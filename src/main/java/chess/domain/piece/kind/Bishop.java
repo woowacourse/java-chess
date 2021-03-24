@@ -22,12 +22,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public Direction direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
         if (!bishopDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return Optional.of(direction);
+        return direction;
     }
 
     @Override

@@ -34,10 +34,10 @@ public class QueenTest {
         Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 3));
         Empty empty4 = new Empty(NOTHING, Point.valueOf(5, 5));
 
-        assertEquals(Optional.of(Direction.SOUTH), queen.direction(empty));
-        assertEquals(Optional.of(Direction.EAST), queen.direction(empty2));
-        assertEquals(Optional.of(Direction.NORTH_WEST), queen.direction(empty3));
-        assertEquals(Optional.of(Direction.SOUTH_EAST), queen.direction(empty4));
+        assertEquals(Direction.SOUTH, queen.direction(empty));
+        assertEquals(Direction.EAST, queen.direction(empty2));
+        assertEquals(Direction.NORTH_WEST, queen.direction(empty3));
+        assertEquals(Direction.SOUTH_EAST, queen.direction(empty4));
     }
 
     @DisplayName("Queen의 불가능한 위치 확인")

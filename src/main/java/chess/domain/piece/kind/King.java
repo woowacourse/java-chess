@@ -15,12 +15,12 @@ public class King extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public Direction direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
         int distance = this.point.calculateDistance(target.point);
 
         if (distance == MOVE_STRAIGHT_ONE_SQUARE || distance == MOVE_DIAGONAL_ONE_SQUARE) {
-            return Optional.of(direction);
+            return direction;
         }
         throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }

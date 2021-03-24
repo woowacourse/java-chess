@@ -38,10 +38,10 @@ public class RookTest {
         Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 4));
         Empty empty4 = new Empty(NOTHING, Point.valueOf(4, 3));
 
-        assertEquals(Optional.of(Direction.SOUTH), rook.direction(empty));
-        assertEquals(Optional.of(Direction.EAST), rook.direction(empty2));
-        assertEquals(Optional.of(Direction.NORTH), rook.direction(empty3));
-        assertEquals(Optional.of(Direction.WEST), rook.direction(empty4));
+        assertEquals(Direction.SOUTH, rook.direction(empty));
+        assertEquals(Direction.EAST, rook.direction(empty2));
+        assertEquals(Direction.NORTH, rook.direction(empty3));
+        assertEquals(Direction.WEST, rook.direction(empty4));
     }
 
     @DisplayName("Rook의 불가능한 방향 확인")

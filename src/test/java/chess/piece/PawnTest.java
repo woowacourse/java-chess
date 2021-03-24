@@ -69,7 +69,7 @@ public class PawnTest {
         Empty empty2 = new Empty(NOTHING, Point.valueOf(5, 2));
         Pawn blackPawn = new Pawn(BLACK, Point.valueOf(5, 4));
 
-        assertEquals(Optional.of(Direction.NORTH_EAST), whitePawn.direction(blackPawn));
+        assertEquals(Direction.NORTH_EAST, whitePawn.direction(blackPawn));
 
         assertThatThrownBy(
             () -> whitePawn.direction(empty)
@@ -97,6 +97,6 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, Point.valueOf(6, 3));
         Empty empty = new Empty(NOTHING, Point.valueOf(4, 3));
 
-        assertEquals(Optional.of(Direction.NORTH), whitePawn.direction(empty));
+        assertEquals(Direction.NORTH, whitePawn.direction(empty));
     }
 }

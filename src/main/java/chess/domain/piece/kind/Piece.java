@@ -1,7 +1,6 @@
 package chess.domain.piece.kind;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
@@ -23,7 +22,7 @@ public abstract class Piece {
         this.point = point;
     }
 
-    public abstract Optional<Direction> direction(Piece target);
+    public abstract Direction direction(Piece target);
 
     public abstract Point moveOneStep(Point target, Direction direction);
 

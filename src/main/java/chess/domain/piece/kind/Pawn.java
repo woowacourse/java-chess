@@ -5,7 +5,6 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import chess.domain.board.Point;
 import chess.domain.board.Row;
@@ -27,27 +26,34 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public Direction direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
+        checkCorrectDirection(direction);
+        return findCorrectDirection(target, direction);
+    }
+
+    private Direction findCorrectDirection(Piece target, Direction direction) {
+        int distance = this.point.calculateDistance(target.point);
+        if (distance == MOVE_STRAIGHT_ONE_SQUARE && target.isEmptyPiece()) {
+            return direction;
+        }
+        if (distance == MOVE_DIAGONAL_ONE_SQUARE && !target.isEmptyPiece()) {
+            return direction;
+        }
+        if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target.isEmptyPiece()
+            && (isInitialBlackPawn() || isInitialWhitePawn())) {
+            return direction;
+        }
+        throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+    }
+
+    private void checkCorrectDirection(Direction direction) {
         if (this.color.equals(WHITE) && !whitePawnDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
         if (this.color.equals(BLACK) && !blackPawnDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-
-        int distance = this.point.calculateDistance(target.point);
-        if (distance == MOVE_STRAIGHT_ONE_SQUARE && target.isEmptyPiece()) {
-            return Optional.of(direction);
-        }
-        if (distance == MOVE_DIAGONAL_ONE_SQUARE && !target.isEmptyPiece()) {
-            return Optional.of(direction);
-        }
-        if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target.isEmptyPiece()
-            && (isInitialBlackPawn() || isInitialWhitePawn())) {
-            return Optional.of(direction);
-        }
-        throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }
 
     private boolean isInitialWhitePawn() {

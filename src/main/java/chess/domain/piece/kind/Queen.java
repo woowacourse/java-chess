@@ -15,9 +15,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
-        return Optional.of(direction);
+    public Direction direction(Piece target) {
+        return Direction.findDirection(this.point, target.point);
     }
 
     @Override

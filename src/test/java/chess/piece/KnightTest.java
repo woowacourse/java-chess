@@ -41,14 +41,14 @@ public class KnightTest {
         Empty empty7 = new Empty(NOTHING, Point.valueOf(5, 6));
         Empty empty8 = new Empty(NOTHING, Point.valueOf(5, 2));
 
-        assertEquals(Optional.empty(), knight.direction(empty));
-        assertEquals(Optional.empty(), knight.direction(empty2));
-        assertEquals(Optional.empty(), knight.direction(empty3));
-        assertEquals(Optional.empty(), knight.direction(empty4));
-        assertEquals(Optional.empty(), knight.direction(empty5));
-        assertEquals(Optional.empty(), knight.direction(empty6));
-        assertEquals(Optional.empty(), knight.direction(empty7));
-        assertEquals(Optional.empty(), knight.direction(empty8));
+        assertNull(knight.direction(empty));
+        assertNull(knight.direction(empty2));
+        assertNull(knight.direction(empty3));
+        assertNull(knight.direction(empty4));
+        assertNull(knight.direction(empty5));
+        assertNull(knight.direction(empty6));
+        assertNull(knight.direction(empty7));
+        assertNull(knight.direction(empty8));
     }
 
     @DisplayName("Knight의 불가능한 거리 확인")

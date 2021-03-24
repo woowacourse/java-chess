@@ -16,13 +16,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public Direction direction(Piece target) {
         int distance = this.point.calculateDistance(target.point);
 
         if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
             throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override

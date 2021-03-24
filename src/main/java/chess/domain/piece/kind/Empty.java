@@ -1,7 +1,5 @@
 package chess.domain.piece.kind;
 
-import java.util.Optional;
-
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
@@ -15,7 +13,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public Direction direction(Piece target) {
         throw new IllegalArgumentException("비어 있는 칸입니다.");
     }
 

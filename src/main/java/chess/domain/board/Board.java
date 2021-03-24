@@ -50,7 +50,7 @@ public class Board {
 
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
         Point currentPoint = source;
-        Direction direction = sourcePiece.direction(targetPiece).orElse(null);
+        Direction direction = sourcePiece.direction(targetPiece);
 
         boolean isArriveAtTarget = currentPoint.equals(target);
         while (!isArriveAtTarget) {

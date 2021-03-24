@@ -34,10 +34,10 @@ public class KingTest {
         Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 5));
         Empty empty4 = new Empty(NOTHING, Point.valueOf(5, 3));
 
-        assertEquals(Optional.of(Direction.SOUTH), king.direction(empty));
-        assertEquals(Optional.of(Direction.EAST), king.direction(empty2));
-        assertEquals(Optional.of(Direction.NORTH_EAST), king.direction(empty3));
-        assertEquals(Optional.of(Direction.SOUTH_WEST), king.direction(empty4));
+        assertEquals(Direction.SOUTH, king.direction(empty));
+        assertEquals(Direction.EAST, king.direction(empty2));
+        assertEquals(Direction.NORTH_EAST, king.direction(empty3));
+        assertEquals(Direction.SOUTH_WEST, king.direction(empty4));
     }
 
     @DisplayName("King의 불가능한 거리 확인")
