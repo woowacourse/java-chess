@@ -19,10 +19,12 @@ public class ChessGame {
         isStart = true;
     }
 
-    public void move(String target, String destination) {
-        board.movePiece(convertStringToPosition(target),
-                convertStringToPosition(destination));
+    public boolean move(String target, String destination) {
+        if (board.movePiece(convertStringToPosition(target), convertStringToPosition(destination))) {
+            return true;
+        }
         board.calculateScore();
+        return false;
     }
 
     public double status(Team team) {

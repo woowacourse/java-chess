@@ -35,22 +35,21 @@ public class Board {
         return board.get(position);
     }
 
-    public void movePiece(Position target, Position destination) {
+    public boolean movePiece(Position target, Position destination) {
         Piece targetPiece = findPieceFromPosition(target);
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
         checkMovable(targetMovablePositions, destination);
-        move(target, destination, targetPiece);
+        return move(target, destination, targetPiece);
     }
 
-    private void move(Position target, Position destination, Piece targetPiece) {
+    private boolean move(Position target, Position destination, Piece targetPiece) {
         if (targetPiece.isMovable(target, destination, this)) {
             checkTurn(targetPiece);
             Piece destinationPiece = findPieceFromPosition(destination);
-            exitGameIfKing(destinationPiece);
             putDeadPieces(destinationPiece);
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
-            return;
+            return isKing(destinationPiece);
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
     }
@@ -62,10 +61,11 @@ public class Board {
         lastTurn = targetPiece.getTeam();
     }
 
-    private void exitGameIfKing(Piece piece) {
-        if(piece instanceof King){
-            System.exit(0);
+    private boolean isKing(Piece piece) {
+        if (Objects.isNull(piece)) {
+            return false;
         }
+        return piece.isKing();
     }
 
     private void putDeadPieces(Piece destinationPiece) {

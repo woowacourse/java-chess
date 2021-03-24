@@ -12,15 +12,22 @@ public abstract class Piece {
     private final Team team;
     private final double score;
     private final boolean promotionChance;
+    private final boolean boss;
 
     private final CanMoveStrategy canMoveStrategy;
 
     public Piece(String name, Team team, double score, CanMoveStrategy canMoveStrategy, boolean promotionChance) {
+        this(name, team, score, canMoveStrategy, promotionChance, false);
+    }
+
+    public Piece(String name, Team team, double score
+            , CanMoveStrategy canMoveStrategy, boolean promotionChance, boolean boss) {
         this.team = team;
         this.name = convertName(name, team);
         this.score = score;
         this.canMoveStrategy = canMoveStrategy;
         this.promotionChance = promotionChance;
+        this.boss = boss;
     }
 
     private String convertName(String name, Team team) {
@@ -61,6 +68,10 @@ public abstract class Piece {
             return false;
         }
         return promotionChance;
+    }
+
+    public boolean isKing() {
+        return boss;
     }
 
     public Team getTeam() {
