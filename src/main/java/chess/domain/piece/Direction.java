@@ -42,19 +42,23 @@ public enum Direction {
         return Integer.compare(difference, 0);
     }
 
-    public static List<Direction> pawnDirection(Color color) {
+    public static boolean isNotPawnDirection(Direction direction, Color color) {
         if (color.isSameAs(WHITE)) {
-            return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+            List<Direction> whitePawnDirection = Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+            return !whitePawnDirection.contains(direction);
         }
-        return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+        List<Direction> blackPawnDirection = Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+        return !blackPawnDirection.contains(direction);
     }
 
-    public static List<Direction> rookDirection() {
-        return Arrays.asList(NORTH, SOUTH, EAST, WEST);
+    public static boolean isNotRookDirection(Direction direction) {
+        List<Direction> rookDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
+        return !rookDirection.contains(direction);
     }
 
-    public static List<Direction> bishopDirection() {
-        return Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST, NORTH_WEST);
+    public static boolean isNotBishopDirection(Direction direction) {
+        List<Direction> bishopDirection = Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST, NORTH_WEST);
+        return !bishopDirection.contains(direction);
     }
 
     public int addCurrentRow(int row) {

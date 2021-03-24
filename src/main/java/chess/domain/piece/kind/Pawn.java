@@ -20,16 +20,12 @@ public final class Pawn extends Piece {
 
     @Override
     public void validateMovable(Direction direction, Piece targetPiece) {
-        if (isNotMovableDirection(direction)) {
+        if (Direction.isNotPawnDirection(direction, this.color)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
         if (isNotMovableRoute(targetPiece)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
-    }
-
-    private boolean isNotMovableDirection(Direction direction) {
-        return !Direction.pawnDirection(this.color).contains(direction);
     }
 
     private boolean isNotMovableRoute(Piece targetPiece) {
