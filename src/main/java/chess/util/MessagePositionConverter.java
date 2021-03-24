@@ -2,22 +2,24 @@ package chess.util;
 
 import chess.domain.Position;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MessagePositionConverter {
 
-    private String[] positions;
-    private StringPositionConverter stringPositionConverter;
+    private static final String MESSAGE_SPLIT_REGEX = " ";
+    private static final int CURRENT_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
 
-    public MessagePositionConverter(String message) {
-        positions = message.split(" ");
-        stringPositionConverter = new StringPositionConverter();
+    private MessagePositionConverter() {
     }
 
-    public Position currentPosition() {
-        return stringPositionConverter.convert(positions[1]);
-    }
-
-    public Position targetPosition() {
-        return stringPositionConverter.convert(positions[2]);
-
+    public static List<Position> convert(String message) {
+        String[] splitPositions = message.split(MESSAGE_SPLIT_REGEX);
+        Position currentPosition = StringPositionConverter
+                .convert(splitPositions[CURRENT_POSITION_INDEX]);
+        Position targetPosition = StringPositionConverter
+                .convert(splitPositions[TARGET_POSITION_INDEX]);
+        return Arrays.asList(currentPosition, targetPosition);
     }
 }

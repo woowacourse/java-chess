@@ -30,14 +30,4 @@ public class ChessResultTest {
         assertThat(expectedWhiteScore).isEqualTo(whiteScore);
         assertThat(expectedBlackScore).isEqualTo(blackScore);
     }
-
-    @Test
-    @DisplayName("최종점수 비교를 통해 winner팀 반환 테스트")
-    void testWinner() {
-        //when
-        TeamColor winner = chessResult.winner();
-
-        //than
-        assertThat(winner).isEqualTo(TeamColor.WHITE);
-    }
 }

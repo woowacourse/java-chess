@@ -9,6 +9,8 @@ import chess.util.MessagePositionConverter;
 import chess.view.BoardDto;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessAction {
 
     private ChessGame chessGame;
@@ -24,17 +26,17 @@ public class ChessAction {
     }
 
     public GameStatus move(String message) throws PieceNotFoundException, ImpossibleMoveException {
-        MessagePositionConverter messagePositionConverter = new MessagePositionConverter(message);
-        Position currentPosition = messagePositionConverter.currentPosition();
-        Position targetPosition = messagePositionConverter.targetPosition();
+        List<Position> positions = MessagePositionConverter.convert(message);
+        Position currentPosition = positions.get(0);
+        Position targetPosition = positions.get(1);
         chessGame.move(currentPosition, targetPosition);
 
         OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
 
-        return chessState();
+        return chessStatus();
     }
 
-    private GameStatus chessState() {
+    private GameStatus chessStatus() {
         if (chessGame.isKingDead()) {
             OutputView.printWinner(chessGame.enemyColor());
             return GameStatus.EXIT;

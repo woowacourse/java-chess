@@ -16,11 +16,4 @@ public class ChessResult {
     public Score blackTeamScore() {
         return blackTeamScore;
     }
-
-    public TeamColor winner() {
-        if (whiteTeamScore.isBiggerThan(blackTeamScore)) {
-            return TeamColor.WHITE;
-        }
-        return TeamColor.BLACK;
-    }
 }

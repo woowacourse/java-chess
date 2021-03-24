@@ -4,6 +4,9 @@ import chess.domain.ChessResult;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 public class OutputView {
 
@@ -27,10 +30,10 @@ public class OutputView {
     }
 
     private static void appendPieceNames(BoardDto boardDto, StringBuilder stringBuilder, int column) {
-        for (int x = 0; x < boardDto.boardSize(); x++) {
-            Position currentPosition = Position.of(x, column);
-            stringBuilder.append(boardDto.board().getOrDefault(currentPosition, "."));
-        }
+        stringBuilder.append(IntStream.range(0, boardDto.boardSize())
+                .mapToObj(x -> Position.of(x, column))
+                .map(currentPosition -> boardDto.board().getOrDefault(currentPosition, "."))
+                .collect(Collectors.joining()));
     }
 
     public static void printStartGame() {
@@ -47,7 +50,11 @@ public class OutputView {
     public static void printResult(ChessResult chessResult) {
         printByFormat(SCORE_FORM, TeamColor.WHITE, chessResult.whiteTeamScore().value());
         printByFormat(SCORE_FORM, TeamColor.BLACK, chessResult.blackTeamScore().value());
-        printWinner(chessResult.winner());
+        TeamColor winner = TeamColor.BLACK;
+        if (chessResult.whiteTeamScore().isBiggerThan(chessResult.blackTeamScore())) {
+            winner = TeamColor.WHITE;
+        }
+        printWinner(winner);
     }
 
     public static void printWinner(TeamColor teamColor) {
