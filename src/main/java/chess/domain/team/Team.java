@@ -57,7 +57,6 @@ public abstract class Team {
         final Piece chosenPiece = piecePosition.get(current);
         piecePosition.remove(current);
         piecePosition.put(destination, chosenPiece);
-        chosenPiece.isMoved();
     }
 
     public Piece choosePiece(final Position position) {

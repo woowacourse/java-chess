@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
-    protected boolean isMoved = false;
-
     public Piece() {
     }
 
@@ -26,9 +24,5 @@ public abstract class Piece {
             }
         }
         return true;
-    }
-
-    public void isMoved() {
-        this.isMoved = true;
     }
 }

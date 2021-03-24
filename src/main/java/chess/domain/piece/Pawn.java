@@ -5,6 +5,9 @@ import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.team.BlackTeam.BLACK_PAWN_COLUMN;
+import static chess.domain.team.WhiteTeam.WHITE_PAWN_COLUMN;
+
 public class Pawn extends Piece {
     private static final int UNICODE_DECIMAL = 9817;
     public static final double SCORE_PAWN = 1.0;
@@ -38,11 +41,23 @@ public class Pawn extends Piece {
 
     @Override
     public boolean checkPositionRule(final Position current, final Position destination) {
-        if (isMoved) {
+        if (isFirstMoved(current)) {
             return checkPositionRuleAfterMove(current, destination);
         }
 
         return checkPositionRuleFirstMove(current, destination);
+    }
+
+    private boolean isFirstMoved(Position current) {
+        if (direction == DIRECTION_BLACK) {
+            return current.getY() != BLACK_PAWN_COLUMN;
+        }
+
+        if (direction == DIRECTION_WHITE) {
+            return current.getY() != WHITE_PAWN_COLUMN;
+        }
+
+        return false;
     }
 
     @Override
