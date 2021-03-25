@@ -50,10 +50,15 @@ public class Point {
     }
 
     public static Point of(int row, int column) {
-        if (row < MINIMUM_VALUE || MAXIMUM_VALUE < row || column < MINIMUM_VALUE || MAXIMUM_VALUE < column) {
+        validateNotOutOfBound(row);
+        validateNotOutOfBound(column);
+        return POINTS.get(MAXIMUM_RANK - MINIMUM_RANK - row + BOARD_SIZE * column);
+    }
+
+    private static void validateNotOutOfBound(int value) {
+        if (value < MINIMUM_VALUE || MAXIMUM_VALUE < value) {
             throw new IllegalArgumentException("올바르지 않은 좌표입니다.");
         }
-        return POINTS.get(MAXIMUM_RANK - MINIMUM_RANK - row + BOARD_SIZE * column);
     }
 
     private static int convertLetterToIndex(char letter) {
