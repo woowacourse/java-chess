@@ -56,14 +56,6 @@ public enum Direction {
         return NORTHEAST;
     }
 
-    public static List<Direction> linearDirection() {
-        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
-    }
-
-    public static List<Direction> diagonalDirection() {
-        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-    }
-
     public static List<Direction> everyDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
