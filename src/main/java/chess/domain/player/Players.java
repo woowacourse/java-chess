@@ -24,7 +24,7 @@ public class Players {
         );
 
         this.board = BoardInitializer.initiateBoard();
-        this.turn = Turn.BLACK;
+        this.turn = Turn.WHITE;
     }
 
     public void move(final Position source, final Position target) {
