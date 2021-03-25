@@ -1,27 +1,26 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
-import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.exceptions.UnableMoveTypeException;
-import chess.domain.piece.Piece;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum MoveDirection {
-    UP(Arrays.asList(0, 1)),
-    DOWN(Arrays.asList(0, -1)),
-    LEFT(Arrays.asList(-1, 0)),
-    RIGHT(Arrays.asList(1, 0)),
-    LEFT_UP(Arrays.asList(-1, 1)),
-    RIGHT_UP(Arrays.asList(1, 1)),
-    LEFT_DOWN(Arrays.asList(-1, -1)),
-    RIGHT_DOWN(Arrays.asList(1, -1));
+    UP(0, 1),
+    DOWN(0, -1),
+    LEFT(-1, 0),
+    RIGHT(1, 0),
+    LEFT_UP(-1, 1),
+    RIGHT_UP(1, 1),
+    LEFT_DOWN(-1, -1),
+    RIGHT_DOWN(1, -1);
 
-    private List<Integer> vector;
+    private int x;
+    private int y;
 
-    MoveDirection(List<Integer> vector) {
-        this.vector = vector;
+    MoveDirection(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public static MoveDirection getDirection(Position source, Position target) {
@@ -31,13 +30,12 @@ public enum MoveDirection {
         int horizontalVector = getVectorValue(horizontalDistance);
         int verticalVector = getVectorValue(verticalDistance);
 
-        List<Integer> vectors = Arrays.asList(horizontalVector, verticalVector);
-        return matchVectors(vectors);
+        return matchVectors(horizontalVector, verticalVector);
     }
 
-    private static MoveDirection matchVectors(List<Integer> vectors) {
+    private static MoveDirection matchVectors(int horizontalVector, int verticalVector) {
         return Arrays.stream(values())
-            .filter(element -> element.vector.equals(vectors))
+            .filter(element -> element.x == horizontalVector && element.y == verticalVector)
             .findAny()
             .orElseThrow(UnableMoveTypeException::new);
     }
@@ -58,10 +56,10 @@ public enum MoveDirection {
     }
 
     public int getXVector() {
-        return vector.get(0);
+        return x;
     }
 
     public int getYVector() {
-        return vector.get(1);
+        return y;
     }
 }
