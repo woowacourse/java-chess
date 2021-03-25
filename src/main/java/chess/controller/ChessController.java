@@ -1,9 +1,13 @@
 package chess.controller;
 
+
+
 import static spark.Spark.get;
+import static spark.Spark.port;
 import static spark.Spark.post;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import chess.service.ChessService;
 import chess.view.OutputView;
@@ -16,7 +20,6 @@ public class ChessController {
     private static final String ROOT = "/";
     private static final String START = "start";
     private static final String MOVE = "move";
-    private static final String STATUS = "status";
     private static final String END_COMMAND_INPUT = "end";
     private static final String CHESS_BOARD_VIEW = "chess-board.html";
     private static final String HOME_VIEW = "index.html";
@@ -29,10 +32,10 @@ public class ChessController {
     }
 
     public void run() {
+        port(8080);
         handleHomeRequest();
         handleStartRequest();
         handleMoveRequest();
-        handleStatusRequest();
         handleEndRequest();
     }
 
@@ -49,8 +52,20 @@ public class ChessController {
             ResponseDTO responseDTO = getResponseWhenRequestStart();
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
+            putBoardRanks(responseDTO.getBoardResponseDTO(), model);
             return render(model, CHESS_BOARD_VIEW);
         });
+    }
+
+    private void putBoardRanks(BoardResponseDTO boardResponseDTO, Map<String, Object> model) {
+        model.put("rank8", boardResponseDTO.getRank8());
+        model.put("rank7", boardResponseDTO.getRank7());
+        model.put("rank6", boardResponseDTO.getRank6());
+        model.put("rank5", boardResponseDTO.getRank5());
+        model.put("rank4", boardResponseDTO.getRank4());
+        model.put("rank3", boardResponseDTO.getRank3());
+        model.put("rank2", boardResponseDTO.getRank2());
+        model.put("rank1", boardResponseDTO.getRank1());
     }
 
     private ResponseDTO getResponseWhenRequestStart() {
@@ -68,6 +83,7 @@ public class ChessController {
             ResponseDTO responseDTO = getResponseWhenRequestMove(moveRequestDTO);
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
+            putBoardRanks(responseDTO.getBoardResponseDTO(), model);
             return render(model, CHESS_BOARD_VIEW);
         });
     }
@@ -75,20 +91,6 @@ public class ChessController {
     private ResponseDTO getResponseWhenRequestMove(MoveRequestDTO moveRequestDTO) {
         ResponseDTO responseDTO = chessService.getResponseWhenRequestMove(moveRequestDTO);
         OutputView.printBoard(responseDTO);
-        return responseDTO;
-    }
-
-    private void handleStatusRequest() {
-        get(ROOT + STATUS, (req, res) -> {
-            ResponseDTO responseDTO = getResponseWhenRequestStatus();
-            Map<String, Object> model = new HashMap<>();
-            model.put(RESPONSE_DTO, responseDTO);
-            return render(model, CHESS_BOARD_VIEW);
-        });
-    }
-
-    private ResponseDTO getResponseWhenRequestStatus() {
-        ResponseDTO responseDTO = chessService.getScores();
         OutputView.printScores(responseDTO);
         return responseDTO;
     }

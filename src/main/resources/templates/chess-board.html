@@ -4,24 +4,153 @@
     <meta charset="UTF-8">
     <title>인비의 체스게임</title>
 </head>
+<style>
+  .cell {
+      height: 80px;
+  }
+  .status {
+      height: 50px;
+  }
+  .content {
+      display: table-cell;
+      vertical-align: middle;
+  }
+  #current-turn-team-team {
+      margin-bottom: 40px;
+  }
+</style>
 <body>
 
-<h1>체스 보드 페이지</h1>
-cellsStatus
+<h1 style="text-align: center; margin-top: 77px; margin-bottom: 50px;">인비의 체스 게임</h1>
 
-{{#responseDTO.cellsStatus}}
-  {{.}}
-{{/responseDTO.cellsStatus}}
-<br>
+<div id="chess-board" style="text-align: center; width: 720px; margin-left: auto; margin-right: auto">
+  {{#responseDTO}}
+  <div id="current-status">
+    <div id="current-scores" style="display: flex">
+      <div class="score status content" style="flex: 1">백 팀 : {{whitePlayerScore}}점</div>
+      <div class="score status content" style="flex: 1">흑 팀 : {{blackPlayerScore}}점</div>
+    </div>
+    <div id="current-turn-team-team">현재 차례 : {{currentTurnTeamName}} 팀</div>
+  </div>
+  {{/responseDTO}}
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      8
+    </div>
+    {{#rank8}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank8}}
+  </div>
 
-{{#responseDTO}}
-  currentTurnTeamName : {{currentTurnTeamName}} <br>
-  blackPlayerScore : {{blackPlayerScore}} <br>
-  whitePlayerScore : {{whitePlayerScore}} <br>
-  isKingDead : {{isKingDead}} <br>
-  winnerName : {{winnerName}} <br>
-{{/responseDTO}}
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      7
+    </div>
+    {{#rank7}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank7}}
+  </div>
 
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      6
+    </div>
+    {{#rank6}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank6}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      5
+    </div>
+    {{#rank5}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank5}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" content style="flex: 1">
+      4
+    </div>
+    {{#rank4}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank4}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      3
+    </div>
+    {{#rank3}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank3}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      2
+    </div>
+    {{#rank2}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank2}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side content" style="flex: 1">
+      1
+    </div>
+    {{#rank1}}
+    <div class="cell content" style="flex: 1">
+      {{.}}
+    </div>
+    {{/rank1}}
+  </div>
+
+  <div class="rank" style="display: flex">
+    <div class="cell left-side bottom-side content" style="flex: 1">
+      X
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      a
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      b
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      c
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      d
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      e
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      f
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      g
+    </div>
+    <div class="cell bottom-side content" style="flex: 1">
+      h
+    </div>
+  </div>
+</div>
 
 <form method="post" action="/move">
   <input type="text" name="startPosition">
@@ -33,6 +162,11 @@ cellsStatus
   <input type="submit" value="게임 종료">
 </form>
 
+
+{{#responseDTO}}
+<div id="is-king-dead" style="display: none">{{isKingDead}}</div>
+<div id="before-turn-team-name" style="display: none">{{beforeTurnTeamName}}</div>
+{{/responseDTO}}
 
 </body>
 </html>
