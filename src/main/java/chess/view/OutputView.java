@@ -9,8 +9,10 @@ import chess.domain.piece.Piece;
 
 public class OutputView {
 
-    private static final String GAME_INIT = "체스 게임을 시작합니다.";
-    private static final String GAME_INIT_COMMAND = "게임 시작은 start, 종료는 end 명령을 입력하세요.";
+    private static final String GAME_INIT = "> 체스 게임을 시작합니다.";
+    private static final String GAME_INIT_COMMAND = "> 게임 시작 : start \n>게임 종료 : end\n게임 이동 : move source 위치 target 위치 - 예. move b2 b3";
+    private static final String DIVIDER = "--------";
+    private static final String BOARD_ROW = "abcdefgh";
     private static final String END = "END";
 
     public static void printInitMessage() {
@@ -20,10 +22,12 @@ public class OutputView {
 
     public static void printBoard(Game game) {
         Board board = game.getBoard();
-        System.out.println();
         for (YPosition yPosition : YPosition.values()) {
             printXAxis(board, yPosition);
         }
+        System.out.println(DIVIDER);
+        System.out.println(BOARD_ROW);
+        System.out.println();
     }
 
     private static void printXAxis(Board board, YPosition yPosition) {
@@ -32,6 +36,7 @@ public class OutputView {
             Piece piece = board.pieceAtPosition(position);
             System.out.print(piece.symbol());
         }
+        System.out.print(" |" + yPosition.getValue());
         System.out.println();
     }
 
