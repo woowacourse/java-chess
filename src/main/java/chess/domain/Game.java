@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitializedBoard;
+import chess.domain.board.RequestedBoard;
 import chess.domain.board.Point;
 import chess.domain.board.Position;
 import chess.domain.piece.PieceColor;
@@ -14,14 +14,14 @@ public class Game {
     private PieceColor turnColor;
 
     public Game() {
-        this.board = new Board(InitializedBoard.emptyBoard());
+        this.board = new Board(RequestedBoard.emptyBoard());
         this.point = new Point(board);
         this.gameState = GameState.NOT_STARTED;
         this.turnColor = PieceColor.WHITE;
     }
 
     public void init() {
-        this.board = new Board(InitializedBoard.board());
+        this.board = new Board(RequestedBoard.board());
         this.point = new Point(board);
         this.gameState = GameState.START;
     }
