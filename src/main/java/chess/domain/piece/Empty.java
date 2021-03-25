@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 
 public class Empty extends Basis {
     private static final String EMPTY_DISPLAYNAME = ".";
+    public static final String EMPTY_MOVE_ERROR = "해당 위치에 움직일 말이 없습니다";
 
     public Empty() {
         super(EMPTY_DISPLAYNAME);
@@ -12,7 +13,7 @@ public class Empty extends Basis {
 
     @Override
     public void moveToEmpty(final Position to, final Pieces pieces) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EMPTY_MOVE_ERROR);
     }
 
     @Override
@@ -20,17 +21,17 @@ public class Empty extends Basis {
 
     @Override
     public boolean hasPosition(final Position position) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EMPTY_MOVE_ERROR);
     }
 
     @Override
     public Position getPosition() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EMPTY_MOVE_ERROR);
     }
 
     @Override
     public boolean isSameColor(final Color color) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EMPTY_MOVE_ERROR);
     }
 
     @Override
@@ -55,6 +56,6 @@ public class Empty extends Basis {
 
     @Override
     public Column getColumn() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EMPTY_MOVE_ERROR);
     }
 }

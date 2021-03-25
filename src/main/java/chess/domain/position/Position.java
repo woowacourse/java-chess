@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Position {
     private static final Map<String, Position> CACHE = new HashMap<>();
+    public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
     private final Column column;
     private final Row row;
 
@@ -30,7 +31,7 @@ public class Position {
         if (CACHE.containsKey(key)) {
             return CACHE.get(key);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(OVER_RANGE_ERROR);
     }
 
     private static void cacheByColumn(final Column x) {

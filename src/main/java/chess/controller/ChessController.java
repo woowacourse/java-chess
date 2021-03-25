@@ -41,7 +41,7 @@ public class ChessController {
     private void playOneTurn(final Game game) {
         try {
             tryOneTurn(game);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             OutputView.printError(e.getMessage());
             playOneTurn(game);
         }
