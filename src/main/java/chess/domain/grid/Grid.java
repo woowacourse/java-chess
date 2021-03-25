@@ -39,6 +39,12 @@ public final class Grid {
         this.gameState = gameState.move(this, sourcePiece.position(), targetPiece.position());
     }
 
+    public void move(final String sourcePosition, final String targetPosition) {
+        Position start = new Position(sourcePosition.charAt(0), sourcePosition.charAt(1));
+        Position end = new Position(targetPosition.charAt(0), targetPosition.charAt(1));
+        this.gameState = gameState.move(this, start, end);
+    }
+
     public void start() {
         this.gameState = gameState.start();
     }
