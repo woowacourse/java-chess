@@ -21,7 +21,7 @@ public enum Command {
                 .anyMatch(cmd -> cmd.command.equals(command));
     }
 
-    public boolean isPrint() {
+    public boolean isPrintCommand() {
         return this.isPrint;
     }
 }

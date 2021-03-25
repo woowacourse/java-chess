@@ -6,14 +6,17 @@ import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
 public final class ChessGame {
-    private Board board;
+    private final Board board;
     private boolean isPlaying = true;
     private Team currentTurnTeam;
 
-    public final void initSetting() {
-        BoardFactory boardFactory = new BoardFactory();
-        currentTurnTeam = Team.WHITE;
-        board = boardFactory.getBoard();
+    public ChessGame() {
+        this(new BoardFactory().getBoard(), Team.WHITE);
+    }
+
+    public ChessGame(final Board board, final Team team) {
+        this.board = board;
+        currentTurnTeam = team;
     }
 
     public final void end() {
@@ -39,6 +42,11 @@ public final class ChessGame {
     public final double getScoreByTeam(final Team team) {
         return board.scoreByTeam(team);
     }
+
+    public final boolean isKingDieEnd() {
+        return board.isEnemyKingDie(currentTurnTeam) || board.isEnemyKingDie(Team.getAnotherTeam(currentTurnTeam));
+    }
+
 
     public final Team winner() {
         if (board.isEnemyKingDie(currentTurnTeam)) {

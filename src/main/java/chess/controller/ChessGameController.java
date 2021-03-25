@@ -12,11 +12,7 @@ import chess.view.OutputView;
 import java.util.Objects;
 
 public class ChessGameController {
-    private final ChessGame chessGame;
-
-    public ChessGameController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
+    private ChessGame chessGame;
 
     public void start() {
         OutputView.printStartMessage();
@@ -24,10 +20,11 @@ public class ChessGameController {
     }
 
     private void run() {
-        while (chessGame.isPlaying()) {
+        do {
             turnExecute();
-        }
-        if (Objects.nonNull(chessGame.winner())) {
+        } while (Objects.nonNull(chessGame) && chessGame.isPlaying());
+
+        if (Objects.nonNull(chessGame) && chessGame.isKingDieEnd()) {
             OutputView.printWinner(chessGame.winner(), chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
         }
     }
@@ -36,22 +33,27 @@ public class ChessGameController {
         try {
             Command command = Command.valueOf(InputView.getCommand());
             commandExecute(command);
-            printCurrentBoard(command);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void commandExecute(final Command command) {
+        if (Objects.isNull(chessGame) && command.equals(Command.MOVE)) {
+            OutputView.printNoStartMessage();
+            turnExecute();
+            return;
+        }
         interactiveCommand(command);
         unInteractiveCommand(command);
+        printCurrentBoard(command);
     }
 
     private void unInteractiveCommand(final Command command) {
         if (command.equals(Command.START)) {
-            chessGame.initSetting();
+            chessGame = new ChessGame();
         }
-        if (command.equals(Command.END)) {
+        if (command.equals(Command.END) && Objects.nonNull(chessGame)) {
             chessGame.end();
         }
     }
@@ -66,9 +68,10 @@ public class ChessGameController {
     }
 
     private void printCurrentBoard(final Command command) {
-        if (command.isPrint()) {
-            printBoard();
+        if (!command.isPrintCommand()) {
+            return;
         }
+        printBoard();
     }
 
     private void move() {
