@@ -11,32 +11,33 @@ public final class Position {
     private static final char MIN_Y_RANGE = Row.FIRST.getName();
     private static final char MAX_Y_RANGE = Row.EIGHTH.getName();
 
-    private final char x;
-    private final char y;
+    private final Column x;
+    private final Row y;
 
     public Position(final String position) {
         this(position.charAt(0), position.charAt(1));
     }
 
     public Position(final char x, final char y) {
-        this.x = x;
-        this.y = y;
+        this.x = Column.column(x);
+        this.y = Row.row(y);
     }
 
     public char x() {
-        return x;
+        return x.getName();
     }
 
     public char y() {
-        return y;
+        return y.getName();
     }
 
     public boolean isInValidRange() {
-        return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
+        return x.getName() >= MIN_X_RANGE && x.getName() <= MAX_X_RANGE
+                && y.getName() >= MIN_Y_RANGE && y.getName() <= MAX_Y_RANGE;
     }
 
     public Position next(final int xDegree, final int yDegree) {
-        return new Position((char) (x + xDegree), (char) (y + yDegree));
+        return new Position((char) (x.getName() + xDegree), (char) (y.getName() + yDegree));
     }
 
     @Override
