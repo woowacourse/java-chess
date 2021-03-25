@@ -1,7 +1,6 @@
 package chess.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;

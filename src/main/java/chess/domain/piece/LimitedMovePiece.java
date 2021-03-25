@@ -14,7 +14,7 @@ public abstract class LimitedMovePiece extends Piece {
     @Override
     public Path findPathInDirection(Direction direction, Position currentPosition) {
         List<Position> positions = new ArrayList<>();
-        if(currentPosition.canGoTo(direction)) {
+        if (currentPosition.canGoTo(direction)) {
             positions.add(currentPosition.moveTo(direction));
         }
         return new Path(positions);

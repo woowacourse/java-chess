@@ -41,13 +41,13 @@ public enum Column {
         return getColumn(value + direction.columnValue());
     }
 
-    public String getName() {
-        return name;
-    }
-
     public boolean isInRange(int moveValue) {
         return Arrays.stream(values())
             .anyMatch(column -> column.value == this.value + moveValue);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getValue() {

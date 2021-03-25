@@ -53,8 +53,8 @@ public abstract class Piece {
             .map(direction -> findPathInDirection(direction, current))
             .map(path -> path.removeObstacleInPath(this, board))
             .flatMap(List::stream)
-        .collect(Collectors.toList()))
-        ;
+            .collect(Collectors.toList()))
+            ;
     }
 
     public abstract Path findPathInDirection(Direction direction, Position currentPosition);

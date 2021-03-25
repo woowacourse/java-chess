@@ -32,13 +32,13 @@ public enum Row {
         return getRow(String.valueOf(Integer.parseInt(number) + direction.rowValue()));
     }
 
-    public String getNumber() {
-        return number;
-    }
-
     public boolean isInRange(int moveValue) {
         return Arrays.stream(values())
             .anyMatch(row -> row.getValue() == this.getValue() + moveValue);
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     public int getValue() {

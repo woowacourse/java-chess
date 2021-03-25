@@ -65,14 +65,6 @@ public class Position {
         return Math.abs(row() - that.row());
     }
 
-    public int row() {
-        return row.getValue();
-    }
-
-    public int column() {
-        return column.getValue();
-    }
-
     public boolean canGoTo(Direction direction) {
         return column.isInRange(direction.columnValue()) && row.isInRange(direction.rowValue());
     }
@@ -93,6 +85,14 @@ public class Position {
 
     public boolean isLowerTo(Position that) {
         return row() < that.row();
+    }
+
+    public int row() {
+        return row.getValue();
+    }
+
+    public int column() {
+        return column.getValue();
     }
 
     @Override
