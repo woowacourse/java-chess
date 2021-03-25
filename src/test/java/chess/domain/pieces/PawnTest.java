@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class PawnTest {
     void blackTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.BLACK, Col.getLocation(col));
+            Pawn pawn = Pawn.of(Team.BLACK, ColumnConverter.getLocation(col));
 
             Position pawnPosition = pawn.getPosition();
             assertThat(pawnPosition.getRow()).isEqualTo(1);
@@ -26,7 +26,7 @@ class PawnTest {
     void whiteTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.WHITE, Col.getLocation(col));
+            Pawn pawn = Pawn.of(Team.WHITE, ColumnConverter.getLocation(col));
 
             Position pawnPosition = pawn.getPosition();
             assertThat(pawnPosition.getRow()).isEqualTo(6);

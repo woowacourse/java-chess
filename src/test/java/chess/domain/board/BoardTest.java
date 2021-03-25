@@ -2,9 +2,9 @@ package chess.domain.board;
 
 import chess.domain.Team;
 import chess.domain.pieces.Pieces;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.util.RowConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class BoardTest {
     void enemyKingDieCheck() {
         Team team = Team.BLACK;
         Pieces pieces = board.toMap().get(Team.getAnotherTeam(team));
-        Position WhiteTeamKingPosition = new Position(Row.getLocation("1"), Col.getLocation("e"));
+        Position WhiteTeamKingPosition = new Position(RowConverter.getLocation("1"), ColumnConverter.getLocation("e"));
 
         assertThat(board.isEnemyKingDie(team)).isFalse();
         pieces.removePieceByPosition(WhiteTeamKingPosition);

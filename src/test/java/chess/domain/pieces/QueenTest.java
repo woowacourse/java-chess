@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class QueenTest {
     @DisplayName("Queen이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"d"})
     void blackTeamPositionCheck(String col) {
-        Queen queen = Queen.of(Team.BLACK, Col.getLocation(col));
+        Queen queen = Queen.of(Team.BLACK, ColumnConverter.getLocation(col));
         Position queenPosition = queen.getPosition();
 
         assertThat(queenPosition.getRow()).isEqualTo(0);
@@ -42,7 +42,7 @@ class QueenTest {
     @DisplayName("Queen이 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"d"})
     void whiteTeamPositionCheck(String col) {
-        Queen queen = Queen.of(Team.WHITE, Col.getLocation(col));
+        Queen queen = Queen.of(Team.WHITE, ColumnConverter.getLocation(col));
         Position queenPosition = queen.getPosition();
 
         assertThat(queenPosition.getRow()).isEqualTo(7);
@@ -53,7 +53,7 @@ class QueenTest {
     @DisplayName("Queen 초기 col 위치가 d가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "c", "e", "f", "g", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Queen.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Queen.of(Team.BLACK, ColumnConverter.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class RookTest {
     @DisplayName("Rook이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"a", "h"})
     void blackTeamPositionCheck(String col) {
-        Rook rook = Rook.of(Team.BLACK, Col.getLocation(col));
+        Rook rook = Rook.of(Team.BLACK, ColumnConverter.getLocation(col));
         Position rookPosition = rook.getPosition();
         assertThat(rookPosition.getRow()).isEqualTo(0);
         assertThat(rookPosition.getRow()).isNotEqualTo(1);
@@ -41,7 +41,7 @@ class RookTest {
     @DisplayName("Rook이 White 팀으로 생성되면, row의 실제 좌표 위치는 y이다.")
     @ValueSource(strings = {"a", "h"})
     void whiteTeamPositionCheck(String col) {
-        Rook rook = Rook.of(Team.WHITE, Col.getLocation(col));
+        Rook rook = Rook.of(Team.WHITE, ColumnConverter.getLocation(col));
         Position rookPosition = rook.getPosition();
         assertThat(rookPosition.getRow()).isEqualTo(7);
         assertThat(rookPosition.getRow()).isNotEqualTo(8);
@@ -51,7 +51,7 @@ class RookTest {
     @DisplayName("Rook 초기 col 위치가 a혹은 h가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"b", "c", "d", "e", "f", "g"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Rook.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Rook.of(Team.BLACK, ColumnConverter.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

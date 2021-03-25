@@ -1,10 +1,10 @@
 package chess.domain;
 
-import chess.domain.position.Row;
+import chess.domain.util.RowConverter;
 
 public enum Team {
-    BLACK(Row.getLocation("7")),
-    WHITE(Row.getLocation("2"));
+    BLACK(RowConverter.getLocation("7")),
+    WHITE(RowConverter.getLocation("2"));
 
     private final int pawnInitRow;
 

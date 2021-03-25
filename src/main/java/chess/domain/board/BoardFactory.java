@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Team;
 import chess.domain.pieces.*;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public final class BoardFactory {
     }
 
     private void pawnInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getPawnInitCols();
+        List<Integer> cols = ColumnConverter.getPawnInitCols();
         cols.forEach((col) -> {
             black.add(Pawn.of(Team.BLACK, col));
             white.add(Pawn.of(Team.WHITE, col));
@@ -43,7 +43,7 @@ public final class BoardFactory {
     }
 
     private void rookInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getRookInitCols();
+        List<Integer> cols = ColumnConverter.getRookInitCols();
 
         cols.forEach((col) -> {
             black.add(Rook.of(Team.BLACK, col));
@@ -52,7 +52,7 @@ public final class BoardFactory {
     }
 
     private void knightInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getKnightInitCols();
+        List<Integer> cols = ColumnConverter.getKnightInitCols();
 
         cols.forEach((col) -> {
             black.add(Knight.of(Team.BLACK, col));
@@ -61,7 +61,7 @@ public final class BoardFactory {
     }
 
     private void bishopInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getBishopInitCols();
+        List<Integer> cols = ColumnConverter.getBishopInitCols();
 
         cols.forEach((col) -> {
             black.add(Bishop.of(Team.BLACK, col));
@@ -70,7 +70,7 @@ public final class BoardFactory {
     }
 
     private void queenInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getQueenInitCols();
+        List<Integer> cols = ColumnConverter.getQueenInitCols();
 
         cols.forEach((col) -> {
             black.add(Queen.of(Team.BLACK, col));
@@ -79,7 +79,7 @@ public final class BoardFactory {
     }
 
     private void kingInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = Col.getKingInitCols();
+        List<Integer> cols = ColumnConverter.getKingInitCols();
 
         cols.forEach((col) -> {
             black.add(King.of(Team.BLACK, col));

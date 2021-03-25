@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class BishopTest {
     @DisplayName("Bishop이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"c", "f"})
     void blackTeamPositionCheck(String col) {
-        Bishop bishop = Bishop.of(Team.BLACK, Col.getLocation(col));
+        Bishop bishop = Bishop.of(Team.BLACK, ColumnConverter.getLocation(col));
         Position bishopPosition = bishop.getPosition();
 
         assertThat(bishopPosition.getRow()).isEqualTo(0);
@@ -44,7 +44,7 @@ class BishopTest {
     @DisplayName("Bishop이 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"c", "f"})
     void whiteTeamPositionCheck(String col) {
-        Bishop bishop = Bishop.of(Team.WHITE, Col.getLocation(col));
+        Bishop bishop = Bishop.of(Team.WHITE, ColumnConverter.getLocation(col));
         Position bishopPosition = bishop.getPosition();
 
         assertThat(bishopPosition.getRow()).isEqualTo(7);
@@ -56,7 +56,7 @@ class BishopTest {
     @DisplayName("Bishop 초기 col 위치가 c혹은 f가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "d", "e", "g", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Bishop.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Bishop.of(Team.BLACK, ColumnConverter.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

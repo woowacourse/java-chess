@@ -3,7 +3,7 @@ package chess.domain.pieces;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.util.RowConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ public class Knight extends NoKingPieces {
 
     private static Position getInitPosition(final Team team, final int col) {
         if (team.equals(Team.BLACK)) {
-            return new Position(Row.getLocation(BLACK_TEAM_ROW), col);
+            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
         }
-        return new Position(Row.getLocation(WHITE_TEAM_ROW), col);
+        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
     }
 
     @Override

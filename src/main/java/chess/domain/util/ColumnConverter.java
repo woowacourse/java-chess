@@ -1,11 +1,11 @@
-package chess.domain.position;
+package chess.domain.util;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Col {
+public enum ColumnConverter {
     A("a", 0),
     B("b", 1),
     C("c", 2),
@@ -18,13 +18,13 @@ public enum Col {
     private final String col;
     private final int location;
 
-    Col(final String col, final int location) {
+    ColumnConverter(final String col, final int location) {
         this.col = col;
         this.location = location;
     }
 
     public static int getLocation(final String col) {
-        return Arrays.stream(Col.values())
+        return Arrays.stream(ColumnConverter.values())
                 .filter(value -> value.col.equals(col))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 좌표입니다."))
@@ -32,7 +32,7 @@ public enum Col {
     }
 
     public static List<Integer> getPawnInitCols() {
-        return Arrays.stream(Col.values())
+        return Arrays.stream(ColumnConverter.values())
                 .map(pawnCol -> pawnCol.location)
                 .collect(Collectors.toList());
     }

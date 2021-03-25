@@ -2,9 +2,9 @@ package chess.controller;
 
 import chess.ChessGame;
 import chess.domain.Team;
-import chess.domain.position.Col;
+import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.util.RowConverter;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -69,8 +69,8 @@ public class ChessGameController {
 
     private Position position(final String point) {
         return new Position(
-                Row.getLocation(String.valueOf(point.charAt(1))),
-                Col.getLocation(String.valueOf(point.charAt(0)))
+                RowConverter.getLocation(String.valueOf(point.charAt(1))),
+                ColumnConverter.getLocation(String.valueOf(point.charAt(0)))
         );
     }
 
