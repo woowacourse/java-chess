@@ -82,7 +82,7 @@ public final class ChessGame {
         if (enemyTeam.havePiece(destination)) {
             final Piece enemyPiece = enemyTeam.deletePiece(destination);
             currentTurnTeam.catchPiece(enemyPiece);
-            finishGameIfKing(enemyPiece);
+            finishIfKingIsCaught(enemyPiece);
         }
     }
 
@@ -93,7 +93,7 @@ public final class ChessGame {
         return blackTeam;
     }
 
-    private void finishGameIfKing(final Piece piece) {
+    private void finishIfKingIsCaught(final Piece piece) {
         if (piece.isKing()) {
             finish();
         }
