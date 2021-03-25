@@ -38,6 +38,7 @@ public class ChessController {
 
     private void handleHomeRequest() {
         get(ROOT, (req, res) -> {
+            OutputView.printGameStartMessage();
             Map<String, Object> model = new HashMap<>();
             return render(model, HOME_VIEW);
         });
@@ -45,7 +46,6 @@ public class ChessController {
 
     private void handleStartRequest() {
         get(ROOT + START, (req, res) -> {
-            OutputView.printGameStartMessage();
             ResponseDTO responseDTO = getResponseWhenRequestStart();
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);

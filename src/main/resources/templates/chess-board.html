@@ -12,15 +12,27 @@ cellsStatus
 {{#responseDTO.cellsStatus}}
   {{.}}
 {{/responseDTO.cellsStatus}}
-
+<br>
 
 {{#responseDTO}}
-  currentTurnTeamName : {{currentTurnTeamName}}
-  blackPlayerScore : {{blackPlayerScore}}
-  whitePlayerScore : {{whitePlayerScore}}
-  isKingDead : {{isKingDead}}
-  winnerName : {{winnerName}}
+  currentTurnTeamName : {{currentTurnTeamName}} <br>
+  blackPlayerScore : {{blackPlayerScore}} <br>
+  whitePlayerScore : {{whitePlayerScore}} <br>
+  isKingDead : {{isKingDead}} <br>
+  winnerName : {{winnerName}} <br>
 {{/responseDTO}}
+
+
+<form method="post" action="/move">
+  <input type="text" name="startPosition">
+  <input type="text" name="destination">
+  <input type="submit" value="기물 이동">
+</form>
+
+<form action="/end">
+  <input type="submit" value="게임 종료">
+</form>
+
 
 </body>
 </html>

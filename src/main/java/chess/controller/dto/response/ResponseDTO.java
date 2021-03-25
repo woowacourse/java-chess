@@ -38,7 +38,7 @@ public class ResponseDTO {
         return whitePlayerScore;
     }
 
-    public boolean isKingDead() {
+    public boolean getIsKingDead() {
         return isKingDead;
     }
 

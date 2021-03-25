@@ -23,7 +23,7 @@ public class OutputView {
         System.out.println();
         System.out.println("현재 " + responseDTO.getCurrentTurnTeamName() + " 팀의 차례입니다.");
 
-        if (responseDTO.isKingDead()) {
+        if (responseDTO.getIsKingDead()) {
             System.out.println();
             System.out.println(responseDTO.getWinnerName() + " 팀이 이겼습니다.");
         }
