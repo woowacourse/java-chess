@@ -35,10 +35,11 @@ public class LinesTest {
     }
 
     @Test
-    @DisplayName("Lines에서 해당 위치에 해당하는 Piece 제대로 가져오는 지 테스트")
+    @DisplayName("Lines에서 해당 위치에 해당하는 Piece 제대로 가져오는 지 테스트(룩)")
     public void piece() {
         Position position = new Position("a4");
-        Piece piece = lines.piece(position); // 룩(Rook)
+        Piece piece = lines.piece(position);
+
         assertThat(piece.getClass()).isEqualTo(Rook.class);
         assertThat(piece.position()).isEqualTo(position);
     }
@@ -48,7 +49,9 @@ public class LinesTest {
     public void assign() {
         Piece piece = new King(Color.WHITE, 'a', '2');
         Position position = new Position("a2");
+
         lines.assign(position, new King(Color.WHITE, 'a', '2'));
+
         assertThat(lines.piece(position)).isEqualTo(piece);
     }
 

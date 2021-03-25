@@ -25,6 +25,7 @@ public class PawnTest {
         Piece pawn = new Pawn(Color.BLACK, 'a', '2');
         Piece pawn2 = new Pawn(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -34,7 +35,9 @@ public class PawnTest {
     public void validateMove_GoOneStep() {
         Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position('b', '2'), pawn);
+
         assertThatCode(() -> {
             pawn.validateSteps(new Empty('b', '3'), grid.lines());
         }).doesNotThrowAnyException();
@@ -45,7 +48,9 @@ public class PawnTest {
     public void validateMove_Back() {
         Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), pawn);
+
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '1'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -56,6 +61,7 @@ public class PawnTest {
     public void validateMove_GoTwoStep() {
         Grid grid = new Grid(new NormalGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+
         assertThatCode(() -> {
             pawn.validateSteps(new Empty('b', '4'), grid.lines());
         }).doesNotThrowAnyException();
@@ -66,7 +72,9 @@ public class PawnTest {
     public void validateMove_GoTwoStep_ThrowException() {
         Grid grid = new Grid(new NormalGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+
         grid.move(pawn, new Empty('b', '3'));
+
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 초기 자리에서만 두칸 이동 가능합니다.");
@@ -77,7 +85,9 @@ public class PawnTest {
     public void validateMove_DiagonalStep_ThrowException() {
         Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), pawn);
+
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('c', '3'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
@@ -89,8 +99,10 @@ public class PawnTest {
         Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         Pawn obstaacle = new Pawn(Color.BLACK, 'b', '3');
+
         grid.lines().assign(new Position("b2"), pawn);
         grid.lines().assign(new Position("b3"), obstaacle);
+
         assertThatThrownBy(() -> {
             pawn.validateSteps(obstaacle, grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 한칸 앞 말이 있으면 가지 못합니다.");

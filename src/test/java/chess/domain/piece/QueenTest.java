@@ -24,6 +24,7 @@ public class QueenTest {
         Piece pawn = new Queen(Color.BLACK, 'a', '2');
         Piece pawn2 = new Queen(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -33,7 +34,9 @@ public class QueenTest {
     public void validateMove_True() {
         Grid grid = new Grid(new TestGridStrategy());
         Queen queen = new Queen(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), queen);
+
         assertThatCode(() -> {
             queen.validateSteps(new Empty('c', '3'), grid.lines());
         }).doesNotThrowAnyException();
@@ -45,8 +48,10 @@ public class QueenTest {
         Grid grid = new Grid(new TestGridStrategy());
         Queen queen = new Queen(Color.WHITE, 'b', '2');
         Queen opponent = new Queen(Color.BLACK, 'c', '3');
+
         grid.lines().assign(new Position("b2"), queen);
         grid.lines().assign(new Position("c3"), opponent);
+
         assertThatCode(() -> {
             queen.validateRoute(opponent, grid.lines());
         }).doesNotThrowAnyException();
@@ -57,7 +62,9 @@ public class QueenTest {
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         Queen queen = new Queen(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), queen);
+
         assertThatThrownBy(() -> {
             queen.validateSteps(new Empty('c', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -69,8 +76,10 @@ public class QueenTest {
         Grid grid = new Grid(new TestGridStrategy());
         Queen queen = new Queen(Color.WHITE, 'b', '2');
         Queen obstacle = new Queen(Color.WHITE, 'c', '3');
+
         grid.lines().assign(new Position("b2"), queen);
         grid.lines().assign(new Position("c3"), obstacle);
+
         assertThatThrownBy(() -> {
             queen.validateRoute(obstacle, grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");

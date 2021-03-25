@@ -21,20 +21,15 @@ public class PositionTest {
     public void init_isSamePosition() {
         Position actualPosition = new Position("a2");
         Position expectedPosition = new Position('a', '2');
+
         assertThat(actualPosition).isEqualTo(expectedPosition);
     }
-
-//    @ParameterizedTest
-//    @DisplayName("체스판 범위에서 벗어나면 False, 아니면 True")
-//    @CsvSource(value = { "i3:false", "a9:false", "a3:true" }, delimiter = ':')
-//    public void isInValidRange(String position, boolean result) {
-//        assertThat(new Position(position).isInValidRange()).isEqualTo(result);
-//    }
 
     @Test
     @DisplayName("특정 위치에서 다른 위치만큼 정상적으로 이동하는 지 테스트")
     public void next() {
         Position position = new Position("a2");
+
         assertThat(position.next(1, 2)).isEqualTo(new Position("b4"));
     }
 }

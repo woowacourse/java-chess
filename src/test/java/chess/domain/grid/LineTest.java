@@ -13,7 +13,9 @@ public class LineTest {
     public void assignPiece() {
         Line line = Line.empty(Row.FIRST);
         Pawn pawn = new Pawn(Color.BLACK, 'b', '1');
+
         line.assignPiece(Column.SECOND, pawn);
+
         assertThat(line.piece(Column.SECOND)).isEqualTo(pawn);
     }
 
@@ -21,6 +23,7 @@ public class LineTest {
     @DisplayName("Line에서 xPosition으로 해당하는 Piece를 제대로 찾는 지 테스트")
     public void piece() {
         Line line = Line.general(Row.FIRST, Color.WHITE);
+
         assertThat(line.piece(Column.FIRST)).isEqualTo(line.pieces().get(0));
     }
 

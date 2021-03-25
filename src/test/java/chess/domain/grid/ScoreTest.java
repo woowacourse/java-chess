@@ -26,6 +26,7 @@ public class ScoreTest {
     public void score_WhenInit() {
         Grid grid = new Grid(new NormalGridStrategy());
         Score score = new Score(grid.lines());
+
         assertThat(score.score(Color.BLACK)).isEqualTo(38);
     }
 
@@ -36,6 +37,7 @@ public class ScoreTest {
         grid.lines().assign(new Position("b3"), new Pawn(Color.BLACK, 'b', '3'));
         grid.lines().assign(new Position("b4"), new Pawn(Color.BLACK, 'b', '4'));
         Score score = new Score(grid.lines());
+
         assertThat(score.score(Color.BLACK)).isEqualTo(38.5);
     }
 
@@ -45,6 +47,7 @@ public class ScoreTest {
         Grid grid = new Grid(new NormalGridStrategy());
         grid.lines().assign(new Position("b2"), new Empty('b', '2'));
         Score score = new Score(grid.lines());
+
         assertThat(score.score(Color.WHITE)).isEqualTo(37);
     }
 }

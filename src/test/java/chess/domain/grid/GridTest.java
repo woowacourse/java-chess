@@ -18,7 +18,9 @@ public class GridTest {
         Grid grid = new Grid(new TestGridStrategy());
         Position position = new Position('b', '4');
         Piece piece = new King(Color.WHITE, 'b', '4');
+
         grid.lines().assign(position, piece);
+
         assertThat(grid.piece(position)).isEqualTo(piece);
     }
 
@@ -28,7 +30,9 @@ public class GridTest {
         Grid grid = new Grid(new TestGridStrategy());
         Position position = new Position('b', '4');
         Piece piece = new Queen(Color.WHITE, 'b', '4');
+
         grid.lines().assign(position, piece);
+
         assertThat(grid.score(Color.WHITE)).isEqualTo(9);
     }
 }

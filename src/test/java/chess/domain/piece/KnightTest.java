@@ -24,6 +24,7 @@ public class KnightTest {
         Piece pawn = new Knight(Color.BLACK, 'a', '2');
         Piece pawn2 = new Knight(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -33,7 +34,9 @@ public class KnightTest {
     public void validateMove_True() {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), knight);
+
         assertThatCode(() -> {
             knight.validateSteps(new Empty('c', '4'), grid.lines());
         }).doesNotThrowAnyException();
@@ -45,8 +48,10 @@ public class KnightTest {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
         Knight opponent = new Knight(Color.BLACK, 'c', '4');
+
         grid.lines().assign(new Position("b2"), knight);
         grid.lines().assign(new Position("c4"), opponent);
+
         assertThatCode(() -> {
             knight.validateRoute(opponent, grid.lines());
         }).doesNotThrowAnyException();
@@ -57,7 +62,9 @@ public class KnightTest {
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), knight);
+
         assertThatThrownBy(() -> {
             knight.validateSteps(new Empty('c', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -69,8 +76,10 @@ public class KnightTest {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
         Knight obstacle = new Knight(Color.WHITE, 'c', '4');
+
         grid.lines().assign(new Position("b2"), knight);
         grid.lines().assign(new Position("c4"), obstacle);
+
         assertThatThrownBy(() -> {
             knight.validateRoute(new Empty('d', '6'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");

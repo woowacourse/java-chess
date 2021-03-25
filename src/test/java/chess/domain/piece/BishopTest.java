@@ -24,6 +24,7 @@ public class BishopTest {
         Piece pawn = new Bishop(Color.BLACK, 'a', '2');
         Piece pawn2 = new Bishop(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -33,7 +34,9 @@ public class BishopTest {
     public void validateMove_True() {
         Grid grid = new Grid(new TestGridStrategy());
         Bishop bishop = new Bishop(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), bishop);
+
         assertThatCode(() -> {
             bishop.validateSteps(new Empty('c', '3'), grid.lines());
         }).doesNotThrowAnyException();
@@ -45,8 +48,10 @@ public class BishopTest {
         Grid grid = new Grid(new TestGridStrategy());
         Bishop bishop = new Bishop(Color.WHITE, 'b', '2');
         Bishop opponent = new Bishop(Color.BLACK, 'c', '3');
+
         grid.lines().assign(new Position("b2"), bishop);
         grid.lines().assign(new Position("c3"), opponent);
+
         assertThatCode(() -> {
             bishop.validateRoute(opponent, grid.lines());
         }).doesNotThrowAnyException();
@@ -57,7 +62,9 @@ public class BishopTest {
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         Bishop bishop = new Bishop(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), bishop);
+
         assertThatThrownBy(() -> {
             bishop.validateSteps(new Empty('c', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -69,8 +76,10 @@ public class BishopTest {
         Grid grid = new Grid(new TestGridStrategy());
         Bishop bishop = new Bishop(Color.WHITE, 'b', '2');
         Bishop obstacle = new Bishop(Color.WHITE, 'c', '3');
+
         grid.lines().assign(new Position("b2"), bishop);
         grid.lines().assign(new Position("c3"), obstacle);
+
         assertThatThrownBy(() -> {
             bishop.validateRoute(new Empty('d', '4'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");

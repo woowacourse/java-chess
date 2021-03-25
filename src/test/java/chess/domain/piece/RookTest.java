@@ -24,6 +24,7 @@ public class RookTest {
         Piece pawn = new Rook(Color.BLACK, 'a', '2');
         Piece pawn2 = new Rook(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -33,7 +34,9 @@ public class RookTest {
     public void validateMove_True() {
         Grid grid = new Grid(new TestGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), rook);
+
         assertThatCode(() -> {
             rook.validateSteps(new Empty('b', '5'), grid.lines());
         }).doesNotThrowAnyException();
@@ -45,8 +48,10 @@ public class RookTest {
         Grid grid = new Grid(new TestGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         Rook opponent = new Rook(Color.BLACK, 'b', '3');
+
         grid.lines().assign(new Position("b2"), rook);
         grid.lines().assign(new Position("b3"), opponent);
+
         assertThatCode(() -> {
             rook.validateRoute(opponent, grid.lines());
         }).doesNotThrowAnyException();
@@ -57,7 +62,9 @@ public class RookTest {
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), rook);
+
         assertThatThrownBy(() -> {
             rook.validateSteps(new Empty('c', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -69,8 +76,10 @@ public class RookTest {
         Grid grid = new Grid(new TestGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         Rook obstacle = new Rook(Color.WHITE, 'b', '3');
+
         grid.lines().assign(new Position("b2"), rook);
         grid.lines().assign(new Position("b3"), obstacle);
+
         assertThatThrownBy(() -> {
             rook.validateRoute(new Empty('b', '4'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");

@@ -25,6 +25,7 @@ public class KingTest {
         Piece pawn = new King(Color.BLACK, 'a', '2');
         Piece pawn2 = new King(Color.BLACK, 'a', 2);
         Position expectedPosition = new Position("a2");
+
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
     }
@@ -34,7 +35,9 @@ public class KingTest {
     public void validateStep_True() {
         Grid grid = new Grid(new TestGridStrategy());
         King king = new King(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), king);
+
         assertThatCode(() -> {
             king.validateSteps(new Empty('c', '3'), grid.lines());
         }).doesNotThrowAnyException();
@@ -46,8 +49,10 @@ public class KingTest {
         Grid grid = new Grid(new TestGridStrategy());
         King king = new King(Color.WHITE, 'b', '2');
         King opponent = new King(Color.BLACK, 'c', '3');
+
         grid.lines().assign(new Position("b2"), king);
         grid.lines().assign(new Position("c3"), opponent);
+
         assertThatCode(() -> {
             king.validateRoute(opponent, grid.lines());
         }).doesNotThrowAnyException();
@@ -58,7 +63,9 @@ public class KingTest {
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         King king = new King(Color.WHITE, 'b', '2');
+
         grid.lines().assign(new Position("b2"), king);
+
         assertThatThrownBy(() -> {
             king.validateSteps(new Empty('c', '4'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
@@ -70,8 +77,10 @@ public class KingTest {
         Grid grid = new Grid(new TestGridStrategy());
         King king = new King(Color.WHITE, 'b', '2');
         King obstacle = new King(Color.WHITE, 'c', '3');
+
         grid.lines().assign(new Position("b2"), king);
         grid.lines().assign(new Position("c3"), obstacle);
+
         assertThatThrownBy(() -> {
             king.validateRoute(obstacle, grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");

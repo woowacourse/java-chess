@@ -24,6 +24,7 @@ public class EmptyTest {
         Empty empty2 = new Empty('a', 2);
         Empty empty3 = new Empty(new Position('a', '2'));
         Position expectedPosition = new Position("a2");
+
         assertThat(empty.position()).isEqualTo(expectedPosition);
         assertThat(empty2.position()).isEqualTo(expectedPosition);
         assertThat(empty3.position()).isEqualTo(expectedPosition);
@@ -33,6 +34,7 @@ public class EmptyTest {
     @DisplayName("사용햐면 안 되는 메서드에 대해서 예외 발생")
     public void color() {
         Empty empty = new Empty('a', '2');
+
         assertThatThrownBy(() -> {
             empty.color();
         }).isInstanceOf(UnsupportedOperationException.class).hasMessage("해당 메서드를 사용하면 안 됩니다.");
