@@ -33,7 +33,6 @@ public class ChessController {
     private void inputCommandAndRun(Grid grid) {
         try {
             tryToInputCommandAndRun(grid);
-            return;
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
@@ -44,19 +43,15 @@ public class ChessController {
         if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
             grid.start();
-            return;
         }
         if (command.equals(END_COMMAND)) {
             grid.end();
-            return;
         }
         if (command.startsWith(MOVE_COMMAND)) {
             runMoveCommand(grid, command);
-            return;
         }
         if (command.equals(STATUS_COMMAND)) {
             runStatusCommand(grid);
-            return;
         }
         throw new IllegalArgumentException("잘못된 입력값입니다.");
     }
@@ -71,7 +66,6 @@ public class ChessController {
             return;
         }
         OutputView.printGridStatus(grid.lines());
-        return;
     }
 
     private void runStatusCommand(Grid grid) {
@@ -81,6 +75,5 @@ public class ChessController {
         OutputView.printScores(Color.BLACK, blackScore);
         OutputView.printScores(Color.WHITE, whiteScore);
         OutputView.printWinner(grid.winnerColor());
-        return;
     }
 }

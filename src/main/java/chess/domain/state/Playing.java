@@ -38,13 +38,13 @@ public class Playing implements GameState {
         }
     }
 
-    private final void validateSourcePieceIsEmpty(final Piece sourcePiece) {
+    private void validateSourcePieceIsEmpty(final Piece sourcePiece) {
         if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("움직이려는 대상이 빈칸입니다");
         }
     }
 
-    private final boolean isKingCaught(final Piece targetPiece) {
+    private boolean isKingCaught(final Piece targetPiece) {
         return targetPiece instanceof King;
     }
 
