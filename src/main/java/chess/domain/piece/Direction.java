@@ -71,20 +71,6 @@ public enum Direction {
         return !bishopDirection.contains(direction);
     }
 
-    private static boolean isNotKnightDirection(Direction direction) {
-        List<Direction> knightDirection = Arrays.asList(
-                NORTH_NORTH_EAST,
-                NORTH_NORTH_WEST,
-                SOUTH_SOUTH_EAST,
-                SOUTH_SOUTH_WEST,
-                NORTH_WEST_WEST,
-                NORTH_EAST_EAST,
-                SOUTH_WEST_WEST,
-                SOUTH_EAST_EAST
-        );
-        return !knightDirection.contains(direction);
-    }
-
     public int addCurrentRow(int row) {
         return rowDirection + row;
     }
