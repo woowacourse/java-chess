@@ -9,31 +9,45 @@ import chess.domain.player.Players;
 import java.util.List;
 
 public class ChessManager {
-    private final Players players;
+    private Players players;
+    private boolean isGameEnd;
 
     public ChessManager() {
-        this.players = new Players();
     }
 
-    public Board getBoard() {
-        return players.getBoard();
+    public void initNewGame(){
+        players = new Players();
+        isGameEnd = false;
     }
 
-    public void move(final MoveCommand command) {
-        players.validateTurn(command.source());
-        players.move(command.source(), command.target());
+    public void move(final Position source, final Position target) {
+        players.validateTurn(source);
+        players.move(source, target);
         players.changeTurn();
+        checkGameEnd();
     }
 
-    public boolean isEnd() {
-        return players.isEnd();
+    private void checkGameEnd(){
+        isGameEnd = players.isEnd();
+    }
+
+    public void makeGameEnd(){
+        isGameEnd = true;
     }
 
     public Status calculateStatus() {
         return new Status(players.whitePlayerScore(), players.blackPlayerScore());
     }
 
-    public List<Position> getReachablePositions(ShowCommand command) {
-        return players.getReachablePositions(command.source());
+    public List<Position> getReachablePositions(final Position source) {
+        return players.getReachablePositions(source);
+    }
+
+    public Board board() {
+        return players.getBoard();
+    }
+
+    public boolean isEnd() {
+        return isGameEnd;
     }
 }

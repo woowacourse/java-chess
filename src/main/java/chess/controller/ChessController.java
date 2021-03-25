@@ -1,18 +1,15 @@
 package chess.controller;
 
-import chess.domain.board.position.Position;
-import chess.domain.command.MoveCommand;
-import chess.domain.command.ShowCommand;
+import chess.controller.Command.Command;
+import chess.controller.Command.StartCommand;
 import chess.manager.ChessManager;
-import chess.manager.Menu;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
-
 public class ChessController {
-
+    private static final String COMMAND_TO_START = "start";
     private final ChessManager chessManager;
+    private Command command;
 
     public ChessController() {
         chessManager = new ChessManager();
@@ -25,44 +22,29 @@ public class ChessController {
     }
 
     private void readStart() {
-        OutputView.printMenu();
-        while (!Menu.of(InputView.getUserCommand()).isStart()) {
-        }
-        OutputView.printBoard(chessManager.getBoard());
+        do {
+            OutputView.printMenu();
+        } while (!COMMAND_TO_START.equals(InputView.readUserInput()));
+
+        command = new StartCommand();
+        command.execute(chessManager);
+        OutputView.printBoard(chessManager.board());
     }
 
     private void executeUserCommands() {
-        String userInput;
         do {
-            userInput = InputView.getUserCommand();
-            commandExecute(userInput);
-        } while (!chessManager.isEnd() && !Menu.of(userInput).isEnd());
+            readUserCommand();
+        } while (!chessManager.isEnd());
     }
 
-    private void commandExecute(final String input) {
-        final Menu menu = Menu.of(input);
-
-        if (menu.isMove()) {
-            movePiece(MoveCommand.of(input));
+    private void readUserCommand() {
+        try {
+            command = command.read(InputView.readUserInput());
+            command.execute(chessManager);
+        } catch (Exception e) {
+            OutputView.printError(e.getMessage());
+            readUserCommand();
         }
-
-        if (menu.isShow()) {
-            showAblePositionToMove(ShowCommand.of(input));
-        }
-
-        if (menu.isStatus()) {
-            OutputView.printScores(chessManager.calculateStatus());
-        }
-    }
-
-    private void movePiece(final MoveCommand command) {
-        chessManager.move(command);
-        OutputView.printBoard(chessManager.getBoard());
-    }
-
-    private void showAblePositionToMove(final ShowCommand command) {
-        final List<Position> reachablePositions = chessManager.getReachablePositions(command);
-        OutputView.printReachableBoard(chessManager.getBoard(), reachablePositions);
     }
 
     private void printResult() {

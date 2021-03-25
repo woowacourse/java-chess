@@ -1,10 +1,10 @@
-package chess.manager;
+package chess.controller.Command;
 
 import java.util.Arrays;
 
 public enum Menu {
-    START("start", 1),
     END("end", 1),
+    START("start", 1),
     MOVE("move", 3),
     STATUS("status", 1),
     SHOW("show", 2);
@@ -45,11 +45,11 @@ public enum Menu {
         return this.equals(STATUS);
     }
 
-    public boolean isStart() {
-        return this.equals(START);
-    }
-
     public boolean isShow() {
         return this.equals(SHOW);
+    }
+
+    public boolean isStart() {
+        return this.equals(START);
     }
 }

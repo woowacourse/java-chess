@@ -74,4 +74,8 @@ public class OutputView {
         System.out.println("> 게임 시작은 start, 종료는 end 명령을 입력하세요.");
         System.out.println("> 게임 이동 : move source target");
     }
+
+    public static void printError(final String errorMessage) {
+        System.out.println("ERROR :: "+ errorMessage);
+    }
 }
