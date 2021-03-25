@@ -24,10 +24,19 @@ class TurnTest {
     }
 
     @Test
-    @DisplayName("다음 턴으로 잘 바꾸는지 확인")
-    void turnNextCheck() {
+    @DisplayName("검정 턴일 때 흰 턴으로 잘 바꾸는지 확인")
+    void turnBlackCheck() {
         turn.next();
         final Player player = turn.player();
         assertThat(player.getColor()).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("흰 턴일 때 검정 턴으로 잘 바꾸는지 확인")
+    void turnWhiteCheck() {
+        turn.next();
+        turn.next();
+        final Player player = turn.player();
+        assertThat(player.getColor()).isEqualTo(Color.BLACK);
     }
 }

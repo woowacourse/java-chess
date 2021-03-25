@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class KingTest {
@@ -41,5 +42,13 @@ class KingTest {
         final King king = new King(Color.BLACK, Position.from("a5"));
         assertThatCode(() -> king.moveToEmpty(Position.from("a4"), new Pieces()))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("킹의 움직임로직으로 갈 수 없는 위치를 입력받았을 때 익셉션을 잘 날리는지 확인")
+    void kingWrongMove() {
+        final King king = new King(Color.BLACK, Position.from("e1"));
+        assertThatThrownBy(() -> king.moveToEmpty(Position.from("e3"), new Pieces()))
+                .isInstanceOf(IllegalArgumentException.class).hasMessageContaining(King.KING_MOVE_ERROR);
     }
 }

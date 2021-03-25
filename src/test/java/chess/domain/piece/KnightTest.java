@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class KnightTest {
@@ -41,5 +42,13 @@ class KnightTest {
         final Knight knight = new Knight(Color.BLACK, Position.from("a5"));
         assertThatCode(() -> knight.moveToEmpty(Position.from("c4"), new Pieces()))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("나이트의 움직임로직으로 갈 수 없는 위치를 입력받았을 때 익셉션을 잘 날리는지 확인")
+    void knightWrongMove() {
+        final Knight knight = new Knight(Color.BLACK, Position.from("b1"));
+        assertThatThrownBy(() -> knight.moveToEmpty(Position.from("b2"), new Pieces()))
+                .isInstanceOf(IllegalArgumentException.class).hasMessageContaining(Knight.KNIGHT_MOVE_ERROR);
     }
 }
