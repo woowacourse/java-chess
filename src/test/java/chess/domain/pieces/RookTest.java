@@ -21,11 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RookTest {
     Board board;
-    Position whiteTeamPawnPosition = new Position(0, 2);
-    Position crossBlackTeamPawnPosition = new Position(0, 0);
-    Position straightBlackTeamPawnPosition = new Position(1, 0);
-    Position crossBlankPosition = new Position(2, 0);
-    Position straightBlankPosition = new Position(2, 1);
 
     @ParameterizedTest
     @DisplayName("Rook이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
@@ -70,11 +65,11 @@ class RookTest {
 
     void set(final Rook rook) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
-                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, PositionsForTest.crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, PositionsForTest.straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, PositionsForTest.whiteTeamPawnPosition),
                 rook
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -91,11 +86,11 @@ class RookTest {
 
         List<Position> movablePositions = rook.getMovablePositions(board);
 
-        assertTrue(movablePositions.contains(straightBlackTeamPawnPosition));
-        assertTrue(movablePositions.contains(straightBlankPosition));
+        assertTrue(movablePositions.contains(PositionsForTest.straightBlackTeamPawnPosition));
+        assertTrue(movablePositions.contains(PositionsForTest.straightBlankPosition));
 
-        assertFalse(movablePositions.contains(whiteTeamPawnPosition));
-        assertFalse(movablePositions.contains(crossBlackTeamPawnPosition));
-        assertFalse(movablePositions.contains(crossBlankPosition));
+        assertFalse(movablePositions.contains(PositionsForTest.whiteTeamPawnPosition));
+        assertFalse(movablePositions.contains(PositionsForTest.crossBlackTeamPawnPosition));
+        assertFalse(movablePositions.contains(PositionsForTest.crossBlankPosition));
     }
 }

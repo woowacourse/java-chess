@@ -73,5 +73,4 @@ class PiecesTest {
         double score = pieces.calculateScore(0, 7);
         assertThat((int) (score * 10)).isEqualTo((int) (20.5 * 10));
     }
-
 }
