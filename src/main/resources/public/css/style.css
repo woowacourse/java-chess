@@ -34,3 +34,10 @@ img {
 .clicked {
     border: 10px solid yellow;
 }
+
+#start-btn {
+    border: 1px solid black;
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+}
