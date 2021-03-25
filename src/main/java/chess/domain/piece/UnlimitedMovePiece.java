@@ -14,7 +14,7 @@ public abstract class UnlimitedMovePiece extends Piece {
     @Override
     public Path findPathInDirection(Direction direction, Position currentPosition) {
         List<Position> positions = new ArrayList<>();
-        while (!currentPosition.isBlockedWhenGoTo(direction)) {
+        while (currentPosition.canGoTo(direction)) {
             positions.add(currentPosition.moveTo(direction));
             currentPosition = currentPosition.moveTo(direction);
         }

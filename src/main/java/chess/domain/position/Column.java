@@ -38,9 +38,6 @@ public enum Column {
     }
 
     public Column move(Direction direction) {
-        if (isBoundary(direction)) {
-            return this;
-        }
         return getColumn(value + direction.columnValue());
     }
 
@@ -48,20 +45,9 @@ public enum Column {
         return name;
     }
 
-    public boolean isBoundary(Direction direction) {
-        if (Direction.rightDirection().contains(direction)) {
-            return this.equals(H);
-        }
-        if (Direction.leftDirection().contains(direction)) {
-            return this.equals(A);
-        }
-        if (Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)) {
-            return this.equals(G) || this.equals(H);
-        }
-        if (Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)) {
-            return this.equals(B) || this.equals(A);
-        }
-        return false;
+    public boolean isInRange(int moveValue) {
+        return Arrays.stream(values())
+            .anyMatch(column -> column.value == this.value + moveValue);
     }
 
     public int getValue() {

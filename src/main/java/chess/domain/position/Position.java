@@ -1,9 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -75,9 +73,13 @@ public class Position {
         return column.getValue();
     }
 
-    public boolean isBlockedWhenGoTo(Direction direction) {
-        return column.isBoundary(direction) || row.isBoundary(direction);
+    public boolean canGoTo(Direction direction) {
+        return column.isInRange(direction.columnValue()) && row.isInRange(direction.rowValue());
     }
+
+/*    public boolean isBlockedWhenGoTo(Direction direction) {
+        return column.isNotInRange(direction) || row.isBoundary(direction);
+    }*/
 
     public Position moveTo(Direction direction) {
         Column newColumn = column.move(direction);

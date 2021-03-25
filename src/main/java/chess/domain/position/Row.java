@@ -29,9 +29,6 @@ public enum Row {
     }
 
     public Row move(Direction direction) {
-        if (isBoundary(direction)) {
-            return this;
-        }
         return getRow(String.valueOf(Integer.parseInt(number) + direction.rowValue()));
     }
 
@@ -39,20 +36,9 @@ public enum Row {
         return number;
     }
 
-    public boolean isBoundary(Direction direction) {
-        if (Direction.downDirection().contains(direction)) {
-            return this.equals(ONE);
-        }
-        if (Direction.upDirection().contains(direction)) {
-            return this.equals(EIGHT);
-        }
-        if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
-            return this.equals(TWO) || this.equals(ONE);
-        }
-        if (Direction.R_UU.equals(direction) || Direction.L_UU.equals(direction)) {
-            return this.equals(SEVEN) || this.equals(EIGHT);
-        }
-        return false;
+    public boolean isInRange(int moveValue) {
+        return Arrays.stream(values())
+            .anyMatch(row -> row.getValue() == this.getValue() + moveValue);
     }
 
     public int getValue() {
