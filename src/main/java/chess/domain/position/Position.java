@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Position {
+    private static final Map<String, Position> CACHE = new HashMap<>();
     private final Column column;
     private final Row row;
-    private static final Map<String, Position> cache = new HashMap<>();
 
     static {
         for (final Column x : Column.values()) {
@@ -27,15 +27,15 @@ public class Position {
     }
 
     public static Position from(final String key) {
-        if (cache.containsKey(key)) {
-            return cache.get(key);
+        if (CACHE.containsKey(key)) {
+            return CACHE.get(key);
         }
         throw new IllegalArgumentException();
     }
 
     private static void cacheByColumn(final Column x) {
         for (final Row y : Row.values()) {
-            cache.put(toKey(x, y), new Position(x, y));
+            CACHE.put(toKey(x, y), new Position(x, y));
         }
     }
 
