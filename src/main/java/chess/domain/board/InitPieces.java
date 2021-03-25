@@ -62,7 +62,8 @@ public enum InitPieces {
         return Arrays.stream(values())
             .filter(p -> p.containsXY(xpoint, ypoint))
             .findFirst()
-            .orElseThrow(IllegalAccessError::new).piece;
+            .orElseThrow(() -> new IllegalArgumentException("해당좌표의 체스말을 찾지 못했습니다."))
+            .piece;
     }
 
     private boolean containsXY(final Xpoint xpoint, final Ypoint ypoint) {

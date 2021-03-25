@@ -10,6 +10,7 @@ import java.util.Set;
 public class Board {
 
     public static final int BOTH_KINGS_ALIVE = 2;
+    public static final String INVALID_POSITION_MESSAGE = "유효하지 않은 좌표 입력입니다.";
 
     private final List<Rank> ranks;
 
@@ -30,7 +31,7 @@ public class Board {
             .filter(rank -> rank.hasPosition(position))
             .map(map -> map.piece(position))
             .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_POSITION_MESSAGE));
     }
 
     public boolean isAliveBothKings() {
@@ -42,7 +43,7 @@ public class Board {
 
     public void moveIfValidPosition(Position source, Position target) {
         if (isNotMovablePosition(source, target)) {
-            throw new IllegalArgumentException("유효하지 않은 좌표 입력입니다.");
+            throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
         swapPieces(source, target);
     }
@@ -64,7 +65,7 @@ public class Board {
         Rank foundRank = this.ranks.stream()
             .filter(rank -> rank.hasPosition(position))
             .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_POSITION_MESSAGE));
 
         foundRank.replacePiece(position, piece);
     }
