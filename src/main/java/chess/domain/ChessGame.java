@@ -38,22 +38,22 @@ public final class ChessGame {
     private void makeSpecialMove(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurnTeam.choosePiece(current);
         if (chosenPiece.isKing() && chosenPiece.isFirstMove()) {
-            makeKingSideCastling(current, destination);
-            makeQueenSideCastling(current, destination);
+            checkKingSideCastling(current, destination);
+            checkQueenSideCastling(current, destination);
         }
         if (chosenPiece.isPawn() && destination.isEndRank()) {
             promote(current);
         }
     }
 
-    private void makeKingSideCastling(final Position kingCurrent, final Position kingDestination) {
+    private void checkKingSideCastling(final Position kingCurrent, final Position kingDestination) {
         if (kingCurrent.moveXandY(2, 0).equals(kingDestination)) {
             final Position kingSideRook = kingDestination.moveXandY(1, 0);
             makeCastling(kingSideRook, kingDestination);
         }
     }
 
-    private void makeQueenSideCastling(final Position kingCurrent, final Position kingDestination) {
+    private void checkQueenSideCastling(final Position kingCurrent, final Position kingDestination) {
         if (kingCurrent.moveXandY(-2, 0).equals(kingDestination)) {
             final Position queenSideRook = kingDestination.moveXandY(-2, 0);
             makeCastling(queenSideRook, kingDestination);
