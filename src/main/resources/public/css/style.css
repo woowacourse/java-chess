@@ -1,3 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .chess-board {
     width: 50px;
     height: 50px;
@@ -20,4 +29,8 @@ td, tr {
 img {
     width: 100px;
     height: 100px;
+}
+
+.clicked {
+    border: 10px solid yellow;
 }

@@ -10,7 +10,7 @@ function createChessBoard() {
         ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
     ]
 
-    const newTable = document.createElement("table");
+    const table = document.getElementById("chess-board");
     for (let i = 0; i < 8; i++) {
         const newTr = document.createElement("tr");
         for (let j = 0; j < 8; j++) {
@@ -32,9 +32,30 @@ function createChessBoard() {
             }
             newTr.appendChild(newTd);
         }
-        newTable.appendChild(newTr);
+        table.appendChild(newTr);
     }
-    document.body.appendChild(newTable);
+    document.body.appendChild(table);
+    addEvent();
+}
+
+function addEvent() {
+    const table = document.getElementById("chess-board");
+    table.addEventListener("click", selectPiece);
 }
 
 createChessBoard();
+
+function selectPiece(event) {
+    const target = event.target;
+    target.closest("td").classList.toggle("clicked");
+}
+
+// function getClickedPiece() {
+//     const tds = document.querySelectorAll("td");
+//     for (let i = 0; i < tds.length; i++) {
+//         if (tds[i].classList.contains("clicked")) {
+//             return tds[i];
+//         }
+//     }
+//     return null;
+// }
