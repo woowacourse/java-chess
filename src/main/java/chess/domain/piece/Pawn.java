@@ -127,13 +127,12 @@ public final class Pawn extends GamePiece {
     }
 
     public static double scoreByCount(int count) {
-        double score = 0;
         if (count == MULTIPLE_SCORE_LIMIT) {
-            score += SINGLE_PAWN_SCORE;
+            return SINGLE_PAWN_SCORE;
         }
         if (count > MULTIPLE_SCORE_LIMIT) {
-            score += count * MULTIPLE_PAWN_SCORE;
+            return count * MULTIPLE_PAWN_SCORE;
         }
-        return score;
+        throw new IllegalArgumentException("유효하지 않은 count 입니다");
     }
 }
