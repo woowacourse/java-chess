@@ -49,21 +49,42 @@ public abstract class Pawn extends Piece {
 
     public abstract boolean isFirstLine(final Horizontal horizontal);
 
+    private boolean isValidStraightMove(final Distance distance, final Position position, final Piece targetPiece){
+        if(isEnemy(targetPiece)){
+           return false;
+        }
+
+        if (distance.equals(STRAIGHT_DISTANCE_WHEN_ON_FIRST_LINE)) {
+            return isFirstLine(position.getHorizontal());
+        }
+
+        return distance.equals(STRAIGHT_DISTANCE);
+    }
+
+    private boolean isValidDiagonalMove(final Distance distance, final Piece targetPiece){
+        if(isEnemy(targetPiece)){
+            return distance.equals(DIAGONAL_DISTANCE_WHEN_EXIST_ENEMY);
+        }
+
+        return false;
+    }
+
+
     @Override
     public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece) {
         if (!super.isReachable(direction, distance, position, targetPiece)) {
             return false;
         }
 
-        if (distance.equals(STRAIGHT_DISTANCE_WHEN_ON_FIRST_LINE) && direction.isStraight()) {
-            return isFirstLine(position.getHorizontal());
+        if(direction.isStraight()){
+            return isValidStraightMove(distance, position, targetPiece);
         }
 
-        if (direction.isDiagonal() && distance.equals(DIAGONAL_DISTANCE_WHEN_EXIST_ENEMY)) {
-            return isEnemy(targetPiece);
+        if (direction.isDiagonal()) {
+            return isValidDiagonalMove(distance, targetPiece);
         }
 
-        return direction.isStraight() && distance.equals(STRAIGHT_DISTANCE);
+        return false;
     }
 
     @Override

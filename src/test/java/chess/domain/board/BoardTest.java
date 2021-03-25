@@ -15,19 +15,6 @@ public class BoardTest {
 
     private Board board;
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner) {
-        return new Piece[]{
-                new Rook(owner),
-                new Knight(owner),
-                new Bishop(owner),
-                new Queen(owner),
-                new King(owner),
-                new Bishop(owner),
-                new Knight(owner),
-                new Rook(owner)
-        };
-    }
-
     @BeforeEach
     void setUp() {
         board = BoardInitializer.initiateBoard();
@@ -67,7 +54,6 @@ public class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-
     @DisplayName("폰은 첫 움직임에서 앞으로 두 칸을 이동할 수 있다.")
     @Test
     void validatePawnMovement1(){
@@ -82,17 +68,23 @@ public class BoardTest {
         assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
     }
 
-    @DisplayName("폰은 대각선으로 적이 있다면 한칸 움직여 잡을 수 있다.")
+    @DisplayName("폰의 전진은 적 기물을 잡을 수 없다.")
     @Test
     void validatePawnMovement3(){
+        board.movePiece(new Position("a2"), new Position("a4"));
         board.movePiece(new Position("a7"), new Position("a5"));
-        board.movePiece(new Position("a5"), new Position("a4"));
-        board.movePiece(new Position("a4"), new Position("a3"));
-        board.movePiece(new Position("a2"), new Position("a3"));
-        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+        assertThatThrownBy(()->board.movePiece(new Position("a4"), new Position("a5"))
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 
 
-
-
+    @DisplayName("폰은 대각선으로 적이 있다면 한칸 움직여 잡을 수 있다.")
+    @Test
+    void validatePawnMovement4(){
+        board.movePiece(new Position("a7"), new Position("a5"));
+        board.movePiece(new Position("a5"), new Position("a4"));
+        board.movePiece(new Position("a4"), new Position("a3"));
+        board.movePiece(new Position("b2"), new Position("a3"));
+        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+    }
 }
