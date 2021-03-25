@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Position {
     public static final int RANGE_MIN_PIVOT = 0;
+
     private final int row;
     private final int col;
 
