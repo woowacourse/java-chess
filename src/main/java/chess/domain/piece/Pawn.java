@@ -13,7 +13,8 @@ public final class Pawn extends GamePiece {
     private static final int DOUBLE_FORWARD = 2;
     private static final double SINGLE_PAWN_SCORE = 1;
     private static final double MULTIPLE_PAWN_SCORE = 0.5;
-    private static final int MULTIPLE_SCORE_LIMIT = 1;
+    private static final int SINGLE_SCORE_LIMIT = 1;
+    public static final int ZERO_SCORE = 0;
 
     private boolean initPosition = true;
 
@@ -97,7 +98,7 @@ public final class Pawn extends GamePiece {
 
     @Override
     public double score() {
-        return 0;
+        return ZERO_SCORE;
     }
 
     @Override
@@ -111,12 +112,16 @@ public final class Pawn extends GamePiece {
     }
 
     public static double scoreByCount(int count) {
-        if (count == MULTIPLE_SCORE_LIMIT) {
+        if (count < 0) {
+            throw new IllegalArgumentException("유효하지 않은 count 입니다");
+        }
+
+        if (count == SINGLE_SCORE_LIMIT) {
             return SINGLE_PAWN_SCORE;
         }
-        if (count > MULTIPLE_SCORE_LIMIT) {
+        if (count > SINGLE_SCORE_LIMIT) {
             return count * MULTIPLE_PAWN_SCORE;
         }
-        throw new IllegalArgumentException("유효하지 않은 count 입니다");
+        return ZERO_SCORE;
     }
 }
