@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
 import static chess.domain.Board.BOARD_SIZE;
 
 public class Point {
-    public static final int MINIMUM_VALUE = 0;
-    public static final int MAXIMUM_VALUE = 7;
+    private static final int MINIMUM_VALUE = 0;
+    private static final int MAXIMUM_VALUE = 7;
     private static final int ASCII_CODE_GAP = 97;
     private static final int RANK_GAP = 8;
     private static final char MINIMUM_LETTER = 'a';
