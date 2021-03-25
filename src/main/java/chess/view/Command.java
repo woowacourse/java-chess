@@ -1,34 +1,12 @@
 package chess.view;
 
-import chess.ChessGame;
-
 import java.util.Arrays;
 
 public enum Command {
-    START("START", true) {
-        @Override
-        public void execute(final ChessGame chessGame) {
-            chessGame.initSetting();
-        }
-    },
-    END("END", false) {
-        @Override
-        public void execute(final ChessGame chessGame) {
-            chessGame.end();
-        }
-    },
-    MOVE("MOVE", true) {
-        @Override
-        public void execute(final ChessGame chessGame) {
-        }
-    },
-    STATUS("STATUS", false) {
-        @Override
-        public void execute(final ChessGame chessGame) {
-        }
-    };
-
-    public abstract void execute(final ChessGame chessGame);
+    START("START", true),
+    END("END", false),
+    MOVE("MOVE", true),
+    STATUS("STATUS", false);
 
     private final String command;
     private final boolean isPrint;

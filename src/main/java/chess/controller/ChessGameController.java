@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.ChessGame;
 import chess.domain.Team;
-import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import chess.domain.util.RowConverter;
 import chess.view.Command;
 import chess.view.InputView;
@@ -35,11 +35,24 @@ public class ChessGameController {
     private void turnExecute() {
         try {
             Command command = Command.valueOf(InputView.getCommand());
-            command.execute(chessGame);
-            interactiveCommand(command);
+            commandExecute(command);
             printCurrentBoard(command);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void commandExecute(final Command command) {
+        interactiveCommand(command);
+        unInteractiveCommand(command);
+    }
+
+    private void unInteractiveCommand(final Command command) {
+        if (command.equals(Command.START)) {
+            chessGame.initSetting();
+        }
+        if (command.equals(Command.END)) {
+            chessGame.end();
         }
     }
 
@@ -66,6 +79,7 @@ public class ChessGameController {
         Position endPosition = position(endPoint);
         chessGame.move(startPosition, endPosition);
     }
+
 
     private Position position(final String point) {
         return new Position(
