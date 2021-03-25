@@ -17,7 +17,7 @@ public class Pawn extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
 
         if (isBlackPawn()) {

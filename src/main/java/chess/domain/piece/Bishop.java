@@ -15,7 +15,7 @@ public class Bishop extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
 
         return moveDiagonal(source, target, chessBoard).contains(target);
     }

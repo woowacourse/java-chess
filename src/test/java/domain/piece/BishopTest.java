@@ -50,8 +50,8 @@ public class BishopTest {
     void movable() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("c5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("d6"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c5"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("d6"), chessBoard));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class BishopTest {
     void fail_movable() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("e7"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("e7"), chessBoard));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BishopTest {
     void fail_same_team() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("e7"), chessBoard));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("e7"), chessBoard));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BishopTest {
     void fail_position() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("b5"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("f8"), chessBoard));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b5"), chessBoard));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("f8"), chessBoard));
     }
 }

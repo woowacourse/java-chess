@@ -8,7 +8,7 @@ import chess.domain.state.TeamColor;
 
 public interface Piece {
 
-    boolean isMoveAble(Position source, Position target, ChessBoard chessBoard);
+    boolean isMovable(Position source, Position target, ChessBoard chessBoard);
 
     String getPieceName();
 

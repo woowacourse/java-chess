@@ -53,7 +53,7 @@ public class ChessBoard {
     }
 
     private boolean isMoveAblePosition(Position start, Position end) {
-        return piece(start).isMoveAble(start, end, this);
+        return piece(start).isMovable(start, end, this);
     }
 
     private void checkKilledPieceIsKing(Piece endPiece) {

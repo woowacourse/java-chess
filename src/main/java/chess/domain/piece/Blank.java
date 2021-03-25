@@ -15,7 +15,7 @@ public class Blank implements Piece {
 
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
         return false;
     }
 

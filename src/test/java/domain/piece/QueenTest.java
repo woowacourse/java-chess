@@ -49,14 +49,14 @@ public class QueenTest {
     void movable() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("a4"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("c3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("b3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("b5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("a3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("c3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("a5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("c5"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a4"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c3"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b3"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b5"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a3"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c3"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a5"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c5"), chessBoard));
     }
 
     @Test
@@ -64,9 +64,9 @@ public class QueenTest {
     void movable_2blocks() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("b6"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("d6"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("d4"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b6"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("d6"), chessBoard));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("d4"), chessBoard));
     }
 
     @Test
@@ -74,6 +74,6 @@ public class QueenTest {
     void movable_2blocks_fail() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("c6"), chessBoard));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c6"), chessBoard));
     }
 }
