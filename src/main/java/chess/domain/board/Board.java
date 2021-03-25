@@ -5,7 +5,6 @@ import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Board {
@@ -30,8 +29,7 @@ public class Board {
     }
 
     public boolean isAliveBothKings() {
-        return this.ranks
-            .stream()
+        return this.ranks.stream()
             .flatMap(rank -> rank.squares().stream())
             .filter(Piece::isKing)
             .count() == BOTH_KINGS_ALIVE;
@@ -58,12 +56,11 @@ public class Board {
     }
 
     private void replacePiece(Position position, Piece piece) {
-        Rank findedRank = this.ranks
-            .stream()
+        Rank foundRank = this.ranks.stream()
             .filter(rank -> rank.hasPosition(position))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
 
-        findedRank.replacePiece(position, piece);
+        foundRank.replacePiece(position, piece);
     }
 }
