@@ -22,8 +22,6 @@ public abstract class Piece {
         this.score = null;
     }
 
-    public abstract boolean canMove(Board board, Position source, Position target);
-
     public boolean isSameColor(Piece piece) {
         return piece.isNotEmpty() && this.isBlack == piece.isBlack;
     }
@@ -33,6 +31,12 @@ public abstract class Piece {
             return name.toUpperCase();
         }
         return name;
+    }
+
+    public void validateMove(Board board, Position source, Position target) {
+        if (!canMove(board, source, target)) {
+            throw new IllegalArgumentException("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
+        }
     }
 
     public Score getScore() {
@@ -58,5 +62,7 @@ public abstract class Piece {
     public boolean isPawn() {
         return false;
     }
+
+    protected abstract boolean canMove(Board board, Position source, Position target);
 
 }

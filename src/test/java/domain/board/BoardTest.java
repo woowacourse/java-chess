@@ -1,6 +1,7 @@
 package domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.chessgame.Score;
 import domain.piece.Bishop;
@@ -130,6 +131,7 @@ class BoardTest {
         assertThat(board.piecesScore(false)).isEqualTo(new Score(19.5));
     }
 
+
     @DisplayName("기물은 같은 팀이 있는 곳으로 이동할 수 없다.")
     @Test
     void moveSameColorPiecePositionTest() {
@@ -141,9 +143,10 @@ class BoardTest {
 
         board.put(source, blackKing);
         board.put(target, blackRook);
-        board.move(source, target);
 
-        assertThat(board.piece(target)).isSameAs(blackRook);
+        assertThatThrownBy(() -> board.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 같은 팀 기물이 존재하는 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("기물은 체스판 범위가 넘어서는 곳으로 이동할 수 없다.")
@@ -155,9 +158,10 @@ class BoardTest {
         Position target = new Position(10,10);
 
         board.put(source, blackKing);
-        board.move(source, target);
 
-        assertThat(board.piece(source)).isSameAs(blackKing);
+        assertThatThrownBy(() -> board.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 체스판 범위를 벗어나는 좌표 입니다.");
     }
 
     @DisplayName("source 위치에 기물이 없으면 이동할 수 없다.")
@@ -169,8 +173,9 @@ class BoardTest {
         Position target = new Position(4,3);
 
         board.put(target, blackKing);
-        board.move(source, target);
 
-        assertThat(board.piece(target)).isSameAs(blackKing);
+        assertThatThrownBy(() -> board.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] source 위치에 기물이 없습니다.");
     }
 }

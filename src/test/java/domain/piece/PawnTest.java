@@ -1,6 +1,7 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.board.Board;
 import domain.position.Position;
@@ -23,7 +24,7 @@ class PawnTest {
         assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("폰은 전방으로 1칸 위치에 기물이 있으면 이동 불가능 하다.")
+    @DisplayName("폰은 전방으로 1칸 위치에 기물이 있으면 이동할 수 없다.")
     @ParameterizedTest
     @CsvSource(value = {"d7,d6,true", "d2,d3,false"}, delimiter = ',')
     void testNotMoveEmptyPlace(String source, String target, boolean isBlack) {
@@ -36,7 +37,9 @@ class PawnTest {
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("폰은 첫 수에 전방으로 2칸 이동 가능하다.")
@@ -53,7 +56,7 @@ class PawnTest {
         assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("폰은 전방으로 2칸 위치에 기물이 있으면, 첫 수에 전방으로 2칸 이동 불가능하다.")
+    @DisplayName("폰은 전방으로 2칸 위치에 기물이 있으면, 첫 수에 전방으로 2칸 이동할 수 없다.")
     @ParameterizedTest
     @CsvSource(value = {"d7,d5,true", "f2,f4,false"}, delimiter = ',')
     void testFirstNotMove(String source, String target, boolean isBlack) {
@@ -66,7 +69,9 @@ class PawnTest {
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("폰은 첫 수가 아니라면 전방으로 2칸 이동 불가능하다.")
@@ -80,7 +85,9 @@ class PawnTest {
 
         board.put(sourcePosition, pawn);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("폰은 전방으로 2칸 이동하려는 이동 경로에 장애물이 있을 경우, 이동 불가능하다.")
@@ -98,7 +105,9 @@ class PawnTest {
         board.put(sourcePosition, pawn);
         board.put(obstaclePosition, knight);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("폰은 전방 양쪽 대각 방향에 적 기물이 있을 경우에 이동 가능하다.")
@@ -128,7 +137,9 @@ class PawnTest {
 
         board.put(sourcePosition, pawn);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
 }

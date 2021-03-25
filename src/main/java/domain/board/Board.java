@@ -56,14 +56,12 @@ public class Board {
         return board.getOrDefault(position, new EmptyPiece());
     }
 
-    public boolean move(Position source, Position target) {
-        Piece SourcePiece = piece(source);
-        if (canMove(source, target) && SourcePiece.canMove(this, source, target)) {
-            put(source, new EmptyPiece());
-            put(target, SourcePiece);
-            return true;
-        }
-        return false;
+    public void move(Position source, Position target) {
+        validateMove(source, target);
+        Piece piece = piece(source);
+        piece.validateMove(this, source, target);
+        put(source, new EmptyPiece());
+        put(target, piece);
     }
 
     public boolean canMove(Position source, Position target) {
@@ -72,6 +70,18 @@ public class Board {
         return sourcePiece.isNotEmpty()
             && target.isChessBoardPosition()
             && !sourcePiece.isSameColor(targetPiece);
+    }
+
+    public void validateMove(Position source, Position target) {
+        if (!source.isChessBoardPosition() || !target.isChessBoardPosition()) {
+            throw new IllegalArgumentException("[Error] 체스판 범위를 벗어나는 좌표 입니다.");
+        }
+        if (piece(source).isEmpty()) {
+            throw new IllegalArgumentException("[Error] source 위치에 기물이 없습니다.");
+        }
+        if (piece(source).isSameColor(piece(target))) {
+            throw new IllegalArgumentException("[Error] 같은 팀 기물이 존재하는 위치로 이동할 수 없습니다.");
+        }
     }
 
     public void put(Position position, Piece piece) {
@@ -115,6 +125,10 @@ public class Board {
             return count;
         }
         return 0;
+    }
+
+    public boolean isEmptyPosition(Position position) {
+        return piece(position).isEmpty();
     }
 
 }

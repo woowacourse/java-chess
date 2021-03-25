@@ -1,6 +1,7 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.board.Board;
 import domain.position.Position;
@@ -37,7 +38,9 @@ class QueenTest {
 
         board.put(sourcePosition, blackQueen);
 
-        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("퀸은 다른 편 기물이 있는 위치로 이동할 수 있다.")
@@ -70,7 +73,9 @@ class QueenTest {
         board.put(sourcePosition, blackQueen);
         board.put(obstaclePosition, whiteRook);
 
-        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isFalse();
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
 }
