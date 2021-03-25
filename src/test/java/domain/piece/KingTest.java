@@ -24,7 +24,7 @@ class KingTest {
         King blackKing = new King(true);
         board.put(sourcePosition, blackKing);
 
-        assertThat(blackKing.canMove(board, sourcePosition, targetPosition)).isTrue();
+        assertThat(blackKing.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("킹은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
@@ -53,7 +53,7 @@ class KingTest {
         board.put(sourcePosition, blackKing);
         board.put(targetPosition, blackRook);
 
-        assertThat(blackKing.canMove(board, sourcePosition, targetPosition)).isTrue();
+        assertThat(blackKing.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
     }
 
 }

@@ -11,6 +11,7 @@ import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.ColumnDegree;
 import domain.position.Position;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -60,7 +61,7 @@ public class Board {
     public void move(Position source, Position target) {
         validateMove(source, target);
         Piece piece = piece(source);
-        piece.validateMove(this, source, target);
+        piece.validateMove(Collections.unmodifiableMap(board), source, target);
         put(source, new EmptyPiece());
         put(target, piece);
     }
@@ -121,10 +122,6 @@ public class Board {
             return count;
         }
         return 0;
-    }
-
-    public boolean isEmptyPosition(Position position) {
-        return piece(position).isEmpty();
     }
 
 }

@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.Board;
 import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
@@ -26,7 +25,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMove(Map<Position, Piece> board, Position source, Position target) {
         return Direction.knightDirection()
             .stream()
             .anyMatch(direction -> source.sum(direction).equals(target));

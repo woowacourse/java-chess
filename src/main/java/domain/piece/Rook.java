@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.Board;
 import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
@@ -26,7 +25,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMove(Map<Position, Piece> board, Position source, Position target) {
         if (source.isNotLinearPosition(target)) {
             return false;
         }
@@ -34,7 +33,7 @@ public class Rook extends Piece {
         do {
             source = source.sum(direction);
         } while (!source.equals(target)
-            && board.piece(source).isEmpty() && source.isChessBoardPosition());
+            && board.get(source).isEmpty() && source.isChessBoardPosition());
         return source.equals(target);
     }
 

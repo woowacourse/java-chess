@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.board.Board;
 import domain.position.Position;
+import java.util.Map;
 
 public class EmptyPiece extends Piece {
 
@@ -12,7 +12,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMove(Map<Position, Piece> board, Position source, Position target) {
         return false;
     }
 

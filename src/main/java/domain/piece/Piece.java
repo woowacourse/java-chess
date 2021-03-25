@@ -1,8 +1,8 @@
 package domain.piece;
 
-import domain.board.Board;
 import domain.chessgame.Score;
 import domain.position.Position;
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -33,7 +33,7 @@ public abstract class Piece {
         return name;
     }
 
-    public void validateMove(Board board, Position source, Position target) {
+    public void validateMove(Map<Position, Piece> board, Position source, Position target) {
         if (!canMove(board, source, target)) {
             throw new IllegalArgumentException("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
         }
@@ -63,6 +63,7 @@ public abstract class Piece {
         return false;
     }
 
-    protected abstract boolean canMove(Board board, Position source, Position target);
+    protected abstract boolean canMove(Map<Position, Piece> board, Position source,
+        Position target);
 
 }

@@ -31,21 +31,6 @@ public class Pawn extends Piece {
         }
     }
 
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean canMove(Board board, Position source, Position target) {
-        List<Direction> directions = new ArrayList<>(findDirections());
-        Direction forwardDirection = directions.remove(0);
-
-        return isForwardOneStepMovable(board, forwardDirection, source, target)
-            || isForwardTwoStepMovable(board, forwardDirection, source, target)
-            || isDiagonalMovable(board, directions, source, target);
-    }
-
     private List<Direction> findDirections() {
         if (isBlack()) {
             return Direction.blackPawnDirection();
@@ -53,27 +38,42 @@ public class Pawn extends Piece {
         return Direction.whitePawnDirection();
     }
 
-    private boolean isForwardOneStepMovable(Board board, Direction direction, Position source,
+    private boolean isForwardOneStepMovable(Map<Position, Piece> board, Direction direction, Position source,
         Position target) {
-        return board.isEmptyPosition(target) && source.sum(direction).equals(target);
+        return board.get(target).isEmpty() && source.sum(direction).equals(target);
     }
 
-    private boolean isDiagonalMovable(Board board, List<Direction> directions, Position source,
+    private boolean isDiagonalMovable(Map<Position, Piece> board, List<Direction> directions, Position source,
         Position target) {
-        return !board.isEmptyPosition(target) && directions.stream()
+        return !board.get(target).isEmpty() && directions.stream()
             .anyMatch(direction -> source.sum(direction).equals(target));
     }
 
-    private boolean isForwardTwoStepMovable(Board board, Direction direction, Position source,
+    private boolean isForwardTwoStepMovable(Map<Position, Piece> board, Direction direction, Position source,
         Position target) {
-        if (!createInitialPawns().containsKey(source) || !board.isEmptyPosition(target)) {
+        if (!createInitialPawns().containsKey(source) || !board.get(target).isEmpty()) {
             return false;
         }
         Position firstStep = source.sum(direction);
-        if (!board.isEmptyPosition(firstStep)) {
+        if (!board.get(target).isEmpty()) {
             return false;
         }
         Position secondStep = firstStep.sum(direction);
         return secondStep.equals(target);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean canMove(Map<Position, Piece> board, Position source, Position target) {
+        List<Direction> directions = new ArrayList<>(findDirections());
+        Direction forwardDirection = directions.remove(0);
+
+        return isForwardOneStepMovable(board, forwardDirection, source, target)
+            || isForwardTwoStepMovable(board, forwardDirection, source, target)
+            || isDiagonalMovable(board, directions, source, target);
     }
 }

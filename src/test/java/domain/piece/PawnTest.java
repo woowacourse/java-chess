@@ -21,7 +21,7 @@ class PawnTest {
         Pawn pawn = new Pawn(isBlack);
         board.put(sourcePosition, pawn);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
+        assertThat(pawn.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("폰은 전방으로 1칸 위치에 기물이 있으면 이동할 수 없다.")
@@ -53,7 +53,7 @@ class PawnTest {
 
         board.put(sourcePosition, pawn);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
+        assertThat(pawn.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("폰은 전방으로 2칸 위치에 기물이 있으면, 첫 수에 전방으로 2칸 이동할 수 없다.")
@@ -123,7 +123,7 @@ class PawnTest {
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
 
-        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
+        assertThat(pawn.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("폰은 전방 양쪽 대각 방향에 적 기물이 없을 경우에 이동 불가능하다.")
