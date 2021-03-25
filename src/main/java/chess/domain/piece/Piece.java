@@ -21,16 +21,16 @@ public class Piece {
     }
 
     public boolean isSameColor(Piece piece) {
-        return this.pieceColor == piece.pieceColor;
+        return isSameColor(piece.pieceColor);
     }
 
-    public boolean isSameColor(PieceColor pieceColor) {
-        return this.pieceColor == pieceColor;
+    public boolean isSameColor(PieceColor anotherPieceColor) {
+        return pieceColor.isSameColor(anotherPieceColor);
     }
 
     public boolean isMovingForward(Position source, Position target) {
         MoveDirection moveDirection = MoveDirection.getDirection(source, target);
-        if (pieceColor == PieceColor.WHITE) {
+        if (pieceColor.isSameColor(PieceColor.WHITE)) {
             return MoveDirection.isWhiteForward(moveDirection);
         }
 
@@ -38,11 +38,11 @@ public class Piece {
     }
 
     public boolean isPawn() {
-        return pieceKind == PieceKind.PAWN;
+        return pieceKind.isSameKind(PieceKind.PAWN);
     }
 
     public boolean isKing() {
-        return pieceKind == PieceKind.KING;
+        return pieceKind.isSameKind(PieceKind.KING);
     }
 
     public void movable(Position source, Position target) {

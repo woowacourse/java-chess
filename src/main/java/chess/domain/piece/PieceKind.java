@@ -38,8 +38,11 @@ public enum PieceKind {
         return this.initialYPositions;
     }
 
+    public boolean isSameKind(PieceKind pieceKind) {
+        return this == pieceKind;
+    }
     public String getName(PieceColor pieceColor) {
-        if (pieceColor == PieceColor.WHITE) {
+        if (pieceColor.isSameColor(PieceColor.WHITE)) {
             return symbol.toLowerCase();
         }
 

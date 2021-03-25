@@ -18,6 +18,10 @@ public enum PieceColor {
         return BLACK;
     }
 
+    public boolean isSameColor(PieceColor pieceColor) {
+        return this == pieceColor;
+    }
+
     public String getName() {
         return name;
     }
