@@ -34,20 +34,20 @@ public class QueenTest {
         Empty empty3 = new Empty(NOTHING, Point.of(3, 3));
         Empty empty4 = new Empty(NOTHING, Point.of(5, 5));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(5, 4));
-        Direction direction2 = Direction.findDirection(source, Point.of(4, 5));
-        Direction direction3 = Direction.findDirection(source, Point.of(3, 3));
-        Direction direction4 = Direction.findDirection(source, Point.of(5, 5));
+        Direction direction1 = Direction.createDirection(source, Point.of(5, 4));
+        Direction direction2 = Direction.createDirection(source, Point.of(4, 5));
+        Direction direction3 = Direction.createDirection(source, Point.of(3, 3));
+        Direction direction4 = Direction.createDirection(source, Point.of(5, 5));
 
         assertEquals(direction1, Direction.SOUTH);
         assertEquals(direction2, Direction.EAST);
         assertEquals(direction3, Direction.NORTH_WEST);
         assertEquals(direction4, Direction.SOUTH_EAST);
 
-        assertDoesNotThrow(() -> queen.validateMovable(direction1, empty1));
-        assertDoesNotThrow(() -> queen.validateMovable(direction2, empty2));
-        assertDoesNotThrow(() -> queen.validateMovable(direction3, empty3));
-        assertDoesNotThrow(() -> queen.validateMovable(direction4, empty4));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(direction1, empty1));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(direction2, empty2));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(direction3, empty3));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(direction4, empty4));
     }
 
     @DisplayName("Queen의 불가능한 위치 확인")
@@ -61,21 +61,21 @@ public class QueenTest {
         Empty empty3 = new Empty(NOTHING, Point.of(2, 5));
         Empty empty4 = new Empty(NOTHING, Point.of(6, 3));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(2, 3));
-        Direction direction2 = Direction.findDirection(source, Point.of(6, 5));
-        Direction direction3 = Direction.findDirection(source, Point.of(2, 5));
-        Direction direction4 = Direction.findDirection(source, Point.of(6, 3));
+        Direction direction1 = Direction.createDirection(source, Point.of(2, 3));
+        Direction direction2 = Direction.createDirection(source, Point.of(6, 5));
+        Direction direction3 = Direction.createDirection(source, Point.of(2, 5));
+        Direction direction4 = Direction.createDirection(source, Point.of(6, 3));
 
-        assertThatThrownBy(() -> queen.validateMovable(direction1, empty1))
+        assertThatThrownBy(() -> queen.validateMovableRoute(direction1, empty1))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovable(direction2, empty2))
+        assertThatThrownBy(() -> queen.validateMovableRoute(direction2, empty2))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovable(direction3, empty3))
+        assertThatThrownBy(() -> queen.validateMovableRoute(direction3, empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovable(direction4, empty4))
+        assertThatThrownBy(() -> queen.validateMovableRoute(direction4, empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

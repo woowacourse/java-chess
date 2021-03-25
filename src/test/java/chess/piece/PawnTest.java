@@ -33,10 +33,10 @@ public class PawnTest {
         Pawn blackPawn = new Pawn(BLACK, source);
         Empty empty = new Empty(NOTHING, Point.of(0, 3));
 
-        Direction direction = Direction.findDirection(source, Point.of(0, 3));
+        Direction direction = Direction.createDirection(source, Point.of(0, 3));
 
         assertThatThrownBy(
-                () -> blackPawn.validateMovable(direction, empty)
+                () -> blackPawn.validateMovableRoute(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -47,10 +47,10 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, source);
         Empty empty = new Empty(NOTHING, Point.of(7, 3));
 
-        Direction direction = Direction.findDirection(source, Point.of(7, 3));
+        Direction direction = Direction.createDirection(source, Point.of(7, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovable(direction, empty)
+                () -> whitePawn.validateMovableRoute(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,15 +63,15 @@ public class PawnTest {
         Pawn blackPawn = new Pawn(BLACK, Point.of(5, 4));
         Empty empty2 = new Empty(NOTHING, Point.of(4, 3));
 
-        Direction direction1 = Direction.findDirection(Point.of(6, 3), Point.of(5, 4));
-        Direction direction2 = Direction.findDirection(Point.of(5, 4), Point.of(4, 3));
+        Direction direction1 = Direction.createDirection(Point.of(6, 3), Point.of(5, 4));
+        Direction direction2 = Direction.createDirection(Point.of(5, 4), Point.of(4, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovable(direction1, empty)
+                () -> whitePawn.validateMovableRoute(direction1, empty)
         ).isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(
-                () -> blackPawn.validateMovable(direction2, empty2)
+                () -> blackPawn.validateMovableRoute(direction2, empty2)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -81,10 +81,10 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, Point.of(2, 3));
         Empty empty = new Empty(NOTHING, Point.of(4, 3));
 
-        Direction direction = Direction.findDirection(Point.of(2, 3), Point.of(4, 3));
+        Direction direction = Direction.createDirection(Point.of(2, 3), Point.of(4, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovable(direction, empty)
+                () -> whitePawn.validateMovableRoute(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -94,8 +94,8 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
         Empty empty = new Empty(NOTHING, Point.of(4, 3));
 
-        Direction direction = Direction.findDirection(Point.of(6, 3), Point.of(4, 3));
+        Direction direction = Direction.createDirection(Point.of(6, 3), Point.of(4, 3));
 
-        assertDoesNotThrow(() -> whitePawn.validateMovable(direction, empty));
+        assertDoesNotThrow(() -> whitePawn.validateMovableRoute(direction, empty));
     }
 }

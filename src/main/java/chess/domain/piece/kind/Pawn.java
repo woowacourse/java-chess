@@ -14,22 +14,25 @@ public final class Pawn extends Piece {
     private static final int INITIAL_POSSIBLE_DISTANCE_OF_PAWN = 4;
     private static final String PAWN_NAME = "p";
 
-    public Pawn(Color color, Point point) {
-        super(PAWN_NAME, color, point);
+    public Pawn(Color color) {
+        super(PAWN_NAME, color);
     }
 
     @Override
-    public void validateMovable(Direction direction, Piece targetPiece) {
+    public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
+        Direction direction = source.findDirection(target);
+
         if (Direction.isNotPawnDirection(direction, this.color)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        if (isNotMovableRoute(targetPiece)) {
+        if (isNotMovableRoute(source, target, targetPiece)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
     }
 
-    private boolean isNotMovableRoute(Piece targetPiece) {
-        int distance = this.point.calculateDistance(targetPiece.point);
+    private boolean isNotMovableRoute(Point source, Point target, Piece targetPiece) {
+        int distance = source.calculateDistance(target);
         if (targetPiece.isEmptyPiece() && distance == MOVE_STRAIGHT_ONE_SQUARE) {
             return false;
         }
@@ -37,23 +40,18 @@ public final class Pawn extends Piece {
             return false;
         }
         if (targetPiece.isEmptyPiece() && distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN
-                && (isInitialBlackPawn() || isInitialWhitePawn())) {
+                && (isInitialBlackPawn(source) || isInitialWhitePawn(source))) {
             return false;
         }
         return true;
     }
 
-    private boolean isInitialWhitePawn() {
-        return this.color.isSameAs(WHITE) && this.point.isSameRow(INITIAL_WHITE_PAWN_ROW);
+    private boolean isInitialWhitePawn(Point source) {
+        return this.color.isSameAs(WHITE) && source.isSameRow(INITIAL_WHITE_PAWN_ROW);
     }
 
-    private boolean isInitialBlackPawn() {
-        return this.color.isSameAs(BLACK) && this.point.isSameRow(INITIAL_BLACK_PAWN_ROW);
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return target;
+    private boolean isInitialBlackPawn(Point source) {
+        return this.color.isSameAs(BLACK) && source.isSameRow(INITIAL_BLACK_PAWN_ROW);
     }
 
     @Override

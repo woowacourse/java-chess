@@ -8,24 +8,19 @@ public final class Queen extends Piece {
     private static final int QUEEN_SCORE = 9;
     private static final String QUEEN_NAME = "q";
 
-    public Queen(Color color, Point point) {
-        super(QUEEN_NAME, color, point);
+    public Queen(Color color) {
+        super(QUEEN_NAME, color);
     }
 
     @Override
-    public void validateMovable(Direction direction, Piece targetPiece) {
-        int initialRowDifference = targetPiece.point.subtractRow(this.point);
-        int initialColumnDifference = targetPiece.point.subtractColumn(this.point);
+    public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        int initialRowDifference = target.subtractRow(source);
+        int initialColumnDifference = target.subtractColumn(source);
 
         if ((Math.abs(initialRowDifference) != Math.abs(initialColumnDifference))
                 && initialRowDifference != 0 && initialColumnDifference != 0) {
             throw new IllegalArgumentException("기물이 움직일 수 없는 방향입니다.");
         }
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return this.point.createNextPoint(direction);
     }
 
     @Override

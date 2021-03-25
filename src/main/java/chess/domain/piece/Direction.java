@@ -25,16 +25,11 @@ public enum Direction {
         this.columnDirection = columnDirection;
     }
 
-    public static Direction findDirection(Point source, Point target) {
-        int initialRowDifference = target.subtractRow(source);
-        int initialColumnDifference = target.subtractColumn(source);
-        if (initialRowDifference == 0 && initialColumnDifference == 0) {
-            throw new IllegalArgumentException("기물이 움직이지 않습니다.");
-        }
+    public static Direction createDirection(int initialRowDifference, int initialColumnDifference) {
 
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.rowDirection == normalizeDifference(initialRowDifference)
-                        && direction.columnDirection == normalizeDifference(initialColumnDifference))
+                .filter(direction -> direction.rowDirection == normalizeDifference(initialRowDifference))
+                .filter(direction -> direction.columnDirection == normalizeDifference(initialColumnDifference))
                 .findAny().orElseThrow(RuntimeException::new);
     }
 

@@ -35,41 +35,34 @@ public class Board {
     public void movePiece(Point source, Point target, Color currentColor) {
         Piece sourcePiece = selectPiece(source);
         validateSourcePieceNotEmpty(sourcePiece);
-        validateSourcePieceColor(currentColor, sourcePiece);
+        sourcePiece.validateCorrectTurn(currentColor);
 
         Piece targetPiece = selectPiece(target);
-        validateTargetPieceColor(currentColor, targetPiece);
-
-        moveStepByStep(source, target, sourcePiece, targetPiece);
+        sourcePiece.validateMovableRoute(source, target, targetPiece);
+        moveStepByStep(source, target);
     }
 
     private Piece selectPiece(Point point) {
         return board.get(point);
     }
 
-    private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
-        Direction direction = Direction.findDirection(source, target);
-        sourcePiece.validateMovable(direction, targetPiece);
+    private void moveStepByStep(Point source, Point target) {
+        Direction direction = source.findDirection(target);
 
         Point currentPoint = source;
         boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
         while (!isArrivedAtTarget) {
-            Point nextPoint = selectCurrentPieceAndFindNextPoint(currentPoint, target, direction);
+            // TODO: Knight의 Direction 추가할 것
+            Point nextPoint = currentPoint.createNextPoint(direction);
             isArrivedAtTarget = nextPoint.isSamePoint(target);
-            movePieceToTargetPoint(source, target, sourcePiece, isArrivedAtTarget);
+            movePieceToTargetPoint(source, target, isArrivedAtTarget);
             checkNextPointIfNotArrived(nextPoint, isArrivedAtTarget);
             currentPoint = nextPoint;
         }
     }
 
-    private Point selectCurrentPieceAndFindNextPoint(Point currentPoint, Point target, Direction direction) {
-        Piece currentPiece = selectPiece(currentPoint);
-        return currentPiece.moveOneStep(target, direction);
-    }
-
-    private void movePieceToTargetPoint(Point source, Point target, Piece sourcePiece, boolean isArrivedAtTarget) {
+    private void movePieceToTargetPoint(Point source, Point target, boolean isArrivedAtTarget) {
         if (isArrivedAtTarget) {
-            sourcePiece.movePoint(target);
             replacePiece(source, target);
         }
     }
@@ -84,7 +77,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
 
         board.replace(target, sourcePiece);
-        board.replace(source, new Empty(Color.NOTHING, source));
+        board.replace(source, new Empty(Color.NOTHING));
     }
 
     public boolean hasBothKings() {
@@ -100,18 +93,6 @@ public class Board {
     private void validateSourcePieceNotEmpty(Piece piece) {
         if (piece.isEmptyPiece()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다.");
-        }
-    }
-
-    private void validateSourcePieceColor(Color currentColor, Piece sourcePiece) {
-        if (sourcePiece.isIncorrectTurn(currentColor)) {
-            throw new IllegalArgumentException("기물의 색이 일치하지 않아 움직일 수 없는 기물입니다.");
-        }
-    }
-
-    private void validateTargetPieceColor(Color currentColor, Piece targetPiece) {
-        if (targetPiece.isSameTeam(currentColor)) {
-            throw new IllegalArgumentException("도착지에 아군이 존재합니다.");
         }
     }
 

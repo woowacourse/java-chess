@@ -13,28 +13,16 @@ public abstract class Piece {
 
     protected final Name name;
     protected final Color color;
-    protected Point point;
 
-    public Piece(String name, Color color, Point point) {
+    public Piece(String name, Color color) {
         this.name = new Name(name, color);
         this.color = color;
-        this.point = point;
     }
 
-    public abstract void validateMovable(Direction direction, Piece targetPiece);
-
-    public abstract Point moveOneStep(Point target, Direction direction);
+    public abstract void validateMovableRoute(Point source, Point target, Piece targetPiece);
 
     public final boolean isSameTeam(Color color) {
         return color.isSameAs(this.color);
-    }
-
-    public final boolean isIncorrectTurn(Color color) {
-        return !color.isSameAs(this.color);
-    }
-
-    public final void movePoint(Point target) {
-        this.point = target;
     }
 
     public abstract double score();
@@ -51,6 +39,22 @@ public abstract class Piece {
         return false;
     }
 
+    public final void validateCorrectTurn(Color currentColor) {
+        if (isIncorrectTurn(currentColor)) {
+            throw new IllegalArgumentException("기물의 색이 일치하지 않아 움직일 수 없는 기물입니다.");
+        }
+    }
+
+    private boolean isIncorrectTurn(Color currentColor) {
+        return !currentColor.isSameAs(this.color);
+    }
+
+    protected final void validateTargetPieceColor(Piece targetPiece) {
+        if (targetPiece.isSameTeam(this.color)) {
+            throw new IllegalArgumentException("도착지에 아군이 존재합니다.");
+        }
+    }
+
     public final String getName() {
         return name.getName();
     }
@@ -61,12 +65,11 @@ public abstract class Piece {
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
         return Objects.equals(name, piece.name) &&
-                color == piece.color &&
-                Objects.equals(point, piece.point);
+                color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color, point);
+        return Objects.hash(name, color);
     }
 }

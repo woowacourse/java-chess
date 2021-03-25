@@ -9,22 +9,17 @@ public final class Knight extends Piece {
     private static final int POSSIBLE_DISTANCE_OF_KNIGHT = 5;
     private static final String KNIGHT_NAME = "n";
 
-    public Knight(Color color, Point point) {
-        super(KNIGHT_NAME, color, point);
+    public Knight(Color color) {
+        super(KNIGHT_NAME, color);
     }
 
     @Override
-    public void validateMovable(Direction direction, Piece targetPiece) {
-        int distance = this.point.calculateDistance(targetPiece.point);
+    public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        int distance = source.calculateDistance(target);
 
         if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return target;
     }
 
     @Override

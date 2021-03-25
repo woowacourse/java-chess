@@ -8,22 +8,17 @@ public final class King extends Piece {
     private static final int KING_SCORE = 0;
     private static final String KING_NAME = "k";
 
-    public King(Color color, Point point) {
-        super(KING_NAME, color, point);
+    public King(Color color) {
+        super(KING_NAME, color);
     }
 
     @Override
-    public void validateMovable(Direction direction, Piece targetPiece) {
-        int distance = this.point.calculateDistance(targetPiece.point);
+    public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        int distance = source.calculateDistance(target);
 
         if (distance != MOVE_STRAIGHT_ONE_SQUARE && distance != MOVE_DIAGONAL_ONE_SQUARE) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return target;
     }
 
     @Override

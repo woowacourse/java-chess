@@ -8,20 +8,17 @@ public final class Bishop extends Piece {
     private static final String BISHOP_NAME = "b";
     private static final int BISHOP_SCORE = 3;
 
-    public Bishop(Color color, Point point) {
-        super(BISHOP_NAME, color, point);
+    public Bishop(Color color) {
+        super(BISHOP_NAME, color);
     }
 
     @Override
-    public void validateMovable(Direction direction, Piece targetPiece) {
+    public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        Direction direction = source.findDirection(target);
+
         if (Direction.isNotBishopDirection(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return this.point.createNextPoint(direction);
     }
 
     @Override

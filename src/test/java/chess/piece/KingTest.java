@@ -35,20 +35,20 @@ public class KingTest {
         Empty empty3 = new Empty(NOTHING, Point.of(3, 5));
         Empty empty4 = new Empty(NOTHING, Point.of(5, 3));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(5, 4));
-        Direction direction2 = Direction.findDirection(source, Point.of(4, 5));
-        Direction direction3 = Direction.findDirection(source, Point.of(3, 5));
-        Direction direction4 = Direction.findDirection(source, Point.of(5, 3));
+        Direction direction1 = Direction.createDirection(source, Point.of(5, 4));
+        Direction direction2 = Direction.createDirection(source, Point.of(4, 5));
+        Direction direction3 = Direction.createDirection(source, Point.of(3, 5));
+        Direction direction4 = Direction.createDirection(source, Point.of(5, 3));
 
         assertEquals(direction1, Direction.SOUTH);
         assertEquals(direction2, Direction.EAST);
         assertEquals(direction3, Direction.NORTH_EAST);
         assertEquals(direction4, Direction.SOUTH_WEST);
 
-        assertDoesNotThrow(() -> king.validateMovable(direction1, empty1));
-        assertDoesNotThrow(() -> king.validateMovable(direction2, empty2));
-        assertDoesNotThrow(() -> king.validateMovable(direction3, empty3));
-        assertDoesNotThrow(() -> king.validateMovable(direction4, empty4));
+        assertDoesNotThrow(() -> king.validateMovableRoute(direction1, empty1));
+        assertDoesNotThrow(() -> king.validateMovableRoute(direction2, empty2));
+        assertDoesNotThrow(() -> king.validateMovableRoute(direction3, empty3));
+        assertDoesNotThrow(() -> king.validateMovableRoute(direction4, empty4));
     }
 
     @DisplayName("King의 불가능한 거리 확인")
@@ -62,21 +62,21 @@ public class KingTest {
         Empty empty3 = new Empty(NOTHING, Point.of(4, 6));
         Empty empty4 = new Empty(NOTHING, Point.of(2, 4));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(2, 2));
-        Direction direction2 = Direction.findDirection(source, Point.of(2, 6));
-        Direction direction3 = Direction.findDirection(source, Point.of(4, 6));
-        Direction direction4 = Direction.findDirection(source, Point.of(2, 4));
+        Direction direction1 = Direction.createDirection(source, Point.of(2, 2));
+        Direction direction2 = Direction.createDirection(source, Point.of(2, 6));
+        Direction direction3 = Direction.createDirection(source, Point.of(4, 6));
+        Direction direction4 = Direction.createDirection(source, Point.of(2, 4));
 
-        assertThatThrownBy(() -> king.validateMovable(direction1, empty1))
+        assertThatThrownBy(() -> king.validateMovableRoute(direction1, empty1))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.validateMovable(direction2, empty2))
+        assertThatThrownBy(() -> king.validateMovableRoute(direction2, empty2))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.validateMovable(direction3, empty3))
+        assertThatThrownBy(() -> king.validateMovableRoute(direction3, empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.validateMovable(direction4, empty4))
+        assertThatThrownBy(() -> king.validateMovableRoute(direction4, empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

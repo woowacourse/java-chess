@@ -39,20 +39,20 @@ public class RookTest {
         Empty empty3 = new Empty(NOTHING, Point.of(3, 4));
         Empty empty4 = new Empty(NOTHING, Point.of(4, 3));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(5, 4));
-        Direction direction2 = Direction.findDirection(source, Point.of(4, 5));
-        Direction direction3 = Direction.findDirection(source, Point.of(3, 4));
-        Direction direction4 = Direction.findDirection(source, Point.of(4, 3));
+        Direction direction1 = Direction.createDirection(source, Point.of(5, 4));
+        Direction direction2 = Direction.createDirection(source, Point.of(4, 5));
+        Direction direction3 = Direction.createDirection(source, Point.of(3, 4));
+        Direction direction4 = Direction.createDirection(source, Point.of(4, 3));
 
         assertEquals(direction1, Direction.SOUTH);
         assertEquals(direction2, Direction.EAST);
         assertEquals(direction3, Direction.NORTH);
         assertEquals(direction4, Direction.WEST);
 
-        assertDoesNotThrow(() -> rook.validateMovable(direction1, empty1));
-        assertDoesNotThrow(() -> rook.validateMovable(direction2, empty2));
-        assertDoesNotThrow(() -> rook.validateMovable(direction3, empty3));
-        assertDoesNotThrow(() -> rook.validateMovable(direction4, empty4));
+        assertDoesNotThrow(() -> rook.validateMovableRoute(direction1, empty1));
+        assertDoesNotThrow(() -> rook.validateMovableRoute(direction2, empty2));
+        assertDoesNotThrow(() -> rook.validateMovableRoute(direction3, empty3));
+        assertDoesNotThrow(() -> rook.validateMovableRoute(direction4, empty4));
     }
 
     @DisplayName("Rook의 불가능한 방향 확인")
@@ -66,21 +66,21 @@ public class RookTest {
         Empty empty3 = new Empty(NOTHING, Point.of(5, 3));
         Empty empty4 = new Empty(NOTHING, Point.of(3, 5));
 
-        Direction direction1 = Direction.findDirection(source, Point.of(3, 3));
-        Direction direction2 = Direction.findDirection(source, Point.of(5, 5));
-        Direction direction3 = Direction.findDirection(source, Point.of(5, 3));
-        Direction direction4 = Direction.findDirection(source, Point.of(3, 5));
+        Direction direction1 = Direction.createDirection(source, Point.of(3, 3));
+        Direction direction2 = Direction.createDirection(source, Point.of(5, 5));
+        Direction direction3 = Direction.createDirection(source, Point.of(5, 3));
+        Direction direction4 = Direction.createDirection(source, Point.of(3, 5));
 
-        assertThatThrownBy(() -> rook.validateMovable(direction1, empty1))
+        assertThatThrownBy(() -> rook.validateMovableRoute(direction1, empty1))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> rook.validateMovable(direction2, empty2))
+        assertThatThrownBy(() -> rook.validateMovableRoute(direction2, empty2))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> rook.validateMovable(direction3, empty3))
+        assertThatThrownBy(() -> rook.validateMovableRoute(direction3, empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> rook.validateMovable(direction4, empty4))
+        assertThatThrownBy(() -> rook.validateMovableRoute(direction4, empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
