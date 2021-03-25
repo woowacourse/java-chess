@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.domain.Game;
+import chess.domain.game.Game;
+import chess.domain.game.GameResult;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -58,7 +59,8 @@ public class ChessController {
 
     private void printScoreIfWanted(final Game game) {
         if (willWatchScore()) {
-            OutputView.printScore(game.score());
+            GameResult gameResult = new GameResult(game.getPieces());
+            OutputView.printScore(gameResult.getScore());
         }
     }
 

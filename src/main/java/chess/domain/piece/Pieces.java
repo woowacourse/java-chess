@@ -14,8 +14,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
-    public static final int SAME_COLUMN_CRITERIA = 2;
-    public static final double SAME_COLUMN_SCORE = 0.5;
     private final List<Piece> pieces = new ArrayList<>();
 
     public Pieces(final Piece... pieces) {
@@ -77,41 +75,7 @@ public class Pieces {
         pieces.remove(piece);
     }
 
-    public double score(final Color color) {
-        return calculateGeneralScore(color) + calculatePawnScore(color);
-    }
-
-    private double calculateGeneralScore(final Color color) {
-        return pieces.stream()
-                     .filter(piece -> piece.isSameColor(color))
-                     .filter(piece -> !piece.isPawn())
-                     .mapToDouble(Piece::score)
-                     .sum();
-    }
-
-    private double calculatePawnScore(final Color color) {
-        return pawnCountingByColumn(color).values()
-                                          .stream()
-                                          .mapToDouble(this::lowerPawnScore)
-                                          .sum();
-    }
-
-    private Map<Column, Long> pawnCountingByColumn(final Color color) {
-        return pawnsWith(color).stream()
-                               .collect(groupingBy(Piece::getColumn, counting()));
-    }
-
-    private List<Piece> pawnsWith(final Color color) {
-        return pieces.stream()
-                     .filter(piece -> piece.isSameColor(color))
-                     .filter(Piece::isPawn)
-                     .collect(Collectors.toList());
-    }
-
-    private double lowerPawnScore(final long count) {
-        if (count >= SAME_COLUMN_CRITERIA) {
-            return count * SAME_COLUMN_SCORE;
-        }
-        return count;
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }

@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.game;
 
+import chess.domain.Player;
+import chess.domain.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
@@ -34,13 +36,6 @@ public class Game {
 
     public Player currentPlayer() {
         return turn.player();
-    }
-
-    public Map<Color, Double> score() {
-        final Map<Color, Double> scores = new HashMap<>();
-        scores.put(Color.BLACK, pieces.score(Color.BLACK));
-        scores.put(Color.WHITE, pieces.score(Color.WHITE));
-        return scores;
     }
 
     public Pieces getPieces() {
