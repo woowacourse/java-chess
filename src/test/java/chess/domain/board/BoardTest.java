@@ -12,11 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
-    private static double BASE_SCORE = 38.0;
+    private final static double BASE_SCORE = 38.0;
     private Board board;
 
     @BeforeEach
@@ -64,5 +63,14 @@ class BoardTest {
     @DisplayName("팀을 받으면, 팀에 따른 현재 점수를 계산한다.")
     void scoreByTeamCheck() {
         assertThat(board.scoreByTeam(Team.BLACK)).isEqualTo(BASE_SCORE);
+    }
+
+    @Test
+    @DisplayName("팀과 위치를 받아 piece가 해당 위치에 있는지 확인")
+    void existPieceByTeam() {
+        assertTrue(board.existsPieceByTeam(Team.WHITE, new Position(6, 0)));
+        assertTrue(board.existsPieceByTeam(Team.BLACK, new Position(1, 0)));
+        assertFalse(board.existsPieceByTeam(Team.WHITE, new Position(1, 0)));
+        assertFalse(board.existsPieceByTeam(Team.BLACK, new Position(6, 0)));
     }
 }

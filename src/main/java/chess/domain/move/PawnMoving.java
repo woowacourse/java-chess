@@ -3,7 +3,6 @@ package chess.domain.move;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -27,10 +26,7 @@ public class PawnMoving implements Moving {
         if (!board.validatesRange(position)) {
             return;
         }
-
-        Pieces enemyPieces = board.piecesByTeam(Team.enemyTeam(team));
-
-        if (enemyPieces.containsPosition(position)) {
+        if (board.existsPieceByTeam(Team.enemyTeam(team), position)) {
             movablePositions.add(position);
         }
     }

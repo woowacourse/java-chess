@@ -48,6 +48,10 @@ public final class Board {
         return pieces.calculatedScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }
 
+    public boolean existsPieceByTeam(final Team team, final Position nextPosition) {
+        return piecesByTeam(team).containsPosition(nextPosition);
+    }
+
     public final Pieces piecesByTeam(final Team team) {
         return board.get(team);
     }

@@ -3,7 +3,6 @@ package chess.domain.move;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
-import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -28,8 +27,7 @@ public class SingleMoving implements Moving {
         if (!board.validatesRange(nextPosition)) {
             return;
         }
-        Pieces pieces = board.piecesByTeam(team);
-        if (pieces.containsPosition(nextPosition)) {
+        if (board.existsPieceByTeam(team, nextPosition)) {
             return;
         }
         movablePositions.add(nextPosition);

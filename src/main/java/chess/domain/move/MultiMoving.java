@@ -36,10 +36,10 @@ public class MultiMoving implements Moving {
         if (!board.validatesRange(nextPosition)) {
             return false;
         }
-        if (board.piecesByTeam(team).containsPosition(nextPosition)) {
+        if (board.existsPieceByTeam(team, nextPosition)) {
             return false;
         }
-        if (board.piecesByTeam(Team.enemyTeam(team)).containsPosition(nextPosition)) {
+        if (board.existsPieceByTeam(Team.enemyTeam(team), nextPosition)) {
             movablePositions.add(nextPosition);
             return false;
         }
