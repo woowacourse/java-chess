@@ -29,7 +29,7 @@ public class ChessBoard {
     }
 
     public static String createPiecePositionName(int row, char column) {
-        return "" + column + row;
+        return String.valueOf(column) + row;
     }
 
     private Piece piece(Position position) {
