@@ -158,7 +158,7 @@
   <input type="submit" value="기물 이동">
 </form>
 
-<form action="/end">
+<form action="/end" onsubmit="return endConfirm();">
   <input type="submit" value="게임 종료">
 </form>
 
@@ -168,5 +168,15 @@
 <div id="before-turn-team-name" style="display: none">{{beforeTurnTeamName}}</div>
 {{/responseDTO}}
 
+<script>
+  function endConfirm() {
+    const is_end = confirm('정말 나가시겠습니까?');
+    if (is_end === true) {
+      alert('게임이 종료되었습니다.');
+      return true;
+    }
+    return false;
+  }
+</script>
 </body>
 </html>
