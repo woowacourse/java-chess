@@ -26,9 +26,4 @@ public final class Knight extends Piece {
     public double score() {
         return KNIGHT_SCORE;
     }
-
-    @Override
-    public boolean isKnight() {
-        return true;
-    }
 }
