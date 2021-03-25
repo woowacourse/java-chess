@@ -4,7 +4,6 @@ import chess.domain.board.Path;
 import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +27,6 @@ public abstract class Piece {
         return this.pieceType.is(PieceType.KING);
     }
 
-    public boolean isKnight() {
-        return this.pieceType.is(PieceType.KNIGHT);
-    }
-
     public boolean isSameSide(Piece that) {
         return !isEnemyOrEmpty(that);
     }
@@ -52,27 +47,13 @@ public abstract class Piece {
         return this.pieceColor.equals(color);
     }
 
-    public boolean canMoveLimited() {
-        return isKing() || isKnight() || isPawn();
-    }
-
     public Paths generatePaths(Position current) {
         return new Paths(directions().stream()
             .map(direction -> findPathInDirection(direction, current))
             .collect(Collectors.toList()));
     }
 
-    private Path findPathInDirection(Direction direction, Position currentPosition) {
-        List<Position> positions = new ArrayList<>();
-        while (!currentPosition.isBlockedWhenGoTo(direction)) {
-            positions.add(currentPosition.moveTo(direction));
-            currentPosition = currentPosition.moveTo(direction);
-            if (canMoveLimited()) {
-                break;
-            }
-        }
-        return new Path(positions);
-    }
+    public abstract Path findPathInDirection(Direction direction, Position currentPosition);
 
     public String color() {
         return pieceColor.getColor();

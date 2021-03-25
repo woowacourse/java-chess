@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Empty extends Piece {
+public class Empty extends LimitedMovePiece {
 
     public Empty() {
         super(PieceType.EMPTY, PieceColor.NOTHING);
@@ -10,6 +11,6 @@ public class Empty extends Piece {
 
     @Override
     public List<Direction> directions() {
-        return null;
+        return new ArrayList<>();
     }
 }

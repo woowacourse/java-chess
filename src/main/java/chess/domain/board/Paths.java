@@ -11,31 +11,8 @@ public class Paths {
 
     private final List<Path> paths;
 
-    public Paths() {
-        paths = new ArrayList<>();
-    }
-
     public Paths(List<Path> paths) {
         this.paths = new ArrayList<>(paths);
-    }
-
-    public Paths findAllPath(Piece piece, Position currentPosition) {
-        return new Paths(piece.directions().stream()
-            .map(direction -> findPathInDirection(piece, direction, currentPosition))
-            .collect(Collectors.toList())
-        );
-    }
-
-    private Path findPathInDirection(Piece piece, Direction direction, Position currentPosition) {
-        List<Position> positions = new ArrayList<>();
-        while (!currentPosition.isBlockedWhenGoTo(direction)) {
-            positions.add(currentPosition.moveTo(direction));
-            currentPosition = currentPosition.moveTo(direction);
-            if (piece.isKing() || piece.isKnight() || piece.isPawn()) {
-                break;
-            }
-        }
-        return new Path(positions);
     }
 
     public Path removeObstacles(Piece piece, Board board) {

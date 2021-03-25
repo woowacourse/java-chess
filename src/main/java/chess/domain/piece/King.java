@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 
-public class King extends Piece {
+public class King extends LimitedMovePiece {
 
     public King(PieceColor pieceColor) {
         super(PieceType.KING, pieceColor);
