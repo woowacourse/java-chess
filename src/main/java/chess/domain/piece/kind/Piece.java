@@ -38,14 +38,14 @@ public abstract class Piece {
         return false;
     }
 
+    private boolean isIncorrectTurn(Color currentColor) {
+        return !currentColor.isSameAs(this.color);
+    }
+
     public final void validateCorrectTurn(Color currentColor) {
         if (isIncorrectTurn(currentColor)) {
             throw new IllegalArgumentException("기물의 색이 일치하지 않아 움직일 수 없는 기물입니다.");
         }
-    }
-
-    private boolean isIncorrectTurn(Color currentColor) {
-        return !currentColor.isSameAs(this.color);
     }
 
     protected final void validateTargetPieceColor(Piece targetPiece) {
@@ -70,9 +70,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(name, color);
-    }
-
-    public boolean isKnight() {
-        return false;
     }
 }
