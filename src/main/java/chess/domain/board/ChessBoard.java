@@ -11,18 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
-
-    public static final int MAX_NUM_PIECE = 16;
-    public static final int ROW_WHITE_START = 1;
-    public static final int ROW_WHITE_END = 2;
-    public static final char COLUMN_FIRST = 'a';
-    public static final char COLUMN_LAST = 'h';
-    public static final int ROW_FIRST = 1;
-    public static final int ROW_LAST = 8;
-    public static final int ROW_BLACK_START = 7;
-    public static final int ROW_BLACK_END = 8;
-    public static final int ROW_WHITE_PAWN_LINE = 2;
-    public static final int ROW_BLACK_PAWN_LINE = 7;
     private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
     private static final String EXCEPTION_POSITION = "잘못된 좌표입니다.";

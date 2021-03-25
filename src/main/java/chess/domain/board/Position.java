@@ -1,5 +1,10 @@
 package chess.domain.board;
 
+import static chess.domain.board.ChessBoardInfo.COLUMN_FIRST;
+import static chess.domain.board.ChessBoardInfo.COLUMN_LAST;
+import static chess.domain.board.ChessBoardInfo.ROW_BLACK_PAWN_LINE;
+import static chess.domain.board.ChessBoardInfo.ROW_WHITE_PAWN_LINE;
+
 import chess.domain.state.TeamColor;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,8 +25,10 @@ public class Position {
     private static Map<String, Position> positions = new LinkedHashMap<>(POSITION_SIZE);
 
     static {
-        for (int row = ChessBoard.ROW_FIRST; row <= ChessBoard.ROW_LAST; row++) {
-            for (char column = ChessBoard.COLUMN_FIRST; column <= ChessBoard.COLUMN_LAST;
+        for (int row = ChessBoardInfo.ROW_FIRST.getBoardInfo(); row <= ChessBoardInfo.ROW_LAST
+            .getBoardInfo(); row++) {
+            for (char column = (char) COLUMN_FIRST.getBoardInfo();
+                column <= (char) COLUMN_LAST.getBoardInfo();
                 column++) {
                 String boardPosition = ChessBoard.createPiecePositionName(row, column);
                 positions.put(boardPosition, new Position(boardPosition));
@@ -151,9 +158,9 @@ public class Position {
 
     public boolean startLine(TeamColor color) {
         if (color == TeamColor.BLACK) {
-            return this.number == ChessBoard.ROW_BLACK_PAWN_LINE;
+            return this.number == ROW_BLACK_PAWN_LINE.getBoardInfo();
         }
-        return this.number == ChessBoard.ROW_WHITE_PAWN_LINE;
+        return this.number == ROW_WHITE_PAWN_LINE.getBoardInfo();
     }
 
     public Character getColumn() {
