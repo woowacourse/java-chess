@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>인비의 체스게임</title>
+</head>
+<body>
+
+<h1>체스 보드 페이지</h1>
+cellsStatus
+
+{{#responseDTO.cellsStatus}}
+  {{.}}
+{{/responseDTO.cellsStatus}}
+
+
+{{#responseDTO}}
+  currentTurnTeamName : {{currentTurnTeamName}}
+  blackPlayerScore : {{blackPlayerScore}}
+  whitePlayerScore : {{whitePlayerScore}}
+  isKingDead : {{isKingDead}}
+  winnerName : {{winnerName}}
+{{/responseDTO}}
+
+</body>
+</html>

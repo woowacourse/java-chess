@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceType.KING;
 
-import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.domain.piece.Piece;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
@@ -100,13 +99,13 @@ public class Board {
             .count() < NUMBER_OF_ALL_KINGS;
     }
 
-    public BoardStatusResponseDTO status() {
+    public List<String> status() {
         List<String> cellsStatus = new ArrayList<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
             addCellsStatusOnRank(cellsStatus, rank);
         }
-        return new BoardStatusResponseDTO(cellsStatus);
+        return cellsStatus;
     }
 
     private void addCellsStatusOnRank(List<String> cellsStatus, Rank rank) {

@@ -1,7 +1,6 @@
 package chess.view;
 
-import chess.controller.dto.response.BoardStatusResponseDTO;
-import chess.controller.dto.response.ScoresResponseDTO;
+import chess.controller.dto.response.ResponseDTO;
 import java.util.List;
 
 public class OutputView {
@@ -16,12 +15,18 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printBoard(BoardStatusResponseDTO boardStatusResponseDTO) {
-        List<String> cellsStatus = boardStatusResponseDTO.getCellsStatus();
+    public static void printBoard(ResponseDTO responseDTO) {
+        List<String> cellsStatus = responseDTO.getCellsStatus();
         for (int cellIndex = 0; cellIndex < BOARD_ALL_CELLS_SIZE; cellIndex++) {
             printCellStatus(cellsStatus, cellIndex);
         }
         System.out.println();
+        System.out.println("현재 " + responseDTO.getCurrentTurnTeamName() + " 팀의 차례입니다.");
+
+        if (responseDTO.isKingDead()) {
+            System.out.println();
+            System.out.println(responseDTO.getWinnerName() + " 팀이 이겼습니다.");
+        }
     }
 
     private static void printCellStatus(List<String> cellsStatus, int cellIndex) {
@@ -32,14 +37,10 @@ public class OutputView {
         }
     }
 
-    public static void printScores(ScoresResponseDTO scoresResponseDTO) {
-        double blackTeamScore = scoresResponseDTO.getBlackTeamScore();
-        double whiteTeamScore = scoresResponseDTO.getWhiteTeamScore();
+    public static void printScores(ResponseDTO responseDTO) {
+        double blackTeamScore = responseDTO.getBlackPlayerScore();
+        double whiteTeamScore = responseDTO.getWhitePlayerScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
         System.out.println();
-    }
-
-    public static void printWinnerTeamColor(String winnerTeamColorName) {
-        System.out.println(winnerTeamColorName + " 팀이 이겼습니다.");
     }
 }

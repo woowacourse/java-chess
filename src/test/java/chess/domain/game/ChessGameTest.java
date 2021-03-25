@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.dto.request.CommandRequestDTO;
-import chess.controller.dto.response.ScoresResponseDTO;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
+import chess.domain.player.Scores;
 import chess.utils.PositionConverter;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ChessGameTest {
-    private static final String MOVE = "move";
     private static final String EMPTY_CELL_STATUS = ".";
 
     @DisplayName("보드 기본 세팅 객체 주입 테스트")
@@ -67,9 +66,9 @@ class ChessGameTest {
     @Test
     void canMovePieceAfterStart() {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO("a2", "a4");
 
-        assertThatCode(() -> chessGame.move(commandRequestDTO))
+        assertThatCode(() -> chessGame.move(moveRequestDTO))
             .doesNotThrowAnyException();
     }
 
@@ -77,9 +76,9 @@ class ChessGameTest {
     @Test
     void canGetBoardStatusAfterStart() {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO("a2", "a4");
 
-        assertThatCode(() -> chessGame.move(commandRequestDTO))
+        assertThatCode(() -> chessGame.move(moveRequestDTO))
             .doesNotThrowAnyException();
     }
 
@@ -168,7 +167,7 @@ class ChessGameTest {
             ChessGame chessGame = new ChessGame(customBoardSetting);
 
             String expectedWinnerTeamColorKoreanName = "흑";
-            assertThat(chessGame.winnerTeamColorName())
+            assertThat(chessGame.winnerName())
                 .isEqualTo(expectedWinnerTeamColorKoreanName);
         }
 
@@ -189,7 +188,7 @@ class ChessGameTest {
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
 
-            assertThatThrownBy(chessGame::winnerTeamColorName)
+            assertThatThrownBy(chessGame::winnerName)
                 .isInstanceOf(IllegalStateException.class);
         }
 
@@ -210,7 +209,7 @@ class ChessGameTest {
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
 
-            assertThatThrownBy(chessGame::winnerTeamColorName)
+            assertThatThrownBy(chessGame::winnerName)
                 .isInstanceOf(IllegalStateException.class);
         }
     }
@@ -235,10 +234,10 @@ class ChessGameTest {
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
 
-            ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
+            Scores scores = chessGame.getScores();
 
-            assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(20);
-            assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(19.5);
+            assertThat(scores.getBlackPlayerScore()).isEqualTo(20);
+            assertThat(scores.getWhitePlayerScore()).isEqualTo(19.5);
         }
 
         @DisplayName("기물을 이동하여 적 기물을 잡은 후, Pawn이 한 File에 2개 이상 존재하는 경우")
@@ -258,14 +257,14 @@ class ChessGameTest {
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
 
-            CommandRequestDTO commandRequestDTO
-                = new CommandRequestDTO("move", "a4", "b5");
+            MoveRequestDTO moveRequestDTO
+                = new MoveRequestDTO("a4", "b5");
 
-            chessGame.move(commandRequestDTO);
-            ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
+            chessGame.move(moveRequestDTO);
+            Scores scores = chessGame.getScores();
 
-            assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(37);
-            assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(37);
+            assertThat(scores.getBlackPlayerScore()).isEqualTo(37);
+            assertThat(scores.getWhitePlayerScore()).isEqualTo(37);
         }
     }
 
@@ -298,7 +297,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
 
@@ -322,7 +321,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
@@ -347,7 +346,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
@@ -372,7 +371,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
@@ -397,7 +396,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
@@ -422,7 +421,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
@@ -447,7 +446,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
@@ -472,7 +471,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
@@ -502,7 +501,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
 
@@ -526,7 +525,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -551,7 +550,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
@@ -576,7 +575,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
@@ -601,7 +600,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
@@ -626,7 +625,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -651,7 +650,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -676,7 +675,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -706,7 +705,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
 
@@ -730,7 +729,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
@@ -755,7 +754,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
@@ -780,7 +779,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
@@ -805,7 +804,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
@@ -830,7 +829,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -855,7 +854,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
@@ -880,7 +879,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
@@ -905,7 +904,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
@@ -930,7 +929,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -955,7 +954,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -980,7 +979,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
@@ -1010,7 +1009,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
 
@@ -1034,7 +1033,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d6";
@@ -1059,7 +1058,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d4";
@@ -1084,7 +1083,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e5";
@@ -1109,7 +1108,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c5";
@@ -1134,7 +1133,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
@@ -1159,7 +1158,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c4";
@@ -1184,7 +1183,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e6";
@@ -1209,7 +1208,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e4";
@@ -1234,7 +1233,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
@@ -1259,7 +1258,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
@@ -1291,7 +1290,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
 
@@ -1315,7 +1314,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "b6";
@@ -1340,7 +1339,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c3";
@@ -1365,7 +1364,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
@@ -1390,7 +1389,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c3";
@@ -1415,7 +1414,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "f6";
@@ -1440,7 +1439,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "f4";
@@ -1465,7 +1464,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "e7";
@@ -1490,7 +1489,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "e3";
@@ -1515,7 +1514,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
@@ -1540,7 +1539,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
@@ -1565,7 +1564,7 @@ class ChessGameTest {
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                chessGame.changeCurrentTurnTeamColorToOpposite();
+                chessGame.changeToNextTurn();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
@@ -1599,7 +1598,7 @@ class ChessGameTest {
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                    chessGame.changeCurrentTurnTeamColorToOpposite();
+                    chessGame.changeToNextTurn();
 
                     String startPositionInput = "d5";
 
@@ -1626,7 +1625,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
@@ -1651,7 +1650,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
@@ -1676,7 +1675,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
@@ -1701,7 +1700,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d3";
@@ -1730,7 +1729,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
@@ -1755,7 +1754,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
@@ -1780,7 +1779,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
@@ -1805,7 +1804,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d7";
@@ -1834,7 +1833,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "c6";
@@ -1859,7 +1858,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "e6";
@@ -1884,7 +1883,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "c6";
@@ -1909,7 +1908,7 @@ class ChessGameTest {
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
 
-                        chessGame.changeCurrentTurnTeamColorToOpposite();
+                        chessGame.changeToNextTurn();
 
                         String startPositionInput = "d7";
                         String destinationInput = "e6";
@@ -2240,15 +2239,15 @@ class ChessGameTest {
     private void assertCanMove(ChessGame chessGame, String startPositionInput,
         String destinationInput) {
 
-        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+        List<String> cellsStatus = chessGame.boardCellsStatus();
         String pieceToMove
             = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
 
-        CommandRequestDTO commandRequestDTO
-            = new CommandRequestDTO(MOVE, startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO
+            = new MoveRequestDTO(startPositionInput, destinationInput);
 
-        chessGame.move(commandRequestDTO);
-        List<String> cellsStatusAfterMove = chessGame.boardStatus().getCellsStatus();
+        chessGame.move(moveRequestDTO);
+        List<String> cellsStatusAfterMove = chessGame.boardCellsStatus();
 
         assertPiecePosition(startPositionInput, EMPTY_CELL_STATUS, cellsStatusAfterMove);
         assertPiecePosition(destinationInput, pieceToMove, cellsStatusAfterMove);
@@ -2267,20 +2266,20 @@ class ChessGameTest {
     private void assertCannotMove(ChessGame chessGame, String startPositionInput,
         String destinationInput) {
 
-        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+        List<String> cellsStatus = chessGame.boardCellsStatus();
 
         String startPositionCellStatus
             = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
         String destinationCellStatus
             = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(destinationInput));
 
-        CommandRequestDTO commandRequestDTO
-            = new CommandRequestDTO(MOVE, startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO
+            = new MoveRequestDTO(startPositionInput, destinationInput);
 
-        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
-        List<String> cellsStatusAfterMove = chessGame.boardStatus().getCellsStatus();
+        List<String> cellsStatusAfterMove = chessGame.boardCellsStatus();
 
         assertPiecePosition(startPositionInput, startPositionCellStatus, cellsStatusAfterMove);
         assertPiecePosition(destinationInput, destinationCellStatus, cellsStatusAfterMove);

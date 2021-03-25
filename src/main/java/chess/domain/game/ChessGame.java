@@ -2,9 +2,7 @@ package chess.domain.game;
 
 import static chess.domain.player.type.TeamColor.WHITE;
 
-import chess.controller.dto.request.CommandRequestDTO;
-import chess.controller.dto.response.BoardStatusResponseDTO;
-import chess.controller.dto.response.ScoresResponseDTO;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
@@ -12,6 +10,7 @@ import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.Players;
+import chess.domain.player.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
@@ -55,8 +54,8 @@ public class ChessGame {
         board.setPiece(position, piece);
     }
 
-    public void move(CommandRequestDTO commandRequestDTO) {
-        MoveRoute moveRoute = new MoveRoute(commandRequestDTO);
+    public void move(MoveRequestDTO moveRequestDTO) {
+        MoveRoute moveRoute = new MoveRoute(moveRequestDTO);
         board.validateRoute(moveRoute, currentTurnTeamColor);
         updatePiecesOfPlayers(moveRoute);
         board.move(moveRoute);
@@ -76,20 +75,24 @@ public class ChessGame {
         return board.isKingDead();
     }
 
-    public BoardStatusResponseDTO boardStatus() {
+    public List<String> boardCellsStatus() {
         return board.status();
     }
 
-    public ScoresResponseDTO getScores() {
-        return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
+    public Scores getScores() {
+        return new Scores(players.blackPlayerScore(), players.whitePlayerScore());
     }
 
-    public String winnerTeamColorName() {
+    public String winnerName() {
         TeamColor teamColor = board.winnerTeamColor();
         return teamColor.getName();
     }
 
-    public void changeCurrentTurnTeamColorToOpposite() {
+    public void changeToNextTurn() {
         currentTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
+    }
+
+    public String currentTurnTeamName() {
+        return currentTurnTeamColor.getName();
     }
 }

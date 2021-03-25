@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.controller.dto.request.CommandRequestDTO;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
 
@@ -13,9 +13,9 @@ public class MoveRoute {
         destination = Position.of(destinationInput);
     }
 
-    public MoveRoute(CommandRequestDTO commandRequestDTO) {
-        startPosition = Position.of(commandRequestDTO.getStartPositionInput());
-        destination = Position.of(commandRequestDTO.getDestinationInput());
+    public MoveRoute(MoveRequestDTO moveRequestDTO) {
+        startPosition = Position.of(moveRequestDTO.getStartPositionInput());
+        destination = Position.of(moveRequestDTO.getDestinationInput());
     }
 
     public Position startPosition() {

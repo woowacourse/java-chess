@@ -1,12 +1,10 @@
 package chess.service;
 
-import chess.controller.dto.request.CommandRequestDTO;
-import chess.controller.dto.response.BoardStatusResponseDTO;
-import chess.controller.dto.response.ChessGameResponseDTO;
-import chess.controller.dto.response.MoveResultResponseDTO;
-import chess.controller.dto.response.ScoresResponseDTO;
+import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.response.ResponseDTO;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
+import chess.domain.player.Scores;
 
 public class ChessService {
     private ChessGame chessGame;
@@ -16,42 +14,60 @@ public class ChessService {
         this.boardSetting = boardSetting;
     }
 
-    public ChessGameResponseDTO startChessGameAndGetInitialBoardStatus() {
+    public ResponseDTO getResponseWhenRequestStart() {
         chessGame = new ChessGame(boardSetting);
-        BoardStatusResponseDTO boardStatusResponseDTO = chessGame.boardStatus();
-        return new ChessGameResponseDTO(boardStatusResponseDTO);
+        Scores scores = chessGame.getScores();
+        return new ResponseDTO(
+            chessGame.boardCellsStatus(),
+            chessGame.currentTurnTeamName(),
+            scores.getBlackPlayerScore(),
+            scores.getWhitePlayerScore(),
+            false,
+            null
+        );
     }
 
-    public ChessGameResponseDTO movePieceAndGetResult(CommandRequestDTO commandRequestDTO) {
-        validateChessGameStarted();
-        BoardStatusResponseDTO boardStatusResponseDTO
-            = movePieceAndGetBoardStatusResponseDTO(commandRequestDTO);
-        boolean isKingDead = chessGame.isKingDead();
-        String winnerTeamColorName = null;
-        if (isKingDead) {
-            winnerTeamColorName = chessGame.winnerTeamColorName();
-        }
-        MoveResultResponseDTO moveResultResponseDTO = new MoveResultResponseDTO(
-            boardStatusResponseDTO, isKingDead, winnerTeamColorName);
-        return new ChessGameResponseDTO(moveResultResponseDTO);
+    public ResponseDTO getResponseWhenRequestMove(MoveRequestDTO moveRequestDTO) {
+        validateGameStarted();
+        String winnerNameIfKingDead = chessGame.currentTurnTeamName();
+        chessGame.move(moveRequestDTO);
+        chessGame.changeToNextTurn();
+        return createResponseDTOWhenRequestMove(winnerNameIfKingDead);
     }
 
-    private void validateChessGameStarted() {
+    private ResponseDTO createResponseDTOWhenRequestMove(String winnerNameIfKingDead) {
+        Scores scores = chessGame.getScores();
+        return new ResponseDTO(
+            chessGame.boardCellsStatus(),
+            chessGame.currentTurnTeamName(),
+            scores.getBlackPlayerScore(),
+            scores.getWhitePlayerScore(),
+            chessGame.isKingDead(),
+            winnerNameIfKingDead
+        );
+    }
+
+    private void validateGameStarted() {
         if (chessGame == null) {
             throw new IllegalStateException("게임을 먼저 시작해 주세요.");
         }
     }
 
-    private BoardStatusResponseDTO movePieceAndGetBoardStatusResponseDTO(
-        CommandRequestDTO commandRequestDTO) {
-        chessGame.move(commandRequestDTO);
-        chessGame.changeCurrentTurnTeamColorToOpposite();
-        return chessGame.boardStatus();
+    public ResponseDTO getScores() {
+        validateGameStarted();
+        Scores scores = chessGame.getScores();
+
+        return new ResponseDTO(
+            chessGame.boardCellsStatus(),
+            chessGame.currentTurnTeamName(),
+            scores.getBlackPlayerScore(),
+            scores.getWhitePlayerScore(),
+            false,
+            null
+        );
     }
 
-    public ChessGameResponseDTO getScores() {
-        validateChessGameStarted();
-        ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
-        return new ChessGameResponseDTO(scoresResponseDTO);
+    public void endGame() {
+        chessGame = null;
     }
 }

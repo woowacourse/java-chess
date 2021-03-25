@@ -1,24 +1,12 @@
 package chess.controller.dto.request;
 
-public class CommandRequestDTO {
-    private final String commandInput;
+public class MoveRequestDTO {
     private final String startPositionInput;
     private final String destinationInput;
 
-    public CommandRequestDTO(String commandInput, String startPositionInput,
-        String destinationInput) {
-
-        this.commandInput = commandInput;
+    public MoveRequestDTO(String startPositionInput, String destinationInput) {
         this.startPositionInput = startPositionInput;
         this.destinationInput = destinationInput;
-    }
-
-    public CommandRequestDTO(String commandInput) {
-        this(commandInput, null, null);
-    }
-
-    public String getCommandInput() {
-        return commandInput;
     }
 
     public String getStartPositionInput() {
