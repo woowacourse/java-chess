@@ -21,7 +21,7 @@ public class Piece {
     }
 
     public boolean isSameColor(Piece piece) {
-        return this.pieceColor == piece.pieceColor;
+        return isSameColor(piece.pieceColor);
     }
 
     public boolean isSameColor(PieceColor pieceColor) {
