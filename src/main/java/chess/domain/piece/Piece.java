@@ -12,8 +12,8 @@ public class Piece {
     public static final String UNABLE_MOVE_TYPE_MESSAGE = "해당 말이 이동할 수 있는 위치가 아닙니다.";
     public static final String SAME_TEAM_MESSAGE = "같은 팀의 말입니다.";
 
-    private PieceKind pieceKind;
-    private PieceColor pieceColor;
+    private final PieceKind pieceKind;
+    private final PieceColor pieceColor;
 
     public Piece(PieceKind pieceKind, PieceColor pieceColor) {
         this.pieceKind = pieceKind;
