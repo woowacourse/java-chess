@@ -15,10 +15,10 @@ public class Position {
     private static final int POSITION_SIZE = 64;
     private static final String ERROR_POSITION_VALUE = "00";
     public static final Position ERROR = new Position(ERROR_POSITION_VALUE);
-    private static final int ALPHA_POSITION = 0;
-    private static final int NUMBER_POSITION = 1;
+    private static final int ALPHA_INDEX = 0;
+    private static final int NUMBER_INDEX = 1;
     private static final int ZERO = 0;
-    private static final int ROW_AND_COLUMN = 2;
+    private static final int ROW_AND_COLUMN_LENGTH = 2;
     private static final int MOVE_ONE_WEIGHT = 1;
     private static final String ERROR_POSITION = "잘못된 좌표입니다";
 
@@ -41,8 +41,8 @@ public class Position {
 
     private Position(String boardPosition) {
         validateLength(boardPosition);
-        this.alpha = boardPosition.charAt(ALPHA_POSITION);
-        this.number = Character.getNumericValue(boardPosition.charAt(NUMBER_POSITION));
+        this.alpha = boardPosition.charAt(ALPHA_INDEX);
+        this.number = Character.getNumericValue(boardPosition.charAt(NUMBER_INDEX));
     }
 
     public static Position valueOf(String value) {
@@ -82,7 +82,7 @@ public class Position {
     }
 
     private void validateLength(String boardPosition) {
-        if (boardPosition.length() != ROW_AND_COLUMN) {
+        if (boardPosition.length() != ROW_AND_COLUMN_LENGTH) {
             throw new IllegalArgumentException();
         }
     }
