@@ -1,9 +1,7 @@
 package chess.controller;
 
 
-
 import static spark.Spark.get;
-import static spark.Spark.port;
 import static spark.Spark.post;
 
 import chess.controller.dto.request.MoveRequestDTO;
@@ -32,7 +30,6 @@ public class ChessController {
     }
 
     public void run() {
-        port(8080);
         handleHomeRequest();
         handleStartRequest();
         handleMoveRequest();
@@ -76,10 +73,8 @@ public class ChessController {
 
     private void handleMoveRequest() {
         post(ROOT + MOVE, (req, res) -> {
-            MoveRequestDTO moveRequestDTO = new MoveRequestDTO(
-                req.queryParams("startPosition"),
-                req.queryParams("destination")
-            );
+            MoveRequestDTO moveRequestDTO = new MoveRequestDTO(req.queryParams("startPosition"),
+                req.queryParams("destination"));
             ResponseDTO responseDTO = getResponseWhenRequestMove(moveRequestDTO);
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
@@ -89,9 +84,21 @@ public class ChessController {
     }
 
     private ResponseDTO getResponseWhenRequestMove(MoveRequestDTO moveRequestDTO) {
-        ResponseDTO responseDTO = chessService.getResponseWhenRequestMove(moveRequestDTO);
+        ResponseDTO responseDTO = handleMoveError(moveRequestDTO);
         OutputView.printBoard(responseDTO);
         OutputView.printScores(responseDTO);
+        return responseDTO;
+    }
+
+    private ResponseDTO handleMoveError(MoveRequestDTO moveRequestDTO) {
+        ResponseDTO responseDTO;
+        try {
+            responseDTO = chessService.getResponseWhenRequestMove(moveRequestDTO);
+        } catch (Exception e) {
+            responseDTO = chessService.getCurrentBoard();
+            responseDTO.setCannotMove(true);
+            responseDTO.setCannotMoveErrorMessage(e.getMessage());
+        }
         return responseDTO;
     }
 

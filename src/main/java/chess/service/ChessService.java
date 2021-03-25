@@ -36,8 +36,7 @@ public class ChessService {
             scores.getBlackPlayerScore(),
             scores.getWhitePlayerScore(),
             false,
-            null
-        );
+            null);
     }
 
     private BoardResponseDTO getBoardResponseDTO() {
@@ -69,8 +68,7 @@ public class ChessService {
             scores.getBlackPlayerScore(),
             scores.getWhitePlayerScore(),
             chessGame.isKingDead(),
-            winnerNameIfKingDead
-        );
+            winnerNameIfKingDead);
     }
 
     private void validateGameStarted() {
@@ -81,5 +79,16 @@ public class ChessService {
 
     public void endGame() {
         chessGame = null;
+    }
+
+    public ResponseDTO getCurrentBoard() {
+        Scores scores = chessGame.getScores();
+        return new ResponseDTO(
+            getBoardResponseDTO(),
+            chessGame.currentTurnTeamName(),
+            scores.getBlackPlayerScore(),
+            scores.getWhitePlayerScore(),
+            false,
+            null);
     }
 }

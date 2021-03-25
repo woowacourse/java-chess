@@ -7,15 +7,20 @@ public class ResponseDTO {
     private final double whitePlayerScore;
     private final boolean isKingDead;
     private final String beforeTurnTeamName;
+    private boolean cannotMove;
+    private String cannotMoveErrorMessage;
 
     public ResponseDTO(BoardResponseDTO boardResponseDTO, String currentTurnTeamName,
-        double blackPlayerScore, double whitePlayerScore, boolean isKingDead, String beforeTurnTeamName) {
+        double blackPlayerScore, double whitePlayerScore, boolean isKingDead,
+        String beforeTurnTeamName) {
+
         this.boardResponseDTO = boardResponseDTO;
         this.currentTurnTeamName = currentTurnTeamName;
         this.blackPlayerScore = blackPlayerScore;
         this.whitePlayerScore = whitePlayerScore;
         this.isKingDead = isKingDead;
         this.beforeTurnTeamName = beforeTurnTeamName;
+        this.cannotMove = false;
     }
 
     public BoardResponseDTO getBoardResponseDTO() {
@@ -40,5 +45,21 @@ public class ResponseDTO {
 
     public String getBeforeTurnTeamName() {
         return beforeTurnTeamName;
+    }
+
+    public boolean getCannotMove() {
+        return cannotMove;
+    }
+
+    public void setCannotMove(boolean cannotMove) {
+        this.cannotMove = cannotMove;
+    }
+
+    public String getCannotMoveErrorMessage() {
+        return cannotMoveErrorMessage;
+    }
+
+    public void setCannotMoveErrorMessage(String cannotMoveErrorMessage) {
+        this.cannotMoveErrorMessage = cannotMoveErrorMessage;
     }
 }

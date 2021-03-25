@@ -15,7 +15,7 @@
       display: table-cell;
       vertical-align: middle;
   }
-  #current-turn-team-team {
+  #current-turn-team-name {
       margin-bottom: 40px;
   }
 </style>
@@ -30,7 +30,7 @@
       <div class="score status content" style="flex: 1">백 팀 : {{whitePlayerScore}}점</div>
       <div class="score status content" style="flex: 1">흑 팀 : {{blackPlayerScore}}점</div>
     </div>
-    <div id="current-turn-team-team">현재 차례 : {{currentTurnTeamName}} 팀</div>
+    <div id="current-turn-team-name">현재 차례 : {{currentTurnTeamName}} 팀</div>
   </div>
   {{/responseDTO}}
   <div class="rank" style="display: flex">
@@ -166,9 +166,25 @@
 {{#responseDTO}}
 <div id="is-king-dead" style="display: none">{{isKingDead}}</div>
 <div id="before-turn-team-name" style="display: none">{{beforeTurnTeamName}}</div>
+<div id="cannot-move" style="display: none">{{cannotMove}}</div>
+<div id="cannot-move-error-message" style="display: none">{{cannotMoveErrorMessage}}</div>
 {{/responseDTO}}
 
-<script>
+<script type="text/javascript">
+  const cannot_move = document.getElementById('cannot-move');
+  const cannot_move_error_message = document.getElementById('cannot-move-error-message');
+  if (cannot_move.innerText === "true") {
+    alert(cannot_move_error_message.innerText);
+  }
+
+  const is_king_dead = document.getElementById('is-king-dead');
+  if (is_king_dead.innerText === "true") {
+    const before_turn_team_name = document.getElementById('before-turn-team-name');
+    alert(before_turn_team_name.innerText + ' 팀이 이겼습니다.');
+    window.location.href='http://localhost:4567';
+  }
+
+
   function endConfirm() {
     const is_end = confirm('정말 나가시겠습니까?');
     if (is_end === true) {
