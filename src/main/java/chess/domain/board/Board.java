@@ -90,8 +90,4 @@ public class Board {
     public List<Position> getAblePositionsToMove(final Position source) {
         return reachablePositions(source);
     }
-
-    public Piece getPieceOf(final Position position) {
-        return of(position);
-    }
 }

@@ -29,7 +29,7 @@ public class OutputView {
     public static void printPieceOrStar(final Board board, final List<Position> starPositions) {
         for (final Horizontal h : Horizontal.reversedValues()) {
             for (final Vertical v : Vertical.values()) {
-                printSymbol(board.getPieceOf(new Position(v, h)), starPositions.contains(new Position(v, h)));
+                printSymbol(board.of(new Position(v, h)), starPositions.contains(new Position(v, h)));
             }
             System.out.println();
         }

@@ -34,7 +34,7 @@ public class Players {
     }
 
     private void checkIsKingDead(final Position target) {
-        if (board.getPieceOf(target).isKing()) {
+        if (board.of(target).isKing()) {
             final Player otherPlayer = players.get(turn.otherIndex());
             otherPlayer.makeKingDead();
         }
@@ -76,9 +76,7 @@ public class Players {
 
     public boolean isEnd() {
         return players.stream()
-                .filter(player -> player.isEnd())
-                .findFirst()
-                .isPresent();
+                .anyMatch(player -> player.isEnd());
     }
 
     public Board getBoard() {

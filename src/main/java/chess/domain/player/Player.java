@@ -33,7 +33,7 @@ public class Player {
         Score score = Score.EMPTY;
 
         for (Position position : positions) {
-            score = score.plus(board.getPieceOf(position).score());
+            score = score.plus(board.of(position).score());
         }
 
         return score;
