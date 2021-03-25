@@ -1,46 +1,23 @@
-package chess.controller.state;
+package chess.domain.state;
 
 import chess.domain.grid.Grid;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Playing implements GameState {
     private static final String WHITE_SPACE_DELIMITER = " ";
-    private static final String STATUS_COMMAND = "status";
     private static final int SOURCE_ARG_INDEX = 1;
     private static final int TARGET_ARG_INDEX = 2;
 
     @Override
-    public final GameState run(final Grid grid) {
-        try {
-            return runPlaying(grid);
-        } catch (IllegalArgumentException error) {
-            return playingException(grid, error);
-        }
-    }
-
-    private GameState runPlaying(final Grid grid) {
-        String input = InputView.command();
-        if (input.equals(STATUS_COMMAND)) {
-            return new Status().run(grid);
-        }
-        List<Piece> moveInput = parsedPieces(grid, input);
+    public final GameState run(final Grid grid, final String command) {
+        List<Piece> moveInput = parsedPieces(grid, command);
         Piece sourcePiece = moveInput.get(0);
         Piece targetPiece = moveInput.get(1);
-        GameState gameState = move(grid, sourcePiece, targetPiece);
-        OutputView.printGridStatus(grid.lines());
-        return gameState;
-    }
-
-    private GameState playingException(final Grid grid, final IllegalArgumentException error) {
-        OutputView.printError(error);
-        return run(grid);
+        return move(grid, sourcePiece, targetPiece);
     }
 
     @Override
@@ -52,10 +29,6 @@ public abstract class Playing implements GameState {
         if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("움직이려는 대상이 빈칸입니다");
         }
-    }
-
-    final boolean isKingCaught(final Piece targetPiece) {
-        return targetPiece instanceof King;
     }
 
     private List<Piece> parsedPieces(final Grid grid, final String command) {

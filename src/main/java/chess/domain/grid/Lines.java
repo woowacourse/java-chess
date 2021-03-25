@@ -8,6 +8,7 @@ import java.util.List;
 
 public final class Lines {
     private static final int ROW_INDEX_COUNT = 7;
+
     private final List<Line> lines;
 
     public Lines(final List<Line> lines) {
