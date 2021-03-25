@@ -28,6 +28,8 @@ public class OutputView {
     private static final String MESSAGE_CHESS_IS_ALREADY_STOPPED = "체스 경기는 종료된 상태입니다.";
     private static final String MESSAGE_END_CHESS = "체스 경기를 종료했습니다." + LINE_SEPARATOR;
     
+    private static final String EXIT_GAME = "게임을 종료합니다.";
+    
     private static final String ERROR_BLACK_IS_EQUAL_TO_WHITE = "BLACK과 WHITE의 점수가 같을 경우 이 메소드를 사용해서는 안됩니다.";
     
     public static void printStart() {
@@ -96,5 +98,9 @@ public class OutputView {
     
     public static void printChessIsStopping() {
         System.out.println(MESSAGE_CHESS_IS_ALREADY_STOPPED);
+    }
+    
+    public static void printExit() {
+        System.out.println(EXIT_GAME);
     }
 }
