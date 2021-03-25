@@ -3,9 +3,11 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitBoardGenerator;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -23,7 +25,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
-
 
     private Board board;
 
@@ -97,6 +98,19 @@ public class BoardTest {
         this.board = new Board(ranks);
 
         assertThat(this.board.isAliveBothKings()).isTrue();
+    }
 
+    @Test
+    @DisplayName("현재 체스보드에 존재하는 말의 위치 이동")
+    void testMoveIfValidPosition() {
+        this.board = new Board(InitBoardGenerator.initRanks());
+
+        assertThat(this.board.pieceByPosition(Position.of("a2"))).isEqualTo(Pawn.createWhite());
+        assertThat(this.board.pieceByPosition(Position.of("a4"))).isEqualTo(Empty.create());
+
+        this.board.moveIfValidPosition(Position.of("a2"), Position.of("a4"));
+
+        assertThat(this.board.pieceByPosition(Position.of("a2"))).isEqualTo(Empty.create());
+        assertThat(this.board.pieceByPosition(Position.of("a4"))).isEqualTo(Pawn.createWhite());
     }
 }

@@ -3,6 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.position.Position;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
@@ -51,5 +52,13 @@ class RankTest {
             Pawn.createBlack(),
             Pawn.createBlack()
         );
+    }
+
+    @Test
+    @DisplayName("체스판 Rank 좌표에 존재하는 체스말 바꾸기")
+    void testReplacePiece() {
+        assertThat(this.rank.piece(Position.of("a7"))).isEqualTo(Pawn.createBlack());
+        this.rank.replacePiece(Position.of("a7"), King.createBlack());
+        assertThat(this.rank.piece(Position.of("a7"))).isEqualTo(King.createBlack());
     }
 }

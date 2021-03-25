@@ -25,4 +25,8 @@ public class Rank {
     public List<Piece> squares() {
         return new ArrayList<>(this.squares.values());
     }
+
+    public void replacePiece(final Position position, final Piece piece) {
+        this.squares.replace(position, piece);
+    }
 }

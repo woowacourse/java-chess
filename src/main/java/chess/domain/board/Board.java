@@ -37,8 +37,6 @@ public class Board {
             .count() == BOTH_KINGS_ALIVE;
     }
 
-    //--------------------- refactor line ------------------------------------------
-
     public void moveIfValidPosition(Position source, Position target) {
         if (isNotMovablePosition(source, target)) {
             throw new IllegalArgumentException("유효하지 않은 좌표 입력입니다.");
@@ -46,7 +44,7 @@ public class Board {
         swapPieces(source, target);
     }
 
-    private Boolean isNotMovablePosition(Position source, Position target) {
+    private boolean isNotMovablePosition(Position source, Position target) {
         Piece piece = pieceByPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();
         Set<Position> movablePath = moveStrategy.moveStrategy(this, source);
@@ -60,12 +58,12 @@ public class Board {
     }
 
     private void replacePiece(Position position, Piece piece) {
+        Rank findedRank = this.ranks
+            .stream()
+            .filter(rank -> rank.hasPosition(position))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
 
-    }
-
-    private void replaceIfValidKey(Position position, Piece piece, Map<Position, Piece> map) {
-        if (map.containsKey(position)) {
-            map.replace(position, piece);
-        }
+        findedRank.replacePiece(position, piece);
     }
 }
