@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Pawn;
@@ -20,9 +19,9 @@ public class PawnTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
     void create(int column) {
-        Pawn blackPawn = new Pawn(BLACK, Point.of(1, column));
+        Pawn blackPawn = new Pawn(BLACK);
         assertThat(PieceType.findPiece(1, column)).isEqualTo(blackPawn);
-        Pawn whitePawn = new Pawn(WHITE, Point.of(6, column));
+        Pawn whitePawn = new Pawn(WHITE);
         assertThat(PieceType.findPiece(6, column)).isEqualTo(whitePawn);
     }
 
@@ -30,13 +29,13 @@ public class PawnTest {
     @Test
     void checkBlackPawnImpossibleMove() {
         Point source = Point.of(1, 3);
-        Pawn blackPawn = new Pawn(BLACK, source);
-        Empty empty = new Empty(NOTHING, Point.of(0, 3));
+        Pawn blackPawn = new Pawn(BLACK);
 
-        Direction direction = Direction.createDirection(source, Point.of(0, 3));
+        Point emptyPoint = Point.of(0, 3);
+        Empty empty = new Empty(NOTHING);
 
         assertThatThrownBy(
-                () -> blackPawn.validateMovableRoute(direction, empty)
+                () -> blackPawn.validateMovableRoute(source, emptyPoint, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,58 +43,63 @@ public class PawnTest {
     @Test
     void checkWhitePawnImpossibleMove() {
         Point source = Point.of(6, 3);
-        Pawn whitePawn = new Pawn(WHITE, source);
-        Empty empty = new Empty(NOTHING, Point.of(7, 3));
+        Pawn whitePawn = new Pawn(WHITE);
 
-        Direction direction = Direction.createDirection(source, Point.of(7, 3));
+        Point emptyPoint = Point.of(7, 3);
+        Empty empty = new Empty(NOTHING);
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovableRoute(direction, empty)
+                () -> whitePawn.validateMovableRoute(source, emptyPoint, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("대각선 이동 시 기물이 없는 경우")
     @Test
     void checkRightDiagonalMove() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
-        Empty empty = new Empty(NOTHING, Point.of(5, 4));
+        Pawn whitePawn = new Pawn(WHITE);
+        Point whitePawnPoint = Point.of(6, 3);
 
-        Pawn blackPawn = new Pawn(BLACK, Point.of(5, 4));
-        Empty empty2 = new Empty(NOTHING, Point.of(4, 3));
+        Empty empty = new Empty(NOTHING);
+        Point emptyPoint = Point.of(5, 4);
 
-        Direction direction1 = Direction.createDirection(Point.of(6, 3), Point.of(5, 4));
-        Direction direction2 = Direction.createDirection(Point.of(5, 4), Point.of(4, 3));
+        Pawn blackPawn = new Pawn(BLACK);
+        Point blackPawnPoint = Point.of(5, 4);
+
+        Empty empty2 = new Empty(NOTHING);
+        Point emptyPoint2 = Point.of(4, 3);
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovableRoute(direction1, empty)
+                () -> whitePawn.validateMovableRoute(whitePawnPoint, emptyPoint, empty)
         ).isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(
-                () -> blackPawn.validateMovableRoute(direction2, empty2)
+                () -> blackPawn.validateMovableRoute(blackPawnPoint, emptyPoint2, empty2)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰 첫 이동 아니면 두 칸 이동 불가 확인")
     @Test
     void checkInitialPawnImpossibleMove() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(2, 3));
-        Empty empty = new Empty(NOTHING, Point.of(4, 3));
+        Pawn whitePawn = new Pawn(WHITE);
+        Point whitePawnPoint = Point.of(2, 3);
 
-        Direction direction = Direction.createDirection(Point.of(2, 3), Point.of(4, 3));
+        Empty empty = new Empty(NOTHING);
+        Point emptyPoint = Point.of(4, 3);
 
         assertThatThrownBy(
-                () -> whitePawn.validateMovableRoute(direction, empty)
+                () -> whitePawn.validateMovableRoute(whitePawnPoint, emptyPoint, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰 첫 이동 시 두 칸 이동 가능 확인")
     @Test
     void checkInitialPawnPossibleMove() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
-        Empty empty = new Empty(NOTHING, Point.of(4, 3));
+        Pawn whitePawn = new Pawn(WHITE);
+        Point whitePawnPoint = Point.of(6, 3);
 
-        Direction direction = Direction.createDirection(Point.of(6, 3), Point.of(4, 3));
+        Empty empty = new Empty(NOTHING);
+        Point emptyPoint = Point.of(4, 3);
 
-        assertDoesNotThrow(() -> whitePawn.validateMovableRoute(direction, empty));
+        assertDoesNotThrow(() -> whitePawn.validateMovableRoute(whitePawnPoint, emptyPoint, empty));
     }
 }

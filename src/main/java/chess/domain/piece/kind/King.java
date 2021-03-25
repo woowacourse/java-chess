@@ -2,7 +2,6 @@ package chess.domain.piece.kind;
 
 import chess.domain.Point;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 
 public final class King extends Piece {
     private static final int KING_SCORE = 0;

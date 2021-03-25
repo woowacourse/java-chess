@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Queen;
@@ -12,15 +11,14 @@ import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QueenTest {
     @DisplayName("Queen 생성")
     @Test
     public void create() {
-        Queen queen1 = new Queen(BLACK, Point.of(0, 3));
+        Queen queen1 = new Queen(BLACK);
         assertThat(PieceType.findPiece(0, 3)).isEqualTo(queen1);
-        Queen queen2 = new Queen(WHITE, Point.of(7, 3));
+        Queen queen2 = new Queen(WHITE);
         assertThat(PieceType.findPiece(7, 3)).isEqualTo(queen2);
     }
 
@@ -28,54 +26,51 @@ public class QueenTest {
     @Test
     void checkQueenPossibleMove() {
         Point source = Point.of(4, 4);
-        Queen queen = new Queen(BLACK, source);
-        Empty empty1 = new Empty(NOTHING, Point.of(5, 4));
-        Empty empty2 = new Empty(NOTHING, Point.of(4, 5));
-        Empty empty3 = new Empty(NOTHING, Point.of(3, 3));
-        Empty empty4 = new Empty(NOTHING, Point.of(5, 5));
+        Queen queen = new Queen(BLACK);
 
-        Direction direction1 = Direction.createDirection(source, Point.of(5, 4));
-        Direction direction2 = Direction.createDirection(source, Point.of(4, 5));
-        Direction direction3 = Direction.createDirection(source, Point.of(3, 3));
-        Direction direction4 = Direction.createDirection(source, Point.of(5, 5));
+        Empty empty1 = new Empty(NOTHING);
+        Point emptyPoint1 = Point.of(4, 3);
+        Empty empty2 = new Empty(NOTHING);
+        Point emptyPoint2 = Point.of(4, 5);
+        Empty empty3 = new Empty(NOTHING);
+        Point emptyPoint3 = Point.of(3, 3);
+        Empty empty4 = new Empty(NOTHING);
+        Point emptyPoint4 = Point.of(5, 5);
 
-        assertEquals(direction1, Direction.SOUTH);
-        assertEquals(direction2, Direction.EAST);
-        assertEquals(direction3, Direction.NORTH_WEST);
-        assertEquals(direction4, Direction.SOUTH_EAST);
-
-        assertDoesNotThrow(() -> queen.validateMovableRoute(direction1, empty1));
-        assertDoesNotThrow(() -> queen.validateMovableRoute(direction2, empty2));
-        assertDoesNotThrow(() -> queen.validateMovableRoute(direction3, empty3));
-        assertDoesNotThrow(() -> queen.validateMovableRoute(direction4, empty4));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(source, emptyPoint1, empty1));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(source, emptyPoint2, empty2));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(source, emptyPoint3, empty3));
+        assertDoesNotThrow(() -> queen.validateMovableRoute(source, emptyPoint4, empty4));
     }
 
     @DisplayName("Queen의 불가능한 위치 확인")
     @Test
     void checkQueenImpossibleMove() {
         Point source = Point.of(4, 4);
-        Queen queen = new Queen(BLACK, source);
+        Queen queen = new Queen(BLACK);
 
-        Empty empty1 = new Empty(NOTHING, Point.of(2, 3));
-        Empty empty2 = new Empty(NOTHING, Point.of(6, 5));
-        Empty empty3 = new Empty(NOTHING, Point.of(2, 5));
-        Empty empty4 = new Empty(NOTHING, Point.of(6, 3));
+        Empty empty1 = new Empty(NOTHING);
+        Point emptyPoint1 = Point.of(2, 3);
 
-        Direction direction1 = Direction.createDirection(source, Point.of(2, 3));
-        Direction direction2 = Direction.createDirection(source, Point.of(6, 5));
-        Direction direction3 = Direction.createDirection(source, Point.of(2, 5));
-        Direction direction4 = Direction.createDirection(source, Point.of(6, 3));
+        Empty empty2 = new Empty(NOTHING);
+        Point emptyPoint2 = Point.of(6, 5);
 
-        assertThatThrownBy(() -> queen.validateMovableRoute(direction1, empty1))
+        Empty empty3 = new Empty(NOTHING);
+        Point emptyPoint3 = Point.of(2, 5);
+
+        Empty empty4 = new Empty(NOTHING);
+        Point emptyPoint4 = Point.of(6, 3);
+
+        assertThatThrownBy(() -> queen.validateMovableRoute(source, emptyPoint1, empty1))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovableRoute(direction2, empty2))
+        assertThatThrownBy(() -> queen.validateMovableRoute(source, emptyPoint2, empty2))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovableRoute(direction3, empty3))
+        assertThatThrownBy(() -> queen.validateMovableRoute(source, emptyPoint3, empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> queen.validateMovableRoute(direction4, empty4))
+        assertThatThrownBy(() -> queen.validateMovableRoute(source, emptyPoint4, empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

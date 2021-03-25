@@ -2,7 +2,6 @@ package chess.domain.piece.kind;
 
 import chess.domain.Point;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 import chess.domain.piece.Name;
 
 import java.util.Objects;

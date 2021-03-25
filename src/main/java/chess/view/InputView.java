@@ -10,8 +10,8 @@ import static chess.controller.ChessController.STATUS;
 
 public class InputView {
     public static final String INVALID_INPUT_ERROR_MESSAGE = "올바르지 않은 입력입니다.";
-    private static final Scanner scanner = new Scanner(System.in);
     public static final String END = "end";
+    private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
     }

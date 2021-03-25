@@ -62,7 +62,7 @@ public class Score {
 
     public String getWinner() {
         if (this.whiteScore > blackScore) {
-            return WHITE+ " 승";
+            return WHITE + " 승";
         }
         if (this.whiteScore < blackScore) {
             return BLACK + " 승";
