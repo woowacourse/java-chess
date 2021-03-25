@@ -79,11 +79,10 @@ public class Board {
         int xVector = moveDirection.getXVector();
         int yVector = moveDirection.getYVector();
 
-        Position pathPosition = new Position(source);
-        pathPosition.moveUnit(xVector, yVector);
+        Position pathPosition = source.movedPosition(xVector, yVector);
         while (!pathPosition.equals(target)) {
             checkIfClear(pathPosition);
-            pathPosition.moveUnit(xVector, yVector);
+            pathPosition = pathPosition.movedPosition(xVector, yVector);
         }
     }
 

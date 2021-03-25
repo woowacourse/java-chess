@@ -10,10 +10,12 @@ import java.util.Optional;
 public class Position {
 
     public static final String OUT_OF_BOUND_MESSAGE = "움직일려는 좌표가 보드판을 넘어갑니다.";
+    public static final int OPPOSITE_SIDE_OF_BOARD = 9;
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
-    private XPosition xPosition;
-    private YPosition yPosition;
+
+    private final XPosition xPosition;
+    private final YPosition yPosition;
 
     static {
         for (XPosition xposition : XPosition.values()) {
@@ -23,8 +25,7 @@ public class Position {
 
     private static void putPositionWithY(XPosition xposition) {
         for (YPosition yPosition : YPosition.values()) {
-            String positionKey = String.format("%c%d", xposition.getValue(),
-                yPosition.getValue());
+            String positionKey = positionKey(xposition.getValue(), yPosition.getValue());
             CACHE.put(positionKey, new Position(xposition, yPosition));
         }
     }
@@ -48,9 +49,12 @@ public class Position {
     }
 
     public static Position of(char xRawPosition, int yRawPosition) {
-        String positionKey = String.format("%c%d", xRawPosition,
-            yRawPosition);
+        String positionKey = positionKey(xRawPosition, yRawPosition);
         return from(positionKey);
+    }
+
+    private static String positionKey(char xRawPosition, int yRawPosition) {
+        return String.format("%c%d", xRawPosition, yRawPosition);
     }
 
     public static Position of(XPosition xPosition, YPosition yPosition) {
@@ -78,16 +82,17 @@ public class Position {
     }
 
     public Position computeSymmetricPosition() {
-        return Position.of(xPosition.getValue(), 9 - yPosition.getValue());
+        return Position.of(xPosition.getValue(), OPPOSITE_SIDE_OF_BOARD - yPosition.getValue());
     }
 
     public boolean sameYPosition(int rawYPosition) {
         return yPosition.samePosition(rawYPosition);
     }
 
-    public void moveUnit(int xVector, int yVector) {
-        xPosition = xPosition.moveUnit(xVector);
-        yPosition = yPosition.moveUnit(yVector);
+    public Position movedPosition(int xVector, int yVector) {
+        XPosition newXPosition = xPosition.moveUnit(xVector);
+        YPosition newYPosition = yPosition.moveUnit(yVector);
+        return Position.of(newXPosition, newYPosition);
     }
 
     @Override
