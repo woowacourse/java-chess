@@ -12,9 +12,14 @@ public enum PieceColor {
     }
 
     public PieceColor oppositeColor() {
+        if (this == VOID) {
+            throw new IllegalArgumentException("반대색이 존재하지 않습니다.");
+        }
+
         if (this == BLACK) {
             return WHITE;
         }
+
         return BLACK;
     }
 
