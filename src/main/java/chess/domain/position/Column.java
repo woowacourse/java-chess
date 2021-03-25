@@ -41,7 +41,7 @@ public enum Column {
         if (isBoundary(direction)) {
             return this;
         }
-        return getColumn(value + direction.getCoordinates().get(0));
+        return getColumn(value + direction.columnValue());
     }
 
     public String getName() {

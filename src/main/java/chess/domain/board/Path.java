@@ -25,28 +25,26 @@ public class Path {
     }
 
     public List<Position> removeObstacleInPath(Piece piece, Board board) {
-        List<Position> cleanPath = new ArrayList<>();
         if (piece.isPawn()) {
             Pawn pawn = (Pawn) piece;
-            calculatePawnPath(pawn, board, cleanPath);
-            return cleanPath;
+            return calculatePawnPath(pawn, board);
         }
-        calculateNonePawnPath(piece, board, cleanPath);
-        return cleanPath;
+        return calculateNonePawnPath(piece, board);
     }
 
-    private void calculatePawnPath(Pawn pawn, Board board, List<Position> cleanPath) {
-        cleanPath.addAll(positions.stream()
+    private List<Position> calculatePawnPath(Pawn pawn, Board board) {
+        return positions.stream()
             .filter(position -> {
                 Piece target = board.findPieceBy(position);
                 Position pawnPosition = board.findPositionBy(pawn);
                 return pawn.isEnemyOrEmpty(target) && pawn
                     .isMovable(pawnPosition, position, target);
             })
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
     }
 
-    private void calculateNonePawnPath(Piece piece, Board board, List<Position> cleanPath) {
+    private List<Position> calculateNonePawnPath(Piece piece, Board board) {
+        List<Position> cleanPath = new ArrayList<>();
         for (Position position : positions) {
             Piece thatPiece = board.findPieceBy(position);
             if (piece.isSameSide(thatPiece)) {
@@ -57,6 +55,7 @@ public class Path {
                 break;
             }
         }
+        return cleanPath;
     }
 
     public List<Position> positions() {

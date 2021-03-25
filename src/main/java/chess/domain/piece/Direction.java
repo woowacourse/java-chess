@@ -70,10 +70,14 @@ public enum Direction {
     }
 
     public static List<Direction> leftDirection() {
-        return Arrays.asList(L_DD, L_UU, LEFT, DOWN_RIGHT, UP_RIGHT);
+        return Arrays.asList(L_DD, L_UU, LEFT, DOWN_LEFT, UP_LEFT);
     }
 
-    public List<Integer> getCoordinates() {
-        return Arrays.asList(columnNumber, rowNumber);
+    public int columnValue(){
+        return columnNumber;
+    }
+
+    public int rowValue(){
+        return rowNumber;
     }
 }

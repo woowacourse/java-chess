@@ -47,10 +47,6 @@ public class Position {
         }
     }
 
-    public static List<Position> positions() {
-        return new ArrayList<>(POSITION_CACHE.values());
-    }
-
     public boolean isWhitePawnStartLine() {
         return row.equals(Row.TWO);
     }

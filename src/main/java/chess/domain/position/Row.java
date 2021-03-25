@@ -32,7 +32,7 @@ public enum Row {
         if (isBoundary(direction)) {
             return this;
         }
-        return getRow(String.valueOf(Integer.parseInt(number) + direction.getCoordinates().get(1)));
+        return getRow(String.valueOf(Integer.parseInt(number) + direction.rowValue()));
     }
 
     public String getNumber() {
