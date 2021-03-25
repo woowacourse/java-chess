@@ -28,12 +28,12 @@ public final class Rook extends GamePieceExceptPawn {
     }
 
     @Override
-    public boolean isKing() {
-        return false;
+    public double score() {
+        return SCORE;
     }
 
     @Override
-    public double score() {
-        return SCORE;
+    public boolean isKing() {
+        return false;
     }
 }

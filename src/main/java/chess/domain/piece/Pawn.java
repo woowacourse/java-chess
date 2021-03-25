@@ -40,10 +40,8 @@ public final class Pawn extends GamePiece {
         return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
     }
 
-    private void checkPieceExistInToPosition(Piece targetPiece) {
-        if (!targetPiece.isBlank()) {
-            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
-        }
+    private boolean diagonal(int rowDifference, int columnDifference) {
+        return rowDifference == 1 && columnDifference == 1;
     }
 
     private boolean forward(int rowDifference, int columnDifference) {
@@ -59,39 +57,10 @@ public final class Pawn extends GamePiece {
         }
     }
 
-    private boolean diagonal(int rowDifference, int columnDifference) {
-        return rowDifference == 1 && columnDifference == 1;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        int rowDifference = Math.abs(Position.differenceOfRow(from, to));
-        int columnDifference = Math.abs(Position.differenceOfColumn(from, to));
-
-        return rowDifference == 1 && columnDifference == 1;
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        if (Position.differenceOfColumn(from, to) != 0) {
-            return false;
+    private void checkPieceExistInToPosition(Piece targetPiece) {
+        if (!targetPiece.isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
         }
-        return Math.abs(Position.differenceOfRow(from, to)) < 3;
-    }
-
-    @Override
-    protected List<Position> getRoute(Position from, Position to) {
-        return Position.route(from, to);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
     }
 
     private boolean movableOneOrTwoSquare(int rowDifference, int columnDifference, int direction) {
@@ -117,13 +86,28 @@ public final class Pawn extends GamePiece {
     }
 
     @Override
-    public double score() {
-        return 0;
+    protected List<Position> getRoute(Position from, Position to) {
+        return Position.route(from, to);
     }
 
     @Override
     public void moved() {
         initPosition = false;
+    }
+
+    @Override
+    public double score() {
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 
     public static double scoreByCount(int count) {

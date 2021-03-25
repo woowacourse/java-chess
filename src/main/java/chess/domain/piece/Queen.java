@@ -21,12 +21,12 @@ public final class Queen extends GamePieceExceptPawn {
         return isDiagonal(rowDifference, columnDifference);
     }
 
-    private boolean isDiagonal(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == Math.abs(columnDifference);
-    }
-
     private boolean isStraight(int rowDifference, int columnDifference) {
         return rowDifference == 0 || columnDifference == 0;
+    }
+
+    private boolean isDiagonal(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 
     @Override
@@ -35,12 +35,12 @@ public final class Queen extends GamePieceExceptPawn {
     }
 
     @Override
-    public boolean isKing() {
-        return false;
+    public double score() {
+        return SCORE;
     }
 
     @Override
-    public double score() {
-        return SCORE;
+    public boolean isKing() {
+        return false;
     }
 }

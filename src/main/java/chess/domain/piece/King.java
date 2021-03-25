@@ -25,12 +25,12 @@ public final class King extends GamePieceExceptPawn {
     }
 
     @Override
-    public boolean isKing() {
-        return true;
+    public double score() {
+        return SCORE;
     }
 
     @Override
-    public double score() {
-        return SCORE;
+    public boolean isKing() {
+        return true;
     }
 }

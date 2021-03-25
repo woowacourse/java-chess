@@ -8,21 +8,17 @@ public interface Piece {
 
     List<Position> route(Position from, Position to, Piece targetPiece, Side side);
 
+    void moved();
+
+    double score();
+
+    boolean isSideEqualTo(Side side);
+
     boolean isBlank();
 
     boolean isPawn();
 
     boolean isKing();
-
-    double score();
-
-    void moved();
-
-    boolean isSideEqualTo(Side side);
-
-    boolean diagonal(Position from, Position to);
-
-    boolean forward(Position from, Position to);
 
     String getInitial();
 }

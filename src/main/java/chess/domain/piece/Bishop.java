@@ -13,13 +13,13 @@ public final class Bishop extends GamePieceExceptPawn {
         super(side, INITIAL);
     }
 
-    private boolean isDiagonal(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == Math.abs(columnDifference);
-    }
-
     @Override
     protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
         return isDiagonal(rowDifference, columnDifference);
+    }
+
+    private boolean isDiagonal(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 
     @Override
@@ -28,12 +28,12 @@ public final class Bishop extends GamePieceExceptPawn {
     }
 
     @Override
-    public boolean isKing() {
-        return false;
+    public double score() {
+        return SCORE;
     }
 
     @Override
-    public double score() {
-        return SCORE;
+    public boolean isKing() {
+        return false;
     }
 }
