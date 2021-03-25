@@ -14,6 +14,7 @@ public final class Bishop extends Piece {
 
     @Override
     public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
         Direction direction = source.findDirection(target);
 
         if (Direction.isNotBishopDirection(direction)) {

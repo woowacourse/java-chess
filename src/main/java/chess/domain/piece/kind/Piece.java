@@ -72,4 +72,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(name, color);
     }
+
+    public boolean isKnight() {
+        return false;
+    }
 }

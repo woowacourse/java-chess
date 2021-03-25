@@ -14,6 +14,7 @@ public final class Rook extends Piece {
 
     @Override
     public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
         Direction direction = source.findDirection(target);
         if (Direction.isNotRookDirection(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");

@@ -15,6 +15,7 @@ public final class Knight extends Piece {
 
     @Override
     public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
         int distance = source.calculateDistance(target);
 
         if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
@@ -25,5 +26,10 @@ public final class Knight extends Piece {
     @Override
     public double score() {
         return KNIGHT_SCORE;
+    }
+
+    @Override
+    public boolean isKnight() {
+        return true;
     }
 }

@@ -48,11 +48,10 @@ public class Board {
 
     private void moveStepByStep(Point source, Point target) {
         Direction direction = source.findDirection(target);
-
         Point currentPoint = source;
         boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
+
         while (!isArrivedAtTarget) {
-            // TODO: Knight의 Direction 추가할 것
             Point nextPoint = currentPoint.createNextPoint(direction);
             isArrivedAtTarget = nextPoint.isSamePoint(target);
             movePieceToTargetPoint(source, target, isArrivedAtTarget);

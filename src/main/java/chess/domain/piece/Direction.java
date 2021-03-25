@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Point;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +13,16 @@ public enum Direction {
     SOUTH(1, 0),
     SOUTH_WEST(1, -1),
     WEST(0, -1),
-    NORTH_WEST(-1, -1);
+    NORTH_WEST(-1, -1),
+
+    NORTH_NORTH_EAST(-2, 1),
+    NORTH_NORTH_WEST(-2, -1),
+    SOUTH_SOUTH_EAST(2, 1),
+    SOUTH_SOUTH_WEST(2, 1),
+    NORTH_WEST_WEST(-1, -2),
+    NORTH_EAST_EAST(-1, 2),
+    SOUTH_WEST_WEST(1, -2),
+    SOUTH_EAST_EAST(1, 2);
 
     private final int rowDirection;
     private final int columnDirection;
@@ -26,11 +33,19 @@ public enum Direction {
     }
 
     public static Direction createDirection(int initialRowDifference, int initialColumnDifference) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.rowDirection == initialRowDifference)
+                .filter(direction -> direction.columnDirection == initialColumnDifference)
+                .findAny()
+                .orElse(createDirectionWithNormalization(initialRowDifference, initialColumnDifference));
+    }
 
+    private static Direction createDirectionWithNormalization(int initialRowDifference, int initialColumnDifference) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.rowDirection == normalizeDifference(initialRowDifference))
                 .filter(direction -> direction.columnDirection == normalizeDifference(initialColumnDifference))
-                .findAny().orElseThrow(RuntimeException::new);
+                .findAny()
+                .orElseThrow(RuntimeException::new);
     }
 
     private static int normalizeDifference(int difference) {
@@ -54,6 +69,20 @@ public enum Direction {
     public static boolean isNotBishopDirection(Direction direction) {
         List<Direction> bishopDirection = Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST, NORTH_WEST);
         return !bishopDirection.contains(direction);
+    }
+
+    private static boolean isNotKnightDirection(Direction direction) {
+        List<Direction> knightDirection = Arrays.asList(
+                NORTH_NORTH_EAST,
+                NORTH_NORTH_WEST,
+                SOUTH_SOUTH_EAST,
+                SOUTH_SOUTH_WEST,
+                NORTH_WEST_WEST,
+                NORTH_EAST_EAST,
+                SOUTH_WEST_WEST,
+                SOUTH_EAST_EAST
+        );
+        return !knightDirection.contains(direction);
     }
 
     public int addCurrentRow(int row) {

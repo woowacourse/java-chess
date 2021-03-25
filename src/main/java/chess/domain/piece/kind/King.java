@@ -14,6 +14,7 @@ public final class King extends Piece {
 
     @Override
     public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
         int distance = source.calculateDistance(target);
 
         if (distance != MOVE_STRAIGHT_ONE_SQUARE && distance != MOVE_DIAGONAL_ONE_SQUARE) {

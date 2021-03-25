@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.kind.Piece;
 
 import java.util.List;
 import java.util.Objects;
@@ -98,6 +99,7 @@ public class Point {
         if (initialRowDifference == 0 && initialColumnDifference == 0) {
             throw new IllegalArgumentException("기물이 움직이지 않습니다.");
         }
+
         return Direction.createDirection(initialRowDifference, initialColumnDifference);
     }
 

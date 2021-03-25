@@ -14,6 +14,7 @@ public final class Queen extends Piece {
 
     @Override
     public void validateMovableRoute(Point source, Point target, Piece targetPiece) {
+        validateTargetPieceColor(targetPiece);
         int initialRowDifference = target.subtractRow(source);
         int initialColumnDifference = target.subtractColumn(source);
 
