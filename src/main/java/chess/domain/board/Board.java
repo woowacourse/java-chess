@@ -10,7 +10,12 @@ import java.util.Set;
 public class Board {
 
     public static final int BOTH_KINGS_ALIVE = 2;
+
     private final List<Rank> ranks;
+
+    public Board() {
+        this(InitPieces.initRanks());
+    }
 
     public Board(final List<Rank> ranks) {
         this.ranks = ranks;

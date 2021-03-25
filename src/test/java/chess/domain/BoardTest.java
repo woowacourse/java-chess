@@ -3,7 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitBoardGenerator;
+import chess.domain.board.InitPieces;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
@@ -103,7 +103,7 @@ public class BoardTest {
     @Test
     @DisplayName("현재 체스보드에 존재하는 말의 위치 이동")
     void testMoveIfValidPosition() {
-        this.board = new Board(InitBoardGenerator.initRanks());
+        this.board = new Board(InitPieces.initRanks());
 
         assertThat(this.board.pieceByPosition(Position.of("a2"))).isEqualTo(Pawn.createWhite());
         assertThat(this.board.pieceByPosition(Position.of("a4"))).isEqualTo(Empty.create());
@@ -112,5 +112,55 @@ public class BoardTest {
 
         assertThat(this.board.pieceByPosition(Position.of("a2"))).isEqualTo(Empty.create());
         assertThat(this.board.pieceByPosition(Position.of("a4"))).isEqualTo(Pawn.createWhite());
+    }
+
+    @Test
+    @DisplayName("Board 생성자에 인자를 넣지 않을 시 자동으로 초기화된 체스보드가 생성되는지 테스트")
+    void testInitChessBoardByNonParameterConstructor() {
+        this.board = new Board();
+        assertThat(board.pieceByPosition(Position.of("a8"))).isEqualTo(Rook.createBlack());
+        assertThat(board.pieceByPosition(Position.of("b8"))).isEqualTo(Knight.createBlack());
+        assertThat(board.pieceByPosition(Position.of("c8"))).isEqualTo(Bishop.createBlack());
+        assertThat(board.pieceByPosition(Position.of("d8"))).isEqualTo(Queen.createBlack());
+        assertThat(board.pieceByPosition(Position.of("e8"))).isEqualTo(King.createBlack());
+        assertThat(board.pieceByPosition(Position.of("f8"))).isEqualTo(Bishop.createBlack());
+        assertThat(board.pieceByPosition(Position.of("g8"))).isEqualTo(Knight.createBlack());
+        assertThat(board.pieceByPosition(Position.of("h8"))).isEqualTo(Rook.createBlack());
+
+        assertThat(board.pieceByPosition(Position.of("a7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("b7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("c7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("d7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("e7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("f7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("g7"))).isEqualTo(Pawn.createBlack());
+        assertThat(board.pieceByPosition(Position.of("h7"))).isEqualTo(Pawn.createBlack());
+
+        assertThat(board.pieceByPosition(Position.of("a6"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("b5"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("c4"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("d3"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("e4"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("f5"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("g6"))).isEqualTo(Empty.create());
+        assertThat(board.pieceByPosition(Position.of("h5"))).isEqualTo(Empty.create());
+
+        assertThat(board.pieceByPosition(Position.of("a1"))).isEqualTo(Rook.createWhite());
+        assertThat(board.pieceByPosition(Position.of("b1"))).isEqualTo(Knight.createWhite());
+        assertThat(board.pieceByPosition(Position.of("c1"))).isEqualTo(Bishop.createWhite());
+        assertThat(board.pieceByPosition(Position.of("d1"))).isEqualTo(Queen.createWhite());
+        assertThat(board.pieceByPosition(Position.of("e1"))).isEqualTo(King.createWhite());
+        assertThat(board.pieceByPosition(Position.of("f1"))).isEqualTo(Bishop.createWhite());
+        assertThat(board.pieceByPosition(Position.of("g1"))).isEqualTo(Knight.createWhite());
+        assertThat(board.pieceByPosition(Position.of("h1"))).isEqualTo(Rook.createWhite());
+
+        assertThat(board.pieceByPosition(Position.of("a2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("b2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("c2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("d2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("e2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("f2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("g2"))).isEqualTo(Pawn.createWhite());
+        assertThat(board.pieceByPosition(Position.of("h2"))).isEqualTo(Pawn.createWhite());
     }
 }
