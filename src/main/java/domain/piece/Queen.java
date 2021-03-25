@@ -38,9 +38,9 @@ public class Queen extends Piece {
 
     private Direction targetDirection(Position source, Position target) {
         if (!source.isNotLinearPosition(target)) {
-            return Direction.linearTargetDirection(source.diff(target));
+            return Direction.linearTargetDirection(source.difference(target));
         }
-        return Direction.diagonalTargetDirection(source.diff(target));
+        return Direction.diagonalTargetDirection(source.difference(target));
     }
 
 }

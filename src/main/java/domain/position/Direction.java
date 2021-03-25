@@ -22,35 +22,35 @@ public enum Direction {
     WWN(-1, -2),
     WWS(1, -2);
 
-    private final int rowDegree;
-    private final int columnDegree;
+    private final RowDegree rowDegree;
+    private final ColumnDegree columnDegree;
 
     Direction(int rowDegree, int columnDegree) {
-        this.rowDegree = rowDegree;
-        this.columnDegree = columnDegree;
+        this.rowDegree = new RowDegree(rowDegree);
+        this.columnDegree = new ColumnDegree(columnDegree);
     }
 
-    public static Direction linearTargetDirection(Position diff) {
-        if (diff.getRowDegree() < 0) {
+    public static Direction linearTargetDirection(Position difference) {
+        if (difference.isRowLessThanZero()) {
             return NORTH;
         }
-        if (diff.getRowDegree() > 0) {
+        if (difference.isRowGreaterThanZero()) {
             return SOUTH;
         }
-        if (diff.getColumnDegree() < 0) {
+        if (difference.isColumnLessThanZero()) {
             return WEST;
         }
         return EAST;
     }
 
-    public static Direction diagonalTargetDirection(Position diff) {
-        if (diff.getRowDegree() > 0 && diff.getColumnDegree() > 0) {
+    public static Direction diagonalTargetDirection(Position difference) {
+        if (difference.isRowGreaterThanZero() && difference.isColumnGreaterThanZero()) {
             return SOUTHEAST;
         }
-        if (diff.getRowDegree() > 0 && diff.getColumnDegree() < 0) {
+        if (difference.isRowGreaterThanZero() && difference.isColumnLessThanZero()) {
             return SOUTHWEST;
         }
-        if (diff.getRowDegree() < 0 && diff.getColumnDegree() < 0) {
+        if (difference.isRowLessThanZero() && difference.isColumnLessThanZero()) {
             return NORTHWEST;
         }
         return NORTHEAST;
@@ -72,12 +72,11 @@ public enum Direction {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
-    public int getRowDegree() {
-        return rowDegree;
+    public RowDegree rowDegreeSum(RowDegree rowDegree) {
+        return this.rowDegree.sum(rowDegree);
     }
 
-    public int getColumnDegree() {
-        return columnDegree;
+    public ColumnDegree columnDegreeSum(ColumnDegree columnDegree) {
+        return this.columnDegree.sum(columnDegree);
     }
-
 }

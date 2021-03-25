@@ -40,11 +40,10 @@ public class Pawn extends Piece {
     public boolean canMove(Board board, Position source, Position target) {
         List<Direction> directions = new ArrayList<>(findDirections());
         Direction forwardDirection = directions.remove(0);
-        if (isForwardMovable(board, forwardDirection, source, target)
-            || isDiagonalMovable(board, directions, source, target)) {
-            return true;
-        }
-        return isFirstMovable(board, forwardDirection, source, target);
+
+        return isForwardOneStepMovable(board, forwardDirection, source, target)
+            || isForwardTwoStepMovable(board, forwardDirection, source, target)
+            || isDiagonalMovable(board, directions, source, target);
     }
 
     private List<Direction> findDirections() {
@@ -54,27 +53,27 @@ public class Pawn extends Piece {
         return Direction.whitePawnDirection();
     }
 
-    private boolean isForwardMovable(Board board, Direction direction, Position source,
+    private boolean isForwardOneStepMovable(Board board, Direction direction, Position source,
         Position target) {
-        return board.piece(target).isEmpty() && source.sum(direction).equals(target);
+        return board.isEmptyPosition(target) && source.sum(direction).equals(target);
     }
 
     private boolean isDiagonalMovable(Board board, List<Direction> directions, Position source,
         Position target) {
-        return board.piece(target).isNotEmpty() && directions.stream()
+        return !board.isEmptyPosition(target) && directions.stream()
             .anyMatch(direction -> source.sum(direction).equals(target));
     }
 
-    private boolean isFirstMovable(Board board, Direction direction, Position source,
+    private boolean isForwardTwoStepMovable(Board board, Direction direction, Position source,
         Position target) {
-        if (!createInitialPawns().containsKey(source) || board.piece(target).isNotEmpty()) {
+        if (!createInitialPawns().containsKey(source) || !board.isEmptyPosition(target)) {
             return false;
         }
         Position firstStep = source.sum(direction);
-        if (board.piece(firstStep).isNotEmpty()) {
+        if (!board.isEmptyPosition(firstStep)) {
             return false;
         }
-        source = firstStep.sum(direction);
-        return source.equals(target);
+        Position secondStep = firstStep.sum(direction);
+        return secondStep.equals(target);
     }
 }

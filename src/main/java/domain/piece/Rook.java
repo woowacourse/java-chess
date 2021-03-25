@@ -30,7 +30,7 @@ public class Rook extends Piece {
         if (source.isNotLinearPosition(target)) {
             return false;
         }
-        Direction direction = Direction.linearTargetDirection(source.diff(target));
+        Direction direction = Direction.linearTargetDirection(source.difference(target));
         do {
             source = source.sum(direction);
         } while (!source.equals(target)

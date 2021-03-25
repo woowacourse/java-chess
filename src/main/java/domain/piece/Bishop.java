@@ -30,7 +30,7 @@ public class Bishop extends Piece {
         if (source.isNotDiagonalPosition(target)) {
             return false;
         }
-        Direction direction = Direction.diagonalTargetDirection(source.diff(target));
+        Direction direction = Direction.diagonalTargetDirection(source.difference(target));
         do {
             source = source.sum(direction);
         } while (!source.equals(target)

@@ -9,6 +9,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.position.ColumnDegree;
 import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,15 +68,10 @@ public class Board {
     public boolean canMove(Position source, Position target) {
         Piece sourcePiece = piece(source);
         Piece targetPiece = piece(target);
-        return sourcePiece.isNotEmpty()
-            && target.isChessBoardPosition()
-            && !sourcePiece.isSameColor(targetPiece);
+        return sourcePiece.isNotEmpty() && !sourcePiece.isSameColor(targetPiece);
     }
 
     public void validateMove(Position source, Position target) {
-        if (!source.isChessBoardPosition() || !target.isChessBoardPosition()) {
-            throw new IllegalArgumentException("[Error] 체스판 범위를 벗어나는 좌표 입니다.");
-        }
         if (piece(source).isEmpty()) {
             throw new IllegalArgumentException("[Error] source 위치에 기물이 없습니다.");
         }
@@ -118,7 +114,7 @@ public class Board {
         int count = (int) pieces(isBlack).entrySet()
             .stream()
             .filter(entry -> entry.getValue().isPawn()
-                && column == entry.getKey().getColumnDegree())
+                && entry.getKey().isColumnEquals(new ColumnDegree(column)))
             .count();
 
         if (count >= PAWN_ALLY_COUNT_CONDITION) {

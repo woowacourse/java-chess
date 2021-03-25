@@ -7,22 +7,24 @@ import org.junit.jupiter.api.Test;
 
 class PositionTest {
 
-    @DisplayName("포지션을 생성한다.")
+    @DisplayName("배열 좌표계를 사용하여 포지션을 생성한다.")
     @Test
-    void createTest() {
-        Position position = new Position(1, 2);
-
-        assertThat(position.getRowDegree()).isEqualTo(1);
-        assertThat(position.getColumnDegree()).isEqualTo(2);
+    void createFromArrayCoordinateTest() {
+        assertThat(new Position(3, 3)).isEqualTo(new Position(3, 3));
+        assertThat(new Position(0, 0)).isEqualTo(new Position(0, 0));
+        assertThat(new Position(1, 5)).isEqualTo(new Position(1, 5));
+        assertThat(new Position(5, 1)).isEqualTo(new Position(5, 1));
+        assertThat(new Position(7, 7)).isEqualTo(new Position(7, 7));
     }
 
     @DisplayName("체스 좌표계를 사용하여 포지션을 생성한다.")
     @Test
-    void chessPositionCreate() {
-        Position position = new Position("d5");
-
-        assertThat(position.getRowDegree()).isEqualTo(3);
-        assertThat(position.getColumnDegree()).isEqualTo(3);
+    void createFromChessCoordinateTest() {
+        assertThat(new Position("d5")).isEqualTo(new Position(3, 3));
+        assertThat(new Position("a8")).isEqualTo(new Position(0, 0));
+        assertThat(new Position("f7")).isEqualTo(new Position(1, 5));
+        assertThat(new Position("b3")).isEqualTo(new Position(5, 1));
+        assertThat(new Position("h1")).isEqualTo(new Position(7, 7));
     }
 
     @DisplayName("포지션이 체스판 범위에 들지 않는다.")
@@ -38,6 +40,7 @@ class PositionTest {
         Position position = new Position("h1");
         assertThat(position.isChessBoardPosition()).isTrue();
     }
+
 
     @DisplayName("두 포지션은 수평 또는 수직이 아니다.")
     @Test
@@ -81,8 +84,7 @@ class PositionTest {
         Position source = new Position(1, 3);
         Position result = source.sum(Direction.EAST);
 
-        assertThat(result.getRowDegree()).isEqualTo(1);
-        assertThat(result.getColumnDegree()).isEqualTo(4);
+        assertThat(result).isEqualTo(new Position(1, 4));
     }
 
     @DisplayName("두 포지션의 차이를 갖는 포지션을 생성한다.")
@@ -90,9 +92,9 @@ class PositionTest {
     void diffTest() {
         Position source = new Position(3, 3);
         Position target = new Position(5, 7);
-        Position diff = source.diff(target);
+        Position diff = source.difference(target);
 
-        assertThat(diff.getRowDegree()).isEqualTo(2);
-        assertThat(diff.getColumnDegree()).isEqualTo(4);
+        assertThat(diff).isEqualTo(new Position(2, 4));
     }
+
 }
