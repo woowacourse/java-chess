@@ -10,14 +10,13 @@ public class King extends AbstractPiece {
     public static final King WHITE_INSTANCE = new King(Color.WHITE);
     
     private static final DirectionGroup DIRECTION_GROUP;
-    
+    private static final String SYMBOL = "k";
+    private static final double SCORE = 0;
+
     static {
         final int MOVABLE_LENGTH = 1;
         DIRECTION_GROUP = new DirectionGroup(Direction.everyDirection(), MOVABLE_LENGTH);
     }
-    
-    private static final String SYMBOL = "k";
-    private static final double SCORE = 0;
     
     private King(Color color) {
         super(color, DIRECTION_GROUP);

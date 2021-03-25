@@ -10,14 +10,13 @@ public class Rook extends AbstractPiece {
     public static final Rook WHITE_INSTANCE = new Rook(Color.WHITE);
     
     private static final DirectionGroup DIRECTION_GROUP;
-    
+    private static final String SYMBOL = "r";
+    private static final double SCORE = 5;
+
     static {
         final int MOVABLE_LENGTH = 7;
         DIRECTION_GROUP = new DirectionGroup(Direction.linearDirection(), MOVABLE_LENGTH);
     }
-    
-    private static final String SYMBOL = "r";
-    private static final double SCORE = 5;
     
     private Rook(Color color) {
         super(color, DIRECTION_GROUP);

@@ -10,14 +10,13 @@ public class Queen extends AbstractPiece {
     public static final Queen WHITE_INSTANCE = new Queen(Color.WHITE);
     
     private static final DirectionGroup DIRECTION_GROUP;
-    
+    private static final String SYMBOL = "q";
+    private static final double SCORE = 9;
+
     static {
         final int MOVABLE_LENGTH = 7;
         DIRECTION_GROUP = new DirectionGroup(Direction.everyDirection(), MOVABLE_LENGTH);
     }
-    
-    private static final String SYMBOL = "q";
-    private static final double SCORE = 9;
     
     private Queen(Color color) {
         super(color, DIRECTION_GROUP);

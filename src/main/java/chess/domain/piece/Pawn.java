@@ -9,17 +9,17 @@ public class Pawn extends AbstractPiece {
     public static final Pawn BLACK_INSTANCE;
     public static final Pawn WHITE_INSTANCE;
     
-    static {
-        final int MOVABLE_LENGTH = 2;
-        BLACK_INSTANCE = new Pawn(Color.BLACK, new DirectionGroup(Direction.blackPawnDirection(), MOVABLE_LENGTH));
-        WHITE_INSTANCE = new Pawn(Color.WHITE, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
-    }
-    
     private static final String SYMBOL = "p";
     private static final double SCORE = 1;
     
     private static final String ERROR_PIECE_EXIST_AT_FORWARD_TARGET = "폰이 전진하는 위치에 기물이 있으면 안됩니다.";
     private static final String ERROR_PIECE_DOES_NOT_EXISTS_AT_DIAGONAL_TARGET = "폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.";
+
+    static {
+        final int MOVABLE_LENGTH = 2;
+        BLACK_INSTANCE = new Pawn(Color.BLACK, new DirectionGroup(Direction.blackPawnDirection(), MOVABLE_LENGTH));
+        WHITE_INSTANCE = new Pawn(Color.WHITE, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
+    }
     
     private Pawn(Color color, DirectionGroup directionGroup) {
         super(color, directionGroup);
