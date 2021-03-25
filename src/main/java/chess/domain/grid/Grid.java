@@ -9,10 +9,10 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public final class Grid {
-    private Lines lines;
-    private Score score;
+    private final Lines lines;
+    private final Score score;
 
-    public Grid(GridStrategy gridStrategy) {
+    public Grid(final GridStrategy gridStrategy) {
         List<Line> lineGroup = gridStrategy.LinesInInitGrid();
         lines = new Lines(lineGroup);
         score = new Score(lines);

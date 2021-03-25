@@ -6,7 +6,6 @@ import chess.domain.piece.Piece;
 
 public final class Score {
     private static final int LINE_COUNT = 8;
-    private static final char MIN_X_POSITION = 'a';
     private static final int SAME_COLUMN_BOUND = 2;
     private static final int DIVIDER_FOR_PAWN_SCORE = 2;
 
@@ -30,12 +29,11 @@ public final class Score {
 
     private double pawnCountInSameColumn(final Color color, final int i) {
         double result = 0;
-        char x = (char) (MIN_X_POSITION + i);
         int pawnCountInSameColumn =
                 (int) lines
                         .lines()
                         .stream()
-                        .map(line -> line.piece(x))
+                        .map(line -> line.piece(Column.column(i)))
                         .filter(piece -> (piece instanceof Pawn && piece.color() == color))
                         .count();
         if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {

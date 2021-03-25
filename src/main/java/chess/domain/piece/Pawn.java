@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
 import chess.domain.grid.Lines;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -24,6 +26,10 @@ public final class Pawn extends Piece {
 
     public Pawn(final Color color, final char x, final char y) {
         super(color, x, y);
+    }
+
+    public Pawn(final Color color, final Column column, final Row row) {
+        super(color, column, row);
     }
 
     public final boolean hasMoved() {
@@ -65,21 +71,21 @@ public final class Pawn extends Piece {
     }
 
     private void validateTwoSteps(final Piece targetPiece) {
-        if (hasMoved() && Math.abs(targetPiece.position().y() - position().y()) == TWO_STEP) {
+        if (hasMoved() && targetPiece.rowDifference(this) == TWO_STEP) {
             throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
         }
     }
 
     private void validateDiagonalMove(final Piece targetPiece) {
-        if (Math.abs(targetPiece.position().y() - position().y()) == 1 &&
-                Math.abs(targetPiece.position().x() - position().x()) == 1 && targetPiece.isEmpty()) {
+        if (targetPiece.rowDifference(this) == 1 &&
+                targetPiece.columnDifference(this) == 1 && targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
         }
     }
 
     private void validateObstacleAhead(final Piece targetPiece) {
-        if (Math.abs(targetPiece.position().y() - position().y()) == 1 &&
-                Math.abs(targetPiece.position().x() - position().x()) == 0 && !targetPiece.isEmpty()) {
+        if (targetPiece.rowDifference(this) == 1 &&
+                targetPiece.columnDifference(this) == 0 && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 한칸 앞 말이 있으면 가지 못합니다.");
         }
     }

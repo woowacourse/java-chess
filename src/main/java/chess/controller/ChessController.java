@@ -14,7 +14,7 @@ public class ChessController {
         this.gameState = new Ready();
     }
 
-    public void run() {
+    public final void run() {
         OutputView.printChessInstruction();
         GridStrategy gridStrategy = new NormalGridStrategy();
         Grid grid = new Grid(gridStrategy);

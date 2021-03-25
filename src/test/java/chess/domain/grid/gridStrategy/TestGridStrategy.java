@@ -1,6 +1,7 @@
 package chess.domain.grid.gridStrategy;
 
 import chess.domain.grid.Line;
+import chess.domain.grid.Row;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class TestGridStrategy implements GridStrategy {
     public List<Line> LinesInInitGrid() {
         List<Line> lineGroup = new ArrayList<>();
         for (int i = FIRST_ROW; i <= EIGHTH_ROW; i++) {
-            lineGroup.add(Line.empty(i));
+            lineGroup.add(Line.empty(Row.row(i)));
         }
         return lineGroup;
     }

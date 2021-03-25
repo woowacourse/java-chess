@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
 import chess.domain.grid.Lines;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -9,19 +11,26 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private static final int DECIMAL = 10;
     private final Color color;
     private Position position;
 
+    public Piece(final Color color, final char x, final char y) {
+        this(color, Column.column(x), Row.row(y));
+    }
+
     public Piece(final Color color, final char x, final int y) {
-        this(color, x, Character.forDigit(y, DECIMAL));
+        this(color, Column.column(x), Row.row(y));
+    }
+
+    public Piece(final Color color, final Column column, final int y) {
+        this(color, column, Row.row(y));
     }
 
     public Piece(final Color color, final Position position) {
-        this(color, position.x(), position.y());
+        this(color, position.column(), position.row());
     }
 
-    public Piece(final Color color, final char x, final char y) {
+    public Piece(final Color color, final Column x, final Row y) {
         this.position = new Position(x, y);
         this.color = color;
     }
@@ -42,15 +51,23 @@ public abstract class Piece {
         return color;
     }
 
+    public int rowDifference(final Piece other) {
+        return this.position.rowDifference(other.position);
+    }
+
+    public int columnDifference(final Piece other) {
+        return this.position.columnDifference(other.position);
+    }
+
     public final List<Position> route(final Direction direction, final int stepRange, Lines lines) {
         List<Position> positions = new ArrayList<>();
         Position sourcePosition = position();
 
         for (int i = 1; i <= stepRange; i++) {
-            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
-            if (!movedPosition.isInValidRange()) {
+            if (!sourcePosition.isValidNext(direction.getXDegree() * i, direction.getYDegree() * i)) {
                 break;
             }
+            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
             positions.add(movedPosition);
             if (!lines.isEmpty(movedPosition)) {
                 break;
@@ -61,7 +78,7 @@ public abstract class Piece {
 
     public final void validateRoute(final Piece targetPiece, final Lines lines) {
         validateSourcePieceEmpty();
-        validatePositionInGrid(targetPiece);
+//        validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
         validateSteps(targetPiece, lines);
     }
@@ -69,14 +86,6 @@ public abstract class Piece {
     private void validateSourcePieceEmpty() {
         if (isEmpty()) {
             throw new IllegalArgumentException("빈 공간을 옮길 수 없습니다.");
-        }
-    }
-
-    private void validatePositionInGrid(final Piece targetPiece) {
-        Position source = this.position();
-        Position target = targetPiece.position();
-        if (!source.isInValidRange() || !target.isInValidRange()) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 

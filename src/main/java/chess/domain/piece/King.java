@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 
 import java.util.List;
@@ -16,6 +18,14 @@ public final class King extends Piece {
 
     public King(final Color color, final char x, final char y) {
         super(color, x, y);
+    }
+
+    public King(final Color color, final Column column, final int y) {
+        super(color, column, Row.row(y));
+    }
+
+    public King(final Color color, final Column column, final Row row) {
+        super(color, column, row);
     }
 
     @Override

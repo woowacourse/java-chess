@@ -14,7 +14,7 @@ public final class Status extends Finished {
         }
     }
 
-    private End runStatus(Grid grid) {
+    private End runStatus(final Grid grid) {
         double blackScore = grid.score(Color.BLACK);
         double whiteScore = grid.score(Color.WHITE);
         OutputView.printScores(Color.BLACK, blackScore);
@@ -28,7 +28,7 @@ public final class Status extends Finished {
         return new End();
     }
 
-    private GameState statusException(Grid grid, IllegalArgumentException error) {
+    private GameState statusException(final Grid grid, final IllegalArgumentException error) {
         OutputView.printError(error);
         return run(grid);
     }

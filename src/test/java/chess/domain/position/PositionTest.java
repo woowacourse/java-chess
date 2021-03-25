@@ -2,8 +2,6 @@ package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -26,12 +24,12 @@ public class PositionTest {
         assertThat(actualPosition).isEqualTo(expectedPosition);
     }
 
-    @ParameterizedTest
-    @DisplayName("체스판 범위에서 벗어나면 False, 아니면 True")
-    @CsvSource(value = { "i3:false", "a9:false", "a3:true" }, delimiter = ':')
-    public void isInValidRange(String position, boolean result) {
-        assertThat(new Position(position).isInValidRange()).isEqualTo(result);
-    }
+//    @ParameterizedTest
+//    @DisplayName("체스판 범위에서 벗어나면 False, 아니면 True")
+//    @CsvSource(value = { "i3:false", "a9:false", "a3:true" }, delimiter = ':')
+//    public void isInValidRange(String position, boolean result) {
+//        assertThat(new Position(position).isInValidRange()).isEqualTo(result);
+//    }
 
     @Test
     @DisplayName("특정 위치에서 다른 위치만큼 정상적으로 이동하는 지 테스트")

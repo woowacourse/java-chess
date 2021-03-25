@@ -25,7 +25,7 @@ public abstract class Playing implements GameState {
         }
     }
 
-    private GameState runPlaying(Grid grid) {
+    private GameState runPlaying(final Grid grid) {
         String input = InputView.command();
         if (input.equals(STATUS_COMMAND)) {
             return new Status().run(grid);
@@ -38,7 +38,7 @@ public abstract class Playing implements GameState {
         return gameState;
     }
 
-    private GameState playingException(Grid grid, IllegalArgumentException error) {
+    private GameState playingException(final Grid grid, final IllegalArgumentException error) {
         OutputView.printError(error);
         return run(grid);
     }

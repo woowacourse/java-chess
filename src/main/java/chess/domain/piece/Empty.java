@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -18,6 +20,10 @@ public final class Empty extends Piece {
 
     public Empty(final Position position) {
         super(Color.BLACK, position);
+    }
+
+    public Empty(final Column column, final Row row) {
+        super(Color.BLACK, column, row);
     }
 
     @Override

@@ -15,15 +15,46 @@ public enum Column {
     private final char reference;
     private final int index;
 
-    Column(char reference, int index) {
+    Column(final char reference, final int index) {
         this.reference = reference;
         this.index = index;
     }
 
-    public static Column column(char reference){
-        Arrays.stream(Column.values())
+    public static Column column(final char reference) {
+        return Arrays.stream(Column.values())
                 .filter(column -> column.reference == reference)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 열이 없습니다."));
+    }
+
+    public static Column column(final int index) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.index == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 열이 없습니다."));
+    }
+
+    public static boolean isValid(final char reference) {
+        return Arrays.stream(Column.values())
+                .anyMatch(column -> column.reference == reference);
+    }
+
+    public final Column changeColumn(final int index) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.index == this.index + index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 열이 없습니다."));
+    }
+
+    public final char getReference() {
+        return reference;
+    }
+
+    public final int getIndex() {
+        return index;
+    }
+
+    public final int difference(final Column other) {
+        return Math.abs(this.index - other.index);
     }
 }

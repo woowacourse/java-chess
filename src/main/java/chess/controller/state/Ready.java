@@ -17,7 +17,7 @@ public final class Ready implements GameState {
         }
     }
 
-    private GameState runReady(Grid grid) {
+    private GameState runReady(final Grid grid) {
         String command = InputView.command();
         if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
@@ -29,7 +29,7 @@ public final class Ready implements GameState {
         throw new IllegalArgumentException("잘못된 입력값입니다.");
     }
 
-    private GameState readyException(Grid grid, IllegalArgumentException error) {
+    private GameState readyException(final Grid grid, final IllegalArgumentException error) {
         OutputView.printError(error);
         return run(grid);
     }

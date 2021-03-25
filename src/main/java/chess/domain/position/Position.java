@@ -1,59 +1,63 @@
 package chess.domain.position;
 
+import chess.domain.grid.Column;
+import chess.domain.grid.Row;
+
 import java.util.Objects;
 
 public final class Position {
-    private static final char MIN_X_RANGE = 'a';
-    private static final char MAX_X_RANGE = 'h';
-    private static final char MIN_Y_RANGE = '1';
-    private static final char MAX_Y_RANGE = '8';
-
-    private final char x;
-    private final char y;
+    private final Column column;
+    private final Row row;
 
     public Position(final String position) {
         this(position.charAt(0), position.charAt(1));
     }
 
     public Position(final char x, final char y) {
-        this.x = x;
-        this.y = y;
+        this(Column.column(x), Row.row(y));
     }
 
-    public final char x() {
-        return x;
+    public Position(final Column column, final Row row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public final char y() {
-        return y;
+    public final Column column() {
+        return this.column;
     }
 
-    public final boolean isInValidRange() {
-        return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
+    public final Row row() {
+        return this.row;
+    }
+
+    public final int rowDifference(final Position other) {
+        return this.row().difference(other.row());
+    }
+
+    public final int columnDifference(final Position other) {
+        return this.column().difference(other.column());
     }
 
     public final Position next(final int xDegree, final int yDegree) {
-        return new Position((char) (x + xDegree), (char) (y + yDegree));
+        return new Position(column.changeColumn(xDegree), row.changeRow(yDegree));
+    }
+
+    public final boolean isValidNext(final int xDegree, final int yDegree) {
+        char nextColumn = (char) (column.getReference() + xDegree);
+        char nextRow = (char) (row.getReference() + yDegree);
+        return Column.isValid(nextColumn) && Row.isValid(nextRow);
     }
 
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return x == position.x && y == position.y;
+        return column == position.column && row == position.row;
     }
 
     @Override
-    public final int hashCode() {
-        return Objects.hash(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }

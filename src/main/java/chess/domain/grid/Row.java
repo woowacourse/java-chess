@@ -15,15 +15,46 @@ public enum Row {
     private final char reference;
     private final int index;
 
-    Row(char reference, int index) {
+    Row(final char reference, final int index) {
         this.reference = reference;
         this.index = index;
     }
 
-    public static Row row(int index){
-        Arrays.stream(Row.values())
-                .filter(row -> row.index == index)
+    public static Row row(final char reference) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.reference == reference)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 행이 없습니다."));
+    }
+
+    public static Row row(final int index) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.index + 1 == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 행이 없습니다."));
+    }
+
+    public final Row changeRow(final int index) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.index == this.index + index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 행이 없습니다."));
+    }
+
+    public static boolean isValid(final char reference) {
+        return Arrays.stream(Row.values())
+                .anyMatch(row -> row.reference == reference);
+    }
+
+    public final int getIndex() {
+        return index;
+    }
+
+    public final char getReference() {
+        return reference;
+    }
+
+    public final int difference(final Row other) {
+        return Math.abs(this.index - other.index);
     }
 }
