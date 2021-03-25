@@ -22,7 +22,7 @@ public enum Row {
         this.location = location;
     }
 
-    public static int getLocation(final String row) {
+    public static int location(final String row) {
         return Arrays.stream(Row.values())
                 .filter(value -> value.row.equals(row))
                 .findFirst()

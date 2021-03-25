@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.move.MultiMove;
+import chess.domain.move.MultiMoving;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
@@ -16,27 +16,27 @@ public final class Queen extends NoKingPieces {
     private static final int INIT_COL = 3;
 
     public Queen(final Team team, final Position position) {
-        super(position, "Q", team, SCORE, new MultiMove());
+        super(position, "Q", team, SCORE, new MultiMoving());
     }
 
     public static Queen of(final Team team, final int col) {
         if (col != INIT_COL) {
             throw new WrongInitPositionException();
         }
-        return new Queen(team, getInitPosition(team, col));
+        return new Queen(team, initPosition(team, col));
     }
 
-    private static Position getInitPosition(final Team team, final int col) {
+    private static Position initPosition(final Team team, final int col) {
         if (team.equals(Team.BLACK)) {
-            return new Position(Row.getLocation(BLACK_TEAM_ROW), col);
+            return new Position(Row.location(BLACK_TEAM_ROW), col);
         }
-        return new Position(Row.getLocation(WHITE_TEAM_ROW), col);
+        return new Position(Row.location(WHITE_TEAM_ROW), col);
     }
 
     @Override
-    public final List<Position> getMovablePositions(final Board board) {
+    public final List<Position> allMovablePositions(final Board board) {
         int[] rowDir = {0, 0, -1, 1, -1, 1, -1, 1};
         int[] colDir = {-1, 1, 0, 0, -1, 1, 1, -1};
-        return movable().allMovablePosition(this, board, rowDir, colDir);
+        return moving().movablePositions(this, board, rowDir, colDir);
     }
 }

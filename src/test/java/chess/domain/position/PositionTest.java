@@ -22,17 +22,17 @@ class PositionTest {
     @DisplayName("같은 Col인지 확인")
     void sameCol() {
         Position position = new Position(1, 3);
-        assertTrue(position.sameCol(3));
+        assertTrue(position.isSameCol(3));
     }
 
     @Test
     @DisplayName("팀에따른 pawn의 초기위치 확인")
     void isInitPawnPositionByTeam() {
         Pawn whitePawn = new Pawn(Team.WHITE, new Position(6, 0));
-        assertTrue(whitePawn.getPosition().isInitPawnPositionByTeam(Team.WHITE));
+        assertTrue(whitePawn.position().isSameInitPawnPositionByTeam(Team.WHITE));
 
         Pawn blackPawn = new Pawn(Team.BLACK, new Position(1, 0));
-        assertTrue(blackPawn.getPosition().isInitPawnPositionByTeam(Team.BLACK));
+        assertTrue(blackPawn.position().isSameInitPawnPositionByTeam(Team.BLACK));
     }
 
     @Test
@@ -47,6 +47,6 @@ class PositionTest {
     @DisplayName("현재 위치가 범위를 벗어나는지 확인")
     void outOfRange() {
         Position position = new Position(-1, 3);
-        assertTrue(position.outOfRange());
+        assertTrue(position.isOutOfRange());
     }
 }

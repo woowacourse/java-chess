@@ -13,30 +13,30 @@ public final class InputView {
     private InputView() {
     }
 
-    public static String getCommand() {
+    public static String command() {
         try {
             String command = SCANNER.next().toUpperCase(Locale.ROOT);
-            validateCommand(command);
+            validatesCommand(command);
             return command;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return getCommand();
+            return command();
         }
     }
 
-    public static String getPoint() {
-        String point = SCANNER.next().toLowerCase(Locale.ROOT);
-        validatePoint(point);
-        return point;
-    }
-
-    private static void validateCommand(final String command) {
-        if (!Command.isValidateCommand(command)) {
+    private static void validatesCommand(final String command) {
+        if (!Command.validatesCommand(command)) {
             throw new WrongCommandException();
         }
     }
 
-    private static void validatePoint(final String point) {
+    public static String point() {
+        String point = SCANNER.next().toLowerCase(Locale.ROOT);
+        validatesPoint(point);
+        return point;
+    }
+
+    private static void validatesPoint(final String point) {
         if (point.length() != POINT_LENGTH) {
             throw new InvalidCoordinateException();
         }

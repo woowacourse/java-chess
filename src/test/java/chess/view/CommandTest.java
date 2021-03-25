@@ -13,13 +13,13 @@ class CommandTest {
     @DisplayName("지원되는 명령어가 입력되면, true를 반환한다.")
     @ValueSource(strings = {"START", "END", "MOVE", "STATUS"})
     void validateCommandCheck(final String command) {
-        assertThat(Command.isValidateCommand(command)).isTrue();
+        assertThat(Command.validatesCommand(command)).isTrue();
     }
 
     @Test
     @DisplayName("지원하지 않는 명령어가 입력되면, false를 반환한다.")
     void wrongCommandCheck() {
         String wrongCommand = "pobi";
-        assertThat(Command.isValidateCommand(wrongCommand)).isFalse();
+        assertThat(Command.validatesCommand(wrongCommand)).isFalse();
     }
 }

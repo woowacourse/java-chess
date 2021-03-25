@@ -35,22 +35,22 @@ class PiecesTest {
     @Test
     @DisplayName("특정 위치에 해당하는 piece가 있으면, true를 반환한다.")
     void containByPosition() {
-        assertTrue(pieces.containByPosition(new Position(4, 5)));
+        assertTrue(pieces.containsPosition(new Position(4, 5)));
     }
 
     @Test
     @DisplayName("특정 위치를 넣으면, 해당하는 위치의 piece를 가져온다.")
     void getPieceByPosition() {
         Position position = new Position(4, 5);
-        Piece piece = pieces.getPieceByPosition(position);
-        assertThat(piece.getPosition()).isEqualTo(position);
+        Piece piece = pieces.pieceByPosition(position);
+        assertThat(piece.position()).isEqualTo(position);
     }
 
     @Test
     @DisplayName("특정 위치에 해당하는 piece가 없으면, 예외가 발생한다.")
     void getPieceByPositionException() {
         assertThatThrownBy(
-                () -> pieces.getPieceByPosition(new Position(7, 7))
+                () -> pieces.pieceByPosition(new Position(7, 7))
         ).isInstanceOf(WrongMoveCommandException.class);
     }
 
@@ -65,13 +65,13 @@ class PiecesTest {
     @Test
     @DisplayName("king이 살아있다면, true를 반환한다.")
     void kingAlive() {
-        assertTrue(pieces.kingAlive());
+        assertTrue(pieces.isKingAlive());
     }
 
     @Test
     @DisplayName("점수를 계산한다.")
     void calculateScore() {
-        double score = pieces.calculateScore(0, 7);
+        double score = pieces.calculatedScore(0, 7);
         assertThat((int) (score * 10)).isEqualTo((int) (20.5 * 10));
     }
 

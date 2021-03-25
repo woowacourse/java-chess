@@ -14,10 +14,10 @@ class PawnTest {
     void blackTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.BLACK, Col.getLocation(col));
+            Pawn pawn = Pawn.of(Team.BLACK, Col.location(col));
 
-            Position pawnPosition = pawn.getPosition();
-            assertThat(pawnPosition.getRow()).isEqualTo(1);
+            Position pawnPosition = pawn.position();
+            assertThat(pawnPosition.row()).isEqualTo(1);
         }
     }
 
@@ -26,10 +26,10 @@ class PawnTest {
     void whiteTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.WHITE, Col.getLocation(col));
+            Pawn pawn = Pawn.of(Team.WHITE, Col.location(col));
 
-            Position pawnPosition = pawn.getPosition();
-            assertThat(pawnPosition.getRow()).isEqualTo(6);
+            Position pawnPosition = pawn.position();
+            assertThat(pawnPosition.row()).isEqualTo(6);
         }
     }
 
@@ -37,13 +37,13 @@ class PawnTest {
     @DisplayName("Pawn이 Black 팀으로 생성되면, initial은 대문자 P이다.")
     void blackTeamInitialCheck() {
         Pawn pawn = Pawn.of(Team.BLACK, 1);
-        assertThat(pawn.getInitial()).isEqualTo("P");
+        assertThat(pawn.initial()).isEqualTo("P");
     }
 
     @Test
     @DisplayName("Pawn이 White 팀으로 생성되면, initial은 소문자 p이다.")
     void whiteTeamInitialCheck() {
         Pawn pawn = Pawn.of(Team.WHITE, 1);
-        assertThat(pawn.getInitial()).isEqualTo("p");
+        assertThat(pawn.initial()).isEqualTo("p");
     }
 }

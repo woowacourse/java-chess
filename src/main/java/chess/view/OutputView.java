@@ -22,7 +22,7 @@ public final class OutputView {
     }
 
     public static void printBoard(final Board board) {
-        String[][] boardStatus = getInitBoard();
+        String[][] boardStatus = initBoard();
         putPieceToBoard(board, boardStatus);
 
         for (int boardSize = 0; boardSize < BOARD_MAX_SIZE; ++boardSize) {
@@ -45,13 +45,13 @@ public final class OutputView {
         board.toMap().values()
                 .forEach(v -> {
                     for (Piece piece : v.toList()) {
-                        Position position = piece.getPosition();
-                        arr[position.getRow()][position.getCol()] = piece.getInitial();
+                        Position position = piece.position();
+                        arr[position.row()][position.col()] = piece.initial();
                     }
                 });
     }
 
-    private static String[][] getInitBoard() {
+    private static String[][] initBoard() {
         String[][] arr = new String[8][8];
 
         for (int i = 0; i < 8; ++i) {

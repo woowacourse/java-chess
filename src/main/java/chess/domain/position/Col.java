@@ -25,7 +25,7 @@ public enum Col {
         this.location = location;
     }
 
-    public static int getLocation(final String col) {
+    public static int location(final String col) {
         return Arrays.stream(Col.values())
                 .filter(value -> value.col.equals(col))
                 .findFirst()
@@ -33,29 +33,29 @@ public enum Col {
                 .location;
     }
 
-    public static List<Integer> getPawnInitCols() {
+    public static List<Integer> pawnInitCols() {
         return Arrays.stream(Col.values())
                 .map(pawnCol -> pawnCol.location)
                 .collect(Collectors.toList());
     }
 
-    public static List<Integer> getRookInitCols() {
+    public static List<Integer> rookInitCols() {
         return Arrays.asList(A.location, H.location);
     }
 
-    public static List<Integer> getKnightInitCols() {
+    public static List<Integer> knightInitCols() {
         return Arrays.asList(B.location, G.location);
     }
 
-    public static List<Integer> getBishopInitCols() {
+    public static List<Integer> bishopInitCols() {
         return Arrays.asList(C.location, F.location);
     }
 
-    public static List<Integer> getQueenInitCols() {
+    public static List<Integer> queenInitCols() {
         return Collections.singletonList(D.location);
     }
 
-    public static List<Integer> getKingInitCols() {
+    public static List<Integer> kingInitCols() {
         return Collections.singletonList(E.location);
     }
 }

@@ -16,30 +16,30 @@ public final class Position {
         this.col = col;
     }
 
-    public final boolean sameCol(final int col) {
+    public final boolean isSameCol(final int col) {
         return this.col == col;
     }
 
-    public final boolean isInitPawnPositionByTeam(final Team team) {
+    public final boolean isSameInitPawnPositionByTeam(final Team team) {
         if (Team.WHITE.equals(team)) {
-            return row == Row.getLocation("2");
+            return row == Row.location("2");
         }
-        return row == Row.getLocation("7");
+        return row == Row.location("7");
     }
 
     public Position next(int rowDir, int colDir) {
         return new Position(this.row + rowDir, this.col + colDir);
     }
 
-    public boolean outOfRange() {
+    public boolean isOutOfRange() {
         return (row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
 
-    public final int getRow() {
+    public final int row() {
         return row;
     }
 
-    public final int getCol() {
+    public final int col() {
         return col;
     }
 

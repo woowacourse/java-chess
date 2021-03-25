@@ -34,43 +34,43 @@ class KnightTest {
     @DisplayName("Knight가 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"b", "g"})
     void blackTeamPositionCheck(String col) {
-        Knight knight = Knight.of(Team.BLACK, Col.getLocation(col));
-        Position KnightPosition = knight.getPosition();
+        Knight knight = Knight.of(Team.BLACK, Col.location(col));
+        Position KnightPosition = knight.position();
 
-        assertThat(KnightPosition.getRow()).isEqualTo(0);
-        assertThat(KnightPosition.getRow()).isNotEqualTo(1);
+        assertThat(KnightPosition.row()).isEqualTo(0);
+        assertThat(KnightPosition.row()).isNotEqualTo(1);
     }
 
     @ParameterizedTest
     @DisplayName("Knight가 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"b", "g"})
     void whiteTeamPositionCheck(String col) {
-        Knight knight = Knight.of(Team.WHITE, Col.getLocation(col));
-        Position KnightPosition = knight.getPosition();
+        Knight knight = Knight.of(Team.WHITE, Col.location(col));
+        Position KnightPosition = knight.position();
 
-        assertThat(KnightPosition.getRow()).isEqualTo(7);
-        assertThat(KnightPosition.getRow()).isNotEqualTo(1);
+        assertThat(KnightPosition.row()).isEqualTo(7);
+        assertThat(KnightPosition.row()).isNotEqualTo(1);
     }
 
     @ParameterizedTest
     @DisplayName("Knight 초기 col 위치가 b혹은 g가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "c", "d", "e", "f", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Knight.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(WrongInitPositionException.class);
+        assertThatThrownBy(() -> Knight.of(Team.BLACK, Col.location(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test
     @DisplayName("Knight가 Black 팀으로 생성되면, initial은 대문자 N이다.")
     void blackTeamInitialCheck() {
         Knight knight = Knight.of(Team.BLACK, 1);
-        assertThat(knight.getInitial()).isEqualTo("N");
+        assertThat(knight.initial()).isEqualTo("N");
     }
 
     @Test
     @DisplayName("Knight가 White 팀으로 생성되면, initial은 소문자 n이다.")
     void whiteTeamInitialCheck() {
         Knight knight = Knight.of(Team.WHITE, 1);
-        assertThat(knight.getInitial()).isEqualTo("n");
+        assertThat(knight.initial()).isEqualTo("n");
     }
 
     void set(final Knight knight) {
@@ -95,7 +95,7 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE, new Position(1, 1));
         set(knight);
 
-        List<Position> movablePositions = knight.getMovablePositions(board);
+        List<Position> movablePositions = knight.allMovablePositions(board);
 
         assertTrue(movablePositions.contains(straightCrossBlackTeamPawnPosition));
         assertTrue(movablePositions.contains(straightCrossBlankPosition));

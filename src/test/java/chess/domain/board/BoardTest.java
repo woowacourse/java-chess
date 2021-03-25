@@ -5,7 +5,7 @@ import chess.domain.pieces.Pieces;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.exception.AnotherTeamTurnException;
+import chess.exception.EnemyTurnException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         BoardFactory boardFactory = new BoardFactory();
-        board = boardFactory.getBoard();
+        board = boardFactory.board();
     }
 
     @Test
@@ -33,7 +33,7 @@ class BoardTest {
 
         assertThatThrownBy(
                 () -> board.move(startPoint, endPoint, Team.BLACK)
-        ).isInstanceOf(AnotherTeamTurnException.class);
+        ).isInstanceOf(EnemyTurnException.class);
         board.move(startPoint, endPoint, Team.WHITE);
     }
 
@@ -41,10 +41,10 @@ class BoardTest {
     @DisplayName("보드 크기를 벗어나는 좌표로 이동하려고 하면, false를 리턴한다.")
     void validateRangeCheck() {
         assertAll(
-                () -> assertFalse(board.validateRange(new Position(8, 0))),
-                () -> assertFalse(board.validateRange(new Position(-1, 0))),
-                () -> assertFalse(board.validateRange(new Position(0, 8))),
-                () -> assertFalse(board.validateRange(new Position(0, -1)))
+                () -> assertFalse(board.validatesRange(new Position(8, 0))),
+                () -> assertFalse(board.validatesRange(new Position(-1, 0))),
+                () -> assertFalse(board.validatesRange(new Position(0, 8))),
+                () -> assertFalse(board.validatesRange(new Position(0, -1)))
         );
     }
 
@@ -53,7 +53,7 @@ class BoardTest {
     void enemyKingDieCheck() {
         Team team = Team.BLACK;
         Pieces pieces = board.toMap().get(Team.enemyTeam(team));
-        Position WhiteTeamKingPosition = new Position(Row.getLocation("1"), Col.getLocation("e"));
+        Position WhiteTeamKingPosition = new Position(Row.location("1"), Col.location("e"));
 
         assertThat(board.isEnemyKingDead(team)).isFalse();
         pieces.removePieceByPosition(WhiteTeamKingPosition);

@@ -17,54 +17,54 @@ public final class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public final boolean containByPosition(final Position position) {
+    public final boolean containsPosition(final Position position) {
         return pieces.stream()
-                .anyMatch(piece -> piece.samePosition(position));
+                .anyMatch(piece -> piece.isSamePosition(position));
     }
 
-    public final Piece getPieceByPosition(final Position position) {
+    public final Piece pieceByPosition(final Position position) {
         return pieces.stream()
-                .filter(piece -> piece.samePosition(position))
+                .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
                 .orElseThrow(WrongMoveCommandException::new);
     }
 
     public final void removePieceByPosition(final Position position) {
         pieces.stream()
-                .filter(piece -> piece.samePosition(position))
+                .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
                 .ifPresent(pieces::remove);
     }
 
-    public final boolean kingAlive() {
+    public final boolean isKingAlive() {
         return pieces.stream()
                 .anyMatch(Piece::isKing);
     }
 
-    public final double calculateScore(final int rangeMinPivot, final int rangeMaxPivot) {
-        double simpleSumScore = calculateSimpleSumScore();
-        double decreasedScore = calculateDecreasedScore(rangeMinPivot, rangeMaxPivot);
+    public final double calculatedScore(final int rangeMinPivot, final int rangeMaxPivot) {
+        double simpleSumScore = calculatedSimpleSumScore();
+        double decreasedScore = calculatedDecreasedScore(rangeMinPivot, rangeMaxPivot);
         return simpleSumScore - decreasedScore;
     }
 
-    private double calculateSimpleSumScore() {
+    private double calculatedSimpleSumScore() {
         return pieces.stream()
                 .mapToDouble(Piece::score)
                 .reduce(0, Double::sum);
     }
 
-    private double calculateDecreasedScore(final int rangeMinPivot, final int rangeMaxPivot) {
+    private double calculatedDecreasedScore(final int rangeMinPivot, final int rangeMaxPivot) {
         double decreasedScore = DEFAULT_SCORE;
         for (int range = rangeMinPivot; range < rangeMaxPivot; ++range) {
-            decreasedScore += calculateRange(range);
+            decreasedScore += decreasedScoreByCol(range);
         }
         return decreasedScore;
     }
 
-    private double calculateRange(final int range) {
+    private double decreasedScoreByCol(final int range) {
         long count = pieces.stream()
                 .filter(Piece::isPawn)
-                .filter(piece -> piece.sameCol(range))
+                .filter(piece -> piece.isSameCol(range))
                 .count();
         if (count >= DECREASE_PIVOT) {
             return DECREASE_UNIT * count;

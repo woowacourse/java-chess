@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.move.Movable;
+import chess.domain.move.Moving;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovePositionException;
 
@@ -14,17 +14,17 @@ public abstract class Piece {
     private final Team team;
     private final String initial;
     private final Double score;
-    private final Movable movable;
+    private final Moving moving;
 
-    public Piece(final Position position, final String initial, final Team team, final Double score, final Movable movable) {
+    public Piece(final Position position, final String initial, final Team team, final Double score, final Moving moving) {
         this.position = position;
         this.score = score;
-        this.initial = checkTeam(team, initial);
+        this.initial = initialByTeam(team, initial);
         this.team = team;
-        this.movable = movable;
+        this.moving = moving;
     }
 
-    private String checkTeam(final Team team, final String initial) {
+    private String initialByTeam(final Team team, final String initial) {
         if (team.equals(Team.WHITE)) {
             return initial.toLowerCase(Locale.ROOT);
         }
@@ -32,40 +32,39 @@ public abstract class Piece {
     }
 
     public final void move(final Board board, final Position endPoint) {
-        List<Position> movablePositions = getMovablePositions(board);
-        validateEndPoint(endPoint, movablePositions);
-        erasePiece(board, endPoint);
+        List<Position> movablePositions = allMovablePositions(board);
+        validatesEndPoint(endPoint, movablePositions);
         this.position = endPoint;
     }
 
-    public void erasePiece(final Board board, final Position endPoint) {
-        Pieces anotherTeamPieces = board.piecesByTeam(Team.enemyTeam(team));
-        anotherTeamPieces.removePieceByPosition(endPoint);
-    }
-
-    private void validateEndPoint(final Position endPoint, final List<Position> movablePositions) {
+    private void validatesEndPoint(final Position endPoint, final List<Position> movablePositions) {
         if (!movablePositions.contains(endPoint)) {
             throw new InvalidMovePositionException();
         }
     }
 
-    public final boolean samePosition(final Position startPoint) {
+    public void erasePiece(final Board board, final Position endPoint) {
+        Pieces enemyPieces = board.piecesByTeam(Team.enemyTeam(team));
+        enemyPieces.removePieceByPosition(endPoint);
+    }
+
+    public final boolean isSamePosition(final Position startPoint) {
         return this.position.equals(startPoint);
     }
 
-    public final boolean sameCol(final int col) {
-        return position.sameCol(col);
+    public final boolean isSameCol(final int col) {
+        return position.isSameCol(col);
     }
 
-    public final Position getPosition() {
+    public final Position position() {
         return position;
     }
 
-    public final Team getTeam() {
+    public final Team team() {
         return team;
     }
 
-    public final String getInitial() {
+    public final String initial() {
         return initial;
     }
 
@@ -73,11 +72,11 @@ public abstract class Piece {
         return score;
     }
 
-    public final Movable movable() {
-        return movable;
+    public final Moving moving() {
+        return moving;
     }
 
-    public abstract List<Position> getMovablePositions(final Board board);
+    public abstract List<Position> allMovablePositions(final Board board);
 
     public abstract boolean isKing();
 

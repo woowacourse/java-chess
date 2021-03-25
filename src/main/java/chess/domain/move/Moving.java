@@ -6,6 +6,6 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public interface Movable {
-    List<Position> allMovablePosition(Piece piece, Board board, int[] rowDir, int[] colDir);
+public interface Moving {
+    List<Position> movablePositions(final Piece piece, final Board board, final int[] rowDirections, final int[] colDirections);
 }

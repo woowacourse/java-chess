@@ -12,9 +12,9 @@ public final class ChessGame {
     private boolean isPlaying = true;
     private Team winner;
 
-    public final void initSetting() {
+    public final void initialize() {
         BoardFactory boardFactory = new BoardFactory();
-        this.board = boardFactory.getBoard();
+        this.board = boardFactory.board();
         this.currentTurn = Team.WHITE;
     }
 
@@ -22,19 +22,19 @@ public final class ChessGame {
         board.move(position(startPoint), position(endPoint), currentTurn);
         if (board.isEnemyKingDead(currentTurn)) {
             winner = currentTurn;
-            end();
+            finish();
         }
         currentTurn = Team.enemyTeam(currentTurn);
     }
 
     private Position position(final String point) {
         return new Position(
-                Row.getLocation(String.valueOf(point.charAt(1))),
-                Col.getLocation(String.valueOf(point.charAt(0)))
+                Row.location(String.valueOf(point.charAt(1))),
+                Col.location(String.valueOf(point.charAt(0)))
         );
     }
 
-    public final void end() {
+    public final void finish() {
         isPlaying = false;
     }
 
@@ -42,11 +42,11 @@ public final class ChessGame {
         return isPlaying;
     }
 
-    public final double getScoreByTeam(final Team team) {
+    public final double scoreByTeam(final Team team) {
         return board.scoreByTeam(team);
     }
 
-    public final Board getBoard() {
+    public final Board board() {
         return board;
     }
 

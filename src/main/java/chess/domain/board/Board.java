@@ -4,7 +4,7 @@ import chess.domain.Team;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
-import chess.exception.AnotherTeamTurnException;
+import chess.exception.EnemyTurnException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,31 +21,31 @@ public final class Board {
 
     public final void move(final Position startPoint, final Position endPoint, final Team team) {
         Pieces pieces = board.get(team);
-        checkAnotherTeamTurn(startPoint, team);
-        Piece startPointPiece = pieces.getPieceByPosition(startPoint);
+        checkEnemyTurn(startPoint, team);
+        Piece startPointPiece = pieces.pieceByPosition(startPoint);
         startPointPiece.move(this, endPoint);
         startPointPiece.erasePiece(this, endPoint);
     }
 
-    private void checkAnotherTeamTurn(Position startPoint, Team team) {
-        Pieces anotherTeamPieces = board.get(Team.enemyTeam(team));
-        if (anotherTeamPieces.containByPosition(startPoint)) {
-            throw new AnotherTeamTurnException(team);
+    private void checkEnemyTurn(Position startPoint, Team team) {
+        Pieces enemyPieces = board.get(Team.enemyTeam(team));
+        if (enemyPieces.containsPosition(startPoint)) {
+            throw new EnemyTurnException(team);
         }
     }
 
-    public boolean validateRange(Position position) {
-        return !position.outOfRange();
+    public boolean validatesRange(Position position) {
+        return !position.isOutOfRange();
     }
 
     public final boolean isEnemyKingDead(final Team team) {
         Pieces enemyPieces = board.get(Team.enemyTeam(team));
-        return !enemyPieces.kingAlive();
+        return !enemyPieces.isKingAlive();
     }
 
     public final double scoreByTeam(final Team team) {
         Pieces pieces = board.get(team);
-        return pieces.calculateScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
+        return pieces.calculatedScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }
 
     public final Pieces piecesByTeam(final Team team) {
