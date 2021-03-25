@@ -37,11 +37,11 @@ public class Knight extends NoKingPieces {
     public final List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
 
-        int[] rowDir = {-1, 1, 2, 2, 1, -1, -2, -2};
-        int[] colDir = {2, 2, 1, -1, -2, -2, -1, 1};
+        int[] rowDirection = {-1, 1, 2, 2, 1, -1, -2, -2};
+        int[] colDirection = {2, 2, 1, -1, -2, -2, -1, 1};
 
-        for (int dir = 0; dir < colDir.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDir[dir], colDir[dir]);
+        for (int dir = 0; dir < colDirection.length; ++dir) {
+            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
         }
         return movablePositions;
     }

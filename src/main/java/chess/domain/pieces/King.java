@@ -36,11 +36,11 @@ public class King extends Piece {
     public List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
 
-        int[] rowDir = {0, 0, -1, 1, -1, 1, -1, 1};
-        int[] colDir = {-1, 1, 0, 0, -1, 1, 1, -1};
+        int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
+        int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
 
-        for (int dir = 0; dir < colDir.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDir[dir], colDir[dir]);
+        for (int dir = 0; dir < colDirection.length; ++dir) {
+            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
         }
         return movablePositions;
     }
