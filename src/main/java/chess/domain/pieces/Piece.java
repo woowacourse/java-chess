@@ -63,9 +63,6 @@ public abstract class Piece {
 
     public abstract List<Position> getMovablePositions(final Board board);
 
-    public abstract boolean isKing();
-
-    public abstract boolean isPawn();
 
     public final Double score() {
         return score;
@@ -74,4 +71,8 @@ public abstract class Piece {
     public final boolean sameCol(final int col) {
         return position.sameCol(col);
     }
+    
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 }

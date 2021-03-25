@@ -30,6 +30,14 @@ public class Position {
         return col;
     }
 
+    public boolean sameCol(final int col) {
+        return this.col == col;
+    }
+
+    public boolean isInitPositionByTeam(final Team team) {
+        return team.isInitPawn(row);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,13 +49,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, col);
-    }
-
-    public boolean sameCol(final int col) {
-        return this.col == col;
-    }
-
-    public boolean isInitPositionByTeam(final Team team) {
-        return team.isInitPawn(row);
     }
 }
