@@ -31,7 +31,7 @@ public class InitializedBoard {
             .forEach(x -> traversYPositions(pieceKind, x));
     }
 
-    private static void traversYPositions(PieceKind pieceKind, char x) {
+    private static void traversYPositions(PieceKind pieceKind, XPosition x) {
         pieceKind.bringInitialYPositions()
             .stream()
             .map(y -> Position.of(x, y))

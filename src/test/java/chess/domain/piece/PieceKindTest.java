@@ -1,9 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.XPosition;
+import chess.domain.board.YPosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,8 +30,8 @@ class PieceKindTest {
     @DisplayName("말 초기 X 값 리스트 테스트")
     @Test
     void bringInitialXPositions() {
-        List<Character> initialXPositions = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
-        List<Character> expectedInitialXPositions = PieceKind.PAWN.bringInitialXPositions();
+        List<XPosition> initialXPositions = Arrays.asList(XPosition.values());
+        List<XPosition> expectedInitialXPositions = PieceKind.PAWN.bringInitialXPositions();
 
         assertTrue(initialXPositions.containsAll(expectedInitialXPositions));
     }
@@ -36,8 +39,8 @@ class PieceKindTest {
     @DisplayName("말 초기 Y 값 리스트 테스트")
     @Test
     void bringInitialYPositions() {
-        List<Integer> initialYPositions = Arrays.asList(2);
-        List<Integer> expectedInitialYPositions = PieceKind.PAWN.bringInitialYPositions();
+        List<YPosition> initialYPositions = Collections.singletonList(YPosition.TWO);
+        List<YPosition> expectedInitialYPositions = PieceKind.PAWN.bringInitialYPositions();
 
         assertTrue(initialYPositions.containsAll(expectedInitialYPositions));
     }

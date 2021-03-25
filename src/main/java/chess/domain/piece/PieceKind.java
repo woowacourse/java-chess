@@ -1,28 +1,45 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import chess.domain.board.XPosition;
+import chess.domain.board.YPosition;
 import chess.domain.piece.strategy.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum PieceKind {
-    KING("K", 0, new KingMoveStrategy(), Arrays.asList('e'), Arrays.asList(1)),
-    QUEEN("Q", 9, new QueenMoveStrategy(), Arrays.asList('d'), Arrays.asList(1)),
-    KNIGHT("N", 2.5, new KnightMoveStrategy(), Arrays.asList('b', 'g'), Arrays.asList(1)),
-    BISHOP("B", 3,  new BishopMoveStrategy(), Arrays.asList('c', 'f'), Arrays.asList(1)),
-    ROOK("R", 5,  new RookMoveStrategy(), Arrays.asList('a', 'h'), Arrays.asList(1)),
-    PAWN("P", 1, new PawnMoveStrategy(), Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'), Arrays.asList(2)),
-    VOID(".", 0, new VoidMoveStrategy(), Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'), Arrays.asList(3, 4));
+    KING("K", 0, new KingMoveStrategy(),
+        Collections.singletonList(XPosition.E),
+        Collections.singletonList(YPosition.ONE)),
+    QUEEN("Q", 9, new QueenMoveStrategy(),
+        Collections.singletonList(XPosition.D),
+        Collections.singletonList(YPosition.ONE)),
+    KNIGHT("N", 2.5, new KnightMoveStrategy(),
+        Arrays.asList(XPosition.B, XPosition.G),
+        Collections.singletonList(YPosition.ONE)),
+    BISHOP("B", 3, new BishopMoveStrategy(),
+        Arrays.asList(XPosition.C, XPosition.F),
+        Collections.singletonList(YPosition.ONE)),
+    ROOK("R", 5, new RookMoveStrategy(),
+        Arrays.asList(XPosition.A, XPosition.H),
+        Collections.singletonList(YPosition.ONE)),
+    PAWN("P", 1, new PawnMoveStrategy(),
+        Arrays.asList(XPosition.values()),
+        Collections.singletonList(YPosition.TWO)),
+    VOID(".", 0, new VoidMoveStrategy(),
+        Arrays.asList(XPosition.values()),
+        Arrays.asList(YPosition.THREE, YPosition.FOUR));
 
     private final String symbol;
     private final double point;
     private final MoveStrategy moveStrategy;
-    private final List<Character> initialXPositions;
-    private final List<Integer> initialYPositions;
+    private final List<XPosition> initialXPositions;
+    private final List<YPosition> initialYPositions;
 
-    PieceKind(String symbol, double point, MoveStrategy moveStrategy, List<Character> initialXPositions,
-              List<Integer> initialYPositions) {
+    PieceKind(String symbol, double point, MoveStrategy moveStrategy, List<XPosition> initialXPositions,
+              List<YPosition> initialYPositions) {
         this.symbol = symbol;
         this.point = point;
         this.moveStrategy = moveStrategy;
@@ -30,11 +47,11 @@ public enum PieceKind {
         this.initialYPositions = initialYPositions;
     }
 
-    public List<Character> bringInitialXPositions() {
+    public List<XPosition> bringInitialXPositions() {
         return this.initialXPositions;
     }
 
-    public List<Integer> bringInitialYPositions() {
+    public List<YPosition> bringInitialYPositions() {
         return this.initialYPositions;
     }
 
