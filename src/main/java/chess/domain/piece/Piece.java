@@ -1,7 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.Path;
+import chess.domain.board.Paths;
+import chess.domain.position.Position;
 import chess.domain.result.Score;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
 
@@ -45,6 +50,28 @@ public abstract class Piece {
 
     public boolean hasColor(PieceColor color) {
         return this.pieceColor.equals(color);
+    }
+
+    public boolean canMoveLimited() {
+        return isKing() || isKnight() || isPawn();
+    }
+
+    public Paths generatePaths(Position current) {
+        return new Paths(directions().stream()
+            .map(direction -> findPathInDirection(direction, current))
+            .collect(Collectors.toList()));
+    }
+
+    private Path findPathInDirection(Direction direction, Position currentPosition) {
+        List<Position> positions = new ArrayList<>();
+        while (!currentPosition.isBlockedWhenGoTo(direction)) {
+            positions.add(currentPosition.moveTo(direction));
+            currentPosition = currentPosition.moveTo(direction);
+            if (canMoveLimited()) {
+                break;
+            }
+        }
+        return new Path(positions);
     }
 
     public String color() {

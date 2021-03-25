@@ -42,16 +42,15 @@ public class Board {
     }
 
     public void move(Piece piece, Position target) {
-        Path path = generatePath(piece);
+        Path path = generateAvailablePath(piece);
         if (path.isAble(target)) {
             coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
         }
     }
 
-    public Path generatePath(Piece piece) {
-        Paths paths = new Paths();
-        paths = paths.findAllPath(piece, findPositionBy(piece));
+    public Path generateAvailablePath(Piece piece) {
+        Paths paths = piece.generatePaths(findPositionBy(piece));
         return paths.removeObstacles(piece, this);
     }
 

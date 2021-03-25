@@ -12,14 +12,12 @@ import org.junit.jupiter.api.Test;
 
 class KingTest {
 
-    // todo : 여기 테스트들은 path에 있어도 될 것 같고?
     @DisplayName("킹이 이동가능한 전체 위치를 구한다. 상황 : 흰킹-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
         Position current = Position.of("e4");
         Piece king = new King(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(king, current);
+        Paths paths = king.generatePaths(current);
 
         assertThat(paths.pathsToPosition()).isEqualTo(kingE4WithoutObstacles());
     }
@@ -29,8 +27,8 @@ class KingTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece king = new King(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(king, current);
+        Paths paths = king.generatePaths(current);
+
         Board board = new Board();
         Piece firstBlackPiece = new Knight(PieceColor.BLACK);
         Piece secondBlackPiece = new Knight(PieceColor.BLACK);

@@ -18,8 +18,8 @@ class RookTest {
     void generatePath() {
         Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(rook, current);
+        Paths paths = rook.generatePaths(current);
+
         assertThat(paths.pathsToPosition()).isEqualTo(rookE4WithoutObstacles());
     }
 
@@ -28,8 +28,8 @@ class RookTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(rook, current);
+        Paths paths = rook.generatePaths(current);
+
         Board board = BoardFactory.initializeBoard();
         assertThat(paths.removeObstacles(rook, board).positions()).isEqualTo(
             rookE4WithObstacles());

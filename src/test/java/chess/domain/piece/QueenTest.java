@@ -12,14 +12,12 @@ import org.junit.jupiter.api.Test;
 
 class QueenTest {
 
-
     @DisplayName("퀸이 이동가능한 전체 위치를 구한다. 상황 : 흰퀸-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
         Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(queen, current);
+        Paths paths = queen.generatePaths(current);
 
         assertThat(paths.pathsToPosition()).isEqualTo(queenE4WithoutObstacles());
     }
@@ -29,8 +27,8 @@ class QueenTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(queen, current);
+        Paths paths = queen.generatePaths(current);
+
         assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions())
             .isEqualTo(
                 queenE4WithObstacles());

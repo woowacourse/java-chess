@@ -17,10 +17,9 @@ class PawnTest {
     void generatePath_White() {
         Position current = Position.of("e2");
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Paths paths = new Paths();
         Board board = new Board();
         board.putPiece(pawn, current);
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE2WithoutObstaclesWhite());
     }
@@ -30,8 +29,8 @@ class PawnTest {
     void generateAttackPath_White() {
         Position current = Position.of("e2");
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
+
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("d3"));
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
@@ -45,8 +44,8 @@ class PawnTest {
     void generateObstacleConsideredPath_White() {
         Position current = Position.of("e4");
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
+
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d5"));
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f5"));
@@ -60,9 +59,9 @@ class PawnTest {
     void generatePath_Black() {
         Position current = Position.of("e7");
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Paths paths = new Paths();
         Board board = new Board();
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
+
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE2WithoutObstaclesBlack());
@@ -73,8 +72,8 @@ class PawnTest {
     void generateAttackPath_Black() {
         Position current = Position.of("e7");
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
+
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d6"));
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("f6"));
@@ -88,8 +87,8 @@ class PawnTest {
     void generateObstacleConsideredPath_Black() {
         Position current = Position.of("e4");
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Paths paths = new Paths();
-        paths = paths.findAllPath(pawn, current);
+        Paths paths = pawn.generatePaths(current);
+
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d3"));
