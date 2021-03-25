@@ -20,6 +20,10 @@ public final class Position {
         this.row = row;
     }
 
+    public static Position of(Column column, Row row) {
+        return new Position(column, row);
+    }
+
     public static Position from(String position) {
         if (position.length() != POSITION_LENGTH) {
             throw new PositionException();

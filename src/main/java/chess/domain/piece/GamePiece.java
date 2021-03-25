@@ -18,22 +18,28 @@ public abstract class GamePiece implements Piece {
     }
 
     @Override
-    public final List<Position> route(Position from, Position to) {
+    public final List<Position> route(Position from, Position to, Piece targetPiece, Side side) {
+        if (!isSideEqualTo(side)) {
+            throw new InvalidMovementException("자신의 기물만 움직일 수 있습니다.");
+        }
         if (Objects.equals(from, to)) {
             throw new InvalidMovementException("자기 자신의 위치로는 이동할 수 없습니다.");
+        }
+        if (targetPiece.isSideEqualTo(side)) {
+            throw new InvalidMovementException("이동하려는 위치에 자신의 기물이 존재합니다.");
         }
 
         int rowDifference = Position.differenceOfRow(from, to);
         int columnDifference = Position.differenceOfColumn(from, to);
 
-        if (movable(rowDifference, columnDifference)) {
+        if (movable(rowDifference, columnDifference, targetPiece)) {
             return getRoute(from, to);
         }
 
         throw new InvalidMovementException("해당 기물의 이동 룰에 어긋납니다.");
     }
 
-    protected abstract boolean movable(int rowDifference, int columnDifference);
+    protected abstract boolean movable(int rowDifference, int columnDifference, Piece targetPiece);
 
     protected abstract List<Position> getRoute(Position from, Position to);
 

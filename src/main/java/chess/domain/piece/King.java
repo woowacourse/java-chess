@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
-import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,7 @@ public final class King extends GamePieceExceptPawn {
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
+    protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
         return Math.abs(rowDifference) == 1 || Math.abs(columnDifference) == 1;
     }
 

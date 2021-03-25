@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
-import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +17,7 @@ public final class Knight extends GamePieceExceptPawn {
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
+    protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
         if (Math.abs(rowDifference) == MOVE_RULE_SECOND
                 && Math.abs(columnDifference) == MOVE_RULE_FIRST) {
             return true;

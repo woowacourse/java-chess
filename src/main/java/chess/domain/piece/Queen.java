@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
-import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public final class Queen extends GamePieceExceptPawn {
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
+    protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
         if (isStraight(rowDifference, columnDifference)) {
             return true;
         }

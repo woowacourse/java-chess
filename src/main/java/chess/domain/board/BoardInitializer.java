@@ -50,19 +50,19 @@ public final class BoardInitializer {
 
     private static void setBase(Map<Position, Piece> result, Side side, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(column, row), BASE_MAP.get(column).apply(side));
+            result.put(Position.of(column, row), BASE_MAP.get(column).apply(side));
         }
     }
 
     private static void setPawn(Map<Position, Piece> result, Side side, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(column, row), new Pawn(side));
+            result.put(Position.of(column, row), new Pawn(side));
         }
     }
 
     private static void setBlank(Map<Position, Piece> result, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(column, row), Blank.getBlank());
+            result.put(Position.of(column, row), Blank.getBlank());
         }
     }
 }

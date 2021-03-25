@@ -16,7 +16,8 @@ public final class Blank implements Piece {
     }
 
     @Override
-    public List<Position> route(Position from, Position to) {
+    public List<Position> route(Position from, Position to, Piece targetPiece,
+            Side playerSide) {
         throw new PieceDoesNotExistException();
     }
 

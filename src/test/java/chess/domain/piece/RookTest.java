@@ -15,6 +15,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class RookTest {
 
+    private static final Piece BLANK = Blank.getBlank();
+    private static final Side SIDE = Side.BLACK;
+
     private Piece rook;
 
     @BeforeEach
@@ -25,7 +28,7 @@ class RookTest {
     @ParameterizedTest(name = "Rook 수직수평 이동경로 반환")
     @MethodSource("routeSuccessTestcase")
     void routeSuccess(Position to, Position[] pathPositions) {
-        assertThat(rook.route(Position.from("d4"), to))
+        assertThat(rook.route(Position.from("d4"), to, BLANK, SIDE))
                 .contains(pathPositions);
     }
 
@@ -47,7 +50,7 @@ class RookTest {
     @ParameterizedTest(name = "Rook 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
-        assertThatThrownBy(() -> rook.route(Position.from("d4"), to))
+        assertThatThrownBy(() -> rook.route(Position.from("d4"), to, BLANK, SIDE))
                 .isInstanceOf(InvalidMovementException.class);
     }
 

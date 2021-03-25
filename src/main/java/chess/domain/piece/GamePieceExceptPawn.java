@@ -1,11 +1,9 @@
-package chess.domain.gamestate;
+package chess.domain.piece;
 
 import chess.domain.game.Side;
-import chess.domain.piece.GamePiece;
 import chess.domain.position.Position;
 import chess.exception.InvalidMethodCallException;
 
-// todo 적절한 이름을 찾자
 public abstract class GamePieceExceptPawn extends GamePiece {
 
     public GamePieceExceptPawn(Side side, String initial) {

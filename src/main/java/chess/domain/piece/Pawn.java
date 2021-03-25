@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.game.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMovementException;
 import java.util.List;
 
 public final class Pawn extends GamePiece {
@@ -21,15 +22,61 @@ public final class Pawn extends GamePiece {
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
+    protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
         if (isSideEqualTo(Side.NONE)) {
             return false;
+        }
+
+        if (diagonal(rowDifference, columnDifference)) {
+            checkOpponentPieceNotExistInToPosition(targetPiece);
+        }
+        if (forward(rowDifference, columnDifference)) {
+            checkPieceExistInToPosition(targetPiece);
         }
 
         if (isSideEqualTo(Side.BLACK)) {
             return movableOneOrTwoSquare(rowDifference, columnDifference, BLACK_DIRECTION);
         }
         return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
+    }
+
+    private void checkPieceExistInToPosition(Piece targetPiece) {
+        if (!targetPiece.isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
+        }
+    }
+
+    private boolean forward(int rowDifference, int columnDifference) {
+        if (columnDifference != 0) {
+            return false;
+        }
+        return Math.abs(rowDifference) < 3;
+    }
+
+    private void checkOpponentPieceNotExistInToPosition(Piece targetPiece) {
+        if (targetPiece.isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 상대 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private boolean diagonal(int rowDifference, int columnDifference) {
+        return rowDifference == 1 && columnDifference == 1;
+    }
+
+    @Override
+    public boolean diagonal(Position from, Position to) {
+        int rowDifference = Math.abs(Position.differenceOfRow(from, to));
+        int columnDifference = Math.abs(Position.differenceOfColumn(from, to));
+
+        return rowDifference == 1 && columnDifference == 1;
+    }
+
+    @Override
+    public boolean forward(Position from, Position to) {
+        if (Position.differenceOfColumn(from, to) != 0) {
+            return false;
+        }
+        return Math.abs(Position.differenceOfRow(from, to)) < 3;
     }
 
     @Override
@@ -71,28 +118,12 @@ public final class Pawn extends GamePiece {
 
     @Override
     public double score() {
-        return SINGLE_PAWN_SCORE;
+        return 0;
     }
 
     @Override
     public void moved() {
         initPosition = false;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        int rowDifference = Math.abs(Position.differenceOfRow(from, to));
-        int columnDifference = Math.abs(Position.differenceOfColumn(from, to));
-
-        return rowDifference == 1 && columnDifference == 1;
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        if (Position.differenceOfColumn(from, to) != 0) {
-            return false;
-        }
-        return Math.abs(Position.differenceOfRow(from, to)) < 3;
     }
 
     public static double scoreByCount(int count) {

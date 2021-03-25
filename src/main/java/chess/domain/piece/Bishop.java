@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
-import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -14,13 +13,13 @@ public final class Bishop extends GamePieceExceptPawn {
         super(side, INITIAL);
     }
 
-    @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        return isDiagonal(rowDifference, columnDifference);
-    }
-
     private boolean isDiagonal(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) == Math.abs(columnDifference);
+    }
+
+    @Override
+    protected boolean movable(int rowDifference, int columnDifference, Piece targetPiece) {
+        return isDiagonal(rowDifference, columnDifference);
     }
 
     @Override

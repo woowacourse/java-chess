@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Piece {
 
-    List<Position> route(Position from, Position to);
+    List<Position> route(Position from, Position to, Piece targetPiece, Side side);
 
     boolean isBlank();
 

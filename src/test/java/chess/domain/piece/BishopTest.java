@@ -15,6 +15,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
+    private static final Piece BLANK = Blank.getBlank();
+    private static final Side SIDE = Side.BLACK;
+
     private Piece bishop;
 
     @BeforeEach
@@ -25,7 +28,7 @@ class BishopTest {
     @ParameterizedTest(name = "Bishop 대각 이동경로 반환")
     @MethodSource("routeSuccessTestcase")
     void routeSuccess(Position to, Position[] pathPositions) {
-        assertThat(bishop.route(Position.from("d4"), to))
+        assertThat(bishop.route(Position.from("d4"), to, BLANK, SIDE))
                 .contains(pathPositions);
     }
 
@@ -47,7 +50,7 @@ class BishopTest {
     @ParameterizedTest(name = "Bishop 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
-        assertThatThrownBy(() -> bishop.route(Position.from("d4"), to))
+        assertThatThrownBy(() -> bishop.route(Position.from("d4"), to, BLANK, SIDE))
                 .isInstanceOf(InvalidMovementException.class);
     }
 

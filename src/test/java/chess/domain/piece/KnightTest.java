@@ -14,17 +14,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class KnightTest {
 
+    private static final Piece BLANK = Blank.getBlank();
+    private static final Side SIDE = Side.BLACK;
+
     private Piece knight;
 
     @BeforeEach
     void setUp() {
-        knight = new Knight(Side.BLACK);
+        knight = new Knight(SIDE);
     }
 
     @ParameterizedTest(name = "Knight 빈 이동경로 반환")
     @MethodSource("routeSuccessTestcase")
     void routeSuccess(Position to) {
-        assertThat(knight.route(Position.from("c3"), to)).isEmpty();
+        assertThat(knight.route(Position.from("c3"), to, BLANK, SIDE)).isEmpty();
     }
 
     private static Stream<Arguments> routeSuccessTestcase() {
@@ -42,7 +45,7 @@ class KnightTest {
     @ParameterizedTest(name = "Knight 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
-        assertThatThrownBy(() -> knight.route(Position.from("a1"), to))
+        assertThatThrownBy(() -> knight.route(Position.from("a1"), to, BLANK, SIDE))
                 .isInstanceOf(InvalidMovementException.class);
     }
 

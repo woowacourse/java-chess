@@ -15,6 +15,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class KingTest {
 
+    private static final Piece BLANK = Blank.getBlank();
+    private static final Side SIDE = Side.BLACK;
+
     private Piece king;
 
     @BeforeEach
@@ -25,13 +28,13 @@ class KingTest {
     @ParameterizedTest(name = "King 빈 이동경로 반환")
     @CsvSource({"b2,a1", "b2,b3", "b2,a2"})
     void routeSuccess(String from, String to) {
-        assertThat(king.route(Position.from(from), Position.from(to))).isEmpty();
+        assertThat(king.route(Position.from(from), Position.from(to), BLANK, SIDE)).isEmpty();
     }
 
     @ParameterizedTest(name = "King 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position from, Position to) {
-        assertThatThrownBy(() -> king.route(from, to))
+        assertThatThrownBy(() -> king.route(from, to, BLANK, SIDE))
                 .isInstanceOf(InvalidMovementException.class);
     }
 

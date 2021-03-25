@@ -33,12 +33,8 @@ public final class OutputView {
     }
 
     private static void print(Board board) {
-        // TODO 뎁스 리팩터링
         for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                Position position = new Position(column, row);
-                System.out.print(board.getPieceInitialByPosition(position));
-            }
+            printRow(board, row);
             System.out.println("  " + row.getLineName());
         }
 
@@ -47,6 +43,13 @@ public final class OutputView {
                 .map(column -> column.name().toLowerCase(Locale.ROOT))
                 .forEach(System.out::print);
         printEmptyLine();
+    }
+
+    private static void printRow(Board board, Row row) {
+        for (Column column : Column.values()) {
+            Position position = Position.of(column, row);
+            System.out.print(board.getPieceInitialByPosition(position));
+        }
     }
 
     private static void printEmptyLine() {

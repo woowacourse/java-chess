@@ -15,6 +15,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class QueenTest {
 
+    private static final Piece BLANK = Blank.getBlank();
+    private static final Side SIDE = Side.BLACK;
+
     private Piece queen;
 
     @BeforeEach
@@ -25,7 +28,7 @@ class QueenTest {
     @ParameterizedTest(name = "Queen 직 이동경로 반환")
     @MethodSource("routeSuccessTestcase")
     void routeSuccess(Position to, Position[] pathPositions) {
-        assertThat(queen.route(Position.from("d4"), to))
+        assertThat(queen.route(Position.from("d4"), to, BLANK, SIDE))
                 .contains(pathPositions);
     }
 
@@ -51,7 +54,7 @@ class QueenTest {
     @ParameterizedTest(name = "Queen 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
-        assertThatThrownBy(() -> queen.route(Position.from("d4"), to))
+        assertThatThrownBy(() -> queen.route(Position.from("d4"), to, BLANK, SIDE))
                 .isInstanceOf(InvalidMovementException.class);
     }
 
