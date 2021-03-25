@@ -47,14 +47,7 @@ public enum Xpoint {
     }
 
     public String getName() {
-        return name;
-    }
-
-    private Xpoint of(int value) {
-        return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == value)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+        return this.name;
     }
 
     public Xpoint left() {

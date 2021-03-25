@@ -1,6 +1,10 @@
 package chess.domain.board.position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Position {
 
@@ -32,10 +36,6 @@ public class Position {
 
     public static Position of(Xpoint xpoint, Ypoint ypoint) {
         return of(xpoint.getName() + ypoint.getValue());
-    }
-
-    public static List<Position> generate() {
-        return new ArrayList<>(CACHE.values());
     }
 
     public Position up() {
@@ -158,18 +158,6 @@ public class Position {
         return movedPosition;
     }
 
-    private boolean isSamePosition(Position movedPosition) {
-        return movedPosition.isSameX(this.xpoint) || movedPosition.isSameY(this.ypoint);
-    }
-
-    public boolean isSameX(Xpoint xpoint) {
-        return this.xpoint.equals(xpoint);
-    }
-
-    public boolean isSameY(Ypoint ypoint) {
-        return this.ypoint.equals(ypoint);
-    }
-
     public List<Position> upVector() {
         List<Position> vector = new ArrayList<>();
         Position position = this;
@@ -250,6 +238,18 @@ public class Position {
         return vector;
     }
 
+    private boolean isSamePosition(Position movedPosition) {
+        return movedPosition.isSameX(this.xpoint) || movedPosition.isSameY(this.ypoint);
+    }
+
+    public boolean isSameX(Xpoint xpoint) {
+        return this.xpoint.equals(xpoint);
+    }
+
+    public boolean isSameY(Ypoint ypoint) {
+        return this.ypoint.equals(ypoint);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -270,9 +270,5 @@ public class Position {
     @Override
     public String toString() {
         return xpoint.name() + ypoint.getValue();
-    }
-
-    public int yValue() {
-        return ypoint.getValue();
     }
 }

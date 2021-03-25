@@ -43,14 +43,7 @@ public enum Ypoint {
     }
 
     public int getValue() {
-        return value;
-    }
-
-    private Ypoint of(int value) {
-        return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == value)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+        return this.value;
     }
 
     public Ypoint up() {
