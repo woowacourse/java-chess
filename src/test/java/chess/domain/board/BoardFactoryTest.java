@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InitializedBoardTest {
+public class BoardFactoryTest {
     
     private static Stream<Arguments> generateNonPawnSource() {
         return Stream.of(Arguments.of("a", Rook.class), Arguments.of("b", Knight.class), Arguments.of("c",
@@ -31,8 +31,7 @@ class InitializedBoardTest {
         final int whiteRow = 8;
         
         // when
-        final Map<Position, Piece> chessBord = InitializedBoard.create()
-                                                               .getBoard();
+        final Map<Position, Piece> chessBord = BoardFactory.InitializedBoard.create().getBoard();
         
         // then
         assertThat(chessBord.get(Position.from(file + blackRow))).isInstanceOf(pieceClass);
@@ -44,8 +43,7 @@ class InitializedBoardTest {
     void initializedPawnTest() {
         
         // when
-        final Map<Position, Piece> chessBord = InitializedBoard.create()
-                                                               .getBoard();
+        final Map<Position, Piece> chessBord = BoardFactory.InitializedBoard.create().getBoard();
         
         // then
         for (int i = 0; i < 8; i++) {
@@ -64,13 +62,28 @@ class InitializedBoardTest {
     void initializedBlankTest(int rank) {
         
         // when
-        final Map<Position, Piece> chessBord = InitializedBoard.create()
-                                                               .getBoard();
+        final Map<Position, Piece> chessBord = BoardFactory.InitializedBoard.create().getBoard();
         
         // then
         for (int i = 0; i < 8; i++) {
             Position position = Position.of(i, rank);
             assertThat(chessBord.get(position)).isInstanceOf(Blank.class);
+        }
+    }
+    
+    @Test
+    @DisplayName("빈 보드 초기화 테스트")
+    void initializedBlankTest() {
+        
+        // when
+        final Map<Position, Piece> chessBord = BoardFactory.EmptyBoard.create().getBoard();
+        
+        // then
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Position position = Position.of(i, j);
+                assertThat(chessBord.get(position)).isInstanceOf(Blank.class);
+            }
         }
     }
 }

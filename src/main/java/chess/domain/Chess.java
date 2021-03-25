@@ -1,8 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.EmptyBoard;
-import chess.domain.board.InitializedBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.MovePosition;
 
 public class Chess {
@@ -24,11 +23,11 @@ public class Chess {
     }
     
     public static Chess createWithInitializedBoard() {
-        return new Chess(InitializedBoard.create());
+        return new Chess(BoardFactory.InitializedBoard.create());
     }
     
     public static Chess createWithEmptyBoard() {
-        return new Chess(EmptyBoard.create(), Status.STOP, Color.WHITE);
+        return new Chess(BoardFactory.EmptyBoard.create(), Status.STOP, Color.WHITE);
     }
     
     public boolean isRunning() {
