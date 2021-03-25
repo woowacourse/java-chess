@@ -156,7 +156,7 @@ public class Position {
     }
 
 
-    public boolean startLine(TeamColor color) {
+    public boolean isPawnNotMoving(TeamColor color) {
         if (color == TeamColor.BLACK) {
             return this.number == ROW_BLACK_PAWN_LINE.getBoardInfo();
         }
