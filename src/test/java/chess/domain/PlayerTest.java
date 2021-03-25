@@ -17,6 +17,7 @@ class PlayerTest {
     void validatePieceToMove() {
         final Player whitePlayer = new Player(Color.WHITE);
         final Position position = Position.from("a2");
+
         assertThatCode(() -> whitePlayer.pickStartPiece(position, new Pieces(new Pawn(Color.WHITE, position))))
                 .doesNotThrowAnyException();
     }
@@ -26,6 +27,7 @@ class PlayerTest {
     void validatePieceToMoveError() {
         final Player whitePlayer = new Player(Color.WHITE);
         final Position position = Position.from("a7");
+
         assertThatThrownBy(() -> whitePlayer.pickStartPiece(Position.from("a7"), new Pieces(new Pawn(Color.BLACK, position))))
                 .isInstanceOf(IllegalArgumentException.class);
     }

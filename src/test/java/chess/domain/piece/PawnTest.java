@@ -24,6 +24,7 @@ public class PawnTest {
         final Position from = Position.from("a3");
         final Position to = Position.from("a4");
         final Piece pawn = new Pawn(Color.WHITE, from);
+
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -34,6 +35,7 @@ public class PawnTest {
         final Position from = Position.from("a3");
         final Position to = Position.from("a2");
         final Piece pawn = new Pawn(Color.BLACK, from);
+
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -44,6 +46,7 @@ public class PawnTest {
         final Position from = Position.from("a2");
         final Position to = Position.from("a4");
         final Piece pawn = new Pawn(Color.WHITE, from);
+
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -54,6 +57,7 @@ public class PawnTest {
         final Position from = Position.from("a7");
         final Position to = Position.from("a5");
         final Piece pawn = new Pawn(Color.BLACK, from);
+
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -64,6 +68,7 @@ public class PawnTest {
         final Position from = Position.from("a2");
         final Position to = Position.from("a4");
         final Piece pawn = new Pawn(Color.WHITE, from);
+
         assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a3"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -73,6 +78,7 @@ public class PawnTest {
         final Position from = Position.from("a7");
         final Position to = Position.from("a5");
         final Piece pawn = new Pawn(Color.BLACK, from);
+
         assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -83,6 +89,7 @@ public class PawnTest {
         final Position from = Position.from("c2");
         final Position to = Position.from(destination);
         final Piece pawn = new Pawn(Color.BLACK, from);
+
         pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -94,6 +101,7 @@ public class PawnTest {
         final Position from = Position.from("h5");
         final Position to = Position.from(destination);
         final Piece pawn = new Pawn(Color.WHITE, from);
+
         pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
