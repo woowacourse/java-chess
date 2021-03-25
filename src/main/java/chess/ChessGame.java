@@ -5,13 +5,14 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
-public class ChessGame {
+public final class ChessGame {
     private Board board;
     private boolean isPlaying = true;
-    private Team winner;
+    private Team currentTurnTeam;
 
     public final void initSetting() {
         BoardFactory boardFactory = new BoardFactory();
+        currentTurnTeam = Team.WHITE;
         board = boardFactory.getBoard();
     }
 
@@ -27,12 +28,12 @@ public class ChessGame {
         return board;
     }
 
-    public final void move(final Position startPoint, final Position endPoint, final Team team) {
-        board.move(startPoint, endPoint, team);
-        if (board.isEnemyKingDie(team)) {
-            winner = team;
+    public final void move(final Position startPoint, final Position endPoint) {
+        board.move(startPoint, endPoint, currentTurnTeam);
+        if (board.isEnemyKingDie(currentTurnTeam)) {
             end();
         }
+        currentTurnTeam = Team.getAnotherTeam(currentTurnTeam);
     }
 
     public final double getScoreByTeam(final Team team) {
@@ -40,6 +41,9 @@ public class ChessGame {
     }
 
     public final Team winner() {
-        return winner;
+        if (board.isEnemyKingDie(currentTurnTeam)) {
+            return currentTurnTeam;
+        }
+        return Team.getAnotherTeam(currentTurnTeam);
     }
 }

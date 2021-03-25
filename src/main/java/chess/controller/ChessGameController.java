@@ -13,11 +13,9 @@ import java.util.Objects;
 
 public class ChessGameController {
     private final ChessGame chessGame;
-    private Team currentTurn;
 
     public ChessGameController(final ChessGame chessGame) {
         this.chessGame = chessGame;
-        this.currentTurn = Team.WHITE;
     }
 
     public void start() {
@@ -44,11 +42,10 @@ public class ChessGameController {
             System.out.println(e.getMessage());
         }
     }
-    
+
     private void interactiveCommand(final Command command) {
         if (command.equals(Command.MOVE)) {
             move();
-            currentTurn = Team.getAnotherTeam(currentTurn);
         }
         if (command.equals(Command.STATUS)) {
             OutputView.printEachTeamScore(chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
@@ -67,7 +64,7 @@ public class ChessGameController {
 
         Position startPosition = position(startPoint);
         Position endPosition = position(endPoint);
-        chessGame.move(startPosition, endPosition, currentTurn);
+        chessGame.move(startPosition, endPosition);
     }
 
     private Position position(final String point) {
