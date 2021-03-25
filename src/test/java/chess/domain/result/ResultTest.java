@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -28,9 +29,9 @@ class ResultTest {
     @Test
     void pawnScoreInSameColumn() {
         Board board = new Board();
-        board.putPiece(new WhitePawn(), Position.of("a1"));
-        board.putPiece(new WhitePawn(), Position.of("a2"));
-        board.putPiece(new WhitePawn(), Position.of("a3"));
+        board.putPiece(new Pawn(PieceColor.WHITE), Position.of("a1"));
+        board.putPiece(new Pawn(PieceColor.WHITE), Position.of("a2"));
+        board.putPiece(new Pawn(PieceColor.WHITE), Position.of("a3"));
         Result result = new Result(board);
         assertThat(result.getWhiteScore()).isEqualTo(new Score(1.5));
         assertThat(result.getBlackScore()).isEqualTo(new Score(0));
@@ -40,10 +41,10 @@ class ResultTest {
     @Test
     void pawnScoreInDifferentColumn() {
         Board board = new Board();
-        board.putPiece(new BlackPawn(), Position.of("a1"));
-        board.putPiece(new BlackPawn(), Position.of("a2"));
-        board.putPiece(new BlackPawn(), Position.of("b2"));
-        board.putPiece(new BlackPawn(), Position.of("c3"));
+        board.putPiece(new Pawn(PieceColor.BLACK), Position.of("a1"));
+        board.putPiece(new Pawn(PieceColor.BLACK), Position.of("a2"));
+        board.putPiece(new Pawn(PieceColor.BLACK), Position.of("b2"));
+        board.putPiece(new Pawn(PieceColor.BLACK), Position.of("c3"));
         Result result = new Result(board);
         Score totalScore = result.calculateTotalScore(PieceColor.BLACK);
         assertThat(totalScore).isEqualTo(new Score(3));
@@ -55,9 +56,7 @@ class ResultTest {
     void findWinner(String positionName, String colorName) {
         Board board = BoardFactory.initializeBoard();
         Result result = new Result(board);
-        assertThatIllegalArgumentException()
-            .isThrownBy(result::findWinner)
-            .withMessage("아직 승자가 정해지지 않았습니다.");
+        assertThat(result.findWinner()).isEqualTo("아직 승자가 정해지지 않았습니다.");
         Piece king = board.findPieceBy(Position.of(positionName));
         board.getCoordinates().remove(king);
         assertThat(result.findWinner()).isEqualTo(colorName + "이 이겼습니다.");

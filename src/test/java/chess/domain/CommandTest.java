@@ -25,7 +25,7 @@ class CommandTest {
     @DisplayName("Command 반환 : MOVE")
     @Test
     void of_returnMove_success() {
-        String value = "move";
+        String value = "move a2 a8";
         assertThat(Command.of(value)).isEqualTo(Command.MOVE);
     }
 

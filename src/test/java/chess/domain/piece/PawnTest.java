@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
-    // todo : 여기 테스트들은 path에 있어도 될 것 같고?
     @DisplayName("흰색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 흰폰-e2 흰피스-없음 검은피스-없음")
     @Test
     void generatePath_White() {
