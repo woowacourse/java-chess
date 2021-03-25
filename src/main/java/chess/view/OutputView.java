@@ -63,8 +63,8 @@ public class OutputView {
 
     public static void printScore(ResultDto resultDto) {
         System.out.println(String.format(SKELETON_RESULT_WHITE_SCORE, resultDto.whiteScore()));
-        System.out.println(String.format(SKELETON_RESULT_BLACK_SCORE + resultDto.blackScore()));
-        System.out.println(String.format(WINNER + resultDto.getWinner()));
+        System.out.println(String.format(SKELETON_RESULT_BLACK_SCORE, resultDto.blackScore()));
+        System.out.println(String.format(WINNER, resultDto.getWinner()));
     }
 
     public static void printErrorMessage(Exception exception) {

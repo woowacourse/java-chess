@@ -31,7 +31,7 @@ public class ChessBoard {
     private final Map<Position, Piece> chessBoard;
     private final Pieces whitePieces;
     private final Pieces blackPieces;
-    private boolean gameStatus = true;
+    private boolean running = true;
 
     public ChessBoard() {
         InitChessBoard initChessBoard = new InitChessBoard();
@@ -70,7 +70,7 @@ public class ChessBoard {
 
     private void checkKilledPieceIsKing(Piece endPiece) {
         if (endPiece instanceof King) {
-            gameStatus = false;
+            running = false;
         }
     }
 
@@ -155,7 +155,7 @@ public class ChessBoard {
 
 
     public boolean isPlaying() {
-        return gameStatus;
+        return running;
     }
 }
 
