@@ -13,7 +13,7 @@ public class KnightMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> moveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
-        Piece sourcePiece = board.pieceOfPosition(source);
+        Piece sourcePiece = board.pieceByPosition(source);
 
         for (List<Position> positions : sourcePiece.vectors(source)) {
             movable.addAll(knightMovablePosition(positions, board, sourcePiece));
@@ -25,7 +25,7 @@ public class KnightMoveStrategy implements MoveStrategy {
 
     private List<Position> knightMovablePosition(List<Position> positions, Board board, Piece sourcePiece) {
         return positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isNotSameColorPiece(sourcePiece))
+                .filter(position -> board.pieceByPosition(position).isNotSameColorPiece(sourcePiece))
                 .collect(Collectors.toList());
     }
 }

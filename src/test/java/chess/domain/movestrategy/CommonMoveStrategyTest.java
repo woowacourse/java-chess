@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.position.Position;
 import chess.domain.piece.*;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Rook.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -80,7 +81,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Rook.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -117,7 +118,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Bishop.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -152,7 +153,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Bishop.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -189,7 +190,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Queen.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -226,7 +227,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = Queen.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -263,7 +264,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = King.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
@@ -293,7 +294,7 @@ public class CommonMoveStrategyTest {
 
         boardGenerator.print();
 
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
 
         MoveStrategy moveStrategy = King.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(

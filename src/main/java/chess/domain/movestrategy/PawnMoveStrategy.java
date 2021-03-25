@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class PawnMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> moveStrategy(Board board, Position source) {
-        Piece sourcePiece = board.pieceOfPosition(source);
+        Piece sourcePiece = board.pieceByPosition(source);
         Set<Position> movable = pawnMovablePosition(sourcePiece.vectors(source), board, sourcePiece);
         movable.remove(source);
         return movable;
@@ -27,17 +27,17 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     private List<Position> forwardPositions(List<Position> positions, Board board) {
-        if (!board.pieceOfPosition(positions.get(0)).isEmpty()) {
+        if (!board.pieceByPosition(positions.get(0)).isEmpty()) {
             return new ArrayList<>();
         }
         return positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isEmpty())
+                .filter(position -> board.pieceByPosition(position).isEmpty())
                 .collect(Collectors.toList());
     }
 
     private List<Position> diagonalPositions(List<Position> positions, Board board, Piece sourcePiece) {
         return positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isOppositeColorPiece(sourcePiece))
+                .filter(position -> board.pieceByPosition(position).isOppositeColorPiece(sourcePiece))
                 .collect(Collectors.toList());
     }
 }

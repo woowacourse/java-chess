@@ -13,7 +13,7 @@ public class CommonMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> moveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
-        Piece sourcePiece = board.pieceOfPosition(source);
+        Piece sourcePiece = board.pieceByPosition(source);
 
         for (List<Position> positions : sourcePiece.vectors(source)) {
             movable.addAll(movablePosition(positions, board, sourcePiece));
@@ -37,10 +37,10 @@ public class CommonMoveStrategy implements MoveStrategy {
     private int findBreakIndex(List<Position> positions, Board board, Piece sourcePiece) {
         int breakIndex = positions.size();
         Position collision = positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isNotEmpty())
+                .filter(position -> board.pieceByPosition(position).isNotEmpty())
                 .findFirst().orElse(positions.get(breakIndex - 1));
 
-        if (board.pieceOfPosition(collision).isNotSameColorPiece(sourcePiece)) {
+        if (board.pieceByPosition(collision).isNotSameColorPiece(sourcePiece)) {
             return positions.indexOf(collision) + 1;
         }
         return positions.indexOf(collision);

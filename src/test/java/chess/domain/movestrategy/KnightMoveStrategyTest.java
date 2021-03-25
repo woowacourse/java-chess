@@ -5,6 +5,7 @@ import chess.domain.board.BoardGenerator;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class KnightMoveStrategyTest {
         boardGenerator.put(Position.of("d5"), Pawn.createWhite());
         boardGenerator.put(Position.of("d7"), Pawn.createWhite());
         boardGenerator.put(Position.of("f6"), Knight.createWhite());
-        Board board = new Board(boardGenerator.create());
+        Board board = new Board(new ArrayList<>(), boardGenerator.create());
         MoveStrategy moveStrategy = Knight.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("f6"))).containsExactlyInAnyOrder(
                 Position.of("h7"), Position.of("e8"),

@@ -4,17 +4,28 @@ import chess.domain.board.position.Position;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Board {
+
     public static final int BOTH_KINGS_ALIVE = 2;
     private final List<Map<Position, Piece>> squares;
+    private final List<Rank> ranks;
 
-    public Board(final List<Map<Position, Piece>> squares) {
+    public Board(final List<Rank> ranks) {
+        this(ranks, new ArrayList<>());
+    }
+
+    public Board(final List<Rank> ranks, final List<Map<Position, Piece>> squares) {
+        this.ranks = ranks;
         this.squares = squares;
+    }
+
+    public List<Rank> ranks() {
+        return this.ranks;
     }
 
     public List<Map<Position, Piece>> squares() {
@@ -29,22 +40,22 @@ public class Board {
     }
 
     private Boolean isNotMovablePosition(Position source, Position target) {
-        Piece piece = pieceOfPosition(source);
+        Piece piece = pieceByPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();
         Set<Position> movablePath = moveStrategy.moveStrategy(this, source);
         return !movablePath.contains(target);
     }
 
-    public Piece pieceOfPosition(Position position) {
-        return squares.stream()
-                .filter(map -> map.containsKey(position))
-                .map(map -> map.get(position))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+    public Piece pieceByPosition(Position position) {
+        return this.ranks.stream()
+            .filter(rank -> rank.hasPosition(position))
+            .map(map -> map.piece(position))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     private void swapPieces(Position source, Position target) {
-        Piece sourcePiece = pieceOfPosition(source);
+        Piece sourcePiece = pieceByPosition(source);
         replacePiece(source, Empty.create());
         replacePiece(target, sourcePiece);
     }
@@ -63,8 +74,8 @@ public class Board {
 
     public boolean isAliveBothKings() {
         return squares.stream()
-                .flatMap(map -> map.values().stream())
-                .filter(Piece::isKing)
-                .count() == BOTH_KINGS_ALIVE;
+            .flatMap(map -> map.values().stream())
+            .filter(Piece::isKing)
+            .count() == BOTH_KINGS_ALIVE;
     }
 }
