@@ -127,7 +127,7 @@ public class Board {
 
     public void checkTurn(Piece piece, PieceColor turnColor) {
         if (!piece.isSameColor(turnColor)) {
-            throw new RuntimeException(INVALID_TURN_MESSAGE);
+            throw new InvalidMoveException(INVALID_TURN_MESSAGE);
         }
     }
 

@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -49,7 +50,7 @@ class GameTest {
         game.init();
 
         assertThatThrownBy(() -> game.move("e7", "e6"))
-            .isInstanceOf(RuntimeException.class)
+            .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Board.INVALID_TURN_MESSAGE);
     }
 
