@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class Rook extends Piece {
-    private static final int ROOK_UNICODE_DECIMAL = 9814;
+    private static final int ROOK_HASHCODE_AS_UNICODE = 9814;
 
     public Rook() {
     }
@@ -43,7 +43,7 @@ public final class Rook extends Piece {
 
     @Override
     public int hashCode() {
-        return ROOK_UNICODE_DECIMAL;
+        return ROOK_HASHCODE_AS_UNICODE;
     }
 
     @Override

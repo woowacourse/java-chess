@@ -5,7 +5,7 @@ import chess.domain.Position;
 import java.util.Map;
 
 public final class Knight extends Piece {
-    private static final int KNIGHT_UNICODE_DECIMAL = 9816;
+    private static final int KNIGHT_HASHCODE_AS_UNICODE = 9816;
 
     public Knight() {
     }
@@ -38,7 +38,7 @@ public final class Knight extends Piece {
 
     @Override
     public int hashCode() {
-        return KNIGHT_UNICODE_DECIMAL;
+        return KNIGHT_HASHCODE_AS_UNICODE;
     }
 
     @Override

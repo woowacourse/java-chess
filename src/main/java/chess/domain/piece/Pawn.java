@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class Pawn extends Piece {
-    private static final int PAWN_UNICODE_DECIMAL = 9817;
+    private static final int PAWN_HASHCODE_AS_UNICODE = 9817;
 
     private final int direction;
 
@@ -67,7 +67,7 @@ public final class Pawn extends Piece {
 
     @Override
     public int hashCode() {
-        return PAWN_UNICODE_DECIMAL * direction;
+        return PAWN_HASHCODE_AS_UNICODE * direction;
     }
 
     @Override

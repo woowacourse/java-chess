@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class Queen extends Piece {
-    private static final int QUEEN_UNICODE_DECIMAL = 9813;
+    private static final int QUEEN_HASHCODE_AS_UNICODE = 9813;
 
     public Queen() {
     }
@@ -47,7 +47,7 @@ public final class Queen extends Piece {
 
     @Override
     public int hashCode() {
-        return QUEEN_UNICODE_DECIMAL;
+        return QUEEN_HASHCODE_AS_UNICODE;
     }
 
     @Override

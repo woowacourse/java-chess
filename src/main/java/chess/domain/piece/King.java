@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class King extends Piece {
-    private static final int KING_UNICODE_DECIMAL = 9812;
+    private static final int KING_HASHCODE_AS_UNICODE = 9812;
 
     public King() {
     }
@@ -68,7 +68,7 @@ public final class King extends Piece {
 
     @Override
     public int hashCode() {
-        return KING_UNICODE_DECIMAL;
+        return KING_HASHCODE_AS_UNICODE;
     }
 
     @Override
