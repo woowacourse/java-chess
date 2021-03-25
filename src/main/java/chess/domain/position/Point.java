@@ -1,9 +1,8 @@
 package chess.domain.position;
 
-import java.util.Objects;
+import chess.BoardSize;
 
-import static chess.ChessConstant.MAX_INDEX_OF_BOARD;
-import static chess.ChessConstant.MIN_INDEX_OF_BOARD;
+import java.util.Objects;
 
 public class Point {
     
@@ -24,7 +23,7 @@ public class Point {
     }
     
     private static boolean isOutOfBounds(int point) {
-        return point < MIN_INDEX_OF_BOARD || point > MAX_INDEX_OF_BOARD;
+        return point < BoardSize.BOUND.getMinIndex() || point > BoardSize.BOUND.getMaxIndex();
     }
     
     public boolean isInRange() {

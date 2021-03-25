@@ -1,11 +1,9 @@
 package chess.view;
 
+import chess.BoardSize;
 import chess.domain.Chess;
 import chess.domain.Color;
 import chess.domain.board.SymbolBoardDTO;
-
-import static chess.ChessConstant.MAX_INDEX_OF_BOARD;
-import static chess.ChessConstant.MIN_INDEX_OF_BOARD;
 
 public class OutputView {
     
@@ -43,14 +41,14 @@ public class OutputView {
     
     public static void printBoard(Chess chess) {
         final String[][] board = SymbolBoardDTO.from(chess).getBoard();
-        for (int j = MAX_INDEX_OF_BOARD; j >= MIN_INDEX_OF_BOARD; j--) {
+        for (int j = BoardSize.BOUND.getMaxIndex(); j >= BoardSize.BOUND.getMinIndex(); j--) {
             printRankAt(board, j);
         }
         System.out.println();
     }
     
     private static void printRankAt(String[][] board, int j) {
-        for (int i = MIN_INDEX_OF_BOARD; i <= MAX_INDEX_OF_BOARD; i++) {
+        for (int i = BoardSize.BOUND.getMinIndex(); i <= BoardSize.BOUND.getMaxIndex(); i++) {
             System.out.print(board[i][j]);
         }
         System.out.println();

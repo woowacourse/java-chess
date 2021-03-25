@@ -7,16 +7,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static chess.ChessConstant.DEFAULT_INDEX_OF_BLACK_PAWN;
-import static chess.ChessConstant.DEFAULT_INDEX_OF_WHITE_PAWN;
-
 public class MovePosition {
+    
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
     
     private static final String BLANK = " ";
     private static final int POSITIONS_SIZE = 3;
     
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
+    private static final int DEFAULT_INDEX_OF_WHITE_PAWN = 1;
+    private static final int DEFAULT_INDEX_OF_BLACK_PAWN = 6;
     
     private static final String ERROR_MISMATCH_POSITION_SIZE = "입력받은 위치가 2개가 아닙니다.";
     
