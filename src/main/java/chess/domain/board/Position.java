@@ -20,7 +20,7 @@ public class Position {
     private static final int ZERO = 0;
     private static final int ROW_AND_COLUMN_LENGTH = 2;
     private static final int MOVE_ONE_WEIGHT = 1;
-    private static final String ERROR_POSITION = "잘못된 좌표입니다";
+    public static final String ERROR_POSITION = "잘못된 좌표입니다. 좌표는 [a~h][1~8] 사이로 입력 해 주세요";
 
     private static Map<String, Position> positions = new LinkedHashMap<>(POSITION_SIZE);
 

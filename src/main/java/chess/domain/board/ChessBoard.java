@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
+
     private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
-    private static final String EXCEPTION_POSITION = "잘못된 좌표입니다.";
     private static final int WIN_BOUNDARY = 0;
 
     private final Map<Position, Piece> chessBoard;
@@ -101,7 +101,7 @@ public class ChessBoard {
         if (isMoveAblePosition(source, target)) {
             return;
         }
-        throw new IllegalArgumentException(EXCEPTION_POSITION);
+        throw new IllegalArgumentException(Position.ERROR_POSITION);
     }
 
     private boolean isMoveAblePosition(String source, String target) {

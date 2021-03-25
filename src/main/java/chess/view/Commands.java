@@ -9,7 +9,7 @@ public enum Commands {
     STATUS("status"),
     END("end");
 
-    public static final String EXCEPTION_INPUT = "잘못된 입력입니다.";
+    public static final String EXCEPTION_INPUT = "입력은 start, end, status, move 중 하나로 입력하여 주세요";
 
     private final String command;
 
