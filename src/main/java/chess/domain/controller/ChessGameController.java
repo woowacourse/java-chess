@@ -42,19 +42,19 @@ public class ChessGameController {
     }
 
     private boolean isCommandEnd(List<String> command) {
-        return Commands.getInstance(command.get(0)) == Commands.END;
+        return Commands.getCommand(command.get(0)) == Commands.END;
     }
 
     private boolean isCommandStatus(List<String> command) {
-        return Commands.getInstance(command.get(0)) == Commands.STATUS;
+        return Commands.getCommand(command.get(0)) == Commands.STATUS;
     }
 
     private boolean isCommandMove(List<String> command) {
-        return Commands.getInstance(command.get(0)) == Commands.MOVE;
+        return Commands.getCommand(command.get(0)) == Commands.MOVE;
     }
 
     private boolean isCommandStart(List<String> command) {
-        return Commands.getInstance(command.get(0)) == Commands.START;
+        return Commands.getCommand(command.get(0)) == Commands.START;
     }
 
     private void runMove(List<String> command) {
