@@ -30,7 +30,12 @@ public final class Board {
         Piece targetPiece = board.get(to);
 
         List<Position> route = movingPiece.route(from, to, targetPiece, playerSide);
+        checkRouteIsEmpty(route);
+        movePiece(from, to, movingPiece);
+        checkWinner(playerSide, targetPiece);
+    }
 
+    private void checkRouteIsEmpty(List<Position> route) {
         route.stream()
                 .map(board::get)
                 .filter(piece -> !piece.isBlank())
@@ -38,17 +43,18 @@ public final class Board {
                 .ifPresent(isBlank -> {
                     throw new InvalidMovementException("이동경로에 다른 기물이 존재합니다.");
                 });
-
-        movePiece(from, to, movingPiece, playerSide);
-        if (targetPiece.isKing()) {
-            winner = playerSide;
-        }
     }
 
-    private void movePiece(Position from, Position to, Piece piece, Side playerSide) {
+    private void movePiece(Position from, Position to, Piece piece) {
         board.put(to, piece);
         board.put(from, Blank.getBlank());
         piece.moved();
+    }
+
+    private void checkWinner(Side playerSide, Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            winner = playerSide;
+        }
     }
 
     public String getPieceInitialByPosition(Position position) {
@@ -59,23 +65,12 @@ public final class Board {
         return winner != Side.NONE;
     }
 
+    public Side winner() {
+        return winner;
+    }
+
     public double score(Side side) {
         return scoreWithoutPawn(side) + scoreOnlyPawn(side);
-    }
-
-    private double scoreOnlyPawn(Side side) {
-        double score = 0;
-        for (Column column : Column.values()) {
-            score += Pawn.scoreByCount(pawnCountByColumn(side, column));
-        }
-        return score;
-    }
-
-    private int pawnCountByColumn(Side side, Column column) {
-        return (int) Arrays.stream(Row.values())
-                .map(row -> board.get(Position.of(column, row)))
-                .filter(piece -> piece.isPawn() && piece.isSideEqualTo(side))
-                .count();
     }
 
     private double scoreWithoutPawn(Side side) {
@@ -86,10 +81,17 @@ public final class Board {
                 .sum();
     }
 
-    public Side winner() {
-        if (!isGameSet()) {
-            return Side.NONE;
-        }
-        return winner;
+    private double scoreOnlyPawn(Side side) {
+        return Arrays.stream(Column.values())
+                .map(column -> pawnCountByColumn(side, column))
+                .mapToDouble(Pawn::scoreByCount)
+                .sum();
+    }
+
+    private int pawnCountByColumn(Side side, Column column) {
+        return (int) Arrays.stream(Row.values())
+                .map(row -> board.get(Position.of(column, row)))
+                .filter(piece -> piece.isPawn() && piece.isSideEqualTo(side))
+                .count();
     }
 }
