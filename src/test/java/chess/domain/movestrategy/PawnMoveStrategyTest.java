@@ -1,20 +1,20 @@
 package chess.domain.movestrategy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.Board;
 import chess.domain.board.InitPieces;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class PawnMoveStrategyTest {
+
     private List<Rank> ranks;
 
     @BeforeEach
@@ -30,7 +30,7 @@ public class PawnMoveStrategyTest {
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder(
-                Position.of("d3"), Position.of("d4"), Position.of("c3"));
+            Position.of("d3"), Position.of("d4"), Position.of("c3"));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PawnMoveStrategyTest {
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("d3"))).containsExactlyInAnyOrder(
-                Position.of("d4"), Position.of("e4"));
+            Position.of("d4"), Position.of("e4"));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class PawnMoveStrategyTest {
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder(
-                Position.of("d6"), Position.of("d5"),
-                Position.of("c6"));
+            Position.of("d6"), Position.of("d5"),
+            Position.of("c6"));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PawnMoveStrategyTest {
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
         assertThat(moveStrategy.moveStrategy(board, Position.of("d6"))).containsExactlyInAnyOrder(
-                Position.of("d5"), Position.of("e5"));
+            Position.of("d5"), Position.of("e5"));
     }
 
     @Test

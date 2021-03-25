@@ -3,6 +3,7 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 
 public abstract class Running extends Started {
+
     public Running(Board board) {
         super(board);
     }
