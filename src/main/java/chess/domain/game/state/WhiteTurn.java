@@ -3,9 +3,9 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 
 public class WhiteTurn extends Running {
+
     public WhiteTurn(Board board) {
         super(board);
     }
@@ -25,11 +25,9 @@ public class WhiteTurn extends Running {
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        Piece sourcePiece = board().pieceOfPosition(source);
+        Piece sourcePiece = board().pieceByPosition(source);
         if (sourcePiece.isBlack()) {
-            throw new IllegalStateException(
-                    Color.WHITE.name() + "턴엔 " + Color.WHITE.name() + "말만 이동 가능합니다."
-            );
+            throw new IllegalStateException("흰색 차례엔 흰색 말만 이동 가능합니다.");
         }
         board().moveIfValidPosition(source, target);
     }
