@@ -34,4 +34,60 @@ class ColorTest {
         // then
         assertThat(next).isEqualTo(Color.BLACK);
     }
+    
+    @Test
+    @DisplayName("검은색인지 테스트")
+    void isBlackTest() {
+        
+        // given
+        Color color = Color.BLACK;
+        
+        // when
+        boolean isBlack = color.isBlack();
+        
+        // then
+        assertThat(isBlack).isTrue();
+    }
+    
+    @Test
+    @DisplayName("검은색이 아닌지 테스트")
+    void isBlackTest_False() {
+    
+        // given
+        Color color = Color.BLACK;
+    
+        // when
+        boolean isBlack = color.isWhite();
+    
+        // then
+        assertThat(isBlack).isFalse();
+    }
+    
+    @Test
+    @DisplayName("하얀색인지 테스트")
+    void isWhiteTest() {
+        
+        // given
+        Color color = Color.WHITE;
+        
+        // when
+        boolean isWhite = color.isWhite();
+        
+        // then
+        assertThat(isWhite).isTrue();
+    }
+    
+    @Test
+    @DisplayName("하얀색이 아닌지 테스트")
+    void isWhiteTest_False() {
+        
+        // given
+        Color color = Color.BLACK;
+        
+        // when
+        boolean isWhite = color.isWhite();
+        
+        // then
+        assertThat(isWhite).isFalse();
+    }
 }
