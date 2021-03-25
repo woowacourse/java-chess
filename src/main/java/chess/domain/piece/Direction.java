@@ -45,7 +45,7 @@ public enum Direction {
                 .filter(direction -> direction.rowDirection == normalizeDifference(initialRowDifference))
                 .filter(direction -> direction.columnDirection == normalizeDifference(initialColumnDifference))
                 .findAny()
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UnsupportedOperationException::new);
     }
 
     private static int normalizeDifference(int difference) {
