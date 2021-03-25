@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static chess.domain.Board.BOARD_SIZE;
+
 public class Point {
     private static final int ASCII_CODE_GAP = 97;
     private static final int RANK_GAP = 8;
@@ -16,11 +18,13 @@ public class Point {
     private static final int MAXIMUM_RANK = 8;
     private static final int LETTER_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    public static final int MINIMUM_VALUE = 1;
+    public static final int MAXIMUM_VALUE = 7;
 
-    private static final List<Point> points;
+    private static final List<Point> POINTS;
 
     static {
-        points = IntStream.rangeClosed(MINIMUM_LETTER, MAXIMUM_LETTER)
+        POINTS = IntStream.rangeClosed(MINIMUM_LETTER, MAXIMUM_LETTER)
                 .mapToObj(i -> (char) i)
                 .flatMap(row ->
                         IntStream.rangeClosed(MINIMUM_RANK, MAXIMUM_RANK)
@@ -42,24 +46,21 @@ public class Point {
     }
 
     private static Point of(char letter, int rank) {
-        return points.stream()
-                .filter(p -> p.isSameColumn(p.convertLetterToIndex(letter)) && p.isSameRow(p.convertRankToIndex(rank)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+        return of(convertRankToIndex(rank), convertLetterToIndex(letter));
     }
 
     public static Point of(int row, int column) {
-        return points.stream()
-                .filter(p -> p.isSameColumn(column) && p.isSameRow(row))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+        if (row < MINIMUM_VALUE || MAXIMUM_VALUE < row || column < MINIMUM_VALUE || MAXIMUM_VALUE < column) {
+            throw new IllegalArgumentException("올바르지 않은 좌표입니다.");
+        }
+        return POINTS.get(MAXIMUM_RANK - MINIMUM_RANK - row + BOARD_SIZE * column);
     }
 
-    private int convertLetterToIndex(char letter) {
+    private static int convertLetterToIndex(char letter) {
         return letter - ASCII_CODE_GAP;
     }
 
-    private int convertRankToIndex(int rank) {
+    private static int convertRankToIndex(int rank) {
         return RANK_GAP - rank;
     }
 
