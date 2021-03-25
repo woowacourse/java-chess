@@ -58,12 +58,12 @@ public class Board {
     }
 
     private void replacePiece(Position position, Piece piece) {
-        Rank findedRank = this.ranks
+        Rank foundRank = this.ranks
             .stream()
             .filter(rank -> rank.hasPosition(position))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
 
-        findedRank.replacePiece(position, piece);
+        foundRank.replacePiece(position, piece);
     }
 }
