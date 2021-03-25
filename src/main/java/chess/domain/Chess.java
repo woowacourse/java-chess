@@ -76,4 +76,24 @@ public class Chess {
     public boolean isStop() {
         return status == Status.STOP;
     }
+    
+    public Chess start() {
+        return null;
+    }
+    
+    public Chess move(MovePosition movePosition) {
+        return null;
+    }
+    
+    public Chess status() {
+        return null;
+    }
+    
+    public Chess end() {
+        return null;
+    }
+    
+    public Chess exit() {
+        return null;
+    }
 }
