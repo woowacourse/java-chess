@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class Running extends DefaultState {
+public class Running implements State {
     public Running() {
         super();
     }

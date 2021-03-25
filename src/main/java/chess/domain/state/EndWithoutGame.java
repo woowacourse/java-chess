@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class EndWithoutGame extends DefaultState {
+public class EndWithoutGame implements State {
     public EndWithoutGame() {
         super();
     }

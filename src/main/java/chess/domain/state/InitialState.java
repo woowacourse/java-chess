@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class InitialState extends DefaultState {
+public class InitialState implements State {
     public InitialState() {
         super();
     }

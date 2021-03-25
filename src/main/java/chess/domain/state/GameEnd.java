@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class GameEnd extends DefaultState {
+public class GameEnd implements State {
     public GameEnd() {
         super();
     }
