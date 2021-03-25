@@ -1,0 +1,23 @@
+.chess-board {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+}
+
+.block1 {
+    background-color: #614c39;
+}
+
+.block2 {
+    background-color: #f0c49c;
+}
+
+td, tr {
+    width: 100px;
+    height: 100px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
