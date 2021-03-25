@@ -19,7 +19,7 @@ public final class ChessGame {
         currentTurnTeam = team;
     }
 
-    public final void end() {
+    public void end() {
         isPlaying = false;
     }
 
@@ -27,7 +27,7 @@ public final class ChessGame {
         return isPlaying;
     }
 
-    public final Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
@@ -39,16 +39,15 @@ public final class ChessGame {
         currentTurnTeam = Team.getAnotherTeam(currentTurnTeam);
     }
 
-    public final double getScoreByTeam(final Team team) {
+    public double getScoreByTeam(final Team team) {
         return board.scoreByTeam(team);
     }
 
-    public final boolean isKingDieEnd() {
+    public boolean isKingDieEnd() {
         return board.isEnemyKingDie(currentTurnTeam) || board.isEnemyKingDie(Team.getAnotherTeam(currentTurnTeam));
     }
 
-
-    public final Team winner() {
+    public Team winner() {
         if (board.isEnemyKingDie(currentTurnTeam)) {
             return currentTurnTeam;
         }

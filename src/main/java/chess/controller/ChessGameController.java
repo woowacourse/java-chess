@@ -11,7 +11,7 @@ import chess.view.OutputView;
 
 import java.util.Objects;
 
-public class ChessGameController {
+public final class ChessGameController {
     private ChessGame chessGame;
 
     public void start() {

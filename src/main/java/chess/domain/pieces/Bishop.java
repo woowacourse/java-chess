@@ -42,7 +42,7 @@ public final class Bishop extends NoKingPieces {
     }
 
     @Override
-    public final List<Position> getMovablePositions(final Board board) {
+    public List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
 
         int[] rowDir = {-1, 1, -1, 1};

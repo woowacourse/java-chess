@@ -7,9 +7,9 @@ import chess.domain.position.Position;
 
 import java.util.Arrays;
 
-public class OutputView {
+public final class OutputView {
 
-    public static final int BOARD_MAX_SIZE = 8;
+    private static final int BOARD_MAX_SIZE = 8;
 
     private OutputView() {
     }
@@ -57,9 +57,9 @@ public class OutputView {
     }
 
     private static String[][] getInitBoard() {
-        String[][] arr = new String[8][8];
+        String[][] arr = new String[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
 
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < BOARD_MAX_SIZE; ++i) {
             Arrays.fill(arr[i], ".");
         }
         return arr;

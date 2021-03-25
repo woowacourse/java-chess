@@ -37,7 +37,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public final List<Position> getMovablePositions(final Board board) {
+    public List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
         addAttackablePositions(movablePositions, board);
         addMovablePositions(movablePositions, board, 1);
@@ -49,7 +49,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public final boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 
