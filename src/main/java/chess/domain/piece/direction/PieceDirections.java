@@ -38,32 +38,37 @@ public abstract class PieceDirections {
 
     private void addPositionNotExistPiece(Direction moveDirection, Position currentPosition,
                                           List<Position> existPiecePositions, List<Position> movablePositions) {
-        do {
-            if (currentPosition.invalidGo(moveDirection)) {
-                return;
-            }
-            currentPosition = currentPosition.go(moveDirection);
+        if (currentPosition.invalidGo(moveDirection)) {
+            return;
+        }
+        Position nextPosition = currentPosition.go(moveDirection);
 
-            if (existPiecePositions.contains(currentPosition)) {
-                return;
-            }
-            movablePositions.add(currentPosition);
-        } while (movableMoreThanOnePosition);
+        if (existPiecePositions.contains(nextPosition)) {
+            return;
+        }
+        movablePositions.add(nextPosition);
+        if (movableMoreThanOnePosition != true) {
+            return;
+        }
+        addPositionNotExistPiece(moveDirection, nextPosition, existPiecePositions, movablePositions);
     }
 
     private void addKillPosition(Direction killDirection, Position currentPosition,
                                  List<Position> enemyPositions, List<Position> movablePositions) {
-        do {
-            if (currentPosition.invalidGo(killDirection)) {
-                return;
-            }
-            currentPosition = currentPosition.go(killDirection);
 
-            if (enemyPositions.contains(currentPosition)) {
-                movablePositions.add(currentPosition);
-                return;
-            }
-        } while (movableMoreThanOnePosition);
+        if (currentPosition.invalidGo(killDirection)) {
+            return;
+        }
+        Position nextPosition = currentPosition.go(killDirection);
+
+        if (enemyPositions.contains(nextPosition)) {
+            movablePositions.add(nextPosition);
+            return;
+        }
+        if (movableMoreThanOnePosition != true) {
+            return;
+        }
+        addKillPosition(killDirection, nextPosition, enemyPositions, movablePositions);
     }
 
     protected List<Direction> moveDirections() {
