@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Path;
-import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
 import java.util.List;
@@ -47,10 +47,14 @@ public abstract class Piece {
         return this.pieceColor.equals(color);
     }
 
-    public Paths generatePaths(Position current) {
-        return new Paths(directions().stream()
+    public Path generatePaths(Position current, Board board) {
+        return new Path(directions()
+            .stream()
             .map(direction -> findPathInDirection(direction, current))
-            .collect(Collectors.toList()));
+            .map(path -> path.removeObstacleInPath(this, board))
+            .flatMap(List::stream)
+        .collect(Collectors.toList()))
+        ;
     }
 
     public abstract Path findPathInDirection(Direction direction, Position currentPosition);

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.Paths;
+import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +19,8 @@ class PawnTest {
         Piece pawn = new Pawn(PieceColor.WHITE);
         Board board = new Board();
         board.putPiece(pawn, current);
-        Paths paths = pawn.generatePaths(current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE2WithoutObstaclesWhite());
     }
 
@@ -29,13 +29,13 @@ class PawnTest {
     void generateAttackPath_White() {
         Position current = Position.of("e2");
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Paths paths = pawn.generatePaths(current);
 
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("d3"));
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
         board.putPiece(pawn, current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE2WithEnemyWhite());
     }
 
@@ -44,13 +44,13 @@ class PawnTest {
     void generateObstacleConsideredPath_White() {
         Position current = Position.of("e4");
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Paths paths = pawn.generatePaths(current);
 
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d5"));
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f5"));
         board.putPiece(pawn, current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE4WithObstacleWhite());
     }
 
@@ -60,10 +60,10 @@ class PawnTest {
         Position current = Position.of("e7");
         Piece pawn = new Pawn(PieceColor.BLACK);
         Board board = new Board();
-        Paths paths = pawn.generatePaths(current);
 
         board.putPiece(pawn, current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE2WithoutObstaclesBlack());
     }
 
@@ -72,13 +72,13 @@ class PawnTest {
     void generateAttackPath_Black() {
         Position current = Position.of("e7");
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Paths paths = pawn.generatePaths(current);
 
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d6"));
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("f6"));
         board.putPiece(pawn, current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE2WithEnemyBlack());
     }
 
@@ -87,13 +87,13 @@ class PawnTest {
     void generateObstacleConsideredPath_Black() {
         Position current = Position.of("e4");
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Paths paths = pawn.generatePaths(current);
 
         Board board = new Board();
         board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
         board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d3"));
         board.putPiece(pawn, current);
-        assertThat(paths.removeObstacles(pawn, board).positions())
+        Path path = pawn.generatePaths(current, board);
+        assertThat(path.positions())
             .isEqualTo(pawnE4WithObstacleBlack());
     }
 

@@ -77,10 +77,6 @@ public class Position {
         return column.isInRange(direction.columnValue()) && row.isInRange(direction.rowValue());
     }
 
-/*    public boolean isBlockedWhenGoTo(Direction direction) {
-        return column.isNotInRange(direction) || row.isBoundary(direction);
-    }*/
-
     public Position moveTo(Direction direction) {
         Column newColumn = column.move(direction);
         Row newRow = row.move(direction);

@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Paths;
+import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -18,9 +18,9 @@ class RookTest {
     void generatePath() {
         Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
-        Paths paths = rook.generatePaths(current);
+        Path path = rook.generatePaths(current, new Board());
 
-        assertThat(paths.pathsToPosition()).isEqualTo(rookE4WithoutObstacles());
+        assertThat(path.positions()).isEqualTo(rookE4WithoutObstacles());
     }
 
     @DisplayName("룩이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰룩-e4 흰피스-e2 검은피스-e7")
@@ -28,10 +28,9 @@ class RookTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
-        Paths paths = rook.generatePaths(current);
+        Path path = rook.generatePaths(current, BoardFactory.initializeBoard());
 
-        Board board = BoardFactory.initializeBoard();
-        assertThat(paths.removeObstacles(rook, board).positions()).isEqualTo(
+        assertThat(path.positions()).isEqualTo(
             rookE4WithObstacles());
     }
 

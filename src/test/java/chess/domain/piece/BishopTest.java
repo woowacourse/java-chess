@@ -2,8 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Paths;
+import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +18,8 @@ class BishopTest {
     void generatePath() {
         Position current = Position.of("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
-        Paths paths = bishop.generatePaths(current);
-        assertThat(paths.pathsToPosition()).isEqualTo(bishopE4WithoutObstacles());
+        Path path = bishop.generatePaths(current, new Board());
+        assertThat(path.positions()).isEqualTo(bishopE4WithoutObstacles());
     }
 
     @DisplayName("비숍이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰비숍-e4 흰피스-c2,g2 검은피스-b7,h7")
@@ -26,10 +27,9 @@ class BishopTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
-        Paths paths = bishop.generatePaths(current);
-        assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions())
-            .isEqualTo(
-                bishopE4WithObstacles());
+
+        Path path = bishop.generatePaths(current, BoardFactory.initializeBoard());
+        assertThat(path.positions()).isEqualTo(bishopE4WithObstacles());
     }
 
     List<Position> bishopE4WithoutObstacles() {

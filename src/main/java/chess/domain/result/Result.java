@@ -51,7 +51,8 @@ public class Result {
                     .stream().filter(pawn -> pawn.getValue().isOn(column))
                     .count())
             .filter(count -> count >= PARALLEL_PAWN_MIN_COUNT)
-            .sum();
+            .sum()
+            ;
         return new Score(parallelPawnCont * PARALLEL_PAWN_SCORE);
     }
 

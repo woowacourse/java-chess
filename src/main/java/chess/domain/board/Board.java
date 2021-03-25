@@ -50,8 +50,7 @@ public class Board {
     }
 
     public Path generateAvailablePath(Piece piece) {
-        Paths paths = piece.generatePaths(findPositionBy(piece));
-        return paths.removeObstacles(piece, this);
+        return piece.generatePaths(findPositionBy(piece), this);
     }
 
     public Map<Piece, Position> remainPieces(PieceColor color) {

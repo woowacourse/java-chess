@@ -2,8 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Paths;
+import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +18,9 @@ class QueenTest {
     void generatePath() {
         Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = queen.generatePaths(current);
+        Path path = queen.generatePaths(current, new Board());
 
-        assertThat(paths.pathsToPosition()).isEqualTo(queenE4WithoutObstacles());
+        assertThat(path.positions()).isEqualTo(queenE4WithoutObstacles());
     }
 
     @DisplayName("퀸이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰퀸-e4 흰피스-c2,e2,g2 검은피스-b7,e7,h7")
@@ -27,9 +28,9 @@ class QueenTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = queen.generatePaths(current);
+        Path path = queen.generatePaths(current, BoardFactory.initializeBoard());
 
-        assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions())
+        assertThat(path.positions())
             .isEqualTo(
                 queenE4WithObstacles());
     }

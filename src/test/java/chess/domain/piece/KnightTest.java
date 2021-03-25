@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.Paths;
+import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +17,8 @@ class KnightTest {
     void generatePath() {
         Position current = Position.of("e4");
         Piece knight = new Knight(PieceColor.WHITE);
-        Paths paths = knight.generatePaths(current);
-        assertThat(paths.pathsToPosition()).isEqualTo(knightE4WithoutObstacles());
+        Path path = knight.generatePaths(current, new Board());
+        assertThat(path.positions()).isEqualTo(knightE4WithoutObstacles());
     }
 
     @DisplayName("나이트가 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰나이트-e4 흰피스-d2,f2 검은피스-d6,f6")
@@ -26,7 +26,6 @@ class KnightTest {
     void generateObstacleConsideredPath() {
         Position current = Position.of("e4");
         Piece knight = new Knight(PieceColor.WHITE);
-        Paths paths = knight.generatePaths(current);
 
         Board board = new Board();
         Piece firstBlackPiece = new Bishop(PieceColor.BLACK);
@@ -37,7 +36,8 @@ class KnightTest {
         board.putPiece(secondBlackPiece, Position.of("f6"));
         board.putPiece(firstWhitePiece, Position.of("d2"));
         board.putPiece(secondWhitePiece, Position.of("f2"));
-        assertThat(paths.removeObstacles(knight, board).positions()).isEqualTo(
+        Path path = knight.generatePaths(current, board);
+        assertThat(path.positions()).isEqualTo(
             knightE4WithObstacles());
     }
 
