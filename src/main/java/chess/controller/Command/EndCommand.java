@@ -3,7 +3,7 @@ package chess.controller.Command;
 import chess.domain.board.position.Position;
 import chess.manager.ChessManager;
 
-public class EndCommand extends Command{
+public class EndCommand extends Command {
     EndCommand(String line) {
         super(line);
     }
@@ -12,7 +12,7 @@ public class EndCommand extends Command{
     public Command read(String line) {
         final Menu menu = Menu.of(line);
 
-        if(menu.isStart()){
+        if (menu.isStart()) {
             return new StartCommand(line);
         }
 

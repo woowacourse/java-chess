@@ -12,23 +12,23 @@ public class MoveCommand extends Command {
     public Command read(final String input) {
         final Menu menu = Menu.of(input);
 
-        if(menu.isStart()){
+        if (menu.isStart()) {
             throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
         }
 
-        if(menu.isMove()){
+        if (menu.isMove()) {
             return new MoveCommand(input);
         }
 
-        if(menu.isStatus()){
+        if (menu.isStatus()) {
             return new StatusCommand(input);
         }
 
-        if(menu.isShow()){
+        if (menu.isShow()) {
             return new ShowCommand(input);
         }
 
-        if(menu.isEnd()){
+        if (menu.isEnd()) {
             return new EndCommand(input);
         }
 

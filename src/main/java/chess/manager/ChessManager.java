@@ -2,8 +2,6 @@ package chess.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
-import chess.domain.command.MoveCommand;
-import chess.domain.command.ShowCommand;
 import chess.domain.player.Players;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public class ChessManager {
     public ChessManager() {
     }
 
-    public void initNewGame(){
+    public void initNewGame() {
         players = new Players();
         isGameEnd = false;
     }
@@ -27,11 +25,11 @@ public class ChessManager {
         checkGameEnd();
     }
 
-    private void checkGameEnd(){
+    private void checkGameEnd() {
         isGameEnd = players.isEnd();
     }
 
-    public void makeGameEnd(){
+    public void makeGameEnd() {
         isGameEnd = true;
     }
 

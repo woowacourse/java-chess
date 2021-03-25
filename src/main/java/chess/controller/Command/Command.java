@@ -11,7 +11,7 @@ public abstract class Command {
     private final Menu menu;
     private final String[] parameters;
 
-    Command(final String line){
+    Command(final String line) {
         menu = Menu.of(line);
         parameters = line.split(SEPARATOR_OF_PARAMETERS);
     }
@@ -20,11 +20,11 @@ public abstract class Command {
 
     public abstract void execute(final ChessManager chessManager);
 
-    public Position source(){
+    public Position source() {
         return new Position(parameters[INDEX_OF_SOURCE]);
     }
 
-    public Position target(){
+    public Position target() {
         return new Position(parameters[INDEX_OF_TARGET]);
     }
 }
