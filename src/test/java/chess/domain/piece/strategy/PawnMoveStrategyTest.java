@@ -3,7 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
-import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -63,12 +63,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(newSourceW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
+                .isInstanceOf(OverDistanceException.class),
 
             () -> assertThatThrownBy(() -> board.move(newSourceB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
+                .isInstanceOf(OverDistanceException.class)
         );
     }
 
@@ -106,12 +104,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
+                .isInstanceOf(UnableMoveTypeException.class),
 
             () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
+                .isInstanceOf(UnableMoveTypeException.class)
         );
     }
 
@@ -123,12 +119,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
+                .isInstanceOf(OverDistanceException.class),
 
             () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
+                .isInstanceOf(OverDistanceException.class)
         );
     }
 
@@ -166,12 +160,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
+                .isInstanceOf(UnableMoveTypeException.class),
 
             () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
+                .isInstanceOf(UnableMoveTypeException.class)
         );
     }
 
@@ -191,12 +183,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(newPositionW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
+                .isInstanceOf(UnableMoveTypeException.class),
 
             () -> assertThatThrownBy(() -> board.move(newPositionB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
+                .isInstanceOf(UnableMoveTypeException.class)
         );
 
     }
@@ -217,12 +207,10 @@ class PawnMoveStrategyTest {
 
         assertAll(
             () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.SAME_TEAM_MESSAGE),
+                .isInstanceOf(SameTeamException.class),
 
             () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
-                .isInstanceOf(InvalidMoveException.class)
-                .hasMessageContaining(Piece.SAME_TEAM_MESSAGE)
+                .isInstanceOf(SameTeamException.class)
         );
     }
 }

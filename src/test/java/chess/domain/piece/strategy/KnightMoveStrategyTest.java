@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.SameTeamException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -68,7 +69,6 @@ class KnightMoveStrategyTest {
         Position target = Position.of('d', 1);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
+            .isInstanceOf(SameTeamException.class);
     }
 }

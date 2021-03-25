@@ -2,6 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.UnableMoveTypeException;
 import chess.domain.piece.Piece;
 
 public class KnightMoveStrategy extends BasicMoveStrategy {
@@ -15,7 +16,7 @@ public class KnightMoveStrategy extends BasicMoveStrategy {
         int yDistanceAbs = Math.abs(source.computeVerticalDistance(target));
 
         if (!isKnightMoveType(xDistanceAbs, yDistanceAbs)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            throw new UnableMoveTypeException();
         }
     }
 

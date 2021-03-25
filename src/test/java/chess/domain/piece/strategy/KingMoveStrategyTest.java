@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.OverDistanceException;
+import chess.domain.exceptions.SameTeamException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -44,8 +46,7 @@ class KingMoveStrategyTest {
         Position target = Position.of('d', 7);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE);
+            .isInstanceOf(OverDistanceException.class);
     }
 
     @DisplayName("같은 팀인 경우 Exception 발생")
@@ -54,7 +55,6 @@ class KingMoveStrategyTest {
         Position target = Position.of('b', 2);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
+            .isInstanceOf(SameTeamException.class);
     }
 }

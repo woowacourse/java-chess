@@ -1,6 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.SameTeamException;
+import chess.domain.exceptions.UnableCrossException;
+import chess.domain.exceptions.UnableMoveTypeException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -70,7 +73,7 @@ public class Board {
         Piece targetPiece = pieceAtPosition(target);
 
         if (sourcePiece.isSameColor(targetPiece)) {
-            throw new InvalidMoveException(Piece.SAME_TEAM_MESSAGE);
+            throw new SameTeamException();
         }
     }
 
@@ -88,24 +91,24 @@ public class Board {
 
     private void checkIfClear(Position pathPosition) {
         if (!pieceAtPosition(pathPosition).equals(VOID_PIECE)) {
-            throw new InvalidMoveException(Piece.UNABLE_CROSS_MESSAGE);
+            throw new UnableCrossException();
         }
     }
 
     private void checkDirection(Position source, Position target) {
         Piece piece = pieceAtPosition(source);
         if (!piece.isMovingForward(source, target)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            throw new UnableMoveTypeException();
         }
     }
 
     private void checkMoveType(Position source, Position target) {
         if (isVoid(target) && source.isDiagonalMove(target)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            throw new UnableMoveTypeException();
         }
 
         if (!isVoid(target) && source.isLineMove(target)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            throw new UnableMoveTypeException();
         }
     }
 

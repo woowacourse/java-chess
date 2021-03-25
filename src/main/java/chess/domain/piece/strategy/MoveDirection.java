@@ -2,6 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.UnableMoveTypeException;
 import chess.domain.piece.Piece;
 
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public enum MoveDirection {
         return Arrays.stream(values())
             .filter(element -> element.vector.equals(vectors))
             .findAny()
-            .orElseThrow(() -> new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE));
+            .orElseThrow(UnableMoveTypeException::new);
     }
 
     private static int getVectorValue(int distance) {

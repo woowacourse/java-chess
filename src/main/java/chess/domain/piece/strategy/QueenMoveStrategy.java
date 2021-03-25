@@ -1,8 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
-import chess.domain.exceptions.InvalidMoveException;
-import chess.domain.piece.Piece;
+import chess.domain.exceptions.UnableMoveTypeException;
 
 public class QueenMoveStrategy extends BasicMoveStrategy {
 
@@ -10,7 +9,7 @@ public class QueenMoveStrategy extends BasicMoveStrategy {
     public void checkValidMove(Position source, Position target) {
         if (!source.isLineMove(target) &&
             !source.isDiagonalMove(target)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            throw new UnableMoveTypeException();
         }
     }
 }

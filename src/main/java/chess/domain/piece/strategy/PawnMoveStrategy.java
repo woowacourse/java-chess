@@ -2,6 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.OverDistanceException;
 import chess.domain.piece.Piece;
 
 public class PawnMoveStrategy extends BasicMoveStrategy {
@@ -28,14 +29,14 @@ public class PawnMoveStrategy extends BasicMoveStrategy {
 
     private void checkInitialMoveDistance(Position source, Position target) {
         if (Math.abs(source.computeVerticalDistance(target)) > PAWN_INITIAL_DISTANCE_LIMIT) {
-            throw new InvalidMoveException(Piece.OVER_DISTANCE_MESSAGE);
+            throw new OverDistanceException();
         }
     }
 
     private void checkGeneralMoveDistance(Position source, Position target) {
         if (Math.abs(source.computeHorizontalDistance(target)) > PAWN_GENERAL_DISTANCE_LIMIT ||
             Math.abs(source.computeVerticalDistance(target)) > PAWN_GENERAL_DISTANCE_LIMIT) {
-            throw new InvalidMoveException(Piece.OVER_DISTANCE_MESSAGE);
+            throw new OverDistanceException();
         }
     }
 }

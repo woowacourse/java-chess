@@ -4,6 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.exceptions.SameTeamException;
+import chess.domain.exceptions.UnableCrossException;
+import chess.domain.exceptions.UnableMoveTypeException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -45,8 +48,7 @@ class BishopMoveStrategyTest {
         Position target = Position.of('c', 3);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
+            .isInstanceOf(UnableMoveTypeException.class);
     }
 
     @DisplayName("같은 팀인 경우 Exception 발생")
@@ -55,8 +57,7 @@ class BishopMoveStrategyTest {
         Position target = Position.of('b', 2);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
+            .isInstanceOf(SameTeamException.class);
     }
 
     @DisplayName("경로상 CLEAR 상태가 아닐 시에 Exception 발생")
@@ -65,7 +66,6 @@ class BishopMoveStrategyTest {
         Position target = Position.of('f', 8);
 
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
+            .isInstanceOf(UnableCrossException.class);
     }
 }
