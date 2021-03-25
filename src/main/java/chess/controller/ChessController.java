@@ -1,13 +1,19 @@
 package chess.controller;
 
+import static spark.Spark.get;
+
 import chess.controller.dto.request.CommandRequestDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.MoveResultResponseDTO;
 import chess.service.ChessService;
-import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.HashMap;
+import java.util.Map;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessController {
+    private static final String ROOT = "/";
     private static final String START_COMMAND_INPUT = "start";
     private static final String MOVE_COMMAND_INPUT = "move";
     private static final String STATUS_COMMAND_INPUT = "status";
@@ -20,14 +26,50 @@ public class ChessController {
     }
 
     public void run() {
-        OutputView.printGameStartMessage();
-        boolean isGameEnd = false;
-        while (!isGameEnd) {
-            CommandRequestDTO commandRequestDTO = InputView.getCommandRequest();
-            ChessGameResponseDTO chessGameResponseDTO
-                = handleRequestCommandInputAndGetIsGameEnd(commandRequestDTO);
-            isGameEnd = chessGameResponseDTO.isGameEnd();
-        }
+        homeRequest();
+
+        get(ROOT + START_COMMAND_INPUT, (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("requestCommand", ROOT + START_COMMAND_INPUT);
+            return render(model, "index.html");
+        });
+
+        get(ROOT + MOVE_COMMAND_INPUT, (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("requestCommand", ROOT + MOVE_COMMAND_INPUT);
+            return render(model, "index.html");
+        });
+
+        get(ROOT + STATUS_COMMAND_INPUT, (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("requestCommand", ROOT + STATUS_COMMAND_INPUT);
+            return render(model, "index.html");
+        });
+
+        get(ROOT + END_COMMAND_INPUT, (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("requestCommand", ROOT + END_COMMAND_INPUT);
+            return render(model, "index.html");
+        });
+
+//        OutputView.printGameStartMessage();
+//        CommandRequestDTO commandRequestDTO = new CommandRequestDTO("start");
+//        handleRequestCommandInputAndGetIsGameEnd(commandRequestDTO);
+//        boolean isGameEnd = false;
+//        while (!isGameEnd) {
+//            CommandRequestDTO commandRequestDTO = new CommandRequestDTO("start");
+//            ChessGameResponseDTO chessGameResponseDTO
+//                = handleRequestCommandInputAndGetIsGameEnd(commandRequestDTO);
+//            isGameEnd = chessGameResponseDTO.isGameEnd();
+//        }
+    }
+
+    private void homeRequest() {
+        get(ROOT, (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("requestCommand", ROOT);
+            return render(model, "index.html");
+        });
     }
 
     private ChessGameResponseDTO handleRequestCommandInputAndGetIsGameEnd(
@@ -96,5 +138,9 @@ public class ChessController {
         ChessGameResponseDTO chessGameResponseDTO = chessService.getScores();
         OutputView.printScores(chessGameResponseDTO.getScoresResponseDTO());
         return chessGameResponseDTO;
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
