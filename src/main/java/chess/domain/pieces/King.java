@@ -8,14 +8,22 @@ import chess.domain.util.RowConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 0.0;
     private static final int INIT_COL = 4;
 
-    public King(final Team team, final Position position) {
+    private King(final Team team, final Position position) {
         super(position, "K", team, SCORE);
+    }
+
+    private King(final Position position, final String initial, final Team team, final double score) {
+        super(position, initial, team, score);
+    }
+
+    public static King of(final Team team, final Position position) {
+        return new King(position, "K", team, SCORE);
     }
 
     public static King of(final Team team, final int col) {

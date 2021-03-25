@@ -70,11 +70,11 @@ class RookTest {
 
     void set(final Rook rook) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
                 rook
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -86,7 +86,7 @@ class RookTest {
     @Test
     @DisplayName("White팀 Rook이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Rook rook = new Rook(Team.WHITE, new Position(1, 1));
+        Rook rook = Rook.of(Team.WHITE, new Position(1, 1));
         set(rook);
 
         List<Position> movablePositions = rook.getMovablePositions(board);

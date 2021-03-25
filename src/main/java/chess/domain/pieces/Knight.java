@@ -8,15 +8,23 @@ import chess.domain.util.RowConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends NoKingPieces {
+public final class Knight extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 2.5;
     private static final int LEFT_SIDE_INIT_COL = 1;
     private static final int RIGHT_SIDE_INIT_COL = 6;
 
-    public Knight(final Team team, final Position position) {
+    private Knight(final Team team, final Position position) {
         super(position, "N", team, SCORE);
+    }
+
+    private Knight(final Position position, final String initial, final Team team, final double score) {
+        super(position, initial, team, score);
+    }
+
+    public static Knight of(final Team team, final Position position) {
+        return new Knight(position, "N", team, SCORE);
     }
 
     public static Knight of(final Team team, final int col) {

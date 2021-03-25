@@ -73,11 +73,11 @@ class KingTest {
 
     void set(final King king) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
                 king
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -89,7 +89,7 @@ class KingTest {
     @Test
     @DisplayName("White팀 King이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        King king = new King(Team.WHITE, new Position(1, 1));
+        King king = King.of(Team.WHITE, new Position(1, 1));
         set(king);
 
         List<Position> movablePositions = king.getMovablePositions(board);

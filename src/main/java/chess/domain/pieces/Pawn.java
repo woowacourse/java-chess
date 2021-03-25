@@ -8,13 +8,21 @@ import chess.domain.util.RowConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     private static final String BLACK_TEAM_ROW = "7";
     private static final String WHITE_TEAM_ROW = "2";
     private static final double SCORE = 1.0;
 
-    public Pawn(final Team team, final Position position) {
+    private Pawn(final Team team, final Position position) {
         super(position, "P", team, SCORE);
+    }
+
+    private Pawn(final Position position, final String initial, final Team team, final double score) {
+        super(position, initial, team, score);
+    }
+
+    public static Pawn of(final Team team, final Position position) {
+        return new Pawn(position, "P", team, SCORE);
     }
 
     public static Pawn of(final Team team, final int col) {

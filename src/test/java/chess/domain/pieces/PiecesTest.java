@@ -19,14 +19,14 @@ class PiecesTest {
     @BeforeEach
     void setUp() {
         List<Piece> piecesList = Arrays.asList(
-                new King(Team.WHITE, new Position(1, 2)),
-                new Queen(Team.WHITE, new Position(2, 2)),
-                new Rook(Team.WHITE, new Position(3, 3)),
-                new Bishop(Team.WHITE, new Position(4, 4)),
-                new Knight(Team.WHITE, new Position(5, 5)),
+                King.of(Team.WHITE, new Position(1, 2)),
+                Queen.of(Team.WHITE, new Position(2, 2)),
+                Rook.of(Team.WHITE, new Position(3, 3)),
+                Bishop.of(Team.WHITE, new Position(4, 4)),
+                Knight.of(Team.WHITE, new Position(5, 5)),
 
-                new Pawn(Team.WHITE, new Position(4, 5)),
-                new Pawn(Team.WHITE, new Position(3, 5))
+                Pawn.of(Team.WHITE, new Position(4, 5)),
+                Pawn.of(Team.WHITE, new Position(3, 5))
         );
         pieces = new Pieces(piecesList);
     }

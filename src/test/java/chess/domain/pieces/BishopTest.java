@@ -75,11 +75,11 @@ class BishopTest {
 
     void set(final Bishop bishop) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
                 bishop
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -91,7 +91,7 @@ class BishopTest {
     @Test
     @DisplayName("White팀 Bishop이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Bishop bishop = new Bishop(Team.WHITE, new Position(1, 1));
+        Bishop bishop = Bishop.of(Team.WHITE, new Position(1, 1));
         set(bishop);
 
         List<Position> movablePositions = bishop.getMovablePositions(board);

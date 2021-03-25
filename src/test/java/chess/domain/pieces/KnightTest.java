@@ -75,12 +75,12 @@ class KnightTest {
 
     void set(final Knight knight) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightCrossBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightCrossBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
                 knight
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -92,7 +92,7 @@ class KnightTest {
     @Test
     @DisplayName("White팀 Knight가 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Knight knight = new Knight(Team.WHITE, new Position(1, 1));
+        Knight knight = Knight.of(Team.WHITE, new Position(1, 1));
         set(knight);
 
         List<Position> movablePositions = knight.getMovablePositions(board);

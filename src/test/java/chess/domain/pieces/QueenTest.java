@@ -72,11 +72,11 @@ class QueenTest {
 
     void set(final Queen queen) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                Pawn.of(Team.BLACK, crossBlackTeamPawnPosition),
+                Pawn.of(Team.BLACK, straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                Pawn.of(Team.WHITE, whiteTeamPawnPosition),
                 queen
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -88,7 +88,7 @@ class QueenTest {
     @Test
     @DisplayName("White팀 Queen이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Queen queen = new Queen(Team.WHITE, new Position(1, 1));
+        Queen queen = Queen.of(Team.WHITE, new Position(1, 1));
         set(queen);
 
         List<Position> movablePositions = queen.getMovablePositions(board);
