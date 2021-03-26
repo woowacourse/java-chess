@@ -72,4 +72,8 @@ public class Game {
     public Result getResult() {
         return new Result(board);
     }
+
+    public String getWinner() {
+        return getResult().findWinner();
+    }
 }

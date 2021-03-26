@@ -24,6 +24,14 @@ public class Score {
         return String.valueOf(score);
     }
 
+    public boolean isTieWith(Score that) {
+        return score == that.score;
+    }
+
+    public boolean moreThan(Score that) {
+        return score > that.score;
+    }
+
     @Override
     public String toString() {
         return Double.toString(score);

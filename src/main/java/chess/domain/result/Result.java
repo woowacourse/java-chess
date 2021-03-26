@@ -16,13 +16,9 @@ public class Result {
     private static final int PARALLEL_PAWN_MIN_COUNT = 2;
 
     private final Board board;
-    private final Score whiteScore;
-    private final Score blackScore;
 
     public Result(Board board) {
         this.board = board;
-        whiteScore = calculateTotalScore(PieceColor.WHITE);
-        blackScore = calculateTotalScore(PieceColor.BLACK);
     }
 
     public Score calculateTotalScore(PieceColor color) {
@@ -66,13 +62,5 @@ public class Result {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("우승자가 없습니다."))
             ;
-    }
-
-    public Score getWhiteScore() {
-        return whiteScore;
-    }
-
-    public Score getBlackScore() {
-        return blackScore;
     }
 }

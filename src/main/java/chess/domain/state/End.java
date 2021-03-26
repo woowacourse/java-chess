@@ -4,7 +4,7 @@ public final class End implements State {
 
     @Override
     public boolean isStarted() {
-        return false;
+        return true;
     }
 
     @Override

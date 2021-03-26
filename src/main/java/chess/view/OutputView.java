@@ -49,4 +49,12 @@ public class OutputView {
         printScore(PieceColor.WHITE, whiteScore);
         printScore(PieceColor.BLACK, blackScore);
     }
+
+    public static void printPrevail(PieceColor prevailColor) {
+        if (prevailColor.equals(PieceColor.NOTHING)) {
+            System.out.println("동점입니다.");
+            return;
+        }
+        System.out.println(prevailColor.getColor() + "이 우세합니다.");
+    }
 }
