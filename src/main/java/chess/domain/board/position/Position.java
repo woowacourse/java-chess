@@ -16,7 +16,7 @@ public class Position {
     private final Xpoint xpoint;
     private final Ypoint ypoint;
 
-    public Position(Xpoint xpoint, Ypoint ypoint) {
+    private Position(Xpoint xpoint, Ypoint ypoint) {
         this.xpoint = xpoint;
         this.ypoint = ypoint;
     }
