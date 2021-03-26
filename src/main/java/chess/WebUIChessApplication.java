@@ -42,6 +42,10 @@ public class WebUIChessApplication {
         get("/winner", (req, res) -> {
             return chessService.getWinner();
         }, JSON_TRANSFORMER);
+
+        post("/restart", (req, res) -> {
+            return chessService.restart();
+        }, JSON_TRANSFORMER);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

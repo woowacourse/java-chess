@@ -41,4 +41,9 @@ public class ChessService {
     public Response getWinner() {
         return new Response(ResponseCode.OK, new WinnerResponseDto(grid.winnerColor()));
     }
+
+    public Response restart() {
+        grid.resetGame();
+        return new Response(ResponseCode.NO_CONTENT);
+    }
 }

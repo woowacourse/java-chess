@@ -99,8 +99,6 @@ async function move(sourcePosition, targetPosition) {
         target.appendChild(piece);
 
         const isFinished = await checkFinished();
-        console.log("isFinished 체크 : ");
-        console.log(isFinished);
         if (isFinished === true) {
             const winner = await getWinner();
             if (winner === "WHITE") {
@@ -155,8 +153,6 @@ async function checkFinished() {
             method: 'get',
             url: '/check/finished',
         });
-        console.log("checkFinished 응답값")
-        console.log(res);
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
@@ -176,8 +172,6 @@ async function getWinner() {
             method: 'get',
             url: '/winner',
         });
-        console.log("getWinner 응답값")
-        console.log(res);
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
@@ -189,4 +183,36 @@ async function getWinner() {
     } catch (e) {
         console.log(e);
     }
+}
+
+async function restart() {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: '/restart',
+        });
+        const data = res.data;
+        if (data.code !== 204) {
+            alert(data.message);
+            return;
+        }
+        if (data.code === 204) {
+            resetChessBoard();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function resetChessBoard() {
+    const $chessBoard = document.getElementById("chess-board");
+    while ($chessBoard.firstChild) {
+        $chessBoard.removeChild($chessBoard.firstChild);
+    }
+    const $players = document.getElementsByClassName("player");
+    for (let i = 0; i < $players.length; i++) {
+        $players[i].classList.remove("turn");
+    }
+    createChessBoard();
+    start();
 }
