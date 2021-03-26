@@ -17,7 +17,7 @@ class CommandTest {
     
     @ParameterizedTest(name = "커맨드 메뉴에 존재하는 커맨드 입력 테스트")
     @MethodSource("generateCommandSource")
-    void hasCommand(String[] inputCommand, Command command) {
+    void hasCommand(String inputCommand, Command command) {
         
         // when
         Command foundCommand = Command.findCommandByInputCommand(inputCommand);
@@ -28,11 +28,12 @@ class CommandTest {
     
     private static Stream<Arguments> generateCommandSource() {
         return Stream.of(
-                Arguments.of(new String[]{"start"}, Command.START),
-                Arguments.of(new String[]{"move", "b2", "b4"}, Command.MOVE),
-                Arguments.of(new String[]{"status"}, Command.STATUS),
-                Arguments.of(new String[]{"end"}, Command.END),
-                Arguments.of(new String[]{"exit"}, Command.EXIT));
+                Arguments.of("start", Command.START),
+                Arguments.of("move", Command.MOVE),
+                Arguments.of("status", Command.STATUS),
+                Arguments.of("end", Command.END),
+                Arguments.of("exit", Command.EXIT)
+        );
     }
     
     @Test
@@ -40,7 +41,7 @@ class CommandTest {
     void hasCommand_DoesNotHaveCommand_False() {
         
         // given
-        String[] command = {"test"};
+        String command = "test";
         
         // when
         ThrowableAssert.ThrowingCallable callable = () -> Command.findCommandByInputCommand(command);
