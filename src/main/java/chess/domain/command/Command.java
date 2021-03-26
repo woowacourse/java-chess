@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 public enum Command {
-    START("start", ChessGame::settingBoard),
+    START("start", (chessGame, input) -> chessGame.settingBoard()),
     MOVE("move ([a-z][1-8]) ([a-z][1-8])", ChessGame::move),
     STATUS("status", Command::status),
-    END("end", ChessGame::end);
+    END("end", (chessGame, input) -> chessGame.end());
 
     String command;
     BiConsumer<ChessGame, String> biConsumer;
@@ -22,11 +22,11 @@ public enum Command {
         this.biConsumer = biConsumer;
     }
 
-    public static void execute(ChessGame chessGame, String input) {
-        findCommand(input).biConsumer.accept(chessGame, input);
+    public void execute(ChessGame chessGame, String input) {
+        this.biConsumer.accept(chessGame, input);
     }
 
-    private static Command findCommand(String input) {
+    public static Command findCommand(String input) {
         return Arrays.stream(Command.values())
                 .filter(value -> input.matches(value.command))
                 .findAny()

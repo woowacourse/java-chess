@@ -23,7 +23,8 @@ public class ChessController {
 
     private void commandAndExecute(ChessGame chessGame) {
         try {
-            Command.execute(chessGame, InputView.inputCommand());
+            String inputCommand = InputView.inputCommand();
+            Command.findCommand(inputCommand).execute(chessGame, inputCommand);
             OutputView.printBoard(chessGame.getBoard());
         } catch (Exception e) {
             OutputView.printMessage(e.getMessage());

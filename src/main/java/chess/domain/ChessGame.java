@@ -16,7 +16,7 @@ public class ChessGame {
     private Board board;
     private Team turnOwner;
 
-    public void settingBoard(String input) {
+    public void settingBoard() {
         board = boardFactory.create();
         turnOwner = Team.WHITE;
     }
@@ -33,7 +33,7 @@ public class ChessGame {
         return board.calculateScore(team);
     }
 
-    public void end(String input) {
+    public void end() {
         System.exit(0);
     }
 
