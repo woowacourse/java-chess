@@ -37,19 +37,19 @@ public class Board {
 
     public boolean isAliveBothKings() {
         return this.ranks.stream()
-            .flatMap(rank -> rank.squares().stream())
+            .flatMap(rank -> rank.pieces().stream())
             .filter(Piece::isKing)
             .count() == BOTH_KINGS_ALIVE;
     }
 
     public void moveIfValidPosition(Position source, Position target) {
-        if (isNotMovablePosition(source, target)) {
+        if (isInvalidPosition(source, target)) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
         swapPieces(source, target);
     }
 
-    private boolean isNotMovablePosition(Position source, Position target) {
+    private boolean isInvalidPosition(Position source, Position target) {
         Piece piece = pieceByPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();
         Set<Position> movablePath = moveStrategy.moveStrategy(this, source);

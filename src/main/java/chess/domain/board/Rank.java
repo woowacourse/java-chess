@@ -18,15 +18,19 @@ public class Rank {
         return this.squares.containsKey(position);
     }
 
+    public void replacePiece(final Position position, final Piece piece) {
+        this.squares.replace(position, piece);
+    }
+
     public Piece piece(Position position) {
         return this.squares.get(position);
     }
 
-    public List<Piece> squares() {
+    public List<Piece> pieces() {
         return new ArrayList<>(this.squares.values());
     }
 
-    public void replacePiece(final Position position, final Piece piece) {
-        this.squares.replace(position, piece);
+    public Map<Position, Piece> squares() {
+        return this.squares;
     }
 }

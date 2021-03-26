@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
@@ -37,8 +38,8 @@ public class ChessGame {
         this.state = state.end();
     }
 
-    public List<Map<Position, Piece>> board() {
-        return state.squares();
+    public List<Rank> ranks() {
+        return state.ranks();
     }
 
     public String finishReason() {

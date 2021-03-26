@@ -47,7 +47,7 @@ class RankTest {
     @Test
     @DisplayName("체스판 출력을 위한 squares 반환")
     void testSquares() {
-        assertThat(this.rank.squares()).containsExactly(
+        assertThat(this.rank.pieces()).containsExactly(
             Pawn.createBlack(),
             Pawn.createBlack(),
             Pawn.createBlack()

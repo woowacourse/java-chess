@@ -29,7 +29,7 @@ public class InitPositionTest {
     void testInitBoardSize() {
         assertThat(this.ranks).hasSize(8);
         for (Rank rank : this.ranks) {
-            assertThat(rank.squares()).hasSize(8);
+            assertThat(rank.pieces()).hasSize(8);
         }
     }
 
@@ -37,7 +37,7 @@ public class InitPositionTest {
     @DisplayName("InitPieces에서 반환 받은 초기 체스보드 체스말 확인")
     void testInitBoard() {
         Rank rank8 = this.ranks.get(0);
-        assertThat(rank8.squares()).containsExactly(
+        assertThat(rank8.pieces()).containsExactly(
             Rook.createBlack(),
             Knight.createBlack(),
             Bishop.createBlack(),
@@ -49,7 +49,7 @@ public class InitPositionTest {
         );
 
         Rank rank7 = this.ranks.get(1);
-        assertThat(rank7.squares()).containsExactly(
+        assertThat(rank7.pieces()).containsExactly(
             Pawn.createBlack(),
             Pawn.createBlack(),
             Pawn.createBlack(),
@@ -61,7 +61,7 @@ public class InitPositionTest {
         );
 
         Rank rank6 = this.ranks.get(2);
-        assertThat(rank6.squares()).containsExactly(
+        assertThat(rank6.pieces()).containsExactly(
             Empty.create(),
             Empty.create(),
             Empty.create(),
@@ -73,7 +73,7 @@ public class InitPositionTest {
         );
 
         Rank rank5 = this.ranks.get(3);
-        assertThat(rank5.squares()).containsExactly(
+        assertThat(rank5.pieces()).containsExactly(
             Empty.create(),
             Empty.create(),
             Empty.create(),
@@ -85,7 +85,7 @@ public class InitPositionTest {
         );
 
         Rank rank4 = this.ranks.get(4);
-        assertThat(rank4.squares()).containsExactly(
+        assertThat(rank4.pieces()).containsExactly(
             Empty.create(),
             Empty.create(),
             Empty.create(),
@@ -97,7 +97,7 @@ public class InitPositionTest {
         );
 
         Rank rank3 = this.ranks.get(5);
-        assertThat(rank3.squares()).containsExactly(
+        assertThat(rank3.pieces()).containsExactly(
             Empty.create(),
             Empty.create(),
             Empty.create(),
@@ -109,7 +109,7 @@ public class InitPositionTest {
         );
 
         Rank rank2 = this.ranks.get(6);
-        assertThat(rank2.squares()).containsExactly(
+        assertThat(rank2.pieces()).containsExactly(
             Pawn.createWhite(),
             Pawn.createWhite(),
             Pawn.createWhite(),
@@ -121,7 +121,7 @@ public class InitPositionTest {
         );
 
         Rank rank1 = this.ranks.get(7);
-        assertThat(rank1.squares()).containsExactly(
+        assertThat(rank1.pieces()).containsExactly(
             Rook.createWhite(),
             Knight.createWhite(),
             Bishop.createWhite(),

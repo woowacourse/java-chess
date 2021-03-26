@@ -71,13 +71,13 @@ public class BoardTest {
         assertThat(this.board.ranks()).hasSize(2);
 
         Rank rank1 = this.board.ranks().get(0);
-        assertThat(rank1.squares()).containsExactly(
+        assertThat(rank1.pieces()).containsExactly(
             Rook.createWhite(), Knight.createWhite(), Bishop.createWhite(),
             Queen.createWhite(), King.createWhite()
         );
 
         Rank rank2 = this.board.ranks().get(1);
-        assertThat(rank2.squares()).containsExactly(Pawn.createWhite(), Pawn.createWhite());
+        assertThat(rank2.pieces()).containsExactly(Pawn.createWhite(), Pawn.createWhite());
     }
 
     @Test

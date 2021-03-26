@@ -1,12 +1,10 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.position.Position;
-import chess.domain.piece.Piece;
+import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 
 import java.util.List;
-import java.util.Map;
 
 public abstract class Started implements State {
     private final Board board;
@@ -35,8 +33,8 @@ public abstract class Started implements State {
     }
 
     @Override
-    public List<Map<Position, Piece>> squares() {
-        return board.squares();
+    public List<Rank> ranks() {
+        return board.ranks();
     }
 
     @Override

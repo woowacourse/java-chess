@@ -1,11 +1,10 @@
 package chess.domain.game.state;
 
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
 
 import java.util.List;
-import java.util.Map;
 
 public interface State {
     State start();
@@ -22,7 +21,7 @@ public interface State {
 
     boolean isNotEnd();
 
-    List<Map<Position, Piece>> squares();
+    List<Rank> ranks();
 
     Color winner();
 
