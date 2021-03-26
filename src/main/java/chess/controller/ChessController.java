@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.command.Command;
 import chess.domain.command.CommandFactory;
 import chess.domain.piece.PieceFactory;
-import chess.domain.player.Round;
+import chess.domain.player.ChessGame;
 import chess.domain.state.StateFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -22,26 +22,26 @@ public class ChessController {
     }
 
     private void startChessGame(final Command command) {
-        Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
+        ChessGame chessGame = new ChessGame(StateFactory.initialization(PieceFactory.whitePieces()),
                 StateFactory.initialization(PieceFactory.blackPieces()), command);
 
         while (true) try {
-            inputCommand(round);
+            inputCommand(chessGame);
             break;
         } catch (RuntimeException runtimeException) {
             System.out.println("[ERROR]: " + runtimeException.getMessage());
         }
     }
 
-    private void inputCommand(final Round round) {
-        while (!round.isEnd()) {
-            OutputView.showChessBoard(round.getBoard());
-            round.execute(INPUT.inputCommand());
-            OutputView.showScore(round.currentPlayerName(), round.calculateScore());
+    private void inputCommand(final ChessGame chessGame) {
+        while (!chessGame.isEnd()) {
+            OutputView.showChessBoard(chessGame.getBoard());
+            chessGame.execute(INPUT.inputCommand());
+            OutputView.showScore(chessGame.currentPlayerName(), chessGame.calculateScore());
         }
-        if (round.isStatus()) {
-            OutputView.showResult(PlayerResultDto.toDto(round.getWhitePlayer()));
-            OutputView.showResult(PlayerResultDto.toDto(round.getBlackPlayer()));
+        if (chessGame.isStatus()) {
+            OutputView.showResult(PlayerResultDto.toDto(chessGame.getWhitePlayer()));
+            OutputView.showResult(PlayerResultDto.toDto(chessGame.getBlackPlayer()));
         }
     }
 }

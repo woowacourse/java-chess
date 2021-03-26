@@ -12,16 +12,16 @@ import chess.domain.state.State;
 import java.util.Map;
 import java.util.Queue;
 
-public class Round {
+public class ChessGame {
     private final Player whitePlayer;
     private final Player blackPlayer;
     private Command command;
 
-    public Round(final State white, final State black, final Command command) {
+    public ChessGame(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
     }
 
-    public Round(final Player whitePlayer, final Player blackPlayer, final Command command) {
+    public ChessGame(final Player whitePlayer, final Player blackPlayer, final Command command) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.command = command;
