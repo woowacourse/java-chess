@@ -1,7 +1,8 @@
 package chess.domain.order;
 
 import chess.domain.board.Board;
-import chess.domain.board.Square;
+import chess.domain.piece.Piece;
+import chess.domain.piece.RealPiece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -22,8 +23,12 @@ public class MoveOrder {
         return Direction.of(this.from, this.to);
     }
 
-    public List<Square> getRoute() {
+    public List<Piece> getRoute() {
         return this.board.getRoute(from, to);
+    }
+
+    public boolean hasPieceAtToPosition() {
+        return this.board.hasPiece(to);
     }
 
     public Position getFromPosition() {
@@ -31,14 +36,14 @@ public class MoveOrder {
     }
 
     public Position getToPosition() {
-        return this.from;
+        return this.to;
     }
 
-    public Square getFromSquare() {
-        return board.findByPosition(from);
+    public RealPiece getPieceAtFromPosition() {
+        return this.board.getRealPieceByPosition(from);
     }
 
-    public Square getToSquare() {
-        return board.findByPosition(to);
+    public RealPiece getPieceAtToPosition() {
+        return this.board.getRealPieceByPosition(to);
     }
 }

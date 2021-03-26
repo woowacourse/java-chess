@@ -2,9 +2,7 @@ package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.RealPiece;
+import chess.domain.piece.*;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -21,22 +19,47 @@ import static java.util.stream.Collectors.toMap;
 public class DefaultChessBoard implements Board {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
 
-    private final Map<Position, Square> board;
+    private final Map<Position, Piece> board;
 
-    DefaultChessBoard(Map<Position, Square> board) {
+    DefaultChessBoard(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public Square findByPosition(Position position) {
+    public Piece getPieceByPosition(Position position) {
         return this.board.get(position);
     }
 
-    public MoveResult move(MoveOrder moveOrder) {
-        Square fromSqaure = this.findByPosition(moveOrder.getFromPosition());
-        return fromSqaure.move(moveOrder);
+    public RealPiece getRealPieceByPosition(Position position) {
+        if (!this.hasPiece(position)) {
+            throw new NoSuchElementException("해당 위치에 말이 없습니다.");
+        }
+        return (RealPiece)this.board.get(position);
     }
 
-    public List<Square> getRoute(Position from, Position to) {
+    public boolean hasPiece(Position position) {
+        return this.board.get(position).isNotBlank();
+    }
+
+    public MoveResult move(MoveOrder moveOrder) {
+        Position fromPosition = moveOrder.getFromPosition();
+        if (!this.hasPiece(fromPosition)) {
+            throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
+        }
+
+        RealPiece pieceToMove = this.getRealPieceByPosition(moveOrder.getFromPosition());
+        Position toPosition = moveOrder.getToPosition();
+
+        if (pieceToMove.canMove(moveOrder)) {
+            Piece piece = this.board.get(toPosition);
+            this.board.put(toPosition, pieceToMove);
+            this.board.put(fromPosition, new Blank());
+            return new MoveResult(piece);
+        }
+
+        throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
+    }
+
+    public List<Piece> getRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> route = new ArrayList<>();
         Position currentPosition = from.getNextPosition(direction);
@@ -76,9 +99,8 @@ public class DefaultChessBoard implements Board {
 
     private List<RealPiece> realPiecesPerFiles(Color color, File file) {
         return positionStreamPerFiles(file)
-                .map(this::findByPosition)
-                .filter(Square::hasPiece)
-                .map(Square::getPiece)
+                .filter(this::hasPiece)
+                .map(this::getRealPieceByPosition)
                 .filter(realPiece -> realPiece.isSameColor(color))
                 .collect(toList());
     }

@@ -58,7 +58,7 @@ public class ChessGameManager {
     }
 
     private void validateTurn(Position from) {
-        if (!board.findByPosition(from).getPiece().isSameColor(this.currentTurnColor)) {
+        if (!board.getRealPieceByPosition(from).isSameColor(this.currentTurnColor)) {
             throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
         }
     }

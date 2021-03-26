@@ -1,8 +1,8 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.Square;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -31,8 +31,8 @@ public class OutputView {
         for (Rank rank : Rank.asListInReverseOrder()) {
             String line = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
-                    .map(board::findByPosition)
-                    .map(Square::getNotation)
+                    .map(board::getPieceByPosition)
+                    .map(Piece::getNotation)
                     .collect(Collectors.joining());
             System.out.println(line);
         }
