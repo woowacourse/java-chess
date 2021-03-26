@@ -53,3 +53,19 @@ img {
     display: flex;
     justify-content: center;
 }
+
+.player {
+    margin: 20px;
+    border: 5px solid black;
+    width: 100px;
+    height: 100px;
+    line-height: 90px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.turn {
+    border: 5px solid yellowgreen !important;
+    color: cornflowerblue;
+}

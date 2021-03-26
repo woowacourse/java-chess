@@ -97,6 +97,7 @@ async function move(sourcePosition, targetPosition) {
             target.getElementsByTagName("img")[0].remove();
         }
         target.appendChild(piece);
+        changeTurn();
     } catch (e) {
         console.log(e);
     }
@@ -118,7 +119,22 @@ async function start() {
             return;
         }
         alert("게임을 시작합니다.");
+        setFirstTurn();
     } catch (e) {
         console.log(e);
+    }
+}
+
+function setFirstTurn() {
+    const $player1 = document.getElementById("player1");
+    $player1.className += " turn"
+}
+
+function changeTurn() {
+    console.log("changeTurn 함수")
+    const $players = document.getElementsByClassName("player");
+    console.log($players);
+    for (let i = 0; i < $players.length; i++) {
+        $players[i].classList.toggle("turn");
     }
 }
