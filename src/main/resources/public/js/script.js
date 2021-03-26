@@ -97,6 +97,18 @@ async function move(sourcePosition, targetPosition) {
             target.getElementsByTagName("img")[0].remove();
         }
         target.appendChild(piece);
+
+        const isFinished = await checkFinished();
+        console.log("isFinished 체크 : ");
+        console.log(isFinished);
+        if (isFinished === true) {
+            const winner = await getWinner();
+            if (winner === "WHITE") {
+                alert("player1이 이겼습니다!");
+            } else if (winner === "BLACK") {
+                alert("player2가 이겼습니다!");
+            }
+        }
         changeTurn();
     } catch (e) {
         console.log(e);
@@ -131,10 +143,50 @@ function setFirstTurn() {
 }
 
 function changeTurn() {
-    console.log("changeTurn 함수")
     const $players = document.getElementsByClassName("player");
-    console.log($players);
     for (let i = 0; i < $players.length; i++) {
         $players[i].classList.toggle("turn");
+    }
+}
+
+async function checkFinished() {
+    try {
+        const res = await axios({
+            method: 'get',
+            url: '/check/finished',
+        });
+        console.log("checkFinished 응답값")
+        console.log(res);
+        const data = res.data;
+        if (data.code !== 200) {
+            alert(data.message);
+            return;
+        }
+        if (data.code === 200) {
+            return data.data.isFinished;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function getWinner() {
+    try {
+        const res = await axios({
+            method: 'get',
+            url: '/winner',
+        });
+        console.log("getWinner 응답값")
+        console.log(res);
+        const data = res.data;
+        if (data.code !== 200) {
+            alert(data.message);
+            return;
+        }
+        if (data.code === 200) {
+            return data.data.winner;
+        }
+    } catch (e) {
+        console.log(e);
     }
 }

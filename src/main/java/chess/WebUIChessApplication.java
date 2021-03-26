@@ -1,7 +1,7 @@
 package chess;
 
 import chess.service.ChessService;
-import chess.web.dto.MoveRequestDto;
+import chess.web.dto.requestdto.MoveRequestDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -13,6 +13,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static final Gson GSON = new Gson();
+    private static final JsonTransformer JSON_TRANSFORMER = new JsonTransformer();
 
     public static void main(String[] args) {
         staticFiles.location("/public");
@@ -28,15 +29,19 @@ public class WebUIChessApplication {
             String sourcePosition = reqBody.get("source");
             String targetPosition = reqBody.get("target");
             return chessService.move(new MoveRequestDto(sourcePosition, targetPosition));
-        }, new JsonTransformer());
+        }, JSON_TRANSFORMER);
 
         post("/start", (req, res) -> {
             return chessService.start();
-        }, new JsonTransformer());
+        }, JSON_TRANSFORMER);
 
         get("/check/finished", (req, res) -> {
             return chessService.checkFinished();
-        }, new JsonTransformer());
+        }, JSON_TRANSFORMER);
+
+        get("/winner", (req, res) -> {
+            return chessService.getWinner();
+        }, JSON_TRANSFORMER);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

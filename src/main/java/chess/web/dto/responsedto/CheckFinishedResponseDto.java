@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.web.dto.responsedto;
 
 public class CheckFinishedResponseDto implements ResponseDto {
     private final boolean isFinished;

@@ -2,10 +2,11 @@ package chess.service;
 
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
-import chess.web.dto.CheckFinishedResponseDto;
-import chess.web.dto.MoveRequestDto;
+import chess.web.dto.requestdto.MoveRequestDto;
+import chess.web.dto.requestdto.WinnerResponseDto;
 import chess.web.dto.response.Response;
 import chess.web.dto.response.ResponseCode;
+import chess.web.dto.responsedto.CheckFinishedResponseDto;
 
 public class ChessService {
 
@@ -35,5 +36,9 @@ public class ChessService {
 
     public Response checkFinished() {
         return new Response(ResponseCode.OK, new CheckFinishedResponseDto(grid.isFinished()));
+    }
+
+    public Response getWinner() {
+        return new Response(ResponseCode.OK, new WinnerResponseDto(grid.winnerColor()));
     }
 }
