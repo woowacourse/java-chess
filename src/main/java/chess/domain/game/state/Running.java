@@ -7,6 +7,10 @@ public abstract class Running extends Started {
     public Running(Board board) {
         super(board);
     }
+    
+    public boolean isSeizeOppositeKing() {
+        return !board().isAliveBothKings();
+    }
 
     @Override
     public State start() {

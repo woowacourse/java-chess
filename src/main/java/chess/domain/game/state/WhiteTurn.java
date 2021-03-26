@@ -17,7 +17,7 @@ public class WhiteTurn extends Running {
 
     @Override
     public State end() {
-        if (!isRunning()) {
+        if (isSeizeOppositeKing()) {
             return new WhiteWin(board());
         }
         return new Draw(board());

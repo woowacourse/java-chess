@@ -17,7 +17,7 @@ public class BlackTurn extends Running {
 
     @Override
     public State end() {
-        if (!isRunning()) {
+        if (isSeizeOppositeKing()) {
             return new BlackWin(board());
         }
         return new Draw(board());
