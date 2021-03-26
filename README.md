@@ -187,6 +187,14 @@ CREATE TABLE chess_room
   current_turn_team_color varchar(255) NOT NULL
 ) ENGINE=InnoDB;
 ```
+```sql
+CREATE TABLE player
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  chess_room_id bigint unsigned,
+  FOREIGN KEY (chess_room_id) REFERENCES chess_room (id)
+) ENGINE=InnoDB;
+```
 
 <br>
 
