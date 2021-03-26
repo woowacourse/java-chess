@@ -20,15 +20,15 @@ public class Piece {
         this.pieceColor = pieceColor;
     }
 
-    public boolean isSameColor(Piece piece) {
+    public boolean isSameColor(final Piece piece) {
         return isSameColor(piece.pieceColor);
     }
 
-    public boolean isSameColor(PieceColor pieceColor) {
+    public boolean isSameColor(final PieceColor pieceColor) {
         return this.pieceColor == pieceColor;
     }
 
-    public boolean isMovingForward(Position source, Position target) {
+    public boolean isMovingForward(final Position source, final Position target) {
         MoveDirection moveDirection = MoveDirection.getDirection(source, target);
         if (pieceColor == PieceColor.WHITE) {
             return MoveDirection.isWhiteForward(moveDirection);
@@ -45,7 +45,7 @@ public class Piece {
         return pieceKind == PieceKind.KING;
     }
 
-    public void movable(Position source, Position target) {
+    public void movable(final Position source, final Position target) {
         pieceKind.movable(source, target);
     }
 

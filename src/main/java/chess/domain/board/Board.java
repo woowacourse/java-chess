@@ -22,7 +22,7 @@ public class Board {
         this.deadKingColor = PieceColor.VOID;
     }
 
-    public void move(Position source, Position target, PieceColor turnColor) {
+    public void move(final Position source, final Position target, final PieceColor turnColor) {
         checkPath(source, target);
 
         Piece originalPiece = pieceAtPosition(source);
@@ -33,12 +33,13 @@ public class Board {
         movePiece(source, target, originalPiece);
     }
 
-    private void checkPath(Position source, Position target) {
+    private void checkPath(final Position source, final Position target) {
         checkMoving(source, target);
         checkNoJumpPiece(source, target);
     }
 
-    private void movePiece(Position source, Position target, Piece originalPiece) {
+    private void movePiece(final Position source, final Position target,
+        final Piece originalPiece) {
         checkPawnCase(source, target, originalPiece);
         judgeKingsState(target);
 
@@ -46,26 +47,28 @@ public class Board {
         putPieceAtPosition(source, VOID_PIECE);
     }
 
-    private void checkPawnCase(Position source, Position target, Piece originalPiece) {
+    private void checkPawnCase(final Position source, final Position target,
+        final Piece originalPiece) {
         if (originalPiece.isPawn()) {
             checkDirection(source, target);
             checkMoveType(source, target);
         }
     }
 
-    private void checkMoving(Position source, Position target) {
-        if (source.computeHorizontalDistance(target) == 0 && source.computeVerticalDistance(target) == 0) {
+    private void checkMoving(final Position source, final Position target) {
+        if (source.computeHorizontalDistance(target) == 0 &&
+            source.computeVerticalDistance(target) == 0) {
             throw new InvalidMoveException(STAY_ERROR_MESSAGE);
         }
     }
 
-    private void checkNoJumpPiece(Position source, Position target) {
+    private void checkNoJumpPiece(final Position source, final Position target) {
         if (source.isLineMove(target) || source.isDiagonalMove(target)) {
             checkClearPath(source, target);
         }
     }
 
-    private void checkIsNotSameTeam(Position source, Position target) {
+    private void checkIsNotSameTeam(final Position source, final Position target) {
         Piece sourcePiece = pieceAtPosition(source);
         Piece targetPiece = pieceAtPosition(target);
 
@@ -74,7 +77,7 @@ public class Board {
         }
     }
 
-    private void checkClearPath(Position source, Position target) {
+    private void checkClearPath(final Position source, final Position target) {
         MoveDirection moveDirection = MoveDirection.getDirection(source, target);
         int xVector = moveDirection.getXVector();
         int yVector = moveDirection.getYVector();
@@ -87,20 +90,20 @@ public class Board {
         }
     }
 
-    private void checkIfClear(Position pathPosition) {
+    private void checkIfClear(final Position pathPosition) {
         if (!pieceAtPosition(pathPosition).equals(VOID_PIECE)) {
             throw new InvalidMoveException(Piece.UNABLE_CROSS_MESSAGE);
         }
     }
 
-    private void checkDirection(Position source, Position target) {
+    private void checkDirection(final Position source, final Position target) {
         Piece piece = pieceAtPosition(source);
         if (!piece.isMovingForward(source, target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
     }
 
-    private void checkMoveType(Position source, Position target) {
+    private void checkMoveType(final Position source, final Position target) {
         if (isVoid(target) && source.isDiagonalMove(target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
@@ -110,12 +113,12 @@ public class Board {
         }
     }
 
-    private boolean isVoid(Position target) {
+    private boolean isVoid(final Position target) {
         Piece targetPiece = pieceAtPosition(target);
         return targetPiece.equals(VOID_PIECE);
     }
 
-    private void judgeKingsState(Position target) {
+    private void judgeKingsState(final Position target) {
         if (pieceAtPosition(target).isKing()) {
             deadKingColor = pieceAtPosition(target).color();
         }
@@ -125,17 +128,17 @@ public class Board {
         return deadKingColor != PieceColor.VOID;
     }
 
-    public void checkTurn(Piece piece, PieceColor turnColor) {
+    public void checkTurn(final Piece piece, final PieceColor turnColor) {
         if (!piece.isSameColor(turnColor)) {
             throw new InvalidMoveException(INVALID_TURN_MESSAGE);
         }
     }
 
-    public Piece pieceAtPosition(Position position) {
+    public Piece pieceAtPosition(final Position position) {
         return board.get(position);
     }
 
-    public void putPieceAtPosition(Position position, Piece piece) {
+    public void putPieceAtPosition(final Position position, final Piece piece) {
         board.put(position, piece);
     }
 

@@ -21,7 +21,7 @@ public class Position {
         }
     }
 
-    private static void putPositionWithY(XPosition xposition) {
+    private static void putPositionWithY(final XPosition xposition) {
         for (YPosition yPosition : YPosition.values()) {
             String positionKey = String.format("%c%d", xposition.getValue(),
                 yPosition.getValue());
@@ -29,17 +29,17 @@ public class Position {
         }
     }
 
-    public Position(Position position) {
+    public Position(final Position position) {
         this.xPosition = position.xPosition;
         this.yPosition = position.yPosition;
     }
 
-    private Position(XPosition xPosition, YPosition yPosition) {
+    private Position(final XPosition xPosition, final YPosition yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
     }
 
-    public static Position from(String positionKey) {
+    public static Position from(final String positionKey) {
         return Optional
             .ofNullable(CACHE.get(positionKey))
             .orElseGet(() -> {
@@ -47,33 +47,33 @@ public class Position {
             });
     }
 
-    public static Position of(char xRawPosition, int yRawPosition) {
+    public static Position of(final char xRawPosition, final int yRawPosition) {
         String positionKey = String.format("%c%d", xRawPosition,
             yRawPosition);
         return from(positionKey);
     }
 
-    public static Position of(XPosition xPosition, YPosition yPosition) {
+    public static Position of(final XPosition xPosition, final YPosition yPosition) {
         char xRawPosition = xPosition.getValue();
         int yRawPosition = yPosition.getValue();
         return of(xRawPosition, yRawPosition);
     }
 
-    public boolean isLineMove(Position target) {
+    public boolean isLineMove(final Position target) {
         return (computeHorizontalDistance(target) == 0 ||
             computeVerticalDistance(target) == 0);
     }
 
-    public boolean isDiagonalMove(Position target) {
+    public boolean isDiagonalMove(final Position target) {
         return (Math.abs(computeHorizontalDistance(target)) ==
             Math.abs(computeVerticalDistance(target)));
     }
 
-    public int computeHorizontalDistance(Position anotherPosition) {
+    public int computeHorizontalDistance(final Position anotherPosition) {
         return xPosition.difference(anotherPosition.xPosition);
     }
 
-    public int computeVerticalDistance(Position anotherPosition) {
+    public int computeVerticalDistance(final Position anotherPosition) {
         return yPosition.difference(anotherPosition.yPosition);
     }
 
@@ -81,11 +81,11 @@ public class Position {
         return Position.of(xPosition.getValue(), 9 - yPosition.getValue());
     }
 
-    public boolean sameYPosition(int rawYPosition) {
+    public boolean sameYPosition(final int rawYPosition) {
         return yPosition.samePosition(rawYPosition);
     }
 
-    public void moveUnit(int xVector, int yVector) {
+    public void moveUnit(final int xVector, final int yVector) {
         xPosition = xPosition.moveUnit(xVector);
         yPosition = yPosition.moveUnit(yVector);
     }

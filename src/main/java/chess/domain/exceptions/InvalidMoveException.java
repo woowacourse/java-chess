@@ -8,7 +8,7 @@ public class InvalidMoveException extends RuntimeException {
 
     }
 
-    public InvalidMoveException(String exceptionMessage) {
+    public InvalidMoveException(final String exceptionMessage) {
         super(exceptionMessage);
     }
 }

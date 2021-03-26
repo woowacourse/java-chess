@@ -19,11 +19,11 @@ public enum MoveDirection {
 
     private List<Integer> vector;
 
-    MoveDirection(List<Integer> vector) {
+    MoveDirection(final List<Integer> vector) {
         this.vector = vector;
     }
 
-    public static MoveDirection getDirection(Position source, Position target) {
+    public static MoveDirection getDirection(final Position source, final Position target) {
         int horizontalDistance = source.computeHorizontalDistance(target);
         int verticalDistance = source.computeVerticalDistance(target);
 
@@ -34,25 +34,25 @@ public enum MoveDirection {
         return matchVectors(vectors);
     }
 
-    private static MoveDirection matchVectors(List<Integer> vectors) {
+    private static MoveDirection matchVectors(final List<Integer> vectors) {
         return Arrays.stream(values())
             .filter(element -> element.vector.equals(vectors))
             .findAny()
             .orElseThrow(() -> new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE));
     }
 
-    private static int getVectorValue(int distance) {
+    private static int getVectorValue(final int distance) {
         if (distance == 0) {
             return 0;
         }
         return distance / Math.abs(distance);
     }
 
-    public static Boolean isWhiteForward(MoveDirection moveDirection) {
+    public static Boolean isWhiteForward(final MoveDirection moveDirection) {
         return Arrays.asList(UP, LEFT_UP, RIGHT_UP).contains(moveDirection);
     }
 
-    public static Boolean isBlackForward(MoveDirection moveDirection) {
+    public static Boolean isBlackForward(final MoveDirection moveDirection) {
         return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN).contains(moveDirection);
     }
 

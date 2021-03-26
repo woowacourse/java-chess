@@ -16,19 +16,19 @@ public class InitializedBoard {
             .forEach(this::traverseXPositions);
     }
 
-    private void traverseXPositions(PieceKind pieceKind) {
+    private void traverseXPositions(final PieceKind pieceKind) {
         pieceKind.bringInitialXPositions()
             .forEach(x -> traversYPositions(pieceKind, x));
     }
 
-    private void traversYPositions(PieceKind pieceKind, char x) {
+    private void traversYPositions(final PieceKind pieceKind, final char x) {
         pieceKind.bringInitialYPositions()
             .stream()
             .map(y -> Position.of(x, y))
             .forEach(position -> putBoard(pieceKind, position));
     }
 
-    private void putBoard(PieceKind pieceKind, Position position) {
+    private void putBoard(final PieceKind pieceKind, final Position position) {
         if (pieceKind == PieceKind.VOID) {
             putVoidPieces(pieceKind, position);
             return;
@@ -36,7 +36,7 @@ public class InitializedBoard {
         putColorPieces(pieceKind, position);
     }
 
-    private void putColorPieces(PieceKind pieceKind, Position position) {
+    private void putColorPieces(final PieceKind pieceKind, final Position position) {
         Piece pieceW = new Piece(pieceKind, PieceColor.WHITE);
         initializedBoard.put(position, pieceW);
 
@@ -44,7 +44,7 @@ public class InitializedBoard {
         initializedBoard.put(position.computeSymmetricPosition(), pieceB);
     }
 
-    private void putVoidPieces(PieceKind pieceKind, Position position) {
+    private void putVoidPieces(final PieceKind pieceKind, final Position position) {
         Piece pieceVoid = new Piece(pieceKind, PieceColor.VOID);
         initializedBoard.put(position, pieceVoid);
         initializedBoard.put(position.computeSymmetricPosition(), pieceVoid);

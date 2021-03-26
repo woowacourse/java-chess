@@ -10,7 +10,7 @@ public class KnightMoveStrategy extends BasicMoveStrategy {
     private static final int SIDE_JUMP_RANGE = 1;
 
     @Override
-    protected void checkValidMove(Position source, Position target) {
+    protected void checkValidMove(final Position source, final Position target) {
         int xDistanceAbs = Math.abs(source.computeHorizontalDistance(target));
         int yDistanceAbs = Math.abs(source.computeVerticalDistance(target));
 
@@ -19,7 +19,7 @@ public class KnightMoveStrategy extends BasicMoveStrategy {
         }
     }
 
-    private boolean isKnightMoveType(int xDistance, int yDistance) {
+    private boolean isKnightMoveType(final int xDistance, final int yDistance) {
         return (xDistance == FORWARD_JUMP_RANGE) && (yDistance == SIDE_JUMP_RANGE) ||
             (xDistance == SIDE_JUMP_RANGE) && (yDistance == FORWARD_JUMP_RANGE);
     }

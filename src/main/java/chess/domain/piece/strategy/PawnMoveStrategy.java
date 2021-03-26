@@ -12,11 +12,11 @@ public class PawnMoveStrategy extends BasicMoveStrategy {
     private static final int PAWN_BLACK_INITIAL_POSITION = 7;
 
     @Override
-    void checkValidMove(Position source, Position target) {
+    void checkValidMove(final Position source, final Position target) {
         checkValidDistance(source, target);
     }
 
-    private void checkValidDistance(Position source, Position target) {
+    private void checkValidDistance(final Position source, final Position target) {
         if (source.sameYPosition(PAWN_WHITE_INITIAL_POSITION) ||
             source.sameYPosition(PAWN_BLACK_INITIAL_POSITION)) {
             checkInitialMoveDistance(source, target);
@@ -26,13 +26,13 @@ public class PawnMoveStrategy extends BasicMoveStrategy {
         checkGeneralMoveDistance(source, target);
     }
 
-    private void checkInitialMoveDistance(Position source, Position target) {
+    private void checkInitialMoveDistance(final Position source, final Position target) {
         if (Math.abs(source.computeVerticalDistance(target)) > PAWN_INITIAL_DISTANCE_LIMIT) {
             throw new InvalidMoveException(Piece.OVER_DISTANCE_MESSAGE);
         }
     }
 
-    private void checkGeneralMoveDistance(Position source, Position target) {
+    private void checkGeneralMoveDistance(final Position source, final Position target) {
         if (Math.abs(source.computeHorizontalDistance(target)) > PAWN_GENERAL_DISTANCE_LIMIT ||
             Math.abs(source.computeVerticalDistance(target)) > PAWN_GENERAL_DISTANCE_LIMIT) {
             throw new InvalidMoveException(Piece.OVER_DISTANCE_MESSAGE);

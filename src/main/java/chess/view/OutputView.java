@@ -18,7 +18,7 @@ public class OutputView {
         System.out.println(GAME_INIT_COMMAND);
     }
 
-    public static void printBoard(Game game) {
+    public static void printBoard(final Game game) {
         Board board = game.getBoard();
         System.out.println();
         for (YPosition yPosition : YPosition.values()) {
@@ -26,7 +26,7 @@ public class OutputView {
         }
     }
 
-    private static void printXAxis(Board board, YPosition yPosition) {
+    private static void printXAxis(final Board board, final YPosition yPosition) {
         for (XPosition xPosition : XPosition.values()) {
             Position position = Position.of(xPosition, yPosition);
             Piece piece = board.pieceAtPosition(position);
@@ -35,12 +35,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScore(Game game) {
+    public static void printScore(final Game game) {
         System.out.printf("백팀 점수 : %f\n", game.computeWhitePoint());
         System.out.printf("흑팀 점수 : %f\n", game.computeBlackPoint());
     }
 
-    public static void printGameWinner(Game game) {
+    public static void printGameWinner(final Game game) {
         System.out.printf("%s이 승리했습니다\n", game.winnerColor().getName());
         System.out.println(END);
     }

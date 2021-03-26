@@ -16,12 +16,12 @@ public enum Commands {
     private final String command;
     BiConsumer<Game, String> function;
 
-    Commands(String command, BiConsumer<Game, String> function) {
+    Commands(final String command, final BiConsumer<Game, String> function) {
         this.command = command;
         this.function = function;
     }
 
-    public static void playCommand(Game game, String input) {
+    public static void playCommand(final Game game, final String input) {
         String processedInput = input.split(" ")[0];
         Commands commands = Arrays.stream(values())
             .filter(element -> element.command.equals(processedInput))
@@ -30,7 +30,7 @@ public enum Commands {
         commands.play(game, input);
     }
 
-    private void play(Game game, String command) {
+    private void play(final Game game, final String command) {
         function.accept(game, command);
     }
 }

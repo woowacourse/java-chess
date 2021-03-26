@@ -16,22 +16,22 @@ public enum XPosition {
 
     private final char name;
 
-    XPosition(char name) {
+    XPosition(final char name) {
         this.name = name;
     }
 
-    public XPosition moveUnit(int unit) {
+    public XPosition moveUnit(final int unit) {
         return findXPosition((char) (name + unit));
     }
 
-    private XPosition findXPosition(char newXPosition) {
+    private XPosition findXPosition(final char newXPosition) {
         return Arrays.stream(values())
             .filter(element -> element.name == newXPosition)
             .findAny()
             .orElseThrow(InvalidMoveException::new);
     }
 
-    public int difference(XPosition anotherXPosition) {
+    public int difference(final XPosition anotherXPosition) {
         return anotherXPosition.name - this.name;
     }
 

@@ -38,7 +38,7 @@ public enum PieceKind {
         return this.initialYPositions;
     }
 
-    public String getName(PieceColor pieceColor) {
+    public String getName(final PieceColor pieceColor) {
         if (pieceColor == PieceColor.WHITE) {
             return symbol.toLowerCase();
         }
@@ -50,7 +50,7 @@ public enum PieceKind {
         return this.point;
     }
 
-    public void movable(Position source, Position target) {
+    public void movable(final Position source, final Position target) {
         this.moveStrategy.move(source, target);
     }
 }

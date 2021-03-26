@@ -21,7 +21,7 @@ public class ChessController {
         }
     }
 
-    private void selectMenu(Game game) {
+    private void selectMenu(final Game game) {
         try {
             String input = InputView.receiveInitialResponse();
             Commands.playCommand(game, input);
@@ -30,12 +30,12 @@ public class ChessController {
         }
     }
 
-    public static void start(Game game, String command) {
+    public static void start(final Game game, final String command) {
         game.init();
         OutputView.printBoard(game);
     }
 
-    public static void move(Game game, String command) {
+    public static void move(final Game game, final String command) {
         isStart(game);
         List<String> processedInput = Arrays.asList(command.split(" "));
 
@@ -45,25 +45,25 @@ public class ChessController {
         isEnd(game, command);
     }
 
-    private static void isStart(Game game) {
+    private static void isStart(final Game game) {
         if (!game.isStart()) {
             throw new IllegalArgumentException(NOT_START_MESSAGE);
         }
     }
 
-    private static void isEnd(Game game, String command) {
+    private static void isEnd(final Game game, final String command) {
         if (game.isEnd()) {
             end(game, command);
             OutputView.printGameWinner(game);
         }
     }
 
-    public static void end(Game game, String command) {
+    public static void end(final Game game, final String command) {
         game.end();
         status(game, command);
     }
 
-    public static void status(Game game, String command) {
+    public static void status(final Game game, final String command) {
         OutputView.printScore(game);
     }
 }

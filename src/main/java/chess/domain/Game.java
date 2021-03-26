@@ -38,7 +38,7 @@ public class Game {
         return gameState.isStart();
     }
 
-    public void move(String source, String target) {
+    public void move(final String source, final String target) {
         Position sourcePosition = Position.from(source);
         Position targetPosition = Position.from(target);
         board.move(sourcePosition, targetPosition, turnColor);
