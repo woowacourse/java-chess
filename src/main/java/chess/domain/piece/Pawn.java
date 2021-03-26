@@ -42,7 +42,14 @@ public final class Pawn extends GamePiece {
     }
 
     private boolean diagonal(int rowDifference, int columnDifference) {
-        return rowDifference == 1 && columnDifference == 1;
+        if (Math.abs(columnDifference) != 1) {
+            return false;
+        }
+
+        if (isSideEqualTo(Side.BLACK)) {
+            return rowDifference == 1;
+        }
+        return rowDifference == -1;
     }
 
     private boolean forward(int rowDifference, int columnDifference) {

@@ -61,14 +61,14 @@ class PawnTest {
     }
 
     @ParameterizedTest(name = "Black Pawn 이동 실패")
-    @ValueSource(strings = {"a5", "a6", "a7", "b6", "b7", "b5", "c4", "c7", "c8", "d7", "d8"})
+    @ValueSource(strings = {"a7", "a6", "b7", "b6", "c4", "d7", "d6", "e7", "e6"})
     void routeBlackPawnFail(String to) {
         assertThatThrownBy(() -> pawnBlack.route(c7, Position.from(to), BLANK, Side.BLACK))
                 .isInstanceOf(InvalidMovementException.class);
     }
 
     @ParameterizedTest(name = "White Pawn 이동 실패")
-    @ValueSource(strings = {"c1", "b1", "b2", "c5", "c2"})
+    @ValueSource(strings = {"a2", "a3", "b2", "b3", "c5", "d2", "d3", "e2", "e3"})
     void routeWhitePawnFail(Position to) {
         assertThatThrownBy(() -> pawnWhite.route(c2, to, BLANK, Side.WHITE))
                 .isInstanceOf(InvalidMovementException.class);
