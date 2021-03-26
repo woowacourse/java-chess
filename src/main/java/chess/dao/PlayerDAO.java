@@ -44,7 +44,7 @@ public class PlayerDAO {
     }
 
     public void deleteAll() throws SQLException {
-        String query = "DELETE FROM chess_room";
+        String query = "DELETE FROM player";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();
     }

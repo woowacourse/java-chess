@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.dao.entity.ChessRoomEntity;
 import chess.dao.entity.PlayerEntity;
 import java.sql.SQLException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,12 @@ class PlayerDAOTest {
 
     private final PlayerDAO playerDAO = new PlayerDAO();
     private final ChessRoomDAO chessRoomDAO = new ChessRoomDAO();
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        playerDAO.deleteAll();
+        chessRoomDAO.deleteAll();
+    }
 
     @Test
     void add() throws SQLException {
