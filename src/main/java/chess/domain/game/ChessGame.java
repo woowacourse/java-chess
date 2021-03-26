@@ -24,18 +24,7 @@ public class ChessGame {
 
     public void move(Position source, Position target) {
         this.state.moveIfValidColor(source, target);
-        this.state = stateByFinished();
-    }
-
-    private State stateByFinished() {
-        if (state.isRunning()) {
-            return state.passTurn();
-        }
-        return state.end();
-    }
-
-    public void finish() {
-        this.state = state.finish();
+        this.state = state.passTurn();
     }
 
     public void end() {
@@ -46,27 +35,27 @@ public class ChessGame {
         return state.ranks();
     }
 
-    public String finishReason() {
-        return state.finishReason();
-    }
-
-    public boolean isNotEnd() {
-        return state.isNotEnd();
-    }
-
-    public Color winner() {
-        return state.winner();
+    public boolean isInit() {
+        return state.isInit();
     }
 
     public boolean isRunning() {
         return state.isRunning();
     }
 
-    public boolean isInit() {
-        return state.isInit();
-    }
-
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public String finishReason() {
+        return state.finishReason();
+    }
+
+    public Color winner() {
+        return state.winner();
+    }
+
+    public boolean isNotEnd() {
+        return state.isNotEnd();
     }
 }
