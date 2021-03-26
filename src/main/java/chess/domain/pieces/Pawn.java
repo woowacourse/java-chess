@@ -118,7 +118,7 @@ public final class Pawn extends NoKingPieces {
     }
 
     @Override
-    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
         throw new UnsupportedOperationException();
     }
 

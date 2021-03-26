@@ -50,14 +50,14 @@ public final class Knight extends NoKingPieces implements SingleMove {
     }
 
     @Override
-    public List<Position> getMovablePositions(Board board) {
+    public List<Position> getMovablePositions(final Board board) {
         int[] rowDirection = {-1, 1, 2, 2, 1, -1, -2, -2};
         int[] colDirection = {2, 2, 1, -1, -2, -2, -1, 1};
         return getMovablePositionsByDir(board, rowDirection, colDirection);
     }
 
     @Override
-    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
         return isMoveAbleDir(board, nextRow, nextCol, getTeam());
     }
 }

@@ -49,7 +49,7 @@ public final class King extends Piece implements SingleMove {
     }
 
     @Override
-    public List<Position> getMovablePositions(Board board) {
+    public List<Position> getMovablePositions(final Board board) {
         int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
         int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
 
@@ -57,7 +57,7 @@ public final class King extends Piece implements SingleMove {
     }
 
     @Override
-    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
         return isMoveAbleDir(board, nextRow, nextCol, getTeam());
     }
 

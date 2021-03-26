@@ -87,7 +87,7 @@ public abstract class Piece {
         }
     }
 
-    protected abstract boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol);
+    protected abstract boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol);
 
     public abstract boolean isKing();
 

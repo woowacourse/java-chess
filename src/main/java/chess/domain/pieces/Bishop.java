@@ -50,14 +50,14 @@ public final class Bishop extends NoKingPieces implements MultiMove {
     }
 
     @Override
-    public List<Position> getMovablePositions(Board board) {
+    public List<Position> getMovablePositions(final Board board) {
         int[] rowDir = {-1, 1, -1, 1};
         int[] colDir = {-1, 1, 1, -1};
         return getMovablePositionsByDir(board, rowDir, colDir);
     }
 
     @Override
-    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
         return isMoveAbleDir(movablePositions, board, nextRow, nextCol, getTeam());
     }
 }
