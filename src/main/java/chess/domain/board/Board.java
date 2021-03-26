@@ -11,6 +11,7 @@ import java.util.Set;
 
 public class Board {
     public static final int BOTH_KINGS_ALIVE = 2;
+
     private final List<Map<Position, Piece>> squares;
 
     public Board(final List<Map<Position, Piece>> squares) {

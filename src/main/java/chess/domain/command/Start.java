@@ -4,6 +4,7 @@ import chess.domain.game.ChessGame;
 
 public class Start implements Command {
     private static final String START_COMMAND = "start";
+
     private final ChessGame chessGame;
 
     public Start(ChessGame chessGame) {

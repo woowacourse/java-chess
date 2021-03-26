@@ -5,6 +5,7 @@ import chess.utils.ScoreCalculator;
 
 public class Status implements Command {
     private static final String STATUS_COMMAND = "status";
+
     private final ChessGame chessGame;
 
     public Status(ChessGame chessGame) {

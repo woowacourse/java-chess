@@ -3,7 +3,6 @@ package chess.domain.board.position;
 import java.util.*;
 
 public class Position {
-
     private static final Map<String, Position> CACHE = new HashMap<>();
 
     static {

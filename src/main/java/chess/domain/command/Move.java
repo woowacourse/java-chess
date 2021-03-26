@@ -11,6 +11,7 @@ public class Move implements Command {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
     private static final int MOVE_COMMAND_COUNT = 3;
+
     private final ChessGame chessGame;
 
     public Move(ChessGame chessGame) {
