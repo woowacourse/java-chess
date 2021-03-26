@@ -1,9 +1,12 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
+import java.util.List;
 
-public abstract class Finished extends Started {
+public abstract class Finished extends AfterStart {
+
     public Finished(Board board) {
         super(board);
     }
@@ -15,7 +18,17 @@ public abstract class Finished extends Started {
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        throw new IllegalStateException("게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("이미 체스게임이 종료되었습니다.");
+    }
+
+    @Override
+    public State passTurn() {
+        throw new IllegalStateException("이미 체스게임이 종료되었습니다.");
+    }
+
+    @Override
+    public List<Rank> ranks() {
+        throw new IllegalStateException("이미 체스게임이 종료되었습니다.");
     }
 
     @Override
@@ -24,7 +37,22 @@ public abstract class Finished extends Started {
     }
 
     @Override
+    public boolean isInit() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
     public boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public boolean isNotEnd() {
         return true;
     }
 }
