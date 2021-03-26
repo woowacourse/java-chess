@@ -24,7 +24,7 @@ public abstract class Player {
     }
 
     public final double calculateScore() {
-        return state.pieces().calculateScore();
+        return state.calculateScore();
     }
 
     public final void toRunningState(final State anotherState) {
