@@ -30,7 +30,7 @@ public class Running implements GameState {
         if (!pieceMovementRule.canMove(source, destination, turn.now())) {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
-        boolean isKingDead = board.isSamePieceTypeAt(destination, Piece.KING);
+        boolean isKingDead = board.hasSamePieceTypeAt(destination, Piece.KING);
         Team destinationTeam = board.teamAt(destination);
 
         board.move(source, destination);
