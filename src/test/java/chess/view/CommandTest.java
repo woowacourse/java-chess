@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandTest {
-
     @ParameterizedTest
     @DisplayName("지원되는 명령어가 입력되면, true를 반환한다.")
     @ValueSource(strings = {"START", "END", "MOVE", "STATUS"})

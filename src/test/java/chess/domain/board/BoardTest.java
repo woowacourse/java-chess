@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class BoardTest {
-    private static double BASE_SCORE = 38.0;
     private Board board;
 
     @BeforeEach
@@ -62,6 +61,7 @@ class BoardTest {
     @Test
     @DisplayName("팀을 받으면, 팀에 따른 현재 점수를 계산한다.")
     void scoreByTeamCheck() {
+        double BASE_SCORE = 38.0;
         assertThat(board.scoreByTeam(Team.BLACK)).isEqualTo(BASE_SCORE);
     }
 }

@@ -4,8 +4,10 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Movable.MultiMove;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import chess.domain.util.RowConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Queen extends NoKingPieces implements MultiMove {
@@ -38,6 +40,12 @@ public final class Queen extends NoKingPieces implements MultiMove {
             return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
         }
         return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
+    }
+
+    public static List<Queen> getInitQueen(final Team team) {
+        List<Queen> queens = new ArrayList<>();
+        ColumnConverter.getQueenInitCols().forEach((col) -> queens.add(Queen.of(team, col)));
+        return queens;
     }
 
     @Override

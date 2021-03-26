@@ -4,8 +4,10 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Movable.SingleMove;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import chess.domain.util.RowConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class King extends Piece implements SingleMove {
@@ -38,6 +40,12 @@ public final class King extends Piece implements SingleMove {
             return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
         }
         return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
+    }
+
+    public static List<King> getInitKing(final Team team) {
+        List<King> kings = new ArrayList<>();
+        ColumnConverter.getKingInitCols().forEach((col) -> kings.add(King.of(team, col)));
+        return kings;
     }
 
     @Override

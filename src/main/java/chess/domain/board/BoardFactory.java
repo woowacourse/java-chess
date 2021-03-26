@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.Team;
 import chess.domain.pieces.*;
-import chess.domain.util.ColumnConverter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,56 +34,33 @@ public final class BoardFactory {
     }
 
     private void pawnInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getPawnInitCols();
-        cols.forEach((col) -> {
-            black.add(Pawn.of(Team.BLACK, col));
-            white.add(Pawn.of(Team.WHITE, col));
-        });
+        black.addAll(Pawn.getInitPawns(Team.BLACK));
+        white.addAll(Pawn.getInitPawns(Team.WHITE));
     }
 
     private void rookInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getRookInitCols();
-
-        cols.forEach((col) -> {
-            black.add(Rook.of(Team.BLACK, col));
-            white.add(Rook.of(Team.WHITE, col));
-        });
+        black.addAll(Rook.getInitRooks(Team.BLACK));
+        white.addAll(Rook.getInitRooks(Team.WHITE));
     }
 
     private void knightInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getKnightInitCols();
-
-        cols.forEach((col) -> {
-            black.add(Knight.of(Team.BLACK, col));
-            white.add(Knight.of(Team.WHITE, col));
-        });
+        black.addAll(Knight.getInitKnights(Team.BLACK));
+        white.addAll(Knight.getInitKnights(Team.WHITE));
     }
 
     private void bishopInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getBishopInitCols();
-
-        cols.forEach((col) -> {
-            black.add(Bishop.of(Team.BLACK, col));
-            white.add(Bishop.of(Team.WHITE, col));
-        });
+        black.addAll(Bishop.getInitBishop(Team.BLACK));
+        white.addAll(Bishop.getInitBishop(Team.WHITE));
     }
 
     private void queenInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getQueenInitCols();
-
-        cols.forEach((col) -> {
-            black.add(Queen.of(Team.BLACK, col));
-            white.add(Queen.of(Team.WHITE, col));
-        });
+        black.addAll(Queen.getInitQueen(Team.BLACK));
+        white.addAll(Queen.getInitQueen(Team.WHITE));
     }
 
     private void kingInitSetting(final List<Piece> black, final List<Piece> white) {
-        List<Integer> cols = ColumnConverter.getKingInitCols();
-
-        cols.forEach((col) -> {
-            black.add(King.of(Team.BLACK, col));
-            white.add(King.of(Team.WHITE, col));
-        });
+        black.addAll(King.getInitKing(Team.BLACK));
+        white.addAll(King.getInitKing(Team.WHITE));
     }
 
     private void makeBoard(final List<Piece> black, final List<Piece> white) {

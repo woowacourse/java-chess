@@ -12,7 +12,7 @@ public final class Pieces {
 
     private final List<Piece> pieces;
 
-    public Pieces(List<Piece> pieces) {
+    public Pieces(List<? extends Piece> pieces) {
         this.pieces = new ArrayList<>(pieces);
     }
 

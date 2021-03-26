@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RowConverterTest {
-
     @Test
     @DisplayName("입력받은 좌표값을 넣으면 실제 좌표값을 가져온다")
     void getLocationTest() {

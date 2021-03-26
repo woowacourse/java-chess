@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import chess.domain.util.RowConverter;
 
 import java.util.ArrayList;
@@ -27,6 +28,12 @@ public final class Pawn extends NoKingPieces {
 
     public static Pawn of(final Team team, final int col) {
         return new Pawn(team, getInitPosition(team, col));
+    }
+
+    public static List<Pawn> getInitPawns(final Team team) {
+        List<Pawn> pawns = new ArrayList<>();
+        ColumnConverter.getPawnInitCols().forEach((col) -> pawns.add(Pawn.of(team, col)));
+        return pawns;
     }
 
     private static Position getInitPosition(final Team team, final int col) {
