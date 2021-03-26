@@ -6,14 +6,15 @@ public class Position {
     private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
 
     static {
-        Arrays.stream(Rank.values())
-                .forEach(rankValue ->
-                        Arrays.stream(File.values())
-                                .forEach(fileValue ->
-                                        POSITIONS.put(rankValue.getRank() + fileValue.getFile(),
-                                                new Position(rankValue, fileValue))
-                                )
-                );
+        for (Rank rankValue : Rank.values()) {
+            initializePosition(rankValue);
+        }
+    }
+
+    private static void initializePosition(Rank rankValue) {
+        for (File fileValue : File.values()) {
+            POSITIONS.put(rankValue.getRank() + fileValue.getFile(), new Position(rankValue, fileValue));
+        }
     }
 
     private final Rank rank;
