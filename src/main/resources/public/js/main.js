@@ -59,6 +59,11 @@ function addClickEventListener() {
 
 function onSelectPiece(event) {
   const clickPiece = event.target.closest("td");
+  if (clickPiece.childElementCount === 0) {
+    alert("빈 공간은 선택할 수 없습니다!");
+    return;
+  }
+
   if (clickPiece.className !== "clicked") {
     clickPiece.classList.toggle("clicked");
     return;
