@@ -28,7 +28,7 @@ public class MovePosition {
         this.targetPosition = targetPosition;
     }
     
-    public static MovePosition of(String[] input) {
+    public static MovePosition from(String[] input) {
         final List<String> positions = trimAndExceptBlank(input);
         if (isSizeMismatch(positions)) {
             throw new IllegalArgumentException(ERROR_MISMATCH_POSITION_SIZE);

@@ -8,7 +8,11 @@ public class InputView {
     
     private static final String BLANK = " ";
     
-    public static String[] askCommand() {
+    public static String askCommand() {
+        return SCANNER.nextLine();
+    }
+    
+    public static String[] askPositions() {
         return SCANNER.nextLine().split(BLANK);
     }
 }
