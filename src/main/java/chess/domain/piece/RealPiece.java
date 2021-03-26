@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.strategy.PieceRange;
 import chess.domain.piece.strategy.PieceStrategy;
+import chess.domain.position.Notation;
 
 public final class RealPiece implements Piece {
 
@@ -10,6 +12,11 @@ public final class RealPiece implements Piece {
     protected RealPiece(final PieceColor color, final PieceStrategy pieceStrategy) {
         this.color = color;
         this.pieceStrategy = pieceStrategy;
+    }
+
+    @Override
+    public PieceRange movableFrom(Notation notation) {
+        return pieceStrategy.pieceRangeFrom(notation);
     }
 
     @Override

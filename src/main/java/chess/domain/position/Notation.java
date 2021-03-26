@@ -33,25 +33,15 @@ public final class Notation {
         final Row newRow = row.move(direction);
         return CACHE.get(newColumn.value() + newRow.value());
     }
-//
-//    public List<Coordinate> moveUntilWall(final Direction direction) {
-//        final List<Coordinate> visitedCoordinates = new ArrayList<>();
-//        Coordinate currentCoordinate = this;
-//        while(currentCoordinate.canMove(direction)) {
-//            currentCoordinate = currentCoordinate.move(direction);
-//            visitedCoordinates.add(currentCoordinate);
-//        }
-//        return visitedCoordinates;
-//    }
 
-    public Notations shortPath(final Direction direction) {
+    public Notations shortRange(final Direction direction) {
         if (canMove(direction)) {
             return new Notations(Collections.singletonList(move(direction)));
         }
         return new Notations(Collections.emptyList());
     }
 
-    public Notations longPath(final Direction direction) {
+    public Notations longRange(final Direction direction) {
         final List<Notation> visitedNotations = new ArrayList<>();
         Notation currentNotation = this;
         while(currentNotation.canMove(direction)) {
