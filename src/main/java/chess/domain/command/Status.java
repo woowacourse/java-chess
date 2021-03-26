@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreCalculator;
 
-public class Status implements Command {
+public class Status implements Command3 {
 
     private static final String STATUS_COMMAND = "status";
 

@@ -61,4 +61,8 @@ public class ChessGame {
     public boolean isInit() {
         return state.isInit();
     }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
 }

@@ -1,11 +1,11 @@
-package chess.domain.board;
+package chess.domain.dto;
 
 import java.util.List;
 
-public class LineDto {
+public class RankDto {
     private final List<String> pieces;
 
-    public LineDto(List<String> pieces) {
+    public RankDto(List<String> pieces) {
         this.pieces = pieces;
     }
 

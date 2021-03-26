@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Commands {
 
-    private final List<Command> commands;
+    private final List<Command3> commands;
 
-    private Commands(List<Command> commands) {
+    private Commands(List<Command3> commands) {
         this.commands = commands;
     }
 
@@ -21,7 +21,7 @@ public class Commands {
         ));
     }
 
-    public Command matchedCommand(String text) {
+    public Command3 matchedCommand(String text) {
         return this.commands.stream()
             .filter(command -> command.isMatchedCommand(text))
             .findFirst()

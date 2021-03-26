@@ -26,4 +26,6 @@ public interface State {
     Color winner();
 
     boolean isInit();
+
+    boolean isFinished();
 }

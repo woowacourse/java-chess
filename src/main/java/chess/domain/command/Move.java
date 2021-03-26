@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 
-public class Move implements Command {
+public class Move implements Command3 {
     private static final String MOVE_COMMAND = "move";
     private static final String MATCH_PATTERN = "[a-h][1-8]";
     private static final String REGEX = " ";
@@ -33,11 +33,6 @@ public class Move implements Command {
                 MOVE_COMMAND.equalsIgnoreCase(splitCommand[COMMAND_INDEX]);
     }
 
-    @Override
-    public boolean isStatus() {
-        return false;
-    }
-
     private boolean isSameCommandCount(int splitCommandCount) {
         return splitCommandCount == MOVE_COMMAND_COUNT;
     }
@@ -48,5 +43,10 @@ public class Move implements Command {
 
     private boolean isMatchedPattern(String position) {
         return position.matches(MATCH_PATTERN);
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
     }
 }

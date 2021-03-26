@@ -46,4 +46,9 @@ public abstract class Started implements State {
     public boolean isInit() {
         return false;
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
