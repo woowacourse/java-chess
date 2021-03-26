@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.controller.web.MoveResponse;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
+import chess.controller.web.MoveResponse;
 import java.util.ArrayList;
 import java.util.List;
 

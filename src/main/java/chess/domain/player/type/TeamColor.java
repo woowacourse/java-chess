@@ -28,6 +28,10 @@ public enum TeamColor {
         return WHITE;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public String getName() {
         return name;
     }

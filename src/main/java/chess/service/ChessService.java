@@ -1,9 +1,9 @@
 package chess.service;
 
-import chess.controller.web.MoveResponse;
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
+import chess.controller.web.MoveResponse;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
 import chess.domain.player.Scores;

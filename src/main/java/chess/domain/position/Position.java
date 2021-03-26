@@ -15,9 +15,8 @@ public class Position {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
-    private Long id;
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
     public Position(File file, Rank rank) {
         this.file = file;
@@ -25,12 +24,6 @@ public class Position {
     }
 
     public Position(String fileValue, String rankValue) {
-        this.file = File.of(fileValue);
-        this.rank = Rank.of(rankValue);
-    }
-
-    public Position(String id, String fileValue, String rankValue) {
-        this.id = Long.valueOf(id);
         this.file = File.of(fileValue);
         this.rank = Rank.of(rankValue);
     }
@@ -79,18 +72,6 @@ public class Position {
 
     public Rank rank() {
         return rank;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public void setRank(Rank rank) {
-        this.rank = rank;
     }
 
     @Override
