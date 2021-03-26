@@ -1,9 +1,13 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Color;
+import java.util.List;
 
 public class End extends Ended {
+
     public End(Board board) {
         super(board);
     }
@@ -19,13 +23,43 @@ public class End extends Ended {
     }
 
     @Override
-    public State end() {
+    public State passTurn() {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public List<Rank> ranks() {
         throw new IllegalStateException();
     }
 
     @Override
     public String finishReason() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public Color winner() {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public State end() {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean isInit() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
