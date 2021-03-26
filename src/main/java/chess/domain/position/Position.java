@@ -47,7 +47,7 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
-    public static Position find(final String source) {
+    public static Position from(final String source) {
         String reversedSource = reverse(source);
         if (Objects.isNull(POSITIONS.get(reversedSource))) {
             throw new IllegalArgumentException("없는 위치입니다!");

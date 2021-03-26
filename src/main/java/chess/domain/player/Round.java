@@ -71,8 +71,8 @@ public class Round {
         this.command = this.command.execute(commands.poll());
         if (this.command.isMove()) {
             this.command = command.ready();
-            Position sourcePosition = Position.find(commands.poll());
-            Position targetPosition = Position.find(commands.poll());
+            Position sourcePosition = Position.from(commands.poll());
+            Position targetPosition = Position.from(commands.poll());
             moveByTurn(sourcePosition, targetPosition);
         }
     }
