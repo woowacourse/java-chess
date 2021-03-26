@@ -2,14 +2,15 @@ package chess.domain.position;
 
 import chess.domain.piece.strategy.Direction;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public final class Coordinate {
+public final class Notation {
 
-    private static final Map<String, Coordinate> CACHE = new HashMap<>();
+    private static final Map<String, Notation> CACHE = new HashMap<>();
 
     static {
         cache();
@@ -18,29 +19,46 @@ public final class Coordinate {
     private final Column column;
     private final Row row;
 
-    private Coordinate(final Column column, final Row row) {
+    private Notation(final Column column, final Row row) {
         this.column = column;
         this.row = row;
     }
 
-    public static Coordinate ofName(final String positionName) {
+    public static Notation ofName(final String positionName) {
         return CACHE.get(positionName);
     }
 
-    public Coordinate move(final Direction direction) {
+    public Notation move(final Direction direction) {
         final Column newColumn = column.move(direction);
         final Row newRow = row.move(direction);
         return CACHE.get(newColumn.value() + newRow.value());
     }
+//
+//    public List<Coordinate> moveUntilWall(final Direction direction) {
+//        final List<Coordinate> visitedCoordinates = new ArrayList<>();
+//        Coordinate currentCoordinate = this;
+//        while(currentCoordinate.canMove(direction)) {
+//            currentCoordinate = currentCoordinate.move(direction);
+//            visitedCoordinates.add(currentCoordinate);
+//        }
+//        return visitedCoordinates;
+//    }
 
-    public List<Coordinate> moveUntilWall(final Direction direction) {
-        final List<Coordinate> visitedCoordinates = new ArrayList<>();
-        Coordinate currentCoordinate = this;
-        while(currentCoordinate.canMove(direction)) {
-            currentCoordinate = currentCoordinate.move(direction);
-            visitedCoordinates.add(currentCoordinate);
+    public Notations shortPath(final Direction direction) {
+        if (canMove(direction)) {
+            return new Notations(Collections.singletonList(move(direction)));
         }
-        return visitedCoordinates;
+        return new Notations(Collections.emptyList());
+    }
+
+    public Notations longPath(final Direction direction) {
+        final List<Notation> visitedNotations = new ArrayList<>();
+        Notation currentNotation = this;
+        while(currentNotation.canMove(direction)) {
+            currentNotation = currentNotation.move(direction);
+            visitedNotations.add(currentNotation);
+        }
+        return new Notations(visitedNotations);
     }
 
     public boolean canMove(Direction direction) {
@@ -63,7 +81,7 @@ public final class Coordinate {
 
     private static void cacheRowsWithColumn(final Column column) {
         for (Row row : Row.values()) {
-            CACHE.put(column.value() + row.value(), new Coordinate(column, row));
+            CACHE.put(column.value() + row.value(), new Notation(column, row));
         }
     }
 
@@ -75,7 +93,7 @@ public final class Coordinate {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Coordinate that = (Coordinate) o;
+        Notation that = (Notation) o;
         return column == that.column && row == that.row;
     }
 

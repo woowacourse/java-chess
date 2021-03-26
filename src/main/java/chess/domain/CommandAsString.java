@@ -1,14 +1,10 @@
 package chess.domain;
 
-import chess.domain.position.Coordinate;
+import chess.domain.position.Notation;
 
 public final class CommandAsString {
 
     private final String[] commandInputs;
-
-    public CommandAsString() {
-        this("");
-    }
 
     public CommandAsString(final String stringCommand) {
         this(stringCommand.split(" "));
@@ -22,19 +18,19 @@ public final class CommandAsString {
         return Command.valueOf(commandInputs[0].toUpperCase());
     }
 
-    public Coordinate source() {
+    public Notation source() {
         return positionOfCommand(1);
     }
 
-    public Coordinate target() {
+    public Notation target() {
         return positionOfCommand(2);
     }
 
-    private Coordinate positionOfCommand(final int number) {
+    private Notation positionOfCommand(final int number) {
         if (commandInputs.length == 1) {
             throw new IllegalArgumentException("플레이어의 행동이 아닙니다.");
         }
-        return Coordinate.ofName(commandInputs[number]);
+        return Notation.ofName(commandInputs[number]);
     }
 
     public boolean isStart() {
