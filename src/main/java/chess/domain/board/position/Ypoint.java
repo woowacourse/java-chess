@@ -42,6 +42,10 @@ public enum Ypoint {
         return Collections.singletonList(TWO);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public int getValue() {
         return this.value;
     }
