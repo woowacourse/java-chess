@@ -88,6 +88,16 @@ async function move(sourcePosition, targetPosition) {
             .then((res) => {
                 console.log("응답값");
                 console.log(res);
+                if (res.data === "OK") {
+                    const source = document.getElementById(sourcePosition);
+                    const target = document.getElementById(targetPosition);
+                    const piece = source.getElementsByTagName("img")[0];
+                    if (target.getElementsByTagName("img")[0]) {
+                        target.getElementsByTagName("img")[0].remove();
+                    }
+                    target.appendChild(piece);
+                    console.log(target);
+                }
             })
     } catch (e) {
         console.log(e);
