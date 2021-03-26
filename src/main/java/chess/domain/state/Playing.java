@@ -11,6 +11,7 @@ public abstract class Playing implements GameState {
     private static final String WHITE_SPACE_DELIMITER = " ";
     private static final int SOURCE_ARG_INDEX = 1;
     private static final int TARGET_ARG_INDEX = 2;
+    private static final int VALID_INPUT_COUNT = 3;
 
     @Override
     public final GameState run(final Grid grid, final String command) {
@@ -33,6 +34,9 @@ public abstract class Playing implements GameState {
 
     private List<Piece> parsedPieces(final Grid grid, final String command) {
         List<String> moveInput = Arrays.asList(command.split(WHITE_SPACE_DELIMITER));
+        if (moveInput.size() != VALID_INPUT_COUNT) {
+            throw new IllegalArgumentException("move source위치 target위치로 입력 해주세요.");
+        }
         Position sourcePosition = new Position(moveInput.get(SOURCE_ARG_INDEX));
         Position targetPosition = new Position(moveInput.get(TARGET_ARG_INDEX));
         Piece sourcePiece = grid.piece(sourcePosition);
