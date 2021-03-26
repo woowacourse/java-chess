@@ -1,17 +1,12 @@
 package chess.controller;
 
 import chess.domain.Game;
+import chess.domain.command.Command;
+import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class ChessController {
-
-    public static final String NOT_START_MESSAGE = "게임이 시작되지 않았습니다.";
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
 
     public void run() {
         OutputView.printInitMessage();
@@ -24,46 +19,23 @@ public class ChessController {
     private void selectMenu(final Game game) {
         try {
             String input = InputView.receiveInitialResponse();
-            Commands.playCommand(game, input);
+            Command command = Commands.matchCommand(input);
+            command = command.run(game, input);
+            showCommandResult(command, game);
         } catch (RuntimeException runtimeException) {
             System.out.println(runtimeException.getMessage());
         }
     }
 
-    public static void start(final Game game, final String command) {
-        game.init();
-        OutputView.printBoard(game);
-    }
-
-    public static void move(final Game game, final String command) {
-        isStart(game);
-        List<String> processedInput = Arrays.asList(command.split(" "));
-
-        game.move(processedInput.get(SOURCE_INDEX), processedInput.get(TARGET_INDEX));
-        OutputView.printBoard(game);
-
-        isEnd(game, command);
-    }
-
-    private static void isStart(final Game game) {
-        if (!game.isStart()) {
-            throw new IllegalArgumentException(NOT_START_MESSAGE);
+    private void showCommandResult(Command command, Game game) {
+        if (command.isStartCommand() || command.isMoveCommand()) {
+            OutputView.printBoard(game);
+            return;
         }
-    }
-
-    private static void isEnd(final Game game, final String command) {
-        if (game.isEnd()) {
-            end(game, command);
+        if (command.isEndCommand()) {
             OutputView.printGameWinner(game);
+            return;
         }
-    }
-
-    public static void end(final Game game, final String command) {
-        game.end();
-        status(game, command);
-    }
-
-    public static void status(final Game game, final String command) {
         OutputView.printScore(game);
     }
 }

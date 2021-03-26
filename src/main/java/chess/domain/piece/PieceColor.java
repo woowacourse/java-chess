@@ -15,7 +15,10 @@ public enum PieceColor {
         if (this == BLACK) {
             return WHITE;
         }
-        return BLACK;
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return VOID;
     }
 
     public String getName() {

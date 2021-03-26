@@ -6,6 +6,7 @@ import chess.domain.board.Position;
 import chess.domain.board.XPosition;
 import chess.domain.board.YPosition;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 
 public class OutputView {
 
@@ -41,6 +42,10 @@ public class OutputView {
     }
 
     public static void printGameWinner(final Game game) {
+        if (game.winnerColor() == PieceColor.VOID) {
+            System.out.println("무승부입니다.");
+            return;
+        }
         System.out.printf("%s이 승리했습니다\n", game.winnerColor().getName());
         System.out.println(END);
     }
