@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 public class ChessController {
     private static final String COMMAND_ERROR = "[ERROR] 올바른 명령이 아닙니다.";
-    private ChessGame chessGame;
 
     public void run() {
         try {
@@ -24,7 +23,7 @@ public class ChessController {
 
     private void selectFirstCommand(CommandType commandType) {
         if (commandType == CommandType.START) {
-            chessGame = new ChessGame();
+            ChessGame chessGame = new ChessGame();
             OutputView.printChessBoard(chessGame.getCurrentPieces());
             gamePlay(chessGame);
         }
@@ -44,11 +43,11 @@ public class ChessController {
         do {
             String[] splitInput = InputView.inputCommand().split(" ");
             commandType = CommandType.findRunningCommand(splitInput[0]);
-            selectRunningCommand(commandType, splitInput);
+            selectRunningCommand(chessGame, commandType, splitInput);
         }while (chessGame.isRunnable(commandType));
     }
 
-    private void selectRunningCommand(CommandType commandType, String[] splitInput) {
+    private void selectRunningCommand(ChessGame chessGame, CommandType commandType, String[] splitInput) {
         if (commandType == CommandType.MOVE) {
             validateRemainingCommand(splitInput);
             chessGame.play(Arrays.asList(splitInput[1], splitInput[2]));
