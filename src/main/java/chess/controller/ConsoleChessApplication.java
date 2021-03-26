@@ -12,9 +12,18 @@ public class ConsoleChessApplication {
         
         Chess chess = Chess.createWithEmptyBoard();
         while (!chess.isTerminated()) {
+            chess = executeCommand(chess);
+        }
+    }
+    
+    private static Chess executeCommand(Chess chess) {
+        try {
             final Command command = Command.findCommandByInputCommand(InputView.askCommand());
             chess = command.execute(chess);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return chess;
     }
     
     public static Chess start(Chess chess) {
@@ -47,6 +56,10 @@ public class ConsoleChessApplication {
     }
     
     public static Chess end(Chess chess) {
+        if (chess.isKindDead() || chess.isStop()) {
+            OutputView.printChessIsStopping();
+        }
+        
         chess = chess.end();
         OutputView.printGameIsStopped();
         return chess;

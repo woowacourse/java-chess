@@ -9,11 +9,12 @@ import java.util.stream.Collectors;
 
 public class MovePosition {
     
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
+    private static final int SOURCE_POSITION_INDEX = 0;
+    private static final int TARGET_POSITION_INDEX = 1;
     
     private static final String BLANK = " ";
-    private static final int POSITIONS_SIZE = 3;
+    private static final int TWO_STEP = 2;
+    private static final int POSITIONS_SIZE = 2;
     
     private static final int DEFAULT_INDEX_OF_WHITE_PAWN = 1;
     private static final int DEFAULT_INDEX_OF_BLACK_PAWN = 6;
@@ -78,5 +79,15 @@ public class MovePosition {
     
     public boolean isArrived(Position sourcePosition) {
         return sourcePosition.equals(targetPosition);
+    }
+    
+    public boolean isTwoStep() {
+        return Math.abs(sourcePosition.getY() - targetPosition.getY()) == TWO_STEP;
+    }
+    
+    public void checkPawnExistAtDefaultPosition(Color color) {
+        if (!isAtDefaultPawnPosition(color)) {
+            throw new IllegalArgumentException("폰은 첫 이동 시에만 2칸 움직일 수 있습니다.");
+        }
     }
 }

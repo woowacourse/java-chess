@@ -9,7 +9,7 @@ public class InputView {
     private static final String BLANK = " ";
     
     public static String askCommand() {
-        return SCANNER.nextLine();
+        return SCANNER.next();
     }
     
     public static String[] askPositions() {
