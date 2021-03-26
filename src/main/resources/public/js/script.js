@@ -11,8 +11,6 @@ function createChessBoard() {
     ]
 
     const table = document.getElementById("chess-board");
-    console.log(table);
-    console.log(document);
     for (let i = 0; i < 8; i++) {
         const newTr = document.createElement("tr");
         for (let j = 0; j < 8; j++) {
@@ -76,7 +74,6 @@ function getClickedPiece() {
 }
 
 async function move(sourcePosition, targetPosition) {
-    console.log("move 함수 실행")
     try {
         axios({
             method: 'post',
@@ -87,9 +84,10 @@ async function move(sourcePosition, targetPosition) {
             }
         })
             .then((res) => {
-                console.log("응답값");
+                console.log("move 통신에 대한 응답값");
                 console.log(res);
-                if (res.data === "OK") {
+                const data = res.data;
+                if (data.code === 204) {
                     const source = document.getElementById(sourcePosition);
                     const target = document.getElementById(targetPosition);
                     const piece = source.getElementsByTagName("img")[0];
@@ -98,6 +96,9 @@ async function move(sourcePosition, targetPosition) {
                     }
                     target.appendChild(piece);
                     console.log(target);
+                }
+                if (data.code === 401) {
+                    alert(data.message);
                 }
             })
     } catch (e) {
