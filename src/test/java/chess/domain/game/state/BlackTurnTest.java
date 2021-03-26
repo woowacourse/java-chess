@@ -1,5 +1,8 @@
 package chess.domain.game.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
 import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
@@ -10,10 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
 class BlackTurnTest {
+
     private BlackTurn blackTurn;
 
     @BeforeEach
@@ -73,7 +74,8 @@ class BlackTurnTest {
     @Test
     @DisplayName("흑색 차례에서 finishReason 명령시 에러 반환")
     void testFinishReasonException() {
-        assertThatThrownBy(() -> this.blackTurn.finishReason()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> this.blackTurn.finishReason())
+            .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
