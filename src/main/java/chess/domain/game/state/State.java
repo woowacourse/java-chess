@@ -13,6 +13,8 @@ public interface State {
 
     State passTurn();
 
+    State finish();
+
     State end();
 
     String finishReason();

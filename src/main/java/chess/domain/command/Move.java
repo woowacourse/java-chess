@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 
-public class Move implements Command3 {
+public class Move implements Command {
     private static final String MOVE_COMMAND = "move";
     private static final String MATCH_PATTERN = "[a-h][1-8]";
     private static final String REGEX = " ";

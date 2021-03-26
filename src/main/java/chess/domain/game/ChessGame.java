@@ -34,6 +34,10 @@ public class ChessGame {
         return state.end();
     }
 
+    public void finish() {
+        this.state = state.finish();
+    }
+
     public void end() {
         this.state = state.end();
     }

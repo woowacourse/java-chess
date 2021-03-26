@@ -2,22 +2,24 @@ package chess.domain.command;
 
 import chess.domain.game.ChessGame;
 
-public class End implements Command {
-    private static final String END_COMMAND = "end";
+public class Finish implements Command {
+
+    private static final String FINISH_COMMAND = "finish";
+
     private final ChessGame chessGame;
 
-    public End(ChessGame chessGame) {
+    public Finish(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 
     @Override
     public void execution(String text) {
-        chessGame.end();
+        this.chessGame.finish();
     }
 
     @Override
     public boolean isMatchedCommand(String text) {
-        return END_COMMAND.equalsIgnoreCase(text);
+        return FINISH_COMMAND.equalsIgnoreCase(text);
     }
 
     @Override

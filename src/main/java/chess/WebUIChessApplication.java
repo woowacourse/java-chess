@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessGameController;
+import chess.controller.ChessController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -12,8 +12,8 @@ public class WebUIChessApplication {
 //            Map<String, Object> model = new HashMap<>();
 //            return render(model, "index.html");
 //        });
-        ChessGameController chessGameController = new ChessGameController();
-        chessGameController.run();
+        ChessController chessController = new ChessController();
+        chessController.run();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

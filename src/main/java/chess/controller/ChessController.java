@@ -1,17 +1,15 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.command.Command;
-import chess.domain.command.Command3;
+import chess.domain.command.Commands;
 import chess.domain.command.Status;
 import chess.domain.game.ChessGame;
 import chess.utils.DtoAssembler;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
-public class ChessGameController {
+public class ChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame(new Board());
@@ -19,43 +17,44 @@ public class ChessGameController {
         while (chessGame.isNotEnd()) {
             OutputView.printCommandNotice();
             chessGame = new ChessGame(new Board());
+            Commands commands = Commands.initCommands(chessGame);
 
-            readyChessBoard(chessGame);
-            runningChess(chessGame);
-            finishedChess(chessGame);
+            readyChess(chessGame, commands);
+            runningChess(chessGame, commands);
+            finishChess(chessGame, commands);
         }
     }
 
-    private void runningChess(ChessGame chessGame) {
-        while (chessGame.isRunning()) {
-            executeCommand(chessGame);
-        }
-    }
-
-    private void readyChessBoard(ChessGame chessGame) {
+    private void readyChess(ChessGame chessGame, Commands commands) {
         while (chessGame.isInit()) {
-            executeCommand(chessGame);
+            executeCommand(commands);
         }
     }
 
-    private void finishedChess(ChessGame chessGame) {
+    private void runningChess(ChessGame chessGame, Commands commands) {
+        while (chessGame.isRunning()) {
+            OutputView.printBoard(DtoAssembler.board(chessGame.ranks()));
+            executeCommand(commands);
+        }
+    }
+
+    private void finishChess(ChessGame chessGame, Commands commands) {
         while (chessGame.isFinished()) {
-            executeCommand(chessGame);
+            executeCommand(commands);
         }
     }
 
-    private void executeCommand(ChessGame chessGame) {
+    private void executeCommand(final Commands commands) {
         try {
             String input = InputView.command();
-            Command command = Command.matchedCommand(input);
-            List<Rank> ranks = command.execution(chessGame, input);
-            OutputView.printBoard(DtoAssembler.board(ranks));
+            Command command = commands.matchedCommand(input);
+            command.execution(input);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorException(e.getMessage());
         }
     }
 
-    private void printStatus(ChessGame chessGame, Command3 command) {
+    private void printStatus(ChessGame chessGame, Command command) {
         if (command.isStatus()) {
             Status status = (Status) command;
             OutputView.printWinner(chessGame.winner());
