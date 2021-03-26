@@ -45,10 +45,10 @@ public class PieceDAO {
             playerEntity);
     }
 
-    public void delete(PlayerEntity playerEntity) throws SQLException {
+    public void delete(PieceEntity pieceEntity) throws SQLException {
         String query = "DELETE FROM piece WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerEntity.getId());
+        pstmt.setLong(1, pieceEntity.getId());
         pstmt.executeUpdate();
     }
 

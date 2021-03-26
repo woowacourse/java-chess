@@ -56,13 +56,15 @@ class PieceDAOTest {
     void delete() throws SQLException {
         ChessRoomEntity chessRoomEntity = new ChessRoomEntity(TEST_TITLE);
         ChessRoomEntity addedChessRoom = chessRoomDAO.add(chessRoomEntity);
-        PlayerEntity playerEntity = new PlayerEntity(addedChessRoom);
-        playerDAO.add(playerEntity);
+        PlayerEntity playerEntityToBeAdded = new PlayerEntity(addedChessRoom);
+        PlayerEntity playerEntity = playerDAO.add(playerEntityToBeAdded);
+        PieceEntity pieceEntityToBeAdded = new PieceEntity(ROOK, BLACK, playerEntity);
+        PieceEntity pieceEntity = pieceDAO.add(pieceEntityToBeAdded);
 
-        playerDAO.delete(playerEntity);
+        pieceDAO.delete(pieceEntity);
 
-        PlayerEntity deletedPlayerEntity = playerDAO.findById(playerEntity.getId());
+        PieceEntity deletedPieceEntity = pieceDAO.findById(pieceEntity.getId());
 
-        assertThat(deletedPlayerEntity).isNull();
+        assertThat(deletedPieceEntity).isNull();
     }
 }
