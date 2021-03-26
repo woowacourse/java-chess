@@ -72,12 +72,6 @@ class WhiteTurnTest {
     }
 
     @Test
-    @DisplayName("백색 차례에서 finishReason 명령시 에러 반환")
-    void testFinishReasonException() {
-        assertThatThrownBy(() -> this.whiteTurn.finishReason()).isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
     @DisplayName("백색 차례에서 winner 명령시 에러 반환")
     void testWinnerException() {
         assertThatThrownBy(() -> this.whiteTurn.winner()).isInstanceOf(IllegalStateException.class);

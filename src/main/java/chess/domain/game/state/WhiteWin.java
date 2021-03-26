@@ -1,7 +1,6 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
 
 public class WhiteWin extends Finished {
 
@@ -10,12 +9,7 @@ public class WhiteWin extends Finished {
     }
 
     @Override
-    public String finishReason() {
-        return "백색의 승리로 게임이 종료되었습니다.";
-    }
-
-    @Override
-    public Color winner() {
-        return Color.WHITE;
+    public String winner() {
+        return "백색";
     }
 }

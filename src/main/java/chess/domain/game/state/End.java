@@ -33,12 +33,7 @@ public class End extends Ended {
     }
 
     @Override
-    public String finishReason() {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public Color winner() {
+    public String winner() {
         throw new IllegalStateException();
     }
 

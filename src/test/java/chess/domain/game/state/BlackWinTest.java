@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,19 +45,17 @@ class BlackWinTest {
     @Test
     @DisplayName("흑색 승리 상태에서 ranks 명령시 예외 반환")
     void testRanksException() {
-        assertThatThrownBy(() -> this.blackWin.ranks()).isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
-    @DisplayName("흑색 승리 상태에서 finishReason 흑색 승리 문구 반환")
-    void testFinishReason() {
-        assertThat(this.blackWin.finishReason()).isEqualTo("흑색의 승리로 게임이 종료되었습니다.");
+        List<Rank> ranks = this.blackWin.ranks();
+        assertThat(ranks).hasSize(8);
+        for (Rank rank : ranks) {
+            assertThat(rank.squares()).hasSize(8);
+        }
     }
 
     @Test
     @DisplayName("흑색 승리 상태에서 winner 명령시 흑색 반환")
     void testWinner() {
-        assertThat(this.blackWin.winner()).isEqualTo(Color.BLACK);
+        assertThat(this.blackWin.winner()).isEqualTo("흑색");
     }
 
     @Test

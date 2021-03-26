@@ -15,9 +15,7 @@ public interface State {
 
     List<Rank> ranks();
 
-    String finishReason();
-
-    Color winner();
+    String winner();
 
     State end();
 

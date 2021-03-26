@@ -44,12 +44,6 @@ public class InitTest {
     }
 
     @Test
-    @DisplayName("초기 상태에서 finishReason 명령시 에러 반환")
-    void testFinishReasonException() {
-        assertThatThrownBy(() -> this.init.finishReason()).isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
     @DisplayName("초기 상태에서 winner 명령시 에러 반환")
     void testWinnerException() {
         assertThatThrownBy(() -> this.init.winner()).isInstanceOf(IllegalStateException.class);

@@ -48,12 +48,6 @@ public class EndTest {
     }
 
     @Test
-    @DisplayName("프로그램 종료 상태에서 finishReason 명령시 예외 반환")
-    void testFinishReasonException() {
-        assertThatThrownBy(() -> this.end.finishReason()).isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
     @DisplayName("프로그램 종료 상태에서 winner 명령시 예외 반환")
     void testWinnerException() {
         assertThatThrownBy(() -> this.end.winner()).isInstanceOf(IllegalStateException.class);

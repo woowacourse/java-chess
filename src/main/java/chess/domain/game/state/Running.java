@@ -22,12 +22,7 @@ public abstract class Running extends AfterStart {
     }
 
     @Override
-    public String finishReason() {
-        throw new IllegalStateException("아직 체스게임이 진행중 입니다.");
-    }
-
-    @Override
-    public Color winner() {
+    public String winner() {
         throw new IllegalStateException("아직 체스게임이 진행중 입니다.");
     }
 

@@ -47,11 +47,7 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public String finishReason() {
-        return state.finishReason();
-    }
-
-    public Color winner() {
+    public String winner() {
         return state.winner();
     }
 

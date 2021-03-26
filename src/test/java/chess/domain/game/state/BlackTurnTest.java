@@ -72,13 +72,6 @@ class BlackTurnTest {
     }
 
     @Test
-    @DisplayName("흑색 차례에서 finishReason 명령시 에러 반환")
-    void testFinishReasonException() {
-        assertThatThrownBy(() -> this.blackTurn.finishReason())
-            .isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
     @DisplayName("흑색 차례에서 winner 명령시 에러 반환")
     void testWinnerException() {
         assertThatThrownBy(() -> this.blackTurn.winner()).isInstanceOf(IllegalStateException.class);
