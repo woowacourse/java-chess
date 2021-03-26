@@ -24,17 +24,21 @@ public class ChessController {
     private void startChessGame(final Command command) {
         Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
                 StateFactory.initialization(PieceFactory.blackPieces()), command);
+        do {
+            playChessGame(round);
+        } while (!round.isEnd());
+    }
 
-        while (true) try {
+    private void playChessGame(final Round round) {
+        try {
             inputCommand(round);
-            break;
         } catch (RuntimeException runtimeException) {
-            System.out.println("[ERROR]: " + runtimeException.getMessage());
+            OutputView.showExceptionMessage(runtimeException);
         }
     }
 
     private void inputCommand(final Round round) {
-        while (!round.isEnd()) {
+        if (!round.isEnd()) {
             OutputView.showChessBoard(round.getBoard());
             round.execute(INPUT.inputCommand());
             OutputView.showScore(round.currentPlayerName(), round.calculateScore());

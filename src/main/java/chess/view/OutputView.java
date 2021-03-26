@@ -17,6 +17,10 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void showExceptionMessage(final RuntimeException runtimeException) {
+        System.out.println("[ERROR]: " + runtimeException.getMessage());
+    }
+
     public static void showChessBoard(final Map<Position, Piece> chessBoard) {
         StringBuilder sb = new StringBuilder();
         for (int rank = RANK; rank > 0; rank--) {
