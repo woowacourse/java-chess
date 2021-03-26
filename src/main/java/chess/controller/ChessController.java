@@ -13,32 +13,34 @@ public class ChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame(new Board());
+        OutputView.printCommandNotice();
 
         while (chessGame.isNotEnd()) {
-            OutputView.printCommandNotice();
             chessGame = new ChessGame(new Board());
             Commands commands = Commands.initCommands(chessGame);
-
             readyChess(chessGame, commands);
             runningChess(chessGame, commands);
-            finishChess(chessGame, commands);
+            finishedChess(chessGame, commands);
         }
     }
 
     private void readyChess(ChessGame chessGame, Commands commands) {
+        OutputView.printRequestInputStart();
         while (chessGame.isInit()) {
             executeCommand(commands);
         }
     }
 
     private void runningChess(ChessGame chessGame, Commands commands) {
+        OutputView.printChessStarted();
         while (chessGame.isRunning()) {
-            OutputView.printBoard(DtoAssembler.board(chessGame.ranks()));
+            OutputView.printChessBoard(DtoAssembler.board(chessGame.ranks()));
             executeCommand(commands);
         }
     }
 
-    private void finishChess(ChessGame chessGame, Commands commands) {
+    private void finishedChess(ChessGame chessGame, Commands commands) {
+        OutputView.printFinishWithReason(chessGame.winner());
         while (chessGame.isFinished()) {
             executeCommand(commands);
         }
@@ -49,15 +51,16 @@ public class ChessController {
             String input = InputView.command();
             Command command = commands.matchedCommand(input);
             command.execution(input);
+            printStatus(command);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorException(e.getMessage());
         }
     }
 
-    private void printStatus(ChessGame chessGame, Command command) {
+    private void printStatus(Command command) {
         if (command.isStatus()) {
             Status status = (Status) command;
-            OutputView.printWinner(chessGame.winner());
+            OutputView.printWinner(status.winner());
             OutputView.printScoreStatus(status.totalWhiteScore(), status.totalBlackScore());
         }
     }
