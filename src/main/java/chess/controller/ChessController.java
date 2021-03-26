@@ -12,16 +12,16 @@ public final class ChessController {
 
     public void run() {
         OutputView.printGuideMessage();
-        GameManager gameManager = new GameManager(new CommandAsString(), new InitialState(Game.initiate()));
+        GameManager gameManager = new GameManager(new InitialState(Game.initiate()));
         while (gameManager.isNotFinished()) {
             try {
                 final CommandAsString command = new CommandAsString(InputView.receiveInput());
                 gameManager = gameManager.execute(command);
+                final GameVisual gameVisual = gameManager.gameVisual(command);
+                OutputView.print(gameVisual);
             } catch (IllegalArgumentException e) {
                 OutputView.printError(e);
             }
-            final GameVisual gameVisual = gameManager.gameVisual();
-            OutputView.print(gameVisual);
         }
         OutputView.printFinishedMessage();
     }

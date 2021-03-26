@@ -1,55 +1,28 @@
 package chess.domain.board;
 
-import chess.domain.piece.strategy.Direction;
-import chess.domain.position.Coordinate;
+import chess.domain.position.Notation;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Path {
 
-    private final Coordinate source;
-    private final Direction direction;
+    private final List<Notation> notations;
 
-    private final List<Coordinate> coordinates;
-
-    public Path(final Piece, final Direction direction) {
-        this()
+    private Path(final List<Notation> possibleNotations) {
+        this.notations = possibleNotations;
     }
 
-    private Path(final List<Coordinate> possibleCoordinates) {
-        this.coordinates = possibleCoordinates;
+    public boolean contains(final Notation targetNotation) {
+        return notations.contains(targetNotation);
     }
 
-    public List<Coordinate> possibleCoordinates() {
-        final List<Coordinate> possibleCoordinates = new ArrayList<>();
+    public List<Notation> possibleCoordinates() {
+        final List<Notation> possibleNotations = new ArrayList<>();
 
-        return possibleCoordinates;
+        return possibleNotations;
     }
 
     public boolean isEmpty() {
-        return coordinates.isEmpty();
+        return notations.isEmpty();
     }
-//    Stream<Position2> stream();
-    // PATH UNTIL END OF THE BOARD
-//    private final PieceColor pieceColor;
-//    private final List<Position2> possiblePositions;
-//
-//    public Path2(PieceColor pieceColor, List<Position2> possiblePositions) {
-//        this.pieceColor = pieceColor;
-//        this.possiblePositions = possiblePositions;
-//    }
-//
-//    public List<Position2> validPositions() {
-//        final List<Position2> validPositions = new ArrayList<>();
-//        for (Position2 position : possiblePositions) {
-//            if (position.holdingPieceIsColor(pieceColor)) {
-//                break;
-//            }
-//        }
-//        return validPositions;
-//    }
-//
-//    public List<Position2> allPositions() {
-//
-//    }
 }

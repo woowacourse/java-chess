@@ -6,19 +6,17 @@ import chess.domain.game.state.GameState;
 public final class GameManager {
 
     private final GameState gameState;
-    private final CommandAsString command;
 
-    public GameManager(final CommandAsString command, final GameState gameState) {
-        this.command = command;
+    public GameManager(final GameState gameState) {
         this.gameState = gameState;
     }
 
     public GameManager execute(final CommandAsString command) {
         final GameState newGameState = gameState.execute(command);
-        return new GameManager(command, newGameState);
+        return new GameManager(newGameState);
     }
 
-    public GameVisual gameVisual() {
+    public GameVisual gameVisual(final CommandAsString command) {
         if (command.isStatus()) {
             return gameState.statusVisual();
         }

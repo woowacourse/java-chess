@@ -1,11 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
-import chess.domain.position.Coordinate;
-import chess.domain.position.Position;
-import java.util.List;
+import chess.domain.position.Notation;
 
 public final class Game {
 
@@ -22,36 +19,22 @@ public final class Game {
         return new Game(Board.ofEmpty());
     }
 
-    public Game move(final Coordinate sourceCoordinate, final Coordinate targetCoordinate) {
-        if (!board.hasAvailablePath(sourceCoordinate, targetCoordinate)) {
+    public Game move(final Notation sourceNotation, final Notation targetNotation) {
+        if (!board.hasAvailablePath(sourceNotation, targetNotation)) {
             throw new IllegalArgumentException("경로 안에서 체스말이 이동할 수 없습니다.");
         }
-//        final Board newBoard = board.movePiece(sourceCoordinate, targetCoordinate);
-//        return new Game(newBoard);
-        return new Game(board.movePiece(sourceCoordinate, targetCoordinate));
+        return new Game(board.movePiece(sourceNotation, targetNotation));
     }
 
-    public boolean containsEnemyPiece(final Coordinate sourceCoordinate, final PieceColor enemyColor) {
-        return board.hasPieceColor(sourceCoordinate, enemyColor);
+    public boolean containsEnemyPiece(final Notation sourceNotation, final PieceColor enemyColor) {
+        return board.hasPieceColor(sourceNotation, enemyColor);
     }
 
-    public boolean kingDead() {
-        int kingCount = (int) board.values()
-                .stream()
-                .filter(Position::containsKing)
-                .count();
-
-        return kingCount != VALID_KING_COUNT;
+    public boolean isGameOver() {
+        return board.kingCount() != VALID_KING_COUNT;
     }
 
-    public List<Piece>
     public int pawnCount(final Column column, final PieceColor color) {
-        return (int) board.values()
-                .stream()
-                .filter(position -> position.isOfColumn(column))
-                .filter(position -> position.containsPawn())
-                .map(position -> position.)
-                .filter(position -> position.holdingPieceIsColor(color))
-                .count();
+        return board.pawnCount(column, color);
     }
 }
