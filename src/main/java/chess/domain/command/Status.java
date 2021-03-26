@@ -1,26 +1,30 @@
 package chess.domain.command;
 
 import chess.domain.game.ChessGame;
-import chess.utils.ScoreCalculator;
+import chess.domain.game.ScoreCalculator;
 
 public class Status implements Command {
+
     private static final String STATUS_COMMAND = "status";
+
     private final ChessGame chessGame;
+    private ScoreCalculator scoreCalculator;
 
     public Status(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 
     public double totalBlackScore() {
-        return ScoreCalculator.totalBlackScore(chessGame.board());
+        return this.scoreCalculator.totalBlackScore();
     }
 
     public double totalWhiteScore() {
-        return ScoreCalculator.totalWhiteScore(chessGame.board());
+        return this.scoreCalculator.totalWhiteScore();
     }
 
     @Override
     public void execution(String text) {
+        this.scoreCalculator = new ScoreCalculator(chessGame.ranks());
     }
 
     @Override

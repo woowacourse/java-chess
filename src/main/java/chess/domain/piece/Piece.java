@@ -64,6 +64,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isNotPawn() {
+        return true;
+    }
+
     public abstract MoveStrategy moveStrategy();
 
     @Override

@@ -39,6 +39,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isNotPawn() {
+        return false;
+    }
+
+    @Override
     public MoveStrategy moveStrategy() {
         return new PawnMoveStrategy();
     }
