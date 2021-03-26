@@ -1,7 +1,7 @@
 package chess.domain.movestrategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitPieces;
+import chess.domain.board.position.InitPosition;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Knight;
@@ -19,7 +19,7 @@ public class KnightMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        this.ranks = InitPieces.initRanks();
+        this.ranks = InitPosition.initRanks();
     }
 
     @Test

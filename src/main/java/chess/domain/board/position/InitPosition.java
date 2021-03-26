@@ -1,8 +1,6 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Xpoint;
-import chess.domain.board.position.Ypoint;
+import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -17,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum InitPieces {
+public enum InitPosition {
     BLACK_ROOK(Xpoint.getRookPoints(), Ypoint.getBlackPoint(), Rook.createBlack()),
     WHITE_ROOK(Xpoint.getRookPoints(), Ypoint.getWhitePoint(), Rook.createWhite()),
     BLACK_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getBlackPoint(), Knight.createBlack()),
@@ -36,7 +34,7 @@ public enum InitPieces {
     private final List<Ypoint> yPoints;
     private final Piece piece;
 
-    InitPieces(final List<Xpoint> xPoints, final List<Ypoint> yPoints, final Piece piece) {
+    InitPosition(final List<Xpoint> xPoints, final List<Ypoint> yPoints, final Piece piece) {
         this.xPoints = xPoints;
         this.yPoints = yPoints;
         this.piece = piece;
@@ -53,7 +51,7 @@ public enum InitPieces {
     private static Rank initRank(final Ypoint ypoint) {
         Map<Position, Piece> line = new LinkedHashMap<>();
         for (Xpoint xpoint : Xpoint.values()) {
-            line.put(Position.of(xpoint, ypoint), InitPieces.findPiece(xpoint, ypoint));
+            line.put(Position.of(xpoint, ypoint), InitPosition.findPiece(xpoint, ypoint));
         }
         return new Rank(line);
     }

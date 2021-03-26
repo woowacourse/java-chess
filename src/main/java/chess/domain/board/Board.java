@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.position.InitPosition;
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Empty;
@@ -15,7 +16,7 @@ public class Board {
     private final List<Rank> ranks;
 
     public Board() {
-        this(InitPieces.initRanks());
+        this(InitPosition.initRanks());
     }
 
     public Board(final List<Rank> ranks) {

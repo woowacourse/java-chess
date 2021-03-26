@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.position.InitPosition;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -14,13 +15,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class InitPiecesTest {
+public class InitPositionTest {
 
     private List<Rank> ranks;
 
     @BeforeEach
     void setUp() {
-        this.ranks = InitPieces.initRanks();
+        this.ranks = InitPosition.initRanks();
     }
 
     @Test
