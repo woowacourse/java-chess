@@ -44,8 +44,8 @@ public class ChessController {
             OutputView.showScore(round.currentPlayerName(), round.calculateScore());
         }
         if (round.isStatus()) {
-            OutputView.showResult(PlayerResultDto.toDto(round.getWhitePlayer()));
-            OutputView.showResult(PlayerResultDto.toDto(round.getBlackPlayer()));
+            OutputView.showResult(PlayerResultDto.from(round.getWhitePlayer()));
+            OutputView.showResult(PlayerResultDto.from(round.getBlackPlayer()));
         }
     }
 }

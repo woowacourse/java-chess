@@ -11,7 +11,7 @@ public class PlayerResultDto {
         this.score = score;
     }
 
-    public static PlayerResultDto toDto(final Player player) {
+    public static PlayerResultDto from(final Player player) {
         return new PlayerResultDto(player.getName(), player.calculateScore());
     }
 
