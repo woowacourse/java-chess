@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.InitialLocation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -13,18 +14,12 @@ public class InitializedBoard {
 
     public InitializedBoard() {
         Arrays.stream(PieceKind.values())
-            .forEach(this::traverseXPositions);
+            .forEach(this::traversePositions);
     }
 
-    private void traverseXPositions(final PieceKind pieceKind) {
-        pieceKind.bringInitialXPositions()
-            .forEach(x -> traversYPositions(pieceKind, x));
-    }
-
-    private void traversYPositions(final PieceKind pieceKind, final char x) {
-        pieceKind.bringInitialYPositions()
-            .stream()
-            .map(y -> Position.of(x, y))
+    private void traversePositions(final PieceKind pieceKind) {
+        InitialLocation initialLocation = InitialLocation.matchPiece(pieceKind);
+        initialLocation.bringPositions()
             .forEach(position -> putBoard(pieceKind, position));
     }
 

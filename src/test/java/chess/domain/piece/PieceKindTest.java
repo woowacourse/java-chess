@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,20 +25,21 @@ class PieceKindTest {
         assertEquals(whitePieceSymbol, "b");
     }
 
-    @DisplayName("말 초기 X 값 리스트 테스트")
+    @DisplayName("말 초기 위치 값 리스트 테스트")
     @Test
-    void bringInitialXPositions() {
-        List<Character> initialXPositions = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
-        List<Character> expectedInitialXPositions = PieceKind.PAWN.bringInitialXPositions();
-
-        assertTrue(initialXPositions.containsAll(expectedInitialXPositions));
-    }
-
-    @DisplayName("말 초기 Y 값 리스트 테스트")
-    @Test
-    void bringInitialYPositions() {
-        List<Integer> initialYPositions = Arrays.asList(2);
-        List<Integer> expectedInitialYPositions = PieceKind.PAWN.bringInitialYPositions();
+    void bringInitialPositions() {
+        List<Position> initialYPositions = Arrays.asList(
+            Position.of('a', 2),
+            Position.of('b',2),
+            Position.of('c',2),
+            Position.of('d',2),
+            Position.of('e',2),
+            Position.of('f',2),
+            Position.of('g',2),
+            Position.of('h',2)
+        );
+        InitialLocation pawnInitialLocation = InitialLocation.matchPiece(PieceKind.PAWN);
+        List<Position> expectedInitialYPositions = pawnInitialLocation.bringPositions();
 
         assertTrue(initialYPositions.containsAll(expectedInitialYPositions));
     }
