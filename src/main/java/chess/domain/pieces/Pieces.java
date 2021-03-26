@@ -16,7 +16,7 @@ public final class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public final boolean containByPosition(final Position position) {
+    public boolean containByPosition(final Position position) {
         return pieces.stream()
                 .anyMatch(piece -> piece.samePosition(position));
     }
@@ -28,7 +28,7 @@ public final class Pieces {
                 .orElseThrow(() -> new IllegalArgumentException("움직이려는 말이 본인의 말이 아닙니다."));
     }
 
-    public final void removePieceByPosition(final Position position) {
+    public void removePieceByPosition(final Position position) {
         pieces.stream()
                 .filter(piece -> piece.samePosition(position))
                 .findFirst()
@@ -44,7 +44,7 @@ public final class Pieces {
                 .anyMatch(Piece::isKing);
     }
 
-    public final double calculateScore(final int rangeMinPivot, final int rangeMaxPivot) {
+    public double calculateScore(final int rangeMinPivot, final int rangeMaxPivot) {
         double simpleSumScore = calculateSimpleSumScore();
         double decreasedScore = calculateDecreasedScore(rangeMinPivot, rangeMaxPivot);
         return simpleSumScore - decreasedScore;

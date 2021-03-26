@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,25 @@ public abstract class Piece {
         this.score = score;
         this.initial = checkTeam(team, initial);
         this.team = team;
+    }
+
+    public final Double score() {
+        return score;
+    }
+
+    public final boolean sameCol(final int col) {
+        return position.sameCol(col);
+    }
+
+    public final boolean samePosition(final Position startPoint) {
+        return this.position.equals(startPoint);
+    }
+
+    public final void move(final Board board, final Position endPoint) {
+        List<Position> movablePositions = getMovablePositions(board);
+        validateEndPoint(endPoint, movablePositions);
+        erasePiece(board, endPoint);
+        this.position = endPoint;
     }
 
     protected final Team getTeam() {
@@ -39,17 +59,6 @@ public abstract class Piece {
         return position;
     }
 
-    public final boolean samePosition(final Position startPoint) {
-        return this.position.equals(startPoint);
-    }
-
-    public final void move(final Board board, final Position endPoint) {
-        List<Position> movablePositions = getMovablePositions(board);
-        validateEndPoint(endPoint, movablePositions);
-        erasePiece(board, endPoint);
-        this.position = endPoint;
-    }
-
     private void erasePiece(final Board board, final Position endPoint) {
         Pieces anotherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(team));
         anotherTeamPieces.removePieceByPosition(endPoint);
@@ -61,18 +70,28 @@ public abstract class Piece {
         }
     }
 
-    public abstract List<Position> getMovablePositions(final Board board);
-
-
-    public final Double score() {
-        return score;
+    protected List<Position> getMovablePositionsByDir(final Board board, final int[] rowDirection, final int[] colDirection) {
+        List<Position> movablePositions = new ArrayList<>();
+        for (int dir = 0; dir < colDirection.length; ++dir) {
+            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
+        }
+        return movablePositions;
     }
 
-    public final boolean sameCol(final int col) {
-        return position.sameCol(col);
+    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection) {
+        int currentRow = getPosition().getRow();
+        int currentCol = getPosition().getCol();
+
+        while (isMoveAble(movablePositions, board, currentRow + rowDirection, currentCol + colDirection)) {
+            movablePositions.add(new Position(currentRow += rowDirection, currentCol += colDirection));
+        }
     }
-    
+
+    protected abstract boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol);
+
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    protected abstract List<Position> getMovablePositions(final Board board);
 }

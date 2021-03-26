@@ -8,7 +8,7 @@ import chess.domain.util.RowConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Pawn extends Piece {
+public final class Pawn extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "7";
     private static final String WHITE_TEAM_ROW = "2";
     private static final double SCORE = 1.0;
@@ -46,16 +46,6 @@ public final class Pawn extends Piece {
             addMovablePositions(movablePositions, board, 2);
         }
         return movablePositions;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
@@ -118,5 +108,15 @@ public final class Pawn extends Piece {
         if (otherTeamPieces.containByPosition(attackPosition)) {
             movablePositions.add(attackPosition);
         }
+    }
+
+    @Override
+    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

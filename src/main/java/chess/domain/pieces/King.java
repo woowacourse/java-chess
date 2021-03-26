@@ -2,13 +2,13 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.pieces.Movable.SingleMove;
 import chess.domain.position.Position;
 import chess.domain.util.RowConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class King extends Piece {
+public final class King extends Piece implements SingleMove {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 0.0;
@@ -41,16 +41,16 @@ public final class King extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(final Board board) {
-        List<Position> movablePositions = new ArrayList<>();
-
+    public List<Position> getMovablePositions(Board board) {
         int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
         int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
 
-        for (int dir = 0; dir < colDirection.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
-        }
-        return movablePositions;
+        return getMovablePositionsByDir(board, rowDirection, colDirection);
+    }
+
+    @Override
+    public boolean isMoveAble(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+        return isMoveAbleDir(board, nextRow, nextCol, getTeam());
     }
 
     @Override
@@ -61,21 +61,5 @@ public final class King extends Piece {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
-        int curRow = getPosition().getRow();
-        int curCol = getPosition().getCol();
-
-        if (isMoveAbleDir(board, curRow + rowDir, curCol + colDir)) {
-            movablePositions.add(new Position(curRow + rowDir, curCol + colDir));
-        }
-    }
-
-    private boolean isMoveAbleDir(final Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
-            return false;
-        }
-        return !board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol));
     }
 }

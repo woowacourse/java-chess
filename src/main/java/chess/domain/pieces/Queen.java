@@ -2,13 +2,13 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.pieces.Movable.MultiMove;
 import chess.domain.position.Position;
 import chess.domain.util.RowConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Queen extends NoKingPieces {
+public final class Queen extends NoKingPieces implements MultiMove {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 9.0;
@@ -41,38 +41,14 @@ public final class Queen extends NoKingPieces {
     }
 
     @Override
-    public final List<Position> getMovablePositions(final Board board) {
-        List<Position> movablePositions = new ArrayList<>();
-
+    public List<Position> getMovablePositions(final Board board) {
         int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
         int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
-
-        for (int dir = 0; dir < colDirection.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
-        }
-        return movablePositions;
+        return getMovablePositionsByDir(board, rowDirection, colDirection);
     }
 
-    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
-        int curRow = getPosition().getRow();
-        int curCol = getPosition().getCol();
-
-        while (isMoveAbleDir(movablePositions, board, curRow + rowDir, curCol + colDir)) {
-            movablePositions.add(new Position(curRow += rowDir, curCol += colDir));
-        }
-    }
-
-    private boolean isMoveAbleDir(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
-            return false;
-        }
-        if (board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol))) {
-            return false;
-        }
-        if (board.piecesByTeam(Team.getAnotherTeam(getTeam())).containByPosition(new Position(nextRow, nextCol))) {
-            movablePositions.add(new Position(nextRow, nextCol));
-            return false;
-        }
-        return true;
+    @Override
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
+        return isMoveAbleDir(movablePositions, board, nextRow, nextCol, getTeam());
     }
 }
