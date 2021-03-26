@@ -1,43 +1,28 @@
 package chess.controller;
 
-import chess.domain.Command;
-import chess.domain.game.Game;
+import chess.domain.CommandAsString;
+import chess.domain.board.Game;
+import chess.domain.game.GameManager;
+import chess.domain.game.GameVisual;
+import chess.domain.game.state.InitialState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public final class ChessController {
 
     public void run() {
-        try {
-            executeGame();
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e);
-        }
-    }
-
-    private void executeGame() {
         OutputView.printGuideMessage();
-        if (Command.isStart(InputView.receiveInput())) {
-            playGame();
-        }
-    }
-
-    private void playGame() {
-        Game game = new Game();
-        while (game.isPlaying()) {
-            OutputView.printBoard(game.getBoard());
-            OutputView.printTurn(game.getCurrentColor());
-            executeCommand(game);
+        GameManager gameManager = new GameManager(new CommandAsString(), new InitialState(Game.initiate()));
+        while (gameManager.isNotFinished()) {
+            try {
+                final CommandAsString command = new CommandAsString(InputView.receiveInput());
+                gameManager = gameManager.execute(command);
+            } catch (IllegalArgumentException e) {
+                OutputView.printError(e);
+            }
+            final GameVisual gameVisual = gameManager.gameVisual();
+            OutputView.print(gameVisual);
         }
         OutputView.printFinishedMessage();
-    }
-
-    private void executeCommand(Game game) {
-        try {
-            game.execute(InputView.receiveInput());
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e);
-            executeCommand(game);
-        }
     }
 }

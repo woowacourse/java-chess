@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
+
     UP(0, 1),
     RIGHT(1, 0),
     DOWN(0, -1),
     LEFT(-1, 0),
-    UP_RIGHT(1, 1),
-    DOWN_RIGHT(1, -1),
-    DOWN_LEFT(-1, -1),
-    UP_LEFT(-1, 1),
+    RIGHT_UP(1, 1),
+    RIGHT_DOWN(1, -1),
+    LEFT_DOWN(-1, -1),
+    LEFT_UP(-1, 1),
 
     UU(0, 2),
     DD(0, -2),
@@ -25,16 +26,12 @@ public enum Direction {
     LL_U(-2, 1),
     LL_D(-2, -1);
 
-    //    private final List<Integer> coordinates;
-    private final int columnNumber;
-    private final int rowNumber;
+    private final int columnValue;
+    private final int rowValue;
 
-    //    Direction(List<Integer> coordinates) {
-//        this.coordinates = coordinates;
-//    }
-    Direction(int columnNumber, int rowNumber) {
-        this.columnNumber = columnNumber;
-        this.rowNumber = rowNumber;
+    Direction(final int columnValue, final int rowValue) {
+        this.columnValue = columnValue;
+        this.rowValue = rowValue;
     }
 
     public static List<Direction> straightDirection() {
@@ -42,11 +39,11 @@ public enum Direction {
     }
 
     public static List<Direction> diagonalDirection() {
-        return Arrays.asList(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+        return Arrays.asList(RIGHT_UP, RIGHT_DOWN, LEFT_DOWN, LEFT_UP);
     }
 
     public static List<Direction> everyDirection() {
-        return Arrays.asList(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+        return Arrays.asList(UP, RIGHT, DOWN, LEFT, RIGHT_UP, RIGHT_DOWN, LEFT_DOWN, LEFT_UP);
     }
 
     public static List<Direction> knightDirection() {
@@ -54,14 +51,26 @@ public enum Direction {
     }
 
     public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(UP, UP_RIGHT, UP_LEFT, UU);
+        return Arrays.asList(UP, RIGHT_UP, LEFT_UP, UU);
+    }
+
+    public static List<Direction> movedWhitePawnDirection() {
+        return Arrays.asList(UP, RIGHT_UP, LEFT_UP);
     }
 
     public static List<Direction> blackPawnDirection() {
-        return Arrays.asList(DOWN, DOWN_RIGHT, DOWN_LEFT, DD);
+        return Arrays.asList(DOWN, RIGHT_DOWN, LEFT_DOWN, DD);
     }
 
-    public List<Integer> getCoordinates() {
-        return Arrays.asList(columnNumber, rowNumber);
+    public static List<Direction> movedBlackPawnDirection() {
+        return Arrays.asList(DOWN, RIGHT_DOWN, LEFT_DOWN);
+    }
+
+    public int columnValue() {
+        return columnValue;
+    }
+
+    public int rowValue() {
+        return rowValue;
     }
 }

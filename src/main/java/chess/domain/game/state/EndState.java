@@ -1,18 +1,18 @@
 package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
-import chess.domain.board.Board2;
+import chess.domain.board.Game;
 import chess.domain.game.GameVisual;
 
 public final class EndState extends StageState {
 
-    public EndState(final Board2 board) {
-        super(board);
+    public EndState(final Game game) {
+        super(game);
     }
 
     @Override
     public GameState execute(final CommandAsString command) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("게임이 종료한 후에는 명령을 실행할 수 없습니다.");
     }
 
     @Override

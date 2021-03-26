@@ -1,82 +1,57 @@
 package chess.domain.board;
 
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Board {
+public final class Board {
 
-    private static final Piece EMPTY_PIECE = new Empty();
-    private final Map<Piece, Position> coordinates;
+    private final Map<Coordinate, Position> positions;
 
-    public Board(Map<Piece, Position> coordinates) {
-        this.coordinates = coordinates;
+    private Board(Map<Coordinate, Position> positions) {
+        this.positions = positions;
     }
 
-    public Board() {
-        this.coordinates = new LinkedHashMap<>();
+    // TODO
+    public static Board ofEmpty() {
+        return new Board(new HashMap<>());
     }
 
-    public void putPiece(Piece piece, Position position) {
-        coordinates.put(piece, position);
+    public Board movePiece(final Coordinate sourceCoordinate, final Coordinate targetCoordinate) {
+        final Map<Coordinate, Position> nextBoardPositions = new HashMap<>(positions);
+        final Position source = positions.get(sourceCoordinate);
+        final Position target = positions.get(targetCoordinate);
+        nextBoardPositions.replace(targetCoordinate, target.copyPieceFrom(source));
+        nextBoardPositions.replace(sourceCoordinate, source.replacePiece(EmptyPiece.getInstance()));
+        return new Board(nextBoardPositions);
     }
 
-    public Piece findPieceBy(Position position) {
-        return coordinates.entrySet()
+    public Position get(Coordinate target) {
+        return positions.get(target);
+    }
+
+    public boolean hasAvailablePath(final Coordinate sourceCoordinate, final Coordinate targetCoordinate) {
+        final Paths paths = new Paths(sourceCoordinate, positions);
+        return paths.available(targetCoordinate);
+    }
+
+    public List<Piece> remainingPieces() {
+        return positions.values()
                 .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), position))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(EMPTY_PIECE)
-                ;
+                .map(position -> position.holdingPiece())
+                .collect(Collectors.toList());
     }
 
-    public Position findPositionBy(Piece piece) {
-        return coordinates.get(piece);
+    public boolean hasPieceColor(final Coordinate sourceCoordinate, final PieceColor enemyColor) {
+        final Position source = positions.get(sourceCoordinate);
+        return source.holdingPieceIsColor(enemyColor);
     }
 
-    public void move(Piece piece, Position target) {
-        Path path = generatePath(piece);
-        if (path.isAble(target)) {
-            coordinates.remove(findPieceBy(target));
-            putPiece(piece, target);
-        }
-    }
-
-    public Path generatePath(Piece piece) {
-        Paths paths = new Paths();
-        paths = paths.findAllPath(piece, coordinates.get(piece));
-        return paths.removeObstacles(piece, this);
-    }
-
-    public Map<Piece, Position> getCoordinates() {
-        return coordinates;
-    }
-
-    public Map<Piece, Position> remainPieces(PieceColor color) {
-        return coordinates.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().hasColor(color))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
-    public Map<Piece, Position> remainPawns(Map<Piece, Position> pieces) {
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().isPawn())
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
-    public boolean kingDead() {
-        int count = (int) coordinates.keySet().stream()
-                .filter(Piece::isKing)
-                .count();
-        return count == 1;
-    }
+    public
 }

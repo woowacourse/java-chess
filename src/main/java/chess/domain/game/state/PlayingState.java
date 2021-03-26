@@ -1,24 +1,25 @@
 package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
-import chess.domain.board.Board2;
+import chess.domain.board.Game;
 import chess.domain.game.GameVisual;
 import chess.domain.piece.PieceColor;
-import chess.domain.position.PositionName;
+import chess.domain.position.Coordinate;
 
 public abstract class PlayingState extends StageState {
 
     private final PieceColor currentTurnColor;
 
-    protected PlayingState(final Board2 board, PieceColor color) {
-        super(board);
+    protected PlayingState(final Game game, PieceColor color) {
+        super(game);
         currentTurnColor = color;
     }
 
     @Override
     public GameState execute(final CommandAsString command) {
+        System.out.println("launched execute from playing state");
         if (command.isEnd()) {
-            return new EndState(board());
+            return new EndState(currentBoard());
         }
         if (command.isMove()) {
             return executeMove(command.source(), command.target());
@@ -29,15 +30,15 @@ public abstract class PlayingState extends StageState {
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
     }
 
-    protected GameState executeMove(final PositionName source, final PositionName target) {
-        moveInBoard(source, target, currentTurnColor);
-        if (kingDead()) {
-            return new EndState(board());
+    protected GameState executeMove(final Coordinate sourceName, final Coordinate targetName) {
+        Game newGame = moveInBoard(sourceName, targetName, currentTurnColor);
+        if (newGame.kingDead()) {
+            return new EndState(newGame);
         }
-        return otherTurnState();
+        return otherTurnState(newGame);
     }
 
-    protected abstract GameState otherTurnState();
+    protected abstract GameState otherTurnState(final Game game);
 
     @Override
     public GameVisual gameVisual() {

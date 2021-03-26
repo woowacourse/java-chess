@@ -1,81 +1,55 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.position.Position;
+import chess.domain.piece.strategy.Direction;
+import chess.domain.position.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path {
+public final class Path {
 
-    private final List<Position> positions;
+    private final Coordinate source;
+    private final Direction direction;
 
-    public Path(List<Position> positions) {
-        this.positions = positions;
+    private final List<Coordinate> coordinates;
+
+    public Path(final Piece, final Direction direction) {
+        this()
     }
 
-    public boolean isAble(Position position) {
-        if (positions.contains(position)) {
-            return true;
-        }
-        throw new IllegalArgumentException("해당 말이 이동할 수 없는 위치입니다.");
+    private Path(final List<Coordinate> possibleCoordinates) {
+        this.coordinates = possibleCoordinates;
     }
 
-    public List<Position> removeObstacleInPath(Piece piece, Board board) {
-        List<Position> cleanPath = new ArrayList<>();
-        if (piece.isPawn()) {
-            calculatePawnPath(piece, board, cleanPath);
-            return cleanPath;
-        }
-        calculateNonePawnPath(piece, board, cleanPath);
-        return cleanPath;
+    public List<Coordinate> possibleCoordinates() {
+        final List<Coordinate> possibleCoordinates = new ArrayList<>();
+
+        return possibleCoordinates;
     }
 
-    private void calculatePawnPath(Piece piece, Board board, List<Position> cleanPath) {
-        for (Position position : positions) {
-            Piece thatPiece = board.findPieceBy(position);
-            Position thisPosition = board.findPositionBy(piece);
-            if (piece.isSameSide(thatPiece)) {
-                break;
-            }
-            if (piece.hasColor(PieceColor.WHITE) && !thisPosition.isWhitePawnStartLine()) {
-                if (thisPosition.rowGap(position) != 1) {
-                    break;
-                }
-            }
-            if (piece.hasColor(PieceColor.BLACK) && !thisPosition.isBlackPawnStartLine()) {
-                if (thisPosition.rowGap(position) != 1) {
-                    break;
-                }
-            }
-            if (thisPosition.isDiagonal(position)) {
-                if (thatPiece.isEmpty()) {
-                    break;
-                }
-            }
-            if (thisPosition.isStraight(position)) {
-                if (piece.isEnemy(thatPiece)) {
-                    break;
-                }
-            }
-            cleanPath.add(position);
-        }
+    public boolean isEmpty() {
+        return coordinates.isEmpty();
     }
-
-    private void calculateNonePawnPath(Piece piece, Board board, List<Position> cleanPath) {
-        for (Position position : positions) {
-            Piece thatPiece = board.findPieceBy(position);
-            if (!piece.isEnemyOrEmpty(thatPiece)) {
-                break;
-            }
-            cleanPath.add(position);
-            if (piece.isEnemy(thatPiece)) {
-                break;
-            }
-        }
-    }
-
-    public List<Position> positions() {
-        return positions;
-    }
+//    Stream<Position2> stream();
+    // PATH UNTIL END OF THE BOARD
+//    private final PieceColor pieceColor;
+//    private final List<Position2> possiblePositions;
+//
+//    public Path2(PieceColor pieceColor, List<Position2> possiblePositions) {
+//        this.pieceColor = pieceColor;
+//        this.possiblePositions = possiblePositions;
+//    }
+//
+//    public List<Position2> validPositions() {
+//        final List<Position2> validPositions = new ArrayList<>();
+//        for (Position2 position : possiblePositions) {
+//            if (position.holdingPieceIsColor(pieceColor)) {
+//                break;
+//            }
+//        }
+//        return validPositions;
+//    }
+//
+//    public List<Position2> allPositions() {
+//
+//    }
 }

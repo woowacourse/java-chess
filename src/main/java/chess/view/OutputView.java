@@ -1,10 +1,6 @@
 package chess.view;
 
-import chess.domain.board.Board;
 import chess.domain.game.GameVisual;
-import chess.domain.piece.PieceColor;
-import chess.domain.result.Score;
-import chess.util.RenderingUtils;
 
 public class OutputView {
 
@@ -18,12 +14,8 @@ public class OutputView {
                 + NEWLINE);
     }
 
-    public static void printBoard(Board board) {
-        System.out.println(NEWLINE + RenderingUtils.renderBoard(board));
-    }
+    public static void print(GameVisual gameVisual) {
 
-    public static void printTurn(PieceColor currentColor) {
-        System.out.println(NEWLINE + currentColor.getColor() + "의 차례입니다.");
     }
 
     public static void printFinishedMessage() {
@@ -32,18 +24,5 @@ public class OutputView {
 
     public static void printError(IllegalArgumentException e) {
         System.out.println(NEWLINE + e.getMessage());
-    }
-
-    public static void printScore(PieceColor color, Score score) {
-        System.out.println(color.getColor() + "의 점수: " + score.is());
-
-    }
-
-    public static void printWinner(String winner) {
-        System.out.println(winner);
-    }
-
-    public static void print(GameVisual gameVisual) {
-
     }
 }
