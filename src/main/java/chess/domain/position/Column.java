@@ -4,69 +4,48 @@ import chess.domain.piece.strategy.Direction;
 import java.util.Arrays;
 
 public enum Column {
-    A(1, "a"),
-    B(2, "b"),
-    C(3, "c"),
-    D(4, "d"),
-    E(5, "e"),
-    F(6, "f"),
-    G(7, "g"),
-    H(8, "h");
 
-    private final int value;
-    private final String name;
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    Column(int value, String name) {
+    private final char value;
+
+    Column(final char value) {
         this.value = value;
-        this.name = name;
     }
 
-    public static Column getColumn(String value) {
+    public Column move(final Direction direction) {
+        char newValue = (char) (this.value + direction.columnValue());
+        return of(newValue);
+    }
+
+    private Column of(final char value) {
         return Arrays.stream(values())
-                .filter(column -> column.name.equals(value))
+                .filter(column -> column.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("열 값이 범위를 벗어났습니다."))
+                ;
     }
 
-    public static Column getColumn(int intValue) {
-        return Arrays.stream(values())
-                .filter(column -> column.value == intValue)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+    public boolean canMove(final Direction direction) {
+        return !goesLower(direction.columnValue()) && !goesHigher(direction.columnValue());
     }
 
-    public Column move(Direction direction) {
-        if (isBoundary(direction)) {
-            return this;
-        }
-        return getColumn(value + direction.getCoordinates().get(0));
+    private boolean goesLower(final int columnValue) {
+        return value + columnValue < A.value;
     }
 
-    public String getName() {
-        return name;
+    private boolean goesHigher(final int columnValue) {
+        return value + columnValue > H.value;
     }
 
-    public boolean isBoundary(Direction direction) {
-        if (Direction.RIGHT.equals(direction) || Direction.UP_RIGHT.equals(direction)
-                || Direction.DOWN_RIGHT.equals(direction) || Direction.R_DD.equals(direction)
-                || Direction.R_UU.equals(direction)) {
-            return this.equals(H);
-        }
-        if (Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)) {
-            return this.equals(G) || this.equals(H);
-        }
-        if (Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)) {
-            return this.equals(B) || this.equals(A);
-        }
-        if (Direction.LEFT.equals(direction) || Direction.UP_LEFT.equals(direction)
-                || Direction.DOWN_LEFT.equals(direction) || Direction.L_DD.equals(direction)
-                || Direction.L_UU.equals(direction)) {
-            return this.equals(A);
-        }
-        return false;
-    }
-
-    public int getValue() {
-        return value;
+    public String value() {
+        return String.valueOf(value);
     }
 }

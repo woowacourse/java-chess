@@ -1,10 +1,14 @@
 package chess.domain;
 
-import chess.domain.position.PositionName;
+import chess.domain.position.Coordinate;
 
 public final class CommandAsString {
 
     private final String[] commandInputs;
+
+    public CommandAsString() {
+        this("");
+    }
 
     public CommandAsString(final String stringCommand) {
         this(stringCommand.split(" "));
@@ -14,23 +18,23 @@ public final class CommandAsString {
         this.commandInputs = commandInputs;
     }
 
-    public Command2 command() {
-        return Command2.valueOf(commandInputs[0].toUpperCase());
+    public Command command() {
+        return Command.valueOf(commandInputs[0].toUpperCase());
     }
 
-    public PositionName source() {
+    public Coordinate source() {
         return positionOfCommand(1);
     }
 
-    public PositionName target() {
+    public Coordinate target() {
         return positionOfCommand(2);
     }
 
-    private PositionName positionOfCommand(final int number) {
+    private Coordinate positionOfCommand(final int number) {
         if (commandInputs.length == 1) {
             throw new IllegalArgumentException("플레이어의 행동이 아닙니다.");
         }
-        return new PositionName(commandInputs[number]);
+        return Coordinate.ofName(commandInputs[number]);
     }
 
     public boolean isStart() {

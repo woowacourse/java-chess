@@ -1,30 +1,25 @@
 package chess.domain.game.state;
 
-import chess.domain.board.Board2;
+import chess.domain.board.Game;
 import chess.domain.piece.PieceColor;
-import chess.domain.position.PositionName;
+import chess.domain.position.Coordinate;
 
 public abstract class StageState implements GameState {
 
-    private final Board2 board;
+    private final Game game;
 
-    protected StageState(final Board2 board) {
-        this.board = board;
+    protected StageState(final Game game) {
+        this.game = game;
     }
 
-    protected Board2 board() {
-        return board;
+    protected Game currentBoard() {
+        return game;
     }
 
-    protected void moveInBoard(final PositionName source, final PositionName target,
-            final PieceColor currentTurnColor) {
-        if (board.isEnemyPiece(source, currentTurnColor.reversed())) {
+    protected Game moveInBoard(final Coordinate sourceName, final Coordinate targetName, final PieceColor currentTurnColor) {
+        if (game.containsEnemyPiece(sourceName, currentTurnColor.reversed())) {
             throw new IllegalArgumentException("해당 체스말을 움직일 권한이 없습니다.");
         }
-        board.move(source, target);
-    }
-
-    protected boolean kingDead() {
-        return board.kingDead();
+        return game.move(sourceName, targetName);
     }
 }

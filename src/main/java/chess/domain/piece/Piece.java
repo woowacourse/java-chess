@@ -1,76 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.Direction;
-import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.result.Score;
-import java.util.List;
+import chess.domain.board.Paths;
+import chess.domain.position.Coordinate;
+import chess.domain.position.Position;
+import java.util.Map;
 
-public abstract class Piece {
+public interface Piece {
 
-    protected PieceType pieceType;
-    protected PieceColor pieceColor;
-    protected MoveStrategy moveStrategy;
+    Paths possibleCoordinates(Coordinate currentCoordinate, Map<Coordinate, Position> boardPositions);
 
-    protected Piece(PieceType pieceType, PieceColor pieceColor, MoveStrategy moveStrategy) {
-        this.pieceType = pieceType;
-        this.pieceColor = pieceColor;
-        this.moveStrategy = moveStrategy;
-    }
+    boolean isColor(PieceColor color);
 
-    public abstract List<Direction> directions();
+    boolean isPawn();
 
-    public boolean isPawn() {
-        return this.pieceType.is(PieceType.PAWN);
-    }
+    boolean isKing();
 
-    public boolean isKing() {
-        return this.pieceType.is(PieceType.KING);
-    }
-
-    public boolean isKnight() {
-        return this.pieceType.is(PieceType.KNIGHT);
-    }
-
-    public boolean isColor(PieceColor color) {
-        return this.pieceColor.equals(color);
-    }
-
-    public boolean isEnemy(Piece that) {
-        return this.pieceColor.equals(that.pieceColor.reversed());
-    }
-
-    public boolean isEmpty() {
-        return this.pieceType.equals(PieceType.EMPTY);
-    }
-
-    public boolean isEnemyOrEmpty(Piece that) {
-        return isEnemy(that) || that.isEmpty();
-    }
-
-    public boolean hasColor(PieceColor color) {
-        return this.pieceColor.equals(color);
-    }
-
-    public String getName() {
-        if (pieceColor.equals(PieceColor.BLACK)) {
-            return this.pieceType.toBlack();
-        }
-        return this.pieceType.getType();
-    }
-
-    public String color() {
-        return pieceColor.getColor();
-    }
-
-    public PieceColor getColor() {
-        return pieceColor;
-    }
-
-    public Score score() {
-        return pieceType.getScore();
-    }
-
-    public boolean isSameSide(Piece that) {
-        return !isEnemyOrEmpty(that);
-    }
+    boolean isEmpty();
 }

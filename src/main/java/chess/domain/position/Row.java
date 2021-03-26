@@ -4,61 +4,48 @@ import chess.domain.piece.strategy.Direction;
 import java.util.Arrays;
 
 public enum Row {
-    EIGHT("8"),
-    SEVEN("7"),
-    SIX("6"),
-    FIVE("5"),
-    FOUR("4"),
-    THREE("3"),
-    TWO("2"),
-    ONE("1");
 
-    private final String number;
+    EIGHT('8'),
+    SEVEN('7'),
+    SIX('6'),
+    FIVE('5'),
+    FOUR('4'),
+    THREE('3'),
+    TWO('2'),
+    ONE('1');
 
-    Row(String number) {
-        this.number = number;
+    private final char value;
+
+    Row(final char value) {
+        this.value = value;
     }
 
-    public static Row getRow(String value) {
+    public Row move(final Direction direction) {
+        char newValue = (char) (this.value + direction.rowValue());
+        return of(newValue);
+    }
+
+    private Row of(final char value) {
         return Arrays.stream(values())
-                .filter(row -> row.number.equals(value))
+                .filter(row -> row.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("행 값이 범위를 벗어났습니다."))
+                ;
     }
 
-    public Row move(Direction direction) {
-        if (isBoundary(direction)) {
-            return this;
-        }
-        return getRow(String.valueOf(Integer.parseInt(number) + direction.getCoordinates().get(1)));
+    public boolean canMove(final Direction direction) {
+        return !goesLower(direction.rowValue()) && !goesHigher(direction.rowValue());
     }
 
-    public String getNumber() {
-        return number;
+    private boolean goesLower(final int rowValue) {
+        return value + rowValue < ONE.value;
     }
 
-    public boolean isBoundary(Direction direction) {
-        if (Direction.DOWN.equals(direction) || Direction.DOWN_LEFT.equals(direction)
-                || Direction.DOWN_RIGHT.equals(direction) || Direction.LL_D.equals(direction)
-                || Direction.RR_D.equals(direction)) {
-            return this.equals(ONE);
-        }
-        if (Direction.UP.equals(direction) || Direction.UP_LEFT.equals(direction)
-                || Direction.UP_RIGHT.equals(direction) || Direction.LL_U.equals(direction)
-                || Direction.RR_U.equals(direction)) {
-            return this.equals(EIGHT);
-
-        }
-        if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
-            return this.equals(TWO) || this.equals(ONE);
-        }
-        if (Direction.R_UU.equals(direction) || Direction.L_UU.equals(direction)) {
-            return this.equals(SEVEN) || this.equals(EIGHT);
-        }
-        return false;
+    private boolean goesHigher(final int rowValue) {
+        return value + rowValue > EIGHT.value;
     }
 
-    public int getValue() {
-        return Integer.parseInt(number);
+    public String value() {
+        return String.valueOf(value);
     }
 }

@@ -1,52 +1,28 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
-import chess.domain.piece.strategy.Direction;
+import chess.domain.board.Paths;
 import chess.domain.piece.strategy.PieceStrategy;
+import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
-import chess.domain.result.Score;
-import java.util.List;
+import java.util.Map;
 
 public final class RealPiece implements Piece {
 
-    private final Color color;
+    private final PieceColor color;
     private final PieceStrategy pieceStrategy;
 
-    public RealPiece(final Color color, final PieceStrategy pieceStrategy) {
+    protected RealPiece(final PieceColor color, final PieceStrategy pieceStrategy) {
         this.color = color;
         this.pieceStrategy = pieceStrategy;
     }
 
     @Override
-    public List<Direction> directions() {
-        return pieceStrategy.directions();
+    public Paths possibleCoordinates(Coordinate currentCoordinate, Map<Coordinate, Position> boardPositions) {
+        return new Paths(currentCoordinate, pieceStrategy.directions());
     }
 
     @Override
-    public Path pathFrom(final Direction direction, final Position position) {
-        return pieceStrategy.pathFrom(direction, position);
-    }
-
-    @Override
-    public boolean isDifferentColor(final Piece piece) {
-        if (piece.isEmpty()) {
-            return true;
-        }
-        final RealPiece realPiece = (RealPiece) piece;
-        return !this.color.equals(realPiece.color);
-    }
-
-    @Override
-    public boolean isSameColor(final Piece piece) {
-        if (piece.isEmpty()) {
-            return false;
-        }
-        final RealPiece realPiece = (RealPiece) piece;
-        return this.color.equals(realPiece.color);
-    }
-
-    @Override
-    public boolean isColor(final Color color) {
+    public boolean isColor(PieceColor color) {
         return this.color.equals(color);
     }
 
@@ -63,19 +39,5 @@ public final class RealPiece implements Piece {
     @Override
     public boolean isEmpty() {
         return false;
-    }
-
-    @Override
-    public String getName() {
-        final String pieceName = pieceStrategy.name();
-        if (color.equals(Color.BLACK)) {
-            return pieceName.toUpperCase();
-        }
-        return pieceName;
-    }
-
-    @Override
-    public Score score() {
-        return new Score(pieceStrategy.value());
     }
 }
