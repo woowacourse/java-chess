@@ -84,7 +84,7 @@ public class Position {
     }
 
     public Position movedPositionByNumber(int xNumber, int yNumber) {
-        return Position.of((char) (x + xNumber)+ String.valueOf((char) (y + yNumber)));
+        return Position.of((char) (x + xNumber) + String.valueOf((char) (y + yNumber)));
     }
 
     public boolean isSameDistanceByCount(Position target, int i) {

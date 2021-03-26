@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static chess.domain.position.Position.CACHE;
 import static java.util.stream.Collectors.toList;
 
 public class Pieces {
@@ -44,6 +45,13 @@ public class Pieces {
         return pieces.stream()
                 .filter(piece -> piece.isSameTeam(color))
                 .collect(Collectors.collectingAndThen(toList(), Pieces::new));
+    }
+
+    public List<Piece> piecesByAllPosition() {
+        return CACHE.keySet()
+                .stream()
+                .map(position -> findByPosition(CACHE.get(position)))
+                .collect(Collectors.toList());
     }
 
     public Score totalScore() {

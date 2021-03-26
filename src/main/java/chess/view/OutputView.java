@@ -2,10 +2,11 @@ package chess.view;
 
 import chess.domain.ScoreStatus;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import chess.domain.piece.info.Color;
 
-import static chess.domain.position.Position.*;
+import java.util.List;
+
+import static chess.domain.position.Position.CHANGE_LINE_POINT;
 
 public class OutputView {
     private OutputView() {
@@ -23,11 +24,10 @@ public class OutputView {
         System.out.println("명령어를 입력해주세요.");
     }
 
-    public static void printChessBoard(Pieces pieces) {
+    public static void printChessBoard(List<Piece> pieces) {
         int index = 0;
-        for (String xy : CACHE.keySet()) {
+        for (Piece piece : pieces) {
             checkChangeLinePoint(index);
-            Piece piece = pieces.findByPosition(CACHE.get(xy));
             System.out.print(piece.getName());
             index++;
         }

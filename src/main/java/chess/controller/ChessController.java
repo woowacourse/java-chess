@@ -28,7 +28,7 @@ public class ChessController {
     }
 
     public void start() {
-        OutputView.printChessBoard(chessGame.getCurrentPieces());
+        OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
         try {
             play();
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class ChessController {
     public void move(Command command) {
         try {
             chessGame.movePieceFromSourceToTarget(command);
-            OutputView.printChessBoard(chessGame.getCurrentPieces());
+            OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             play();

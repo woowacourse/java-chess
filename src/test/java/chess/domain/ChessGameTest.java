@@ -18,7 +18,7 @@ public class ChessGameTest {
     void 현재_기물_확인_테스트() {
         ChessGame chessGame = new ChessGame();
 
-        assertThat(chessGame.getCurrentPieces()).isInstanceOf(Pieces.class);
+        assertThat(chessGame.getPiecesByAllPosition().size()).isEqualTo(64);
     }
 
     @DisplayName("비숍 이동 - target에 상대 말이 있는 경우")

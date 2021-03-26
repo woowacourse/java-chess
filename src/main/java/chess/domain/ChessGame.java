@@ -7,6 +7,8 @@ import chess.domain.piece.Pieces;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public class ChessGame {
     private final Pieces pieces;
     private Color turn;
@@ -24,8 +26,8 @@ public class ChessGame {
         this.turn = turn;
     }
 
-    public Pieces getCurrentPieces() {
-        return pieces;
+    public List<Piece> getPiecesByAllPosition() {
+        return pieces.piecesByAllPosition();
     }
 
     public void next() {
