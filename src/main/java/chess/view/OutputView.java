@@ -93,7 +93,7 @@ public class OutputView {
     }
     
     public static void printKingIsDead(Color winner) {
-        System.out.printf(FORMAT_KING_IS_DEAD, winner.color());
+        System.out.printf(FORMAT_KING_IS_DEAD, winner.next().color());
         System.out.printf(FORMAT_WINNER, winner.color());
     }
     
