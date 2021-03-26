@@ -18,7 +18,6 @@ public class Commands {
             new Start(chessGame),
             new Move(chessGame),
             new Status(chessGame),
-            new Finish(chessGame),
             new End(chessGame)
         ));
     }

@@ -1,9 +1,13 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Color;
+import java.util.List;
 
 public class Init extends Preparing {
+
     public Init(Board board) {
         super(board);
     }
@@ -15,7 +19,27 @@ public class Init extends Preparing {
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        throw new IllegalStateException("아직 체스판이 준비되지 않았습니다.");
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public State passTurn() {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public List<Rank> ranks() {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public String finishReason() {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public Color winner() {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
     }
 
     @Override
@@ -25,6 +49,21 @@ public class Init extends Preparing {
 
     @Override
     public boolean isInit() {
+        return true;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean isNotEnd() {
         return true;
     }
 }

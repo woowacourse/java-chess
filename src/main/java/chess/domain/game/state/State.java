@@ -13,21 +13,19 @@ public interface State {
 
     State passTurn();
 
-    State finish();
-
-    State end();
+    List<Rank> ranks();
 
     String finishReason();
 
-    boolean isRunning();
-
-    boolean isNotEnd();
-
-    List<Rank> ranks();
-
     Color winner();
+
+    State end();
 
     boolean isInit();
 
+    boolean isRunning();
+
     boolean isFinished();
+
+    boolean isNotEnd();
 }
