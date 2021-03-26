@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveRoute;
 import chess.domain.piece.strategy.MoveStrategy;
 
 public abstract class Piece {
@@ -16,8 +16,12 @@ public abstract class Piece {
         return notation;
     }
 
-    public boolean canMove(MoveOrder moveOrder) {
-        return this.moveStrategy.canMove(moveOrder);
+    public boolean canMove(MoveRoute moveRoute) {
+        return this.moveStrategy.canMove(moveRoute);
+    }
+
+    public boolean isBlank() {
+        return this.equals(new Blank());
     }
 
     public boolean isNotBlank() {

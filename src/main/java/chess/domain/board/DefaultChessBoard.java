@@ -1,7 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveRoute;
 import chess.domain.order.MoveResult;
+import chess.domain.order.RouteEntry;
 import chess.domain.piece.*;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
@@ -40,16 +41,16 @@ public class DefaultChessBoard implements Board {
         return this.board.get(position).isNotBlank();
     }
 
-    public MoveResult move(MoveOrder moveOrder) {
-        Position fromPosition = moveOrder.getFromPosition();
+    public MoveResult move(MoveRoute moveRoute) {
+        Position fromPosition = moveRoute.getFromPosition();
         if (!this.hasPiece(fromPosition)) {
             throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
         }
 
-        RealPiece pieceToMove = this.getRealPieceByPosition(moveOrder.getFromPosition());
-        Position toPosition = moveOrder.getToPosition();
+        RealPiece pieceToMove = this.getRealPieceByPosition(moveRoute.getFromPosition());
+        Position toPosition = moveRoute.getToPosition();
 
-        if (pieceToMove.canMove(moveOrder)) {
+        if (pieceToMove.canMove(moveRoute)) {
             Piece piece = this.board.get(toPosition);
             this.board.put(toPosition, pieceToMove);
             this.board.put(fromPosition, new Blank());
@@ -59,18 +60,26 @@ public class DefaultChessBoard implements Board {
         throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
     }
 
-    public List<Piece> getRoute(Position from, Position to) {
+    public MoveRoute createMoveRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
-        List<Position> route = new ArrayList<>();
-        Position currentPosition = from.getNextPosition(direction);
+        List<RouteEntry> route = new ArrayList<>();
 
+        Piece currentPiece;
+        RouteEntry currentRouteEntry;
+
+        Position currentPosition = from;
         while (!currentPosition.equals(to)) {
-            route.add(currentPosition);
+            currentPiece = getPieceByPosition(currentPosition);
+            currentRouteEntry = new RouteEntry(currentPosition, currentPiece);
+            route.add(currentRouteEntry);
+
             currentPosition = currentPosition.getNextPosition(direction);
         }
-        return route.stream()
-                .map(board::get)
-                .collect(toList());
+        currentPiece = getPieceByPosition(currentPosition);
+        currentRouteEntry = new RouteEntry(currentPosition, currentPiece);
+        route.add(currentRouteEntry);
+
+        return new MoveRoute(route);
     }
 
     public Map<Color, Double> getScoreMap() {

@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveRoute;
 
 public interface MoveStrategy {
-    boolean canMove(MoveOrder moveOrder);
+    boolean canMove(MoveRoute moveRoute);
 }

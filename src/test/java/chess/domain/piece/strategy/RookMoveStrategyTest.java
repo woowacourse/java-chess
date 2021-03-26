@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.order.MoveOrder;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,14 +37,14 @@ class RookMoveStrategyTest {
     @ParameterizedTest
     @MethodSource
     void rookCanMoveTest(Position from, Position to, boolean expected) {
-        assertThat(whiteRook.canMove(new MoveOrder(board, from, to))).isEqualTo(expected);
+        assertThat(whiteRook.canMove(board.createMoveRoute(from, to))).isEqualTo(expected);
     }
 
     @DisplayName("잘못된 방향으로 이동하려고 한다면 예외")
     @ParameterizedTest
     @CsvSource({"a1, b2", "a1, b8"})
     void throwExceptionWhenWrongDirection(String from, String to) {
-        assertThatThrownBy(() -> whiteRook.canMove(new MoveOrder(board, Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteRook.canMove(board.createMoveRoute(Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
@@ -53,7 +52,7 @@ class RookMoveStrategyTest {
     @DisplayName("룩이 가는 길에 다른 기물이 있으면 예외")
     @Test
     void whenBlockedThrowTest() {
-        assertThatThrownBy(() -> whiteRook.canMove(new MoveOrder(board, Position.of("a1"), Position.of("a3"))))
+        assertThatThrownBy(() -> whiteRook.canMove(board.createMoveRoute(Position.of("a1"), Position.of("a3"))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
@@ -62,6 +61,6 @@ class RookMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"a1, b1", "a1, a2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteRook.canMove(new MoveOrder(board, Position.of(from), Position.of(to))));
+        assertThatThrownBy(() -> whiteRook.canMove(board.createMoveRoute(Position.of(from), Position.of(to))));
     }
 }

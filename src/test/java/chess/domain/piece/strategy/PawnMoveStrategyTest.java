@@ -2,7 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveRoute;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
@@ -27,8 +27,8 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a3, WHITE", "b7, b6, BLACK"})
     void canMove_StraightDirection(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
-        assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
+        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        assertThat(pawn.canMove(moveRoute)).isEqualTo(true);
     }
 
     @DisplayName("직선으로 3칸 이상 이동할 경우 예외")
@@ -36,8 +36,8 @@ class PawnMoveStrategyTest {
     @CsvSource({"c2, c5, WHITE", "g7, g4, BLACK"})
     void throwExceptionWhenMoveOverThreeSquares(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
-        assertThatThrownBy(() -> pawn.canMove(moveOrder))
+        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        assertThatThrownBy(() -> pawn.canMove(moveRoute))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
     }
@@ -49,8 +49,8 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a4, WHITE", "b7, b5, BLACK"})
     void canMove_2RankOnFirstMove(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
-        assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
+        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        assertThat(pawn.canMove(moveRoute)).isEqualTo(true);
     }
 
     // TODO 2번째 행마 시 2칸을 전진시 예외 발생 테스트

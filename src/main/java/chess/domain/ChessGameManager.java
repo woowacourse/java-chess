@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveRoute;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
@@ -48,7 +48,7 @@ public class ChessGameManager {
             throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
         }
         validateTurn(from);
-        MoveResult moveResult = board.move(new MoveOrder(this.board, from, to));
+        MoveResult moveResult = board.move(board.createMoveRoute(from, to));
         if (moveResult.isCaptured()) {
             ColoredPieces opposite = findByColor(currentTurnColor.opposite());
             opposite.remove(moveResult.getCapturedPiece());
