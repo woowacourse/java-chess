@@ -84,11 +84,16 @@ public class OutputView {
         System.out.println(MESSAGE_STATUS);
         System.out.println(MESSAGE_BLACK_SCORE + blackScore);
         System.out.println(MESSAGE_WHITE_SCORE + whiteScore);
+        
+        if (blackScore == whiteScore) {
+            System.out.println(MESSAGE_DRAW);
+            return;
+        }
         System.out.printf(FORMAT_WINNER, winner.color());
     }
     
     public static void printKingIsDead(Color winner) {
-        System.out.printf(FORMAT_KING_IS_DEAD, winner.next().color());
+        System.out.printf(FORMAT_KING_IS_DEAD, winner.color());
         System.out.printf(FORMAT_WINNER, winner.color());
     }
     
