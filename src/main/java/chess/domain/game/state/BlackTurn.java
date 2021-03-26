@@ -23,6 +23,10 @@ public class BlackTurn extends Running {
 
     @Override
     public State passTurn() {
-        return new WhiteTurn(board());
+        if (board().isAliveBothKings()) {
+            return new WhiteTurn(board());
+        }
+
+        return new BlackWin(board());
     }
 }
