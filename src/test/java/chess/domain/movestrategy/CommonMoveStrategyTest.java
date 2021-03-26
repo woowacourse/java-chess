@@ -3,8 +3,8 @@ package chess.domain.movestrategy;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.position.InitPosition;
 import chess.domain.board.Rank;
+import chess.domain.board.position.InitPosition;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

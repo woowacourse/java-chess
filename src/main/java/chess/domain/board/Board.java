@@ -46,6 +46,7 @@ public class Board {
         if (isInvalidPosition(source, target)) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
+
         swapPieces(source, target);
     }
 

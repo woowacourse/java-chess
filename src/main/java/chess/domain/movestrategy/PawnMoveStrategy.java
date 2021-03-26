@@ -24,7 +24,8 @@ public class PawnMoveStrategy implements MoveStrategy {
         return movable;
     }
 
-    private Set<Position> pawnMovablePosition(List<List<Position>> positions, Board board, Piece sourcePiece) {
+    private Set<Position> pawnMovablePosition(List<List<Position>> positions, Board board,
+        Piece sourcePiece) {
         Set<Position> pawnMovable = new HashSet<>();
         pawnMovable.addAll(forwardPositions(positions.get(FORWARD_INDEX), board));
         pawnMovable.addAll(diagonalPositions(positions.get(DIAGONAL_INDEX), board, sourcePiece));
@@ -46,7 +47,8 @@ public class PawnMoveStrategy implements MoveStrategy {
             .collect(Collectors.toList());
     }
 
-    private List<Position> diagonalPositions(List<Position> positions, Board board, Piece sourcePiece) {
+    private List<Position> diagonalPositions(List<Position> positions, Board board,
+        Piece sourcePiece) {
         return positions.stream()
             .filter(position -> {
                 Piece piece = board.pieceByPosition(position);

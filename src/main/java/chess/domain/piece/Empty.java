@@ -3,11 +3,11 @@ package chess.domain.piece;
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Empty extends Piece {
+
     private Empty(Color color) {
         super(color, Symbol.EMPTY);
     }

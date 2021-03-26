@@ -1,17 +1,13 @@
 package chess.domain.game.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class EndTest {
 

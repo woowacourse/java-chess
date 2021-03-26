@@ -2,11 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.MoveStrategy;
-
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+
     private final Color color;
     private final Symbol symbol;
 

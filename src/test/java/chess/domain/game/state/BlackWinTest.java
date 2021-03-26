@@ -6,7 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
-import chess.domain.piece.Color;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

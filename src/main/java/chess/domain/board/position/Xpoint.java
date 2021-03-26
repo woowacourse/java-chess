@@ -52,29 +52,29 @@ public enum Xpoint {
 
     public Xpoint left() {
         return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value - 1)
-                .findFirst()
-                .orElse(this);
+            .filter(xpoint -> xpoint.value == this.value - 1)
+            .findFirst()
+            .orElse(this);
     }
 
     public Xpoint left(int value) {
         return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value - value)
-                .findFirst()
-                .orElse(this);
+            .filter(xpoint -> xpoint.value == this.value - value)
+            .findFirst()
+            .orElse(this);
     }
 
     public Xpoint right() {
         return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value + 1)
-                .findFirst()
-                .orElse(this);
+            .filter(xpoint -> xpoint.value == this.value + 1)
+            .findFirst()
+            .orElse(this);
     }
 
     public Xpoint right(int value) {
         return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value + value)
-                .findFirst()
-                .orElse(this);
+            .filter(xpoint -> xpoint.value == this.value + value)
+            .findFirst()
+            .orElse(this);
     }
 }

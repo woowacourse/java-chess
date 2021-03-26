@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
+
     @Test
     @DisplayName("movable 테스트")
     void movableTest() {

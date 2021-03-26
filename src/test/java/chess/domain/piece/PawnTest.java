@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.position.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
 
@@ -52,14 +51,14 @@ class PawnTest {
     @DisplayName("폰 경계 이동 가능성 테스트")
     void borderTest() {
         assertThat(Pawn.createWhite().vectors(Position.of("c8")).get(0))
-                .containsExactly(Position.of("c8"));
+            .containsExactly(Position.of("c8"));
         assertThat(Pawn.createWhite().vectors(Position.of("c8")).get(0))
-                .containsExactly(Position.of("c8"));
+            .containsExactly(Position.of("c8"));
 
         assertThat(Pawn.createWhite().vectors(Position.of("a5")).get(0))
-                .containsExactly(Position.of("a6"));
+            .containsExactly(Position.of("a6"));
         assertThat(Pawn.createWhite().vectors(Position.of("a5")).get(1))
-                .containsExactly(Position.of("a5"), Position.of("b6"));
+            .containsExactly(Position.of("a5"), Position.of("b6"));
 //
 //        assertThat(Pawn.createWhite().moveStrategy(Position.valueOf("h5")).get(0))
 //            .containsAll(Arrays.asList(Position.valueOf("g6"), Position.valueOf("h6"), Position.valueOf("h5")));

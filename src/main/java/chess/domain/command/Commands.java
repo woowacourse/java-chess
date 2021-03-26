@@ -1,7 +1,6 @@
 package chess.domain.command;
 
 import chess.domain.game.ChessGame;
-import chess.domain.game.state.Finished;
 import java.util.Arrays;
 import java.util.List;
 

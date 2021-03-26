@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
+
     public static final double SCORE = 5;
 
     private Rook(Color color) {
@@ -26,10 +26,10 @@ public class Rook extends Piece {
     @Override
     public List<List<Position>> vectors(Position position) {
         return new ArrayList<>(Arrays.asList(
-                position.upVector(),
-                position.downVector(),
-                position.leftVector(),
-                position.rightVector()
+            position.upVector(),
+            position.downVector(),
+            position.leftVector(),
+            position.rightVector()
         ));
     }
 

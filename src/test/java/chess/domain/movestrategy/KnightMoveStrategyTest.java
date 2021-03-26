@@ -1,8 +1,10 @@
 package chess.domain.movestrategy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.Board;
-import chess.domain.board.position.InitPosition;
 import chess.domain.board.Rank;
+import chess.domain.board.position.InitPosition;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -12,9 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class KnightMoveStrategyTest {
+
     private List<Rank> ranks;
 
     @BeforeEach
@@ -35,8 +36,8 @@ public class KnightMoveStrategyTest {
         MoveStrategy moveStrategy = Knight.createWhite().moveStrategy();
 
         assertThat(moveStrategy.moveStrategy(board, Position.of("f6"))).containsExactlyInAnyOrder(
-                Position.of("h7"), Position.of("e8"),
-                Position.of("g4"), Position.of("e4"));
+            Position.of("h7"), Position.of("e8"),
+            Position.of("g4"), Position.of("e4"));
     }
 
     private void replacePieceForTest(final Position position, final Piece piece) {
