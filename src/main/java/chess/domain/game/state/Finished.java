@@ -28,7 +28,7 @@ public abstract class Finished extends AfterStart {
 
     @Override
     public List<Rank> ranks() {
-        throw new IllegalStateException("이미 체스게임이 종료되었습니다.");
+        return board().ranks();
     }
 
     @Override

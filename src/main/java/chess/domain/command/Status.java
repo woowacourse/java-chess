@@ -14,6 +14,10 @@ public class Status implements Command {
         this.chessGame = chessGame;
     }
 
+    public String winner(){
+        return this.chessGame.winner();
+    }
+
     public double totalBlackScore() {
         return this.scoreCalculator.totalBlackScore();
     }
