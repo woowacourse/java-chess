@@ -22,11 +22,6 @@ public class MoveRoute {
         return Direction.of(getFromPosition(), getToPosition());
     }
 
-    public boolean hasPieceAtToPosition() {
-        return this.moveRoute.get(this.moveRoute.size() - 1).getPiece().isNotBlank();
-
-    }
-
     public Position getFromPosition() {
         return this.moveRoute.get(INDEX_FROM_POSITION).getPosition();
     }
@@ -49,6 +44,10 @@ public class MoveRoute {
             throw new NoSuchElementException("해당 칸에는 기물이 없습니다.");
         }
         return (RealPiece) piece;
+    }
+
+    public boolean hasPieceAtToPosition() {
+        return this.moveRoute.get(this.moveRoute.size() - 1).getPiece().isNotBlank();
     }
 
     public boolean isBlocked() {
