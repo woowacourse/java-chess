@@ -3,11 +3,8 @@ package chess.dao;
 import static chess.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.dao.entity.ChessRoomEntity;
 import chess.dao.entity.PieceEntity;
 import chess.dao.entity.PlayerEntity;
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

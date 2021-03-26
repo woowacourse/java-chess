@@ -2,8 +2,10 @@ package chess.dao;
 
 import static chess.domain.piece.type.PieceType.PAWN;
 import static chess.domain.player.type.TeamColor.WHITE;
-import static chess.domain.position.type.File.*;
-import static chess.domain.position.type.Rank.*;
+import static chess.domain.position.type.File.A;
+import static chess.domain.position.type.File.H;
+import static chess.domain.position.type.Rank.EIGHT;
+import static chess.domain.position.type.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.dao.entity.ChessRoomEntity;

@@ -1,14 +1,14 @@
 package chess.dao;
 
-import static chess.domain.piece.type.PieceType.*;
-import static chess.domain.player.type.TeamColor.*;
+import static chess.domain.piece.type.PieceType.PAWN;
+import static chess.domain.piece.type.PieceType.ROOK;
+import static chess.domain.player.type.TeamColor.BLACK;
+import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.dao.entity.ChessRoomEntity;
 import chess.dao.entity.PieceEntity;
 import chess.dao.entity.PlayerEntity;
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

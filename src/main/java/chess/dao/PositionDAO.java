@@ -4,7 +4,6 @@ import static chess.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import chess.dao.entity.PieceEntity;
-import chess.dao.entity.PlayerEntity;
 import chess.dao.entity.PositionEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

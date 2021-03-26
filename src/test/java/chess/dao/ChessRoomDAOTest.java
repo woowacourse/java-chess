@@ -3,7 +3,6 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.dao.entity.ChessRoomEntity;
-import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
