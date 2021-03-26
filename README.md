@@ -205,6 +205,15 @@ CREATE TABLE piece
   FOREIGN KEY (player_id) REFERENCES player (id)
 ) ENGINE=InnoDB;
 ```
-
+```sql
+CREATE TABLE position
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  file_value varchar(255) NOT NULL,
+  rank_value varchar(255) NOT NULL,
+  piece_id bigint unsigned,
+  FOREIGN KEY (piece_id) REFERENCES piece (id)
+) ENGINE=InnoDB;
+```
 <br>
 
