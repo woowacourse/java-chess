@@ -3,7 +3,7 @@ package chess.dao;
 import static chess.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.domain.game.ChessRoomEntity;
+import chess.dao.entity.ChessRoomEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,16 +35,6 @@ public class ChessRoomDAO {
             rs.getLong("id"),
             rs.getString("title"),
             rs.getString("current_turn_team_color"));
-    }
-
-    public ChessRoomEntity update(ChessRoomEntity chessRoomEntity) throws SQLException {
-        String query = "UPDATE chess_room SET title = ?, current_turn_team_color = ? WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessRoomEntity.getTitle());
-        pstmt.setString(2, chessRoomEntity.getCurrentTeamColor());
-        pstmt.setLong(3, chessRoomEntity.getId());
-        pstmt.executeUpdate();
-        return chessRoomEntity;
     }
 
     public void delete(ChessRoomEntity chessRoomEntity) throws SQLException {

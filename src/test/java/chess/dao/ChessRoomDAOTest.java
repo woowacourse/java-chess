@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.game.ChessRoomEntity;
+import chess.dao.entity.ChessRoomEntity;
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class ChessRoomDAOTest {
     private static final String TEST_TITLE = "testTitle";
+
     private final ChessRoomDAO chessRoomDAO = new ChessRoomDAO();
 
     @AfterEach
@@ -21,33 +22,17 @@ class ChessRoomDAOTest {
     void add() throws SQLException {
         ChessRoomEntity chessRoomEntity = new ChessRoomEntity(TEST_TITLE);
 
-        ChessRoomEntity addedChessRoom = chessRoomDAO.add(chessRoomEntity);
-
-        assertThat(chessRoomEntity).isEqualTo(addedChessRoom);
+        chessRoomDAO.add(chessRoomEntity);
     }
 
     @Test
     void findById() throws SQLException {
-        ChessRoomEntity chessRoomEntity = new ChessRoomEntity(TEST_TITLE);
-        ChessRoomEntity addedChessRoom = chessRoomDAO.add(chessRoomEntity);
+        ChessRoomEntity chessRoom = new ChessRoomEntity(TEST_TITLE);
+        ChessRoomEntity addedChessRoom = chessRoomDAO.add(chessRoom);
 
-        ChessRoomEntity foundByIdChessRoom = chessRoomDAO.findById(addedChessRoom.getId());
+        ChessRoomEntity foundChessRoom = chessRoomDAO.findById(addedChessRoom.getId());
 
-        assertThat(addedChessRoom).isEqualTo(foundByIdChessRoom);
-    }
-
-    @Test
-    void update() throws SQLException {
-        ChessRoomEntity chessRoomEntity = new ChessRoomEntity(TEST_TITLE);
-        ChessRoomEntity chessRoomToUpdate = chessRoomDAO.add(chessRoomEntity);
-        String newTitle = "newTitle";
-        String newCurrentTurnTeamColor = TeamColor.BLACK.getValue();
-        chessRoomToUpdate.setTitle(newTitle);
-        chessRoomToUpdate.setCurrentTeamColor(newCurrentTurnTeamColor);
-
-        ChessRoomEntity updatedChessRoom = chessRoomDAO.update(chessRoomEntity);
-
-        assertThat(updatedChessRoom).isEqualTo(chessRoomToUpdate);
+        assertThat(foundChessRoom).isEqualTo(addedChessRoom);
     }
 
     @Test
