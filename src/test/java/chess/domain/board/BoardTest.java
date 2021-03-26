@@ -24,7 +24,8 @@ public class BoardTest {
     
     @BeforeEach
     void setUp() {
-        chess = Chess.createWithInitializedBoard();
+        chess = Chess.createWithEmptyBoard()
+                     .start();
         board = chess.getBoard();
     }
     
@@ -38,7 +39,7 @@ public class BoardTest {
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        chess.movePiece(movePosition);
+        chess.move(movePosition);
         
         // then
         final Map<Position, Piece> chessBoard = this.board.getBoard();
@@ -66,7 +67,7 @@ public class BoardTest {
         
         Position blackKingPosition = Position.from("e8");
         MovePosition movePosition = new MovePosition(whitePawnPosition, blackKingPosition);
-        chess.movePiece(movePosition);
+        chess = chess.move(movePosition);
     }
     
     @Test

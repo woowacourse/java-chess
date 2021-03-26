@@ -14,7 +14,8 @@ public class QueenTest {
     
     private final Queen queen = Queen.WHITE_INSTANCE;
     private final Position sourcePosition = Position.from("d1");
-    private final Board board = Chess.createWithInitializedBoard()
+    private final Board board = Chess.createWithEmptyBoard()
+                                     .start()
                                      .getBoard();
     
     @Test

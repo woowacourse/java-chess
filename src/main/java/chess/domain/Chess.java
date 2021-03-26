@@ -9,8 +9,8 @@ public class Chess {
     private static final String ERROR_GAME_IS_NOT_RUNNING = "게임 진행 중이 아닙니다.";
     
     private final Board board;
-    private Status status;
-    private Color turn;
+    private final Status status;
+    private final Color turn;
     
     public Chess(Board board) {
         this(board, Status.RUNNING, Color.WHITE);
@@ -22,27 +22,8 @@ public class Chess {
         this.turn = turn;
     }
     
-    public static Chess createWithInitializedBoard() {
-        return new Chess(BoardFactory.InitializedBoard.create());
-    }
-    
     public static Chess createWithEmptyBoard() {
         return new Chess(BoardFactory.EmptyBoard.create(), Status.STOP, Color.WHITE);
-    }
-    
-    public boolean isRunning() {
-        return status.isRunning();
-    }
-    
-    public void checkGameIsRunning() {
-        if (!isRunning()) {
-            throw new IllegalStateException(ERROR_GAME_IS_NOT_RUNNING);
-        }
-    }
-    
-    public void movePiece(MovePosition movePosition) {
-        status = board.move(movePosition, turn);
-        turn = turn.next();
     }
     
     public Board getBoard() {
@@ -57,43 +38,40 @@ public class Chess {
         return turn.next();
     }
     
+    public Chess start() {
+        return new Chess(BoardFactory.InitializedBoard.create(), Status.RUNNING, Color.WHITE);
+    }
+    
+    public Chess move(MovePosition movePosition) {
+        if (!status.isRunning()) {
+            throw new IllegalStateException(ERROR_GAME_IS_NOT_RUNNING);
+        }
+        
+        Status status = board.move(movePosition, turn);
+        return new Chess(board, status, turn.next());
+    }
+    
+    public Chess end() {
+        return new Chess(board, Status.STOP, turn);
+    }
+    
+    public Chess exit() {
+        return new Chess(board, Status.TERMINATED, turn);
+    }
+    
     public boolean isTerminated() {
         return status.isTerminated();
     }
     
-    public void stop() {
-        status = Status.STOP;
+    public boolean isKindDead() {
+        return status.isKingDead();
     }
     
-    public void terminate() {
-        status = Status.TERMINATED;
-    }
-    
-    public boolean isKingDead() {
-        return status == Status.KING_DEAD;
+    public boolean isRunning() {
+        return status.isRunning();
     }
     
     public boolean isStop() {
-        return status == Status.STOP;
-    }
-    
-    public Chess start() {
-        return null;
-    }
-    
-    public Chess move(MovePosition movePosition) {
-        return null;
-    }
-    
-    public Chess status() {
-        return null;
-    }
-    
-    public Chess end() {
-        return null;
-    }
-    
-    public Chess exit() {
-        return null;
+        return status.isStop();
     }
 }

@@ -13,7 +13,9 @@ import static org.assertj.core.api.Assertions.*;
 class KnightTest {
     private final Knight knight = Knight.WHITE_INSTANCE;
     private final Position sourcePosition = Position.from("b1");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private final Board board = Chess.createWithEmptyBoard()
+                                     .start()
+                                     .getBoard();
     
     @Test
     @DisplayName("이동 검사")

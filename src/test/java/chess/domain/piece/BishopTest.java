@@ -19,7 +19,9 @@ class BishopTest {
     
     @BeforeEach
     void setUp() {
-        board = Chess.createWithInitializedBoard().getBoard();
+        board = Chess.createWithEmptyBoard()
+                     .start()
+                     .getBoard();
     }
     
     @Test

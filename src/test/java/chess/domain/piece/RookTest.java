@@ -19,7 +19,8 @@ class RookTest {
     
     @BeforeEach
     void setUp() {
-        board = Chess.createWithInitializedBoard()
+        board = Chess.createWithEmptyBoard()
+                     .start()
                      .getBoard();
     }
     

@@ -14,7 +14,8 @@ class KingTest {
     
     private final King king = King.WHITE_INSTANCE;
     private final Position sourcePosition = Position.from("e1");
-    private final Board board = Chess.createWithInitializedBoard()
+    private final Board board = Chess.createWithEmptyBoard()
+                                     .start()
                                      .getBoard();
     
     @Test

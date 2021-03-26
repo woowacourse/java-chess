@@ -8,7 +8,8 @@ import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlankTest {
     
@@ -20,7 +21,8 @@ class BlankTest {
         Blank blank = Blank.INSTANCE;
         Position sourcePosition = Position.from("a3");
         Position targetPosition = Position.from("a4");
-        Board board = Chess.createWithInitializedBoard()
+        Board board = Chess.createWithEmptyBoard()
+                           .start()
                            .getBoard();
         
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);

@@ -23,7 +23,7 @@ class SymbolBoardDTOTest {
     void initializedNonPawnSymbolTest(int file, String symbol) {
         
         // given
-        Chess chess = Chess.createWithInitializedBoard();
+        Chess chess = Chess.createWithEmptyBoard().start();
         final int blackRow = 7;
         final int whiteRow = 0;
         
@@ -41,7 +41,7 @@ class SymbolBoardDTOTest {
     void initializedPawnSymbolTest() {
         
         // given
-        Chess chess = Chess.createWithInitializedBoard();
+        Chess chess = Chess.createWithEmptyBoard().start();
         final int blackRow = 6;
         final int whiteRow = 1;
         

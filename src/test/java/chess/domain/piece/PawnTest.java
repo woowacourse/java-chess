@@ -13,7 +13,9 @@ import static org.assertj.core.api.Assertions.*;
 class PawnTest {
     private final Pawn pawn = Pawn.WHITE_INSTANCE;
     private final Position sourcePosition = Position.from("a2");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private final Board board = Chess.createWithEmptyBoard()
+                                     .start()
+                                     .getBoard();
     
     @Test
     @DisplayName("1칸 전진 테스트")
