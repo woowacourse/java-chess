@@ -54,6 +54,10 @@ public abstract class Piece {
         return position.getFile();
     }
 
+    public final Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

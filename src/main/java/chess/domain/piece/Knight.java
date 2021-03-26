@@ -80,7 +80,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -98,7 +98,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -116,7 +116,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -134,7 +134,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -152,7 +152,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -170,7 +170,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -188,7 +188,7 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -206,10 +206,14 @@ public class Knight extends Piece {
         if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!piece.get().isSameColor(this)) {
+        if (this.isDifferentColor(piece.get())) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
+    }
+
+    private boolean isDifferentColor(final Piece piece) {
+        return !this.getColor().equals(piece.getColor());
     }
 
     private void checkTarget(Target target, List<Position> positions) {
