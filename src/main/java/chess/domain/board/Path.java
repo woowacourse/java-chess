@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.position.Notation;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Path {
@@ -14,12 +13,6 @@ public final class Path {
 
     public boolean contains(final Notation targetNotation) {
         return notations.contains(targetNotation);
-    }
-
-    public List<Notation> possibleCoordinates() {
-        final List<Notation> possibleNotations = new ArrayList<>();
-
-        return possibleNotations;
     }
 
     public boolean isEmpty() {

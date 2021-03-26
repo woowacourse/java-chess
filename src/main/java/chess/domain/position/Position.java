@@ -3,7 +3,7 @@ package chess.domain.position;
 import chess.domain.board.Paths;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.strategy.Direction;
+import chess.domain.piece.strategy.PieceRange;
 import java.util.Map;
 
 public final class Position {
@@ -33,7 +33,8 @@ public final class Position {
     }
 
     public Paths availablePaths(Map<Notation, Position> boardPositions) {
-        return new Paths(holdingPiece, notation, boardPositions);
+        PieceRange pieceRange = holdingPiece.movableFrom(notation);
+        return pieceRange.calculatePaths(boardPositions);
     }
 
     public boolean isEmpty() {
