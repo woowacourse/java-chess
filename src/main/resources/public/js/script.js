@@ -58,9 +58,7 @@ function selectPiece(event) {
         // 아무것도 클릭이 안 되있는 상태 -> 클릭한 것 clicked로 바꾸기
     } else {
         clickPiece.classList.toggle("clicked");
-
     }
-
 }
 
 function getClickedPiece() {
@@ -75,47 +73,51 @@ function getClickedPiece() {
 
 async function move(sourcePosition, targetPosition) {
     try {
-        axios({
+        const res = await axios({
             method: 'post',
             url: '/move',
             data: {
                 source: sourcePosition,
                 target: targetPosition
             }
-        })
-            .then((res) => {
-                console.log("move 통신에 대한 응답값");
-                console.log(res);
-                const data = res.data;
-                if (data.code === 204) {
-                    const source = document.getElementById(sourcePosition);
-                    const target = document.getElementById(targetPosition);
-                    const piece = source.getElementsByTagName("img")[0];
-                    if (target.getElementsByTagName("img")[0]) {
-                        target.getElementsByTagName("img")[0].remove();
-                    }
-                    target.appendChild(piece);
-                    console.log(target);
-                }
-                if (data.code === 401) {
-                    alert(data.message);
-                }
-            })
+        });
+        const data = res.data;
+        if (data.code === 401) {
+            alert(data.message);
+            return;
+        }
+        if (data.code !== 204) {
+            alert(data.message);
+            return;
+        }
+        const source = document.getElementById(sourcePosition);
+        const target = document.getElementById(targetPosition);
+        const piece = source.getElementsByTagName("img")[0];
+        if (target.getElementsByTagName("img")[0]) {
+            target.getElementsByTagName("img")[0].remove();
+        }
+        target.appendChild(piece);
     } catch (e) {
         console.log(e);
     }
 }
 
-function start() {
+async function start() {
     try {
-        axios({
+        const res = await axios({
             method: 'post',
             url: '/start',
-        })
-            .then((res) => {
-                console.log("응답값");
-                console.log(res);
-            })
+        });
+        const data = res.data;
+        if (data.code === 401) {
+            alert(data.message);
+            return;
+        }
+        if (data.code !== 204) {
+            alert(data.message);
+            return;
+        }
+        alert("게임을 시작합니다.");
     } catch (e) {
         console.log(e);
     }
