@@ -54,8 +54,8 @@ public class OutputView {
         System.out.printf(GAME_RESULT_WINNER_FORMAT, winner.teamName());
     }
 
-    public static void printIllegalCommand(IllegalArgumentException ipe) {
+    public static void printIllegalCommand(IllegalArgumentException e) {
         System.out.printf(INFO_MESSAGE_FORMAT,
-            String.format(ILLEGAL_COMMAND_MESSAGE, ipe.getMessage()));
+            String.format(ILLEGAL_COMMAND_MESSAGE, e.getMessage()));
     }
 }
