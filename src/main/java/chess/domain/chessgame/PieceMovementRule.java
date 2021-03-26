@@ -66,7 +66,8 @@ public class PieceMovementRule {
             && (source.isLocatedIn(Row.TWO) || source.isLocatedIn(Row.SEVEN));
     }
 
-    private boolean isNotPawnOrValidPawnMove(Point source, Point destination, MoveVector moveVector) {
+    private boolean isNotPawnOrValidPawnMove(Point source, Point destination, MoveVector
+        moveVector) {
         return board.hasNotSamePieceTypeAt(source, Piece.PAWN) ||
             (isNotOrValidPawnStraightMove(destination, moveVector)
                 && isNotOrValidPawnDiagonalMove(source, destination, moveVector));
