@@ -195,6 +195,16 @@ CREATE TABLE player
   FOREIGN KEY (chess_room_id) REFERENCES chess_room (id)
 ) ENGINE=InnoDB;
 ```
+```sql
+CREATE TABLE piece
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  piece_name varchar(255) NOT NULL,
+  color varchar(255) NOT NULL,
+  player_id bigint unsigned,
+  FOREIGN KEY (player_id) REFERENCES player (id)
+) ENGINE=InnoDB;
+```
 
 <br>
 
