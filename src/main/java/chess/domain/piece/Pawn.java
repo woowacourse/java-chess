@@ -39,13 +39,13 @@ public class Pawn extends AbstractPiece {
         checkObstacleExistsAtDirection(movePosition, direction, board);
         
         final boolean isForwardDirection = isForward(direction);
+        if (isForwardDirection && movePosition.isTwoStep()) {
+            movePosition.checkPawnExistAtDefaultPosition(color);
+        }
+        
         final boolean isBlankAtTargetPosition = board.isBlank(movePosition.getTargetPosition());
         if (isForwardDirection && !isBlankAtTargetPosition) {
             throw new IllegalArgumentException(ERROR_PIECE_EXIST_AT_FORWARD_TARGET);
-        }
-        
-        if (isForwardDirection && !movePosition.isAtDefaultPawnPosition(color)) {
-            throw new IllegalArgumentException("폰은 첫 이동 시에만 2칸 움직일 수 있습니다.");
         }
         
         if (!isForwardDirection && isBlankAtTargetPosition) {
