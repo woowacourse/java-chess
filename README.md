@@ -133,12 +133,98 @@
 
 ### Step2
 
-- [ ] 체스 보드 페이지
-  - [ ] 홀수 번 째로 보드 한 칸을 클릭했을 때,
-    - [ ] 해당 칸을 어두운 색깔로  바꾼다.
-    - [ ] 해당 칸의 위치 값을 기물 이동 시작 위치로 저장한다.
-  - [ ] 짝수 번 째로 보드 한 칸을 클릭했을 때,
-    - [ ] 해당 칸의 위치 값을 기물 이동 도착 위치로 저장한다.
-    - [ ] 기물 이동 시작 위치와 도착 위치로 `Controller`에게 기물 이동 요청을 보낸다.
+- [x] 체스 보드 페이지
+  - [x] 홀수 번 째로 보드 한 칸을 클릭했을 때,
+    - [x] 해당 칸의 위치 값을 기물 이동 시작 위치로 저장한다.
+  - [x] 짝수 번 째로 보드 한 칸을 클릭했을 때,
+    - [x] 해당 칸의 위치 값을 기물 이동 도착 위치로 저장한다.
+    - [x] 기물 이동 시작 위치와 도착 위치로 `Controller`에게 기물 이동 요청을 보낸다.
 
 <br>
+
+
+
+## 5단계 - DB 적용
+
+- [ ] 메인 페이지
+  - [ ] 방 생성
+    - [ ] 방 제목 입력 칸
+    - [ ] 방 생성 버튼
+  - [ ] 방 목록
+    - [ ] 생성되어 있는 방들의 목록
+      - [ ] 각 방의 제목들을 나열한다.
+      - [ ] 방의 제목을 클릭하면, 진행중인 상태의 체스 게임 보드 화면으로 이동한다.
+    - [ ] 각 방 오른쪽에 삭제 버튼
+      - [ ] 삭제버튼을 누르면, `방을 삭제하시겠습니까?` 확인 창이 뜬다.
+      - [ ] `확인` 을 누르면, 방을 삭제한다.
+      - [ ] `취소` 를 누르면, 아무 일도 발생하지 않는다.
+- [ ] DB
+  - 서버를 재시작 해도, 이전에 하던 모든 방들의 상태가 유지되어야 한다.
+    - 방 목록
+      - 방
+        - id (Long)
+        - 방 제목 (String)
+        - 현재 차례 팀 색깔 (String)
+        - 백 팀 플레이어 id (Long)
+        - 흑 팀 플레이어 id (Long)
+          - 플레이어
+            - id (Long)
+            - 현재 점수 (double)
+            - 갖고있는 기물들
+              - 기물
+                - id (Long)
+                - 이름 (String)
+                - 위치
+                  - id (Long)
+                  - File (String)
+                  - Rank (String)
+- [ ] 테이블 구성
+```sql
+CREATE TABLE chess_room
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  title varchar(255) NOT NULL,
+  current_turn_team_color varchar(255) NOT NULL DEFAULT 'white',
+  white_team_player_id bigint unsigned NOT NULL,
+  black_team_player_id bigint unsigned NOT NULL,
+  FOREIGN KEY (white_team_player_id) REFERENCES player(id),
+  FOREIGN KEY (black_team_player_id) REFERENCES player(id)
+) ENGINE=InnoDB;
+```
+```sql
+CREATE TABLE player
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  score decimal(5,5) NOT NULL DEFAULT 0.00,
+  pieces_id bigint unsigned NOT NULL,
+  FOREIGN KEY (pieces_id) REFERENCES pieces (id)
+) ENGINE=InnoDB;
+```
+```sql
+CREATE TABLE pieces
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  piece_id bigint unsigned,
+  FOREIGN KEY (piece_id) REFERENCES piece (id)
+) ENGINE=InnoDB;
+```
+```sql
+CREATE TABLE piece
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  position_id bigint unsigned NOT NULL,
+  FOREIGN KEY (position_id) REFERENCES position (id)
+) ENGINE=InnoDB;
+```
+```sql
+CREATE TABLE position
+(
+  id bigint unsigned AUTO_INCREMENT PRIMARY KEY,
+  file_value varchar(255) NOT NULL,
+  rank_value varchar(255) NOT NULL
+) ENGINE=InnoDB;
+```
+
+<br>
+
