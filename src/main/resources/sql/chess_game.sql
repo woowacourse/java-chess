@@ -10,7 +10,7 @@ use chess_game;
 
 show tables;
 
-drop table player;
+drop table piece;
 
 CREATE TABLE position
 (
@@ -44,5 +44,4 @@ CREATE TABLE chess_room
   current_turn_team_color varchar(255) NOT NULL
 ) ENGINE=InnoDB;
 
-select * from position;
 select * from piece;
