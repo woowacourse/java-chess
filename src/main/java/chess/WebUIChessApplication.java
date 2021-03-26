@@ -31,11 +31,11 @@ public class WebUIChessApplication {
         }, new JsonTransformer());
 
         post("/start", (req, res) -> {
-            try {
-                return chessService.start();
-            } catch (Exception e) {
-                return e;
-            }
+            return chessService.start();
+        }, new JsonTransformer());
+
+        get("/check/finished", (req, res) -> {
+            return chessService.checkFinished();
         }, new JsonTransformer());
     }
 

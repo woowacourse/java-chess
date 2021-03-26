@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
+import chess.web.dto.CheckFinishedResponseDto;
 import chess.web.dto.MoveRequestDto;
 import chess.web.dto.response.Response;
 import chess.web.dto.response.ResponseCode;
@@ -30,5 +31,9 @@ public class ChessService {
         } catch (IllegalArgumentException e) {
             return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
         }
+    }
+
+    public Response checkFinished() {
+        return new Response(ResponseCode.OK, new CheckFinishedResponseDto(grid.isFinished()));
     }
 }
