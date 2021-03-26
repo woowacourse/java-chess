@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.board.position.Position;
+import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Empty extends Piece {
@@ -16,7 +18,7 @@ public class Empty extends Piece {
 
     @Override
     public List<List<Position>> vectors(Position position) {
-        throw new IllegalStateException();
+        return new ArrayList<>();
     }
 
     @Override
@@ -31,7 +33,7 @@ public class Empty extends Piece {
 
     @Override
     public MoveStrategy moveStrategy() {
-        throw new IllegalStateException();
+        return new CommonMoveStrategy();
     }
 
     @Override
