@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 
 public class Path {
 
-    private static final String INVALID_TARGET_POSITION_ERROR_MESSAGE = "해당 말이 이동할 수 없는 위치입니다.";
-
     private final List<Position> positions;
 
     public Path(List<Position> positions) {
@@ -21,7 +19,7 @@ public class Path {
         if (positions.contains(position)) {
             return true;
         }
-        throw new IllegalArgumentException(INVALID_TARGET_POSITION_ERROR_MESSAGE);
+        throw new IllegalArgumentException("해당 말이 이동할 수 없는 위치입니다.");
     }
 
     public List<Position> removeObstacleInPath(Piece piece, Board board) {

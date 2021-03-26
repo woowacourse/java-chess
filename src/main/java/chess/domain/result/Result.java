@@ -12,7 +12,6 @@ public class Result {
 
     private static final String WINNER_NOT_CHOSEN_ERROR_MESSAGE = "아직 승자가 정해지지 않았습니다.";
     private static final String WINNING_GUIDE_MESSAGE = "이 이겼습니다.";
-    private static final String NO_WINNER_ERROR_MESSAGE = "우승자가 없습니다.";
     private static final double PARALLEL_PAWN_SCORE = 0.5;
     private static final int PARALLEL_PAWN_MIN_COUNT = 2;
 
@@ -65,7 +64,7 @@ public class Result {
             .filter(Piece::isKing)
             .map(piece -> piece.color() + WINNING_GUIDE_MESSAGE)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NO_WINNER_ERROR_MESSAGE))
+            .orElseThrow(() -> new IllegalArgumentException("우승자가 없습니다."))
             ;
     }
 

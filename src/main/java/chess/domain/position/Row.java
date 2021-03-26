@@ -13,8 +13,6 @@ public enum Row {
     TWO("2"),
     ONE("1");
 
-    private static final String INVALID_ROW_ERROR_MESSAGE = "존재하지 않는 행입니다.";
-
     private final String number;
 
     Row(String number) {
@@ -25,7 +23,7 @@ public enum Row {
         return Arrays.stream(values())
             .filter(row -> row.number.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(INVALID_ROW_ERROR_MESSAGE));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
     public Row move(Direction direction) {
