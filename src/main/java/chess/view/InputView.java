@@ -1,7 +1,7 @@
 package chess.view;
 
 
-import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.console.dto.CommandRequestDTO;
 import java.util.Scanner;
 
 public class InputView {
@@ -20,7 +20,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static MoveRequestDTO getCommandRequest() {
+    public static CommandRequestDTO getCommandRequest() {
         String commandLineInput = SCANNER.nextLine();
         String[] splitCommandLineInput = commandLineInput.split(COMMAND_DELIMITER);
         validateCommandLineFormat(splitCommandLineInput);
@@ -47,7 +47,7 @@ public class InputView {
         }
     }
 
-    private static MoveRequestDTO parseCommandLineInput(String[] splitCommandLineInput) {
+    private static CommandRequestDTO parseCommandLineInput(String[] splitCommandLineInput) {
         String commandInput = splitCommandLineInput[COMMAND_INDEX];
         if (commandInput.equals(MOVE_COMMAND)) {
             return parseMoveCommandLineInput(splitCommandLineInput);
@@ -59,16 +59,17 @@ public class InputView {
         throw new IllegalArgumentException("명령어를 잘못 입력했습니다.");
     }
 
-    private static MoveRequestDTO parseMoveCommandLineInput(String[] splitCommandLineInput) {
+    private static CommandRequestDTO parseMoveCommandLineInput(String[] splitCommandLineInput) {
+        String commandInput = splitCommandLineInput[COMMAND_INDEX];
         String startPositionInput = splitCommandLineInput[START_POSITION_INDEX];
         String destinationInput = splitCommandLineInput[DESTINATION_INDEX];
-        return new MoveRequestDTO(startPositionInput, destinationInput);
+        return new CommandRequestDTO(commandInput, startPositionInput, destinationInput);
     }
 
-    private static MoveRequestDTO parseCommandLineInputExceptMoveCommand(
+    private static CommandRequestDTO parseCommandLineInputExceptMoveCommand(
         String[] splitCommandLineInput) {
 
         String commandInput = splitCommandLineInput[COMMAND_INDEX];
-        return new MoveRequestDTO(null, null);
+        return new CommandRequestDTO(commandInput);
     }
 }

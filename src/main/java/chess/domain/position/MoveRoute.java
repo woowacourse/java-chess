@@ -14,8 +14,8 @@ public class MoveRoute {
     }
 
     public MoveRoute(MoveRequestDTO moveRequestDTO) {
-        startPosition = Position.of(moveRequestDTO.getStartPositionInput());
-        destination = Position.of(moveRequestDTO.getDestinationInput());
+        startPosition = Position.of(moveRequestDTO.getStartPosition());
+        destination = Position.of(moveRequestDTO.getDestination());
     }
 
     public Position startPosition() {

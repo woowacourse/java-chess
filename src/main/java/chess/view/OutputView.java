@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.controller.web.MoveResponse;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import java.util.ArrayList;
@@ -28,12 +29,13 @@ public class OutputView {
 
     private static void printCurrentTurnTeamName(ResponseDTO responseDTO) {
         System.out.println();
-        System.out.println("현재 " + responseDTO.getCurrentTurnTeamName() + " 팀의 차례입니다.");
+        if (!responseDTO.isEnd() && !responseDTO.getIsKingDead()) {
+            System.out.println("현재 " + responseDTO.getCurrentTurnTeamName() + " 팀의 차례입니다.");
+        }
     }
 
     private static void printWinnerTeamNameWhenKingDead(ResponseDTO responseDTO) {
         if (responseDTO.getIsKingDead()) {
-            System.out.println();
             System.out.println(responseDTO.getBeforeTurnTeamName() + " 팀이 이겼습니다.");
         }
     }
@@ -63,6 +65,9 @@ public class OutputView {
         double blackTeamScore = responseDTO.getBlackPlayerScore();
         double whiteTeamScore = responseDTO.getWhitePlayerScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
-        System.out.println();
+    }
+
+    public static void printErrorMessage(MoveResponse moveResponse) {
+        System.out.println("에러 : " + moveResponse.getErrorMessage());
     }
 }

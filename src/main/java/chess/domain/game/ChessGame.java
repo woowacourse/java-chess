@@ -83,16 +83,16 @@ public class ChessGame {
         return new Scores(players.blackPlayerScore(), players.whitePlayerScore());
     }
 
-    public String winnerName() {
-        TeamColor teamColor = board.winnerTeamColor();
-        return teamColor.getName();
-    }
-
     public void changeToNextTurn() {
         currentTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
     }
 
     public String currentTurnTeamName() {
         return currentTurnTeamColor.getName();
+    }
+
+    public String beforeTurnTeamName() {
+        TeamColor beforeTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
+        return beforeTurnTeamColor.getName();
     }
 }

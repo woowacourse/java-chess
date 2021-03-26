@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.controller.web.MoveResponse;
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
@@ -27,16 +28,8 @@ public class ChessService {
         this.boardSetting = boardSetting;
     }
 
-    public ResponseDTO getResponseWhenRequestStart() {
+    public void start() {
         chessGame = new ChessGame(boardSetting);
-        Scores scores = chessGame.getScores();
-        return new ResponseDTO(
-            getBoardResponseDTO(),
-            chessGame.currentTurnTeamName(),
-            scores.getBlackPlayerScore(),
-            scores.getWhitePlayerScore(),
-            false,
-            null);
     }
 
     private BoardResponseDTO getBoardResponseDTO() {
@@ -52,23 +45,19 @@ public class ChessService {
             cellsStatus.subList(RANK8_FIRST_INDEX, BOARD_ALL_CELLS_SIZE));
     }
 
-    public ResponseDTO getResponseWhenRequestMove(MoveRequestDTO moveRequestDTO) {
+    public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) {
         validateGameStarted();
-        String winnerNameIfKingDead = chessGame.currentTurnTeamName();
-        chessGame.move(moveRequestDTO);
-        chessGame.changeToNextTurn();
-        return createResponseDTOWhenRequestMove(winnerNameIfKingDead);
+        return createMoveResponse(moveRequestDTO);
     }
 
-    private ResponseDTO createResponseDTOWhenRequestMove(String winnerNameIfKingDead) {
-        Scores scores = chessGame.getScores();
-        return new ResponseDTO(
-            getBoardResponseDTO(),
-            chessGame.currentTurnTeamName(),
-            scores.getBlackPlayerScore(),
-            scores.getWhitePlayerScore(),
-            chessGame.isKingDead(),
-            winnerNameIfKingDead);
+    private MoveResponse createMoveResponse(MoveRequestDTO moveRequestDTO) {
+        try {
+            chessGame.move(moveRequestDTO);
+        } catch (Exception e) {
+            return new MoveResponse(true, e.getMessage());
+        }
+        chessGame.changeToNextTurn();
+        return new MoveResponse(false);
     }
 
     private void validateGameStarted() {
@@ -82,13 +71,14 @@ public class ChessService {
     }
 
     public ResponseDTO getCurrentBoard() {
+        validateGameStarted();
         Scores scores = chessGame.getScores();
         return new ResponseDTO(
             getBoardResponseDTO(),
             chessGame.currentTurnTeamName(),
             scores.getBlackPlayerScore(),
             scores.getWhitePlayerScore(),
-            false,
-            null);
+            chessGame.isKingDead(),
+            chessGame.beforeTurnTeamName());
     }
 }

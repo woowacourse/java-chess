@@ -7,8 +7,7 @@ public class ResponseDTO {
     private final double whitePlayerScore;
     private final boolean isKingDead;
     private final String beforeTurnTeamName;
-    private boolean cannotMove;
-    private String cannotMoveErrorMessage;
+    private boolean isEnd;
 
     public ResponseDTO(BoardResponseDTO boardResponseDTO, String currentTurnTeamName,
         double blackPlayerScore, double whitePlayerScore, boolean isKingDead,
@@ -20,7 +19,16 @@ public class ResponseDTO {
         this.whitePlayerScore = whitePlayerScore;
         this.isKingDead = isKingDead;
         this.beforeTurnTeamName = beforeTurnTeamName;
-        this.cannotMove = false;
+    }
+
+    public ResponseDTO(boolean isEnd) {
+        this.boardResponseDTO = null;
+        this.currentTurnTeamName = null;
+        this.blackPlayerScore = 0;
+        this.whitePlayerScore = 0;
+        this.isKingDead = false;
+        this.beforeTurnTeamName = null;
+        this.isEnd = isEnd;
     }
 
     public BoardResponseDTO getBoardResponseDTO() {
@@ -47,19 +55,7 @@ public class ResponseDTO {
         return beforeTurnTeamName;
     }
 
-    public boolean getCannotMove() {
-        return cannotMove;
-    }
-
-    public void setCannotMove(boolean cannotMove) {
-        this.cannotMove = cannotMove;
-    }
-
-    public String getCannotMoveErrorMessage() {
-        return cannotMoveErrorMessage;
-    }
-
-    public void setCannotMoveErrorMessage(String cannotMoveErrorMessage) {
-        this.cannotMoveErrorMessage = cannotMoveErrorMessage;
+    public boolean isEnd() {
+        return isEnd;
     }
 }

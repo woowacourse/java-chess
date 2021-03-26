@@ -1,17 +1,17 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.console.ConsoleController;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
 import chess.service.ChessService;
 
-public class WebUIChessApplication {
+public class ConsoleApplication {
     public static void main(String[] args) {
         BoardSetting boardSetting = new BoardDefaultSetting();
 
         ChessService chessService = new ChessService(boardSetting);
-        ChessController chessController = new ChessController(chessService);
+        ConsoleController consoleController = new ConsoleController(chessService);
 
-        chessController.run();
+        consoleController.run();
     }
 }
