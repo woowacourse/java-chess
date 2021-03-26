@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Chess;
+import chess.domain.Color;
 import chess.domain.position.MovePosition;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,55 +12,49 @@ public class ConsoleChessApplication {
         
         Chess chess = Chess.createWithEmptyBoard();
         while (!chess.isTerminated()) {
-            chess = execute(chess);
+            final Command command = Command.findCommandByInputCommand(InputView.askCommand());
+            chess = command.execute(chess);
         }
     }
     
-    private static Chess execute(Chess chess) {
-        final String[] inputCommand = InputView.askCommand();
-        final Command command = Command.findCommandByInputCommand(inputCommand);
-        
-        if (command == Command.START) {
-            return start(chess);
-        }
-        
-        if (command == Command.MOVE) {
-            return move(chess, inputCommand);
-        }
-        
-        if (command == Command.STATUS) {
-            return status(chess);
-        }
-        
-        if (command == Command.END) {
-            return end(chess);
-        }
-        
-        if (command == Command.EXIT) {
-            return exit(chess);
-        }
-        
-        throw new IllegalArgumentException("없는 커맨드입니다.");
+    public static Chess start(Chess chess) {
+        chess = chess.start();
+        OutputView.printBoard(chess);
+        return chess;
     }
     
-    private static Chess start(Chess chess) {
-        return chess.start();
+    public static Chess move(Chess chess) {
+        String[] positions = InputView.askPositions();
+        chess = chess.move(MovePosition.from(positions));
+        OutputView.printBoard(chess);
+        if (chess.isKindDead()) {
+            OutputView.printKingIsDead(chess.winner());
+        }
+        return chess;
     }
     
-    private static Chess move(Chess chess, String[] inputCommand) {
-        MovePosition movePosition = MovePosition.of(inputCommand);
-        return chess.move(movePosition);
+    public static Chess status(Chess chess) {
+        double blackScore = chess.score(Color.BLACK);
+        double whiteScore = chess.score(Color.WHITE);
+        if (chess.isRunning()) {
+            OutputView.printStatusWithRunningMessage(blackScore, whiteScore);
+        }
+        
+        if (chess.isKindDead() || chess.isStop()) {
+            OutputView.printStatusWithWinner(blackScore, whiteScore, chess.winner());
+        }
+        return chess;
     }
     
-    private static Chess status(Chess chess) {
-        return chess.status();
+    public static Chess end(Chess chess) {
+        chess = chess.end();
+        OutputView.printGameIsStopped();
+        return chess;
     }
     
-    private static Chess end(Chess chess) {
-        return chess.end();
-    }
-    
-    private static Chess exit(Chess chess) {
-        return chess.exit();
+    public static Chess exit(Chess chess) {
+        chess = chess.exit();
+        OutputView.printExit();
+        return chess;
     }
 }
