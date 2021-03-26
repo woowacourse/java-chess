@@ -31,13 +31,13 @@ public class ChessController {
 
     private void playChessGame(final Round round) {
         try {
-            inputCommand(round);
+            play(round);
         } catch (RuntimeException runtimeException) {
             OutputView.showExceptionMessage(runtimeException);
         }
     }
 
-    private void inputCommand(final Round round) {
+    private void play(final Round round) {
         if (!round.isEnd()) {
             OutputView.showChessBoard(round.getBoard());
             round.execute(INPUT.inputCommand());
