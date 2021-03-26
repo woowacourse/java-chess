@@ -1,24 +1,27 @@
 @charset "UTF-8";
 
-h1{
+h1 {
     text-align: center;
 }
 
 table {
     width: 700px;
     height: 700px;
-    margin:auto;
+    margin: auto;
 }
 
 img {
-    width: 60px;
+    width: 100%;
     display: block;
     margin: auto;
 }
 
 .chess-board {
-    width: 700px;
-    display: flex;
-    flex-direction: column;
+    text-align: center;
     margin: auto;
+}
+
+.clicked {
+    border: 10px solid black;
+    box-sizing: border-box;
 }

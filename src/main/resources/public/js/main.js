@@ -12,6 +12,7 @@ function createChessBoard() {
     ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
   ]
   makeTable(pieces);
+  addClickEventListener();
 }
 
 function makeTable(pieces) {
@@ -44,9 +45,23 @@ function makeTd(pieces, row, col) {
 function decideCellStyle(td, row, col) {
   if ((row % 2 === 0 && col % 2 === 0) || (row % 2 === 1 && col % 2 === 1)) {
     td.setAttribute("style",
-        "background-color: rgb(204, 204, 204); width: 60px; height: 60px;");
+        "background-color: rgb(204, 204, 204); width: 80px; height: 82px;");
     return;
   }
   td.setAttribute("style",
-      "background-color: rgb(000, 102, 051); width: 60px; height: 60px;");
+      "background-color: rgb(000, 102, 051); width: 80px; height: 82px;");
+}
+
+function addClickEventListener() {
+  const table = document.getElementById("chess-board");
+  table.addEventListener("click", onSelectPiece);
+}
+
+function onSelectPiece(event) {
+  const clickPiece = event.target.closest("td");
+  if (clickPiece.className !== "clicked") {
+    clickPiece.classList.toggle("clicked");
+    return;
+  }
+  clickPiece.classList.toggle("clicked");
 }
