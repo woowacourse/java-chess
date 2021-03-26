@@ -1,15 +1,14 @@
 package chess.domain.player;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
 
-import java.util.Map;
 import java.util.Queue;
 
 public class ChessGame {
@@ -52,15 +51,16 @@ public class ChessGame {
         }
     }
 
-    public Map<Position, Piece> getBoard() {
-        Map<Position, Piece> board = ChessBoardFactory.initializeBoard();
+    public ChessBoard getBoard() {
+        ChessBoard chessBoard = ChessBoardFactory.initializeBoard();
+
         Pieces whitePieces = whitePlayer.getState().pieces();
         Pieces blackPieces = blackPlayer.getState().pieces();
 
-        whitePieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
-        blackPieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
+        chessBoard.addPieces(whitePieces);
+        chessBoard.addPieces(blackPieces);
 
-        return board;
+        return chessBoard;
     }
 
     public boolean isEnd() {

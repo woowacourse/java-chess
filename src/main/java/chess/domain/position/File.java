@@ -13,6 +13,7 @@ public enum File {
     G(7, "g"),
     H(8, "h");
 
+    private static final int EMPTY_SIZE = 1;
     private final int value;
     private final String file;
 
@@ -33,6 +34,10 @@ public enum File {
                 .filter(value -> value.file.equals(file))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %s", file)));
+    }
+
+    public static int size() {
+        return values().length - EMPTY_SIZE;
     }
 
     public boolean isSameFile(final File file) {

@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -11,20 +12,19 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class OutputView {
-    private static final int RANK = 8;
-    private static final int FILE = 8;
-
     private OutputView() {
     }
 
-    public static void showChessBoard(final Map<Position, Piece> chessBoard) {
+    public static void showChessBoard(final ChessBoard chessBoard) {
+        Map<Position, Piece> board = chessBoard.boards();
         StringBuilder sb = new StringBuilder();
-        for (int rank = RANK; rank > 0; rank--) {
+
+        for (int rank = chessBoard.getRankSize(); rank > 0; rank--) {
             final int finalRank = rank;
-            IntStream.rangeClosed(1, FILE)
+            IntStream.rangeClosed(1, chessBoard.getFileSize())
                     .mapToObj(file -> Position.valueOf(Rank.findByValue(finalRank), File.findByValue(file)))
                     .forEach(position -> {
-                        sb.append(checkBoard(chessBoard, position));
+                        sb.append(checkBoard(board, position));
                     });
             sb.append("\n");
         }

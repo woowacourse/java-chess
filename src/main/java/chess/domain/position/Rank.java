@@ -13,6 +13,7 @@ public enum Rank {
     SEVEN(7, "7"),
     EIGHT(8, "8");
 
+    private static final int EMPTY_SIZE = 1;
     private final int value;
     private final String rank;
 
@@ -33,6 +34,10 @@ public enum Rank {
                 .filter(value -> value.rank.equals(rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("없는 랭크임! 입력 값: %s", rank)));
+    }
+
+    public static int size() {
+        return values().length - EMPTY_SIZE;
     }
 
     public String getRank() {
