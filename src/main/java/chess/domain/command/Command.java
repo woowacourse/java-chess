@@ -6,11 +6,14 @@ import chess.exception.NoSuchCommandException;
 import chess.view.OutputView;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.BiConsumer;
+
+import static chess.domain.ChessGame.*;
 
 public enum Command {
     START("start", (chessGame, input) -> chessGame.settingBoard()),
-    MOVE("move ([a-z][1-8]) ([a-z][1-8])", ChessGame::move),
+    MOVE("move", ChessGame::move),
     STATUS("status", Command::status),
     END("end", (chessGame, input) -> chessGame.end());
 
@@ -28,7 +31,7 @@ public enum Command {
 
     public static Command findCommand(String input) {
         return Arrays.stream(Command.values())
-                .filter(value -> input.matches(value.command))
+                .filter(value -> Objects.equals(input.split(DELIMITER)[0], value.command))
                 .findAny()
                 .orElseThrow(NoSuchCommandException::new);
     }

@@ -11,7 +11,7 @@ import static chess.controller.ChessController.boardFactory;
 public class ChessGame {
     private static final int TARGET_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
-    private static final String DELIMITER = " ";
+    public static final String DELIMITER = " ";
 
     private Board board;
     private Team turnOwner;
