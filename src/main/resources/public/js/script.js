@@ -51,9 +51,12 @@ function selectPiece(event) {
     // 클릭이 되있을 경우
     if (clickedPiece) {
         clickedPiece.classList.toggle("clicked");
+        // 서로 다른 Piece를 클릭한 경우에만 move를 실행하기
         const sourcePosition = clickedPiece.id;
         const targetPosition = clickPiece.id;
-        move(sourcePosition, targetPosition);
+        if (sourcePosition !== targetPosition) {
+            move(sourcePosition, targetPosition);
+        }
 
         // 아무것도 클릭이 안 되있는 상태 -> 클릭한 것 clicked로 바꾸기
     } else {
