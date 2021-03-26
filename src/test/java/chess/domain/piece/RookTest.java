@@ -13,12 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RookTest {
-    private CurrentPieces currentPieces;
-
-    @BeforeEach
-    void setUp() {
-        currentPieces = CurrentPieces.generate();
-    }
 
     @DisplayName("Rook 객체 생성 확인")
     @Test

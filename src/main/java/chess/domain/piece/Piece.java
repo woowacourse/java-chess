@@ -51,7 +51,23 @@ public abstract class Piece {
         return color == piece.color;
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public boolean isSamePosition(Position position) {
         return this.position.equals(position);
+    }
+
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
+    public boolean isEmpty() {
+        return this instanceof Empty;
     }
 }

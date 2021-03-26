@@ -18,10 +18,6 @@ public class ChessGame {
         turn = Color.WHITE;
     }
 
-    public void next() {
-        this.turn = turn.reverse();
-    }
-
     public CurrentPieces getCurrentPieces() {
         return currentPieces;
     }
@@ -35,8 +31,12 @@ public class ChessGame {
         next();
     }
 
+    private void next() {
+        this.turn = turn.reverse();
+    }
+
     private void validateTurn(Piece sourcePiece) {
-        if (!sourcePiece.getColor().isSame(turn)) {
+        if (!sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(TURN_ERROR);
         }
     }

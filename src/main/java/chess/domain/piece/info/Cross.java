@@ -1,7 +1,6 @@
 package chess.domain.piece.info;
 
 import chess.domain.piece.CurrentPieces;
-import chess.domain.piece.Pawn;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -42,7 +41,7 @@ public enum Cross {
         int sourceX = source.getX();
         int sourceY = source.getY();
         int count = Math.max(Math.abs(source.subtractX(target)), Math.abs(source.subtractY(target)));
-        if (currentPieces.findByPosition(source) instanceof Pawn) {
+        if (currentPieces.findByPosition(source).isPawn()) {
             count++;
         }
         for (int i = 1; i < count; i++) {

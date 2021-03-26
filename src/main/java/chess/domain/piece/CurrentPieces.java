@@ -36,30 +36,30 @@ public class CurrentPieces {
     }
 
     public boolean isAliveAllKings() {
-        return (int) currentPieces.stream().filter(piece -> piece instanceof King).count() == 2;
+        return (int) currentPieces.stream().filter(piece -> piece.isKing()).count() == 2;
     }
 
     public double sumScoreByColor(Color color) {
-        Map<Object, Long> pawns = collectPawnCountsByRow(color);
+        Map<Character, Long> pawns = collectPawnCountsByRow(color);
         int count = (int) pawns.keySet().stream()
                 .filter(character -> pawns.get(character) >= 2)
                 .mapToLong(character -> pawns.get(character))
                 .sum();
         return currentPieces.stream()
-                .filter(piece -> piece.getColor().isSame(color))
+                .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
                 .sum() - (count * 0.5);
     }
 
-    private Map<Object, Long> collectPawnCountsByRow(Color color) {
+    private Map<Character, Long> collectPawnCountsByRow(Color color) {
         return currentPieces.stream()
-                .filter(piece -> piece instanceof Pawn)
-                .filter(piece -> piece.getColor().isSame(color))
+                .filter(piece -> piece.isPawn())
+                .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.groupingBy(piece -> piece.getPosition().getX(), Collectors.counting()));
     }
 
     public void removePieceIfNotEmpty(Piece targetPiece) {
-        if (!(targetPiece instanceof Empty)) {
+        if (!(targetPiece.isEmpty())) {
             currentPieces.remove(targetPiece);
         }
     }
