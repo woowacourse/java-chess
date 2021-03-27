@@ -3,6 +3,7 @@ package chess.domain.game;
 import static chess.domain.player.type.TeamColor.WHITE;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.dao.entity.ChessRoomEntity;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
@@ -18,12 +19,23 @@ import chess.domain.position.cache.PositionsCache;
 import java.util.List;
 
 public class ChessGame {
+    private final ChessRoomEntity chessRoomEntity;
     private final Players players;
     private final Board board;
     private TeamColor currentTurnTeamColor = WHITE;
 
+
     public ChessGame(BoardSetting boardSetting) {
         validate(boardSetting);
+        chessRoomEntity = null;
+        players = new Players();
+        board = new Board();
+        setPieces(boardSetting);
+    }
+
+    public ChessGame(BoardSetting boardSetting, String title) {
+        validate(boardSetting);
+        chessRoomEntity = new ChessRoomEntity(title);
         players = new Players();
         board = new Board();
         setPieces(boardSetting);
