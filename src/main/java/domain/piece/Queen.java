@@ -3,7 +3,6 @@ package domain.piece;
 import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Queen extends Piece {
@@ -13,13 +12,6 @@ public class Queen extends Piece {
 
     public Queen(boolean isBlack) {
         super(NAME, isBlack, SCORE);
-    }
-
-    public static Map<Position, Piece> createInitialQueens() {
-        Map<Position, Piece> initialQueens = new HashMap<>();
-        initialQueens.put(new Position("d8"), new Queen(true));
-        initialQueens.put(new Position("d1"), new Queen(false));
-        return initialQueens;
     }
 
     private Direction targetDirection(Position source, Position target) {

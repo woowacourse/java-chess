@@ -3,7 +3,6 @@ package domain.piece;
 import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Bishop extends Piece {
@@ -13,15 +12,6 @@ public class Bishop extends Piece {
 
     public Bishop(boolean isBlack) {
         super(NAME, isBlack, SCORE);
-    }
-
-    public static Map<Position, Piece> createInitialBishops() {
-        Map<Position, Piece> initialBishops = new HashMap<>();
-        initialBishops.put(new Position("c8"), new Bishop(true));
-        initialBishops.put(new Position("f8"), new Bishop(true));
-        initialBishops.put(new Position("c1"), new Bishop(false));
-        initialBishops.put(new Position("f1"), new Bishop(false));
-        return initialBishops;
     }
 
     @Override

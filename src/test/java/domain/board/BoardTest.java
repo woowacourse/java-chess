@@ -161,7 +161,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[Error] 체스판 범위를 벗어나는 좌표 입니다.");
+            .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
     @DisplayName("source 위치에 기물이 없으면 이동할 수 없다.")
