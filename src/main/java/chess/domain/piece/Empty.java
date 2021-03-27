@@ -23,6 +23,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
     public String getSymbol() {
         return ".";
     }

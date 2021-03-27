@@ -26,17 +26,6 @@ public class Board {
         return of(Position.of(vertical, horizontal));
     }
 
-    public void move(final Position source, final Position target) {
-        validateMove(source, target);
-        movePiece(source, target);
-    }
-
-    private void validateMove(final Position source, final Position target) {
-        if (!ableToMove(source).contains(target)) {
-            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
-        }
-    }
-
     private List<Position> ableToMove(final Position source) {
         // TODO :: 인덴트 줄이기
         final List<Position> ableToMove = new ArrayList<>();
@@ -60,6 +49,17 @@ public class Board {
         }
 
         return ableToMove;
+    }
+
+    private void validateMove(final Position source, final Position target) {
+        if (!ableToMove(source).contains(target)) {
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
+        }
+    }
+
+    public void move(final Position source, final Position target) {
+        validateMove(source, target);
+        movePiece(source, target);
     }
 
     private boolean isBlocked(final Position source, final Direction direction, final int distance) {
@@ -106,7 +106,7 @@ public class Board {
     }
 
     public boolean isPositionOwner(final Position position, final Owner owner) {
-        return of(position).isOwner(owner);
+        return of(position).isSameOwner(owner);
     }
 
     public Map<Position, Piece> getBoard() {

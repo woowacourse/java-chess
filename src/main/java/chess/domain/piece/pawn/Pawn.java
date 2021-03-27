@@ -34,15 +34,15 @@ public abstract class Pawn extends Piece {
     protected abstract boolean isFirstLine(final Horizontal horizontal);
 
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        if (source.isStraight(target)) {
-            return isValidStraightMove(source, target);
+        if (source.isStraight(target) && targetPiece.isEmpty()) {
+            return this.isValidStraightMove(source, target);
         }
 
-        return isValidDiagonalMove(source, target, isEnemy(targetPiece));
+        return this.isValidDiagonalMove(source, target, this.isEnemy(targetPiece));
     }
 
     private boolean isValidStraightMove(final Position source, final Position target) {
-        if (isFirstLine(source.getHorizontal())) {
+        if (this.isFirstLine(source.getHorizontal())) {
             return true;
         }
 
@@ -50,7 +50,7 @@ public abstract class Pawn extends Piece {
     }
 
     private boolean isValidDiagonalMove(final Position source, final Position target, final boolean isEnemy) {
-        if (isEnemy) {
+        if (source.isDiagonal(target) && isEnemy) {
             return source.getDistance(target) == 1;
         }
         return false;

@@ -38,7 +38,7 @@ public class Status {
 
     private static Score calculateOwnerScoreOnBoard(final Board board, final Owner owner) {
         return board.pieces().stream()
-                .filter(piece -> piece.isOwner(owner))
+                .filter(piece -> piece.isSameOwner(owner))
                 .map(Piece::score)
                 .reduce(new Score(0), Score::sum);
     }
