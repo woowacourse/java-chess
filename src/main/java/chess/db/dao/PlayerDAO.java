@@ -4,6 +4,7 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
 import chess.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;
@@ -33,17 +34,24 @@ public class PlayerDAO {
         return pstmt.getGeneratedKeys();
     }
 
-    public PlayerEntity findById(Long id) throws SQLException {
-        String query = "SELECT * FROM player WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, id);
-        ResultSet rs = pstmt.executeQuery();
+    public PlayerEntity findByIdAndChessGame(Long id, ChessGameEntity chessGameEntity)
+        throws SQLException {
+        ResultSet rs = getResultSet(id, chessGameEntity);
         if (!rs.next()) {
             return null;
         }
         return new PlayerEntity(
             rs.getLong("id"),
-            TeamColor.of(rs.getString("team_color")));
+            TeamColor.of(rs.getString("team_color")),
+            chessGameEntity);
+    }
+
+    private ResultSet getResultSet(Long id, ChessGameEntity chessGameEntity) throws SQLException {
+        String query = "SELECT * FROM player WHERE id = ? AND chess_game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, id);
+        pstmt.setLong(2, chessGameEntity.getId());
+        return pstmt.executeQuery();
     }
 
     public void delete(PlayerEntity playerEntity) throws SQLException {

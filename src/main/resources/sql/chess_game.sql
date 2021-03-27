@@ -193,8 +193,6 @@ INSERT INTO position (file_value, rank_value) VALUES ('f', '8');
 INSERT INTO position (file_value, rank_value) VALUES ('g', '8');
 INSERT INTO position (file_value, rank_value) VALUES ('h', '8');
 
-select * from position;
-
 -- ----------------------------------------------------
 -- piece
 -- ----------------------------------------------------
@@ -213,4 +211,16 @@ INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
 INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
 
+
+
+select * from position;
+
 select * from piece;
+
+select * from player;
+
+select * from player_piece_position;
+
+select * from chess_game;
+
+delete from chess_game;

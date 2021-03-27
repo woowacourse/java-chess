@@ -24,24 +24,26 @@ class PlayerDAOTest {
 
     @Test
     void saveAndFindById() throws SQLException {
-        ChessGameEntity chessRoomEntity = chessGameDAO.add(new ChessGameEntity(TEST_TITLE));
-        PlayerEntity playerEntity = new PlayerEntity(WHITE, chessRoomEntity);
+        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        PlayerEntity playerEntity = new PlayerEntity(WHITE, chessGameEntity);
 
         PlayerEntity savedPlayerEntity = playerDAO.save(playerEntity);
-        PlayerEntity foundByIdPlayerEntity = playerDAO.findById(savedPlayerEntity.getId());
+        PlayerEntity foundByIdPlayerEntity
+            = playerDAO.findByIdAndChessGame(savedPlayerEntity.getId(), chessGameEntity);
 
         assertThat(savedPlayerEntity).isEqualTo(foundByIdPlayerEntity);
     }
 
-
     @Test
     void delete() throws SQLException {
-        ChessGameEntity chessGameEntity = chessGameDAO.add(new ChessGameEntity(TEST_TITLE));
+        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
         PlayerEntity playerEntity = playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
 
         playerDAO.delete(playerEntity);
 
-        PlayerEntity deletedPlayerEntity = playerDAO.findById(playerEntity.getId());
+        PlayerEntity deletedPlayerEntity
+            = playerDAO.findByIdAndChessGame(playerEntity.getId(), chessGameEntity);
+
         assertThat(deletedPlayerEntity).isNull();
     }
 }

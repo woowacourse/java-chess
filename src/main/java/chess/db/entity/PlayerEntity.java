@@ -1,17 +1,12 @@
 package chess.db.entity;
 
 import chess.domain.player.type.TeamColor;
-import java.util.List;
 import java.util.Objects;
 
 public class PlayerEntity {
     private Long id;
     private final TeamColor teamColor;
     private ChessGameEntity chessGameEntity;
-
-    public PlayerEntity(TeamColor teamColor) {
-        this.teamColor = teamColor;
-    }
 
     public PlayerEntity(TeamColor teamColor, ChessGameEntity chessGameEntity) {
         this.teamColor = teamColor;
@@ -24,19 +19,8 @@ public class PlayerEntity {
         this.chessGameEntity = chessGameEntity;
     }
 
-    public PlayerEntity(Long id, TeamColor teamColor) {
-        this.id = id;
-        this.teamColor = teamColor;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setPieceEntities(List<PiecePositionEntity> initialPiecesPositionsByColor) {
-        for (PiecePositionEntity piecePositionEntity : initialPiecesPositionsByColor) {
-            piecePositionEntity.setPlayerEntity(this);
-        }
     }
 
     public ChessGameEntity getChessGameEntity() {

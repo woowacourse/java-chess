@@ -2,27 +2,23 @@ package chess.db.entity;
 
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.domain.player.type.TeamColor;
 import java.util.Objects;
 
 public class ChessGameEntity {
     private Long id;
     private String title;
-    private String currentTeamColor;
+    private TeamColor currentTurnTeamColor;
 
     public ChessGameEntity(String title) {
         this.title = title;
-        this.currentTeamColor = WHITE.getValue();
+        this.currentTurnTeamColor = WHITE;
     }
 
-    public ChessGameEntity(Long id, String title, String current_turn_team_color) {
+    public ChessGameEntity(Long id, String title, TeamColor currentTurnTeamColor) {
         this.id = id;
         this.title = title;
-        this.currentTeamColor = current_turn_team_color;
-    }
-
-    public ChessGameEntity(String title, String currentTurnTeamColor) {
-        this.title = title;
-        this.currentTeamColor = currentTurnTeamColor;
+        this.currentTurnTeamColor = currentTurnTeamColor;
     }
 
     public Long getId() {
@@ -37,16 +33,12 @@ public class ChessGameEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public TeamColor getCurrentTurnTeamColor() {
+        return currentTurnTeamColor;
     }
 
-    public String getCurrentTeamColor() {
-        return currentTeamColor;
-    }
-
-    public void setCurrentTeamColor(String currentTeamColor) {
-        this.currentTeamColor = currentTeamColor;
+    public void setCurrentTurnTeamColor(TeamColor currentTurnTeamColor) {
+        this.currentTurnTeamColor = currentTurnTeamColor;
     }
 
     @Override

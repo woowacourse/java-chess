@@ -2,28 +2,33 @@ package chess.db.entity;
 
 import java.util.Objects;
 
-public class PiecePositionEntity {
+public class PlayerPiecePositionEntity {
     private Long id;
-    private PlayerEntity playerEntity;
-    private final PieceEntity pieceEntity;
-    private final PositionEntity positionEntity;
+    private final PlayerEntity playerEntity;
+    private PieceEntity pieceEntity;
+    private PositionEntity positionEntity;
 
-    public PiecePositionEntity(PieceEntity pieceEntity, PositionEntity positionEntity) {
-        this.pieceEntity = pieceEntity;
-        this.positionEntity = positionEntity;
-    }
-
-    public PiecePositionEntity(Long id, PlayerEntity playerEntity, PieceEntity pieceEntity, PositionEntity positionEntity) {
+    public PlayerPiecePositionEntity(Long id, PlayerEntity playerEntity, PieceEntity pieceEntity,
+        PositionEntity positionEntity) {
         this.id = id;
         this.playerEntity = playerEntity;
         this.pieceEntity = pieceEntity;
         this.positionEntity = positionEntity;
     }
 
-    public PiecePositionEntity(Long id) {
-        this.id = id;
-        pieceEntity = null;
-        positionEntity = null;
+    public PlayerPiecePositionEntity(PlayerEntity playerEntity, PieceEntity pieceEntity,
+        PositionEntity positionEntity) {
+        this.playerEntity = playerEntity;
+        this.pieceEntity = pieceEntity;
+        this.positionEntity = positionEntity;
+    }
+
+    public void setPieceEntity(PieceEntity pieceEntity) {
+        this.pieceEntity = pieceEntity;
+    }
+
+    public void setPositionEntity(PositionEntity positionEntity) {
+        this.positionEntity = positionEntity;
     }
 
     public Long getId() {
@@ -42,19 +47,16 @@ public class PiecePositionEntity {
         return positionEntity;
     }
 
-    public void setPlayerEntity(PlayerEntity playerEntity) {
-        this.playerEntity = playerEntity;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PiecePositionEntity)) {
+        if (!(o instanceof PlayerPiecePositionEntity)) {
             return false;
         }
-        PiecePositionEntity that = (PiecePositionEntity) o;
+        PlayerPiecePositionEntity that = (PlayerPiecePositionEntity) o;
         return id.equals(that.id);
     }
 

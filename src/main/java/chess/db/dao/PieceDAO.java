@@ -14,6 +14,17 @@ public class PieceDAO {
 
     public PieceEntity findByPieceTypeAndTeamColor(PieceType pieceType, TeamColor teamColor)
         throws SQLException {
+        ResultSet rs = getResultSet(pieceType, teamColor);
+        if (rs == null) {
+            return null;
+        }
+        return new PieceEntity(
+            rs.getLong("id"),
+            rs.getString("name"),
+            rs.getString("color"));
+    }
+
+    private ResultSet getResultSet(PieceType pieceType, TeamColor teamColor) throws SQLException {
         String query = "SELECT * FROM piece WHERE name = ? AND color = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, pieceType.name());
@@ -22,9 +33,6 @@ public class PieceDAO {
         if (!rs.next()) {
             return null;
         }
-        return new PieceEntity(
-            rs.getLong("id"),
-            rs.getString("name"),
-            rs.getString("color"));
+        return rs;
     }
 }
