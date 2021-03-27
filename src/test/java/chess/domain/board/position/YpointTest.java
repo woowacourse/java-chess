@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class YpointTest {
-
     @Test
     @DisplayName("Ypoint 출력을 위한 값 반환 테스트")
     void testPrintYpoint() {

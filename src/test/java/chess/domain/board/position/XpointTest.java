@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class XpointTest {
-
     @Test
     @DisplayName("Xpoint 출력을 위한 이름 반환 테스트")
     void testPrintXpoint() {

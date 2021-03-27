@@ -9,7 +9,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
-
     @Test
     @DisplayName("퀸 생성 테스트")
     void createTest() {

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
-
     @Test
     @DisplayName("체스보드 생성 테스트")
     void createTest() {
