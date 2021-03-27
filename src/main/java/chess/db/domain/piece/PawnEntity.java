@@ -16,6 +16,10 @@ public class PawnEntity extends PieceEntity {
         super(id, PAWN, teamColor, DEFAULT_SCORE, Direction.pawnDirections(teamColor));
     }
 
+    public PawnEntity(TeamColor teamColor) {
+        super(PAWN, teamColor, DEFAULT_SCORE, Direction.pawnDirections(teamColor));
+    }
+
     @Override
     public boolean canMoveTo(MoveRoute moveRoute, Board board) {
         Direction moveDirection = moveRoute.direction();

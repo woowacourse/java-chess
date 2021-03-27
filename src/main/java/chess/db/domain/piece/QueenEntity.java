@@ -11,4 +11,8 @@ public class QueenEntity extends PieceEntity {
     public QueenEntity(Long id, TeamColor teamColor) {
         super(id, QUEEN, teamColor, SCORE, Direction.queenDirections());
     }
+
+    public QueenEntity(TeamColor teamColor) {
+        super(QUEEN, teamColor, SCORE, Direction.queenDirections());
+    }
 }

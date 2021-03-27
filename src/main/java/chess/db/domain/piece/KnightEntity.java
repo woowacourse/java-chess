@@ -15,6 +15,10 @@ public class KnightEntity extends PieceEntity {
         super(id, KNIGHT, teamColor, SCORE, Direction.knightDirections());
     }
 
+    public KnightEntity(TeamColor teamColor) {
+        super(KNIGHT, teamColor, SCORE, Direction.knightDirections());
+    }
+
     @Override
     public boolean canMoveTo(MoveRoute moveRoute, Board board) {
         if (isNotCorrectDirection(moveRoute.direction())) {

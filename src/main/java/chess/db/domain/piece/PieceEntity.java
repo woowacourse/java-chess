@@ -33,6 +33,15 @@ public class PieceEntity {
         directions = null;
     }
 
+    public PieceEntity(PieceType pieceType, TeamColor teamColor, double score,
+        List<Direction> directions) {
+        this.id = null;
+        this.pieceType = pieceType;
+        this.teamColor = teamColor;
+        this.score = score;
+        this.directions = directions;
+    }
+
     public static PieceEntity of(PieceWithColorType pieceWithColorType) {
         return PieceEntitiesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
     }

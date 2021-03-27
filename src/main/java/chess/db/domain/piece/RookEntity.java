@@ -11,4 +11,8 @@ public class RookEntity extends PieceEntity {
     public RookEntity(Long id, TeamColor teamColor) {
         super(id, ROOK, teamColor, SCORE, Direction.rookDirections());
     }
+
+    public RookEntity(TeamColor teamColor) {
+        super(ROOK, teamColor, SCORE, Direction.rookDirections());
+    }
 }

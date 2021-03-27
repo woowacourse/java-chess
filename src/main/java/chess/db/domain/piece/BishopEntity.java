@@ -11,4 +11,8 @@ public class BishopEntity extends PieceEntity {
     public BishopEntity(Long id, TeamColor teamColor) {
         super(id, BISHOP, teamColor, SCORE, Direction.bishopDirections());
     }
+
+    public BishopEntity(TeamColor teamColor) {
+        super(BISHOP, teamColor, SCORE, Direction.bishopDirections());
+    }
 }
