@@ -63,7 +63,7 @@ public class Position {
 
     public Position leftUp() {
         Position movedPosition = of(xpoint.left(), ypoint.up());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -71,7 +71,7 @@ public class Position {
 
     public Position rightUp() {
         Position movedPosition = of(xpoint.right(), ypoint.up());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -79,7 +79,7 @@ public class Position {
 
     public Position leftDown() {
         Position movedPosition = of(xpoint.left(), ypoint.down());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -87,7 +87,7 @@ public class Position {
 
     public Position rightDown() {
         Position movedPosition = of(xpoint.right(), ypoint.down());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -95,7 +95,7 @@ public class Position {
 
     public Position upUpLeft() {
         Position movedPosition = of(xpoint.left(), ypoint.up(2));
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -103,7 +103,7 @@ public class Position {
 
     public Position upUpRight() {
         Position movedPosition = of(xpoint.right(), ypoint.up(2));
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -111,7 +111,7 @@ public class Position {
 
     public Position downDownLeft() {
         Position movedPosition = of(xpoint.left(), ypoint.down(2));
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -119,7 +119,7 @@ public class Position {
 
     public Position downDownRight() {
         Position movedPosition = of(xpoint.right(), ypoint.down(2));
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -127,7 +127,7 @@ public class Position {
 
     public Position leftLeftUp() {
         Position movedPosition = of(xpoint.left(2), ypoint.up());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -135,7 +135,7 @@ public class Position {
 
     public Position leftLeftDown() {
         Position movedPosition = of(xpoint.left(2), ypoint.down());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -143,7 +143,7 @@ public class Position {
 
     public Position rightRightUp() {
         Position movedPosition = of(xpoint.right(2), ypoint.up());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
@@ -151,13 +151,13 @@ public class Position {
 
     public Position rightRightDown() {
         Position movedPosition = of(xpoint.right(2), ypoint.down());
-        if (isSamePosition(movedPosition)) {
+        if (isSameXOrY(movedPosition)) {
             return this;
         }
         return movedPosition;
     }
 
-    private boolean isSamePosition(Position movedPosition) {
+    private boolean isSameXOrY(Position movedPosition) {
         return movedPosition.isSameX(this.xpoint) || movedPosition.isSameY(this.ypoint);
     }
 
