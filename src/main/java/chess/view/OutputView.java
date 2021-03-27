@@ -34,17 +34,20 @@ public class OutputView {
         for (final Horizontal horizontal : Horizontal.values()) {
             for (final Vertical vertical : Vertical.values()) {
                 final Position position = Position.of(vertical, horizontal);
-
-                if (ableToMove.contains(position)) {
-                    System.out.print("*");
-                    continue;
-                }
-
-                final Piece piece = board.of(position);
-                System.out.print(piece.getSymbol());
+                printPieceOrAbleToMoveSymbol(board, position, ableToMove);
             }
             System.out.println();
         }
+    }
+
+    private static void printPieceOrAbleToMoveSymbol(Board board, Position position, List<Position> ableToMove) {
+        if (ableToMove.contains(position)) {
+            System.out.print("*");
+            return;
+        }
+
+        final Piece piece = board.of(position);
+        System.out.print(piece.getSymbol());
     }
 
 
