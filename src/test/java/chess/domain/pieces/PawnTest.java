@@ -1,6 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.Team;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ class PawnTest {
     void blackTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.BLACK, Col.location(col));
+            Pawn pawn = Pawn.black(Col.location(col));
 
             Position pawnPosition = pawn.position();
             assertThat(pawnPosition.row()).isEqualTo(1);
@@ -26,7 +25,7 @@ class PawnTest {
     void whiteTeamPositionCheck() {
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
             String col = Character.toString(alpha);
-            Pawn pawn = Pawn.of(Team.WHITE, Col.location(col));
+            Pawn pawn = Pawn.white(Col.location(col));
 
             Position pawnPosition = pawn.position();
             assertThat(pawnPosition.row()).isEqualTo(6);
@@ -34,16 +33,16 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("Pawn이 Black 팀으로 생성되면, initial은 대문자 P이다.")
+    @DisplayName("Pawn이 Black 팀으로 생성되면, initial은 P이다.")
     void blackTeamInitialCheck() {
-        Pawn pawn = Pawn.of(Team.BLACK, 1);
+        Pawn pawn = Pawn.black(1);
         assertThat(pawn.initial()).isEqualTo("P");
     }
 
     @Test
-    @DisplayName("Pawn이 White 팀으로 생성되면, initial은 소문자 p이다.")
+    @DisplayName("Pawn이 White 팀으로 생성되면, initial은 P이다.")
     void whiteTeamInitialCheck() {
-        Pawn pawn = Pawn.of(Team.WHITE, 1);
-        assertThat(pawn.initial()).isEqualTo("p");
+        Pawn pawn = Pawn.white(1);
+        assertThat(pawn.initial()).isEqualTo("P");
     }
 }

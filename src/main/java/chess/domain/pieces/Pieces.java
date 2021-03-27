@@ -41,6 +41,11 @@ public final class Pieces {
                 .anyMatch(Piece::isKing);
     }
 
+    public final boolean findByPiece(final Piece piece) {
+        return pieces.stream()
+                .anyMatch(p -> p.equals(piece));
+    }
+
     public final double calculatedScore(final int rangeMinPivot, final int rangeMaxPivot) {
         double simpleSumScore = calculatedSimpleSumScore();
         double decreasedScore = calculatedDecreasedScore(rangeMinPivot, rangeMaxPivot);

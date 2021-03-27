@@ -22,7 +22,7 @@ public abstract class MultiMoving implements Moving {
         int distance = 1;
         Position currentPosition = piece.position();
         Position nextPosition = currentPosition.next(rowDirection * distance, colDirection * distance);
-        Team team = piece.team();
+        Team team = board.teamByPiece(piece);
 
         while (canMove(board, nextPosition, team)) {
             distance++;

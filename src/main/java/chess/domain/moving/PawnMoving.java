@@ -20,14 +20,16 @@ public class PawnMoving implements Moving {
         addAttackablePositions(piece, board);
         addStraightPosition(board, piece, 1);
         Position currentPosition = piece.position();
-        if (currentPosition.isSameInitPawnPositionByTeam(piece.team())) {
+        Team team = board.teamByPiece(piece);
+        if (currentPosition.isSameInitPawnPositionByTeam(team)) {
             addStraightPosition(board, piece, 2);
         }
         return movablePositions;
     }
 
     private void addAttackablePositions(final Piece piece, final Board board) {
-        if (Team.WHITE.equals(piece.team())) {
+        Team team = board.teamByPiece(piece);
+        if (Team.WHITE.equals(team)) {
             movablePositions(piece, board, whiteRowDirection, whiteColDirection);
             return;
         }
@@ -36,9 +38,10 @@ public class PawnMoving implements Moving {
 
     private void movablePositions(final Piece piece, final Board board, final int[] rowDirections, final int[] colDirections) {
         Position curPosition = piece.position();
+        Team team = board.teamByPiece(piece);
         for (int direction = 0; direction < rowDirections.length; ++direction) {
             Position nextPosition = curPosition.next(rowDirections[direction], colDirections[direction]);
-            addAttackablePosition(board, nextPosition, piece.team());
+            addAttackablePosition(board, nextPosition, team);
         }
     }
 
@@ -53,7 +56,8 @@ public class PawnMoving implements Moving {
 
     private void addStraightPosition(final Board board, final Piece piece, final int degree) {
         Position currentPosition = piece.position();
-        Position nextPosition = currentPosition.next(straightRow(piece.team(), degree), 0);
+        Team team = board.teamByPiece(piece);
+        Position nextPosition = currentPosition.next(straightRow(team, degree), 0);
         if (!board.validatesPieceWithinBoardRange(nextPosition)) {
             return;
         }

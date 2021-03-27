@@ -13,7 +13,7 @@ public abstract class SingleMoving implements Moving {
 
     public List<Position> movablePositions(final Piece piece, final Board board, final int[] rowDirection, final int[] colDirection) {
         Position currentPosition = piece.position();
-        Team team = piece.team();
+        Team team = board.teamByPiece(piece);
 
         for (int direction = 0; direction < rowDirection.length; direction++) {
             Position nextPosition = currentPosition.next(rowDirection[direction], colDirection[direction]);

@@ -5,6 +5,7 @@ import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
 import chess.exception.EnemyTurnException;
+import chess.exception.NotExistPieceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,17 +25,17 @@ public final class Board {
         checkEnemyTurn(startPoint, team);
         Piece startPointPiece = pieces.pieceByPosition(startPoint);
         startPointPiece.move(this, endPoint);
-        startPointPiece.erasePiece(this, endPoint);
+        startPointPiece.erasePiece(this, team, endPoint);
     }
 
-    private void checkEnemyTurn(Position startPoint, Team team) {
+    private void checkEnemyTurn(final Position startPoint, final Team team) {
         Pieces enemyPieces = board.get(Team.enemyTeam(team));
         if (enemyPieces.containsPosition(startPoint)) {
             throw new EnemyTurnException(team);
         }
     }
 
-    public boolean validatesPieceWithinBoardRange(Position position) {
+    public boolean validatesPieceWithinBoardRange(final Position position) {
         return !position.isOutOfRange();
     }
 
@@ -48,8 +49,18 @@ public final class Board {
         return pieces.calculatedScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }
 
-    public boolean existsPieceByTeam(final Team team, final Position nextPosition) {
+    public final boolean existsPieceByTeam(final Team team, final Position nextPosition) {
         return piecesByTeam(team).containsPosition(nextPosition);
+    }
+
+    public final Team teamByPiece(final Piece piece) {
+        if (board.get(Team.BLACK).findByPiece(piece)) {
+            return Team.BLACK;
+        }
+        if (board.get(Team.WHITE).findByPiece(piece)) {
+            return Team.WHITE;
+        }
+        throw new NotExistPieceException();
     }
 
     public final Pieces piecesByTeam(final Team team) {

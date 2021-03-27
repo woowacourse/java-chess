@@ -1,6 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.exception.WrongMoveCommandException;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,14 +19,14 @@ class PiecesTest {
     @BeforeEach
     void setUp() {
         List<Piece> piecesList = Arrays.asList(
-                new King(Team.WHITE, new Position(1, 2)),
-                new Queen(Team.WHITE, new Position(2, 2)),
-                new Rook(Team.WHITE, new Position(3, 3)),
-                new Bishop(Team.WHITE, new Position(4, 4)),
-                new Knight(Team.WHITE, new Position(5, 5)),
+                new King(new Position(1, 2)),
+                new Queen(new Position(2, 2)),
+                new Rook(new Position(3, 3)),
+                new Bishop(new Position(4, 4)),
+                new Knight(new Position(5, 5)),
 
-                new Pawn(Team.WHITE, new Position(4, 5)),
-                new Pawn(Team.WHITE, new Position(3, 5))
+                new Pawn(new Position(4, 5)),
+                new Pawn(new Position(3, 5))
         );
         pieces = new Pieces(piecesList);
     }

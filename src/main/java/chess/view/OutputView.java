@@ -6,6 +6,7 @@ import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public final class OutputView {
     public static final int BOARD_MAX_SIZE = 8;
@@ -41,23 +42,31 @@ public final class OutputView {
         System.out.println();
     }
 
-    private static void putPieceToBoard(final Board board, final String[][] arr) {
-        board.toMap().values()
-                .forEach(v -> {
-                    for (Piece piece : v.toList()) {
-                        Position position = piece.position();
-                        arr[position.row()][position.col()] = piece.initial();
-                    }
-                });
+    private static void putPieceToBoard(final Board board, final String[][] outputBoard) {
+        board.toMap().forEach((team, value) -> {
+            for (Piece piece : value.toList()) {
+                putPieceByTeam(outputBoard, team, piece);
+            }
+        });
+    }
+
+    private static void putPieceByTeam(String[][] board, Team team, Piece piece) {
+        Position position = piece.position();
+        if (Team.BLACK.equals(team)) {
+            board[position.row()][position.col()] = piece.initial();
+        }
+        if (Team.WHITE.equals(team)) {
+            board[position.row()][position.col()] = piece.initial().toLowerCase(Locale.ROOT);
+        }
     }
 
     private static String[][] initBoard() {
-        String[][] arr = new String[8][8];
+        String[][] board = new String[8][8];
 
         for (int i = 0; i < 8; ++i) {
-            Arrays.fill(arr[i], ".");
+            Arrays.fill(board[i], ".");
         }
-        return arr;
+        return board;
     }
 
     private static void printOneLine(final String[] line) {

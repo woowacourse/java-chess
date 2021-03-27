@@ -34,7 +34,7 @@ class BishopTest {
     @DisplayName("Bishop이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"c", "f"})
     void blackTeamPositionCheck(String col) {
-        Bishop bishop = Bishop.of(Team.BLACK, Col.location(col));
+        Bishop bishop = Bishop.black(Col.location(col));
         Position bishopPosition = bishop.position();
 
         assertThat(bishopPosition.row()).isEqualTo(0);
@@ -45,7 +45,7 @@ class BishopTest {
     @DisplayName("Bishop이 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"c", "f"})
     void whiteTeamPositionCheck(String col) {
-        Bishop bishop = Bishop.of(Team.WHITE, Col.location(col));
+        Bishop bishop = Bishop.white(Col.location(col));
         Position bishopPosition = bishop.position();
 
         assertThat(bishopPosition.row()).isEqualTo(7);
@@ -57,30 +57,30 @@ class BishopTest {
     @DisplayName("Bishop 초기 col 위치가 c혹은 f가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "d", "e", "g", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Bishop.of(Team.BLACK, Col.location(col))).isInstanceOf(WrongInitPositionException.class);
+        assertThatThrownBy(() -> Bishop.white(Col.location(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test
-    @DisplayName("Bishop이 Black 팀으로 생성되면, initial은 대문자 B이다.")
+    @DisplayName("Bishop이 Black 팀으로 생성되면, initial은 B이다.")
     void blackTeamInitialCheck() {
-        Bishop bishop = Bishop.of(Team.BLACK, 2);
+        Bishop bishop = Bishop.black(2);
         assertThat(bishop.initial()).isEqualTo("B");
     }
 
     @Test
-    @DisplayName("Bishop이 White 팀으로 생성되면, initial은 소문자 b이다.")
+    @DisplayName("Bishop이 White 팀으로 생성되면, initial은 B이다.")
     void whiteTeamInitialCheck() {
-        Bishop bishop = Bishop.of(Team.WHITE, 2);
-        assertThat(bishop.initial()).isEqualTo("b");
+        Bishop bishop = Bishop.white(2);
+        assertThat(bishop.initial()).isEqualTo("B");
     }
 
     void set(final Bishop bishop) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                new Pawn(crossBlackTeamPawnPosition),
+                new Pawn(straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                new Pawn(whiteTeamPawnPosition),
                 bishop
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -92,7 +92,7 @@ class BishopTest {
     @Test
     @DisplayName("White팀 Bishop이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Bishop bishop = new Bishop(Team.WHITE, new Position(1, 1));
+        Bishop bishop = new Bishop(new Position(1, 1));
         set(bishop);
 
         List<Position> movablePositions = new BishopMoving().allMovablePositions(bishop, board);

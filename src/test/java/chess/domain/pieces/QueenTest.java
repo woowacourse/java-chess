@@ -33,7 +33,7 @@ class QueenTest {
     @DisplayName("Queen이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"d"})
     void blackTeamPositionCheck(String col) {
-        Queen queen = Queen.of(Team.BLACK, Col.location(col));
+        Queen queen = Queen.black(Col.location(col));
         Position queenPosition = queen.position();
 
         assertThat(queenPosition.row()).isEqualTo(0);
@@ -44,7 +44,7 @@ class QueenTest {
     @DisplayName("Queen이 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"d"})
     void whiteTeamPositionCheck(String col) {
-        Queen queen = Queen.of(Team.WHITE, Col.location(col));
+        Queen queen = Queen.white(Col.location(col));
         Position queenPosition = queen.position();
 
         assertThat(queenPosition.row()).isEqualTo(7);
@@ -55,30 +55,30 @@ class QueenTest {
     @DisplayName("Queen 초기 col 위치가 d가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "c", "e", "f", "g", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Queen.of(Team.BLACK, Col.location(col))).isInstanceOf(WrongInitPositionException.class);
+        assertThatThrownBy(() -> Queen.white(Col.location(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test
-    @DisplayName("Queen이 Black 팀으로 생성되면, initial은 대문자 Q이다.")
+    @DisplayName("Queen이 Black 팀으로 생성되면, initial은 Q이다.")
     void blackTeamInitialCheck() {
-        Queen queen = Queen.of(Team.BLACK, 3);
+        Queen queen = Queen.black(3);
         assertThat(queen.initial()).isEqualTo("Q");
     }
 
     @Test
-    @DisplayName("Queen이 White 팀으로 생성되면, initial은 소문자 q이다.")
+    @DisplayName("Queen이 White 팀으로 생성되면, initial은 Q이다.")
     void whiteTeamInitialCheck() {
-        Queen queen = Queen.of(Team.WHITE, 3);
-        assertThat(queen.initial()).isEqualTo("q");
+        Queen queen = Queen.white(3);
+        assertThat(queen.initial()).isEqualTo("Q");
     }
 
     void set(final Queen queen) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition)
+                new Pawn(crossBlackTeamPawnPosition),
+                new Pawn(straightBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                new Pawn(whiteTeamPawnPosition),
                 queen
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -90,7 +90,7 @@ class QueenTest {
     @Test
     @DisplayName("White팀 Queen이 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Queen queen = new Queen(Team.WHITE, new Position(1, 1));
+        Queen queen = new Queen(new Position(1, 1));
         set(queen);
 
         List<Position> movablePositions = new QueenMoving().allMovablePositions(queen, board);
