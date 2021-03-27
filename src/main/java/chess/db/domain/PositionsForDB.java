@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.db.domain;
 
 public class PositionsForDB {
 }

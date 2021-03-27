@@ -1,10 +1,10 @@
-package chess.dao;
+package chess.db.dao;
 
-import static chess.dao.DBConnection.getConnection;
+import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.dao.entity.PieceEntity;
-import chess.dao.entity.PositionEntity;
+import chess.db.entity.PieceEntity;
+import chess.db.entity.PositionEntity;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.sql.PreparedStatement;

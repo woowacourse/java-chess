@@ -1,8 +1,8 @@
-package chess.domain;
+package chess.db.entity;
 
-import chess.dao.entity.PieceEntity;
-import chess.dao.entity.PlayerEntity;
-import chess.dao.entity.PositionEntity;
+import chess.db.entity.PieceEntity;
+import chess.db.entity.PlayerEntity;
+import chess.db.entity.PositionEntity;
 
 public class PiecePositionEntity {
     private Long id;

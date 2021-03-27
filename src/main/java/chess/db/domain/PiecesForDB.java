@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.db.domain;
 
-import chess.dao.entity.PieceEntity;
+import chess.db.entity.PieceEntity;
 import chess.domain.player.type.TeamColor;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package chess.dao.entity;
+package chess.db.entity;
 
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;

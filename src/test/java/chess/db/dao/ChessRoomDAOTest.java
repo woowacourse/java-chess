@@ -1,8 +1,8 @@
-package chess.dao;
+package chess.db.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.entity.ChessGameEntity;
+import chess.db.entity.ChessGameEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

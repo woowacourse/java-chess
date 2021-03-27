@@ -1,4 +1,4 @@
-package chess.dao.entity;
+package chess.db.entity;
 
 import static chess.domain.player.type.TeamColor.WHITE;
 

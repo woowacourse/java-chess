@@ -1,10 +1,10 @@
-package chess.dao;
+package chess.db.dao;
 
-import static chess.dao.DBConnection.getConnection;
+import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.dao.entity.PieceEntity;
-import chess.dao.entity.PlayerEntity;
+import chess.db.entity.PieceEntity;
+import chess.db.entity.PlayerEntity;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;

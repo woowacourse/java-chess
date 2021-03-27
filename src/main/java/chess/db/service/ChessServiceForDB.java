@@ -1,6 +1,6 @@
-package chess.service;
+package chess.db.service;
 
-import chess.domain.game.ChessGameForDB;
+import chess.db.domain.ChessGameForDB;
 import java.sql.SQLException;
 
 public class ChessServiceForDB {

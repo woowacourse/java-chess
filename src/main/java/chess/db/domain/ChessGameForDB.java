@@ -1,12 +1,11 @@
-package chess.domain.game;
+package chess.db.domain;
 
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
-import chess.dao.ChessGameDAO;
-import chess.dao.entity.ChessGameEntity;
-import chess.dao.entity.PlayerEntity;
-import chess.domain.player.PlayerForDB;
+import chess.db.dao.ChessGameDAO;
+import chess.db.entity.ChessGameEntity;
+import chess.db.entity.PlayerEntity;
 import java.sql.SQLException;
 
 public class ChessGameForDB {

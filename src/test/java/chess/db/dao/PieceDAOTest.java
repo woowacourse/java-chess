@@ -1,4 +1,4 @@
-//package chess.dao;
+//package chess.db.dao;
 //
 //import static chess.domain.piece.type.PieceType.PAWN;
 //import static chess.domain.piece.type.PieceType.ROOK;
@@ -6,9 +6,9 @@
 //import static chess.domain.player.type.TeamColor.WHITE;
 //import static org.assertj.core.api.Assertions.assertThat;
 //
-//import chess.dao.entity.ChessGameEntity;
-//import chess.dao.entity.PieceEntity;
-//import chess.dao.entity.PlayerEntity;
+//import chess.db.entity.ChessGameEntity;
+//import chess.db.entity.PieceEntity;
+//import chess.db.entity.PlayerEntity;
 //import java.sql.SQLException;
 //import org.junit.jupiter.api.AfterEach;
 //import org.junit.jupiter.api.Test;
