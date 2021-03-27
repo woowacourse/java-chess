@@ -16,7 +16,7 @@ public class MoveCommand {
 
     public static MoveCommand of(final String[] input) {
         validateMoveCommand(input);
-        return new MoveCommand(new Position(input[1]), new Position(input[2]));
+        return new MoveCommand(Position.of(input[1]), Position.of(input[2]));
     }
 
     private static void validateMoveCommand(String[] input) {

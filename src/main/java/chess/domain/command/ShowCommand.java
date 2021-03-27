@@ -11,7 +11,7 @@ public class ShowCommand {
     }
 
     public static ShowCommand of(final String[] input) {
-        return new ShowCommand(new Position(input[1]));
+        return new ShowCommand(Position.of(input[1]));
     }
 
     public static ShowCommand of(final String input) {
