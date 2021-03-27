@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.PieceRange;
+import chess.domain.board.Path;
+import chess.domain.piece.strategy.Direction;
 import chess.domain.piece.strategy.PieceStrategy;
-import chess.domain.position.Notation;
+import chess.domain.position.Position;
+import java.util.List;
 
 public final class RealPiece implements Piece {
 
@@ -15,8 +17,13 @@ public final class RealPiece implements Piece {
     }
 
     @Override
-    public PieceRange movableFrom(Notation notation) {
-        return pieceStrategy.pieceRangeFrom(notation);
+    public List<Direction> directions() {
+        return pieceStrategy.directions();
+    }
+
+    @Override
+    public Path pathFrom(Direction direction, Position position) {
+        return pieceStrategy.pathFrom(direction, position);
     }
 
     @Override

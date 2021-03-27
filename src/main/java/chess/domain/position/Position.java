@@ -1,63 +1,95 @@
 package chess.domain.position;
 
-import chess.domain.board.Paths;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.strategy.PieceRange;
+import chess.domain.board.Path;
+import chess.domain.piece.strategy.Direction;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Position {
 
-    private final Notation notation;
-    private final Piece holdingPiece;
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
-    public Position(final Position position, final Piece holdingPiece) {
-        this(position.notation, holdingPiece);
+    static {
+        cache();
     }
 
-    public Position(final Notation notation, final Piece holdingPiece) {
-        this.notation = notation;
-        this.holdingPiece = holdingPiece;
+    private final Column column;
+    private final Row row;
+
+    private Position(final Column column, final Row row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public Position replacePiece(Piece piece) {
-        return new Position(this, piece);
+    public static Position ofName(final String positionName) {
+        return CACHE.get(positionName);
     }
 
-    public Position copyPieceFrom(Position source) {
-        return new Position(this, source.holdingPiece);
+    public Position move(final Direction direction) {
+        final Column newColumn = column.move(direction);
+        final Row newRow = row.move(direction);
+        return CACHE.get(newColumn.value() + newRow.value());
     }
 
-    public boolean holdingPieceIsColor(PieceColor color) {
-        return holdingPiece.isColor(color);
+    public Path shortPath(final Direction direction) {
+        if (canMove(direction)) {
+            return new Path(Collections.singletonList(move(direction)));
+        }
+        return new Path(Collections.emptyList());
     }
 
-    public Paths availablePaths(Map<Notation, Position> boardPositions) {
-        PieceRange pieceRange = holdingPiece.movableFrom(notation);
-        return pieceRange.calculatePaths(boardPositions);
+    public Path longPath(final Direction direction) {
+        final List<Position> visitedPositions = new ArrayList<>();
+        Position currentPosition = this;
+        while(currentPosition.canMove(direction)) {
+            currentPosition = currentPosition.move(direction);
+            visitedPositions.add(currentPosition);
+        }
+        return new Path(visitedPositions);
     }
 
-    public boolean isEmpty() {
-        return holdingPiece.isEmpty();
-    }
-
-    public boolean containsPawn() {
-        return holdingPiece.isPawn();
-    }
-
-    public boolean containsKing() {
-        return holdingPiece.isKing();
+    public boolean canMove(Direction direction) {
+        return column.canMove(direction) && row.canMove(direction);
     }
 
     public boolean isOfColumn(Column column) {
-        return notation.isOfColumn(column);
+        return this.column.equals(column);
     }
 
-    public Piece holdingPiece() {
-        return holdingPiece;
+    public String name() {
+        return column.value() + row.value();
     }
 
-    public Notation notation() {
-        return notation;
+    private static void cache() {
+        for (Column column : Column.values()) {
+            cacheRowsWithColumn(column);
+        }
+    }
+
+    private static void cacheRowsWithColumn(final Column column) {
+        for (Row row : Row.values()) {
+            CACHE.put(column.value() + row.value(), new Position(column, row));
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position that = (Position) o;
+        return column == that.column && row == that.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }

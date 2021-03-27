@@ -2,7 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.Game;
 import chess.domain.piece.PieceColor;
-import chess.domain.position.Notation;
+import chess.domain.position.Position;
 
 public abstract class StageState implements GameState {
 
@@ -16,7 +16,7 @@ public abstract class StageState implements GameState {
         return game;
     }
 
-    protected Game moveInBoard(final Notation sourceName, final Notation targetName, final PieceColor currentTurnColor) {
+    protected Game moveInBoard(final Position sourceName, final Position targetName, final PieceColor currentTurnColor) {
         if (game.containsEnemyPiece(sourceName, currentTurnColor.reversed())) {
             throw new IllegalArgumentException("해당 체스말을 움직일 권한이 없습니다.");
         }

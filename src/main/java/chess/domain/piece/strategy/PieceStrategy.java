@@ -1,10 +1,14 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.position.Notation;
+import chess.domain.board.Path;
+import chess.domain.position.Position;
+import java.util.List;
 
 public interface PieceStrategy {
 
-    PieceRange pieceRangeFrom(Notation notation);
+    List<Direction> directions();
+
+    Path pathFrom(final Direction direction, final Position position);
 
     boolean isPawn();
 
