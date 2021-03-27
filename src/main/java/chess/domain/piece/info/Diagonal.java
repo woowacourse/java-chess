@@ -1,11 +1,10 @@
 package chess.domain.piece.info;
 
-import chess.domain.piece.CurrentPieces;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum Diagonal {
+public enum Diagonal implements Direction {
     UP_RIGHT((source, target) ->
             !source.isSubtractXPositive(target) && !source.isSubtractYPositive(target),
             new int[]{1, 1}),
@@ -19,8 +18,6 @@ public enum Diagonal {
             source.isSubtractXPositive(target) && source.isSubtractYPositive(target),
             new int[]{-1, -1});
 
-    private static final String DIRECTION_ERROR = "[ERROR] 올바른 방향이 아닙니다.";
-    private static final String OBSTACLE_ERROR = "[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.";
     private final BiPredicate<Position, Position> findDiagonal;
     private final int[] changeValues;
 
@@ -37,19 +34,8 @@ public enum Diagonal {
                 .orElseThrow(() -> new IllegalArgumentException(DIRECTION_ERROR));
     }
 
-    public void hasPieceInPath(Position source, Position target, CurrentPieces currentPieces) {
-        int sourceX = source.getX();
-        int sourceY = source.getY();
-        int count = Math.abs(source.subtractX(target));
-        for (int i = 1; i < count; i++) {
-            validatePieceInPath(currentPieces, sourceX, sourceY, i);
-        }
-    }
-
-    private void validatePieceInPath(CurrentPieces currentPieces, int sourceX, int sourceY, int count) {
-        if (currentPieces.hasSamePositionPiece(
-                Position.of((char) (sourceX + (changeValues[0] * count)), (char) (sourceY + (changeValues[1] * count))))) {
-            throw new IllegalArgumentException(OBSTACLE_ERROR);
-        }
+    @Override
+    public int[] getChangeValues() {
+        return changeValues;
     }
 }

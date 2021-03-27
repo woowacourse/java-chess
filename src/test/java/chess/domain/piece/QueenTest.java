@@ -1,113 +1,101 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QueenTest {
-    private CurrentPieces currentPieces;
-
-    @BeforeEach
-    void setUp() {
-        currentPieces = CurrentPieces.generate();
-    }
 
     @DisplayName("Queen 객체 생성 확인")
     @Test
     void 퀸_객체_생성() {
-        Queen queen = new Queen(Position.of('d', '8'), "Q", Color.BLACK);
+        Queen queen = new Queen("Q", Color.BLACK);
 
-        assertThat(queen.getPosition()).isEqualTo(Position.of('d', '8'));
         assertThat(queen.getName()).isEqualTo("Q");
+        assertThat(queen.isSameColor(Color.BLACK)).isTrue();
     }
 
     @DisplayName("초기화된 퀸 객체들 생성 확인")
     @Test
     void 퀸_객체들_생성() {
-        List<Queen> queens = Queen.generate();
+        Map<Position, Queen> queens = Queen.generate();
 
         assertThat(queens.size()).isEqualTo(2);
     }
 
     @Test
     void 퀸_이동_십자() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), "Q", Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d', '1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('d', '4'), new Queen("Q", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('d', '4');
+        Position target = Position.of('d', '1');
+        Piece queen = chessBoard.findByPosition(source);
 
-        queen.move(target, currentPieces);
+        chessBoard.move(source, target);
 
-        assertThat(queen.getPosition()).isEqualTo(target);
+        assertThat(queen).isEqualTo(chessBoard.findByPosition(target));
     }
 
     @Test
     void 퀸_이동_대각선() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), "Q", Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('b', '6'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('d', '4'), new Queen("Q", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('d', '4');
+        Position target = Position.of('a', '1');
+        Piece queen = chessBoard.findByPosition(source);
 
-        queen.move(target, currentPieces);
+        chessBoard.move(source, target);
 
-        assertThat(queen.getPosition()).isEqualTo(target);
+        assertThat(queen).isEqualTo(chessBoard.findByPosition(target));
     }
 
     @Test
     void 퀸_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), "Q", Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('b', '1'); // 옮기고자 하는 위치
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('d', '4'), new Queen("Q", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('d', '4');
+        Position target = Position.of('b', '1');
 
-        Piece queen = currentPieces.findByPosition(source);
-
-        assertThatThrownBy(() ->  queen.move(target, currentPieces))
+        assertThatThrownBy(() ->  chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 상대편_말을_공격한다_십자() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), "Q", Color.BLACK),
-                new Pawn(Position.of('d','1'),"p", Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('d', '4'), new Queen("Q", Color.BLACK));
+        current.put(Position.of('a', '4'), new Queen("q", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('d', '4');
+        Position target = Position.of('a', '4');
 
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d','1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        chessBoard.move(source, target);
 
-        queen.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+        assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
 
     @Test
     void 상대편_말을_공격한다_대각선() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), "Q", Color.BLACK),
-                new Pawn(Position.of('d','1'),"p", Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('d', '4'), new Queen("Q", Color.BLACK));
+        current.put(Position.of('g', '7'), new Queen("q", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('d', '4');
+        Position target = Position.of('g', '7');
 
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d','1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        chessBoard.move(source, target);
 
-        queen.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+        assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
 }

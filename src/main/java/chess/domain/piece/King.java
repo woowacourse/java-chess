@@ -1,49 +1,32 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
 import chess.domain.piece.info.Score;
+import chess.domain.piece.strategy.KingMoveStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class King extends Move {
-    private static final String KING_ERROR = "[ERROR] 킹 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(0);
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');
 
-    public King(Position position, String name, Color color) {
-        super(position, name, color);
-    }
-
-    public King(Position position, String name, Color color, Score score) {
-        super(position, name, color, score);
+    public King(String name, Color color) {
+        super(name, color, SCORE, new KingMoveStrategy());
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        validateKingMove(target);
-        if (this.position.isCross(target)) {
-            moveCross(target, currentPieces);
-        }
-        if (this.position.isDiagonal(target)) {
-            moveDiagonal(target, currentPieces);
-        }
-        this.position = target;
+    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
+        return moveStrategy.canMove(source, target, chessBoard);
     }
 
-    private void validateKingMove(Position target) {
-        if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
-                !(Math.abs(this.position.subtractX(target)) == 1 || Math.abs(this.position.subtractY(target)) == 1)) {
-            throw new IllegalArgumentException(KING_ERROR);
-        }
-    }
-
-    public static List<King> generate() {
-        List<King> kings = new ArrayList();
-        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK, SCORE));
-        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE, SCORE));
+    public static Map<Position, King> generate() {
+        Map<Position, King> kings = new HashMap<>();
+        kings.put(INITIAL_BLACK_POSITION, new King("K", Color.BLACK));
+        kings.put(INITIAL_WHITE_POSITION, new King("k", Color.WHITE));
         return kings;
     }
 }

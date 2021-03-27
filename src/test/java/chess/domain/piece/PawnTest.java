@@ -1,38 +1,42 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PawnTest {
-    private CurrentPieces currentPieces;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUp() {
-        currentPieces = CurrentPieces.generate();
+        chessBoard = ChessBoard.generate();
     }
 
     @DisplayName("Pawn 객체 생성 확인")
     @Test
     void 폰_객체_생성() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
+        Pawn pawn = new Pawn("P", Color.BLACK);
 
-        assertThat(pawn.getPosition()).isEqualTo(Position.of('a', '7'));
         assertThat(pawn.getName()).isEqualTo("P");
+        assertThat(pawn.isSameColor(Color.BLACK)).isTrue();
     }
 
     @DisplayName("초기화된 Pawn 객체들 생성 확인")
     @Test
     void 폰_객체들_생성() {
-        List<Pawn> pawns = Pawn.generate();
+        Map<Position, Pawn> pawns = Pawn.generate();
 
         assertThat(pawns.size()).isEqualTo(16);
     }
@@ -40,92 +44,158 @@ public class PawnTest {
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 - 2칸 이동")
     @Test
     void pawn_처음으로_이동_2칸() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
+        Position source = Position.of('a', '7');
+        Position target = Position.of('a', '5');
+        Piece pawn = chessBoard.findByPosition(source);
 
-        pawn.move(Position.of('a', '5'), currentPieces);
+        chessBoard.move(source, target);
 
-        assertThat(pawn.getPosition()).isEqualTo(Position.of('a', '5'));
+        assertThat(pawn).isEqualTo(chessBoard.findByPosition(target));
     }
 
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 예외 - 3칸 이동 ")
     @Test
     void pawn_처음으로_이동_3칸_예외() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
+        Position source = Position.of('a', '7');
+        Position target = Position.of('a', '4');
 
-        assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> {
+            chessBoard.move(source, target);
+        }).isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+    @DisplayName("Pawn 규칙에 따라 이미 움직인 Pawn 을 움직이는 경우 - 1칸 이동 ")
+    @Test
+    void pawn_이미_이동했을때_1칸_이동() {
+        Position source = Position.of('a', '4');
+        Position target = Position.of('a', '3');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Piece pawn = chessBoard.findByPosition(source);
+
+        chessBoard.move(source, target);
+
+        assertThat(pawn).isEqualTo(chessBoard.findByPosition(target));
     }
 
     @DisplayName("Pawn 규칙에 따라 이미 움직인 Pawn 을 움직이는 경우 예외 - 2칸 이동 ")
     @Test
     void pawn_이미_이동_2칸_예외() {
-        Pawn pawn = new Pawn(Position.of('a', '6'), "P", Color.BLACK);
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(Position.of('a', '4'), new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+        Position source = Position.of('a', '4');
+        Position target = Position.of('a', '2');
 
-        assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
+        assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("뒤로 이동할 경우 예외")
+    @DisplayName("검은색 폰이 뒤로 이동할 경우 예외")
     @Test
-    void pawn_뒤로_이동() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P", Color.BLACK),
-                new Pawn(Position.of('a', '2'), "P", Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+    void 검은색_pawn_뒤로_이동() {
+        Position source = Position.of('a', '7');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
 
-        Piece pawn1 = currentPieces.findByPosition(Position.of('a', '7'));
-        Piece pawn2 = currentPieces.findByPosition(Position.of('a', '2'));
-
-        assertThatThrownBy(() -> pawn1.move(Position.of('a', '8'), currentPieces))
+        assertThatThrownBy(() -> chessBoard.move(source, Position.of('a', '8')))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> pawn2.move(Position.of('a', '1'), currentPieces))
+    }
+
+    @DisplayName("하얀색 폰이 뒤로 이동할 경우 예외")
+    @Test
+    void 하얀색_pawn_뒤로_이동() {
+        Position source = Position.of('a', '2');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("p", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
+
+        assertThatThrownBy(() -> chessBoard.move(source, Position.of('a', '1')))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 이동하는데_앞에_장애물이_있는_경우() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P", Color.BLACK),
-                new Pawn(Position.of('a', '6'), "P", Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+    void 이동하는데_위치_경로에_장애물이_있는_경우() {
+        Position source = Position.of('a', '7');
+        Position target = Position.of('a', '5');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        current.put(Position.of('a', '6'), new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
 
-        Position source = Position.of('a', '7'); // 비숍 위치
-        Position target = Position.of('a', '5'); // 옮기고자 하는 위치
-        Piece pawn = currentPieces.findByPosition(source);
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
-        assertThatThrownBy(() -> pawn.move(target, currentPieces))
-        .isInstanceOf(IllegalArgumentException.class);
+    @Test
+    void 이동하려는_위치에_체스말이_있을경우_예외() {
+        Position source = Position.of('a', '7');
+        Position target = Position.of('a', '5');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        current.put(target, new Pawn("P", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 검은말이_상대편_말을_공격한다() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P", Color.BLACK),
-                new Pawn(Position.of('b', '6'), "p", Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Position source = Position.of('a', '6');
+        Position target = Position.of('b', '5');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        current.put(target, new Pawn("p", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
 
-        Position source = Position.of('a', '7'); // 비숍 위치
-        Position target = Position.of('b', '6'); // 옮기고자 하는 위치
-        Piece pawn = currentPieces.findByPosition(source);
+        chessBoard.move(source, target);
 
-        pawn.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+        assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
 
     @Test
     void 하얀말이_상대편_말을_공격한다() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '2'), "p", Color.WHITE),
-                new Pawn(Position.of('b', '3'), "P", Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Position source = Position.of('a', '2');
+        Position target = Position.of('b', '3');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("p", Color.WHITE));
+        current.put(target, new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
 
-        Position source = Position.of('a', '2'); // 비숍 위치
-        Position target = Position.of('b', '3'); // 옮기고자 하는 위치
-        Piece pawn = currentPieces.findByPosition(source);
+        chessBoard.move(source, target);
 
-        pawn.move(target, currentPieces);
+        assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
+    }
 
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+    @Test
+    void 검은말이_같은편_말을_공격할때_예외() {
+        Position source = Position.of('a', '6');
+        Position target = Position.of('b', '5');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("P", Color.BLACK));
+        current.put(target, new Pawn("P", Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(current);
+
+        assertThatThrownBy(() -> {
+            chessBoard.move(source, target);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 하얀말이_같은편_말을_공격할때_예외() {
+        Position source = Position.of('a', '2');
+        Position target = Position.of('b', '3');
+        Map<Position, Piece> current = new HashMap<>();
+        current.put(source, new Pawn("p", Color.WHITE));
+        current.put(target, new Pawn("p", Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(current);
+
+        assertThatThrownBy(() -> {
+            chessBoard.move(source, target);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }

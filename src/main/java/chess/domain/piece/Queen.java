@@ -1,48 +1,32 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
 import chess.domain.piece.info.Score;
+import chess.domain.piece.strategy.QueenMoveStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Queen extends Move {
-    private static final String QUEEN_ERROR = "[ERROR] 퀸 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(9);
     private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
 
-    public Queen(Position position, String name, Color color) {
-        super(position, name, color);
-    }
-
-    public Queen(Position position, String name, Color color, Score score) {
-        super(position, name, color, score);
+    public Queen(String name, Color color) {
+        super(name, color, SCORE, new QueenMoveStrategy());
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        validateQueenMove(target);
-        if (this.position.isCross(target)) {
-            moveCross(target, currentPieces);
-        }
-        if (this.position.isDiagonal(target)) {
-            moveDiagonal(target, currentPieces);
-        }
-        this.position = target;
+    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
+        return moveStrategy.canMove(source, target, chessBoard);
     }
 
-    private void validateQueenMove(Position target) {
-        if (!this.position.isCross(target) && !this.position.isDiagonal(target)) {
-            throw new IllegalArgumentException(QUEEN_ERROR);
-        }
-    }
-
-    public static List<Queen> generate() {
-        List<Queen> queens = new ArrayList();
-        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q", Color.BLACK, SCORE));
-        queens.add(new Queen(INITIAL_WHITE_POSITION, "q", Color.WHITE, SCORE));
+    public static Map<Position, Queen> generate() {
+        Map<Position, Queen> queens = new HashMap<>();
+        queens.put(INITIAL_BLACK_POSITION, new Queen("Q", Color.BLACK));
+        queens.put(INITIAL_WHITE_POSITION, new Queen("q", Color.BLACK));
         return queens;
     }
 }

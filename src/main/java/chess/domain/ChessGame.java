@@ -10,26 +10,26 @@ import java.util.List;
 public class ChessGame {
     private static final String TURN_ERROR = "[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.";
 
-    private final CurrentPieces currentPieces;
+    //private final CurrentPieces currentPieces;
     private Color turn;
 
-    public ChessGame() {
-        this.currentPieces = CurrentPieces.generate();
-        turn = Color.WHITE;
-    }
+//    public ChessGame() {
+//        this.currentPieces = CurrentPieces.generate();
+//        turn = Color.WHITE;
+//    }
 
-    public CurrentPieces getCurrentPieces() {
-        return currentPieces;
-    }
+//    //public CurrentPieces getCurrentPieces() {
+//        return currentPieces;
+//    }
 
-    public void play(List<String> sourceTarget) {
-        Position source = Position.of(sourceTarget.get(0).charAt(0), sourceTarget.get(0).charAt(1));
-        Position target = Position.of(sourceTarget.get(1).charAt(0), sourceTarget.get(1).charAt(1));
-        Piece sourcePiece = currentPieces.findByPosition(source);
-        validateTurn(sourcePiece);
-        sourcePiece.move(target, currentPieces);
-        next();
-    }
+//    public void play(List<String> sourceTarget) {
+//        Position source = Position.of(sourceTarget.get(0).charAt(0), sourceTarget.get(0).charAt(1));
+//        Position target = Position.of(sourceTarget.get(1).charAt(0), sourceTarget.get(1).charAt(1));
+//        Piece sourcePiece = currentPieces.findByPosition(source);
+//        validateTurn(sourcePiece);
+//        sourcePiece.move(target, currentPieces);
+//        next();
+//    }
 
     private void next() {
         this.turn = turn.reverse();
@@ -41,7 +41,7 @@ public class ChessGame {
         }
     }
 
-    public boolean isRunnable(CommandType commandType) {
-        return !(commandType == CommandType.END) && currentPieces.isAliveAllKings();
-    }
+//    public boolean isRunnable(CommandType commandType) {
+//        return !(commandType == CommandType.END) && currentPieces.isAliveAllKings();
+//    }
 }
