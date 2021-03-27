@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.command.*;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
@@ -10,17 +11,22 @@ import java.util.List;
 public class ChessGame {
     private static final String TURN_ERROR = "[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.";
 
-    //private final CurrentPieces currentPieces;
+    private Command command;
+    private final ChessBoard chessBoard;
     private Color turn;
 
-//    public ChessGame() {
-//        this.currentPieces = CurrentPieces.generate();
-//        turn = Color.WHITE;
-//    }
+    public ChessGame() {
+        chessBoard = ChessBoard.generate();
+        turn = Color.WHITE;
+    }
 
 //    //public CurrentPieces getCurrentPieces() {
 //        return currentPieces;
 //    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
 
 //    public void play(List<String> sourceTarget) {
 //        Position source = Position.of(sourceTarget.get(0).charAt(0), sourceTarget.get(0).charAt(1));
@@ -44,4 +50,43 @@ public class ChessGame {
 //    public boolean isRunnable(CommandType commandType) {
 //        return !(commandType == CommandType.END) && currentPieces.isAliveAllKings();
 //    }
+
+    public boolean isRunnable() {
+        return chessBoard.isAliveAllKings();
+    }
+
+    public void selectFirstCommand(String inputCommand) {
+        command = CommandFactory.selectFirstCommand(inputCommand);
+    }
+
+    public boolean isStart() {
+        return command instanceof Start;
+    }
+
+    public void selectRunningCommand(String inputCommand) {
+        if (!(command instanceof Waiting)) {
+            command = command.changeWaiting();
+        }
+        command = command.changeRunningCommand(inputCommand);
+
+    }
+
+    public boolean isMove() {
+        return command instanceof Move;
+    }
+
+    public void move() {
+        if (isMove()) {
+            command = command.move(chessBoard, turn);
+            next();
+        }
+    }
+
+    public boolean isEnd() {
+        return command instanceof End;
+    }
+
+    public boolean isStatus() {
+        return command instanceof Status;
+    }
 }

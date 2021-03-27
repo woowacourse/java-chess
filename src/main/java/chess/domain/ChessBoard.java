@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
     private static final String OBSTACLE_ERROR = "[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.";
     private static final String SAME_COLOR_ERROR = "[ERROR] taget에 같은 편 말이 있습니다.";
+    private static final String EMPTY_ERROR = "[ERROR] 체스말이 없습니다.";
     private Map<Position, Piece> chessBoard;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
@@ -49,10 +50,12 @@ public class ChessBoard {
 
     public double sumScoreByColor(Color color) {
         Map<Character, Long> pawns = collectPawnCountsByRow(color);
+        System.out.println(pawns.toString());
         int count = (int) pawns.keySet().stream()
                 .filter(character -> pawns.get(character) >= 2)
                 .mapToLong(character -> pawns.get(character))
                 .sum();
+        System.out.println(count);
         return chessBoard.values().stream()
                 .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
@@ -77,7 +80,7 @@ public class ChessBoard {
 
     private void validateEmpty(Piece sourcePiece) {
         if (sourcePiece.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(EMPTY_ERROR);
         }
     }
 
@@ -96,13 +99,18 @@ public class ChessBoard {
     public void hasPieceInPath(Position source, Position target, Direction direction) {
         int sourceX = source.getX();
         int sourceY = source.getY();
+        int count = checkDistance(source, target);
+        for (int i = 1; i < count; i++) {
+            validatePieceInPath(sourceX, sourceY, i, direction);
+        }
+    }
+
+    private int checkDistance(Position source, Position target) {
         int count = Math.max(Math.abs(source.subtractX(target)), Math.abs(source.subtractY(target)));
         if (findByPosition(source).isPawn()) {
             count++;
         }
-        for (int i = 1; i < count; i++) {
-            validatePieceInPath(sourceX, sourceY, i, direction);
-        }
+        return count;
     }
 
     private void validatePieceInPath(int sourceX, int sourceY, int count, Direction direction) {
@@ -112,13 +120,6 @@ public class ChessBoard {
         }
     }
 
-
-//    public void removePieceIfNotEmpty(Piece targetPiece) {
-//        if (!(targetPiece.isEmpty())) {
-//            currentPieces.remove(targetPiece);
-//        }
-//    }
-//
     public boolean hasSamePositionPiece(Position target) {
         return chessBoard.keySet().stream()
                 .anyMatch(position -> position.equals(target));

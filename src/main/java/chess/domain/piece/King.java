@@ -9,7 +9,7 @@ import chess.domain.piece.strategy.KingMoveStrategy;
 import java.util.HashMap;
 import java.util.Map;
 
-public class King extends Move {
+public class King extends Piece {
     private static final Score SCORE = new Score(0);
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');

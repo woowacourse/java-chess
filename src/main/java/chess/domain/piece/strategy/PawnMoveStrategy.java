@@ -1,10 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.ChessBoard;
-import chess.domain.piece.info.Color;
-import chess.domain.piece.info.Cross;
-import chess.domain.piece.info.Direction;
-import chess.domain.piece.info.Position;
+import chess.domain.piece.info.*;
 
 public class PawnMoveStrategy implements MoveStrategy {
     private static final String PAWN_ERROR = "[ERROR] 폰 이동 규칙에 어긋납니다.";
@@ -16,7 +13,6 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        System.out.println(source.subtractY(target));
         if (isAttackAble(source, target)) {
             return true;
         }
@@ -30,12 +26,6 @@ public class PawnMoveStrategy implements MoveStrategy {
         throw new IllegalArgumentException(PAWN_ERROR);
     }
 
-    private void validateAttackable(Position source, Position target) {
-        if (!isAttackAble(source, target)) {
-            throw new IllegalArgumentException(PAWN_ERROR);
-        }
-    }
-
     private boolean isAttackAble(Position source, Position target) {
         if (this.color == Color.BLACK) {
             return Math.abs(source.subtractX(target)) == 1 && source.subtractY(target) == 1;
@@ -44,15 +34,6 @@ public class PawnMoveStrategy implements MoveStrategy {
             return Math.abs(source.subtractX(target)) == 1 && source.subtractY(target) == -1;
         }
         return false;
-    }
-
-    private void validateMovable(Position source, Position target, ChessBoard chessBoard) {
-        Cross cross = Cross.findCrossByTwoPosition(source, target);
-        if (!isMoveAble(source, target, cross)) {
-            throw new IllegalArgumentException(PAWN_ERROR);
-        }
-        chessBoard.hasPieceInPath(source, target, cross);
-        validateFirstTurnIfTwoDistance(source, target);
     }
 
     private boolean isMoveAble(Position source, Position target, Direction cross) {
