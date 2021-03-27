@@ -25,12 +25,12 @@ public class Blank implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return null;
+        return TeamColor.NONE;
     }
 
     @Override
     public void dead() {
-
+        throw new UnsupportedOperationException("빈칸은 움직일 수 없죠!");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Blank implements Piece {
 
     @Override
     public void changePosition(Position end) {
-        throw new IllegalArgumentException("공백은 움직일 수 없습니다.");
+        throw new UnsupportedOperationException("공백은 움직일 수 없습니다.");
     }
 
     @Override
@@ -50,12 +50,12 @@ public class Blank implements Piece {
 
     @Override
     public Score getScore() {
-        return null;
+        throw new UnsupportedOperationException("빈칸은 점수가 없어요~");
     }
 
 
     @Override
     public Character getColumn() {
-        throw new IllegalArgumentException("공백의 값을 구할 수 없습니다.");
+        throw new UnsupportedOperationException("공백의 값을 구할 수 없습니다.");
     }
 }

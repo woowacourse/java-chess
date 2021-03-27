@@ -42,3 +42,13 @@ class BlackSet {
 ## 내용
 - setXXX라는 set 명칭말고 메서드에 의도를 들어내어 이름을 지으면 setter의 단점을 보완할 수 있다.
 - setter 자체는 의도를 가지기 어렵다.
+
+# [Java] UnsupportedOperationException - 2
+
+## 내용
+- 지원하지 않는 연산 예외처리
+- 런타임 예외
+- 대표적으로 Collections.unmodifiableList 에서 add할 경우
+
+## 링크
+[javadocs UnsupportedOperationException](https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html)

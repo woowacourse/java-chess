@@ -6,5 +6,5 @@
 - [ ] 각 piece가 Position을 가져야 할까?
 - [ ] instanceOf 내부화
 - [ ] column, row Enum으로 변경
-- [ ] 사용하지 않는 메소드에 한해 UnsupportedOperationException 처리
+- [x] 사용하지 않는 메소드에 한해 UnsupportedOperationException 처리
 - [ ] com.google.common.collect.Table를 사용하여 테이블 형태의 자료구조 사용가능
