@@ -4,12 +4,12 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
 import chess.domain.result.Score;
 
-public class King extends LimitedMovablePiece {
-    private static final String NAME = "K";
-    private static final double SCORE = 0;
+import java.util.List;
 
-    public King(TeamType teamType) {
-        super(NAME, teamType, new Score(SCORE), Direction.getKingDirections());
+public class LimitedMovablePiece extends Piece {
+
+    protected LimitedMovablePiece(String name, TeamType teamType, Score score, List<Direction> directions) {
+        super(name, teamType, score, directions);
     }
 
     @Override

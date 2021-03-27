@@ -4,7 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
 import chess.domain.result.Score;
 
-public class Pawn extends Piece {
+public class Pawn extends LimitedMovablePiece {
     private static final String NAME = "P";
     private static final double SCORE = 1;
 

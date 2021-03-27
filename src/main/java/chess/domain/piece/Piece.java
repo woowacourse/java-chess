@@ -20,16 +20,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public boolean isMovable(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
-        Direction direction = current.evaluateDirection(destination);
-        if (!isCorrectDirection(direction)) {
-            return false;
-        }
-        if (chessBoard.hasPieceOnRouteBeforeDestination(current, destination)) {
-            return false;
-        }
-        return chessBoard.isEmptyOrHasEnemyOn(destination, teamType);
-    }
+    public abstract boolean isMovable(ChessBoard chessBoard, Coordinate current, Coordinate destination);
 
     protected boolean isCorrectDirection(Direction direction) {
         return directions.contains(direction);
