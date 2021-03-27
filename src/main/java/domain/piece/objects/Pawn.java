@@ -44,16 +44,6 @@ public class Pawn extends Piece {
         return PAWNS;
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
-        List<Direction> directions = new ArrayList<>(selectDirectionByColor());
-        boolean result = movableLinear(directions.remove(0), board, start, end);
-        if (!result) {
-            result = movableDiagonal(directions, board, start, end);
-        }
-        return result;
-    }
-
     private boolean movableDiagonal(List<Direction> directions, Map<Position, Piece> board, Position start, Position end) {
         return directions.stream()
                 .map(direction -> start.move(direction))
@@ -76,5 +66,20 @@ public class Pawn extends Piece {
             return Direction.blackPawnDirection();
         }
         return Direction.whitePawnDirection();
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
+        List<Direction> directions = new ArrayList<>(selectDirectionByColor());
+        boolean result = movableLinear(directions.remove(0), board, start, end);
+        if (!result) {
+            result = movableDiagonal(directions, board, start, end);
+        }
+        return result;
     }
 }

@@ -29,7 +29,7 @@ public class ScoreMachine {
     }
 
     private static Score addScore(Score score, Map.Entry<Position, Piece> entry, Board board) {
-        if (entry.getValue() instanceof Pawn) {
+        if (entry.getValue().isPawn()) {
             score = addPawnScore(entry, score, board);
             return score;
         }

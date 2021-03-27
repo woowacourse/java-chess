@@ -16,6 +16,11 @@ public final class Empty extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
     public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         return false;
     }

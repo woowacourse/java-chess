@@ -39,6 +39,18 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
+    public boolean isKingDead() {
+        return this instanceof King;
+    }
+
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     protected boolean isDiagonal(Position start, Position end) {
         Queue<Integer> diff = Position.makeDiff(start, end);
         int rowDiff = Math.abs(diff.poll());
@@ -46,7 +58,7 @@ public abstract class Piece {
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
     }
 
-    public boolean isLinear(Position start, Position end) {
+    protected boolean isLinear(Position start, Position end) {
         Queue<Integer> diff = Position.makeDiff(start, end);
         int rowDiff = Math.abs(diff.poll());
         int colDiff = Math.abs(diff.poll());
@@ -67,10 +79,6 @@ public abstract class Piece {
         Queue<Integer> diff = Position.makeDiff(start, end);
         Direction direction = Direction.findDiagonalDirection(diff.poll(), diff.poll());
         return direction;
-    }
-
-    public boolean isKingDead() {
-        return this instanceof King;
     }
 
     @Override

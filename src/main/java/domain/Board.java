@@ -4,7 +4,6 @@ import domain.exception.InvalidMoveException;
 import domain.piece.Direction;
 import domain.piece.Position;
 import domain.piece.objects.Empty;
-import domain.piece.objects.Pawn;
 import domain.piece.objects.Piece;
 
 import java.util.Collections;
@@ -41,7 +40,7 @@ public class Board {
 
     public boolean canMovable(Position position, boolean color) {
         Piece piece = getPiece(position);
-        return !(piece instanceof Empty) && piece.isSameColor(color);
+        return !(piece.isEmpty()) && piece.isSameColor(color);
     }
 
     public Map<Position, Piece> getTeam(boolean color) {
@@ -63,7 +62,7 @@ public class Board {
         return Direction.verticalDirection().stream()
                 .filter(direction -> !position.move(direction).equals(position))
                 .map(direction -> getPiece(position.move(direction)))
-                .filter(piece -> piece instanceof Pawn && piece.isSameColor(pawn.getValue()))
+                .filter(piece -> piece.isPawn() && piece.isSameColor(pawn.getValue()))
                 .findAny()
                 .isPresent();
     }
