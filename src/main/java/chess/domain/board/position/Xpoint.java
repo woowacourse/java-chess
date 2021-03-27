@@ -3,6 +3,7 @@ package chess.domain.board.position;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public enum Xpoint {
     A("a", 1),
@@ -50,38 +51,34 @@ public enum Xpoint {
         return name;
     }
 
-    private Xpoint of(int value) {
-        return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == value)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
     public Xpoint left() {
-        return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value - 1)
-                .findFirst()
-                .orElse(this);
+        return find(subtractCondition(1));
     }
 
     public Xpoint left(int value) {
-        return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value - value)
-                .findFirst()
-                .orElse(this);
+        return find(subtractCondition(value));
     }
 
     public Xpoint right() {
+        return find(addCondition(1));
+    }
+
+    public Xpoint right(int value) {
+        return find(addCondition(value));
+    }
+
+    public Xpoint find(final Predicate<Xpoint> condition) {
         return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value + 1)
+                .filter(condition)
                 .findFirst()
                 .orElse(this);
     }
 
-    public Xpoint right(int value) {
-        return Arrays.stream(values())
-                .filter(xpoint -> xpoint.value == this.value + value)
-                .findFirst()
-                .orElse(this);
+    private Predicate<Xpoint> addCondition(int value) {
+        return xpoint -> xpoint.value == this.value + value;
+    }
+
+    private Predicate<Xpoint> subtractCondition(int value) {
+        return xpoint -> xpoint.value == this.value - value;
     }
 }

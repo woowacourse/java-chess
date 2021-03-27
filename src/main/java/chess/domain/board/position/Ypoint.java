@@ -3,6 +3,7 @@ package chess.domain.board.position;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public enum Ypoint {
     EIGHT("8", 8),
@@ -46,38 +47,34 @@ public enum Ypoint {
         return value;
     }
 
-    private Ypoint of(int value) {
-        return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == value)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
     public Ypoint up() {
-        return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == this.value + 1)
-                .findFirst()
-                .orElse(this);
+        return find(addCondition(1));
     }
 
     public Ypoint up(int value) {
-        return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == this.value + value)
-                .findFirst()
-                .orElse(this);
+        return find(addCondition(value));
     }
 
     public Ypoint down() {
+        return find(subtractCondition(1));
+    }
+
+    public Ypoint down(int value) {
+        return find(subtractCondition(value));
+    }
+
+    public Ypoint find(final Predicate<Ypoint> condition) {
         return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == this.value - 1)
+                .filter(condition)
                 .findFirst()
                 .orElse(this);
     }
 
-    public Ypoint down(int value) {
-        return Arrays.stream(values())
-                .filter(ypoint -> ypoint.value == this.value - value)
-                .findFirst()
-                .orElse(this);
+    private Predicate<Ypoint> addCondition(int value) {
+        return ypoint -> ypoint.value == this.value + value;
+    }
+
+    private Predicate<Ypoint> subtractCondition(int value) {
+        return ypoint -> ypoint.value == this.value - value;
     }
 }
