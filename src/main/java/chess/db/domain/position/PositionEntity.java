@@ -6,7 +6,6 @@ import static chess.domain.position.type.Rank.TWO;
 
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.util.Objects;
@@ -42,23 +41,23 @@ public class PositionEntity {
         return PositionEntity.of(File.of(file), Rank.of(rank));
     }
 
-    public Direction calculateDirection(Position destination) {
-        File destinationFile = destination.file();
-        Rank destinationRank = destination.rank();
+    public Direction calculateDirection(PositionEntity destination) {
+        File destinationFile = destination.getFile();
+        Rank destinationRank = destination.getRank();
 
-        int fileDiff = destinationFile.order() - file.order();
-        int rankDiff = destinationRank.value() - rank.value();
+        int fileDiff = destinationFile.getOrder() - file.getOrder();
+        int rankDiff = destinationRank.getValue() - rank.getValue();
 
         return Direction.of(fileDiff, rankDiff);
     }
 
     public PositionEntity move(Direction direction) {
-        return PositionEntity.of(file.move(direction), rank.move(direction));
+        return PositionEntity.of(file.getMovedFile(direction), rank.getMovedRank(direction));
     }
 
-    public boolean isRankForwardedBy(Position destination, int rankDiff) {
-        return rank.isDiff(destination.rank(), rankDiff)
-            && file.isSameAs(destination.file());
+    public boolean isRankForwardedBy(PositionEntity destination, int rankDiff) {
+        return rank.isDiff(destination.getRank(), rankDiff)
+            && file.isSameAs(destination.getFile());
     }
 
     public boolean isFirstPawnPosition(TeamColor teamColor) {

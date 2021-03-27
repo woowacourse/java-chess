@@ -1,13 +1,13 @@
 package chess.db.service;
 
-import chess.db.domain.ChessGameForDB;
+import chess.db.domain.game.ChessGameForDBEx;
 import java.sql.SQLException;
 
 public class ChessServiceForDB {
-    private final ChessGameForDB chessGameForDB;
+    private final ChessGameForDBEx chessGameForDB;
 
     public ChessServiceForDB() {
-        chessGameForDB = new ChessGameForDB();
+        chessGameForDB = new ChessGameForDBEx();
     }
 
     public void createChessGame(String title) throws SQLException {

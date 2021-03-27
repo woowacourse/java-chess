@@ -39,7 +39,7 @@ public class Cell {
         return piece.getPieceType();
     }
 
-    public Piece piece() {
+    public Piece getPiece() {
         return piece;
     }
 

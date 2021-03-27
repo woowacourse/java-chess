@@ -13,8 +13,8 @@ public class PositionConverter {
         String fileValue = String.valueOf(position.charAt(FILE_INDEX));
         Rank rank = Rank.of(rankValue);
         File file = File.of(fileValue);
-        int rankOrder = rank.value();
-        int fileOrder = file.order();
+        int rankOrder = rank.getValue();
+        int fileOrder = file.getOrder();
         return calculateIndex(rankOrder, fileOrder);
     }
 

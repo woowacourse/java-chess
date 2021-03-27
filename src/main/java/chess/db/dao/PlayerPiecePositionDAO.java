@@ -73,7 +73,7 @@ public class PlayerPiecePositionDAO {
     }
 
 
-    public void delete(PlayerPiecePositionEntity piecesPositionEntity) throws SQLException {
+    public void remove(PlayerPiecePositionEntity piecesPositionEntity) throws SQLException {
         String query = "DELETE FROM player_piece_position WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, piecesPositionEntity.getId());

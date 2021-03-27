@@ -51,4 +51,8 @@ public class PlayerEntity {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public double getScore() {
+        return 0;
+    }
 }

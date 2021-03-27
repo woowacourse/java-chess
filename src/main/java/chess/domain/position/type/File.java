@@ -25,14 +25,14 @@ public enum File {
         return File.valueOf(fileInput.toUpperCase());
     }
 
-    public File move(Direction direction) {
+    public File getMovedFile(Direction direction) {
         int movedX = order + direction.getX();
         return findFileByOrder(movedX);
     }
 
     private static File findFileByOrder(int order) {
         return Arrays.stream(values())
-            .filter(file -> file.order() == order)
+            .filter(file -> file.getOrder() == order)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
     }
@@ -45,7 +45,7 @@ public enum File {
         return value;
     }
 
-    public int order() {
+    public int getOrder() {
         return order;
     }
 }

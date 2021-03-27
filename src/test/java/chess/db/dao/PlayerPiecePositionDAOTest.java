@@ -75,7 +75,7 @@ class PlayerPiecePositionDAOTest {
 
     @Test
     void delete() throws SQLException {
-        playerPiecePositionDAO.delete(playerPiecePositionEntity);
+        playerPiecePositionDAO.remove(playerPiecePositionEntity);
 
         PlayerPiecePositionEntity deletedPlayerPiecePosition = playerPiecePositionDAO
             .findByPlayerAndPieceAndPosition(playerEntity, pieceEntity, positionEntity);

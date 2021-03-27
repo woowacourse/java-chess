@@ -44,14 +44,14 @@ public class Position {
         File destinationFile = destination.file();
         Rank destinationRank = destination.rank();
 
-        int fileDiff = destinationFile.order() - file.order();
-        int rankDiff = destinationRank.value() - rank.value();
+        int fileDiff = destinationFile.getOrder() - file.getOrder();
+        int rankDiff = destinationRank.getValue() - rank.getValue();
 
         return Direction.of(fileDiff, rankDiff);
     }
 
     public Position move(Direction direction) {
-        return new Position(file.move(direction), rank.move(direction));
+        return new Position(file.getMovedFile(direction), rank.getMovedRank(direction));
     }
 
     public boolean isRankForwardedBy(Position destination, int rankDiff) {

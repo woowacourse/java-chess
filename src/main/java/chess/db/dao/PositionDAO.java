@@ -16,7 +16,7 @@ public class PositionDAO {
         String query = "SELECT * FROM position WHERE file_value = ? AND rank_value = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, file.value());
-        pstmt.setString(2, String.valueOf(rank.value()));
+        pstmt.setString(2, String.valueOf(rank.getValue()));
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) {
             return null;

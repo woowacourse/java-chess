@@ -2,11 +2,11 @@ package chess.db.domain.piece;
 
 import static chess.domain.piece.type.PieceType.KING;
 
-import chess.domain.board.Board;
+import chess.db.domain.board.BoardForDB;
+import chess.db.domain.position.MoveRouteForDB;
+import chess.db.domain.position.PositionEntity;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
-import chess.domain.position.Position;
 
 public class KingEntity extends PieceEntity {
     private static final double SCORE = 0;
@@ -20,13 +20,13 @@ public class KingEntity extends PieceEntity {
     }
 
     @Override
-    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
-        if (isNotCorrectDirection(moveRoute.direction())) {
+    public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        if (isNotCorrectDirection(moveRouteForDB.getDirection())) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        Position nextPosition = moveRoute.nextPositionOfStartPosition();
-        if (!(moveRoute.isDestination(nextPosition)
-            && board.isCellEmptyOrEnemyExists(nextPosition, getTeamColor()))) {
+        PositionEntity nextPosition = moveRouteForDB.getNextPositionOfStartPosition();
+        if (!(moveRouteForDB.isDestination(nextPosition)
+            && boardForDB.isCellEmptyOrEnemyExists(nextPosition, getTeamColor()))) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;

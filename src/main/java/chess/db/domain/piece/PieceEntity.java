@@ -1,11 +1,11 @@
 package chess.db.domain.piece;
 
-import chess.domain.board.Board;
+import chess.db.domain.board.BoardForDB;
+import chess.db.domain.position.MoveRouteForDB;
 import chess.domain.piece.type.Direction;
 import chess.domain.piece.type.PieceType;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,13 +50,13 @@ public class PieceEntity {
         return PieceEntitiesCache.find(pieceType, teamColor);
     }
 
-    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
-        Direction moveDirection = moveRoute.direction();
+    public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        Direction moveDirection = moveRouteForDB.getDirection();
         if (isNotCorrectDirection(moveDirection)
-            || board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)) {
+            || boardForDB.isAnyPieceExistsOnRouteBeforeDestination(moveRouteForDB)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        if (board.isOwnPieceExistsInCell(moveRoute.destination(), teamColor)) {
+        if (boardForDB.isOwnPieceExistsInCell(moveRouteForDB.getDestination(), teamColor)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;

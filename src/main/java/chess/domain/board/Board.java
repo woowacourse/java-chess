@@ -21,7 +21,6 @@ public class Board {
     public void setPiece(Position position, Piece piece) {
         Cell cell = new Cell(piece);
         cells.put(position, cell);
-
     }
 
     public Cell findCell(Position position) {
@@ -29,7 +28,7 @@ public class Board {
     }
 
     public Piece findPiece(Position position) {
-        return findCell(position).piece();
+        return findCell(position).getPiece();
     }
 
     public void move(MoveRoute moveRoute) {
@@ -114,17 +113,6 @@ public class Board {
             Cell cell = cells.get(Position.of(file, rank));
             cellsStatus.add(cell.status());
         }
-    }
-
-    public TeamColor winnerTeamColor() {
-        if (!isKingDead()) {
-            throw new IllegalStateException("모든 King들이 살아있습니다.");
-        }
-        return cells.values().stream()
-            .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
-            .findAny()
-            .orElseThrow(() -> new IllegalStateException("살아있는 King이 한 개도 없습니다."))
-            .teamColor();
     }
 }
 

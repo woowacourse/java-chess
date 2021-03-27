@@ -2,11 +2,11 @@ package chess.db.domain.piece;
 
 import static chess.domain.piece.type.PieceType.PAWN;
 
-import chess.domain.board.Board;
+import chess.db.domain.board.BoardForDB;
+import chess.db.domain.position.MoveRouteForDB;
+import chess.db.domain.position.PositionEntity;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
-import chess.domain.position.Position;
 
 public class PawnEntity extends PieceEntity {
     private static final double DEFAULT_SCORE = 1;
@@ -21,50 +21,50 @@ public class PawnEntity extends PieceEntity {
     }
 
     @Override
-    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
-        Direction moveDirection = moveRoute.direction();
+    public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        Direction moveDirection = moveRouteForDB.getDirection();
         if (isNotCorrectDirection(moveDirection)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         if (moveDirection.isForward()) {
-            return canMoveForward(moveRoute, board);
+            return canMoveForward(moveRouteForDB, boardForDB);
         }
-        return canMoveDiagonal(moveRoute, board);
+        return canMoveDiagonal(moveRouteForDB, boardForDB);
     }
 
-    private boolean canMoveForward(MoveRoute moveRoute, Board board) {
-        if (moveRoute.isRankForwardedBy(2)) {
-            return canMoveTwoRankForward(moveRoute, board);
+    private boolean canMoveForward(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        if (moveRouteForDB.isRankForwardedBy(2)) {
+            return canMoveTwoRankForward(moveRouteForDB, boardForDB);
         }
-        if (moveRoute.isRankForwardedBy(1)) {
-            return canMoveOneRankForward(moveRoute, board);
+        if (moveRouteForDB.isRankForwardedBy(1)) {
+            return canMoveOneRankForward(moveRouteForDB, boardForDB);
         }
         throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
     }
 
 
-    private boolean canMoveTwoRankForward(MoveRoute moveRoute, Board board) {
-        if (!moveRoute.isStartPositionFirstPawnPosition(getTeamColor())) {
+    private boolean canMoveTwoRankForward(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        if (!moveRouteForDB.isStartPositionFirstPawnPosition(getTeamColor())) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        if (board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)
-            || board.isAnyPieceExistsInCell(moveRoute.destination())) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
-        }
-        return true;
-    }
-
-    private boolean canMoveOneRankForward(MoveRoute moveRoute, Board board) {
-        if (board.isAnyPieceExistsInCell(moveRoute.destination())) {
+        if (boardForDB.isAnyPieceExistsOnRouteBeforeDestination(moveRouteForDB)
+            || boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         return true;
     }
 
-    private boolean canMoveDiagonal(MoveRoute moveRoute, Board board) {
-        Position nextPosition = moveRoute.nextPositionOfStartPosition();
-        if (!(board.isEnemyExists(moveRoute.destination(), getTeamColor())
-            && nextPosition.equals(moveRoute.destination()))) {
+    private boolean canMoveOneRankForward(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        if (boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        return true;
+    }
+
+    private boolean canMoveDiagonal(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
+        PositionEntity nextPosition = moveRouteForDB.getNextPositionOfStartPosition();
+        if (!(boardForDB.isEnemyExists(moveRouteForDB.getDestination(), getTeamColor())
+            && nextPosition.equals(moveRouteForDB.getDestination()))) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         return true;
