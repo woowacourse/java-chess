@@ -46,6 +46,13 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
+    public Position change(final int rank, final int file) {
+        Rank findRank = Rank.findByValue(this.rank.getValue() + rank);
+        File findFile = File.findByValue(this.file.getValue() + file);
+
+        return POSITIONS.get(findRank.getRank() + findFile.getFile());
+    }
+
     public static Position find(final String source) {
         String reversedSource = reverse(source);
         if (Objects.isNull(POSITIONS.get(reversedSource))) {

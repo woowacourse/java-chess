@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
@@ -15,16 +16,16 @@ public class Pawn extends Piece {
 
     private boolean isFirst = true;
 
-    private Pawn(final String piece, final Position position, final Color color) {
-        super(piece, position, color);
+    private Pawn(final String piece, final Color color, final MoveStrategies moveStrategies, final Position position) {
+        super(piece, color, moveStrategies, position);
     }
 
     public static Pawn from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Pawn(piece, position, Color.BLACK);
+            return new Pawn(piece, Color.BLACK, new MoveStrategies(new North(), new Northeast(), new Northwest()), position);
         }
-        return new Pawn(piece, position, Color.WHITE);
+        return new Pawn(piece, Color.WHITE, new MoveStrategies(new South(), new Southeast(), new Southwest()), position);
     }
 
     private static void validate(final String piece) {

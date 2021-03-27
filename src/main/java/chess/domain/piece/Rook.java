@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.*;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
@@ -11,16 +12,16 @@ public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
     private static final double SCORE = 5;
 
-    private Rook(final String piece, final Position position, final Color color) {
-        super(piece, position, color);
+    private Rook(final String piece, final Color color, final Position position) {
+        super(piece, color, new MoveStrategies(new Northeast(), new Northwest(), new Southeast(), new Southwest()), position);
     }
 
     public static Rook from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Rook(piece, position, Color.BLACK);
+            return new Rook(piece, Color.BLACK, position);
         }
-        return new Rook(piece, position, Color.WHITE);
+        return new Rook(piece, Color.WHITE, position);
     }
 
     private static void validate(final String piece) {

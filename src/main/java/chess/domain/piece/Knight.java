@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.MoveStrategies;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
@@ -12,16 +13,16 @@ public class Knight extends Piece {
     private static final String SYMBOL = "Nn";
     private static final double SCORE = 2.5;
 
-    private Knight(final String piece, final Position position, final Color color) {
-        super(piece, position, color);
+    private Knight(final String piece, final Color color, final Position position) {
+        super(piece, color, MoveStrategies.knightMoveStrategies(), position);
     }
 
     public static Knight from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Knight(piece, position, Color.BLACK);
+            return new Knight(piece, Color.BLACK, position);
         }
-        return new Knight(piece, position, Color.WHITE);
+        return new Knight(piece, Color.WHITE, position);
     }
 
     private static void validate(final String piece) {

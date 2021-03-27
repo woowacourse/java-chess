@@ -1,11 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.MoveStrategies;
+import chess.domain.piece.direction.MoveStrategy;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public abstract class Piece {
@@ -13,13 +17,15 @@ public abstract class Piece {
 
     private final String piece;
     private final Color color;
+    private final MoveStrategies moveStrategies;
 
     private Position position;
 
-    protected Piece(final String piece, final Position position, final Color color) {
+    protected Piece(final String piece, final Color color, final MoveStrategies moveStrategies, final Position position) {
         this.piece = piece;
-        this.position = position;
         this.color = color;
+        this.moveStrategies = moveStrategies;
+        this.position = position;
     }
 
     public static boolean isBlack(final String piece) {
@@ -52,6 +58,30 @@ public abstract class Piece {
 
     public final File getFile() {
         return position.getFile();
+    }
+
+    public final List<Position> possiblePositions(final Pieces basePieces, final Pieces targetPieces) {
+        return findRoutes(basePieces, targetPieces);
+
+    }
+
+    private final List<Position> findRoutes(Pieces basePieces, Pieces targetPieces) {
+        List<Position> positions = new ArrayList<>();
+        List<MoveStrategy> strategies = moveStrategies.strategies();
+        for (MoveStrategy strategy : strategies) {
+            Position nextPosition = strategy.move(position);
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+        }
+        return positions;
     }
 
     @Override

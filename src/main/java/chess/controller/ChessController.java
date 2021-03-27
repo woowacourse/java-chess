@@ -36,7 +36,7 @@ public class ChessController {
     private void inputCommand(final ChessGame chessGame) {
         while (!chessGame.isEnd()) {
             OutputView.showChessBoard(chessGame.getBoard());
-            chessGame.execute(INPUT.inputCommand());
+            chessGame.move(INPUT.inputCommand());
             OutputView.showScore(chessGame.currentPlayerName(), chessGame.calculateScore());
         }
         if (chessGame.isStatus()) {
