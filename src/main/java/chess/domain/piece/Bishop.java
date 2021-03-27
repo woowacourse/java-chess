@@ -15,7 +15,7 @@ public class Bishop extends Piece {
     private boolean isFirst = true;
 
     private Bishop(final String piece, final Color color, final Position position) {
-        super(piece, color, new MoveStrategies(new East(), new West(), new North(), new South()), position);
+        super(piece, color, new MoveStrategies(new Northeast(), new Northwest(), new Southeast(), new Southwest()), position);
     }
 
     public static Bishop from(final String piece, final Position position) {

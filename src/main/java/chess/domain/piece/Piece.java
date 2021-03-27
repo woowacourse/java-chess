@@ -6,7 +6,10 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public abstract class Piece {
@@ -74,7 +77,7 @@ public abstract class Piece {
         if (isKing() || isKnight()) {
             return singleMove(basePieces, targetPieces, strategy);
         }
-        return Collections.emptyList();
+        return multiMove(basePieces, targetPieces, strategy);
     }
 
     private List<Position> pawnMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
@@ -84,7 +87,7 @@ public abstract class Piece {
         return singleMove(basePieces, targetPieces, strategy);
     }
 
-    private List<Position> pawnFirstMove(final Pieces basePieces, final  Pieces targetPieces, final MoveStrategy strategy){
+    private List<Position> pawnFirstMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
         if (strategy.isNorth() || strategy.isSouth()) {
             List<Position> positions = new ArrayList<>();
             return northAndSouthPositions(basePieces, targetPieces, strategy, positions);
@@ -120,6 +123,29 @@ public abstract class Piece {
         }
         if (!basePiece.isPresent()) {
             positions.add(nextPosition);
+        }
+        return positions;
+    }
+
+    private List<Position> multiMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy){
+        List<Position> positions = new ArrayList<>();
+        Position nextPosition = position;
+        while (true){
+            if (Objects.isNull(nextPosition)) {
+                break;
+            }
+            nextPosition = strategy.move(nextPosition);
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                positions.add(nextPosition);
+                break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
         }
         return positions;
     }

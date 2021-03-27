@@ -4,9 +4,7 @@ import chess.domain.piece.direction.*;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
@@ -15,7 +13,7 @@ public class Rook extends Piece {
     private boolean isFirst = true;
 
     private Rook(final String piece, final Color color, final Position position) {
-        super(piece, color, new MoveStrategies(new Northeast(), new Northwest(), new Southeast(), new Southwest()), position);
+        super(piece, color, new MoveStrategies(new East(), new West(), new North(), new South()), position);
     }
 
     public static Rook from(final String piece, final Position position) {
@@ -37,7 +35,7 @@ public class Rook extends Piece {
 
     @Override
     public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes(basePieces, targetPieces);
+        List<Position> positions = possiblePositions(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
         isFirst = false;
@@ -72,103 +70,6 @@ public class Rook extends Piece {
     @Override
     public boolean isFirstMove() {
         return isFirst;
-    }
-
-    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes(basePieces, targetPieces));
-        positions.addAll(makeDownRoutes(basePieces, targetPieces));
-        positions.addAll(makeLeftRoutes(basePieces, targetPieces));
-        positions.addAll(makeRightRoutes(basePieces, targetPieces));
-        return positions;
-    }
-
-    private List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = file; index < 8; index++) {
-            Position nextPosition = Position.valueOf(rank, index + 1);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = file; index > 1; index--) {
-            Position nextPosition = Position.valueOf(rank, index - 1);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = rank; index > 1; index--) {
-            Position nextPosition = Position.valueOf(index - 1, file);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = rank; index < 8; index++) {
-            Position nextPosition = Position.valueOf(index + 1, file);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
     }
 
     @Override
