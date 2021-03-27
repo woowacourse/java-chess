@@ -12,7 +12,8 @@ public class Knight extends Piece {
                 owner,
                 Score.KNIGHT,
                 Direction.knightDirections(),
-                Distance.ONE
+                Distance.ONE,
+                Symbol.KNIGHT
         );
     }
 

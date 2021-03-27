@@ -59,14 +59,14 @@ public class Board {
         try {
             final Position target = source.next(direction, distance);
             return !of(source).isSameTeam(of(target))
-                    && !isPrePositionEnemy(source, direction, distance)
+                    && !capturedEnemy(source, direction, distance)
                     && of(source).isReachable(direction, distance, source, of(target));
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-    private boolean isPrePositionEnemy(final Position source, final Direction direction, final Distance distance) {
+    private boolean capturedEnemy(final Position source, final Direction direction, final Distance distance) {
         if (distance.isFirst()) {
             return false;
         }

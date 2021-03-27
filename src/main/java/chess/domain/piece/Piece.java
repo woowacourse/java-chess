@@ -11,17 +11,20 @@ public abstract class Piece {
     private final List<Direction> ableDirections;
     private final Score score;
     private final Distance ableDistance;
+    private final Symbol symbol;
 
     // XXX :: 빌더 패턴 공부하기
     public Piece(final Owner owner,
                  final Score score,
                  final List<Direction> directions,
-                 final Distance distance) {
+                 final Distance distance,
+                 final Symbol symbol) {
 
         this.owner = owner;
         this.score = score;
         this.ableDirections = directions;
         this.ableDistance = distance;
+        this.symbol = symbol;
     }
 
     public final Score score() {
@@ -54,5 +57,13 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public boolean isBlack(){
+        return owner.isBlack();
+    }
+
+    public String symbol(){
+        return symbol.getSymbol();
     }
 }

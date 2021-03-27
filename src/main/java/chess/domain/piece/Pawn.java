@@ -31,7 +31,8 @@ public abstract class Pawn extends Piece {
                 owner,
                 Score.PAWN,
                 directions,
-                Distance.TWO
+                Distance.TWO,
+                Symbol.PAWN
         );
     }
 

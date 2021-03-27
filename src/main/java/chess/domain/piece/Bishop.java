@@ -12,7 +12,8 @@ public class Bishop extends Piece {
                 owner,
                 Score.BISHOP,
                 Direction.diagonalDirections(),
-                Distance.SEVEN
+                Distance.SEVEN,
+                Symbol.BISHOP
         );
     }
 

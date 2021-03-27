@@ -12,7 +12,8 @@ public class Empty extends Piece {
                 Owner.NONE,
                 Score.EMPTY,
                 Collections.emptyList(),
-                Distance.ONE
+                Distance.ONE,
+                Symbol.EMPTY
         );
     }
 

@@ -58,7 +58,7 @@ public class Player {
         this.state = State.DEAD;
     }
 
-    public boolean isEnd() {
+    public boolean isDead() {
         return state.isDead();
     }
 }

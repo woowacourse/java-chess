@@ -1,4 +1,4 @@
-package chess.controller.Command;
+package chess.controller.command;
 
 import chess.manager.ChessManager;
 import chess.view.OutputView;

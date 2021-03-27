@@ -76,7 +76,7 @@ public class Players {
 
     public boolean isEnd() {
         return players.stream()
-                .anyMatch(player -> player.isEnd());
+                .anyMatch(player -> player.isDead());
     }
 
     public Board getBoard() {

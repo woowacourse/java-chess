@@ -7,43 +7,31 @@ import chess.domain.board.position.Vertical;
 import chess.domain.piece.Piece;
 import chess.manager.Status;
 
-import java.util.Collections;
-import java.util.List;
-
 public class OutputView {
-    private static final String STAR_SHAPE = "*";
-
     public static void printBoard(final Board board) {
-        printPieceOrStar(board);
+        printPiece(board);
     }
 
-    public static void printReachableBoard(final Board board, final List<Position> ableToMove) {
-        printPieceOrStar(board, ableToMove);
-    }
-
-    public static void printPieceOrStar(final Board board) {
-        final List<Position> starPositions = Collections.emptyList();
-        printPieceOrStar(board, starPositions);
-    }
-
-    public static void printPieceOrStar(final Board board, final List<Position> starPositions) {
+    public static void printPiece(final Board board) {
         for (final Horizontal h : Horizontal.reversedValues()) {
             for (final Vertical v : Vertical.values()) {
-                printSymbol(board.of(new Position(v, h)), starPositions.contains(new Position(v, h)));
+                printSymbol(board.of(new Position(v, h)));
             }
             System.out.println();
         }
     }
 
-    private static void printSymbol(final Piece piece, final boolean isStar) {
-        System.out.print(decideSymbol(piece, isStar));
+    private static void printSymbol(final Piece piece) {
+        System.out.print(decideSymbol(piece));
     }
 
-    private static String decideSymbol(final Piece piece, final boolean isStar) {
-        if (isStar) {
-            return STAR_SHAPE;
+    private static String decideSymbol(final Piece piece) {
+        final String symbol = piece.symbol();
+
+        if (piece.isBlack()) {
+            return symbol.toUpperCase();
         }
-        return PieceSymbol.symbol(piece);
+        return symbol.toLowerCase();
     }
 
     public static void printScores(final Status status) {
