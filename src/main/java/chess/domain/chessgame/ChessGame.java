@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChessGame {
 
-    private final Turn turn;
+    private Turn turn;
     private final ScoreBoard scoreBoard;
     private GameState gameState;
 
@@ -20,6 +20,7 @@ public class ChessGame {
     }
 
     public void start() {
+        turn = new Turn(Team.WHITE);
         gameState = gameState.start();
     }
 

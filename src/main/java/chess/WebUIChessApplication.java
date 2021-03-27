@@ -2,14 +2,15 @@ package chess;
 
 import static spark.Spark.get;
 
-import chess.dto.PointDto;
-import com.google.gson.Gson;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Turn;
 import chess.dto.BoardDtoWeb;
+import chess.dto.GameStatusDto;
+import chess.dto.PointDto;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,8 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
-    private static Gson gson = new Gson();
+
+    private static final Gson gson = new Gson();
 
     public static void main(String[] args) {
         Board board = new Board();
@@ -44,11 +46,21 @@ public class WebUIChessApplication {
         });
 
         get("/move", "application/json", (req, res) -> {
-           Point source = Point.of(req.queryParams("source"));
-           Point destination = Point.of(req.queryParams("destination"));
-           chessGame.move(source, destination);
-           BoardDtoWeb boardDtoWeb = new BoardDtoWeb(board);
-           return gson.toJson(boardDtoWeb);
+            Point source = Point.of(req.queryParams("source"));
+            Point destination = Point.of(req.queryParams("destination"));
+            Map<String, Object> model = new HashMap<>();
+            chessGame.move(source, destination);
+            model.put("board", new BoardDtoWeb(board));
+            return gson.toJson(model);
+        });
+
+        get("/getGameStatus", "application/json", (req, res) -> {
+            GameStatusDto gameStatusDto = new GameStatusDto(chessGame);
+            return gson.toJson(new GameStatusDto(chessGame));
+        });
+
+        get("/currentTurn", "application/json", (req, res) -> {
+            return gson.toJson(chessGame.currentTurn());
         });
     }
 

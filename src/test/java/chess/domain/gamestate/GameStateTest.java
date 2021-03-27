@@ -40,12 +40,12 @@ class GameStateTest {
         board.putSymmetrically(Piece.KING, Point.of("a1"));
         GameState gameState = new Running(board);
 
-        assertThatIllegalArgumentException().isThrownBy(gameState::start);
         assertThatIllegalArgumentException().isThrownBy(gameState::winner);
         assertThat(gameState.end()).hasSameClassAs(new Finished(Team.NONE));
         assertThat(gameState.status()).hasSameClassAs(new Running(board));
         assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)))
             .hasSameClassAs(new Running(board));
+        assertThat(gameState.start()).hasSameClassAs(new Running(board));
     }
 
     @Test

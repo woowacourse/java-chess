@@ -21,7 +21,7 @@ body {
 
 header {
     position: relative;
-    top: 0px;
+    top: 0;
     width: 100%;
     height: 10%;
     vertical-align: middle;
@@ -65,10 +65,26 @@ section {
     user-select: none;
 }
 
+.board {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 2px 2px 5px 0 black;
+    max-height:100%;
+    max-width:100%;
+}
+
 .square {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    filter: drop-shadow(2px 2px 5px #000);
+}
+
+.whiteTurn, .blackTurn {
     filter: drop-shadow(2px 2px 5px #000);
 }
 
@@ -114,14 +130,21 @@ section {
     background-image: url('../images/en.png');
 }
 
-img {
-    position: relative;
-    top: 0;
-    bottom: 0;
+.result {
+    position: fixed;
+    z-index: 999;
     left: 0;
-    right: 0;
-    margin: auto;
-    box-shadow: 2px 2px 5px 0 black;
-    max-height:100%;
-    max-width:100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+}
+
+.result p {
+    position: relative;
+    top: 40%;
+    font-size: xxx-large;
+    font-family: "pencil", sans-serif;
+    color: #eee;
 }

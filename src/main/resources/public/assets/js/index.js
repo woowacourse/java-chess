@@ -13,6 +13,11 @@ const squareStyleTemplate = (squareStyle) => {
 
 const columns = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8"];
+const teams = {
+  w: "white",
+  b: "black",
+  n: "none"
+};
 
 const boardSize = 8;
 const points = numbers(boardSize).flatMap(
@@ -41,24 +46,66 @@ const addMovables = async function (point) {
   }
 }
 
+const updateTurnBadge = async function() {
+  const response = await fetch("./currentTurn");
+  const result = await response.json();
+
+  const whiteBadge = document.querySelector(".whiteTurn");
+  const blackBadge = document.querySelector(".blackTurn");
+
+  if (result === "BLACK") {
+    whiteBadge.style.visibility = "hidden";
+    blackBadge.style.visibility = "visible";
+  } else {
+    whiteBadge.style.visibility = "visible";
+    blackBadge.style.visibility = "hidden";
+  }
+  console.log(result);
+};
+
 const move = async function (source, destination) {
   const response = await fetch(
       "./move?source=" + source + "&destination=" + destination);
   const result = await response.json();
 
-  for (const i in result["board"]) {
-    const newSquare = result["board"][i];
+  console.log(result);
+  const boardDto = result["board"];
+  for (const i in boardDto["board"]) {
+    const newSquare = boardDto["board"][i];
     const square = document.querySelector("#" + newSquare.x + newSquare.y);
     square.setAttribute("class",
         "square " + newSquare["piece"] + newSquare["team"]);
+  }
+  updateTurnBadge().then();
+}
+
+const checkGameState = async function() {
+  const response = await fetch("./getGameStatus");
+  const result = await response.json();
+
+  console.log(result);
+  if (result["isOngoing"] === "false") {
+    console.log("asdfasdfasdfasdf");
+    const resultDiv = document.createElement("div");
+    resultDiv.classList.add("result");
+    resultDiv.innerHTML = `<p>Winner is ${teams[result["winner"]]}</p>`;
+    document.querySelector("body").insertAdjacentElement("afterbegin", resultDiv);
+    const style = document.createElement('style');
+    style.innerHTML = `
+      header, .square, .board {
+        filter: blur(2px);
+      }
+    `;
+    document.head.appendChild(style);
   }
 }
 
 const clickSquare = function (event) {
   if (event.target.classList.contains("movable")) {
-    move(event.target.value, event.target.closest(".square").id).then(r => {
+    move(event.target.value, event.target.closest(".square").id).then(() => {
+      removeAllMovables();
+      checkGameState().then();
     });
-    removeAllMovables();
     return;
   }
   removeAllMovables();
@@ -94,10 +141,25 @@ const reloadBoard = () => {
     };
     square.style.cssText = squareStyleTemplate(squareStyle);
   });
+
+  const whiteTurn = document.querySelector(".whiteTurn");
+  whiteTurn.style.cssText = `position: fixed; 
+    left:${boardRect.left}px;
+    top:${boardRect.bottom + 4}px;
+    width:${boardRect.width / 24}px;
+    height:${boardRect.width / 24}px;`;
+
+  const blackTurn = document.querySelector(".blackTurn");
+  blackTurn.style.cssText = `position: fixed; 
+    left:${boardRect.right - boardRect.width / 24}px;
+    top:${boardRect.top - boardRect.width / 24 - 4}px;
+    width:${boardRect.width / 24}px;
+    height:${boardRect.width / 24}px;`;
 }
 
 window.onload = () => {
   reloadBoard();
+  updateTurnBadge().then();
   addEventToSquares();
 };
 
