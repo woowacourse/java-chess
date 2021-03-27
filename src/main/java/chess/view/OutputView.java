@@ -40,7 +40,7 @@ public class OutputView {
         }
     }
 
-    private static void printPieceOrAbleToMoveSymbol(Board board, Position position, List<Position> ableToMove) {
+    private static void printPieceOrAbleToMoveSymbol(final Board board, final Position position, final List<Position> ableToMove) {
         if (ableToMove.contains(position)) {
             System.out.print("*");
             return;
