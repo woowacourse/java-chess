@@ -2,7 +2,7 @@ package chess.db.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.entity.PositionEntity;
+import chess.db.domain.position.PositionEntity;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.sql.SQLException;

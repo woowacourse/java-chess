@@ -13,7 +13,7 @@ import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PieceEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.db.entity.PositionEntity;
+import chess.db.domain.position.PositionEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

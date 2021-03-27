@@ -1,4 +1,4 @@
-package chess.domain.position;
+package chess.db.domain.position;
 
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.position.type.Rank.SEVEN;
@@ -6,38 +6,34 @@ import static chess.domain.position.type.Rank.TWO;
 
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.cache.PositionsCache;
+import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.util.Objects;
 
-public class Position {
+public class PositionEntity {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
+    private final Long id;
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    public PositionEntity(Long id, String fileValue, String rankValue) {
+        this.id = id;
+        file = File.of(fileValue);
+        rank = Rank.of(rankValue);
     }
 
-    public Position(String fileValue, String rankValue) {
-        this.file = File.of(fileValue);
-        this.rank = Rank.of(rankValue);
+    public static PositionEntity of(File file, Rank rank) {
+        return PositionEntitiesCache.find(file, rank);
     }
 
+    public static PositionEntity of(String position) {
+        String file = String.valueOf(position.charAt(FILE_INDEX));
+        String rank = String.valueOf(position.charAt(RANK_INDEX));
 
-    public static Position of(File file, Rank rank) {
-        return PositionsCache.find(file, rank);
-    }
-
-    public static Position of(String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
-        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
-
-        return Position.of(File.of(fileInput), Rank.of(rankInput));
+        return PositionEntity.of(File.of(file), Rank.of(rank));
     }
 
     public Direction calculateDirection(Position destination) {
@@ -50,8 +46,8 @@ public class Position {
         return Direction.of(fileDiff, rankDiff);
     }
 
-    public Position move(Direction direction) {
-        return new Position(file.move(direction), rank.move(direction));
+    public PositionEntity move(Direction direction) {
+        return PositionEntity.of(file.move(direction), rank.move(direction));
     }
 
     public boolean isRankForwardedBy(Position destination, int rankDiff) {
@@ -66,11 +62,15 @@ public class Position {
         return rank == TWO;
     }
 
-    public File file() {
+    public Long getId() {
+        return id;
+    }
+
+    public File getFile() {
         return file;
     }
 
-    public Rank rank() {
+    public Rank getRank() {
         return rank;
     }
 
@@ -79,15 +79,15 @@ public class Position {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Position)) {
+        if (!(o instanceof PositionEntity)) {
             return false;
         }
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        PositionEntity that = (PositionEntity) o;
+        return id.equals(that.id) && file == that.file && rank == that.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(id, file, rank);
     }
 }

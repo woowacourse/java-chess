@@ -26,7 +26,7 @@ import chess.db.dao.PositionDAO;
 import chess.db.entity.PieceEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.db.entity.PositionEntity;
+import chess.db.domain.position.PositionEntity;
 import chess.domain.position.type.File;
 import java.sql.SQLException;
 

@@ -3,7 +3,7 @@ package chess.db.dao;
 
 import static chess.db.dao.DBConnection.getConnection;
 
-import chess.db.entity.PositionEntity;
+import chess.db.domain.position.PositionEntity;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.sql.PreparedStatement;

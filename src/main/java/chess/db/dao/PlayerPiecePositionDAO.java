@@ -6,7 +6,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import chess.db.entity.PieceEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.db.entity.PositionEntity;
+import chess.db.domain.position.PositionEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
