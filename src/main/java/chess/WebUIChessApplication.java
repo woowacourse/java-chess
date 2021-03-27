@@ -1,22 +1,28 @@
 package chess;
 
+import static spark.Spark.after;
 import static spark.Spark.get;
 
-import java.util.HashMap;
+import chess.controller.ChessController;
+import chess.domain.ChessGameImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+import spark.Filter;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        ChessController chessController = new ChessController(ChessGameImpl.initialGame());
+        ObjectMapper objectMapper = new ObjectMapper();
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        after((req, res) -> {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET");
+            res.header("Access-Control-Allow-Methods", "POST");
+        });
+
+        get("/pieces", (req, res) -> objectMapper.writeValueAsString(chessController.startGame()));
     }
 }

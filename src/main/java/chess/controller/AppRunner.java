@@ -2,8 +2,6 @@ package chess.controller;
 
 import chess.domain.ChessGameImpl;
 import chess.exception.ChessException;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 public final class AppRunner {
 
@@ -15,16 +13,16 @@ public final class AppRunner {
 
     public static void main(String[] args) {
         ChessAction chessAction = new ChessAction(ChessGameImpl.emptyGame());
-        OutputView.printStartGame();
+//        OutputView.printStartGame();
         playChess(chessAction);
     }
 
     private static void playChess(ChessAction chessAction) {
         try {
-            String command = InputView.option();
-            Option option = Option.selectedOption(command.split(COMMAND_SPLIT_REGEX)[OPTION_INDEX]);
-            GameStatus gameStatus = option.execute(chessAction, command);
-            restartIfNotEnd(gameStatus, chessAction);
+//            String command = InputView.option();
+//            Option option = Option.selectedOption(command.split(COMMAND_SPLIT_REGEX)[OPTION_INDEX]);
+//            GameStatus gameStatus = option.execute(chessAction, command);
+//            restartIfNotEnd(gameStatus, chessAction);
         } catch (ChessException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
             playChess(chessAction);

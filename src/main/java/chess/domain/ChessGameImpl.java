@@ -7,7 +7,6 @@ import chess.domain.scorecalculator.ScoreCalculator;
 import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -97,8 +96,8 @@ public final class ChessGameImpl implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> nameGroupingByPosition() {
-        return pieces.nameGroupingByPosition();
+    public Pieces currentPieces() {
+        return pieces;
     }
 
     @Override

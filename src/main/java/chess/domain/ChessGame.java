@@ -1,7 +1,5 @@
 package chess.domain;
 
-import java.util.Map;
-
 public interface ChessGame {
 
     void movePiece(Position currentPosition, Position targetPosition);
@@ -14,7 +12,7 @@ public interface ChessGame {
 
     boolean isCheckmate();
 
-    Map<Position, String> nameGroupingByPosition();
+    Pieces currentPieces();
 
     int boardSize();
 

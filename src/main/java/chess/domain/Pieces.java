@@ -1,7 +1,6 @@
 package chess.domain;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
 import chess.domain.piece.Piece;
@@ -9,7 +8,6 @@ import chess.exception.PieceNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -78,14 +76,6 @@ public class Pieces {
             .collect(toSet());
     }
 
-    public Map<Position, String> nameGroupingByPosition() {
-        return pieces.stream()
-            .collect(toMap(
-                Piece::currentPosition,
-                Piece::name
-            ));
-    }
-
     public Piece kingByColor(TeamColor teamColor) {
         return pieces.stream()
             .filter(Piece::isKing)
@@ -98,5 +88,9 @@ public class Pieces {
         return pieces.stream()
             .filter(Piece::isKing)
             .noneMatch(piece -> piece.isSameColor(teamColor));
+    }
+
+    public List<Piece> asList() {
+        return pieces;
     }
 }

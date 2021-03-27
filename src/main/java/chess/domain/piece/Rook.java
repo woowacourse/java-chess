@@ -8,8 +8,9 @@ import chess.domain.TeamColor;
 public final class Rook extends Piece {
 
     public Rook(TeamColor teamColor, Position position) {
-        super(new PieceDetails("r", teamColor, Score.from(5), true),
-            new AvailableDirections(PieceDirection.straightDirections(), PieceDirection.straightDirections()),
+        super(new PieceDetails("rook", teamColor, Score.from(5), true),
+            new AvailableDirections(PieceDirection.straightDirections(),
+                PieceDirection.straightDirections()),
             position);
     }
 

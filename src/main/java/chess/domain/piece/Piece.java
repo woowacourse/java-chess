@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.TeamColor.WHITE;
-
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
@@ -17,7 +15,8 @@ public abstract class Piece {
     private List<Position> movablePositions;
     private boolean moved;
 
-    public Piece(PieceDetails pieceDetails, AvailableDirections availableDirections, Position position) {
+    public Piece(PieceDetails pieceDetails, AvailableDirections availableDirections,
+        Position position) {
         this(pieceDetails, availableDirections, new ArrayList<>(), position, false);
     }
 
@@ -34,9 +33,11 @@ public abstract class Piece {
         List<Position> enemiesPositions) {
         movablePositions = new ArrayList<>();
         movablePositions.addAll(
-            availableDirections.movablePositions(existPiecePositions, currentPosition, pieceDetails.iterable()));
+            availableDirections
+                .movablePositions(existPiecePositions, currentPosition, pieceDetails.iterable()));
         movablePositions.addAll(
-            availableDirections.killablePositions(enemiesPositions, currentPosition, pieceDetails.iterable()));
+            availableDirections
+                .killablePositions(enemiesPositions, currentPosition, pieceDetails.iterable()));
     }
 
     public boolean samePosition(Position position) {
@@ -85,10 +86,7 @@ public abstract class Piece {
     }
 
     public String name() {
-        if (isSameColor(WHITE)) {
-            return pieceDetails.name();
-        }
-        return pieceDetails.name().toUpperCase();
+        return pieceDetails.name();
     }
 
     public abstract boolean isKing();
@@ -97,5 +95,9 @@ public abstract class Piece {
 
     public boolean isNotSameColor(TeamColor currentColor) {
         return pieceDetails.isNotSameColor(currentColor);
+    }
+
+    public TeamColor color() {
+        return pieceDetails.color();
     }
 }

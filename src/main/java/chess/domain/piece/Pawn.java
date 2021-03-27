@@ -9,7 +9,7 @@ import java.util.List;
 public final class Pawn extends Piece {
 
     public Pawn(TeamColor teamColor, Position position) {
-        super(new PieceDetails("p", teamColor, Score.from(1), false),
+        super(new PieceDetails("pawn", teamColor, Score.from(1), false),
             new AvailableDirections(PieceDirection.forwardDirection(teamColor),
                 PieceDirection.forwardDiagonal(teamColor)),
             position);

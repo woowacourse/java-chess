@@ -5,8 +5,6 @@ import chess.domain.ChessGame;
 import chess.domain.ChessGameImpl;
 import chess.domain.GameResult;
 import chess.domain.Positions;
-import chess.view.OutputView;
-import chess.view.dto.BoardDto;
 
 public final class ChessAction {
 
@@ -19,14 +17,13 @@ public final class ChessAction {
     public GameStatus start() {
         chessGame = ChessGameImpl.initialGame();
 
-        OutputView
-            .printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
+//        OutputView.printBoard(new BoardDto(chessGame.pieceGroupingByPosition(), chessGame.boardSize()));
 
         return GameStatus.RUN;
     }
 
     public GameStatus end() {
-        OutputView.printEndGame();
+//        OutputView.printEndGame();
         return GameStatus.EXIT;
     }
 
@@ -34,32 +31,31 @@ public final class ChessAction {
         Positions positions = MessagePositionConverter.convert(message);
         chessGame.movePiece(positions.currentPosition(), positions.targetPosition());
 
-        OutputView
-            .printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
+//        OutputView.printBoard(new BoardDto(chessGame.pieceGroupingByPosition(), chessGame.boardSize()));
 
         return checkGameStatus();
     }
 
     private GameStatus checkGameStatus() {
         if (chessGame.isCheckmate()) {
-            OutputView.printCheckmate(chessGame.currentColor().reverse());
+//            OutputView.printCheckmate(chessGame.currentColor().reverse());
             return GameStatus.EXIT;
         }
 
         if (chessGame.isKingDead()) {
-            OutputView.printKingDead(chessGame.currentColor().reverse());
+//            OutputView.printKingDead(chessGame.currentColor().reverse());
             return GameStatus.EXIT;
         }
 
         if (chessGame.isChecked()) {
-            OutputView.printCheck();
+//            OutputView.printCheck();
         }
         return GameStatus.RUN;
     }
 
     public GameStatus status() {
         GameResult gameResult = chessGame.gameResult();
-        OutputView.printResult(gameResult);
+//        OutputView.printResult(gameResult);
         return GameStatus.EXIT;
     }
 }
