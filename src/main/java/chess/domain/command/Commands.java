@@ -22,13 +22,9 @@ public class Commands {
     }
 
     public Command matchedCommand(String text) {
-        try {
-            return commands.stream()
-                    .filter(command -> command.isMatchedCommand(text))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalStateException("수행할 수 없는 명령어 입니다.");
-        }
+        return commands.stream()
+                .filter(command -> command.isMatchedCommand(text))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("수행할 수 없는 명령어 입니다."));
     }
 }
