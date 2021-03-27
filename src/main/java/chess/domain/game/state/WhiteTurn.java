@@ -27,7 +27,7 @@ public class WhiteTurn extends Running {
     public void moveIfValidColor(Position source, Position target) {
         Piece sourcePiece = board().pieceOfPosition(source);
         if (sourcePiece.isBlack()) {
-            throw new IllegalStateException(
+            throw new UnsupportedOperationException(
                     Color.WHITE.name() + "턴엔 " + Color.WHITE.name() + "말만 이동 가능합니다."
             );
         }

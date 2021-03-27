@@ -10,22 +10,22 @@ public class End extends Started {
 
     @Override
     public State start() {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public State end() {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public String finishReason() {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     @Override

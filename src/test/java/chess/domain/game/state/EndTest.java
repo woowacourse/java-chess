@@ -20,20 +20,20 @@ public class EndTest {
     @Test
     @DisplayName("종료 상태에서 start 명령시 에러 반환")
     void endStartException() {
-        assertThatThrownBy(end::start).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(end::start).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     @DisplayName("종료 상태에서 move 명령시 에러 반환")
     void endMoveReturnWhiteTurn() {
         assertThatThrownBy(() -> end.moveIfValidColor(Position.of("c5"), Position.of("c6")))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     @DisplayName("종료 상태에서 end 명령시 에러 반환")
     void endEndReturnEndTurn() {
-        assertThatThrownBy(end::end).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(end::end).isInstanceOf(UnsupportedOperationException.class);
     }
 
 }

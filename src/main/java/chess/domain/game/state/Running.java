@@ -9,12 +9,12 @@ public abstract class Running extends Started {
 
     @Override
     public State start() {
-        throw new IllegalStateException("게임이 이미 진행 중 입니다.");
+        throw new UnsupportedOperationException("게임이 이미 진행 중 입니다.");
     }
 
     @Override
     public String finishReason() {
-        throw new IllegalStateException("아직 게임이 종료되지 않았습니다.");
+        throw new UnsupportedOperationException("아직 게임이 종료되지 않았습니다.");
     }
 
     @Override

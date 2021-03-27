@@ -13,7 +13,7 @@ class BlackTurnTest {
     @DisplayName("블랙 턴 상태에서 start 명령시 에러 반환")
     void blackTurnStartException() {
         BlackTurn blackTurn = new BlackTurn(new Board(InitBoardGenerator.initLines()));
-        assertThatThrownBy(blackTurn::start).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(blackTurn::start).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

@@ -31,7 +31,7 @@ public abstract class Started implements State {
 
     @Override
     public State passTurn() {
-        throw new IllegalStateException("현재 수행할 수 없는 명령입니다.");
+        throw new UnsupportedOperationException("현재 수행할 수 없는 명령입니다.");
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class Started implements State {
 
     @Override
     public Color winner() {
-        throw new IllegalStateException("현재 수행할 수 없는 명령입니다.");
+        throw new UnsupportedOperationException("현재 수행할 수 없는 명령입니다.");
     }
 
     @Override

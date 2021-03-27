@@ -9,6 +9,6 @@ public abstract class Preparing extends Started {
 
     @Override
     public String finishReason() {
-        throw new IllegalStateException("아직 게임이 종료되지 않았습니다");
+        throw new UnsupportedOperationException("아직 게임이 종료되지 않았습니다");
     }
 }

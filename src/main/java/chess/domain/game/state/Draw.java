@@ -15,6 +15,6 @@ public class Draw extends Finished {
 
     @Override
     public Color winner() {
-        throw new IllegalStateException("무승부 처리로 승자가 존재하지 않습니다.");
+        throw new UnsupportedOperationException("무승부 처리로 승자가 존재하지 않습니다.");
     }
 }

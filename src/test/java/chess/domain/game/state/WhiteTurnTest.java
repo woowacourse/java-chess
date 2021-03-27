@@ -13,7 +13,7 @@ class WhiteTurnTest {
     @DisplayName("화이트 턴 상태에서 start 명령시 에러 반환")
     void blackTurnStartException() {
         WhiteTurn whiteTurn = new WhiteTurn(new Board(InitBoardGenerator.initLines()));
-        assertThatThrownBy(whiteTurn::start).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(whiteTurn::start).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

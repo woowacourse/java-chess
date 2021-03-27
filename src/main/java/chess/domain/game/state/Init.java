@@ -15,7 +15,7 @@ public class Init extends Preparing {
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        throw new IllegalStateException("아직 체스판이 준비되지 않았습니다.");
+        throw new UnsupportedOperationException("아직 체스판이 준비되지 않았습니다.");
     }
 
     @Override
