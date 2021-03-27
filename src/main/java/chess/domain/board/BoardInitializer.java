@@ -20,9 +20,7 @@ public class BoardInitializer {
 
     public static Board initiateBoard() {
         final Map<Position, Piece> map = new LinkedHashMap<>();
-
         resetBoard(map);
-
         return new Board(map);
     }
 

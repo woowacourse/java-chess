@@ -31,7 +31,7 @@ public abstract class Pawn extends Piece {
         throw new IllegalArgumentException("체스말은 색깔이 있어야 합니다.");
     }
 
-    public abstract boolean isFirstLine(final Horizontal horizontal);
+    protected abstract boolean isFirstLine(final Horizontal horizontal);
 
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         if (source.isStraight(target)) {
