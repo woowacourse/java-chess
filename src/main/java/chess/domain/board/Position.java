@@ -18,7 +18,6 @@ public class Position {
     private static final int ALPHA_INDEX = 0;
     private static final int NUMBER_INDEX = 1;
     private static final int ZERO = 0;
-    private static final int ROW_AND_COLUMN_LENGTH = 2;
     private static final int MOVE_ONE_WEIGHT = 1;
     public static final String ERROR_POSITION = "잘못된 좌표입니다. 좌표는 [a~h][1~8] 사이로 입력 해 주세요";
 
@@ -40,7 +39,6 @@ public class Position {
     private final int number;
 
     private Position(String boardPosition) {
-        validateLength(boardPosition);
         this.alpha = boardPosition.charAt(ALPHA_INDEX);
         this.number = Character.getNumericValue(boardPosition.charAt(NUMBER_INDEX));
     }
@@ -79,12 +77,6 @@ public class Position {
 
     private boolean vertical(Position value) {
         return alpha == value.alpha && number != value.number;
-    }
-
-    private void validateLength(String boardPosition) {
-        if (boardPosition.length() != ROW_AND_COLUMN_LENGTH) {
-            throw new IllegalArgumentException();
-        }
     }
 
     public Position moveUp() {
