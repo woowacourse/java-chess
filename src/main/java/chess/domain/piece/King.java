@@ -10,6 +10,8 @@ public class King extends Piece {
     private static final String SYMBOL = "Kk";
     private static final double SCORE = 0;
 
+    private boolean isFirst = true;
+
     private King(final String piece, final Color color, final Position position) {
         super(piece, color, MoveStrategies.everyMoveStrategies(), position);
     }
@@ -36,6 +38,7 @@ public class King extends Piece {
         List<Position> positions = possiblePositions(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+        isFirst = false;
     }
 
     @Override
@@ -56,6 +59,11 @@ public class King extends Piece {
     @Override
     public boolean isKnight() {
         return false;
+    }
+
+    @Override
+    public boolean isFirstMove() {
+        return isFirst;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {

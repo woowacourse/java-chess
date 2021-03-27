@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 public interface MoveStrategy {
     Position move(final Position position);
 
-    int getX();
+    boolean isNorth();
 
-    int getY();
+    boolean isSouth();
 }

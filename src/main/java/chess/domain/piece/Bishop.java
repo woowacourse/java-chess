@@ -12,6 +12,8 @@ public class Bishop extends Piece {
     private static final String SYMBOL = "Bb";
     private static final double SCORE = 3;
 
+    private boolean isFirst = true;
+
     private Bishop(final String piece, final Color color, final Position position) {
         super(piece, color, new MoveStrategies(new East(), new West(), new North(), new South()), position);
     }
@@ -39,6 +41,7 @@ public class Bishop extends Piece {
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
         changePosition(target.getPosition());
+        isFirst = false;
     }
 
     @Override
@@ -59,6 +62,11 @@ public class Bishop extends Piece {
     @Override
     public boolean isKnight() {
         return false;
+    }
+
+    @Override
+    public boolean isFirstMove() {
+        return isFirst;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {

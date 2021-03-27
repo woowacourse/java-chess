@@ -49,10 +49,6 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public final boolean isSameColor(final Piece piece) {
-        return color.equals(piece.color);
-    }
-
     public final File getFile() {
         return position.getFile();
     }
@@ -72,10 +68,46 @@ public abstract class Piece {
     }
 
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
-        if (isKing() || isPawn() || isKnight()) {
+        if (isPawn()) {
+            return pawnMove(basePieces, targetPieces, strategy);
+        }
+        if (isKing() || isKnight()) {
             return singleMove(basePieces, targetPieces, strategy);
         }
         return Collections.emptyList();
+    }
+
+    private List<Position> pawnMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
+        if (isFirstMove()) {
+            return pawnFirstMove(basePieces, targetPieces, strategy);
+        }
+        return singleMove(basePieces, targetPieces, strategy);
+    }
+
+    private List<Position> pawnFirstMove(final Pieces basePieces, final  Pieces targetPieces, final MoveStrategy strategy){
+        if (strategy.isNorth() || strategy.isSouth()) {
+            List<Position> positions = new ArrayList<>();
+            return northAndSouthPositions(basePieces, targetPieces, strategy, positions);
+        }
+        return singleMove(basePieces, targetPieces, strategy);
+    }
+
+    private List<Position> northAndSouthPositions(Pieces basePieces, Pieces targetPieces, MoveStrategy strategy, List<Position> positions) {
+        Position nextPosition = position;
+        for (int index = 0; index < 2; index++) {
+            nextPosition = strategy.move(nextPosition);
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
     }
 
     private List<Position> singleMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
@@ -114,4 +146,6 @@ public abstract class Piece {
     public abstract boolean isPawn();
 
     public abstract boolean isKnight();
+
+    public abstract boolean isFirstMove();
 }

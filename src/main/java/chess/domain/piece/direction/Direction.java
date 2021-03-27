@@ -3,8 +3,8 @@ package chess.domain.piece.direction;
 import chess.domain.position.Position;
 
 public abstract class Direction implements MoveStrategy {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     protected Direction(int x, int y) {
         this.x = x;
@@ -13,16 +13,6 @@ public abstract class Direction implements MoveStrategy {
 
     @Override
     public Position move(final Position position) {
-        return position.change(x, y);
-    }
-
-    @Override
-    public final int getX() {
-        return x;
-    }
-
-    @Override
-    public final int getY() {
-        return y;
+        return position.change(y, x);
     }
 }

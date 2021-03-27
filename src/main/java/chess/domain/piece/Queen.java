@@ -12,6 +12,8 @@ public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
     private static final double SCORE = 9;
 
+    private boolean isFirst = true;
+
     private Queen(final String piece, final Color color, final Position position) {
         super(piece, color, MoveStrategies.everyMoveStrategies(), position);
     }
@@ -58,6 +60,11 @@ public class Queen extends Piece {
     @Override
     public boolean isKnight() {
         return false;
+    }
+
+    @Override
+    public boolean isFirstMove() {
+        return isFirst;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {

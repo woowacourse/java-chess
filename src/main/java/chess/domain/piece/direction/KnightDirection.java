@@ -1,9 +1,17 @@
 package chess.domain.piece.direction;
 
-import chess.domain.position.Position;
-
-public abstract class KnightDirection extends Direction{
+public abstract class KnightDirection extends Direction {
     protected KnightDirection(int x, int y) {
         super(x, y);
+    }
+
+    @Override
+    public boolean isNorth() {
+        return false;
+    }
+
+    @Override
+    public boolean isSouth() {
+        return false;
     }
 }

@@ -12,6 +12,8 @@ public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
     private static final double SCORE = 5;
 
+    private boolean isFirst = true;
+
     private Rook(final String piece, final Color color, final Position position) {
         super(piece, color, new MoveStrategies(new Northeast(), new Northwest(), new Southeast(), new Southwest()), position);
     }
@@ -38,6 +40,7 @@ public class Rook extends Piece {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+        isFirst = false;
     }
 
     @Override
@@ -64,6 +67,11 @@ public class Rook extends Piece {
     @Override
     public boolean isKnight() {
         return false;
+    }
+
+    @Override
+    public boolean isFirstMove() {
+        return isFirst;
     }
 
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
