@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PositionEntitiesCache {
-    private static final PositionDAO positionDAO = new PositionDAO();
-    private static final List<PositionEntity> positionEntities = new ArrayList<>();
+    private static final PositionDAO POSITION_DAO = new PositionDAO();
+    private static final List<PositionEntity> POSITION_ENTITIES = new ArrayList<>();
 
     private PositionEntitiesCache() {
     }
@@ -38,13 +38,13 @@ public class PositionEntitiesCache {
 
     private static void cachingPositionsOfRank(Rank rank) throws SQLException {
         for (File file : File.values()) {
-            PositionEntity positionEntity = positionDAO.findByFileAndRank(file, rank);
-            positionEntities.add(positionEntity);
+            PositionEntity positionEntity = POSITION_DAO.findByFileAndRank(file, rank);
+            POSITION_ENTITIES.add(positionEntity);
         }
     }
 
     public static PositionEntity find(File file, Rank rank) {
-        return positionEntities.stream()
+        return POSITION_ENTITIES.stream()
             .filter(positionEntity ->
                     positionEntity.getFile() == file && positionEntity.getRank() == rank)
             .findAny()
@@ -52,6 +52,6 @@ public class PositionEntitiesCache {
     }
 
     public static PositionEntity get(int index) {
-        return positionEntities.get(index);
+        return POSITION_ENTITIES.get(index);
     }
 }
