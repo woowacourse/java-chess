@@ -126,25 +126,24 @@ public class InitChessBoard {
     }
 
     private void initUniquePieceLine() {
-        TeamColor color = TeamColor.WHITE;
-        chessBoard.put(Position.valueOf("a1"), new Rook(color, Position.valueOf("a1")));
-        chessBoard.put(Position.valueOf("b1"), new Knight(color, Position.valueOf("b1")));
-        chessBoard.put(Position.valueOf("c1"), new Bishop(color, Position.valueOf("c1")));
-        chessBoard.put(Position.valueOf("d1"), new Queen(color, Position.valueOf("d1")));
-        chessBoard.put(Position.valueOf("e1"), new King(color, Position.valueOf("e1")));
-        chessBoard.put(Position.valueOf("f1"), new Bishop(color, Position.valueOf("f1")));
-        chessBoard.put(Position.valueOf("g1"), new Knight(color, Position.valueOf("g1")));
-        chessBoard.put(Position.valueOf("h1"), new Rook(color, Position.valueOf("h1")));
 
-        color = TeamColor.BLACK;
-        chessBoard.put(Position.valueOf("a8"), new Rook(color, Position.valueOf("a8")));
-        chessBoard.put(Position.valueOf("b8"), new Knight(color, Position.valueOf("b8")));
-        chessBoard.put(Position.valueOf("c8"), new Bishop(color, Position.valueOf("c8")));
-        chessBoard.put(Position.valueOf("d8"), new Queen(color, Position.valueOf("d8")));
-        chessBoard.put(Position.valueOf("e8"), new King(color, Position.valueOf("e8")));
-        chessBoard.put(Position.valueOf("f8"), new Bishop(color, Position.valueOf("f8")));
-        chessBoard.put(Position.valueOf("g8"), new Knight(color, Position.valueOf("g8")));
-        chessBoard.put(Position.valueOf("h8"), new Rook(color, Position.valueOf("h8")));
+        chessBoard.put(Position.valueOf("a1"), new Rook(TeamColor.WHITE, Position.valueOf("a1")));
+        chessBoard.put(Position.valueOf("b1"), new Knight(TeamColor.WHITE, Position.valueOf("b1")));
+        chessBoard.put(Position.valueOf("c1"), new Bishop(TeamColor.WHITE, Position.valueOf("c1")));
+        chessBoard.put(Position.valueOf("d1"), new Queen(TeamColor.WHITE, Position.valueOf("d1")));
+        chessBoard.put(Position.valueOf("e1"), new King(TeamColor.WHITE, Position.valueOf("e1")));
+        chessBoard.put(Position.valueOf("f1"), new Bishop(TeamColor.WHITE, Position.valueOf("f1")));
+        chessBoard.put(Position.valueOf("g1"), new Knight(TeamColor.WHITE, Position.valueOf("g1")));
+        chessBoard.put(Position.valueOf("h1"), new Rook(TeamColor.WHITE, Position.valueOf("h1")));
+
+        chessBoard.put(Position.valueOf("a8"), new Rook(TeamColor.BLACK, Position.valueOf("a8")));
+        chessBoard.put(Position.valueOf("b8"), new Knight(TeamColor.BLACK, Position.valueOf("b8")));
+        chessBoard.put(Position.valueOf("c8"), new Bishop(TeamColor.BLACK, Position.valueOf("c8")));
+        chessBoard.put(Position.valueOf("d8"), new Queen(TeamColor.BLACK, Position.valueOf("d8")));
+        chessBoard.put(Position.valueOf("e8"), new King(TeamColor.BLACK, Position.valueOf("e8")));
+        chessBoard.put(Position.valueOf("f8"), new Bishop(TeamColor.BLACK, Position.valueOf("f8")));
+        chessBoard.put(Position.valueOf("g8"), new Knight(TeamColor.BLACK, Position.valueOf("g8")));
+        chessBoard.put(Position.valueOf("h8"), new Rook(TeamColor.BLACK, Position.valueOf("h8")));
     }
 
     public Map<Position, Piece> getChessBoard() {
