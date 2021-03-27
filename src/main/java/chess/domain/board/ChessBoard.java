@@ -1,9 +1,12 @@
 package chess.domain.board;
 
-import chess.domain.order.MoveRoute;
 import chess.domain.order.MoveResult;
+import chess.domain.order.MoveRoute;
 import chess.domain.order.RouteEntry;
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -17,12 +20,12 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-public class DefaultChessBoard implements Board {
+public class ChessBoard {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
 
     private final Map<Position, Piece> board;
 
-    DefaultChessBoard(Map<Position, Piece> board) {
+    public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
     }
 
@@ -112,4 +115,3 @@ public class DefaultChessBoard implements Board {
                 .map(rank -> Position.of(file, rank));
     }
 }
-

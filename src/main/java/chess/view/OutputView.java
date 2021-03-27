@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -27,11 +27,11 @@ public class OutputView {
         );
     }
 
-    public static void printBoard(Board board) {
+    public static void printBoard(ChessBoard chessBoard) {
         for (Rank rank : Rank.asListInReverseOrder()) {
             String line = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
-                    .map(board::getPieceByPosition)
+                    .map(chessBoard::getPieceByPosition)
                     .map(Piece::getNotation)
                     .collect(Collectors.joining());
             System.out.println(line);

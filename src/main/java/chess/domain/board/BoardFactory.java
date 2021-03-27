@@ -16,9 +16,9 @@ import static chess.domain.position.Rank.TWO;
 import static java.util.stream.Collectors.toMap;
 
 public class BoardFactory {
-    public static Board createBoard() {
+    public static ChessBoard createBoard() {
         Map<Position, Piece> board = initialize();
-        return new DefaultChessBoard(board);
+        return new ChessBoard(board);
     }
 
     private static Map<Position, Piece> initialize() {

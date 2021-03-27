@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 import chess.domain.order.MoveRoute;
 import chess.domain.piece.Color;
@@ -15,11 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnMoveStrategyTest {
-    private Board board;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        chessBoard = BoardFactory.createBoard();
     }
 
     @DisplayName("행마에 대한 검증 - 직선")
@@ -27,7 +27,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a3, WHITE", "b7, b6, BLACK"})
     void canMove_StraightDirection(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        MoveRoute moveRoute = chessBoard.createMoveRoute(Position.of(from), Position.of(to));
         assertThat(pawn.canMove(moveRoute)).isEqualTo(true);
     }
 
@@ -36,7 +36,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"c2, c5, WHITE", "g7, g4, BLACK"})
     void throwExceptionWhenMoveOverThreeSquares(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        MoveRoute moveRoute = chessBoard.createMoveRoute(Position.of(from), Position.of(to));
         assertThatThrownBy(() -> pawn.canMove(moveRoute))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
@@ -49,7 +49,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a4, WHITE", "b7, b5, BLACK"})
     void canMove_2RankOnFirstMove(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveRoute moveRoute = board.createMoveRoute(Position.of(from), Position.of(to));
+        MoveRoute moveRoute = chessBoard.createMoveRoute(Position.of(from), Position.of(to));
         assertThat(pawn.canMove(moveRoute)).isEqualTo(true);
     }
 

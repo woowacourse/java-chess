@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QueenMoveStrategyTest {
-    private Board board;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        chessBoard = BoardFactory.createBoard();
     }
 
     private static Stream<Arguments> queenCanMoveTest() {
@@ -40,14 +40,14 @@ public class QueenMoveStrategyTest {
     @ParameterizedTest
     @MethodSource
     void queenCanMoveTest(Position from, Position to, boolean expected) {
-        assertThat(whiteQueen.canMove(board.createMoveRoute(from, to))).isEqualTo(expected);
+        assertThat(whiteQueen.canMove(chessBoard.createMoveRoute(from, to))).isEqualTo(expected);
     }
 
     @DisplayName("잘못된 방향으로 이동하려고 한다면 예외")
     @ParameterizedTest
     @CsvSource({"c3,e4", "h2, g5"})
     void throwExceptionWhenWrongDirection(String from, String to) {
-        assertThatThrownBy(() -> whiteQueen.canMove(board.createMoveRoute(Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
@@ -55,7 +55,7 @@ public class QueenMoveStrategyTest {
     @DisplayName("기물이 가는 길에 다른 기물이 있으면 예외")
     @Test
     void whenBlockedThrowTest() {
-        assertThatThrownBy(() -> whiteQueen.canMove(board.createMoveRoute(Position.of("d1"), Position.of("d3"))))
+        assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of("d1"), Position.of("d3"))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
@@ -64,7 +64,7 @@ public class QueenMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"d1, e1", "d1, d2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteQueen.canMove(board.createMoveRoute(Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("동일한 진영의 말이 있어서 행마할 수 없습니다.");
     }

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 
 public class Fixture {
@@ -10,5 +10,5 @@ public class Fixture {
     public static final Queen whiteQueen = new Queen(Color.WHITE);
     public static final Knight whiteKnight = new Knight(Color.WHITE);
     public static final King whiteKing = new King(Color.WHITE);
-    public static Board mockBoard = BoardFactory.createBoard();
+    public static ChessBoard mockChessBoard = BoardFactory.createBoard();
 }
