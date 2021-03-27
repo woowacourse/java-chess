@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 
-public class End extends Ended {
+public class End extends Started {
     public End(Board board) {
         super(board);
     }
