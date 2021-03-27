@@ -13,8 +13,7 @@ import java.util.Objects;
 public class Position {
 
     private static final int POSITION_SIZE = 64;
-    private static final String ERROR_POSITION_VALUE = "00";
-    public static final Position ERROR = new Position(ERROR_POSITION_VALUE);
+    public static final Position outOfBoard = new Position("00");
     private static final int ALPHA_INDEX = 0;
     private static final int NUMBER_INDEX = 1;
     private static final int ZERO = 0;
@@ -84,7 +83,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveDown() {
@@ -92,7 +91,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveLeft() {
@@ -100,7 +99,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveRight() {
@@ -108,7 +107,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveRightUp() {
@@ -117,7 +116,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveRightDown() {
@@ -126,7 +125,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveLeftUp() {
@@ -135,7 +134,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
     public Position moveLeftDown() {
@@ -144,7 +143,7 @@ public class Position {
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
-        return ERROR;
+        return outOfBoard;
     }
 
 

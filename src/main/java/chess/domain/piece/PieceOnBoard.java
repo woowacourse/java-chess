@@ -16,7 +16,7 @@ public abstract class PieceOnBoard implements Piece {
     private Position position;
 
     public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType) {
-        this(teamColor, pieceType, Position.ERROR);
+        this(teamColor, pieceType, Position.outOfBoard);
     }
 
     public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position position) {
@@ -36,7 +36,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     protected boolean validBlank(Position position, ChessBoard chessBoard) {
-        return position != Position.ERROR && chessBoard.isBlank(position);
+        return position != Position.outOfBoard && chessBoard.isBlank(position);
     }
 
 

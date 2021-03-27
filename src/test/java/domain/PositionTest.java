@@ -228,7 +228,7 @@ public class PositionTest {
 
         Position afterLeft = before.moveLeft();
 
-        assertThat(afterDown).isEqualTo(Position.ERROR);
-        assertThat(afterLeft).isEqualTo(Position.ERROR);
+        assertThat(afterDown).isEqualTo(Position.outOfBoard);
+        assertThat(afterLeft).isEqualTo(Position.outOfBoard);
     }
 }
