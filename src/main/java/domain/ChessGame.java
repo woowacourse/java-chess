@@ -30,7 +30,7 @@ public class ChessGame {
         }
         Piece endPiece = board.getPiece(end);
         board.move(start, end);
-        isKingDead(endPiece);
+        checkKingState(endPiece);
         turn = !turn;
     }
 
@@ -39,7 +39,7 @@ public class ChessGame {
         return board.canMovable(start, turn);
     }
 
-    private void isKingDead(Piece endPiece) {
+    private void checkKingState(Piece endPiece) {
         if (endPiece.isKingDead()) {
             state = new Finished();
         }
