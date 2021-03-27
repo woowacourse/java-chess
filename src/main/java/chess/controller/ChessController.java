@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
 import chess.manager.ChessManager;
-import chess.manager.Menu;
+import chess.manager.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -18,37 +18,37 @@ public class ChessController {
     public void run() {
         OutputView.printGuideStartGame();
         firstCommand();
-        Menu menu;
+        Command command;
         do {
-            menu = getMenu();
-        } while (!chessManager.isEnd() && !menu.isEnd());
+            command = getMenu();
+        } while (!chessManager.isEnd() && !command.isEnd());
 
         OutputView.printGameResult(chessManager.getStatus());
     }
 
     private void firstCommand() {
-        Menu menu = initFirstCommand();
-        if (menu.isStart()) {
+        Command command = initFirstCommand();
+        if (command.isStart()) {
             OutputView.printBoard(chessManager.getBoard());
         }
-        if (menu.isEnd()) {
+        if (command.isEnd()) {
             OutputView.printEndGame();
         }
     }
 
-    private Menu initFirstCommand() {
+    private Command initFirstCommand() {
         try {
             String userInput = InputView.getUserCommand();
-            Menu menu = Menu.of(userInput);
-            menu.isFirstCommand();
-            return menu;
+            Command command = Command.of(userInput);
+            command.isFirstCommand();
+            return command;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             return initFirstCommand();
         }
     }
 
-    private Menu getMenu() {
+    private Command getMenu() {
         try {
             return executeMenu(InputView.getUserCommand());
         } catch (IllegalArgumentException e) {
@@ -57,26 +57,26 @@ public class ChessController {
         }
     }
 
-    private Menu executeMenu(final String input) {
-        final Menu menu = Menu.of(input);
+    private Command executeMenu(final String input) {
+        final Command command = Command.of(input);
 
-        if (menu.isStart()) {
+        if (command.isStart()) {
             restartGame();
         }
 
-        if (menu.isMove()) {
+        if (command.isMove()) {
             movePiece(MoveCommand.of(input));
         }
 
-        if (menu.isShow()) {
+        if (command.isShow()) {
             showAblePositionToMove(ShowCommand.of(input));
         }
 
-        if (menu.isStatus()) {
+        if (command.isStatus()) {
             OutputView.printStatus(chessManager.getStatus());
         }
 
-        return menu;
+        return command;
     }
 
     private void restartGame() {

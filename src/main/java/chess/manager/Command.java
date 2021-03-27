@@ -2,7 +2,7 @@ package chess.manager;
 
 import java.util.Arrays;
 
-public enum Menu {
+public enum Command {
     START("start", 1),
     END("end", 1),
     MOVE("move", 3),
@@ -12,15 +12,15 @@ public enum Menu {
     private final String command;
     private final int parameterCount;
 
-    Menu(final String command, final int parameterCount) {
+    Command(final String command, final int parameterCount) {
         this.command = command;
         this.parameterCount = parameterCount;
     }
 
-    public static Menu of(final String line) {
+    public static Command of(final String line) {
         String[] splitLine = line.split(" ");
         return Arrays.stream(values())
-                .filter(menu -> menu.isSameCommand(splitLine[0]) && menu.isSameParameterSize(splitLine.length))
+                .filter(command -> command.isSameCommand(splitLine[0]) && command.isSameParameterSize(splitLine.length))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령입니다."));
     }
