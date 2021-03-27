@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
-import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
+
 import java.util.Map;
 
 public class Pawn extends PieceOnBoard {

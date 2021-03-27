@@ -6,6 +6,7 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.PieceSet;
 import chess.domain.player.Score;
 import chess.domain.position.Position;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

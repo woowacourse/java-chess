@@ -10,6 +10,7 @@ import chess.domain.position.NumberRow;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.Running;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -81,7 +82,7 @@ public class ChessBoard {
     private void validatePosition(String source, String target) {
         validateSamePosition(source, target);
         if (gameState.containsKey(Position.valueOf(source)) &&
-            gameState.containsKey(Position.valueOf(target))) {
+                gameState.containsKey(Position.valueOf(target))) {
             return;
         }
         throw new IllegalArgumentException("잘못된 좌표입니다.");

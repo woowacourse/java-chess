@@ -6,6 +6,7 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +73,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     protected Set<Position> moveAsPossible(Moves direction, Position target,
-        Map<Position, Piece> chessBoard) {
+                                           Map<Position, Piece> chessBoard) {
         Set<Position> candidates = new HashSet<>();
         Position position = direction.move(currentPosition);
         while (movable(position, target, chessBoard)) {
@@ -95,16 +96,16 @@ public abstract class PieceOnBoard implements Piece {
         Set<Position> candidates = new HashSet<>();
         candidates.addAll(checkFront(chessBoard, currentPosition.moveFront(teamColor)));
         candidates.add(
-            checkFrontDiagonal(target, chessBoard,
-                currentPosition.moveFront(teamColor).moveRight()));
+                checkFrontDiagonal(target, chessBoard,
+                        currentPosition.moveFront(teamColor).moveRight()));
         candidates.add(
-            checkFrontDiagonal(target, chessBoard,
-                currentPosition.moveFront(teamColor).moveLeft()));
+                checkFrontDiagonal(target, chessBoard,
+                        currentPosition.moveFront(teamColor).moveLeft()));
         return candidates.contains(target);
     }
 
     private Position checkFrontDiagonal(Position target, Map<Position, Piece> chessBoard,
-        Position position) {
+                                        Position position) {
         if (isMeetEnemy(position, target, chessBoard)) {
             return position;
         }
@@ -129,7 +130,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     private boolean isMeetEnemy(Position position, Position target,
-        Map<Position, Piece> chessBoard) {
+                                Map<Position, Piece> chessBoard) {
 
         return position == target && isEnemyTeam(chessBoard.get(position));
     }

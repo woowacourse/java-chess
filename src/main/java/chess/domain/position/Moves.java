@@ -23,11 +23,11 @@ public enum Moves {
 
     private final Function<Position, Position> expression;
 
-    Moves(Function<Position, Position> expression){
+    Moves(Function<Position, Position> expression) {
         this.expression = expression;
     }
 
-    public Position move(Position position){
+    public Position move(Position position) {
         return expression.apply(position);
     }
 

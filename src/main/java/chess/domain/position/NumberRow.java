@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,12 +51,12 @@ public class NumberRow {
         throw new IllegalArgumentException("유효하지 않은 입력입니다. 숫자이어야 합니다.");
     }
 
-    public String movedNumber(int value) {
-        return NumberRow.valueOf(number + value).number();
-    }
-
     public static List<NumberRow> values() {
         return new ArrayList<>(cache.values());
+    }
+
+    public String movedNumber(int value) {
+        return NumberRow.valueOf(number + value).number();
     }
 
     public String number() {

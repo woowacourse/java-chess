@@ -36,14 +36,6 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("거리 1인 경우")
-    void calculate_distance() {
-        final Position position = Position.valueOf("b2");
-    }
-
-
-
-    @Test
     @DisplayName("위")
     void moveUp() {
         Position before = Position.valueOf("c3");

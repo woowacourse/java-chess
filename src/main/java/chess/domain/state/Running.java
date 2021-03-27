@@ -8,6 +8,7 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.PieceSet;
 import chess.domain.player.Score;
 import chess.domain.position.Position;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class Running implements GameState {
     }
 
     private GameState moveBoard(Position source, Position target, Piece startPiece,
-        Piece targetPiece) {
+                                Piece targetPiece) {
         if (chessBoard.get(target) == Blank.INSTANCE) {
             movePieces(source, target, startPiece);
             return new Running(chessBoard);

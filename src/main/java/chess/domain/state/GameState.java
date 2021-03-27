@@ -4,6 +4,7 @@ import chess.domain.Result;
 import chess.domain.piece.Piece;
 import chess.domain.player.PieceSet;
 import chess.domain.position.Position;
+
 import java.util.Map;
 
 public interface GameState {
