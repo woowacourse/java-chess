@@ -23,7 +23,7 @@ public class PawnMoving implements Moving {
     }
 
     private void addAttackablePosition(final List<Position> movablePositions, final Board board, final Position position, final Team team) {
-        if (!board.validatesRange(position)) {
+        if (!board.validatesPieceWithinBoardRange(position)) {
             return;
         }
         if (board.existsPieceByTeam(Team.enemyTeam(team), position)) {

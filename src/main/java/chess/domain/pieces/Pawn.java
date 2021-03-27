@@ -65,7 +65,7 @@ public final class Pawn extends Piece {
     private void addStraightPosition(final List<Position> movablePositions, final Board board, final int degree) {
         Position currentPosition = position();
         Position nextPosition = currentPosition.next(straightRow(degree), 0);
-        if (!board.validatesRange(nextPosition)) {
+        if (!board.validatesPieceWithinBoardRange(nextPosition)) {
             return;
         }
 

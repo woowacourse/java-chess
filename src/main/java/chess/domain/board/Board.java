@@ -34,7 +34,7 @@ public final class Board {
         }
     }
 
-    public boolean validatesRange(Position position) {
+    public boolean validatesPieceWithinBoardRange(Position position) {
         return !position.isOutOfRange();
     }
 

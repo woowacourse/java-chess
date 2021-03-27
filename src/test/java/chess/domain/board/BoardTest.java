@@ -40,10 +40,10 @@ class BoardTest {
     @DisplayName("보드 크기를 벗어나는 좌표로 이동하려고 하면, false를 리턴한다.")
     void validateRangeCheck() {
         assertAll(
-                () -> assertFalse(board.validatesRange(new Position(8, 0))),
-                () -> assertFalse(board.validatesRange(new Position(-1, 0))),
-                () -> assertFalse(board.validatesRange(new Position(0, 8))),
-                () -> assertFalse(board.validatesRange(new Position(0, -1)))
+                () -> assertFalse(board.validatesPieceWithinBoardRange(new Position(8, 0))),
+                () -> assertFalse(board.validatesPieceWithinBoardRange(new Position(-1, 0))),
+                () -> assertFalse(board.validatesPieceWithinBoardRange(new Position(0, 8))),
+                () -> assertFalse(board.validatesPieceWithinBoardRange(new Position(0, -1)))
         );
     }
 
