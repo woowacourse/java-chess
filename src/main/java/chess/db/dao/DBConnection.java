@@ -27,7 +27,7 @@ public class DBConnection {
             con = DriverManager
                 .getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USER_NAME,
                     PASSWORD);
-            System.out.println("정상적으로 연결되었습니다.");
+            // System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();

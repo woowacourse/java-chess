@@ -22,7 +22,7 @@ public class PlayerForDB {
         return playerDAO.save(playerEntity);
     }
 
-    private void setInitialPieces(PlayerEntity playerEntity) {
+    private void setInitialPieces(PlayerEntity playerEntity) throws SQLException {
         List<PiecePositionEntity> initialPiecesPositionsByColor
             = piecesPositionsForDB.getInitialPiecesPositionsByColor(playerEntity.getTeamColor());
         playerEntity.setPieceEntities(initialPiecesPositionsByColor);

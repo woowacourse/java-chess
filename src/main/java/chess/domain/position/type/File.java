@@ -22,11 +22,7 @@ public enum File {
     }
 
     public static File of(String fileInput) {
-        return findFileByValue(fileInput);
-    }
-
-    private static File findFileByValue(String value) {
-        return File.valueOf(value.toUpperCase());
+        return File.valueOf(fileInput.toUpperCase());
     }
 
     public File move(Direction direction) {

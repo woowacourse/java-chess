@@ -5,50 +5,22 @@ import chess.domain.position.type.Rank;
 import java.util.Objects;
 
 public class PositionEntity {
-    private Long id;
-    private String fileValue;
-    private String rankValue;
-    private PieceEntity pieceEntity;
+    private final Long id;
+    private final File file;
+    private final Rank rank;
 
-    public PositionEntity(File file, Rank rank, PieceEntity pieceEntity) {
-        this.fileValue = file.value();
-        this.rankValue = String.valueOf(rank.value());
-        this.pieceEntity = pieceEntity;
-    }
-
-    public PositionEntity(Long id, String fileValue, String rankValue, PieceEntity pieceEntity) {
+    public PositionEntity(Long id, String fileValue, String rankValue) {
         this.id = id;
-        this.fileValue = fileValue;
-        this.rankValue = rankValue;
-        this.pieceEntity = pieceEntity;
+        file = File.of(fileValue);
+        rank = Rank.of(rankValue);
     }
 
-    public Long getId() {
-        return id;
+    public File getFile() {
+        return file;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFileValue() {
-        return fileValue;
-    }
-
-    public void setFile(File file) {
-        fileValue = file.value();
-    }
-
-    public String getRankValue() {
-        return rankValue;
-    }
-
-    public void setRank(Rank rank) {
-        rankValue = String.valueOf(rank.value());
-    }
-
-    public PieceEntity getPieceEntity() {
-        return pieceEntity;
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
@@ -60,11 +32,11 @@ public class PositionEntity {
             return false;
         }
         PositionEntity that = (PositionEntity) o;
-        return Objects.equals(getId(), that.getId());
+        return id.equals(that.id) && file == that.file && rank == that.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id, file, rank);
     }
 }

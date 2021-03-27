@@ -20,7 +20,6 @@ import static chess.domain.position.type.Rank.ONE;
 import static chess.domain.position.type.Rank.SEVEN;
 import static chess.domain.position.type.Rank.TWO;
 
-
 import chess.db.dao.PieceDAO;
 import chess.db.dao.PiecePositionDAO;
 import chess.db.dao.PositionDAO;
@@ -29,6 +28,7 @@ import chess.db.entity.PiecePositionEntity;
 import chess.db.entity.PositionEntity;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.type.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,8 @@ public class PiecesPositionsForDB {
         positionDAO = new PositionDAO();
     }
 
-    public List<PiecePositionEntity> getInitialPiecesPositionsByColor(TeamColor teamColor) {
+    public List<PiecePositionEntity> getInitialPiecesPositionsByColor(TeamColor teamColor)
+        throws SQLException {
         List<PiecePositionEntity> initialPiecesPositions = new ArrayList<>();
         setInitialKings(teamColor, initialPiecesPositions);
         setInitialQueens(teamColor, initialPiecesPositions);
@@ -55,7 +56,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialKings(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity kingEntity = pieceDAO.findByNameAndColor(KING, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteKingsPositions(kingEntity, initialPiecesPositions);
@@ -65,7 +66,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhiteKingsPositions(PieceEntity kingEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity whiteKingInitialPosition = positionDAO.findByFileAndRank(E, ONE);
         PiecePositionEntity piecePositionEntity
             = piecePositionDAO.save(
@@ -75,7 +76,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackKingsPositions(PieceEntity kingEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity blackKingInitialPosition = positionDAO.findByFileAndRank(E, EIGHT);
         PiecePositionEntity piecePositionEntity
             = piecePositionDAO.save(
@@ -85,7 +86,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialQueens(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity queenEntity = pieceDAO.findByNameAndColor(QUEEN, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteQueensPositions(queenEntity, initialPiecesPositions);
@@ -95,7 +96,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhiteQueensPositions(PieceEntity queenEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity whiteQueenInitialPosition = positionDAO.findByFileAndRank(D, ONE);
         PiecePositionEntity piecePositionEntity
             = piecePositionDAO.save(
@@ -105,7 +106,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackQueensPositions(PieceEntity queenEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity blackQueenInitialPosition = positionDAO.findByFileAndRank(D, EIGHT);
         PiecePositionEntity piecePositionEntity = piecePositionDAO.save(
             new PiecePositionEntity(queenEntity, blackQueenInitialPosition)
@@ -114,7 +115,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialRooks(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity rookEntity = pieceDAO.findByNameAndColor(ROOK, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteRooksPositions(rookEntity, initialPiecesPositions);
@@ -124,7 +125,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhiteRooksPositions(PieceEntity rookEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity whiteRookInitialLeftPosition = positionDAO.findByFileAndRank(A, ONE);
         PositionEntity whiteRookInitialRightPosition = positionDAO.findByFileAndRank(H, ONE);
         PiecePositionEntity piecePositionEntity1
@@ -138,7 +139,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackRooksPositions(PieceEntity rookEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity blackRookInitialLeftPosition = positionDAO.findByFileAndRank(A, EIGHT);
         PositionEntity blackRookInitialRightPosition = positionDAO.findByFileAndRank(H, EIGHT);
         PiecePositionEntity piecePositionEntity1
@@ -152,7 +153,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialKnights(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity knightEntity = pieceDAO.findByNameAndColor(KNIGHT, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteKnightsPositions(knightEntity, initialPiecesPositions);
@@ -163,7 +164,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhiteKnightsPositions(PieceEntity knightEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity whiteKnightInitialLeftPosition = positionDAO.findByFileAndRank(B, ONE);
         PositionEntity whiteKnightInitialRightPosition = positionDAO.findByFileAndRank(G, ONE);
         PiecePositionEntity piecePositionEntity1 = piecePositionDAO.save(
@@ -177,7 +178,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackKnightsPositions(PieceEntity knightEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity blackKnightInitialLeftPosition = positionDAO.findByFileAndRank(B, EIGHT);
         PositionEntity blackKnightInitialRightPosition = positionDAO.findByFileAndRank(G, EIGHT);
         PiecePositionEntity piecePositionEntity1 = piecePositionDAO.save(
@@ -191,7 +192,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBishops(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity bishopEntity = pieceDAO.findByNameAndColor(BISHOP, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteBishopsPositions(bishopEntity, initialPiecesPositions);
@@ -202,7 +203,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhiteBishopsPositions(PieceEntity bishopEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity whiteBishopInitialLeftPosition = positionDAO.findByFileAndRank(C, ONE);
         PositionEntity whiteBishopInitialRightPosition = positionDAO.findByFileAndRank(F, ONE);
         PiecePositionEntity piecePositionEntity1 = piecePositionDAO.save(
@@ -216,7 +217,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackBishopsPositions(PieceEntity bishopEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PositionEntity blackBishopInitialLeftPosition = positionDAO.findByFileAndRank(C, EIGHT);
         PositionEntity blackBishopInitialRightPosition = positionDAO.findByFileAndRank(F, EIGHT);
         PiecePositionEntity piecePositionEntity1 = piecePositionDAO.save(
@@ -230,7 +231,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialPawns(TeamColor teamColor,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         PieceEntity pawnEntity = pieceDAO.findByNameAndColor(PAWN, teamColor);
         if (teamColor == WHITE) {
             setInitialWhitePawnsPositions(pawnEntity, initialPiecesPositions);
@@ -240,7 +241,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialWhitePawnsPositions(PieceEntity pawnEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         for (File file : File.values()) {
             PositionEntity whitePawnInitialPosition = positionDAO.findByFileAndRank(file, TWO);
             PiecePositionEntity piecePositionEntity = piecePositionDAO.save(
@@ -250,7 +251,7 @@ public class PiecesPositionsForDB {
     }
 
     private void setInitialBlackPawnsPositions(PieceEntity pawnEntity,
-        List<PiecePositionEntity> initialPiecesPositions) {
+        List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
         for (File file : File.values()) {
             PositionEntity blackPawnInitialPosition = positionDAO.findByFileAndRank(file, SEVEN);
             PiecePositionEntity piecePositionEntity = piecePositionDAO.save(
