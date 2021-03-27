@@ -58,7 +58,12 @@ public abstract class Piece {
 
     public final List<Position> possiblePositions(final Pieces basePieces, final Pieces targetPieces) {
         return findRoutes(basePieces, targetPieces);
+    }
 
+    protected final void checkTarget(final Target target, final List<Position> positions) {
+        if (!positions.contains(target.getPosition())) {
+            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
+        }
     }
 
     private final List<Position> findRoutes(final Pieces basePieces, final Pieces targetPieces) {

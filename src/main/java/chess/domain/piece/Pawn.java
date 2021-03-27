@@ -75,13 +75,6 @@ public class Pawn extends Piece {
         return isFirst;
     }
 
-    private void checkTarget(final Target target, final List<Position> positions) {
-        if (!positions.contains(target.getPosition())) {
-            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
-        }
-    }
-
-
     @Override
     public int hashCode() {
         return super.hashCode();
