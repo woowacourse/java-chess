@@ -50,6 +50,3 @@
         - [x] 퀸은 9점으로 계산한다.
         - [x] 킹은 0점으로 계산한다.
     
-### 질문 목록
-
-- InitBoardGenerator의 역할을 InitPieces에 통합하는게 어떤지?
