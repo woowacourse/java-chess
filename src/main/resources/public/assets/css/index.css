@@ -84,6 +84,10 @@ section {
     filter: drop-shadow(2px 2px 5px #000);
 }
 
+.selected {
+    filter: drop-shadow(2px 2px 5px #57AA51);
+}
+
 .whiteTurn, .blackTurn {
     filter: drop-shadow(2px 2px 5px #000);
 }

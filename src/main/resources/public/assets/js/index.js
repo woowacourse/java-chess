@@ -85,7 +85,6 @@ const checkGameState = async function() {
 
   console.log(result);
   if (result["isOngoing"] === "false") {
-    console.log("asdfasdfasdfasdf");
     const resultDiv = document.createElement("div");
     resultDiv.classList.add("result");
     resultDiv.innerHTML = `<p>Winner is ${teams[result["winner"]]}</p>`;
@@ -100,15 +99,23 @@ const checkGameState = async function() {
   }
 }
 
+const removeHighlight = () => {
+  document.querySelectorAll(".selected").forEach(selected => {
+    selected.classList.remove("selected");
+  });
+}
+
 const clickSquare = function (event) {
+  removeHighlight();
   if (event.target.classList.contains("movable")) {
     move(event.target.value, event.target.closest(".square").id).then(() => {
-      removeAllMovables();
       checkGameState().then();
+      removeAllMovables();
     });
     return;
   }
   removeAllMovables();
+  document.querySelector("#" + event.target.id).classList.add("selected");
   addMovables(event.target.id).then(r => {
   });
 };
@@ -143,18 +150,18 @@ const reloadBoard = () => {
   });
 
   const whiteTurn = document.querySelector(".whiteTurn");
-  whiteTurn.style.cssText = `position: fixed; 
-    left:${boardRect.left}px;
-    top:${boardRect.bottom + 4}px;
-    width:${boardRect.width / 24}px;
-    height:${boardRect.width / 24}px;`;
+  whiteTurn.style.position = "fixed";
+  whiteTurn.style.left = boardRect.left.toString() + "px";
+  whiteTurn.style.top = (boardRect.bottom + 4).toString() + "px";
+  whiteTurn.style.width = (boardRect.width / 24).toString() + "px";
+  whiteTurn.style.height = (boardRect.width / 24).toString() + "px";
 
   const blackTurn = document.querySelector(".blackTurn");
-  blackTurn.style.cssText = `position: fixed; 
-    left:${boardRect.right - boardRect.width / 24}px;
-    top:${boardRect.top - boardRect.width / 24 - 4}px;
-    width:${boardRect.width / 24}px;
-    height:${boardRect.width / 24}px;`;
+  blackTurn.style.position = "fixed";
+  blackTurn.style.left = (boardRect.right - boardRect.width / 24).toString() + "px";
+  blackTurn.style.top = (boardRect.top - boardRect.width / 24 - 4).toString() + "px";
+  blackTurn.style.width = (boardRect.width / 24).toString() + "px";
+  blackTurn.style.height = (boardRect.width / 24).toString() + "px";
 }
 
 window.onload = () => {
@@ -165,4 +172,5 @@ window.onload = () => {
 
 window.onresize = () => {
   reloadBoard();
+  updateTurnBadge().then();
 }
