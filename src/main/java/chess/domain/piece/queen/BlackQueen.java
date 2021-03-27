@@ -16,6 +16,6 @@ public class BlackQueen extends Queen {
 
     @Override
     public String getSymbol() {
-        return "N";
+        return "Q";
     }
 }
