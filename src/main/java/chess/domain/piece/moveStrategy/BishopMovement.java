@@ -26,7 +26,7 @@ public class BishopMovement implements MoveStrategy {
         List<Position> result = new ArrayList<>();
         int horizontalWeight = target.getHorizontalWeight();
         int verticalWeight = target.getVerticalWeight();
-        while (isInsideBoard(target, direction)) {
+        while (isInsideBoard(horizontalWeight, verticalWeight, direction)) {
             horizontalWeight += direction.getX();
             verticalWeight += direction.getY();
             result.add(
@@ -36,10 +36,7 @@ public class BishopMovement implements MoveStrategy {
         return result;
     }
 
-    private boolean isInsideBoard(Position target, Direction direction) {
-        int horizontalWeight = target.getHorizontalWeight();
-        int verticalWeight = target.getVerticalWeight();
-
+    private boolean isInsideBoard(int horizontalWeight, int verticalWeight, Direction direction) {
         return horizontalWeight + direction.getX() >= Board.MIN_BORDER
                 && horizontalWeight + direction.getX() <= Board.MAX_BORDER
                 && verticalWeight + direction.getY() >= Board.MIN_BORDER
