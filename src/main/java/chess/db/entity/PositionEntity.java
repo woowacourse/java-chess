@@ -15,6 +15,10 @@ public class PositionEntity {
         rank = Rank.of(rankValue);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public File getFile() {
         return file;
     }

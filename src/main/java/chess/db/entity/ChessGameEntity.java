@@ -67,6 +67,6 @@ public class ChessGameEntity {
     }
 
     public void addPlayer(PlayerEntity playerEntity) {
-        playerEntity.addChessRoomEntity(this);
+        playerEntity.setChessGameEntity(this);
     }
 }

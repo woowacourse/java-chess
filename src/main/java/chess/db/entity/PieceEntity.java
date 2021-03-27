@@ -15,6 +15,10 @@ public class PieceEntity {
         teamColor = TeamColor.of(color);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public PieceType getPieceType() {
         return pieceType;
     }

@@ -7,27 +7,27 @@ import java.util.Objects;
 public class PlayerEntity {
     private Long id;
     private final TeamColor teamColor;
-    private ChessGameEntity chessRoomEntity;
-
-    public PlayerEntity(ChessGameEntity chessRoomEntity) {
-        this.chessRoomEntity = chessRoomEntity;
-        this.teamColor = null;
-    }
+    private ChessGameEntity chessGameEntity;
 
     public PlayerEntity(TeamColor teamColor) {
         this.teamColor = teamColor;
     }
 
-    public PlayerEntity(Long id, ChessGameEntity chessRoomEntity) {
-        this.id = id;
-        this.chessRoomEntity = chessRoomEntity;
-        this.teamColor = null;
+    public PlayerEntity(TeamColor teamColor, ChessGameEntity chessGameEntity) {
+        this.teamColor = teamColor;
+        this.chessGameEntity = chessGameEntity;
     }
 
-    public void setId(Long id) {
+    public PlayerEntity(Long id, TeamColor teamColor, ChessGameEntity chessGameEntity) {
         this.id = id;
+        this.teamColor = teamColor;
+        this.chessGameEntity = chessGameEntity;
     }
 
+    public PlayerEntity(Long id, TeamColor teamColor) {
+        this.id = id;
+        this.teamColor = teamColor;
+    }
 
     public Long getId() {
         return id;
@@ -39,12 +39,12 @@ public class PlayerEntity {
         }
     }
 
-    public ChessGameEntity getChessRoomEntity() {
-        return chessRoomEntity;
+    public ChessGameEntity getChessGameEntity() {
+        return chessGameEntity;
     }
 
-    public void addChessRoomEntity(ChessGameEntity chessRoomEntity) {
-        this.chessRoomEntity = chessRoomEntity;
+    public void setChessGameEntity(ChessGameEntity chessGameEntity) {
+        this.chessGameEntity = chessGameEntity;
     }
 
     public TeamColor getTeamColor() {
