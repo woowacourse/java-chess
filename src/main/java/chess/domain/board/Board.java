@@ -4,7 +4,6 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
-import chess.domain.position.Notation;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +12,10 @@ import java.util.stream.Collectors;
 
 public final class Board {
 
-    private final Map<Notation, Position> positions;
+    private final Map<Position, Piece> coordinates;
 
-    private Board(Map<Notation, Position> positions) {
-        this.positions = positions;
+    private Board(Map<Position, Piece> coordinates) {
+        this.coordinates = coordinates;
     }
 
     // TODO
@@ -24,52 +23,57 @@ public final class Board {
         return new Board(new HashMap<>());
     }
 
-    public Board movePiece(final Notation sourceNotation, final Notation targetNotation) {
-        final Map<Notation, Position> nextBoardPositions = new HashMap<>(positions);
-        final Position source = positions.get(sourceNotation);
-        final Position target = positions.get(targetNotation);
-        nextBoardPositions.replace(targetNotation, target.copyPieceFrom(source));
-        nextBoardPositions.replace(sourceNotation, source.replacePiece(EmptyPiece.getInstance()));
-        return new Board(nextBoardPositions);
+    public Board movePiece(final Position sourcePosition, final Position targetPosition) {
+        final Map<Position, Piece> nextCoordinates = new HashMap<>(coordinates);
+        final Piece sourcePiece = coordinates.get(sourcePosition);
+        final Piece targetPiece = coordinates.get(targetPosition);
+        nextCoordinates.replace(targetPosition, sourcePiece);
+        nextCoordinates.replace(sourcePosition, EmptyPiece.getInstance());
+        return new Board(nextCoordinates);
     }
 
-    public boolean hasAvailablePath(final Notation sourceNotation, final Notation targetNotation) {
-        return pathsOf(sourceNotation).contains(targetNotation);
+    public boolean hasAvailablePath(final Position sourcePosition, final Position targetPosition) {
+        return pathsOf(sourcePosition).contains(targetPosition);
     }
 
     public List<Piece> remainingPieces() {
-        return positions.values()
+        return coordinates.values()
                 .stream()
-                .map(Position::holdingPiece)
                 .filter(piece -> !piece.isEmpty())
                 .collect(Collectors.toList())
                 ;
     }
 
-    public boolean hasPieceColor(final Notation sourceNotation, final PieceColor color) {
-        final Position source = positions.get(sourceNotation);
-        return source.holdingPieceIsColor(color);
+    public boolean hasPieceColor(final Position sourcePosition, final PieceColor color) {
+        return coordinates.get(sourcePosition).isColor(color);
     }
 
     public int kingCount() {
-        return (int) positions.values()
+        return (int) coordinates.values()
                 .stream()
-                .filter(Position::containsKing)
+                .filter(Piece::isKing)
                 .count();
     }
 
     public int pawnCount(final Column column, final PieceColor color) {
-        return (int) positions.values()
+        return (int) coordinates.entrySet()
                 .stream()
-                .filter(position -> position.isOfColumn(column))
-                .filter(Position::containsPawn)
-                .filter(position -> position.holdingPieceIsColor(color))
+                .filter(entry -> entry.getKey().isOfColumn(column))
+                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getValue().isColor(color))
                 .count()
                 ;
     }
 
-    private Paths pathsOf(final Notation sourceNotation) {
-        final Position sourcePosition = positions.get(sourceNotation);
-        return sourcePosition.availablePaths(positions);
+    private Path pathsOf(final Position sourcePosition) {
+        final Piece piece = coordinates.get(sourcePosition);
+        return new Path(
+                piece.directions()
+                .stream()
+                .map(direction -> piece.pathFrom(direction, sourcePosition))
+                .map(path -> path.removeObstacleInPath(piece, this))
+                .flatMap(List::stream)
+                .collect(Collectors.toList())
+        );
     }
 }

@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.PieceRange;
-import chess.domain.position.Notation;
+import chess.domain.board.Path;
+import chess.domain.piece.strategy.Direction;
+import chess.domain.position.Position;
+import java.util.List;
 
 public class EmptyPiece implements Piece {
 
@@ -15,8 +17,13 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
-    public PieceRange movableFrom(Notation notation) {
-        throw new IllegalArgumentException("빈 말은 움직일 수 없습니다.");
+    public List<Direction> directions() {
+        throw new IllegalArgumentException("존재하지 않는 체스말은 이동 방향을 구할 수 없습니다.");
+    }
+
+    @Override
+    public Path pathFrom(Direction direction, Position position) {
+        throw new IllegalArgumentException("존재하지 않는 체스말은 경로를 구할 수 없습니다.");
     }
 
     @Override

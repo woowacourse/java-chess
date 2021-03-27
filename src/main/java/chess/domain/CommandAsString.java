@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.position.Notation;
+import chess.domain.position.Position;
 
 public final class CommandAsString {
 
@@ -18,19 +18,19 @@ public final class CommandAsString {
         return Command.valueOf(commandInputs[0].toUpperCase());
     }
 
-    public Notation source() {
+    public Position source() {
         return positionOfCommand(1);
     }
 
-    public Notation target() {
+    public Position target() {
         return positionOfCommand(2);
     }
 
-    private Notation positionOfCommand(final int number) {
+    private Position positionOfCommand(final int number) {
         if (commandInputs.length == 1) {
             throw new IllegalArgumentException("플레이어의 행동이 아닙니다.");
         }
-        return Notation.ofName(commandInputs[number]);
+        return Position.ofName(commandInputs[number]);
     }
 
     public boolean isStart() {

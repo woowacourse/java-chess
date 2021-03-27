@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
-import chess.domain.position.Notation;
+import chess.domain.position.Position;
 
 public final class Game {
 
@@ -19,15 +19,15 @@ public final class Game {
         return new Game(Board.ofEmpty());
     }
 
-    public Game move(final Notation sourceNotation, final Notation targetNotation) {
-        if (!board.hasAvailablePath(sourceNotation, targetNotation)) {
+    public Game move(final Position sourcePosition, final Position targetPosition) {
+        if (!board.hasAvailablePath(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("경로 안에서 체스말이 이동할 수 없습니다.");
         }
-        return new Game(board.movePiece(sourceNotation, targetNotation));
+        return new Game(board.movePiece(sourcePosition, targetPosition));
     }
 
-    public boolean containsEnemyPiece(final Notation sourceNotation, final PieceColor enemyColor) {
-        return board.hasPieceColor(sourceNotation, enemyColor);
+    public boolean containsEnemyPiece(final Position sourcePosition, final PieceColor enemyColor) {
+        return board.hasPieceColor(sourcePosition, enemyColor);
     }
 
     public boolean isGameOver() {

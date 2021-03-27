@@ -4,7 +4,7 @@ import chess.domain.CommandAsString;
 import chess.domain.board.Game;
 import chess.domain.game.GameVisual;
 import chess.domain.piece.PieceColor;
-import chess.domain.position.Notation;
+import chess.domain.position.Position;
 
 public abstract class PlayingState extends StageState {
 
@@ -30,7 +30,7 @@ public abstract class PlayingState extends StageState {
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
     }
 
-    protected GameState executeMove(final Notation sourceName, final Notation targetName) {
+    protected GameState executeMove(final Position sourceName, final Position targetName) {
         Game newGame = moveInBoard(sourceName, targetName, currentTurnColor);
         if (newGame.isGameOver()) {
             return new EndState(newGame);
