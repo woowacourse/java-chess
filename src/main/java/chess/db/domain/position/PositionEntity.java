@@ -25,6 +25,12 @@ public class PositionEntity {
         rank = Rank.of(rankValue);
     }
 
+    public PositionEntity(File file, Rank rank) {
+        id = null;
+        this.file = file;
+        this.rank = rank;
+    }
+
     public static PositionEntity of(File file, Rank rank) {
         return PositionEntitiesCache.find(file, rank);
     }
@@ -83,11 +89,11 @@ public class PositionEntity {
             return false;
         }
         PositionEntity that = (PositionEntity) o;
-        return id.equals(that.id) && file == that.file && rank == that.rank;
+        return getFile() == that.getFile() && getRank() == that.getRank();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, file, rank);
+        return Objects.hash(getFile(), getRank());
     }
 }
