@@ -33,8 +33,7 @@ public class Bishop extends Piece {
         List<Position> result = new ArrayList<>();
         int horizontalWeight = target.getHorizontalWeight();
         int verticalWeight = target.getVerticalWeight();
-        while (horizontalWeight + direction.getX() >= Board.MIN_BORDER && horizontalWeight + direction.getX() <= Board.MAX_BORDER
-                && verticalWeight + direction.getY() >= Board.MIN_BORDER && verticalWeight + direction.getY() <= Board.MAX_BORDER) {
+        while (isInsideBoard(target, direction)) {
             horizontalWeight += direction.getX();
             verticalWeight += direction.getY();
             result.add(
@@ -42,5 +41,15 @@ public class Bishop extends Piece {
             );
         }
         return result;
+    }
+
+    private boolean isInsideBoard(Position target, Direction direction) {
+        int horizontalWeight = target.getHorizontalWeight();
+        int verticalWeight = target.getVerticalWeight();
+
+        return horizontalWeight + direction.getX() >= Board.MIN_BORDER
+                && horizontalWeight + direction.getX() <= Board.MAX_BORDER
+                && verticalWeight + direction.getY() >= Board.MIN_BORDER
+                && verticalWeight + direction.getY() <= Board.MAX_BORDER;
     }
 }
