@@ -13,9 +13,9 @@ public class PieceDAO {
     private final PlayerDAO playerDAO = new PlayerDAO();
 
     public PieceEntity add(PieceEntity pieceEntity) throws SQLException {
-        String query = "INSERT INTO piece (piece_name, color, player_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO piece (name, color, player_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
-        pstmt.setString(1, pieceEntity.getPieceName());
+        pstmt.setString(1, pieceEntity.getName());
         pstmt.setString(2, pieceEntity.getColor());
         pstmt.setLong(3, pieceEntity.getPlayerEntity().getId());
         pstmt.executeUpdate();
@@ -37,7 +37,7 @@ public class PieceDAO {
         PlayerEntity playerEntity = playerDAO.findById(rs.getLong("player_id"));
         return new PieceEntity(
             rs.getLong("id"),
-            rs.getString("piece_name"),
+            rs.getString("name"),
             rs.getString("color"),
             playerEntity);
     }

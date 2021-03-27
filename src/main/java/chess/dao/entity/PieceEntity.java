@@ -6,19 +6,19 @@ import java.util.Objects;
 
 public class PieceEntity {
     private Long id;
-    private final String pieceName;
+    private final String name;
     private final String color;
     private final PlayerEntity playerEntity;
 
     public PieceEntity(PieceType pieceType, TeamColor color, PlayerEntity playerEntity) {
-        this.pieceName = pieceType.name();
+        this.name = pieceType.name();
         this.color = color.getValue();
         this.playerEntity = playerEntity;
     }
 
-    public PieceEntity(Long id, String pieceName, String color, PlayerEntity playerEntity) {
+    public PieceEntity(Long id, String name, String color, PlayerEntity playerEntity) {
         this.id = id;
-        this.pieceName = pieceName;
+        this.name = name;
         this.color = color;
         this.playerEntity = playerEntity;
     }
@@ -31,8 +31,8 @@ public class PieceEntity {
         this.id = id;
     }
 
-    public String getPieceName() {
-        return pieceName;
+    public String getName() {
+        return name;
     }
 
     public String getColor() {
