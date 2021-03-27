@@ -13,10 +13,10 @@ public class RoomDAOTest {
 
     @Test
     @DisplayName("방을 정상적으로 조회 및 추가를 하는 지 테스트")
-    public void addRoom() throws SQLException {
+    public void createAndFindRoom() throws SQLException {
         String roomName = "abcd";
-        long roomId = roomDao.addRoom(roomName);
-        long foundRoomId = roomDao.findRoomIdByName(roomName);
+        long roomId = roomDao.createRoom(roomName);
+        Object foundRoomId = roomDao.findRoomIdByName(roomName);
         assertThat(roomId).isEqualTo(foundRoomId);
     }
 }
