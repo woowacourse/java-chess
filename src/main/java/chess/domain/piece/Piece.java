@@ -27,8 +27,6 @@ public abstract class Piece {
         return this.isPawn() && this.owner.isSameTeam(owner);
     }
 
-    public abstract String getSymbol();
-
     public final boolean isEnemy(final Piece other) {
         return this.owner.isEnemy(other.owner);
     }
@@ -37,15 +35,9 @@ public abstract class Piece {
         return this.owner.isSameTeam(other.owner);
     }
 
-    public List<Direction> getDirections() {
-        return Collections.unmodifiableList(directions);
-    }
-
     public boolean isOwner(final Owner owner) {
         return this.owner.isSameTeam(owner);
     }
-
-    public abstract int getMaxDistance();
 
     public boolean isKing() {
         return false;
@@ -54,4 +46,12 @@ public abstract class Piece {
     public boolean isPawn() {
         return false;
     }
+
+    public abstract String getSymbol();
+
+    public List<Direction> getDirections() {
+        return Collections.unmodifiableList(directions);
+    }
+
+    public abstract int getMaxDistance();
 }
