@@ -1,6 +1,9 @@
 package chess.domain.position;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Position {
     private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
@@ -11,18 +14,17 @@ public class Position {
         }
     }
 
+    private final Rank rank;
+    private final File file;
+    private Position(final Rank rank, final File file) {
+        this.rank = rank;
+        this.file = file;
+    }
+
     private static void initializePosition(Rank rankValue) {
         for (File fileValue : File.values()) {
             POSITIONS.put(rankValue.getRank() + fileValue.getFile(), new Position(rankValue, fileValue));
         }
-    }
-
-    private final Rank rank;
-    private final File file;
-
-    private Position(final Rank rank, final File file) {
-        this.rank = rank;
-        this.file = file;
     }
 
     public static Map<String, Position> getPositions() {

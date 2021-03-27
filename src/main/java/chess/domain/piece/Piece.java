@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.piece.strategy.MultipleCellMoveStrategy;
+import chess.domain.piece.strategy.OneCellMoveStrategy;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
@@ -13,13 +15,24 @@ public abstract class Piece {
 
     private final String piece;
     private final Color color;
-
+    protected MultipleCellMoveStrategy multipleCellMoveStrategy;
+    protected OneCellMoveStrategy oneCellMoveStrategy;
     private Position position;
 
-    protected Piece(final String piece, final Position position, final Color color) {
+    protected Piece(final String piece, final Position position,
+                    final Color color, final MultipleCellMoveStrategy multipleCellMoveStrategy) {
         this.piece = piece;
         this.position = position;
         this.color = color;
+        this.multipleCellMoveStrategy = multipleCellMoveStrategy;
+    }
+
+    protected Piece(final String piece, final Position position,
+                    final Color color, final OneCellMoveStrategy oneCellMoveStrategy) {
+        this.piece = piece;
+        this.position = position;
+        this.color = color;
+        this.oneCellMoveStrategy = oneCellMoveStrategy;
     }
 
     public static boolean isBlack(final String piece) {
@@ -42,12 +55,12 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
-    public final void changePosition(final Position position) {
-        this.position = position;
+    public final boolean isSameColor(final Piece piece) {
+        return this.getColor().equals(piece.getColor());
     }
 
-    public final boolean isSameColor(final Piece piece) {
-        return color.equals(piece.color);
+    public final void changePosition(final Position position) {
+        this.position = position;
     }
 
     public final File getFile() {

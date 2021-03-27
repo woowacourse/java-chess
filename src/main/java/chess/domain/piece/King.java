@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.piece.strategy.KingMoveStrategy;
+import chess.domain.piece.strategy.OneCellMoveStrategy;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
@@ -15,16 +14,17 @@ public class King extends Piece {
     private static final String SYMBOL = "Kk";
     private static final double SCORE = 0;
 
-    private King(final String piece, final Position position, final Color color) {
-        super(piece, position, color);
+    private King(final String piece, final Position position,
+                 final Color color, final OneCellMoveStrategy oneCellMoveStrategy) {
+        super(piece, position, color, oneCellMoveStrategy);
     }
 
     public static King from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new King(piece, position, BLACK);
+            return new King(piece, position, BLACK, new KingMoveStrategy());
         }
-        return new King(piece, position, WHITE);
+        return new King(piece, position, WHITE, new KingMoveStrategy());
     }
 
     private static void validate(final String piece) {
@@ -38,8 +38,8 @@ public class King extends Piece {
 
     @Override
     public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes(basePieces, targetPieces);
-        checkTarget(target, positions);
+        List<Position> positions = oneCellMoveStrategy.makeRoutes(basePieces, targetPieces, getPosition());
+        oneCellMoveStrategy.checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
     }
 
@@ -56,153 +56,6 @@ public class King extends Piece {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes(basePieces, targetPieces));
-        positions.addAll(makeDownRoutes(basePieces, targetPieces));
-        positions.addAll(makeLeftRoutes(basePieces, targetPieces));
-        positions.addAll(makeRightRoutes(basePieces, targetPieces));
-        positions.addAll(makeUpLeftRoutes(basePieces, targetPieces));
-        positions.addAll(makeUpRightRoutes(basePieces, targetPieces));
-        positions.addAll(makeDownLeftRoutes(basePieces, targetPieces));
-        positions.addAll(makeDownRightRoutes(basePieces, targetPieces));
-        return positions;
-    }
-
-    private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank + 1, file);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank - 1, file);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank, file - 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank, file + 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank + 1, file - 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank + 1, file + 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank - 1, file - 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        Position nextPosition = Position.valueOf(rank - 1, file + 1);
-        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-        if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
-        }
-        return Collections.emptyList();
-    }
-
-    private void checkTarget(final Target target, final List<Position> positions) {
-        if (!positions.contains(target.getPosition())) {
-            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
-        }
     }
 
     @Override
