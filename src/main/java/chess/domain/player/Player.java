@@ -40,9 +40,7 @@ public class Player {
     }
 
     public void removeIfExist(final Position target) {
-        if (positions.contains(target)) {
-            positions.remove(target);
-        }
+        positions.remove(target);
     }
 
     public void move(final Position source, final Position target) {
