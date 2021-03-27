@@ -46,7 +46,7 @@ public class Score {
     private static double calculateScoreTotalExceptPawn(Map<Coordinate, Piece> pieces) {
         return pieces.values()
                 .stream()
-                .filter(piece -> !piece.isPawn())
+                .filter(piece -> !piece.isPieceOf(Pawn.class))
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
@@ -55,7 +55,7 @@ public class Score {
         return (int) Arrays.stream(Rank.values())
                 .map(rank -> new Coordinate(file, rank))
                 .filter(pieces::containsKey)
-                .filter(coordinate -> pieces.get(coordinate).isPawn())
+                .filter(coordinate -> pieces.get(coordinate).isPieceOf(Pawn.class))
                 .count();
     }
 

@@ -29,8 +29,8 @@ class PieceTest {
         Piece king = new King(TeamType.WHITE);
         Piece notKing = new Pawn(TeamType.WHITE);
 
-        assertThat(king.isKing()).isTrue();
-        assertThat(notKing.isKing()).isFalse();
+        assertThat(king.isPieceOf(King.class)).isTrue();
+        assertThat(notKing.isPieceOf(King.class)).isFalse();
     }
 
     @DisplayName("기물이 폰인지 확인한다.")
@@ -39,8 +39,8 @@ class PieceTest {
         Piece pawn = new Pawn(TeamType.WHITE);
         Piece notPawn = new Rook(TeamType.WHITE);
 
-        assertThat(pawn.isPawn()).isTrue();
-        assertThat(notPawn.isPawn()).isFalse();
+        assertThat(pawn.isPieceOf(Pawn.class)).isTrue();
+        assertThat(notPawn.isPieceOf(Pawn.class)).isFalse();
     }
 
     @DisplayName("기물이 주어진 팀과 같은 팀인지 확인한다.")
