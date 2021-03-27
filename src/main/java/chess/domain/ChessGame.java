@@ -56,7 +56,7 @@ public class ChessGame {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");
         }
         if (sourcePiece.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
+            throw new IllegalArgumentException("[ERROR] target에 같은 편 말이 있습니다.");
         }
     }
 
