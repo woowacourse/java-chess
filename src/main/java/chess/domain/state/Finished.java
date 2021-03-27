@@ -19,7 +19,7 @@ public class Finished implements GameState {
 
     @Override
     public GameState move(Position source, Position target) {
-        throw new IllegalArgumentException("게임이 종료되었으므로 움직일 수 없습니다.");
+        throw new UnsupportedOperationException("게임이 종료되었으므로 움직일 수 없습니다.");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Finished implements GameState {
 
     @Override
     public GameState terminate() {
-        throw new IllegalArgumentException("이미 끝난 게임입니다.");
+        throw new UnsupportedOperationException("이미 끝난 게임입니다.");
     }
 
 
