@@ -21,11 +21,7 @@ public class Bishop extends PieceOnBoard {
 
     @Override
     public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN, target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.LEFT_UP, target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN, target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_UP, target, chessBoard));
+        final Set<Position> candidates = moveDiagonalAsPossible(target, chessBoard);
         return candidates.contains(target);
     }
 

@@ -21,7 +21,7 @@ public class Knight extends PieceOnBoard {
 
     @Override
     public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
-        Set<Position> candidates = new HashSet<>();
+        final Set<Position> candidates = new HashSet<>();
 
         candidates.add(moveOnce(Moves.LEFT_DOWN_DOWN, target, chessBoard));
         candidates.add(moveOnce(Moves.LEFT_UP_LEFT, target, chessBoard));

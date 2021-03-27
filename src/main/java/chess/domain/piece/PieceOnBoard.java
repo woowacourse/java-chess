@@ -6,7 +6,6 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -69,20 +68,33 @@ public abstract class PieceOnBoard implements Piece {
 
     @Override
     public String toString() {
-        return teamColor.name() + "" + pieceType + "\n";
+        return "PieceOnBoard{" +
+            "teamColor=" + teamColor +
+            ", pieceType=" + pieceType +
+            ", state=" + state +
+            ", currentPosition=" + currentPosition +
+            '}';
     }
 
-    protected Set<Position> moveAsPossible(Moves direction, Position target,
-                                           Map<Position, Piece> chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        Position position = direction.move(currentPosition);
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = direction.move(position);
-        }
+    protected Set<Position> moveDiagonalAsPossible(Position target,
+        Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT_UP, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_UP, target, chessBoard));
         return candidates;
     }
 
+    protected Set<Position> moveCrossAsPossible(Position target,
+        Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        candidates.addAll(moveAsPossible(Moves.UP, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.DOWN, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT, target, chessBoard));
+        return candidates;
+    }
 
     protected Position moveOnce(Moves direction, Position target, Map<Position, Piece> chessBoard) {
         Position position = direction.move(currentPosition);
@@ -92,46 +104,54 @@ public abstract class PieceOnBoard implements Piece {
         return Position.ERROR;
     }
 
-    protected boolean movablePawn(Position target, Map<Position, Piece> chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        candidates.addAll(checkFront(chessBoard, currentPosition.moveFront(teamColor)));
-        candidates.add(
-                checkFrontDiagonal(target, chessBoard,
-                        currentPosition.moveFront(teamColor).moveRight()));
-        candidates.add(
-                checkFrontDiagonal(target, chessBoard,
-                        currentPosition.moveFront(teamColor).moveLeft()));
-        return candidates.contains(target);
-    }
-
-    private Position checkFrontDiagonal(Position target, Map<Position, Piece> chessBoard,
-                                        Position position) {
-        if (isMeetEnemy(position, target, chessBoard)) {
-            return position;
+    protected Set<Position> checkFrontDiagonal(Position target, Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        Position positionDiagonalRight = currentPosition.moveFront(teamColor).moveRight();
+        Position positionDiagonalLeft = currentPosition.moveFront(teamColor).moveLeft();
+        if (isMeetEnemy(positionDiagonalRight, target, chessBoard)) {
+            candidates.add(positionDiagonalRight);
         }
-        return Position.ERROR;
-    }
-
-    private Set<Position> checkFront(Map<Position, Piece> chessBoard, Position position) {
-        Set<Position> candidates = new HashSet<>();
-        if (validBlank(position, chessBoard)) {
-            candidates.add(position);
-            position = position.moveFront(teamColor);
-            if (validBlank(position, chessBoard) && currentPosition.pawnLine(teamColor)) {
-                candidates.add(position);
-            }
+        if (isMeetEnemy(positionDiagonalLeft, target, chessBoard)) {
+            candidates.add(positionDiagonalLeft);
         }
         return candidates;
     }
 
+    protected Set<Position> checkFront(Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        Position position = currentPosition.moveFront(teamColor);
+        if (validBlank(position, chessBoard)) {
+            candidates.add(position);
+            position = position.moveFront(teamColor);
+            checkOnStartLine(chessBoard, candidates, position);
+        }
+        return candidates;
+    }
+
+    private void checkOnStartLine(Map<Position, Piece> chessBoard, Set<Position> candidates,
+        Position position) {
+        if (validBlank(position, chessBoard) && currentPosition.pawnLine(teamColor)) {
+            candidates.add(position);
+        }
+    }
+
+    private Set<Position> moveAsPossible(Moves direction, Position target,
+        Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        Position position = direction.move(currentPosition);
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = direction.move(position);
+        }
+        return candidates;
+    }
 
     private boolean movable(Position position, Position target, Map<Position, Piece> chessBoard) {
         return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
     }
 
     private boolean isMeetEnemy(Position position, Position target,
-                                Map<Position, Piece> chessBoard) {
-
+        Map<Position, Piece> chessBoard) {
         return position == target && isEnemyTeam(chessBoard.get(position));
     }
 

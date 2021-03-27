@@ -4,7 +4,9 @@ import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Pawn extends PieceOnBoard {
 
@@ -18,7 +20,10 @@ public class Pawn extends PieceOnBoard {
 
     @Override
     public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
-        return movablePawn(target, chessBoard);
+        final Set<Position> candidates = new HashSet<>();
+        candidates.addAll(checkFront(chessBoard));
+        candidates.addAll(checkFrontDiagonal(target, chessBoard));
+        return candidates.contains(target);
     }
 
 }
