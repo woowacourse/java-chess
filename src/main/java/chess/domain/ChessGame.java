@@ -49,7 +49,7 @@ public class ChessGame {
     }
 
     public boolean isBeforeEnd() {
-        return !end;
+        return !board.isGameOver() && !end;
     }
     public boolean isBeforeStart() {
         return !start;

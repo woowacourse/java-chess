@@ -16,11 +16,13 @@ public class Board {
     private final Map<Position, Piece> board;
     private final Map<Team, Double> deadPieceByTeam;
     private final BoardStatus boardStatus;
+    private boolean gameOver;
 
     public Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
         this.deadPieceByTeam = initializeDeadPieceByTeamMap();
         this.boardStatus = new BoardStatus();
+        gameOver = false;
     }
 
     private Map<Team, Double> initializeDeadPieceByTeamMap() {
@@ -48,9 +50,10 @@ public class Board {
             putDeadPieces(destinationPiece);
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
-            return isKing(destinationPiece);
+            checkDeadKing(destinationPiece);
+            return true;
         }
-        throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+        return false;
     }
 
     private void checkTurn(Piece targetPiece) {
@@ -60,11 +63,12 @@ public class Board {
         boardStatus.changeTurn();
     }
 
-    private boolean isKing(Piece piece) {
+    private void checkDeadKing(Piece piece) {
         if (Objects.isNull(piece)) {
-            return false;
+            gameOver = false;
+            return;
         }
-        return piece.isKing();
+        gameOver = piece.isKing();
     }
 
     private void putDeadPieces(Piece destinationPiece) {
@@ -121,6 +125,10 @@ public class Board {
 
     public double score(Team team) {
         return boardStatus.score(team);
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     public Map<Position, Piece> getBoard() {
