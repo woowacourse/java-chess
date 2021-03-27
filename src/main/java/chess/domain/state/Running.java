@@ -43,7 +43,7 @@ public class Running implements GameState {
     }
 
     private GameState kingCase(Piece targetPiece) {
-        if (targetPiece instanceof King) {
+        if (targetPiece.isKing()) {
             return new Finished(chessBoard);
         }
         return new Running(chessBoard);
@@ -91,6 +91,11 @@ public class Running implements GameState {
     @Override
     public GameState terminate() {
         return new Finished(chessBoard);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 
 

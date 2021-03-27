@@ -67,6 +67,16 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
+    @Override
     public String toString() {
         return "PieceOnBoard{" +
             "teamColor=" + teamColor +

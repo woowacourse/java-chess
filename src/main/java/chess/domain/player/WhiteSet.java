@@ -90,7 +90,7 @@ public class WhiteSet implements PieceSet {
     }
 
     private void recordPawns(Map<Character, Integer> pawnCount, Piece piece) {
-        if (piece instanceof Pawn) {
+        if (piece.isPawn()) {
             pawnCount.put(piece.getColumn(),
                 pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
         }

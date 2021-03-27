@@ -60,5 +60,10 @@ public class Finished implements GameState {
         throw new UnsupportedOperationException("이미 끝난 게임입니다.");
     }
 
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
 
 }

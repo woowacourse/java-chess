@@ -23,4 +23,8 @@ public interface Piece {
 
     Character getColumn();
 
+    boolean isKing();
+
+    boolean isPawn();
+
 }

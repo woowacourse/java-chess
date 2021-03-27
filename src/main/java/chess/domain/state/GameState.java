@@ -18,4 +18,6 @@ public interface GameState {
 
     GameState terminate();
 
+    boolean isRunning();
+
 }

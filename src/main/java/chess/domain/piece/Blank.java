@@ -58,4 +58,14 @@ public class Blank implements Piece {
         throw new UnsupportedOperationException("공백의 값을 구할 수 없습니다.");
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
 }

@@ -98,7 +98,7 @@ public class ChessBoard {
     }
 
     public boolean isPlaying() {
-        return gameState instanceof Running;
+        return gameState.isRunning();
     }
 
     public void terminate() {
