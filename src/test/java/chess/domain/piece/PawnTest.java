@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -136,4 +136,5 @@ public class PawnTest {
         assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
         assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
     }
+
 }

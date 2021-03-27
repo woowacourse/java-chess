@@ -52,3 +52,13 @@ class BlackSet {
 
 ## 링크
 [javadocs UnsupportedOperationException](https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html)
+
+
+# [Java] Enum - 3
+
+## 내용
+- Enum에는 기본적으로 static <T extends Enum<T>> valueOf(String value) 가 정의되어 있다. 따라서 valueOf(String s)의 정적팩토리 메서드가 만들어지지 않는다.
+- 이외에도 clone(), compareTo(E o), equals, toString, names, finalize 등이 기본적으로 정의되어 있다.
+
+## 링크 
+[javadocs Enum](https://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html)

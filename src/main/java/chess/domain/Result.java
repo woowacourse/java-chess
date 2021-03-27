@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
-
 import java.util.Map;
 
 public class Result {
@@ -25,4 +24,5 @@ public class Result {
     public String getWinner() {
         return winner.name();
     }
+
 }

@@ -22,6 +22,7 @@ public class BlankTest {
 
         assertThatThrownBy(() -> {
             piece.changePosition(Position.valueOf("b3"));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
+
 }

@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import chess.domain.pieceinformations.TeamColor;
-import chess.domain.position.Position;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,13 +37,15 @@ public class ChessBoardTest {
     @Test
     @DisplayName("말 이동 실패 테스트")
     void failOutOfBoundary() {
-        assertThatThrownBy(() -> chessBoard.move("b2", "b10")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessBoard.move("b2", "b10"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("동일한 위치 금지 테스트")
     void failSamePosition() {
-        assertThatThrownBy(() -> chessBoard.move("b2", "b2")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessBoard.move("b2", "b2"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -67,4 +69,5 @@ public class ChessBoardTest {
 
         assertFalse(chessBoard.isPlaying());
     }
+
 }

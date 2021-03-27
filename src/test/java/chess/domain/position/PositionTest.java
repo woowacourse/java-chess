@@ -12,7 +12,7 @@ public class PositionTest {
     @Test
     @DisplayName("생성")
     void create() {
-        assertThatCode(()-> Position.valueOf("a1")).doesNotThrowAnyException();
+        assertThatCode(() -> Position.valueOf("a1")).doesNotThrowAnyException();
     }
 
     @Test
@@ -127,4 +127,5 @@ public class PositionTest {
         assertThat(afterDown).isEqualTo(Position.ERROR);
         assertThat(afterLeft).isEqualTo(Position.ERROR);
     }
+
 }

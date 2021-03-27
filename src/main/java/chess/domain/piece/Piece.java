@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import chess.domain.position.Position;
-
 import java.util.Map;
 
 public interface Piece {
@@ -23,4 +22,5 @@ public interface Piece {
     Score getScore();
 
     Character getColumn();
+
 }

@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import chess.domain.position.Position;
-
 import java.util.Map;
 
 public class Blank implements Piece {
@@ -58,4 +57,5 @@ public class Blank implements Piece {
     public Character getColumn() {
         throw new UnsupportedOperationException("공백의 값을 구할 수 없습니다.");
     }
+
 }

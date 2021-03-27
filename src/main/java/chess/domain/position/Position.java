@@ -1,35 +1,34 @@
 package chess.domain.position;
 
 import chess.domain.pieceinformations.TeamColor;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Position {
-    public static final Position ERROR = new Position(AlphaColumn.ERROR, NumberRow.ERROR);
+    public static final Position ERROR = new Position(AlphaColumns.ERROR, NumberRows.ERROR);
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
 
     static {
-        for (NumberRow row : NumberRow.values()) {
-            for (AlphaColumn column : AlphaColumn.values()) {
+        for (NumberRows row : NumberRows.rows()) {
+            for (AlphaColumns column : AlphaColumns.columns()) {
                 final String position = column.alpha() + row.number();
                 CACHE.put(position, new Position(position));
             }
         }
     }
 
-    private final AlphaColumn column;
-    private final NumberRow row;
+    private final AlphaColumns column;
+    private final NumberRows row;
 
     private Position(String boardPosition) {
         validateLength(boardPosition);
-        this.column = AlphaColumn.valueOf(boardPosition.charAt(0));
-        this.row = NumberRow.valueOf(boardPosition.charAt(1));
+        this.column = AlphaColumns.getInstance(boardPosition.charAt(0));
+        this.row = NumberRows.getInstance(boardPosition.charAt(1));
     }
 
-    private Position(AlphaColumn alpha, NumberRow number) {
+    private Position(AlphaColumns alpha, NumberRows number) {
         this.column = alpha;
         this.row = number;
     }
@@ -41,12 +40,12 @@ public class Position {
         throw new IllegalArgumentException();
     }
 
-    public static Position valueOf(AlphaColumn column, NumberRow row) {
+    public static Position valueOf(AlphaColumns column, NumberRows row) {
         final String value = column.alpha() + row.number();
         if (CACHE.containsKey(value)) {
             return CACHE.get(value);
         }
-        throw new IllegalArgumentException();
+        return ERROR;
     }
 
     public static List<Position> values() {
@@ -144,8 +143,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "boardPosition='" + column + ", " + row + '\'' +
-                '}';
+            "boardPosition='" + column + ", " + row + '\'' +
+            '}';
     }
 
 }

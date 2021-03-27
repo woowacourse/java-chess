@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -76,4 +76,5 @@ public class BishopTest {
         assertFalse(piece.isMoveAble(Position.valueOf("b5"), board));
         assertFalse(piece.isMoveAble(Position.valueOf("f8"), board));
     }
+
 }

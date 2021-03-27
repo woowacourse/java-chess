@@ -1,12 +1,21 @@
 package chess.domain.player;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.pieceinformations.TeamColor;
-import chess.domain.position.AlphaColumn;
-import chess.domain.position.NumberRow;
+import chess.domain.position.AlphaColumns;
+import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackSet implements PieceSet {
@@ -31,8 +40,8 @@ public class BlackSet implements PieceSet {
     }
 
     private void setPawns() {
-        for (AlphaColumn alphaColumn : AlphaColumn.values()) {
-            NumberRow numberRow = NumberRow.valueOf(INITIAL_PAWN_LINE);
+        for (AlphaColumns alphaColumn : AlphaColumns.columns()) {
+            NumberRows numberRow = NumberRows.getInstance(INITIAL_PAWN_LINE);
             pieces.add(new Pawn(BLACK, Position.valueOf(alphaColumn, numberRow)));
 
         }
@@ -69,21 +78,21 @@ public class BlackSet implements PieceSet {
 
     private Score subtractWhenOnSameLine(Map<Character, Integer> pawnCount) {
         return pawnCount.values().stream()
-                .filter(number -> number > 1)
-                .map(number -> new Score(MINUS_HALF_POINT * number))
-                .reduce(Score.ZERO, Score::add);
+            .filter(number -> number > 1)
+            .map(number -> new Score(MINUS_HALF_POINT * number))
+            .reduce(Score.ZERO, Score::add);
     }
 
     private List<Piece> alives() {
         return pieces.stream()
-                .filter(Piece::isAlive)
-                .collect(Collectors.toList());
+            .filter(Piece::isAlive)
+            .collect(Collectors.toList());
     }
 
     private void recordPawns(Map<Character, Integer> pawnCount, Piece piece) {
         if (piece instanceof Pawn) {
             pawnCount.put(piece.getColumn(),
-                    pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
+                pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
         }
     }
 

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.view.OutputView;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -19,7 +18,7 @@ public enum Commands {
         OutputView.printScore(chessBoard.result());
     }),
     END("end",
-            (chessBoard, strings) -> chessBoard.terminate()
+        (chessBoard, strings) -> chessBoard.terminate()
     );
 
     private final String command;
@@ -32,8 +31,8 @@ public enum Commands {
 
     public static void run(ChessBoard chessBoard, List<String> value) {
         Arrays.stream(Commands.values())
-                .filter(command -> command.command.equals(value.get(0)))
-                .forEach(command -> command.runCommand(chessBoard, value));
+            .filter(command -> command.command.equals(value.get(0)))
+            .forEach(command -> command.runCommand(chessBoard, value));
     }
 
     public void runCommand(ChessBoard chessBoard, List<String> input) {
