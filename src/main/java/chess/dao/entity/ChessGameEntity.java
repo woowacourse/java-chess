@@ -4,20 +4,25 @@ import static chess.domain.player.type.TeamColor.WHITE;
 
 import java.util.Objects;
 
-public class ChessRoomEntity {
+public class ChessGameEntity {
     private Long id;
     private String title;
     private String currentTeamColor;
 
-    public ChessRoomEntity(String title) {
+    public ChessGameEntity(String title) {
         this.title = title;
         this.currentTeamColor = WHITE.getValue();
     }
 
-    public ChessRoomEntity(Long id, String title, String current_turn_team_color) {
+    public ChessGameEntity(Long id, String title, String current_turn_team_color) {
         this.id = id;
         this.title = title;
         this.currentTeamColor = current_turn_team_color;
+    }
+
+    public ChessGameEntity(String title, String currentTurnTeamColor) {
+        this.title = title;
+        this.currentTeamColor = currentTurnTeamColor;
     }
 
     public Long getId() {
@@ -49,15 +54,19 @@ public class ChessRoomEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ChessRoomEntity)) {
+        if (!(o instanceof ChessGameEntity)) {
             return false;
         }
-        ChessRoomEntity that = (ChessRoomEntity) o;
+        ChessGameEntity that = (ChessGameEntity) o;
         return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public void addPlayer(PlayerEntity playerEntity) {
+        playerEntity.addChessRoomEntity(this);
     }
 }

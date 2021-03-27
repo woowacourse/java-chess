@@ -21,6 +21,7 @@ public class Board {
     public void setPiece(Position position, Piece piece) {
         Cell cell = new Cell(piece);
         cells.put(position, cell);
+
     }
 
     public Cell findCell(Position position) {

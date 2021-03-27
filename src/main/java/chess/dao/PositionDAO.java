@@ -5,6 +5,8 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import chess.dao.entity.PieceEntity;
 import chess.dao.entity.PositionEntity;
+import chess.domain.position.type.File;
+import chess.domain.position.type.Rank;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,5 +65,10 @@ public class PositionDAO {
         String query = "DELETE FROM position";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();
+    }
+
+    public PositionEntity findByFileAndRank(File file, Rank rank) {
+
+        return null;
     }
 }

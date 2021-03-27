@@ -3,17 +3,17 @@ package chess.dao;
 import static chess.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.dao.entity.ChessRoomEntity;
+import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.PlayerEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PlayerDAO {
-    private final ChessRoomDAO chessRoomDAO = new ChessRoomDAO();
+    private final ChessGameDAO chessRoomDAO = new ChessGameDAO();
 
     public PlayerEntity add(PlayerEntity playerEntity) throws SQLException {
-        String query = "INSERT INTO player (chess_room_id) VALUES (?)";
+        String query = "INSERT INTO player (chess_game_id) VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
         pstmt.setLong(1, playerEntity.getChessRoomEntity().getId());
         pstmt.executeUpdate();
@@ -32,7 +32,7 @@ public class PlayerDAO {
         if (!rs.next()) {
             return null;
         }
-        ChessRoomEntity chessRoomEntity = chessRoomDAO.findById(rs.getLong("chess_room_id"));
+        ChessGameEntity chessRoomEntity = chessRoomDAO.findById(rs.getLong("chess_room_id"));
         return new PlayerEntity(rs.getLong("id"), chessRoomEntity);
     }
 
@@ -47,5 +47,17 @@ public class PlayerDAO {
         String query = "DELETE FROM player";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();
+    }
+
+    public PlayerEntity save(PlayerEntity playerEntity) throws SQLException {
+        String query = "INSERT INTO player (chess_game_id) VALUES (?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
+        pstmt.setLong(1, playerEntity.getChessRoomEntity().getId());
+        pstmt.executeUpdate();
+        ResultSet generatedKeys = pstmt.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            playerEntity.setId(generatedKeys.getLong(1));
+        }
+        return playerEntity;
     }
 }
