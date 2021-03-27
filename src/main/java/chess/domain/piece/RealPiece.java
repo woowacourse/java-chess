@@ -1,15 +1,18 @@
 package chess.domain.piece;
 
+import chess.domain.order.MoveRoute;
 import chess.domain.piece.strategy.MoveStrategy;
 
 import java.util.Objects;
 
 public class RealPiece extends Piece {
     private final Color color;
+    private final MoveStrategy moveStrategy;
 
     public RealPiece(Color color, String notation, MoveStrategy moveStrategy) {
-        super(notation, moveStrategy);
+        super(notation);
         this.color = color;
+        this.moveStrategy = moveStrategy;
     }
 
     @Override
@@ -17,12 +20,24 @@ public class RealPiece extends Piece {
         return color.changeNotation(super.getNotation());
     }
 
+    @Override
+    public boolean canMove(MoveRoute moveRoute) {
+        return this.moveStrategy.canMove(moveRoute);
+    }
+
+    @Override
+    public Color getColor() {
+        return this.color;
+    }
+
+    @Override
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
 
-    public boolean isSameColor(RealPiece realPiece) {
-        return this.color == realPiece.color;
+    @Override
+    public boolean isSameColor(Piece piece) {
+        return this.isSameColor(piece.getColor());
     }
 
     @Override

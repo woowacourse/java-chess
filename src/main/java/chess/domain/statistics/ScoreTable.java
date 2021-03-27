@@ -1,7 +1,6 @@
 package chess.domain.statistics;
 
 import chess.domain.piece.*;
-import chess.domain.piece.RealPiece;
 
 import java.util.Arrays;
 
@@ -11,19 +10,20 @@ public enum ScoreTable {
     BISHOP(Bishop.class, 3),
     KNIGHT(Knight.class, 2.5),
     ROOK(Rook.class, 5),
-    PAWN(Pawn.class, 1);
+    PAWN(Pawn.class, 1),
+    BLANK(Blank.class, 0);
 
     private static final double PAWN_DISADVANTAGE_RATIO = 0.5;
 
-    private final Class<? extends RealPiece> pieceClass;
+    private final Class<? extends Piece> pieceClass;
     private final double score;
 
-    ScoreTable(Class<? extends RealPiece> pieceClass, double score) {
+    ScoreTable(Class<? extends Piece> pieceClass, double score) {
         this.pieceClass = pieceClass;
         this.score = score;
     }
 
-    private Class<? extends RealPiece> getPieceClass() {
+    private Class<? extends Piece> getPieceClass() {
         return pieceClass;
     }
 
@@ -31,9 +31,9 @@ public enum ScoreTable {
         return PAWN_DISADVANTAGE_RATIO;
     }
 
-    public static double convertToScore(RealPiece realPiece) {
+    public static double convertToScore(Piece piece) {
         return Arrays.stream(values())
-                .filter(item -> item.getPieceClass().equals(realPiece.getClass()))
+                .filter(item -> item.getPieceClass().equals(piece.getClass()))
                 .mapToDouble(item -> item.score)
                 .findAny()
                 .getAsDouble();

@@ -30,13 +30,6 @@ public class DefaultChessBoard implements Board {
         return this.board.get(position);
     }
 
-    public RealPiece getRealPieceByPosition(Position position) {
-        if (!this.hasPiece(position)) {
-            throw new NoSuchElementException("해당 위치에 말이 없습니다.");
-        }
-        return (RealPiece)this.board.get(position);
-    }
-
     public boolean hasPiece(Position position) {
         return this.board.get(position).isNotBlank();
     }
@@ -47,7 +40,7 @@ public class DefaultChessBoard implements Board {
             throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
         }
 
-        RealPiece pieceToMove = this.getRealPieceByPosition(moveRoute.getFromPosition());
+        Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
         Position toPosition = moveRoute.getToPosition();
 
         if (pieceToMove.canMove(moveRoute)) {
@@ -93,7 +86,7 @@ public class DefaultChessBoard implements Board {
                 .sum();
     }
 
-    private double scorePerFiles(List<RealPiece> realPieces) {
+    private double scorePerFiles(List<Piece> realPieces) {
         double score = realPieces.stream()
                 .mapToDouble(ScoreTable::convertToScore)
                 .sum();
@@ -106,11 +99,11 @@ public class DefaultChessBoard implements Board {
         return score;
     }
 
-    private List<RealPiece> realPiecesPerFiles(Color color, File file) {
+    private List<Piece> realPiecesPerFiles(Color color, File file) {
         return positionStreamPerFiles(file)
                 .filter(this::hasPiece)
-                .map(this::getRealPieceByPosition)
-                .filter(realPiece -> realPiece.isSameColor(color))
+                .map(this::getPieceByPosition)
+                .filter(piece -> piece.isSameColor(color))
                 .collect(toList());
     }
 

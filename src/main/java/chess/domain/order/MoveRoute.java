@@ -1,12 +1,10 @@
 package chess.domain.order;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.RealPiece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class MoveRoute {
     private static final int INDEX_FROM_POSITION = 0;
@@ -30,20 +28,12 @@ public class MoveRoute {
         return this.moveRoute.get(this.moveRoute.size() - 1).getPosition();
     }
 
-    public RealPiece getPieceAtFromPosition() {
-        Piece piece = this.moveRoute.get(INDEX_FROM_POSITION).getPiece();
-        if (piece.isBlank()) {
-            throw new NoSuchElementException("해당 칸에는 기물이 없습니다.");
-        }
-        return (RealPiece) piece;
+    public Piece getPieceAtFromPosition() {
+        return this.moveRoute.get(INDEX_FROM_POSITION).getPiece();
     }
 
-    public RealPiece getPieceAtToPosition() {
-        Piece piece = this.moveRoute.get(this.moveRoute.size() - 1).getPiece();
-        if (piece.isBlank()) {
-            throw new NoSuchElementException("해당 칸에는 기물이 없습니다.");
-        }
-        return (RealPiece) piece;
+    public Piece getPieceAtToPosition() {
+        return this.moveRoute.get(this.moveRoute.size() - 1).getPiece();
     }
 
     public boolean hasPieceAtToPosition() {

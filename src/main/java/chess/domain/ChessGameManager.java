@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.order.MoveRoute;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
@@ -14,6 +13,7 @@ import chess.domain.statistics.MatchResult;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class ChessGameManager {
@@ -44,10 +44,11 @@ public class ChessGameManager {
     }
 
     public void move(Position from, Position to) {
+        validateProperPieceAtFromPosition(from);
         if (this.state.isNotRunning()) {
             throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
         }
-        validateTurn(from);
+
         MoveResult moveResult = board.move(board.createMoveRoute(from, to));
         if (moveResult.isCaptured()) {
             ColoredPieces opposite = findByColor(currentTurnColor.opposite());
@@ -57,14 +58,21 @@ public class ChessGameManager {
         updateState(this.state.move(isKingDeadEndCondition()));
     }
 
-    private void validateTurn(Position from) {
-        if (!board.getRealPieceByPosition(from).isSameColor(this.currentTurnColor)) {
-            throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
+    private void validateProperPieceAtFromPosition(Position from) {
+        validateHasPieceAtFromPosition(from);
+        validateTurn(from);
+    }
+
+    private void validateHasPieceAtFromPosition(Position from) {
+        if (!this.board.hasPiece(from)) {
+            throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
         }
     }
 
-    private void turnOver() {
-        currentTurnColor = currentTurnColor.opposite();
+    private void validateTurn(Position from) {
+        if (!board.getPieceByPosition(from).isSameColor(this.currentTurnColor)) {
+            throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
+        }
     }
 
     private ColoredPieces findByColor(Color color) {
@@ -72,6 +80,10 @@ public class ChessGameManager {
                 .filter(pieces -> pieces.isSameColor(color))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("시스템 에러 - 진영을 찾을 수 없습니다."));
+    }
+
+    private void turnOver() {
+        currentTurnColor = currentTurnColor.opposite();
     }
 
     public boolean isKingDeadEndCondition() {

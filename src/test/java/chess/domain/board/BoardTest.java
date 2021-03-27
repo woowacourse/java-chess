@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.RealPiece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ public class BoardTest {
     @DisplayName("포지션을 받아 해당 위치의 Piece를 리턴한다.")
     @Test
     void findByPositionTest() {
-        assertThat(mockBoard.getRealPieceByPosition(Position.of("a1"))).isInstanceOf(Piece.class);
+        assertThat(mockBoard.getPieceByPosition(Position.of("a1"))).isInstanceOf(Piece.class);
     }
 
     @DisplayName("이동할 때 해당 위치에 말이 없으면 예외")
@@ -30,9 +29,9 @@ public class BoardTest {
     @DisplayName("말을 움직인다.")
     @Test
     void movePiece() {
-        RealPiece realPiece = mockBoard.getRealPieceByPosition(Position.of("b2"));
+        Piece piece = mockBoard.getPieceByPosition(Position.of("b2"));
         mockBoard.move(mockBoard.createMoveRoute(Position.of("b2"), Position.of("b3")));
 
-        assertThat(mockBoard.getRealPieceByPosition(Position.of("b3"))).isEqualTo(realPiece);
+        assertThat(mockBoard.getPieceByPosition(Position.of("b3"))).isEqualTo(piece);
     }
 }
