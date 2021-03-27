@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.moving.BishopMoving;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.exception.WrongInitPositionException;
@@ -94,7 +95,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Team.WHITE, new Position(1, 1));
         set(bishop);
 
-        List<Position> movablePositions = bishop.allMovablePositions(board);
+        List<Position> movablePositions = new BishopMoving().allMovablePositions(bishop, board);
 
         assertTrue(movablePositions.contains(crossBlackTeamPawnPosition));
         assertTrue(movablePositions.contains(crossBlankPosition));

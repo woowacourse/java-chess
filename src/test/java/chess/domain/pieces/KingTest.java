@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.moving.KingMoving;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.exception.WrongInitPositionException;
@@ -93,7 +94,7 @@ class KingTest {
         King king = new King(Team.WHITE, new Position(1, 1));
         set(king);
 
-        List<Position> movablePositions = king.allMovablePositions(board);
+        List<Position> movablePositions = new KingMoving().allMovablePositions(king, board);
 
         assertTrue(movablePositions.contains(crossBlackTeamPawnPosition));
         assertTrue(movablePositions.contains(crossBlankPosition));

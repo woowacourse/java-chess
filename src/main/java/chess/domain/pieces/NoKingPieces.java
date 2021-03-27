@@ -1,7 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.move.Moving;
+import chess.domain.moving.Moving;
 import chess.domain.position.Position;
 
 public abstract class NoKingPieces extends Piece {
@@ -16,7 +16,7 @@ public abstract class NoKingPieces extends Piece {
     }
 
     @Override
-    public final boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 }

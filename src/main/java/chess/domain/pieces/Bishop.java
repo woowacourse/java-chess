@@ -1,13 +1,10 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.board.Board;
-import chess.domain.move.MultiMoving;
+import chess.domain.moving.BishopMoving;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
-
-import java.util.List;
 
 public final class Bishop extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
@@ -17,7 +14,7 @@ public final class Bishop extends NoKingPieces {
     private static final int RIGHT_SIDE_INIT_COL = 5;
 
     public Bishop(final Team team, final Position position) {
-        super(position, "B", team, SCORE, new MultiMoving());
+        super(position, "B", team, SCORE, new BishopMoving());
     }
 
     public static Bishop of(final Team team, final int col) {
@@ -32,12 +29,5 @@ public final class Bishop extends NoKingPieces {
             return new Position(Row.location(BLACK_TEAM_ROW), col);
         }
         return new Position(Row.location(WHITE_TEAM_ROW), col);
-    }
-
-    @Override
-    public final List<Position> allMovablePositions(final Board board) {
-        int[] rowDirection = {-1, 1, -1, 1};
-        int[] colDirection = {-1, 1, 1, -1};
-        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 }

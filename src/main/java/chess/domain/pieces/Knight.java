@@ -1,13 +1,10 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.board.Board;
-import chess.domain.move.SingleMoving;
+import chess.domain.moving.KnightMoving;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
-
-import java.util.List;
 
 public final class Knight extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
@@ -17,7 +14,7 @@ public final class Knight extends NoKingPieces {
     private static final int RIGHT_SIDE_INIT_COL = 6;
 
     public Knight(final Team team, final Position position) {
-        super(position, "N", team, SCORE, new SingleMoving());
+        super(position, "N", team, SCORE, new KnightMoving());
     }
 
     public static Knight of(final Team team, final int col) {
@@ -32,12 +29,5 @@ public final class Knight extends NoKingPieces {
             return new Position(Row.location(BLACK_TEAM_ROW), col);
         }
         return new Position(Row.location(WHITE_TEAM_ROW), col);
-    }
-
-    @Override
-    public final List<Position> allMovablePositions(final Board board) {
-        int[] rowDirection = {-1, 1, 2, 2, 1, -1, -2, -2};
-        int[] colDirection = {2, 2, 1, -1, -2, -2, -1, 1};
-        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 }

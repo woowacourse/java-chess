@@ -1,13 +1,10 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.board.Board;
-import chess.domain.move.MultiMoving;
+import chess.domain.moving.QueenMoving;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
-
-import java.util.List;
 
 public final class Queen extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
@@ -16,7 +13,7 @@ public final class Queen extends NoKingPieces {
     private static final int INIT_COL = 3;
 
     public Queen(final Team team, final Position position) {
-        super(position, "Q", team, SCORE, new MultiMoving());
+        super(position, "Q", team, SCORE, new QueenMoving());
     }
 
     public static Queen of(final Team team, final int col) {
@@ -31,12 +28,5 @@ public final class Queen extends NoKingPieces {
             return new Position(Row.location(BLACK_TEAM_ROW), col);
         }
         return new Position(Row.location(WHITE_TEAM_ROW), col);
-    }
-
-    @Override
-    public final List<Position> allMovablePositions(final Board board) {
-        int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
-        int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
-        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 }

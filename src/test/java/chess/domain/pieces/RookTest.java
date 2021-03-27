@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.moving.RookMoving;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.exception.WrongInitPositionException;
@@ -90,7 +91,7 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE, new Position(1, 1));
         set(rook);
 
-        List<Position> movablePositions = rook.allMovablePositions(board);
+        List<Position> movablePositions = new RookMoving().allMovablePositions(rook, board);
 
         assertTrue(movablePositions.contains(straightBlackTeamPawnPosition));
         assertTrue(movablePositions.contains(straightBlankPosition));

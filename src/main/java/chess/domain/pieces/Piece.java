@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.move.Moving;
+import chess.domain.moving.Moving;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovePositionException;
 
@@ -32,7 +32,7 @@ public abstract class Piece {
     }
 
     public final void move(final Board board, final Position endPoint) {
-        List<Position> movablePositions = allMovablePositions(board);
+        List<Position> movablePositions = moving.allMovablePositions(this, board);
         validatesEndPoint(endPoint, movablePositions);
         this.position = endPoint;
     }
@@ -43,7 +43,7 @@ public abstract class Piece {
         }
     }
 
-    public void erasePiece(final Board board, final Position endPoint) {
+    public final void erasePiece(final Board board, final Position endPoint) {
         Pieces enemyPieces = board.piecesByTeam(Team.enemyTeam(team));
         enemyPieces.removePieceByPosition(endPoint);
     }
@@ -71,12 +71,6 @@ public abstract class Piece {
     public final Double score() {
         return score;
     }
-
-    public final Moving moving() {
-        return moving;
-    }
-
-    public abstract List<Position> allMovablePositions(final Board board);
 
     public abstract boolean isKing();
 
