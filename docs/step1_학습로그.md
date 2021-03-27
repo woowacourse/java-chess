@@ -28,3 +28,11 @@ class BlackSet {
 
 ## 링크
 [javadocs StreamAPI](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html)
+
+
+# 학습로그 1-2
+
+# [Java] Function Interface - 2
+
+## 내용
+- UnaryOperator<T> 는 T타입을 받아서 T타입을 리턴한다. Funtion Interface와 비슷하지만 인자로 들어오는 타입과 반환하는 타입이 같다는 특징이 있다.

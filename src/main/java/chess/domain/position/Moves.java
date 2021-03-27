@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public enum Moves {
 
@@ -21,9 +21,9 @@ public enum Moves {
     LEFT_DOWN_DOWN(position -> position.moveLeftDown().moveDown()),
     LEFT_DOWN_LEFT(position -> position.moveLeftDown().moveLeft());
 
-    private final Function<Position, Position> expression;
+    private final UnaryOperator<Position> expression;
 
-    Moves(Function<Position, Position> expression) {
+    Moves(UnaryOperator<Position> expression) {
         this.expression = expression;
     }
 
