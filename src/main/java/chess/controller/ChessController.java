@@ -16,7 +16,7 @@ public class ChessController {
     }
 
     public void run() {
-        OutputView.getNewGameCommand();
+        OutputView.printGuideStartGame();
         firstCommand();
         Menu menu;
         do {
