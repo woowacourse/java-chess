@@ -65,7 +65,7 @@ public class Position {
         int newRank = this.rank.getValue() + rank;
         int newFile = this.file.getValue() + file;
 
-        if (canMove(newRank, newFile)) {
+         if (canMove(newRank, newFile)) {
             Rank findRank = Rank.findByValue(newRank);
             File findFile = File.findByValue(newFile);
             return POSITIONS.get(findRank.getRank() + findFile.getFile());
@@ -74,7 +74,7 @@ public class Position {
     }
 
     private boolean canMove(int newRank, int newFile) {
-        return (newRank > 0 && newRank < Rank.size()) && (newFile > 0 && newFile < File.size());
+        return (newRank > 0 && newRank <= Rank.size()) && (newFile > 0 && newFile <= File.size());
     }
 
     public Rank getRank() {
