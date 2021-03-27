@@ -46,13 +46,6 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
-    public Position change(final int rank, final int file) {
-        Rank findRank = Rank.findByValue(this.rank.getValue() + rank);
-        File findFile = File.findByValue(this.file.getValue() + file);
-
-        return POSITIONS.get(findRank.getRank() + findFile.getFile());
-    }
-
     public static Position find(final String source) {
         String reversedSource = reverse(source);
         if (Objects.isNull(POSITIONS.get(reversedSource))) {
@@ -66,6 +59,22 @@ public class Position {
         reversedSource += source.charAt(1);
         reversedSource += source.charAt(0);
         return reversedSource;
+    }
+
+    public Position change(final int rank, final int file) {
+        int newRank = this.rank.getValue() + rank;
+        int newFile = this.file.getValue() + file;
+
+        if (canMove(newRank, newFile)) {
+            Rank findRank = Rank.findByValue(newRank);
+            File findFile = File.findByValue(newFile);
+            return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        }
+        return null;
+    }
+
+    private boolean canMove(int newRank, int newFile) {
+        return (newRank > 0 && newRank < Rank.size()) && (newFile > 0 && newFile < File.size());
     }
 
     public Rank getRank() {

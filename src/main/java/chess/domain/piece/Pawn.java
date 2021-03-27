@@ -67,6 +67,11 @@ public class Pawn extends Piece {
         return true;
     }
 
+    @Override
+    public boolean isKnight() {
+        return false;
+    }
+
     private void checkTarget(final Target target, final List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));

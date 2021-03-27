@@ -13,7 +13,7 @@ public abstract class Direction implements MoveStrategy {
 
     @Override
     public Position move(final Position position) {
-        return position.change(y, x);
+        return position.change(x, y);
     }
 
     @Override

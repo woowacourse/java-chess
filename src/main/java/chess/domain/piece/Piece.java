@@ -6,10 +6,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public abstract class Piece {
@@ -65,21 +62,32 @@ public abstract class Piece {
 
     }
 
-    private final List<Position> findRoutes(Pieces basePieces, Pieces targetPieces) {
+    private final List<Position> findRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         List<MoveStrategy> strategies = moveStrategies.strategies();
         for (MoveStrategy strategy : strategies) {
-            Position nextPosition = strategy.move(position);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
+            positions.addAll(makeRoutes(basePieces, targetPieces, strategy));
+        }
+        return positions;
+    }
+
+    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
+        if (isKing() || isPawn() || isKnight()) {
+            return singleMove(basePieces, targetPieces, strategy);
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Position> singleMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
+        List<Position> positions = new ArrayList<>();
+        Position nextPosition = strategy.move(position);
+        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+        if (targetPiece.isPresent()) {
+            positions.add(nextPosition);
+        }
+        if (!basePiece.isPresent()) {
+            positions.add(nextPosition);
         }
         return positions;
     }
@@ -104,4 +112,6 @@ public abstract class Piece {
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    public abstract boolean isKnight();
 }
