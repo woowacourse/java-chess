@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Command;
 import chess.exception.InvalidCoordinateException;
 import chess.exception.WrongCommandException;
 
