@@ -16,14 +16,14 @@ public class ChessBoard {
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
     private static final int WIN_BOUNDARY = 0;
 
-    private final Map<Position, Piece> chessBoard;
+    private final PieceOnBoardPosition pieceOnBoardPosition;
     private final Pieces whitePieces;
     private final Pieces blackPieces;
     private boolean running = true;
 
     public ChessBoard() {
         InitChessBoard initChessBoard = new InitChessBoard();
-        this.chessBoard = initChessBoard.getChessBoard();
+        this.pieceOnBoardPosition = new PieceOnBoardPosition(initChessBoard.getChessBoard());
         this.whitePieces = initChessBoard.getWhitePieces();
         this.blackPieces = initChessBoard.getBlackPieces();
     }
@@ -33,11 +33,11 @@ public class ChessBoard {
     }
 
     private Piece piece(Position position) {
-        return chessBoard.get(position);
+        return pieceOnBoardPosition.valueOf(position);
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return pieceOnBoardPosition.getChessBoard();
     }
 
     public void move(String source, String target) {
@@ -62,8 +62,8 @@ public class ChessBoard {
         }
     }
 
-    private Piece pieceOnChessBoard(Position boardPosition, Piece piece) {
-        return chessBoard.put(boardPosition, piece);
+    private void pieceOnChessBoard(Position boardPosition, Piece piece) {
+        pieceOnBoardPosition.pieceOnChessBoard(boardPosition, piece);
     }
 
     private void killPiece(Position start, Position end) {
@@ -105,8 +105,8 @@ public class ChessBoard {
     }
 
     private boolean isMoveAblePosition(String source, String target) {
-        return chessBoard.containsKey(Position.valueOf(source))
-            && chessBoard.containsKey(Position.valueOf(target));
+        return pieceOnBoardPosition.containsKey(Position.valueOf(source))
+            && pieceOnBoardPosition.containsKey(Position.valueOf(target));
     }
 
     public boolean isBlank(Position position) {
