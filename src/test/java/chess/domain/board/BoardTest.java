@@ -13,9 +13,10 @@ class BoardTest {
     @DisplayName("보드 초기화 상태 테스트 : 비숍 화이트")
     @Test
     void checkPieceAtPosition_BishopWhite() {
+        InitializedBoard initializedBoard = new InitializedBoard();
         Piece piece = new Piece(PieceKind.BISHOP, PieceColor.WHITE);
         Position position = Position.of('c', 1);
-        Board board = new Board(InitializedBoard.board());
+        Board board = new Board(initializedBoard.board());
 
         Piece extractedPiece = board.pieceAtPosition(position);
 
@@ -29,7 +30,8 @@ class BoardTest {
         Position positionL = Position.of('b', 8);
         Position positionR = Position.of('g', 8);
 
-        Board board = new Board(InitializedBoard.board());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        Board board = new Board(initializedBoard.board());
 
         Piece extractedPieceL = board.pieceAtPosition(positionL);
         Piece extractedPieceR = board.pieceAtPosition(positionR);
@@ -43,7 +45,9 @@ class BoardTest {
     void checkPieceAtPosition_void() {
         Piece piece = new Piece(PieceKind.VOID, PieceColor.VOID);
         Position position = Position.of('f', 3);
-        Board board = new Board(InitializedBoard.board());
+
+        InitializedBoard initializedBoard = new InitializedBoard();
+        Board board = new Board(initializedBoard.board());
 
         Piece extractedPiece = board.pieceAtPosition(position);
 

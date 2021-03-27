@@ -18,11 +18,9 @@ public class Board {
     private static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
 
     private final Map<Position, Piece> board;
-    private PieceColor deadKingColor;
 
     public Board(Map<Position, Piece> existedBoard) {
         this.board = new HashMap<>(existedBoard);
-        this.deadKingColor = PieceColor.VOID;
     }
 
     public void move(Position source, Position target, PieceColor turnColor) {
@@ -44,8 +42,6 @@ public class Board {
     }
 
     private void movePiece(Position source, Position target, Piece originalPiece) {
-        judgeKingsState(target);
-
         putPieceAtPosition(target, originalPiece);
         putPieceAtPosition(source, VOID_PIECE);
     }
@@ -118,14 +114,12 @@ public class Board {
         return targetPiece.equals(VOID_PIECE);
     }
 
-    private void judgeKingsState(Position target) {
-        if (pieceAtPosition(target).isKing()) {
-            deadKingColor = pieceAtPosition(target).color();
-        }
-    }
-
     public boolean kingIsDead() {
-        return deadKingColor != PieceColor.VOID;
+        long numberOfAliveKing = board.values()
+            .stream()
+            .filter(Piece::isKing)
+            .count();
+        return numberOfAliveKing < 2;
     }
 
     public void checkTurn(Piece piece, PieceColor turnColor) {
@@ -143,6 +137,10 @@ public class Board {
     }
 
     public PieceColor winnerColor() {
-        return this.deadKingColor.oppositeColor();
+        return board.values()
+            .stream()
+            .filter(Piece::isKing)
+            .findFirst()
+            .get().color();
     }
 }
