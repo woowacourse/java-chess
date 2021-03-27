@@ -25,7 +25,8 @@ class QueenMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(InitializedBoard.board());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        board = new Board(initializedBoard.board());
         position = Position.of('c', 3);
         piece = new Piece(PieceKind.QUEEN, PieceColor.WHITE);
         board.putPieceAtPosition(position, piece);

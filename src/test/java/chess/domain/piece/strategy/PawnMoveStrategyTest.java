@@ -3,7 +3,9 @@ package chess.domain.piece.strategy;
 import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
-import chess.domain.exceptions.*;
+import chess.domain.exceptions.OverDistanceException;
+import chess.domain.exceptions.SameTeamException;
+import chess.domain.exceptions.UnableMoveTypeException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
@@ -25,7 +27,8 @@ class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(InitializedBoard.board());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        board = new Board(initializedBoard.board());
         sourceW = Position.of('c', 2);
         sourceB = Position.of('d', 7);
         pieceW = board.pieceAtPosition(sourceW);

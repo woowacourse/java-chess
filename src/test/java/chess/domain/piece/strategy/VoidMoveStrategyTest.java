@@ -15,7 +15,8 @@ class VoidMoveStrategyTest {
     @DisplayName("움직이지 않은 경우 예외 발생")
     @Test
     void move_ExceptionThrown() {
-        Board board = new Board(InitializedBoard.board());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        Board board = new Board(initializedBoard.board());
 
         Position source = Position.of('c', 4);
         Position target = Position.of('c', 6);

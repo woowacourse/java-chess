@@ -14,14 +14,16 @@ public class Game {
     private PieceColor turnColor;
 
     public Game() {
-        this.board = new Board(InitializedBoard.emptyBoard());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        this.board = new Board(initializedBoard.emptyBoard());
         this.point = new Point(board);
         this.gameState = GameState.NOT_STARTED;
         this.turnColor = PieceColor.WHITE;
     }
 
     public void init() {
-        this.board = new Board(InitializedBoard.board());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        this.board = new Board(initializedBoard.board());
         this.point = new Point(board);
         this.gameState = GameState.START;
     }

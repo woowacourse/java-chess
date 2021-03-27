@@ -9,6 +9,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -20,7 +21,7 @@ public class Board {
     private PieceColor deadKingColor;
 
     public Board(Map<Position, Piece> existedBoard) {
-        this.board = existedBoard;
+        this.board = new HashMap<>(existedBoard);
         this.deadKingColor = PieceColor.VOID;
     }
 
