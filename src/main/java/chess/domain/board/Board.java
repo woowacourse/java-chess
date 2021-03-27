@@ -101,48 +101,16 @@ public class Board {
         board.put(position, Empty.getInstance());
     }
 
-    public Status getStatus() {
-        return new Status(calculateOwnerScore(Owner.WHITE), calculateOwnerScore(Owner.BLACK));
+    public List<Position> getAbleToMove(final Position source) {
+        return ableToMove(source);
     }
 
-    private Score calculateOwnerScore(final Owner owner) {
-        Score score = new Score(0);
-
-        if (isKingAlive(owner)) {
-            score = board.values().stream()
-                    .filter(piece -> piece.isOwner(owner))
-                    .map(Piece::score)
-                    .reduce(new Score(0), Score::sum);
-        }
-
-        return score.calculatePawnPenaltyScore(getPawnCountInVertical(owner));
-    }
-
-    private boolean isKingAlive(final Owner owner) {
+    public boolean isKingAlive(final Owner owner) {
         return board.containsValue(King.getInstanceOf(owner));
     }
 
-    private int getPawnCountInVertical(final Owner owner) {
-        int totalCount = 0;
-        for (final Vertical vertical : Vertical.values()) {
-            totalCount += penaltyScorePawnCount(vertical, owner);
-        }
-        return totalCount;
-    }
-
-    private int penaltyScorePawnCount(Vertical vertical, Owner owner) {
-        int pawnCount = (int) Arrays.stream(Horizontal.values())
-                .map(horizontal -> of(vertical, horizontal))
-                .filter(piece -> piece.isSameOwnerPawn(owner))
-                .count();
-        if (pawnCount > 1) {
-            return pawnCount;
-        }
-        return 0;
-    }
-
-    public List<Position> getAbleToMove(final Position source) {
-        return ableToMove(source);
+    public Collection<Piece> pieces() {
+        return new ArrayList<>(board.values());
     }
 
     public boolean isPositionOwner(final Position position, final Owner owner) {

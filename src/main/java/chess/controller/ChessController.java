@@ -23,7 +23,7 @@ public class ChessController {
             menu = getMenu();
         } while (!chessManager.isEnd() && !menu.isEnd());
 
-        OutputView.printGameResult(chessManager.calculateStatus());
+        OutputView.printGameResult(chessManager.getStatus());
     }
 
     private void firstCommand() {
@@ -73,7 +73,7 @@ public class ChessController {
         }
 
         if (menu.isStatus()) {
-            OutputView.printStatus(chessManager.calculateStatus());
+            OutputView.printStatus(chessManager.getStatus());
         }
 
         return menu;

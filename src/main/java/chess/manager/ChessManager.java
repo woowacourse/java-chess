@@ -17,10 +17,6 @@ public class ChessManager {
         this.board = BoardInitializer.initiateBoard();
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     public void move(final MoveCommand command) {
         validateTurn(command.source());
         board.move(command.source(), command.target());
@@ -37,8 +33,8 @@ public class ChessManager {
         return board.getAbleToMove(command.source());
     }
 
-    public Status calculateStatus() {
-        return board.getStatus();
+    public Status getStatus() {
+        return Status.statusOfBoard(board);
     }
 
     public boolean isEnd() {
@@ -47,5 +43,9 @@ public class ChessManager {
 
     public void resetBoard() {
         board.resetBoard();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
