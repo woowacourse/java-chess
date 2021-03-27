@@ -7,15 +7,12 @@ import chess.domain.direction.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Score;
 import chess.domain.piece.king.King;
-import chess.manager.Status;
 
 import java.util.*;
 
 public class Board {
     private final Map<Position, Piece> board;
-    private boolean isEnd = false;
 
     public Board(final Map<Position, Piece> board) {
         this.board = board;
@@ -31,7 +28,6 @@ public class Board {
 
     public void move(final Position source, final Position target) {
         validateMove(source, target);
-        checkGameEnd(target);
         movePiece(source, target);
     }
 
@@ -78,16 +74,6 @@ public class Board {
         return of(source).isSameTeam(of(target));
     }
 
-    private void checkGameEnd(final Position target) {
-        if (of(target).isKing()) {
-            isEnd = true;
-        }
-    }
-
-    public boolean isEnd() {
-        return isEnd;
-    }
-
     private void movePiece(final Position source, final Position target) {
         putPiece(source, target);
         putEmpty(source);
@@ -105,12 +91,18 @@ public class Board {
         return ableToMove(source);
     }
 
+
+
     public boolean isKingAlive(final Owner owner) {
         return board.containsValue(King.getInstanceOf(owner));
     }
 
     public Collection<Piece> pieces() {
         return new ArrayList<>(board.values());
+    }
+
+    public boolean isTargetKing(Position target) {
+        return of(target).isKing();
     }
 
     public boolean isPositionOwner(final Position position, final Owner owner) {

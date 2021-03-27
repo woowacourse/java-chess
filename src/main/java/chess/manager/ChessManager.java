@@ -12,6 +12,7 @@ import java.util.List;
 public class ChessManager {
     private final Board board;
     private Owner turn = Owner.WHITE;
+    private boolean isEnd = false;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
@@ -19,7 +20,9 @@ public class ChessManager {
 
     public void move(final MoveCommand command) {
         validateTurn(command.source());
+        boolean isKing = isTargetKing(command.target());
         board.move(command.source(), command.target());
+        isEnd = isKing;
         turn = turn.reverse();
     }
 
@@ -27,6 +30,10 @@ public class ChessManager {
         if (!board.isPositionOwner(source, turn)) {
             throw new IllegalArgumentException("현재는 " + turn.name() + "플레이어의 턴입니다.");
         }
+    }
+
+    private boolean isTargetKing(Position target) {
+        return board.isTargetKing(target);
     }
 
     public List<Position> getReachablePositions(final ShowCommand command) {
@@ -38,7 +45,7 @@ public class ChessManager {
     }
 
     public boolean isEnd() {
-        return board.isEnd();
+        return isEnd;
     }
 
     public void resetBoard() {
