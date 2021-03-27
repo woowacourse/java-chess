@@ -36,3 +36,9 @@ class BlackSet {
 
 ## 내용
 - UnaryOperator<T> 는 T타입을 받아서 T타입을 리턴한다. Funtion Interface와 비슷하지만 인자로 들어오는 타입과 반환하는 타입이 같다는 특징이 있다.
+
+# [OOP] Setter - 3
+
+## 내용
+- setXXX라는 set 명칭말고 메서드에 의도를 들어내어 이름을 지으면 setter의 단점을 보완할 수 있다.
+- setter 자체는 의도를 가지기 어렵다.
