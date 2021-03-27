@@ -12,7 +12,7 @@ public class Score {
         this.value = value;
     }
 
-    public Score plus(final Score score) {
+    public Score sum(final Score score) {
         return new Score(this.value + score.value);
     }
 

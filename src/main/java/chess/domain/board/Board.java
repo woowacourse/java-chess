@@ -4,13 +4,14 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.direction.Direction;
-import chess.domain.piece.*;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Score;
+import chess.domain.piece.king.King;
 import chess.manager.Status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private final Map<Position, Piece> board;
@@ -106,29 +107,19 @@ public class Board {
 
     private Score calculateScore(final Owner owner) {
         Score score = new Score(0);
-        boolean diedKing = true;
 
-        for (final Vertical vertical : Vertical.values()) {
-            for (final Horizontal horizontal : Horizontal.values()) {
-                final Piece piece = of(vertical, horizontal);
-
-                if (!piece.isOwner(owner)) {
-                    continue;
-                }
-
-                if (piece.isKing()) {
-                    diedKing = false;
-                }
-
-                score = score.plus(piece.score());
-            }
-        }
-
-        if (diedKing) {
-            return new Score(0);
+        if (isKingAlive(owner)) {
+            score = board.values().stream()
+                    .filter(piece -> piece.isOwner(owner))
+                    .map(Piece::score)
+                    .reduce(new Score(0), Score::sum);
         }
 
         return score.calculatePawnPenaltyScore(getPawnCountInLine(owner));
+    }
+
+    private boolean isKingAlive(final Owner owner) {
+        return board.containsValue(King.getInstanceOf(owner));
     }
 
     private int getPawnCountInLine(final Owner owner) {

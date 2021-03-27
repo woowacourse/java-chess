@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreTest {
 
@@ -21,7 +20,7 @@ class ScoreTest {
     void plusTest() {
         Score other = new Score(1);
 
-        Score result = score.plus(other);
+        Score result = score.sum(other);
 
         assertThat(result).isEqualTo(new Score(11));
     }
