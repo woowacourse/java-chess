@@ -23,7 +23,7 @@ public class Board {
     }
 
     public Piece of(final Vertical vertical, final Horizontal horizontal) {
-        return of(new Position(vertical, horizontal));
+        return of(Position.of(vertical, horizontal));
     }
 
     public void move(final Position source, final Position target) {

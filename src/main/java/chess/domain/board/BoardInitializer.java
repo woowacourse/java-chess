@@ -38,7 +38,7 @@ public class BoardInitializer {
     private static void putLineInMap(final Map<Position, Piece> map, final Horizontal horizontal, final Piece[] pieces) {
         final Vertical[] verticals = Vertical.values();
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            map.put(new Position(verticals[i], horizontal), pieces[i]);
+            map.put(Position.of(verticals[i], horizontal), pieces[i]);
         }
     }
 

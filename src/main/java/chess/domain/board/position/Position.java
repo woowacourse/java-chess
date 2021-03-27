@@ -5,27 +5,32 @@ import chess.domain.direction.Direction;
 import java.util.Objects;
 
 public class Position {
+    private static final int POSITION_VALID_SIZE = 2;
+
     private final Vertical vertical;
     private final Horizontal horizontal;
 
-    public Position(final Vertical vertical, final Horizontal horizontal) {
+    private Position(final Vertical vertical, final Horizontal horizontal) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
 
-    public Position(final String[] vh) {
-        this(Vertical.parse(vh[0]), Horizontal.parse(vh[1]));
+    private Position(final String[] inputs) {
+        this(Vertical.parse(inputs[0]), Horizontal.parse(inputs[1]));
     }
 
-    public Position(final String s) {
-        this(s.split(""));
+    private Position(final String input) {
+        this(input.split(""));
+    }
+
+    public static Position of(final Vertical vertical, final Horizontal horizontal) {
+        return new Position(vertical, horizontal);
     }
 
     public static Position of(final String input) {
-        if (input.split("").length != 2) {
+        if (input.split("").length != POSITION_VALID_SIZE) {
             throw new IllegalArgumentException("올바른 위치가 아닙니다.");
         }
-
         return new Position(input);
     }
 
@@ -48,7 +53,11 @@ public class Position {
             return this.horizontal.getDistance(other.horizontal);
         }
 
-        throw new IllegalArgumentException("");
+        throw new IllegalArgumentException("직선이나 대각선 경로가 아니라서 거리를 측정할 수 없습니다.");
+    }
+
+    public Position next(final Direction direction, final int distance) {
+        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
     }
 
     public Horizontal getHorizontal() {
@@ -66,10 +75,6 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
-    }
-
-    public Position next(final Direction direction, final int distance) {
-        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
     }
 
     @Override

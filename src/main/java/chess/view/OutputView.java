@@ -23,7 +23,7 @@ public class OutputView {
     public static void printBoard(final Board board) {
         for (final Horizontal horizontal : Horizontal.values()) {
             for (final Vertical vertical : Vertical.values()) {
-                final Piece piece = board.of(new Position(vertical, horizontal));
+                final Piece piece = board.of(Position.of(vertical, horizontal));
                 System.out.print(piece.getSymbol());
             }
             System.out.println();
@@ -33,7 +33,7 @@ public class OutputView {
     public static void printAbleToMove(final Board board, final List<Position> ableToMove) {
         for (final Horizontal horizontal : Horizontal.values()) {
             for (final Vertical vertical : Vertical.values()) {
-                final Position position = new Position(vertical, horizontal);
+                final Position position = Position.of(vertical, horizontal);
 
                 if (ableToMove.contains(position)) {
                     System.out.print("*");

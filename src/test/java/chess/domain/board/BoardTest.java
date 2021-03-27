@@ -59,8 +59,8 @@ public class BoardTest {
     @DisplayName("입력한 위치로 이동된다.")
     @Test
     void moveTest() {
-        final Position source = new Position(Vertical.B, Horizontal.TWO);
-        final Position target = new Position(Vertical.B, Horizontal.THREE);
+        final Position source = Position.of(Vertical.B, Horizontal.TWO);
+        final Position target = Position.of(Vertical.B, Horizontal.THREE);
 
         board.move(source, target);
 
