@@ -14,9 +14,9 @@ public enum TeamColor {
         this.name = name;
     }
 
-    public static TeamColor of(String teamColorInput) {
+    public static TeamColor of(String color) {
         return Arrays.stream(values())
-            .filter(teamColor -> teamColor.value.equals(teamColorInput))
+            .filter(teamColor -> teamColor.value.equals(color))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀 색깔 입니다."));
     }

@@ -22,7 +22,7 @@ public class Knight extends Piece {
         }
         Position nextPosition = moveRoute.nextPositionOfStartPosition();
         if (!(moveRoute.isDestination(nextPosition)
-            && board.isCellEmptyOrEnemyExists(nextPosition, color()))) {
+            && board.isCellEmptyOrEnemyExists(nextPosition, getTeamColor()))) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;

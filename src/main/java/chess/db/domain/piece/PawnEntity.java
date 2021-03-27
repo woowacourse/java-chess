@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.db.domain.piece;
 
 import static chess.domain.piece.type.PieceType.PAWN;
 
@@ -8,12 +8,12 @@ import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
 
-public class Pawn extends Piece {
+public class PawnEntity extends PieceEntity {
     private static final double DEFAULT_SCORE = 1;
     private static final double HALF_SCORE = DEFAULT_SCORE / 2;
 
-    public Pawn(TeamColor teamColor) {
-        super(PAWN, teamColor, DEFAULT_SCORE, Direction.pawnDirections(teamColor));
+    public PawnEntity(Long id, TeamColor teamColor) {
+        super(id, PAWN, teamColor, DEFAULT_SCORE, Direction.pawnDirections(teamColor));
     }
 
     @Override

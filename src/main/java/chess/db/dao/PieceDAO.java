@@ -3,7 +3,7 @@ package chess.db.dao;
 
 import static chess.db.dao.DBConnection.getConnection;
 
-import chess.db.entity.PieceEntity;
+import chess.db.domain.piece.PieceEntity;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;

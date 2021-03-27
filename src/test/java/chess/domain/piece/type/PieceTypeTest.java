@@ -10,7 +10,7 @@ class PieceTypeTest {
     @DisplayName("흑의 기물들은 대문자로 표기하고, 백의 기물들은 소문자로 표기한다.")
     @Test
     void pieceName() {
-        assertThat(PieceType.KING.name(TeamColor.BLACK)).isEqualTo("K");
-        assertThat(PieceType.KING.name(TeamColor.WHITE)).isEqualTo("k");
+        assertThat(PieceType.KING.getName(TeamColor.BLACK)).isEqualTo("K");
+        assertThat(PieceType.KING.getName(TeamColor.WHITE)).isEqualTo("k");
     }
 }

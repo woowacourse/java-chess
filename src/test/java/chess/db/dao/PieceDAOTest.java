@@ -2,7 +2,7 @@ package chess.db.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.entity.PieceEntity;
+import chess.db.domain.piece.PieceEntity;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;

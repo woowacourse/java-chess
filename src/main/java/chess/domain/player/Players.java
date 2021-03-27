@@ -18,12 +18,12 @@ public class Players {
     }
 
     public void add(Piece piece, Position position) {
-        Player player = findPlayerByTeamColor(piece.color());
+        Player player = findPlayerByTeamColor(piece.getTeamColor());
         player.give(piece, position);
     }
 
     public void remove(Piece piece, Position position) {
-        Player player = findPlayerByTeamColor(piece.color());
+        Player player = findPlayerByTeamColor(piece.getTeamColor());
         player.removePiece(piece, position);
     }
 

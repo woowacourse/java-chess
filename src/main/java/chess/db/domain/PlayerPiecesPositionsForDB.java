@@ -23,10 +23,10 @@ import static chess.domain.position.type.Rank.TWO;
 import chess.db.dao.PieceDAO;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.dao.PositionDAO;
-import chess.db.entity.PieceEntity;
+import chess.db.domain.piece.PieceEntity;
+import chess.db.domain.position.PositionEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.db.domain.position.PositionEntity;
 import chess.domain.position.type.File;
 import java.sql.SQLException;
 

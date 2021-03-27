@@ -1,5 +1,6 @@
 package chess.db.entity;
 
+import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import java.util.Objects;
 

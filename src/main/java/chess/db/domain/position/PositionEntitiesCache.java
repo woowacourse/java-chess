@@ -46,7 +46,7 @@ public class PositionEntitiesCache {
     public static PositionEntity find(File file, Rank rank) {
         return POSITION_ENTITIES.stream()
             .filter(positionEntity ->
-                    positionEntity.getFile() == file && positionEntity.getRank() == rank)
+                positionEntity.getFile() == file && positionEntity.getRank() == rank)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 위치 입니다."));
     }

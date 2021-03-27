@@ -22,7 +22,7 @@ public class Player {
     }
 
     public double score() {
-        return pieces.score();
+        return pieces.getScore();
     }
 
     public TeamColor teamColor() {

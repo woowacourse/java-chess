@@ -1,7 +1,6 @@
-package chess.domain.piece;
+package chess.db.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.piece.cache.PiecesCache;
 import chess.domain.piece.type.Direction;
 import chess.domain.piece.type.PieceType;
 import chess.domain.piece.type.PieceWithColorType;
@@ -10,26 +9,36 @@ import chess.domain.position.MoveRoute;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece {
+public class PieceEntity {
+    private final Long id;
     private final PieceType pieceType;
     private final TeamColor teamColor;
     private final double score;
     private final List<Direction> directions;
 
-    protected Piece(PieceType pieceType, TeamColor teamColor, double score,
+    public PieceEntity(Long id, PieceType pieceType, TeamColor teamColor, double score,
         List<Direction> directions) {
+        this.id = id;
         this.pieceType = pieceType;
         this.teamColor = teamColor;
         this.score = score;
         this.directions = directions;
     }
 
-    public static Piece of(PieceWithColorType pieceWithColorType) {
-        return PiecesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+    public PieceEntity(Long id, String name, String color) {
+        this.id = id;
+        this.pieceType = PieceType.find(name);
+        this.teamColor = TeamColor.of(color);
+        score = -9.9;
+        directions = null;
     }
 
-    public static Piece of(PieceType pieceType, TeamColor teamColor) {
-        return PiecesCache.find(pieceType, teamColor);
+    public static PieceEntity of(PieceWithColorType pieceWithColorType) {
+        return PieceEntitiesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+    }
+
+    public static PieceEntity of(PieceType pieceType, TeamColor teamColor) {
+        return PieceEntitiesCache.find(pieceType, teamColor);
     }
 
     public boolean canMoveTo(MoveRoute moveRoute, Board board) {
@@ -46,6 +55,10 @@ public abstract class Piece {
 
     protected boolean isNotCorrectDirection(Direction moveCommandDirection) {
         return !directions.contains(moveCommandDirection);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public PieceType getPieceType() {
@@ -69,10 +82,10 @@ public abstract class Piece {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Piece)) {
+        if (!(o instanceof PieceEntity)) {
             return false;
         }
-        Piece piece = (Piece) o;
+        PieceEntity piece = (PieceEntity) o;
         return pieceType == piece.pieceType && teamColor == piece.teamColor;
     }
 

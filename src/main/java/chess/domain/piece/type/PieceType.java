@@ -26,7 +26,7 @@ public enum PieceType {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물 타입입니다."));
     }
 
-    public String name(TeamColor teamColor) {
+    public String getName(TeamColor teamColor) {
         if (teamColor == WHITE) {
             return name.toLowerCase();
         }

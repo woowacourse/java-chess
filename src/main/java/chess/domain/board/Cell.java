@@ -28,7 +28,7 @@ public class Cell {
     }
 
     public TeamColor teamColor() {
-        return piece.color();
+        return piece.getTeamColor();
     }
 
     public boolean isEmpty() {
@@ -36,7 +36,7 @@ public class Cell {
     }
 
     public PieceType pieceType() {
-        return piece.type();
+        return piece.getPieceType();
     }
 
     public Piece piece() {
@@ -45,7 +45,7 @@ public class Cell {
 
     public String status() {
         if (piece != null) {
-            return piece.name();
+            return piece.getName();
         }
         return EMPTY_STATUS;
     }

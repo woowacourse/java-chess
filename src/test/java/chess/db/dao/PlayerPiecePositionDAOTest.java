@@ -9,11 +9,11 @@ import static chess.domain.position.type.Rank.FIVE;
 import static chess.domain.position.type.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.db.domain.piece.PieceEntity;
+import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
-import chess.db.entity.PieceEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.db.domain.position.PositionEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

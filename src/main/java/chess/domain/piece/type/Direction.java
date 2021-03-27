@@ -101,6 +101,13 @@ public enum Direction {
         return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
     }
 
+    public static List<Direction> pawnDirections(String color) {
+        if (TeamColor.of(color) == TeamColor.BLACK) {
+            return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
+        }
+        return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
+    }
+
     public static List<Direction> knightDirections() {
         return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
             Direction.LEFT_DOWN_DOWN, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP,
