@@ -17,26 +17,16 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
-
-    public final Score score() {
-        return this.score;
-    }
-
-    public boolean isSameOwnerPawn(Owner owner) {
-        return this.isPawn() && this.owner.isSameTeam(owner);
-    }
-
-    public final boolean isEnemy(final Piece other) {
-        return this.owner.isEnemy(other.owner);
-    }
-
     public final boolean isSameTeam(final Piece other) {
         return this.owner.isSameTeam(other.owner);
     }
 
-    public boolean isOwner(final Owner owner) {
+    public boolean isSameOwner(final Owner owner) {
         return this.owner.isSameTeam(owner);
+    }
+
+    public boolean isSameOwnerPawn(Owner owner) {
+        return this.isPawn() && this.owner.isSameTeam(owner);
     }
 
     public boolean isKing() {
@@ -47,11 +37,25 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract String getSymbol();
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public final boolean isEnemy(final Piece other) {
+        return this.owner.isEnemy(other.owner);
+    }
 
     public List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
     }
 
+    public final Score score() {
+        return this.score;
+    }
+
+    public abstract String getSymbol();
+
     public abstract int getMaxDistance();
+
+    public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 }
