@@ -33,7 +33,7 @@ public class MenuController {
     }
 
     private void selectOutputView(MenuDto menuDto) {
-        if (menuDto instanceof BoardDto) {
+        if (menuDto.isBoardDto()) {
             OutputView.showBoard((BoardDto) menuDto);
             return;
         }

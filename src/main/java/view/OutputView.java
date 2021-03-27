@@ -9,7 +9,7 @@ public class OutputView {
     }
 
     public static void showBoard(BoardDto boardDto) {
-        boardDto.getMenuDto().forEach(System.out::print);
+        boardDto.getBoardResult().forEach(System.out::print);
     }
 
     public static void showGuide() {
@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     public static void showStatus(StatusDto statusDto) {
-        statusDto.getMenuDto().entrySet().stream()
+        statusDto.getStatusResult().entrySet().stream()
                 .forEach(entry -> System.out.println(entry.getKey() + " : " + entry.getValue() + ""));
     }
 

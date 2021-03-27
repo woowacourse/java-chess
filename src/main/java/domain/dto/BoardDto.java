@@ -27,7 +27,7 @@ public class BoardDto implements MenuDto {
                 });
     }
 
-    public List<String> getMenuDto() {
+    public List<String> getBoardResult() {
         return Collections.unmodifiableList(result);
     }
 
@@ -42,5 +42,10 @@ public class BoardDto implements MenuDto {
     @Override
     public int hashCode() {
         return Objects.hash(result);
+    }
+
+    @Override
+    public boolean isBoardDto() {
+        return true;
     }
 }

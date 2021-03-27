@@ -17,7 +17,7 @@ public class StatusDto implements MenuDto {
         }
     }
 
-    public Map<String, Double> getMenuDto() {
+    public Map<String, Double> getStatusResult() {
         return Collections.unmodifiableMap(result);
     }
 
@@ -32,5 +32,10 @@ public class StatusDto implements MenuDto {
     @Override
     public int hashCode() {
         return Objects.hash(result);
+    }
+
+    @Override
+    public boolean isBoardDto() {
+        return false;
     }
 }
