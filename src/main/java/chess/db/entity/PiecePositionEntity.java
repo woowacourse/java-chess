@@ -1,9 +1,5 @@
 package chess.db.entity;
 
-import chess.db.entity.PieceEntity;
-import chess.db.entity.PlayerEntity;
-import chess.db.entity.PositionEntity;
-
 public class PiecePositionEntity {
     private Long id;
     private PlayerEntity playerEntity;

@@ -16,15 +16,15 @@ class PositionDAOTest {
     @Test
     void findByFileAndRank() throws SQLException {
         for (File file : File.values()) {
-            findPositionByRanksInFileOf(file);
+            findByRanksInFileOf(file);
         }
     }
 
-    private void findPositionByRanksInFileOf(File file) throws SQLException {
+    private void findByRanksInFileOf(File file) throws SQLException {
         for (Rank rank : Rank.values()) {
             PositionEntity positionEntity = positionDAO.findByFileAndRank(file, rank);
-            assertThat(positionEntity.getFile()).isEqualTo(file);
-            assertThat(positionEntity.getRank()).isEqualTo(rank);
+            assertThat(positionEntity.getFile()).isSameAs(file);
+            assertThat(positionEntity.getRank()).isSameAs(rank);
         }
     }
 }

@@ -57,7 +57,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialKings(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity kingEntity = pieceDAO.findByNameAndColor(KING, teamColor);
+        PieceEntity kingEntity = pieceDAO.findByPieceTypeAndTeamColor(KING, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteKingsPositions(kingEntity, initialPiecesPositions);
             return;
@@ -87,7 +87,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialQueens(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity queenEntity = pieceDAO.findByNameAndColor(QUEEN, teamColor);
+        PieceEntity queenEntity = pieceDAO.findByPieceTypeAndTeamColor(QUEEN, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteQueensPositions(queenEntity, initialPiecesPositions);
             return;
@@ -116,7 +116,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialRooks(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity rookEntity = pieceDAO.findByNameAndColor(ROOK, teamColor);
+        PieceEntity rookEntity = pieceDAO.findByPieceTypeAndTeamColor(ROOK, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteRooksPositions(rookEntity, initialPiecesPositions);
             return;
@@ -154,7 +154,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialKnights(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity knightEntity = pieceDAO.findByNameAndColor(KNIGHT, teamColor);
+        PieceEntity knightEntity = pieceDAO.findByPieceTypeAndTeamColor(KNIGHT, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteKnightsPositions(knightEntity, initialPiecesPositions);
             return;
@@ -193,7 +193,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialBishops(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity bishopEntity = pieceDAO.findByNameAndColor(BISHOP, teamColor);
+        PieceEntity bishopEntity = pieceDAO.findByPieceTypeAndTeamColor(BISHOP, teamColor);
         if (teamColor == WHITE) {
             setInitialWhiteBishopsPositions(bishopEntity, initialPiecesPositions);
             return;
@@ -232,7 +232,7 @@ public class PiecesPositionsForDB {
 
     private void setInitialPawns(TeamColor teamColor,
         List<PiecePositionEntity> initialPiecesPositions) throws SQLException {
-        PieceEntity pawnEntity = pieceDAO.findByNameAndColor(PAWN, teamColor);
+        PieceEntity pawnEntity = pieceDAO.findByPieceTypeAndTeamColor(PAWN, teamColor);
         if (teamColor == WHITE) {
             setInitialWhitePawnsPositions(pawnEntity, initialPiecesPositions);
             return;

@@ -1,8 +1,8 @@
 package chess.db.domain;
 
 import chess.db.dao.PlayerDAO;
-import chess.db.entity.PlayerEntity;
 import chess.db.entity.PiecePositionEntity;
+import chess.db.entity.PlayerEntity;
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.List;

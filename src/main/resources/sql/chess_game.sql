@@ -199,18 +199,18 @@ select * from position;
 -- piece
 -- ----------------------------------------------------
 
-INSERT INTO piece (name, color) VALUES ('Pawn', 'white');
-INSERT INTO piece (name, color) VALUES ('Rook', 'white');
-INSERT INTO piece (name, color) VALUES ('Bishop', 'white');
-INSERT INTO piece (name, color) VALUES ('Knight', 'white');
-INSERT INTO piece (name, color) VALUES ('Queen', 'white');
-INSERT INTO piece (name, color) VALUES ('King', 'white');
+INSERT INTO piece (name, color) VALUES ('PAWN', 'white');
+INSERT INTO piece (name, color) VALUES ('ROOK', 'white');
+INSERT INTO piece (name, color) VALUES ('BISHOP', 'white');
+INSERT INTO piece (name, color) VALUES ('KNIGHT', 'white');
+INSERT INTO piece (name, color) VALUES ('QUEEN', 'white');
+INSERT INTO piece (name, color) VALUES ('KING', 'white');
 
-INSERT INTO piece (name, color) VALUES ('Pawn', 'black');
-INSERT INTO piece (name, color) VALUES ('Rook', 'black');
-INSERT INTO piece (name, color) VALUES ('Bishop', 'black');
-INSERT INTO piece (name, color) VALUES ('Knight', 'black');
-INSERT INTO piece (name, color) VALUES ('Queen', 'black');
-INSERT INTO piece (name, color) VALUES ('King', 'black');
+INSERT INTO piece (name, color) VALUES ('PAWN', 'black');
+INSERT INTO piece (name, color) VALUES ('ROOK', 'black');
+INSERT INTO piece (name, color) VALUES ('BISHOP', 'black');
+INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
+INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
+INSERT INTO piece (name, color) VALUES ('KING', 'black');
 
 select * from piece;
