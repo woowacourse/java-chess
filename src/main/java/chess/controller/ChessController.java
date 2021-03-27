@@ -2,65 +2,48 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
+import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
     private final ChessGame chessGame;
+    private final Commands commands;
 
     public ChessController() {
         this.chessGame = new ChessGame();
+        this.commands = Commands.validCommands();
     }
 
     public void run() {
-        try {
-            firstStep();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            firstStep();
-        }
-    }
-
-    private void firstStep() {
         OutputView.printStartMessage();
-        Command command = new Command(InputView.command());
-        command.runFirstAction(this);
-    }
-
-    public void start() {
-        OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
-        try {
-            play();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            play();
-        }
-    }
-
-    private void play() {
         while (chessGame.runnable()) {
-            OutputView.printRequestCommandMessage();
-            Command command = new Command(InputView.command());
-            command.runRunningAction(this, command);
+            executeByCommand();
         }
+        end();
     }
 
-    public void except() {
-        throw new IllegalStateException("[ERROR] 진행할 수 없는 명령어입니다.");
-    }
-
-    public void move(Command command) {
+    private void executeByCommand() {
         try {
-            chessGame.movePieceFromSourceToTarget(command);
-            OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
+            OutputView.printRequestCommandMessage();
+            String[] splitCommand = InputView.command().split(" ");
+            String firstCommand = splitCommand[0];
+            Command command = commands.findCommandByText(firstCommand);
+            command.execute(chessGame, splitCommand);
+            showResultByCommand(command);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            play();
+            executeByCommand();
         }
     }
 
-    public void status() {
-        OutputView.printStatus(chessGame.scoreStatus());
+    private void showResultByCommand(Command command) {
+        if (command.isMustShowBoard()) {
+            OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
+        }
+        if (command.isMustShowStatus()) {
+            OutputView.printStatus(chessGame.scoreStatus());
+        }
     }
 
     public void end() {

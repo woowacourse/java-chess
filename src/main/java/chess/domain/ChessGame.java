@@ -1,29 +1,37 @@
 package chess.domain;
 
-import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 
 import java.util.List;
 
 public class ChessGame {
     private final Pieces pieces;
     private Color turn;
+    private State state;
 
     public ChessGame() {
         this(new Pieces(PieceFactory.initialPieces()));
     }
 
     public ChessGame(Pieces pieces) {
-        this(pieces, Color.WHITE);
+        this(pieces, Color.WHITE, new Ready());
     }
 
-    public ChessGame(Pieces pieces, Color turn) {
+    public ChessGame(Pieces pieces, State state) {
+        this.pieces = pieces;
+        this.state = state;
+    }
+
+    public ChessGame(Pieces pieces, Color turn, State state) {
         this.pieces = pieces;
         this.turn = turn;
+        this.state = state;
     }
 
     public List<Piece> getPiecesByAllPosition() {
@@ -34,9 +42,7 @@ public class ChessGame {
         this.turn = turn.reverse();
     }
 
-    public void movePieceFromSourceToTarget(Command command) {
-        Position source = Position.of(command.secondCommand());
-        Position target = Position.of(command.thirdCommand());
+    public void movePieceFromSourceToTarget(Position source, Position target) {
         Piece sourcePiece = pieces.findByPosition(source);
         checkAbleToMove(sourcePiece, target);
         pieces.removePieceByPosition(target);
@@ -54,11 +60,27 @@ public class ChessGame {
         }
     }
 
-    public boolean runnable() {
-        return pieces.isAliveAllKings();
-    }
-
     public ScoreStatus scoreStatus() {
         return ScoreStatus.generateByColor(pieces);
+    }
+
+    private void changeState(State state) {
+        this.state = state;
+    }
+
+    public void start() {
+        changeState(state.start());
+    }
+
+    public boolean runnable() {
+        return pieces.isAliveAllKings() && !state.isFinish();
+    }
+
+    public boolean notStartYet() {
+        return state.isReady();
+    }
+
+    public void end() {
+        changeState(state.end());
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.command.Command;
 import chess.domain.piece.*;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
@@ -29,8 +28,7 @@ public class ChessGameTest {
                 new Pawn(Position.of("f5"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move c8 f5");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("c8"), Position.of("f5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -43,8 +41,7 @@ public class ChessGameTest {
                 new Pawn(Position.of("e7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move d8 e7");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("e7"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -57,8 +54,7 @@ public class ChessGameTest {
                 new Pawn(Position.of("d7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move d8 d7");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d7"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -71,8 +67,8 @@ public class ChessGameTest {
                 new Pawn(Position.of("d7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move b8 d7");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("b8"), Position.of("d7"));
+
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -85,8 +81,8 @@ public class ChessGameTest {
                 new Pawn(Position.of("d1"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move d8 d1");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
+
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -99,8 +95,7 @@ public class ChessGameTest {
                 new Pawn(Position.of("d1"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move d8 d1");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -113,8 +108,7 @@ public class ChessGameTest {
                 new Pawn(Position.of("a5"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
-        Command command = new Command("move a8 a5");
-        chessGame.movePieceFromSourceToTarget(command);
+        chessGame.movePieceFromSourceToTarget(Position.of("a8"), Position.of("a5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
