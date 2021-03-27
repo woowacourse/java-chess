@@ -6,19 +6,21 @@
   <link href="/assets/css/index.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-  <header>
-    <h2 class="title">Paper Chess</h2>
-  </header>
-  <section>
-    <div class="board-container">
-      <img class="board" src="/assets/images/board.png">
-      {{#board}}
-        {{#board}}
-          {{#.}} {{#.}}<div id="{{x}}{{y}}" value="{{piece}}{{team}}"></div>{{/.}} {{/.}}
-        {{/board}}
-      {{/board}}
-    </div>
-  </section>
-  <script type="text/javascript" src="/assets/js/index.js"></script>
+<header>
+  <h2 class="title">Paper Chess</h2>
+</header>
+<section>
+  <div class="board-container">
+    <img class="board" src="/assets/images/board.png">
+    {{#board}}
+    {{#board}}
+    {{#.}} {{#.}}
+    <div id="{{x}}{{y}}" class="square {{piece}}{{team}}"></div>
+    {{/.}} {{/.}}
+    {{/board}}
+    {{/board}}
+  </div>
+</section>
+<script type="text/javascript" src="/assets/js/index.js"></script>
 </body>
 </html>

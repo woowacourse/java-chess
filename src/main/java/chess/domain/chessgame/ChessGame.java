@@ -5,6 +5,7 @@ import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.Ready;
+import java.util.List;
 
 public class ChessGame {
 
@@ -48,5 +49,9 @@ public class ChessGame {
 
     public Team winner() {
         return gameState.winner();
+    }
+
+    public List<Point> movablePoints(Point currentPoint) {
+        return gameState.movablePoints(currentPoint, turn);
     }
 }

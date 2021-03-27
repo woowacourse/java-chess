@@ -7,14 +7,9 @@ const squareStyleTemplate = (squareStyle) => {
     left:${squareStyle.left}px;
     top:${squareStyle.top}px;
     width:${squareStyle.width}px;
-    height:${squareStyle.height}px;`;
+    height:${squareStyle.height}px;
+    cursor:pointer;`;
 };
-
-const squareImageTemplate = (piece) => {
-  return `background: url('./assets/images/${piece}.png') 50% 50% no-repeat;
-      background-size: contain;
-      filter: drop-shadow(2px 2px 5px #000)`;
-}
 
 const columns = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -27,9 +22,59 @@ const points = numbers(boardSize).flatMap(
 );
 const boardWidthRateWithoutBorder = 1020 / 1077;
 
+const removeAllMovables = () => {
+  const movables = document.querySelectorAll(".movable");
+  movables.forEach(movable => {
+    movable.parentElement.removeChild(movable);
+  });
+}
+
+const addMovables = async function (point) {
+  const response = await fetch("./movablePoints/" + point);
+  const result = await response.json();
+  for (const i in result) {
+    const square = document.querySelector("#" + result[i].x + result[i].y);
+    const moveDiv = document.createElement("div");
+    moveDiv.classList.add("movable");
+    moveDiv.value = point;
+    square.insertAdjacentElement("afterbegin", moveDiv);
+  }
+}
+
+const move = async function (source, destination) {
+  const response = await fetch(
+      "./move?source=" + source + "&destination=" + destination);
+  const result = await response.json();
+
+  for (const i in result["board"]) {
+    const newSquare = result["board"][i];
+    const square = document.querySelector("#" + newSquare.x + newSquare.y);
+    square.setAttribute("class",
+        "square " + newSquare["piece"] + newSquare["team"]);
+  }
+}
+
+const clickSquare = function (event) {
+  if (event.target.classList.contains("movable")) {
+    move(event.target.value, event.target.closest(".square").id).then(r => {
+    });
+    removeAllMovables();
+    return;
+  }
+  removeAllMovables();
+  addMovables(event.target.id).then(r => {
+  });
+};
+
+const addEventToSquares = () => {
+  const squares = document.querySelectorAll(".square");
+  squares.forEach(square =>
+      square.addEventListener("click", clickSquare)
+  );
+}
+
 const reloadBoard = () => {
   const boardRect = document.querySelector(".board").getBoundingClientRect();
-  console.log(boardRect);
   const squareWidth = boardRect.width * boardWidthRateWithoutBorder / boardSize;
   const squareHeight = boardRect.height * boardWidthRateWithoutBorder
       / boardSize;
@@ -48,12 +93,12 @@ const reloadBoard = () => {
       top: boardTop + squareHeight * (boardSize - 1 - point.y)
     };
     square.style.cssText = squareStyleTemplate(squareStyle);
-    square.style.cssText += squareImageTemplate(square.getAttribute("value"));
   });
 }
 
 window.onload = () => {
   reloadBoard();
+  addEventToSquares();
 };
 
 window.onresize = () => {

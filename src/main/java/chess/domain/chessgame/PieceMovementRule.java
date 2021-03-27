@@ -6,6 +6,8 @@ import chess.domain.board.Row;
 import chess.domain.board.Team;
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PieceMovementRule {
 
@@ -16,6 +18,13 @@ public class PieceMovementRule {
 
     public PieceMovementRule(Board board) {
         this.board = board;
+    }
+
+    public List<Point> movablePoints(Point currentPoint, Team currentTeam) {
+        return board.points()
+            .stream()
+            .filter(point -> canMove(currentPoint, point, currentTeam))
+            .collect(Collectors.toList());
     }
 
     public boolean canMove(Point source, Point destination, Team currentTeam) {

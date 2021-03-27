@@ -6,6 +6,7 @@ import chess.domain.board.Team;
 import chess.domain.chessgame.PieceMovementRule;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
+import java.util.List;
 
 public class Running implements GameState {
 
@@ -22,7 +23,7 @@ public class Running implements GameState {
 
     @Override
     public GameState start() {
-        throw EXCEPTION;
+        return new Ready(board).start();
     }
 
     @Override
@@ -64,5 +65,10 @@ public class Running implements GameState {
     @Override
     public Team winner() {
         throw EXCEPTION;
+    }
+
+    @Override
+    public List<Point> movablePoints(Point currentPoint, Turn turn) {
+        return pieceMovementRule.movablePoints(currentPoint, turn.now());
     }
 }

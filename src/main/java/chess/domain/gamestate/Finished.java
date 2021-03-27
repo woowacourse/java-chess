@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
+import java.util.List;
 
 public class Finished implements GameState {
 
@@ -43,5 +44,10 @@ public class Finished implements GameState {
     @Override
     public Team winner() {
         return winner;
+    }
+
+    @Override
+    public List<Point> movablePoints(Point currentPoint, Turn turn) {
+        throw EXCEPTION;
     }
 }

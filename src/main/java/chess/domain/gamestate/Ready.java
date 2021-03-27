@@ -41,6 +41,7 @@ public class Ready implements GameState {
 
     @Override
     public GameState start() {
+        board.clear();
         WHITE_INITIAL_POINTS.keySet()
             .forEach(this::initializePiece);
         return new Running(board);
@@ -73,6 +74,11 @@ public class Ready implements GameState {
 
     @Override
     public Team winner() {
+        throw EXCEPTION;
+    }
+
+    @Override
+    public List<Point> movablePoints(Point currentPoint, Turn turn) {
         throw EXCEPTION;
     }
 }

@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
+import java.util.List;
 
 public interface GameState {
 
@@ -17,4 +18,6 @@ public interface GameState {
     boolean isFinished();
 
     Team winner();
+
+    List<Point> movablePoints(Point currentPoint, Turn turn);
 }

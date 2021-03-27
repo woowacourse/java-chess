@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,10 @@ public class Board {
     private final Map<Point, SquareState> squares = new HashMap<>();
 
     public Board() {
+        clear();
+    }
+
+    public void clear() {
         Point.allPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
     }
@@ -85,5 +90,9 @@ public class Board {
 
     public Map<Point, SquareState> squares() {
         return new HashMap<>(squares);
+    }
+
+    public List<Point> points() {
+        return new ArrayList<>(squares.keySet());
     }
 }
