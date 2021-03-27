@@ -132,10 +132,10 @@ public abstract class Piece {
         return positions;
     }
 
-    private List<Position> multiMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy){
+    private List<Position> multiMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
         List<Position> positions = new ArrayList<>();
         Position nextPosition = position;
-        while (true){
+        while (true) {
             if (Objects.isNull(nextPosition)) {
                 break;
             }

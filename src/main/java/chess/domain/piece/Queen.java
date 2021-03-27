@@ -4,15 +4,13 @@ import chess.domain.piece.direction.MoveStrategies;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
     private static final double SCORE = 9;
 
-    private boolean isFirst = true;
+    private final boolean isFirst = true;
 
     private Queen(final String piece, final Color color, final Position position) {
         super(piece, color, MoveStrategies.everyMoveStrategies(), position);
