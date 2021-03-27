@@ -2,8 +2,8 @@ package chess.domain.state;
 
 import chess.domain.Result;
 import chess.domain.piece.Piece;
-import chess.domain.player.PieceSet;
 import chess.domain.position.Position;
+import chess.domain.team.PieceSet;
 import java.util.Map;
 
 public interface GameState {

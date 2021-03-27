@@ -4,22 +4,22 @@ import java.util.function.UnaryOperator;
 
 public enum Moves {
 
-    UP(Position::moveUp),
-    DOWN(Position::moveDown),
-    RIGHT(Position::moveRight),
-    LEFT(Position::moveLeft),
-    RIGHT_UP(Position::moveRightUp),
-    LEFT_UP(Position::moveLeftUp),
-    RIGHT_DOWN(Position::moveRightDown),
-    LEFT_DOWN(Position::moveLeftDown),
-    RIGHT_UP_UP(position -> position.moveRightUp().moveUp()),
-    RIGHT_UP_RIGHT(position -> position.moveRightUp().moveRight()),
-    LEFT_UP_UP(position -> position.moveLeftUp().moveUp()),
-    LEFT_UP_LEFT(position -> position.moveLeftUp().moveLeft()),
-    RIGHT_DOWN_DOWN(position -> position.moveRightDown().moveDown()),
-    RIGHT_DOWN_RIGHT(position -> position.moveRightDown().moveRight()),
-    LEFT_DOWN_DOWN(position -> position.moveLeftDown().moveDown()),
-    LEFT_DOWN_LEFT(position -> position.moveLeftDown().moveLeft());
+    UP(position -> position.move(0, 1)),
+    DOWN(position -> position.move(0, -1)),
+    RIGHT(position -> position.move(1, 0)),
+    LEFT(position -> position.move(-1, 0)),
+    RIGHT_UP(position -> position.move(1, 1)),
+    LEFT_UP(position -> position.move(-1, 1)),
+    RIGHT_DOWN(position -> position.move(1, -1)),
+    LEFT_DOWN(position -> position.move(-1, -1)),
+    RIGHT_UP_UP(position -> position.move(1, 2)),
+    RIGHT_UP_RIGHT(position -> position.move(2, 1)),
+    LEFT_UP_UP(position -> position.move(-1, 2)),
+    LEFT_UP_LEFT(position -> position.move(-2, 1)),
+    RIGHT_DOWN_DOWN(position -> position.move(1, -2)),
+    RIGHT_DOWN_RIGHT(position -> position.move(2, -1)),
+    LEFT_DOWN_DOWN(position -> position.move(-1, -2)),
+    LEFT_DOWN_LEFT(position -> position.move(-2, -1));
 
     private final UnaryOperator<Position> expression;
 

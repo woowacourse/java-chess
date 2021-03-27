@@ -52,6 +52,10 @@ public enum NumberRows {
         return NumberRows.getInstance(number + value).number();
     }
 
+    public NumberRows movedNumber1(int value) {
+        return NumberRows.getInstance(number + value);
+    }
+
     public String number() {
         return String.valueOf(number);
     }

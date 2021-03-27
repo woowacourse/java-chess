@@ -2,14 +2,14 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.player.BlackSet;
-import chess.domain.player.PieceSet;
-import chess.domain.player.WhiteSet;
 import chess.domain.position.AlphaColumns;
 import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.Running;
+import chess.domain.team.BlackSet;
+import chess.domain.team.PieceSet;
+import chess.domain.team.WhiteSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;

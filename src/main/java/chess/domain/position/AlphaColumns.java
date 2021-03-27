@@ -49,6 +49,11 @@ public enum AlphaColumns {
         return AlphaColumns.getInstance(asciNumber + value).alpha();
     }
 
+    public AlphaColumns movedAlpha1(int value) {
+        return AlphaColumns.getInstance(asciNumber + value);
+    }
+
+
     public String alpha() {
         return String.valueOf((char) asciNumber);
     }

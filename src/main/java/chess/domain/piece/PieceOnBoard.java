@@ -3,9 +3,9 @@ package chess.domain.piece;
 import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
-import chess.domain.player.Score;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
+import chess.domain.team.Score;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -116,8 +116,8 @@ public abstract class PieceOnBoard implements Piece {
 
     protected Set<Position> checkFrontDiagonal(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
-        Position positionDiagonalRight = currentPosition.moveFront(teamColor).moveRight();
-        Position positionDiagonalLeft = currentPosition.moveFront(teamColor).moveLeft();
+        Position positionDiagonalRight = currentPosition.moveFront(teamColor).move(0, 1);
+        Position positionDiagonalLeft = currentPosition.moveFront(teamColor).move(0, -1);
         if (isMeetEnemy(positionDiagonalRight, target, chessBoard)) {
             candidates.add(positionDiagonalRight);
         }

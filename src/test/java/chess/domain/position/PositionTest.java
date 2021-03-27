@@ -3,7 +3,10 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import chess.domain.pieceinformations.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,96 +39,69 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("위")
-    void moveUp() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("앞방향 이동 테스트 - 흑팀")
+    void move_front_black() {
+        Position position = Position.valueOf("c4");
 
-        Position after = before.moveUp();
+        final Position movedPosition = position.moveFront(TeamColor.BLACK);
 
-        assertThat(after).isEqualTo(Position.valueOf("c4"));
+        assertThat(movedPosition).isEqualTo(Position.valueOf("c3"));
     }
 
     @Test
-    @DisplayName("아래")
-    void moveDown() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("앞방향 이동 테스트 - 백팀")
+    void move_front_white() {
+        Position position = Position.valueOf("c4");
 
-        Position after = before.moveDown();
+        final Position movedPosition = position.moveFront(TeamColor.WHITE);
 
-        assertThat(after).isEqualTo(Position.valueOf("c2"));
+        assertThat(movedPosition).isEqualTo(Position.valueOf("c5"));
     }
 
     @Test
-    @DisplayName("오른쪽")
-    void moveRight() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("이동 테스트")
+    void move() {
+        Position position = Position.valueOf("c4");
 
-        Position after = before.moveRight();
+        final Position moved = position.move(1, 3);
 
-        assertThat(after).isEqualTo(Position.valueOf("d3"));
+        assertThat(moved).isEqualTo(Position.valueOf("d7"));
     }
 
     @Test
-    @DisplayName("왼쪽")
-    void moveLeft() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("폰의 시작라인 테스트 - 백")
+    void pawn_line() {
+        Position position = Position.valueOf("d2");
 
-        Position after = before.moveLeft();
-
-        assertThat(after).isEqualTo(Position.valueOf("b3"));
+        assertTrue(position.pawnLine(TeamColor.WHITE));
     }
 
     @Test
-    @DisplayName("오른쪽 대각선 위")
-    void moveRightUp() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("폰의 시작라인 테스트 - 흑")
+    void pawn_line1() {
+        Position position = Position.valueOf("d7");
 
-        Position after = before.moveRightUp();
-
-        assertThat(after).isEqualTo(Position.valueOf("d4"));
+        assertTrue(position.pawnLine(TeamColor.BLACK));
     }
 
     @Test
-    @DisplayName("오른쪽 대각선 아래")
-    void moveRightDown() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("폰의 시작라인 테스트 실패")
+    void pawn_line_fail() {
+        Position position = Position.valueOf("d3");
+        Position positionBlack = Position.valueOf("d2");
+        Position positionWhite = Position.valueOf("d7");
 
-        Position after = before.moveRightDown();
-
-        assertThat(after).isEqualTo(Position.valueOf("d2"));
+        assertFalse(position.pawnLine(TeamColor.WHITE));
+        assertFalse(positionBlack.pawnLine(TeamColor.BLACK));
+        assertFalse(positionWhite.pawnLine(TeamColor.WHITE));
     }
 
     @Test
-    @DisplayName("왼쪽 대각선 위")
-    void moveLeftUp() {
-        Position before = Position.valueOf("c3");
+    @DisplayName("세로 좌표 가져오기")
+    void getColumn() {
+        Position position = Position.valueOf("c4");
 
-        Position after = before.moveLeftUp();
-
-        assertThat(after).isEqualTo(Position.valueOf("b4"));
-    }
-
-    @Test
-    @DisplayName("왼쪽 대각선 아래")
-    void moveLeftDown() {
-        Position before = Position.valueOf("c3");
-
-        Position after = before.moveLeftDown();
-
-        assertThat(after).isEqualTo(Position.valueOf("b2"));
-    }
-
-    @Test
-    @DisplayName("이동시 범위를 벗어나는 경우")
-    void moveDown_fail() {
-        Position before = Position.valueOf("a1");
-
-        Position afterDown = before.moveDown();
-
-        Position afterLeft = before.moveLeft();
-
-        assertThat(afterDown).isEqualTo(Position.ERROR);
-        assertThat(afterLeft).isEqualTo(Position.ERROR);
+        assertThat(position.getColumn()).isEqualTo('c');
     }
 
 }

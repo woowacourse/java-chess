@@ -62,3 +62,13 @@ class BlackSet {
 
 ## 링크 
 [javadocs Enum](https://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html)
+
+# [Java] Table - 3
+
+## 내용
+- row, column 을 키로 테이블을 만들 수 있다.
+- `compile('com.google.guava:guava:29.0-jre')` dependencies에 추가하여 사용한다.
+- LinkedHashMap을 기반으로 구현되는 `HashBasedTable.create();`을 사용하였다.
+
+## 링크
+[Table 사용방법](https://www.baeldung.com/guava-table)

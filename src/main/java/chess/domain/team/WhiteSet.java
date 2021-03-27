@@ -1,4 +1,4 @@
-package chess.domain.player;
+package chess.domain.team;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

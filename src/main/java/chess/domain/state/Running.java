@@ -2,12 +2,11 @@ package chess.domain.state;
 
 import chess.domain.Result;
 import chess.domain.piece.Blank;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.pieceinformations.TeamColor;
-import chess.domain.player.PieceSet;
-import chess.domain.player.Score;
 import chess.domain.position.Position;
+import chess.domain.team.PieceSet;
+import chess.domain.team.Score;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

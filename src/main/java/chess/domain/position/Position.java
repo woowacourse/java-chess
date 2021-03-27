@@ -1,20 +1,20 @@
 package chess.domain.position;
 
 import chess.domain.pieceinformations.TeamColor;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Position {
     public static final Position ERROR = new Position(AlphaColumns.ERROR, NumberRows.ERROR);
-    private static final Map<String, Position> CACHE = new LinkedHashMap<>();
+    private static final Table<AlphaColumns, NumberRows, Position> CACHED_TABLE
+        = HashBasedTable.create();
 
     static {
         for (NumberRows row : NumberRows.rows()) {
             for (AlphaColumns column : AlphaColumns.columns()) {
-                final String position = column.alpha() + row.number();
-                CACHE.put(position, new Position(position));
+                CACHED_TABLE.put(column, row, new Position(column, row));
             }
         }
     }
@@ -22,37 +22,33 @@ public class Position {
     private final AlphaColumns column;
     private final NumberRows row;
 
-    private Position(String boardPosition) {
-        validateLength(boardPosition);
-        this.column = AlphaColumns.getInstance(boardPosition.charAt(0));
-        this.row = NumberRows.getInstance(boardPosition.charAt(1));
-    }
-
     private Position(AlphaColumns alpha, NumberRows number) {
         this.column = alpha;
         this.row = number;
     }
 
     public static Position valueOf(String value) {
-        if (CACHE.containsKey(value)) {
-            return CACHE.get(value);
+        validateLength(value);
+        final AlphaColumns alpha = AlphaColumns.getInstance(value.charAt(0));
+        final NumberRows number = NumberRows.getInstance(value.charAt(1));
+        if (CACHED_TABLE.contains(alpha, number)) {
+            return CACHED_TABLE.get(alpha, number);
         }
         throw new IllegalArgumentException();
     }
 
     public static Position valueOf(AlphaColumns column, NumberRows row) {
-        final String value = column.alpha() + row.number();
-        if (CACHE.containsKey(value)) {
-            return CACHE.get(value);
+        if (CACHED_TABLE.contains(column, row)) {
+            return CACHED_TABLE.get(column, row);
         }
         return ERROR;
     }
 
     public static List<Position> values() {
-        return new ArrayList<>(CACHE.values());
+        return new ArrayList<>(CACHED_TABLE.values());
     }
 
-    private void validateLength(String boardPosition) {
+    private static void validateLength(String boardPosition) {
         if (boardPosition.length() != 2) {
             throw new IllegalArgumentException("좌표의 문자길이는 2입니다.");
         }
@@ -60,72 +56,19 @@ public class Position {
 
     public Position moveFront(TeamColor teamColor) {
         if (teamColor == TeamColor.BLACK) {
-            return moveDown();
+            return move(0, -1);
         }
-        return moveUp();
+        return move(0, 1);
     }
 
-    public Position moveUp() {
-        String next = column.alpha() + row.movedNumber(1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
+    public Position move(int alphaDirection, int numberDirection) {
+        final AlphaColumns movedAlpha = column.movedAlpha1(alphaDirection);
+        final NumberRows movedNumber = row.movedNumber1(numberDirection);
 
-    public Position moveDown() {
-        String next = column.alpha() + row.movedNumber(-1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
+        if (CACHED_TABLE.contains(movedAlpha, movedNumber)) {
+            return Position.valueOf(movedAlpha, movedNumber);
         }
-        return ERROR;
-    }
 
-    public Position moveLeft() {
-        String next = column.movedAlpha(-1) + row.number();
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
-
-    public Position moveRight() {
-        String next = column.movedAlpha(1) + row.number();
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
-
-    public Position moveRightUp() {
-        String next = column.movedAlpha(1) + row.movedNumber(1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
-
-    public Position moveRightDown() {
-        String next = column.movedAlpha(1) + row.movedNumber(-1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
-
-    public Position moveLeftUp() {
-        String next = column.movedAlpha(-1) + row.movedNumber(1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
-        return ERROR;
-    }
-
-    public Position moveLeftDown() {
-        String next = column.movedAlpha(-1) + row.movedNumber(-1);
-        if (CACHE.containsKey(next)) {
-            return Position.valueOf(next);
-        }
         return ERROR;
     }
 

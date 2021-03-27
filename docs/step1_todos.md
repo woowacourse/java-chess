@@ -7,4 +7,6 @@
 - [x] instanceOf 내부화
 - [x] column, row Enum으로 변경
 - [x] 사용하지 않는 메소드에 한해 UnsupportedOperationException 처리
-- [ ] com.google.common.collect.Table를 사용하여 테이블 형태의 자료구조 사용가능
+- [x] com.google.common.collect.Table를 사용하여 테이블 형태의 자료구조 사용가능
+- [ ] 팀별로 턴을 바꾸는 것 구현
+- [ ] 누락된 테스트코드들 작성
