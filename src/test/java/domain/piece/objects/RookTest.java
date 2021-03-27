@@ -17,7 +17,7 @@ class RookTest {
     @ParameterizedTest
     @ValueSource(strings = {"d6", "d4", "c5", "e5"})
     void check_row_column_range_true_test(String endPosition) {
-        Rook rook = Rook.of("R",  true);
+        Rook rook = Rook.of("R", true);
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d5"), rook);
         }});
@@ -27,7 +27,7 @@ class RookTest {
     @DisplayName("룩이 이동하려는 위치에 같은 편 말이 있는 경우 이동할 수 없다.")
     @Test
     void cant_move_rook_if_same_color_piece_exists() {
-        Rook rook = Rook.of("R",  true);
+        Rook rook = Rook.of("R", true);
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d6"), rook);
             put(Position.of("d7"), Queen.of("Q", true));
@@ -38,8 +38,8 @@ class RookTest {
     @DisplayName("룩이 이동하려는 위치가 상하좌우 범위가 아니라면, 실패를 반환한다.")
     @Test
     void check_row_column_range_false_test() {
-        Rook rook = Rook.of("R",  true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Rook rook = Rook.of("R", true);
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d5"), rook);
         }});
         assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of("e4"))).isFalse();
@@ -49,8 +49,8 @@ class RookTest {
     @DisplayName("룩이 이동하려는 경로에 다른 말이 있으면, 실패를 반환한다.")
     @Test
     void cant_move_rook_if_piece_exist() {
-        Rook rook = Rook.of("R",  true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Rook rook = Rook.of("R", true);
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d5"), rook);
             put(Position.of("e5"), Pawn.of("P", true));
         }});

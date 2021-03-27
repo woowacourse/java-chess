@@ -1,9 +1,9 @@
 package domain.score;
 
 import domain.Board;
+import domain.piece.Position;
 import domain.piece.objects.Pawn;
 import domain.piece.objects.Piece;
-import domain.piece.Position;
 
 import java.util.Map;
 
@@ -43,22 +43,4 @@ public class ScoreMachine {
         }
         return score.add(pawn.getValue().getScore());
     }
-//
-//
-//    public Score whitePiecesScore() {
-//        Score score = new Score();
-//
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (board[i][j] != null && !board[i][j].isBlack()) {
-//                    if (board[i][j] instanceof Pawn) {
-//                        score = addPawnScore(i, j, score);
-//                        continue;
-//                    }
-//                    score = score.sum(board[i][j].getScore());
-//                }
-//            }
-//        }
-//        return score;
-//    }
 }

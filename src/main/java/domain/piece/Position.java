@@ -1,6 +1,8 @@
 package domain.piece;
 
-import domain.IndexMachine;
+import domain.Column;
+import domain.Row;
+import domain.exception.InvalidPositionException;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -16,7 +18,16 @@ public class Position {
     }
 
     public static Position of(String input) {
-        return IndexMachine.convertPosition(input);
+        validateLength(input);
+        Column col = Column.convertColumn(input.charAt(0));
+        Row row = Row.convertRow(input.charAt(1));
+        return Position.valueOf(row.getIndex(), col.getIndex());
+    }
+
+    private static void validateLength(String input) {
+        if (input.length() > 2 || input.length() <= 0) {
+            throw new InvalidPositionException();
+        }
     }
 
     public static Position valueOf(int row, int column) {

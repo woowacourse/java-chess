@@ -4,7 +4,10 @@ import domain.piece.Direction;
 import domain.piece.Position;
 import domain.score.Score;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class King extends Piece {
     private static final Score SCORE = Score.of(0);

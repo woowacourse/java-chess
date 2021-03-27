@@ -2,17 +2,18 @@ package domain;
 
 import domain.exception.InvalidMoveException;
 import domain.piece.Direction;
+import domain.piece.Position;
 import domain.piece.objects.Empty;
 import domain.piece.objects.Pawn;
 import domain.piece.objects.Piece;
-import domain.piece.Position;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.piece.Color.*;
+import static domain.piece.Color.BLACK;
+import static domain.piece.Color.WHITE;
 
 public class Board {
     private Map<Position, Piece> board;

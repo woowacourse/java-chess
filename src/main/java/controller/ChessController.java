@@ -1,8 +1,8 @@
 package controller;
 
-import domain.menu.Menu;
 import domain.ChessGame;
 import domain.exception.InvalidMenuException;
+import domain.menu.Menu;
 import view.InputView;
 import view.OutputView;
 

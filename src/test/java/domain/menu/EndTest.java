@@ -1,7 +1,6 @@
 package domain.menu;
 
 import domain.ChessGame;
-import domain.dto.BoardDto;
 import domain.dto.StatusDto;
 import domain.exception.GameNotStartException;
 import org.junit.jupiter.api.BeforeEach;

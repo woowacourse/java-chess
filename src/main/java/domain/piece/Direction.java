@@ -5,13 +5,13 @@ import java.util.List;
 
 public enum Direction {
     EAST(0, 1),
-    SOUTHEAST(1, 1),
+    SOUTH_EAST(1, 1),
     SOUTH(1, 0),
-    SOUTHWEST(1, -1),
+    SOUTH_WEST(1, -1),
     WEST(0, -1),
-    NORTHWEST(-1, -1),
+    NORTH_WEST(-1, -1),
     NORTH(-1, 0),
-    NORTHEAST(-1, 1),
+    NORTH_EAST(-1, 1),
 
     NNE(1, 2),
     NNW(-1, 2),
@@ -40,18 +40,18 @@ public enum Direction {
 
     public static Direction findDiagonalDirection(int rowDiff, int colDiff) {
         if (rowDiff > 0 && colDiff > 0) {
-            return SOUTHEAST;
+            return SOUTH_EAST;
         }
 
         if (rowDiff > 0 && colDiff < 0) {
-            return SOUTHWEST;
+            return SOUTH_WEST;
         }
 
         if (rowDiff < 0 && colDiff < 0) {
-            return NORTHWEST;
+            return NORTH_WEST;
         }
 
-        return NORTHEAST;
+        return NORTH_EAST;
     }
 
     public static Direction findLinearDirection(int rowDiff, int colDiff) {
@@ -75,7 +75,7 @@ public enum Direction {
     }
 
     public static List<Direction> diagonalDirection() {
-        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+        return Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
     }
 
     public static List<Direction> verticalDirection() {
@@ -87,10 +87,10 @@ public enum Direction {
     }
 
     public static List<Direction> blackPawnDirection() {
-        return Arrays.asList(SOUTH, SOUTHWEST, SOUTHEAST);
+        return Arrays.asList(SOUTH, SOUTH_WEST, SOUTH_EAST);
     }
 
     public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(NORTH, NORTHWEST, NORTHEAST);
+        return Arrays.asList(NORTH, NORTH_WEST, NORTH_EAST);
     }
 }

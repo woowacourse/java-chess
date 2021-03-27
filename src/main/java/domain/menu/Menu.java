@@ -7,7 +7,7 @@ import domain.exception.InvalidMenuException;
 import java.util.Arrays;
 
 public enum Menu {
-    START("start"  , new Start()),
+    START("start", new Start()),
     STATUS("status", new Status()),
     MOVE("move", new Move()),
     END("end", new End());

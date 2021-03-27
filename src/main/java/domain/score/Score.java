@@ -1,6 +1,8 @@
 package domain.score;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.WeakHashMap;
 
 public class Score {
     private final double value;
@@ -24,6 +26,10 @@ public class Score {
         return new Score(value / 2);
     }
 
+    public double getScore() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,9 +41,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public double getScore() { //  test용
-        return value;
     }
 }

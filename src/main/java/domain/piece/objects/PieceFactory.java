@@ -1,7 +1,6 @@
 package domain.piece.objects;
 
 import domain.piece.Position;
-import domain.piece.objects.*;
 
 import java.util.HashMap;
 import java.util.Map;

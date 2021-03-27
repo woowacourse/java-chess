@@ -1,6 +1,6 @@
 package domain;
 
-import domain.piece.*;
+import domain.piece.Position;
 import domain.piece.objects.*;
 import domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -32,21 +32,21 @@ class ChessGameTest {
     void chess_game_score_test() {
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
             put(Position.of("b8"), King.of("K", true));
-            put(Position.of("c8"),Rook.of("R", true));
+            put(Position.of("c8"), Rook.of("R", true));
             put(Position.of("a7"), Pawn.of("P", true));
-            put(Position.of("c7"),Pawn.of("P", true));
+            put(Position.of("c7"), Pawn.of("P", true));
             put(Position.of("d7"), Bishop.of("B", true));
-            put(Position.of("b6"),Pawn.of("P", true));
-            put(Position.of("e6"), Queen.of("Q",  true));
+            put(Position.of("b6"), Pawn.of("P", true));
+            put(Position.of("e6"), Queen.of("Q", true));
 
             put(Position.of("f4"), Knight.of("n", false));
-            put(Position.of("g4"),Queen.of("q", false));
-            put(Position.of("f3"), Pawn.of("p",  false));
-            put(Position.of("h3"), Pawn.of("p",  false));
-            put(Position.of("f2"), Pawn.of("p",  false));
-            put(Position.of("g2"), Pawn.of("p",  false));
-            put(Position.of("e1"), Rook.of("r",  false));
-            put(Position.of("f1"), King.of("k",  false));
+            put(Position.of("g4"), Queen.of("q", false));
+            put(Position.of("f3"), Pawn.of("p", false));
+            put(Position.of("h3"), Pawn.of("p", false));
+            put(Position.of("f2"), Pawn.of("p", false));
+            put(Position.of("g2"), Pawn.of("p", false));
+            put(Position.of("e1"), Rook.of("r", false));
+            put(Position.of("f1"), King.of("k", false));
         }};
         ChessGame chessGame = new ChessGame();
         chessGame.start(pieces);

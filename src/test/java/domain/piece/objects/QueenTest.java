@@ -17,7 +17,7 @@ class QueenTest {
     @ValueSource(strings = {"d5", "e6", "f3", "f5", "c4", "d3", "g4"})
     void queen_move_if_empty(String endPosition) {
         Queen queen = Queen.of("Q", true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), queen);
         }});
 
@@ -28,7 +28,7 @@ class QueenTest {
     @Test
     void queen_move_if_enemy_exist() {
         Queen queen = Queen.of("Q", true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), queen);
             put(Position.of("e2"), Queen.of("q", false));
         }});
@@ -39,7 +39,7 @@ class QueenTest {
     @Test
     void queen_cant_move_if_same_piece_exist() {
         Queen queen = Queen.of("Q", true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e5"), queen);
             put(Position.of("g7"), Pawn.of("P", true));
         }});
@@ -51,7 +51,7 @@ class QueenTest {
     @ValueSource(strings = {"d6", "f2", "d2", "f6", "c5", "c3", "g5", "g3"})
     void queen_move_fail_test(String endPosition) {
         Queen queen = Queen.of("Q", true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), queen);
         }});
         assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of(endPosition))).isFalse();
@@ -61,7 +61,7 @@ class QueenTest {
     @Test
     void cant_move_queen_if_piece_exist() {
         Queen queen = Queen.of("Q", true);
-        Board board = new Board(new HashMap<Position, Piece>(){{
+        Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), queen);
             put(Position.of("e5"), Pawn.of("P", true));
             put(Position.of("f3"), Pawn.of("p", false));

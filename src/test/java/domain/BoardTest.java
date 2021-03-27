@@ -1,9 +1,9 @@
 package domain;
 
+import domain.piece.Position;
 import domain.piece.objects.Empty;
 import domain.piece.objects.King;
 import domain.piece.objects.Piece;
-import domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

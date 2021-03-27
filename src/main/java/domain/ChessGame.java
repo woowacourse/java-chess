@@ -2,8 +2,8 @@ package domain;
 
 import domain.exception.ImmovableSamePositionException;
 import domain.exception.InvalidMoveException;
-import domain.piece.objects.Piece;
 import domain.piece.Position;
+import domain.piece.objects.Piece;
 import domain.score.Score;
 import domain.score.ScoreMachine;
 import domain.state.Finished;

@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-public class BoardDto implements MenuDto{
+public class BoardDto implements MenuDto {
     private List<String> result = new ArrayList<>();
 
     public BoardDto(Board board) {

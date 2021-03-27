@@ -1,5 +1,7 @@
 package domain;
 
+import domain.exception.InvalidPositionException;
+
 import java.util.Arrays;
 
 public enum Column {
@@ -20,11 +22,14 @@ public enum Column {
         this.index = index;
     }
 
-    public static int convertColumn(char input) {
+    public static Column convertColumn(char input) {
         return Arrays.stream(Column.values()).
                 filter(value -> value.name == input)
                 .findAny()
-                .get()
-                .index;
+                .orElseThrow(() -> new InvalidPositionException());
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
