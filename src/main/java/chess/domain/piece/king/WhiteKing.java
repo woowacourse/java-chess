@@ -4,7 +4,7 @@ import chess.domain.direction.Direction;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Score;
 
-public class WhiteKing extends King{
+public class WhiteKing extends King {
 
     private static final WhiteKing WHITE_KING = new WhiteKing();
 
