@@ -5,7 +5,6 @@ import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class Started implements State {
@@ -35,7 +34,7 @@ public abstract class Started implements State {
     }
 
     @Override
-    public List<Map<Position, Piece>> squares() {
+    public Map<Position, Piece> squares() {
         return board.squares();
     }
 

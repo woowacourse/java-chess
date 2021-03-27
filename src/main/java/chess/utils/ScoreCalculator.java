@@ -13,15 +13,15 @@ public class ScoreCalculator {
     private ScoreCalculator() {
     }
 
-    public static double totalWhiteScore(List<Map<Position, Piece>> squares) {
+    public static double totalWhiteScore(Map<Position, Piece> squares) {
         return scoreExceptPawns(squares, Color.WHITE) + scoreOfPawns(squares, Color.WHITE);
     }
 
-    public static double totalBlackScore(List<Map<Position, Piece>> squares) {
+    public static double totalBlackScore(Map<Position, Piece> squares) {
         return scoreExceptPawns(squares, Color.BLACK) + scoreOfPawns(squares, Color.BLACK);
     }
 
-    private static double scoreOfPawns(List<Map<Position, Piece>> squares, Color color) {
+    private static double scoreOfPawns(Map<Position, Piece> squares, Color color) {
         double pawnScoreSum = 0;
         for (Xpoint xpoint : Xpoint.values()) {
             pawnScoreSum += verticalPawnScore(squares, xpoint, color);
@@ -29,7 +29,7 @@ public class ScoreCalculator {
         return pawnScoreSum;
     }
 
-    private static double verticalPawnScore(List<Map<Position, Piece>> squares, Xpoint xpoint, Color color) {
+    private static double verticalPawnScore(Map<Position, Piece> squares, Xpoint xpoint, Color color) {
         long countOfPawnsInVertical = countOfPawnsInVertical(squares, xpoint, color);
         if (countOfPawnsInVertical > 1) {
             return countOfPawnsInVertical * 0.5;
@@ -37,10 +37,9 @@ public class ScoreCalculator {
         return countOfPawnsInVertical;
     }
 
-    private static long countOfPawnsInVertical(List<Map<Position, Piece>> squares, Xpoint xpoint, Color color) {
+    private static long countOfPawnsInVertical(Map<Position, Piece> squares, Xpoint xpoint, Color color) {
         List<Position> verticalPositions = verticalPositions(squares, xpoint);
-        return squares.stream()
-                .flatMap(map -> map.entrySet().stream())
+        return squares.entrySet().stream()
                 .filter(entry -> verticalPositions.contains(entry.getKey()))
                 .map(Map.Entry::getValue)
                 .filter(piece -> piece.isSameColor(color))
@@ -48,18 +47,16 @@ public class ScoreCalculator {
                 .count();
     }
 
-    private static double scoreExceptPawns(List<Map<Position, Piece>> squares, Color color) {
-        return squares.stream()
-                .flatMap(map -> map.values().stream())
+    private static double scoreExceptPawns(Map<Position, Piece> squares, Color color) {
+        return squares.values().stream()
                 .filter(piece -> piece.isSameColor(color))
                 .filter(piece -> !piece.isPawn())
                 .mapToDouble(Piece::score)
                 .sum();
     }
 
-    private static List<Position> verticalPositions(List<Map<Position, Piece>> squares, Xpoint xpoint) {
-        return squares.stream()
-                .flatMap(map -> map.keySet().stream())
+    private static List<Position> verticalPositions(Map<Position, Piece> squares, Xpoint xpoint) {
+        return squares.keySet().stream()
                 .filter(position -> position.isSameX(xpoint))
                 .collect(Collectors.toList());
     }

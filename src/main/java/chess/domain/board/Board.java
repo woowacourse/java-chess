@@ -5,20 +5,20 @@ import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Board {
     public static final int BOTH_KINGS_ALIVE = 2;
 
-    private final List<Map<Position, Piece>> squares;
+    private final Map<Position, Piece> squares;
 
-    public Board(final List<Map<Position, Piece>> squares) {
+    public Board(final Map<Position, Piece> squares) {
         this.squares = squares;
     }
 
-    public List<Map<Position, Piece>> squares() {
+    public Map<Position, Piece> squares() {
         return squares;
     }
 
@@ -37,11 +37,11 @@ public class Board {
     }
 
     public Piece pieceOfPosition(Position position) {
-        return squares.stream()
-                .filter(map -> map.containsKey(position))
-                .map(map -> map.get(position))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+        Piece piece = squares.get(position);
+        if (Objects.isNull(piece)) {
+            throw new IllegalArgumentException();
+        }
+        return piece;
     }
 
     private void swapPieces(Position source, Position target) {
@@ -51,20 +51,13 @@ public class Board {
     }
 
     private void replacePiece(Position position, Piece piece) {
-        for (Map<Position, Piece> map : squares) {
-            replaceIfValidKey(position, piece, map);
-        }
-    }
-
-    private void replaceIfValidKey(Position position, Piece piece, Map<Position, Piece> map) {
-        if (map.containsKey(position)) {
-            map.replace(position, piece);
+        if (squares.containsKey(position)) {
+            squares.replace(position, piece);
         }
     }
 
     public boolean isAliveBothKings() {
-        return squares.stream()
-                .flatMap(map -> map.values().stream())
+        return squares.values().stream()
                 .filter(Piece::isKing)
                 .count() == BOTH_KINGS_ALIVE;
     }

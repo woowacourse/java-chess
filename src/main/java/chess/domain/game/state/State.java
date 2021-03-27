@@ -4,7 +4,6 @@ import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
-import java.util.List;
 import java.util.Map;
 
 public interface State {
@@ -22,7 +21,7 @@ public interface State {
 
     boolean isNotEnd();
 
-    List<Map<Position, Piece>> squares();
+    Map<Position, Piece> squares();
 
     Color winner();
 

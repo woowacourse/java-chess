@@ -6,26 +6,24 @@ import chess.domain.board.position.Ypoint;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BoardGenerator {
-    private final List<Map<Position, Piece>> squares;
+    private final Map<Position, Piece> squares;
 
     public BoardGenerator() {
         squares = initLines();
     }
 
     public void put(Position position, Piece piece) {
-        squares.get(8 - position.yValue()).replace(position, piece);
+        squares.replace(position, piece);
     }
 
-    public static List<Map<Position, Piece>> initLines() {
-        List<Map<Position, Piece>> lines = new ArrayList<>();
+    public static Map<Position, Piece> initLines() {
+        Map<Position, Piece> lines = new LinkedHashMap<>();
         for (Ypoint ypoint : Ypoint.values()) {
-            lines.add(initLine(ypoint));
+            lines.putAll(initLine(ypoint));
         }
         return lines;
     }
@@ -38,14 +36,14 @@ public class BoardGenerator {
         return line;
     }
 
-    public List<Map<Position, Piece>> create() {
+    public Map<Position, Piece> create() {
         return squares;
     }
 
     public void print() {
-        for (Map<Position, Piece> square : squares) {
-            for (Piece value : square.values()) {
-                System.out.print(value.getSymbol());
+        for (Ypoint ypoint : Ypoint.values()) {
+            for (Xpoint xpoint : Xpoint.values()) {
+                System.out.print(squares.get(Position.of(xpoint, ypoint)).getSymbol());
             }
             System.out.println();
         }

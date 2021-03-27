@@ -7,7 +7,6 @@ import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
-import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -37,7 +36,7 @@ public class ChessGame {
         this.state = state.end();
     }
 
-    public List<Map<Position, Piece>> board() {
+    public Map<Position, Piece> board() {
         return state.squares();
     }
 
