@@ -11,8 +11,14 @@
   </header>
   <section>
     <div class="board-container">
-      <img src="/assets/images/board.png">
+      <img class="board" src="/assets/images/board.png">
+      {{#board}}
+        {{#board}}
+          {{#.}} {{#.}}<div id="{{x}}{{y}}" value="{{piece}}{{team}}"></div>{{/.}} {{/.}}
+        {{/board}}
+      {{/board}}
     </div>
   </section>
+  <script type="text/javascript" src="/assets/js/index.js"></script>
 </body>
 </html>

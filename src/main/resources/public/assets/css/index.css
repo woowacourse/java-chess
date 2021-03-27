@@ -60,6 +60,7 @@ img {
     left: 0;
     right: 0;
     margin: auto;
+    box-shadow: 2px 2px 5px 0 black;
     max-height:100%;
     max-width:100%;
 }

@@ -70,6 +70,10 @@ public class SquareState {
         return team;
     }
 
+    public Piece piece() {
+        return piece;
+    }
+
     public boolean isOnTeam(Team team) {
         return this.team == team;
     }

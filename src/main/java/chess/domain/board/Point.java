@@ -82,6 +82,14 @@ public class Point {
         return column.index() + moveVector.horizontal();
     }
 
+    public String xCoordinate() {
+        return column.coordinate();
+    }
+
+    public String yCoordinate() {
+        return row.coordinate();
+    }
+
     public boolean isLocatedIn(Row row) {
         return this.row == row;
     }
