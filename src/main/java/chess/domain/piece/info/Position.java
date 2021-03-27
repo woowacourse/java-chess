@@ -1,6 +1,7 @@
 package chess.domain.piece.info;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
     private static final String POSITION_RANGE_ERROR = "[ERROR] 올바른 체스판 범위가 아닙니다.";
@@ -8,17 +9,14 @@ public class Position {
     private static final String COL = "87654321";
     private static final char BLACK_PAWN_FIRST_COL = '7';
     private static final char WHITE_PAWN_FIRST_COL = '2';
-    public static final Position EMPTY = new Position('0', '0');
-    public static final Map<String, Position> POSITIONS;
+    public static final List<Position> POSITIONS;
 
     static {
-        POSITIONS = new LinkedHashMap<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                POSITIONS.put(String.valueOf(ROW.charAt(j)) + COL.charAt(i),
-                        new Position(ROW.charAt(j), COL.charAt(i)));
-            }
-        }
+        POSITIONS = COL.chars()
+                .mapToObj(col -> (char) col)
+                .flatMap(col -> ROW.chars()
+                        .mapToObj(row -> new Position((char) row, col)))
+                .collect(Collectors.toList());
     }
 
     private final char x;
@@ -30,14 +28,10 @@ public class Position {
     }
 
     public static Position of(char x, char y) {
-        validatePosition(x, y);
-        return POSITIONS.get(String.valueOf(x) + y);
-    }
-
-    private static void validatePosition(char x, char y) {
-        if (!ROW.contains(String.valueOf(x)) || !COL.contains(String.valueOf(y))) {
-            throw new IllegalArgumentException(POSITION_RANGE_ERROR);
-        }
+        return POSITIONS.stream()
+                .filter(position -> position.x == x && position.y == y)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(POSITION_RANGE_ERROR));
     }
 
     public char getX() {
@@ -62,28 +56,52 @@ public class Position {
         return Objects.hash(x, y);
     }
 
-    public int subtractY(Position anotherPosition) {
-        return this.y - anotherPosition.y;
+    public int subtractY(Position position) {
+        return this.y - position.y;
     }
 
-    public int subtractX(Position anotherPosition) {
-        return this.x - anotherPosition.x;
+    public int subtractX(Position position) {
+        return this.x - position.x;
     }
 
-    public boolean isSubtractYPositive(Position anotherPosition) {
-        return this.y > anotherPosition.y;
+    public boolean isDiagonal(Position position) {
+        return Math.abs(subtractX(position)) == Math.abs(subtractY(position));
     }
 
-    public boolean isSubtractXPositive(Position anotherPosition) {
-        return this.x > anotherPosition.x;
+    public boolean isCross(Position position) {
+        return (getX() == position.getX()) || (getY() == position.getY());
     }
 
-    public boolean isDiagonal(Position target) {
-        return Math.abs(subtractX(target)) == Math.abs(subtractY(target));
+    public boolean isUp(Position position) {
+        return subtractX(position) == 0 && subtractY(position) < 0;
     }
 
-    public boolean isCross(Position target) {
-        return (this.getX() == target.getX()) || (this.getY() == target.getY());
+    public boolean isDown(Position position) {
+        return subtractX(position) == 0 && subtractY(position) > 0;
+    }
+
+    public boolean isRight(Position position) {
+        return subtractX(position) < 0 && subtractY(position) == 0;
+    }
+
+    public boolean isLeft(Position position) {
+        return subtractX(position) > 0 && subtractY(position) == 0;
+    }
+
+    public boolean isUpRight(Position position) {
+        return subtractX(position) < 0 && subtractY(position) < 0;
+    }
+
+    public boolean isUpLeft(Position position) {
+        return subtractX(position) > 0 && subtractY(position) < 0;
+    }
+
+    public boolean isDownRight(Position position) {
+        return subtractX(position) < 0 && subtractY(position) > 0;
+    }
+
+    public boolean isDownLeft(Position position) {
+        return subtractX(position) > 0 && subtractY(position) > 0;
     }
 
     public boolean isFirstTurnIfPawn(Color color) {

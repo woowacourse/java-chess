@@ -40,7 +40,7 @@ public class RookTest {
         Position target = Position.of('d', '1');
         Piece rook = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(rook).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -53,7 +53,7 @@ public class RookTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('c', '3');
 
-        assertThatThrownBy(() ->  chessBoard.move(source, target))
+        assertThatThrownBy(() ->  chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -66,7 +66,7 @@ public class RookTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('a', '4');
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }

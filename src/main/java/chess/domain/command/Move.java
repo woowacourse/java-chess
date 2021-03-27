@@ -7,6 +7,7 @@ import chess.domain.piece.info.Position;
 
 public class Move implements Command {
     private static final String TURN_ERROR = "[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.";
+    private static final int MOVE_COMMANDS_SIZE = 3;
     private final String[] splitInput;
 
     public Move(String[] splitInput) {
@@ -15,9 +16,13 @@ public class Move implements Command {
     }
 
     private void validateRemainingCommand(String[] splitInput) {
-        if (splitInput.length != 3 || !(splitInput[1].length() == 2 && splitInput[2].length() == 2)) {
+        if (splitInput.length != MOVE_COMMANDS_SIZE || !isCorrectPositionInput(splitInput)) {
             throw new IllegalArgumentException(COMMAND_ERROR);
         }
+    }
+
+    private boolean isCorrectPositionInput(String[] splitInput) {
+        return splitInput[1].length() == 2 || splitInput[2].length() == 2;
     }
 
     @Override
@@ -26,7 +31,7 @@ public class Move implements Command {
         Position target = Position.of(splitInput[2].charAt(0), splitInput[2].charAt(1));
         Piece sourcePiece = chessBoard.findByPosition(source);
         validateTurn(sourcePiece, turn);
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
         return new Waiting();
     }
 

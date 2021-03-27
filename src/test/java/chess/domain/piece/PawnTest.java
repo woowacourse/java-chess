@@ -3,14 +3,11 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,7 +45,7 @@ public class PawnTest {
         Position target = Position.of('a', '5');
         Piece pawn = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(pawn).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -60,7 +57,7 @@ public class PawnTest {
         Position target = Position.of('a', '4');
 
         assertThatThrownBy(() -> {
-            chessBoard.move(source, target);
+            chessBoard.movePiece(source, target);
         }).isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -75,7 +72,7 @@ public class PawnTest {
         ChessBoard chessBoard = new ChessBoard(current);
         Piece pawn = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(pawn).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -89,7 +86,7 @@ public class PawnTest {
         Position source = Position.of('a', '4');
         Position target = Position.of('a', '2');
 
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -101,7 +98,7 @@ public class PawnTest {
         current.put(source, new Pawn("P", Color.BLACK));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        assertThatThrownBy(() -> chessBoard.move(source, Position.of('a', '8')))
+        assertThatThrownBy(() -> chessBoard.movePiece(source, Position.of('a', '8')))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -113,7 +110,7 @@ public class PawnTest {
         current.put(source, new Pawn("p", Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        assertThatThrownBy(() -> chessBoard.move(source, Position.of('a', '1')))
+        assertThatThrownBy(() -> chessBoard.movePiece(source, Position.of('a', '1')))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -126,7 +123,7 @@ public class PawnTest {
         current.put(Position.of('a', '6'), new Pawn("P", Color.BLACK));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -139,7 +136,7 @@ public class PawnTest {
         current.put(target, new Pawn("P", Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -152,7 +149,7 @@ public class PawnTest {
         current.put(target, new Pawn("p", Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
@@ -166,7 +163,7 @@ public class PawnTest {
         current.put(target, new Pawn("P", Color.BLACK));
         ChessBoard chessBoard = new ChessBoard(current);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
@@ -181,7 +178,7 @@ public class PawnTest {
         ChessBoard chessBoard = new ChessBoard(current);
 
         assertThatThrownBy(() -> {
-            chessBoard.move(source, target);
+            chessBoard.movePiece(source, target);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -195,7 +192,7 @@ public class PawnTest {
         ChessBoard chessBoard = new ChessBoard(current);
 
         assertThatThrownBy(() -> {
-            chessBoard.move(source, target);
+            chessBoard.movePiece(source, target);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.CurrentPieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +12,6 @@ public class ChessGameTest {
     void 체스판_확인_테스트() {
         ChessGame chessGame = new ChessGame();
 
-        assertThat(chessGame.getChessBoard()).isInstanceOf(CurrentPieces.class);
+        assertThat(chessGame.getChessBoard()).isInstanceOf(ChessBoard.class);
     }
 }

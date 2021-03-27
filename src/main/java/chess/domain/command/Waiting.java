@@ -4,7 +4,6 @@ import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 
 public class Waiting implements Command {
-
     @Override
     public Command move(ChessBoard chessBoard, Color turn) {
         throw new UnsupportedOperationException(NOT_EXECUTE_ERROR);

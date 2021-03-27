@@ -10,13 +10,17 @@ public class ChessController {
             OutputView.printStartMessage();
             ChessGame chessGame = new ChessGame();
             chessGame.selectFirstCommand(InputView.inputCommand());
-            if (chessGame.isStart()) {
-                OutputView.printChessBoard(chessGame.getChessBoard());
-                gamePlay(chessGame);
-            }
+            executeFirstCommand(chessGame);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             run();
+        }
+    }
+
+    private void executeFirstCommand(ChessGame chessGame) {
+        if (chessGame.isStart()) {
+            OutputView.printChessBoard(chessGame.getChessBoard());
+            gamePlay(chessGame);
         }
     }
 
@@ -32,16 +36,20 @@ public class ChessController {
     private void playByCommand(ChessGame chessGame) {
         while (chessGame.isRunnable()) {
             chessGame.selectRunningCommand(InputView.inputCommand());
-            if (chessGame.isMove()) {
-                chessGame.move();
-                OutputView.printChessBoard(chessGame.getChessBoard());
-            }
             if (chessGame.isEnd()) {
                 return;
             }
-            if (chessGame.isStatus()) {
-                OutputView.printStatus(chessGame.getChessBoard());
-            }
+            executeRunningCommand(chessGame);
+        }
+    }
+
+    private void executeRunningCommand(ChessGame chessGame) {
+        if (chessGame.isStatus()) {
+            OutputView.printStatus(chessGame.getChessBoard());
+        }
+        if (chessGame.isMove()) {
+            chessGame.move();
+            OutputView.printChessBoard(chessGame.getChessBoard());
         }
     }
 }

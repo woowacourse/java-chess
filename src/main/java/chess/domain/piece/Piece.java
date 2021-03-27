@@ -12,10 +12,6 @@ public abstract class Piece {
     protected final Score score;
     protected final MoveStrategy moveStrategy;
 
-    public Piece(String name, Color color, MoveStrategy moveStrategy) {
-        this(name, color, new Score(0), moveStrategy);
-    }
-
     public Piece(String name, Color color, Score score, MoveStrategy moveStrategy) {
         this.name = name;
         this.color = color;
@@ -26,7 +22,6 @@ public abstract class Piece {
     public String getName() {
         return name;
     }
-
 
     public Color getColor() {
         return color;

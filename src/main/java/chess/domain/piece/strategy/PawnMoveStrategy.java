@@ -19,7 +19,6 @@ public class PawnMoveStrategy implements MoveStrategy {
         Direction pawnDirection = Cross.findCrossByTwoPosition(source, target);
         chessBoard.hasPieceInPath(source, target, pawnDirection);
         if (isMoveAble(source, target, pawnDirection)) {
-            System.out.println(source.subtractY(target));
             validateFirstTurnIfTwoDistance(source, target);
             return true;
         }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
     private static final Score SCORE = new Score(5);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '8'),
             Position.of('h', '8'));

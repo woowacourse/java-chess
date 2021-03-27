@@ -40,7 +40,7 @@ public class KnightTest {
         Position target = Position.of('f', '3');
         Piece knight = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(knight).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -54,7 +54,7 @@ public class KnightTest {
         Position target = Position.of('c', '3');
         Piece knight = chessBoard.findByPosition(source);
 
-        assertThatThrownBy(() ->  chessBoard.move(source, target))
+        assertThatThrownBy(() ->  chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -67,7 +67,7 @@ public class KnightTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('f', '3');
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }

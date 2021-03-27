@@ -16,4 +16,8 @@ public abstract class AllMoveStrategy implements MoveStrategy {
         Direction diagonal = Diagonal.findDiagonalByTwoPosition(source, target);
         chessBoard.hasPieceInPath(source, target, diagonal);
     }
+
+    protected boolean isNotCrossOrDiagonal(Position source, Position target) {
+        return !source.isCross(target) && !source.isDiagonal(target);
+    }
 }

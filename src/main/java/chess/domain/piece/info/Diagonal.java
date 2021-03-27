@@ -5,18 +5,10 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Diagonal implements Direction {
-    UP_RIGHT((source, target) ->
-            !source.isSubtractXPositive(target) && !source.isSubtractYPositive(target),
-            new int[]{1, 1}),
-    UP_LEFT((source, target) ->
-            source.isSubtractXPositive(target) && !source.isSubtractYPositive(target),
-            new int[]{-1, 1}),
-    DOWN_RIGHT((source, target) ->
-            !source.isSubtractXPositive(target) && source.isSubtractYPositive(target),
-            new int[]{1, -1}),
-    DOWN_LEFT((source, target) ->
-            source.isSubtractXPositive(target) && source.isSubtractYPositive(target),
-            new int[]{-1, -1});
+    UP_RIGHT(Position::isUpRight, new int[]{1, 1}),
+    UP_LEFT(Position::isUpLeft, new int[]{-1, 1}),
+    DOWN_RIGHT(Position::isDownRight, new int[]{1, -1}),
+    DOWN_LEFT(Position::isDownLeft, new int[]{-1, -1});
 
     private final BiPredicate<Position, Position> findDiagonal;
     private final int[] changeValues;

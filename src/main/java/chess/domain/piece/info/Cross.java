@@ -4,18 +4,10 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Cross implements Direction {
-    UP((source, target) ->
-            source.subtractX(target) == 0 && !source.isSubtractYPositive(target),
-            new int[]{0, 1}),
-    DOWN((source, target) ->
-            source.subtractX(target) == 0 && source.isSubtractYPositive(target),
-            new int[]{0, -1}),
-    RIGHT((source, target) ->
-            !source.isSubtractXPositive(target) && source.subtractY(target) == 0,
-            new int[]{1, 0}),
-    LEFT((source, target) ->
-            source.isSubtractXPositive(target) && source.subtractY(target) == 0,
-            new int[]{-1, 0});
+    UP(Position::isUp, new int[]{0, 1}),
+    DOWN(Position::isDown, new int[]{0, -1}),
+    RIGHT(Position::isRight, new int[]{1, 0}),
+    LEFT(Position::isLeft, new int[]{-1, 0});
 
     private final BiPredicate<Position, Position> findCross;
     private final int[] changeValues;

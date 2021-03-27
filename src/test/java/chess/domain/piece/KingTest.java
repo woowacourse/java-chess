@@ -39,7 +39,7 @@ public class KingTest {
         Position target = Position.of('d', '3');
         Piece king = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(king).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -53,7 +53,7 @@ public class KingTest {
         Position target = Position.of('c', '3');
         Piece king = chessBoard.findByPosition(source);
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(king).isEqualTo(chessBoard.findByPosition(target));
     }
@@ -66,7 +66,7 @@ public class KingTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('c', '1');
 
-        assertThatThrownBy(() ->  chessBoard.move(source, target))
+        assertThatThrownBy(() ->  chessBoard.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,7 +79,7 @@ public class KingTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('d', '3');
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }
@@ -93,7 +93,7 @@ public class KingTest {
         Position source = Position.of('d', '4');
         Position target = Position.of('c', '3');
 
-        chessBoard.move(source, target);
+        chessBoard.movePiece(source, target);
 
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(1);
     }

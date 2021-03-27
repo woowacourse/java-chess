@@ -50,12 +50,10 @@ public class ChessBoard {
 
     public double sumScoreByColor(Color color) {
         Map<Character, Long> pawns = collectPawnCountsByRow(color);
-        System.out.println(pawns.toString());
         int count = (int) pawns.keySet().stream()
                 .filter(character -> pawns.get(character) >= 2)
                 .mapToLong(character -> pawns.get(character))
                 .sum();
-        System.out.println(count);
         return chessBoard.values().stream()
                 .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
@@ -69,7 +67,7 @@ public class ChessBoard {
                 .collect(Collectors.groupingBy(entry -> entry.getKey().getX(), Collectors.counting()));
     }
 
-    public void move(Position source, Position target) {
+    public void movePiece(Position source, Position target) {
         Piece sourcePiece = findByPosition(source);
         validateEmpty(sourcePiece);
         validateMovable(sourcePiece, source, target);

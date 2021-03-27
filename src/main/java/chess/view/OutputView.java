@@ -1,10 +1,9 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
-import chess.domain.piece.info.Color;
 import chess.domain.piece.Piece;
-
-import static chess.domain.piece.info.Position.POSITIONS;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
 
 public class OutputView {
     private OutputView() {
@@ -16,13 +15,11 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        int index = 0;
-        for (String key : POSITIONS.keySet()) {
-            if (index % 8 == 0) {
+        for (int i = 0; i < Position.POSITIONS.size(); i++) {
+            if (i % 8 == 0) {
                 System.out.println();
             }
-            index++;
-            Piece piece = chessBoard.findByPosition(POSITIONS.get(key));
+            Piece piece = chessBoard.findByPosition(Position.POSITIONS.get(i));
             System.out.print(piece.getName());
         }
         System.out.println();
