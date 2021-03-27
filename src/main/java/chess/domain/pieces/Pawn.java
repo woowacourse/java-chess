@@ -51,15 +51,15 @@ public final class Pawn extends Piece {
     }
 
     private List<Position> whiteTeamAttackPosition(final Board board) {
-        int[] rowDir = {-1, -1};
-        int[] colDir = {-1, 1};
-        return moving().movablePositions(this, board, rowDir, colDir);
+        int[] rowDirection = {-1, -1};
+        int[] colDirection = {-1, 1};
+        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 
     private List<Position> blackTeamAttackPosition(final Board board) {
-        int[] rowDir = {1, 1};
-        int[] colDir = {-1, 1};
-        return moving().movablePositions(this, board, rowDir, colDir);
+        int[] rowDirection = {1, 1};
+        int[] colDirection = {-1, 1};
+        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 
     private void addStraightPosition(final List<Position> movablePositions, final Board board, final int degree) {

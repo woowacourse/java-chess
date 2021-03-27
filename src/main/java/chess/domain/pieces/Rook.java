@@ -36,8 +36,8 @@ public final class Rook extends NoKingPieces {
 
     @Override
     public final List<Position> allMovablePositions(final Board board) {
-        int[] rowDir = {0, 0, -1, 1};
-        int[] colDir = {-1, 1, 0, 0};
-        return moving().movablePositions(this, board, rowDir, colDir);
+        int[] rowDirection = {0, 0, -1, 1};
+        int[] colDirection = {-1, 1, 0, 0};
+        return moving().movablePositions(this, board, rowDirection, colDirection);
     }
 }

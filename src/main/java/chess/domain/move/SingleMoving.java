@@ -16,8 +16,8 @@ public class SingleMoving implements Moving {
         Position currentPosition = piece.position();
         Team team = piece.team();
 
-        for (int i = 0; i < rowDirections.length; i++) {
-            Position nextPosition = currentPosition.next(rowDirections[i], colDirections[i]);
+        for (int direction = 0; direction < rowDirections.length; direction++) {
+            Position nextPosition = currentPosition.next(rowDirections[direction], colDirections[direction]);
             addMovablePositions(board, movablePositions, nextPosition, team);
         }
         return movablePositions;

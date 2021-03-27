@@ -27,8 +27,8 @@ public final class Position {
         return row == Row.location("7");
     }
 
-    public Position next(int rowDir, int colDir) {
-        return new Position(this.row + rowDir, this.col + colDir);
+    public Position next(int rowDirection, int colDirection) {
+        return new Position(this.row + rowDirection, this.col + colDirection);
     }
 
     public boolean isOutOfRange() {
