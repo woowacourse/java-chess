@@ -1,5 +1,7 @@
 package chess.db.dao;
 
+
+
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 

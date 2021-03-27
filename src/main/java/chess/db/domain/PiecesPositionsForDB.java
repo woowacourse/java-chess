@@ -20,12 +20,13 @@ import static chess.domain.position.type.Rank.ONE;
 import static chess.domain.position.type.Rank.SEVEN;
 import static chess.domain.position.type.Rank.TWO;
 
+
 import chess.db.dao.PieceDAO;
 import chess.db.dao.PiecePositionDAO;
 import chess.db.dao.PositionDAO;
 import chess.db.entity.PieceEntity;
-import chess.db.entity.PositionEntity;
 import chess.db.entity.PiecePositionEntity;
+import chess.db.entity.PositionEntity;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.type.File;
 import java.util.ArrayList;

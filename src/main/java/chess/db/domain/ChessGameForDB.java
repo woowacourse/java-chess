@@ -3,6 +3,7 @@ package chess.db.domain;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+
 import chess.db.dao.ChessGameDAO;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
