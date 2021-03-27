@@ -33,10 +33,6 @@ public class Position {
         return of(xpoint.getName() + ypoint.getValue());
     }
 
-    public static List<Position> generate() {
-        return new ArrayList<>(CACHE.values());
-    }
-
     public Position up() {
         return of(xpoint, ypoint.up());
     }
