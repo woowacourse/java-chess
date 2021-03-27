@@ -20,12 +20,34 @@ public abstract class Piece {
     private final MoveStrategies moveStrategies;
 
     private Position position;
+    private boolean isFirst = true;
 
     protected Piece(final String piece, final Color color, final MoveStrategies moveStrategies, final Position position) {
         this.piece = piece;
         this.color = color;
         this.moveStrategies = moveStrategies;
         this.position = position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece1 = (Piece) o;
+        return Objects.equals(piece, piece1.piece) && color == piece1.color && Objects.equals(position, piece1.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(piece, color, position);
+    }
+
+    public final void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = possiblePositions(basePieces, targetPieces);
+        checkTarget(target, positions);
+        basePieces.changePiecePosition(this, target);
+        changePosition(target.getPosition());
+        isFirst = false;
     }
 
     public static boolean isBlack(final String piece) {
@@ -86,7 +108,7 @@ public abstract class Piece {
     }
 
     private List<Position> pawnMove(final Pieces basePieces, final Pieces targetPieces, final MoveStrategy strategy) {
-        if (isFirstMove()) {
+        if (isFirst) {
             return pawnFirstMove(basePieces, targetPieces, strategy);
         }
         return singleMove(basePieces, targetPieces, strategy);
@@ -155,21 +177,6 @@ public abstract class Piece {
         return positions;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece1 = (Piece) o;
-        return Objects.equals(piece, piece1.piece) && color == piece1.color && Objects.equals(position, piece1.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(piece, color, position);
-    }
-
-    public abstract void move(final Target target, final Pieces basePieces, final Pieces targetPieces);
-
     public abstract double score(final List<Piece> pieces);
 
     public abstract boolean isKing();
@@ -177,6 +184,4 @@ public abstract class Piece {
     public abstract boolean isPawn();
 
     public abstract boolean isKnight();
-
-    public abstract boolean isFirstMove();
 }

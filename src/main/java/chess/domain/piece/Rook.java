@@ -10,8 +10,6 @@ public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
     private static final double SCORE = 5;
 
-    private boolean isFirst = true;
-
     private Rook(final String piece, final Color color, final Position position) {
         super(piece, color, new MoveStrategies(new East(), new West(), new North(), new South()), position);
     }
@@ -34,14 +32,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = possiblePositions(basePieces, targetPieces);
-        checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
-        isFirst = false;
-    }
-
-    @Override
     public double score(final List<Piece> pieces) {
         return SCORE;
     }
@@ -59,11 +49,6 @@ public class Rook extends Piece {
     @Override
     public boolean isKnight() {
         return false;
-    }
-
-    @Override
-    public boolean isFirstMove() {
-        return isFirst;
     }
 
     @Override

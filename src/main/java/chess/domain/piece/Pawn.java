@@ -3,15 +3,12 @@ package chess.domain.piece;
 import chess.domain.piece.direction.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Target;
 
 import java.util.List;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
     private static final double SCORE = 1;
-
-    private boolean isFirst = true;
 
     private Pawn(final String piece, final Color color, final MoveStrategies moveStrategies, final Position position) {
         super(piece, color, moveStrategies, position);
@@ -32,14 +29,6 @@ public class Pawn extends Piece {
         if (piece.length() > 1) {
             throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
         }
-    }
-
-    @Override
-    public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = possiblePositions(basePieces, targetPieces);
-        checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
-        isFirst = false;
     }
 
     @Override
@@ -68,11 +57,6 @@ public class Pawn extends Piece {
     @Override
     public boolean isKnight() {
         return false;
-    }
-
-    @Override
-    public boolean isFirstMove() {
-        return isFirst;
     }
 
     @Override
