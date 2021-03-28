@@ -68,7 +68,7 @@ public enum Direction {
     public static Direction findDirection(Position source, Position target) {
         int xGap = gap(source.getColumnAsIndex(), target.getColumnAsIndex());
         int yGap = gap(source.getRowAsIndex(), target.getRowAsIndex());
-        if (xGap == 0 & yGap == 0) {
+        if (source == target) {
             throw new IllegalArgumentException(SAME_TARGET);
         }
         if (xGap == 0) {
