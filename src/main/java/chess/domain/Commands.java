@@ -30,9 +30,12 @@ public enum Commands {
     }
 
     public static void run(ChessBoard chessBoard, List<String> value) {
-        Arrays.stream(Commands.values())
-            .filter(command -> command.command.equals(value.get(0)))
-            .forEach(command -> command.runCommand(chessBoard, value));
+        final Commands command = Arrays.stream(Commands.values())
+            .filter(input -> input.command.equals(value.get(0)))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당 명령어는 없습니다. 다시 입력해 주세요"));
+
+        command.runCommand(chessBoard, value);
     }
 
     public void runCommand(ChessBoard chessBoard, List<String> input) {

@@ -13,16 +13,20 @@ import java.util.Map;
 
 public class Running implements GameState {
     private final Map<Position, Piece> chessBoard;
+    private final TeamColor turn;
 
-    public Running(Map<Position, Piece> chessBoard) {
+    public Running(Map<Position, Piece> chessBoard, TeamColor turn) {
         this.chessBoard = chessBoard;
+        this.turn = turn;
     }
 
     @Override
     public GameState move(Position source, Position target) {
         Piece startPiece = chessBoard.get(source);
         Piece targetPiece = chessBoard.get(target);
-
+        if (startPiece.getColor() != turn) {
+            throw new IllegalArgumentException("차례가 아닙니다.");
+        }
         if (chessBoard.get(source).isMoveAble(target, chessBoard)) {
             return moveBoard(source, target, startPiece, targetPiece);
         }
@@ -33,7 +37,7 @@ public class Running implements GameState {
         Piece targetPiece) {
         if (chessBoard.get(target) == Blank.INSTANCE) {
             movePieces(source, target, startPiece);
-            return new Running(chessBoard);
+            return new Running(chessBoard, turn.counterpart());
         }
 
         targetPiece.dead();
@@ -45,7 +49,7 @@ public class Running implements GameState {
         if (targetPiece.isKing()) {
             return new Finished(chessBoard);
         }
-        return new Running(chessBoard);
+        return new Running(chessBoard, turn.counterpart());
     }
 
     private void movePieces(Position source, Position target, Piece startPiece) {

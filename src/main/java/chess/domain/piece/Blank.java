@@ -24,7 +24,7 @@ public class Blank implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return TeamColor.NONE;
+        throw new UnsupportedOperationException("빈칸은 팀이 없어요!");
     }
 
     @Override

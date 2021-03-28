@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.AlphaColumns;
 import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
@@ -28,13 +29,13 @@ public class ChessBoard {
         this.whitePieces = new WhiteSet();
         this.blackPieces = new BlackSet();
         final Map<Position, Piece> chessBoard = initBoard();
-        this.gameState = new Running(chessBoard);
+        this.gameState = new Running(chessBoard, TeamColor.WHITE);
     }
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
         this.whitePieces = new WhiteSet();
         this.blackPieces = new BlackSet();
-        this.gameState = new Running(chessBoard);
+        this.gameState = new Running(chessBoard, TeamColor.WHITE);
     }
 
     private Map<Position, Piece> initBoard() {
