@@ -54,8 +54,8 @@ public class Round {
 
     public Map<Position, Piece> getBoard() {
         Map<Position, Piece> board = ChessBoardFactory.initializeBoard();
-        Pieces whitePieces = whitePlayer.getState().pieces();
-        Pieces blackPieces = blackPlayer.getState().pieces();
+        Pieces whitePieces = whitePlayer.getPieces();
+        Pieces blackPieces = blackPlayer.getPieces();
 
         whitePieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
         blackPieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));

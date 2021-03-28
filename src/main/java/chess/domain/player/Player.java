@@ -1,5 +1,6 @@
 package chess.domain.player;
 
+import chess.domain.piece.Pieces;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
@@ -9,10 +10,6 @@ public abstract class Player {
 
     protected Player(final State state) {
         this.state = state;
-    }
-
-    public final State getState() {
-        return state;
     }
 
     public final boolean isFinish() {
@@ -31,6 +28,13 @@ public abstract class Player {
         this.state = this.state.toRunningTurn(anotherState);
     }
 
-    public abstract String getName();
+    public final State getState() {
+        return state;
+    }
 
+    public final Pieces getPieces() {
+        return state.pieces();
+    }
+
+    public abstract String getName();
 }
