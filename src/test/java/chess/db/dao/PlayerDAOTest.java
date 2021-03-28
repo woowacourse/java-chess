@@ -40,7 +40,7 @@ class PlayerDAOTest {
     }
 
     @Test
-    void delete() throws SQLException {
+    void remove() throws SQLException {
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
         playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
         playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));

@@ -22,8 +22,8 @@ public class CellForDB {
         return pieceEntity.canMoveTo(moveRouteForDB, boardForDB);
     }
 
-    public void movePieceTo(CellForDB targetCell) {
-        targetCell.put(pieceEntity);
+    public void movePieceTo(CellForDB destinationCell) {
+        destinationCell.put(pieceEntity);
         pieceEntity = null;
     }
 

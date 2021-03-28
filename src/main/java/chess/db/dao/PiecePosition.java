@@ -5,11 +5,11 @@ import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import java.util.Objects;
 
-public class PiecePositionEntities {
+public class PiecePosition {
     private PieceEntity pieceEntity;
     private PositionEntity positionEntity;
 
-    public PiecePositionEntities(PieceEntity pieceEntity, PositionEntity positionEntity) {
+    public PiecePosition(PieceEntity pieceEntity, PositionEntity positionEntity) {
         this.pieceEntity = pieceEntity;
         this.positionEntity = positionEntity;
     }
@@ -35,10 +35,10 @@ public class PiecePositionEntities {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PiecePositionEntities)) {
+        if (!(o instanceof PiecePosition)) {
             return false;
         }
-        PiecePositionEntities that = (PiecePositionEntities) o;
+        PiecePosition that = (PiecePosition) o;
         return getPieceEntity().equals(that.getPieceEntity())
             && getPositionEntity().equals(that.getPositionEntity());
     }

@@ -1,30 +1,30 @@
 package chess.db.entity;
 
-import chess.db.dao.PiecePositionEntities;
+import chess.db.dao.PiecePosition;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import java.util.Objects;
 
-public class PiecePositionEntity {
+public class PlayerPiecePosition {
     private Long id;
     private final PlayerEntity playerEntity;
-    private final PiecePositionEntities piecePositionEntities;
+    private final PiecePosition piecePositionEntities;
 
-    public PiecePositionEntity(Long id, PlayerEntity playerEntity, PieceEntity pieceEntity,
+    public PlayerPiecePosition(Long id, PlayerEntity playerEntity, PieceEntity pieceEntity,
         PositionEntity positionEntity) {
         this.id = id;
         this.playerEntity = playerEntity;
-        this.piecePositionEntities = new PiecePositionEntities(pieceEntity, positionEntity);
+        this.piecePositionEntities = new PiecePosition(pieceEntity, positionEntity);
     }
 
-    public PiecePositionEntity(PlayerEntity playerEntity, PieceEntity pieceEntity,
+    public PlayerPiecePosition(PlayerEntity playerEntity, PieceEntity pieceEntity,
         PositionEntity positionEntity) {
         this.playerEntity = playerEntity;
-        this.piecePositionEntities = new PiecePositionEntities(pieceEntity, positionEntity);
+        this.piecePositionEntities = new PiecePosition(pieceEntity, positionEntity);
     }
 
-    public PiecePositionEntity(PlayerEntity playerEntity,
-        PiecePositionEntities piecePositionEntities) {
+    public PlayerPiecePosition(PlayerEntity playerEntity,
+        PiecePosition piecePositionEntities) {
 
         this.playerEntity = playerEntity;
         this.piecePositionEntities = piecePositionEntities;
@@ -54,7 +54,7 @@ public class PiecePositionEntity {
         return piecePositionEntities.getPositionEntity();
     }
 
-    public PiecePositionEntities getPiecePositionEntities() {
+    public PiecePosition getPiecePositionEntities() {
         return piecePositionEntities;
     }
 
@@ -63,10 +63,10 @@ public class PiecePositionEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PiecePositionEntity)) {
+        if (!(o instanceof PlayerPiecePosition)) {
             return false;
         }
-        PiecePositionEntity that = (PiecePositionEntity) o;
+        PlayerPiecePosition that = (PlayerPiecePosition) o;
         return getPlayerEntity().equals(that.getPlayerEntity())
             && getPiecePositionEntities().equals(that.getPiecePositionEntities());
     }

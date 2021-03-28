@@ -5,7 +5,7 @@ import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.db.dao.ChessGameDAO;
-import chess.db.dao.PiecePositionEntities;
+import chess.db.dao.PiecePosition;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.PlayersForDB;
@@ -14,7 +14,7 @@ import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
-import chess.db.entity.PiecePositionEntity;
+import chess.db.entity.PlayerPiecePosition;
 import chess.beforedb.domain.board.setting.BoardCustomSetting;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
@@ -66,18 +66,18 @@ public class ChessGameForDB {
         if (pieceWithColorType != null) {
             PieceEntity pieceEntity = PieceEntity.of(pieceWithColorType);
             playersForDB.saveInitialPiecePositions(
-                new PiecePositionEntities(pieceEntity, positionEntity));
+                new PiecePosition(pieceEntity, positionEntity));
         }
     }
 
     public void load(Long chessGameId) throws SQLException {
         chessGameEntity = chessGameDAO.findById(chessGameId);
         playersForDB.loadPlayers(chessGameEntity);
-        List<PiecePositionEntity> loadedPiecesPositions = getAllPiecesPositionsOfPlayers();
+        List<PlayerPiecePosition> loadedPiecesPositions = getAllPiecesPositionsOfPlayers();
         boardForDB.load(loadedPiecesPositions);
     }
 
-    public List<PiecePositionEntity> getAllPiecesPositionsOfPlayers() throws SQLException {
+    public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayers() throws SQLException {
         return playersForDB.getAllPiecesPositionsOfChessGame();
     }
 
@@ -90,7 +90,7 @@ public class ChessGameForDB {
 
     private void updatePiecesOfPlayers(MoveRouteForDB moveRouteForDB) throws SQLException {
         PieceEntity movingPiece = boardForDB.findPiece(moveRouteForDB.getStartPosition());
-        playersForDB.update(movingPiece, moveRouteForDB.getDestination());
+        playersForDB.updatePiecePosition(movingPiece, moveRouteForDB.getDestination());
         if (boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
             PieceEntity deadPiece = boardForDB.findPiece(moveRouteForDB.getDestination());
             playersForDB.removePiece(deadPiece, moveRouteForDB.getDestination());

@@ -6,20 +6,20 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
+import chess.db.entity.PlayerPiecePosition;
 import chess.db.entity.PlayerEntity;
-import chess.db.entity.PiecePositionEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PiecePositionDAO {
-    public PiecePositionEntity save(PiecePositionEntity playerPiecePositionEntity)
+public class PlayerPiecePositionDAO {
+    public PlayerPiecePosition save(PlayerPiecePosition playerPiecePositionEntity)
         throws SQLException {
         ResultSet generatedKeys = getResultSet(playerPiecePositionEntity);
         if (generatedKeys.next()) {
-            return new PiecePositionEntity(
+            return new PlayerPiecePosition(
                 generatedKeys.getLong(1),
                 playerPiecePositionEntity.getPlayerEntity(),
                 playerPiecePositionEntity.getPieceEntity(),
@@ -28,7 +28,7 @@ public class PiecePositionDAO {
         throw new SQLException("PiecePositionEntity를 save()할 수 없습니다.");
     }
 
-    private ResultSet getResultSet(PiecePositionEntity playerPiecePositionEntity)
+    private ResultSet getResultSet(PlayerPiecePosition playerPiecePositionEntity)
         throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
@@ -39,13 +39,13 @@ public class PiecePositionDAO {
         return pstmt.getGeneratedKeys();
     }
 
-    public PiecePositionEntity findByPlayerAndPieceAndPosition(PlayerEntity playerEntity,
+    public PlayerPiecePosition findByPlayerAndPieceAndPosition(PlayerEntity playerEntity,
         PieceEntity pieceEntity, PositionEntity positionEntity) throws SQLException {
         ResultSet rs = getResultSet(playerEntity, pieceEntity, positionEntity);
         if (!rs.next()) {
             return null;
         }
-        return new PiecePositionEntity(
+        return new PlayerPiecePosition(
             rs.getLong("id"),
             playerEntity,
             pieceEntity,
@@ -89,20 +89,18 @@ public class PiecePositionDAO {
         return pstmt.executeQuery();
     }
 
-    public PiecePositionEntity updatePieceAndPosition(
-        PiecePositionEntity playerPiecePositionEntity)
+    public PlayerPiecePosition updatePiecePosition(PlayerPiecePosition playerPiecePositionEntity)
         throws SQLException {
-        String query = "UPDATE player_piece_position SET piece_id = ?, position_id = ? WHERE id = ?";
+        String query = "UPDATE player_piece_position SET position_id = ? WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerPiecePositionEntity.getPieceEntity().getId());
-        pstmt.setLong(2, playerPiecePositionEntity.getPositionEntity().getId());
-        pstmt.setLong(3, playerPiecePositionEntity.getId());
+        pstmt.setLong(1, playerPiecePositionEntity.getPositionEntity().getId());
+        pstmt.setLong(2, playerPiecePositionEntity.getId());
         pstmt.executeUpdate();
         return playerPiecePositionEntity;
     }
 
 
-    public void remove(PiecePositionEntity piecesPositionEntity) throws SQLException {
+    public void removePiece(PlayerPiecePosition piecesPositionEntity) throws SQLException {
         String query = "DELETE FROM player_piece_position WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, piecesPositionEntity.getId());

@@ -8,7 +8,7 @@ import chess.db.domain.position.PositionEntity;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
-import chess.db.entity.PiecePositionEntity;
+import chess.db.entity.PlayerPiecePosition;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,9 +37,9 @@ public class BoardForDB {
         }
     }
 
-    public void load(List<PiecePositionEntity> piecesPositions) {
+    public void load(List<PlayerPiecePosition> piecesPositions) {
         setAllCellsEmpty();
-        for (PiecePositionEntity piecePosition : piecesPositions) {
+        for (PlayerPiecePosition piecePosition : piecesPositions) {
             PositionEntity position = piecePosition.getPositionEntity();
             PieceEntity piece = piecePosition.getPieceEntity();
             setCell(position, piece);

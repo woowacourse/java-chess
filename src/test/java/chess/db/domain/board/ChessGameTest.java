@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PlayerDAO;
-import chess.db.dao.PiecePositionDAO;
+import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.game.ChessGameForDB;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
@@ -19,7 +19,7 @@ public class ChessGameTest {
     private final ChessGameForDB chessGameForDB = new ChessGameForDB();
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
     private final PlayerDAO playerDAO = new PlayerDAO();
-    private final PiecePositionDAO piecePositionDAO = new PiecePositionDAO();
+    private final PlayerPiecePositionDAO piecePositionDAO = new PlayerPiecePositionDAO();
 
     @AfterEach
     void tearDown() throws SQLException {

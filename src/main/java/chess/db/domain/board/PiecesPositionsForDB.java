@@ -1,31 +1,31 @@
 package chess.db.domain.board;
 
-import chess.db.dao.PiecePositionEntities;
-import chess.db.dao.PiecePositionDAO;
+import chess.db.dao.PiecePosition;
+import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.ScoreCalculator;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.PlayerEntity;
-import chess.db.entity.PiecePositionEntity;
+import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesPositionsForDB {
-    private final PiecePositionDAO piecePositionDAO;
+    private final PlayerPiecePositionDAO piecePositionDAO;
     private final ScoreCalculator scoreCalculator;
 
 
     public PiecesPositionsForDB() {
-        piecePositionDAO = new PiecePositionDAO();
+        piecePositionDAO = new PlayerPiecePositionDAO();
         scoreCalculator = new ScoreCalculator();
     }
 
-    public void save(PlayerEntity playerEntity, PiecePositionEntities piecePositionEntities)
+    public void save(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
         throws SQLException {
 
         piecePositionDAO.save(
-            new PiecePositionEntity(playerEntity, piecePositionEntities)
+            new PlayerPiecePosition(playerEntity, piecePositionEntities)
         );
     }
 
@@ -35,7 +35,7 @@ public class PiecesPositionsForDB {
         // scoreCalculator.
     }
 
-    public List<PiecePositionEntity> getAllPiecesPositionsOfPlayer(PlayerEntity playerEntity)
+    public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayer(PlayerEntity playerEntity)
         throws SQLException {
 
         List<PiecePositionFromDB> piecesPositionsFromDB
@@ -44,20 +44,20 @@ public class PiecesPositionsForDB {
         return getParsedPiecePositionEntities(playerEntity, piecesPositionsFromDB);
     }
 
-    private List<PiecePositionEntity> getParsedPiecePositionEntities(
+    private List<PlayerPiecePosition> getParsedPiecePositionEntities(
         PlayerEntity playerEntity, List<PiecePositionFromDB> piecesPositionsFromDB) {
 
-        List<PiecePositionEntity> playerPiecePositionEntities = new ArrayList<>();
+        List<PlayerPiecePosition> playerPiecePositionEntities = new ArrayList<>();
         for (PiecePositionFromDB piecePositionFromDB : piecesPositionsFromDB) {
-            PiecePositionEntities piecePositionEntities =
+            PiecePosition piecePositionEntities =
                 getParsedPiecePositionEntities(piecePositionFromDB);
             playerPiecePositionEntities.add(
-                new PiecePositionEntity(playerEntity, piecePositionEntities));
+                new PlayerPiecePosition(playerEntity, piecePositionEntities));
         }
         return playerPiecePositionEntities;
     }
 
-    private PiecePositionEntities getParsedPiecePositionEntities(
+    private PiecePosition getParsedPiecePositionEntities(
         PiecePositionFromDB piecePositionFromDB) {
 
         PieceEntity pieceEntity = PieceEntity.of(
@@ -66,19 +66,19 @@ public class PiecesPositionsForDB {
         PositionEntity positionEntity = PositionEntity.of(
             piecePositionFromDB.getFile(), piecePositionFromDB.getRank());
 
-        return new PiecePositionEntities(pieceEntity, positionEntity);
+        return new PiecePosition(pieceEntity, positionEntity);
     }
 
-    public void update(PlayerEntity playerEntity, PiecePositionEntities piecePositionEntities)
+    public void updatePiecePosition(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
         throws SQLException {
 
-        piecePositionDAO.updatePieceAndPosition(
-            new PiecePositionEntity(playerEntity, piecePositionEntities)
+        piecePositionDAO.updatePiecePosition(
+            new PlayerPiecePosition(playerEntity, piecePositionEntities)
         );
     }
 
-    public void remove(PiecePositionEntity playerPiecePositionEntity) throws SQLException {
-        piecePositionDAO.remove(playerPiecePositionEntity);
+    public void removePiece(PlayerPiecePosition playerPiecePositionEntity) throws SQLException {
+        piecePositionDAO.removePiece(playerPiecePositionEntity);
     }
 
     public void removePiecesPositionsOfPlayer(PlayerEntity playerEntity) throws SQLException {
