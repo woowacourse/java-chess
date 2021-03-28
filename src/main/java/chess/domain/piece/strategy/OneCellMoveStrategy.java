@@ -1,5 +1,6 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -16,75 +17,75 @@ public abstract class OneCellMoveStrategy implements MoveStrategy {
 
     protected List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                           final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + UP.getRow(), file + UP.getColumn());
+        return findPositions(basePieces, targetPieces, position, UP);
     }
 
     protected List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + DOWN.getRow(), file + DOWN.getColumn());
+        return findPositions(basePieces, targetPieces, position, DOWN);
     }
 
     protected List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + LEFT.getRow(), file + LEFT.getColumn());
+        return findPositions(basePieces, targetPieces, position, LEFT);
     }
 
     protected List<Position> makeLeftUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                               final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + LEFT_UP.getRow(), file + LEFT_UP.getColumn());
+        return findPositions(basePieces, targetPieces, position, LEFT_UP);
     }
 
     protected List<Position> makeLeftDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                 final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + LEFT_DOWN.getRow(), file + LEFT_DOWN.getColumn());
+        return findPositions(basePieces, targetPieces, position, LEFT_DOWN);
     }
 
     protected List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                              final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + RIGHT.getRow(), file + RIGHT.getColumn());
+        return findPositions(basePieces, targetPieces, position, RIGHT);
     }
 
     protected List<Position> makeRightUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + RIGHT_UP.getRow(), file + RIGHT_UP.getColumn());
+        return findPositions(basePieces, targetPieces, position, RIGHT_UP);
     }
 
     protected List<Position> makeRightDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                  final Position position) {
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        return findPositions(basePieces, targetPieces,
-                rank + RIGHT_DOWN.getRow(), file + RIGHT_DOWN.getColumn());
+        return findPositions(basePieces, targetPieces, position, RIGHT_DOWN);
     }
 
     public List<Position> findPositions(final Pieces basePieces, final Pieces targetPieces,
-                                        final int rank, final int file) {
-        Position nextPosition = Position.valueOf(rank, file);
+                                        final Position position, final Direction direction) {
+        Position nextPosition = position.findNextPosition(direction);
+        return findPositionByNextPosition(basePieces, targetPieces, nextPosition);
+    }
+
+    private List<Position> findPositionByNextPosition(final Pieces basePieces, final Pieces targetPieces,
+                                                      final Position nextPosition) {
         Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
         Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
         if (targetPiece.isPresent()) {
             return Collections.singletonList(nextPosition);
+        }
+        if (!basePiece.isPresent()) {
+            return Collections.singletonList(nextPosition);
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Position> findPositions(final Pieces basePieces, final Pieces targetPieces,
+                                        final Position position, final Direction direction, final int index) {
+        Position nextPosition = position.findNextPosition(direction, index);
+        return findPositionByNextPawnPosition(basePieces, targetPieces, nextPosition);
+    }
+
+    private List<Position> findPositionByNextPawnPosition(final Pieces basePieces, final Pieces targetPieces,
+                                                          final Position nextPosition) {
+        Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
+        Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+        if (targetPiece.isPresent()) {
+            return Collections.emptyList();
         }
         if (!basePiece.isPresent()) {
             return Collections.singletonList(nextPosition);

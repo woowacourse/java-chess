@@ -100,7 +100,6 @@ class PawnTest {
         assertThat(pawn.isSamePosition(F2)).isEqualTo(true);
     }
 
-
     @DisplayName("첫 시작 이후 1칸을 이동한다.")
     @Test
     void afterFirstMove() {

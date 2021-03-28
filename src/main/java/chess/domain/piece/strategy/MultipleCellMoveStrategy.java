@@ -16,10 +16,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                           final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = rank; index < range; index++) {
-            Position nextPosition = findNextPosition(index + UP.getRow(), file + UP.getColumn());
+        for (int index = position.getRankValue(); index < range; index++) {
+            Position nextPosition = position.findNextPositionByRank(UP, index);
             Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
             Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
             if (targetPiece.isPresent()) {
@@ -38,10 +36,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = rank; index > range; index--) {
-            Position nextPosition = findNextPosition(index + DOWN.getRow(), file + DOWN.getColumn());
+        for (int index = position.getRankValue(); index > range; index--) {
+            Position nextPosition = position.findNextPositionByRank(DOWN, index);
             Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
             Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
             if (targetPiece.isPresent()) {
@@ -60,10 +56,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = file; index > range; index--) {
-            Position nextPosition = findNextPosition(rank + LEFT.getRow(), index + LEFT.getColumn());
+        for (int index = position.getFileValue(); index > range; index--) {
+            Position nextPosition = position.findNextPositionByFile(LEFT, index);
             Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
             Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
             if (targetPiece.isPresent()) {
@@ -82,8 +76,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeLeftUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                               final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
+        int rank = position.getRankValue();
+        int file = position.getFileValue();
         for (int index = rank; index < range; index++) {
             Position nextPosition = findNextPosition(index + LEFT_UP.getRow(),
                     file-- + LEFT_UP.getColumn());
@@ -108,8 +102,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeLeftDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                 final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
+        int rank = position.getRankValue();
+        int file = position.getFileValue();
         for (int index = rank; index > range; index--) {
             Position nextPosition = findNextPosition(index + LEFT_DOWN.getRow(),
                     file-- + LEFT_DOWN.getColumn());
@@ -134,10 +128,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                              final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = file; index < range; index++) {
-            Position nextPosition = findNextPosition(rank + RIGHT.getRow(), index + RIGHT.getColumn());
+        for (int index = position.getFileValue(); index < range; index++) {
+            Position nextPosition = position.findNextPositionByFile(RIGHT, index);
             Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
             Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
             if (targetPiece.isPresent()) {
@@ -156,8 +148,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeRightUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
+        int rank = position.getRankValue();
+        int file = position.getFileValue();
         for (int index = rank; index < range; index++) {
             Position nextPosition = findNextPosition(index + RIGHT_UP.getRow(),
                     file++ + RIGHT_UP.getColumn());
@@ -182,8 +174,8 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
     protected List<Position> makeRightDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                  final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
+        int rank = position.getRankValue();
+        int file = position.getFileValue();
         for (int index = rank; index > range; index--) {
             Position nextPosition = findNextPosition(index + RIGHT_DOWN.getRow(),
                     file++ + RIGHT_DOWN.getColumn());

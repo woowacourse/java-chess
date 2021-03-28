@@ -1,12 +1,10 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static chess.domain.piece.Direction.*;
 
@@ -43,36 +41,20 @@ public class PawnMoveStrategy extends OneCellMoveStrategy {
     private List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces,
                                           final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue() + DOWN.getRow();
-        int file = position.getFile().getValue() + DOWN.getColumn();
         for (int index = 0; index < range; index++) {
-            Position nextPosition = findNextPosition(rank - index, file);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
-            if (targetPiece.isPresent()) {
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
+            positions.addAll(findPositions(basePieces, targetPieces, position, DOWN, -index));
         }
         return positions;
     }
 
     private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                final Position position) {
-        int rank = position.getRank().getValue() + RIGHT_DOWN.getRow();
-        int file = position.getFile().getValue() + RIGHT_DOWN.getColumn();
-        return findPositions(basePieces, targetPieces, rank, file);
+        return findPositions(basePieces, targetPieces, position, RIGHT_DOWN);
     }
 
     private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                               final Position position) {
-        int rank = position.getRank().getValue() + LEFT_DOWN.getRow();
-        int file = position.getFile().getValue() + LEFT_DOWN.getColumn();
-        return findPositions(basePieces, targetPieces, rank, file);
+        return findPositions(basePieces, targetPieces, position, LEFT_DOWN);
     }
 
     private List<Position> whitePositions(final Pieces basePieces, final Pieces targetPieces,
@@ -93,35 +75,19 @@ public class PawnMoveStrategy extends OneCellMoveStrategy {
     private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces,
                                         final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
-        int rank = position.getRank().getValue() + UP.getRow();
-        int file = position.getFile().getValue() + UP.getColumn();
         for (int index = 0; index < range; index++) {
-            Position nextPosition = findNextPosition(rank + index, file);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
-            if (targetPiece.isPresent()) {
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
+            positions.addAll(findPositions(basePieces, targetPieces, position, UP, index));
         }
         return positions;
     }
 
     private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                              final Position position) {
-        int rank = position.getRank().getValue() + RIGHT_UP.getRow();
-        int file = position.getFile().getValue() + RIGHT_UP.getColumn();
-        return findPositions(basePieces, targetPieces, rank, file);
+        return findPositions(basePieces, targetPieces, position, RIGHT_UP);
     }
 
     private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position) {
-        int rank = position.getRank().getValue() + LEFT_UP.getRow();
-        int file = position.getFile().getValue() + LEFT_UP.getColumn();
-        return findPositions(basePieces, targetPieces, rank, file);
+        return findPositions(basePieces, targetPieces, position, LEFT_UP);
     }
 }

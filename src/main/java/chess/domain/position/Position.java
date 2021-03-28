@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -50,6 +52,78 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
+    public Position findNextPosition(final Direction direction) {
+        int nextRank = this.getRankValue() + direction.getRow();
+        int nextFile = this.getFileValue() + direction.getColumn();
+        return findNextPositionByDirection(direction, nextRank, nextFile);
+    }
+
+    private Position findNextPositionByDirection(final Direction direction,
+                                                 final int nextRank, final int nextFile) {
+        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+            Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow());
+            File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
+            return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        }
+        return this;
+    }
+
+    public Position findNextPosition(final Direction direction, final int index) {
+        int nextRank = this.getRankValue() + direction.getRow() + index;
+        int nextFile = this.getFileValue() + direction.getColumn();
+        return findNextPositionByDirection(direction, nextRank, nextFile, index);
+    }
+
+    private Position findNextPositionByDirection(final Direction direction,
+                                                 final int nextRank, final int nextFile, final int index) {
+        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+            Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow() + index);
+            File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
+            return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        }
+        return this;
+    }
+
+    public Position findNextPositionByRank(final Direction direction, final int index) {
+        int nextRank = direction.getRow() + index;
+        int nextFile = this.getFileValue() + direction.getColumn();
+        return findNextPositionByRank(direction, nextRank, nextFile, index);
+    }
+
+    private Position findNextPositionByRank(final Direction direction,
+                                            final int nextRank, final int nextFile, final int index) {
+        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+            Rank findRank = Rank.findByValue(direction.getRow() + index);
+            File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
+            return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        }
+        return this;
+    }
+
+    public Position findNextPositionByFile(final Direction direction, final int index) {
+        int nextRank = this.getRankValue() + direction.getRow();
+        int nextFile = direction.getColumn() + index;
+        return findNextPositionByFile(direction, nextRank, nextFile, index);
+    }
+
+    private Position findNextPositionByFile(final Direction direction,
+                                            final int nextRank, final int nextFile, final int index) {
+        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+            Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow());
+            File findFile = File.findByValue(direction.getColumn() + index);
+            return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        }
+        return this;
+    }
+
+    private boolean isRankInBound(final int rank) {
+        return 1 <= rank && rank <= 8;
+    }
+
+    private boolean isFileInBound(final int file) {
+        return 1 <= file && file <= 8;
+    }
+
     public static Position from(final String source) {
         String reversedSource = reverse(source);
         if (Objects.isNull(POSITIONS.get(reversedSource))) {
@@ -69,8 +143,16 @@ public class Position {
         return rank;
     }
 
+    public int getRankValue() {
+        return rank.getValue();
+    }
+
     public File getFile() {
         return file;
+    }
+
+    public int getFileValue() {
+        return file.getValue();
     }
 
     @Override
