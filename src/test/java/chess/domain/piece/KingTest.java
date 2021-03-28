@@ -18,7 +18,7 @@ public class KingTest {
     void 킹_객체_생성() {
         King king = new King(Position.of("e8"), Color.BLACK);
 
-        assertThat(king.getPosition()).isEqualTo(Position.of("e8"));
+        assertThat(king.isSamePosition(Position.of("e8"))).isTrue();
         assertThat(king.getName()).isEqualTo("K");
     }
 
@@ -30,7 +30,7 @@ public class KingTest {
 
         king.move(target);
 
-        assertThat(king.getPosition()).isEqualTo(target);
+        assertThat(king.isSamePosition(target)).isTrue();
     }
 
     @DisplayName("킹의 이동 규칙에 어긋나는 경우 예외")

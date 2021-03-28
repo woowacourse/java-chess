@@ -23,7 +23,7 @@ public class BishopTest {
     void 비숍_객체_생성() {
         Bishop bishop = new Bishop(Position.of("c8"), Color.BLACK);
 
-        assertThat(bishop.getPosition()).isEqualTo(Position.of("c8"));
+        assertThat(bishop.isSamePosition(Position.of("c8"))).isTrue();
         assertThat(bishop.getName()).isEqualTo("B");
     }
 
@@ -34,24 +34,9 @@ public class BishopTest {
         Piece bishop = new Bishop(Position.of("c8"), Color.BLACK);
 
         bishop.move(target);
-        Position result = bishop.getPosition();
 
-        assertThat(result).isEqualTo(target);
+        assertThat(bishop.isSamePosition(target)).isTrue();
     }
-
-//    @DisplayName("비숍 이동 경로에 장애물이 있을 경우 예외")
-//    @Test
-//    void 비숍_이동에_장애물() {
-//        Position source = Position.of("f8");
-//        Position target = Position.of("h6");
-//        Piece bishop = initialPieces.findByPosition(source);
-//        Piece targetPiece = initialPieces.findByPosition(target);
-//        Direction direction = Direction.findDirectionByTwoPosition(source, target);
-//        bishop.checkMovable(targetPiece, direction);
-//        assertThatThrownBy((() ->
-//                bishop.checkMovable(targetPiece, direction)))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
 
     @DisplayName("대각선 이동이 아닌 경우 예외")
     @Test

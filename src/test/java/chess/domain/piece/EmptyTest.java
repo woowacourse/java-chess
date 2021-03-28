@@ -21,7 +21,7 @@ public class EmptyTest {
     void 빈_기물_객체_생성_테스트() {
         Empty empty = new Empty(Position.of("a1"));
 
-        assertThat(empty.getPosition()).isEqualTo(Position.of("a1"));
+        assertThat(empty.isSamePosition(Position.of("a1"))).isTrue();
         assertThat(empty.getName()).isEqualTo(".");
     }
 

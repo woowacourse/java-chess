@@ -18,7 +18,7 @@ public class KnightTest {
     void 나이트_객체_생성() {
         Knight knight = new Knight(Position.of("b8"), Color.BLACK);
 
-        assertThat(knight.getPosition()).isEqualTo(Position.of("b8"));
+        assertThat(knight.isSamePosition(Position.of("b8"))).isTrue();
         assertThat(knight.getName()).isEqualTo("N");
     }
 
@@ -30,7 +30,7 @@ public class KnightTest {
 
         knight.move(target);
 
-        assertThat(knight.getPosition()).isEqualTo(target);
+        assertThat(knight.isSamePosition(target)).isTrue();
     }
 
     @DisplayName("나이트 이동 규칙에 어긋나는 경우 - 예외.")

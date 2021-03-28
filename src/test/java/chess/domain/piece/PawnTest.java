@@ -26,7 +26,7 @@ public class PawnTest {
     void 폰_객체_생성() {
         Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
 
-        assertThat(pawn.getPosition()).isEqualTo(Position.of("a7"));
+        assertThat(pawn.isSamePosition(Position.of("a7"))).isTrue();
         assertThat(pawn.getName()).isEqualTo("P");
     }
 
@@ -38,7 +38,7 @@ public class PawnTest {
 
         pawn.move(target);
 
-        assertThat(pawn.getPosition()).isEqualTo(target);
+        assertThat(pawn.isSamePosition(target)).isTrue();
     }
 
     @DisplayName("Pawn 이동 규칙을 확인한다. 처음 Pawn을 움직이는 경우 - 2칸 이동")
@@ -80,22 +80,6 @@ public class PawnTest {
                 pawn.checkMovable(targetPiece, direction)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-//    @DisplayName("이동 경로에 장애물이 있을 경우")
-//    @Test
-//    void 이동하는데_앞에_장애물이_있는_경우() {
-//        List<Piece> current = Arrays.asList(
-//                new Pawn(Position.of("a7"), Color.BLACK),
-//                new Pawn(Position.of("a6"), Color.BLACK));
-//        Pieces pieces = new Pieces(current);
-//
-//        Position source = Position.of("a7");
-//        Position target = Position.of("a5");
-//        Piece pawn = pieces.findByPosition(source);
-//
-//        assertThatThrownBy(() -> pawn.move(target, pieces))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
 
     @DisplayName("검정 말이 흰 말을 공격한다.")
     @Test

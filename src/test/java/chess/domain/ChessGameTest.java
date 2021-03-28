@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessGameTest {
     @DisplayName("현재 기물 확인하기")
@@ -31,6 +32,17 @@ public class ChessGameTest {
         chessGame.movePieceFromSourceToTarget(Position.of("c8"), Position.of("f5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
+    }
+
+    @DisplayName("비숍 이동 경로에 장애물이 있을 경우 예외")
+    @Test
+    void 비숍_이동에_장애물() {
+        ChessGame chessGame = new ChessGame();
+        Position source = Position.of("f8");
+        Position target = Position.of("h6");
+        assertThatThrownBy(() ->
+                chessGame.movePieceFromSourceToTarget(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("킹 - 대각선 위치인 target에 상대 말이 있는 경우")
@@ -111,5 +123,22 @@ public class ChessGameTest {
         chessGame.movePieceFromSourceToTarget(Position.of("a8"), Position.of("a5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
+    }
+
+    @DisplayName("폰 - 이동 경로에 장애물이 있을 경우")
+    @Test
+    void 이동하는데_앞에_장애물이_있는_경우() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of("a7"), Color.BLACK),
+                new Pawn(Position.of("a6"), Color.BLACK));
+        Pieces pieces = new Pieces(current);
+        Position source = Position.of("a7");
+        Position target = Position.of("a5");
+
+        ChessGame chessGame = new ChessGame(pieces);
+
+        assertThatThrownBy(() ->
+                chessGame.movePieceFromSourceToTarget(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

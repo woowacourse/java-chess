@@ -16,10 +16,10 @@ public class Pawn extends Piece {
 
     @Override
     public void checkMovable(Piece targetPiece, Direction direction) {
-        if (color.same(Color.BLACK) && !Direction.blackPawnDirection().contains(direction)) {
+        if (getColor().same(Color.BLACK) && !Direction.blackPawnDirection().contains(direction)) {
             throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
         }
-        if (color.same(Color.WHITE) && !Direction.whitePawnDirection().contains(direction)) {
+        if (getColor().same(Color.WHITE) && !Direction.whitePawnDirection().contains(direction)) {
             throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
         }
         if (Direction.diagonalDirection().contains(direction) && targetPiece.isEmpty()) {

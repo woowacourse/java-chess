@@ -8,9 +8,9 @@ import chess.domain.position.Position;
 
 public abstract class Piece {
     protected Position position;
-    protected Name name;
-    protected Color color;
-    protected Score score;
+    private final Name name;
+    private final Color color;
+    private Score score;
 
     public Piece(Position position, Name name, Color color) {
         this(position, name, color, Score.ZERO);
@@ -27,12 +27,12 @@ public abstract class Piece {
         this.position = target;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     public String getName() {
         return name.nameByColor(color);
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public double score() {

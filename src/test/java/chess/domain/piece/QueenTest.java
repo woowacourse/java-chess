@@ -18,7 +18,7 @@ public class QueenTest {
     void 퀸_객체_생성() {
         Queen queen = new Queen(Position.of("d8"), Color.BLACK);
 
-        assertThat(queen.getPosition()).isEqualTo(Position.of("d8"));
+        assertThat(queen.isSamePosition(Position.of("d8"))).isTrue();
         assertThat(queen.getName()).isEqualTo("Q");
     }
 
@@ -30,7 +30,7 @@ public class QueenTest {
 
         queen.move(target);
 
-        assertThat(queen.getPosition()).isEqualTo(target);
+        assertThat(queen.isSamePosition(target)).isTrue();
     }
 
     @DisplayName("퀸 이동 규칙을 확인한다. - 십자")

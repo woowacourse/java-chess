@@ -18,7 +18,7 @@ public class RookTest {
     void 룩_객체_생성() {
         Rook rook = new Rook(Position.of("a8"), Color.BLACK);
 
-        assertThat(rook.getPosition()).isEqualTo(Position.of("a8"));
+        assertThat(rook.isSamePosition(Position.of("a8"))).isTrue();
         assertThat(rook.getName()).isEqualTo("R");
     }
 
@@ -30,7 +30,7 @@ public class RookTest {
 
         rook.move(target);
 
-        assertThat(rook.getPosition()).isEqualTo(target);
+        assertThat(rook.isSamePosition(target)).isTrue();
     }
 
     @DisplayName("룩의 이동 규칙에 어긋나는 경우 - 예외")
