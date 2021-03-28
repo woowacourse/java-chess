@@ -1,9 +1,9 @@
 package domain.piece.objects;
 
 import domain.piece.Color;
-import domain.piece.Direction;
 import domain.piece.Name;
-import domain.piece.Position;
+import domain.piece.position.Direction;
+import domain.piece.position.Position;
 import domain.score.Score;
 
 import java.util.Map;
@@ -65,7 +65,7 @@ public abstract class Piece {
         return (rowDiff == 0) || (colDiff == 0);
     }
 
-    protected boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
+    protected boolean isEmptyPiecePosition(Map<Position, Piece> board, Position nextPosition) {
         return !board.containsKey(nextPosition);
     }
 

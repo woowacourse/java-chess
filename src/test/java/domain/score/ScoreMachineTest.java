@@ -1,8 +1,8 @@
 package domain.score;
 
 import domain.Board;
-import domain.piece.Position;
 import domain.piece.objects.*;
+import domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

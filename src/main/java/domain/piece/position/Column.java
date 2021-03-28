@@ -1,4 +1,4 @@
-package domain;
+package domain.piece.position;
 
 import domain.exception.InvalidPositionException;
 
@@ -20,6 +20,13 @@ public enum Column {
     Column(char name, int index) {
         this.name = name;
         this.index = index;
+    }
+
+    public static Column findColumn(int index) {
+        return Arrays.stream(Column.values())
+                .filter(value -> value.index == index)
+                .findAny()
+                .orElseThrow(() -> new InvalidPositionException());
     }
 
     public static Column convertColumn(char input) {

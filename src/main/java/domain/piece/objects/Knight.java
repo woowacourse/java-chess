@@ -1,7 +1,7 @@
 package domain.piece.objects;
 
-import domain.piece.Direction;
-import domain.piece.Position;
+import domain.piece.position.Direction;
+import domain.piece.position.Position;
 import domain.score.Score;
 
 import java.util.HashMap;
@@ -28,18 +28,12 @@ public class Knight extends Piece {
         }};
     }
 
-    private boolean checkPosition(Map<Position, Piece> board, Position nextPosition) {
-        return !board.containsKey(nextPosition) || !this.isSameColor(board.get(nextPosition));
-    }
-
     @Override
     public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         List<Direction> directions = Direction.knightDirection();
         return directions.stream()
                 .map(direction -> start.move(direction))
-                .filter(nextPosition -> nextPosition.equals(end))
-                .filter(nextPosition -> checkPosition(board, nextPosition))
-                .findAny()
-                .isPresent();
+                .filter(nextPosition -> nextPosition.notEmptyPosition() && nextPosition.equals(end))
+                .anyMatch(nextPosition -> isEmptyPiecePosition(board, nextPosition) || !this.isSameColor(board.get(nextPosition)));
     }
 }

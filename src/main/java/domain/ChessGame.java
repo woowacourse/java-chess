@@ -1,9 +1,8 @@
 package domain;
 
 import domain.exception.ImmovableSamePositionException;
-import domain.exception.InvalidMoveException;
-import domain.piece.Position;
 import domain.piece.objects.Piece;
+import domain.piece.position.Position;
 import domain.score.Score;
 import domain.score.ScoreMachine;
 import domain.state.Finished;
@@ -25,18 +24,16 @@ public class ChessGame {
     }
 
     public void move(Position start, Position end) {
-        if (!movablePiece(start, end, turn)) {
-            throw new InvalidMoveException();
-        }
+        chekMovablePiece(start, end, turn);
         Piece endPiece = board.getPiece(end);
         board.move(start, end);
         checkKingState(endPiece);
         turn = !turn;
     }
 
-    private boolean movablePiece(Position start, Position end, boolean turn) {
+    private void chekMovablePiece(Position start, Position end, boolean turn) {
         checkSamePosition(start, end);
-        return board.canMovable(start, turn);
+        board.checkMovable(start, turn);
     }
 
     private void checkKingState(Piece endPiece) {

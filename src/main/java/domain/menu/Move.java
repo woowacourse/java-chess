@@ -4,8 +4,8 @@ import domain.ChessGame;
 import domain.dto.BoardDto;
 import domain.dto.MenuDto;
 import domain.exception.GameNotStartException;
-import domain.exception.InvalidMoveException;
-import domain.piece.Position;
+import domain.exception.InvalidMoveCommandException;
+import domain.piece.position.Position;
 
 public class Move implements Command {
     public static final int COMMAND_NUMBERS = 3;
@@ -28,7 +28,7 @@ public class Move implements Command {
 
     private void invalidCommand(String command) {
         if (command.split(" ").length != COMMAND_NUMBERS) {
-            throw new InvalidMoveException();
+            throw new InvalidMoveCommandException(command);
         }
     }
 }

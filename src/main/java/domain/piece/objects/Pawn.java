@@ -1,7 +1,7 @@
 package domain.piece.objects;
 
-import domain.piece.Direction;
-import domain.piece.Position;
+import domain.piece.position.Direction;
+import domain.piece.position.Position;
 import domain.score.Score;
 
 import java.util.ArrayList;
@@ -47,18 +47,20 @@ public class Pawn extends Piece {
     private boolean movableDiagonal(List<Direction> directions, Map<Position, Piece> board, Position start, Position end) {
         return directions.stream()
                 .map(direction -> start.move(direction))
-                .filter(next -> next.equals(end))
-                .filter(next -> board.containsKey(next) && !board.get(next).isSameColor(this))
-                .findAny()
-                .isPresent();
+                .filter(nextPosition -> nextPosition.notEmptyPosition() && nextPosition.equals(end))
+                .anyMatch(nextPosition -> !isEmptyPiecePosition(board, nextPosition) && !this.isSameColor(board.get(nextPosition)));
     }
 
     private boolean movableLinear(Direction direction, Map<Position, Piece> board, Position start, Position end) {
         Position next = start.move(direction);
-        if (next.equals(end) && isEmptyPosition(board, end)) {
+        if (next.equals(end) && (next.notEmptyPosition() && isEmptyPiecePosition(board, end))) { // 한칸 이동이고 이동 가능하면 true를 반환한다.
             return true;
         }
-        return PAWNS.containsKey(start) && next.move(direction).equals(end) && !board.containsKey(end);
+
+        // 2칸 이동이 가능하다면 true, 아니라면 false를 반환한다.
+        return PAWNS.containsKey(start)
+                && (next.move(direction).notEmptyPosition() && next.move(direction).equals(end))
+                && !board.containsKey(end);
     }
 
     private List<Direction> selectDirectionByColor() {
@@ -69,11 +71,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         List<Direction> directions = new ArrayList<>(selectDirectionByColor());
         boolean result = movableLinear(directions.remove(0), board, start, end);
@@ -81,5 +78,10 @@ public class Pawn extends Piece {
             result = movableDiagonal(directions, board, start, end);
         }
         return result;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

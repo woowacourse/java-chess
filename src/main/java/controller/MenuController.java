@@ -25,7 +25,7 @@ public class MenuController {
             OutputView.gameNotStart();
         } catch (InvalidPositionException e) {
             OutputView.invalidInputPosition(command);
-        } catch (InvalidMoveException e) {
+        } catch (PieceCannotMoveException e) {
             OutputView.cannotMovePosition(command);
         } catch (ImmovableSamePositionException e) {
             OutputView.cannotMovesamePosition(command);

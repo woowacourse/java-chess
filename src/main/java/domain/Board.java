@@ -1,10 +1,12 @@
 package domain;
 
-import domain.exception.InvalidMoveException;
-import domain.piece.Direction;
-import domain.piece.Position;
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
+import domain.exception.PieceEmptyException;
 import domain.piece.objects.Empty;
 import domain.piece.objects.Piece;
+import domain.piece.position.Direction;
+import domain.piece.position.Position;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ public class Board {
     public void move(Position start, Position end) {
         Piece piece = board.get(start);
         if (!piece.canMove(getBoard(), start, end)) {
-            throw new InvalidMoveException();
+            throw new PieceCannotMoveException(piece.getName());
         }
         board.remove(start);
         board.put(end, piece);
@@ -38,9 +40,15 @@ public class Board {
         return board.getOrDefault(position, Empty.create());
     }
 
-    public boolean canMovable(Position position, boolean color) {
+    public void checkMovable(Position position, boolean color) {
         Piece piece = getPiece(position);
-        return !(piece.isEmpty()) && piece.isSameColor(color);
+        if (!piece.isSameColor(color)) {
+            throw new InvalidTurnException();
+        }
+
+        if (piece.isEmpty()) {
+            throw new PieceEmptyException();
+        }
     }
 
     public Map<Position, Piece> getTeam(boolean color) {
@@ -60,10 +68,9 @@ public class Board {
     public boolean isExistSamePawn(Map.Entry<Position, Piece> pawn) {
         Position position = pawn.getKey();
         return Direction.verticalDirection().stream()
-                .filter(direction -> !position.move(direction).equals(position))
-                .map(direction -> getPiece(position.move(direction)))
-                .filter(piece -> piece.isPawn() && piece.isSameColor(pawn.getValue()))
-                .findAny()
-                .isPresent();
+                .map(direction -> position.move(direction))
+                .filter(movePosition -> movePosition.notEmptyPosition() && !movePosition.equals(position))
+                .map(movePosition -> getPiece(movePosition))
+                .anyMatch(piece -> piece.isPawn() && piece.isSameColor(pawn.getValue()));
     }
 }

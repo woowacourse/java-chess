@@ -1,7 +1,7 @@
 package domain.piece.objects;
 
-import domain.piece.Direction;
-import domain.piece.Position;
+import domain.piece.position.Direction;
+import domain.piece.position.Position;
 import domain.score.Score;
 
 import java.util.HashMap;
@@ -36,8 +36,8 @@ public class Bishop extends Piece {
         Direction direction = getDiagonalDirection(start, end);
         do {
             start = start.move(direction);
-        } while (!start.equals(end) && isEmptyPosition(board, start));
+        } while (!start.equals(end) && start.notEmptyPosition() && isEmptyPiecePosition(board, start));
 
-        return start.equals(end) && (isEmptyPosition(board, end) || !this.isSameColor(board.get(end)));
+        return start.equals(end) && (isEmptyPiecePosition(board, start) || !this.isSameColor(board.get(end)));
     }
 }

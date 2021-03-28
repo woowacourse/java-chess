@@ -1,7 +1,7 @@
 package domain.piece.objects;
 
 import domain.Board;
-import domain.piece.Position;
+import domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

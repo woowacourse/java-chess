@@ -1,9 +1,9 @@
 package domain;
 
-import domain.piece.Position;
 import domain.piece.objects.Empty;
 import domain.piece.objects.King;
 import domain.piece.objects.Piece;
+import domain.piece.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
     private Map<Position, Piece> pieces;
@@ -47,7 +48,7 @@ class BoardTest {
     @Test
     void correct_user_turn_check() {
         Board board = new Board(pieces);
-        assertThat(board.canMovable(Position.of("a7"), true)).isTrue();
+        assertDoesNotThrow(() -> board.checkMovable(Position.of("a7"), true));
     }
 
     @DisplayName("빈 칸의 기물을 가져오는 경우 empty가 반환된다.")

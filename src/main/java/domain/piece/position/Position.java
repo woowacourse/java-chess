@@ -1,7 +1,5 @@
-package domain.piece;
+package domain.piece.position;
 
-import domain.Column;
-import domain.Row;
 import domain.exception.InvalidPositionException;
 
 import java.util.LinkedList;
@@ -9,19 +7,25 @@ import java.util.Objects;
 import java.util.Queue;
 
 public class Position {
-    private final int row;
-    private final int column;
+    private static final Position EMPTY_POSITION = new Position(null, null);    // TODO : null 대신 다른 방법은?
 
-    public Position(int row, int column) {
+    private final Row row;
+    private final Column column;
+
+    public Position(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+
+    public static Position valueOf(int row, int column) {
+        return new Position(Row.findRow(row), Column.findColumn(column));
     }
 
     public static Position of(String input) {
         validateLength(input);
         Column col = Column.convertColumn(input.charAt(0));
         Row row = Row.convertRow(input.charAt(1));
-        return Position.valueOf(row.getIndex(), col.getIndex());
+        return new Position(row, col);
     }
 
     private static void validateLength(String input) {
@@ -30,20 +34,24 @@ public class Position {
         }
     }
 
-    public static Position valueOf(int row, int column) {
-        return new Position(row, column);
-    }
-
     public int getRow() {
-        return row;
+        return row.getIndex();
     }
 
     public int getColumn() {
-        return column;
+        return column.getIndex();
     }
 
     public Position move(Direction direction) {
-        return Position.valueOf(row + direction.getX(), column + direction.getY());
+        try {
+            return Position.valueOf(row.getIndex() + direction.getX(), column.getIndex() + direction.getY());
+        } catch (InvalidPositionException e) {
+            return EMPTY_POSITION;
+        }
+    }
+
+    public boolean notEmptyPosition() {
+        return !this.equals(EMPTY_POSITION);
     }
 
     public static Queue makeDiff(Position from, Position to) {

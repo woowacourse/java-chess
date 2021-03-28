@@ -1,6 +1,6 @@
 package domain.piece.objects;
 
-import domain.piece.Position;
+import domain.piece.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;
