@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Position {
-    public static final Position EMPTY = new Position('0', '0');
     public static final int CHANGE_LINE_POINT = 8;
     public static final Map<String, Position> CACHE;
     public static final List<Character> Xs = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
