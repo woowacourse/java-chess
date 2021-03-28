@@ -5,6 +5,7 @@ import domain.exception.InvalidPositionException;
 import java.util.Objects;
 
 public class Position {
+    public static final int POSITION_INPUT_LENGTH = 2;
     private static final Position EMPTY_POSITION = new Position(null, null);
 
     private final Row row;
@@ -27,7 +28,7 @@ public class Position {
     }
 
     private static void validateLength(String input) {
-        if (input.length() > 2 || input.length() <= 0) {
+        if (input.length() > POSITION_INPUT_LENGTH || input.length() <= 0) {
             throw new InvalidPositionException();
         }
     }
