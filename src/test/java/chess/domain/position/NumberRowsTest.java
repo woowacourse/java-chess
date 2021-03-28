@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,8 @@ class NumberRowsTest {
     @Test
     @DisplayName("실패 - 범위를 벗어나는 숫자 입력")
     void create_fail1() {
-        assertThat(NumberRows.getInstance("9"))
-            .isEqualTo(null);
+        assertThatThrownBy(()->NumberRows.getInstance("9"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
