@@ -3,6 +3,7 @@ package chess.manager;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Owner;
 import chess.domain.player.Player;
 import chess.domain.player.Scores;
 import chess.domain.player.Players;
@@ -70,7 +71,7 @@ public class ChessGame {
         return isGameEnd;
     }
 
-    public Queue<Player> winner(){
+    public Queue<Owner> winner(){
         return new LinkedList<>(scores().winner());
     }
 }

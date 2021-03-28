@@ -28,10 +28,10 @@ public class OutputView {
     }
 
     private static void printSymbol(final Piece piece) {
-        System.out.print(decideSymbol(piece));
+        System.out.print(decidePieceSymbol(piece));
     }
 
-    private static String decideSymbol(final Piece piece) {
+    private static String decidePieceSymbol(final Piece piece) {
         final String symbol = piece.symbol();
 
         if (piece.isBlack()) {
@@ -41,26 +41,28 @@ public class OutputView {
     }
 
     public static void printScore(final ScoreDto scoreDto) {
-        final Owner owner = scoreDto.owner();
+        final String owner = decidePlayerSymbol(scoreDto.owner());
+        final double score = scoreDto.score();
 
-        if(owner.isBlack()){
-            System.out.println("블랙의 점수 : "+ scoreDto.score());
-        }
-
-        if(owner.isWhite()){
-            System.out.println("화이트의 점수 : "+ scoreDto.score());
-        }
+        System.out.println( owner + "의 점수 : "+ score);
     }
 
-    public static void printWinner(final Queue<Player> winner) {
+    public static void printWinner(final Queue<Owner> owner) {
         System.out.println("=== 게임 결과 ===");
 
-        if(winner.size() == NUMBER_OF_WINNER){
-            System.out.println("승자 : " + winner.peek());
+        if(owner.size() == NUMBER_OF_WINNER){
+            System.out.println("승자 : " + decidePlayerSymbol(owner.peek()));
             return;
         }
 
         System.out.println("무승부입니다.");
+    }
+
+    public static String decidePlayerSymbol(final Owner owner){
+        if(owner.isBlack()){
+            return "블랙";
+        }
+        return "화이트";
     }
 
     public static void printMenu() {

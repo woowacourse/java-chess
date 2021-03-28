@@ -1,5 +1,6 @@
 package chess.domain.player;
 
+import chess.domain.piece.Owner;
 import chess.domain.piece.Score;
 
 import java.util.*;
@@ -22,11 +23,12 @@ public class Scores {
         return new Scores(scores);
     }
 
-    public List<Player> winner(){
+    public List<Owner> winner(){
         final Score max = maxScore();
 
         return players().stream()
                 .filter(player -> scoreTable.get(player).equals(max))
+                .map(player -> player.owner())
                 .collect(Collectors.toList());
     }
 
