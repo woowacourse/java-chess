@@ -1,4 +1,4 @@
-package chess.web.dto.requestdto;
+package chess.dto.requestdto;
 
 public class MoveRequestDto {
     private final String sourcePosition;
