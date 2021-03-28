@@ -17,6 +17,7 @@ public class Round {
     private final Player blackPlayer;
 
     private Command command;
+    private boolean isEnd = false;
 
     public Round(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
@@ -46,7 +47,11 @@ public class Round {
 
     private void checkPieces(final State state, final Target target) {
         if (state.isKing(target.getPosition())) {
-            this.command = this.command.end();
+            isEnd = true;
+        }
+        if (isEnd) {
+            this.command = command.end();
+            return;
         }
         if (state.findPiece(target.getPosition()).isPresent()) {
             state.removePiece(target.getPosition());
