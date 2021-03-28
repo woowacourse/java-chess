@@ -37,7 +37,7 @@ public class Pieces {
 
     public boolean isAliveAllKings() {
         return KING_COUNT == (int) pieces.stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .count();
     }
 

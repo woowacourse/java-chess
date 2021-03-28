@@ -55,6 +55,14 @@ public abstract class Piece {
         return this instanceof Pawn;
     }
 
+    public boolean isKnight() {
+        return this instanceof Knight;
+    }
+
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
     public boolean isSamePosition(Position position) {
         return this.position.equals(position);
     }

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
@@ -46,7 +45,7 @@ public class ChessGame {
         checkAbleToMove(sourcePiece, target, turn);
         Direction direction = Direction.findDirectionByTwoPosition(source, target);
         sourcePiece.checkMovable(targetPiece, direction);
-        if (!(sourcePiece instanceof Knight)) {
+        if (!(sourcePiece.isKnight())) {
             checkPieceInPath(source, target, direction);
         }
         pieces.removePieceByPosition(target);
