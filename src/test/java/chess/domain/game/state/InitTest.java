@@ -38,9 +38,9 @@ public class InitTest {
     }
 
     @Test
-    @DisplayName("초기 상태에서 ranks 명령시 에러 반환")
-    void testRanksException() {
-        assertThatThrownBy(() -> this.init.ranks()).isInstanceOf(IllegalStateException.class);
+    @DisplayName("초기 상태에서 board 명령시 에러 반환")
+    void testBoardException() {
+        assertThatThrownBy(() -> this.init.board()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test

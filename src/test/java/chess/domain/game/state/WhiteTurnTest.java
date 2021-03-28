@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +29,7 @@ class WhiteTurnTest {
     @Test
     @DisplayName("백색 차례에서 백색 말 move 명령 진행")
     void testMove() {
-        Board board = this.whiteTurn.board();
+        Board board = this.whiteTurn.afterStartBoard();
 
         assertThat(board.pieceByPosition(Position.of("a2"))).isEqualTo(Pawn.createWhite());
         assertThat(board.pieceByPosition(Position.of("a4"))).isEqualTo(Empty.create());
@@ -45,7 +43,7 @@ class WhiteTurnTest {
     @Test
     @DisplayName("백색 차례에서 흑색 말 move 명령시 예외반환")
     void testMoveException() {
-        Board board = this.whiteTurn.board();
+        Board board = this.whiteTurn.afterStartBoard();
 
         assertThat(board.pieceByPosition(Position.of("a7"))).isEqualTo(Pawn.createBlack());
         assertThat(board.pieceByPosition(Position.of("a5"))).isEqualTo(Empty.create());
@@ -62,13 +60,9 @@ class WhiteTurnTest {
     }
 
     @Test
-    @DisplayName("백색 차례에서 ranks 명령시 ranks 반환")
-    void testRanks() {
-        List<Rank> ranks = this.whiteTurn.ranks();
-        assertThat(ranks).hasSize(8);
-        for (Rank rank : ranks) {
-            assertThat(rank.squares()).hasSize(8);
-        }
+    @DisplayName("백색 차례에서 board 명령시 board 반환")
+    void testBoard() {
+        assertThat(this.whiteTurn.board()).isInstanceOf(Board.class);
     }
 
     @Test

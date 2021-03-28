@@ -38,9 +38,9 @@ public class EndTest {
     }
 
     @Test
-    @DisplayName("프로그램 종료 상태에서 ranks 명령시 예외 반환")
-    void testRanksException() {
-        assertThatThrownBy(() -> this.end.ranks()).isInstanceOf(IllegalStateException.class);
+    @DisplayName("프로그램 종료 상태에서 board 명령시 예외 반환")
+    void testBoardException() {
+        assertThatThrownBy(() -> this.end.board()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test

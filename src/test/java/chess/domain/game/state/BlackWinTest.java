@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,13 +40,9 @@ class BlackWinTest {
     }
 
     @Test
-    @DisplayName("흑색 승리 상태에서 ranks 명령시 예외 반환")
-    void testRanksException() {
-        List<Rank> ranks = this.blackWin.ranks();
-        assertThat(ranks).hasSize(8);
-        for (Rank rank : ranks) {
-            assertThat(rank.squares()).hasSize(8);
-        }
+    @DisplayName("흑색 승리 상태에서 board 명령시 board 반환")
+    void testBoard() {
+        assertThat(this.blackWin.board()).isInstanceOf(Board.class);
     }
 
     @Test
