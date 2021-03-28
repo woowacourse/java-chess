@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
@@ -12,14 +13,16 @@ public class Finished implements GameState {
         new IllegalArgumentException("올바르지 않은 입력입니다.");
 
     private final Team winner;
+    private final Board board;
 
-    public Finished(Team winner) {
+    public Finished(Board board, Team winner) {
+        this.board = board;
         this.winner = winner;
     }
 
     @Override
     public GameState start() {
-        throw EXCEPTION;
+        return new Ready(board).start();
     }
 
     @Override

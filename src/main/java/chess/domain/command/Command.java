@@ -1,7 +1,9 @@
 package chess.domain.command;
 
 import chess.domain.board.Point;
+import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.chessgame.Turn;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;

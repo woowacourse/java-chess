@@ -4,6 +4,10 @@ const teams = {
   n: "none"
 };
 
+const launch = document.querySelector(".launch");
+const result = document.querySelector(".result");
+const blur = document.querySelector(".blur")
+
 async function getGameStatus() {
   const response = await fetch("./getGameStatus");
   return await response.json();
@@ -12,19 +16,20 @@ async function getGameStatus() {
 export const checkGameState = () => {
   getGameStatus().then(gameStatus => {
     if (gameStatus["gameState"] === "Ready") {
-      document.querySelector(".launch").style.visibility = "visible";
-      document.querySelector(".blur").disabled = false;
+      launch.style.visibility = "visible";
+      result.style.visibility = "hidden";
+      blur.disabled = false;
       return;
     }
-    document.querySelector(".launch").style.visibility = "hidden";
     if (gameStatus["gameState"] === "Finished") {
-      document.querySelector(".blur").disabled = false;
-      const resultDiv = document.createElement("div");
-      resultDiv.classList.add("result");
-      resultDiv.innerHTML = `<p>Winner is ${teams[gameStatus["winner"]]}</p>`;
-      document.querySelector("body").insertAdjacentElement("afterbegin", resultDiv);
+      launch.style.visibility = "hidden";
+      blur.disabled = false;
+      result.style.visibility = "visible";
+      result.innerHTML = `<p>Winner is ${teams[gameStatus["winner"]]}</p><p>Click anywhere to start</p>`;
       return;
     }
+    launch.style.visibility = "hidden";
+    result.style.visibility = "hidden";
     document.querySelector(".blur").disabled = true;
   });
 }

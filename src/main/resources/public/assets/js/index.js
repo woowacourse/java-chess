@@ -30,8 +30,9 @@ const addEventToSquares = () => {
   );
 }
 
-const addEventToLaunch = () => {
+const addEventToScreen = () => {
   document.querySelector(".launch").addEventListener("click", start);
+  document.querySelector(".result").addEventListener("click", start);
 }
 
 window.onload = () => {
@@ -39,7 +40,7 @@ window.onload = () => {
   reloadBoard();
   updateTurnBadge();
   addEventToSquares();
-  addEventToLaunch();
+  addEventToScreen();
 };
 
 window.onresize = () => {

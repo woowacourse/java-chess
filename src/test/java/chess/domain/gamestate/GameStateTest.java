@@ -41,7 +41,7 @@ class GameStateTest {
         GameState gameState = new Running(board);
 
         assertThatIllegalArgumentException().isThrownBy(gameState::winner);
-        assertThat(gameState.end()).hasSameClassAs(new Finished(Team.NONE));
+        assertThat(gameState.end()).hasSameClassAs(new Finished(board, Team.NONE));
         assertThat(gameState.status()).hasSameClassAs(new Running(board));
         assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)))
             .hasSameClassAs(new Running(board));
@@ -55,15 +55,15 @@ class GameStateTest {
         GameState gameState = new Running(board);
 
         assertThat(gameState.move(Point.of("c4"), Point.of("c5"), new Turn(Team.WHITE)))
-            .hasSameClassAs(new Finished(Team.WHITE));
+            .hasSameClassAs(new Finished(board, Team.WHITE));
     }
 
     @Test
     @DisplayName("Finished 상태의 명령어 입력시 상태 변화")
     void finished() {
-        GameState gameState = new Finished(Team.WHITE);
+        GameState gameState = new Finished(board, Team.WHITE);
 
-        assertThatIllegalArgumentException().isThrownBy(gameState::start);
+        assertThat(gameState.start()).hasSameClassAs(new Running(board));
         assertThatIllegalArgumentException().isThrownBy(gameState::end);
         assertThatIllegalArgumentException().isThrownBy(gameState::status);
         assertThatIllegalArgumentException()

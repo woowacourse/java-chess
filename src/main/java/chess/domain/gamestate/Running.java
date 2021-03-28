@@ -42,14 +42,14 @@ public class Running implements GameState {
 
     private GameState gameStateAfterMovement(boolean isKingDead, Team destinationTeam) {
         if (isKingDead) {
-            return new Finished(destinationTeam.opposingTeam());
+            return new Finished(board, destinationTeam.opposingTeam());
         }
         return this;
     }
 
     @Override
     public GameState end() {
-        return new Finished(Team.NONE);
+        return new Finished(board, Team.NONE);
     }
 
     @Override

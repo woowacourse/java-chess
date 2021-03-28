@@ -20,7 +20,7 @@ public class ChessGame {
     }
 
     public void start() {
-        turn = new Turn(Team.WHITE);
+        turn.restart();
         gameState = gameState.start();
     }
 
