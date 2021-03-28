@@ -4,7 +4,6 @@ import domain.ChessGame;
 import domain.dto.BoardDto;
 import domain.dto.MenuDto;
 import domain.dto.StatusDto;
-import domain.exception.*;
 import domain.menu.Menu;
 import view.OutputView;
 
@@ -19,16 +18,8 @@ public class MenuController {
         try {
             MenuDto menuDto = menu.execute(command, game);
             selectOutputView(menuDto);
-        } catch (CannotStartException e) {
-            OutputView.alreadyStartGame();
-        } catch (GameNotStartException e) {
-            OutputView.gameNotStart();
-        } catch (InvalidPositionException e) {
-            OutputView.invalidInputPosition(command);
-        } catch (PieceCannotMoveException e) {
-            OutputView.cannotMovePosition(command);
-        } catch (ImmovableSamePositionException e) {
-            OutputView.cannotMovesamePosition(command);
+        } catch (RuntimeException e) {
+            OutputView.printError(e.getMessage());
         }
     }
 
