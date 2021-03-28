@@ -27,7 +27,7 @@ public abstract class Piece {
     }
 
     public String getName() {
-        if (isBlack()) {
+        if (isNotEmpty() && isBlack()) {
             return name.toUpperCase();
         }
         return name;

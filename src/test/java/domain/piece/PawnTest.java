@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
 
-    private Color color(boolean isBlack){
-        if(isBlack){
+    private Color color(boolean isBlack) {
+        if (isBlack) {
             return Color.BLACK;
         }
         return Color.WHITE;

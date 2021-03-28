@@ -45,7 +45,7 @@ public class Pawn extends Piece {
             return false;
         }
         Position firstStep = source.sum(direction);
-        if (!board.get(target).isEmpty()) {
+        if (!board.get(firstStep).isEmpty()) {
             return false;
         }
         Position secondStep = firstStep.sum(direction);

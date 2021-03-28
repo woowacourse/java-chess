@@ -1,6 +1,7 @@
 package domain.position;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,9 @@ class PositionTest {
     @DisplayName("포지션이 체스판 범위에 들지 않는다.")
     @Test
     void isNotChessBoardPositionTest() {
-        Position position = new Position("k1");
-        assertThat(position.isChessBoardPosition()).isFalse();
+        assertThatThrownBy(() -> new Position("k1"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[Error] 유효하지 않은 체스 좌표 입니다.");
     }
 
     @DisplayName("포지션이 체스판 범위에 든다.")
