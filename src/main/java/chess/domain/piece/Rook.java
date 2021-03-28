@@ -5,6 +5,9 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Rook extends Division {
+
+    public static final int ROOK_SCORE = 5;
+
     public Rook(Color color, Position position) {
         super(color, "r", position);
     }
@@ -38,7 +41,7 @@ public class Rook extends Division {
 
     @Override
     public double score() {
-        return 5;
+        return ROOK_SCORE;
     }
 
     @Override

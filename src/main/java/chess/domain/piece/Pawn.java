@@ -5,6 +5,9 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Division {
+
+    public static final int PAWN_SCORE = 1;
+
     public Pawn(Color color, Position position) {
         super(color, "p", position);
     }
@@ -62,7 +65,7 @@ public class Pawn extends Division {
 
     @Override
     public double score() {
-        return 1;
+        return PAWN_SCORE;
     }
 
     @Override

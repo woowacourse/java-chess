@@ -3,6 +3,9 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class King extends Division {
+
+    public static final int KING_SCORE = 0;
+
     public King(Color color, Position position) {
         super(color, "k", position);
     }
@@ -31,7 +34,7 @@ public class King extends Division {
 
     @Override
     public double score() {
-        return 0;
+        return KING_SCORE;
     }
 
     @Override
