@@ -1,33 +1,35 @@
 package chess.controller;
 
+import chess.domain.command.Command;
 import chess.domain.game.Board;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Game;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.dto.InputPositionDTO;
+
+import java.util.List;
 
 public class ChessController {
     public void run() {
-        if (willNotPlayGame()) {
-            return;
-        }
-        Board board = BoardFactory.create();
-        Game game = new Game(board);
-        OutputView.printWayToMove();
-        OutputView.display(game.allBoard());
+        if (willPlayGame()) {
+            Board board = BoardFactory.create();
+            Game game = new Game(board);
+            OutputView.printWayToMove();
+            OutputView.display(game.allBoard());
 
-        play(game);
-        printScoreIfWanted(game);
+            play(game);
+            printScoreIfWanted(game);
+        }
     }
 
-    private boolean willNotPlayGame() {
+    private boolean willPlayGame() {
         try {
-            return InputView.willNotPlayGame();
+            OutputView.printWillPlayGameMessage();
+            return new Command(InputView.inputCommand()).isStart();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return willNotPlayGame();
+            return willPlayGame();
         }
     }
 
@@ -48,9 +50,14 @@ public class ChessController {
 
     private void tryOneTurn(Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
-        InputPositionDTO positionInputs = InputView.requestPositions();
-        game.move(Position.from(positionInputs.from()), Position.from(positionInputs.to()));
-        OutputView.display(game.allBoard());
+        Command command = new Command(InputView.inputCommand());
+        if (command.isMove()) {
+            List<String> positions = command.getOptions();
+            game.move(Position.from(positions.get(0)), Position.from(positions.get(1)));
+            OutputView.display(game.allBoard());
+            return;
+        }
+        throw new IllegalArgumentException();
     }
 
     private void printScoreIfWanted(Game game) {
@@ -61,7 +68,7 @@ public class ChessController {
 
     private boolean willWatchScore() {
         try {
-            return InputView.willWatchScore();
+            return new Command(InputView.inputCommand()).isStatus();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return willWatchScore();
