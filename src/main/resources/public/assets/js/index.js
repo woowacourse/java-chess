@@ -21,6 +21,7 @@ const start = function (event) {
     checkGameState();
     reloadSquares(board["board"]);
   });
+  updateTurnBadge();
 }
 
 const addEventToSquares = () => {
@@ -45,5 +46,4 @@ window.onload = () => {
 
 window.onresize = () => {
   reloadBoard();
-  updateTurnBadge();
 }
