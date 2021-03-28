@@ -1,0 +1,22 @@
+table {
+    alignment: center;
+    border: black;
+}
+
+td.black-box {
+    background-color: beige;
+    width: 4rem;
+    height: 4rem;
+}
+
+td.white-box {
+    background-color: saddlebrown;
+    width: 4rem;
+    height: 4rem;
+}
+
+.piece {
+    alignment: center;
+    width: 4rem;
+    height: 4rem;
+}

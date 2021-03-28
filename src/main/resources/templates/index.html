@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+    <meta charset="utf-8">
+    <title>샐리의 체스 게임</title>
+    <link rel="stylesheet" type="text/css" href="chess.css"/>
 </head>
 <body>
-Hello World!!
+<h1>게임을 시작합니다!</h1>
+<table>
+    <tr>
+        <td class="black-box" id="a8">
+            <img src="black_rook.png" alt="black_rook" class="piece">
+        </td>
+        <td class="white-box" id="b8">
+            <img src="black_knight.png" alt="black_knight" class="piece">
+        </td>
+        <td class="black-box" id="c8">
+            <img src="black_bishop.png" alt="black_bishop" class="piece">
+        </td>
+        <td class="white-box" id="d8">
+            <img src="black_king.png" alt="black_king" class="piece">
+        </td>
+        <td class="black-box" id="e8">
+            <img src="black_queen.png" alt="black_queen" class="piece">
+        </td>
+        <td class="white-box" id="f8">
+            <img src="black_bishop.png" alt="black_bishop" class="piece">
+        </td>
+        <td class="black-box" id="g8">
+            <img src="black_knight.png" alt="black_knight" class="piece">
+        </td>
+        <td class="white-box" id="h8">
+            <img src="black_rook.png" alt="black_rook" class="piece">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="black-box" id="b7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="white-box" id="c7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="black-box" id="d7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="white-box" id="e7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="black-box" id="f7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="white-box" id="g7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+        <td class="black-box" id="h7">
+            <img src="black_pawn.png" alt="black_pawn" class="piece">
+        </td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a6"></td>
+        <td class="white-box" id="b6"></td>
+        <td class="black-box" id="c6"></td>
+        <td class="white-box" id="d6"></td>
+        <td class="black-box" id="e6"></td>
+        <td class="white-box" id="f6"></td>
+        <td class="black-box" id="g6"></td>
+        <td class="white-box" id="h6"></td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a5"></td>
+        <td class="black-box" id="b5"></td>
+        <td class="white-box" id="c5"></td>
+        <td class="black-box" id="d5"></td>
+        <td class="white-box" id="e5"></td>
+        <td class="black-box" id="f5"></td>
+        <td class="white-box" id="g5"></td>
+        <td class="black-box" id="h5"></td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a4"></td>
+        <td class="white-box" id="b4"></td>
+        <td class="black-box" id="c4"></td>
+        <td class="white-box" id="d4"></td>
+        <td class="black-box" id="e4"></td>
+        <td class="white-box" id="f4"></td>
+        <td class="black-box" id="g4"></td>
+        <td class="white-box" id="h4"></td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a3"></td>
+        <td class="black-box" id="b3"></td>
+        <td class="white-box" id="c3"></td>
+        <td class="black-box" id="d3"></td>
+        <td class="white-box" id="e3"></td>
+        <td class="black-box" id="f3"></td>
+        <td class="white-box" id="g3"></td>
+        <td class="black-box" id="h3"></td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a2">
+            <img src="white_rook.png" alt="white_rook" class="piece">
+        </td>
+        <td class="white-box" id="b2">
+            <img src="white_knight.png" alt="white_knight" class="piece">
+        </td>
+        <td class="black-box" id="c2">
+            <img src="white_bishop.png" alt="white_bishop" class="piece">
+        </td>
+        <td class="white-box" id="d2">
+            <img src="white_king.png" alt="white_king" class="piece">
+        </td>
+        <td class="black-box" id="e2">
+            <img src="white_queen.png" alt="white_queen" class="piece">
+        </td>
+        <td class="white-box" id="f2">
+            <img src="white_bishop.png" alt="white_bishop" class="piece">
+        </td>
+        <td class="black-box" id="g2">
+            <img src="white_knight.png" alt="white_knight" class="piece">
+        </td>
+        <td class="white-box" id="h2">
+            <img src="white_rook.png" alt="white_rook" class="piece">
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="black-box" id="b1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="white-box" id="c1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="black-box" id="d1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="white-box" id="e1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="black-box" id="f1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="white-box" id="g1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+        <td class="black-box" id="h1">
+            <img src="white_pawn.png" alt="white_pawn" class="piece">
+        </td>
+    </tr>
+</table>
 </body>
 </html>
