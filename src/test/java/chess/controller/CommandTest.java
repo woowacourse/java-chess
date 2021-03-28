@@ -1,6 +1,5 @@
-package chess.controller.command;
+package chess.controller;
 
-import chess.controller.Command;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
