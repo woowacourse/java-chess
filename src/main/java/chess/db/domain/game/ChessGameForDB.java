@@ -5,6 +5,7 @@ import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.db.dao.ChessGameDAO;
+import chess.db.dao.PiecePositionEntities;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.PlayersForDB;
@@ -64,9 +65,14 @@ public class ChessGameForDB {
         PieceEntity pieceEntity = null;
         if (pieceWithColorType != null) {
             pieceEntity = PieceEntity.of(pieceWithColorType);
-            playersForDB.addForNewPlayers(pieceEntity, positionEntity);
+            playersForDB.addForNewPlayers(new PiecePositionEntities(pieceEntity, positionEntity));
         }
         boardForDB.setPiece(positionEntity, pieceEntity);
+    }
+
+    public void load(Long chessGameId) throws SQLException {
+        chessGameEntity = chessGameDAO.findById(chessGameId);
+        playersForDB.loadPlayers(chessGameEntity);
     }
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {

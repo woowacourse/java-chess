@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,25 +26,29 @@ class PlayerDAOTest {
     @Test
     void saveAndFindById() throws SQLException {
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-        PlayerEntity playerEntity = new PlayerEntity(WHITE, chessGameEntity);
+        PlayerEntity playerEntity1 = new PlayerEntity(WHITE, chessGameEntity);
+        PlayerEntity playerEntity2 = new PlayerEntity(BLACK, chessGameEntity);
 
-        PlayerEntity savedPlayerEntity = playerDAO.save(playerEntity);
-        PlayerEntity foundByIdPlayerEntity
-            = playerDAO.findByIdAndChessGame(savedPlayerEntity.getId(), chessGameEntity);
+        PlayerEntity savedPlayerEntity1 = playerDAO.save(playerEntity1);
+        PlayerEntity savedPlayerEntity2 = playerDAO.save(playerEntity2);
 
-        assertThat(savedPlayerEntity).isEqualTo(foundByIdPlayerEntity);
+        List<PlayerEntity> foundPlayers = playerDAO.findAllByChessGame(chessGameEntity);
+
+        assertThat(foundPlayers).containsExactlyInAnyOrder(
+            savedPlayerEntity1, savedPlayerEntity2
+        );
     }
 
     @Test
     void delete() throws SQLException {
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-        PlayerEntity playerEntity = playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
+        playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
+        playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
 
-        playerDAO.delete(playerEntity);
+        playerDAO.deleteAll();
 
-        PlayerEntity deletedPlayerEntity
-            = playerDAO.findByIdAndChessGame(playerEntity.getId(), chessGameEntity);
+        List<PlayerEntity> foundPlayers = playerDAO.findAllByChessGame(chessGameEntity);
 
-        assertThat(deletedPlayerEntity).isNull();
+        assertThat(foundPlayers).isEmpty();
     }
 }

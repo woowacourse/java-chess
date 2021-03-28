@@ -1,5 +1,6 @@
 package chess.db.dao;
 
+import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import java.util.Objects;
@@ -45,5 +46,9 @@ public class PiecePositionEntities {
     @Override
     public int hashCode() {
         return Objects.hash(getPieceEntity(), getPositionEntity());
+    }
+
+    public TeamColor getPieceTeamColor() {
+        return pieceEntity.getTeamColor();
     }
 }

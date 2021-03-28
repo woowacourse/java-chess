@@ -20,15 +20,17 @@ public class PlayerPiecesPositionsForDB {
     public void save(PlayerEntity playerEntity, PiecePositionEntities piecePositionEntities)
         throws SQLException {
 
-        playerPiecePositionDAO
-            .save(new PlayerPiecePositionEntity(playerEntity, piecePositionEntities));
+        playerPiecePositionDAO.save(
+            new PlayerPiecePositionEntity(playerEntity, piecePositionEntities)
+        );
     }
 
     public void update(PlayerEntity playerEntity, PiecePositionEntities piecePositionEntities)
         throws SQLException {
 
         playerPiecePositionDAO.updatePieceAndPosition(
-            new PlayerPiecePositionEntity(playerEntity, piecePositionEntities));
+            new PlayerPiecePositionEntity(playerEntity, piecePositionEntities)
+        );
     }
 
     public void remove(PlayerPiecePositionEntity playerPiecePositionEntity) throws SQLException {

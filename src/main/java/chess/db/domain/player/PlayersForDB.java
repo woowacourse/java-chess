@@ -33,11 +33,10 @@ public class PlayersForDB {
         playerEntities.add(blackPlayerEntity);
     }
 
-    public void addForNewPlayers(PieceEntity pieceEntity, PositionEntity positionEntity)
-        throws SQLException {
-
+    public void addForNewPlayers(PiecePositionEntities piecePositionEntities) throws SQLException {
         addPieceToPlayerTeamColorOf(
-            pieceEntity.getTeamColor(), new PiecePositionEntities(pieceEntity, positionEntity));
+            piecePositionEntities.getPieceTeamColor(), piecePositionEntities
+        );
     }
 
     private void addPieceToPlayerTeamColorOf(TeamColor teamColor,
@@ -45,6 +44,11 @@ public class PlayersForDB {
 
         PlayerEntity playerEntity = findPlayerByTeamColor(teamColor);
         playerPiecesPositionsForDB.save(playerEntity, piecePositionEntities);
+    }
+
+    public void loadPlayers(ChessGameEntity chessGameEntity) throws SQLException {
+        playerEntities.clear();
+        playerEntities.addAll(playerDAO.findAllByChessGame(chessGameEntity));
     }
 
     public void update(PieceEntity pieceEntity, PositionEntity positionEntity) throws SQLException {
