@@ -1,15 +1,10 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Xpoint;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 public class ScoreCalculator {
 
