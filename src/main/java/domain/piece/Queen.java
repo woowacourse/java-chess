@@ -10,8 +10,8 @@ public class Queen extends Piece {
     private static final String NAME = "q";
     private static final Score SCORE = new Score(9);
 
-    public Queen(boolean isBlack) {
-        super(NAME, isBlack, SCORE);
+    public Queen(Color color) {
+        super(NAME, color, SCORE);
     }
 
     private Direction targetDirection(Position source, Position target) {

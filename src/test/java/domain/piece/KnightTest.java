@@ -20,7 +20,7 @@ class KnightTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Knight blackKnight = new Knight(true);
+        Knight blackKnight = new Knight(Color.BLACK);
 
         board.put(sourcePosition, blackKnight);
 
@@ -34,7 +34,7 @@ class KnightTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Knight blackKnight = new Knight(true);
+        Knight blackKnight = new Knight(Color.BLACK);
 
         board.put(sourcePosition, blackKnight);
 
@@ -49,8 +49,8 @@ class KnightTest {
         Board board = new Board();
         Position sourcePosition = new Position("d5");
         Position targetPosition = new Position("e7");
-        Knight blackKnight = new Knight(true);
-        Rook blackRook = new Rook(false);
+        Knight blackKnight = new Knight(Color.BLACK);
+        Rook blackRook = new Rook(Color.WHITE);
 
         board.put(sourcePosition, blackKnight);
         board.put(targetPosition, blackRook);

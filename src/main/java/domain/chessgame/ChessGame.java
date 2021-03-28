@@ -2,6 +2,7 @@ package domain.chessgame;
 
 import domain.board.Board;
 import domain.board.Score;
+import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 
@@ -51,16 +52,16 @@ public class ChessGame {
         return board;
     }
 
-    public Score score(boolean isBlack) {
-        return board.piecesScore(isBlack);
+    public Score score(Color color) {
+        return board.piecesScore(color);
     }
 
     public void exit() {
         isPlaying = false;
     }
 
-    public boolean isKingAlive(boolean isBlack) {
-        return board.isKingAlive(isBlack);
+    public boolean isKingAlive(Color color) {
+        return board.isKingAlive(color);
     }
 
 }

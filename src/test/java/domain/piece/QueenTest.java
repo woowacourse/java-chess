@@ -20,7 +20,7 @@ class QueenTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Queen blackQueen = new Queen(true);
+        Queen blackQueen = new Queen(Color.BLACK);
 
         board.put(sourcePosition, blackQueen);
 
@@ -34,7 +34,7 @@ class QueenTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Queen blackQueen = new Queen(true);
+        Queen blackQueen = new Queen(Color.BLACK);
 
         board.put(sourcePosition, blackQueen);
 
@@ -49,8 +49,8 @@ class QueenTest {
         Board board = new Board();
         Position sourcePosition = new Position("d5");
         Position targetPosition = new Position("a8");
-        Queen blackQueen = new Queen(true);
-        Rook blackRook = new Rook(false);
+        Queen blackQueen = new Queen(Color.BLACK);
+        Rook blackRook = new Rook(Color.WHITE);
 
         board.put(sourcePosition, blackQueen);
         board.put(targetPosition, blackRook);
@@ -67,8 +67,8 @@ class QueenTest {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
         Position obstaclePosition = new Position(obstacle);
-        Queen blackQueen = new Queen(true);
-        Rook whiteRook = new Rook(false);
+        Queen blackQueen = new Queen(Color.BLACK);
+        Rook whiteRook = new Rook(Color.WHITE);
 
         board.put(sourcePosition, blackQueen);
         board.put(obstaclePosition, whiteRook);

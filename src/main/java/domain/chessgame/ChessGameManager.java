@@ -3,6 +3,7 @@ package domain.chessgame;
 import domain.board.Board;
 import domain.command.Command;
 import domain.command.Commands;
+import domain.piece.Color;
 import java.util.List;
 
 public class ChessGameManager {
@@ -44,11 +45,11 @@ public class ChessGameManager {
     }
 
     public boolean isBlackKingAlive(){
-        return chessGame.isKingAlive(true);
+        return chessGame.isKingAlive(Color.BLACK);
     }
 
     public boolean isWhiteKingAlive(){
-        return chessGame.isKingAlive(false);
+        return chessGame.isKingAlive(Color.WHITE);
     }
 
 }

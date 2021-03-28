@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.piece.Bishop;
+import domain.piece.Color;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
@@ -109,25 +110,25 @@ class BoardTest {
     void calculateChessScoreTest() {
         Board board = new Board();
 
-        board.put(new Position("b8"), new King(true));
-        board.put(new Position("c8"), new Rook(true));
-        board.put(new Position("a7"), new Pawn(true));
-        board.put(new Position("c7"), new Pawn(true));
-        board.put(new Position("d7"), new Bishop(true));
-        board.put(new Position("b6"), new Pawn(true));
-        board.put(new Position("e6"), new Queen(true));
+        board.put(new Position("b8"), new King(Color.BLACK));
+        board.put(new Position("c8"), new Rook(Color.BLACK));
+        board.put(new Position("a7"), new Pawn(Color.BLACK));
+        board.put(new Position("c7"), new Pawn(Color.BLACK));
+        board.put(new Position("d7"), new Bishop(Color.BLACK));
+        board.put(new Position("b6"), new Pawn(Color.BLACK));
+        board.put(new Position("e6"), new Queen(Color.BLACK));
 
-        board.put(new Position("f4"), new Knight(false));
-        board.put(new Position("g4"), new Queen(false));
-        board.put(new Position("f3"), new Pawn(false));
-        board.put(new Position("h3"), new Pawn(false));
-        board.put(new Position("f2"), new Pawn(false));
-        board.put(new Position("g2"), new Pawn(false));
-        board.put(new Position("e1"), new Rook(false));
-        board.put(new Position("f1"), new King(false));
+        board.put(new Position("f4"), new Knight(Color.WHITE));
+        board.put(new Position("g4"), new Queen(Color.WHITE));
+        board.put(new Position("f3"), new Pawn(Color.WHITE));
+        board.put(new Position("h3"), new Pawn(Color.WHITE));
+        board.put(new Position("f2"), new Pawn(Color.WHITE));
+        board.put(new Position("g2"), new Pawn(Color.WHITE));
+        board.put(new Position("e1"), new Rook(Color.WHITE));
+        board.put(new Position("f1"), new King(Color.WHITE));
 
-        assertThat(board.piecesScore(true)).isEqualTo(new Score(20));
-        assertThat(board.piecesScore(false)).isEqualTo(new Score(19.5));
+        assertThat(board.piecesScore(Color.BLACK)).isEqualTo(new Score(20));
+        assertThat(board.piecesScore(Color.WHITE)).isEqualTo(new Score(19.5));
     }
 
 
@@ -135,8 +136,8 @@ class BoardTest {
     @Test
     void moveSameColorPiecePositionTest() {
         Board board = new Board();
-        King blackKing = new King(true);
-        Rook blackRook = new Rook(true);
+        King blackKing = new King(Color.BLACK);
+        Rook blackRook = new Rook(Color.BLACK);
         Position source = new Position(3,3);
         Position target = new Position(4,3);
 
@@ -152,7 +153,7 @@ class BoardTest {
     @Test
     void moveOverChessBoardTest() {
         Board board = new Board();
-        King blackKing = new King(true);
+        King blackKing = new King(Color.BLACK);
         Position source = new Position(3,3);
         Position target = new Position(10,10);
 
@@ -167,7 +168,7 @@ class BoardTest {
     @Test
     void emptySourceTest() {
         Board board = new Board();
-        King blackKing = new King(true);
+        King blackKing = new King(Color.BLACK);
         Position source = new Position(1,1);
         Position target = new Position(4,3);
 

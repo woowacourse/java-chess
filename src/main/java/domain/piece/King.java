@@ -10,8 +10,8 @@ public class King extends Piece {
     private static final String NAME = "k";
     private static final Score SCORE = new Score(0);
 
-    public King(boolean isBlack) {
-        super(NAME, isBlack, SCORE);
+    public King(Color color) {
+        super(NAME, color, SCORE);
     }
 
     @Override

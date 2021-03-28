@@ -10,8 +10,8 @@ public class Rook extends Piece {
     private static final Score SCORE = new Score(5);
     private static final String NAME = "r";
 
-    public Rook(boolean isBlack) {
-        super(NAME, isBlack, SCORE);
+    public Rook(Color color) {
+        super(NAME, color, SCORE);
     }
 
     @Override

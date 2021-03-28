@@ -7,27 +7,27 @@ import java.util.Map;
 public abstract class Piece {
 
     private final String name;
-    private final boolean isBlack;
+    private final Color color;
     private final Score score;
 
-    protected Piece(String name, boolean isBlack, Score score) {
+    protected Piece(String name, Color color, Score score) {
         this.name = name;
-        this.isBlack = isBlack;
+        this.color = color;
         this.score = score;
     }
 
     public Piece(String name) {
         this.name = name;
-        this.isBlack = false;
+        this.color = null;
         this.score = null;
     }
 
     public boolean isSameColor(Piece piece) {
-        return piece.isNotEmpty() && this.isBlack == piece.isBlack;
+        return piece.isNotEmpty() && this.color == piece.color;
     }
 
     public String getName() {
-        if (isBlack) {
+        if (isBlack()) {
             return name.toUpperCase();
         }
         return name;
@@ -44,7 +44,7 @@ public abstract class Piece {
     }
 
     public boolean isBlack() {
-        return isBlack;
+        return color.isBlack();
     }
 
     public boolean isNotEmpty() {

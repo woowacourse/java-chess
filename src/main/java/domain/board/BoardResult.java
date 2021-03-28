@@ -3,6 +3,7 @@ package domain.board;
 import static domain.board.Board.CHESS_BOARD_SIZE;
 import static domain.board.Board.PAWN_ALLY_COUNT_CONDITION;
 
+import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Column;
 import domain.position.Position;
@@ -18,34 +19,34 @@ public class BoardResult {
         this.board = board;
     }
 
-    public Map<Position, Piece> pieces(boolean isBlack) {
+    public Map<Position, Piece> pieces(Color color) {
         return board.entrySet()
             .stream()
-            .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == isBlack)
+            .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == color.isBlack())
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
-    public Score piecesScore(boolean isBlack) {
+    public Score piecesScore(Color color) {
         Score score = new Score();
-        Map<Position, Piece> pieces = pieces(isBlack);
+        Map<Position, Piece> pieces = pieces(color);
 
         for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
             score = score.sum(entry.getValue().getScore());
         }
-        score = minusPawnScore(score, isBlack);
+        score = minusPawnScore(score, color);
         return score;
     }
 
-    private Score minusPawnScore(Score score, boolean isBlack) {
+    private Score minusPawnScore(Score score, Color color) {
         int minusCount = 0;
         for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
-            minusCount += rowAllyPawnCount(row, isBlack);
+            minusCount += rowAllyPawnCount(row, color);
         }
         return score.minusPawnScore(minusCount);
     }
 
-    private int rowAllyPawnCount(int column, boolean isBlack) {
-        int count = (int) pieces(isBlack).entrySet()
+    private int rowAllyPawnCount(int column, Color color) {
+        int count = (int) pieces(color).entrySet()
             .stream()
             .filter(entry -> entry.getValue().isPawn()
                 && entry.getKey().isColumnEquals(new Column(column)))
@@ -57,8 +58,8 @@ public class BoardResult {
         return 0;
     }
 
-    public boolean isKingAlive(boolean isBlack){
-        return pieces(isBlack).entrySet().stream()
+    public boolean isKingAlive(Color color){
+        return pieces(color).entrySet().stream()
             .anyMatch(entry -> entry.getValue().isKing());
     }
 

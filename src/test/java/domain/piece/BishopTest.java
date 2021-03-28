@@ -19,7 +19,7 @@ class BishopTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Bishop blackBishop = new Bishop(true);
+        Bishop blackBishop = new Bishop(Color.BLACK);
 
         board.put(sourcePosition, blackBishop);
 
@@ -33,7 +33,7 @@ class BishopTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Bishop blackBishop = new Bishop(true);
+        Bishop blackBishop = new Bishop(Color.BLACK);
 
         board.put(sourcePosition, blackBishop);
 
@@ -48,8 +48,8 @@ class BishopTest {
         Board board = new Board();
         Position sourcePosition = new Position("d5");
         Position targetPosition = new Position("a8");
-        Bishop blackBishop = new Bishop(true);
-        Rook blackRook = new Rook(false);
+        Bishop blackBishop = new Bishop(Color.BLACK);
+        Rook blackRook = new Rook(Color.WHITE);
 
         board.put(sourcePosition, blackBishop);
         board.put(targetPosition, blackRook);
@@ -65,8 +65,8 @@ class BishopTest {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
         Position obstaclePosition = new Position(obstacle);
-        Bishop blackBishop = new Bishop(true);
-        Rook whiteRook = new Rook(false);
+        Bishop blackBishop = new Bishop(Color.BLACK);
+        Rook whiteRook = new Rook(Color.WHITE);
 
         board.put(sourcePosition, blackBishop);
         board.put(obstaclePosition, whiteRook);

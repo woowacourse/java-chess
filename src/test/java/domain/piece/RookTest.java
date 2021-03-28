@@ -19,7 +19,7 @@ class RookTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Rook blackRook = new Rook(true);
+        Rook blackRook = new Rook(Color.BLACK);
 
         board.put(sourcePosition, blackRook);
 
@@ -33,7 +33,7 @@ class RookTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Rook blackRook = new Rook(true);
+        Rook blackRook = new Rook(Color.BLACK);
 
         board.put(sourcePosition, blackRook);
 
@@ -48,8 +48,8 @@ class RookTest {
         Board board = new Board();
         Position sourcePosition = new Position("d5");
         Position targetPosition = new Position("h5");
-        Rook blackRook = new Rook(true);
-        King whiteKing = new King(false);
+        Rook blackRook = new Rook(Color.BLACK);
+        King whiteKing = new King(Color.BLACK);
 
         board.put(sourcePosition, blackRook);
         board.put(targetPosition, whiteKing);
@@ -65,8 +65,8 @@ class RookTest {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
         Position obstaclePosition = new Position(obstacle);
-        Rook blackRook = new Rook(true);
-        Rook whiteRook = new Rook(false);
+        Rook blackRook = new Rook(Color.BLACK);
+        Rook whiteRook = new Rook(Color.BLACK);
 
         board.put(sourcePosition, blackRook);
         board.put(obstaclePosition, whiteRook);

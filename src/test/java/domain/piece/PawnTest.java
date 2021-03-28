@@ -11,6 +11,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
 
+    private Color color(boolean isBlack){
+        if(isBlack){
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
+
     @DisplayName("폰은 전방으로 1칸 이동 가능하다.")
     @ParameterizedTest
     @CsvSource(value = {"d7,d6,true", "d2,d3,false"}, delimiter = ',')
@@ -18,7 +25,7 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
         board.put(sourcePosition, pawn);
 
         assertThat(pawn.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
@@ -31,8 +38,8 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
-        Knight knight = new Knight(!isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
+        Knight knight = new Knight(color(!isBlack));
 
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
@@ -49,7 +56,7 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
 
         board.put(sourcePosition, pawn);
 
@@ -63,8 +70,8 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
-        Knight knight = new Knight(!isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
+        Knight knight = new Knight(color(!isBlack));
 
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
@@ -82,7 +89,7 @@ class PawnTest {
         Position sourcePosition = new Position(source);
         Position stopoverPosition = new Position(stopover);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
 
         board.put(sourcePosition, pawn);
         board.move(sourcePosition, stopoverPosition);
@@ -101,8 +108,8 @@ class PawnTest {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
         Position obstaclePosition = new Position(obstacle);
-        Pawn pawn = new Pawn(isBlack);
-        Knight knight = new Knight(isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
+        Knight knight = new Knight(color(isBlack));
 
         board.put(sourcePosition, pawn);
         board.put(obstaclePosition, knight);
@@ -119,8 +126,8 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
-        Knight knight = new Knight(!isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
+        Knight knight = new Knight(color(!isBlack));
 
         board.put(sourcePosition, pawn);
         board.put(targetPosition, knight);
@@ -135,7 +142,7 @@ class PawnTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        Pawn pawn = new Pawn(isBlack);
+        Pawn pawn = new Pawn(color(isBlack));
 
         board.put(sourcePosition, pawn);
 

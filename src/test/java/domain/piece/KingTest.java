@@ -21,7 +21,7 @@ class KingTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        King blackKing = new King(true);
+        King blackKing = new King(Color.BLACK);
         board.put(sourcePosition, blackKing);
 
         assertThat(blackKing.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
@@ -34,7 +34,7 @@ class KingTest {
         Board board = new Board();
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-        King blackKing = new King(true);
+        King blackKing = new King(Color.BLACK);
         board.put(sourcePosition, blackKing);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
@@ -48,8 +48,8 @@ class KingTest {
         Board board = new Board();
         Position sourcePosition = new Position("d5");
         Position targetPosition = new Position("e5");
-        King blackKing = new King(true);
-        Rook blackRook = new Rook(false);
+        King blackKing = new King(Color.BLACK);
+        Rook blackRook = new Rook(Color.WHITE);
         board.put(sourcePosition, blackKing);
         board.put(targetPosition, blackRook);
 

@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.piece.Color;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -55,14 +56,14 @@ public class Board {
         board.put(position, piece);
     }
 
-    public Score piecesScore(boolean isBlack) {
+    public Score piecesScore(Color color) {
         BoardResult boardResult = new BoardResult(board);
-        return boardResult.piecesScore(isBlack);
+        return boardResult.piecesScore(color);
     }
 
-    public boolean isKingAlive(boolean isBlack){
+    public boolean isKingAlive(Color color){
         BoardResult boardResult = new BoardResult(board);
-        return boardResult.isKingAlive(isBlack);
+        return boardResult.isKingAlive(color);
     }
 
 }

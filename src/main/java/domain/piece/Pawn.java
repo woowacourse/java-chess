@@ -13,8 +13,8 @@ public class Pawn extends Piece {
     private static final Score SCORE = new Score(1);
     private boolean isMoved;
 
-    public Pawn(boolean isBlack) {
-        super(NAME, isBlack, SCORE);
+    public Pawn(Color color) {
+        super(NAME, color, SCORE);
         isMoved = false;
     }
 
