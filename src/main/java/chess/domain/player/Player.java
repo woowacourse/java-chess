@@ -16,7 +16,7 @@ public abstract class Player {
     }
 
     public final boolean isFinish() {
-        return state.isFinish();
+        return state.isFinishedTurn();
     }
 
     public final void move(final Source source, final Target target, final State targetState) {
@@ -28,7 +28,7 @@ public abstract class Player {
     }
 
     public final void toRunningState(final State anotherState) {
-        this.state = this.state.toRunningState(anotherState);
+        this.state = this.state.toRunningTurn(anotherState);
     }
 
     public abstract String getName();

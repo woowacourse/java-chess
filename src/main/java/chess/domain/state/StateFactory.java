@@ -8,8 +8,8 @@ public class StateFactory {
 
     public static State initialization(final Pieces pieces) {
         if (pieces.isBlack()) {
-            return new Finished(pieces);
+            return new FinishedTurn(pieces);
         }
-        return new Running(pieces);
+        return new RunningTurn(pieces);
     }
 }

@@ -9,7 +9,7 @@ import chess.domain.position.Target;
 import java.util.Optional;
 
 public interface State {
-    boolean isFinish();
+    boolean isFinishedTurn();
 
     State move(final Source source, final Target target, final State anotherState);
 
@@ -17,7 +17,7 @@ public interface State {
 
     Pieces pieces();
 
-    State toRunningState(final State anotherState);
+    State toRunningTurn(final State anotherState);
 
     void removePiece(final Position position);
 

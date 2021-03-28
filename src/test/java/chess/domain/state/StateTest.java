@@ -25,7 +25,7 @@ class StateTest {
         black = StateFactory.initialization(blackPieces);
     }
 
-    @DisplayName("말이 움직여지면, 턴이 변경된다.")
+    @DisplayName("말이 움직여지면 턴이 변경된다.")
     @Test
     void move() {
         Source source = Source.valueOf(A2, white);
@@ -33,16 +33,16 @@ class StateTest {
 
         State whiteAfterMove = white.move(source, target, black);
 
-        assertThat(whiteAfterMove).isInstanceOf(Finished.class);
+        assertThat(whiteAfterMove).isInstanceOf(FinishedTurn.class);
     }
 
-    @DisplayName("말이 움직여지면, 턴이 변경되고, 그상태에서 움직이려 하면 에러가 발생한다.")
+    @DisplayName("말이 움직여지면 턴이 변경되고, 그상태에서 움직이려 하면 에러가 발생한다.")
     @Test
     void turnOverMove() {
         Source source = Source.valueOf(A2, white);
         Target target = Target.valueOf(source, A3, white);
         State whiteAfterMove = white.move(source, target, black);
-        assertThat(whiteAfterMove).isInstanceOf(Finished.class);
+        assertThat(whiteAfterMove).isInstanceOf(FinishedTurn.class);
 
         Source secondSource = Source.valueOf(A3, white);
         Target secondTarget = Target.valueOf(source, A4, white);
@@ -52,21 +52,21 @@ class StateTest {
                         secondSource, secondTarget, black
                 )
         ).isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("끝난 상태에서는 기물을 움직일 수 없습니다.");
+                .hasMessage("한 턴이 끝난 경우에는 기물을 움직일 수 없습니다.");
     }
 
-    @DisplayName("말이 움직여지면, 턴이 변경되고, 상대가 움직인다.")
+    @DisplayName("말이 움직여지면 턴이 변경되고, 상대가 움직인다.")
     @Test
     void turnChange() {
         Source source = Source.valueOf(A2, white);
         Target target = Target.valueOf(source, A3, white);
         State whiteAfterMove = white.move(source, target, black);
-        assertThat(whiteAfterMove).isInstanceOf(Finished.class);
+        assertThat(whiteAfterMove).isInstanceOf(FinishedTurn.class);
 
         Source blackSource = Source.valueOf(A7, black);
         Target blackTarget = Target.valueOf(source, A5, black);
 
-        black = black.toRunningState(whiteAfterMove);
+        black = black.toRunningTurn(whiteAfterMove);
 
         State blackState = black.move(blackSource, blackTarget, whiteAfterMove);
         assertThat(blackState.findPiece(A5)).isNotEmpty();
@@ -83,6 +83,6 @@ class StateTest {
                         source, target, white
                 )
         ).isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("끝난 상태에서는 기물을 움직일 수 없습니다.");
+                .hasMessage("한 턴이 끝난 경우에는 기물을 움직일 수 없습니다.");
     }
 }

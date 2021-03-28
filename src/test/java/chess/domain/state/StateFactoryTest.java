@@ -17,7 +17,7 @@ class StateFactoryTest {
         State white = StateFactory.initialization(whitePieces);
         State black = StateFactory.initialization(blackPieces);
 
-        assertThat(white).isInstanceOf(Running.class);
-        assertThat(black).isInstanceOf(Finished.class);
+        assertThat(white).isInstanceOf(RunningTurn.class);
+        assertThat(black).isInstanceOf(FinishedTurn.class);
     }
 }
