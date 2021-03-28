@@ -43,14 +43,21 @@ public class Board {
 
     public void checkMovable(Position start, Position end, boolean color) {
         Piece piece = getPiece(start);
+        checkInvalidTurn(color, piece);
+        checkEmptyPiece(piece);
+        checkSamePosition(start, end);
+    }
+
+    private void checkInvalidTurn(boolean color, Piece piece) {
         if (!piece.isSameColor(color)) {
             throw new InvalidTurnException();
         }
+    }
 
+    private void checkEmptyPiece(Piece piece) {
         if (piece.isEmpty()) {
             throw new PieceEmptyException();
         }
-        checkSamePosition(start, end);
     }
 
     private void checkSamePosition(Position start, Position end) {

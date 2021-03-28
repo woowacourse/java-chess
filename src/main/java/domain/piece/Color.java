@@ -1,6 +1,7 @@
 package domain.piece;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum Color {
     BLACK(true),
@@ -16,7 +17,7 @@ public enum Color {
         return Arrays.stream(values())
                 .filter(value -> value.color == color)
                 .findAny()
-                .get();
+                .orElseThrow(() -> new NoSuchElementException());
     }
 
     public static String findColorName(Boolean color) {

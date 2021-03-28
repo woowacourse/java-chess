@@ -1,7 +1,7 @@
 package domain.dto;
 
 import domain.Board;
-import domain.piece.Position;
+import domain.piece.position.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;

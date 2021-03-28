@@ -5,7 +5,7 @@ import domain.exception.InvalidPositionException;
 import java.util.Objects;
 
 public class Position {
-    private static final Position EMPTY_POSITION = new Position(null, null);    // TODO : null 대신 다른 방법은?
+    private static final Position EMPTY_POSITION = new Position(null, null);
 
     private final Row row;
     private final Column column;
