@@ -34,7 +34,7 @@ class PositionTest {
     @DisplayName("이동범위가 7칸일때 이동이 가능한지 테스트")
     void canMoveTest() {
         Position position = Position.of("a1");
-        Direction direction = Direction.NORTHEAST;
+        Direction direction = Direction.NORTH_EAST;
         Position targetPosition = Position.of("h8");
         int ableLength = 7;
 
