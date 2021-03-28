@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.domain.Board.BOARD_SIZE;
+import static chess.domain.ChessGame.BOARD_SIZE;
 
 public class Point {
     private static final int MINIMUM_VALUE = 0;
