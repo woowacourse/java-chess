@@ -2,6 +2,7 @@ package chess.domain.piece.king;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
@@ -10,14 +11,16 @@ import java.util.List;
 
 public abstract class King extends Piece {
 
-    private static final int ABLE_DISTANCE_TO_MOVE = 1;
-
-    public King(final Owner owner) {
-        this(owner, new Score(0.0d), Direction.allDirections());
+    private King(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+        super(owner, score, directions, maxDistance);
     }
 
-    public King(final Owner owner, Score score, List<Direction> directions) {
-        super(owner, score, directions);
+    protected King(final Owner owner, Score score, List<Direction> directions) {
+        this(owner, score, directions, MaxDistance.KING);
+    }
+
+    protected King(final Owner owner) {
+        this(owner, new Score(0.0d), Direction.allDirections());
     }
 
     public static King getInstanceOf(final Owner owner) {
@@ -40,11 +43,6 @@ public abstract class King extends Piece {
     @Override
     public String getSymbol() {
         return "K";
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 
     @Override

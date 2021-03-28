@@ -1,20 +1,47 @@
 package chess.domain.piece;
 
+import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
-    protected final Owner owner;
-    protected final List<Direction> directions;
-    protected final Score score;
+    private final Owner owner;
+    private final Score score;
+    private final List<Direction> directions;
+    private final MaxDistance maxDistance;
 
-    public Piece(final Owner owner, final Score score, final List<Direction> directions) {
+    public Piece(Owner owner, Score score, List<Direction> directions, MaxDistance maxDistance) {
         this.owner = owner;
-        this.score = score;
         this.directions = directions;
+        this.score = score;
+        this.maxDistance = maxDistance;
+    }
+
+    public Piece(Owner owner, Score score, List<Direction> directions) {
+        this(owner, score, directions, MaxDistance.EMPTY);
+    }
+
+    public List<Path> ableToPath(final Position source) {
+        return directions.stream()
+                .map(direction -> ableToPathDirection(source, direction))
+                .collect(Collectors.toList());
+    }
+
+    public Path ableToPathDirection(Position source, Direction direction) {
+        List<Position> path = new ArrayList<>();
+        Position target = source;
+        while (target.isValidPosition(direction) && isValidDistance(source, target.next(direction))) {
+            target = target.next(direction);
+            path.add(target);
+        }
+        return new Path(path);
+    }
+
+    private boolean isValidDistance(Position source, Position target) {
+        return source.getDistance(target) <= this.maxDistanceValue();
     }
 
     public final boolean isSameTeam(final Piece other) {
@@ -45,17 +72,15 @@ public abstract class Piece {
         return this.owner.isEnemy(other.owner);
     }
 
-    public List<Direction> getDirections() {
-        return Collections.unmodifiableList(directions);
-    }
-
     public final Score score() {
         return this.score;
     }
 
-    public abstract String getSymbol();
-
-    public abstract int getMaxDistance();
+    public int maxDistanceValue() {
+        return this.maxDistance.value();
+    }
 
     public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
+
+    public abstract String getSymbol();
 }

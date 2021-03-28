@@ -2,15 +2,25 @@ package chess.domain.piece.rook;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
 
-public abstract class Rook extends Piece {
-    private static final int ABLE_DISTANCE_TO_MOVE = 7;
+import java.util.List;
 
-    public Rook(final Owner owner) {
-        super(owner, new Score(5.0d), Direction.straightDirections());
+public abstract class Rook extends Piece {
+
+    private Rook(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+        super(owner, score, directions, maxDistance);
+    }
+
+    private Rook(final Owner owner, final Score score, final List<Direction> directions) {
+        this(owner, score, directions, MaxDistance.ROOK);
+    }
+
+    protected Rook(final Owner owner) {
+        this(owner, new Score(5.0d), Direction.straightDirections());
     }
 
     public static Rook getInstanceOf(final Owner owner) {
@@ -28,10 +38,5 @@ public abstract class Rook extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 }

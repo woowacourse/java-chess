@@ -2,16 +2,25 @@ package chess.domain.piece.bishop;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
 
+import java.util.List;
+
 public abstract class Bishop extends Piece {
 
-    private static final int ABLE_DISTANCE_TO_MOVE = 7;
+    private Bishop(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+        super(owner, score, directions, maxDistance);
+    }
+
+    private Bishop(final Owner owner, final Score score, final List<Direction> directions) {
+        this(owner, score, directions, MaxDistance.BISHOP);
+    }
 
     public Bishop(final Owner owner) {
-        super(owner, new Score(3.0d), Direction.diagonalDirections());
+        this(owner, new Score(3.0d), Direction.diagonalDirections());
     }
 
     public static Bishop getInstanceOf(final Owner owner) {
@@ -34,10 +43,5 @@ public abstract class Bishop extends Piece {
     @Override
     public String getSymbol() {
         return "B";
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 }

@@ -2,16 +2,25 @@ package chess.domain.piece.queen;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
 
+import java.util.List;
+
 public abstract class Queen extends Piece {
 
-    private static final int ABLE_DISTANCE_TO_MOVE = 7;
+    private Queen(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+        super(owner, score, directions, maxDistance);
+    }
 
-    public Queen(final Owner owner) {
-        super(owner, new Score(9.0d), Direction.allDirections());
+    protected Queen(final Owner owner, final Score score, final List<Direction> directions) {
+        this(owner, score, directions, MaxDistance.QUEEN);
+    }
+
+    protected Queen(final Owner owner) {
+        this(owner, new Score(9.0d), Direction.allDirections());
     }
 
     public static Queen getInstanceOf(final Owner owner) {
@@ -29,10 +38,5 @@ public abstract class Queen extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 }
