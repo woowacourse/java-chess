@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.team;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

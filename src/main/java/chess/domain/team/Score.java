@@ -11,7 +11,6 @@ public class Score implements Comparable<Score> {
         this.score = value;
     }
 
-
     public Score add(Score value) {
         return new Score(value.score + this.score);
     }
