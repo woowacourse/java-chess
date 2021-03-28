@@ -2,6 +2,7 @@ package chess.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
@@ -22,6 +23,7 @@ public class ChessManager {
         validateTurn(command.source());
         boolean isKing = isTargetKing(command.target());
         board.move(command.source(), command.target());
+        // TODO 왕이 죽었는지 체크하는 로직 더 생각해보기
         isEnd = isKing;
         turn = turn.reverse();
     }
@@ -36,7 +38,7 @@ public class ChessManager {
         return board.isTargetKing(target);
     }
 
-    public List<Position> getReachablePositions(final ShowCommand command) {
+    public Path getReachablePositions(final ShowCommand command) {
         return board.getAbleToMove(command.source());
     }
 

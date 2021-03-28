@@ -2,12 +2,11 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Piece;
 import chess.manager.Status;
-
-import java.util.List;
 
 public class OutputView {
 
@@ -30,7 +29,7 @@ public class OutputView {
         }
     }
 
-    public static void printAbleToMove(final Board board, final List<Position> ableToMove) {
+    public static void printAbleToMove(final Board board, final Path ableToMove) {
         for (final Horizontal horizontal : Horizontal.values()) {
             for (final Vertical vertical : Vertical.values()) {
                 final Position position = Position.of(vertical, horizontal);
@@ -40,7 +39,7 @@ public class OutputView {
         }
     }
 
-    private static void printPieceOrAbleToMoveSymbol(final Board board, final Position position, final List<Position> ableToMove) {
+    private static void printPieceOrAbleToMoveSymbol(final Board board, final Position position, final Path ableToMove) {
         if (ableToMove.contains(position)) {
             System.out.print("*");
             return;

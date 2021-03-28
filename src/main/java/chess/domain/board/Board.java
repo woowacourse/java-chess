@@ -1,15 +1,16 @@
 package chess.domain.board;
 
 import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.direction.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.king.King;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> board;
@@ -26,35 +27,15 @@ public class Board {
         return of(Position.of(vertical, horizontal));
     }
 
-    private List<Position> ableToMove(final Position source) {
-        // TODO :: 인덴트 줄이기
-        final List<Position> ableToMove = new ArrayList<>();
+    private Path ableToPath(final Position source) {
         final Piece sourcePiece = of(source);
+        final List<Path> paths = sourcePiece.ableToPath(source);
 
-        for (final Direction direction : sourcePiece.getDirections()) {
-            for (int distance = 1; distance <= sourcePiece.getMaxDistance(); distance++) {
-                if (isBlocked(source, direction, distance)) {
-                    break;
-                }
-
-                final Position target = source.next(direction, distance);
-                if (sourcePiece.isReachable(source, target, of(target))) {
-                    ableToMove.add(target);
-                }
-
-                if (sourcePiece.isEnemy(of(target))) {
-                    break;
-                }
-            }
-        }
-
-        return ableToMove;
-    }
-
-    private void validateMove(final Position source, final Position target) {
-        if (!ableToMove(source).contains(target)) {
-            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
-        }
+        return new Path(paths.stream()
+                .map(path -> path.filterPieceRules(source, this))
+                .collect(Collectors.toList())
+                .stream()
+                .flatMap(Path::stream).collect(Collectors.toList()));
     }
 
     public void move(final Position source, final Position target) {
@@ -62,21 +43,23 @@ public class Board {
         movePiece(source, target);
     }
 
-    private boolean isBlocked(final Position source, final Direction direction, final int distance) {
-        try {
-            return isSameTeam(source, source.next(direction, distance));
-        } catch (IllegalArgumentException e) {
-            return true;
+    private void validateMove(final Position source, final Position target) {
+        if (isUnableToMove(source, target)) {
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
-    private boolean isSameTeam(final Position source, final Position target) {
-        return of(source).isSameTeam(of(target));
+    private boolean isUnableToMove(final Position source, final Position target) {
+        return !ableToPath(source).contains(target);
     }
 
     private void movePiece(final Position source, final Position target) {
         putPiece(source, target);
         putEmpty(source);
+    }
+
+    public Path getAbleToMove(final Position source) {
+        return ableToPath(source);
     }
 
     private void putPiece(final Position source, final Position target) {
@@ -87,18 +70,8 @@ public class Board {
         board.put(position, Empty.getInstance());
     }
 
-    public List<Position> getAbleToMove(final Position source) {
-        return ableToMove(source);
-    }
-
-
-
     public boolean isKingAlive(final Owner owner) {
         return board.containsValue(King.getInstanceOf(owner));
-    }
-
-    public Collection<Piece> pieces() {
-        return new ArrayList<>(board.values());
     }
 
     public boolean isTargetKing(Position target) {
@@ -107,6 +80,10 @@ public class Board {
 
     public boolean isPositionOwner(final Position position, final Owner owner) {
         return of(position).isSameOwner(owner);
+    }
+
+    public List<Piece> pieces() {
+        return new ArrayList<>(board.values());
     }
 
     public Map<Position, Piece> getBoard() {

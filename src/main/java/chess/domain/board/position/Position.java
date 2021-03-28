@@ -29,9 +29,22 @@ public class Position {
 
     public static Position of(final String input) {
         if (input.split("").length != POSITION_VALID_SIZE) {
-            throw new IllegalArgumentException("올바른 위치가 아닙니다.");
+            throw new IllegalArgumentException("입력값이 올바른 위치가 아닙니다.");
         }
         return new Position(input);
+    }
+
+    public boolean isValidPosition(Direction direction) {
+        return !this.isEscapePosition(direction);
+    }
+
+    public boolean isEscapePosition(Direction direction) {
+        try {
+            this.next(direction);
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isStraight(final Position other) {
@@ -54,6 +67,10 @@ public class Position {
         }
 
         throw new IllegalArgumentException("직선이나 대각선 경로가 아니라서 거리를 측정할 수 없습니다.");
+    }
+
+    public Position next(final Direction direction) {
+        return new Position(vertical.add(direction.getX()), horizontal.add(direction.getY()));
     }
 
     public Position next(final Direction direction, final int distance) {

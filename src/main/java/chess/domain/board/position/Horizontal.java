@@ -18,12 +18,12 @@ public enum Horizontal {
         this.index = index;
     }
 
-    static Horizontal parse(final String input) {
+    public static Horizontal parse(final String input) {
         validateParseInt(input);
         return of(Integer.parseInt(input));
     }
 
-    static Horizontal of(final int index) {
+    public static Horizontal of(final int index) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
                 .findFirst()
