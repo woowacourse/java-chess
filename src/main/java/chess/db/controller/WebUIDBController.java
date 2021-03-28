@@ -52,9 +52,10 @@ public class WebUIDBController {
     }
 
     private void handleCreateChessRoomRequest() {
-        get(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
+        post(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
             chessServiceForDB.createNewChessGame(req.queryParams("room-title"));
-            res.redirect(ROOT + CHESS_BOARD);
+            System.out.println("들어온 요청 : room-title=" + req.queryParams("room-title"));
+            //res.redirect(ROOT + CHESS_BOARD);
             return null;
         });
     }
