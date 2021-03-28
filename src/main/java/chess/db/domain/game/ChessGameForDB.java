@@ -14,7 +14,7 @@ import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
-import chess.db.entity.PlayerPiecePositionEntity;
+import chess.db.entity.PiecePositionEntity;
 import chess.beforedb.domain.board.setting.BoardCustomSetting;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
@@ -87,7 +87,7 @@ public class ChessGameForDB {
         playersForDB.update(movingPiece, moveRouteForDB.getDestination());
         if (boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
             PieceEntity deadPiece = boardForDB.findPiece(moveRouteForDB.getDestination());
-            playersForDB.remove(deadPiece, moveRouteForDB.getDestination());
+            playersForDB.removePiece(deadPiece, moveRouteForDB.getDestination());
         }
     }
 
@@ -103,7 +103,7 @@ public class ChessGameForDB {
         return boardForDB.getStatus();
     }
 
-    public List<PlayerPiecePositionEntity> getAllPiecesPositionsOfAllPlayers() throws SQLException {
+    public List<PiecePositionEntity> getAllPiecesPositionsOfAllPlayers() throws SQLException {
         return playersForDB.getAllPiecesPositionsOfChessGame();
     }
 
@@ -124,5 +124,10 @@ public class ChessGameForDB {
     public String beforeTurnTeamName() {
         TeamColor beforeTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
         return beforeTurnTeamColor.getName();
+    }
+
+    public void end() throws SQLException {
+        playersForDB.removePlayersOfChessGame(chessGameEntity);
+        chessGameDAO.remove(chessGameEntity);
     }
 }

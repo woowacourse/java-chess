@@ -19,8 +19,8 @@ class PlayerDAOTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        playerDAO.deleteAll();
-        chessGameDAO.deleteAll();
+        playerDAO.removeAll();
+        chessGameDAO.removeAll();
     }
 
     @Test
@@ -45,7 +45,7 @@ class PlayerDAOTest {
         playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
         playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
 
-        playerDAO.deleteAll();
+        playerDAO.removeAll();
 
         List<PlayerEntity> foundPlayers = playerDAO.findAllByChessGame(chessGameEntity);
 

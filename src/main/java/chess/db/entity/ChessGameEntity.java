@@ -15,10 +15,10 @@ public class ChessGameEntity {
         this.currentTurnTeamColor = WHITE;
     }
 
-    public ChessGameEntity(Long id, String title, TeamColor currentTurnTeamColor) {
+    public ChessGameEntity(Long id, String title, String currentTurnTeamColor) {
         this.id = id;
         this.title = title;
-        this.currentTurnTeamColor = currentTurnTeamColor;
+        this.currentTurnTeamColor = TeamColor.of(currentTurnTeamColor);
     }
 
     public Long getId() {

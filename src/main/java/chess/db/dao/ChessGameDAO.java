@@ -4,11 +4,15 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.entity.ChessGameEntity;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.entity.PlayerEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessGameDAO {
 
@@ -33,7 +37,7 @@ public class ChessGameDAO {
         return new ChessGameEntity(
             rs.getLong("id"),
             rs.getString("title"),
-            TeamColor.of(rs.getString("current_turn_team_color")));
+            rs.getString("current_turn_team_color"));
     }
 
     private ResultSet getResultSet(Long id) throws SQLException {
@@ -47,6 +51,25 @@ public class ChessGameDAO {
         return rs;
     }
 
+    public List<ChessGameEntity> findAll() throws SQLException {
+        ResultSet rs = getResultSet();
+        List<ChessGameEntity> results = new ArrayList<>();
+        while (rs.next()) {
+            results.add(new ChessGameEntity(
+                rs.getLong("id"),
+                rs.getString("title"),
+                rs.getString("current_turn_team_color")
+            ));
+        }
+        return results;
+    }
+
+    private ResultSet getResultSet() throws SQLException {
+        String query = "SELECT * FROM chess_game";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        return pstmt.executeQuery();
+    }
+
     public ChessGameEntity updateCurrentTurnTeamColor(ChessGameEntity chessGameEntity)
         throws SQLException {
         String query = "UPDATE chess_game SET current_turn_team_color = ? WHERE id = ?";
@@ -57,14 +80,14 @@ public class ChessGameDAO {
         return chessGameEntity;
     }
 
-    public void delete(ChessGameEntity chessGameEntity) throws SQLException {
+    public void remove(ChessGameEntity chessGameEntity) throws SQLException {
         String query = "DELETE FROM chess_game WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, chessGameEntity.getId());
         pstmt.executeUpdate();
     }
 
-    public void deleteAll() throws SQLException {
+    public void removeAll() throws SQLException {
         String query = "DELETE FROM chess_game";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();

@@ -22,15 +22,15 @@ import static chess.beforedb.domain.position.type.Rank.SEVEN;
 import static chess.beforedb.domain.position.type.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PiecePositionEntities;
 import chess.db.dao.PlayerDAO;
-import chess.db.dao.PlayerPiecePositionDAO;
+import chess.db.dao.PiecePositionDAO;
 import chess.db.domain.game.ChessGameForDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerPiecePositionEntity;
-import chess.beforedb.domain.board.setting.BoardDefaultSetting;
+import chess.db.entity.PiecePositionEntity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,17 +39,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardForDBDefaultSettingTest {
-    private final PlayerPiecePositionDAO playerPiecePositionDAO = new PlayerPiecePositionDAO();
+class BoardForDBTest {
+    private final PiecePositionDAO playerPiecePositionDAO = new PiecePositionDAO();
     private final PlayerDAO playerDAO = new PlayerDAO();
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
     private ChessGameForDB chessGameForDB;
 
     @AfterEach
     void tearDown() throws SQLException {
-        playerPiecePositionDAO.deleteAll();
-        playerDAO.deleteAll();
-        chessGameDAO.deleteAll();
+        playerPiecePositionDAO.removeAll();
+        playerDAO.removeAll();
+        chessGameDAO.removeAll();
     }
 
     @BeforeEach
@@ -62,11 +62,11 @@ class BoardForDBDefaultSettingTest {
     @DisplayName("DB에서 체스 판 정보 가져오기")
     @Test
     void BoardDefaultSetting() throws SQLException {
-        List<PlayerPiecePositionEntity> allPiecesPositionsOfAllPlayers
+        List<PiecePositionEntity> allPiecesPositionsOfAllPlayers
             = chessGameForDB.getAllPiecesPositionsOfAllPlayers();
 
         List<PiecePositionEntities> allPiecePositionEntities = new ArrayList<>();
-        for (PlayerPiecePositionEntity playerPiecePositionEntity : allPiecesPositionsOfAllPlayers) {
+        for (PiecePositionEntity playerPiecePositionEntity : allPiecesPositionsOfAllPlayers) {
             allPiecePositionEntities.add(playerPiecePositionEntity.getPiecePositionEntities());
         }
 

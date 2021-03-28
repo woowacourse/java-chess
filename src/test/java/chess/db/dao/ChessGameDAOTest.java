@@ -23,7 +23,7 @@ class ChessGameDAOTest {
 
     @AfterEach
     void tearDown() throws SQLException {
-        chessGameDAO.deleteAll();
+        chessGameDAO.removeAll();
     }
 
     @Test
@@ -50,7 +50,7 @@ class ChessGameDAOTest {
     @Test
     void delete() throws SQLException {
 
-        chessGameDAO.delete(chessGameEntity);
+        chessGameDAO.remove(chessGameEntity);
         ChessGameEntity deletedChessRoom = chessGameDAO.findById(chessGameEntity.getId());
 
         assertThat(deletedChessRoom).isNull();

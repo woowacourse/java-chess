@@ -56,9 +56,16 @@ public class PlayerDAO {
         return pstmt.executeQuery();
     }
 
-    public void deleteAll() throws SQLException {
+    public void removeAll() throws SQLException {
         String query = "DELETE FROM player";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.executeUpdate();
+    }
+
+    public void removeAllByChessGame(ChessGameEntity chessGameEntity) throws SQLException {
+        String query = "DELETE FROM player WHERE chess_game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, chessGameEntity.getId());
         pstmt.executeUpdate();
     }
 }

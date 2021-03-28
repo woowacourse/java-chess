@@ -13,22 +13,22 @@ import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
-import chess.db.entity.PlayerPiecePositionEntity;
+import chess.db.entity.PiecePositionEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PlayerPiecePositionDAOTest {
+class PiecePositionDAOTest {
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
     private final PlayerDAO playerDAO = new PlayerDAO();
     private final PieceDAO pieceDAO = new PieceDAO();
     private final PositionDAO positionDAO = new PositionDAO();
-    private final PlayerPiecePositionDAO playerPiecePositionDAO = new PlayerPiecePositionDAO();
+    private final PiecePositionDAO piecePositionDAO = new PiecePositionDAO();
     private PlayerEntity playerEntity;
     private PieceEntity pieceEntity;
     private PositionEntity positionEntity;
-    private PlayerPiecePositionEntity playerPiecePositionEntity;
+    private PiecePositionEntity piecePositionEntity;
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -36,51 +36,51 @@ class PlayerPiecePositionDAOTest {
         pieceEntity = pieceDAO.findByPieceTypeAndTeamColor(PAWN, WHITE);
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity("test"));
         playerEntity = playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
-        playerPiecePositionEntity = playerPiecePositionDAO.save(
-            new PlayerPiecePositionEntity(
+        piecePositionEntity = piecePositionDAO.save(
+            new PiecePositionEntity(
                 playerEntity, new PiecePositionEntities(pieceEntity, positionEntity)));
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        playerPiecePositionDAO.deleteAll();
-        playerDAO.deleteAll();
-        chessGameDAO.deleteAll();
+        piecePositionDAO.removeAll();
+        playerDAO.removeAll();
+        chessGameDAO.removeAll();
     }
 
     @Test
     void saveAndFind() throws SQLException {
 
-        PlayerPiecePositionEntity foundPlayerPiecePositionEntity = playerPiecePositionDAO
+        PiecePositionEntity foundPiecePositionEntity = piecePositionDAO
             .findByPlayerAndPieceAndPosition(playerEntity, pieceEntity, positionEntity);
 
-        assertThat(foundPlayerPiecePositionEntity.getPlayerEntity()).isEqualTo(playerEntity);
-        assertThat(foundPlayerPiecePositionEntity.getPieceEntity()).isEqualTo(pieceEntity);
-        assertThat(foundPlayerPiecePositionEntity.getPositionEntity()).isEqualTo(positionEntity);
+        assertThat(foundPiecePositionEntity.getPlayerEntity()).isEqualTo(playerEntity);
+        assertThat(foundPiecePositionEntity.getPieceEntity()).isEqualTo(pieceEntity);
+        assertThat(foundPiecePositionEntity.getPositionEntity()).isEqualTo(positionEntity);
     }
 
     @Test
     void update() throws SQLException {
         PieceEntity newPieceEntity = pieceDAO.findByPieceTypeAndTeamColor(ROOK, WHITE);
         PositionEntity newPositionEntity = positionDAO.findByFileAndRank(H, TWO);
-        playerPiecePositionEntity.setPieceEntity(newPieceEntity);
-        playerPiecePositionEntity.setPositionEntity(newPositionEntity);
+        piecePositionEntity.setPieceEntity(newPieceEntity);
+        piecePositionEntity.setPositionEntity(newPositionEntity);
 
-        PlayerPiecePositionEntity updatedPlayerPiecePositionDAO = playerPiecePositionDAO
-            .updatePieceAndPosition(playerPiecePositionEntity);
+        PiecePositionEntity updatedPiecePositionDAO = piecePositionDAO
+            .updatePieceAndPosition(piecePositionEntity);
 
-        assertThat(updatedPlayerPiecePositionDAO.getPlayerEntity()).isEqualTo(playerEntity);
-        assertThat(updatedPlayerPiecePositionDAO.getPieceEntity()).isEqualTo(newPieceEntity);
-        assertThat(updatedPlayerPiecePositionDAO.getPositionEntity()).isEqualTo(newPositionEntity);
+        assertThat(updatedPiecePositionDAO.getPlayerEntity()).isEqualTo(playerEntity);
+        assertThat(updatedPiecePositionDAO.getPieceEntity()).isEqualTo(newPieceEntity);
+        assertThat(updatedPiecePositionDAO.getPositionEntity()).isEqualTo(newPositionEntity);
     }
 
     @Test
     void delete() throws SQLException {
-        playerPiecePositionDAO.remove(playerPiecePositionEntity);
+        piecePositionDAO.remove(piecePositionEntity);
 
-        PlayerPiecePositionEntity deletedPlayerPiecePosition = playerPiecePositionDAO
+        PiecePositionEntity deletedPiecePosition = piecePositionDAO
             .findByPlayerAndPieceAndPosition(playerEntity, pieceEntity, positionEntity);
 
-        assertThat(deletedPlayerPiecePosition).isNull();
+        assertThat(deletedPiecePosition).isNull();
     }
 }
