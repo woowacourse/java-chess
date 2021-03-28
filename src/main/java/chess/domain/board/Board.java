@@ -2,8 +2,10 @@ package chess.domain.board;
 
 import chess.domain.board.position.InitPosition;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
 import chess.domain.movestrategy.MoveStrategy;
+import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.List;
@@ -27,7 +29,7 @@ public class Board {
         this.squares = squares;
     }
 
-    public Piece pieceByPosition(Position position) {
+    public Piece pieceByPosition(final Position position) {
         return this.squares.get(position);
     }
 
@@ -38,7 +40,7 @@ public class Board {
             .count() == BOTH_KINGS_ALIVE;
     }
 
-    public void moveIfValidPosition(Position source, Position target) {
+    public void moveIfValidPosition(final Position source, final Position target) {
         if (isInvalidPosition(source, target)) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
@@ -46,24 +48,35 @@ public class Board {
         swapPieces(source, target);
     }
 
-    private boolean isInvalidPosition(Position source, Position target) {
+    private boolean isInvalidPosition(final Position source, final Position target) {
         Piece piece = pieceByPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();
         Set<Position> movablePath = moveStrategy.currentPositionMoveStrategy(this, source);
         return !movablePath.contains(target);
     }
 
-    private void swapPieces(Position source, Position target) {
+    private void swapPieces(final Position source, final Position target) {
         Piece sourcePiece = pieceByPosition(source);
         replacePiece(source, Empty.create());
         replacePiece(target, sourcePiece);
     }
 
-    private void replacePiece(Position position, Piece piece) {
+    private void replacePiece(final Position position, final Piece piece) {
         this.squares.replace(position, piece);
     }
 
-    public List<Piece> piecesByYpoint(Ypoint ypoint) {
+    public List<Piece> piecesByXpoint(final Xpoint xpoint) {
+        return this.squares.entrySet()
+            .stream()
+            .filter(entry -> {
+                Position position = entry.getKey();
+                return position.isSameX(xpoint);
+            })
+            .map(Entry::getValue)
+            .collect(Collectors.toList());
+    }
+
+    public List<Piece> piecesByYpoint(final Ypoint ypoint) {
         return this.squares.entrySet()
             .stream()
             .filter(entry -> {
@@ -71,6 +84,13 @@ public class Board {
                 return position.isSameY(ypoint);
             })
             .map(Entry::getValue)
+            .collect(Collectors.toList());
+    }
+
+    public List<Piece> piecesByColor(final Color color) {
+        return this.squares.values()
+            .stream()
+            .filter(piece -> piece.isSameColor(color))
             .collect(Collectors.toList());
     }
 }

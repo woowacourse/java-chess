@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Rank;
+import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -11,10 +11,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,9 +33,8 @@ class ScoreCalculatorTest {
     }
 
     private ScoreCalculator emptyScoreCalculator() {
-        Rank rank = new Rank(new LinkedHashMap<>());
-        List<Rank> ranks = new ArrayList<>(Collections.singletonList(rank));
-        return new ScoreCalculator(ranks);
+        Board board = new Board(new LinkedHashMap<>());
+        return new ScoreCalculator(board);
     }
 
     @Test
@@ -48,8 +44,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("e8"), King.createBlack());
         map.put(Position.of("e1"), King.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(0);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(0);
@@ -62,8 +58,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("d8"), Queen.createBlack());
         map.put(Position.of("d1"), Queen.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(9);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(9);
@@ -77,8 +73,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("h8"), Rook.createBlack());
         map.put(Position.of("a1"), Rook.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(10);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(5);
@@ -92,8 +88,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("f8"), Bishop.createBlack());
         map.put(Position.of("c1"), Bishop.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(6);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(3);
@@ -107,8 +103,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("g8"), Knight.createBlack());
         map.put(Position.of("b1"), Knight.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(5);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(2.5);
@@ -122,8 +118,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("b7"), Pawn.createBlack());
         map.put(Position.of("c2"), Pawn.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(2);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(1);
@@ -137,8 +133,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("a6"), Pawn.createBlack());
         map.put(Position.of("a2"), Pawn.createWhite());
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(1);
         assertThat(scoreCalculator.totalWhiteScore()).isEqualTo(1);
@@ -155,8 +151,8 @@ class ScoreCalculatorTest {
         map.put(Position.of("e8"), King.createBlack());  // 0
         map.put(Position.of("a1"), Rook.createBlack());  // 5
 
-        List<Rank> ranks = Collections.singletonList(new Rank(map));
-        ScoreCalculator scoreCalculator = new ScoreCalculator(ranks);
+        Board board = new Board(map);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
 
         assertThat(scoreCalculator.totalBlackScore()).isEqualTo(16);
     }
