@@ -7,6 +7,7 @@ import chess.domain.player.Round;
 import chess.domain.state.StateFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.ChessBoardDto;
 import chess.view.dto.PlayerResultDto;
 
 import java.util.Scanner;
@@ -39,7 +40,7 @@ public class ChessController {
 
     private void play(final Round round) {
         if (round.isPlaying()) {
-            OutputView.showChessBoard(round.getBoard());
+            OutputView.showChessBoard(ChessBoardDto.from(round));
             round.execute(INPUT.inputCommand());
             OutputView.showScore(round.currentPlayerName(), round.calculateScore());
         }

@@ -15,6 +15,7 @@ import java.util.Queue;
 public class Round {
     private final Player whitePlayer;
     private final Player blackPlayer;
+
     private Command command;
 
     public Round(final State white, final State black, final Command command) {
