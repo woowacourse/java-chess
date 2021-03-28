@@ -7,7 +7,7 @@ public enum TeamColor {
         if (this == BLACK) {
             return WHITE;
         }
-        if(this == WHITE){
+        if (this == WHITE) {
             return BLACK;
         }
         throw new IllegalArgumentException("어느팀의 턴도 아닙니다.");
