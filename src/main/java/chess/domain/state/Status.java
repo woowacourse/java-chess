@@ -32,7 +32,7 @@ public class Status implements State {
 
     @Override
     public ScoreResult bringResult() {
-        return new ScoreResult(board.score(Team.BLACK), board.score(Team.WHITE));
+        return ScoreResult.yield(board.toList());
     }
 
     @Override

@@ -4,13 +4,8 @@ import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
-
-    private final static double BASIC_SCORE_CRITERION = 1;
-    private final static double PAWN_SAME_COL_SCORE = 0.5;
 
     private final List<Piece> pieces;
 
@@ -100,35 +95,6 @@ public class Board {
             Piece targetPiece = find(target);
             pieces.remove(targetPiece);
         }
-    }
-
-    public double score(Team team) {
-        return scoreExceptPawn(team) + scorePawn(team);
-    }
-
-    private double scoreExceptPawn(Team team) {
-        return pieces
-            .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> !piece.isPawn())
-            .mapToDouble(piece -> piece.getPieceType().getScore())
-            .sum();
-    }
-
-    private double scorePawn(Team team) {
-        final Map<Integer, Long> frequencyPerX = pieces
-            .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(Piece::isPawn)
-            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()));
-
-        return frequencyPerX
-            .values()
-            .stream()
-            .mapToDouble(count -> count <= BASIC_SCORE_CRITERION ?
-                count :
-                count * PAWN_SAME_COL_SCORE)
-            .sum();
     }
 
     public boolean isKingAlive(Team team) {
