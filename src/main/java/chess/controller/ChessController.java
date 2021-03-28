@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.domain.command.MoveCommand;
-import chess.domain.command.ShowCommand;
 import chess.manager.ChessManager;
 import chess.manager.Command;
 import chess.view.InputView;
@@ -17,7 +15,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printGuideStartGame();
-        firstCommand();
+        Command firstCommand = firstCommand();
+        if (firstCommand.isEnd()) {
+            return;
+        }
         Command command;
         do {
             command = getMenu();
@@ -26,14 +27,10 @@ public class ChessController {
         OutputView.printGameResult(chessManager.getStatus());
     }
 
-    private void firstCommand() {
+    private Command firstCommand() {
         Command command = initFirstCommand();
-        if (command.isStart()) {
-            OutputView.printBoard(chessManager.getBoard());
-        }
-        if (command.isEnd()) {
-            OutputView.printEndGame();
-        }
+        command.execute(chessManager, "");
+        return command;
     }
 
     private Command initFirstCommand() {
@@ -59,37 +56,7 @@ public class ChessController {
 
     private Command executeMenu(final String input) {
         final Command command = Command.of(input);
-
-        if (command.isStart()) {
-            restartGame();
-        }
-
-        if (command.isMove()) {
-            movePiece(MoveCommand.of(input));
-        }
-
-        if (command.isShow()) {
-            showAblePositionToMove(ShowCommand.of(input));
-        }
-
-        if (command.isStatus()) {
-            OutputView.printStatus(chessManager.getStatus());
-        }
-
+        command.execute(chessManager, input);
         return command;
-    }
-
-    private void restartGame() {
-        chessManager.resetBoard();
-        OutputView.printBoard(chessManager.getBoard());
-    }
-
-    private void movePiece(final MoveCommand command) {
-        chessManager.move(command);
-        OutputView.printBoard(chessManager.getBoard());
-    }
-
-    private void showAblePositionToMove(final ShowCommand command) {
-        OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(command));
     }
 }

@@ -11,8 +11,10 @@ import chess.domain.piece.Owner;
 import java.util.List;
 
 public class ChessManager {
+    private static final Owner FIRST_TURN = Owner.WHITE;
+
     private final Board board;
-    private Owner turn = Owner.WHITE;
+    private Owner turn = FIRST_TURN;
     private boolean isEnd = false;
 
     public ChessManager() {
@@ -51,6 +53,7 @@ public class ChessManager {
     }
 
     public void resetBoard() {
+        turn = FIRST_TURN;
         board.resetBoard();
     }
 

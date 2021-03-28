@@ -40,38 +40,12 @@ class CommandTest {
     }
 
     @Test
-    void isMove() {
-        Command move = Command.MOVE;
-        Command start = Command.START;
-
-        assertThat(move.isMove()).isTrue();
-        assertThat(start.isMove()).isFalse();
-    }
-
-    @Test
-    void isStatus() {
-        Command status = Command.STATUS;
-        Command start = Command.START;
-
-        assertThat(status.isStatus()).isTrue();
-        assertThat(start.isStatus()).isFalse();
-    }
-
-    @Test
+    @DisplayName("메뉴가 START인지 판단한다.")
     void isStart() {
         Command start = Command.START;
         Command status = Command.STATUS;
 
         assertThat(start.isStart()).isTrue();
         assertThat(status.isStart()).isFalse();
-    }
-
-    @Test
-    void isShow() {
-        Command show = Command.SHOW;
-        Command start = Command.START;
-
-        assertThat(show.isShow()).isTrue();
-        assertThat(start.isShow()).isFalse();
     }
 }

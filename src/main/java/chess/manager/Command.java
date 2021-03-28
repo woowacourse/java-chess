@@ -1,13 +1,50 @@
 package chess.manager;
 
+import chess.domain.command.MoveCommand;
+import chess.domain.command.ShowCommand;
+import chess.view.OutputView;
+
 import java.util.Arrays;
 
 public enum Command {
-    START("start", 1),
-    END("end", 1),
-    MOVE("move", 3),
-    STATUS("status", 1),
-    SHOW("show", 2);
+    START("start", 1) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            OutputView.printBoard(chessManager.getBoard());
+        }
+    },
+    RESTART("restart", 1) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            chessManager.resetBoard();
+            OutputView.printRestartGame(chessManager.getBoard());
+        }
+    },
+    END("end", 1) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            OutputView.printEndGame();
+        }
+    },
+    MOVE("move", 3) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            chessManager.move(MoveCommand.of(input));
+            OutputView.printBoard(chessManager.getBoard());
+        }
+    },
+    STATUS("status", 1) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            OutputView.printStatus(chessManager.getStatus());
+        }
+    },
+    SHOW("show", 2) {
+        @Override
+        public void execute(ChessManager chessManager, String input) {
+            OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(ShowCommand.of(input)));
+        }
+    };
 
     private final String command;
     private final int parameterCount;
@@ -16,6 +53,8 @@ public enum Command {
         this.command = command;
         this.parameterCount = parameterCount;
     }
+
+    public abstract void execute(ChessManager chessManager, String input);
 
     public static Command of(final String line) {
         String[] splitLine = line.split(" ");
@@ -44,19 +83,7 @@ public enum Command {
         return this.equals(END);
     }
 
-    public boolean isMove() {
-        return this.equals(MOVE);
-    }
-
-    public boolean isStatus() {
-        return this.equals(STATUS);
-    }
-
     public boolean isStart() {
         return this.equals(START);
-    }
-
-    public boolean isShow() {
-        return this.equals(SHOW);
     }
 }
