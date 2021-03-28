@@ -4,6 +4,7 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.db.domain.game.GameStatusEntity;
 import chess.db.entity.ChessGameEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,6 +65,25 @@ public class ChessGameDAO {
     private ResultSet getResultSet() throws SQLException {
         String query = "SELECT * FROM chess_game";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
+        return pstmt.executeQuery();
+    }
+
+    public GameStatusEntity findStatusByGameId(Long gameId) throws SQLException {
+        ResultSet rs = getResultSetOfGameStatus(gameId);
+        if (!rs.next()) {
+            return null;
+        }
+        return new GameStatusEntity(
+            rs.getString("title"),
+            rs.getString("current_turn_team_color"),
+            rs.getDouble("white_team_score"),
+            rs.getDouble("black_team_score"));
+    }
+
+    private ResultSet getResultSetOfGameStatus(Long gameId) throws SQLException {
+        String query = "SELECT * FROM chess_game WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gameId);
         return pstmt.executeQuery();
     }
 

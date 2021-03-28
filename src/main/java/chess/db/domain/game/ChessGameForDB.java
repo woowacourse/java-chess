@@ -1,14 +1,10 @@
 package chess.db.domain.game;
 
-import static chess.beforedb.domain.player.type.TeamColor.BLACK;
-import static chess.beforedb.domain.player.type.TeamColor.WHITE;
-
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.board.setting.BoardCustomSetting;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.piece.type.PieceWithColorType;
-import chess.beforedb.domain.player.Scores;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PiecePosition;
@@ -105,10 +101,14 @@ public class ChessGameForDB {
         return boardForDB.getStatus(gameId);
     }
 
-    public Scores getScores() {
-        return new Scores(
-            playersForDB.getPlayerScoreTeamColorOf(BLACK),
-            playersForDB.getPlayerScoreTeamColorOf(WHITE));
+    public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
+        GameStatusEntity gameStatusEntity = chessGameDAO.findStatusByGameId(gameId);
+        return new GameStatusResponseDTO(
+            gameStatusEntity.getTitle(),
+            gameStatusEntity.getCurrentTurnTeamColor(),
+            gameStatusEntity.getWhitePlayerScore(),
+            gameStatusEntity.getBlackPlayerScore()
+        );
     }
 
     public void changeToNextTurn() throws SQLException {

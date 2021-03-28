@@ -54,14 +54,15 @@ public class ChessServiceForDB {
     }
 
     public ResponseDTO getBoard(Long roomId) throws SQLException {
-        Scores scores = chessGameForDB.getScores();
-        return new ResponseDTO(
-            getBoardResponseDTO(roomId),
-            chessGameForDB.currentTurnTeamName(),
-            scores.getBlackPlayerScore(),
-            scores.getWhitePlayerScore(),
-            chessGameForDB.isKingDead(),
-            chessGameForDB.beforeTurnTeamName());
+        //Scores scores = chessGameForDB.getGameStatus();
+//        return new ResponseDTO(
+//            getBoardResponseDTO(roomId),
+//            chessGameForDB.currentTurnTeamName(),
+//            scores.getBlackPlayerScore(),
+//            scores.getWhitePlayerScore(),
+//            chessGameForDB.isKingDead(),
+//            chessGameForDB.beforeTurnTeamName());
+        return null;
     }
 
     private BoardResponseDTO getBoardResponseDTO(Long gameId) throws SQLException {
