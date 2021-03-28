@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import java.util.List;
 import java.util.Map;
 
 public final class Board {
@@ -39,5 +40,13 @@ public final class Board {
 
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    public Color turn() {
+        return state.turn();
+    }
+
+    public List<Position> movablePositions(String source) {
+        return state.movablePositions(source);
     }
 }
