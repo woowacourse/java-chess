@@ -49,9 +49,12 @@
 
 ## 1단계 피드백 이후
 - [x] indent 정리
+- [x] State 제네릭 대신 사용할 Result (BoardResult, ScoreResult) 도메인 생성
+- [ ] State 리팩토링
 - [ ] ChessGame 도메인 생성
 - [ ] Board에서 점수에 대한 코드 분리
 - [ ] 각각의 기물들이 초기 위치를 가지고 있도록 변경
 - [ ] State 관련 중복 코드 정리
 - [ ] Location 캐싱
 - [ ] 빠진 테스트 추가
+- [ ] 보드 출력을 보기 좋게 변경
