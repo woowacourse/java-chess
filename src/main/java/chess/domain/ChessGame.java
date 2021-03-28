@@ -67,12 +67,16 @@ public class ChessGame {
     public void checkPieceInPath(Position source, Position target, Direction direction) {
         int countX = Math.abs(source.xDistance(target));
         for (int i = 1; i < countX; i++) {
-            int countY = Math.abs(source.yDistance(target));
-            for (int j = 1; j < countY; j++) {
-                Piece piece = pieces.findByPosition(
-                        source.movedPositionByNumber(direction.getXChange() * i, direction.getYChange() * j));
-                checkAbleToJump(piece);
-            }
+            checkInYPath(source, target, direction, i);
+        }
+    }
+
+    private void checkInYPath(Position source, Position target, Direction direction, int i) {
+        int countY = Math.abs(source.yDistance(target));
+        for (int j = 1; j < countY; j++) {
+            Piece piece = pieces.findByPosition(
+                    source.movedByNumber(direction.getXChange() * i, direction.getYChange() * j));
+            checkAbleToJump(piece);
         }
     }
 
