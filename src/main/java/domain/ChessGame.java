@@ -1,12 +1,8 @@
 package domain;
 
-import domain.exception.ImmovableSamePositionException;
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 import domain.score.Score;
-import domain.score.ScoreMachine;
-import domain.state.Finished;
-import domain.state.Running;
 import domain.state.State;
 import domain.state.Wait;
 
@@ -14,64 +10,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
-    private State state = new Wait();
-    private boolean turn = false;
-    private Board board;
+    private State state = new Wait(new HashMap<>());
 
     public void start(Map<Position, Piece> pieces) {
-        state = new Running();
-        board = new Board(pieces);
+        state = state.run(pieces);
     }
 
     public void move(Position start, Position end) {
-        chekMovablePiece(start, end, turn);
-        Piece endPiece = board.getPiece(end);
-        board.move(start, end);
-        checkKingState(endPiece);
-        turn = !turn;
-    }
-
-    private void chekMovablePiece(Position start, Position end, boolean turn) {
-        checkSamePosition(start, end);
-        board.checkMovable(start, turn);
-    }
-
-    private void checkKingState(Piece endPiece) {
-        if (endPiece.isKingDead()) {
-            state = new Finished();
-        }
-    }
-
-    private void checkSamePosition(Position start, Position end) {
-        if (start.equals(end)) {
-            throw new ImmovableSamePositionException();
-        }
+        state = state.move(start, end);
     }
 
     public Map<Boolean, Score> piecesScore() {
-        Map<Boolean, Score> result = new HashMap<>();
-        result.put(true, ScoreMachine.blackPiecesScore(board));
-        result.put(false, ScoreMachine.whitePiecesScore(board));
-        return result;
+        return state.pieceScore();
+
     }
 
     public Board getBoard() {
-        return board;
+        return state.getBoard();
     }
 
-    public void end() {
-        state = new Finished();
+    public void finish() {
+        state = state.finish();
     }
 
     public boolean isRunning() {
-        return state instanceof Running;
-    }
-
-    public boolean isWait() {
-        return state instanceof Wait;
-    }
-
-    public boolean isEnd() {
-        return state instanceof Finished;
+        return state.isRunning();
     }
 }

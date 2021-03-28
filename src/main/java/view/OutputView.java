@@ -19,10 +19,6 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void showCommandLine() {
-        System.out.print("> ");
-    }
-
     public static void showEndMessage() {
         System.out.println("체스가 종료됩니다.");
     }

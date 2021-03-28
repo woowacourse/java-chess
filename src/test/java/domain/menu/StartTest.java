@@ -2,7 +2,7 @@ package domain.menu;
 
 import domain.ChessGame;
 import domain.dto.BoardDto;
-import domain.exception.CannotStartException;
+import domain.exception.AlreadyStartException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +30,6 @@ class StartTest {
     void start_menu_fail_test() {
         (new Start()).execute("start", chessGame);
         assertThatThrownBy(() -> (new Start()).execute("start", chessGame))
-                .isInstanceOf(CannotStartException.class);
+                .isInstanceOf(AlreadyStartException.class);
     }
 }

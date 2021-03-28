@@ -3,7 +3,6 @@ package domain.menu;
 import domain.ChessGame;
 import domain.dto.BoardDto;
 import domain.dto.MenuDto;
-import domain.exception.GameNotStartException;
 import domain.exception.InvalidMoveCommandException;
 import domain.piece.position.Position;
 
@@ -12,9 +11,6 @@ public class Move implements Command {
 
     @Override
     public MenuDto execute(String command, ChessGame game) {
-        if (!game.isRunning()) {
-            throw new GameNotStartException();
-        }
         startMoveMenu(command, game);
         return new BoardDto(game.getBoard());
     }

@@ -21,7 +21,7 @@ class StatusTest {
     @DisplayName("status 메뉴를 실행하면, 현재 체스 게임의 결과를 출력한다.")
     @Test
     void status_menu_test() {
-        (new Start()).execute("strat", chessGame);
+        (new Start()).execute("start", chessGame);
         assertThat((new Status()).execute("status", chessGame))
                 .isEqualTo(new StatusDto(chessGame.piecesScore()));
     }

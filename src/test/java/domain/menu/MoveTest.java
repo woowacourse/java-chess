@@ -30,7 +30,7 @@ class MoveTest {
     @DisplayName("게임을 실행하지 않고 move 메뉴를 실행하면, 에러가 발생한다.")
     @Test
     void move_menu_fail_test() {
-        assertThatThrownBy(() -> (new Move()).execute("move", chessGame))
+        assertThatThrownBy(() -> (new Move()).execute("move a2 b2", chessGame))
                 .isInstanceOf(GameNotStartException.class);
     }
 }

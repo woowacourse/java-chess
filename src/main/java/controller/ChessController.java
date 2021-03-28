@@ -12,7 +12,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         OutputView.showGuide();
-        while (!chessGame.isEnd()) {
+        while (chessGame.isRunning()) {
             selectMenu(chessGame);
         }
         OutputView.showEndMessage();
@@ -20,7 +20,6 @@ public class ChessController {
 
     private Menu selectMenu(ChessGame chessGame) {
         try {
-            OutputView.showCommandLine();
             String command = InputView.inputCommand();
             menuController.run(command, chessGame);
             String menuCommand = command.split(" ")[0];

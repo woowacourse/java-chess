@@ -10,6 +10,7 @@ public class InputView {
     }
 
     public static String inputCommand() {
+        System.out.print("> ");
         return scanner.nextLine();
     }
 }
