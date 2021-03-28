@@ -42,7 +42,7 @@ public class ChessGame {
     public void movePieceFromSourceToTarget(Position source, Position target) {
         Piece sourcePiece = pieces.findByPosition(source);
         Piece targetPiece = pieces.findByPosition(target);
-        checkAbleToMove(sourcePiece, target, turn);
+        checkAbleToMove(sourcePiece, target);
         Direction direction = Direction.findDirectionByTwoPosition(source, target);
         sourcePiece.checkMovable(targetPiece, direction);
         if (!(sourcePiece.isKnight())) {
@@ -53,7 +53,7 @@ public class ChessGame {
         next();
     }
 
-    private void checkAbleToMove(Piece sourcePiece, Position target, Color turn) {
+    private void checkAbleToMove(Piece sourcePiece, Position target) {
         Piece targetPiece = pieces.findByPosition(target);
         if (!sourcePiece.isSameTeam(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");
