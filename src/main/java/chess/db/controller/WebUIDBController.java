@@ -9,9 +9,11 @@ import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.BoardResponseDTO;
 import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.web.MoveResponse;
+import chess.db.domain.game.ChessGameResponseDTO;
 import chess.db.service.ChessServiceForDB;
 import com.google.gson.Gson;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -46,7 +48,10 @@ public class WebUIDBController {
 
     private void handleHomeRequest() {
         get(ROOT, (req, res) -> {
+            List<ChessGameResponseDTO> allRoomsIdAndTitle
+                = chessServiceForDB.getAllRoomsIdAndTitle();
             Map<String, Object> model = new HashMap<>();
+            model.put("allChessGameRooms", allRoomsIdAndTitle);
             return render(model, HOME_VIEW);
         });
     }
@@ -54,8 +59,7 @@ public class WebUIDBController {
     private void handleCreateChessRoomRequest() {
         post(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
             chessServiceForDB.createNewChessGame(req.queryParams("room-title"));
-            System.out.println("들어온 요청 : room-title=" + req.queryParams("room-title"));
-            //res.redirect(ROOT + CHESS_BOARD);
+            res.redirect(ROOT + CHESS_BOARD);
             return null;
         });
     }

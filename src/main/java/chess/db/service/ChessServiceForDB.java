@@ -7,6 +7,7 @@ import chess.beforedb.controller.web.MoveResponse;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.player.Scores;
 import chess.db.domain.game.ChessGameForDB;
+import chess.db.domain.game.ChessGameResponseDTO;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class ChessServiceForDB {
         chessGameForDB.load(chessGameId);
     }
 
+    public List<ChessGameResponseDTO> getAllRoomsIdAndTitle() throws SQLException {
+        return chessGameForDB.getAllGamesIdAndTitle();
+    }
+
     public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {
         // validateGameStarted();
         return createMoveResponse(moveRequestDTO);
@@ -52,11 +57,11 @@ public class ChessServiceForDB {
         chessGameForDB.changeToNextTurn();
         return new MoveResponse(false);
     }
-
 //    private void validateGameStarted() {
 //        if (chessGameForDB == null) {
 //            throw new IllegalStateException("게임을 먼저 시작해 주세요.");
 //        }
+
 //    }
 
     public ResponseDTO getCurrentBoard() {

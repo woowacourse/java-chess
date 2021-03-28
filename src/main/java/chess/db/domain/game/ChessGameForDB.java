@@ -22,6 +22,7 @@ import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.Scores;
 import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGameForDB {
@@ -78,6 +79,15 @@ public class ChessGameForDB {
 
     public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayers() throws SQLException {
         return playersForDB.getAllPiecesPositionsOfChessGame();
+    }
+
+    public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
+        List<ChessGameResponseDTO> chessGameResponseDTOs = new ArrayList<>();
+        for (ChessGameEntity chessGameEntity : chessGameDAO.findAll()) {
+            chessGameResponseDTOs.add(
+                new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
+        }
+        return chessGameResponseDTOs;
     }
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
