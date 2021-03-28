@@ -64,26 +64,32 @@ function divClickEvent(event) {
         restartAsk();
         return;
     }
-    const key = event.target.getAttribute("id");
-    if (isClicked === false && boardInfo[key] === ".") {
-        //선택할 수 없는 친구
-        console.log("빈 공간은 움직일 수 없습니다.")
-        return;
-    }
+    const targetPosition = event.target.getAttribute("id");
     if (isClicked === false) {
+        if (boardInfo[targetPosition] === ".") {
+            console.log("빈 공간은 움직일 수 없습니다.")
+            return;
+        }
+        const isWhite = boardInfo["turn"] === "WHITE";
+        if ((isWhite === true && boardInfo[targetPosition] !== boardInfo[targetPosition].toLowerCase())
+        || (isWhite === false && boardInfo[targetPosition] !== boardInfo[targetPosition].toUpperCase())) {
+            alert("상대방의 턴입니다.");
+            return;
+        }
         isClicked = true;
         source = event.target;
         source.style.backgroundColor = "yellow";
-    } else if (source === event.target) {
-        isClicked = false;
-        source.style.backgroundColor = "";
-        source = null;
     } else {
-        isClicked = false;
-        source.style.backgroundColor = "";
-        const sourcePosition = source.getAttribute("id");
-        const targetPosition = event.target.getAttribute("id");
-        movedPieces(sourcePosition, targetPosition);
+        if (source === event.target) {
+            isClicked = false;
+            source.style.backgroundColor = "";
+            source = null;
+        } else {
+            isClicked = false;
+            source.style.backgroundColor = "";
+            const sourcePosition = source.getAttribute("id");
+            movedPieces(sourcePosition, targetPosition);
+        }
     }
 }
 
