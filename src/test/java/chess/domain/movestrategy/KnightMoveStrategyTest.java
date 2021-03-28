@@ -10,41 +10,34 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class KnightMoveStrategyTest {
 
-    private List<Rank> ranks;
+    private Map<Position, Piece> squares;
 
     @BeforeEach
     void setUp() {
-        this.ranks = InitPosition.initRanks();
+        this.squares = InitPosition.initSquares();
     }
 
     @Test
     @DisplayName("나이트 이동 가능 경로 확인")
     void movable() {
-        replacePieceForTest(Position.of("h5"), Pawn.createWhite());
-        replacePieceForTest(Position.of("g8"), Pawn.createWhite());
-        replacePieceForTest(Position.of("d5"), Pawn.createWhite());
-        replacePieceForTest(Position.of("d7"), Pawn.createWhite());
-        replacePieceForTest(Position.of("f6"), Knight.createWhite());
+        this.squares.replace(Position.of("h5"), Pawn.createWhite());
+        this.squares.replace(Position.of("g8"), Pawn.createWhite());
+        this.squares.replace(Position.of("d5"), Pawn.createWhite());
+        this.squares.replace(Position.of("d7"), Pawn.createWhite());
+        this.squares.replace(Position.of("f6"), Knight.createWhite());
 
-        Board board = new Board(this.ranks);
+        Board board = new Board(this.squares);
         MoveStrategy moveStrategy = Knight.createWhite().moveStrategy();
 
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("f6"))).containsExactlyInAnyOrder(
             Position.of("h7"), Position.of("e8"),
             Position.of("g4"), Position.of("e4"));
-    }
-
-    private void replacePieceForTest(final Position position, final Piece piece) {
-        this.ranks.stream()
-            .filter(map -> map.hasPosition(position))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."))
-            .replacePiece(position, piece);
     }
 }

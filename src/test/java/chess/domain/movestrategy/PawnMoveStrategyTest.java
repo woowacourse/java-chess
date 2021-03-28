@@ -9,25 +9,28 @@ import chess.domain.board.position.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PawnMoveStrategyTest {
 
-    private List<Rank> ranks;
+    private Map<Position, Piece> squares;
 
     @BeforeEach
     void setUp() {
-        this.ranks = InitPosition.initRanks();
+        this.squares = InitPosition.initSquares();
     }
 
     @Test
     @DisplayName("화이트 폰 초기 이동 가능 경로 확인")
     void whitePawnStartMovable() {
-        replacePieceForTest(Position.of("c3"), Pawn.createBlack());
-        replacePieceForTest(Position.of("d2"), Pawn.createWhite());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("c3"), Pawn.createBlack());
+        this.squares.replace(Position.of("d2"), Pawn.createWhite());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder(
             Position.of("d3"), Position.of("d4"), Position.of("c3"));
@@ -36,9 +39,11 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("화이트 폰 이동 가능 경로 확인")
     void whitePawnMovable() {
-        replacePieceForTest(Position.of("e4"), Pawn.createBlack());
-        replacePieceForTest(Position.of("d3"), Pawn.createWhite());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("e4"), Pawn.createBlack());
+        this.squares.replace(Position.of("d3"), Pawn.createWhite());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d3"))).containsExactlyInAnyOrder(
             Position.of("d4"), Position.of("e4"));
@@ -47,9 +52,11 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("블랙 폰 초기 이동 가능 경로 확인")
     void blackPawnStartMovable() {
-        replacePieceForTest(Position.of("c6"), Pawn.createWhite());
-        replacePieceForTest(Position.of("d7"), Pawn.createBlack());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("c6"), Pawn.createWhite());
+        this.squares.replace(Position.of("d7"), Pawn.createBlack());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder(
             Position.of("d6"), Position.of("d5"),
@@ -59,9 +66,11 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("블랙 폰 이동 가능 경로 확인")
     void blackPawnMovable() {
-        replacePieceForTest(Position.of("e5"), Pawn.createWhite());
-        replacePieceForTest(Position.of("d6"), Pawn.createBlack());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("e5"), Pawn.createWhite());
+        this.squares.replace(Position.of("d6"), Pawn.createBlack());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d6"))).containsExactlyInAnyOrder(
             Position.of("d5"), Position.of("e5"));
@@ -70,9 +79,11 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("앞이 막혔을 때 화이트 폰 초기 이동 가능 경로 확인")
     void whitePawnStartMovableWhenBlocked() {
-        replacePieceForTest(Position.of("d3"), Pawn.createBlack());
-        replacePieceForTest(Position.of("d2"), Pawn.createWhite());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("d3"), Pawn.createBlack());
+        this.squares.replace(Position.of("d2"), Pawn.createWhite());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder();
     }
@@ -80,18 +91,12 @@ public class PawnMoveStrategyTest {
     @Test
     @DisplayName("앞이 막혔을 때 블랙 폰 초기 이동 가능 경로 확인")
     void blackPawnStartMovableWhenBlocked() {
-        replacePieceForTest(Position.of("d6"), Pawn.createBlack());
-        replacePieceForTest(Position.of("d7"), Pawn.createBlack());
-        Board board = new Board(this.ranks);
+        this.squares.replace(Position.of("d6"), Pawn.createBlack());
+        this.squares.replace(Position.of("d7"), Pawn.createBlack());
+
+        Board board = new Board(this.squares);
+
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
         assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder();
-    }
-
-    private void replacePieceForTest(final Position position, final Piece piece) {
-        this.ranks.stream()
-            .filter(map -> map.hasPosition(position))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."))
-            .replacePiece(position, piece);
     }
 }
