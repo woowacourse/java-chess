@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
-import chess.domain.piece.Piece;
+import chess.domain.result.BoardResult;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
 import chess.utils.BoardUtil;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 class MoveTest {
 
-    private State move;
+    private Move move;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +25,7 @@ class MoveTest {
         start.receive("start");
         State wait = start.next();
         wait.receive("move a2 a3");
-        move = wait.next();
+        move = (Move) wait.next();
     }
 
     @DisplayName("이동상태 - 명령을 입력 받을 수 없다.")
@@ -58,7 +58,7 @@ class MoveTest {
             state = state.next();
             assertThat(state).isInstanceOf(Move.class);
 
-            state.result();
+            state.bringResult();
             state = state.next();
 
             if (i != commands.size() - 1) {
@@ -71,18 +71,19 @@ class MoveTest {
 
     @DisplayName("이동상태 - 결과는 이동한 위치를 가진 보드이다.")
     @Test
-    void result() {
+    void bringResult() {
         Board expectedBoard = BoardUtil.generateInitialBoard();
         expectedBoard.move(Location.of("a2"), Location.of("a3"), Team.WHITE);
 
-        final List<Piece> pieces = ((Move) move).result();
-        assertThat(pieces).isEqualTo(expectedBoard.toList());
+        BoardResult boardResult = move.bringResult();
+        assertThat(boardResult.getPieces())
+            .isEqualTo(expectedBoard.toList());
     }
 
     @DisplayName("이동상태 - 결과 타입은 보드이다.")
     @Test
-    void resultType() {
-        assertThat(move.resultType())
+    void bringResultType() {
+        assertThat(move.bringResultType())
             .isEqualTo(ResultType.BOARD);
     }
 

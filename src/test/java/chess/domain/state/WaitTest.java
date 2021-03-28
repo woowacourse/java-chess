@@ -67,15 +67,15 @@ class WaitTest {
 
     @DisplayName("입력대기상태 - 결과를 지원하지 않는다.")
     @Test
-    void result() {
-        assertThatThrownBy(() -> wait.result())
+    void bringResult() {
+        assertThatThrownBy(() -> wait.bringResult())
             .isInstanceOf(UnsupportedCommandException.class);
     }
 
     @DisplayName("입력대기상태 - 결과 타입은 없다.")
     @Test
-    void resultType() {
-        assertThat(wait.resultType())
+    void bringResultType() {
+        assertThat(wait.bringResultType())
             .isEqualTo(ResultType.NONE);
     }
 

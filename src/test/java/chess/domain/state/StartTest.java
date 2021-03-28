@@ -5,10 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
+import chess.domain.result.BoardResult;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.utils.BoardUtil;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,17 +59,18 @@ class StartTest {
 
     @DisplayName("시작상태 - 결과는 초기 위치를 가진 보드이다.")
     @Test
-    void result() {
-        List<Piece> pieces = start.result();
+    void bringResult() {
+        final BoardResult boardResult = start.bringResult();
         Board initialBoard = BoardUtil.generateInitialBoard();
 
-        assertThat(pieces).isEqualTo(initialBoard.toList());
+        assertThat(boardResult.getPieces())
+            .isEqualTo(initialBoard.toList());
     }
 
     @DisplayName("시작상태 - 결과 타입은 보드이다.")
     @Test
     void resultType() {
-        assertThat(start.resultType())
+        assertThat(start.bringResultType())
             .isEqualTo(ResultType.BOARD);
     }
 

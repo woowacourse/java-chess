@@ -1,6 +1,8 @@
 package chess.domain.state;
 
-public interface State<T> {
+import chess.domain.result.Result;
+
+public interface State {
 
     void receive(String command);
 
@@ -8,9 +10,9 @@ public interface State<T> {
 
     State before();
 
-    T result();
+    Result bringResult();
 
-    ResultType resultType();
+    ResultType bringResultType();
 
     boolean needsParam();
 

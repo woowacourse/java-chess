@@ -1,14 +1,13 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
+import chess.domain.result.BoardResult;
 import chess.domain.state.command.CommandType;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
 import chess.utils.BoardUtil;
-import java.util.List;
 
-public class Start implements State<List<Piece>> {
+public class Start implements State {
 
     private final Board board;
     private final Team team;
@@ -46,12 +45,12 @@ public class Start implements State<List<Piece>> {
     }
 
     @Override
-    public List<Piece> result() {
-        return board.toList();
+    public BoardResult bringResult() {
+        return new BoardResult(board.toList());
     }
 
     @Override
-    public ResultType resultType() {
+    public ResultType bringResultType() {
         return ResultType.BOARD;
     }
 

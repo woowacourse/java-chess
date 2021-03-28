@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.result.Result;
 import chess.domain.state.exception.UnsupportedCommandException;
 
 public class End implements State {
@@ -20,12 +21,12 @@ public class End implements State {
     }
 
     @Override
-    public Object result() {
+    public Result bringResult() {
         throw new UnsupportedCommandException("게임이 끝났습니다. 결과를 요청할 수 업습니다.");
     }
 
     @Override
-    public ResultType resultType() {
+    public ResultType bringResultType() {
         return ResultType.NONE;
     }
 

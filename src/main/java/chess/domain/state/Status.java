@@ -1,12 +1,11 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.result.ScoreResult;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Status implements State<Map<Team, Double>> {
+public class Status implements State {
 
     private final Board board;
     private final Team team;
@@ -32,15 +31,12 @@ public class Status implements State<Map<Team, Double>> {
     }
 
     @Override
-    public Map<Team, Double> result() {
-        Map<Team, Double> result = new HashMap<>();
-        result.put(Team.WHITE, board.score(Team.WHITE));
-        result.put(Team.BLACK, board.score(Team.BLACK));
-        return result;
+    public ScoreResult bringResult() {
+        return new ScoreResult(board.score(Team.BLACK), board.score(Team.WHITE));
     }
 
     @Override
-    public ResultType resultType() {
+    public ResultType bringResultType() {
         return ResultType.SCORE;
     }
 

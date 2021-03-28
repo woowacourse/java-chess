@@ -3,16 +3,15 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.result.ScoreResult;
 import chess.domain.state.exception.UnsupportedCommandException;
-import chess.domain.team.Team;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class StatusTest {
 
-    private State status;
+    private Status status;
 
     @BeforeEach
     void setUp() {
@@ -20,7 +19,7 @@ class StatusTest {
         start.receive("start");
         State wait = start.next();
         wait.receive("status");
-        status = wait.next();
+        status = (Status) wait.next();
     }
 
     @DisplayName("점수확인상태 - 명령을 입력 받을 수 없다.")
@@ -39,17 +38,17 @@ class StatusTest {
 
     @DisplayName("점수확인상태 - 결과는 두 팀의 점수를 가지고 있다.")
     @Test
-    void result() {
-        final Map<Team, Double> result = ((Status) status).result();
+    void bringResult() {
+        ScoreResult scoreResult = status.bringResult();
 
-        assertThat(result).containsEntry(Team.WHITE, 38.0);
-        assertThat(result).containsEntry(Team.BLACK, 38.0);
+        assertThat(scoreResult.getWhiteScore()).isEqualTo(38.0);
+        assertThat(scoreResult.getBlackScore()).isEqualTo(38.0);
     }
 
     @DisplayName("점수확인상태 - 결과 타입은 점수이다.")
     @Test
-    void resultType() {
-        assertThat(status.resultType())
+    void bringResultType() {
+        assertThat(status.bringResultType())
             .isEqualTo(ResultType.SCORE);
     }
 

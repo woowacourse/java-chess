@@ -2,12 +2,11 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
-import chess.domain.piece.Piece;
+import chess.domain.result.BoardResult;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
-import java.util.List;
 
-public class Move implements State<List<Piece>> {
+public class Move implements State {
 
     private static final String BLANK = " ";
     private static final int SOURCE_LOCATION_INDEX = 1;
@@ -42,17 +41,17 @@ public class Move implements State<List<Piece>> {
     }
 
     @Override
-    public List<Piece> result() {
+    public BoardResult bringResult() {
         String[] words = command.split(BLANK);
         Location source = Location.of(words[SOURCE_LOCATION_INDEX].trim());
         Location target = Location.of(words[TARGET_LOCATION_INDEX].trim());
 
         board.move(source, target, team);
-        return board.toList();
+        return new BoardResult(board.toList());
     }
 
     @Override
-    public ResultType resultType() {
+    public ResultType bringResultType() {
         return ResultType.BOARD;
     }
 

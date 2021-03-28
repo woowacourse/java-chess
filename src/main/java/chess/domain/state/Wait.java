@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.result.Result;
 import chess.domain.state.command.CommandType;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
@@ -48,12 +49,12 @@ public class Wait implements State {
     }
 
     @Override
-    public Object result() {
+    public Result bringResult() {
         throw new UnsupportedCommandException("입력 대기중에는 결과를 요청할 수 없습니다.");
     }
 
     @Override
-    public ResultType resultType() {
+    public ResultType bringResultType() {
         return ResultType.NONE;
     }
 

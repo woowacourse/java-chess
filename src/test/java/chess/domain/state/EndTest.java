@@ -35,15 +35,15 @@ class EndTest {
 
     @DisplayName("종료상태 - 결과는 없다.")
     @Test
-    void result() {
-        assertThatThrownBy(() -> end.result())
+    void bringResult() {
+        assertThatThrownBy(() -> end.bringResult())
             .isInstanceOf(UnsupportedCommandException.class);
     }
 
     @DisplayName("종료상태 - 결과 타입은 없다.")
     @Test
-    void resultType() {
-        assertThat(end.resultType())
+    void bringResultType() {
+        assertThat(end.bringResultType())
             .isEqualTo(ResultType.NONE);
     }
 
