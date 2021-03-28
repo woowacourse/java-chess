@@ -15,8 +15,6 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
         this.color = color;
     }
 
-    // TODO 분기 리팩토링
-    // TODO 디미터의 법칙
     @Override
     public boolean canMove(MoveRoute moveRoute) {
         if (Direction.isDiagonal(moveRoute.getDirection())) {
