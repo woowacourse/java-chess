@@ -35,4 +35,8 @@ public enum TeamColor {
     public String getName() {
         return name;
     }
+
+    public String oppositeTeamColorName() {
+        return oppositeTeamColor().getName();
+    }
 }

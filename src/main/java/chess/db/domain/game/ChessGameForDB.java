@@ -29,7 +29,6 @@ public class ChessGameForDB {
     private final PlayersForDB playersForDB;
     private final BoardForDB boardForDB;
     private ChessGameEntity chessGameEntity;
-    private TeamColor currentTurnTeamColor = WHITE;
 
     public ChessGameForDB() {
         playersForDB = new PlayersForDB();
@@ -83,7 +82,7 @@ public class ChessGameForDB {
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
         MoveRouteForDB moveRouteForDB = new MoveRouteForDB(moveRequestDTO);
-        boardForDB.validateRoute(moveRouteForDB, currentTurnTeamColor);
+        boardForDB.validateRoute(moveRouteForDB, chessGameEntity.getCurrentTurnTeamColor());
         updatePiecesOfPlayers(moveRouteForDB);
         boardForDB.move(moveRouteForDB);
     }
@@ -115,17 +114,18 @@ public class ChessGameForDB {
             playersForDB.getPlayerScoreTeamColorOf(WHITE));
     }
 
-    public void changeToNextTurn() {
-        currentTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
+    public void changeToNextTurn() throws SQLException {
+        TeamColor currentTurnTeamColor = chessGameEntity.getCurrentTurnTeamColor();
+        chessGameEntity.setCurrentTurnTeamColor(currentTurnTeamColor.oppositeTeamColor());
+        chessGameDAO.updateCurrentTurnTeamColor(chessGameEntity);
     }
 
     public String currentTurnTeamName() {
-        return currentTurnTeamColor.getName();
+        return chessGameEntity.getCurrentTurnTeamColorName();
     }
 
     public String beforeTurnTeamName() {
-        TeamColor beforeTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
-        return beforeTurnTeamColor.getName();
+        return chessGameEntity.getOppositeTeamColorName();
     }
 
     public void end() throws SQLException {

@@ -41,6 +41,14 @@ public class ChessGameEntity {
         this.currentTurnTeamColor = currentTurnTeamColor;
     }
 
+    public void addPlayer(PlayerEntity playerEntity) {
+        playerEntity.setChessGameEntity(this);
+    }
+
+    public String getCurrentTurnTeamColorName() {
+        return currentTurnTeamColor.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -58,7 +66,7 @@ public class ChessGameEntity {
         return Objects.hash(getId());
     }
 
-    public void addPlayer(PlayerEntity playerEntity) {
-        playerEntity.setChessGameEntity(this);
+    public String getOppositeTeamColorName() {
+        return currentTurnTeamColor.oppositeTeamColorName();
     }
 }

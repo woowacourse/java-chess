@@ -38,12 +38,12 @@ public class ChessServiceForDB {
         chessGameForDB.load(chessGameId);
     }
 
-    public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) {
+    public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {
         // validateGameStarted();
         return createMoveResponse(moveRequestDTO);
     }
 
-    private MoveResponse createMoveResponse(MoveRequestDTO moveRequestDTO) {
+    private MoveResponse createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
         try {
             chessGameForDB.move(moveRequestDTO);
         } catch (Exception e) {
