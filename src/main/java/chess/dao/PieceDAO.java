@@ -19,6 +19,7 @@ public class PieceDAO {
     private static final int FIFTH_COLUMN = 5;
     private static final int SECOND_PARAMETER_INDEX = 2;
     private static final int THIRD_PARAMETER_INDEX = 3;
+    private static final int FOURTH_PARAMETER_INDEX = 4;
 
     private final ConnectionSetup con;
 
@@ -29,12 +30,14 @@ public class PieceDAO {
     public long createPiece(long gridId, Piece piece) throws SQLException {
         boolean isBlack = piece.isBlack();
         String position = String.valueOf(piece.position().x()) + String.valueOf(piece.position().y());
+        String name = String.valueOf(piece.name());
 
-        String query = "INSERT INTO piece (isBlack, position, gridId) VALUES (?, ?, ?)";
+        String query = "INSERT INTO piece (isBlack, position, gridId, name) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = con.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
         pstmt.setString(SECOND_PARAMETER_INDEX, position);
         pstmt.setLong(THIRD_PARAMETER_INDEX, gridId);
+        pstmt.setString(FOURTH_PARAMETER_INDEX, name);
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
         if (rs.next()) {
@@ -48,16 +51,14 @@ public class PieceDAO {
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
         ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            return null;
-        }
         List<PieceResponseDto> pieces = new ArrayList<>();
         while (rs.next()) {
             pieces.add(new PieceResponseDto(
                     rs.getLong(FIRST_COLUMN),
                     rs.getBoolean(SECOND_COLUMN),
                     rs.getString(THIRD_COLUMN),
-                    rs.getLong(FOURTH_COLUMN)
+                    rs.getLong(FOURTH_COLUMN),
+                    rs.getString(FIFTH_COLUMN)
             ));
         }
         return pieces;
