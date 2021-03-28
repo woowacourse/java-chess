@@ -2,15 +2,19 @@ package chess.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.player.Player;
+import chess.domain.player.Scores;
 import chess.domain.player.Players;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-public class ChessManager {
+public class ChessGame {
     private Players players;
     private boolean isGameEnd;
 
-    public ChessManager() {
+    public ChessGame() {
     }
 
     public void initNewGame() {
@@ -22,22 +26,14 @@ public class ChessManager {
         players.validateTurn(source);
         players.move(source, target);
         players.changeTurn();
-        checkGameEnd();
-    }
-
-    private void checkGameEnd() {
         isGameEnd = players.isEnd();
     }
 
-    public void makeGameEnd() {
-        isGameEnd = true;
+    public Scores scores() {
+        return players.scores();
     }
 
-    public Status calculateStatus() {
-        return new Status(players.whitePlayerScore(), players.blackPlayerScore());
-    }
-
-    public List<Position> getReachablePositions(final Position source) {
+    public List<Position> reachablePositions(final Position source) {
         return players.getReachablePositions(source);
     }
 
@@ -45,7 +41,15 @@ public class ChessManager {
         return players.getBoard();
     }
 
+    public void makeGameEnd() {
+        isGameEnd = true;
+    }
+
     public boolean isEnd() {
         return isGameEnd;
+    }
+
+    public Queue<Player> winner(){
+        return new LinkedList<>(players.winner());
     }
 }

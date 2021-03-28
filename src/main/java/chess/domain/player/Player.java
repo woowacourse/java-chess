@@ -18,28 +18,25 @@ public class Player {
         this.state = State.LiVE;
     }
 
-    public Score calculateScore(final Board board) {
+    public Score score(final Board board) {
         if (state.isDead()) {
             return Score.EMPTY;
         }
 
-        final Score score = getScore(board);
+        final Score score = addAllPiecesScores(board);
         int pawnCountDuplicatedInLine = board.countDuplicatedPawnInLine(owner);
-
         return score.calculatePawnPenaltyScore(pawnCountDuplicatedInLine);
     }
 
-    private Score getScore(final Board board) {
+    private Score addAllPiecesScores(final Board board) {
         Score score = Score.EMPTY;
-
         for (Position position : positions) {
             score = score.plus(board.of(position).score());
         }
-
         return score;
     }
 
-    public void removeIfExist(final Position target) {
+    public void remove(final Position target) {
         positions.remove(target);
     }
 
@@ -52,11 +49,15 @@ public class Player {
         return positions.contains(position);
     }
 
-    public void makeKingDead() {
+    public void makeDead() {
         this.state = State.DEAD;
     }
 
     public boolean isDead() {
         return state.isDead();
+    }
+
+    public Owner owner() {
+        return owner;
     }
 }

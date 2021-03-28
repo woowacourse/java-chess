@@ -1,7 +1,7 @@
 package chess.controller.command;
 
 import chess.domain.board.position.Position;
-import chess.manager.ChessManager;
+import chess.manager.ChessGame;
 
 public abstract class Command {
     private static final String SEPARATOR_OF_PARAMETERS = " ";
@@ -18,7 +18,7 @@ public abstract class Command {
 
     public abstract Command read(final String line);
 
-    public abstract void execute(final ChessManager chessManager);
+    public abstract void execute(final ChessGame chessGame);
 
     public Position source() {
         return new Position(parameters[INDEX_OF_SOURCE]);

@@ -1,10 +1,11 @@
 package chess.controller.command;
 
 import chess.domain.board.position.Position;
-import chess.manager.ChessManager;
+import chess.manager.ChessGame;
+import chess.view.OutputView;
 
-public class EndCommand extends Command {
-    EndCommand(String line) {
+public class End extends Command {
+    public End(String line) {
         super(line);
     }
 
@@ -13,15 +14,15 @@ public class EndCommand extends Command {
         final Menu menu = Menu.of(line);
 
         if (menu.isStart()) {
-            return new StartCommand(line);
+            return new Start(line);
         }
 
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
     @Override
-    public void execute(ChessManager chessManager) {
-        chessManager.makeGameEnd();
+    public void execute(final ChessGame chessGame) {
+        chessGame.makeGameEnd();
     }
 
     @Override

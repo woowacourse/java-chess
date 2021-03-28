@@ -1,24 +1,21 @@
 package chess.controller;
 
 import chess.controller.command.Command;
-import chess.controller.command.StartCommand;
-import chess.manager.ChessManager;
+import chess.controller.command.Start;
+import chess.manager.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
     private static final String COMMAND_TO_START = "start";
-    private final ChessManager chessManager;
-    private Command command;
 
-    public ChessController() {
-        chessManager = new ChessManager();
-    }
+    private final ChessGame chessGame = new ChessGame();
+    private Command command;
 
     public void run() {
         readStart();
         executeUserCommands();
-        printResult();
+        OutputView.printWinner(chessGame.winner());
     }
 
     private void readStart() {
@@ -26,28 +23,23 @@ public class ChessController {
             OutputView.printMenu();
         } while (!COMMAND_TO_START.equals(InputView.readUserInput()));
 
-        command = new StartCommand();
-        command.execute(chessManager);
-        OutputView.printBoard(chessManager.board());
+        command = new Start(COMMAND_TO_START);
+        command.execute(chessGame);
     }
 
     private void executeUserCommands() {
         do {
             readUserCommand();
-        } while (!chessManager.isEnd());
+        } while (!chessGame.isEnd());
     }
 
     private void readUserCommand() {
         try {
             command = command.read(InputView.readUserInput());
-            command.execute(chessManager);
+            command.execute(chessGame);
         } catch (Exception e) {
             OutputView.printError(e.getMessage());
             readUserCommand();
         }
-    }
-
-    private void printResult() {
-        OutputView.printGameResult(chessManager.calculateStatus());
     }
 }

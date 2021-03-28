@@ -1,18 +1,19 @@
 package chess.controller.command;
 
+import chess.controller.ScoreDto;
 import chess.domain.board.position.Position;
-import chess.manager.ChessManager;
+import chess.domain.piece.Score;
+import chess.domain.player.Player;
+import chess.domain.player.Scores;
+import chess.manager.ChessGame;
+import chess.view.OutputView;
 
-public class StartCommand extends Command {
-
-    public StartCommand(String line) {
+public class Status extends Command {
+    public Status(String line) {
         super(line);
     }
 
-    public StartCommand() {
-        super("start");
-    }
-
+    @Override
     public Command read(final String input) {
         final Menu menu = Menu.of(input);
 
@@ -21,27 +22,31 @@ public class StartCommand extends Command {
         }
 
         if (menu.isMove()) {
-            return new MoveCommand(input);
+            return new Move(input);
         }
 
         if (menu.isStatus()) {
-            return new StatusCommand(input);
+            return new Status(input);
         }
 
         if (menu.isShow()) {
-            return new ShowCommand(input);
+            return new Show(input);
         }
 
         if (menu.isEnd()) {
-            return new EndCommand(input);
+            return new End(input);
         }
 
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
     @Override
-    public void execute(ChessManager chessManager) {
-        chessManager.initNewGame();
+    public void execute(final ChessGame chessGame) {
+        final Scores scoreTable = chessGame.scores();
+        for(final Player player : scoreTable.players()){
+            final Score score = scoreTable.get(player);
+            OutputView.printScore(new ScoreDto(player.owner(), score.score()));
+        }
     }
 
     @Override

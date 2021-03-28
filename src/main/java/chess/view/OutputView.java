@@ -1,13 +1,19 @@
 package chess.view;
 
+import chess.controller.ScoreDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
+import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
-import chess.manager.Status;
+import chess.domain.player.Player;
+
+import java.util.Queue;
 
 public class OutputView {
+    private static final int NUMBER_OF_WINNER = 1;
+
     public static void printBoard(final Board board) {
         printPiece(board);
     }
@@ -34,27 +40,27 @@ public class OutputView {
         return symbol.toLowerCase();
     }
 
-    public static void printScores(final Status status) {
-        System.out.println("White score : " + status.whiteScore());
-        System.out.println("Black score : " + status.blackScore());
+    public static void printScore(final ScoreDto scoreDto) {
+        final Owner owner = scoreDto.owner();
+
+        if(owner.isBlack()){
+            System.out.println("블랙의 점수 : "+ scoreDto.score());
+        }
+
+        if(owner.isWhite()){
+            System.out.println("화이트의 점수 : "+ scoreDto.score());
+        }
     }
 
-    public static void printGameResult(final Status status) {
-        printScores(status);
-
+    public static void printWinner(final Queue<Player> winner) {
         System.out.println("=== 게임 결과 ===");
 
-        if (status.whiteScore() > status.blackScore()) {
-            System.out.println("화이트의 승리입니다.");
+        if(winner.size() == NUMBER_OF_WINNER){
+            System.out.println("승자 : " + winner.peek());
+            return;
         }
 
-        if (status.whiteScore() < status.blackScore()) {
-            System.out.println("블랙의 승리입니다.");
-        }
-
-        if (status.whiteScore() == status.blackScore()) {
-            System.out.println("무승부입니다.");
-        }
+        System.out.println("무승부입니다.");
     }
 
     public static void printMenu() {

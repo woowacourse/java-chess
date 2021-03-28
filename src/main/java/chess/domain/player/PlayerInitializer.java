@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class PlayerInitializer {
 
+    private PlayerInitializer(){};
+
     public static Player initPlayer(final Owner owner) {
         final List<Position> positions = new ArrayList<>();
 

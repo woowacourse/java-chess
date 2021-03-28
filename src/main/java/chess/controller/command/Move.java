@@ -1,10 +1,10 @@
 package chess.controller.command;
 
-import chess.manager.ChessManager;
+import chess.manager.ChessGame;
 import chess.view.OutputView;
 
-public class MoveCommand extends Command {
-    MoveCommand(String line) {
+public class Move extends Command {
+    public Move(String line) {
         super(line);
     }
 
@@ -17,27 +17,27 @@ public class MoveCommand extends Command {
         }
 
         if (menu.isMove()) {
-            return new MoveCommand(input);
+            return new Move(input);
         }
 
         if (menu.isStatus()) {
-            return new StatusCommand(input);
+            return new Status(input);
         }
 
         if (menu.isShow()) {
-            return new ShowCommand(input);
+            return new Show(input);
         }
 
         if (menu.isEnd()) {
-            return new EndCommand(input);
+            return new End(input);
         }
 
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
     @Override
-    public void execute(ChessManager chessManager) {
-        chessManager.move(super.source(), super.target());
-        OutputView.printBoard(chessManager.board());
+    public void execute(final ChessGame chessGame) {
+        chessGame.move(super.source(), super.target());
+        OutputView.printBoard(chessGame.board());
     }
 }

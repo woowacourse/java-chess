@@ -1,11 +1,11 @@
 package chess.controller.command;
 
 import chess.domain.board.position.Position;
-import chess.manager.ChessManager;
+import chess.manager.ChessGame;
 import chess.view.OutputView;
 
-public class StatusCommand extends Command {
-    StatusCommand(String line) {
+public class Show extends Command {
+    public Show(String line) {
         super(line);
     }
 
@@ -18,32 +18,30 @@ public class StatusCommand extends Command {
         }
 
         if (menu.isMove()) {
-            return new MoveCommand(input);
+            return new Move(input);
         }
 
         if (menu.isStatus()) {
-            return new StatusCommand(input);
+            return new Status(input);
         }
 
         if (menu.isShow()) {
-            return new ShowCommand(input);
+            return new Show(input);
         }
 
         if (menu.isEnd()) {
-            return new EndCommand(input);
+            return new End(input);
         }
 
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
     @Override
-    public void execute(ChessManager chessManager) {
-        OutputView.printGameResult(chessManager.calculateStatus());
-    }
+    public void execute(final ChessGame chessGame) {
+//        final List<Position> reachablePositions = chessManager.getReachablePositions(super.source());
+//        OutputView.printReachableBoard(chessManager.board(), reachablePositions);
 
-    @Override
-    public Position source() {
-        throw new IllegalArgumentException("Source parameter 가 존재하지 않습니다.");
+        OutputView.printBoard(chessGame.board());
     }
 
     @Override

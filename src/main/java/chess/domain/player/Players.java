@@ -4,52 +4,57 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
-import chess.domain.piece.Score;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Players {
-    private static final int INDEX_OF_BLACK = 0;
-    private static final int INDEX_OF_WHITE = 1;
-
     private final List<Player> players;
     private final Board board;
-    private Turn turn;
+
+    private Turn turn = Turn.WHITE;
+    private Scores scores = new Scores();
 
     public Players() {
-        players = Arrays.asList(
+        this.players = Arrays.asList(
                 PlayerInitializer.initPlayer(Owner.BLACK),
                 PlayerInitializer.initPlayer(Owner.WHITE)
         );
-
         this.board = BoardInitializer.initiateBoard();
-        this.turn = Turn.WHITE;
     }
 
     public void move(final Position source, final Position target) {
         checkIsKingDead(target);
         board.movePiece(source, target);
         updatePositions(source, target);
+        updateScores();
     }
 
     private void checkIsKingDead(final Position target) {
         if (board.of(target).isKing()) {
             final Player otherPlayer = players.get(turn.otherIndex());
-            otherPlayer.makeKingDead();
+            otherPlayer.makeDead();
         }
     }
 
-    public void updatePositions(final Position source, final Position target) {
+    private void updatePositions(final Position source, final Position target) {
         final Player turnPlayer = players.get(turn.index());
         final Player otherPlayer = players.get(turn.otherIndex());
 
         turnPlayer.move(source, target);
-        otherPlayer.removeIfExist(target);
+        otherPlayer.remove(target);
+    }
+
+    private void updateScores(){
+        for(final Player player : players){
+            scores = scores.update(player, player.score(board));
+        }
     }
 
     public void changeTurn() {
-        this.turn = this.turn.change();
+        turn = turn.change();
     }
 
     public void validateTurn(final Position source) {
@@ -60,18 +65,16 @@ public class Players {
         }
     }
 
+    public Scores scores(){
+        return scores;
+    }
+
+    public List<Player> winner(){
+        return scores.winner();
+    }
+
     public List<Position> getReachablePositions(final Position source) {
         return board.getAblePositionsToMove(source);
-    }
-
-    public Score blackPlayerScore() {
-        final Player black = players.get(INDEX_OF_BLACK);
-        return black.calculateScore(board);
-    }
-
-    public Score whitePlayerScore() {
-        final Player white = players.get(INDEX_OF_WHITE);
-        return white.calculateScore(board);
     }
 
     public boolean isEnd() {

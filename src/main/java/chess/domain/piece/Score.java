@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Objects;
+
 public class Score {
     public static final Score EMPTY = new Score(0.0d);
     public static final Score PAWN = new Score(1.0d);
@@ -25,5 +27,22 @@ public class Score {
 
     public Score calculatePawnPenaltyScore(final int pawnCountInLine) {
         return new Score(this.value - (PAWN_PENALTY_SCORE.value * pawnCountInLine));
+    }
+
+    public Score bigger(final Score score){
+        return new Score(Math.max(this.value, score.value));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return Double.compare(score.value, value) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
