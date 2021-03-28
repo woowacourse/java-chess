@@ -1,6 +1,6 @@
-package chess.web.dto.response;
+package chess.dto.response;
 
-import chess.web.dto.responsedto.ResponseDto;
+import chess.dto.responsedto.ResponseDto;
 
 public class Response {
     private final int code;

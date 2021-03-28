@@ -35,7 +35,7 @@ public class RoomDAO {
         pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) {
-            return null;
+            return Optional.ofNullable(null);
         }
         return Optional.ofNullable(rs.getLong(ROOM_ID_COLUMN_NAME));
     }

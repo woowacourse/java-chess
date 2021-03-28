@@ -1,15 +1,22 @@
 package chess.dao;
 
 import chess.domain.piece.Piece;
+import chess.dto.responsedto.PieceResponseDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PieceDAO {
     private static final int FIRST_PARAMETER_INDEX = 1;
     private static final int FIRST_COLUMN = 1;
+    private static final int SECOND_COLUMN = 2;
+    private static final int THIRD_COLUMN = 3;
+    private static final int FOURTH_COLUMN = 4;
+    private static final int FIFTH_COLUMN = 5;
     private static final int SECOND_PARAMETER_INDEX = 2;
     private static final int THIRD_PARAMETER_INDEX = 3;
 
@@ -34,5 +41,25 @@ public class PieceDAO {
             return rs.getLong(FIRST_COLUMN);
         }
         throw new SQLException("아무 값도 삽입되지 않았습니다.");
+    }
+
+    public List<PieceResponseDto> findPiecesByGridId(long gridId) throws SQLException {
+        String query = "SELECT * FROM piece WHERE gridId = ?";
+        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) {
+            return null;
+        }
+        List<PieceResponseDto> pieces = new ArrayList<>();
+        while (rs.next()) {
+            pieces.add(new PieceResponseDto(
+                    rs.getLong(FIRST_COLUMN),
+                    rs.getBoolean(SECOND_COLUMN),
+                    rs.getString(THIRD_COLUMN),
+                    rs.getLong(FOURTH_COLUMN)
+            ));
+        }
+        return pieces;
     }
 }

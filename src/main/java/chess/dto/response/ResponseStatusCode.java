@@ -1,4 +1,4 @@
-package chess.web.dto.response;
+package chess.dto.response;
 
 public enum ResponseStatusCode {
     BAD_REQUEST(400),
