@@ -18,10 +18,18 @@ public class BoardForDB {
 
     private final Map<PositionEntity, CellForDB> cellsForDB = new HashMap<>();
 
-    public void setPiece(PositionEntity positionEntity, PieceEntity pieceEntity) {
-        CellForDB cellForDB = new CellForDB(pieceEntity);
-        cellsForDB.put(positionEntity, cellForDB);
+    public BoardForDB() {
+        for (File file : File.values()) {
+            putEmptyCellsInFile(file);
+        }
+    }
 
+    private void putEmptyCellsInFile(File file) {
+        for (Rank rank : Rank.values()) {
+            cellsForDB.put(
+                PositionEntity.of(file, rank), new CellForDB()
+            );
+        }
     }
 
     public CellForDB findCell(PositionEntity positionEntity) {

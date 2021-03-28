@@ -29,7 +29,6 @@ public class PlayersForDB {
     public void createNewPlayers(ChessGameEntity chessGameEntity) throws SQLException {
         playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
         playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
-        loadPlayers(chessGameEntity);
     }
 
     public void loadPlayers(ChessGameEntity chessGameEntity) throws SQLException {
@@ -37,7 +36,9 @@ public class PlayersForDB {
         playerEntities.addAll(playerDAO.findAllByChessGame(chessGameEntity));
     }
 
-    public void addForNewPlayers(PiecePositionEntities piecePositionEntities) throws SQLException {
+    public void saveInitialPiecePositions(PiecePositionEntities piecePositionEntities)
+        throws SQLException {
+
         addPieceToPlayerTeamColorOf(
             piecePositionEntities.getPieceTeamColor(), piecePositionEntities
         );

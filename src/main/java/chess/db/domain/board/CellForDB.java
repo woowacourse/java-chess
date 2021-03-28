@@ -10,8 +10,8 @@ public class CellForDB {
 
     private PieceEntity pieceEntity;
 
-    public CellForDB(PieceEntity pieceEntity) {
-        this.pieceEntity = pieceEntity;
+    public CellForDB() {
+        this.pieceEntity = null;
     }
 
     public void put(PieceEntity pieceEntity) {
