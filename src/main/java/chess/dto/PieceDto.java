@@ -1,10 +1,13 @@
 package chess.dto;
 
 import chess.domain.board.Point;
+import chess.domain.board.SquareState;
 import chess.domain.board.Team;
 import chess.domain.piece.Piece;
+import java.io.Serializable;
 
-public class PieceDto {
+public class PieceDto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private static final String EMPTY_PIECE = "e";
     private static final String BLACK = "b";
@@ -38,6 +41,33 @@ public class PieceDto {
             return WHITE;
         }
         return NONE;
+    }
+
+    public Team teamForEntity() {
+        if (team.equals(BLACK)) {
+            return Team.BLACK;
+        }
+        if (team.equals(WHITE)) {
+            return Team.WHITE;
+        }
+        return Team.NONE;
+    }
+
+    private Piece pieceForEntity() {
+        if (piece.equals(EMPTY_PIECE)) {
+            return Piece.EMPTY;
+        }
+        return Piece.pieceByName(piece);
+    }
+
+    public SquareState toSquareStateEntity() {
+        Piece piece = pieceForEntity();
+        Team team = teamForEntity();
+        return SquareState.of(piece, team);
+    }
+
+    public Point toPointEntity() {
+        return Point.of(x + y);
     }
 
     public String getTeam() {

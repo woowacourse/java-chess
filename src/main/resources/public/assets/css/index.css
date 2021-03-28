@@ -152,3 +152,7 @@ section {
     font-family: "pencil", sans-serif;
     color: #eee;
 }
+
+.blur {
+    filter: blur(2px);
+}

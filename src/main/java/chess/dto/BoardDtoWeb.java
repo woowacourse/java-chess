@@ -3,11 +3,14 @@ package chess.dto;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.SquareState;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardDtoWeb {
+public class BoardDtoWeb implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final List<PieceDto> board;
 
@@ -21,6 +24,14 @@ public class BoardDtoWeb {
 
     private PieceDto pieceDtoByPoint(Point point, Map<Point, SquareState> squares) {
         return new PieceDto(point, squares.get(point).team(), squares.get(point).piece());
+    }
+
+    public Board toEntity() {
+        Map<Point, SquareState> squares = new HashMap<>();
+        board.forEach(pieceDto -> {
+            squares.put(pieceDto.toPointEntity(), pieceDto.toSquareStateEntity());
+        });
+        return new Board(squares);
     }
 
     public List<PieceDto> getBoard() {

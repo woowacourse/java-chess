@@ -12,6 +12,11 @@ public class Turn {
         this.currentTeam = currentTeam;
     }
 
+    public Turn(Team firstTeam, Team currentTeam) {
+        this.firstTeam = firstTeam;
+        this.currentTeam = currentTeam;
+    }
+
     public Team now() {
         return currentTeam;
     }

@@ -10,10 +10,15 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private final Map<Point, SquareState> squares = new HashMap<>();
+    private final Map<Point, SquareState> squares;
 
     public Board() {
+        squares = new HashMap<>();
         clear();
+    }
+
+    public Board(Map<Point, SquareState> squares) {
+        this.squares = new HashMap<>(squares);
     }
 
     public void clear() {

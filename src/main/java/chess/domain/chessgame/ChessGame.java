@@ -1,5 +1,6 @@
 package chess.domain.chessgame;
 
+import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
@@ -17,6 +18,12 @@ public class ChessGame {
         this.scoreBoard = new ScoreBoard(board);
         this.gameState = new Ready(board);
         this.turn = turn;
+    }
+
+    public ChessGame(Turn turn, ScoreBoard scoreBoard, GameState gameState) {
+        this.turn = turn;
+        this.scoreBoard = scoreBoard;
+        this.gameState = gameState;
     }
 
     public void start() {
