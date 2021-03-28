@@ -16,8 +16,7 @@ class PositionTest {
     @Test
     void position_generate() {
         Position position = Position.valueOf(0, 0);
-        assertThat(position.getRow()).isEqualTo(0);
-        assertThat(position.getColumn()).isEqualTo(0);
+        assertThat(position).isEqualTo(Position.valueOf(0, 0));
     }
 
     @DisplayName("Position의 인덱스가 잘못 입력 된 경우")
@@ -41,7 +40,6 @@ class PositionTest {
     @CsvSource(value = {"a7:1:0", "c6:2:2", "f3:5:5", "h2:6:7"}, delimiter = ':')
     public void string_to_index_position(String input, int x, int y) {
         Position position = Position.of(input);
-        assertThat(position.getRow()).isEqualTo(x);
-        assertThat(position.getColumn()).isEqualTo(y);
+        assertThat(position).isEqualTo(Position.valueOf(x, y));
     }
 }

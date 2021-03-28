@@ -2,9 +2,7 @@ package domain.piece.position;
 
 import domain.exception.InvalidPositionException;
 
-import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Queue;
 
 public class Position {
     private static final Position EMPTY_POSITION = new Position(null, null);    // TODO : null 대신 다른 방법은?
@@ -34,12 +32,12 @@ public class Position {
         }
     }
 
-    public int getRow() {
-        return row.getIndex();
+    public static int makeRowDiff(Position start, Position end) {
+        return end.row.getIndex() - start.row.getIndex();
     }
 
-    public int getColumn() {
-        return column.getIndex();
+    public static int makeColumnDiff(Position start, Position end) {
+        return end.column.getIndex() - start.column.getIndex();
     }
 
     public Position move(Direction direction) {
@@ -52,13 +50,6 @@ public class Position {
 
     public boolean notEmptyPosition() {
         return !this.equals(EMPTY_POSITION);
-    }
-
-    public static Queue makeDiff(Position from, Position to) {
-        Queue<Integer> diff = new LinkedList<>();
-        diff.add(to.getRow() - from.getRow());
-        diff.add(to.getColumn() - from.getColumn());
-        return diff;
     }
 
     @Override

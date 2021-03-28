@@ -8,7 +8,6 @@ import domain.score.Score;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Queue;
 
 public abstract class Piece {
     private final Name name;
@@ -52,16 +51,14 @@ public abstract class Piece {
     }
 
     protected boolean isDiagonal(Position start, Position end) {
-        Queue<Integer> diff = Position.makeDiff(start, end);
-        int rowDiff = Math.abs(diff.poll());
-        int colDiff = Math.abs(diff.poll());
+        int rowDiff = Math.abs(Position.makeRowDiff(start, end));
+        int colDiff = Math.abs(Position.makeColumnDiff(start, end));
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
     }
 
     protected boolean isLinear(Position start, Position end) {
-        Queue<Integer> diff = Position.makeDiff(start, end);
-        int rowDiff = Math.abs(diff.poll());
-        int colDiff = Math.abs(diff.poll());
+        int rowDiff = Math.abs(Position.makeRowDiff(start, end));
+        int colDiff = Math.abs(Position.makeColumnDiff(start, end));
         return (rowDiff == 0) || (colDiff == 0);
     }
 
@@ -70,14 +67,16 @@ public abstract class Piece {
     }
 
     protected Direction getLinearDirection(Position start, Position end) {
-        Queue<Integer> diff = Position.makeDiff(start, end);
-        Direction direction = Direction.findLinearDirection(diff.poll(), diff.poll());
+        int rowDiff = Position.makeRowDiff(start, end);
+        int colDiff = Position.makeColumnDiff(start, end);
+        Direction direction = Direction.findLinearDirection(rowDiff, colDiff);
         return direction;
     }
 
     protected Direction getDiagonalDirection(Position start, Position end) {
-        Queue<Integer> diff = Position.makeDiff(start, end);
-        Direction direction = Direction.findDiagonalDirection(diff.poll(), diff.poll());
+        int rowDiff = Position.makeRowDiff(start, end);
+        int colDiff = Position.makeColumnDiff(start, end);
+        Direction direction = Direction.findDiagonalDirection(rowDiff, colDiff);
         return direction;
     }
 
