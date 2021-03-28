@@ -82,7 +82,7 @@ public class Position {
         return (this.x == target.x) || (this.y == target.y);
     }
 
-    public Position movedPositionByNumber(int xNumber, int yNumber) {
+    public Position movedByNumber(int xNumber, int yNumber) {
         return Position.of((char) (x + xNumber) + String.valueOf((char) (y + yNumber)));
     }
 
