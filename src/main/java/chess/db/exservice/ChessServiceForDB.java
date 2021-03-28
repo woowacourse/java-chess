@@ -1,4 +1,4 @@
-package chess.db.service;
+package chess.db.exservice;
 
 import chess.db.domain.game.ChessGameForDBEx;
 import java.sql.SQLException;
