@@ -24,12 +24,12 @@ public class Blank implements Piece {
 
     @Override
     public TeamColor getColor() {
-        throw new UnsupportedOperationException("빈칸은 팀이 없어요!");
+        throw new UnsupportedOperationException("빈칸입니다.");
     }
 
     @Override
     public void dead() {
-        throw new UnsupportedOperationException("빈칸은 움직일 수 없죠!");
+        throw new UnsupportedOperationException("빈칸입니다.");
     }
 
     @Override
