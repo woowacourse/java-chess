@@ -1,8 +1,11 @@
+let store = {};
+
 async function createChessBoard() {
     try {
         let roomName;
         do {
             roomName = prompt('입장할 방의 이름을 입력해주세요.');
+            store.roomName = roomName;
         } while (!roomName)
 
         const res = await axios({
@@ -10,6 +13,7 @@ async function createChessBoard() {
             url: `/grid/${roomName}`,
         });
         const data = res.data;
+        store.grid = data.data.gridResponseDto;
         console.log(data);
         if (data.code !== 200) {
             alert(data.message);
@@ -155,7 +159,7 @@ async function start() {
     try {
         const res = await axios({
             method: 'post',
-            url: '/start',
+            url: `/grid/${store.grid.gridId}/start`,
         });
         const data = res.data;
         if (data.code === 401) {

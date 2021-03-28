@@ -29,7 +29,7 @@ public class ChessService {
         pieceDAO = new PieceDAO();
     }
 
-//    public Response move(MoveRequestDto requestDto) {
+    //    public Response move(MoveRequestDto requestDto) {
 //        try {
 //            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
 //            return new Response(ResponseCode.NO_CONTENT);
@@ -37,8 +37,11 @@ public class ChessService {
 //            return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
 //        }
 //    }
+    public void start(long gridId) throws SQLException {
+        gridDAO.changeToStarting(gridId);
+    }
 
-    public GridAndPiecesResponseDto start(StartRequestDto requestDto) throws SQLException {
+    public GridAndPiecesResponseDto getGridAndPieces(StartRequestDto requestDto) throws SQLException {
         String roomName = requestDto.getRoomName();
         Optional<Long> roomId = roomDAO.findRoomIdByName(roomName);
         if (!roomId.isPresent()) {

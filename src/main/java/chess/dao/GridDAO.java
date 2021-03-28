@@ -18,6 +18,7 @@ public class GridDAO {
     private static final int THIRD_COLUMN = 3;
     private static final int FOURTH_COLUMN = 4;
     private static final int FIFTH_COLUMN = 5;
+    private static final int SIXTH_COLUMN = 6;
     private static final int SECOND_PARAMETER_INDEX = 2;
     private static final int THIRD_PARAMETER_INDEX = 3;
 
@@ -60,7 +61,8 @@ public class GridDAO {
                 rs.getBoolean(SECOND_COLUMN),
                 rs.getBoolean(THIRD_COLUMN),
                 rs.getLong(FOURTH_COLUMN),
-                rs.getObject(FIFTH_COLUMN, LocalDateTime.class)
+                rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
+                rs.getBoolean(SIXTH_COLUMN)
         );
     }
 
@@ -78,7 +80,15 @@ public class GridDAO {
                 rs.getBoolean(SECOND_COLUMN),
                 rs.getBoolean(THIRD_COLUMN),
                 rs.getLong(FOURTH_COLUMN),
-                rs.getObject(FIFTH_COLUMN, LocalDateTime.class)
+                rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
+                rs.getBoolean(SIXTH_COLUMN)
         );
+    }
+
+    public void changeToStarting(long gridId) throws SQLException {
+        String query = "UPDATE grid SET isStarted = true WHERE gridId = ?";
+        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+        pstmt.executeUpdate();
     }
 }

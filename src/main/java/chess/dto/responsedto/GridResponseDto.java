@@ -8,13 +8,15 @@ public class GridResponseDto implements ResponseDto {
     private final boolean isFinished;
     private final Long roomId;
     private final LocalDateTime createdAt;
+    private final boolean isStarted;
 
-    public GridResponseDto(Long gridId, boolean isBlackTurn, boolean isFinished, Long roomId, LocalDateTime createdAt) {
+    public GridResponseDto(Long gridId, boolean isBlackTurn, boolean isFinished, Long roomId, LocalDateTime createdAt, boolean isStarted) {
         this.gridId = gridId;
         this.isBlackTurn = isBlackTurn;
         this.isFinished = isFinished;
         this.roomId = roomId;
         this.createdAt = createdAt;
+        this.isStarted = isStarted;
     }
 
     public Long getGridId() {
@@ -35,5 +37,9 @@ public class GridResponseDto implements ResponseDto {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
     }
 }

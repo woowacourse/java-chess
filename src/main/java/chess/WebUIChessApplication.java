@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
@@ -38,8 +39,14 @@ public class WebUIChessApplication {
         get("/grid/:roomName", (req, res) -> {
             String roomName = req.params(":roomName");
             StartRequestDto startRequestDto = new StartRequestDto(roomName);
-            GridAndPiecesResponseDto gridAndPiecesResponseDto = chessService.start(startRequestDto);
+            GridAndPiecesResponseDto gridAndPiecesResponseDto = chessService.getGridAndPieces(startRequestDto);
             return new Response(ResponseCode.OK, gridAndPiecesResponseDto);
+        }, JSON_TRANSFORMER);
+
+        post("/grid/:gridId/start", (req, res) -> {
+            String gridId = req.params("gridId");
+            chessService.start(Long.parseLong(gridId));
+            return new Response(ResponseCode.NO_CONTENT);
         }, JSON_TRANSFORMER);
 //
 //        get("/check/finished", (req, res) -> {
