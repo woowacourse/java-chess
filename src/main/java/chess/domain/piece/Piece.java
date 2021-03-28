@@ -4,7 +4,8 @@ import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Piece {

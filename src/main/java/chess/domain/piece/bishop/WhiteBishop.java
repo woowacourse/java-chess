@@ -2,7 +2,7 @@ package chess.domain.piece.bishop;
 
 import chess.domain.piece.Owner;
 
-public class WhiteBishop extends Bishop{
+public class WhiteBishop extends Bishop {
 
     private static final WhiteBishop WHITE_BISHOP = new WhiteBishop();
 

@@ -8,8 +8,6 @@ import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
 import chess.domain.piece.Owner;
 
-import java.util.List;
-
 public class ChessManager {
     private static final Owner FIRST_TURN = Owner.WHITE;
 

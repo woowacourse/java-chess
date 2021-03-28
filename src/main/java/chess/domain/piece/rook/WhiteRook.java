@@ -2,7 +2,7 @@ package chess.domain.piece.rook;
 
 import chess.domain.piece.Owner;
 
-public class WhiteRook extends Rook{
+public class WhiteRook extends Rook {
 
     private static final WhiteRook WHITE_ROOK = new WhiteRook();
 

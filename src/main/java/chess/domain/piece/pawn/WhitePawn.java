@@ -4,7 +4,7 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Owner;
 
-public class WhitePawn extends Pawn{
+public class WhitePawn extends Pawn {
 
     private static final WhitePawn WHITE_PAWN = new WhitePawn();
 

@@ -9,7 +9,10 @@ import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.king.King;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
