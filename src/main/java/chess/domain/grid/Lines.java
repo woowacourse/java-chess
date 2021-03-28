@@ -43,4 +43,12 @@ public final class Lines {
         int linesLastIndex = lines.size() - DIFFERENCE_SIZE_AND_INDEX;
         return lines.get(linesLastIndex - index);
     }
+
+    public List<Piece> pieces() {
+        List<Piece> pieces = new ArrayList<>();
+        for (Line line : lines) {
+            pieces.addAll(line.pieces());
+        }
+        return pieces;
+    }
 }

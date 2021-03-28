@@ -1,7 +1,6 @@
 package chess.domain.grid;
 
 import chess.domain.grid.gridStrategy.GridStrategy;
-import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -18,10 +17,6 @@ public final class Grid {
 
     public Grid(GridStrategy gridStrategy) {
         initGame(gridStrategy);
-    }
-
-    public void resetGame() {
-        initGame(new NormalGridStrategy());
     }
 
     private void initGame(GridStrategy gridStrategy) {
@@ -99,5 +94,9 @@ public final class Grid {
 
     public boolean isKingCaught() {
         return score.isKingCaught();
+    }
+
+    public List<Piece> pieces() {
+        return lines.pieces();
     }
 }
