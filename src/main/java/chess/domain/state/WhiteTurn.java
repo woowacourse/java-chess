@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class WhiteTurn implements State{
+public class WhiteTurn implements State {
     @Override
     public boolean isReady() {
         return false;

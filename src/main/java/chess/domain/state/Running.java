@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class Running implements State{
+public class Running implements State {
     @Override
     public boolean isReady() {
         return false;

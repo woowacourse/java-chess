@@ -22,7 +22,7 @@ public class StatusOnCommandTest {
         ChessGame chessGame = new ChessGame();
         String[] splitCommand = new String[]{"status"};
 
-        assertThatThrownBy(()->statusOnCommand.execute(chessGame, splitCommand));
+        assertThatThrownBy(() -> statusOnCommand.execute(chessGame, splitCommand));
     }
 
     @DisplayName("체스 보드를 출력하지 않아도 된다.")

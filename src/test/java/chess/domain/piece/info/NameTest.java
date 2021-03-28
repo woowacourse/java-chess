@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece.info;
 
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Name;

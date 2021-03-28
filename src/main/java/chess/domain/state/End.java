@@ -5,6 +5,7 @@ public class End implements State {
     public boolean isReady() {
         return false;
     }
+
     @Override
     public boolean isFinish() {
         return true;

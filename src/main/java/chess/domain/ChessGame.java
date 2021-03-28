@@ -46,7 +46,7 @@ public class ChessGame {
         checkAbleToMove(sourcePiece, target, turn);
         Direction direction = Direction.findDirectionByTwoPosition(source, target);
         sourcePiece.checkMovable(targetPiece, direction);
-        if(!(sourcePiece instanceof Knight)) {
+        if (!(sourcePiece instanceof Knight)) {
             checkPieceInPath(source, target, direction);
         }
         pieces.removePieceByPosition(target);

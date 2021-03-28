@@ -23,7 +23,7 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public void move(Position target){
+    public void move(Position target) {
         this.position = target;
     }
 

@@ -86,10 +86,6 @@ public class Position {
         return Position.of((char) (x + xNumber) + String.valueOf((char) (y + yNumber)));
     }
 
-    public boolean isSameDistanceByCount(Position target, int i) {
-        return (Math.abs(this.xDistance(target)) == i && Math.abs(this.yDistance(target)) == i);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

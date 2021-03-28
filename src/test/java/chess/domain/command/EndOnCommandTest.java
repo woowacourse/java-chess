@@ -1,24 +1,15 @@
 package chess.domain.command;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
-import chess.domain.piece.info.Color;
-import chess.domain.position.Position;
-import chess.domain.state.WhiteTurn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EndOnCommandTest {
     private EndOnCommand endOnCommand;
+
     @BeforeEach
     void setUp() {
         endOnCommand = new EndOnCommand();
