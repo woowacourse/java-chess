@@ -1,14 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.piece.info.Color;
-import chess.domain.position.Diagonal;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -30,34 +27,31 @@ public class BishopTest {
         assertThat(bishop.getName()).isEqualTo("B");
     }
 
-    @DisplayName("Bishop 규칙에 따른 이동")
+    @DisplayName("Bishop 이동")
     @Test
     void 비숍_이동_확인() {
-        List<Piece> currentPieces = Arrays.asList(
-                new Bishop(Position.of("c8"), Color.BLACK));
-        Pieces pieces = new Pieces(currentPieces);
-        Position source = Position.of("c8");
         Position target = Position.of("e6");
-        Piece bishop = pieces.findByPosition(source);
+        Piece bishop = new Bishop(Position.of("c8"), Color.BLACK);
 
-        bishop.move(target, pieces);
+        bishop.move(target);
         Position result = bishop.getPosition();
 
         assertThat(result).isEqualTo(target);
     }
 
-    @DisplayName("비숍 이동 경로에 장애물이 있을 경우 예외")
-    @Test
-    void 비숍_이동에_장애물() {
-        Position source = Position.of("f8");
-        Position target = Position.of("h6");
-        Piece bishop = initialPieces.findByPosition(source);
-        Diagonal bishopD = Diagonal.findDiagonalByTwoPosition(source, target);
-
-        assertThatThrownBy((() ->
-                bishopD.hasPieceInPath(bishop.getPosition(), target, initialPieces)))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+//    @DisplayName("비숍 이동 경로에 장애물이 있을 경우 예외")
+//    @Test
+//    void 비숍_이동에_장애물() {
+//        Position source = Position.of("f8");
+//        Position target = Position.of("h6");
+//        Piece bishop = initialPieces.findByPosition(source);
+//        Piece targetPiece = initialPieces.findByPosition(target);
+//        Direction direction = Direction.findDirectionByTwoPosition(source, target);
+//        bishop.checkMovable(targetPiece, direction);
+//        assertThatThrownBy((() ->
+//                bishop.checkMovable(targetPiece, direction)))
+//                .isInstanceOf(IllegalArgumentException.class);
+//    }
 
     @DisplayName("대각선 이동이 아닌 경우 예외")
     @Test
@@ -65,9 +59,11 @@ public class BishopTest {
         Position source = Position.of("f8");
         Position target = Position.of("g6");
         Piece bishop = initialPieces.findByPosition(source);
-        initialPieces.removePieceByPosition(Position.of("g7"));
+        Piece targetPiece = initialPieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        assertThatThrownBy(() -> bishop.move(target, initialPieces))
+        assertThatThrownBy((() ->
+                bishop.checkMovable(targetPiece, direction)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

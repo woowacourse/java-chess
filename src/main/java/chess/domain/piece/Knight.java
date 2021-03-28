@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Name;
 import chess.domain.piece.info.Score;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
@@ -11,15 +12,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(Position target, Pieces pieces) {
-        checkMoveRule(target);
-        this.position = target;
-    }
-
-    public void checkMoveRule(Position target) {
-        if (!((Math.abs(this.position.xDistance(target)) == 2 && Math.abs(this.position.yDistance(target)) == 1) ||
-                (Math.abs(this.position.xDistance(target)) == 1 && Math.abs(this.position.yDistance(target)) == 2))) {
-            throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
+    public void checkMovable(Piece targetPiece, Direction direction) {
+        if (!Direction.knightDirection().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
         }
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.info.Color;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,49 +30,72 @@ public class PawnTest {
         assertThat(pawn.getName()).isEqualTo("P");
     }
 
-    @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 - 2칸 이동")
+    @DisplayName("폰의 이동을 확인한다.")
+    @Test
+    void 폰_이동() {
+        Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
+        Position target = Position.of("c6");
+
+        pawn.move(target);
+
+        assertThat(pawn.getPosition()).isEqualTo(target);
+    }
+
+    @DisplayName("Pawn 이동 규칙을 확인한다. 처음 Pawn을 움직이는 경우 - 2칸 이동")
     @Test
     void pawn_처음으로_이동_2칸() {
-        Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
+        Position source = Position.of("a7");
+        Position target = Position.of("a5");
+        Piece pawn = initialPieces.findByPosition(source);
+        Piece targetPiece = initialPieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        pawn.move(Position.of("a5"), initialPieces);
-
-        assertThat(pawn.getPosition()).isEqualTo(Position.of("a5"));
+        pawn.checkMovable(targetPiece, direction);
     }
 
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 예외 - 3칸 이동 ")
     @Test
     void pawn_처음으로_이동_3칸_예외() {
-        Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
+        Position source = Position.of("f8");
+        Position target = Position.of("g6");
+        Piece pawn = initialPieces.findByPosition(source);
+        Piece targetPiece = initialPieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        assertThatThrownBy(() -> pawn.move(Position.of("a4"), initialPieces))
+        assertThatThrownBy((() ->
+                pawn.checkMovable(targetPiece, direction)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("Pawn 규칙에 따라 이미 움직인 Pawn을 움직이는 경우 예외 - 2칸 이동 ")
     @Test
     void pawn_이미_이동_2칸_예외() {
-        Pawn pawn = new Pawn(Position.of("a6"), Color.BLACK);
+        Position source = Position.of("a6");
+        Position target = Position.of("a4");
+        Piece pawn = initialPieces.findByPosition(source);
+        Piece targetPiece = initialPieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        assertThatThrownBy(() -> pawn.move(Position.of("a4"), initialPieces))
+        assertThatThrownBy((() ->
+                pawn.checkMovable(targetPiece, direction)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("이동 경로에 장애물이 있을 경우")
-    @Test
-    void 이동하는데_앞에_장애물이_있는_경우() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a7"), Color.BLACK),
-                new Pawn(Position.of("a6"), Color.BLACK));
-        Pieces pieces = new Pieces(current);
-
-        Position source = Position.of("a7");
-        Position target = Position.of("a5");
-        Piece pawn = pieces.findByPosition(source);
-
-        assertThatThrownBy(() -> pawn.move(target, pieces))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+//    @DisplayName("이동 경로에 장애물이 있을 경우")
+//    @Test
+//    void 이동하는데_앞에_장애물이_있는_경우() {
+//        List<Piece> current = Arrays.asList(
+//                new Pawn(Position.of("a7"), Color.BLACK),
+//                new Pawn(Position.of("a6"), Color.BLACK));
+//        Pieces pieces = new Pieces(current);
+//
+//        Position source = Position.of("a7");
+//        Position target = Position.of("a5");
+//        Piece pawn = pieces.findByPosition(source);
+//
+//        assertThatThrownBy(() -> pawn.move(target, pieces))
+//                .isInstanceOf(IllegalArgumentException.class);
+//    }
 
     @DisplayName("검정 말이 흰 말을 공격한다.")
     @Test
@@ -80,14 +104,13 @@ public class PawnTest {
                 new Pawn(Position.of("a7"), Color.BLACK),
                 new Pawn(Position.of("b6"), Color.WHITE));
         Pieces pieces = new Pieces(current);
-
         Position source = Position.of("a7");
         Position target = Position.of("b6");
         Piece pawn = pieces.findByPosition(source);
+        Piece targetPiece = pieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        pawn.move(target, pieces);
-
-        assertThat(pieces.getPieces().size()).isEqualTo(1);
+        pawn.checkMovable(targetPiece, direction);
     }
 
     @DisplayName("흰 말이 검정 말을 공격한다.")
@@ -101,10 +124,10 @@ public class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("b3");
         Piece pawn = pieces.findByPosition(source);
+        Piece targetPiece = pieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        pawn.move(target, pieces);
-
-        assertThat(pieces.getPieces().size()).isEqualTo(1);
+        pawn.checkMovable(targetPiece, direction);
     }
 
     @DisplayName("흰 말이 검정 말을 공격한다. - 말이 없을 경우")
@@ -117,8 +140,10 @@ public class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("b3");
         Piece pawn = pieces.findByPosition(source);
+        Piece targetPiece = pieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        assertThatThrownBy(() -> pawn.move(target, pieces))
+        assertThatThrownBy(() -> pawn.checkMovable(targetPiece, direction))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

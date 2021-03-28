@@ -27,7 +27,7 @@ public class Pieces {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
-                .orElse(new Empty());
+                .orElse(new Empty(position));
     }
 
     public void removePieceByPosition(Position target) {

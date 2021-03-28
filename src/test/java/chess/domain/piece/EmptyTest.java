@@ -31,7 +31,7 @@ public class EmptyTest {
         Empty empty = new Empty();
         Position target = Position.of("e6");
 
-        assertThatThrownBy(() -> empty.move(target, initialPieces))
+        assertThatThrownBy(() -> empty.move(target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

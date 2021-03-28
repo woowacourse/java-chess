@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.info.Color;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,14 +25,10 @@ public class KnightTest {
     @DisplayName("나이트의 이동을 확인한다.")
     @Test
     void 나이트_이동() {
-        List<Piece> current = Arrays.asList(
-                new Knight(Position.of("b8"), Color.BLACK));
-        Pieces pieces = new Pieces(current);
-        Position source = Position.of("b8");
-        Position target = Position.of("c6"); // 옮기고자 하는 위치
-        Piece knight = pieces.findByPosition(source);
+        Knight knight = new Knight(Position.of("b8"), Color.BLACK);
+        Position target = Position.of("c6");
 
-        knight.move(target, pieces);
+        knight.move(target);
 
         assertThat(knight.getPosition()).isEqualTo(target);
     }
@@ -44,10 +41,12 @@ public class KnightTest {
         Pieces pieces = new Pieces(current);
         Position source = Position.of("b8");
         Position target = Position.of("b1");
-
         Piece knight = pieces.findByPosition(source);
+        Piece targetPiece = pieces.findByPosition(target);
+        Direction direction = Direction.findDirectionByTwoPosition(source, target);
 
-        assertThatThrownBy(() -> knight.move(target, pieces))
+        assertThatThrownBy((() ->
+                knight.checkMovable(targetPiece, direction)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -4,6 +4,7 @@ import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Name;
 import chess.domain.piece.info.Score;
 import chess.domain.position.Cross;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -12,21 +13,6 @@ public class Pawn extends Piece {
 
     public Pawn(Position position, Color color) {
         super(position, Name.PAWN, color, new Score(1));
-    }
-
-    @Override
-    public void move(Position target, Pieces pieces) {
-        if (this.position.isDiagonal(target) && position.isSameDistanceByCount(target, 1)) {
-            checkAbleToAttack(target, pieces);
-            return;
-        }
-        if (this.color.same(Color.BLACK) && moveByBlackRule(target, pieces)) {
-            return;
-        }
-        if (this.color.same(Color.WHITE) && moveByWhiteRule(target, pieces)) {
-            return;
-        }
-        throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
     }
 
     private void checkAbleToAttack(Position target, Pieces pieces) {
@@ -70,5 +56,26 @@ public class Pawn extends Piece {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void checkMovable(Piece targetPiece, Direction direction) {
+        if (color.same(Color.BLACK) && !Direction.blackPawnDirection().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
+        }
+        if (color.same(Color.WHITE) && !Direction.whitePawnDirection().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
+        }
+        if (Direction.diagonalDirection().contains(direction) && targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
+        }
+        if ((this.position.sameY(BLACK_INITIAL_Y) || this.position.sameY(WHITE_INITIAL_Y)) &&
+                (Math.abs(this.position.yDistance(targetPiece.position)) <= 2)) {
+            System.out.println(Math.abs(this.position.yDistance(targetPiece.position)));
+            return;
+        }
+        if (Math.abs(this.position.yDistance(targetPiece.position)) != 1) {
+            throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
+        }
     }
 }

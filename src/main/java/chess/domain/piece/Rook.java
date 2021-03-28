@@ -4,6 +4,7 @@ import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Name;
 import chess.domain.piece.info.Score;
 import chess.domain.position.Cross;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Rook extends Piece {
@@ -12,9 +13,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position target, Pieces pieces) {
-        Cross rookCross = Cross.findCrossByTwoPosition(this.position, target);
-        rookCross.hasPieceInPath(this.position, target, pieces);
-        this.position = target;
+    public void checkMovable(Piece targetPiece, Direction direction) {
+        if (!Direction.crossDirection().contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
+        }
     }
 }

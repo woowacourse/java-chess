@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Name;
 import chess.domain.piece.info.Score;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class Piece {
@@ -22,7 +23,9 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public abstract void move(Position target, Pieces pieces);
+    public void move(Position target){
+        this.position = target;
+    }
 
     public Position getPosition() {
         return position;
@@ -55,4 +58,6 @@ public abstract class Piece {
     public boolean isSamePosition(Position position) {
         return this.position.equals(position);
     }
+
+    public abstract void checkMovable(Piece targetPiece, Direction direction);
 }
