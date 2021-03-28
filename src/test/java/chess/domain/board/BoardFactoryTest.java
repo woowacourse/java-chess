@@ -16,12 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardFactoryTest {
     
-    private static Stream<Arguments> generateNonPawnSource() {
-        return Stream.of(Arguments.of("a", Rook.class), Arguments.of("b", Knight.class), Arguments.of("c",
-                Bishop.class), Arguments.of("d", Queen.class), Arguments.of("e", King.class), Arguments.of("f",
-                Bishop.class), Arguments.of("g", Knight.class), Arguments.of("h", Rook.class));
-    }
-    
     @ParameterizedTest(name = "폰이 아닌 기물의 초기화 테스트")
     @MethodSource("generateNonPawnSource")
     void initializedNonPawnTest(String file, Class<Piece> pieceClass) {
@@ -36,6 +30,19 @@ public class BoardFactoryTest {
         // then
         assertThat(chessBord.get(Position.from(file + blackRow))).isInstanceOf(pieceClass);
         assertThat(chessBord.get(Position.from(file + whiteRow))).isInstanceOf(pieceClass);
+    }
+    
+    private static Stream<Arguments> generateNonPawnSource() {
+        return Stream.of(
+                Arguments.of("a", Rook.class),
+                Arguments.of("b", Knight.class),
+                Arguments.of("c", Bishop.class),
+                Arguments.of("d", Queen.class),
+                Arguments.of("e", King.class),
+                Arguments.of("f", Bishop.class),
+                Arguments.of("g", Knight.class),
+                Arguments.of("h", Rook.class)
+        );
     }
     
     @Test

@@ -13,11 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SymbolBoardDTOTest {
     
-    private static Stream<Arguments> generateNonPawnSource() {
-        return Stream.of(Arguments.of(0, "r"), Arguments.of(1, "n"), Arguments.of(2, "b"), Arguments.of(3, "q"),
-                Arguments.of(4, "k"), Arguments.of(5, "b"), Arguments.of(6, "n"), Arguments.of(7, "r"));
-    }
-    
     @ParameterizedTest(name = "폰이 아닌 기물의 심볼 보드 테스트")
     @MethodSource("generateNonPawnSource")
     void initializedNonPawnSymbolTest(int file, String symbol) {
@@ -34,6 +29,19 @@ class SymbolBoardDTOTest {
         // then
         assertThat(board[file][blackRow]).isEqualTo(symbol.toUpperCase());
         assertThat(board[file][whiteRow]).isEqualTo(symbol);
+    }
+    
+    private static Stream<Arguments> generateNonPawnSource() {
+        return Stream.of(
+                Arguments.of(0, "r"),
+                Arguments.of(1, "n"),
+                Arguments.of(2, "b"),
+                Arguments.of(3, "q"),
+                Arguments.of(4, "k"),
+                Arguments.of(5, "b"),
+                Arguments.of(6, "n"),
+                Arguments.of(7, "r")
+        );
     }
     
     @Test
