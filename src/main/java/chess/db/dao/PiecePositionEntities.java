@@ -2,6 +2,7 @@ package chess.db.dao;
 
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
+import java.util.Objects;
 
 public class PiecePositionEntities {
     private PieceEntity pieceEntity;
@@ -26,5 +27,23 @@ public class PiecePositionEntities {
 
     public void setPositionEntity(PositionEntity positionEntity) {
         this.positionEntity = positionEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PiecePositionEntities)) {
+            return false;
+        }
+        PiecePositionEntities that = (PiecePositionEntities) o;
+        return getPieceEntity().equals(that.getPieceEntity())
+            && getPositionEntity().equals(that.getPositionEntity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPieceEntity(), getPositionEntity());
     }
 }

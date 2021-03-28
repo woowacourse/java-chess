@@ -5,7 +5,6 @@ import static chess.domain.position.type.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.db.domain.position.PositionEntity;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import org.junit.jupiter.api.DisplayName;

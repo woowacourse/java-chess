@@ -28,7 +28,7 @@ class BoardDefaultSettingTest {
     @Test
     void BoardDefaultSetting() {
         for (int i = 0; i < 8; i++) {
-            String fileValue = File.values()[i].value();
+            String fileValue = File.values()[i].getValue();
 
             assertThat(
                 cellsStatus.get(PositionConverter.convertToCellsStatusIndex(fileValue + "8"))

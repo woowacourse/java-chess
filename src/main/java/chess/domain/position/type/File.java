@@ -41,7 +41,7 @@ public enum File {
         return this == destinationFile;
     }
 
-    public String value() {
+    public String getValue() {
         return value;
     }
 

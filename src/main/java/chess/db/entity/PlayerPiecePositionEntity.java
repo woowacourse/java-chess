@@ -54,6 +54,9 @@ public class PlayerPiecePositionEntity {
         return piecePositionEntities.getPositionEntity();
     }
 
+    public PiecePositionEntities getPiecePositionEntities() {
+        return piecePositionEntities;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,11 +67,12 @@ public class PlayerPiecePositionEntity {
             return false;
         }
         PlayerPiecePositionEntity that = (PlayerPiecePositionEntity) o;
-        return id.equals(that.id);
+        return getPlayerEntity().equals(that.getPlayerEntity())
+            && getPiecePositionEntities().equals(that.getPiecePositionEntities());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getPlayerEntity(), getPiecePositionEntities());
     }
 }

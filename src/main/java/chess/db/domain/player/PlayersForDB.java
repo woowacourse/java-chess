@@ -44,8 +44,7 @@ public class PlayersForDB {
         PiecePositionEntities piecePositionEntities) throws SQLException {
 
         PlayerEntity playerEntity = findPlayerByTeamColor(teamColor);
-        playerPiecesPositionsForDB.save(
-            playerEntity, piecePositionEntities);
+        playerPiecesPositionsForDB.save(playerEntity, piecePositionEntities);
     }
 
     public void update(PieceEntity pieceEntity, PositionEntity positionEntity) throws SQLException {

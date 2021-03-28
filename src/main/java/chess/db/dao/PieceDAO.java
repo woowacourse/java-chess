@@ -18,10 +18,11 @@ public class PieceDAO {
         if (rs == null) {
             return null;
         }
-        return new PieceEntity(
-            rs.getLong("id"),
-            rs.getString("name"),
-            rs.getString("color"));
+        return PieceEntity.castedFrom(
+            new PieceFromDB(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getString("color")));
     }
 
     private ResultSet getResultSet(PieceType pieceType, TeamColor teamColor) throws SQLException {

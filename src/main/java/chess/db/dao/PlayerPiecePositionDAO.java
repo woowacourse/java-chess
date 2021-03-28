@@ -67,22 +67,23 @@ public class PlayerPiecePositionDAO {
         throws SQLException {
         ResultSet rs = getResultSet(playerEntity);
         List<PiecePositionFromDB> results = new ArrayList<>();
-        while (!rs.next()) {
+        while (rs.next()) {
             results.add(new PiecePositionFromDB(
-                rs.getString("pieceName"),
-                rs.getString("pieceColor"),
-                rs.getString("fileValue"),
-                rs.getString("rankValue")));
+                rs.getString("piece_name"),
+                rs.getString("piece_color"),
+                rs.getString("file_value"),
+                rs.getString("rank_value")));
         }
         return results;
     }
 
     private ResultSet getResultSet(PlayerEntity playerEntity) throws SQLException {
-        String query = "SELECT piece.name, piece.color, position.file_value, position.rank_value"
-            + "FROM player_piece_position"
-            + "INNER JOIN piece ON player_piece_position.piece_id = piece.id"
-            + "INNER JOIN position ON player_piece_position.position_id = position.id"
-            + "WHERE player_id = ?";
+        String query =
+            "SELECT piece.name AS piece_name, piece.color AS piece_color, position.file_value AS file_value, position.rank_value AS rank_value "
+                + "FROM player_piece_position "
+                + "INNER JOIN piece ON player_piece_position.piece_id = piece.id "
+                + "INNER JOIN position ON player_piece_position.position_id = position.id "
+                + "WHERE player_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerEntity.getId());
         return pstmt.executeQuery();

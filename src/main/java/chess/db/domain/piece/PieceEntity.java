@@ -1,5 +1,13 @@
 package chess.db.domain.piece;
 
+import static chess.domain.piece.type.PieceType.BISHOP;
+import static chess.domain.piece.type.PieceType.KING;
+import static chess.domain.piece.type.PieceType.KNIGHT;
+import static chess.domain.piece.type.PieceType.PAWN;
+import static chess.domain.piece.type.PieceType.QUEEN;
+import static chess.domain.piece.type.PieceType.ROOK;
+
+import chess.db.dao.PieceFromDB;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.domain.piece.type.Direction;
@@ -25,14 +33,6 @@ public class PieceEntity {
         this.directions = directions;
     }
 
-    public PieceEntity(Long id, String name, String color) {
-        this.id = id;
-        this.pieceType = PieceType.find(name);
-        this.teamColor = TeamColor.of(color);
-        score = -9.9;
-        directions = null;
-    }
-
     public PieceEntity(PieceType pieceType, TeamColor teamColor, double score,
         List<Direction> directions) {
         this.id = null;
@@ -40,6 +40,44 @@ public class PieceEntity {
         this.teamColor = teamColor;
         this.score = score;
         this.directions = directions;
+    }
+
+    public static PieceEntity castedFrom(PieceFromDB pieceFromDB) {
+        return castToConcretePieceObject(pieceFromDB);
+    }
+
+    private static PieceEntity castToConcretePieceObject(PieceFromDB pieceFromDB) {
+        PieceEntity castedPieceEntity = getPieceEntityHalf(pieceFromDB);
+        if (castedPieceEntity != null) {
+            return castedPieceEntity;
+        }
+        return getPieceEntityTheOtherHalf(pieceFromDB);
+    }
+
+    private static PieceEntity getPieceEntityHalf(PieceFromDB pieceFromDB) {
+        if (pieceFromDB.getPieceType() == PAWN) {
+            return new PawnEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        if (pieceFromDB.getPieceType() == ROOK) {
+            return new RookEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        if (pieceFromDB.getPieceType() == KNIGHT) {
+            return new KnightEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        return null;
+    }
+
+    private static PieceEntity getPieceEntityTheOtherHalf(PieceFromDB pieceFromDB) {
+        if (pieceFromDB.getPieceType() == BISHOP) {
+            return new BishopEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        if (pieceFromDB.getPieceType() == QUEEN) {
+            return new QueenEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        if (pieceFromDB.getPieceType() == KING) {
+            return new KingEntity(pieceFromDB.getId(), pieceFromDB.getTeamColor());
+        }
+        throw new IllegalArgumentException("PieceFromDB -> 구체 Piece 클래스 캐스팅 실패");
     }
 
     public static PieceEntity of(PieceWithColorType pieceWithColorType) {

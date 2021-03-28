@@ -226,4 +226,22 @@ select * from position;
 
 select * from piece;
 
+
+
+delete from player_piece_position;
+
 delete from chess_game;
+
+delete from player;
+
+
+
+
+SELECT 
+	piece.name AS piece_name, piece.color AS piece_color, position.file_value AS file_value, position.rank_value AS rank_value 
+FROM player_piece_position
+	INNER JOIN piece 
+		ON player_piece_position.piece_id = piece.id
+	INNER JOIN position 
+        ON player_piece_position.position_id = position.id
+WHERE player_id = 424;
