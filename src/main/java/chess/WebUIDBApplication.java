@@ -1,8 +1,8 @@
 package chess;
 
-import chess.beforedb.controller.web.WebUIController;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
+import chess.db.controller.WebUIDBController;
 import chess.db.service.ChessServiceForDB;
 
 public class WebUIDBApplication {
@@ -10,9 +10,8 @@ public class WebUIDBApplication {
         BoardSetting boardSetting = new BoardDefaultSetting();
 
         ChessServiceForDB chessServiceForDB = new ChessServiceForDB(boardSetting);
+        WebUIDBController webUIDBController = new WebUIDBController(chessServiceForDB);
 
-//        WebUIController chessController = new WebUIController(chessService);
-//
-//        chessController.run();
+        webUIDBController.run();
     }
 }

@@ -10,6 +10,7 @@ import chess.beforedb.controller.dto.response.BoardResponseDTO;
 import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.web.MoveResponse;
 import chess.beforedb.service.ChessService;
+import chess.db.service.ChessServiceForDB;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +28,11 @@ public class WebUIDBController {
     private static final String RESPONSE_DTO = "responseDTO";
     private static final String APPLICATION_JSON = "application/json";
 
-    private final ChessService chessService;
+    private final ChessServiceForDB chessServiceForDB;
     private final Gson gson;
 
-    public WebUIDBController(ChessService chessService) {
-        this.chessService = chessService;
+    public WebUIDBController(ChessServiceForDB chessServiceForDB) {
+        this.chessServiceForDB = chessServiceForDB;
         this.gson = new Gson();
     }
 
@@ -53,7 +54,7 @@ public class WebUIDBController {
 
     private void handleStartRequest() {
         get(ROOT + START, (req, res) -> {
-            chessService.start();
+            // chessServiceForDB.start();
             res.redirect(ROOT + CHESS_BOARD);
             return null;
         });
@@ -61,7 +62,7 @@ public class WebUIDBController {
 
     private void handleBoardRequest() {
         get(ROOT + CHESS_BOARD, (req, res) -> {
-            ResponseDTO responseDTO = chessService.getCurrentBoard();
+            ResponseDTO responseDTO = chessServiceForDB.getCurrentBoard();
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
             putBoardRanks(responseDTO.getBoardResponseDTO(), model);
@@ -72,7 +73,7 @@ public class WebUIDBController {
     private void handleMoveRequest() {
         post(ROOT + MOVE, APPLICATION_JSON, (req, res) -> {
             MoveRequestDTO moveRequestDTO = gson.fromJson(req.body(), MoveRequestDTO.class);
-            MoveResponse moveResponse = chessService.requestMove(moveRequestDTO);
+            MoveResponse moveResponse = chessServiceForDB.requestMove(moveRequestDTO);
             res.type(APPLICATION_JSON);
             return gson.toJson(moveResponse);
         });
@@ -80,7 +81,7 @@ public class WebUIDBController {
 
     private void handleEndRequest() {
         get(ROOT + END_COMMAND_INPUT, (req, res) -> {
-            chessService.endGame();
+            chessServiceForDB.endGame();
             res.redirect(ROOT);
             return null;
         });
