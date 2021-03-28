@@ -63,7 +63,7 @@ class BoardForDBTest {
     @Test
     void BoardDefaultSetting() throws SQLException {
         List<PiecePositionEntity> allPiecesPositionsOfAllPlayers
-            = chessGameForDB.getAllPiecesPositionsOfAllPlayers();
+            = chessGameForDB.getAllPiecesPositionsOfPlayers();
 
         List<PiecePositionEntities> allPiecePositionEntities = new ArrayList<>();
         for (PiecePositionEntity playerPiecePositionEntity : allPiecesPositionsOfAllPlayers) {

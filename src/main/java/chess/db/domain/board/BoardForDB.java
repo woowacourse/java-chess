@@ -8,6 +8,7 @@ import chess.db.domain.position.PositionEntity;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
+import chess.db.entity.PiecePositionEntity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,10 @@ public class BoardForDB {
     private final Map<PositionEntity, CellForDB> cellsForDB = new HashMap<>();
 
     public BoardForDB() {
+        setAllCellsEmpty();
+    }
+
+    private void setAllCellsEmpty() {
         for (File file : File.values()) {
             putEmptyCellsInFile(file);
         }
@@ -30,6 +35,21 @@ public class BoardForDB {
                 PositionEntity.of(file, rank), new CellForDB()
             );
         }
+    }
+
+    public void load(List<PiecePositionEntity> piecesPositions) {
+        setAllCellsEmpty();
+        for (PiecePositionEntity piecePosition : piecesPositions) {
+            PositionEntity position = piecePosition.getPositionEntity();
+            PieceEntity piece = piecePosition.getPieceEntity();
+            setCell(position, piece);
+        }
+    }
+
+    private void setCell(PositionEntity position, PieceEntity piece) {
+        CellForDB cell = findCell(position);
+        cell.put(piece);
+        cellsForDB.put(position, cell);
     }
 
     public CellForDB findCell(PositionEntity positionEntity) {

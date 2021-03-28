@@ -73,6 +73,12 @@ public class ChessGameForDB {
     public void load(Long chessGameId) throws SQLException {
         chessGameEntity = chessGameDAO.findById(chessGameId);
         playersForDB.loadPlayers(chessGameEntity);
+        List<PiecePositionEntity> loadedPiecesPositions = getAllPiecesPositionsOfPlayers();
+        boardForDB.load(loadedPiecesPositions);
+    }
+
+    public List<PiecePositionEntity> getAllPiecesPositionsOfPlayers() throws SQLException {
+        return playersForDB.getAllPiecesPositionsOfChessGame();
     }
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
@@ -101,10 +107,6 @@ public class ChessGameForDB {
 
     public List<String> boardCellsStatus() {
         return boardForDB.getStatus();
-    }
-
-    public List<PiecePositionEntity> getAllPiecesPositionsOfAllPlayers() throws SQLException {
-        return playersForDB.getAllPiecesPositionsOfChessGame();
     }
 
     public Scores getScores() {
