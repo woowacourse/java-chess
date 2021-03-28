@@ -146,4 +146,9 @@ public final class Pieces {
 
         return kingCount != TOTAL_KING_SIZE;
     }
+
+    public List<Position> movablePositions(Position sourcePosition) {
+        Piece piece = pieces.get(sourcePosition);
+        return piece.movablePositions(pieces());
+    }
 }

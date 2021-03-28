@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,6 +11,7 @@ public abstract class AbstractPiece implements Piece {
     private static final int MIN_DISTANCE = 1;
     private static final int MAX_DISTANCE = 8;
     protected static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
+
     protected final Color color;
     protected final Position position;
 
@@ -54,7 +56,7 @@ public abstract class AbstractPiece implements Piece {
         int dy = direction.getYDegree();
 
         boolean isObstacle = IntStream.range(MIN_DISTANCE, findDistance(position, direction))
-            .mapToObj(distance -> this.position.add(dx * distance, dy * distance))
+            .mapToObj(distance -> this.position.addedPosition(dx * distance, dy * distance))
             .anyMatch(movePosition -> !(Objects.isNull(pieces.get(movePosition))));
 
         if (isObstacle) {
@@ -69,7 +71,7 @@ public abstract class AbstractPiece implements Piece {
         int distance = 0;
         boolean isStop = false;
         while (!isStop && distance++ < MAX_DISTANCE) {
-            Position movePosition = this.position.add(dx * distance, dy * distance);
+            Position movePosition = this.position.addedPosition(dx * distance, dy * distance);
             isStop = position.equals(movePosition);
         }
         return distance;
@@ -83,5 +85,27 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    protected List<Position> Positions(Map<Position, Piece> pieces, List<Direction> directions, int ableLength) {
+        final List<Position> positions = new ArrayList<>();
+        for (Direction direction : directions) {
+            for (int i = 0; i < ableLength; i++) {
+                int dx = direction.getXDegree();
+                int dy = direction.getYDegree();
+                if (position.isAdd(dx, dy)) {
+                    Position movePosition = position.addedPosition(dx, dy);
+                    Piece piece = pieces.get(movePosition);
+                    if (!Objects.isNull(piece) && piece.isSameColor(color)) {
+                        break;
+                    }
+                    positions.add(movePosition);
+                    if (!Objects.isNull(piece)){
+                        break;
+                    }
+                }
+            }
+        }
+        return positions;
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.List;
 import java.util.Map;
 
 public interface Piece {
@@ -19,4 +20,6 @@ public interface Piece {
     boolean isPawn();
 
     boolean isKing();
+
+    List<Position> movablePositions(Map<Position, Piece> pieces);
 }
