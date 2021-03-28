@@ -55,4 +55,8 @@ public class Player {
     public Owner owner() {
         return owner;
     }
+
+    public boolean isOwner(final Owner owner) {
+        return this.owner.equals(owner);
+    }
 }

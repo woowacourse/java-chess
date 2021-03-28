@@ -13,7 +13,6 @@ public abstract class Piece {
     private final Distance ableDistance;
     private final Symbol symbol;
 
-    // XXX :: 빌더 패턴 공부하기
     public Piece(final Owner owner,
                  final Score score,
                  final List<Direction> directions,
@@ -59,11 +58,11 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isBlack(){
+    public boolean isBlack() {
         return owner.isBlack();
     }
 
-    public String symbol(){
+    public String symbol() {
         return symbol.getSymbol();
     }
 }

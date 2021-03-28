@@ -11,7 +11,7 @@ public enum Symbol {
 
     private final String symbol;
 
-    Symbol(final String symbol){
+    Symbol(final String symbol) {
         this.symbol = symbol;
     }
 

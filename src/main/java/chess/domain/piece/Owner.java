@@ -6,10 +6,10 @@ public enum Owner {
     NONE;
 
     public Owner reverse() {
-        if (this.equals(BLACK)) {
+        if (isBlack()) {
             return WHITE;
         }
-        if (this.equals(WHITE)) {
+        if (isWhite()) {
             return BLACK;
         }
 

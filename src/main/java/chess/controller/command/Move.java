@@ -1,6 +1,7 @@
 package chess.controller.command;
 
-import chess.manager.ChessGame;
+import chess.domain.board.position.Position;
+import chess.domain.manager.ChessGame;
 import chess.view.OutputView;
 
 public class Move extends Command {
@@ -35,9 +36,17 @@ public class Move extends Command {
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
+    // XXX :: ChessGame.move()에 validateTurn과 changeTurn을 넣을까
+
     @Override
     public void execute(final ChessGame chessGame) {
-        chessGame.move(super.source(), super.target());
+        final Position source = super.source();
+        final Position target = super.target();
+
+        chessGame.validateTurn(source);
+        chessGame.move(source, target);
+        chessGame.changeTurn();
+
         OutputView.printBoard(chessGame.board());
     }
 }

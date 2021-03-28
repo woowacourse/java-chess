@@ -18,11 +18,11 @@ public class King extends Piece {
     }
 
     public static King getInstanceOf(final Owner owner) {
-        if (owner.equals(Owner.BLACK)) {
+        if (owner.isBlack()) {
             return BLACK_KING;
         }
 
-        if (owner.equals(Owner.WHITE)) {
+        if (owner.isWhite()) {
             return WHITE_KING;
         }
 

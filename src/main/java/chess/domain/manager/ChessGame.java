@@ -1,12 +1,11 @@
-package chess.manager;
+package chess.domain.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
-import chess.domain.player.Player;
-import chess.domain.player.Scores;
 import chess.domain.player.Players;
+import chess.domain.player.Scores;
 import chess.domain.player.Turn;
 
 import java.util.LinkedList;
@@ -30,20 +29,20 @@ public class ChessGame {
     }
 
     public void move(final Position source, final Position target) {
-        validateTurn(source);
-
         board.movePiece(source, target);
         players.move(source, target);
-
         checkGameEnd();
-        changeTurn();
     }
 
-    private void validateTurn(final Position source) {
+    public void validateTurn(final Position source) {
         turn.validate(players.ownerOf(source));
     }
 
-    private void changeTurn(){
+    private void checkGameEnd() {
+        isGameEnd = players.anyKingDead(board);
+    }
+
+    public void changeTurn() {
         turn = turn.change();
     }
 
@@ -52,15 +51,11 @@ public class ChessGame {
     }
 
     public List<Position> reachablePositions(final Position source) {
-        return board.getAblePositionsToMove(source);
+        return board.reachablePositions(source);
     }
 
     public Board board() {
         return board;
-    }
-
-    private void checkGameEnd(){
-        isGameEnd = players.anyKingDead(board);
     }
 
     public void setGameEnd() {
@@ -71,7 +66,7 @@ public class ChessGame {
         return isGameEnd;
     }
 
-    public Queue<Owner> winner(){
+    public Queue<Owner> winner() {
         return new LinkedList<>(scores().winner());
     }
 }

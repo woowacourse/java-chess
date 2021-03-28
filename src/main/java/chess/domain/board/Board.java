@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
+    private static final int DUPLICATED_NUMBER_OF_PAWN_IN_LINE = 2;
+
     private final Map<Position, Piece> board;
 
     public Board(final Map<Position, Piece> board) {
@@ -31,53 +33,70 @@ public class Board {
     }
 
     public void movePiece(final Position source, final Position target) {
-        if (!reachablePositions(source).contains(target)) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");
+        if (reachablePositions(source).contains(target)) {
+            board.put(target, board.get(source));
+            board.put(source, Empty.getInstance());
+            return;
         }
-
-        board.put(target, board.get(source));
-        board.put(source, Empty.getInstance());
+        throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");
     }
 
-    private List<Position> reachablePositions(final Position source) {
+    public List<Position> reachablePositions(final Position source) {
         return Arrays.stream(Direction.values())
-                .flatMap(direction -> addReachableDistance(source, direction).stream())
+                .map(direction -> checkReachableInDirection(source, direction))
+                .flatMap(positions -> positions.stream())
                 .collect(Collectors.toList());
     }
 
-    private List<Position> addReachableDistance(final Position source, final Direction direction) {
-        final List<Position> ableToMove = new ArrayList<>();
+    private List<Position> checkReachableInDirection(final Position source, final Direction direction) {
+        final List<Position> positions = new ArrayList<>();
+
         Distance distance = Distance.ONE;
-        while (isReachable(source, direction, distance)) {
-            ableToMove.add(source.next(direction, distance));
+        while (!isBlocked(source, direction, distance) && isValidMovement(source, direction, distance)) {
+            positions.add(source.next(direction, distance));
             distance = distance.next();
         }
-        return ableToMove;
+
+        return positions;
     }
 
-    private boolean isReachable(final Position source, final Direction direction, final Distance distance) {
+    private boolean isBlocked(final Position source, final Direction direction, final Distance distance) {
         try {
             final Position target = source.next(direction, distance);
-            return !of(source).isSameTeam(of(target))
-                    && !capturedEnemy(source, direction, distance)
-                    && of(source).isReachable(direction, distance, source, of(target));
+
+            final Piece sourcePiece = of(source);
+            final Piece targetPiece = of(target);
+
+            return sourcePiece.isSameTeam(targetPiece) || capturedEnemyAlready(source, direction, distance);
         } catch (IllegalArgumentException e) {
-            return false;
+            return true;
         }
     }
 
-    private boolean capturedEnemy(final Position source, final Direction direction, final Distance distance) {
+    private boolean isValidMovement(final Position source, final Direction direction, final Distance distance) {
+        final Position target = source.next(direction, distance);
+        final Piece sourcePiece = of(source);
+        final Piece targetPiece = of(target);
+
+        return sourcePiece.isReachable(direction, distance, source, targetPiece);
+    }
+
+    private boolean capturedEnemyAlready(final Position source, final Direction direction, final Distance distance) {
         if (distance.isFirst()) {
             return false;
         }
-        final Position prePosition = source.next(direction, distance.pre());
-        return of(source).isEnemy(of(prePosition));
+
+        final Position prevPosition = source.next(direction, distance.pre());
+        final Piece sourcePiece = of(source);
+        final Piece prevPiece = of(prevPosition);
+
+        return sourcePiece.isEnemy(prevPiece);
     }
 
     public int countDuplicatedPawnInLine(final Owner owner) {
         return Arrays.stream(Vertical.values())
                 .mapToInt(v -> countPawnInVerticalLine(v, owner))
-                .filter(count -> count > 1)
+                .filter(count -> count >= DUPLICATED_NUMBER_OF_PAWN_IN_LINE)
                 .sum();
     }
 
@@ -85,9 +104,5 @@ public class Board {
         return (int) Arrays.stream(Horizontal.values())
                 .filter(h -> of(v, h).isOwner(owner) && of(v, h).isPawn())
                 .count();
-    }
-
-    public List<Position> getAblePositionsToMove(final Position source) {
-        return reachablePositions(source);
     }
 }

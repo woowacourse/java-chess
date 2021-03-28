@@ -18,7 +18,7 @@ public enum Menu {
     }
 
     public static Menu of(final String line) {
-        String[] splitLine = line.split(" ");
+        final String[] splitLine = line.split(" ");
         return Arrays.stream(values())
                 .filter(menu -> menu.isSameCommand(splitLine[0]) && menu.isSameParameterSize(splitLine.length))
                 .findFirst()

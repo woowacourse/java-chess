@@ -29,7 +29,7 @@ public class Score {
         return new Score(this.value - (PAWN_PENALTY_SCORE.value * pawnCountInLine));
     }
 
-    public Score bigger(final Score score){
+    public Score bigger(final Score score) {
         return new Score(Math.max(this.value, score.value));
     }
 

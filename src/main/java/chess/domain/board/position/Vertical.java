@@ -35,9 +35,4 @@ public enum Vertical {
     public Vertical add(final Direction direction, final Distance distance) {
         return of(index + direction.getX() * distance.getValue());
     }
-
-    @Override
-    public String toString() {
-        return ""+index;
-    }
 }

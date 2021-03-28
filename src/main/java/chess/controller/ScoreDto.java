@@ -6,7 +6,7 @@ public class ScoreDto {
     private final Owner owner;
     private final double score;
 
-    public ScoreDto(final Owner owner, final double score){
+    public ScoreDto(final Owner owner, final double score) {
         this.owner = owner;
         this.score = score;
     }

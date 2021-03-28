@@ -21,31 +21,34 @@ public class Players {
 
     public void move(final Position source, final Position target) {
         final Player turn = player(source);
+        final Player other = other(turn);
+
         turn.move(source, target);
-        other(turn).captured(target);
+        other.captured(target);
     }
 
-    private Player player(final Position position){
+    private Player player(final Position position) {
         return players.stream()
                 .filter(player -> player.has(position))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("기물이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("기물이 아닙니다."));
     }
 
-    private Player other(final Player turn){
+    private Player other(final Player turn) {
         return players.stream()
                 .filter(player -> !player.equals(turn))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public Owner ownerOf(final Position source){
+    public Owner ownerOf(final Position source) {
         return player(source).owner();
     }
 
-    public Scores scores(final Board board){
+    public Scores scores(final Board board) {
         players.stream()
                 .forEach(player -> scores = scores.update(player, player.score(board)));
+
         return scores;
     }
 

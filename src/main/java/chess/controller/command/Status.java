@@ -2,10 +2,10 @@ package chess.controller.command;
 
 import chess.controller.ScoreDto;
 import chess.domain.board.position.Position;
+import chess.domain.manager.ChessGame;
 import chess.domain.piece.Score;
 import chess.domain.player.Player;
 import chess.domain.player.Scores;
-import chess.manager.ChessGame;
 import chess.view.OutputView;
 
 public class Status extends Command {
@@ -43,7 +43,7 @@ public class Status extends Command {
     @Override
     public void execute(final ChessGame chessGame) {
         final Scores scoreTable = chessGame.scores();
-        for(final Player player : scoreTable.players()){
+        for (final Player player : scoreTable.players()) {
             final Score score = scoreTable.get(player);
             OutputView.printScore(new ScoreDto(player.owner(), score.score()));
         }

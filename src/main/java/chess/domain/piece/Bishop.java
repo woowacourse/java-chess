@@ -18,11 +18,11 @@ public class Bishop extends Piece {
     }
 
     public static Bishop getInstanceOf(final Owner owner) {
-        if (owner.equals(Owner.BLACK)) {
+        if (owner.isBlack()) {
             return BLACK_BISHOP;
         }
 
-        if (owner.equals(Owner.WHITE)) {
+        if (owner.isWhite()) {
             return WHITE_BISHOP;
         }
 

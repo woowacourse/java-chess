@@ -18,11 +18,11 @@ public class Knight extends Piece {
     }
 
     public static Knight getInstanceOf(final Owner owner) {
-        if (owner.equals(Owner.BLACK)) {
+        if (owner.isBlack()) {
             return BLACK_KNIGHT;
         }
 
-        if (owner.equals(Owner.WHITE)) {
+        if (owner.isWhite()) {
             return WHITE_KNIGHT;
         }
 

@@ -12,22 +12,21 @@ import java.util.stream.Collectors;
 
 public class PlayerInitializer {
 
-    private PlayerInitializer(){};
+    private PlayerInitializer() {
+    }
 
     public static Player initPlayer(final Owner owner) {
         final List<Position> positions = new ArrayList<>();
 
-        if (owner.equals(Owner.BLACK)) {
+        if (owner.isBlack()) {
             positions.addAll(getHorizontalLine(Horizontal.EIGHT));
             positions.addAll(getHorizontalLine(Horizontal.SEVEN));
-
             return new Player(positions, owner);
         }
 
-        if (owner.equals(Owner.WHITE)) {
+        if (owner.isWhite()) {
             positions.addAll(getHorizontalLine(Horizontal.TWO));
             positions.addAll(getHorizontalLine(Horizontal.ONE));
-
             return new Player(positions, owner);
         }
 

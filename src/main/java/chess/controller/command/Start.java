@@ -1,7 +1,7 @@
 package chess.controller.command;
 
 import chess.domain.board.position.Position;
-import chess.manager.ChessGame;
+import chess.domain.manager.ChessGame;
 import chess.view.OutputView;
 
 public class Start extends Command {

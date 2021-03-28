@@ -7,7 +7,6 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
-import chess.domain.player.Player;
 
 import java.util.Queue;
 
@@ -44,13 +43,13 @@ public class OutputView {
         final String owner = decidePlayerSymbol(scoreDto.owner());
         final double score = scoreDto.score();
 
-        System.out.println( owner + "의 점수 : "+ score);
+        System.out.println(owner + "의 점수 : " + score);
     }
 
     public static void printWinner(final Queue<Owner> owner) {
         System.out.println("=== 게임 결과 ===");
 
-        if(owner.size() == NUMBER_OF_WINNER){
+        if (owner.size() == NUMBER_OF_WINNER) {
             System.out.println("승자 : " + decidePlayerSymbol(owner.peek()));
             return;
         }
@@ -58,8 +57,8 @@ public class OutputView {
         System.out.println("무승부입니다.");
     }
 
-    public static String decidePlayerSymbol(final Owner owner){
-        if(owner.isBlack()){
+    public static String decidePlayerSymbol(final Owner owner) {
+        if (owner.isBlack()) {
             return "블랙";
         }
         return "화이트";

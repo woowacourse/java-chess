@@ -18,11 +18,11 @@ public class Rook extends Piece {
     }
 
     public static Rook getInstanceOf(final Owner owner) {
-        if (owner.equals(Owner.BLACK)) {
+        if (owner.isBlack()) {
             return BLACK_ROOK;
         }
 
-        if (owner.equals(Owner.WHITE)) {
+        if (owner.isWhite()) {
             return WHITE_ROOK;
         }
 
