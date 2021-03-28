@@ -100,7 +100,7 @@ public class BoardForDB {
             .count() < NUMBER_OF_ALL_KINGS;
     }
 
-    public List<String> status() {
+    public List<String> getStatus() {
         List<String> cellsStatus = new ArrayList<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {

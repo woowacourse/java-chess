@@ -3,6 +3,7 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.PlayerEntity;
@@ -10,28 +11,30 @@ import chess.db.entity.PlayerPiecePositionEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerPiecePositionDAO {
-    public PlayerPiecePositionEntity save(PlayerPiecePositionEntity piecePositionEntity)
+    public PlayerPiecePositionEntity save(PlayerPiecePositionEntity playerPiecePositionEntity)
         throws SQLException {
-        ResultSet generatedKeys = getResultSet(piecePositionEntity);
+        ResultSet generatedKeys = getResultSet(playerPiecePositionEntity);
         if (generatedKeys.next()) {
             return new PlayerPiecePositionEntity(
                 generatedKeys.getLong(1),
-                piecePositionEntity.getPlayerEntity(),
-                piecePositionEntity.getPieceEntity(),
-                piecePositionEntity.getPositionEntity());
+                playerPiecePositionEntity.getPlayerEntity(),
+                playerPiecePositionEntity.getPieceEntity(),
+                playerPiecePositionEntity.getPositionEntity());
         }
         throw new SQLException("PiecePositionEntity를 save()할 수 없습니다.");
     }
 
-    private ResultSet getResultSet(PlayerPiecePositionEntity piecesPositionsEntity)
+    private ResultSet getResultSet(PlayerPiecePositionEntity playerPiecePositionEntity)
         throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
-        pstmt.setLong(1, piecesPositionsEntity.getPlayerEntity().getId());
-        pstmt.setLong(2, piecesPositionsEntity.getPieceEntity().getId());
-        pstmt.setLong(3, piecesPositionsEntity.getPositionEntity().getId());
+        pstmt.setLong(1, playerPiecePositionEntity.getPlayerEntity().getId());
+        pstmt.setLong(2, playerPiecePositionEntity.getPieceEntity().getId());
+        pstmt.setLong(3, playerPiecePositionEntity.getPositionEntity().getId());
         pstmt.executeUpdate();
         return pstmt.getGeneratedKeys();
     }
@@ -57,6 +60,31 @@ public class PlayerPiecePositionDAO {
         pstmt.setLong(1, playerEntity.getId());
         pstmt.setLong(2, pieceEntity.getId());
         pstmt.setLong(3, positionEntity.getId());
+        return pstmt.executeQuery();
+    }
+
+    public List<PiecePositionFromDB> findAllByPlayer(PlayerEntity playerEntity)
+        throws SQLException {
+        ResultSet rs = getResultSet(playerEntity);
+        List<PiecePositionFromDB> results = new ArrayList<>();
+        while (!rs.next()) {
+            results.add(new PiecePositionFromDB(
+                rs.getString("pieceName"),
+                rs.getString("pieceColor"),
+                rs.getString("fileValue"),
+                rs.getString("rankValue")));
+        }
+        return results;
+    }
+
+    private ResultSet getResultSet(PlayerEntity playerEntity) throws SQLException {
+        String query = "SELECT piece.name, piece.color, position.file_value, position.rank_value"
+            + "FROM player_piece_position"
+            + "INNER JOIN piece ON player_piece_position.piece_id = piece.id"
+            + "INNER JOIN position ON player_piece_position.position_id = position.id"
+            + "WHERE player_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerEntity.getId());
         return pstmt.executeQuery();
     }
 

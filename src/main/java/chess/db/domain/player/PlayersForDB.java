@@ -3,6 +3,7 @@ package chess.db.domain.player;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.db.dao.PiecePositionEntities;
 import chess.db.dao.PlayerDAO;
 import chess.db.domain.board.PlayerPiecesPositionsForDB;
 import chess.db.domain.piece.PieceEntity;
@@ -35,19 +36,22 @@ public class PlayersForDB {
     public void addForNewPlayers(PieceEntity pieceEntity, PositionEntity positionEntity)
         throws SQLException {
 
-        addPieceToPlayerTeamColorOf(pieceEntity.getTeamColor(), pieceEntity, positionEntity);
+        addPieceToPlayerTeamColorOf(
+            pieceEntity.getTeamColor(), new PiecePositionEntities(pieceEntity, positionEntity));
     }
 
-    private void addPieceToPlayerTeamColorOf(TeamColor teamColor, PieceEntity pieceEntity,
-        PositionEntity positionEntity) throws SQLException {
+    private void addPieceToPlayerTeamColorOf(TeamColor teamColor,
+        PiecePositionEntities piecePositionEntities) throws SQLException {
 
         PlayerEntity playerEntity = findPlayerByTeamColor(teamColor);
-        playerPiecesPositionsForDB.save(playerEntity, pieceEntity, positionEntity);
+        playerPiecesPositionsForDB.save(
+            playerEntity, piecePositionEntities);
     }
 
     public void update(PieceEntity pieceEntity, PositionEntity positionEntity) throws SQLException {
         PlayerEntity playerEntity = findPlayerByTeamColor(pieceEntity.getTeamColor());
-        playerPiecesPositionsForDB.update(playerEntity, pieceEntity, positionEntity);
+        playerPiecesPositionsForDB
+            .update(playerEntity, new PiecePositionEntities(pieceEntity, positionEntity));
     }
 
     private PlayerEntity findPlayerByTeamColor(TeamColor teamColor) {
@@ -64,7 +68,22 @@ public class PlayersForDB {
 
     public void remove(PieceEntity deadPiece, PositionEntity positionEntity) throws SQLException {
         PlayerEntity playerEntity = findPlayerByTeamColor(deadPiece.getTeamColor());
-        playerPiecesPositionsForDB
-            .remove(new PlayerPiecePositionEntity(playerEntity, deadPiece, positionEntity));
+        playerPiecesPositionsForDB.remove(
+            new PlayerPiecePositionEntity(playerEntity,
+                new PiecePositionEntities(deadPiece, positionEntity)));
+    }
+
+    public List<PlayerPiecePositionEntity> getAllPiecesPositionsOfChessGame() throws SQLException {
+
+        List<PlayerPiecePositionEntity> allPiecesPositionsEntities = new ArrayList<>();
+        for (PlayerEntity playerEntity : playerEntities) {
+            allPiecesPositionsEntities.addAll(
+                playerPiecesPositionsForDB.getAllPiecesPositionsOfPlayer(playerEntity));
+        }
+        return allPiecesPositionsEntities;
+    }
+
+    public PlayerEntity getPlayerColorOf(TeamColor teamColor) {
+        return findPlayerByTeamColor(teamColor);
     }
 }

@@ -12,6 +12,8 @@ import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
+import chess.db.entity.PlayerEntity;
+import chess.db.entity.PlayerPiecePositionEntity;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
@@ -25,6 +27,7 @@ public class ChessGameForDB {
     private final ChessGameDAO chessGameDAO;
     private final PlayersForDB playersForDB;
     private final BoardForDB boardForDB;
+    private ChessGameEntity chessGameEntity;
     private TeamColor currentTurnTeamColor = WHITE;
 
     public ChessGameForDB() {
@@ -35,7 +38,7 @@ public class ChessGameForDB {
 
     public void createNew(BoardSetting boardSetting, String title) throws SQLException {
         validate(boardSetting);
-        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
+        chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
         playersForDB.createNewPlayers(chessGameEntity);
         setInitialPieces(boardSetting);
     }
@@ -82,12 +85,20 @@ public class ChessGameForDB {
         }
     }
 
+    public PlayerEntity getPlayerColorOf(TeamColor teamColor) {
+        return playersForDB.getPlayerColorOf(teamColor);
+    }
+
     public boolean isKingDead() {
         return boardForDB.isKingDead();
     }
 
     public List<String> boardCellsStatus() {
-        return boardForDB.status();
+        return boardForDB.getStatus();
+    }
+
+    public List<PlayerPiecePositionEntity> getAllPiecesPositionsOfAllPlayers() throws SQLException {
+        return playersForDB.getAllPiecesPositionsOfChessGame();
     }
 
     public Scores getScores() {

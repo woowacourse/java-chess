@@ -1,5 +1,6 @@
 package chess.db.entity;
 
+import chess.db.dao.PiecePositionEntities;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import java.util.Objects;
@@ -7,30 +8,34 @@ import java.util.Objects;
 public class PlayerPiecePositionEntity {
     private Long id;
     private final PlayerEntity playerEntity;
-    private PieceEntity pieceEntity;
-    private PositionEntity positionEntity;
+    private final PiecePositionEntities piecePositionEntities;
 
     public PlayerPiecePositionEntity(Long id, PlayerEntity playerEntity, PieceEntity pieceEntity,
         PositionEntity positionEntity) {
         this.id = id;
         this.playerEntity = playerEntity;
-        this.pieceEntity = pieceEntity;
-        this.positionEntity = positionEntity;
+        this.piecePositionEntities = new PiecePositionEntities(pieceEntity, positionEntity);
     }
 
     public PlayerPiecePositionEntity(PlayerEntity playerEntity, PieceEntity pieceEntity,
         PositionEntity positionEntity) {
         this.playerEntity = playerEntity;
-        this.pieceEntity = pieceEntity;
-        this.positionEntity = positionEntity;
+        this.piecePositionEntities = new PiecePositionEntities(pieceEntity, positionEntity);
+    }
+
+    public PlayerPiecePositionEntity(PlayerEntity playerEntity,
+        PiecePositionEntities piecePositionEntities) {
+
+        this.playerEntity = playerEntity;
+        this.piecePositionEntities = piecePositionEntities;
     }
 
     public void setPieceEntity(PieceEntity pieceEntity) {
-        this.pieceEntity = pieceEntity;
+        this.piecePositionEntities.setPieceEntity(pieceEntity);
     }
 
     public void setPositionEntity(PositionEntity positionEntity) {
-        this.positionEntity = positionEntity;
+        this.piecePositionEntities.setPositionEntity(positionEntity);
     }
 
     public Long getId() {
@@ -42,11 +47,11 @@ public class PlayerPiecePositionEntity {
     }
 
     public PieceEntity getPieceEntity() {
-        return pieceEntity;
+        return piecePositionEntities.getPieceEntity();
     }
 
     public PositionEntity getPositionEntity() {
-        return positionEntity;
+        return piecePositionEntities.getPositionEntity();
     }
 
 

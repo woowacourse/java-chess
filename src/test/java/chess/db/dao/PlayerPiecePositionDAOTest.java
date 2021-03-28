@@ -37,7 +37,8 @@ class PlayerPiecePositionDAOTest {
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity("test"));
         playerEntity = playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
         playerPiecePositionEntity = playerPiecePositionDAO.save(
-            new PlayerPiecePositionEntity(playerEntity, pieceEntity, positionEntity));
+            new PlayerPiecePositionEntity(
+                playerEntity, new PiecePositionEntities(pieceEntity, positionEntity)));
     }
 
     @AfterEach
