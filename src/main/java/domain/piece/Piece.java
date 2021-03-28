@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.chessgame.Score;
+import domain.board.Score;
 import domain.position.Position;
 import java.util.Map;
 

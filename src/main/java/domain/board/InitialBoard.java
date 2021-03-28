@@ -16,6 +16,9 @@ import java.util.Map;
 
 public class InitialBoard {
 
+    private InitialBoard(){
+    }
+
     public static void initChessPieces(Map<Position, Piece> board) {
         board.putAll(createInitialKings());
         board.putAll(createInitialQueens());

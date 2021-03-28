@@ -3,7 +3,6 @@ package domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import domain.chessgame.Score;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;

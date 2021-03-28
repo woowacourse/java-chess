@@ -3,30 +3,41 @@ package domain.position;
 import static domain.position.Position.CHESS_BOARD_END_RANGE;
 import static domain.position.Position.CHESS_BOARD_START_RANGE;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class ColumnDegree {
+public class Column {
 
+    private static final List<String> chessColumns = Arrays
+        .asList("a", "b", "c", "d", "e", "f", "g", "h");
     private final int value;
 
-    public ColumnDegree(int value) {
+    public Column(int value) {
         this.value = value;
     }
 
-    public ColumnDegree(String chessCoordinate) {
+    public Column(String chessCoordinate) {
         this(chessCoordinate.charAt(0) - 'a');
+        validateChessCoordinate(chessCoordinate);
     }
 
-    public ColumnDegree sum(ColumnDegree columnDegree) {
-        return new ColumnDegree(value + columnDegree.value);
+    private void validateChessCoordinate(String chessCoordinate) {
+        if (!chessColumns.contains(String.valueOf(chessCoordinate.charAt(0)))) {
+            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+        }
     }
 
-    public ColumnDegree difference(ColumnDegree columnDegree) {
-        return new ColumnDegree(value - columnDegree.value);
+    public Column sum(Column column) {
+        return new Column(value + column.value);
     }
 
-    public int abs(ColumnDegree columnDegree){
-        return Math.abs(value - columnDegree.value);
+    public Column difference(Column column) {
+        return new Column(value - column.value);
+    }
+
+    public int abs(Column column) {
+        return Math.abs(value - column.value);
     }
 
     public boolean isGreaterThanZero() {
@@ -49,7 +60,7 @@ public class ColumnDegree {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ColumnDegree that = (ColumnDegree) o;
+        Column that = (Column) o;
         return value == that.value;
     }
 

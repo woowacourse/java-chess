@@ -3,34 +3,45 @@ package domain.position;
 import static domain.position.Position.CHESS_BOARD_END_RANGE;
 import static domain.position.Position.CHESS_BOARD_START_RANGE;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class RowDegree {
+public class Row {
 
+    private static final List<String> chessRows = Arrays
+        .asList("8", "7", "6", "5", "4", "3", "2", "1");
     private final int value;
 
-    public RowDegree(int value) {
+    public Row(int value) {
         this.value = value;
     }
 
-    public RowDegree(String chessCoordinate) {
+    public Row(String chessCoordinate) {
         this((chessCoordinate.charAt(1) - '8') * -1);
+        validateChessCoordinate(chessCoordinate);
+    }
+
+    private void validateChessCoordinate(String chessCoordinate) {
+        if (!chessRows.contains(String.valueOf(chessCoordinate.charAt(1)))) {
+            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+        }
     }
 
     public boolean isChessBoardPosition() {
         return value >= CHESS_BOARD_START_RANGE && value < CHESS_BOARD_END_RANGE;
     }
 
-    public RowDegree sum(RowDegree rowDegree) {
-        return new RowDegree(value + rowDegree.value);
+    public Row sum(Row row) {
+        return new Row(value + row.value);
     }
 
-    public RowDegree difference(RowDegree rowDegree) {
-        return new RowDegree(value - rowDegree.value);
+    public Row difference(Row row) {
+        return new Row(value - row.value);
     }
 
-    public int abs(RowDegree rowDegree) {
-        return Math.abs(value - rowDegree.value);
+    public int abs(Row row) {
+        return Math.abs(value - row.value);
     }
 
     public boolean isGreaterThanZero() {
@@ -49,8 +60,8 @@ public class RowDegree {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RowDegree rowDegree = (RowDegree) o;
-        return value == rowDegree.value;
+        Row row = (Row) o;
+        return value == row.value;
     }
 
     @Override

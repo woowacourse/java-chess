@@ -22,12 +22,12 @@ public enum Direction {
     WWN(-1, -2),
     WWS(1, -2);
 
-    private final RowDegree rowDegree;
-    private final ColumnDegree columnDegree;
+    private final Row row;
+    private final Column column;
 
     Direction(int rowDegree, int columnDegree) {
-        this.rowDegree = new RowDegree(rowDegree);
-        this.columnDegree = new ColumnDegree(columnDegree);
+        this.row = new Row(rowDegree);
+        this.column = new Column(columnDegree);
     }
 
     public static Direction linearTargetDirection(Position difference) {
@@ -72,11 +72,11 @@ public enum Direction {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
-    public RowDegree rowDegreeSum(RowDegree rowDegree) {
-        return this.rowDegree.sum(rowDegree);
+    public Row rowDegreeSum(Row row) {
+        return this.row.sum(row);
     }
 
-    public ColumnDegree columnDegreeSum(ColumnDegree columnDegree) {
-        return this.columnDegree.sum(columnDegree);
+    public Column columnDegreeSum(Column column) {
+        return this.column.sum(column);
     }
 }

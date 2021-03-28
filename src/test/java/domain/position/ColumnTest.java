@@ -6,13 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class RowDegreeTest {
+class ColumnTest {
 
-    @DisplayName("배열 기준 체스 행 좌표 생성")
+    @DisplayName("배열 기준 체스 열 좌표 생성")
     @ParameterizedTest
     @CsvSource(value = {"d5", "a8", "d5", " f7", "d5", "b3", "d5", "h1"}, delimiter = ',')
     void createTest(String value) {
-        assertThat(new RowDegree(value)).isEqualTo(new RowDegree(value));
+        assertThat(new Column(value)).isEqualTo(new Column(value));
     }
 
 }

@@ -1,50 +1,49 @@
 package controller;
 
 import domain.chessgame.ChessGame;
-import domain.position.Position;
-import java.util.List;
+import domain.chessgame.ChessGameManager;
+import domain.command.Commands;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
 
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
-    private static final String MOVE_COMMAND = "move";
-    private static final String STATUS_COMMAND = "status";
-
     public void run() {
         OutputView.printGameInformation();
-        if (!InputView.command().equals(START_COMMAND)) {
-            throw new IllegalArgumentException();
+        ChessGameManager chessGameManager = new ChessGameManager(new ChessGame(), new Commands());
+        try {
+            chessGameManager.runChessGame(InputView.command());
+            proceed(chessGameManager);
+            OutputView.printResult(chessGameManager);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            run();
         }
-        startChessGame();
     }
 
-    private void startChessGame() {
-        ChessGame chessGame = new ChessGame();
-        while (chessGame.isNotEnd()) {
-            OutputView.printBoard(chessGame.getBoard());
-            List<String> command = InputView.moveCommand();
-            if (!runCommand(chessGame, command)) {
-                return;
-            }
+    private void proceed(ChessGameManager chessGameManager) {
+        try {
+            play(chessGameManager);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            proceed(chessGameManager);
         }
-        OutputView.printBoard(chessGame.getBoard());
     }
 
-    private boolean runCommand(ChessGame chessGame, List<String> command) {
-        if (command.get(0).equals(END_COMMAND)) {
-            return false;
+    private void play(ChessGameManager chessGameManager) {
+        OutputView.printBoard(chessGameManager);
+        while (chessGameManager.isPlaying()) {
+            chessGameManager.runChessGame(InputView.command());
+            printCommandResult(chessGameManager);
         }
-        if (command.get(0).equals(STATUS_COMMAND)) {
-            OutputView.printScore(chessGame.getBoard());
-            return true;
-        }
-        if (command.get(0).equals(MOVE_COMMAND)) {
-            chessGame.move(new Position(command.get(1)), new Position(command.get(2)));
-            return true;
-        }
-        return false;
     }
+
+    public void printCommandResult(ChessGameManager chessGameManager) {
+        if (chessGameManager.isStatusCommandCalled()) {
+            OutputView.printScore(chessGameManager);
+            return;
+        }
+        OutputView.printBoard(chessGameManager);
+    }
+
 }

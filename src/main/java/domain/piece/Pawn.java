@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.chessgame.Score;
+import domain.board.Score;
 import domain.position.Direction;
 import domain.position.Position;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Pawn extends Piece {
     private boolean isForwardTwoStepMovable(Map<Position, Piece> board, Direction direction,
         Position source,
         Position target) {
-        if (!isMoved || !board.get(target).isEmpty()) {
+        if (isMoved || !board.get(target).isEmpty()) {
             return false;
         }
         Position firstStep = source.sum(direction);

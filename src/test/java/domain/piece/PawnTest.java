@@ -76,16 +76,18 @@ class PawnTest {
 
     @DisplayName("폰은 첫 수가 아니라면 전방으로 2칸 이동 불가능하다.")
     @ParameterizedTest
-    @CsvSource(value = {"d6,d4,true", "d3,d5,false"}, delimiter = ',')
-    void testFirstNotMoveEmptyPlace(String source, String target, boolean isBlack) {
+    @CsvSource(value = {"d7,d6,d4,true", "d2,d3,d5,false"}, delimiter = ',')
+    void testFirstNotMove(String source, String stopover, String target, boolean isBlack) {
         Board board = new Board();
         Position sourcePosition = new Position(source);
+        Position stopoverPosition = new Position(stopover);
         Position targetPosition = new Position(target);
         Pawn pawn = new Pawn(isBlack);
 
         board.put(sourcePosition, pawn);
+        board.move(sourcePosition, stopoverPosition);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(stopoverPosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
