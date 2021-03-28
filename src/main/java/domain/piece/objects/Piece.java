@@ -38,8 +38,8 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
-    public boolean isKingDead() {
-        return this instanceof King;
+    public boolean isKing() {
+        return false;
     }
 
     public boolean isEmpty() {

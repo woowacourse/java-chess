@@ -1,7 +1,6 @@
 package domain.state;
 
 import domain.exception.AlreadyStartException;
-import domain.exception.ImmovableSamePositionException;
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 
@@ -13,19 +12,8 @@ public class Running extends Started {
         super(pieces);
     }
 
-    private void chekMovablePiece(Position start, Position end, boolean turn) {
-        checkSamePosition(start, end);
-        board.checkMovable(start, turn);
-    }
-
-    private void checkSamePosition(Position start, Position end) {
-        if (start.equals(end)) {
-            throw new ImmovableSamePositionException();
-        }
-    }
-
-    private State checkKingState(Piece endPiece) {
-        if (endPiece.isKingDead()) {
+    private State gameStateByKing(Piece endPiece) {
+        if (board.isKingDead(endPiece)) {
             return new Finished(board.getBoard());
         }
         return this;
@@ -33,11 +21,11 @@ public class Running extends Started {
 
     @Override
     public State move(Position start, Position end) {
-        chekMovablePiece(start, end, turn);
+        board.checkMovable(start, end, turn);
         Piece endPiece = board.getPiece(end);
         board.move(start, end);
         turn = !turn;
-        return checkKingState(endPiece);
+        return gameStateByKing(endPiece);
     }
 
     @Override

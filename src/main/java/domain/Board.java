@@ -1,5 +1,6 @@
 package domain;
 
+import domain.exception.ImmovableSamePositionException;
 import domain.exception.InvalidTurnException;
 import domain.exception.PieceCannotMoveException;
 import domain.exception.PieceEmptyException;
@@ -40,14 +41,21 @@ public class Board {
         return board.getOrDefault(position, Empty.create());
     }
 
-    public void checkMovable(Position position, boolean color) {
-        Piece piece = getPiece(position);
+    public void checkMovable(Position start, Position end, boolean color) {
+        Piece piece = getPiece(start);
         if (!piece.isSameColor(color)) {
             throw new InvalidTurnException();
         }
 
         if (piece.isEmpty()) {
             throw new PieceEmptyException();
+        }
+        checkSamePosition(start, end);
+    }
+
+    private void checkSamePosition(Position start, Position end) {
+        if (start.equals(end)) {
+            throw new ImmovableSamePositionException();
         }
     }
 
@@ -72,5 +80,9 @@ public class Board {
                 .filter(movePosition -> movePosition.notEmptyPosition() && !movePosition.equals(position))
                 .map(movePosition -> getPiece(movePosition))
                 .anyMatch(piece -> piece.isPawn() && piece.isSameColor(pawn.getValue()));
+    }
+
+    public boolean isKingDead(Piece endPiece) {
+        return endPiece.isKing();
     }
 }

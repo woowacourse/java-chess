@@ -48,7 +48,7 @@ class BoardTest {
     @Test
     void correct_user_turn_check() {
         Board board = new Board(pieces);
-        assertDoesNotThrow(() -> board.checkMovable(Position.of("a7"), true));
+        assertDoesNotThrow(() -> board.checkMovable(Position.of("a7"), Position.of("b6"), true));
     }
 
     @DisplayName("빈 칸의 기물을 가져오는 경우 empty가 반환된다.")

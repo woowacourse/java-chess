@@ -38,4 +38,9 @@ public class King extends Piece {
                 .filter(nextPosition -> nextPosition.notEmptyPosition() && nextPosition.equals(end))
                 .anyMatch(nextPosition -> isEmptyPiecePosition(board, nextPosition) || !this.isSameColor(board.get(nextPosition)));
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
