@@ -63,8 +63,8 @@ public class Round {
         return board;
     }
 
-    public boolean isEnd() {
-        return command.isEnd();
+    public boolean isPlaying() {
+        return !command.isEnd();
     }
 
     public void execute(final Queue<String> commands) {

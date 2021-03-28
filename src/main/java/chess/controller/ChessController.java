@@ -26,7 +26,7 @@ public class ChessController {
                 StateFactory.initialization(PieceFactory.blackPieces()), command);
         do {
             playChessGame(round);
-        } while (!round.isEnd());
+        } while (round.isPlaying());
     }
 
     private void playChessGame(final Round round) {
@@ -38,7 +38,7 @@ public class ChessController {
     }
 
     private void play(final Round round) {
-        if (!round.isEnd()) {
+        if (round.isPlaying()) {
             OutputView.showChessBoard(round.getBoard());
             round.execute(INPUT.inputCommand());
             OutputView.showScore(round.currentPlayerName(), round.calculateScore());
