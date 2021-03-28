@@ -36,7 +36,8 @@ public class ChessGameForDB {
     public void createNew(BoardSetting boardSetting, String title) throws SQLException {
         validate(boardSetting);
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
-        setInitialPieces(boardSetting, chessGameEntity);
+        playersForDB.createNewPlayers(chessGameEntity);
+        setInitialPieces(boardSetting);
     }
 
     private void validate(BoardSetting boardSetting) {
@@ -46,22 +47,21 @@ public class ChessGameForDB {
         }
     }
 
-    private void setInitialPieces(BoardSetting boardSetting, ChessGameEntity chessGameEntity)
-        throws SQLException {
+    private void setInitialPieces(BoardSetting boardSetting) throws SQLException {
         List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
         for (int index = 0; index < piecesSetting.size(); index++) {
             PositionEntity positionEntity = PositionEntitiesCache.get(index);
             PieceWithColorType pieceWithColorType = piecesSetting.get(index);
-            setInitialPiece(pieceWithColorType, positionEntity, chessGameEntity);
+            setInitialPiece(pieceWithColorType, positionEntity);
         }
     }
 
     private void setInitialPiece(PieceWithColorType pieceWithColorType,
-        PositionEntity positionEntity, ChessGameEntity chessGameEntity) throws SQLException {
+        PositionEntity positionEntity) throws SQLException {
         PieceEntity pieceEntity = null;
         if (pieceWithColorType != null) {
             pieceEntity = PieceEntity.of(pieceWithColorType);
-            playersForDB.addForNewPlayers(pieceEntity, positionEntity, chessGameEntity);
+            playersForDB.addForNewPlayers(pieceEntity, positionEntity);
         }
         boardForDB.setPiece(positionEntity, pieceEntity);
     }

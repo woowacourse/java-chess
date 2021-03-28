@@ -25,12 +25,24 @@ public class PlayersForDB {
         playerPiecesPositionsForDB = new PlayerPiecesPositionsForDB();
     }
 
-    public void addForNewPlayers(PieceEntity pieceEntity, PositionEntity positionEntity,
-        ChessGameEntity chessGameEntity) throws SQLException {
+    public void createNewPlayers(ChessGameEntity chessGameEntity) throws SQLException {
         PlayerEntity whitePlayerEntity = playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
         PlayerEntity blackPlayerEntity = playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
-        playerPiecesPositionsForDB.save(whitePlayerEntity, pieceEntity, positionEntity);
-        playerPiecesPositionsForDB.save(blackPlayerEntity, pieceEntity, positionEntity);
+        playerEntities.add(whitePlayerEntity);
+        playerEntities.add(blackPlayerEntity);
+    }
+
+    public void addForNewPlayers(PieceEntity pieceEntity, PositionEntity positionEntity)
+        throws SQLException {
+
+        addPieceToPlayerTeamColorOf(pieceEntity.getTeamColor(), pieceEntity, positionEntity);
+    }
+
+    private void addPieceToPlayerTeamColorOf(TeamColor teamColor, PieceEntity pieceEntity,
+        PositionEntity positionEntity) throws SQLException {
+
+        PlayerEntity playerEntity = findPlayerByTeamColor(teamColor);
+        playerPiecesPositionsForDB.save(playerEntity, pieceEntity, positionEntity);
     }
 
     public void update(PieceEntity pieceEntity, PositionEntity positionEntity) throws SQLException {

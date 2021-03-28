@@ -216,14 +216,14 @@ INSERT INTO piece (name, color) VALUES ('KING', 'black');
 
 use chess_game;
 
-select * from position;
-
-select * from piece;
+select * from chess_game;
 
 select * from player;
 
 select * from player_piece_position;
 
-select * from chess_game;
+select * from position;
+
+select * from piece;
 
 delete from chess_game;
