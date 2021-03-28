@@ -13,7 +13,7 @@ public class Init extends Preparing {
 
     @Override
     public State start() {
-        return new WhiteTurn(board());
+        return new WhiteTurn(afterStartBoard());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Init extends Preparing {
     }
 
     @Override
-    public List<Rank> ranks() {
+    public Board board() {
         throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
     }
 
@@ -38,7 +38,7 @@ public class Init extends Preparing {
 
     @Override
     public State end() {
-        return new End(board());
+        return new End(afterStartBoard());
     }
 
     @Override

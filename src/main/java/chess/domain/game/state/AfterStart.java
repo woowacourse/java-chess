@@ -10,7 +10,7 @@ public abstract class AfterStart implements State {
         this.board = board;
     }
 
-    protected Board board() {
+    protected Board afterStartBoard() {
         return this.board;
     }
 }

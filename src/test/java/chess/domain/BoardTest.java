@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.board.position.InitPosition;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Ypoint;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -30,30 +31,25 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        Map<Position, Piece> squares1 = new LinkedHashMap<>();
-        squares1.put(Position.of("a1"), Rook.createWhite());
-        squares1.put(Position.of("b1"), Knight.createWhite());
-        squares1.put(Position.of("c1"), Bishop.createWhite());
-        squares1.put(Position.of("d1"), Queen.createWhite());
-        squares1.put(Position.of("e1"), King.createWhite());
+        Map<Position, Piece> squares = new LinkedHashMap<>();
 
-        Map<Position, Piece> squares2 = new LinkedHashMap<>();
-        squares2.put(Position.of("a2"), Pawn.createWhite());
-        squares2.put(Position.of("b2"), Pawn.createWhite());
+        squares.put(Position.of("a1"), Rook.createWhite());
+        squares.put(Position.of("b1"), Knight.createWhite());
+        squares.put(Position.of("c1"), Bishop.createWhite());
+        squares.put(Position.of("d1"), Queen.createWhite());
+        squares.put(Position.of("e1"), King.createWhite());
 
-        List<Rank> ranks = new ArrayList<>(Arrays.asList(
-            new Rank(squares1),
-            new Rank(squares2)
-        ));
+        squares.put(Position.of("a2"), Pawn.createWhite());
+        squares.put(Position.of("b2"), Pawn.createWhite());
 
-        this.board = new Board(ranks);
+        this.board = new Board(squares);
     }
 
     @Test
     @DisplayName("체스보드 생성 테스트")
     void testCreate() {
-        List<Rank> list = new ArrayList<>();
-        assertThat(new Board(list)).isInstanceOf(Board.class);
+        Map<Position, Piece> squares = new LinkedHashMap<>();
+        assertThat(new Board(squares)).isInstanceOf(Board.class);
     }
 
     @Test
@@ -66,18 +62,20 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("체스보드 출력을 위한 전체 보드 반환")
+    @DisplayName("체스보드 출력을 위한 라인별 Piece들 반환")
     void testGetRanks() {
-        assertThat(this.board.ranks()).hasSize(2);
-
-        Rank rank1 = this.board.ranks().get(0);
-        assertThat(rank1.pieces()).containsExactly(
-            Rook.createWhite(), Knight.createWhite(), Bishop.createWhite(),
-            Queen.createWhite(), King.createWhite()
+        assertThat(this.board.piecesByYpoint(Ypoint.ONE)).containsExactly(
+            Rook.createWhite(),
+            Knight.createWhite(),
+            Bishop.createWhite(),
+            Queen.createWhite(),
+            King.createWhite()
         );
 
-        Rank rank2 = this.board.ranks().get(1);
-        assertThat(rank2.pieces()).containsExactly(Pawn.createWhite(), Pawn.createWhite());
+        assertThat(this.board.piecesByYpoint(Ypoint.TWO)).containsExactly(
+            Pawn.createWhite(),
+            Pawn.createWhite()
+        );
     }
 
     @Test
@@ -85,17 +83,11 @@ public class BoardTest {
     void testIsAliveBothKings() {
         assertThat(this.board.isAliveBothKings()).isFalse();
 
-        Map<Position, Piece> squares1 = new HashMap<>();
-        squares1.put(Position.of("e8"), King.createBlack());
-        Map<Position, Piece> squares2 = new HashMap<>();
-        squares2.put(Position.of("e1"), King.createWhite());
+        Map<Position, Piece> squares = new HashMap<>();
+        squares.put(Position.of("e8"), King.createBlack());
+        squares.put(Position.of("e1"), King.createWhite());
 
-        List<Rank> ranks = new ArrayList<>(Arrays.asList(
-            new Rank(squares1),
-            new Rank(squares2)
-        ));
-
-        this.board = new Board(ranks);
+        this.board = new Board(squares);
 
         assertThat(this.board.isAliveBothKings()).isTrue();
     }
@@ -103,7 +95,7 @@ public class BoardTest {
     @Test
     @DisplayName("현재 체스보드에 존재하는 말의 위치 이동")
     void testMoveIfValidPosition() {
-        this.board = new Board(InitPosition.initRanks());
+        this.board = new Board();
 
         assertThat(this.board.pieceByPosition(Position.of("a2"))).isEqualTo(Pawn.createWhite());
         assertThat(this.board.pieceByPosition(Position.of("a4"))).isEqualTo(Empty.create());

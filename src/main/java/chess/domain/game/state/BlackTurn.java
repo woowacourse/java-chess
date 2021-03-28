@@ -12,21 +12,21 @@ public class BlackTurn extends Running {
 
     @Override
     public void moveIfValidColor(Position source, Position target) {
-        Piece sourcePiece = board().pieceByPosition(source);
+        Piece sourcePiece = afterStartBoard().pieceByPosition(source);
 
         if (sourcePiece.isWhite()) {
             throw new IllegalStateException("흑색 차례엔 흑색 말만 이동 가능합니다.");
         }
 
-        board().moveIfValidPosition(source, target);
+        afterStartBoard().moveIfValidPosition(source, target);
     }
 
     @Override
     public State passTurn() {
-        if (board().isAliveBothKings()) {
-            return new WhiteTurn(board());
+        if (afterStartBoard().isAliveBothKings()) {
+            return new WhiteTurn(afterStartBoard());
         }
 
-        return new BlackWin(board());
+        return new BlackWin(afterStartBoard());
     }
 }

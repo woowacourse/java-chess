@@ -1,8 +1,6 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
-import java.util.List;
 
 public abstract class Running extends AfterStart {
 
@@ -16,8 +14,8 @@ public abstract class Running extends AfterStart {
     }
 
     @Override
-    public List<Rank> ranks() {
-        return board().ranks();
+    public Board board() {
+        return afterStartBoard();
     }
 
     @Override
@@ -27,7 +25,7 @@ public abstract class Running extends AfterStart {
 
     @Override
     public State end() {
-        return new End(board());
+        return new End(afterStartBoard());
     }
 
     @Override

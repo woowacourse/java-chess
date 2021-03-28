@@ -28,8 +28,8 @@ public class ChessGame {
         this.state = state.end();
     }
 
-    public List<Rank> ranks() {
-        return state.ranks();
+    public Board board() {
+        return state.board();
     }
 
     public boolean isInit() {
