@@ -19,6 +19,4 @@ public interface Piece {
     boolean isPawn();
 
     boolean isKing();
-
-    boolean isBlank();
 }

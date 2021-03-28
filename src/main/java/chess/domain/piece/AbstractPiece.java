@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public abstract class AbstractPiece implements Piece {
@@ -54,7 +55,7 @@ public abstract class AbstractPiece implements Piece {
 
         boolean isObstacle = IntStream.range(MIN_DISTANCE, findDistance(position, direction))
             .mapToObj(distance -> this.position.add(dx * distance, dy * distance))
-            .anyMatch(movePosition -> !(pieces.get(movePosition).isBlank()));
+            .anyMatch(movePosition -> !(Objects.isNull(pieces.get(movePosition))));
 
         if (isObstacle) {
             throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
@@ -81,11 +82,6 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isBlank() {
         return false;
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Pawn extends AbstractPiece {
 
@@ -34,10 +35,10 @@ public final class Pawn extends AbstractPiece {
     }
 
     private void validate(Position position, Map<Position, Piece> pieces, Direction direction) {
-        if (isForward(direction) && !(pieces.get(position) instanceof Blank)) {
+        if (isForward(direction) && !(Objects.isNull(pieces.get(position)))) {
             throw new IllegalArgumentException("폰은 전진하는 위치에 기물이 있으면 안됩니다.");
         }
-        if (!isForward(direction) && pieces.get(position) instanceof Blank) {
+        if (!isForward(direction) && Objects.isNull(pieces.get(position))) {
             throw new IllegalArgumentException("폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.");
         }
         validateObstacle(position, direction, pieces);

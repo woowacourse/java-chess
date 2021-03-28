@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -15,6 +14,7 @@ import chess.domain.state.State;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Pieces {
@@ -62,7 +62,7 @@ public final class Pieces {
 
     private void initBlank(final int x) {
         for (int y = MIN_INDEX; y <= MAX_INDEX; y++) {
-            pieces.put(Position.of(x, y), new Blank());
+            pieces.put(Position.of(x, y), null);
         }
     }
 
@@ -74,16 +74,22 @@ public final class Pieces {
         validateAttackPiece(sourcePiece, targetPiece);
 
         pieces.put(targetPosition, sourcePiece.move(targetPosition, pieces()));
-        pieces.put(sourcePosition, new Blank());
+        pieces.put(sourcePosition, null);
     }
 
     private void validateSourcePiece(final Piece sourcePiece, final State state) {
+        if (Objects.isNull(sourcePiece)) {
+            throw new IllegalArgumentException("빈공간을 움직일 수 없습니다.");
+        }
         if (!state.isSameColor(sourcePiece)) {
             throw new IllegalArgumentException("움직이려 하는 기물은 상대방의 기물입니다.");
         }
     }
 
     private void validateAttackPiece(final Piece sourcePiece, final Piece targetPiece) {
+        if (Objects.isNull(targetPiece)) {
+            return;
+        }
         if (sourcePiece.isSameColor(targetPiece)) {
             throw new IllegalArgumentException("공격하려는 기물은 자신의 기물입니다.");
         }
@@ -92,6 +98,7 @@ public final class Pieces {
     public double score(final Color color) {
         double score = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::score)
             .sum();
@@ -103,6 +110,7 @@ public final class Pieces {
         long count = 0;
         List<Piece> pawns = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(piece -> piece.isSameColor(color))
             .filter(Piece::isPawn)
             .collect(Collectors.toList());
@@ -110,6 +118,7 @@ public final class Pieces {
         for (int column = MIN_INDEX; column <= MAX_INDEX; column++) {
             Point point = Point.from(column);
             long pawnCount = pawns.stream()
+                .filter(piece -> !Objects.isNull(piece))
                 .filter(piece -> piece.isSameColumn(point))
                 .count();
             count += duplicateCount(pawnCount);
@@ -131,6 +140,7 @@ public final class Pieces {
     public boolean isKillKing() {
         long kingCount = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(Piece::isKing)
             .count();
 

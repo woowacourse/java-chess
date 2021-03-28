@@ -7,12 +7,12 @@ public class BoardDTO {
 
     private final double whiteScore;
     private final double blackScore;
-    private final String winner;
+    private final Color winner;
 
     public BoardDTO(Board board) {
         whiteScore = board.score(Color.WHITE);
         blackScore = board.score(Color.BLACK);
-        winner = board.winner().color();
+        winner = board.winner();
     }
 
     public double getWhiteScore() {
@@ -23,7 +23,7 @@ public class BoardDTO {
         return blackScore;
     }
 
-    public String getWinner() {
+    public Color getWinner() {
         return winner;
     }
 }

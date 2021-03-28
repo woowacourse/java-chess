@@ -11,6 +11,6 @@ public abstract class WinnerBlank extends AbstractState {
 
     @Override
     public Color winner() {
-        return Color.BLANK;
+        return null;
     }
 }
