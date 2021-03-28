@@ -9,7 +9,6 @@ import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.BoardResponseDTO;
 import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.web.MoveResponse;
-import chess.beforedb.service.ChessService;
 import chess.db.service.ChessServiceForDB;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIDBController {
     private static final String ROOT = "/";
-    private static final String START = "start";
+    private static final String CREATE_CHESS_ROOM = "create-chess-room";
     private static final String CHESS_BOARD = "chess-board";
     private static final String MOVE = "move";
     private static final String END_COMMAND_INPUT = "end";
@@ -39,7 +38,7 @@ public class WebUIDBController {
     public void run() {
         port(8080);
         handleHomeRequest();
-        handleStartRequest();
+        handleCreateChessRoomRequest();
         handleBoardRequest();
         handleMoveRequest();
         handleEndRequest();
@@ -52,9 +51,9 @@ public class WebUIDBController {
         });
     }
 
-    private void handleStartRequest() {
-        get(ROOT + START, (req, res) -> {
-            // chessServiceForDB.start();
+    private void handleCreateChessRoomRequest() {
+        get(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
+            chessServiceForDB.createNewChessGame(req.queryParams("room-title"));
             res.redirect(ROOT + CHESS_BOARD);
             return null;
         });
