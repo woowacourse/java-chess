@@ -15,6 +15,7 @@ public abstract class Piece {
 
     private final String piece;
     private final Color color;
+
     protected MultipleCellMoveStrategy multipleCellMoveStrategy;
     protected OneCellMoveStrategy oneCellMoveStrategy;
     private Position position;
@@ -43,32 +44,24 @@ public abstract class Piece {
         return color.equals(Color.BLACK);
     }
 
-    public final Position getPosition() {
-        return position;
-    }
-
-    public final String getPiece() {
-        return piece;
-    }
-
     public final boolean isSamePosition(final Position position) {
         return this.position.equals(position);
-    }
-
-    public final boolean isSameColor(final Piece piece) {
-        return this.getColor().equals(piece.getColor());
     }
 
     public final void changePosition(final Position position) {
         this.position = position;
     }
 
-    public final File getFile() {
-        return position.getFile();
+    public final String getPiece() {
+        return piece;
     }
 
-    public final Color getColor() {
-        return color;
+    public final Position getPosition() {
+        return position;
+    }
+
+    public final File getFile() {
+        return position.getFile();
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Pawn extends Piece {
     public void move(Target target, final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = oneCellMoveStrategy.makeRoutes(basePieces, targetPieces, getPosition());
         oneCellMoveStrategy.checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
+        this.changePosition(target.getPosition());
     }
 
     @Override

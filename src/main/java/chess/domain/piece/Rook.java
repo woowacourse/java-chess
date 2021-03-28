@@ -39,7 +39,7 @@ public class Rook extends Piece {
         List<Position> positions = multipleCellMoveStrategy.makeLinearRoutes(
                 basePieces, targetPieces, getPosition(), RANGE);
         multipleCellMoveStrategy.checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
+        this.changePosition(target.getPosition());
     }
 
     @Override

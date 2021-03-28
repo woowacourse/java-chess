@@ -39,8 +39,7 @@ public class Bishop extends Piece {
         List<Position> positions = multipleCellMoveStrategy.makeDiagonalRoutes(
                 basePieces, targetPieces, getPosition(), RANGE);
         multipleCellMoveStrategy.checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
-        changePosition(target.getPosition());
+        this.changePosition(target.getPosition());
     }
 
     @Override

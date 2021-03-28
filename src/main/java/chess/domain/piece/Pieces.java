@@ -35,14 +35,6 @@ public class Pieces {
         source.move(target, this, targetPieces);
     }
 
-    public boolean isSameColor(final Piece piece) {
-        return this.getPieces().get(0).isSameColor(piece);
-    }
-
-    public void changePiecePosition(final Piece source, final Target target) {
-        source.changePosition(target.getPosition());
-    }
-
     public void remove(final Position position) {
         if (findPiece(position).isPresent()) {
             pieces.remove(findPiece(position).get());

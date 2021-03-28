@@ -41,7 +41,7 @@ public class Queen extends Piece {
         positions.addAll(multipleCellMoveStrategy.makeDiagonalRoutes(
                 basePieces, targetPieces, getPosition(), RANGE));
         multipleCellMoveStrategy.checkTarget(target, positions);
-        basePieces.changePiecePosition(this, target);
+        this.changePosition(target.getPosition());
     }
 
     @Override
