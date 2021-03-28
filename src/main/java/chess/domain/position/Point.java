@@ -10,7 +10,7 @@ public class Point {
     
     private final int point;
     
-    public Point(int point) {
+    private Point(int point) {
         this.point = point;
     }
     
@@ -34,6 +34,14 @@ public class Point {
         return new Point(point + distance);
     }
     
+    public int getPoint() {
+        return point;
+    }
+    
+    public boolean equalsTo(int point) {
+        return this.point == point;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -49,13 +57,5 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(point);
-    }
-    
-    public int getPoint() {
-        return point;
-    }
-    
-    public boolean equalsTo(int point) {
-        return this.point == point;
     }
 }

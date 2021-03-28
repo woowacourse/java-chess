@@ -12,7 +12,7 @@ public class SymbolBoardDTO {
     
     private final String[][] board;
     
-    public SymbolBoardDTO(String[][] board) {
+    private SymbolBoardDTO(String[][] board) {
         this.board = board;
     }
     

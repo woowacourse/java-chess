@@ -69,14 +69,6 @@ public class MovePosition {
         return direction.isCorrectDirection(xDistance, yDistance, movableLength);
     }
     
-    public boolean isAtDefaultPawnPosition(Color color) {
-        if (color.isWhite()) {
-            return sourcePosition.existsAtRankOf(DEFAULT_INDEX_OF_WHITE_PAWN);
-        }
-        
-        return sourcePosition.existsAtRankOf(DEFAULT_INDEX_OF_BLACK_PAWN);
-    }
-    
     public boolean isArrived(Position sourcePosition) {
         return sourcePosition.equals(targetPosition);
     }
@@ -89,5 +81,13 @@ public class MovePosition {
         if (!isAtDefaultPawnPosition(color)) {
             throw new IllegalArgumentException("폰은 첫 이동 시에만 2칸 움직일 수 있습니다.");
         }
+    }
+    
+    private boolean isAtDefaultPawnPosition(Color color) {
+        if (color.isWhite()) {
+            return sourcePosition.existsAtRankOf(DEFAULT_INDEX_OF_WHITE_PAWN);
+        }
+        
+        return sourcePosition.existsAtRankOf(DEFAULT_INDEX_OF_BLACK_PAWN);
     }
 }
