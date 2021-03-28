@@ -2,13 +2,11 @@ package chess.db.domain.board;
 
 import static chess.beforedb.domain.piece.type.PieceType.KING;
 
+import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntity;
-import chess.beforedb.domain.player.type.TeamColor;
-import chess.beforedb.domain.position.type.File;
-import chess.beforedb.domain.position.type.Rank;
-import chess.db.entity.PlayerPiecePosition;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,33 +15,11 @@ import java.util.Map;
 public class BoardForDB {
     private static final int NUMBER_OF_ALL_KINGS = 2;
 
+    private final PiecesPositionsForDB piecesPositionsForDB;
     private final Map<PositionEntity, CellForDB> cellsForDB = new HashMap<>();
 
     public BoardForDB() {
-        setAllCellsEmpty();
-    }
-
-    private void setAllCellsEmpty() {
-        for (File file : File.values()) {
-            putEmptyCellsInFile(file);
-        }
-    }
-
-    private void putEmptyCellsInFile(File file) {
-        for (Rank rank : Rank.values()) {
-            cellsForDB.put(
-                PositionEntity.of(file, rank), new CellForDB()
-            );
-        }
-    }
-
-    public void load(List<PlayerPiecePosition> piecesPositions) {
-        setAllCellsEmpty();
-        for (PlayerPiecePosition piecePosition : piecesPositions) {
-            PositionEntity position = piecePosition.getPositionEntity();
-            PieceEntity piece = piecePosition.getPieceEntity();
-            setCell(position, piece);
-        }
+        piecesPositionsForDB = new PiecesPositionsForDB();
     }
 
     private void setCell(PositionEntity position, PieceEntity piece) {
@@ -128,20 +104,9 @@ public class BoardForDB {
             .count() < NUMBER_OF_ALL_KINGS;
     }
 
-    public List<String> getStatus() {
-        List<String> cellsStatus = new ArrayList<>();
-        List<Rank> reversedRanks = Rank.reversedRanks();
-        for (Rank rank : reversedRanks) {
-            addCellsStatusOnRank(cellsStatus, rank);
-        }
-        return cellsStatus;
-    }
 
-    private void addCellsStatusOnRank(List<String> cellsStatus, Rank rank) {
-        for (File file : File.values()) {
-            CellForDB cell = cellsForDB.get(PositionEntity.of(file, rank));
-            cellsStatus.add(cell.status());
-        }
+    public List<String> getStatus(Long gameId) throws SQLException {
+        return piecesPositionsForDB.getCellsStatusGameOfInOrder(gameId);
     }
 }
 

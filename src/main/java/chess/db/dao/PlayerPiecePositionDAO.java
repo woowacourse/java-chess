@@ -3,11 +3,12 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerPiecePosition;
 import chess.db.entity.PlayerEntity;
+import chess.db.entity.PlayerPiecePosition;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,6 +64,31 @@ public class PlayerPiecePositionDAO {
         return pstmt.executeQuery();
     }
 
+    public List<PiecePositionFromDB> findAllByPlayerId(Long playerId) throws SQLException {
+        ResultSet rs = getResultSet(playerId);
+        List<PiecePositionFromDB> results = new ArrayList<>();
+        while (rs.next()) {
+            results.add(new PiecePositionFromDB(
+                rs.getString("piece_name"),
+                rs.getString("piece_color"),
+                rs.getString("file_value"),
+                rs.getString("rank_value")));
+        }
+        return results;
+    }
+
+    private ResultSet getResultSet(Long playerId) throws SQLException {
+        String query =
+            "SELECT piece.name AS piece_name, piece.color AS piece_color, position.file_value AS file_value, position.rank_value AS rank_value "
+                + "FROM player_piece_position "
+                + "INNER JOIN piece ON player_piece_position.piece_id = piece.id "
+                + "INNER JOIN position ON player_piece_position.position_id = position.id "
+                + "WHERE player_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerId);
+        return pstmt.executeQuery();
+    }
+
     public List<PiecePositionFromDB> findAllByPlayer(PlayerEntity playerEntity)
         throws SQLException {
         ResultSet rs = getResultSet(playerEntity);
@@ -86,6 +112,34 @@ public class PlayerPiecePositionDAO {
                 + "WHERE player_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerEntity.getId());
+        return pstmt.executeQuery();
+    }
+
+    public PieceWithColorType findByChessGameIdAndFileAndRank(Long gameId, Long positionId)
+        throws SQLException {
+        ResultSet rs = getResultSet(gameId, positionId);
+        if (!rs.next()) {
+            return null;
+        }
+        String pieceName = rs.getString("piece_name");
+        String pieceColor = rs.getString("piece_color");
+        return PieceWithColorType.of(pieceName, pieceColor);
+    }
+
+    private ResultSet getResultSet(Long gameId, Long positionId) throws SQLException {
+        String query = "SELECT name AS piece_name, color AS piece_color FROM piece "
+            + "INNER JOIN "
+            + "(SELECT piece_id FROM player_piece_position "
+            + "INNER JOIN "
+            + "(SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
+            + "ON player_piece_position.player_id = players.player_id "
+            + "WHERE player_piece_position.position_id = ?) "
+            + "AS piece_id_of_selected_game_and_selected_position "
+            + "ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id";
+
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gameId);
+        pstmt.setLong(2, positionId);
         return pstmt.executeQuery();
     }
 

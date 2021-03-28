@@ -7,9 +7,9 @@ import static chess.beforedb.domain.piece.type.PieceType.PAWN;
 import static chess.beforedb.domain.piece.type.PieceType.QUEEN;
 import static chess.beforedb.domain.piece.type.PieceType.ROOK;
 
-import chess.db.dao.PieceDAO;
 import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.dao.PieceDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;

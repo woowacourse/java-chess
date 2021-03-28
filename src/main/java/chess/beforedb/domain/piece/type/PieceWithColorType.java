@@ -10,6 +10,7 @@ import static chess.beforedb.domain.player.type.TeamColor.BLACK;
 import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
 import chess.beforedb.domain.player.type.TeamColor;
+import java.util.Arrays;
 
 public enum PieceWithColorType {
     B_PN(PAWN, BLACK),
@@ -33,11 +34,27 @@ public enum PieceWithColorType {
         this.teamColor = teamColor;
     }
 
-    public PieceType type() {
+    public static PieceWithColorType of(String pieceName, String pieceColor) {
+        PieceType pieceType = PieceType.valueOf(pieceName);
+        TeamColor teamColor = TeamColor.of(pieceColor);
+        Arrays.stream(PieceWithColorType.values())
+            .filter(pieceWithColorType ->
+                pieceWithColorType.getPieceType() == pieceType
+                    && pieceWithColorType.getTeamColor() == teamColor)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색깔기물 타입입니다."));
+        return null;
+    }
+
+    public PieceType getPieceType() {
         return pieceType;
     }
 
-    public TeamColor color() {
+    public TeamColor getTeamColor() {
         return teamColor;
+    }
+
+    public String getName() {
+        return pieceType.getName(teamColor);
     }
 }

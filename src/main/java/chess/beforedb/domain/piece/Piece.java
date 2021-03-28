@@ -25,7 +25,8 @@ public abstract class Piece {
     }
 
     public static Piece of(PieceWithColorType pieceWithColorType) {
-        return PiecesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+        return PiecesCache
+            .find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
     }
 
     public static Piece of(PieceType pieceType, TeamColor teamColor) {

@@ -2,8 +2,8 @@ package chess.db.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.entity.ChessGameEntity;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.entity.ChessGameEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

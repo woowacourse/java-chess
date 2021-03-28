@@ -1,5 +1,8 @@
 package chess.db.domain.board;
 
+import chess.beforedb.domain.piece.type.PieceWithColorType;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.piece.PieceEntity;
@@ -29,10 +32,43 @@ public class PiecesPositionsForDB {
         );
     }
 
+    public List<String> getCellsStatusGameOfInOrder(Long gameId) throws SQLException {
+        List<String> cellsStatus = new ArrayList<>();
+        List<Rank> reversedRanks = Rank.reversedRanks();
+        for (Rank rank : reversedRanks) {
+            getCellsStatusByGameIdAndRank(gameId, rank, cellsStatus);
+        }
+        return cellsStatus;
+    }
+
+    private void getCellsStatusByGameIdAndRank(Long gameId, Rank rank, List<String> cellsStatus)
+        throws SQLException {
+        for (File file : File.values()) {
+            PositionEntity position = PositionEntity.of(file, rank);
+            PieceWithColorType pieceWithColorType = piecePositionDAO
+                .findByChessGameIdAndFileAndRank(gameId, position.getId());
+            addCellStatus(cellsStatus, pieceWithColorType);
+        }
+    }
+
+    private void addCellStatus(List<String> cellsStatus, PieceWithColorType pieceWithColorType) {
+        String pieceName = ".";
+        if (pieceWithColorType != null) {
+            pieceName = pieceWithColorType.getName();
+        }
+        cellsStatus.add(pieceName);
+    }
+
     public void getScoreOfPlayer(PlayerEntity playerEntity) throws SQLException {
         List<PiecePositionFromDB> allPiecesPositionsFromDBOfPlayer
             = piecePositionDAO.findAllByPlayer(playerEntity);
         // scoreCalculator.
+    }
+
+    public List<PiecePositionFromDB> getAllPiecesPositionsOfPlayer(Long playerId)
+        throws SQLException {
+
+        return piecePositionDAO.findAllByPlayerId(playerId);
     }
 
     public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayer(PlayerEntity playerEntity)

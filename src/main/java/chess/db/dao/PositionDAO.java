@@ -3,9 +3,9 @@ package chess.db.dao;
 
 import static chess.db.dao.DBConnection.getConnection;
 
-import chess.db.domain.position.PositionEntity;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
+import chess.db.domain.position.PositionEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

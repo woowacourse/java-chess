@@ -1,9 +1,9 @@
 package chess.db.domain.board;
 
-import chess.db.domain.piece.PieceEntity;
-import chess.db.domain.position.MoveRouteForDB;
 import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.domain.piece.PieceEntity;
+import chess.db.domain.position.MoveRouteForDB;
 
 public class CellForDB {
     private static final String EMPTY_STATUS = ".";

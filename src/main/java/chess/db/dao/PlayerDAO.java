@@ -35,6 +35,22 @@ public class PlayerDAO {
         return pstmt.getGeneratedKeys();
     }
 
+    public List<Long> findAllPlayerIdsByChessGameId(Long gameId) throws SQLException {
+        List<Long> playerIds = new ArrayList<>();
+        ResultSet rs = getResultSet(gameId);
+        while (rs.next()) {
+            playerIds.add(rs.getLong("id"));
+        }
+        return playerIds;
+    }
+
+    private ResultSet getResultSet(Long gameId) throws SQLException {
+        String query = "SELECT player.id FROM player WHERE chess_game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gameId);
+        return pstmt.executeQuery();
+    }
+
     public List<PlayerEntity> findAllByChessGame(ChessGameEntity chessGameEntity)
         throws SQLException {
         List<PlayerEntity> players = new ArrayList<>();

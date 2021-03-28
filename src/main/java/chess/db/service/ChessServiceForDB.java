@@ -35,16 +35,11 @@ public class ChessServiceForDB {
         chessGameForDB.createNew(boardSetting, title);
     }
 
-    public void loadChessGame(Long chessGameId) throws SQLException {
-        chessGameForDB.load(chessGameId);
-    }
-
     public List<ChessGameResponseDTO> getAllRoomsIdAndTitle() throws SQLException {
         return chessGameForDB.getAllGamesIdAndTitle();
     }
 
     public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {
-        // validateGameStarted();
         return createMoveResponse(moveRequestDTO);
     }
 
@@ -57,18 +52,11 @@ public class ChessServiceForDB {
         chessGameForDB.changeToNextTurn();
         return new MoveResponse(false);
     }
-//    private void validateGameStarted() {
-//        if (chessGameForDB == null) {
-//            throw new IllegalStateException("게임을 먼저 시작해 주세요.");
-//        }
 
-//    }
-
-    public ResponseDTO getCurrentBoard() {
-        // validateGameStarted();
+    public ResponseDTO getBoard(Long roomId) throws SQLException {
         Scores scores = chessGameForDB.getScores();
         return new ResponseDTO(
-            getBoardResponseDTO(),
+            getBoardResponseDTO(roomId),
             chessGameForDB.currentTurnTeamName(),
             scores.getBlackPlayerScore(),
             scores.getWhitePlayerScore(),
@@ -76,8 +64,8 @@ public class ChessServiceForDB {
             chessGameForDB.beforeTurnTeamName());
     }
 
-    private BoardResponseDTO getBoardResponseDTO() {
-        List<String> cellsStatus = chessGameForDB.boardCellsStatus();
+    private BoardResponseDTO getBoardResponseDTO(Long gameId) throws SQLException {
+        List<String> cellsStatus = chessGameForDB.boardCellsStatus(gameId);
         return new BoardResponseDTO(
             cellsStatus.subList(RANK1_FIRST_INDEX, RANK2_FIRST_INDEX),
             cellsStatus.subList(RANK2_FIRST_INDEX, RANK3_FIRST_INDEX),

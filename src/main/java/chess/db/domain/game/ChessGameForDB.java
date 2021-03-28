@@ -4,6 +4,12 @@ import static chess.beforedb.domain.player.type.TeamColor.BLACK;
 import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
+import chess.beforedb.domain.board.setting.BoardCustomSetting;
+import chess.beforedb.domain.board.setting.BoardDefaultSetting;
+import chess.beforedb.domain.board.setting.BoardSetting;
+import chess.beforedb.domain.piece.type.PieceWithColorType;
+import chess.beforedb.domain.player.Scores;
+import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PiecePosition;
 import chess.db.domain.board.BoardForDB;
@@ -13,14 +19,7 @@ import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
-import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePosition;
-import chess.beforedb.domain.board.setting.BoardCustomSetting;
-import chess.beforedb.domain.board.setting.BoardDefaultSetting;
-import chess.beforedb.domain.board.setting.BoardSetting;
-import chess.beforedb.domain.piece.type.PieceWithColorType;
-import chess.beforedb.domain.player.Scores;
-import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,6 @@ public class ChessGameForDB {
         validate(boardSetting);
         chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
         playersForDB.createNewPlayers(chessGameEntity);
-        playersForDB.loadPlayers(chessGameEntity);
         setInitialPieces(boardSetting);
     }
 
@@ -70,15 +68,8 @@ public class ChessGameForDB {
         }
     }
 
-    public void load(Long chessGameId) throws SQLException {
-        chessGameEntity = chessGameDAO.findById(chessGameId);
-        playersForDB.loadPlayers(chessGameEntity);
-        List<PlayerPiecePosition> loadedPiecesPositions = getAllPiecesPositionsOfPlayers();
-        boardForDB.load(loadedPiecesPositions);
-    }
-
     public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayers() throws SQLException {
-        return playersForDB.getAllPiecesPositionsOfChessGame();
+        return playersForDB.getAllPiecesPositionsGameOf();
     }
 
     public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
@@ -106,16 +97,12 @@ public class ChessGameForDB {
         }
     }
 
-    public PlayerEntity getPlayerColorOf(TeamColor teamColor) {
-        return playersForDB.getPlayerColorOf(teamColor);
-    }
-
     public boolean isKingDead() {
         return boardForDB.isKingDead();
     }
 
-    public List<String> boardCellsStatus() {
-        return boardForDB.getStatus();
+    public List<String> boardCellsStatus(Long gameId) throws SQLException {
+        return boardForDB.getStatus(gameId);
     }
 
     public Scores getScores() {

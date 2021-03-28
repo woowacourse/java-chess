@@ -41,7 +41,8 @@ public class WebUIDBController {
         port(8080);
         handleHomeRequest();
         handleCreateChessRoomRequest();
-        handleBoardRequest();
+        handleEnterChessRoomRequest();
+        handleGetBoardRequest();
         handleMoveRequest();
         handleEndRequest();
     }
@@ -64,9 +65,18 @@ public class WebUIDBController {
         });
     }
 
-    private void handleBoardRequest() {
+    private void handleEnterChessRoomRequest() {
         get(ROOT + CHESS_BOARD, (req, res) -> {
-            ResponseDTO responseDTO = chessServiceForDB.getCurrentBoard();
+            String roomIdToEnter = req.queryParams("id");
+            res.redirect(ROOT + CHESS_BOARD + "?id=" + roomIdToEnter);
+            return null;
+        });
+    }
+
+    private void handleGetBoardRequest() {
+        get(ROOT + CHESS_BOARD, (req, res) -> {
+            Long roomId = Long.valueOf(req.queryParams("id"));
+            ResponseDTO responseDTO = chessServiceForDB.getBoard(roomId);
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
             putBoardRanks(responseDTO.getBoardResponseDTO(), model);

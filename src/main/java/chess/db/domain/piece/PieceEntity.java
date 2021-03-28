@@ -7,13 +7,13 @@ import static chess.beforedb.domain.piece.type.PieceType.PAWN;
 import static chess.beforedb.domain.piece.type.PieceType.QUEEN;
 import static chess.beforedb.domain.piece.type.PieceType.ROOK;
 
-import chess.db.dao.PieceFromDB;
-import chess.db.domain.board.BoardForDB;
-import chess.db.domain.position.MoveRouteForDB;
 import chess.beforedb.domain.piece.type.Direction;
 import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.dao.PieceFromDB;
+import chess.db.domain.board.BoardForDB;
+import chess.db.domain.position.MoveRouteForDB;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,7 +81,8 @@ public class PieceEntity {
     }
 
     public static PieceEntity of(PieceWithColorType pieceWithColorType) {
-        return PieceEntitiesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+        return PieceEntitiesCache
+            .find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
     }
 
     public static PieceEntity of(PieceType pieceType, TeamColor teamColor) {
