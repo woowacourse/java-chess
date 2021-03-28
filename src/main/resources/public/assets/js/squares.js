@@ -11,13 +11,17 @@ export const removeHighlight = () => {
 export const move = (source, destination) => {
   getBoardAfterMove(source, destination).then(board => {
     const boardDto = board["board"];
-    for (const i in boardDto["board"]) {
-      const newSquare = boardDto["board"][i];
-      const square = document.querySelector("#" + newSquare.x + newSquare.y);
-      square.setAttribute("class",
-          "square " + newSquare["piece"] + newSquare["team"]);
-    }
+    reloadSquares(board["board"]["board"]);
     updateTurnBadge();
     checkGameState();
   });
+}
+
+export const reloadSquares = (board) => {
+  for (const i in board) {
+    const newSquare = board[i];
+    const square = document.querySelector("#" + newSquare.x + newSquare.y);
+    square.setAttribute("class",
+        "square " + newSquare["piece"] + newSquare["team"]);
+  }
 }

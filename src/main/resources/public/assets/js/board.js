@@ -28,6 +28,11 @@ export async function getBoardAfterMove(source, destination) {
   return await response.json();
 }
 
+export async function getInitializedBoard() {
+  const response = await fetch("./start");
+  return await response.json();
+}
+
 export const reloadBoard = () => {
   const boardRect = document.querySelector(".board").getBoundingClientRect();
   const squareWidth = boardRect.width * boardWidthRateWithoutBorder / boardSize;

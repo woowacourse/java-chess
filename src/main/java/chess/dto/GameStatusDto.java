@@ -9,11 +9,11 @@ public class GameStatusDto {
     private static final String WHITE = "w";
     private static final String NONE = "n";
 
-    private final String isOngoing;
+    private final String gameState;
     private final String winner;
 
     public GameStatusDto(ChessGame chessGame) {
-        isOngoing = Boolean.toString(chessGame.isOngoing());
+        gameState = chessGame.gameState().getClass().getSimpleName();
         winner = winnerByGameStatus(chessGame);
     }
 
@@ -34,8 +34,8 @@ public class GameStatusDto {
         return NONE;
     }
 
-    public String getIsOngoing() {
-        return isOngoing;
+    public String getGameState() {
+        return gameState;
     }
 
     public String getWinner() {

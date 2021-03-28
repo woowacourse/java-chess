@@ -1,7 +1,8 @@
-import {reloadBoard} from "./board.js";
+import {getInitializedBoard, reloadBoard} from "./board.js";
 import {updateTurnBadge} from "./turnBadge.js";
 import {addMovables, removeAllMovables} from "./movables.js";
-import {move, removeHighlight} from "./squares.js";
+import {move, reloadSquares, removeHighlight} from "./squares.js";
+import {checkGameState} from "./gameState.js";
 
 const clickSquare = function (event) {
   removeHighlight();
@@ -15,6 +16,13 @@ const clickSquare = function (event) {
   addMovables(event.target.id);
 };
 
+const start = function (event) {
+  getInitializedBoard().then(board => {
+    checkGameState();
+    reloadSquares(board["board"]);
+  });
+}
+
 const addEventToSquares = () => {
   const squares = document.querySelectorAll(".square");
   squares.forEach(square =>
@@ -22,10 +30,16 @@ const addEventToSquares = () => {
   );
 }
 
+const addEventToLaunch = () => {
+  document.querySelector(".launch").addEventListener("click", start);
+}
+
 window.onload = () => {
+  checkGameState();
   reloadBoard();
   updateTurnBadge();
   addEventToSquares();
+  addEventToLaunch();
 };
 
 window.onresize = () => {

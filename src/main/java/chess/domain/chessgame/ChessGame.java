@@ -55,4 +55,8 @@ public class ChessGame {
     public List<Point> movablePoints(Point currentPoint) {
         return gameState.movablePoints(currentPoint, turn);
     }
+
+    public GameState gameState() {
+        return gameState;
+    }
 }

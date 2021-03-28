@@ -134,7 +134,7 @@ section {
     background-image: url('../images/en.png');
 }
 
-.result {
+.result, .launch {
     position: fixed;
     z-index: 999;
     left: 0;
@@ -145,7 +145,7 @@ section {
     text-align: center;
 }
 
-.result p {
+.launch p, .result p {
     position: relative;
     top: 40%;
     font-size: xx-large;

@@ -6,6 +6,7 @@ import chess.domain.board.Row;
 import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,6 +80,6 @@ public class Ready implements GameState {
 
     @Override
     public List<Point> movablePoints(Point currentPoint, Turn turn) {
-        throw EXCEPTION;
+        return new ArrayList<>();
     }
 }
