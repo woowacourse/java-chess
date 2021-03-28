@@ -1,0 +1,45 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color:#F3E4DF;
+}
+
+.title {
+    color:#522632;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.chessBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #522632;
+    margin: auto;
+    width: 35vw;
+    height: 35vw;
+}
+
+.chessRow {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.chessColumn {
+    width: 100%;
+    height: 100%;
+}
+
+.chessRow > .chessColumn > img {
+    width: 100%;
+    height: 100%;
+}
