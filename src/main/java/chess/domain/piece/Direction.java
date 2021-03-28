@@ -54,7 +54,7 @@ public enum Direction {
     }
     
     private boolean canArrive(int distance, int degree, int movableLength) {
-        if (doesNotMove(distance, degree)) {
+        if (isStay(distance, degree)) {
             return true;
         }
         
@@ -65,7 +65,7 @@ public enum Direction {
         return degree == 0 || canDivideWithoutRemainder(distance, degree, movableLength);
     }
     
-    private boolean doesNotMove(int distance, int degree) {
+    private boolean isStay(int distance, int degree) {
         return distance == 0 && degree == 0;
     }
     
