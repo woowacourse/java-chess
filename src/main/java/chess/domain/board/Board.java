@@ -26,7 +26,6 @@ public final class Board {
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
         final Map<Position, Piece> nextCoordinates = new HashMap<>(coordinates);
         final Piece sourcePiece = coordinates.get(sourcePosition);
-        final Piece targetPiece = coordinates.get(targetPosition);
         nextCoordinates.replace(targetPosition, sourcePiece);
         nextCoordinates.replace(sourcePosition, EmptyPiece.getInstance());
         return new Board(nextCoordinates);
@@ -44,15 +43,16 @@ public final class Board {
                 ;
     }
 
-    public boolean hasPieceColor(final Position sourcePosition, final PieceColor color) {
-        return coordinates.get(sourcePosition).isColor(color);
+    public Piece pieceAt(final Position position) {
+        return coordinates.get(position);
     }
 
     public int kingCount() {
         return (int) coordinates.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count();
+                .count()
+                ;
     }
 
     public int pawnCount(final Column column, final PieceColor color) {
@@ -73,7 +73,6 @@ public final class Board {
                 .map(direction -> piece.pathFrom(direction, sourcePosition))
                 .map(path -> path.removeObstacleInPath(piece, this))
                 .flatMap(List::stream)
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
     }
 }

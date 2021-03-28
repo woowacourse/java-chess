@@ -4,13 +4,12 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public final class Path {
 
     private final List<Position> positions;
 
-    private Path(final List<Position> positions) {
+    public Path(final List<Position> positions) {
         this.positions = positions;
     }
 
@@ -18,21 +17,17 @@ public final class Path {
         return positions.contains(targetPosition);
     }
 
-    public List<Position> removeObstacleInPath(Piece piece, Board boardPosition) {
+    public List<Position> removeObstacleInPath(final Piece piece, final Board board) {
         final List<Position> cleanPath = new ArrayList<>();
         for (Position position : positions) {
-            // TODO
-//            if (piece.canGo(position)) {
-//                cleanPath.add(position);
-//            }
-            // 같은 색일 때 (공용)
-                // 그만
-            // 다른 색일 때
-                // pawn diagonal then OK
-            // 빈 공간일 때
-                // pawn straight then OK
+            final Piece otherPiece = board.pieceAt(position);
+            if (piece.canReplace(otherPiece)) {
+                cleanPath.add(position);
+            }
+            if (piece.blockedBy(otherPiece)) {
+                break;
+            }
         }
-
         return cleanPath;
     }
 

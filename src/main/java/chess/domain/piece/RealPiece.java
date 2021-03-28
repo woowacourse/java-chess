@@ -22,12 +22,25 @@ public final class RealPiece implements Piece {
     }
 
     @Override
-    public Path pathFrom(Direction direction, Position position) {
+    public Path pathFrom(final Direction direction, final Position position) {
         return pieceStrategy.pathFrom(direction, position);
     }
 
     @Override
-    public boolean isColor(PieceColor color) {
+    public boolean canReplace(final Piece piece) {
+        return pieceStrategy.canReplace(piece);
+//        if (isPawn()) {
+//
+//        }
+    }
+
+    @Override
+    public boolean blockedBy(final Piece piece) {
+        return pieceStrategy.blockedBy(piece);
+    }
+
+    @Override
+    public boolean isColor(final PieceColor color) {
         return this.color.equals(color);
     }
 
