@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,10 +24,11 @@ class PositionTest {
         }
     }
 
-    @DisplayName("위치 형식에 2글자가 아닐  예외를 발생시킨다.")
-    @Test
-    void throwExceptionWhenWrongFormatArgument() {
-        assertThatThrownBy(() -> Position.of("aaa"))
+    @DisplayName("위치 형식(File + Rank의 두 글자)에 맞지 않는 위치 값이 입력되면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @CsvSource({"aaa", "111", "a9", "i1"})
+    void throwExceptionWhenWrongFormatArgument(String input) {
+        assertThatThrownBy(() -> Position.of(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("위치 형식에 맞는 입력이 아닙니다.");
     }

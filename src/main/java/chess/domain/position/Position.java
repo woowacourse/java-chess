@@ -3,11 +3,13 @@ package chess.domain.position;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Position {
     public static final int POSITION_FORMAT_LENGTH = 2;
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
+    public static final Pattern positionPattern = Pattern.compile("([a-h][1-8])");
 
     private final File file;
     private final Rank rank;
@@ -24,8 +26,7 @@ public class Position {
     public static Position of(String position) {
         List<String> splitPosition = Arrays.asList(position.split(""));
 
-        // TODO 검증 로직 및 상수화 리팩토링
-        if (splitPosition.size() != POSITION_FORMAT_LENGTH) {
+        if (splitPosition.size() != POSITION_FORMAT_LENGTH || !positionPattern.matcher(position).find()) {
             throw new IllegalArgumentException("위치 형식에 맞는 입력이 아닙니다.");
         }
         File file = File.from(splitPosition.get(FILE_INDEX));
