@@ -1,0 +1,30 @@
+.square {
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+}
+
+.square:hover {
+  background-color: blueviolet;
+  cursor: pointer;
+}
+
+.square1 {
+  background-color: wheat;
+}
+
+.square:hover {
+  background-color: blueviolet;
+  cursor: pointer;
+ }
+
+.square2 {
+  background-color: thistle;
+}
+
+#board {
+  text-align: center;
+  font-size: 0px;
+}
