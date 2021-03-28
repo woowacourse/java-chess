@@ -87,6 +87,11 @@ public abstract class AbstractPiece implements Piece {
         return false;
     }
 
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        return null;
+    }
+
     protected List<Position> Positions(Map<Position, Piece> pieces, List<Direction> directions, int ableLength) {
         final List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
