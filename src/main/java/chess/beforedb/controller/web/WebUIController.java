@@ -15,7 +15,7 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebController {
+public class WebUIController {
     private static final String ROOT = "/";
     private static final String START = "start";
     private static final String CHESS_BOARD = "chess-board";
@@ -29,7 +29,7 @@ public class WebController {
     private final ChessService chessService;
     private final Gson gson;
 
-    public WebController(ChessService chessService) {
+    public WebUIController(ChessService chessService) {
         this.chessService = chessService;
         this.gson = new Gson();
     }

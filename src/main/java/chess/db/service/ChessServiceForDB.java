@@ -1,4 +1,4 @@
-package chess.db.controller;
+package chess.db.service;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.BoardResponseDTO;

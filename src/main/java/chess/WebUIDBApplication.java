@@ -3,15 +3,16 @@ package chess;
 import chess.beforedb.controller.web.WebUIController;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
-import chess.beforedb.service.ChessService;
+import chess.db.service.ChessServiceForDB;
 
-public class WebUIApplication {
+public class WebUIDBApplication {
     public static void main(String[] args) {
         BoardSetting boardSetting = new BoardDefaultSetting();
 
-        ChessService chessService = new ChessService(boardSetting);
-        WebUIController webUIController = new WebUIController(chessService);
+        ChessServiceForDB chessServiceForDB = new ChessServiceForDB(boardSetting);
 
-        webUIController.run();
+//        WebUIController chessController = new WebUIController(chessService);
+//
+//        chessController.run();
     }
 }
