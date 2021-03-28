@@ -8,7 +8,7 @@ CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 show tables;
 
-set global max_connections = 200;
+set global max_connections = 500;
 
 
 -- MySQL Workbench Forward Engineering
@@ -214,6 +214,7 @@ INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
 
 
+use chess_game;
 
 select * from position;
 

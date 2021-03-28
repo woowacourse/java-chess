@@ -1,16 +1,9 @@
-package chess.db.domain;
+package chess.db.domain.piece;
 
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.db.domain.piece.BishopEntity;
-import chess.db.domain.piece.KingEntity;
-import chess.db.domain.piece.KnightEntity;
-import chess.db.domain.piece.PawnEntity;
-import chess.db.domain.piece.PieceEntity;
-import chess.db.domain.piece.QueenEntity;
-import chess.db.domain.piece.RookEntity;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.util.ArrayList;

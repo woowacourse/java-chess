@@ -27,10 +27,8 @@ public class PlayersForDB {
 
     public void addForNewPlayers(PieceEntity pieceEntity, PositionEntity positionEntity,
         ChessGameEntity chessGameEntity) throws SQLException {
-        PlayerEntity whitePlayerEntity = new PlayerEntity(WHITE, chessGameEntity);
-        PlayerEntity blackPlayerEntity = new PlayerEntity(BLACK, chessGameEntity);
-        playerDAO.save(whitePlayerEntity);
-        playerDAO.save(blackPlayerEntity);
+        PlayerEntity whitePlayerEntity = playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
+        PlayerEntity blackPlayerEntity = playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
         playerPiecesPositionsForDB.save(whitePlayerEntity, pieceEntity, positionEntity);
         playerPiecesPositionsForDB.save(blackPlayerEntity, pieceEntity, positionEntity);
     }
