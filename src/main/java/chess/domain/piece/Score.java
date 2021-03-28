@@ -25,7 +25,7 @@ public class Score {
         return this.value;
     }
 
-    public Score calculatePawnPenaltyScore(final int pawnCountInLine) {
+    public Score applyPawnPenalty(final int pawnCountInLine) {
         return new Score(this.value - (PAWN_PENALTY_SCORE.value * pawnCountInLine));
     }
 

@@ -22,7 +22,7 @@ public class Position {
         this(s.split(""));
     }
 
-    public Horizontal getHorizontal() {
+    public Horizontal horizontal() {
         return horizontal;
     }
 
@@ -41,5 +41,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
+    }
+
+    @Override
+    public String toString() {
+        return vertical+" / "+horizontal;
     }
 }

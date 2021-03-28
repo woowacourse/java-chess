@@ -56,7 +56,7 @@ public abstract class Pawn extends Piece {
         }
 
         if (distance.equals(STRAIGHT_DISTANCE_WHEN_ON_FIRST_LINE)) {
-            return isFirstLine(position.getHorizontal());
+            return isFirstLine(position.horizontal());
         }
 
         return distance.equals(STRAIGHT_DISTANCE);

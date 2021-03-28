@@ -30,7 +30,7 @@ public class ChessController {
     private void executeUserCommands() {
         do {
             readUserCommand();
-        } while (!chessGame.isEnd());
+        } while (!chessGame.isGameEnd());
     }
 
     private void readUserCommand() {

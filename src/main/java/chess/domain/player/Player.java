@@ -10,34 +10,27 @@ import java.util.List;
 public class Player {
     private final Owner owner;
     private final List<Position> positions;
-    private State state;
 
     public Player(final List<Position> positions, final Owner owner) {
         this.positions = positions;
         this.owner = owner;
-        this.state = State.LiVE;
     }
 
     public Score score(final Board board) {
-        if (state.isDead()) {
+        if (isDead(board)) {
             return Score.EMPTY;
         }
 
         final Score score = addAllPiecesScores(board);
-        int pawnCountDuplicatedInLine = board.countDuplicatedPawnInLine(owner);
-        return score.calculatePawnPenaltyScore(pawnCountDuplicatedInLine);
+        return score.applyPawnPenalty(board.countDuplicatedPawnInLine(owner));
     }
 
     private Score addAllPiecesScores(final Board board) {
         Score score = Score.EMPTY;
-        for (Position position : positions) {
+        for (final Position position : positions) {
             score = score.plus(board.of(position).score());
         }
         return score;
-    }
-
-    public void remove(final Position target) {
-        positions.remove(target);
     }
 
     public void move(final Position source, final Position target) {
@@ -45,16 +38,18 @@ public class Player {
         positions.add(target);
     }
 
-    public boolean contains(final Position position) {
+    public void captured(final Position target) {
+        positions.remove(target);
+    }
+
+    public boolean isDead(final Board board) {
+        return positions.stream()
+                .map(position -> board.of(position))
+                .noneMatch(piece -> piece.isKing());
+    }
+
+    public boolean has(final Position position) {
         return positions.contains(position);
-    }
-
-    public void makeDead() {
-        this.state = State.DEAD;
-    }
-
-    public boolean isDead() {
-        return state.isDead();
     }
 
     public Owner owner() {

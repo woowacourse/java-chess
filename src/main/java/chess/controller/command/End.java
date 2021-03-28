@@ -2,7 +2,6 @@ package chess.controller.command;
 
 import chess.domain.board.position.Position;
 import chess.manager.ChessGame;
-import chess.view.OutputView;
 
 public class End extends Command {
     public End(String line) {
@@ -22,7 +21,7 @@ public class End extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        chessGame.makeGameEnd();
+        chessGame.setGameEnd();
     }
 
     @Override

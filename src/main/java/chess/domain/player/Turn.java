@@ -1,12 +1,14 @@
 package chess.domain.player;
 
+import chess.domain.piece.Owner;
+
 public enum Turn {
-    BLACK(0), WHITE(1);
+    BLACK(Owner.BLACK), WHITE(Owner.WHITE);
 
-    private final int index;
+    private final Owner owner;
 
-    Turn(int index) {
-        this.index = index;
+    Turn(final Owner owner) {
+        this.owner = owner;
     }
 
     public Turn change() {
@@ -17,11 +19,9 @@ public enum Turn {
         return BLACK;
     }
 
-    public int index() {
-        return index;
-    }
-
-    public int otherIndex() {
-        return change().index;
+    public void validate(final Owner mover) {
+        if(!owner.isSameTeam(mover)){
+            throw new IllegalArgumentException("현재 순서의 사용자가 아닙니다.");
+        }
     }
 }
