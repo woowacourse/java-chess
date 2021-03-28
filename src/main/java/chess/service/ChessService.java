@@ -32,19 +32,6 @@ public class ChessService {
         chessGame = new ChessGame(boardSetting);
     }
 
-    private BoardResponseDTO getBoardResponseDTO() {
-        List<String> cellsStatus = chessGame.boardCellsStatus();
-        return new BoardResponseDTO(
-            cellsStatus.subList(RANK1_FIRST_INDEX, RANK2_FIRST_INDEX),
-            cellsStatus.subList(RANK2_FIRST_INDEX, RANK3_FIRST_INDEX),
-            cellsStatus.subList(RANK3_FIRST_INDEX, RANK4_FIRST_INDEX),
-            cellsStatus.subList(RANK4_FIRST_INDEX, RANK5_FIRST_INDEX),
-            cellsStatus.subList(RANK5_FIRST_INDEX, RANK6_FIRST_INDEX),
-            cellsStatus.subList(RANK6_FIRST_INDEX, RANK7_FIRST_INDEX),
-            cellsStatus.subList(RANK7_FIRST_INDEX, RANK8_FIRST_INDEX),
-            cellsStatus.subList(RANK8_FIRST_INDEX, BOARD_ALL_CELLS_SIZE));
-    }
-
     public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) {
         validateGameStarted();
         return createMoveResponse(moveRequestDTO);
@@ -66,10 +53,6 @@ public class ChessService {
         }
     }
 
-    public void endGame() {
-        chessGame = null;
-    }
-
     public ResponseDTO getCurrentBoard() {
         validateGameStarted();
         Scores scores = chessGame.getScores();
@@ -80,5 +63,22 @@ public class ChessService {
             scores.getWhitePlayerScore(),
             chessGame.isKingDead(),
             chessGame.beforeTurnTeamName());
+    }
+
+    private BoardResponseDTO getBoardResponseDTO() {
+        List<String> cellsStatus = chessGame.boardCellsStatus();
+        return new BoardResponseDTO(
+            cellsStatus.subList(RANK1_FIRST_INDEX, RANK2_FIRST_INDEX),
+            cellsStatus.subList(RANK2_FIRST_INDEX, RANK3_FIRST_INDEX),
+            cellsStatus.subList(RANK3_FIRST_INDEX, RANK4_FIRST_INDEX),
+            cellsStatus.subList(RANK4_FIRST_INDEX, RANK5_FIRST_INDEX),
+            cellsStatus.subList(RANK5_FIRST_INDEX, RANK6_FIRST_INDEX),
+            cellsStatus.subList(RANK6_FIRST_INDEX, RANK7_FIRST_INDEX),
+            cellsStatus.subList(RANK7_FIRST_INDEX, RANK8_FIRST_INDEX),
+            cellsStatus.subList(RANK8_FIRST_INDEX, BOARD_ALL_CELLS_SIZE));
+    }
+
+    public void endGame() {
+        chessGame = null;
     }
 }
