@@ -1,6 +1,8 @@
 package chess;
 
 import chess.dto.requestdto.StartRequestDto;
+import chess.dto.response.Response;
+import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -11,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
-import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
@@ -34,11 +35,11 @@ public class WebUIChessApplication {
 //            return chessService.move(new MoveRequestDto(sourcePosition, targetPosition));
 //        }, JSON_TRANSFORMER);
 
-        post("/start/:roomName", (req, res) -> {
+        get("/grid/:roomName", (req, res) -> {
             String roomName = req.params(":roomName");
             StartRequestDto startRequestDto = new StartRequestDto(roomName);
-            GridAndPiecesResponseDto start = chessService.start(startRequestDto);
-            return start;
+            GridAndPiecesResponseDto gridAndPiecesResponseDto = chessService.start(startRequestDto);
+            return new Response(ResponseCode.OK, gridAndPiecesResponseDto);
         }, JSON_TRANSFORMER);
 //
 //        get("/check/finished", (req, res) -> {

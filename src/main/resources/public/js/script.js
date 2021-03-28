@@ -1,40 +1,75 @@
-function createChessBoard() {
-    const pieces = [
-        ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
-        new Array(8).fill("BP"),
-        new Array(8),
-        new Array(8),
-        new Array(8),
-        new Array(8),
-        new Array(8).fill("WP"),
-        ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
-    ]
+async function createChessBoard() {
+    try {
+        let roomName;
+        do {
+            roomName = prompt('입장할 방의 이름을 입력해주세요.');
+        } while (!roomName)
 
-    const table = document.getElementById("chess-board");
-    for (let i = 0; i < 8; i++) {
-        const newTr = document.createElement("tr");
-        for (let j = 0; j < 8; j++) {
-            const newTd = document.createElement("td");
-
-            const row = String(8 - i); // 열(12345678)
-            const asciiNum = 97; // h의 아스키코드
-            const column = String.fromCharCode(asciiNum + j);
-            newTd.id = column + row;
-            if (pieces[i][j]) {
-                const piece = document.createElement("img");
-                piece.src = "images/" + pieces[i][j] + ".png";
-                newTd.appendChild(piece);
-            }
-            if (i % 2 == j % 2) {
-                newTd.className = "block1";
-            } else {
-                newTd.className = "block2";
-            }
-            newTr.appendChild(newTd);
+        const res = await axios({
+            method: 'get',
+            url: `/grid/${roomName}`,
+        });
+        const data = res.data;
+        console.log(data);
+        if (data.code !== 200) {
+            alert(data.message);
+            return;
         }
-        table.appendChild(newTr);
+        const piecesResponseDto = data.data.piecesResponseDto;
+        piecesResponseDto.sort((a, b) => {
+            if (a.position[1] > b.position[1]) {
+                return -1;
+            } else if (a.position[1] < b.position[1]) {
+                return 1;
+            } else if (a.position[1] == b.position[1]) {
+                if (a.position[0] > b.position[0]) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+        let pieces = []
+        for (let i = 0; i < 8; i++) {
+            pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
+        }
+        const table = document.getElementById("chess-board");
+        for (let i = 0; i < 8; i++) {
+            const newTr = document.createElement("tr");
+            for (let j = 0; j < 8; j++) {
+                const newTd = document.createElement("td");
+
+                const row = String(8 - i); // 열(12345678)
+                const asciiNum = 97; // h의 아스키코드
+                const column = String.fromCharCode(asciiNum + j);
+                newTd.id = column + row;
+                console.log("pieces[i][j]")
+                console.log(pieces[i][j])
+                let pieceName = pieces[i][j].name;
+                if (pieceName !== ".") {
+                    console.log(pieces[i][j])
+                    const piece = document.createElement("img");
+                    if (pieceName === pieceName.toUpperCase()) {
+                        pieceName = "B" + pieceName.toUpperCase();
+                    } else {
+                        pieceName = "W" + pieceName.toLowerCase();
+                    }
+                    piece.src = "images/" + pieceName + ".png";
+                    newTd.appendChild(piece);
+                }
+                if (i % 2 == j % 2) {
+                    newTd.className = "block1";
+                } else {
+                    newTd.className = "block2";
+                }
+                newTr.appendChild(newTd);
+            }
+            table.appendChild(newTr);
+        }
+        addEvent();
+    } catch (e) {
+        console.log(e);
     }
-    addEvent();
 }
 
 function addEvent() {
