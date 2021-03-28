@@ -10,7 +10,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.king.King;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> board;
@@ -30,12 +29,7 @@ public class Board {
     private Path ableToPath(final Position source) {
         final Piece sourcePiece = of(source);
         final List<Path> paths = sourcePiece.ableToPath(source);
-
-        return new Path(paths.stream()
-                .map(path -> path.filterPieceRules(source, this))
-                .collect(Collectors.toList())
-                .stream()
-                .flatMap(Path::stream).collect(Collectors.toList()));
+        return Path.of(paths, source, this);
     }
 
     public void move(final Position source, final Position target) {
@@ -58,16 +52,16 @@ public class Board {
         putEmpty(source);
     }
 
-    public Path getAbleToMove(final Position source) {
-        return ableToPath(source);
-    }
-
     private void putPiece(final Position source, final Position target) {
         board.put(target, board.get(source));
     }
 
     private void putEmpty(final Position position) {
         board.put(position, Empty.getInstance());
+    }
+
+    public Path getAbleToMove(final Position source) {
+        return ableToPath(source);
     }
 
     public boolean isKingAlive(final Owner owner) {

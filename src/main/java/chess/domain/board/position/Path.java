@@ -5,17 +5,36 @@ import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Path {
 
     private final List<Position> path;
 
-    public Path(List<Position> path) {
+    private Path(List<Position> path) {
         this.path = path;
     }
 
-    public Path filterPieceRules(Position source, Board board) {
+    public static Path of(List<Position> path) {
+        return new Path(path);
+    }
+
+    public static Path of(List<Path> paths, Position source, Board board) {
+        return new Path(
+                filterPaths(paths, source, board).stream()
+                        .flatMap(Path::stream)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private static List<Path> filterPaths(List<Path> paths, Position source, Board board) {
+        return paths.stream()
+                .map(path -> path.filterPieceRules(source, board))
+                .collect(Collectors.toList());
+    }
+
+    private Path filterPieceRules(Position source, Board board) {
         Piece sourcePiece = board.of(source);
         List<Position> filterPaths = new ArrayList<>();
         for (Position target : this.path) {

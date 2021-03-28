@@ -37,7 +37,7 @@ public abstract class Piece {
             target = target.next(direction);
             path.add(target);
         }
-        return new Path(path);
+        return Path.of(path);
     }
 
     private boolean isValidDistance(Position source, Position target) {
