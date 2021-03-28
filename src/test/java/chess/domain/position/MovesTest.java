@@ -95,8 +95,8 @@ public class MovesTest {
 
         Position afterLeft = Moves.LEFT.move(before);
 
-        assertThat(afterDown).isEqualTo(Position.ERROR);
-        assertThat(afterLeft).isEqualTo(Position.ERROR);
+        assertThat(afterDown).isEqualTo(null);
+        assertThat(afterLeft).isEqualTo(null);
     }
 
 }

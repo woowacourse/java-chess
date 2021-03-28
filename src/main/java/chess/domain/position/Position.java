@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Position {
-    public static final Position ERROR = new Position(AlphaColumns.ERROR, NumberRows.ERROR);
     private static final Table<AlphaColumns, NumberRows, Position> CACHED_TABLE
         = HashBasedTable.create();
 
     static {
-        for (NumberRows row : NumberRows.rows()) {
-            for (AlphaColumns column : AlphaColumns.columns()) {
+        for (NumberRows row : NumberRows.values()) {
+            for (AlphaColumns column : AlphaColumns.values()) {
                 CACHED_TABLE.put(column, row, new Position(column, row));
             }
         }
@@ -41,7 +40,7 @@ public class Position {
         if (CACHED_TABLE.contains(column, row)) {
             return CACHED_TABLE.get(column, row);
         }
-        return ERROR;
+        return null;
     }
 
     public static List<Position> values() {
@@ -62,14 +61,14 @@ public class Position {
     }
 
     public Position move(int alphaDirection, int numberDirection) {
-        final AlphaColumns movedAlpha = column.movedAlpha1(alphaDirection);
-        final NumberRows movedNumber = row.movedNumber1(numberDirection);
+        final AlphaColumns movedAlpha = column.movedAlpha(alphaDirection);
+        final NumberRows movedNumber = row.movedNumber(numberDirection);
 
         if (CACHED_TABLE.contains(movedAlpha, movedNumber)) {
             return Position.valueOf(movedAlpha, movedNumber);
         }
 
-        return ERROR;
+        return null;
     }
 
     public boolean pawnLine(TeamColor color) {

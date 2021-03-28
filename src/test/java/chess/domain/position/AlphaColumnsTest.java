@@ -57,7 +57,7 @@ class AlphaColumnsTest {
     @Test
     @DisplayName("움직임 문자반환")
     void movedAlpha() {
-        assertThat(AlphaColumns.getInstance("a").movedAlpha(1)).isEqualTo("b");
+        assertThat(AlphaColumns.getInstance("a").movedAlpha(1)).isEqualTo(AlphaColumns.B);
     }
 
 }

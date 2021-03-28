@@ -2,8 +2,6 @@ package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum AlphaColumns {
     A('a'),
@@ -13,8 +11,7 @@ public enum AlphaColumns {
     E('e'),
     F('f'),
     G('g'),
-    H('h'),
-    ERROR('z');
+    H('h');
 
     private final int asciNumber;
 
@@ -34,7 +31,7 @@ public enum AlphaColumns {
         return Arrays.stream(AlphaColumns.values())
             .filter(alpha -> alpha.asciNumber == value)
             .findFirst()
-            .orElse(ERROR);
+            .orElse(null);
     }
 
     private static int validCharacter(String value) {
@@ -44,25 +41,12 @@ public enum AlphaColumns {
         throw new IllegalArgumentException("유효하지 않은 입력입니다. 알파벳이어야 합니다.");
     }
 
-
-    public String movedAlpha(int value) {
-        return AlphaColumns.getInstance(asciNumber + value).alpha();
-    }
-
-    public AlphaColumns movedAlpha1(int value) {
+    public AlphaColumns movedAlpha(int value) {
         return AlphaColumns.getInstance(asciNumber + value);
     }
-
 
     public String alpha() {
         return String.valueOf((char) asciNumber);
     }
-
-    public static List<AlphaColumns> columns() {
-        return Arrays.stream(AlphaColumns.values())
-            .filter(alpha -> alpha != AlphaColumns.ERROR)
-            .collect(Collectors.toList());
-    }
-
 
 }

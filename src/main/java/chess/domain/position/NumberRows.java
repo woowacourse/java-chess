@@ -2,8 +2,6 @@ package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum NumberRows {
     ONE(1),
@@ -13,8 +11,7 @@ public enum NumberRows {
     FIVE(5),
     SIX(6),
     SEVEN(7),
-    EIGHT(8),
-    ERROR(0);
+    EIGHT(8);
 
     private final int number;
 
@@ -26,7 +23,7 @@ public enum NumberRows {
         return Arrays.stream(NumberRows.values())
             .filter(item -> item.number == value)
             .findFirst()
-            .orElse(ERROR);
+            .orElse(null);
     }
 
     public static NumberRows getInstance(char value) {
@@ -48,22 +45,12 @@ public enum NumberRows {
         throw new IllegalArgumentException("유효하지 않은 입력입니다. 숫자이어야 합니다.");
     }
 
-    public String movedNumber(int value) {
-        return NumberRows.getInstance(number + value).number();
-    }
-
-    public NumberRows movedNumber1(int value) {
+    public NumberRows movedNumber(int value) {
         return NumberRows.getInstance(number + value);
     }
 
     public String number() {
         return String.valueOf(number);
-    }
-
-    public static List<NumberRows> rows() {
-        return Arrays.stream(NumberRows.values())
-            .filter(number -> number != NumberRows.ERROR)
-            .collect(Collectors.toList());
     }
 
 }

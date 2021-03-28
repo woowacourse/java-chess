@@ -40,7 +40,7 @@ public class WhiteSet implements PieceSet {
     }
 
     private void setPawns() {
-        for (AlphaColumns alphaColumn : AlphaColumns.columns()) {
+        for (AlphaColumns alphaColumn : AlphaColumns.values()) {
             NumberRows numberRow = NumberRows.getInstance(INITIAL_PAWN_LINE);
             pieces.add(new Pawn(TeamColor.WHITE, Position.valueOf(alphaColumn, numberRow)));
 

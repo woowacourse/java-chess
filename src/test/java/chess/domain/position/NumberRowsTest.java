@@ -29,13 +29,13 @@ class NumberRowsTest {
     @DisplayName("실패 - 범위를 벗어나는 숫자 입력")
     void create_fail1() {
         assertThat(NumberRows.getInstance("9"))
-            .isEqualTo(NumberRows.ERROR);
+            .isEqualTo(null);
     }
 
     @Test
     @DisplayName("움직임 문자반환")
     void movedAlpha() {
-        assertThat(NumberRows.getInstance("1").movedNumber(1)).isEqualTo("2");
+        assertThat(NumberRows.getInstance("1").movedNumber(1)).isEqualTo(NumberRows.TWO);
     }
 
 }

@@ -54,7 +54,7 @@ public class ChessBoard {
     private void setBlackPieces(Map<Position, Piece> chessBoard) {
         Iterator<Piece> blacks = blackPieces.values();
         for (int i = BLACK_PAWN_LINE; i >= BLACK_NOT_PAWN_LINE; i--) {
-            for (AlphaColumns alpha : AlphaColumns.columns()) {
+            for (AlphaColumns alpha : AlphaColumns.values()) {
                 chessBoard.put(Position.valueOf(alpha, NumberRows.getInstance(i)), blacks.next());
             }
         }
@@ -63,7 +63,7 @@ public class ChessBoard {
     private void setWhitePieces(Map<Position, Piece> chessBoard) {
         Iterator<Piece> whites = whitePieces.values();
         for (int i = WHITE_NOT_PAWN_LINE; i <= WHITE_PAWN_LINE; i++) {
-            for (AlphaColumns alpha : AlphaColumns.columns()) {
+            for (AlphaColumns alpha : AlphaColumns.values()) {
                 chessBoard.put(Position.valueOf(alpha, NumberRows.getInstance(i)), whites.next());
             }
         }

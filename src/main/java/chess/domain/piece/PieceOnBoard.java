@@ -62,8 +62,8 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
-    public void changePosition(Position end) {
-        currentPosition = end;
+    public void changePosition(Position newPosition) {
+        currentPosition = newPosition;
     }
 
     @Override
@@ -111,13 +111,13 @@ public abstract class PieceOnBoard implements Piece {
         if (movable(position, target, chessBoard)) {
             return position;
         }
-        return Position.ERROR;
+        return null;
     }
 
     protected Set<Position> checkFrontDiagonal(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
-        Position positionDiagonalRight = currentPosition.moveFront(teamColor).move(0, 1);
-        Position positionDiagonalLeft = currentPosition.moveFront(teamColor).move(0, -1);
+        Position positionDiagonalRight = Moves.RIGHT.move(currentPosition.moveFront(teamColor));
+        Position positionDiagonalLeft = Moves.LEFT.move(currentPosition.moveFront(teamColor));
         if (isMeetEnemy(positionDiagonalRight, target, chessBoard)) {
             candidates.add(positionDiagonalRight);
         }
@@ -166,7 +166,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     private boolean validBlank(Position position, Map<Position, Piece> chessBoard) {
-        return position != Position.ERROR && chessBoard.get(position) == Blank.INSTANCE;
+        return position != null && chessBoard.get(position) == Blank.INSTANCE;
     }
 
     private boolean isEnemyTeam(Piece comparePiece) {
