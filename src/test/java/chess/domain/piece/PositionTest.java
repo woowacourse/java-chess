@@ -62,8 +62,8 @@ class PositionTest {
     void add() {
         Position position = Position.of("a1");
 
-        assertThat(position.add(7, 7)).isEqualTo(Position.of("h8"));
-        assertThat(position.add(7, 7)).isSameAs(Position.of("h8"));
+        assertThat(position.addedPosition(7, 7)).isEqualTo(Position.of("h8"));
+        assertThat(position.addedPosition(7, 7)).isSameAs(Position.of("h8"));
     }
 
     @Test
@@ -71,8 +71,8 @@ class PositionTest {
     void addException() {
         Position position = Position.of("a1");
 
-        assertThatThrownBy(() -> position.add(-1, -1)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> position.add(8, 8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> position.addedPosition(-1, -1)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> position.addedPosition(8, 8)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

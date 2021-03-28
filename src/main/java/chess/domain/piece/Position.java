@@ -79,7 +79,7 @@ public final class Position {
         return this.x.isAdd(x) && this.y.isAdd(y);
     }
 
-    public Position add(final int x, int y) {
+    public Position addedPosition(final int x, int y) {
         return Position.of(this.x.add(x), this.y.add(y));
     }
 
@@ -106,5 +106,11 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public String positionToString() {
+        char x = (char) (this.x.point() + CORRECTION_X);
+        char y = (char) (this.y.point() + CORRECTION_Y);
+        return y + Character.toString(x);
     }
 }
