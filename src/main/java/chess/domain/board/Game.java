@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -27,7 +28,8 @@ public final class Game {
     }
 
     public boolean containsEnemyPiece(final Position sourcePosition, final PieceColor enemyColor) {
-        return board.hasPieceColor(sourcePosition, enemyColor);
+        final Piece otherPiece = board.pieceAt(sourcePosition);
+        return otherPiece.isColor(enemyColor);
     }
 
     public boolean isGameOver() {

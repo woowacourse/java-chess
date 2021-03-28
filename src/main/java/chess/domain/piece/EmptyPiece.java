@@ -27,6 +27,16 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
+    public boolean canReplace(Piece piece) {
+        throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물을 대체할 수 없습니다.");
+    }
+
+    @Override
+    public boolean blockedBy(Piece piece) {
+        throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물이 가로막을 수 없습니다.");
+    }
+
+    @Override
     public boolean isColor(PieceColor color) {
         return false;
     }

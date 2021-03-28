@@ -9,9 +9,13 @@ public interface Piece {
 
     List<Direction> directions();
 
-    Path pathFrom(Direction direction, Position position);
+    Path pathFrom(final Direction direction, final Position position);
 
-    boolean isColor(PieceColor color);
+    boolean canReplace(final Piece piece);
+
+    boolean blockedBy(final Piece piece);
+
+    boolean isColor(final PieceColor color);
 
     boolean isPawn();
 
