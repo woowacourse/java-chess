@@ -182,18 +182,18 @@
       - [x] 보드의 Cell들
         - [x] Board의 모든 Cell들을 Empty로 초기화한다.
         - [x] 저장되어있는 마지막 배치 상태의 기물들을 DB에서 가져와 Board의 Cell에 저장한다.
-  - [ ] 보드 상태 출력 요청
+  - [x] 보드 상태 출력 요청
     
-    - [ ] ChessGame 내에 있는 Cell들의 정보를 반환한다.
+    - [x] Board에 있는 모든 Cell들의 상태 정보를 반환한다.
     
-  - [ ] 기물 이동 요청
+  - [x] 기물 이동 요청
     - [x] 이동이 불가능 할  때
       - [x] 예외를 발생시키고 어떤 업데이트도 하지 않는다.
     - [x] 이동이 가능할 때
       - [x] 움직인 기물의 위치 정보를 DB와 Board(Cell)에 모두 업데이트한다.
     - [x] 상대방의 기물을 잡았을 때
       - [x] 잡힌 기물을 DB와 Board(Cell)에서 모두 삭제한다.
-    - [ ] ChessGame의 현재 차례 팀 색깔 정보를 DB와 ChessGame에 모두 업데이트한다.
+    - [x] ChessGame의 현재 차례 팀 색깔 정보를 DB와 ChessGame에 모두 업데이트한다.
 
   - [x] 게임 종료 (게임 방 삭제 버튼을 클릭한 경우 또는 King이 잡힌 경우)
     - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
