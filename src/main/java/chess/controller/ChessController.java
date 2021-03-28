@@ -6,50 +6,50 @@ import static chess.view.OutputView.printException;
 import static chess.view.OutputView.printGameEndMessage;
 import static chess.view.OutputView.printGameStartMessage;
 
-import chess.domain.piece.Piece;
+import chess.domain.game.ChessGame;
+import chess.domain.result.BoardResult;
+import chess.domain.result.ScoreResult;
 import chess.domain.state.ResultType;
-import chess.domain.state.Start;
-import chess.domain.state.State;
-import chess.domain.state.Status;
-import chess.domain.team.Team;
 import chess.dto.PiecesDto;
 import chess.view.OutputView;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessController {
 
-    public void play() {
+    private final ChessGame chessGame;
+
+    public ChessController() {
+        this.chessGame = new ChessGame();
+    }
+
+    public void run() {
         printGameStartMessage();
-        State<?> state = new Start();
-        while (state.isRunning()) {
-            actWithCommand(state);
-            boolean isSuccessful = actWithResponse(state);
-            state = progress(state, isSuccessful);
+        while (chessGame.isRunning()) {
+            actWithCommand();
+            boolean isSuccessful = actWithResponse();
+            progress(isSuccessful);
         }
         printGameEndMessage();
     }
 
-    private void actWithCommand(State<?> state) {
+    private void actWithCommand() {
         try {
-            runNeedsCommand(state);
+            runCommandIfNeeded();
         } catch (RuntimeException e) {
             printException(e.getMessage());
-            actWithCommand(state);
+            actWithCommand();
         }
     }
 
-    private void runNeedsCommand(State<?> state) {
-        if (!state.needsParam()) {
+    private void runCommandIfNeeded() {
+        if (!chessGame.needsCommand()) {
             return;
         }
-        state.receive(inputCommand());
+        chessGame.receiveCommand(inputCommand());
     }
 
-    private boolean actWithResponse(State<?> state) {
+    private boolean actWithResponse() {
         try {
-            response(state);
+            response();
             return true;
         } catch (RuntimeException e) {
             printException(e.getMessage());
@@ -57,34 +57,26 @@ public class ChessController {
         }
     }
 
-    private void response(State<?> state) {
-        if (ResultType.BOARD.equals(state.resultType())) {
-            responseBoard(state);
+    private void response() {
+        if (chessGame.supports(ResultType.BOARD)) {
+            responseBoard();
         }
-        if (ResultType.SCORE.equals(state.resultType())) {
-            responseScore(state);
+        if (chessGame.supports(ResultType.SCORE)) {
+            responseScore();
         }
     }
 
-    private void responseBoard(State<?> state) {
-        List<?> result = (List<?>) state.result();
-        List<Piece> pieces = result.stream()
-            .map(Piece.class::cast)
-            .collect(Collectors.toList());
-
-        printBoard(PiecesDto.from(pieces));
+    private void responseBoard() {
+        BoardResult boardResult = (BoardResult) chessGame.bringResult();
+        printBoard(PiecesDto.from(boardResult));
     }
 
-    private void responseScore(State<?> state) {
-        Status status = (Status) state;
-        Map<Team, Double> result = status.result();
-        OutputView.printScore(result.get(Team.BLACK), result.get(Team.WHITE));
+    private void responseScore() {
+        ScoreResult scoreResult = (ScoreResult) chessGame.bringResult();
+        OutputView.printScore(scoreResult.getBlackScore(), scoreResult.getWhiteScore());
     }
 
-    private State<?> progress(State<?> state, boolean isSuccess) {
-        if (isSuccess) {
-            return state.next();
-        }
-        return state.before();
+    private void progress(boolean isSuccessful) {
+        chessGame.progress(isSuccessful);
     }
 }
