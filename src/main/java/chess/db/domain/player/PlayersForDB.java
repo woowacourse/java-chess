@@ -37,12 +37,12 @@ public class PlayersForDB {
             playerDAO.save(new PlayerEntity(BLACK, chessGameEntity))));
     }
 
-    public void saveInitialPiecePositions(PiecePosition piecePositionEntities)
+    public void saveInitialPiecesPositions(PiecePosition piecePosition, Long gameId)
         throws SQLException {
 
-        addPieceToPlayerTeamColorOf(
-            piecePositionEntities.getPieceTeamColor(), piecePositionEntities
-        );
+        TeamColor teamColor = piecePosition.getPieceTeamColor();
+        Long playerId = playerDAO.findByGameIdAndTeamColor(gameId, teamColor);
+        piecesPositionsForDB.save(playerId, piecePosition);
     }
 
     private void addPieceToPlayerTeamColorOf(TeamColor teamColor,

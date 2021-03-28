@@ -35,6 +35,22 @@ public class PlayerDAO {
         return pstmt.getGeneratedKeys();
     }
 
+    public Long findByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
+        ResultSet rs = getResultSetOfPlayer(gameId, teamColor);
+        if (!rs.next()) {
+            return null;
+        }
+        return rs.getLong("id");
+    }
+
+    private ResultSet getResultSetOfPlayer(Long gameId, TeamColor teamColor) throws SQLException {
+        String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gameId);
+        pstmt.setString(2, teamColor.getValue());
+        return pstmt.executeQuery();
+    }
+
     public List<Long> findAllPlayerIdsByChessGameId(Long gameId) throws SQLException {
         List<Long> playerIds = new ArrayList<>();
         ResultSet rs = getResultSet(gameId);

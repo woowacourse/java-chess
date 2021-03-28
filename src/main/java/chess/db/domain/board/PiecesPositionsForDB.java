@@ -24,6 +24,10 @@ public class PiecesPositionsForDB {
         scoreCalculator = new ScoreCalculator();
     }
 
+    public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
+        piecePositionDAO.save(playerId, piecePosition);
+    }
+
     public void save(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
         throws SQLException {
 

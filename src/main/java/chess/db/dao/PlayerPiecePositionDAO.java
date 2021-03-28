@@ -16,6 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerPiecePositionDAO {
+
+    public void save(Long playerId, PiecePosition piecePosition)
+        throws SQLException {
+        String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerId);
+        pstmt.setLong(2, piecePosition.getPieceEntity().getId());
+        pstmt.setLong(3, piecePosition.getPositionEntity().getId());
+        pstmt.executeUpdate();
+    }
+
     public PlayerPiecePosition save(PlayerPiecePosition playerPiecePositionEntity)
         throws SQLException {
         ResultSet generatedKeys = getResultSet(playerPiecePositionEntity);
