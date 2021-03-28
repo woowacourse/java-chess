@@ -53,7 +53,7 @@ public class Board {
     private boolean isInvalidPosition(Position source, Position target) {
         Piece piece = pieceByPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();
-        Set<Position> movablePath = moveStrategy.moveStrategy(this, source);
+        Set<Position> movablePath = moveStrategy.currentPositionMoveStrategy(this, source);
         return !movablePath.contains(target);
     }
 

@@ -29,7 +29,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d2"), Pawn.createWhite());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder(
             Position.of("d3"), Position.of("d4"), Position.of("c3"));
     }
 
@@ -40,7 +40,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d3"), Pawn.createWhite());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d3"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d3"))).containsExactlyInAnyOrder(
             Position.of("d4"), Position.of("e4"));
     }
 
@@ -51,7 +51,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d7"), Pawn.createBlack());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder(
             Position.of("d6"), Position.of("d5"),
             Position.of("c6"));
     }
@@ -63,7 +63,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d6"), Pawn.createBlack());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d6"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d6"))).containsExactlyInAnyOrder(
             Position.of("d5"), Position.of("e5"));
     }
 
@@ -74,7 +74,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d2"), Pawn.createWhite());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder();
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder();
     }
 
     @Test
@@ -84,7 +84,7 @@ public class PawnMoveStrategyTest {
         replacePieceForTest(Position.of("d7"), Pawn.createBlack());
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder();
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder();
     }
 
     private void replacePieceForTest(final Position position, final Piece piece) {

@@ -35,7 +35,7 @@ public class KnightMoveStrategyTest {
         Board board = new Board(this.ranks);
         MoveStrategy moveStrategy = Knight.createWhite().moveStrategy();
 
-        assertThat(moveStrategy.moveStrategy(board, Position.of("f6"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("f6"))).containsExactlyInAnyOrder(
             Position.of("h7"), Position.of("e8"),
             Position.of("g4"), Position.of("e4"));
     }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class KnightMoveStrategy implements MoveStrategy {
 
     @Override
-    public Set<Position> moveStrategy(Board board, Position source) {
+    public Set<Position> currentPositionMoveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
         Piece sourcePiece = board.pieceByPosition(source);
 

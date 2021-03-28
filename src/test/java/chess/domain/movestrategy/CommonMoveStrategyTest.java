@@ -55,7 +55,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Rook.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e4"),
             Position.of("d5"), Position.of("f5"));
     }
@@ -88,7 +88,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Rook.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e7"),
             Position.of("e4"), Position.of("e3"),
             Position.of("d5"), Position.of("c5"),
@@ -123,7 +123,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Bishop.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("d6"), Position.of("f6"),
             Position.of("d4"), Position.of("f4"));
     }
@@ -156,7 +156,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Bishop.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("d6"), Position.of("c7"),
             Position.of("f6"), Position.of("g7"),
             Position.of("d4"), Position.of("c3"),
@@ -191,7 +191,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Queen.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e4"),
             Position.of("d5"), Position.of("f5"),
             Position.of("d6"), Position.of("f6"),
@@ -226,7 +226,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = Queen.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e7"),
             Position.of("e4"), Position.of("e3"),
             Position.of("d5"), Position.of("c5"),
@@ -261,7 +261,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = King.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e4"));
     }
 
@@ -289,7 +289,7 @@ public class CommonMoveStrategyTest {
         Board board = new Board(this.ranks);
 
         MoveStrategy moveStrategy = King.createWhite().moveStrategy();
-        assertThat(moveStrategy.moveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
+        assertThat(moveStrategy.currentPositionMoveStrategy(board, Position.of("e5"))).containsExactlyInAnyOrder(
             Position.of("e6"), Position.of("e4"),
             Position.of("d5"), Position.of("f5"),
             Position.of("d6"), Position.of("f6"),

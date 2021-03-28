@@ -15,7 +15,7 @@ public class PawnMoveStrategy implements MoveStrategy {
     public static final int DIAGONAL_INDEX = 1;
 
     @Override
-    public Set<Position> moveStrategy(Board board, Position source) {
+    public Set<Position> currentPositionMoveStrategy(Board board, Position source) {
         Piece sourcePiece = board.pieceByPosition(source);
         Set<Position> movable = pawnMovablePosition(
             sourcePiece.vectors(source), board, sourcePiece
