@@ -39,7 +39,7 @@ public class ChessGame {
     }
 
     private void validateTurn(Piece piece) {
-        if (piece.isBlack() != isBlackTurn) {
+        if (piece.isNotEmpty() && piece.isBlack() != isBlackTurn) {
             throw new IllegalArgumentException("[Error] 해당 기물의 턴이 아닙니다.");
         }
     }
