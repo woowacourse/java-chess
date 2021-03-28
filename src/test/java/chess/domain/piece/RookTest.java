@@ -1,12 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.grid.Grid;
-import chess.domain.grid.gridstrategy.TestGridStrategy;
+import chess.domain.grid.gridStrategy.CustomGridStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RookTest {
     @Test
@@ -31,7 +33,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook이 갈 수 있는 위치 검증, true")
     public void validateMove_True() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position("b2"), rook);
         assertThatCode(() -> {
@@ -42,7 +44,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook이 갈 수 있는 위치: 상대말 먹기")
     public void validateRoute_True() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         Rook opponent = new Rook(Color.BLACK, 'b', '3');
         grid.lines().assign(new Position("b2"), rook);
@@ -55,7 +57,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook이 갈 수 없는 위치.")
     public void validateMove_False() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position("b2"), rook);
         assertThatThrownBy(() -> {
@@ -66,7 +68,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook이 방해물 때문에 갈 수 없는 위치.")
     public void validateMove_FalseWhenObstaclesAhead() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Rook rook = new Rook(Color.WHITE, 'b', '2');
         Rook obstacle = new Rook(Color.WHITE, 'b', '3');
         grid.lines().assign(new Position("b2"), rook);

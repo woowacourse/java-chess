@@ -1,8 +1,7 @@
-package chess.domain.grid.gridstrategy;
+package chess.domain.grid.gridStrategy;
 
 import chess.domain.grid.Line;
 import chess.domain.grid.Row;
-import chess.domain.grid.gridStrategy.GridStrategy;
 import chess.domain.state.GameState;
 import chess.domain.state.Playing;
 
@@ -11,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class TestGridStrategy implements GridStrategy {
+public class CustomGridStrategy implements GridStrategy {
     @Override
     public List<Line> linesInInitGrid() {
         List<Line> lineGroup = new ArrayList<>();

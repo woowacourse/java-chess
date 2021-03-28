@@ -1,7 +1,7 @@
 package chess.domain.grid;
 
+import chess.domain.grid.gridStrategy.CustomGridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
-import chess.domain.grid.gridstrategy.TestGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -16,7 +16,7 @@ public class GridTest {
     @Test
     @DisplayName("해당 위치의 Piece를 잘 찾아내는 지 테스트")
     public void piece() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Position position = new Position('b', '4');
         Piece piece = new King(Color.WHITE, 'b', '4');
         grid.lines().assign(position, piece);
@@ -26,7 +26,7 @@ public class GridTest {
     @Test
     @DisplayName("점수를 잘 계산하는 지 테스트")
     public void score() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Position position = new Position('b', '4');
         Piece piece = new Queen(Color.WHITE, 'b', '4');
         grid.lines().assign(position, piece);

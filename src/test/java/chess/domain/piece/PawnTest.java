@@ -1,13 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.grid.Grid;
+import chess.domain.grid.gridStrategy.CustomGridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
-import chess.domain.grid.gridstrategy.TestGridStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PawnTest {
     @Test
@@ -32,7 +34,7 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn이 빈 공간으로 한 칸 전진할 수 있는 지 테스트")
     public void validateMove_GoOneStep() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position('b', '2'), pawn);
         assertThatCode(() -> {
@@ -43,7 +45,7 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn이 뒤로 못가는 지 검증")
     public void validateMove_Back() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position("b2"), pawn);
         assertThatThrownBy(() -> {
@@ -64,7 +66,7 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn이 움직인 적이 있을 때 앞으로 전진하면 예외 발생하는 지 테스트")
     public void validateMove_GoTwoStep_ThrowException() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position("b2"), pawn);
         grid.move(pawn, new Empty('b', '3'));
@@ -76,7 +78,7 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn이 빈 공간으로 이동할 때에는 대각선으로 이동할 수 없다.")
     public void validateMove_DiagonalStep_ThrowException() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         grid.lines().assign(new Position("b2"), pawn);
         assertThatThrownBy(() -> {
@@ -87,7 +89,7 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn 앞에 말이 있으면 앞으로 이동할 수 없다.")
     public void validateMove_Obstacle_ThrowException() {
-        Grid grid = new Grid(new TestGridStrategy());
+        Grid grid = new Grid(new CustomGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         Pawn obstaacle = new Pawn(Color.BLACK, 'b', '3');
         grid.lines().assign(new Position("b2"), pawn);
