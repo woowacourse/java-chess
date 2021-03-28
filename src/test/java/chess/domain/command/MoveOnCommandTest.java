@@ -4,7 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.*;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
-import chess.domain.state.WhiteTurn;
+import chess.domain.state.Running;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class MoveOnCommandTest {
     @DisplayName("move source위치 target위치 형식이 아닐 시 예외")
     @Test
     void 형식_예외() {
-        ChessGame chessGame = new ChessGame(new Pieces(PieceFactory.initialPieces()), Color.WHITE, new WhiteTurn());
+        ChessGame chessGame = new ChessGame(new Pieces(PieceFactory.initialPieces()), Color.WHITE, new Running());
         String[] splitCommand = new String[]{"move", "a2", "a3", "23"};
         assertThatThrownBy(() -> moveOnCommand.execute(chessGame, splitCommand))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -48,7 +48,7 @@ public class MoveOnCommandTest {
                 new Bishop(Position.of("c8"), Color.WHITE),
                 new Pawn(Position.of("f5"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces, Color.WHITE, new WhiteTurn());
+        ChessGame chessGame = new ChessGame(pieces, Color.WHITE, new Running());
         String[] splitCommand = new String[]{"move", "c8", "f5"};
 
         moveOnCommand.execute(chessGame, splitCommand);

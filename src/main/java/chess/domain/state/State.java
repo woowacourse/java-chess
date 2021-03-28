@@ -5,7 +5,7 @@ public interface State {
 
     boolean isFinish();
 
-    State end();
-
     State start();
+
+    State end();
 }

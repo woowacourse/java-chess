@@ -12,12 +12,12 @@ public class Running implements State {
     }
 
     @Override
-    public State end() {
-        return new End();
+    public State start() {
+        throw new IllegalArgumentException("[ERROR] 이미 게임이 진행중입니다.");
     }
 
     @Override
-    public State start() {
-        return null;
+    public State end() {
+        return new End();
     }
 }

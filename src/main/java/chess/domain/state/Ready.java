@@ -12,12 +12,12 @@ public class Ready implements State {
     }
 
     @Override
-    public State end() {
-        return new End();
+    public State start() {
+        return new Running();
     }
 
     @Override
-    public State start() {
-        return new WhiteTurn();
+    public State end() {
+        return new End();
     }
 }
