@@ -55,11 +55,12 @@ public class Board {
     }
 
     private void validateNotExistentInPath(List<Location> pathToTarget) {
-        pathToTarget.forEach(location -> {
-            if (isExistent(location)) {
-                throw new MoveFailureException("이동 경로에 말이 있습니다.");
-            }
-        });
+        boolean isExistent = pathToTarget.stream()
+            .anyMatch(this::isExistent);
+
+        if (isExistent) {
+            throw new MoveFailureException("이동 경로에 말이 있습니다.");
+        }
     }
 
     private void validateSameLocation(Location source, Location target) {
