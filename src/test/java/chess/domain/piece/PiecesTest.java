@@ -66,12 +66,12 @@ public class PiecesTest {
     @Test
     void 세로줄_같은색_폰() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a8"), Color.BLACK),
-                new Pawn(Position.of("a7"), Color.BLACK),
-                new Pawn(Position.of("d8"), Color.BLACK),
-                new Pawn(Position.of("d7"), Color.BLACK),
-                new Pawn(Position.of("c1"), Color.WHITE),
-                new Pawn(Position.of("c2"), Color.WHITE));
+                new Pawn(Color.BLACK, Position.of("a8")),
+                new Pawn(Color.BLACK, Position.of("a7")),
+                new Pawn(Color.BLACK, Position.of("d8")),
+                new Pawn(Color.BLACK, Position.of("d7")),
+                new Pawn(Color.WHITE, Position.of("c1")),
+                new Pawn(Color.WHITE, Position.of("c2")));
         Pieces pieces = new Pieces(current);
 
         int pawnCountByX = pieces.pawnCountByX('a');

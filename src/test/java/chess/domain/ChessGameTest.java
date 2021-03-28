@@ -25,8 +25,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Bishop(Position.of("c8"), Color.WHITE),
-                new Pawn(Position.of("f5"), Color.BLACK));
+                new Bishop(Color.WHITE, Position.of("c8")),
+                new Pawn(Color.BLACK, Position.of("f5")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("c8"), Position.of("f5"));
@@ -49,8 +49,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다_대각선() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of("d8"), Color.WHITE),
-                new Pawn(Position.of("e7"), Color.BLACK));
+                new King(Color.WHITE, Position.of("d8")),
+                new Pawn(Color.BLACK, Position.of("e7")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("e7"));
@@ -62,8 +62,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다_십자() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of("d8"), Color.WHITE),
-                new Pawn(Position.of("d7"), Color.BLACK));
+                new King(Color.WHITE, Position.of("d8")),
+                new Pawn(Color.BLACK, Position.of("d7")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d7"));
@@ -75,8 +75,8 @@ public class ChessGameTest {
     @Test
     void 나이트_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of("b8"), Color.WHITE),
-                new Pawn(Position.of("d7"), Color.BLACK));
+                new Knight(Color.WHITE, Position.of("b8")),
+                new Pawn(Color.BLACK, Position.of("d7")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("b8"), Position.of("d7"));
@@ -89,8 +89,8 @@ public class ChessGameTest {
     @Test
     void 퀸_상대편_말을_공격한다_십자() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of("d8"), Color.WHITE),
-                new Pawn(Position.of("d1"), Color.BLACK));
+                new Queen(Color.WHITE, Position.of("d8")),
+                new Pawn(Color.BLACK, Position.of("d1")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
@@ -103,8 +103,8 @@ public class ChessGameTest {
     @Test
     void 퀸_상대편_말을_공격한다_대각선() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of("d8"), Color.WHITE),
-                new Pawn(Position.of("d1"), Color.BLACK));
+                new Queen(Color.WHITE, Position.of("d8")),
+                new Pawn(Color.BLACK, Position.of("d1")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
@@ -116,8 +116,8 @@ public class ChessGameTest {
     @Test
     void 룩_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Rook(Position.of("a8"), Color.WHITE),
-                new Pawn(Position.of("a5"), Color.BLACK));
+                new Rook(Color.WHITE, Position.of("a8")),
+                new Pawn(Color.BLACK, Position.of("a5")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         chessGame.movePieceFromSourceToTarget(Position.of("a8"), Position.of("a5"));
@@ -129,8 +129,8 @@ public class ChessGameTest {
     @Test
     void 이동하는데_앞에_장애물이_있는_경우() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a7"), Color.BLACK),
-                new Pawn(Position.of("a6"), Color.BLACK));
+                new Pawn(Color.BLACK, Position.of("a7")),
+                new Pawn(Color.BLACK, Position.of("a6")));
         Pieces pieces = new Pieces(current);
         Position source = Position.of("a7");
         Position target = Position.of("a5");

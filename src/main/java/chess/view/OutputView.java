@@ -28,7 +28,7 @@ public class OutputView {
         int index = 0;
         for (Piece piece : pieces) {
             checkChangeLinePoint(index);
-            System.out.print(piece.getName());
+            System.out.print(piece.name());
             index++;
         }
         System.out.println();

@@ -22,7 +22,7 @@ public class EmptyTest {
         Empty empty = new Empty(Position.of("a1"));
 
         assertThat(empty.isSamePosition(Position.of("a1"))).isTrue();
-        assertThat(empty.getName()).isEqualTo(".");
+        assertThat(empty.name()).isEqualTo(".");
     }
 
     @DisplayName("Empty 객체를 움직일 경우 예외")

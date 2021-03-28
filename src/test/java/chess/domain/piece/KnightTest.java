@@ -16,16 +16,16 @@ public class KnightTest {
     @DisplayName("Knight 객체 생성 확인")
     @Test
     void 나이트_객체_생성() {
-        Knight knight = new Knight(Position.of("b8"), Color.BLACK);
+        Knight knight = new Knight(Color.BLACK, Position.of("b8"));
 
         assertThat(knight.isSamePosition(Position.of("b8"))).isTrue();
-        assertThat(knight.getName()).isEqualTo("N");
+        assertThat(knight.name()).isEqualTo("N");
     }
 
     @DisplayName("나이트의 이동을 확인한다.")
     @Test
     void 나이트_이동() {
-        Knight knight = new Knight(Position.of("b8"), Color.BLACK);
+        Knight knight = new Knight(Color.BLACK, Position.of("b8"));
         Position target = Position.of("c6");
 
         knight.move(target);
@@ -37,7 +37,7 @@ public class KnightTest {
     @Test
     void 나이트_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of("b8"), Color.BLACK));
+                new Knight(Color.BLACK, Position.of("b8")));
         Pieces pieces = new Pieces(current);
         Position source = Position.of("b8");
         Position target = Position.of("b1");

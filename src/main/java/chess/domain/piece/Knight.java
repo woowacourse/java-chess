@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
-    public Knight(Position position, Color color) {
-        super(position, Name.KNIGHT, color, new Score(2.5));
+    public Knight(Color color, Position position) {
+        super(Name.KNIGHT, color, position, new Score(2.5));
     }
 
     @Override
@@ -16,5 +16,10 @@ public class Knight extends Piece {
         if (!Direction.knightDirection().contains(direction)) {
             throw new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다.");
         }
+    }
+
+    @Override
+    public boolean isKnight() {
+        return true;
     }
 }

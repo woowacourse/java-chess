@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Rook extends Piece {
-    public Rook(Position position, Color color) {
-        super(position, Name.ROOK, color, new Score(5));
+    public Rook(Color color, Position position) {
+        super(Name.ROOK, color, position, new Score(5));
     }
 
     @Override

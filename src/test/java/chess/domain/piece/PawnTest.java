@@ -24,16 +24,16 @@ public class PawnTest {
     @DisplayName("Pawn 객체 생성 확인")
     @Test
     void 폰_객체_생성() {
-        Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
+        Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
 
         assertThat(pawn.isSamePosition(Position.of("a7"))).isTrue();
-        assertThat(pawn.getName()).isEqualTo("P");
+        assertThat(pawn.name()).isEqualTo("P");
     }
 
     @DisplayName("폰의 이동을 확인한다.")
     @Test
     void 폰_이동() {
-        Pawn pawn = new Pawn(Position.of("a7"), Color.BLACK);
+        Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
         Position target = Position.of("c6");
 
         pawn.move(target);
@@ -85,8 +85,8 @@ public class PawnTest {
     @Test
     void 검은말이_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a7"), Color.BLACK),
-                new Pawn(Position.of("b6"), Color.WHITE));
+                new Pawn(Color.BLACK, Position.of("a7")),
+                new Pawn(Color.WHITE, Position.of("b6")));
         Pieces pieces = new Pieces(current);
         Position source = Position.of("a7");
         Position target = Position.of("b6");
@@ -101,8 +101,8 @@ public class PawnTest {
     @Test
     void 흰말이_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a2"), Color.WHITE),
-                new Pawn(Position.of("b3"), Color.BLACK));
+                new Pawn(Color.WHITE, Position.of("a2")),
+                new Pawn(Color.BLACK, Position.of("b3")));
         Pieces pieces = new Pieces(current);
 
         Position source = Position.of("a2");
@@ -118,7 +118,7 @@ public class PawnTest {
     @Test
     void 흰말이_상대편_말을_공격한다_예외() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of("a2"), Color.WHITE));
+                new Pawn(Color.WHITE, Position.of("a2")));
         Pieces pieces = new Pieces(current);
 
         Position source = Position.of("a2");

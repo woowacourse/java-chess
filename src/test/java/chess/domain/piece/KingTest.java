@@ -16,17 +16,17 @@ public class KingTest {
     @DisplayName("King 객체 생성 확인")
     @Test
     void 킹_객체_생성() {
-        King king = new King(Position.of("e8"), Color.BLACK);
+        King king = new King(Color.BLACK, Position.of("e8"));
 
         assertThat(king.isSamePosition(Position.of("e8"))).isTrue();
-        assertThat(king.getName()).isEqualTo("K");
+        assertThat(king.name()).isEqualTo("K");
     }
 
     @DisplayName("킹의 이동을 확인한다.")
     @Test
     void 킹_이동_십자() {
         Position target = Position.of("e7");
-        King king = new King(Position.of("e8"), Color.BLACK);
+        King king = new King(Color.BLACK, Position.of("e8"));
 
         king.move(target);
 
@@ -37,7 +37,7 @@ public class KingTest {
     @Test
     void 킹_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of("e8"), Color.BLACK));
+                new King(Color.BLACK, Position.of("e8")));
         Pieces pieces = new Pieces(current);
         Position source = Position.of("f8");
         Position target = Position.of("g6");

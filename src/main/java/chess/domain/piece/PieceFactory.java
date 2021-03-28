@@ -48,10 +48,10 @@ public class PieceFactory {
 
     private static List<Bishop> initialBishops() {
         List<Bishop> blackBishops = INITIAL_BISHOP_BLACK_POSITIONS.stream()
-                .map(position -> new Bishop(position, Color.BLACK))
+                .map(position -> new Bishop(Color.BLACK, position))
                 .collect(Collectors.toList());
         List<Bishop> whiteBishops = INITIAL_BISHOP_WHITE_POSITIONS.stream()
-                .map(position -> new Bishop(position, Color.WHITE))
+                .map(position -> new Bishop(Color.WHITE, position))
                 .collect(Collectors.toList());
         blackBishops.addAll(whiteBishops);
         return blackBishops;
@@ -59,17 +59,17 @@ public class PieceFactory {
 
     private static List<King> initialKings() {
         List<King> kings = new ArrayList();
-        kings.add(new King(INITIAL_KING_BLACK_POSITION, Color.BLACK));
-        kings.add(new King(INITIAL_KING_WHITE_POSITION, Color.WHITE));
+        kings.add(new King(Color.BLACK, INITIAL_KING_BLACK_POSITION));
+        kings.add(new King(Color.WHITE, INITIAL_KING_WHITE_POSITION));
         return kings;
     }
 
     public static List<Knight> initialKnights() {
         List<Knight> blackKnights = INITIAL_KNIGHT_BLACK_POSITIONS.stream()
-                .map(position -> new Knight(position, Color.BLACK))
+                .map(position -> new Knight(Color.BLACK, position))
                 .collect(Collectors.toList());
         List<Knight> whiteKnights = INITIAL_KNIGHT_WHITE_POSITIONS.stream()
-                .map(position -> new Knight(position, Color.WHITE))
+                .map(position -> new Knight(Color.WHITE, position))
                 .collect(Collectors.toList());
         blackKnights.addAll(whiteKnights);
         return blackKnights;
@@ -77,10 +77,10 @@ public class PieceFactory {
 
     public static List<Pawn> initialPawns() {
         List<Pawn> blackPawns = INITIAL_PAWN_BLACK_POSITIONS.stream()
-                .map(position -> new Pawn(position, Color.BLACK))
+                .map(position -> new Pawn(Color.BLACK, position))
                 .collect(Collectors.toList());
         List<Pawn> whitePawns = INITIAL_PAWN_WHITE_POSITIONS.stream()
-                .map(position -> new Pawn(position, Color.WHITE))
+                .map(position -> new Pawn(Color.WHITE, position))
                 .collect(Collectors.toList());
         blackPawns.addAll(whitePawns);
         return blackPawns;
@@ -88,17 +88,17 @@ public class PieceFactory {
 
     public static List<Queen> initialQueens() {
         List<Queen> queens = new ArrayList();
-        queens.add(new Queen(INITIAL_QUEEN_BLACK_POSITION, Color.BLACK));
-        queens.add(new Queen(INITIAL_QUEEN_WHITE_POSITION, Color.WHITE));
+        queens.add(new Queen(Color.BLACK, INITIAL_QUEEN_BLACK_POSITION));
+        queens.add(new Queen(Color.WHITE, INITIAL_QUEEN_WHITE_POSITION));
         return queens;
     }
 
     public static List<Rook> initialRooks() {
         List<Rook> blackRooks = INITIAL_ROOK_BLACK_POSITIONS.stream()
-                .map(position -> new Rook(position, Color.BLACK))
+                .map(position -> new Rook(Color.BLACK, position))
                 .collect(Collectors.toList());
         List<Rook> whiteRooks = INITIAL_ROOK_WHITE_POSITIONS.stream()
-                .map(position -> new Rook(position, Color.WHITE))
+                .map(position -> new Rook(Color.WHITE, position))
                 .collect(Collectors.toList());
         blackRooks.addAll(whiteRooks);
         return blackRooks;

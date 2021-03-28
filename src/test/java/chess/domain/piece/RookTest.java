@@ -16,17 +16,17 @@ public class RookTest {
     @DisplayName("Rook 객체 생성 확인")
     @Test
     void 룩_객체_생성() {
-        Rook rook = new Rook(Position.of("a8"), Color.BLACK);
+        Rook rook = new Rook(Color.BLACK, Position.of("a8"));
 
         assertThat(rook.isSamePosition(Position.of("a8"))).isTrue();
-        assertThat(rook.getName()).isEqualTo("R");
+        assertThat(rook.name()).isEqualTo("R");
     }
 
     @DisplayName("룩의 이동을 확인한다.")
     @Test
     void 룩_이동() {
         Position target = Position.of("a1");
-        Piece rook = new Rook(Position.of("a8"), Color.BLACK);
+        Piece rook = new Rook(Color.BLACK, Position.of("a8"));
 
         rook.move(target);
 
@@ -37,7 +37,7 @@ public class RookTest {
     @Test
     void 룩_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
-                new Rook(Position.of("a8"), Color.BLACK));
+                new Rook(Color.BLACK, Position.of("a8")));
         Pieces pieces = new Pieces(current);
         Position source = Position.of("a8");
         Position target = Position.of("b7");

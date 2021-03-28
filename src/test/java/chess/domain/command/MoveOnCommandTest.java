@@ -45,8 +45,8 @@ public class MoveOnCommandTest {
     @Test
     void move를_실행() {
         List<Piece> current = Arrays.asList(
-                new Bishop(Position.of("c8"), Color.WHITE),
-                new Pawn(Position.of("f5"), Color.BLACK));
+                new Bishop(Color.WHITE, Position.of("c8")),
+                new Pawn(Color.BLACK, Position.of("f5")));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces, Color.WHITE, new Running());
         String[] splitCommand = new String[]{"move", "c8", "f5"};

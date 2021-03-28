@@ -63,7 +63,7 @@ public class Pieces {
     public int pawnCountByX(char index) {
         return (int) pieces.stream()
                 .filter(Piece::isPawn)
-                .filter(piece -> piece.position.sameX(index))
+                .filter(piece -> piece.position().sameX(index))
                 .count();
     }
 }

@@ -21,17 +21,17 @@ public class BishopTest {
     @DisplayName("Bishop 객체 생성 확인")
     @Test
     void 비숍_객체_생성() {
-        Bishop bishop = new Bishop(Position.of("c8"), Color.BLACK);
+        Bishop bishop = new Bishop(Color.BLACK, Position.of("c8"));
 
         assertThat(bishop.isSamePosition(Position.of("c8"))).isTrue();
-        assertThat(bishop.getName()).isEqualTo("B");
+        assertThat(bishop.name()).isEqualTo("B");
     }
 
     @DisplayName("Bishop 이동")
     @Test
     void 비숍_이동_확인() {
         Position target = Position.of("e6");
-        Piece bishop = new Bishop(Position.of("c8"), Color.BLACK);
+        Piece bishop = new Bishop(Color.BLACK, Position.of("c8"));
 
         bishop.move(target);
 

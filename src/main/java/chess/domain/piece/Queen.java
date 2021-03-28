@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Queen extends Piece {
-    public Queen(Position position, Color color) {
-        super(position, Name.QUEEN, color, new Score(9));
+    public Queen(Color color, Position position) {
+        super(Name.QUEEN, color, position, new Score(9));
     }
 
     @Override

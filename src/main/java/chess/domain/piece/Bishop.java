@@ -7,9 +7,8 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
-
-    public Bishop(Position position, Color color) {
-        super(position, Name.BISHOP, color, new Score(3));
+    public Bishop(Color color, Position position) {
+        super(Name.BISHOP, color, position, new Score(3));
     }
 
     @Override

@@ -7,19 +7,19 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public abstract class Piece {
-    protected Position position;
     private final Name name;
     private final Color color;
+    private Position position;
     private Score score;
 
-    public Piece(Position position, Name name, Color color) {
-        this(position, name, color, Score.ZERO);
+    public Piece(Name name, Color color, Position position) {
+        this(name, color, position, Score.ZERO);
     }
 
-    public Piece(Position position, Name name, Color color, Score score) {
-        this.position = position;
+    public Piece(Name name, Color color, Position position, Score score) {
         this.name = name;
         this.color = color;
+        this.position = position;
         this.score = score;
     }
 
@@ -27,15 +27,19 @@ public abstract class Piece {
         this.position = target;
     }
 
-    public String getName() {
+    public String name() {
         return name.nameByColor(color);
     }
 
-    public Color getColor() {
+    protected Color color() {
         return color;
     }
 
-    public double score() {
+    protected Position position() {
+        return position;
+    }
+
+    protected double score() {
         return score.getValue();
     }
 
@@ -47,24 +51,24 @@ public abstract class Piece {
         return this.color.same(anotherColor);
     }
 
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
     public boolean isEmpty() {
-        return this instanceof Empty;
+        return false;
     }
 
     public boolean isPawn() {
-        return this instanceof Pawn;
+        return false;
     }
 
     public boolean isKnight() {
-        return this instanceof Knight;
+        return false;
     }
 
     public boolean isKing() {
-        return this instanceof King;
-    }
-
-    public boolean isSamePosition(Position position) {
-        return this.position.equals(position);
+        return false;
     }
 
     public abstract void checkMovable(Piece targetPiece, Direction direction);
