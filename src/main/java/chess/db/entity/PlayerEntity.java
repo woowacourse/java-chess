@@ -1,6 +1,6 @@
 package chess.db.entity;
 
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.util.Objects;
 
 public class PlayerEntity {

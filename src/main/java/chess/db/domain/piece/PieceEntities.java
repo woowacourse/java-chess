@@ -1,9 +1,9 @@
 package chess.db.domain.piece;
 
-import static chess.domain.piece.type.PieceType.PAWN;
+import static chess.beforedb.domain.piece.type.PieceType.PAWN;
 
-import chess.domain.position.Position;
-import chess.domain.position.type.File;
+import chess.beforedb.domain.position.Position;
+import chess.beforedb.domain.position.type.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

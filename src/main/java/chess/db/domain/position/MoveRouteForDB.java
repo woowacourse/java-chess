@@ -1,8 +1,8 @@
 package chess.db.domain.position;
 
-import chess.controller.dto.request.MoveRequestDTO;
-import chess.domain.piece.type.Direction;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.controller.dto.request.MoveRequestDTO;
+import chess.beforedb.domain.piece.type.Direction;
+import chess.beforedb.domain.player.type.TeamColor;
 
 public class MoveRouteForDB {
     private final PositionEntity startPosition;

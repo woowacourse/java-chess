@@ -3,8 +3,8 @@ package chess.db.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.db.domain.position.PositionEntity;
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 import java.sql.SQLException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

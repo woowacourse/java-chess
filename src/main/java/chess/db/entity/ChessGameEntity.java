@@ -1,8 +1,8 @@
 package chess.db.entity;
 
-import static chess.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.util.Objects;
 
 public class ChessGameEntity {

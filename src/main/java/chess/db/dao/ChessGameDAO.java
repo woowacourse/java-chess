@@ -5,7 +5,7 @@ import static chess.db.dao.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import chess.db.entity.ChessGameEntity;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

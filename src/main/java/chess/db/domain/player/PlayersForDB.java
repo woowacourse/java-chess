@@ -1,7 +1,7 @@
 package chess.db.domain.player;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
 import chess.db.dao.PiecePositionEntities;
 import chess.db.dao.PlayerDAO;
@@ -11,7 +11,7 @@ import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

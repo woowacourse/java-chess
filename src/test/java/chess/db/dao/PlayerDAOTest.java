@@ -1,7 +1,7 @@
 package chess.db.dao;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.db.entity.ChessGameEntity;

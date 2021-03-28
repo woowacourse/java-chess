@@ -1,13 +1,13 @@
 package chess.db.domain.board;
 
-import static chess.domain.piece.type.PieceType.KING;
+import static chess.beforedb.domain.piece.type.PieceType.KING;
 
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntity;
-import chess.domain.player.type.TeamColor;
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.player.type.TeamColor;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

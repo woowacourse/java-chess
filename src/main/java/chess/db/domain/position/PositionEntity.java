@@ -1,13 +1,13 @@
 package chess.db.domain.position;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.position.type.Rank.SEVEN;
-import static chess.domain.position.type.Rank.TWO;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.position.type.Rank.SEVEN;
+import static chess.beforedb.domain.position.type.Rank.TWO;
 
-import chess.domain.piece.type.Direction;
-import chess.domain.player.type.TeamColor;
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.piece.type.Direction;
+import chess.beforedb.domain.player.type.TeamColor;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 import java.util.Objects;
 
 public class PositionEntity {

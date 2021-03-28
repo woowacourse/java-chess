@@ -1,12 +1,12 @@
 package chess.db.domain.piece;
 
-import static chess.domain.piece.type.PieceType.KNIGHT;
+import static chess.beforedb.domain.piece.type.PieceType.KNIGHT;
 
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntity;
-import chess.domain.piece.type.Direction;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.piece.type.Direction;
+import chess.beforedb.domain.player.type.TeamColor;
 
 public class KnightEntity extends PieceEntity {
     private static final double SCORE = 2.5;

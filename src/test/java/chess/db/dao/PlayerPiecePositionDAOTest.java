@@ -1,12 +1,12 @@
 package chess.db.dao;
 
-import static chess.domain.piece.type.PieceType.PAWN;
-import static chess.domain.piece.type.PieceType.ROOK;
-import static chess.domain.player.type.TeamColor.WHITE;
-import static chess.domain.position.type.File.D;
-import static chess.domain.position.type.File.H;
-import static chess.domain.position.type.Rank.FIVE;
-import static chess.domain.position.type.Rank.TWO;
+import static chess.beforedb.domain.piece.type.PieceType.PAWN;
+import static chess.beforedb.domain.piece.type.PieceType.ROOK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.position.type.File.D;
+import static chess.beforedb.domain.position.type.File.H;
+import static chess.beforedb.domain.position.type.Rank.FIVE;
+import static chess.beforedb.domain.position.type.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.db.domain.piece.PieceEntity;

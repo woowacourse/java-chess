@@ -1,9 +1,9 @@
 package chess.db.domain.game;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
-import chess.controller.dto.request.MoveRequestDTO;
+import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.db.dao.ChessGameDAO;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.piece.PieceEntity;
@@ -14,12 +14,12 @@ import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePositionEntity;
-import chess.domain.board.setting.BoardCustomSetting;
-import chess.domain.board.setting.BoardDefaultSetting;
-import chess.domain.board.setting.BoardSetting;
-import chess.domain.piece.type.PieceWithColorType;
-import chess.domain.player.Scores;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.board.setting.BoardCustomSetting;
+import chess.beforedb.domain.board.setting.BoardDefaultSetting;
+import chess.beforedb.domain.board.setting.BoardSetting;
+import chess.beforedb.domain.piece.type.PieceWithColorType;
+import chess.beforedb.domain.player.Scores;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.List;
 

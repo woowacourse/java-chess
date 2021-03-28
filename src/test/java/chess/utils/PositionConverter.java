@@ -1,7 +1,7 @@
 package chess.utils;
 
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 
 public class PositionConverter {
     private static final int FILE_INDEX = 0;

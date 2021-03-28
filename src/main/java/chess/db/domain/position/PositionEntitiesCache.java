@@ -1,8 +1,8 @@
 package chess.db.domain.position;
 
 import chess.db.dao.PositionDAO;
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;

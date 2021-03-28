@@ -1,11 +1,11 @@
 package chess.db.domain.piece;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.player.type.TeamColor.WHITE;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

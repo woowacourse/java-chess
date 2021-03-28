@@ -4,8 +4,8 @@ package chess.db.dao;
 import static chess.db.dao.DBConnection.getConnection;
 
 import chess.db.domain.piece.PieceEntity;
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

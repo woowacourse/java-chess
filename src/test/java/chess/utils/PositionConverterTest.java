@@ -1,19 +1,19 @@
 package chess.utils;
 
-import static chess.domain.piece.type.PieceWithColorType.B_BP;
-import static chess.domain.piece.type.PieceWithColorType.B_KG;
-import static chess.domain.piece.type.PieceWithColorType.B_PN;
-import static chess.domain.piece.type.PieceWithColorType.B_QN;
-import static chess.domain.piece.type.PieceWithColorType.B_RK;
-import static chess.domain.piece.type.PieceWithColorType.W_NT;
-import static chess.domain.piece.type.PieceWithColorType.W_PN;
-import static chess.domain.piece.type.PieceWithColorType.W_QN;
-import static chess.domain.piece.type.PieceWithColorType.W_RK;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.B_BP;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.B_KG;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.B_PN;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.B_QN;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.B_RK;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.W_NT;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.W_PN;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.W_QN;
+import static chess.beforedb.domain.piece.type.PieceWithColorType.W_RK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.setting.BoardCustomSetting;
-import chess.domain.board.setting.BoardSetting;
-import chess.domain.game.ChessGame;
+import chess.beforedb.domain.board.setting.BoardCustomSetting;
+import chess.beforedb.domain.board.setting.BoardSetting;
+import chess.beforedb.domain.game.ChessGame;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

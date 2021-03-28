@@ -1,19 +1,19 @@
 package chess.db.domain.piece;
 
-import static chess.domain.piece.type.PieceType.BISHOP;
-import static chess.domain.piece.type.PieceType.KING;
-import static chess.domain.piece.type.PieceType.KNIGHT;
-import static chess.domain.piece.type.PieceType.PAWN;
-import static chess.domain.piece.type.PieceType.QUEEN;
-import static chess.domain.piece.type.PieceType.ROOK;
+import static chess.beforedb.domain.piece.type.PieceType.BISHOP;
+import static chess.beforedb.domain.piece.type.PieceType.KING;
+import static chess.beforedb.domain.piece.type.PieceType.KNIGHT;
+import static chess.beforedb.domain.piece.type.PieceType.PAWN;
+import static chess.beforedb.domain.piece.type.PieceType.QUEEN;
+import static chess.beforedb.domain.piece.type.PieceType.ROOK;
 
 import chess.db.dao.PieceFromDB;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.position.MoveRouteForDB;
-import chess.domain.piece.type.Direction;
-import chess.domain.piece.type.PieceType;
-import chess.domain.piece.type.PieceWithColorType;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.piece.type.Direction;
+import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.piece.type.PieceWithColorType;
+import chess.beforedb.domain.player.type.TeamColor;
 import java.util.List;
 import java.util.Objects;
 

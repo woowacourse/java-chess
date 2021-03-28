@@ -1,9 +1,9 @@
 package chess.db.domain.board;
 
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
-import chess.domain.position.type.File;
-import chess.domain.position.type.Rank;
+import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.player.type.TeamColor;
+import chess.beforedb.domain.position.type.File;
+import chess.beforedb.domain.position.type.Rank;
 
 public class PiecePositionFromDB {
     private final PieceType pieceType;

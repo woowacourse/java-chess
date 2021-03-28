@@ -1,7 +1,7 @@
 package chess.db.dao;
 
-import chess.domain.piece.type.PieceType;
-import chess.domain.player.type.TeamColor;
+import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.player.type.TeamColor;
 
 public class PieceFromDB {
     private final Long id;
