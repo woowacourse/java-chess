@@ -58,7 +58,7 @@ function createChessBoardAndPieces(gridDto, piecesResponseDto) {
             const newTd = document.createElement("td");
 
             const row = String(8 - i); // 열(12345678)
-            const asciiNum = 97; // h의 아스키코드
+            const asciiNum = 'h'.charCodeAt; // h의 아스키코드
             const column = String.fromCharCode(asciiNum + j);
             newTd.id = column + row;
             let pieceName = pieces[i][j].name;
