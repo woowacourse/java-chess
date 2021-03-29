@@ -4,13 +4,11 @@ import chess.domain.Position;
 
 public final class StringPositionConverter {
 
-    private StringPositionConverter() {
+    public StringPositionConverter() {
     }
 
-    public static Position convert(String message) {
-        char[] rowAndColumn = message.toCharArray();
-        int x = rowAndColumn[0] - 'a';
-        int y = rowAndColumn[1] - '0';
-        return Position.of(x, y);
+    public Position convert(String value) {
+        String[] position = value.split("");
+        return Position.of(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
     }
 }

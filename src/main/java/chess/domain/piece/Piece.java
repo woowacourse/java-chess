@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.PositionInformation;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.exception.ImpossibleMoveException;
@@ -29,15 +30,12 @@ public abstract class Piece {
         this.moved = moved;
     }
 
-    public void updateMovablePositions(List<Position> existPiecePositions,
-        List<Position> enemiesPositions) {
-        movablePositions = new ArrayList<>();
-        movablePositions.addAll(
-            availableDirections
-                .movablePositions(existPiecePositions, currentPosition, pieceDetails.iterable()));
-        movablePositions.addAll(
-            availableDirections
-                .killablePositions(enemiesPositions, currentPosition, pieceDetails.iterable()));
+    public void updateMovablePositions(List<PositionInformation> existPiecePositions) {
+        PositionInformation currentPosition =
+            new PositionInformation(this.currentPosition, pieceDetails.color());
+
+        movablePositions = availableDirections.allMovablePositions(existPiecePositions, currentPosition,
+            pieceDetails.iterable());
     }
 
     public boolean samePosition(Position position) {
@@ -99,5 +97,9 @@ public abstract class Piece {
 
     public TeamColor color() {
         return pieceDetails.color();
+    }
+
+    public PositionInformation positionInformation() {
+        return new PositionInformation(currentPosition, pieceDetails.color());
     }
 }

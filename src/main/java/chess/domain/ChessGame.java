@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
+import java.util.List;
+
 public interface ChessGame {
 
     void movePiece(Position currentPosition, Position targetPosition);
@@ -12,9 +15,9 @@ public interface ChessGame {
 
     boolean isCheckmate();
 
-    Pieces currentPieces();
+    Pieces pieces();
 
-    int boardSize();
+    List<Piece> currentColorPieces();
 
     TeamColor currentColor();
 }

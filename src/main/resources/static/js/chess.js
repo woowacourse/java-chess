@@ -1,38 +1,48 @@
 const $board = document.querySelector('.board');
-document.addEventListener('DOMContentLoaded', createBoard);
+document.addEventListener('DOMContentLoaded', eventHandler);
+
+const fetchService = new FetchService();
+const board = new Board();
+
+function eventHandler() {
+  createBoard();
+  $board.addEventListener('click', clickEvent);
+}
 
 function createBoard() {
-  fetch('http://localhost:4567/pieces')
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (jsonData) {
-    const jsonString = JSON.stringify(jsonData);
-    board(JSON.parse(jsonString));
-  })
+  fetchService.get('http://localhost:4567/pieces')
+  .then(pieces => {
+    board.drawBoard(pieces);
+    updateRoundStatus();
+  });
 }
 
-function board(pieces) {
-  for (let i = 7; i >= 0; i--) {
-    for (let j = 0; j < 8; j++) {
-      const boardElement = document.createElement('div');
-      boardElement.className = 'board-item';
-      let color = '';
-      if ((j - i) % 2 === 0) {
-        color = 'white';
-      } else {
-        color = 'black';
-      }
-      boardElement.classList.add(color)
-      $board.appendChild(boardElement);
+function updateRoundStatus() {
+  fetchService.get('http://localhost:4567/roundstatus')
+  .then(result => board.updateRoundStatus(result));
+}
 
-      let piece = pieces.find(piece => piece.currentPosition === `${j}${i}`);
-      if (piece !== undefined) {
-        boardElement.innerHTML = `<i class="fas fa-chess-${piece.name} ${piece.teamColor
-        === 'WHITE' ? 'piece_white' : 'piece_black'}"></i>`;
-      }
-    }
+function clickEvent({target}) {
+  let targetBoardItem = target.closest(".board-item");
+
+  if (targetBoardItem.classList.contains('movable')) {
+    movePosition(targetBoardItem);
+  } else {
+    board.selectItem(targetBoardItem);
   }
+
 }
 
+function movePosition(targetBoardItem) {
+  let data = {
+    currentPosition: board.getSelectedItem().id,
+    targetPosition: targetBoardItem.id
+  };
 
+  fetchService.post('http://localhost:4567/move', data)
+  .then(result => {
+    board.move(targetBoardItem);
+    board.updateRoundStatus(result);
+    board.validateContinuable();
+  });
+}

@@ -22,7 +22,7 @@ public final class PieceDetails {
     }
 
     public boolean isNotSameColor(TeamColor teamColor) {
-        return teamColor.isReverse(this.teamColor);
+        return teamColor.isEnemy(this.teamColor);
     }
 
     public boolean iterable() {

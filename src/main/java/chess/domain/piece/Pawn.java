@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.PieceDirection;
 import chess.domain.Position;
+import chess.domain.PositionInformation;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 import java.util.List;
@@ -16,9 +17,8 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void updateMovablePositions(List<Position> existPiecePositions,
-        List<Position> enemiesPositions) {
-        super.updateMovablePositions(existPiecePositions, enemiesPositions);
+    public void updateMovablePositions(List<PositionInformation> existPiecePositions) {
+        super.updateMovablePositions(existPiecePositions);
         if (isNotMoved()) {
             directions().pawnAdditionalPosition(existPiecePositions, currentPosition())
                 .ifPresent(position -> movablePositions().add(position));

@@ -1,23 +1,59 @@
 package chess.controller;
 
-import chess.controller.dto.PieceResponseDTO;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+
+import chess.controller.converter.StringPositionConverter;
+import chess.controller.dto.RoundStatusDTO;
+import chess.controller.dto.PieceDTO;
 import chess.domain.ChessGame;
+import chess.domain.Position;
 import chess.domain.piece.Piece;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class ChessController {
 
     private final ChessGame chessGame;
+    private final StringPositionConverter stringPositionConverter;
 
     public ChessController(ChessGame chessGame) {
         this.chessGame = chessGame;
+        this.stringPositionConverter = new StringPositionConverter();
     }
 
-    public List<PieceResponseDTO> startGame() {
-        List<Piece> pieces = chessGame.currentPieces().asList();
+    public List<PieceDTO> startGame() {
+        List<Piece> pieces = chessGame.pieces().asList();
         return pieces.stream()
-            .map(PieceResponseDTO::new)
-            .collect(Collectors.toList());
+            .map(PieceDTO::new)
+            .collect(toList());
+    }
+
+    public RoundStatusDTO movablePositions() {
+        List<Piece> pieces = chessGame.currentColorPieces();
+        return new RoundStatusDTO(
+            mapMovablePositions(pieces),
+            chessGame.currentColor(),
+            chessGame.gameResult(),
+            chessGame.isChecked(),
+            chessGame.isKingDead()
+        );
+    }
+
+    private Map<String, List<String>> mapMovablePositions(List<Piece> pieces) {
+        return pieces.stream()
+            .collect(toMap(
+                piece -> piece.currentPosition().columnAndRow(),
+                piece -> piece.movablePositions()
+                    .stream()
+                    .map(Position::columnAndRow)
+                    .collect(toList())
+            ));
+    }
+
+    public void move(String currentPosition, String targetPosition) {
+        Position current = stringPositionConverter.convert(currentPosition);
+        Position target = stringPositionConverter.convert(targetPosition);
+        chessGame.movePiece(current, target);
     }
 }

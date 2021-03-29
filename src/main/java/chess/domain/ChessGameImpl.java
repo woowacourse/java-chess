@@ -80,10 +80,14 @@ public final class ChessGameImpl implements ChessGame {
         Set<Position> enemiesAttackPositions = pieces
             .attackPositionsByColor(currentColor.reverse());
 
-        return enemiesAttackPositions.contains(
-            pieces.kingByColor(currentColor)
-                .currentPosition()
-        );
+        if(!isKingDead()) {
+            return enemiesAttackPositions.contains(
+                pieces.kingByColor(currentColor)
+                    .currentPosition()
+            );
+        }
+
+        return false;
     }
 
     @Override
@@ -96,13 +100,13 @@ public final class ChessGameImpl implements ChessGame {
     }
 
     @Override
-    public Pieces currentPieces() {
+    public Pieces pieces() {
         return pieces;
     }
 
     @Override
-    public int boardSize() {
-        return BOARD_SIZE;
+    public List<Piece> currentColorPieces() {
+        return pieces.piecesByTeamColor(currentColor);
     }
 
     @Override
