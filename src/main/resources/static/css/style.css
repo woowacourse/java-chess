@@ -1,0 +1,40 @@
+h1 {
+    color:#333D79;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+body {
+    background-color:#FCF6F5;
+}
+
+.chessBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #7b9acc;
+    margin: auto;
+    width: 35vw;
+    height: 35vw;
+}
+
+.chessRow {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.chessColumn {
+    width: 100%;
+    height: 100%;
+}
+
+.chessRow > .chessColumn > img {
+    width: 100%;
+    height: 100%;
+}
