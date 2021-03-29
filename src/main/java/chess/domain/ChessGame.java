@@ -53,4 +53,8 @@ public final class ChessGame {
     public final Team winner() {
         return winner;
     }
+
+    public Team turn() {
+        return currentTurn;
+    }
 }

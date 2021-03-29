@@ -8,7 +8,7 @@
 <body>
 <div id="total">
     <div id="top">
-        <p>Woowa Chess</p>
+        <p>Woowa Kingdom Chess</p>
     </div>
     <div id="middle">
         <div id="chessboard-box">
@@ -88,13 +88,23 @@
         </div>
         <div id="status">
             <div class="score">
-                Black 팀 점수 :
+                <img src="./img/black_team.png">
+                <p>
+                    {{black-score}}
+                </p>
             </div>
             <div id="turn">
-                팀 차례입니다.
+                {{#if isWhite}}
+                <img src="./img/white_turn.png">
+                {{else}}
+                <img src="./img/black_turn.png">
+                {{/if}}
             </div>
             <div class="score">
-                White 팀 점수 :
+                <img src="./img/white_team.png">
+                <p>
+                    {{white-score}}
+                </p>
             </div>
             <div id="bottom">
                 <form action="/" method="get">
@@ -112,6 +122,11 @@
         document.getElementById("{{position}}")
             .insertAdjacentHTML("beforeend", "<img src=./img/pieces/{{team}}_{{initial}}.png>");
     {{/pieces}}
+</script>
+<script>
+    document.getElementById("chessboard").addEventListener("click", function (event) {
+        console.log(event.target.parentNode.id);
+    });
 </script>
 </body>
 </html>
