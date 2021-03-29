@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.MoveStrategy;
-import java.util.List;
 
 public abstract class Piece {
 
@@ -25,12 +23,12 @@ public abstract class Piece {
         return color;
     }
 
-    public boolean isSameColor(Piece piece) {
-        return this.getColor().equals(piece.getColor());
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
     }
 
-    public boolean isSameColor(Color color) {
-        return this.getColor().equals(color);
+    public boolean isSameColor(Piece piece) {
+        return this.color.equals(piece.color);
     }
 
     public boolean isBlank() {
@@ -52,8 +50,6 @@ public abstract class Piece {
     public double score() {
         return type.getScore();
     }
-
-    public abstract List<Direction> direction();
 
     public boolean isMovable(
         ChessBoard chessBoard,
