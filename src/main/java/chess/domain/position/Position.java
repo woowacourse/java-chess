@@ -73,9 +73,9 @@ public class Position {
 
     public boolean pawnLine(TeamColor color) {
         if (color == TeamColor.BLACK) {
-            return row.number().equals("7");
+            return row == NumberRows.SEVEN;
         }
-        return row.number().equals("2");
+        return row == NumberRows.TWO;
     }
 
     public Character getColumn() {
