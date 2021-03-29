@@ -17,7 +17,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
 
-    private static TeamType currentTeamType = TeamType.WHITE;
+    private static TeamType TEAM_TYPE = TeamType.WHITE;
 
     public static void main(String[] args) {
         port(8080);
@@ -30,8 +30,7 @@ public class WebUIChessApplication {
         });
         get("/chessboard", (req, res) -> {
             res.type("application/json");
-            BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
-            return new Gson().toJson(new Gson().toJsonTree(boardDTO));
+            return new Gson().toJson(new Gson().toJsonTree(BoardDTO.from(chessBoard, TEAM_TYPE)));
         });
         post("/chessboard/move", (req, res) -> {
             RequestDTO requestDTO = new Gson().fromJson(req.body(), RequestDTO.class);
@@ -40,8 +39,8 @@ public class WebUIChessApplication {
             Coordinate destination = Coordinate.from(requestDTO.getDestination());
             TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
             chessBoard.move(current, destination, teamType);
-            currentTeamType = currentTeamType.findOppositeTeam();
-            BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
+            TEAM_TYPE = teamType.findOppositeTeam();
+            BoardDTO boardDTO = BoardDTO.from(chessBoard, TEAM_TYPE);
             return new Gson().toJson(new Gson().toJsonTree(boardDTO));
         });
         exception(RuntimeException.class, (e, req, res) -> {
