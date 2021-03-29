@@ -21,10 +21,15 @@ public class InputView {
     }
 
     public static CommandRequestDTO getCommandRequest() {
-        String commandLineInput = SCANNER.nextLine();
-        String[] splitCommandLineInput = commandLineInput.split(COMMAND_DELIMITER);
-        validateCommandLineFormat(splitCommandLineInput);
-        return parseCommandLineInput(splitCommandLineInput);
+        try {
+            String commandLineInput = SCANNER.nextLine();
+            String[] splitCommandLineInput = commandLineInput.split(COMMAND_DELIMITER);
+            validateCommandLineFormat(splitCommandLineInput);
+            return parseCommandLineInput(splitCommandLineInput);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getCommandRequest();
+        }
     }
 
     private static void validateCommandLineFormat(String[] splitCommandLineInput) {

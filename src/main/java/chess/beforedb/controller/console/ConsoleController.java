@@ -1,12 +1,11 @@
 package chess.beforedb.controller.console;
 
 import chess.beforedb.controller.console.dto.CommandRequestDTO;
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.MoveResponse;
-import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.service.ChessService;
 import chess.beforedb.view.InputView;
 import chess.beforedb.view.OutputView;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
+import chess.db.controller.dto.response.ResponseDTOForDB;
 
 public class ConsoleController {
     private static final String START_COMMAND_INPUT = "start";
@@ -20,18 +19,19 @@ public class ConsoleController {
         this.chessService = chessService;
     }
 
-    public void run() {
+    public void run() throws Exception {
         OutputView.printGameStartMessage();
         boolean isGameEnd = false;
         while (!isGameEnd) {
             CommandRequestDTO commandRequestDTO = InputView.getCommandRequest();
-            ResponseDTO responseDTO = request(commandRequestDTO);
+            ResponseDTOForDB responseDTO = request(commandRequestDTO);
             isGameEnd = responseDTO.getIsKingDead() || responseDTO.isEnd();
         }
+        chessService.endGame();
     }
 
-    private ResponseDTO request(CommandRequestDTO commandRequestDTO) {
-        ResponseDTO responseDTO = startOrEnd(commandRequestDTO);
+    private ResponseDTOForDB request(CommandRequestDTO commandRequestDTO) {
+        ResponseDTOForDB responseDTO = startOrEnd(commandRequestDTO);
         if (responseDTO != null) {
             return responseDTO;
         }
@@ -42,7 +42,7 @@ public class ConsoleController {
         throw new IllegalArgumentException("유효하지 않은 명령어 입니다.");
     }
 
-    private ResponseDTO startOrEnd(CommandRequestDTO commandRequestDTO) {
+    private ResponseDTOForDB startOrEnd(CommandRequestDTO commandRequestDTO) {
         if (START_COMMAND_INPUT.equals(commandRequestDTO.getCommandInput())) {
             return start();
         }
@@ -52,7 +52,7 @@ public class ConsoleController {
         return null;
     }
 
-    private ResponseDTO moveOrStatus(CommandRequestDTO commandRequestDTO) {
+    private ResponseDTOForDB moveOrStatus(CommandRequestDTO commandRequestDTO) {
         if (MOVE_COMMAND_INPUT.equals(commandRequestDTO.getCommandInput())) {
             return move(commandRequestDTO);
         }
@@ -62,36 +62,57 @@ public class ConsoleController {
         return null;
     }
 
-    private ResponseDTO start() {
-        chessService.start();
-        return printCurrentBoard();
-    }
-
-    private ResponseDTO printCurrentBoard() {
-        ResponseDTO responseDTO = chessService.getCurrentBoard();
-        OutputView.printBoard(responseDTO);
-        return responseDTO;
-    }
-
-    private ResponseDTO end() {
-        return new ResponseDTO(true);
-    }
-
-    private ResponseDTO move(CommandRequestDTO commandRequestDTO) {
-        String startPositionInput = commandRequestDTO.getStartPositionInput();
-        String destinationInput = commandRequestDTO.getDestinationInput();
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(startPositionInput, destinationInput);
-        MoveResponse moveResponse = chessService.requestMove(moveRequestDTO);
-        if (moveResponse.isMoveError()) {
-            OutputView.printErrorMessage(moveResponse);
-            return new ResponseDTO(false);
+    private ResponseDTOForDB start() {
+        try {
+            chessService.start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return printCurrentBoard();
     }
 
-    private ResponseDTO status() {
-        ResponseDTO responseDTO = chessService.getCurrentBoard();
-        OutputView.printScores(responseDTO);
+    private ResponseDTOForDB printCurrentBoard() {
+        ResponseDTOForDB responseDTO;
+        try {
+            responseDTO = chessService.getCurrentBoard();
+            OutputView.printBoard(responseDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseDTOForDB(false);
+        }
         return responseDTO;
+    }
+
+    private ResponseDTOForDB end() {
+        try {
+            chessService.endGame();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new ResponseDTOForDB(true);
+    }
+
+    private ResponseDTOForDB move(CommandRequestDTO commandRequestDTO) {
+        String startPositionInput = commandRequestDTO.getStartPositionInput();
+        String destinationInput = commandRequestDTO.getDestinationInput();
+        MoveRequestDTOForDB moveRequestDTO
+            = new MoveRequestDTOForDB(startPositionInput, destinationInput);
+        try {
+            chessService.requestMove(moveRequestDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return printCurrentBoard();
+    }
+
+    private ResponseDTOForDB status() {
+        ResponseDTOForDB responseDTO;
+        try {
+            responseDTO = chessService.getCurrentBoard();
+            OutputView.printScores(responseDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new ResponseDTOForDB(false);
     }
 }

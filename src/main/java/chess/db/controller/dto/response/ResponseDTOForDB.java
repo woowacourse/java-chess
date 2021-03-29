@@ -11,6 +11,7 @@ public class ResponseDTOForDB {
     private final String beforeTurnTeamName;
     private final boolean isKingDead;
     private final BoardResponseDTOForDB boardResponseDTO;
+    private final boolean isEnd;
 
     public ResponseDTOForDB(GameStatusResponseDTO gameStatusResponseDTO, boolean isKingDead,
         BoardResponseDTOForDB boardResponseDTO) {
@@ -23,6 +24,19 @@ public class ResponseDTOForDB {
         this.beforeTurnTeamName = gameStatusResponseDTO.getBeforeTurnTeamColorName();
         this.isKingDead = isKingDead;
         this.boardResponseDTO = boardResponseDTO;
+        this.isEnd = false;
+    }
+
+    public ResponseDTOForDB(boolean isEnd) {
+        this.gameId = null;
+        this.title = null;
+        this.whitePlayerScore = 0;
+        this.blackPlayerScore = 0;
+        this.currentTurnTeamName = null;
+        this.beforeTurnTeamName = null;
+        this.isKingDead = false;
+        this.boardResponseDTO = null;
+        this.isEnd = isEnd;
     }
 
     public Long getGameId() {
@@ -55,5 +69,9 @@ public class ResponseDTOForDB {
 
     public BoardResponseDTOForDB getBoardResponseDTO() {
         return boardResponseDTO;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
     }
 }

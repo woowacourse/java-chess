@@ -1,8 +1,8 @@
 package chess.beforedb.view;
 
-import chess.beforedb.controller.dto.response.BoardResponseDTO;
-import chess.beforedb.controller.dto.response.MoveResponse;
-import chess.beforedb.controller.dto.response.ResponseDTO;
+import chess.db.controller.dto.response.BoardResponseDTOForDB;
+import chess.db.controller.dto.response.MoveResponseDTOForDB;
+import chess.db.controller.dto.response.ResponseDTOForDB;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printBoard(ResponseDTO responseDTO) {
+    public static void printBoard(ResponseDTOForDB responseDTO) {
         List<String> cellsStatus = getParsedCellsStatus(responseDTO);
         for (int cellIndex = 0; cellIndex < BOARD_ALL_CELLS_SIZE; cellIndex++) {
             printCellStatus(cellsStatus, cellIndex);
@@ -27,21 +27,21 @@ public class OutputView {
         printWinnerTeamNameWhenKingDead(responseDTO);
     }
 
-    private static void printCurrentTurnTeamName(ResponseDTO responseDTO) {
+    private static void printCurrentTurnTeamName(ResponseDTOForDB responseDTO) {
         System.out.println();
         if (!responseDTO.isEnd() && !responseDTO.getIsKingDead()) {
             System.out.println("현재 " + responseDTO.getCurrentTurnTeamName() + " 팀의 차례입니다.");
         }
     }
 
-    private static void printWinnerTeamNameWhenKingDead(ResponseDTO responseDTO) {
+    private static void printWinnerTeamNameWhenKingDead(ResponseDTOForDB responseDTO) {
         if (responseDTO.getIsKingDead()) {
             System.out.println(responseDTO.getBeforeTurnTeamName() + " 팀이 이겼습니다.");
         }
     }
 
-    private static List<String> getParsedCellsStatus(ResponseDTO responseDTO) {
-        BoardResponseDTO boardResponseDTO = responseDTO.getBoardResponseDTO();
+    private static List<String> getParsedCellsStatus(ResponseDTOForDB responseDTO) {
+        BoardResponseDTOForDB boardResponseDTO = responseDTO.getBoardResponseDTO();
         List<String> cellsStatus = new ArrayList<>(boardResponseDTO.getRank8());
         cellsStatus.addAll(boardResponseDTO.getRank7());
         cellsStatus.addAll(boardResponseDTO.getRank6());
@@ -61,13 +61,13 @@ public class OutputView {
         }
     }
 
-    public static void printScores(ResponseDTO responseDTO) {
+    public static void printScores(ResponseDTOForDB responseDTO) {
         double blackTeamScore = responseDTO.getBlackPlayerScore();
         double whiteTeamScore = responseDTO.getWhitePlayerScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 
-    public static void printErrorMessage(MoveResponse moveResponse) {
+    public static void printErrorMessage(MoveResponseDTOForDB moveResponse) {
         System.out.println("에러 : " + moveResponse.getErrorMessage());
     }
 }

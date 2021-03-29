@@ -2,7 +2,7 @@ package chess.db.controller.dto.request;
 
 
 public class MoveRequestDTOForDB {
-    private final Long gameId;
+    private Long gameId;
     private final String startPosition;
     private final String destination;
 
@@ -10,6 +10,15 @@ public class MoveRequestDTOForDB {
         this.gameId = gameId;
         this.startPosition = startPosition;
         this.destination = destination;
+    }
+
+    public MoveRequestDTOForDB(String startPosition, String destination) {
+        this.startPosition = startPosition;
+        this.destination = destination;
+    }
+
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 
     public Long getGameId() {
