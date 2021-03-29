@@ -1,8 +1,5 @@
 package chess.db.service;
 
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.ResponseDTO;
-import chess.beforedb.controller.dto.response.MoveResponse;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.db.controller.dto.request.MoveRequestDTOForDB;
 import chess.db.controller.dto.response.BoardResponseDTOForDB;
@@ -79,7 +76,7 @@ public class ChessServiceForDB {
             cellsStatus.subList(RANK8_FIRST_INDEX, BOARD_ALL_CELLS_SIZE));
     }
 
-    public void endGame(Long gameId) throws SQLException {
-        chessGameForDB.end(gameId);
+    public void deleteGame(Long gameId) throws SQLException {
+        chessGameForDB.remove(gameId);
     }
 }

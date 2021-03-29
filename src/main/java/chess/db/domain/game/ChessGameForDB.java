@@ -77,7 +77,7 @@ public class ChessGameForDB {
         chessGameDAO.updateCurrentTurnTeamColor(chessGameEntity);
     }
 
-    public void end(Long gameId) throws SQLException {
+    public void remove(Long gameId) throws SQLException {
         boardForDB.removeAllPlayersAndPiecesPositionsOfGame(gameId);
         chessGameDAO.remove(gameId);
     }

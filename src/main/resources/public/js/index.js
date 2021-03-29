@@ -5,12 +5,12 @@ for (let i = 0; i < enter_room_buttons.length; i++) {
   });
 }
 
-const remove_room_buttons =  document.getElementsByClassName("remove-room-button");
+const remove_room_buttons =  document.getElementsByClassName("delete-room-button");
 for (let i = 0; i < remove_room_buttons.length; i++) {
   remove_room_buttons[i].addEventListener('click', (event) => {
-    const is_remove = confirm('정말 삭제하시겠습니까?');
-    if (is_remove === true) {
-      window.location.href='http://localhost:4567/remove?id=' + event.target.parentElement.id;
+    const is_delete = confirm('정말 삭제하시겠습니까?');
+    if (is_delete === true) {
+      window.location.href='http://localhost:4567/delete?id=' + event.target.parentElement.id;
     }
   });
 }

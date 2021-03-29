@@ -24,7 +24,7 @@ public class WebUIDBController {
     private static final String CREATE_CHESS_ROOM = "create-chess-room";
     private static final String CHESS_BOARD = "chess-board";
     private static final String MOVE = "move";
-    private static final String END = "end";
+    private static final String DELETE = "delete";
     private static final String CHESS_BOARD_VIEW = "chess-board.html";
     private static final String HOME_VIEW = "index.html";
     private static final String RESPONSE_DTO = "responseDTO";
@@ -44,7 +44,7 @@ public class WebUIDBController {
         handleCreateChessRoomRequest();
         handleGetChessBoardRequest();
         handleMoveRequest();
-        handleEndRequest();
+        handleDeleteRequest();
     }
 
     private void handleHomeRequest() {
@@ -99,10 +99,10 @@ public class WebUIDBController {
         });
     }
 
-    private void handleEndRequest() {
-        get(ROOT + END, (req, res) -> {
-            Long roomId = Long.valueOf(req.queryParams("id"));
-            chessServiceForDB.endGame(roomId);
+    private void handleDeleteRequest() {
+        get(ROOT + DELETE, (req, res) -> {
+            Long gameId = Long.valueOf(req.queryParams("id"));
+            chessServiceForDB.deleteGame(gameId);
             res.redirect(ROOT);
             return null;
         });
