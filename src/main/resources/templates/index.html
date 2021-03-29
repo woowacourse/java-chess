@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>로또</title>
+    <link href="/css/piece.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-Hello World!!
+<section id="board">
+    <script id="template-list-piece" type="text/template">
+        <img src="/images/{url}.png" id="{coordinate}" class="piece" alt="img"/>
+    </script>
+</section>
+
+<section id="status">
+    <div class="current-team-type">현재 턴 :</div>
+    <div class="piece-current-position">선택 기물 현재 위치 :</div>
+    <div class="piece-destination">선택 기물 목적지 위치 :</div>
+</section>
 </body>
+<script src="/js/chess.js" type="text/javascript"></script>
 </html>
