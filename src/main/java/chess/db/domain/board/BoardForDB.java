@@ -4,14 +4,17 @@ import static chess.beforedb.domain.piece.type.PieceType.KING;
 import static chess.beforedb.domain.player.type.TeamColor.BLACK;
 import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
-import chess.beforedb.domain.piece.type.PieceType;
+import chess.beforedb.domain.board.setting.BoardSetting;
+import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
 import chess.db.dao.GamePiecePosition;
+import chess.db.dao.PiecePosition;
 import chess.db.domain.game.ScoresEntity;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.PlayersForDB;
 import chess.db.domain.position.MoveRequestForDB;
+import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -31,6 +34,32 @@ public class BoardForDB {
         playersForDB = new PlayersForDB();
         moveChecker = new MoveChecker();
     }
+
+    public void createAndSaveNewPlayersAndPiecesPositionsOfGame(Long gameId,
+        BoardSetting boardSetting) throws SQLException {
+
+        playersForDB.createAndSaveNewPlayers(gameId);
+        saveInitialPieces(boardSetting, gameId);
+    }
+
+    private void saveInitialPieces(BoardSetting boardSetting, Long gameId) throws SQLException {
+        List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
+        for (int index = 0; index < piecesSetting.size(); index++) {
+            PositionEntity positionEntity = PositionEntitiesCache.get(index);
+            PieceWithColorType pieceWithColorType = piecesSetting.get(index);
+            saveInitialPiece(pieceWithColorType, positionEntity, gameId);
+        }
+    }
+
+    private void saveInitialPiece(PieceWithColorType pieceWithColorType,
+        PositionEntity positionEntity, Long gameId) throws SQLException {
+        if (pieceWithColorType != null) {
+            PieceEntity pieceEntity = PieceEntity.of(pieceWithColorType);
+            playersForDB.saveInitialPiecesPositions(
+                new PiecePosition(pieceEntity, positionEntity), gameId);
+        }
+    }
+
 
     public void validateRoute(Long gameId, MoveRequestForDB moveRequestForDB) throws SQLException {
         Map<PositionEntity, CellForDB> cells = new HashMap<>();

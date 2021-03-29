@@ -11,12 +11,10 @@ import chess.db.domain.board.PiecesPositionsForDB;
 import chess.db.domain.game.ScoresEntity;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.ChessGameEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlayersForDB {
@@ -32,13 +30,9 @@ public class PlayersForDB {
         scoreCalculator = new ScoreCalculator();
     }
 
-    public void createNewPlayers(ChessGameEntity chessGameEntity) throws SQLException {
-//        playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
-//        playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
-
-        playerEntities.addAll(Arrays.asList(
-            playerDAO.save(new PlayerEntity(WHITE, chessGameEntity)),
-            playerDAO.save(new PlayerEntity(BLACK, chessGameEntity))));
+    public void createAndSaveNewPlayers(Long gameId) throws SQLException {
+        playerDAO.save(WHITE, gameId);
+        playerDAO.save(BLACK, gameId);
     }
 
     public void saveInitialPiecesPositions(PiecePosition piecePosition, Long gameId)
@@ -105,6 +99,7 @@ public class PlayersForDB {
     public PlayerEntity getPlayerColorOf(TeamColor teamColor) {
         return findPlayerByTeamColor(teamColor);
     }
+
     public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor)
         throws SQLException {
         return playerDAO.findIdByGameIdAndTeamColor(gameId, teamColor);

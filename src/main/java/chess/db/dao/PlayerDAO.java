@@ -15,24 +15,12 @@ import java.util.List;
 
 public class PlayerDAO {
 
-    public PlayerEntity save(PlayerEntity playerEntity) throws SQLException {
-        ResultSet generatedKeys = getResultSet(playerEntity);
-        if (generatedKeys.next()) {
-            return new PlayerEntity(
-                generatedKeys.getLong(1),
-                playerEntity.getTeamColor(),
-                playerEntity.getChessGameEntity());
-        }
-        throw new SQLException("playerEntity를 save()할 수 없습니다.");
-    }
-
-    private ResultSet getResultSet(PlayerEntity playerEntity) throws SQLException {
-        String query = "INSERT INTO player (chess_game_id, team_color) VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
-        pstmt.setLong(1, playerEntity.getChessGameEntity().getId());
-        pstmt.setString(2, playerEntity.getTeamColor().getValue());
+    public void save(TeamColor teamColor, Long gameId) throws SQLException {
+        String query = "INSERT INTO player (team_color, chess_game_id) VALUES (?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, teamColor.getValue());
+        pstmt.setLong(2, gameId);
         pstmt.executeUpdate();
-        return pstmt.getGeneratedKeys();
     }
 
     public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {

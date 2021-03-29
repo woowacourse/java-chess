@@ -17,8 +17,7 @@ import java.util.List;
 
 public class PlayerPiecePositionDAO {
 
-    public void save(Long playerId, PiecePosition piecePosition)
-        throws SQLException {
+    public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerId);
