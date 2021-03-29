@@ -8,8 +8,9 @@ CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 show tables;
 
-set global max_connections = 1000;
+set global max_connections = 100000;
 
+set wait_timeout = 30;
 
 -- MySQL Workbench Forward Engineering
 
