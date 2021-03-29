@@ -41,7 +41,7 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
-    public boolean isColor(PieceColor color) {
+    public boolean isColor(Color color) {
         return false;
     }
 

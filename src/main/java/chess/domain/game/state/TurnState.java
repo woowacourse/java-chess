@@ -2,9 +2,8 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
-import chess.domain.result.Result;
-import chess.domain.result.StatusResult;
-import chess.domain.result.TurnResult;
+import chess.domain.game.Result;
+import chess.domain.game.StatusResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -42,13 +41,13 @@ public abstract class TurnState extends PlayingState {
     protected abstract GameState otherTurnState(final Board board);
 
     @Override
-    public Result turnResult() {
-        return new TurnResult(currentBoard());
+    public Result statusResult() {
+        return new StatusResult(currentBoard());
     }
 
     @Override
-    public Result statusResult() {
-        return new StatusResult(currentBoard());
+    public Result scoreResult() {
+        return null;
     }
 
     @Override

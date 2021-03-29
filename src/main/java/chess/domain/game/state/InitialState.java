@@ -2,11 +2,10 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
-import chess.domain.board.Game;
-import chess.domain.game.GameVisual;
+import chess.domain.game.Result;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.Color;
 import chess.domain.piece.RealPiece;
 import chess.domain.piece.strategy.BishopStrategy;
 import chess.domain.piece.strategy.BlackPawnStrategy;
@@ -37,11 +36,11 @@ public final class InitialState implements GameState {
     public GameState execute(final CommandAsString command) {
         System.out.println("launched execute from initial state");
         if (command.isEnd()) {
-            return new EndState(new Game(initiateBoard()));
+            return new EndState(initiateBoard());
         }
         if (command.isStart()) {
             System.out.println("launched start from initial state");
-            return new WhiteTurnState(new Game(initiateBoard()));
+            return new WhiteTurnState(initiateBoard());
         }
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
     }
@@ -54,19 +53,19 @@ public final class InitialState implements GameState {
             }
         }
         placePawns(coordinates);
-        placeSpecialPieces(WHITE_SPECIAL_ROW, PieceColor.WHITE, coordinates);
-        placeSpecialPieces(BLACK_SPECIAL_ROW, PieceColor.BLACK, coordinates);
+        placeSpecialPieces(WHITE_SPECIAL_ROW, Color.WHITE, coordinates);
+        placeSpecialPieces(BLACK_SPECIAL_ROW, Color.BLACK, coordinates);
         return new Board(coordinates);
     }
 
 
     @Override
-    public GameVisual gameVisual() {
+    public Result statusResult() {
         throw new IllegalArgumentException("게임이 시작하기 전에는 게임 상황을 볼 수 없습니다.");
     }
 
     @Override
-    public GameVisual statusVisual() {
+    public Result scoreResult() {
         throw new IllegalArgumentException("게임이 시작하기 전에는 게임 상황을 볼 수 없습니다.");
     }
 
@@ -79,14 +78,14 @@ public final class InitialState implements GameState {
         Arrays.stream(Column.values()).forEach(column -> {
             coordinates.replace(
                     Position.of(column, WHITE_PAWN_ROW),
-                    new RealPiece(PieceColor.WHITE, new WhitePawnStrategy()));
+                    new RealPiece(Color.WHITE, new WhitePawnStrategy()));
             coordinates.replace(
                     Position.of(column, BLACK_PAWN_ROW),
-                    new RealPiece(PieceColor.BLACK, new BlackPawnStrategy()));
+                    new RealPiece(Color.BLACK, new BlackPawnStrategy()));
         });
     }
 
-    private void placeSpecialPieces(final Row row, final PieceColor color,
+    private void placeSpecialPieces(final Row row, final Color color,
             final Map<Position, Piece> coordinates) {
         Map<Column, Piece> pieces = createSpecialPieces(color);
         Arrays.stream(Column.values()).forEach(
@@ -94,7 +93,7 @@ public final class InitialState implements GameState {
         );
     }
 
-    private Map<Column, Piece> createSpecialPieces(PieceColor color) {
+    private Map<Column, Piece> createSpecialPieces(Color color) {
         Map<Column, Piece> pieces = new LinkedHashMap<>();
         pieces.put(Column.A, new RealPiece(color, new RookStrategy()));
         pieces.put(Column.B, new RealPiece(color, new KnightStrategy()));

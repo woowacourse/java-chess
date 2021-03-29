@@ -16,11 +16,11 @@ public final class GameManager {
         return new GameManager(newGameState);
     }
 
-    public GameVisual gameVisual(final CommandAsString command) {
+    public Result result(final CommandAsString command) {
         if (command.isStatus()) {
-            return gameState.statusVisual();
+            return gameState.scoreResult();
         }
-        return gameState.gameVisual();
+        return gameState.statusResult();
     }
 
     public boolean isNotFinished() {

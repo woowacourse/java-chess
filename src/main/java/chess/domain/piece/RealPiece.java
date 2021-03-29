@@ -9,10 +9,10 @@ import java.util.List;
 
 public final class RealPiece implements Piece {
 
-    private final PieceColor color;
+    private final Color color;
     private final PieceStrategy pieceStrategy;
 
-    public RealPiece(final PieceColor color, final PieceStrategy pieceStrategy) {
+    public RealPiece(final Color color, final PieceStrategy pieceStrategy) {
         this.color = color;
         this.pieceStrategy = pieceStrategy;
     }
@@ -46,7 +46,7 @@ public final class RealPiece implements Piece {
     }
 
     @Override
-    public boolean isColor(final PieceColor color) {
+    public boolean isColor(final Color color) {
         return this.color.equals(color);
     }
 
@@ -68,7 +68,7 @@ public final class RealPiece implements Piece {
     @Override
     public String getName() {
         final String pieceName = pieceStrategy.name();
-        if (color.equals(PieceColor.BLACK)) {
+        if (color.equals(Color.BLACK)) {
             return pieceName.toUpperCase();
         }
         return pieceName;

@@ -1,13 +1,13 @@
 package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
-import chess.domain.board.Game;
-import chess.domain.game.GameVisual;
+import chess.domain.board.Board;
+import chess.domain.game.Result;
 
-public final class EndState extends StageState {
+public final class EndState extends PlayingState {
 
-    public EndState(final Game game) {
-        super(game);
+    public EndState(final Board board) {
+        super(board);
     }
 
     @Override
@@ -16,12 +16,13 @@ public final class EndState extends StageState {
     }
 
     @Override
-    public GameVisual gameVisual() {
+    public Result statusResult() {
+        // end game needs to say something
         return null;
     }
 
     @Override
-    public GameVisual statusVisual() {
+    public Result scoreResult() {
         return null;
     }
 
