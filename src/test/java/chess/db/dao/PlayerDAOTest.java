@@ -1,5 +1,6 @@
 package chess.db.dao;
 
+import static chess.TestFixture.TEST_TITLE;
 import static chess.beforedb.domain.player.type.TeamColor.BLACK;
 import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,11 +10,10 @@ import chess.db.entity.PlayerEntity;
 import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerDAOTest {
-    private static final String TEST_TITLE = "testTitle";
-
     private final PlayerDAO playerDAO = new PlayerDAO();
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
 
@@ -23,35 +23,89 @@ class PlayerDAOTest {
         chessGameDAO.removeAll();
     }
 
+    @DisplayName("저장 및 조회")
     @Test
     void saveAndFindById() throws SQLException {
         ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
         Long gameId = chessGame.getId();
 
         playerDAO.save(WHITE, gameId);
-        playerDAO.save(BLACK, gameId);
 
         Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
 
         assertThat(whitePlayerId).isNotNull();
-        assertThat(blackPlayerId).isNotNull();
     }
 
+    @DisplayName("점수 업데이트 및 조회")
     @Test
-    void remove() throws SQLException {
+    void updateScoreAndFindByPlayerId() throws SQLException {
         ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
         Long gameId = chessGame.getId();
 
         playerDAO.save(WHITE, gameId);
-        playerDAO.save(BLACK, gameId);
 
-        playerDAO.removeAllByChessGame(gameId);
+        Long whitePlayerIdBeforeUpdateScore = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        double scoreBeforeUpdate = playerDAO.findScoreByPlayerId(whitePlayerIdBeforeUpdateScore);
 
-        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+        assertThat(scoreBeforeUpdate).isEqualTo(38.0);
 
-        assertThat(whitePlayerId).isNull();
-        assertThat(blackPlayerId).isNull();
+        double newScore = 2.54;
+        playerDAO.updateScore(whitePlayerIdBeforeUpdateScore, newScore);
+
+        double scoreAfterUpdate = playerDAO.findScoreByPlayerId(whitePlayerIdBeforeUpdateScore);
+
+        assertThat(scoreAfterUpdate).isEqualTo(newScore);
+    }
+
+    @DisplayName("특정 체스 게임의 모든 플레이어들 삭제")
+    @Test
+    void removeAllByChessGame() throws SQLException {
+        ChessGameEntity chessGame1 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        ChessGameEntity chessGame2 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE + "2"));
+        Long game1Id = chessGame1.getId();
+        Long game2Id = chessGame2.getId();
+
+        playerDAO.save(WHITE, game1Id);
+        playerDAO.save(BLACK, game1Id);
+        playerDAO.save(WHITE, game2Id);
+        playerDAO.save(BLACK, game2Id);
+
+        playerDAO.removeAllByChessGame(game1Id);
+
+        Long game1WhitePlayer = playerDAO.findIdByGameIdAndTeamColor(game1Id, WHITE);
+        Long game1BlackPlayer = playerDAO.findIdByGameIdAndTeamColor(game1Id, BLACK);
+        Long game2WhitePlayer = playerDAO.findIdByGameIdAndTeamColor(game2Id, WHITE);
+        Long game2BlackPlayer = playerDAO.findIdByGameIdAndTeamColor(game2Id, BLACK);
+
+        assertThat(game1WhitePlayer).isNull();
+        assertThat(game1BlackPlayer).isNull();
+        assertThat(game2WhitePlayer).isNotNull();
+        assertThat(game2BlackPlayer).isNotNull();
+    }
+
+    @DisplayName("모든 플레이어들 삭제")
+    @Test
+    void removeAll() throws SQLException {
+        ChessGameEntity chessGame1 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        ChessGameEntity chessGame2 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE + "2"));
+        Long game1Id = chessGame1.getId();
+        Long game2Id = chessGame2.getId();
+
+        playerDAO.save(WHITE, game1Id);
+        playerDAO.save(BLACK, game1Id);
+        playerDAO.save(WHITE, game2Id);
+        playerDAO.save(BLACK, game2Id);
+
+        playerDAO.removeAll();
+
+        Long game1WhitePlayer = playerDAO.findIdByGameIdAndTeamColor(game1Id, WHITE);
+        Long game1BlackPlayer = playerDAO.findIdByGameIdAndTeamColor(game1Id, BLACK);
+        Long game2WhitePlayer = playerDAO.findIdByGameIdAndTeamColor(game2Id, WHITE);
+        Long game2BlackPlayer = playerDAO.findIdByGameIdAndTeamColor(game2Id, BLACK);
+
+        assertThat(game1WhitePlayer).isNull();
+        assertThat(game1BlackPlayer).isNull();
+        assertThat(game2WhitePlayer).isNull();
+        assertThat(game2BlackPlayer).isNull();
     }
 }
