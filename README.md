@@ -361,8 +361,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-- [ ] Console, DB 와 관련없는 과거 클래스 삭제
-- [ ] SQL 파일 정리 (constrain 등 이름 수정)
-- [ ] 패키지 경로 정리
 - [ ] 네이밍 변경
 - [ ] 체스보드 View 꾸미기
+- [ ] README.md 정리
+- [ ] SQL 파일 정리 (constrain 등 이름 수정)
+- [ ] 학습로그 작성
+- [ ] Pull request
