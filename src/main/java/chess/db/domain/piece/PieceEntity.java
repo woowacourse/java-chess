@@ -13,11 +13,15 @@ import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.dao.PieceFromDB;
 import chess.db.domain.board.BoardForDB;
+import chess.db.domain.board.CellForDB;
+import chess.db.domain.position.MoveRequestForDB;
 import chess.db.domain.position.MoveRouteForDB;
+import chess.db.domain.position.PositionEntity;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class PieceEntity {
+public abstract  class PieceEntity {
     private final Long id;
     private final PieceType pieceType;
     private final TeamColor teamColor;
@@ -81,12 +85,27 @@ public class PieceEntity {
     }
 
     public static PieceEntity of(PieceWithColorType pieceWithColorType) {
+        if (pieceWithColorType == null) {
+            return null;
+        }
         return PieceEntitiesCache
             .find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
     }
 
     public static PieceEntity of(PieceType pieceType, TeamColor teamColor) {
         return PieceEntitiesCache.find(pieceType, teamColor);
+    }
+
+    public boolean canMoveTo(MoveRequestForDB moveRequestForDB, BoardForDB boardForDB) {
+        Direction moveDirection = moveRequestForDB.getDirection();
+        if (isNotCorrectDirection(moveDirection)
+            || boardForDB.isAnyPieceExistsOnRouteBeforeDestination(moveRequestForDB)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+        }
+        if (boardForDB.isOwnPieceExistsInCell(moveRequestForDB.getDestination(), teamColor)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+        }
+        return true;
     }
 
     public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {

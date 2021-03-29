@@ -45,7 +45,7 @@ public class ChessServiceForDB {
 
     private MoveResponse createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
         try {
-            chessGameForDB.move(moveRequestDTO);
+            //chessGameForDB.move(moveRequestDTO);
         } catch (Exception e) {
             return new MoveResponse(true, e.getMessage());
         }

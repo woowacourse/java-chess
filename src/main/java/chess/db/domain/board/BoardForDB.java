@@ -4,6 +4,7 @@ import static chess.beforedb.domain.piece.type.PieceType.KING;
 
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.domain.piece.PieceEntity;
+import chess.db.domain.position.MoveRequestForDB;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntity;
 import java.sql.SQLException;
@@ -16,16 +17,26 @@ public class BoardForDB {
     private static final int NUMBER_OF_ALL_KINGS = 2;
 
     private final PiecesPositionsForDB piecesPositionsForDB;
+    private final MovableChecker movableChecker;
     private final Map<PositionEntity, CellForDB> cellsForDB = new HashMap<>();
 
     public BoardForDB() {
         piecesPositionsForDB = new PiecesPositionsForDB();
+        movableChecker = new MovableChecker();
     }
 
-    private void setCell(PositionEntity position, PieceEntity piece) {
-        CellForDB cell = findCell(position);
-        cell.put(piece);
-        cellsForDB.put(position, cell);
+    public void validateRoute(Long gameId, MoveRequestForDB moveRequestForDB) throws SQLException {
+        Map<PositionEntity, CellForDB> cells = new HashMap<>();
+        piecesPositionsForDB.setCellsStatusByGameId(gameId, cells);
+
+        CellForDB startPositionCell = cells.get(moveRequestForDB.getStartPosition());
+
+        validateOwnPiece(startPositionCell, moveRequestForDB.getCurrentTurnTeamColor());
+        validateMoveRoute(cells, moveRequestForDB);
+    }
+
+    public List<String> getStatus(Long gameId) throws SQLException {
+        return piecesPositionsForDB.getCellsStatusByGameIdInOrderAsString(gameId);
     }
 
     public CellForDB findCell(PositionEntity positionEntity) {
@@ -42,12 +53,6 @@ public class BoardForDB {
         startPositionCell.movePieceTo(destinationCell);
     }
 
-    public void validateRoute(MoveRouteForDB moveRouteForDB, TeamColor teamColor) {
-        CellForDB startPositionCell = cellsForDB.get(moveRouteForDB.getStartPosition());
-        validateOwnPiece(startPositionCell, teamColor);
-        validateMoveRoute(startPositionCell, moveRouteForDB);
-    }
-
     private void validateOwnPiece(CellForDB startPositionCell, TeamColor teamColor) {
         if (startPositionCell.isEmpty()) {
             throw new IllegalArgumentException("출발 위치에 기물이 존재하지 않습니다.");
@@ -57,10 +62,27 @@ public class BoardForDB {
         }
     }
 
-    private void validateMoveRoute(CellForDB startPositionCell, MoveRouteForDB moveRouteForDB) {
-        if (!startPositionCell.canMoveTo(moveRouteForDB, this)) {
+    private void validateMoveRoute(Map<PositionEntity, CellForDB> cells,
+        MoveRequestForDB moveRequestForDB) {
+
+        CellForDB startPositionCell = cells.get(moveRequestForDB.getStartPosition());
+        PieceEntity startPositionPiece = startPositionCell.getPieceEntity();
+        boolean canMove = startPositionPiece.canMoveTo(moveRequestForDB, this);
+        if (!canMove) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
+    }
+
+    public boolean isAnyPieceExistsOnRouteBeforeDestination(MoveRequestForDB moveRequestForDB) {
+        PositionEntity movingPosition = moveRequestForDB.getNextPositionOfStartPosition();
+        List<PositionEntity> canMovePositions = new ArrayList<>();
+        while (!movingPosition.equals(moveRequestForDB.getDestination())) {
+            canMovePositions.add(movingPosition);
+            movingPosition = movingPosition.move(moveRequestForDB.getDirection());
+        }
+        return canMovePositions.stream()
+            .map(cellsForDB::get)
+            .anyMatch(cell -> !cell.isEmpty());
     }
 
     public boolean isAnyPieceExistsOnRouteBeforeDestination(MoveRouteForDB moveRouteForDB) {
@@ -104,9 +126,5 @@ public class BoardForDB {
             .count() < NUMBER_OF_ALL_KINGS;
     }
 
-
-    public List<String> getStatus(Long gameId) throws SQLException {
-        return piecesPositionsForDB.getCellsStatusGameOfInOrder(gameId);
-    }
 }
 

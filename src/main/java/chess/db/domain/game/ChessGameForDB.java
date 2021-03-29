@@ -11,6 +11,7 @@ import chess.db.dao.PiecePosition;
 import chess.db.domain.board.BoardForDB;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.PlayersForDB;
+import chess.db.domain.position.MoveRequestForDB;
 import chess.db.domain.position.MoveRouteForDB;
 import chess.db.domain.position.PositionEntitiesCache;
 import chess.db.domain.position.PositionEntity;
@@ -77,11 +78,13 @@ public class ChessGameForDB {
         return chessGameResponseDTOs;
     }
 
-    public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
-        MoveRouteForDB moveRouteForDB = new MoveRouteForDB(moveRequestDTO);
-        boardForDB.validateRoute(moveRouteForDB, chessGameEntity.getCurrentTurnTeamColor());
-        updatePiecesOfPlayers(moveRouteForDB);
-        boardForDB.move(moveRouteForDB);
+    public void move(Long gameId, MoveRequestDTO moveRequestDTO) throws SQLException {
+        ChessGameEntity chessGameEntity = chessGameDAO.findById(gameId);
+        MoveRequestForDB moveRequestForDB
+            = new MoveRequestForDB(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
+        boardForDB.validateRoute(chessGameEntity.getId(), moveRequestForDB);
+        //updatePiecesOfPlayers(moveRequestForDB);
+        //boardForDB.move(moveRequestForDB);
     }
 
     private void updatePiecesOfPlayers(MoveRouteForDB moveRouteForDB) throws SQLException {
