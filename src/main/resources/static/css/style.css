@@ -1,0 +1,19 @@
+.board {
+    display: grid;
+    margin: 0 auto;
+    width: 480px;
+    height: 480px;
+    grid-template-columns: repeat(8, 60px);
+}
+
+.item {
+    text-align: center;
+}
+
+.dark {
+    background-color: #769656;
+}
+
+.bright {
+    background-color: #EEEED2;
+}
