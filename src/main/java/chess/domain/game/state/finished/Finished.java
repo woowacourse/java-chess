@@ -5,6 +5,9 @@ import chess.domain.game.state.Started;
 import chess.domain.piece.Position;
 
 public abstract class Finished extends Started {
+
+    public static final String FINISHED = "Finished";
+
     public Finished(ChessGame chessGame) {
         super(chessGame);
     }
@@ -22,6 +25,11 @@ public abstract class Finished extends Started {
     @Override
     public void end() {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
+    }
+
+    @Override
+    public String getStatus() {
+        return FINISHED;
     }
 
     @Override

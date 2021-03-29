@@ -13,5 +13,7 @@ public interface State {
 
     boolean isFinished();
 
+    String getStatus();
+
     Optional<String> getWinnerColorNotation();
 }

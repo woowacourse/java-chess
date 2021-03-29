@@ -5,8 +5,14 @@ import chess.domain.game.state.Started;
 
 public abstract class Idle extends Started {
 
+    public static final String IDLE = "idle";
+
     public Idle(final ChessGame chessGame) {
         super(chessGame);
     }
 
+    @Override
+    public String getStatus() {
+        return IDLE;
+    }
 }

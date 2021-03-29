@@ -78,7 +78,12 @@ public class ChessGame {
         return Board.getRow();
     }
 
+    public String getStatus() {
+        return state.getStatus();
+    }
+
     public boolean isBlackTurn() {
         return state instanceof BlackTurn;
     }
+
 }

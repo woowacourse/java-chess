@@ -43,8 +43,6 @@ public class ChessController {
     }
 
     public Object move(Request request, Response response) {
-        System.out.println(request.body());
-
         MoveDto moveDto = gson.fromJson(request.body(), MoveDto.class);
 
         String source = moveDto.getSource();
