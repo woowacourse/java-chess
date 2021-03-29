@@ -6,13 +6,13 @@ import chess.dao.RoomDAO;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Piece;
+import chess.dto.PieceDto;
 import chess.dto.requestdto.MoveRequestDto;
 import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
 import chess.dto.responsedto.GridResponseDto;
-import chess.dto.responsedto.PieceResponseDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ChessService {
 
     public Response move(MoveRequestDto requestDto) {
         try {
-            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
+//            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
             return new Response(ResponseCode.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
@@ -53,7 +53,7 @@ public class ChessService {
             return createGridAndPiece(createdRoomId);
         }
         GridResponseDto gridResponseDto = gridDAO.findRecentGridByRoomId(roomId.get());
-        List<PieceResponseDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridResponseDto.getGridId());
+        List<PieceDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridResponseDto.getGridId());
         return new GridAndPiecesResponseDto(gridResponseDto, piecesResponseDto);
     }
 
@@ -78,7 +78,7 @@ public class ChessService {
             pieceDAO.createPiece(gridId, piece);
         }
         GridResponseDto gridResponseDto = gridDAO.findGridByGridId(gridId);
-        List<PieceResponseDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridId);
+        List<PieceDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridId);
         return new GridAndPiecesResponseDto(gridResponseDto, piecesResponseDto);
     }
 }

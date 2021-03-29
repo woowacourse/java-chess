@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dto.requestdto.MoveRequestDto;
 import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
@@ -31,16 +32,14 @@ public class WebUIChessApplication {
 //
         post("/move", (req, res) -> {
             System.out.println(req.body());
-            HashMap reqBody = GSON.fromJson(req.body(), new HashMap<>().getClass());
+            MoveRequestDto reqBody = GSON.fromJson(req.body(), MoveRequestDto.class);
             System.out.println(reqBody);
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
-            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody);
+            System.out.println(reqBody);
+            System.out.println(reqBody);
+            System.out.println(reqBody);
+            System.out.println(reqBody);
+            System.out.println(reqBody);
             return null;
 //            String sourcePosition = reqBody.get("source");
 //            String targetPosition = reqBody.get("target");

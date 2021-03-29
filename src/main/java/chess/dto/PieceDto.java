@@ -1,13 +1,15 @@
-package chess.dto.responsedto;
+package chess.dto;
 
-public class PieceResponseDto implements ResponseDto {
+import chess.dto.responsedto.ResponseDto;
+
+public class PieceDto implements ResponseDto {
     private final long pieceId;
     private final boolean isBlack;
     private final String position;
     private final long gridId;
     private final String name;
 
-    public PieceResponseDto(long pieceId, boolean isBlack, String position, long gridId, String name) {
+    public PieceDto(long pieceId, boolean isBlack, String position, long gridId, String name) {
         this.pieceId = pieceId;
         this.isBlack = isBlack;
         this.position = position;

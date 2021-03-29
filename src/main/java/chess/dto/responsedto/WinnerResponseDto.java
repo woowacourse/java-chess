@@ -1,7 +1,6 @@
-package chess.dto.requestdto;
+package chess.dto.responsedto;
 
 import chess.domain.piece.Color;
-import chess.dto.responsedto.ResponseDto;
 
 public class WinnerResponseDto implements ResponseDto {
     private final String winner;

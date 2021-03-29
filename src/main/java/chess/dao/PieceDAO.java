@@ -1,7 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Piece;
-import chess.dto.responsedto.PieceResponseDto;
+import chess.dto.PieceDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,14 +46,14 @@ public class PieceDAO {
         throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
-    public List<PieceResponseDto> findPiecesByGridId(long gridId) throws SQLException {
+    public List<PieceDto> findPiecesByGridId(long gridId) throws SQLException {
         String query = "SELECT * FROM piece WHERE gridId = ?";
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
         ResultSet rs = pstmt.executeQuery();
-        List<PieceResponseDto> pieces = new ArrayList<>();
+        List<PieceDto> pieces = new ArrayList<>();
         while (rs.next()) {
-            pieces.add(new PieceResponseDto(
+            pieces.add(new PieceDto(
                     rs.getLong(FIRST_COLUMN),
                     rs.getBoolean(SECOND_COLUMN),
                     rs.getString(THIRD_COLUMN),

@@ -1,19 +1,13 @@
 package chess.dto.requestdto;
 
+import chess.dto.PieceDto;
+
+import java.util.List;
+
 public class MoveRequestDto {
-    private final String sourcePosition;
-    private final String targetPosition;
+    private final List<PieceDto> piecesDto;
 
-    public MoveRequestDto(String sourcePosition, String targetPosition) {
-        this.sourcePosition = sourcePosition;
-        this.targetPosition = targetPosition;
-    }
-
-    public String getTargetPosition() {
-        return targetPosition;
-    }
-
-    public String getSourcePosition() {
-        return sourcePosition;
+    public MoveRequestDto(List<PieceDto> piecesDto) {
+        this.piecesDto = piecesDto;
     }
 }

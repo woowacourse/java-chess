@@ -14,6 +14,10 @@ public final class Empty extends Piece {
         super(Color.BLACK, column.getName(), row.getName());
     }
 
+    public Empty(final Color color, final char x, final char y) {
+        super(color, x, y);
+    }
+
     public Empty(final char x, final int y) {
         super(Color.BLACK, x, y);
     }
