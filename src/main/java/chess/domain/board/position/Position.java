@@ -56,6 +56,13 @@ public class Position {
                 == this.vertical.getDistance(other.vertical);
     }
 
+    public boolean isKnightDirection(final Position other) {
+        int distanceHorizontal = this.horizontal.getDistance(other.horizontal);
+        int distanceVertical = this.vertical.getDistance(other.vertical);
+        return ((distanceHorizontal % 2) == 0 && (distanceHorizontal / 2) == distanceVertical)
+                || ((distanceVertical % 2) == 0 && (distanceVertical / 2) == distanceHorizontal);
+    }
+
     public int getDistance(final Position other) {
         if (isStraight(other)) {
             return this.horizontal.getDistance(other.horizontal)
@@ -64,6 +71,11 @@ public class Position {
 
         if (isDiagonal(other)) {
             return this.horizontal.getDistance(other.horizontal);
+        }
+
+        if (isKnightDirection(other)) {
+            return (this.horizontal.getDistance(other.horizontal)
+                    + this.vertical.getDistance(other.vertical)) / 3;
         }
 
         throw new IllegalArgumentException("직선이나 대각선 경로가 아니라서 거리를 측정할 수 없습니다.");
