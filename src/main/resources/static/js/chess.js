@@ -46,6 +46,7 @@ function printArr(myArr, currentTeamType) {
                 post.send(data);
                 current.value = '';
                 post.onreadystatechange = function () {
+                    console.log(post.status);
                     if (post.readyState === 4 && post.status === 200) {
                         var myArr = JSON.parse(post.responseText).data;
                         Array.from(document.getElementsByClassName('piece'))
