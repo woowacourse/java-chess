@@ -75,9 +75,7 @@ public class ChessGameDAO {
         }
         return new GameStatusEntity(
             rs.getString("title"),
-            rs.getString("current_turn_team_color"),
-            rs.getDouble("white_team_score"),
-            rs.getDouble("black_team_score"));
+            rs.getString("current_turn_team_color"));
     }
 
     private ResultSet getResultSetOfGameStatus(Long gameId) throws SQLException {

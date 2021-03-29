@@ -23,10 +23,12 @@ public class ChessGameForDB {
         chessGameDAO = new ChessGameDAO();
     }
 
-    public void createNew(BoardSetting boardSetting, String title) throws SQLException {
+    public Long createNew(BoardSetting boardSetting, String title) throws SQLException {
         validate(boardSetting);
         ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
-        boardForDB.createAndSaveNewPlayersAndPiecesPositionsOfGame(chessGameEntity.getId(), boardSetting);
+        boardForDB.createAndSaveNewPlayersAndPiecesPositionsOfGame(
+            chessGameEntity.getId(), boardSetting);
+        return chessGameEntity.getId();
     }
 
     private void validate(BoardSetting boardSetting) {
@@ -60,10 +62,10 @@ public class ChessGameForDB {
     public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
         GameStatusEntity gameStatusEntity = chessGameDAO.findStatusByGameId(gameId);
         ScoresEntity scores = boardForDB.getScores(gameId);
-        TeamColor currentTurnTeamColor = gameStatusEntity.getCurrentTurnTeamColor();
         return new GameStatusResponseDTO(
+            gameId,
             gameStatusEntity.getTitle(),
-            currentTurnTeamColor,
+            gameStatusEntity.getCurrentTurnTeamColor(),
             scores.getWhitePlayerScore(),
             scores.getBlackPlayerScore());
     }

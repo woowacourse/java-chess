@@ -5,6 +5,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.db.domain.board.PiecePositionFromDB;
+import chess.db.domain.board.PiecePositionNew;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.PlayerEntity;
@@ -17,21 +18,12 @@ import java.util.List;
 
 public class PlayerPiecePositionDAO {
 
-    public void save(Long playerId, Long pieceId, Long positionId) throws SQLException {
+    public void save(Long playerId, PiecePositionNew piecePosition) throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerId);
-        pstmt.setLong(2, pieceId);
-        pstmt.setLong(3, positionId);
-        pstmt.executeUpdate();
-    }
-
-    public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
-        String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerId);
-        pstmt.setLong(2, piecePosition.getPieceEntity().getId());
-        pstmt.setLong(3, piecePosition.getPositionEntity().getId());
+        pstmt.setLong(2, piecePosition.getPieceId());
+        pstmt.setLong(3, piecePosition.getPositionId());
         pstmt.executeUpdate();
     }
 
@@ -150,11 +142,11 @@ public class PlayerPiecePositionDAO {
         throws SQLException {
         String query = "SELECT name AS piece_name, color AS piece_color FROM piece "
             + "INNER JOIN (SELECT piece_id FROM player_piece_position "
-            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
-            + "ON player_piece_position.player_id = players.player_id "
-            + "WHERE player_piece_position.position_id = ?) "
-            + "AS piece_id_of_selected_game_and_selected_position "
-            + "ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id";
+            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) "
+            + "AS players_id_of_selected_game ON player_piece_position.player_id = players_id_of_selected_game.player_id "
+            + "AND player_piece_position.position_id = ?) "
+            + "AS player_piece_position_of_selected_game "
+            + "ON player_piece_position_of_selected_game.piece_id = piece.id";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, gameId);
         pstmt.setLong(2, positionId);

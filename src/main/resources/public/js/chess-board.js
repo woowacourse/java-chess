@@ -31,7 +31,7 @@ for (let i = 0; i < piece_cells.length; i++) {
 
 function request_move_post() {
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:8080/move', true);
+  xhr.open('POST', 'http://localhost:4567/move', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.responseType = 'json';
   xhr.send(JSON.stringify({
@@ -55,15 +55,10 @@ const is_king_dead = document.getElementById('is-king-dead');
 if (is_king_dead.innerText === "true") {
   const before_turn_team_name = document.getElementById('before-turn-team-name');
   alert(before_turn_team_name.innerText + ' 팀이 이겼습니다.');
-  window.location.href='http://localhost:8080';
+  window.location.href='http://localhost:4567';
 }
 
 
 function endConfirm() {
-  const is_end = confirm('정말 나가시겠습니까?');
-  if (is_end === true) {
-    alert('게임이 종료되었습니다.');
-    return true;
-  }
-  return false;
+  return confirm('정말 나가시겠습니까?');
 }

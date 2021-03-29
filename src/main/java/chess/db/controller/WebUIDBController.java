@@ -6,8 +6,6 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.MoveResponse;
 import chess.db.controller.dto.request.MoveRequestDTOForDB;
 import chess.db.controller.dto.response.BoardResponseDTOForDB;
 import chess.db.controller.dto.response.MoveResponseDTOForDB;
@@ -44,8 +42,7 @@ public class WebUIDBController {
         staticFiles.location("/public");
         handleHomeRequest();
         handleCreateChessRoomRequest();
-        handleEnterChessRoomRequest();
-        handleGetBoardRequest();
+        handleGetChessBoardRequest();
         handleMoveRequest();
         handleEndRequest();
     }
@@ -62,29 +59,35 @@ public class WebUIDBController {
 
     private void handleCreateChessRoomRequest() {
         post(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
-            chessServiceForDB.createNewChessGame(req.queryParams("room-title"));
-            res.redirect(ROOT + CHESS_BOARD);
+            Long createdChessGameId
+                = chessServiceForDB.createNewChessGame(req.queryParams("room-title"));
+            res.redirect(ROOT + CHESS_BOARD + "?id=" + createdChessGameId);
             return null;
         });
     }
 
-    private void handleEnterChessRoomRequest() {
+    private void handleGetChessBoardRequest() {
         get(ROOT + CHESS_BOARD, (req, res) -> {
-            String roomIdToEnter = req.queryParams("id");
-            res.redirect(ROOT + CHESS_BOARD + "?id=" + roomIdToEnter);
-            return null;
-        });
-    }
-
-    private void handleGetBoardRequest() {
-        get(ROOT + CHESS_BOARD, (req, res) -> {
-            Long roomId = Long.valueOf(req.queryParams("id"));
-            ResponseDTOForDB responseDTO = chessServiceForDB.getGameStatus(roomId);
+            Long gameId = Long.valueOf(req.queryParams("id"));
+            ResponseDTOForDB responseDTO = chessServiceForDB.getGameStatus(gameId);
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
-            putBoardRanks(responseDTO.getBoardResponseDTO(), model);
+            putBoardRanksToModel(model, responseDTO.getBoardResponseDTO());
             return render(model, CHESS_BOARD_VIEW);
         });
+    }
+
+    private void putBoardRanksToModel(Map<String, Object> model,
+        BoardResponseDTOForDB boardResponseDTO) {
+
+        model.put("rank8", boardResponseDTO.getRank8());
+        model.put("rank7", boardResponseDTO.getRank7());
+        model.put("rank6", boardResponseDTO.getRank6());
+        model.put("rank5", boardResponseDTO.getRank5());
+        model.put("rank4", boardResponseDTO.getRank4());
+        model.put("rank3", boardResponseDTO.getRank3());
+        model.put("rank2", boardResponseDTO.getRank2());
+        model.put("rank1", boardResponseDTO.getRank1());
     }
 
     private void handleMoveRequest() {
@@ -103,17 +106,6 @@ public class WebUIDBController {
             res.redirect(ROOT);
             return null;
         });
-    }
-
-    private void putBoardRanks(BoardResponseDTOForDB boardResponseDTO, Map<String, Object> model) {
-        model.put("rank8", boardResponseDTO.getRank8());
-        model.put("rank7", boardResponseDTO.getRank7());
-        model.put("rank6", boardResponseDTO.getRank6());
-        model.put("rank5", boardResponseDTO.getRank5());
-        model.put("rank4", boardResponseDTO.getRank4());
-        model.put("rank3", boardResponseDTO.getRank3());
-        model.put("rank2", boardResponseDTO.getRank2());
-        model.put("rank1", boardResponseDTO.getRank1());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

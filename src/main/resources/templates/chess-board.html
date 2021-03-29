@@ -27,6 +27,7 @@
 <h1 style="text-align: center; margin-top: 77px; margin-bottom: 50px;">인비의 체스 게임</h1>
 
 <div id="chess-board" style="text-align: center; width: 720px; margin-left: auto; margin-right: auto">
+
   {{#responseDTO}}
   <div id="current-status">
     <div id="current-scores" style="display: flex">
@@ -36,6 +37,7 @@
     <div id="current-turn-team-name">현재 차례 : {{currentTurnTeamName}} 팀</div>
   </div>
   {{/responseDTO}}
+
   <div class="rank" style="display: flex">
     <div class="cell left-side content" style="flex: 1">
       8
@@ -161,8 +163,8 @@
   <input type="submit" value="기물 이동">
 </form>
 
-<form action="/end" onsubmit="return endConfirm();">
-  <input type="submit" value="게임 종료">
+<form action="/" onsubmit="return endConfirm();">
+  <input type="submit" value="방 나가기">
 </form>
 
 

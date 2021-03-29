@@ -205,11 +205,11 @@
   
 - [ ] API
   - [ ] 방 생성
-    - [ ] `POST : "/create-chess-room"` 요청
+    - [ ] `POST : "/create-chess-room?room-title=${방 제목}"` 요청
       - [ ] 새로운 체스 게임, 플레이어들 생성.
       - [ ] 초기 기물 배치 세팅
       - [ ] `생성한 게임 id`를 반환
-      - [ ] Controller에서 `GET : "/chess-board?id={생성한 게임 id}"` redirect
+      - [ ] Controller에서 `GET : "/chess-board?id=${생성한 게임 id}"` redirect
   - [ ] 기존 방 접속
     - [ ] 방 클릭
       - [ ] `GET : "/chess-board?id={게임 id}"` 요청
@@ -229,7 +229,7 @@
     - [ ] `GET : "/"` 으로 redirect
   - [ ] 기물 이동
 
-    - [ ] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "{출발 위치}", "destination": "{도착 위치}"}"` 요청
+    - [ ] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "${출발 위치}", "destination": "${도착 위치}"}"` 요청
     - [ ] 이동 가능한 경우
       - [ ] 기물 이동, 턴 전환 DB 업데이트
       - [ ] 정상 이동 응답 반환

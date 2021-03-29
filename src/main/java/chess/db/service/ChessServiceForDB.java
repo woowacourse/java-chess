@@ -35,8 +35,8 @@ public class ChessServiceForDB {
         chessGameForDB = new ChessGameForDB();
     }
 
-    public void createNewChessGame(String title) throws SQLException {
-        chessGameForDB.createNew(boardSetting, title);
+    public Long createNewChessGame(String title) throws SQLException {
+        return chessGameForDB.createNew(boardSetting, title);
     }
 
     public List<ChessGameResponseDTO> getAllRoomsIdAndTitle() throws SQLException {
@@ -62,12 +62,9 @@ public class ChessServiceForDB {
         BoardStatusResponseDTOForDB boardStatusResponseDTOForDB
             = chessGameForDB.getBoardStatus(gameId);
         return new ResponseDTOForDB(
-            getBoardResponseDTO(boardStatusResponseDTOForDB.getCellsStatus()),
-            gameStatusResponseDTO.getCurrentTurnTeamColorName(),
-            gameStatusResponseDTO.getBlackPlayerScore(),
-            gameStatusResponseDTO.getWhitePlayerScore(),
+            gameStatusResponseDTO,
             boardStatusResponseDTOForDB.isKingDead(),
-            gameStatusResponseDTO.getBeforeTurnTeamColorName());
+            getBoardResponseDTO(boardStatusResponseDTOForDB.getCellsStatus()));
     }
 
     private BoardResponseDTOForDB getBoardResponseDTO(List<String> cellsStatus) {

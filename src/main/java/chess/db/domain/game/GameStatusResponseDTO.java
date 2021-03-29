@@ -3,20 +3,26 @@ package chess.db.domain.game;
 import chess.beforedb.domain.player.type.TeamColor;
 
 public class GameStatusResponseDTO {
+    private final Long gameId;
     private final String title;
     private final String currentTurnTeamColorName;
     private final String beforeTurnTeamColorName;
     private final double whitePlayerScore;
     private final double blackPlayerScore;
 
-    public GameStatusResponseDTO(String title, TeamColor teamColor,
+    public GameStatusResponseDTO(Long gameId, String title, TeamColor teamColor,
         double whitePlayerScore, double blackPlayerScore) {
 
+        this.gameId = gameId;
         this.title = title;
         this.currentTurnTeamColorName = teamColor.getName();
         this.beforeTurnTeamColorName = teamColor.oppositeTeamColorName();
         this.whitePlayerScore = whitePlayerScore;
         this.blackPlayerScore = blackPlayerScore;
+    }
+
+    public Long getGameId() {
+        return gameId;
     }
 
     public String getTitle() {

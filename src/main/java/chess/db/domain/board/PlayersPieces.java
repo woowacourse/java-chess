@@ -29,21 +29,31 @@ public class PlayersPieces {
     }
 
     public void saveInitialPieces(BoardSetting boardSetting, Long gameId) throws SQLException {
+        PlayersIds playersIds = getPlayersIdOfGame(gameId);
         List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
         for (int index = 0; index < piecesSetting.size(); index++) {
-            PositionEntity positionEntity = PositionEntitiesCache.get(index);
             PieceWithColorType pieceWithColorType = piecesSetting.get(index);
-            saveInitialPiece(pieceWithColorType, positionEntity, gameId);
+            PieceEntity pieceEntity = PieceEntity.of(pieceWithColorType);
+            PositionEntity positionEntity = PositionEntitiesCache.get(index);
+            PiecePositionNew piecePositionNew = new PiecePositionNew(pieceEntity, positionEntity);
+            savePieceIfExists(playersIds, piecePositionNew);
         }
     }
 
-    private void saveInitialPiece(PieceWithColorType pieceWithColorType,
-        PositionEntity positionEntity, Long gameId) throws SQLException {
-        if (pieceWithColorType != null) {
-            PieceEntity pieceEntity = PieceEntity.of(pieceWithColorType);
-            Long playerId = playersForDB
-                .getPlayerIdByGameIdAndTeamColor(gameId, pieceWithColorType.getTeamColor());
-            piecesPositionsForDB.save(playerId, pieceEntity.getId(), positionEntity.getId());
+    private PlayersIds getPlayersIdOfGame(Long gameId) throws SQLException {
+        Long whitePlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
+        return new PlayersIds(whitePlayerId, blackPlayerId);
+    }
+
+    private void savePieceIfExists(PlayersIds playersIds, PiecePositionNew piecePositionNew)
+        throws SQLException {
+        if (piecePositionNew.isPieceExists()) {
+            if (piecePositionNew.getTeamColor() == WHITE) {
+                piecesPositionsForDB.save(playersIds.getWhitePlayerId(), piecePositionNew);
+                return;
+            }
+            piecesPositionsForDB.save(playersIds.getBlackPlayerId(), piecePositionNew);
         }
     }
 

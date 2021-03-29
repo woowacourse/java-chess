@@ -4,12 +4,9 @@ import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
 import chess.db.dao.GamePiecePosition;
-import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerEntity;
-import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,12 +21,8 @@ public class PiecesPositionsForDB {
         playerPiecePositionDAO = new PlayerPiecePositionDAO();
     }
 
-    public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
-        playerPiecePositionDAO.save(playerId, piecePosition);
-    }
-
-    public void save(PlayerEntity playerEntity, PiecePosition piecePosition) throws SQLException {
-        playerPiecePositionDAO.save(new PlayerPiecePosition(playerEntity, piecePosition));
+    public void save(Long playerId, PiecePositionNew piecePositionNew) throws SQLException {
+        playerPiecePositionDAO.save(playerId, piecePositionNew);
     }
 
     public Map<PositionEntity, CellForDB> getAllCellsStatusByGameId(Long gameId)
@@ -112,10 +105,6 @@ public class PiecesPositionsForDB {
 
     public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
         playerPiecePositionDAO.updatePiecePosition(gamePiecePosition);
-    }
-
-    public void save(Long playerId, Long pieceId, Long positionId) throws SQLException {
-        playerPiecePositionDAO.save(playerId, pieceId, positionId);
     }
 
     public List<PiecePositionFromDB> getAllPiecesPositionsOfPlayer(Long playerId)

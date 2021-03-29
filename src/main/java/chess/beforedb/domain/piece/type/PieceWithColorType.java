@@ -37,13 +37,12 @@ public enum PieceWithColorType {
     public static PieceWithColorType of(String pieceName, String pieceColor) {
         PieceType pieceType = PieceType.valueOf(pieceName);
         TeamColor teamColor = TeamColor.of(pieceColor);
-        Arrays.stream(PieceWithColorType.values())
+        return Arrays.stream(PieceWithColorType.values())
             .filter(pieceWithColorType ->
                 pieceWithColorType.getPieceType() == pieceType
                     && pieceWithColorType.getTeamColor() == teamColor)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 색깔기물 타입입니다."));
-        return null;
     }
 
     public PieceType getPieceType() {
