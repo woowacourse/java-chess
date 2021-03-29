@@ -1,90 +1,93 @@
 package chess.controller;
 
+import chess.controller.dto.MessageDto;
+import chess.controller.dto.StatusDto;
 import chess.domain.board.Board;
 import chess.domain.command.*;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
-import chess.view.InputView;
-import chess.view.OutputView;
-import chess.view.dto.BoardDto;
+import chess.controller.dto.GameDto;
+import com.google.gson.Gson;
+import spark.Request;
+import spark.Response;
 
-import java.util.Arrays;
+import static spark.Spark.*;
+
 
 public class ChessController {
+    private static final Gson gson = new Gson();
+    private static final String CHESS_GAME = "chessGame";
 
     public void run() {
-        Board board = initializeBoard();
-        ChessGame chessGame = initializeGame(board);
-        Commands commands = initializeCommands(chessGame);
-        
-        OutputView.printStartMessage();
-
-        while (!chessGame.isFinished()) {
-            turn(board, chessGame, commands);
-        }
+        get("/", this::start, gson::toJson);
+        get("/move/:source/:target", this::move, gson::toJson);
+        get("/status", this::status, gson::toJson);
+        get("/end", this::end, gson::toJson);
     }
 
-    private Board initializeBoard() {
-        return new Board(PieceFactory.createPieces());
-    }
+    public Object start(Request request, Response response) {
+        setNewGameToSessionIfSessionIsNewOrIsFinished(request);
+        ChessGame chessGame = getChessGameFromSession(request);
 
-    private Commands initializeCommands(ChessGame chessGame) {
-        return new Commands(
-                Arrays.asList(
-                        new StartCommand(chessGame),
-                        new MoveCommand(chessGame),
-                        new EndCommand(chessGame),
-                        new StatusCommand(chessGame))
-        );
-    }
-
-    private ChessGame initializeGame(Board board) {
-        return new ChessGame(board);
-    }
-
-    private void turn(Board board, ChessGame chessGame, Commands commands) {
         try {
-            String input = InputView.inputCommandFromUser();
-
-            Command command = commands.getIfPresent(input);
-            command.execute(input);
-
-            print(board, chessGame, command);
+            chessGame.start();
         } catch (RuntimeException e) {
-            OutputView.printExceptionMessage(e.getMessage());
+            return new MessageDto(e.getMessage());
+        }
+
+        return new GameDto(chessGame);
+    }
+
+    public Object move(Request request, Response response) {
+        String source = request.params(":source");
+        String target = request.params(":target");
+
+        ChessGame chessGame = getChessGameFromSession(request);
+
+        MoveService moveService = new MoveService(chessGame);
+
+        try {
+            moveService.move(source, target);
+        } catch (RuntimeException e) {
+            return new MessageDto(e.getMessage());
+        }
+
+        return new GameDto(chessGame);
+    }
+
+    public Object status(Request request, Response response) {
+        ChessGame chessGame = getChessGameFromSession(request);
+
+        StatusService statusService = new StatusService(chessGame);
+        StatusDto statusDto = null;
+
+        try {
+            statusDto = statusService.getStatus();
+        } catch(RuntimeException e) {
+            return new MessageDto(e.getMessage());
+        }
+
+        return statusDto;
+    }
+
+    public Object end(Request request, Response response) {
+        ChessGame chessGame = getChessGameFromSession(request);
+
+        chessGame.end();
+
+        return new MessageDto("finish");
+    }
+
+    void setNewGameToSessionIfSessionIsNewOrIsFinished(Request request) {
+        if(request.session().isNew() || getChessGameFromSession(request).isFinished()) {
+            request.session().attribute(CHESS_GAME,
+                    new ChessGame(new Board(PieceFactory.createPieces()))
+            );
         }
     }
 
-    private void print(Board board, ChessGame chessGame, Command command) {
-        printScoreIfStatusCommand(command);
-        printBoard(chessGame, board);
-        printWinner(chessGame);
-    }
-
-    private void printWinner(ChessGame chessGame) {
-        if (!chessGame.isFinished()) {
-            return;
-        }
-
-        chessGame.getWinnerColorNotation()
-                .ifPresent(OutputView::printWinner);
-    }
-
-    private void printBoard(ChessGame chessGame, Board board) {
-        if (chessGame.isFinished()) {
-            return;
-        }
-
-        OutputView.drawBoard(new BoardDto(board));
-    }
-
-    private void printScoreIfStatusCommand(Command command) {
-        if (!command.isStatus()) {
-            return;
-        }
-
-        StatusCommand statusCommand = (StatusCommand) command;
-        OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
+    ChessGame getChessGameFromSession(Request request) {
+        return request.session().attribute(CHESS_GAME);
     }
 
 }
