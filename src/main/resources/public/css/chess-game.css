@@ -37,7 +37,7 @@ h1 {
   margin: 0 auto;
 }
 
-.row {
+.rank {
   display: flex;
   position: relative;
 }
@@ -51,8 +51,8 @@ h1 {
   background-image: url("/img/whiteTile.jpeg");
 }
 
-.row:nth-of-type(odd) .position:nth-of-type(odd),
-.row:nth-of-type(even) .position:nth-of-type(even) {
+.rank:nth-of-type(odd) .position:nth-of-type(odd),
+.rank:nth-of-type(even) .position:nth-of-type(even) {
   background-image: url("/img/blackTile.jpeg");
 }
 
@@ -69,7 +69,7 @@ h1 {
   filter: drop-shadow(0 5px 1.5px #222222);
 }
 
-.row-text {
+.rank-text {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 1em;
   color: #ffffff;
@@ -78,7 +78,7 @@ h1 {
   left: -20px;
 }
 
-.column-texts {
+.file-texts {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 1em;
   color: #ffffff;
