@@ -49,9 +49,11 @@ public class WebUIChessApplication {
             return new Response(ResponseCode.NO_CONTENT);
         }, JSON_TRANSFORMER);
 //
-//        get("/check/finished", (req, res) -> {
-//            return chessService.checkFinished();
-//        }, JSON_TRANSFORMER);
+        post("/grid/:gridId/finish", (req, res) -> {
+            String gridId = req.params("gridId");
+            chessService.finish(Long.parseLong(gridId));
+            return new Response(ResponseCode.NO_CONTENT);
+        }, JSON_TRANSFORMER);
 //
 //        get("/winner", (req, res) -> {
 //            return chessService.getWinner();

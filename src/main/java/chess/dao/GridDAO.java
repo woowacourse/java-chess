@@ -112,4 +112,13 @@ public class GridDAO {
         pstmt.executeUpdate();
         con.closeConnection(connection);
     }
+
+    public void changeToFinished(long gridId) throws SQLException {
+        String query = "UPDATE grid SET isFinished = true WHERE gridId = ?";
+        Connection connection = con.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+        pstmt.executeUpdate();
+        con.closeConnection(connection);
+    }
 }

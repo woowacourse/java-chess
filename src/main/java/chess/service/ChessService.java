@@ -99,9 +99,9 @@ public class ChessService {
         return new GridAndPiecesResponseDto(gridDto, piecesResponseDto);
     }
 
-//    public Response checkFinished() {
-//        return new Response(ResponseCode.OK, new CheckFinishedResponseDto(grid.isFinished()));
-//    }
+    public void finish(long gridId) throws SQLException {
+        gridDAO.changeToFinished(gridId);
+    }
 //
 //    public Response getWinner() {
 //        return new Response(ResponseCode.OK, new WinnerResponseDto(grid.winnerColor()));

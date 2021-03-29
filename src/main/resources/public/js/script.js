@@ -149,20 +149,21 @@ async function move(sourcePosition, targetPosition) {
         const sourcePieceName = sourcePiece.name;
         const targetPiece = findPieceByPosition(store.pieces, targetPosition);
 
+        if (targetPiece.name == "K" || targetPiece.name == "k") {
+            await finish();
+            if (store.gridDto.isBlackTurn) {
+                alert("player2가 이겼습니다.")
+            } else {
+                alert("player1이 이겼습니다.")
+            }
+            return;
+        }
+
         sourcePiece.name = ".";
         targetPiece.name = sourcePieceName;
         targetPiece.isBlack = sourcePieceIsBlack;
         store.gridDto.isBlackTurn = !store.gridDto.isBlackTurn;
 
-        const isFinished = await checkFinished();
-        if (isFinished === true) {
-            const winner = await getWinner();
-            if (winner === "WHITE") {
-                alert("player1이 이겼습니다!");
-            } else if (winner === "BLACK") {
-                alert("player2가 이겼습니다!");
-            }
-        }
         changeTurn();
     } catch (e) {
         console.log(e);
@@ -203,19 +204,19 @@ function changeTurn() {
     }
 }
 
-async function checkFinished() {
+async function finish() {
     try {
         const res = await axios({
-            method: 'get',
-            url: '/check/finished',
+            method: 'post',
+            url: `/grid/${store.gridDto.gridId}/finish`,
         });
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
             return;
         }
-        if (data.code === 200) {
-            return data.data.isFinished;
+        if (data.code === 204) {
+            store.gridDto.isFinished = true;
         }
     } catch (e) {
         console.log(e);
