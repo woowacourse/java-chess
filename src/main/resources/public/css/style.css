@@ -26,6 +26,6 @@ img {
 }
 
 .clicked {
-    border: 10px solid black;
+    border: 10px solid yellow;
     box-sizing: border-box;
 }
