@@ -5,6 +5,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.domain.ChessResult;
 import chess.domain.dto.request.MoveRequest;
 import chess.domain.dto.response.Response;
 import chess.domain.game.ChessGame;
@@ -25,7 +26,7 @@ public class WebUIChessApplication {
 
         final ChessGame chessGame = new ChessGame();
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
+            final Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
@@ -53,6 +54,14 @@ public class WebUIChessApplication {
             }
             return new Response("200", "게임 진행중");
         }, JSON_TRANSFORMER);
+
+        get("/result", (req, res) -> {
+            final Map<String, Object> model = new HashMap<>();
+            final ChessResult chessResult = new ChessResult(chessGame.board());
+            model.put("opposite", chessResult.winner().oppositeTeamName());
+            model.put("winner", chessResult.winner().teamName());
+            return render(model, "result.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

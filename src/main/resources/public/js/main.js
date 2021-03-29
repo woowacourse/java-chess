@@ -69,9 +69,8 @@ async function onSelectPiece(event) {
         nowClickedPiece.classList.toggle("clicked");
         return;
     }
+    clearClicked();
     await move(pastClickedPiece.id, nowClickedPiece.id);
-    nowClickedPiece.classList.remove("clicked");
-    pastClickedPiece.classList.remove("clicked");
     await checkEndGame();
 }
 
@@ -83,6 +82,15 @@ function decideClickedPiece() {
         }
     }
     return "";
+}
+
+function clearClicked() {
+    const tds = document.getElementsByTagName("td");
+    for (let i = 0; i < tds.length; i++) {
+        if (tds[i].classList.contains("clicked")) {
+            tds[i].classList.remove("clicked");
+        }
+    }
 }
 
 async function move(sourcePosition, targetPosition) {
@@ -113,7 +121,7 @@ async function move(sourcePosition, targetPosition) {
     });
 }
 
-function settingImg(sourcePosition, targetPosition) {
+async function settingImg(sourcePosition, targetPosition) {
     const source = document.getElementById(sourcePosition);
     const target = document.getElementById(targetPosition);
     const piece = source.getElementsByTagName("img")[0];
@@ -123,7 +131,7 @@ function settingImg(sourcePosition, targetPosition) {
     target.appendChild(piece);
 }
 
-function changeTurnText() {
+async function changeTurnText() {
     if (document.getElementById("user-").innerText === 'White') {
         document.getElementById("user-turn").innerText = 'Black';
         return;
@@ -136,9 +144,10 @@ async function checkEndGame() {
     .then(res => {
         return res.json();
     })
-    .then(obj => {
+    .then(async obj => {
         if (obj.code === "401") {
             alert(obj.message);
+            location.replace('/result');
         }
     })
 }
