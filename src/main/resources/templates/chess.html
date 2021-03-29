@@ -108,7 +108,10 @@
     </div>
 </div>
 <script>
-
+    {{#pieces}}
+        document.getElementById("{{position}}")
+            .insertAdjacentHTML("beforeend", "<img src=./img/pieces/{{team}}_{{initial}}.png>");
+    {{/pieces}}
 </script>
 </body>
 </html>

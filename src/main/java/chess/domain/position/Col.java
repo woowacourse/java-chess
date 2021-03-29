@@ -33,6 +33,14 @@ public enum Col {
                 .location;
     }
 
+    public static String col(final int location) {
+        return Arrays.stream(Col.values())
+                .filter(value -> value.location == location)
+                .findFirst()
+                .orElseThrow(InvalidCoordinateException::new)
+                .col;
+    }
+
     public static List<Integer> pawnInitCols() {
         return Arrays.stream(Col.values())
                 .map(pawnCol -> pawnCol.location)
