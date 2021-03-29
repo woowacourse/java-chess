@@ -29,12 +29,15 @@ for (let i = 0; i < piece_cells.length; i++) {
   });
 }
 
+const game_id = document.getElementById('game-id').innerText;
+
 function request_move_post() {
   const xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:4567/move', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.responseType = 'json';
   xhr.send(JSON.stringify({
+    gameId : game_id,
     startPosition: start_position,
     destination: destination
   }));
@@ -47,7 +50,7 @@ function request_move_post() {
       alert(move_response['errorMessage']);
       return;
     }
-    window.location.href='http://localhost:8080/chess-board';
+    window.location.href='http://localhost:4567/chess-board?id=' + game_id;
   };
 }
 
@@ -55,7 +58,7 @@ const is_king_dead = document.getElementById('is-king-dead');
 if (is_king_dead.innerText === "true") {
   const before_turn_team_name = document.getElementById('before-turn-team-name');
   alert(before_turn_team_name.innerText + ' 팀이 이겼습니다.');
-  window.location.href='http://localhost:4567';
+  window.location.href='http://localhost:4567/delete?id=' + game_id;
 }
 
 

@@ -62,7 +62,7 @@ public class BoardForDB {
         GamePiecePosition startPositionPiece = playersPieces
             .getGamePiecePositionByGameIdAndPosition(gameId, moveRequestForDB.getStartPosition());
         GamePiecePosition destinationPiece = playersPieces
-            .getGamePiecePositionByGameIdAndPosition(gameId, moveRequestForDB.getStartPosition());
+            .getGamePiecePositionByGameIdAndPosition(gameId, moveRequestForDB.getDestination());
         if (destinationPiece != null) {
             playersPieces.removePieceOfGame(destinationPiece);
             playersPieces.calculateAndUpdateScoresOfGame(gameId);
