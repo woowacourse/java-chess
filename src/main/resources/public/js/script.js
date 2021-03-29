@@ -1,3 +1,12 @@
+import {
+    finishGameByGridId,
+    getGridAndPiecesByRoomName,
+    movePiece,
+    restartGameByRoomId,
+    startGameByGridId
+} from "./service/chessService.js";
+
+
 let store = {};
 
 async function createChessBoard() {
@@ -8,10 +17,7 @@ async function createChessBoard() {
             store.roomName = roomName;
         } while (!roomName)
 
-        const res = await axios({
-            method: 'get',
-            url: `/grid/${roomName}`,
-        });
+        const res = await getGridAndPiecesByRoomName(roomName);
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
@@ -28,6 +34,11 @@ function addEvent() {
     const table = document.getElementById("chess-board");
     table.addEventListener("click", selectPiece);
 }
+
+const $startBtn = document.getElementById("start-btn");
+$startBtn.addEventListener("click", start);
+const $restartBtn = document.getElementById("restart-btn");
+$restartBtn.addEventListener("click", restart);
 
 createChessBoard();
 
@@ -58,7 +69,7 @@ function createChessBoardAndPieces(gridDto, piecesResponseDto) {
             const newTd = document.createElement("td");
 
             const row = String(8 - i); // 열(12345678)
-            const asciiNum = 'h'.charCodeAt; // h의 아스키코드
+            const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
             const column = String.fromCharCode(asciiNum + j);
             newTd.id = column + row;
             let pieceName = pieces[i][j].name;
@@ -130,17 +141,7 @@ function getClickedPiece() {
 
 async function move(sourcePosition, targetPosition) {
     try {
-        const res = await axios({
-            method: 'post',
-            url: '/move',
-            data: {
-                piecesDto: store.pieces.flat(),
-                sourcePosition,
-                targetPosition,
-                gridDto: store.gridDto
-            }
-        });
-
+        const res = await movePiece(store.pieces.flat(), store.gridDto, sourcePosition, targetPosition);
         const data = res.data;
         if (data.code === 401) {
             alert(data.message);
@@ -190,10 +191,7 @@ async function start() {
             alert("이미 게임이 시작했습니다.")
             return;
         }
-        const res = await axios({
-            method: 'post',
-            url: `/grid/${store.gridDto.gridId}/start`,
-        });
+        const res = await startGameByGridId(store.gridDto.gridId);
         const data = res.data;
         if (data.code === 401) {
             alert(data.message);
@@ -229,10 +227,7 @@ function changeTurn() {
 
 async function finish() {
     try {
-        const res = await axios({
-            method: 'post',
-            url: `/grid/${store.gridDto.gridId}/finish`,
-        });
+        const res = await finishGameByGridId(store.gridDto.gridId);
         const data = res.data;
         if (data.code === 204) {
             store.gridDto.isFinished = true;
@@ -244,10 +239,7 @@ async function finish() {
 
 async function restart() {
     try {
-        const res = await axios({
-            method: 'get',
-            url: `/room/${store.gridDto.roomId}/restart`,
-        });
+        const res = await restartGameByRoomId(store.gridDto.roomId);
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
@@ -262,7 +254,7 @@ async function restart() {
 }
 
 function findPieceByPosition(pieces, position) {
-    rowIndex = "87654321".indexOf(position[1]);
-    columnIndex = "abcdefgh".indexOf(position[0]);
+    const rowIndex = "87654321".indexOf(position[1]);
+    const columnIndex = "abcdefgh".indexOf(position[0]);
     return pieces[rowIndex][columnIndex];
 }
