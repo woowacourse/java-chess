@@ -1,0 +1,24 @@
+.chess_board {
+    height: 500px;
+    width : 500px;
+
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: 1fr;
+
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+.chess_board > .line {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.chess_board > .line:nth-child(odd) > .cell:nth-child(odd),
+.chess_board > .line:nth-child(even) > .cell:nth-child(even) {
+    background-color: darkgray;
+}
+
