@@ -1,0 +1,18 @@
+@font-face {
+    src: url("../font/BMHANNAProOTF.otf");
+    font-family: "hanna";
+}
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+}
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#title p {
+    font-family: "hanna";
+    font-size: 100px;
+}
