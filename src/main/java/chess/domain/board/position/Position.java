@@ -73,10 +73,6 @@ public class Position {
         return new Position(vertical.add(direction.getX()), horizontal.add(direction.getY()));
     }
 
-    public Position next(final Direction direction, final int distance) {
-        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
-    }
-
     public Horizontal getHorizontal() {
         return horizontal;
     }
