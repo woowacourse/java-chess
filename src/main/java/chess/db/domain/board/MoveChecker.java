@@ -22,10 +22,10 @@ public class MoveChecker {
         PieceEntity startPositionPieceToMove = getStartPositionPiece(cells, moveRequestForDB);
         PieceType pieceTypeToMove = startPositionPieceToMove.getPieceType();
         if ((pieceTypeToMove == ROOK) || (pieceTypeToMove == BISHOP)
-            || (pieceTypeToMove == QUEEN) || (pieceTypeToMove == KING)) {
+            || (pieceTypeToMove == QUEEN)) {
             return canMoveByDefaultMoveStrategy(moveRequestForDB, cells);
         }
-        if (pieceTypeToMove == KNIGHT) {
+        if (pieceTypeToMove == KNIGHT || pieceTypeToMove == KING) {
             return canByKnightMoveStrategy(moveRequestForDB, cells);
         }
         return canMoveByPawnMoveStrategy(moveRequestForDB, cells);

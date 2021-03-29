@@ -8,7 +8,7 @@ CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 show tables;
 
-set global max_connections = 500;
+set global max_connections = 1000;
 
 
 -- MySQL Workbench Forward Engineering
@@ -54,7 +54,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `chess_game`.`chess_game` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL DEFAULT '제목 없는 방',
   `current_turn_team_color` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -276,11 +276,11 @@ FROM
 				player_piece_position
 					INNER JOIN (
 						SELECT 
-							player.id AS player_id
+							*
 						FROM 
 							player
 						WHERE 
-							chess_game_id = 299
+							chess_game_id = 46
 						) AS players 
 						ON player_piece_position.player_id = players.player_id
 			WHERE player_piece_position.position_id = 129

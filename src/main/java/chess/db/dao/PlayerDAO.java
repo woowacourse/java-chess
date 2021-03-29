@@ -39,43 +39,6 @@ public class PlayerDAO {
         return pstmt.executeQuery();
     }
 
-    public List<Long> findAllPlayerIdsByChessGameId(Long gameId) throws SQLException {
-        List<Long> playerIds = new ArrayList<>();
-        ResultSet rs = getResultSet(gameId);
-        while (rs.next()) {
-            playerIds.add(rs.getLong("id"));
-        }
-        return playerIds;
-    }
-
-    private ResultSet getResultSet(Long gameId) throws SQLException {
-        String query = "SELECT player.id FROM player WHERE chess_game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        return pstmt.executeQuery();
-    }
-
-    public List<PlayerEntity> findAllByChessGame(ChessGameEntity chessGameEntity)
-        throws SQLException {
-        List<PlayerEntity> players = new ArrayList<>();
-        ResultSet rs = getResultSet(chessGameEntity);
-        while (rs.next()) {
-            players.add(new PlayerEntity(
-                rs.getLong("id"),
-                TeamColor.of(rs.getString("team_color")),
-                chessGameEntity)
-            );
-        }
-        return players;
-    }
-
-    private ResultSet getResultSet(ChessGameEntity chessGameEntity) throws SQLException {
-        String query = "SELECT * FROM player WHERE chess_game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, chessGameEntity.getId());
-        return pstmt.executeQuery();
-    }
-
     public double findScoreByPlayerId(Long playerId) throws SQLException {
         String query = "SELECT score FROM player WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -90,8 +53,8 @@ public class PlayerDAO {
     public void updateScore(Long playerId, double score) throws SQLException {
         String query = "UPDATE player SET score = ? WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerId);
-        pstmt.setDouble(2, score);
+        pstmt.setDouble(1, score);
+        pstmt.setLong(2, playerId);
         pstmt.executeUpdate();
     }
 

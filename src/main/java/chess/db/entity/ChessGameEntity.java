@@ -7,12 +7,16 @@ import java.util.Objects;
 
 public class ChessGameEntity {
     private Long id;
-    private String title;
+    private final String title;
     private TeamColor currentTurnTeamColor;
 
     public ChessGameEntity(String title) {
-        this.title = title;
         this.currentTurnTeamColor = WHITE;
+        if (title.isEmpty()) {
+            this.title = "제목 없는 방";
+            return;
+        }
+        this.title = title;
     }
 
     public ChessGameEntity(Long id, String title, String currentTurnTeamColor) {

@@ -4,6 +4,7 @@ import chess.db.domain.game.GameStatusResponseDTO;
 
 public class ResponseDTOForDB {
     private final Long gameId;
+    private final String title;
     private final double whitePlayerScore;
     private final double blackPlayerScore;
     private final String currentTurnTeamName;
@@ -15,6 +16,7 @@ public class ResponseDTOForDB {
         BoardResponseDTOForDB boardResponseDTO) {
 
         this.gameId = gameStatusResponseDTO.getGameId();
+        this.title = gameStatusResponseDTO.getTitle();
         this.whitePlayerScore = gameStatusResponseDTO.getWhitePlayerScore();
         this.blackPlayerScore = gameStatusResponseDTO.getBlackPlayerScore();
         this.currentTurnTeamName = gameStatusResponseDTO.getCurrentTurnTeamColorName();
@@ -25,6 +27,10 @@ public class ResponseDTOForDB {
 
     public Long getGameId() {
         return gameId;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public double getWhitePlayerScore() {
