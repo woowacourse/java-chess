@@ -47,6 +47,19 @@ public class Position {
         return new ArrayList<>(cache.values());
     }
 
+    public List<Position> positionsOfDirection(int columnValue, int rowValue) {
+        List<Position> positions = new ArrayList<>();
+        Position temp = this;
+        try {
+            while(true) {
+                temp = temp.moveBy(columnValue, rowValue);
+                positions.add(temp);
+            }
+        } catch (IllegalArgumentException e) {
+            return positions;
+        }
+    }
+
     public Position moveBy(int columnValue, int rowValue) {
         return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
     }
@@ -119,4 +132,5 @@ public class Position {
     public Column column() {
         return column;
     }
+
 }
