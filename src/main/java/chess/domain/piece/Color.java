@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-public enum PieceColor {
+public enum Color {
 
     WHITE,
     BLACK;
 
-    public PieceColor reversed() {
+    public Color reversed() {
         if(WHITE.equals(this)) {
             return BLACK;
         }

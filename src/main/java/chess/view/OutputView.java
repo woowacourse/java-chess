@@ -1,7 +1,5 @@
 package chess.view;
 
-import chess.domain.game.GameVisual;
-
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
@@ -14,8 +12,8 @@ public class OutputView {
                 + NEWLINE);
     }
 
-    public static void print(GameVisual gameVisual) {
-
+    public static void print(String result) {
+        System.out.println(result);
     }
 
     public static void printFinishedMessage() {

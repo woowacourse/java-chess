@@ -2,10 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.RealPiece;
-import chess.domain.piece.strategy.KingStrategy;
-import chess.domain.piece.strategy.RookStrategy;
+import chess.domain.piece.Color;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -53,7 +50,7 @@ public final class Board {
                 ;
     }
 
-    public int pawnCount(final Column column, final PieceColor color) {
+    public int pawnCount(final Column column, final Color color) {
         return (int) coordinates.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isOfColumn(column))

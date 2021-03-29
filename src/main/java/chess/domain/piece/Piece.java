@@ -16,7 +16,7 @@ public interface Piece {
 
     boolean isSameColor(final Piece piece);
 
-    boolean isColor(final PieceColor color);
+    boolean isColor(final Color color);
 
     boolean isPawn();
 

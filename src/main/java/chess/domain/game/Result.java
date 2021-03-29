@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-public interface GameVisual {
+public interface Result {
 
     String visualAsString();
 }

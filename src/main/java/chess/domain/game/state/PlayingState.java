@@ -1,57 +1,42 @@
 package chess.domain.game.state;
 
-import chess.domain.CommandAsString;
-import chess.domain.board.Game;
-import chess.domain.game.GameVisual;
-import chess.domain.piece.PieceColor;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public abstract class PlayingState extends StageState {
+public abstract class PlayingState implements GameState {
 
-    private final PieceColor currentTurnColor;
+    private final Board board;
 
-    protected PlayingState(final Game game, PieceColor color) {
-        super(game);
-        currentTurnColor = color;
+    protected PlayingState(final Board board) {
+        this.board = board;
     }
 
-    @Override
-    public GameState execute(final CommandAsString command) {
-        System.out.println("launched execute from playing state");
-        if (command.isEnd()) {
-            return new EndState(currentGame());
+    protected Board currentBoard() {
+        return board;
+    }
+
+    protected Board moveInBoard(final Position sourceName, final Position targetName, final Color color) {
+        validateMovement(sourceName, targetName, color);
+        return board.movePiece(sourceName, targetName);
+    }
+
+    private void validateMovement(final Position sourceName, final Position targetName, final Color color) {
+        validateOwner(sourceName, color);
+        validatePath(sourceName, targetName);
+    }
+
+    private void validateOwner(final Position sourceName, final Color color) {
+        final Piece piece = board.pieceAt(sourceName);
+        if (piece.isColor(color.reversed())) {
+            throw new IllegalArgumentException("해당 체스말을 움직일 권한이 없습니다.");
         }
-        if (command.isMove()) {
-            return executeMove(command.source(), command.target());
+    }
+
+    private void validatePath(final Position sourceName, final Position targetName) {
+        if (!board.hasAvailablePath(sourceName, targetName)) {
+            throw new IllegalArgumentException("경로 안에서 체스말이 이동할 수 없습니다.");
         }
-        if (command.isStatus()) {
-            return this;
-        }
-        throw new IllegalArgumentException("가능한 명령이 아닙니다.");
-    }
-
-    protected GameState executeMove(final Position sourceName, final Position targetName) {
-        Game newGame = moveInBoard(sourceName, targetName, currentTurnColor);
-        if (newGame.isGameOver()) {
-            return new EndState(newGame);
-        }
-        return otherTurnState(newGame);
-    }
-
-    protected abstract GameState otherTurnState(final Game game);
-
-    @Override
-    public GameVisual gameVisual() {
-        return null;
-    }
-
-    @Override
-    public GameVisual statusVisual() {
-        return null;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }
