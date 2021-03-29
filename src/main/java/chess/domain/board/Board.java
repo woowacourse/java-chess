@@ -72,4 +72,8 @@ public class Board {
     public boolean isKingAt(Position target) {
         return pieceAt(target).isKing();
     }
+
+    public Map<Position, Piece> board() {
+        return chessBoard;
+    }
 }

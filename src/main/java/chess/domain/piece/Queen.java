@@ -40,4 +40,9 @@ public class Queen extends AbstractPiece {
     public double getPoint() {
         return POINT;
     }
+
+    @Override
+    public String pieceName() {
+        return "queen";
+    }
 }

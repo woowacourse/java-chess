@@ -98,4 +98,12 @@ public class ChessGame {
     private void turnOver() {
         turn = Team.turnOver(turn);
     }
+
+    public Board board() {
+        return board;
+    }
+
+    public Team turn() {
+        return turn;
+    }
 }

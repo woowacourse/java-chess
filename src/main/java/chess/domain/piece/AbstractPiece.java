@@ -48,4 +48,9 @@ public abstract class AbstractPiece implements Piece {
     protected List<Position> generatePaths(Path path, Direction direction, int distance) {
         return IntStream.range(1, distance - 1).mapToObj(i -> path.move(direction, i)).collect(Collectors.toList());
     }
+
+    @Override
+    public String toString() {
+        return pieceName() + "_" + team.toString();
+    }
 }

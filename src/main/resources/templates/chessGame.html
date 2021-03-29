@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/chess.css" rel="stylesheet" type="text/css"/>
+    <title>Play Chess!</title>
+</head>
+
+<body>
+<div id="mainGame">
+    <h1 id="title">Play Chess!</h1>
+    <div id="chessBoard">
+        {{#squares}}
+        <div id="{{position}}" class="square">
+            {{#if piece}}
+            <img alt="position" class="squareImage" src="../images/{{piece}}.png"/>
+            {{else}}
+            <img alt="empty" src="../images/blank.png"/>
+            {{/if}}
+        </div>
+        {{/squares}}
+    </div>
+
+    <div id="teamInfoUI">
+        <div id="turn">{{turn}}팀의 차례입니다.</div>
+        <form action="/end" method="get">
+            <button>종료하기</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

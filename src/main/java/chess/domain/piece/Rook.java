@@ -40,4 +40,9 @@ public class Rook extends AbstractPiece {
     public double getPoint() {
         return POINT;
     }
+
+    @Override
+    public String pieceName() {
+        return "rook";
+    }
 }

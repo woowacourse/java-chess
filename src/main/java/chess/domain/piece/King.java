@@ -41,4 +41,9 @@ public class King extends AbstractPiece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public String pieceName() {
+        return "king";
+    }
 }

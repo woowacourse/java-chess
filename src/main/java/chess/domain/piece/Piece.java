@@ -13,6 +13,8 @@ public interface Piece {
 
     String getName();
 
+    String pieceName();
+
     Team getTeam();
 
     void confirmTurn(Team team);
