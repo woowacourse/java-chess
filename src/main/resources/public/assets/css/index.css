@@ -81,7 +81,7 @@ section {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    filter: drop-shadow(2px 2px 5px #000);
+    filter: drop-shadow(2px 2px 5px #000) blur(0);
 }
 
 .selected {

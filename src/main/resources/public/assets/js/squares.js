@@ -10,10 +10,9 @@ export const removeHighlight = () => {
 
 export const move = (source, destination) => {
   getBoardAfterMove(source, destination).then(board => {
-    const boardDto = board["board"];
+    checkGameState();
     reloadSquares(board["board"]["board"]);
     updateTurnBadge();
-    checkGameState();
   });
 }
 

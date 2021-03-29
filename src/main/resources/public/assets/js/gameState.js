@@ -28,7 +28,6 @@ const blurContents = (isBlur) => {
 
 export const checkGameState = () => {
   getGameStatus().then(gameStatus => {
-    console.log(gameStatus);
     if (gameStatus["gameState"] === "Ready") {
       launch.style.visibility = "visible";
       result.style.visibility = "hidden";
@@ -37,9 +36,9 @@ export const checkGameState = () => {
     }
     if (gameStatus["gameState"] === "Finished") {
       launch.style.visibility = "hidden";
-      blurContents(true);
       result.style.visibility = "visible";
       result.innerHTML = `<p>Winner is ${teams[gameStatus["winner"]]}</p><p>Click anywhere to start</p>`;
+      blurContents(true);
       return;
     }
     launch.style.visibility = "hidden";

@@ -16,12 +16,12 @@ const clickSquare = function (event) {
   addMovables(event.target.id);
 };
 
-const start = function (event) {
+const start = function () {
   getInitializedBoard().then(board => {
-    checkGameState();
     reloadSquares(board["board"]);
+    checkGameState();
+    updateTurnBadge();
   });
-  updateTurnBadge();
 }
 
 const addEventToSquares = () => {
