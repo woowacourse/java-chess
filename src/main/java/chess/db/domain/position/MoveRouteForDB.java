@@ -31,7 +31,7 @@ public class MoveRouteForDB {
     }
 
     public PositionEntity getNextPositionOfStartPosition() {
-        return startPosition.move(getDirection());
+        return startPosition.moveTo(getDirection());
     }
 
     public boolean isDestination(PositionEntity positionEntity) {

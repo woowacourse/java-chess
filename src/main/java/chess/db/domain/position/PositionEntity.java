@@ -51,7 +51,7 @@ public class PositionEntity {
         return Direction.of(fileDiff, rankDiff);
     }
 
-    public PositionEntity move(Direction direction) {
+    public PositionEntity moveTo(Direction direction) {
         return PositionEntity.of(file.getMovedFile(direction), rank.getMovedRank(direction));
     }
 

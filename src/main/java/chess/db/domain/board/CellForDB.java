@@ -18,16 +18,12 @@ public class CellForDB {
         this.pieceEntity = pieceEntity;
     }
 
-    public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
-        return pieceEntity.canMoveTo(moveRouteForDB, boardForDB);
-    }
-
     public void movePieceTo(CellForDB destinationCell) {
         destinationCell.put(pieceEntity);
         pieceEntity = null;
     }
 
-    public TeamColor teamColor() {
+    public TeamColor getTeamColor() {
         return pieceEntity.getTeamColor();
     }
 

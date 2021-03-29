@@ -18,17 +18,4 @@ public class KingEntity extends PieceEntity {
     public KingEntity(TeamColor teamColor) {
         super(KING, teamColor, SCORE, Direction.kingDirections());
     }
-
-    @Override
-    public boolean canMoveTo(MoveRouteForDB moveRouteForDB, BoardForDB boardForDB) {
-        if (isNotCorrectDirection(moveRouteForDB.getDirection())) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
-        }
-        PositionEntity nextPosition = moveRouteForDB.getNextPositionOfStartPosition();
-        if (!(moveRouteForDB.isDestination(nextPosition)
-            && boardForDB.isCellEmptyOrEnemyExists(nextPosition, getTeamColor()))) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
-        }
-        return true;
-    }
 }

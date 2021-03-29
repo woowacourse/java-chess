@@ -32,7 +32,7 @@ public class MoveRequestForDB {
     }
 
     public PositionEntity getNextPositionOfStartPosition() {
-        return startPosition.move(getDirection());
+        return startPosition.moveTo(getDirection());
     }
 
     public boolean isDestination(PositionEntity positionEntity) {
@@ -43,7 +43,7 @@ public class MoveRequestForDB {
         return startPosition.isRankForwardedBy(destination, rankDiff);
     }
 
-    public boolean isStartPositionFirstPawnPosition(TeamColor teamColor) {
-        return startPosition.isFirstPawnPosition(teamColor);
+    public boolean isStartPositionFirstPawnPosition() {
+        return startPosition.isFirstPawnPosition(currentTurnTeamColor);
     }
 }

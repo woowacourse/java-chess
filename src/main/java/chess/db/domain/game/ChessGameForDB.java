@@ -90,10 +90,10 @@ public class ChessGameForDB {
     private void updatePiecesOfPlayers(MoveRouteForDB moveRouteForDB) throws SQLException {
         PieceEntity movingPiece = boardForDB.findPiece(moveRouteForDB.getStartPosition());
         playersForDB.updatePiecePosition(movingPiece, moveRouteForDB.getDestination());
-        if (boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
-            PieceEntity deadPiece = boardForDB.findPiece(moveRouteForDB.getDestination());
-            playersForDB.removePiece(deadPiece, moveRouteForDB.getDestination());
-        }
+//        if (boardForDB.isAnyPieceExistsInCell(moveRouteForDB.getDestination())) {
+//            PieceEntity deadPiece = boardForDB.findPiece(moveRouteForDB.getDestination());
+//            playersForDB.removePiece(deadPiece, moveRouteForDB.getDestination());
+//        }
     }
 
     public boolean isKingDead() {
