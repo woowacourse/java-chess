@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
-import chess.dto.responsedto.GridResponseDto;
+import chess.dto.GridDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,7 +48,7 @@ public class GridDAO {
         throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
-    public GridResponseDto findGridByGridId(long gridId) throws SQLException {
+    public GridDto findGridByGridId(long gridId) throws SQLException {
         String query = "SELECT * FROM grid WHERE gridId = ? LIMIT 1";
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
@@ -56,7 +56,7 @@ public class GridDAO {
         if (!rs.next()) {
             return null;
         }
-        return new GridResponseDto(
+        return new GridDto(
                 rs.getLong(FIRST_COLUMN),
                 rs.getBoolean(SECOND_COLUMN),
                 rs.getBoolean(THIRD_COLUMN),
@@ -66,7 +66,7 @@ public class GridDAO {
         );
     }
 
-    public GridResponseDto findRecentGridByRoomId(long roomId) throws SQLException {
+    public GridDto findRecentGridByRoomId(long roomId) throws SQLException {
         String query = "SELECT * FROM grid WHERE roomId = ? ORDER BY createdAt DESC LIMIT 1";
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, roomId);
@@ -75,7 +75,7 @@ public class GridDAO {
         if (!rs.next()) {
             return null;
         }
-        return new GridResponseDto(
+        return new GridDto(
                 rs.getLong(FIRST_COLUMN),
                 rs.getBoolean(SECOND_COLUMN),
                 rs.getBoolean(THIRD_COLUMN),
@@ -89,6 +89,14 @@ public class GridDAO {
         String query = "UPDATE grid SET isStarted = true WHERE gridId = ?";
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+        pstmt.executeUpdate();
+    }
+
+    public void changeTurn(long gridId, boolean isBlackTurn) throws SQLException {
+        String query = "UPDATE grid SET isBlackTurn = ? WHERE gridId = ?";
+        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
+        pstmt.setLong(SECOND_PARAMETER_INDEX, gridId);
         pstmt.executeUpdate();
     }
 }

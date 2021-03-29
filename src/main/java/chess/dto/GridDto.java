@@ -1,8 +1,10 @@
-package chess.dto.responsedto;
+package chess.dto;
+
+import chess.dto.responsedto.ResponseDto;
 
 import java.time.LocalDateTime;
 
-public class GridResponseDto implements ResponseDto {
+public class GridDto implements ResponseDto {
     private final Long gridId;
     private final boolean isBlackTurn;
     private final boolean isFinished;
@@ -10,7 +12,7 @@ public class GridResponseDto implements ResponseDto {
     private final LocalDateTime createdAt;
     private final boolean isStarted;
 
-    public GridResponseDto(Long gridId, boolean isBlackTurn, boolean isFinished, Long roomId, LocalDateTime createdAt, boolean isStarted) {
+    public GridDto(Long gridId, boolean isBlackTurn, boolean isFinished, Long roomId, LocalDateTime createdAt, boolean isStarted) {
         this.gridId = gridId;
         this.isBlackTurn = isBlackTurn;
         this.isFinished = isFinished;

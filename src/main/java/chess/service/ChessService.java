@@ -11,13 +11,13 @@ import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.dto.GridDto;
 import chess.dto.PieceDto;
 import chess.dto.requestdto.MoveRequestDto;
 import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
-import chess.dto.responsedto.GridResponseDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -41,6 +41,7 @@ public class ChessService {
 
     public Response move(MoveRequestDto requestDto) {
         try {
+            GridDto gridDto = requestDto.getGridDto();
             List<Piece> pieces = requestDto.getPiecesDto().stream()
                     .map(pieceDto -> {
                         Color color = null;
@@ -58,9 +59,10 @@ public class ChessService {
                     })
                     .collect(Collectors.toList());
             List<Line> lines = Lines.from(pieces).lines();
-            Grid grid = new Grid(new CustomGridStrategy(lines));
-            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
 
+            Grid grid = new Grid(new CustomGridStrategy(lines, Color.findColorByTurn(requestDto.getGridDto().isBlackTurn())));
+            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
+            gridDAO.changeTurn(gridDto.getGridId(), !gridDto.isBlackTurn());
             PieceDto sourcePieceDto = requestDto.getPiecesDto().stream()
                     .filter(pieceDto -> {
                         return pieceDto.getPosition().equals(requestDto.getSourcePosition());
@@ -92,9 +94,9 @@ public class ChessService {
             long createdRoomId = roomDAO.createRoom(roomName);
             return createGridAndPiece(createdRoomId);
         }
-        GridResponseDto gridResponseDto = gridDAO.findRecentGridByRoomId(roomId.get());
-        List<PieceDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridResponseDto.getGridId());
-        return new GridAndPiecesResponseDto(gridResponseDto, piecesResponseDto);
+        GridDto gridDto = gridDAO.findRecentGridByRoomId(roomId.get());
+        List<PieceDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridDto.getGridId());
+        return new GridAndPiecesResponseDto(gridDto, piecesResponseDto);
     }
 
 //    public Response checkFinished() {
@@ -117,8 +119,8 @@ public class ChessService {
         for (Piece piece : pieces) {
             pieceDAO.createPiece(gridId, piece);
         }
-        GridResponseDto gridResponseDto = gridDAO.findGridByGridId(gridId);
+        GridDto gridDto = gridDAO.findGridByGridId(gridId);
         List<PieceDto> piecesResponseDto = pieceDAO.findPiecesByGridId(gridId);
-        return new GridAndPiecesResponseDto(gridResponseDto, piecesResponseDto);
+        return new GridAndPiecesResponseDto(gridDto, piecesResponseDto);
     }
 }

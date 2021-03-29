@@ -13,7 +13,9 @@ async function createChessBoard() {
             url: `/grid/${roomName}`,
         });
         const data = res.data;
-        store.grid = data.data.gridResponseDto;
+        console.log("/grid/roomName")
+        console.log(data);
+        store.gridDto = data.data.gridDto;
         if (data.code !== 200) {
             alert(data.message);
             return;
@@ -37,6 +39,7 @@ async function createChessBoard() {
             pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
         }
         store.pieces = pieces;
+        console.log("게임 시작 시 저장되는 store");
         console.log(store);
         const table = document.getElementById("chess-board");
         for (let i = 0; i < 8; i++) {
@@ -119,9 +122,11 @@ async function move(sourcePosition, targetPosition) {
             data: {
                 piecesDto: store.pieces.flat(),
                 sourcePosition,
-                targetPosition
+                targetPosition,
+                gridDto: store.gridDto
             }
         });
+
         const data = res.data;
         if (data.code === 401) {
             alert(data.message);
@@ -147,6 +152,7 @@ async function move(sourcePosition, targetPosition) {
         sourcePiece.name = ".";
         targetPiece.name = sourcePieceName;
         targetPiece.isBlack = sourcePieceIsBlack;
+        store.gridDto.isBlackTurn = !store.gridDto.isBlackTurn;
 
         const isFinished = await checkFinished();
         if (isFinished === true) {
@@ -167,7 +173,7 @@ async function start() {
     try {
         const res = await axios({
             method: 'post',
-            url: `/grid/${store.grid.gridId}/start`,
+            url: `/grid/${store.gridDto.gridId}/start`,
         });
         const data = res.data;
         if (data.code === 401) {

@@ -1,16 +1,17 @@
 package chess.dto.responsedto;
 
+import chess.dto.GridDto;
 import chess.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GridAndPiecesResponseDto implements ResponseDto {
-    private final GridResponseDto gridResponseDto;
+    private final GridDto gridDto;
     private final List<PieceDto> piecesResponseDto;
 
-    public GridAndPiecesResponseDto(GridResponseDto gridResponseDto, List<PieceDto> piecesResponseDto) {
-        this.gridResponseDto = gridResponseDto;
+    public GridAndPiecesResponseDto(GridDto gridDto, List<PieceDto> piecesResponseDto) {
+        this.gridDto = gridDto;
         this.piecesResponseDto = new ArrayList<>(piecesResponseDto);
     }
 }

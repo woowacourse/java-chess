@@ -27,4 +27,9 @@ public class NormalGridStrategy implements GridStrategy {
     public GameState initGameState() {
         return new Ready();
     }
+
+    @Override
+    public Color turn() {
+        return Color.WHITE;
+    }
 }

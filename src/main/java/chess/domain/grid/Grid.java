@@ -23,7 +23,7 @@ public final class Grid {
         List<Line> lineGroup = gridStrategy.linesInInitGrid();
         this.lines = new Lines(lineGroup);
         this.score = new Score(lines);
-        this.turn = Color.WHITE;
+        this.turn = gridStrategy.turn();
         this.gameState = gridStrategy.initGameState();
     }
 
