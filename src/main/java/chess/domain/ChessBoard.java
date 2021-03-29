@@ -1,10 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.*;
-import chess.domain.piece.info.Color;
-import chess.domain.piece.info.Direction;
-import chess.domain.piece.info.Position;
+import chess.domain.piece.info.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,15 +30,11 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public Piece findByPosition(Position position) {
-        return chessBoard.keySet().stream()
-                .filter(key -> key.equals(position))
-                .map(key -> chessBoard.get(position))
-                .findFirst()
-                .orElse(Empty.EMPTY);
+        return chessBoard.getOrDefault(position, Empty.EMPTY);
     }
 
     public boolean isAliveAllKings() {
@@ -83,8 +78,34 @@ public class ChessBoard {
     }
 
     private void validateMovable(Piece sourcePiece, Position source, Position target) {
-        if (!sourcePiece.canMove(source, target, this)) {
+        if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException();
+        }
+        validatePieceRoute(sourcePiece, source, target);
+    }
+
+    private void validatePieceRoute(Piece sourcePiece, Position source, Position target) {
+        if (sourcePiece.isKnight()) {
+            return;
+        }
+        if (!sourcePiece.isKnight() && !sourcePiece.isPawn()) {
+            validateCrossOrDiagonalRoute(source, target);
+            return;
+        }
+        Pawn pawn = (Pawn) sourcePiece;
+        if (!pawn.isAttackAble(source, target)) {
+            validateCrossOrDiagonalRoute(source, target);
+        }
+    }
+
+    private void validateCrossOrDiagonalRoute(Position source, Position target) {
+        if (source.isCross(target)) {
+            Direction cross = Cross.findCrossByTwoPosition(source, target);
+            hasPieceInPath(source, target, cross);
+        }
+        if (source.isDiagonal(target)) {
+            Direction diagonal = Diagonal.findDiagonalByTwoPosition(source, target);
+            hasPieceInPath(source, target, diagonal);
         }
     }
 

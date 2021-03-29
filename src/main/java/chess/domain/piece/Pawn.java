@@ -27,8 +27,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        return moveStrategy.canMove(source, target, chessBoard);
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target) {
+        return moveStrategy.canMove(source, target);
     }
 
     public static Map<Position, Pawn> generate() {
@@ -38,5 +43,10 @@ public class Pawn extends Piece {
                 .collect(Collectors.toMap(position -> position, position -> new Pawn("p", Color.WHITE)));
         blackPawns.putAll(whitePawns);
         return blackPawns;
+    }
+
+    public boolean isAttackAble(Position source, Position target) {
+        PawnMoveStrategy pawnMoveStrategy = (PawnMoveStrategy) moveStrategy;
+        return pawnMoveStrategy.isAttackAble(source, target);
     }
 }

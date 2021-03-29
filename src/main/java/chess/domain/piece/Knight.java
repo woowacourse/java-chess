@@ -23,8 +23,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        return moveStrategy.canMove(source, target, chessBoard);
+    public boolean isKnight() {
+        return true;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target) {
+        return moveStrategy.canMove(source, target);
     }
 
     public static Map<Position, Knight> generate() {

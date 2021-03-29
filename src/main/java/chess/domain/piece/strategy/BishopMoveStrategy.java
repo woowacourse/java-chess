@@ -1,12 +1,13 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.Position;
 
-public class BishopMoveStrategy extends AllMoveStrategy {
+public class BishopMoveStrategy implements MoveStrategy {
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        validateDiagonal(source, target, chessBoard);
-        return true;
+    public boolean canMove(Position source, Position target) {
+        if (source.isDiagonal(target)) {
+            return true;
+        }
+        return false;
     }
 }
