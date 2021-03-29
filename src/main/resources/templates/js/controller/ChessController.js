@@ -16,7 +16,7 @@ export class ChessController {
         this.moveEventHandler();
     }
 
-    async start() {
+    async #start() {
         let result
         try {
             result = await new Ajax().patch('start', '')
@@ -49,6 +49,10 @@ export class ChessController {
         }
     }
 
+    #finished(winner) {
+        this.#chessGame.setWinner(winner)
+    }
+
     async #printGameStatus() {
         let result = await new Ajax().get('status')
 
@@ -62,7 +66,7 @@ export class ChessController {
 
         console.log(result)
         if(result.status === 'finished') {
-            alert("finished")
+            this.#finished(this.#turn)
             return
         }
 
@@ -111,7 +115,7 @@ export class ChessController {
     startEventHandler() {
         document.getElementById('start_button')
             .addEventListener('click', async e => {
-                await this.start()
+                await this.#start()
             })
     }
 

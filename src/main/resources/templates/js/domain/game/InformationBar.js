@@ -1,4 +1,4 @@
-export class Turn {
+export class InformationBar {
 
     #dom
 
@@ -15,6 +15,10 @@ export class Turn {
 
     setTurn(turn) {
         this.#dom.innerHTML = `<strong>${turn}의 차례 입니다.</strong>`
+    }
+
+    setWinner(winner) {
+        this.#dom.innerHTML = `<strong>${winner}가 승리했습니다.</strong>`
     }
 
     get dom() {

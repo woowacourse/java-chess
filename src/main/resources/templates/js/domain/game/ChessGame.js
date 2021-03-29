@@ -1,12 +1,12 @@
 import {Board} from "../board/Board.js";
-import {Turn} from "./Turn.js";
+import {InformationBar} from "./InformationBar.js";
 import {Status} from "./Status.js";
 
 export class ChessGame {
 
     #dom
     #board = new Board()
-    #turn = new Turn()
+    #informationBar = new InformationBar()
     #status = new Status()
 
     constructor() {
@@ -17,13 +17,13 @@ export class ChessGame {
     #init() {
         document.body.appendChild(this.#dom)
         this.#dom.appendChild(this.#board.dom)
-        this.#dom.appendChild(this.#turn.dom)
+        this.#dom.appendChild(this.#informationBar.dom)
         this.#dom.appendChild(this.#status.dom)
     }
 
 
     setTurn(turn) {
-        this.#turn.setTurn(turn)
+        this.#informationBar.setTurn(turn)
     }
 
     setPieces(pieces) {
@@ -32,6 +32,10 @@ export class ChessGame {
 
     setStatus(result) {
         this.#status.setStatus(result)
+    }
+
+    setWinner(winner) {
+        this.#informationBar.setWinner(winner)
     }
 
     #createDom() {
