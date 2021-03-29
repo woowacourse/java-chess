@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.piece.Piece;
 import chess.dto.PieceDto;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,28 +32,29 @@ public class PieceDAO {
         boolean isBlack = piece.isBlack();
         String position = String.valueOf(piece.position().x()) + String.valueOf(piece.position().y());
         String name = String.valueOf(piece.name());
-
         String query = "INSERT INTO piece (isBlack, position, gridId, name) VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = con.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        Connection connection = con.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
         pstmt.setString(SECOND_PARAMETER_INDEX, position);
         pstmt.setLong(THIRD_PARAMETER_INDEX, gridId);
         pstmt.setString(FOURTH_PARAMETER_INDEX, name);
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
-        con.closeConnection();
         if (rs.next()) {
-            return rs.getLong(FIRST_COLUMN);
+            long result = rs.getLong(FIRST_COLUMN);
+            con.closeConnection(connection);
+            return result;
         }
         throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
     public List<PieceDto> findPiecesByGridId(long gridId) throws SQLException {
+        Connection connection = con.getConnection();
         String query = "SELECT * FROM piece WHERE gridId = ?";
-        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
         ResultSet rs = pstmt.executeQuery();
-        con.closeConnection();
         List<PieceDto> pieces = new ArrayList<>();
         while (rs.next()) {
             pieces.add(new PieceDto(
@@ -63,16 +65,18 @@ public class PieceDAO {
                     rs.getString(FIFTH_COLUMN)
             ));
         }
+        con.closeConnection(connection);
         return pieces;
     }
 
     public void updatePiece(long pieceId, boolean isBlack, char name) throws SQLException {
+        Connection connection = con.getConnection();
         String query = "UPDATE piece SET isBlack = ?, name = ?  WHERE pieceId = ?";
-        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
         pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
         pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
         pstmt.executeUpdate();
-        con.closeConnection();
+        con.closeConnection(connection);
     }
 }
