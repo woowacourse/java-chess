@@ -42,6 +42,7 @@ public class GridDAO {
         pstmt.setLong(THIRD_PARAMETER_INDEX, roomId);
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
+        con.closeConnection();
         if (rs.next()) {
             return rs.getLong(FIRST_COLUMN);
         }
@@ -56,6 +57,7 @@ public class GridDAO {
         if (!rs.next()) {
             return null;
         }
+        con.closeConnection();
         return new GridDto(
                 rs.getLong(FIRST_COLUMN),
                 rs.getBoolean(SECOND_COLUMN),

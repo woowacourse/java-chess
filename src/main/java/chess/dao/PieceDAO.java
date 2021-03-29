@@ -40,6 +40,7 @@ public class PieceDAO {
         pstmt.setString(FOURTH_PARAMETER_INDEX, name);
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
+        con.closeConnection();
         if (rs.next()) {
             return rs.getLong(FIRST_COLUMN);
         }
@@ -51,6 +52,7 @@ public class PieceDAO {
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
         ResultSet rs = pstmt.executeQuery();
+        con.closeConnection();
         List<PieceDto> pieces = new ArrayList<>();
         while (rs.next()) {
             pieces.add(new PieceDto(
@@ -71,5 +73,6 @@ public class PieceDAO {
         pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
         pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
         pstmt.executeUpdate();
+        con.closeConnection();
     }
 }

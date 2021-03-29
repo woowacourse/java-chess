@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionSetup {
+    private Connection connection;
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소
@@ -29,14 +31,15 @@ public class ConnectionSetup {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
+        connection = con;
         return con;
     }
 
     // 드라이버 연결해제
-    public void closeConnection(Connection con) {
+    public void closeConnection() {
         try {
-            if (con != null)
-                con.close();
+            if (connection != null)
+                connection.close();
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }

@@ -23,6 +23,7 @@ public class RoomDAO {
         pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
+        con.closeConnection();
         if (rs.next()) {
             return rs.getLong(FIRST_COLUMN);
         }
@@ -34,6 +35,7 @@ public class RoomDAO {
         PreparedStatement pstmt = con.getConnection().prepareStatement(query);
         pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
         ResultSet rs = pstmt.executeQuery();
+        con.closeConnection();
         if (!rs.next()) {
             return Optional.ofNullable(null);
         }
