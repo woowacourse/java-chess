@@ -29,12 +29,20 @@ public final class RealPiece implements Piece {
 
     @Override
     public boolean isDifferentColor(final Piece piece) {
-        return pieceStrategy.isDifferentColor(piece);
+        if (piece.isEmpty()) {
+            return true;
+        }
+        final RealPiece realPiece = (RealPiece) piece;
+        return !this.color.equals(realPiece.color);
     }
 
     @Override
     public boolean isSameColor(final Piece piece) {
-        return pieceStrategy.blockedBy(piece);
+        if (piece.isEmpty()) {
+            return false;
+        }
+        final RealPiece realPiece = (RealPiece) piece;
+        return this.color.equals(realPiece.color);
     }
 
     @Override
@@ -59,7 +67,11 @@ public final class RealPiece implements Piece {
 
     @Override
     public String getName() {
-        return pieceStrategy.name();
+        final String pieceName = pieceStrategy.name();
+        if (color.equals(PieceColor.BLACK)) {
+            return pieceName.toUpperCase();
+        }
+        return pieceName;
     }
 
     @Override
