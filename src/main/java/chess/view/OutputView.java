@@ -4,7 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Result;
 import chess.domain.piece.Piece;
-import chess.domain.piece.feature.Color;
+import chess.domain.feature.Color;
 
 import java.util.Map;
 

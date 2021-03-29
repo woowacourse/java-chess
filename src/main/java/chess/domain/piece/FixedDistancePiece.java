@@ -1,10 +1,9 @@
-package chess.domain.piece.fixeddistance;
+package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.feature.Color;
+import chess.domain.feature.Color;
 
 public abstract class FixedDistancePiece extends Piece {
 	public FixedDistancePiece(final Color color, final Position position) {

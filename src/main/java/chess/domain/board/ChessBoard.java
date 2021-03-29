@@ -3,12 +3,12 @@ package chess.domain.board;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.feature.Color;
-import chess.domain.piece.fixeddistance.King;
-import chess.domain.piece.fixeddistance.Knight;
-import chess.domain.piece.flexibledistance.Bishop;
-import chess.domain.piece.flexibledistance.Queen;
-import chess.domain.piece.flexibledistance.Rook;
+import chess.domain.feature.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

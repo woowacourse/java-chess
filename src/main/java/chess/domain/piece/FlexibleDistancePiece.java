@@ -1,10 +1,9 @@
-package chess.domain.piece.flexibledistance;
+package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.feature.Color;
+import chess.domain.feature.Color;
 
 public abstract class FlexibleDistancePiece extends Piece {
 	public FlexibleDistancePiece(final Color color, final Position position) {
