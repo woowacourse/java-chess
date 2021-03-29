@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Team;
 import chess.dto.PiecesDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,28 +21,35 @@ public class WebChessGameController {
 
         post("/enter", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String button = "시작";
-            model.put("button", button);
+            model.put("button", "시작");
+            model.put("isWhite", true);
             return render(model, "chess.html");
         });
 
+        ChessGame chessGame = new ChessGame();
+        chessGame.initialize();
+
         post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGame chessGame = new ChessGame();
-            chessGame.initialize();
-            PiecesDTO piecesDTOs = PiecesDTO.create(chessGame.board());
-            model.put("pieces", piecesDTOs.getPieceDTOs());
-            String button = "초기화";
-            model.put("button", button);
+            gameInformation(chessGame, model);
             return render(model, "chess.html");
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String button = "초기화";
-            model.put("button", button);
+            chessGame.move(req.queryParams("startPoint"), req.queryParams("endPoint"));
+            gameInformation(chessGame, model);
             return render(model, "chess.html");
         });
+    }
+
+    private void gameInformation(ChessGame chessGame, Map<String, Object> model) {
+        PiecesDTO piecesDTOs = PiecesDTO.create(chessGame.board());
+        model.put("pieces", piecesDTOs.getPieceDTOs());
+        model.put("button", "초기화");
+        model.put("isWhite", Team.WHITE.equals(chessGame.turn()));
+        model.put("black-score", chessGame.scoreByTeam(Team.BLACK));
+        model.put("white-score", chessGame.scoreByTeam(Team.WHITE));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
