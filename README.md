@@ -312,3 +312,15 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
 <br>
 
+
+
+
+
+# Todo list
+
+
+
+- [ ] 도메인 의존 구조 정리
+- [ ] View <->  Controller <-> Service <-> Domain 연결
+- [ ] 테스트 코드 연결
+- [ ] 체스보드 View 꾸미기
