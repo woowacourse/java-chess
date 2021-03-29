@@ -1,10 +1,9 @@
 const squareStyleTemplate = (squareStyle) => {
-  return `position: fixed; 
+  return `position: fixed;
     left:${squareStyle.left}px;
     top:${squareStyle.top}px;
     width:${squareStyle.width}px;
-    height:${squareStyle.height}px;
-    cursor:pointer;`;
+    height:${squareStyle.height}px;`;
 };
 
 const columns = ["a", "b", "c", "d", "e", "f", "g", "h"];

@@ -79,6 +79,11 @@ public class WebUIChessApplication {
         get("/currentTurn", "application/json", (req, res) -> {
             return gson.toJson(chessGame.currentTurn());
         });
+
+        get("/exit", (req, res) -> {
+           chessGame.end();
+           return gson.toJson(new String("success"));
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -31,9 +31,16 @@ const addEventToSquares = () => {
   );
 }
 
+const exitGame = () => {
+  fetch("./exit").then(response => {
+    checkGameState();
+  });
+}
+
 const addEventToScreen = () => {
   document.querySelector(".launch").addEventListener("click", start);
   document.querySelector(".result").addEventListener("click", start);
+  document.querySelector(".exit").addEventListener("click", exitGame);
 }
 
 window.onload = () => {
