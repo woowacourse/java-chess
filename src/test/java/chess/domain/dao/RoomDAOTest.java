@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +18,6 @@ public class RoomDAOTest {
         String roomName = "abcd";
         long roomId = roomDao.createRoom(roomName);
         Object foundRoomId = roomDao.findRoomIdByName(roomName);
-        assertThat(roomId).isEqualTo(foundRoomId);
+        assertThat(Optional.ofNullable(roomId)).isEqualTo(foundRoomId);
     }
 }

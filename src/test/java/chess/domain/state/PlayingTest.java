@@ -1,7 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.grid.Grid;
-import chess.domain.grid.gridStrategy.CustomGridStrategy;
+import chess.domain.grid.gridStrategy.TestGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -31,7 +31,7 @@ public class PlayingTest {
     @Test
     @DisplayName("move를 실행했을 때 King을 잡을 경우, Finished 상태를 반환")
     public void move_ReturnFinished() {
-        Grid grid = new Grid(new CustomGridStrategy());
+        Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         King king = new King(Color.BLACK, 'c', '3');
         grid.lines().assign(new Position("b2"), pawn);
@@ -43,7 +43,7 @@ public class PlayingTest {
     @Test
     @DisplayName("move를 실행했을 때 King을 잡지 않은 경우, Playing 상태를 반환")
     public void move_ReturnPlaying() {
-        Grid grid = new Grid(new CustomGridStrategy());
+        Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
         Rook rook = new Rook(Color.BLACK, 'c', '3');
         grid.lines().assign(new Position("b2"), pawn);

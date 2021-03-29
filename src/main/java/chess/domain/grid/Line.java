@@ -1,6 +1,14 @@
 package chess.domain.grid;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +19,10 @@ public final class Line {
 
     private Line(final List<Piece> pieces) {
         this.pieces = new ArrayList<>(pieces);
+    }
+
+    public static Line from(final List<Piece> pieces) {
+        return new Line(pieces);
     }
 
     public static Line general(final Row row, final Color color) {

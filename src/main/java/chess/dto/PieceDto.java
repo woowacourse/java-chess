@@ -16,4 +16,24 @@ public class PieceDto implements ResponseDto {
         this.gridId = gridId;
         this.name = name;
     }
+
+    public long getPieceId() {
+        return pieceId;
+    }
+
+    public boolean isBlack() {
+        return isBlack;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public long getGridId() {
+        return gridId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

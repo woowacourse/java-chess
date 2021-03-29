@@ -32,18 +32,8 @@ public class WebUIChessApplication {
 //
         post("/move", (req, res) -> {
             System.out.println(req.body());
-            MoveRequestDto reqBody = GSON.fromJson(req.body(), MoveRequestDto.class);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            System.out.println(reqBody);
-            return null;
-//            String sourcePosition = reqBody.get("source");
-//            String targetPosition = reqBody.get("target");
-//            return chessService.move(new MoveRequestDto(sourcePosition, targetPosition));
+            MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
+            return chessService.move(moveRequestDto);
         }, JSON_TRANSFORMER);
 
         get("/grid/:roomName", (req, res) -> {

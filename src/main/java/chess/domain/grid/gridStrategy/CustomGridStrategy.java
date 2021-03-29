@@ -1,26 +1,22 @@
 package chess.domain.grid.gridStrategy;
 
 import chess.domain.grid.Line;
-import chess.domain.grid.Row;
 import chess.domain.state.GameState;
 import chess.domain.state.Playing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CustomGridStrategy implements GridStrategy {
+    private final List<Line> lines;
+
+    public CustomGridStrategy(List<Line> lines) {
+        this.lines = new ArrayList(lines);
+    }
+
     @Override
     public List<Line> linesInInitGrid() {
-        List<Line> lineGroup = new ArrayList<>();
-
-        List<Row> rows = Arrays.asList(Row.values());
-        Collections.reverse(rows);
-        for (Row row : rows) {
-            lineGroup.add(Line.empty(row));
-        }
-        return lineGroup;
+        return new ArrayList<>(lines);
     }
 
     @Override

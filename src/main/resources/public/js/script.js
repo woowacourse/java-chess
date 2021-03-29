@@ -14,7 +14,6 @@ async function createChessBoard() {
         });
         const data = res.data;
         store.grid = data.data.gridResponseDto;
-        console.log(data);
         if (data.code !== 200) {
             alert(data.message);
             return;
@@ -37,6 +36,8 @@ async function createChessBoard() {
         for (let i = 0; i < 8; i++) {
             pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
         }
+        store.pieces = pieces;
+        console.log(store);
         const table = document.getElementById("chess-board");
         for (let i = 0; i < 8; i++) {
             const newTr = document.createElement("tr");
@@ -47,11 +48,8 @@ async function createChessBoard() {
                 const asciiNum = 97; // h의 아스키코드
                 const column = String.fromCharCode(asciiNum + j);
                 newTd.id = column + row;
-                console.log("pieces[i][j]")
-                console.log(pieces[i][j])
                 let pieceName = pieces[i][j].name;
                 if (pieceName !== ".") {
-                    console.log(pieces[i][j])
                     const piece = document.createElement("img");
                     if (pieceName === pieceName.toUpperCase()) {
                         pieceName = "B" + pieceName.toUpperCase();
@@ -119,8 +117,9 @@ async function move(sourcePosition, targetPosition) {
             method: 'post',
             url: '/move',
             data: {
-                source: sourcePosition,
-                target: targetPosition
+                piecesDto: store.pieces.flat(),
+                sourcePosition,
+                targetPosition
             }
         });
         const data = res.data;
@@ -139,6 +138,15 @@ async function move(sourcePosition, targetPosition) {
             target.getElementsByTagName("img")[0].remove();
         }
         target.appendChild(piece);
+
+        const sourcePiece = findPieceByPosition(store.pieces, sourcePosition);
+        const sourcePieceIsBlack = sourcePiece.isBlack;
+        const sourcePieceName = sourcePiece.name;
+        const targetPiece = findPieceByPosition(store.pieces, targetPosition);
+
+        sourcePiece.name = ".";
+        targetPiece.name = sourcePieceName;
+        targetPiece.isBlack = sourcePieceIsBlack;
 
         const isFinished = await checkFinished();
         if (isFinished === true) {
@@ -257,4 +265,10 @@ function resetChessBoard() {
     }
     createChessBoard();
     start();
+}
+
+function findPieceByPosition(pieces, position) {
+    rowIndex = "87654321".indexOf(position[1]);
+    columnIndex = "abcdefgh".indexOf(position[0]);
+    return pieces[rowIndex][columnIndex];
 }
