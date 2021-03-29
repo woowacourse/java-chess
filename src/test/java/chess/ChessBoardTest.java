@@ -5,15 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -160,41 +151,5 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> {
             chessBoard.move("b1", "d2");
         }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("각 진영 별 점수 계산")
-    void scoreTest() {
-        chessBoard.move("b2", "b4");
-        chessBoard.move("c7", "c5");
-        chessBoard.move("b4", "c5");
-        assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(37.0);
-        assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(37.0);
-    }
-
-    @Test
-    @DisplayName("한 쪽의 킹이 죽고 끝났을 때 점수 계산")
-    void scoreTest2() {
-        ChessBoard chessBoard = new ChessBoard();
-        Map<Position, Piece> board = chessBoard.getChessBoard();
-        board.put(Position.of("b8"), new King(Color.BLACK));
-        board.put(Position.of("c8"), (new Rook(Color.BLACK)));
-        board.put(Position.of("a7"), (new Pawn(Color.BLACK)));
-        board.put(Position.of("c7"), (new Pawn(Color.BLACK)));
-        board.put(Position.of("d7"), (new Bishop(Color.BLACK)));
-        board.put(Position.of("b6"), (new Pawn(Color.BLACK)));
-        board.put(Position.of("e6"), (new Queen(Color.BLACK)));
-
-        board.put(Position.of("f4"), (new Knight(Color.WHITE)));
-        board.put(Position.of("g4"), (new Queen(Color.WHITE)));
-        board.put(Position.of("f3"), (new Pawn(Color.WHITE)));
-        board.put(Position.of("h3"), (new Pawn(Color.WHITE)));
-        board.put(Position.of("f2"), (new Pawn(Color.WHITE)));
-        board.put(Position.of("g2"), (new Pawn(Color.WHITE)));
-        board.put(Position.of("e1"), (new Rook(Color.WHITE)));
-        board.put(Position.of("f1"), (new King(Color.WHITE)));
-
-        assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(20.0);
-        assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(19.5);
     }
 }

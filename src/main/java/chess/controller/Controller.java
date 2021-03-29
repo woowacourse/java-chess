@@ -41,7 +41,7 @@ public class Controller {
 
     public void endGame(ChessGame chessGame) {
         OutputView.gameEnd();
-        Result result = chessGame.result();
+        Result result = chessGame.gameResult();
         if (InputView.isStatus()) {
             OutputView.printResult(result);
         }

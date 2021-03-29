@@ -45,10 +45,9 @@ public class ChessGame {
         return chessBoard.isOver();
     }
 
-    public Result result() {
-        double blackScore = chessBoard.getScore(Color.WHITE);
-        double whiteScore = chessBoard.getScore(Color.BLACK);
-        return new Result(blackScore, whiteScore);
+    public Result gameResult() {
+        Result result = new Result(chessBoard.getChessBoard());
+        return result;
     }
 
     public ChessBoard getChessBoard() {

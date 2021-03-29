@@ -1,39 +1,68 @@
 package chess.domain.game;
 
+import chess.domain.board.Column;
+import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Result {
 
     public static final String DRAW = "무";
     public static final String WIN = "승";
     public static final String LOSE = "패";
+    private static final int COLUMN_NEIGHBOR_PAWN = 2;
+    private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
+    private final Map<Position, Piece> chessBoard;
     private final Map<Color, Double> result = new HashMap<>();
 
-    public Result(double blackScore, double whiteScore) {
-        result.put(Color.BLACK, blackScore);
-        result.put(Color.WHITE, whiteScore);
+    public Result(Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
     public Map<Color, Double> getResult() {
         return result;
     }
 
-    public Map<Color, String> getWinOrLose() {
-        Map<Color, String> winOrLose = new HashMap<>();
-        if (result.get(Color.BLACK).equals(result.get(Color.WHITE))) {
-            winOrLose.put(Color.BLACK, DRAW);
-            winOrLose.put(Color.WHITE, DRAW);
-            return winOrLose;
+    public String winOrLose(Color color) {
+        if (result.get(color) > result.get(color.getOppositeColor())) {
+            return WIN;
         }
-        if (result.get(Color.BLACK) > result.get(Color.WHITE)) {
-            winOrLose.put(Color.BLACK, WIN);
-            winOrLose.put(Color.WHITE, LOSE);
-            return winOrLose;
+        if (result.get(color) == result.get(color.getOppositeColor())) {
+            return DRAW;
         }
-        winOrLose.put(Color.BLACK, LOSE);
-        winOrLose.put(Color.WHITE, WIN);
-        return winOrLose;
+        return LOSE;
+    }
+
+    public double score(Color color) {
+        double score = normalScore(color);
+        Map<Column, Long> pawnCount = pawnCount(color);
+        double punishmentScore = pawnScore(pawnCount);
+        return score - punishmentScore;
+    }
+
+    private double normalScore(Color color) {
+        return chessBoard.values().stream()
+            .filter(piece -> piece.isSameColor(color))
+            .mapToDouble(Piece::score)
+            .sum();
+    }
+
+    private Map<Column, Long> pawnCount(Color color) {
+        return chessBoard.entrySet()
+            .stream()
+            .filter(piece -> piece.getValue().isPawn())
+            .filter(piece -> piece.getValue().isSameColor(color))
+            .collect(Collectors
+                .groupingBy(position -> position.getKey().getColumn(), Collectors.counting()));
+    }
+
+    private double pawnScore(Map<Column, Long> pawnCount) {
+        return pawnCount.values().stream()
+            .filter(count -> count >= COLUMN_NEIGHBOR_PAWN)
+            .mapToDouble(count -> count * PAWN_SCORE_PUNISHMENT_RATIO)
+            .sum();
     }
 }

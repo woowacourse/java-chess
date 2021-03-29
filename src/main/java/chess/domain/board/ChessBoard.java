@@ -11,14 +11,11 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
     private static final int BOARD_SIZE = 8;
     private static final int NUMBER_OF_KINGS = 2;
-    private static final int COLUMN_NEIGHBOR_PAWN = 2;
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final String SAME_POSITION = "같은 위치로 이동할 수 없습니다.";
 
@@ -117,35 +114,5 @@ public class ChessBoard {
             .filter(Piece::isKing)
             .count();
         return kingCount < NUMBER_OF_KINGS;
-    }
-
-    public double getScore(Color color) {
-        double score = calculateScore(color);
-        Map<Column, Long> pawnCount = calculatePawnCount(color);
-        double punishmentScore = calculatePunishmentScore(pawnCount);
-        return score - punishmentScore;
-    }
-
-    private double calculateScore(Color color) {
-        return chessBoard.values().stream()
-            .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::score)
-            .sum();
-    }
-
-    private Map<Column, Long> calculatePawnCount(Color color) {
-        return chessBoard.entrySet()
-            .stream()
-            .filter(piece -> piece.getValue().isPawn())
-            .filter(piece -> piece.getValue().isSameColor(color))
-            .collect(Collectors
-                .groupingBy(position -> position.getKey().getColumn(), Collectors.counting()));
-    }
-
-    private double calculatePunishmentScore(Map<Column, Long> pawnCount) {
-        return pawnCount.values().stream()
-            .filter(count -> count >= COLUMN_NEIGHBOR_PAWN)
-            .mapToDouble(count -> count * PAWN_SCORE_PUNISHMENT_RATIO)
-            .sum();
     }
 }
