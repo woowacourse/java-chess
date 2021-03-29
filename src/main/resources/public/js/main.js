@@ -108,14 +108,27 @@ async function move(sourcePosition, targetPosition) {
             alert(obj.message);
             return;
         }
-        const source = document.getElementById(sourcePosition);
-        const target = document.getElementById(targetPosition);
-        const piece = source.getElementsByTagName("img")[0];
-        if (target.getElementsByTagName("img")[0]) {
-            target.getElementsByTagName("img")[0].remove();
-        }
-        target.appendChild(piece);
+        settingImg(sourcePosition, targetPosition);
+        changeTurnText();
     });
+}
+
+function settingImg(sourcePosition, targetPosition) {
+    const source = document.getElementById(sourcePosition);
+    const target = document.getElementById(targetPosition);
+    const piece = source.getElementsByTagName("img")[0];
+    if (target.getElementsByTagName("img")[0]) {
+        target.getElementsByTagName("img")[0].remove();
+    }
+    target.appendChild(piece);
+}
+
+function changeTurnText() {
+    if (document.getElementById("user-").innerText === 'White') {
+        document.getElementById("user-turn").innerText = 'Black';
+        return;
+    }
+    document.getElementById("user-turn").innerText = 'White';
 }
 
 async function checkEndGame() {
