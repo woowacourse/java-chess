@@ -3,7 +3,7 @@ function initiate() {
     const url = "http://localhost:8080/chessboard";
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
-            const boardDTO = JSON.parse(this.responseText).data;
+            const boardDTO = JSON.parse(this.responseText);
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
         }
     }
@@ -94,7 +94,7 @@ function sendMoveRequest(current, destination, currentTeamType) {
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             removeOutdatedChessBoard();
-            const boardDTO = JSON.parse(this.responseText).data;
+            const boardDTO = JSON.parse(this.responseText);
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
             return;
         }

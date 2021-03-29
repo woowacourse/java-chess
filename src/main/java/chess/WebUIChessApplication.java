@@ -31,7 +31,7 @@ public class WebUIChessApplication {
         get("/chessboard", (req, res) -> {
             res.type("application/json");
             BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "hi", new Gson().toJsonTree(boardDTO)));
+            return new Gson().toJson(new Gson().toJsonTree(boardDTO));
         });
         post("/chessboard/move", (req, res) -> {
             RequestDTO requestDTO = new Gson().fromJson(req.body(), RequestDTO.class);
@@ -42,7 +42,7 @@ public class WebUIChessApplication {
             chessBoard.move(current, destination, teamType);
             currentTeamType = currentTeamType.findOppositeTeam();
             BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
-            return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "hi", new Gson().toJsonTree(boardDTO)));
+            return new Gson().toJson(new Gson().toJsonTree(boardDTO));
         });
         exception(RuntimeException.class, (e, req, res) -> {
             res.status(500);
