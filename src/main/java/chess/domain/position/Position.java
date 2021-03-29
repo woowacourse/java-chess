@@ -46,7 +46,9 @@ public final class Position implements Comparable<Position> {
 
     public Direction directionToTarget(Position target) {
         if (hasMiddlePath(target)) {
-            return Direction.matchingDirection(directionFormat(target));
+            List<Integer> directionFormat = directionFormat(target);
+            return Direction.matchingDirection(
+                    directionFormat.get(0), directionFormat.get(1));
         }
         throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
