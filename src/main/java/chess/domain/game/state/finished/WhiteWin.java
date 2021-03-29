@@ -11,6 +11,11 @@ public class WhiteWin extends Finished {
     }
 
     @Override
+    public String getStatus() {
+        return "whiteWin";
+    }
+
+    @Override
     public Optional<String> getWinnerColorNotation() {
         return Optional.of(WhitePiece.NOTATION);
     }

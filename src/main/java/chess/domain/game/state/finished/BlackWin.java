@@ -11,7 +11,14 @@ public class BlackWin extends Finished {
     }
 
     @Override
+    public String getStatus() {
+        return "blackWin";
+    }
+
+    @Override
     public Optional<String> getWinnerColorNotation() {
         return Optional.of(BlackPiece.NOTATION);
     }
+
+
 }

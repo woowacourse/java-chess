@@ -12,7 +12,6 @@ import static spark.Spark.patch;
 
 public class ChessController {
     private static final Gson gson = new Gson();
-    private static final String CHESS_GAME = "chessGame";
 
     public void run() {
         get("/:gameId/start", this::start, gson::toJson);

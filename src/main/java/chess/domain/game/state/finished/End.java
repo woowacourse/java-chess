@@ -29,4 +29,9 @@ public class End extends Finished {
         return true;
     }
 
+    @Override
+    public String getStatus() {
+        return "end";
+    }
+
 }

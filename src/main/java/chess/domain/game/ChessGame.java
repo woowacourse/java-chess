@@ -82,6 +82,10 @@ public class ChessGame {
         return state.getStatus();
     }
 
+    public State getState() {
+        return state;
+    }
+
     public boolean isBlackTurn() {
         return state instanceof BlackTurn;
     }

@@ -12,6 +12,7 @@ public class GameDto {
 
     private final String status;
     private final String turn;
+    private final String winner;
     private final List<PieceDto> pieceDtos;
 
     public GameDto(ChessGame chessGame) {
@@ -22,6 +23,7 @@ public class GameDto {
 
         this.turn = getTurn(chessGame);
         this.status = getStatus(chessGame);
+        this.winner = getWinner(chessGame);
     }
 
     private String getStatus(ChessGame chessGame) {
@@ -36,6 +38,14 @@ public class GameDto {
         return WHITE;
     }
 
+    private String getWinner(ChessGame chessGame) {
+        if(chessGame.getWinnerColorNotation().isPresent()) {
+            return chessGame.getWinnerColorNotation().get();
+        }
+
+        return "";
+    }
+
     public List<PieceDto> getPieceDtos() {
         return pieceDtos;
     }
@@ -47,4 +57,9 @@ public class GameDto {
     public String getStatus() {
         return status;
     }
+
+    public String getWinner() {
+        return winner;
+    }
+
 }

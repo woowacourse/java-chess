@@ -6,8 +6,6 @@ import chess.domain.piece.Position;
 
 public abstract class Finished extends Started {
 
-    public static final String FINISHED = "finished";
-
     public Finished(ChessGame chessGame) {
         super(chessGame);
     }
@@ -28,12 +26,8 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public String getStatus() {
-        return FINISHED;
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
+
 }

@@ -1,6 +1,8 @@
 export class Status {
 
     #dom
+    #blackScore
+    #whiteScore
 
     constructor() {
         this.#dom = this.#createDom()
@@ -13,6 +15,10 @@ export class Status {
         `
     }
 
+    getWinnerByScore() {
+        if(this.#blackScore > this.#whiteScore) return 'black'
+        if(this.#blackScore < this.#whiteScore) return 'white'
+    }
 
     #createDom() {
         return document.createRange()

@@ -86,16 +86,21 @@ export class ChessController {
         let pieces = PieceFactory.getPiecesByPieceDtos(result)
         this.#chessGame.setPieces(pieces)
 
-        console.log(result)
-        if(result.status === 'finished') {
-            this.#finished(this.#turn)
-            return
-        }
-
         if(result.status === 'running') {
             this.#chessGame.setTurn(result.turn)
             this.#turn = result.turn
         }
+
+        if(result.status !== 'running') {
+            this.#finished(this.#calculateWinner(result))
+        }
+
+    }
+
+    #calculateWinner(result) {
+        if(result.status === 'blackWin') return "black"
+        if(result.status === 'whiteWin') return "white"
+        return this.#chessGame.getWinnerByScore
     }
 
     async #selectPiece(e) {

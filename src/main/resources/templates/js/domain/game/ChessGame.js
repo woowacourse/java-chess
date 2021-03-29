@@ -16,7 +16,7 @@ export class ChessGame {
     }
 
     #init() {
-        document.body.appendChild(this.#dom)
+        document.getElementById('wrapper').appendChild(this.#dom)
         this.#dom.appendChild(this.#board.dom)
         this.#dom.appendChild(this.#informationBar.dom)
         this.#dom.appendChild(this.#status.dom)
@@ -52,6 +52,10 @@ export class ChessGame {
 
     get gameId() {
         return this.#gameId
+    }
+
+    get winnerByScore() {
+        return this.#status.getWinnerByScore()
     }
 
 }
