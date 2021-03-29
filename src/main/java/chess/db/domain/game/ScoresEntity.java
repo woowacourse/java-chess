@@ -1,19 +1,19 @@
 package chess.db.domain.game;
 
 public class ScoresEntity {
-    private final double blackPlayerScore;
     private final double whitePlayerScore;
+    private final double blackPlayerScore;
 
-    public ScoresEntity(double blackPlayerScore, double whitePlayerScore) {
-        this.blackPlayerScore = blackPlayerScore;
+    public ScoresEntity(double whitePlayerScore, double blackPlayerScore) {
         this.whitePlayerScore = whitePlayerScore;
-    }
-
-    public double getBlackPlayerScore() {
-        return blackPlayerScore;
+        this.blackPlayerScore = blackPlayerScore;
     }
 
     public double getWhitePlayerScore() {
         return whitePlayerScore;
+    }
+
+    public double getBlackPlayerScore() {
+        return blackPlayerScore;
     }
 }

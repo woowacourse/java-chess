@@ -126,9 +126,10 @@ public class PlayerPiecePositionDAO {
         return pstmt.executeQuery();
     }
 
-    public PieceWithColorType findByChessGameIdAndFileAndRank(Long gameId, Long positionId)
+    public PieceWithColorType findPieceWithColorTypeByChessGameIdAndFileAndRank(Long gameId,
+        Long positionId)
         throws SQLException {
-        ResultSet rs = getResultSet(gameId, positionId);
+        ResultSet rs = getResultSetToFindPieceWithColorType(gameId, positionId);
         if (!rs.next()) {
             return null;
         }
@@ -137,17 +138,38 @@ public class PlayerPiecePositionDAO {
         return PieceWithColorType.of(pieceName, pieceColor);
     }
 
-    private ResultSet getResultSet(Long gameId, Long positionId) throws SQLException {
+    private ResultSet getResultSetToFindPieceWithColorType(Long gameId, Long positionId)
+        throws SQLException {
         String query = "SELECT name AS piece_name, color AS piece_color FROM piece "
-            + "INNER JOIN "
-            + "(SELECT piece_id FROM player_piece_position "
-            + "INNER JOIN "
-            + "(SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
+            + "INNER JOIN (SELECT piece_id FROM player_piece_position "
+            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
             + "ON player_piece_position.player_id = players.player_id "
             + "WHERE player_piece_position.position_id = ?) "
             + "AS piece_id_of_selected_game_and_selected_position "
             + "ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gameId);
+        pstmt.setLong(2, positionId);
+        return pstmt.executeQuery();
+    }
 
+    public GamePiecePosition findGamePiecePositionByGameIdAndPositionId(Long gameId,
+        Long positionId) throws SQLException {
+        ResultSet rs = getResultSetToFindPiecePosition(gameId, positionId);
+        if (!rs.next()) {
+            return null;
+        }
+        Long foundPlayerPiecePositionId = rs.getLong("id");
+        Long foundPositionId = rs.getLong("position_id");
+        return new GamePiecePosition(foundPlayerPiecePositionId, foundPositionId);
+    }
+
+    private ResultSet getResultSetToFindPiecePosition(Long gameId, Long positionId)
+        throws SQLException {
+        String query = "SELECT id, position_id FROM player_piece_position "
+            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
+            + "ON player_piece_position.player_id = players.player_id "
+            + "WHERE player_piece_position.position_id = ?;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, gameId);
         pstmt.setLong(2, positionId);
@@ -162,6 +184,14 @@ public class PlayerPiecePositionDAO {
         pstmt.setLong(2, playerPiecePositionEntity.getId());
         pstmt.executeUpdate();
         return playerPiecePositionEntity;
+    }
+
+    public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
+        String query = "UPDATE player_piece_position SET position_id = ? WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gamePiecePosition.getPositionId());
+        pstmt.setLong(2, gamePiecePosition.getPlayerPiecePositionId());
+        pstmt.executeUpdate();
     }
 
 
@@ -182,6 +212,13 @@ public class PlayerPiecePositionDAO {
         String query = "DELETE FROM player_piece_position WHERE player_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerEntity.getId());
+        pstmt.executeUpdate();
+    }
+
+    public void removePiecePositionOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
+        String query = "DELETE FROM player_piece_position WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gamePiecePosition.getPlayerPiecePositionId());
         pstmt.executeUpdate();
     }
 }

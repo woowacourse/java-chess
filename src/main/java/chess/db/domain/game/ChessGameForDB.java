@@ -83,8 +83,7 @@ public class ChessGameForDB {
         MoveRequestForDB moveRequestForDB
             = new MoveRequestForDB(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
         boardForDB.validateRoute(chessGameEntity.getId(), moveRequestForDB);
-        //updatePiecesOfPlayers(moveRequestForDB);
-        //boardForDB.move(moveRequestForDB);
+        boardForDB.move(gameId, moveRequestForDB);
     }
 
     private void updatePiecesOfPlayers(MoveRouteForDB moveRouteForDB) throws SQLException {
@@ -106,12 +105,12 @@ public class ChessGameForDB {
 
     public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
         GameStatusEntity gameStatusEntity = chessGameDAO.findStatusByGameId(gameId);
+        ScoresEntity scores = boardForDB.getScores(gameId);
         return new GameStatusResponseDTO(
             gameStatusEntity.getTitle(),
             gameStatusEntity.getCurrentTurnTeamColor(),
-            gameStatusEntity.getWhitePlayerScore(),
-            gameStatusEntity.getBlackPlayerScore()
-        );
+            scores.getWhitePlayerScore(),
+            scores.getBlackPlayerScore());
     }
 
     public void changeToNextTurn() throws SQLException {

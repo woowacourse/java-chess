@@ -8,6 +8,7 @@ import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerDAO;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.board.PiecesPositionsForDB;
+import chess.db.domain.game.ScoresEntity;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.ChessGameEntity;
@@ -21,11 +22,14 @@ import java.util.List;
 public class PlayersForDB {
     private final PlayerDAO playerDAO;
     private final PiecesPositionsForDB piecesPositionsForDB;
+    private final ScoreCalculator scoreCalculator;
+
     private final List<PlayerEntity> playerEntities = new ArrayList<>();
 
     public PlayersForDB() {
         playerDAO = new PlayerDAO();
         piecesPositionsForDB = new PiecesPositionsForDB();
+        scoreCalculator = new ScoreCalculator();
     }
 
     public void createNewPlayers(ChessGameEntity chessGameEntity) throws SQLException {
@@ -41,7 +45,7 @@ public class PlayersForDB {
         throws SQLException {
 
         TeamColor teamColor = piecePosition.getPieceTeamColor();
-        Long playerId = playerDAO.findByGameIdAndTeamColor(gameId, teamColor);
+        Long playerId = playerDAO.findIdByGameIdAndTeamColor(gameId, teamColor);
         piecesPositionsForDB.save(playerId, piecePosition);
     }
 
@@ -107,5 +111,31 @@ public class PlayersForDB {
             piecesPositionsForDB.removePiecesPositionsOfPlayer(playerEntity);
         }
         playerDAO.removeAllByChessGame(chessGameEntity);
+    }
+
+    public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor)
+        throws SQLException {
+        return playerDAO.findIdByGameIdAndTeamColor(gameId, teamColor);
+    }
+
+    public void calculateAndUpdateScoresOfGame(Long gameId) throws SQLException {
+        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+        List<PiecePositionFromDB> whitePiecesPositions = piecesPositionsForDB
+            .getAllPiecesPositionsOfPlayer(whitePlayerId);
+        List<PiecePositionFromDB> blackPiecesPositions = piecesPositionsForDB
+            .getAllPiecesPositionsOfPlayer(blackPlayerId);
+        double whitePlayerScore = scoreCalculator.getCalculatedScore(whitePiecesPositions);
+        double blackPlayerScore = scoreCalculator.getCalculatedScore(whitePiecesPositions);
+        playerDAO.updateScore(whitePlayerId, whitePlayerScore);
+        playerDAO.updateScore(blackPlayerId, blackPlayerScore);
+    }
+
+    public ScoresEntity getPlayersScores(Long gameId) throws SQLException {
+        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+        double whitePlayerScore = playerDAO.findScoreByPlayerId(whitePlayerId);
+        double blackPlayerScore = playerDAO.findScoreByPlayerId(blackPlayerId);
+        return new ScoresEntity(whitePlayerScore, blackPlayerScore);
     }
 }

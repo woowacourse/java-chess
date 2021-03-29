@@ -3,6 +3,7 @@ package chess.db.domain.board;
 import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
+import chess.db.dao.GamePiecePosition;
 import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.piece.PieceEntity;
@@ -12,29 +13,28 @@ import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PiecesPositionsForDB {
     private static final String NOT_EXISTS = ".";
-    private final PlayerPiecePositionDAO piecePositionDAO;
+    private final PlayerPiecePositionDAO playerPiecePositionDAO;
     private final ScoreCalculator scoreCalculator;
 
 
     public PiecesPositionsForDB() {
-        piecePositionDAO = new PlayerPiecePositionDAO();
+        playerPiecePositionDAO = new PlayerPiecePositionDAO();
         scoreCalculator = new ScoreCalculator();
     }
 
     public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
-        piecePositionDAO.save(playerId, piecePosition);
+        playerPiecePositionDAO.save(playerId, piecePosition);
     }
 
     public void save(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
         throws SQLException {
 
-        piecePositionDAO.save(
+        playerPiecePositionDAO.save(
             new PlayerPiecePosition(playerEntity, piecePositionEntities)
         );
     }
@@ -53,8 +53,8 @@ public class PiecesPositionsForDB {
         Map<PositionEntity, CellForDB> cells) throws SQLException {
         for (File file : File.values()) {
             PositionEntity position = PositionEntity.of(file, rank);
-            PieceWithColorType pieceWithColorType = piecePositionDAO
-                .findByChessGameIdAndFileAndRank(gameId, position.getId());
+            PieceWithColorType pieceWithColorType = playerPiecePositionDAO
+                .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
             PieceEntity piece = PieceEntity.of(pieceWithColorType);
             PiecePosition piecePosition = new PiecePosition(piece, position);
             putCellStatus(cells, piecePosition);
@@ -81,8 +81,8 @@ public class PiecesPositionsForDB {
         List<String> cellsStatus) throws SQLException {
         for (File file : File.values()) {
             PositionEntity position = PositionEntity.of(file, rank);
-            PieceWithColorType pieceWithColorType = piecePositionDAO
-                .findByChessGameIdAndFileAndRank(gameId, position.getId());
+            PieceWithColorType pieceWithColorType = playerPiecePositionDAO
+                .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
             addCellStatusAsString(cellsStatus, pieceWithColorType);
         }
     }
@@ -99,21 +99,21 @@ public class PiecesPositionsForDB {
 
     public void getScoreOfPlayer(PlayerEntity playerEntity) throws SQLException {
         List<PiecePositionFromDB> allPiecesPositionsFromDBOfPlayer
-            = piecePositionDAO.findAllByPlayer(playerEntity);
+            = playerPiecePositionDAO.findAllByPlayer(playerEntity);
         // scoreCalculator.
     }
 
     public List<PiecePositionFromDB> getAllPiecesPositionsOfPlayer(Long playerId)
         throws SQLException {
 
-        return piecePositionDAO.findAllByPlayerId(playerId);
+        return playerPiecePositionDAO.findAllByPlayerId(playerId);
     }
 
     public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayer(PlayerEntity playerEntity)
         throws SQLException {
 
         List<PiecePositionFromDB> piecesPositionsFromDB
-            = piecePositionDAO.findAllByPlayer(playerEntity);
+            = playerPiecePositionDAO.findAllByPlayer(playerEntity);
 
         return getParsedPiecePositionEntities(playerEntity, piecesPositionsFromDB);
     }
@@ -146,16 +146,39 @@ public class PiecesPositionsForDB {
     public void updatePiecePosition(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
         throws SQLException {
 
-        piecePositionDAO.updatePiecePosition(
+        playerPiecePositionDAO.updatePiecePosition(
             new PlayerPiecePosition(playerEntity, piecePositionEntities)
         );
     }
 
     public void removePiece(PlayerPiecePosition playerPiecePositionEntity) throws SQLException {
-        piecePositionDAO.removePiece(playerPiecePositionEntity);
+        playerPiecePositionDAO.removePiece(playerPiecePositionEntity);
     }
 
     public void removePiecesPositionsOfPlayer(PlayerEntity playerEntity) throws SQLException {
-        piecePositionDAO.removeAllByPlayer(playerEntity);
+        playerPiecePositionDAO.removeAllByPlayer(playerEntity);
+    }
+
+    public PieceEntity getPieceByGameIdAndPosition(Long gameId, PositionEntity position)
+        throws SQLException {
+
+        PieceWithColorType pieceWithColorType = playerPiecePositionDAO
+            .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
+        return PieceEntity.of(pieceWithColorType);
+    }
+
+    public GamePiecePosition getGamePiecePositionByGameIdAndPosition(Long gameId,
+        PositionEntity startPosition) throws SQLException {
+
+        return playerPiecePositionDAO
+            .findGamePiecePositionByGameIdAndPositionId(gameId, startPosition.getId());
+    }
+
+    public void removePieceOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
+        playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePosition);
+    }
+
+    public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
+        playerPiecePositionDAO.updatePiecePosition(gamePiecePosition);
     }
 }

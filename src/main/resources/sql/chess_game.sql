@@ -309,3 +309,33 @@ FROM
             
             
 SELECT id, position_id FROM player_piece_position INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = 299) AS players ON player_piece_position.player_id = players.player_id WHERE player_piece_position.position_id = 129;
+
+
+
+
+
+SELECT
+	title, current_turn_team_color, 
+
+
+SELECT
+	name, color
+FROM
+	player_piece_position
+		INNER JOIN (
+			SELECT 
+				piece_id
+			FROM 
+				player_piece_position
+					INNER JOIN (
+						SELECT 
+							player.id AS player_id
+						FROM 
+							player
+						WHERE 
+							chess_game_id = 299
+						) AS players 
+						ON player_piece_position.player_id = players.player_id
+			WHERE player_piece_position.position_id = 129
+		) AS piece_id_of_selected_game_and_selected_position 
+        ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id;

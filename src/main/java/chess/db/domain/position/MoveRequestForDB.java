@@ -46,4 +46,8 @@ public class MoveRequestForDB {
     public boolean isStartPositionFirstPawnPosition() {
         return startPosition.isFirstPawnPosition(currentTurnTeamColor);
     }
+
+    public Long getDestinationId() {
+        return destination.getId();
+    }
 }

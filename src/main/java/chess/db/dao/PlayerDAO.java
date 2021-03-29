@@ -35,7 +35,7 @@ public class PlayerDAO {
         return pstmt.getGeneratedKeys();
     }
 
-    public Long findByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
+    public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
         ResultSet rs = getResultSetOfPlayer(gameId, teamColor);
         if (!rs.next()) {
             return null;
@@ -86,6 +86,25 @@ public class PlayerDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, chessGameEntity.getId());
         return pstmt.executeQuery();
+    }
+
+    public double findScoreByPlayerId(Long playerId) throws SQLException {
+        String query = "SELECT score FROM player WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerId);
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) {
+            throw new SQLException("해당 아이디의 플레이어를 찾을 수 없습니다.");
+        }
+        return rs.getDouble("score");
+    }
+
+    public void updateScore(Long playerId, double score) throws SQLException {
+        String query = "UPDATE player SET score = ? WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerId);
+        pstmt.setDouble(2, score);
+        pstmt.executeUpdate();
     }
 
     public void removeAll() throws SQLException {
