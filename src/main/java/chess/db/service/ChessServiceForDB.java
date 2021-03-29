@@ -49,7 +49,9 @@ public class ChessServiceForDB {
         } catch (Exception e) {
             return new MoveResponse(true, e.getMessage());
         }
-        chessGameForDB.changeToNextTurn();
+        // TODO:
+        Long gameId = null;
+        chessGameForDB.changeToNextTurn(gameId);
         return new MoveResponse(false);
     }
 
