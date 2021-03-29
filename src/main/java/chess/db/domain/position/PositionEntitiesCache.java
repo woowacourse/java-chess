@@ -54,4 +54,11 @@ public class PositionEntitiesCache {
     public static PositionEntity get(int index) {
         return POSITION_ENTITIES.get(index);
     }
+
+    public static PositionEntity findById(Long positionId) {
+        return POSITION_ENTITIES.stream()
+            .filter(positionEntity -> positionEntity.getId().equals(positionId))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 위치 입니다."));
+    }
 }

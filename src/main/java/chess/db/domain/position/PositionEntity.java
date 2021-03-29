@@ -41,6 +41,10 @@ public class PositionEntity {
         return PositionEntity.of(File.of(file), Rank.of(rank));
     }
 
+    public static PositionEntity of(Long positionId) {
+        return PositionEntitiesCache.findById(positionId);
+    }
+
     public Direction calculateDirection(PositionEntity destination) {
         File destinationFile = destination.getFile();
         Rank destinationRank = destination.getRank();

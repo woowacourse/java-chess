@@ -14,6 +14,10 @@ public class CellForDB {
         this.pieceEntity = null;
     }
 
+    public CellForDB(PieceEntity pieceEntity) {
+        this.pieceEntity = pieceEntity;
+    }
+
     public void put(PieceEntity pieceEntity) {
         this.pieceEntity = pieceEntity;
     }

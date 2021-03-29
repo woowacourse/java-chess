@@ -28,35 +28,26 @@ public class PiecesPositionsForDB {
     public Map<PositionEntity, CellForDB> getAllCellsStatusByGameId(Long gameId)
         throws SQLException {
 
+        Map<PositionEntity, PieceEntity> existsPieces
+            = playerPiecePositionDAO.findAllByGameId(gameId);
         Map<PositionEntity, CellForDB> allCells = new HashMap<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
-            allCells.putAll(getCellsStatusByGameIdAndRank(gameId, rank));
+            allCells.putAll(getCellsStatusByGameIdAndRank(rank, existsPieces));
         }
         return allCells;
     }
 
-    private Map<PositionEntity, CellForDB> getCellsStatusByGameIdAndRank(Long gameId, Rank rank)
-        throws SQLException {
+    private Map<PositionEntity, CellForDB> getCellsStatusByGameIdAndRank(Rank rank,
+        Map<PositionEntity, PieceEntity> existsPieces) {
 
         Map<PositionEntity, CellForDB> cells = new HashMap<>();
         for (File file : File.values()) {
             PositionEntity position = PositionEntity.of(file, rank);
-            CellForDB cell = getCellByGameIdAndPosition(gameId, position);
+            CellForDB cell = new CellForDB(existsPieces.get(position));
             cells.put(position, cell);
         }
         return cells;
-    }
-
-    private CellForDB getCellByGameIdAndPosition(Long gameId, PositionEntity position)
-        throws SQLException {
-
-        PieceWithColorType pieceWithColorType = playerPiecePositionDAO
-            .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
-        PieceEntity piece = PieceEntity.of(pieceWithColorType);
-        CellForDB cell = new CellForDB();
-        cell.put(piece);
-        return cell;
     }
 
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {

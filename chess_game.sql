@@ -314,13 +314,29 @@ SELECT id, position_id FROM player_piece_position INNER JOIN (SELECT player.id A
 
 
 
+
+SELECT 
+	piece_id, position_id
+FROM 
+	player_piece_position 
+	INNER JOIN (
+		SELECT 
+			player.id AS player_id 
+		FROM 
+			player 
+		WHERE chess_game_id = 42
+	) AS players_id_of_selected_game
+	ON player_piece_position.player_id = players_id_of_selected_game.player_id;
+    
+SELECT piece_id, position_id FROM player_piece_position INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players_id_of_selected_game ON player_piece_position.player_id = players_id_of_selected_game.player_id;
+
 SELECT 
 	name AS piece_name, 
     color AS piece_color 
 FROM piece 
 	INNER JOIN (
 		SELECT 
-			piece_id
+			id
         FROM 
 			player_piece_position 
             INNER JOIN (
@@ -328,13 +344,17 @@ FROM piece
 					player.id AS player_id 
 				FROM 
 					player 
-				WHERE chess_game_id = 40
+				WHERE chess_game_id = 42
 			) AS players_id_of_selected_game
             ON player_piece_position.player_id = players_id_of_selected_game.player_id
-				AND player_piece_position.position_id = 1
 		) AS player_piece_position_of_selected_game
         ON player_piece_position_of_selected_game.piece_id = piece.id
 WHERE player_piece_position.position_id = 9;
+
+
+
+
+SELECT name AS piece_name, color AS piece_color FROM piece INNER JOIN (SELECT piece_id FROM player_piece_position INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = 40) AS players_id_of_selected_gameON player_piece_position.player_id = players_id_of_selected_game.player_idAND player_piece_position.position_id = 1) AS player_piece_position_of_selected_gameON player_piece_position_of_selected_game.piece_id = piece.id
 
 
 

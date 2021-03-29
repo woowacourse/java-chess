@@ -58,4 +58,11 @@ public class PieceEntitiesCache {
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
+
+    public static PieceEntity findById(Long pieceId) {
+        return PIECE_ENTITIES.stream()
+            .filter(piece -> piece.getId().equals(pieceId))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+    }
 }

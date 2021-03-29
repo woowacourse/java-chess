@@ -90,6 +90,10 @@ public abstract class PieceEntity {
         return PieceEntitiesCache.find(pieceType, teamColor);
     }
 
+    public static PieceEntity of(Long pieceId) {
+        return PieceEntitiesCache.findById(pieceId);
+    }
+
     protected boolean isNotCorrectDirection(Direction moveCommandDirection) {
         return !directions.contains(moveCommandDirection);
     }
