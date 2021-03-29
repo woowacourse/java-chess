@@ -56,8 +56,6 @@ CREATE TABLE IF NOT EXISTS `chess_game`.`chess_game` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `current_turn_team_color` VARCHAR(255) NOT NULL,
-  `white_team_score` DECIMAL(7,3) UNSIGNED NOT NULL DEFAULT 38.0,
-  `black_team_score` DECIMAL(7,3) UNSIGNED NOT NULL DEFAULT 38.0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -68,6 +66,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `chess_game`.`player` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `team_color` VARCHAR(255) NOT NULL,
+  `score` DECIMAL(7,3) UNSIGNED NOT NULL DEFAULT 38.0,
   `chess_game_id` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `chess_game_id`),
   INDEX `fk_player_chess_game1_idx` (`chess_game_id` ASC) VISIBLE,
@@ -112,6 +111,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 
@@ -240,81 +240,6 @@ delete from chess_game;
 
 
 
-
-SELECT 
-	piece.name AS piece_name, piece.color AS piece_color, position.file_value AS file_value, position.rank_value AS rank_value 
-FROM player_piece_position
-	INNER JOIN piece 
-		ON player_piece_position.piece_id = piece.id
-	INNER JOIN position 
-        ON player_piece_position.position_id = position.id
-WHERE player_piece_position.player_id = 427;
-
-
-SELECT 
-	piece.name AS piece_name, piece.color AS piece_color
-FROM player_piece_position
-	INNER JOIN (
-		SELECT player.id AS player_id
-			FROM player
-		WHERE chess_game_id = 272
-    ) AS players ON player_piece_position.player_id = players.player_id
-    INNER JOIN 
-		piece
-	ON piece_id = player_piece_position.piece_id;
-    
-    
-    
-    
-SELECT 
-	players.player_id, piece_id
-FROM player_piece_position
-	INNER JOIN (
-		SELECT player.id AS player_id
-			FROM player
-		WHERE chess_game_id = 272
-    ) AS players ON player_piece_position.player_id = players.player_id;
-    
-    
-SELECT
-	piece.id, piece.name, piece.color
-FROM
-	piece
-		INNER JOIN (
-			SELECT 
-				piece_id
-			FROM player_piece_position
-				INNER JOIN (
-					SELECT 
-						player.id AS player_id
-					FROM 
-						player
-					WHERE 
-						chess_game_id = 299
-					) AS players 
-					ON player_piece_position.player_id = players.player_id
-		) AS pieces_id_in_exact_chess_game
-			ON piece.id = pieces_id_in_exact_chess_game.piece_id
-		INNER JOIN (
-			SELECT 
-				piece_id
-			FROM player_piece_position
-				INNER JOIN (
-					SELECT
-						id AS position_id
-					FROM
-						position
-					WHERE 
-						rank_value = '1'
-						AND
-						file_value = 'a'
-                ) AS selected_position
-                ON player_piece_position.position_id = selected_position.position_id
-        ) AS pieces_id_in_selected_position
-			ON piece.id = pieces_id_in_selected_position.piece_id;
-            
-            
-
 SELECT
 	name, color
 FROM
@@ -336,14 +261,14 @@ FROM
 			WHERE player_piece_position.position_id = 129
 		) AS piece_id_of_selected_game_and_selected_position 
         ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id;
- 
- 
- 
- 
- SELECT
+        
+        
+        
+
+SELECT
 	name, color
 FROM
-	piece
+	player_piece_position
 		INNER JOIN (
 			SELECT 
 				piece_id
@@ -355,99 +280,32 @@ FROM
 						FROM 
 							player
 						WHERE 
-							player.id = 614
+							chess_game_id = 299
 						) AS players 
 						ON player_piece_position.player_id = players.player_id
-		) AS piece_id_of_selected_player
-        ON piece.id = piece_id_of_selected_player.piece_id;
- 
- 
- 
- 
- 			SELECT 
-				piece_id
+			WHERE player_piece_position.position_id = 129
+		) AS piece_id_of_selected_game_and_selected_position 
+        ON piece.id = piece_id_of_selected_game_and_selected_position.piece_id;
+
+
+
+
+
+
+			SELECT 
+				id, position_id
 			FROM 
 				player_piece_position
-			WHERE(
-				SELECT
-					id AS position_id
-				FROM
-					position
-				WHERE 
-					rank_value = '1'
-					AND
-					file_value = 'a'
-                ) AS selected_position
-		
-			
-				
- 
- 
- 
- 
- 
- 
- 
+					INNER JOIN (
+						SELECT 
+							player.id AS player_id
+						FROM 
+							player
+						WHERE 
+							chess_game_id = 299
+						) AS players 
+						ON player_piece_position.player_id = players.player_id
+			WHERE player_piece_position.position_id = 129;
             
             
-            
-
-
-
-		INNER JOIN (
-			SELECT 
-				piece_id
-			FROM player_piece_position
-				INNER JOIN (
-					SELECT 
-						player.id AS player_id
-					FROM 
-						player
-					WHERE 
-						chess_game_id = 299
-					) AS players 
-					ON player_piece_position.player_id = players.player_id
-		) AS pieces_id_in_exact_chess_game
--- 특정 체스 게임에 존재하는 모든 기물들의 piece_id
-
-		INNER JOIN (
-			SELECT 
-				piece_id
-			FROM player_piece_position
-				INNER JOIN (
-					SELECT
-						id AS position_id
-					FROM
-						position
-					WHERE 
-						rank_value = '1'
-						AND
-						file_value = 'a'
-                ) AS selected_position
-                ON player_piece_position.position_id = selected_position.position_id
-        ) AS pieces_id_in_selected_position
--- 특정 위치에 존재하는 기물들의 piece_id
-
-SELECT
-	
-
-
-
-SELECT 
-	piece_id
-FROM
-	player_piece_position
-WHERE
-	player_piece_position.player_id = 547;
-
-
-SELECT player.id AS player_id
-	FROM player
-WHERE chess_game_id = 272;
-
-SELECT
-	*
-FROM player_piece_position
-WHERE player_piece_position.player_id = 547;
-
-
+SELECT id, position_id FROM player_piece_position INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = 299) AS players ON player_piece_position.player_id = players.player_id WHERE player_piece_position.position_id = 129;
