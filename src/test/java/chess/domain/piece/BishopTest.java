@@ -2,8 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.piece.feature.Color;
-import chess.domain.piece.flexibledistance.Bishop;
+import chess.domain.feature.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -3,8 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.piece.feature.Color;
-import chess.domain.piece.feature.Type;
+import chess.domain.feature.Color;
+import chess.domain.feature.Type;
 
 import java.util.List;
 

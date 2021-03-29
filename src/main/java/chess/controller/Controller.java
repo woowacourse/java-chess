@@ -4,7 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
 import chess.domain.gamestate.Ready;
-import chess.domain.piece.feature.Color;
+import chess.domain.feature.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
