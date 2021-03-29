@@ -1,10 +1,13 @@
 package chess.beforedb.domain.board.setting;
 
+import static chess.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.beforedb.domain.game.ChessGame;
 import chess.beforedb.domain.position.type.File;
+import chess.db.domain.game.ChessGameForDB;
 import chess.utils.PositionConverter;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +20,10 @@ class BoardDefaultSettingTest {
     private List<String> whitePiecesExceptPawns;
 
     @BeforeEach
-    void setUp() {
-        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        cellsStatus = chessGame.boardCellsStatus();
+    void setUp() throws SQLException {
+        ChessGameForDB chessGame = new ChessGameForDB();
+        Long gameId = chessGame.createNew(new BoardDefaultSetting(), TEST_TITLE);
+        cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
         blackPiecesExceptPawns = Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R");
         whitePiecesExceptPawns = Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r");
     }
