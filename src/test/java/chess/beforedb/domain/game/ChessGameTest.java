@@ -443,13 +443,14 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGameForDB = new ChessGameForDB();
+                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGameForDB.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput);
+                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -467,14 +468,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGameForDB = new ChessGameForDB();
+                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGameForDB.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput);
+                    assertCanMove(chessGameForDB, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -492,14 +494,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGame = new ChessGameForDB();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput);
+                    assertCanMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
@@ -517,14 +520,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGame = new ChessGameForDB();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput);
+                    assertCanMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
@@ -542,14 +546,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGame = new ChessGameForDB();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput);
+                    assertCanMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -567,14 +572,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGameForDB = new ChessGameForDB();
+                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGameForDB.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput);
+                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -592,14 +598,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGameForDB = new ChessGameForDB();
+                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGameForDB.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput);
+                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -617,14 +624,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGame chessGame = new ChessGame(customBoardSetting);
+                    ChessGameForDB chessGame = new ChessGameForDB();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGame.changeToNextTurn();
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput);
+                    assertCanMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
             }
 
