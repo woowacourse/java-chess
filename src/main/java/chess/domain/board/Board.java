@@ -75,7 +75,7 @@ public class Board {
         return of(target).isKing();
     }
 
-    public boolean isPositionOwner(final Position position, final Owner owner) {
+    public boolean isPositionSameOwner(final Position position, final Owner owner) {
         return of(position).isSameOwner(owner);
     }
 

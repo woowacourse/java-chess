@@ -20,6 +20,7 @@ public class ChessManager {
     }
 
     public void move(final MoveCommand command) {
+        validateSourcePiece(command.source());
         validateTurn(command.source());
         boolean isKing = isTargetKing(command.target());
         board.move(command.source(), command.target());
@@ -28,8 +29,14 @@ public class ChessManager {
         turn = turn.reverse();
     }
 
+    private void validateSourcePiece(final Position source) {
+        if (board.of(source).isEmpty()) {
+            throw new IllegalArgumentException("지정한 칸에는 체스말이 존재하지 않습니다.");
+        }
+    }
+
     private void validateTurn(final Position source) {
-        if (!board.isPositionOwner(source, turn)) {
+        if (!board.isPositionSameOwner(source, turn)) {
             throw new IllegalArgumentException("현재는 " + turn.name() + "플레이어의 턴입니다.");
         }
     }
@@ -39,6 +46,7 @@ public class ChessManager {
     }
 
     public Path getReachablePositions(final ShowCommand command) {
+        validateSourcePiece(command.source());
         return board.getAbleToMove(command.source());
     }
 

@@ -19,7 +19,7 @@ public class Status {
         this.blackScore = blackScore;
     }
 
-    public static Status statusOfBoard(Board board) {
+    public static Status statusOfBoard(final Board board) {
         return new Status(ownerScore(board, Owner.WHITE),
                 ownerScore(board, Owner.BLACK));
     }
