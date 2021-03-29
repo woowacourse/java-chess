@@ -6,7 +6,7 @@ import chess.domain.piece.Position;
 
 public abstract class Finished extends Started {
 
-    public static final String FINISHED = "Finished";
+    public static final String FINISHED = "finished";
 
     public Finished(ChessGame chessGame) {
         super(chessGame);

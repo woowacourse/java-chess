@@ -1,12 +1,12 @@
 package chess.controller;
 
+import chess.service.MoveService;
+import chess.service.StatusService;
 import chess.controller.dto.GameDto;
 import chess.controller.dto.MessageDto;
 import chess.controller.dto.MoveDto;
 import chess.controller.dto.StatusDto;
 import chess.domain.board.Board;
-import chess.domain.command.MoveService;
-import chess.domain.command.StatusService;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
 import com.google.gson.Gson;
@@ -24,8 +24,8 @@ public class ChessController {
     public void run() {
         patch("/start", this::start, gson::toJson);
         patch("/move", this::move, gson::toJson);
-        get("/status", this::status, gson::toJson);
         patch("/end", this::end, gson::toJson);
+        get("/status", this::status, gson::toJson);
     }
 
     public Object start(Request request, Response response) {

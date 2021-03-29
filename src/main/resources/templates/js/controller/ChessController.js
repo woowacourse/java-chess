@@ -25,14 +25,52 @@ export class ChessController {
             return
         }
 
-        let pieces = PieceFactory.getPiecesByPieceDtos(result)
+        await this.#printGameStatus()
+        this.#resultHandler(result)
+    }
 
-        this.#chessGame.setPieces(pieces)
-        this.#chessGame.setTurn(result.turn)
-        this.#turn = result.turn
+    async #move(e) {
+        if (this.#selected && e.target && ![...e.target.classList].includes(this.#turn)) {
+            let source = this.#selected.id
+            let target = e.target.id
+
+            let result
+            try {
+                result = await this.#sendMoveRequest(source, target)
+            } catch (e) {
+                alert(e.message)
+                return
+            }
+
+            this.#resultHandler(result)
+            await this.#printGameStatus()
+
+            this.#selected = undefined
+        }
+    }
+
+    async #printGameStatus() {
+        let result = await new Ajax().get('status')
+
+        this.#chessGame.setStatus(result)
     }
 
 
+    #resultHandler(result) {
+        let pieces = PieceFactory.getPiecesByPieceDtos(result)
+        this.#chessGame.setPieces(pieces)
+
+        console.log(result)
+        if(result.status === 'finished') {
+            alert("finished")
+            return
+        }
+
+        if(result.status === 'running') {
+            this.#chessGame.setTurn(result.turn)
+            this.#turn = result.turn
+        }
+    }
 
     async #selectPiece(e) {
         if (e.target && [...e.target.classList].includes(this.#turn)) {
@@ -53,31 +91,13 @@ export class ChessController {
         }
     }
 
-    async #move(e) {
-        if (this.#selected && e.target && ![...e.target.classList].includes(this.#turn)) {
-            let source = this.#selected.id
-            let target = e.target.id
-            let result
 
-            try {
-                result = await new Ajax().patch('move', `
+    async #sendMoveRequest(source, target) {
+        return await new Ajax().patch('move', `
                 {
                     "source" : "${source}",
                     "target" : "${target}"
                 }`)
-            } catch (e) {
-                alert(e.message)
-                return
-            }
-
-            let pieces = PieceFactory.getPiecesByPieceDtos(result)
-
-            this.#chessGame.setPieces(pieces)
-            this.#chessGame.setTurn(result.turn)
-            this.#turn = result.turn
-
-            this.#selected = undefined
-        }
     }
 
     moveEventHandler() {
