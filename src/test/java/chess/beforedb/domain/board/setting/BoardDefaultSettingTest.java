@@ -3,6 +3,7 @@ package chess.beforedb.domain.board.setting;
 import static chess.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.DBCleaner;
 import chess.beforedb.domain.game.ChessGame;
 import chess.beforedb.domain.position.type.File;
 import chess.db.domain.game.ChessGameForDB;
@@ -10,6 +11,7 @@ import chess.utils.PositionConverter;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,11 @@ class BoardDefaultSettingTest {
     private List<String> cellsStatus;
     private List<String> blackPiecesExceptPawns;
     private List<String> whitePiecesExceptPawns;
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        DBCleaner.removeAll();
+    }
 
     @BeforeEach
     void setUp() throws SQLException {
