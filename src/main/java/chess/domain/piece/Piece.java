@@ -1,18 +1,28 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.MoveStrategy;
+import java.util.List;
 
 public abstract class Piece {
 
     private final Color color;
-    private final MoveStrategy moveStategy;
+    private final MoveStrategy moveStrategy;
     protected Type type;
 
     public Piece(Color color, MoveStrategy moveStrategy) {
         this.color = color;
-        this.moveStategy = moveStrategy;
+        this.moveStrategy = moveStrategy;
+    }
+
+    public boolean isMovable(
+        ChessBoard chessBoard,
+        Position sourcePosition,
+        Position targetPosition
+    ) {
+        return moveStrategy.movable(chessBoard, sourcePosition, targetPosition, this);
     }
 
     public String getName() {
@@ -22,6 +32,8 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public abstract List<Direction> direction();
 
     public boolean isSameColor(Color color) {
         return this.color.equals(color);
@@ -49,13 +61,5 @@ public abstract class Piece {
 
     public double score() {
         return type.getScore();
-    }
-
-    public boolean isMovable(
-        ChessBoard chessBoard,
-        Position sourcePosition,
-        Position targetPosition
-    ) {
-        return moveStategy.movable(chessBoard, sourcePosition, targetPosition, this);
     }
 }
