@@ -23,32 +23,35 @@ class PlayerDAOTest {
         chessGameDAO.removeAll();
     }
 
-//    @Test
-//    void saveAndFindById() throws SQLException {
-//        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-//        PlayerEntity playerEntity1 = new PlayerEntity(WHITE, chessGameEntity);
-//        PlayerEntity playerEntity2 = new PlayerEntity(BLACK, chessGameEntity);
-//
-//        PlayerEntity savedPlayerEntity1 = playerDAO.save(playerEntity1);
-//        PlayerEntity savedPlayerEntity2 = playerDAO.save(playerEntity2);
-//
-//        List<PlayerEntity> foundPlayers = playerDAO.findAllByChessGame(chessGameEntity);
-//
-//        assertThat(foundPlayers).containsExactlyInAnyOrder(
-//            savedPlayerEntity1, savedPlayerEntity2
-//        );
-//    }
-//
-//    @Test
-//    void remove() throws SQLException {
-//        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-//        playerDAO.save(new PlayerEntity(BLACK, chessGameEntity));
-//        playerDAO.save(new PlayerEntity(WHITE, chessGameEntity));
-//
-//        playerDAO.removeAll();
-//
-//        List<PlayerEntity> foundPlayers = playerDAO.findAllByChessGame(chessGameEntity);
-//
-//        assertThat(foundPlayers).isEmpty();
-//    }
+    @Test
+    void saveAndFindById() throws SQLException {
+        ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        Long gameId = chessGame.getId();
+
+        playerDAO.save(WHITE, gameId);
+        playerDAO.save(BLACK, gameId);
+
+        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+
+        assertThat(whitePlayerId).isNotNull();
+        assertThat(blackPlayerId).isNotNull();
+    }
+
+    @Test
+    void remove() throws SQLException {
+        ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        Long gameId = chessGame.getId();
+
+        playerDAO.save(WHITE, gameId);
+        playerDAO.save(BLACK, gameId);
+
+        playerDAO.removeAllByChessGame(gameId);
+
+        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+
+        assertThat(whitePlayerId).isNull();
+        assertThat(blackPlayerId).isNull();
+    }
 }
