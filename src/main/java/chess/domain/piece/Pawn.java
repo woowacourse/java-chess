@@ -25,4 +25,8 @@ public class Pawn extends PieceOnBoard {
         return candidates.contains(target);
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

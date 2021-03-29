@@ -68,12 +68,12 @@ public abstract class PieceOnBoard implements Piece {
 
     @Override
     public boolean isKing() {
-        return this instanceof King;
+        return false;
     }
 
     @Override
     public boolean isPawn() {
-        return this instanceof Pawn;
+        return false;
     }
 
     @Override

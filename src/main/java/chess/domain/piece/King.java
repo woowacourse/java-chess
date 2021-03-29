@@ -32,4 +32,8 @@ public class King extends PieceOnBoard {
         return candidates.contains(target);
     }
 
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
