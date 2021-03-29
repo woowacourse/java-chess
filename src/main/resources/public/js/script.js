@@ -13,65 +13,14 @@ async function createChessBoard() {
             url: `/grid/${roomName}`,
         });
         const data = res.data;
-        console.log("/grid/roomName")
-        console.log(data);
-        store.gridDto = data.data.gridDto;
         if (data.code !== 200) {
             alert(data.message);
             return;
         }
-        const piecesResponseDto = data.data.piecesResponseDto;
-        piecesResponseDto.sort((a, b) => {
-            if (a.position[1] > b.position[1]) {
-                return -1;
-            } else if (a.position[1] < b.position[1]) {
-                return 1;
-            } else if (a.position[1] == b.position[1]) {
-                if (a.position[0] > b.position[0]) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-        });
-        let pieces = []
-        for (let i = 0; i < 8; i++) {
-            pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
-        }
-        store.pieces = pieces;
-        console.log("게임 시작 시 저장되는 store");
-        console.log(store);
-        const table = document.getElementById("chess-board");
-        for (let i = 0; i < 8; i++) {
-            const newTr = document.createElement("tr");
-            for (let j = 0; j < 8; j++) {
-                const newTd = document.createElement("td");
-
-                const row = String(8 - i); // 열(12345678)
-                const asciiNum = 97; // h의 아스키코드
-                const column = String.fromCharCode(asciiNum + j);
-                newTd.id = column + row;
-                let pieceName = pieces[i][j].name;
-                if (pieceName !== ".") {
-                    const piece = document.createElement("img");
-                    if (pieceName === pieceName.toUpperCase()) {
-                        pieceName = "B" + pieceName.toUpperCase();
-                    } else {
-                        pieceName = "W" + pieceName.toLowerCase();
-                    }
-                    piece.src = "images/" + pieceName + ".png";
-                    newTd.appendChild(piece);
-                }
-                if (i % 2 == j % 2) {
-                    newTd.className = "block1";
-                } else {
-                    newTd.className = "block2";
-                }
-                newTr.appendChild(newTd);
-            }
-            table.appendChild(newTr);
-        }
-        addEvent();
+        console.log("/grid/roomName")
+        console.log(data);
+        cleanChessBoard();
+        createChessBoardAndPieces(data.data.gridDto, data.data.piecesResponseDto);
     } catch (e) {
         console.log(e);
     }
@@ -84,7 +33,72 @@ function addEvent() {
 
 createChessBoard();
 
+function createChessBoardAndPieces(gridDto, piecesResponseDto) {
+    store.gridDto = gridDto;
+    piecesResponseDto.sort((a, b) => {
+        if (a.position[1] > b.position[1]) {
+            return -1;
+        } else if (a.position[1] < b.position[1]) {
+            return 1;
+        } else if (a.position[1] == b.position[1]) {
+            if (a.position[0] > b.position[0]) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    });
+    let pieces = []
+    for (let i = 0; i < 8; i++) {
+        pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
+    }
+    store.pieces = pieces;
+    console.log("게임 시작 시 저장되는 store");
+    console.log(store);
+    const table = document.getElementById("chess-board");
+    for (let i = 0; i < 8; i++) {
+        const newTr = document.createElement("tr");
+        for (let j = 0; j < 8; j++) {
+            const newTd = document.createElement("td");
+
+            const row = String(8 - i); // 열(12345678)
+            const asciiNum = 97; // h의 아스키코드
+            const column = String.fromCharCode(asciiNum + j);
+            newTd.id = column + row;
+            let pieceName = pieces[i][j].name;
+            if (pieceName !== ".") {
+                const piece = document.createElement("img");
+                if (pieceName === pieceName.toUpperCase()) {
+                    pieceName = "B" + pieceName.toUpperCase();
+                } else {
+                    pieceName = "W" + pieceName.toLowerCase();
+                }
+                piece.src = "images/" + pieceName + ".png";
+                newTd.appendChild(piece);
+            }
+            if (i % 2 == j % 2) {
+                newTd.className = "block1";
+            } else {
+                newTd.className = "block2";
+            }
+            newTr.appendChild(newTd);
+        }
+        table.appendChild(newTr);
+    }
+    addEvent();
+}
+
+function cleanChessBoard() {
+    const chessBoard = document.getElementById("chess-board");
+    chessBoard.innerHTML = '';
+    store.gridDto = null;
+}
+
 function selectPiece(event) {
+    if (!store.gridDto.isStarted) {
+        alert("게임을 시작하시려면 Start 버튼을 눌러주세요.")
+        return;
+    }
     if (store.gridDto.isFinished) {
         alert("이미 게임이 끝났습니다. 게임을 다시 시작하시고 싶으면 Restart 버튼을 눌러주세요.")
         return;
@@ -176,6 +190,10 @@ async function move(sourcePosition, targetPosition) {
 
 async function start() {
     try {
+        if (store.gridDto && store.gridDto.isStarted) {
+            alert("이미 게임이 시작했습니다.")
+            return;
+        }
         const res = await axios({
             method: 'post',
             url: `/grid/${store.gridDto.gridId}/start`,
@@ -189,6 +207,7 @@ async function start() {
             alert(data.message);
             return;
         }
+        store.gridDto.isStarted = true;
         alert("게임을 시작합니다.");
         setFirstTurn();
     } catch (e) {
@@ -197,6 +216,10 @@ async function start() {
 }
 
 function setFirstTurn() {
+    const $players = document.getElementsByClassName("player");
+    for (let i = 0; i < $players.length; i++) {
+        $players[i].classList.remove("turn");
+    }
     const $player1 = document.getElementById("player1");
     $player1.className += " turn"
 }
@@ -223,55 +246,25 @@ async function finish() {
     }
 }
 
-async function getWinner() {
+async function restart() {
     try {
         const res = await axios({
             method: 'get',
-            url: '/winner',
+            url: `/room/${store.gridDto.roomId}/restart`,
         });
         const data = res.data;
         if (data.code !== 200) {
             alert(data.message);
             return;
         }
-        if (data.code === 200) {
-            return data.data.winner;
-        }
+        console.log("restart");
+        console.log(data);
+        cleanChessBoard();
+        createChessBoardAndPieces(data.data.gridDto, data.data.piecesResponseDto);
+        start();
     } catch (e) {
         console.log(e);
     }
-}
-
-async function restart() {
-    try {
-        const res = await axios({
-            method: 'post',
-            url: '/restart',
-        });
-        const data = res.data;
-        if (data.code !== 204) {
-            alert(data.message);
-            return;
-        }
-        if (data.code === 204) {
-            resetChessBoard();
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-function resetChessBoard() {
-    const $chessBoard = document.getElementById("chess-board");
-    while ($chessBoard.firstChild) {
-        $chessBoard.removeChild($chessBoard.firstChild);
-    }
-    const $players = document.getElementsByClassName("player");
-    for (let i = 0; i < $players.length; i++) {
-        $players[i].classList.remove("turn");
-    }
-    createChessBoard();
-    start();
 }
 
 function findPieceByPosition(pieces, position) {

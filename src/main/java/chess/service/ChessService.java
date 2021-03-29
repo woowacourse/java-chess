@@ -102,15 +102,10 @@ public class ChessService {
     public void finish(long gridId) throws SQLException {
         gridDAO.changeToFinished(gridId);
     }
-//
-//    public Response getWinner() {
-//        return new Response(ResponseCode.OK, new WinnerResponseDto(grid.winnerColor()));
-//    }
-//
-//    public Response restart() {
-//        grid.resetGame();
-//        return new Response(ResponseCode.NO_CONTENT);
-//    }
+
+    public GridAndPiecesResponseDto restart(long roomId) throws SQLException {
+        return createGridAndPiece(roomId);
+    }
 
     private GridAndPiecesResponseDto createGridAndPiece(long roomId) throws SQLException {
         Grid grid = new Grid(new NormalGridStrategy());
