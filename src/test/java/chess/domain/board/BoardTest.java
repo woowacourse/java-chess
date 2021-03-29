@@ -16,10 +16,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
 
+    private static final int BOARD_LENGTH = 8;
     private Board board;
 
     @BeforeEach
@@ -30,14 +35,26 @@ public class BoardTest {
     @DisplayName("올바른 보드 생성된다.")
     @Test
     void createTest() {
-        Piece[] pieces = getPiecesOfFirstLine(Owner.WHITE);
-
-        for (Vertical vertical : Vertical.values()) {
-            assertThat(board.of(vertical, Horizontal.ONE).getSymbol()).isEqualTo(pieces[vertical.getIndex() - 1].getSymbol());
+        List<List<Piece>> piecesList = Arrays.asList(
+                Arrays.asList(getPiecesOfFirstLine(Owner.BLACK)),
+                Arrays.asList(getPiecesOfSecondLine(Owner.BLACK)),
+                Arrays.asList(getEmptyLine()),
+                Arrays.asList(getEmptyLine()),
+                Arrays.asList(getEmptyLine()),
+                Arrays.asList(getEmptyLine()),
+                Arrays.asList(getPiecesOfSecondLine(Owner.WHITE)),
+                Arrays.asList(getPiecesOfFirstLine(Owner.WHITE))
+                );
+        Vertical[] verticals = Vertical.values();
+        Horizontal[] horizontals = Horizontal.values();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                assertThat(board.of(verticals[j], horizontals[i])).isEqualTo(piecesList.get(i).get(j));
+            }
         }
     }
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner) {
+    private static Piece[] getPiecesOfFirstLine(final Owner owner) {
         return new Piece[]{
                 Rook.getInstanceOf(owner),
                 Knight.getInstanceOf(owner),
@@ -48,6 +65,18 @@ public class BoardTest {
                 Knight.getInstanceOf(owner),
                 Rook.getInstanceOf(owner)
         };
+    }
+
+    private static Piece[] getPiecesOfSecondLine(final Owner owner) {
+        final Piece[] pieces = new Pawn[BOARD_LENGTH];
+        Arrays.fill(pieces, Pawn.getInstanceOf(owner));
+        return pieces;
+    }
+
+    private static Piece[] getEmptyLine() {
+        final Piece[] pieces = new Empty[BOARD_LENGTH];
+        Arrays.fill(pieces, Empty.getInstance());
+        return pieces;
     }
 
     @DisplayName("입력한 위치의 기물을 가져온다.")
