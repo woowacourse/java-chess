@@ -1,0 +1,17 @@
+td {
+    width: 60px;
+    height: 75px;
+}
+
+img {
+    max-height: 100%;
+    min-width: 100%;
+}
+
+.blackTile {
+    background-color: #614c39;
+}
+
+.whiteTile {
+    background-color: #f0c49c;
+}
