@@ -36,6 +36,7 @@ public class WebUIChessApplication {
             try {
                 chessGame.move(getPositionByCommands(moveRequest.source().split("")),
                     getPositionByCommands(moveRequest.target().split("")));
+                chessGame.nextTurn();
                 return new Response("200", "성공");
             } catch (UnsupportedOperationException | IllegalArgumentException e) {
                 return new Response("401", e.getMessage());
