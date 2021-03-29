@@ -6,7 +6,10 @@ import chess.dao.RoomDAO;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Piece;
+import chess.dto.requestdto.MoveRequestDto;
 import chess.dto.requestdto.StartRequestDto;
+import chess.dto.response.Response;
+import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
 import chess.dto.responsedto.GridResponseDto;
 import chess.dto.responsedto.PieceResponseDto;
@@ -29,14 +32,15 @@ public class ChessService {
         pieceDAO = new PieceDAO();
     }
 
-    //    public Response move(MoveRequestDto requestDto) {
-//        try {
-//            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
-//            return new Response(ResponseCode.NO_CONTENT);
-//        } catch (IllegalArgumentException e) {
-//            return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
-//        }
-//    }
+    public Response move(MoveRequestDto requestDto) {
+        try {
+            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
+            return new Response(ResponseCode.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
+        }
+    }
+
     public void start(long gridId) throws SQLException {
         gridDAO.changeToStarting(gridId);
     }

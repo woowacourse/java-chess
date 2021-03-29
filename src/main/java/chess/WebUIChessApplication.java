@@ -29,12 +29,23 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 //
-//        post("/move", (req, res) -> {
-//            Map<String, String> reqBody = (Map) GSON.fromJson(req.body(), new HashMap<>().getClass());
+        post("/move", (req, res) -> {
+            System.out.println(req.body());
+            HashMap reqBody = GSON.fromJson(req.body(), new HashMap<>().getClass());
+            System.out.println(reqBody);
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            System.out.println(reqBody.get("test"));
+            return null;
 //            String sourcePosition = reqBody.get("source");
 //            String targetPosition = reqBody.get("target");
 //            return chessService.move(new MoveRequestDto(sourcePosition, targetPosition));
-//        }, JSON_TRANSFORMER);
+        }, JSON_TRANSFORMER);
 
         get("/grid/:roomName", (req, res) -> {
             String roomName = req.params(":roomName");
