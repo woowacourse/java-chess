@@ -1,9 +1,9 @@
 package chess;
 
-import chess.beforedb.domain.board.setting.BoardDefaultSetting;
-import chess.beforedb.domain.board.setting.BoardSetting;
-import chess.db.controller.WebUIDBController;
-import chess.db.service.ChessServiceForDB;
+import chess.controller.web.WebUIDBController;
+import chess.domain.board.setting.BoardDefaultSetting;
+import chess.domain.board.setting.BoardSetting;
+import chess.service.ChessServiceForDB;
 
 public class WebUIDBApplication {
     public static void main(String[] args) {
