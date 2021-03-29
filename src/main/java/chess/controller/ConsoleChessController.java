@@ -9,12 +9,12 @@ import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleChessController {
 
     private final ChessBoard chessBoard;
     private TeamType teamType = TeamType.WHITE;
 
-    public ChessController(ChessBoard chessBoard) {
+    public ConsoleChessController(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
