@@ -17,7 +17,7 @@ class ScoreTest {
 
     @Test
     @DisplayName("스코어 plus 메서드를 이용해서 더할 수 있다.")
-    void plusTest() {
+    void sumTest() {
         Score other = new Score(1);
 
         Score result = score.sum(other);
