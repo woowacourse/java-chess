@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
-    <link href="/css/piece.css" rel="stylesheet" type="text/css">
+    <title>Chess Game</title>
+    <link href="/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <section id="board">
@@ -11,14 +11,15 @@
         <img src="/images/{url}.png" id="{coordinate}" class="piece" alt="img"/>
     </script>
 </section>
-
 <section id="status">
-    <div class="current-team-type">현재 턴 :</div>
-    <form action="/none" method="post">
-        <div class="piece-current-position">선택 기물 현재 위치 : <input class="current" name="current"
-                                                                 value=""></div>
-        <div class="piece-destination">선택 기물 목적지 위치 : <input class="destination" name="destination" readonly type="text"
-                                                             value=""></div>
+    <div class="current-team-message">현재 팀</div>
+    <div class="current-team-type"></div>
+    <form class="piece-move-form">
+        <div class="piece-current-position">선택 기물 현재 위치<br>
+            <label>
+                <input class="current" name="current" readonly value="">
+            </label>
+        </div>
     </form>
 </section>
 </body>

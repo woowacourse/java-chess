@@ -1,7 +1,7 @@
 #board {
     display: grid;
-    grid-template-columns: repeat(8, 100px);
-    grid-template-rows: repeat(8, 100px);
+    grid-template-columns: repeat(8, 103px);
+    grid-template-rows: repeat(8, 103px);
     position: absolute;
 }
 
@@ -14,7 +14,7 @@
     margin-top: 100px;
 }
 
-.piece-destination {
+.reset {
     margin-top: 100px;
 }
 
