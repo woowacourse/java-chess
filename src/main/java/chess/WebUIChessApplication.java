@@ -28,12 +28,12 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
-        get("/main", (req, res) -> {
+        get("/chessboard", (req, res) -> {
             res.type("application/json");
             BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "hi", new Gson().toJsonTree(boardDTO)));
         });
-        post("/main/post", (req, res) -> {
+        post("/chessboard/move", (req, res) -> {
             RequestDTO requestDTO = new Gson().fromJson(req.body(), RequestDTO.class);
             Coordinate current = Coordinate.from(requestDTO.getCurrent());
             Coordinate destination = Coordinate.from(requestDTO.getDestination());

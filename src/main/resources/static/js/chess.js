@@ -1,91 +1,122 @@
-var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/main";
-
-function calculateCoordinate(i, j) {
-    const y = 8 - i;
-    const x = j + 97;
-    return String.fromCharCode(x) + "" + y;
-}
-
-function printArr(myArr, currentTeamType) {
-    const ui = document.getElementById("board");
-    const html = document.querySelector("#template-list-piece").innerHTML;
-    for (let i = 0; i < 8; i++) {
-        let target = myArr[i];
-        for (let j = 0; j < 8; j++) {
-            let piece = target.pieces[j];
-            const coordinate = calculateCoordinate(i, j);
-            const pieceImg = html.replace("{url}", generateHTML(piece))
-                .replace("{coordinate}", coordinate);
-            ui.insertAdjacentHTML('beforeend', pieceImg);
+function initiate() {
+    const xmlHttp = new XMLHttpRequest();
+    const url = "http://localhost:8080/chessboard";
+    xmlHttp.onreadystatechange = function () {
+        if (isValidHttpResponse(xmlHttp)) {
+            const boardDTO = JSON.parse(this.responseText).data;
+            printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
         }
     }
+    xmlHttp.open('GET', url, true);
+    xmlHttp.send();
+}
 
-    let element = document.querySelector('.current-team-type');
-    element.textContent = currentTeamType;
-    Array.from(document.getElementsByClassName('piece')).forEach(piece => {
-        piece.addEventListener('click', function (event) {
-                let current = document.querySelector(".current");
-                if (current.value.length === 0) {
-                    current.value = piece.id;
-                    piece.style.border = "1px solid red";
-                    return;
-                }
-                if (piece.style.border === "1px solid red") {
-                    current.value = '';
-                    piece.style.border = '1px solid black';
-                    return;
-                }
-                var data = JSON.stringify({
-                    "current": current.value,
-                    "destination": piece.id,
-                    "teamType": currentTeamType
-                });
-                var post = new XMLHttpRequest();
-                post.open("POST", "http://localhost:8080/main/post", true);
-                post.send(data);
-                current.value = '';
-                post.onreadystatechange = function () {
-                    console.log(post.status);
-                    if (post.readyState === 4 && post.status === 200) {
-                        var myArr = JSON.parse(post.responseText).data;
-                        Array.from(document.getElementsByClassName('piece'))
-                            .forEach(t => t.remove());
-                        printArr(myArr.rows, myArr.currentTeamType);
-                    }
-                }
+function isValidHttpResponse(xmlHttp) {
+    return xmlHttp.readyState === 4 && xmlHttp.status === 200;
+}
 
-            }
-        );
+function printChessBoard(rows, currentTeamType) {
+    printEachRow(rows);
+    changeCurrentTeamType(currentTeamType);
+    Array.from(document.getElementsByClassName('piece'))
+        .forEach(piece => addMovableEvent(piece, currentTeamType));
+}
+
+function printEachRow(rows) {
+    const board = document.getElementById('board');
+    const pieceTemplate = document.querySelector('#template-list-piece').innerHTML;
+    for (let i = 0; i < rows.length; i++) {
+        const columns = rows[i].pieces;
+        for (let j = 0; j < columns.length; j++) {
+            const piece = columns[j];
+            const coordinate = calculateCoordinate(i, j);
+            const pieceHtmlNode = pieceTemplate.replace('{url}', generatePieceUrl(piece))
+                .replace('{coordinate}', coordinate);
+            board.insertAdjacentHTML('beforeend', pieceHtmlNode);
+        }
+    }
+}
+
+function calculateCoordinate(i, j) {
+    const x = j + 97;
+    const y = 8 - i;
+    return String.fromCharCode(x) + y;
+}
+
+function generatePieceUrl(piece) {
+    if (piece === null) {
+        return "Blank";
+    }
+    const teamPrefix = (piece.teamType === "BLACK") ? "B" : "W";
+    return teamPrefix + piece.name.toUpperCase();
+}
+
+function changeCurrentTeamType(currentTeamType) {
+    const teamTypeElement = document.querySelector('.current-team-type');
+    teamTypeElement.textContent = currentTeamType;
+}
+
+function addMovableEvent(piece, currentTeamType) {
+    piece.addEventListener('click', function (event) {
+        const current = document.querySelector('.current');
+        if (isPieceChosenForTheFirst(current)) {
+            current.value = piece.id;
+            piece.style.border = '1px solid red';
+            return;
+        }
+        if (isPieceChosenAlready(piece)) {
+            current.value = '';
+            piece.style.border = '1px solid black';
+            return;
+        }
+        sendMoveRequest(current.value, piece.id, currentTeamType);
+        current.value = '';
     });
 }
 
-function getName(piece) {
-    let prefix;
-    if (piece.teamType === "BLACK") {
-        prefix = "B";
-    } else {
-        prefix = "W";
-    }
-    return prefix + piece.name.toUpperCase();
+function isPieceChosenForTheFirst(current) {
+    return current.value.length === 0;
 }
 
-function generateHTML(piece) {
-    let name;
-    if (piece === null) {
-        name = "Blank";
-    } else {
-        name = getName(piece);
-    }
-    return name;
+function isPieceChosenAlready(piece) {
+    return piece.style.border === '1px solid red';
 }
 
-xmlhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-        var myArr = JSON.parse(this.responseText).data;
-        printArr(myArr.rows, myArr.currentTeamType);
+function sendMoveRequest(current, destination, currentTeamType) {
+    const requestData = JSON.stringify({
+        "current": current,
+        "destination": destination,
+        "teamType": currentTeamType
+    });
+    const xmlHttp = new XMLHttpRequest();
+    const url = 'http://localhost:8080/chessboard/move';
+    xmlHttp.onreadystatechange = function () {
+        if (isValidHttpResponse(xmlHttp)) {
+            removeOutdatedChessBoard();
+            const boardDTO = JSON.parse(this.responseText).data;
+            printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
+            return;
+        }
+        if (isExceptionThrown(xmlHttp)) {
+            alert('기물을 움직일 수 없습니다. 다시 시도해주세요.');
+            const currentPiece = document.getElementById(current);
+            currentPiece.style.border = '1px solid black';
+        }
     }
-};
+    xmlHttp.open('POST', url, true);
+    xmlHttp.send(requestData);
+}
 
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
+function removeOutdatedChessBoard() {
+    Array.from(document.getElementsByClassName('piece'))
+        .forEach(t => t.remove());
+}
+
+function isExceptionThrown(xmlHttp) {
+    return xmlHttp.readyState === 4 && xmlHttp.status === 500;
+}
+
+initiate();
+
+
+
