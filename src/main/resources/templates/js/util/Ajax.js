@@ -5,44 +5,56 @@ export class Ajax {
 
     }
 
-    get(uri) {
-        return fetch(Ajax.#URL + uri)
+    async get(uri) {
+        let result = await fetch(Ajax.#URL + uri)
+        if(result.ok) return await result.json()
+
+        throw await result.json()
     }
 
-    post(uri, data) {
+    async post(uri, data) {
         const option = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: data
         }
 
-        return fetch(Ajax.#URL + uri, option)
+        let result = await fetch(Ajax.#URL + uri, option)
+        if(result.ok) return await result.json()
+
+        throw await result.json()
     }
 
-    delete(uri, data) {
+    async delete(uri, data) {
         const option = {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: data
         }
 
-        return fetch(Ajax.#URL + uri, option)
+        let result = await fetch(Ajax.#URL + uri, option)
+        if(result.ok) return await result.json()
+
+        throw await result.json()
     }
 
-    patch(uri, data) {
+    async patch(uri, data) {
         const option = {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: data
         }
 
-        return fetch(Ajax.#URL + uri, option)
+        let result = await fetch(Ajax.#URL + uri, option)
+        if(result.ok) return await result.json()
+
+        throw await result.json()
     }
 
 

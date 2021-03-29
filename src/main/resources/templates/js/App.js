@@ -1,14 +1,13 @@
-import {Board} from "./domain/board/Board.js";
 import {ChessController} from "./controller/ChessController.js";
+import {ChessGame} from "./domain/game/ChessGame.js";
 
 class App {
-    #board = new Board()
-    #controller = new ChessController(this.#board)
+    #controller = new ChessController(new ChessGame())
 
     run() {
-        document.body.appendChild(this.#board.dom)
         this.#controller.run()
     }
+
 }
 
 let app = new App()

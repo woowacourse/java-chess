@@ -1,17 +1,20 @@
 package chess.controller;
 
+import chess.controller.dto.GameDto;
 import chess.controller.dto.MessageDto;
+import chess.controller.dto.MoveDto;
 import chess.controller.dto.StatusDto;
 import chess.domain.board.Board;
-import chess.domain.command.*;
+import chess.domain.command.MoveService;
+import chess.domain.command.StatusService;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
-import chess.controller.dto.GameDto;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.patch;
 
 
 public class ChessController {
@@ -20,7 +23,7 @@ public class ChessController {
 
     public void run() {
         patch("/start", this::start, gson::toJson);
-        patch("/move/:source/:target", this::move, gson::toJson);
+        patch("/move", this::move, gson::toJson);
         get("/status", this::status, gson::toJson);
         patch("/end", this::end, gson::toJson);
     }
@@ -32,6 +35,7 @@ public class ChessController {
         try {
             chessGame.start();
         } catch (RuntimeException e) {
+            response.status(400);
             return new MessageDto(e.getMessage());
         }
 
@@ -39,8 +43,12 @@ public class ChessController {
     }
 
     public Object move(Request request, Response response) {
-        String source = request.params(":source");
-        String target = request.params(":target");
+        System.out.println(request.body());
+
+        MoveDto moveDto = gson.fromJson(request.body(), MoveDto.class);
+
+        String source = moveDto.getSource();
+        String target = moveDto.getTarget();
 
         ChessGame chessGame = getChessGameFromSession(request);
 
@@ -49,6 +57,7 @@ public class ChessController {
         try {
             moveService.move(source, target);
         } catch (RuntimeException e) {
+            response.status(400);
             return new MessageDto(e.getMessage());
         }
 

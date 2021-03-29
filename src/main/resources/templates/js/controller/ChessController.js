@@ -3,35 +3,88 @@ import {PieceFactory} from "../domain/piece/PieceFactory.js";
 
 export class ChessController {
 
-    #board
+    #chessGame
+    #turn
+    #selected
 
-
-    constructor(board) {
-        this.#board = board
+    constructor(chessGame) {
+        this.#chessGame = chessGame
     }
 
     run() {
         this.startEventHandler();
+        this.moveEventHandler();
     }
 
     async start() {
-        let result = await new Ajax().patch('start', '')
-        let pieceDtos = await result.json()
+        let result
+        try {
+            result = await new Ajax().patch('start', '')
+        } catch (e) {
+            alert(e.message)
+            return
+        }
 
-        console.log(pieceDtos)
+        let pieces = PieceFactory.getPiecesByPieceDtos(result)
 
-        let pieces = PieceFactory.getPiecesByPieceDtos(pieceDtos)
-        this.#board.setPieces(pieces)
+        this.#chessGame.setPieces(pieces)
+        this.#chessGame.setTurn(result.turn)
+        this.#turn = result.turn
     }
 
-    move() {
 
+
+    async #selectPiece(e) {
+        if (e.target && [...e.target.classList].includes(this.#turn)) {
+            if (this.#selected === e.target) {
+                e.target.classList.remove('selected')
+                this.#selected = undefined
+
+                return
+            }
+
+            if (this.#selected !== undefined) {
+                this.#selected.classList.remove('selected')
+            }
+
+            this.#selected = e.target
+            e.target.classList.add('selected')
+            return
+        }
+    }
+
+    async #move(e) {
+        if (this.#selected && e.target && ![...e.target.classList].includes(this.#turn)) {
+            let source = this.#selected.id
+            let target = e.target.id
+            let result
+
+            try {
+                result = await new Ajax().patch('move', `
+                {
+                    "source" : "${source}",
+                    "target" : "${target}"
+                }`)
+            } catch (e) {
+                alert(e.message)
+                return
+            }
+
+            let pieces = PieceFactory.getPiecesByPieceDtos(result)
+
+            this.#chessGame.setPieces(pieces)
+            this.#chessGame.setTurn(result.turn)
+            this.#turn = result.turn
+
+            this.#selected = undefined
+        }
     }
 
     moveEventHandler() {
         document.getElementById('chess_board')
-            .addEventListener('click', e => {
-
+            .addEventListener('click', async e => {
+                await this.#selectPiece(e)
+                await this.#move(e)
             })
     }
 

@@ -5,35 +5,45 @@ export class Board {
     #lines = []
 
     constructor() {
+        this.#dom = this.#createDom()
+        this.#init();
+    }
+
+    #init() {
         for (let row = 8; row >= 1; row--) {
             this.#lines.push(new Line(row))
         }
 
-        this.#dom = this.#createDom()
+        for (let line of this.#lines) {
+            this.#dom.appendChild(line.dom)
+        }
     }
 
     #createDom() {
-        let wrapper = document
+        return document
             .createRange()
             .createContextualFragment(
-                `<div class="chess_board"></div>`
+                `<div id="chess_board"></div>`
             ).firstElementChild
-
-        for (let line of this.#lines) {
-            wrapper.appendChild(line.dom)
-        }
-
-        return wrapper
     }
 
     setPieces(pieces) {
+        this.#clear()
+        this.#init()
+
         for (let piece of pieces) {
-            console.log(pieces)
             let dom = document.getElementById(piece.location)
-            console.log(dom)
+
             dom.classList.add(piece.color)
             dom.textContent = piece.notation
         }
+    }
+
+    #clear() {
+        while(this.#dom.hasChildNodes()) {
+            this.#dom.removeChild(this.#dom.firstChild)
+        }
+        this.#lines = []
     }
 
     get dom() {
