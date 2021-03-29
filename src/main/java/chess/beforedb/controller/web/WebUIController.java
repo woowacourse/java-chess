@@ -7,6 +7,7 @@ import static spark.Spark.post;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.BoardResponseDTO;
+import chess.beforedb.controller.dto.response.MoveResponse;
 import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.service.ChessService;
 import com.google.gson.Gson;

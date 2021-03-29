@@ -1,16 +1,18 @@
 package chess.db.domain.board;
 
 import static chess.beforedb.domain.piece.type.PieceType.KING;
-import static chess.beforedb.domain.player.type.TeamColor.*;
+import static chess.beforedb.domain.player.type.TeamColor.BLACK;
+import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 
+import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
 import chess.db.dao.GamePiecePosition;
 import chess.db.domain.game.ScoresEntity;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.player.PlayersForDB;
 import chess.db.domain.position.MoveRequestForDB;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerEntity;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +84,18 @@ public class BoardForDB {
         return playersForDB.getPlayersScores(gameId);
     }
 
-    public List<String> getStatus(Long gameId) throws SQLException {
-        return piecesPositionsForDB.getCellsStatusByGameIdInOrderAsString(gameId);
+    public BoardStatusResponseDTOForDB getStatus(Long gameId) throws SQLException {
+        List<String> cellsStatus = piecesPositionsForDB
+            .getCellsStatusByGameIdInOrderAsString(gameId);
+        return new BoardStatusResponseDTOForDB(cellsStatus, isKingDead(cellsStatus));
+    }
+
+    private boolean isKingDead(List<String> cellsStatus) {
+        return cellsStatus.stream()
+            .filter(cellStatus ->
+                cellStatus.equals(KING.getName(WHITE))
+                    || cellStatus.equals(KING.getName(BLACK)))
+            .count() < NUMBER_OF_ALL_KINGS;
     }
 
     public CellForDB findCell(PositionEntity positionEntity) {
@@ -92,12 +104,6 @@ public class BoardForDB {
 
     public PieceEntity findPiece(PositionEntity positionEntity) {
         return findCell(positionEntity).getPieceEntity();
-    }
-
-    public boolean isKingDead() {
-        return cellsForDB.values().stream()
-            .filter(cell -> !cell.isEmpty() && cell.getPieceType() == KING)
-            .count() < NUMBER_OF_ALL_KINGS;
     }
 
     public void removeAllPlayersAndPiecesPositionsOfGame(Long gameId) throws SQLException {

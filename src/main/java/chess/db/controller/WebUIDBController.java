@@ -6,9 +6,11 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.BoardResponseDTO;
-import chess.beforedb.controller.dto.response.ResponseDTO;
-import chess.beforedb.controller.web.MoveResponse;
+import chess.beforedb.controller.dto.response.MoveResponse;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
+import chess.db.controller.dto.response.BoardResponseDTOForDB;
+import chess.db.controller.dto.response.MoveResponseDTOForDB;
+import chess.db.controller.dto.response.ResponseDTOForDB;
 import chess.db.domain.game.ChessGameResponseDTO;
 import chess.db.service.ChessServiceForDB;
 import com.google.gson.Gson;
@@ -76,7 +78,7 @@ public class WebUIDBController {
     private void handleGetBoardRequest() {
         get(ROOT + CHESS_BOARD, (req, res) -> {
             Long roomId = Long.valueOf(req.queryParams("id"));
-            ResponseDTO responseDTO = chessServiceForDB.getBoard(roomId);
+            ResponseDTOForDB responseDTO = chessServiceForDB.getGameStatus(roomId);
             Map<String, Object> model = new HashMap<>();
             model.put(RESPONSE_DTO, responseDTO);
             putBoardRanks(responseDTO.getBoardResponseDTO(), model);
@@ -86,8 +88,8 @@ public class WebUIDBController {
 
     private void handleMoveRequest() {
         post(ROOT + MOVE, APPLICATION_JSON, (req, res) -> {
-            MoveRequestDTO moveRequestDTO = gson.fromJson(req.body(), MoveRequestDTO.class);
-            MoveResponse moveResponse = chessServiceForDB.requestMove(moveRequestDTO);
+            MoveRequestDTOForDB moveRequestDTO = gson.fromJson(req.body(), MoveRequestDTOForDB.class);
+            MoveResponseDTOForDB moveResponse = chessServiceForDB.requestMove(moveRequestDTO);
             res.type(APPLICATION_JSON);
             return gson.toJson(moveResponse);
         });
@@ -102,7 +104,7 @@ public class WebUIDBController {
         });
     }
 
-    private void putBoardRanks(BoardResponseDTO boardResponseDTO, Map<String, Object> model) {
+    private void putBoardRanks(BoardResponseDTOForDB boardResponseDTO, Map<String, Object> model) {
         model.put("rank8", boardResponseDTO.getRank8());
         model.put("rank7", boardResponseDTO.getRank7());
         model.put("rank6", boardResponseDTO.getRank6());

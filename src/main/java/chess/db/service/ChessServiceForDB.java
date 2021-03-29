@@ -1,13 +1,17 @@
 package chess.db.service;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.BoardResponseDTO;
 import chess.beforedb.controller.dto.response.ResponseDTO;
-import chess.beforedb.controller.web.MoveResponse;
+import chess.beforedb.controller.dto.response.MoveResponse;
 import chess.beforedb.domain.board.setting.BoardSetting;
-import chess.beforedb.domain.player.Scores;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
+import chess.db.controller.dto.response.BoardResponseDTOForDB;
+import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.db.controller.dto.response.MoveResponseDTOForDB;
+import chess.db.controller.dto.response.ResponseDTOForDB;
 import chess.db.domain.game.ChessGameForDB;
 import chess.db.domain.game.ChessGameResponseDTO;
+import chess.db.domain.game.GameStatusResponseDTO;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,37 +43,35 @@ public class ChessServiceForDB {
         return chessGameForDB.getAllGamesIdAndTitle();
     }
 
-    public MoveResponse requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {
+    public MoveResponseDTOForDB requestMove(MoveRequestDTOForDB moveRequestDTO) throws SQLException {
         return createMoveResponse(moveRequestDTO);
     }
 
-    private MoveResponse createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
+    private MoveResponseDTOForDB createMoveResponse(MoveRequestDTOForDB moveRequestDTO) throws SQLException {
         try {
-            //chessGameForDB.move(moveRequestDTO);
+            chessGameForDB.move(moveRequestDTO);
         } catch (Exception e) {
-            return new MoveResponse(true, e.getMessage());
+            return new MoveResponseDTOForDB(true, e.getMessage());
         }
-        // TODO:
-        Long gameId = null;
-        chessGameForDB.changeToNextTurn(gameId);
-        return new MoveResponse(false);
+        chessGameForDB.changeToNextTurn(moveRequestDTO.getGameId());
+        return new MoveResponseDTOForDB(false);
     }
 
-    public ResponseDTO getBoard(Long roomId) throws SQLException {
-        //Scores scores = chessGameForDB.getGameStatus();
-//        return new ResponseDTO(
-//            getBoardResponseDTO(roomId),
-//            chessGameForDB.currentTurnTeamName(),
-//            scores.getBlackPlayerScore(),
-//            scores.getWhitePlayerScore(),
-//            chessGameForDB.isKingDead(),
-//            chessGameForDB.beforeTurnTeamName());
-        return null;
+    public ResponseDTOForDB getGameStatus(Long gameId) throws SQLException {
+        GameStatusResponseDTO gameStatusResponseDTO = chessGameForDB.getGameStatus(gameId);
+        BoardStatusResponseDTOForDB boardStatusResponseDTOForDB
+            = chessGameForDB.getBoardStatus(gameId);
+        return new ResponseDTOForDB(
+            getBoardResponseDTO(boardStatusResponseDTOForDB.getCellsStatus()),
+            gameStatusResponseDTO.getCurrentTurnTeamColorName(),
+            gameStatusResponseDTO.getBlackPlayerScore(),
+            gameStatusResponseDTO.getWhitePlayerScore(),
+            boardStatusResponseDTOForDB.isKingDead(),
+            gameStatusResponseDTO.getBeforeTurnTeamColorName());
     }
 
-    private BoardResponseDTO getBoardResponseDTO(Long gameId) throws SQLException {
-        List<String> cellsStatus = chessGameForDB.boardCellsStatus(gameId);
-        return new BoardResponseDTO(
+    private BoardResponseDTOForDB getBoardResponseDTO(List<String> cellsStatus) {
+        return new BoardResponseDTOForDB(
             cellsStatus.subList(RANK1_FIRST_INDEX, RANK2_FIRST_INDEX),
             cellsStatus.subList(RANK2_FIRST_INDEX, RANK3_FIRST_INDEX),
             cellsStatus.subList(RANK3_FIRST_INDEX, RANK4_FIRST_INDEX),

@@ -1,9 +1,8 @@
 package chess.db.domain.position;
 
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.piece.type.Direction;
 import chess.beforedb.domain.player.type.TeamColor;
-import chess.db.controller.MoveRequestDTOForDB;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
 
 public class MoveRequestForDB {
     private final TeamColor currentTurnTeamColor;

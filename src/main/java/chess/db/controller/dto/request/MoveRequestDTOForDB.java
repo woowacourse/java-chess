@@ -1,4 +1,4 @@
-package chess.db.controller;
+package chess.db.controller.dto.request;
 
 
 public class MoveRequestDTOForDB {

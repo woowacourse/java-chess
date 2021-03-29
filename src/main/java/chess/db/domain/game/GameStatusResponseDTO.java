@@ -5,6 +5,7 @@ import chess.beforedb.domain.player.type.TeamColor;
 public class GameStatusResponseDTO {
     private final String title;
     private final String currentTurnTeamColorName;
+    private final String beforeTurnTeamColorName;
     private final double whitePlayerScore;
     private final double blackPlayerScore;
 
@@ -13,6 +14,7 @@ public class GameStatusResponseDTO {
 
         this.title = title;
         this.currentTurnTeamColorName = teamColor.getName();
+        this.beforeTurnTeamColorName = teamColor.oppositeTeamColorName();
         this.whitePlayerScore = whitePlayerScore;
         this.blackPlayerScore = blackPlayerScore;
     }
@@ -23,6 +25,10 @@ public class GameStatusResponseDTO {
 
     public String getCurrentTurnTeamColorName() {
         return currentTurnTeamColorName;
+    }
+
+    public String getBeforeTurnTeamColorName() {
+        return beforeTurnTeamColorName;
     }
 
     public double getWhitePlayerScore() {

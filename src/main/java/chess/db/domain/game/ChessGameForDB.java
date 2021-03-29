@@ -1,12 +1,12 @@
 package chess.db.domain.game;
 
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.board.setting.BoardCustomSetting;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.type.TeamColor;
-import chess.db.controller.MoveRequestDTOForDB;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
+import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PiecePosition;
 import chess.db.domain.board.BoardForDB;
@@ -96,20 +96,17 @@ public class ChessGameForDB {
 //        }
     }
 
-    public boolean isKingDead() {
-        return boardForDB.isKingDead();
-    }
-
-    public List<String> boardCellsStatus(Long gameId) throws SQLException {
+    public BoardStatusResponseDTOForDB getBoardStatus(Long gameId) throws SQLException {
         return boardForDB.getStatus(gameId);
     }
 
     public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
         GameStatusEntity gameStatusEntity = chessGameDAO.findStatusByGameId(gameId);
         ScoresEntity scores = boardForDB.getScores(gameId);
+        TeamColor currentTurnTeamColor = gameStatusEntity.getCurrentTurnTeamColor();
         return new GameStatusResponseDTO(
             gameStatusEntity.getTitle(),
-            gameStatusEntity.getCurrentTurnTeamColor(),
+            currentTurnTeamColor,
             scores.getWhitePlayerScore(),
             scores.getBlackPlayerScore());
     }

@@ -1,15 +1,15 @@
-package chess.beforedb.controller.web;
+package chess.db.controller.dto.response;
 
-public class MoveResponse {
+public class MoveResponseDTOForDB {
     private final boolean isMoveError;
     private final String errorMessage;
 
-    public MoveResponse(boolean isMoveError, String errorMessage) {
+    public MoveResponseDTOForDB(boolean isMoveError, String errorMessage) {
         this.isMoveError = isMoveError;
         this.errorMessage = errorMessage;
     }
 
-    public MoveResponse(boolean isMoveError) {
+    public MoveResponseDTOForDB(boolean isMoveError) {
         this(isMoveError, null);
     }
 
