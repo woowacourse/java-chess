@@ -6,6 +6,7 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
 import chess.domain.team.Score;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -79,15 +80,15 @@ public abstract class PieceOnBoard implements Piece {
     @Override
     public String toString() {
         return "PieceOnBoard{" +
-            "teamColor=" + teamColor +
-            ", pieceType=" + pieceType +
-            ", state=" + state +
-            ", currentPosition=" + currentPosition +
-            '}';
+                "teamColor=" + teamColor +
+                ", pieceType=" + pieceType +
+                ", state=" + state +
+                ", currentPosition=" + currentPosition +
+                '}';
     }
 
     protected Set<Position> moveDiagonalAsPossible(Position target,
-        Map<Position, Piece> chessBoard) {
+                                                   Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         candidates.addAll(moveAsPossible(Moves.LEFT_DOWN, target, chessBoard));
         candidates.addAll(moveAsPossible(Moves.LEFT_UP, target, chessBoard));
@@ -97,7 +98,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     protected Set<Position> moveCrossAsPossible(Position target,
-        Map<Position, Piece> chessBoard) {
+                                                Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         candidates.addAll(moveAsPossible(Moves.UP, target, chessBoard));
         candidates.addAll(moveAsPossible(Moves.DOWN, target, chessBoard));
@@ -138,15 +139,13 @@ public abstract class PieceOnBoard implements Piece {
         return candidates;
     }
 
-    private void checkOnStartLine(Map<Position, Piece> chessBoard, Set<Position> candidates,
-        Position position) {
+    private void checkOnStartLine(Map<Position, Piece> chessBoard, Set<Position> candidates, Position position) {
         if (validBlank(position, chessBoard) && currentPosition.pawnLine(teamColor)) {
             candidates.add(position);
         }
     }
 
-    private Set<Position> moveAsPossible(Moves direction, Position target,
-        Map<Position, Piece> chessBoard) {
+    private Set<Position> moveAsPossible(Moves direction, Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         Position position = direction.move(currentPosition);
         while (movable(position, target, chessBoard)) {
@@ -160,8 +159,7 @@ public abstract class PieceOnBoard implements Piece {
         return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
     }
 
-    private boolean isMeetEnemy(Position position, Position target,
-        Map<Position, Piece> chessBoard) {
+    private boolean isMeetEnemy(Position position, Position target, Map<Position, Piece> chessBoard) {
         return position == target && isEnemyTeam(chessBoard.get(position));
     }
 

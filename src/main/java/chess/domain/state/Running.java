@@ -87,11 +87,6 @@ public class Running implements GameState {
     }
 
     @Override
-    public boolean containsKey(Position position) {
-        return chessBoard.containsKey(position);
-    }
-
-    @Override
     public GameState terminate() {
         return new Finished(chessBoard);
     }

@@ -75,23 +75,7 @@ public class ChessBoard {
     }
 
     public void move(String source, String target) {
-        validatePosition(source, target);
         gameState = gameState.move(Position.valueOf(source), Position.valueOf(target));
-    }
-
-    private void validatePosition(String source, String target) {
-        validateSamePosition(source, target);
-        if (gameState.containsKey(Position.valueOf(source)) &&
-            gameState.containsKey(Position.valueOf(target))) {
-            return;
-        }
-        throw new IllegalArgumentException("잘못된 좌표입니다.");
-    }
-
-    private void validateSamePosition(String source, String target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
-        }
     }
 
     public Result result() {

@@ -14,8 +14,6 @@ public interface GameState {
 
     Map<Position, Piece> getChessBoard();
 
-    boolean containsKey(Position position);
-
     GameState terminate();
 
     boolean isRunning();

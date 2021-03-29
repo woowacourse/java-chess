@@ -44,15 +44,9 @@ public class Finished implements GameState {
         return result;
     }
 
-
     @Override
     public Map<Position, Piece> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
-    }
-
-    @Override
-    public boolean containsKey(Position position) {
-        return chessBoard.containsKey(position);
     }
 
     @Override
