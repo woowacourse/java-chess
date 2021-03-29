@@ -20,7 +20,6 @@ public class ChessController {
         while (chessGame.runnable()) {
             executeByCommand();
         }
-        end();
     }
 
     private void executeByCommand() {
@@ -44,9 +43,5 @@ public class ChessController {
         if (command.isMustShowStatus()) {
             OutputView.printStatus(chessGame.scoreStatus());
         }
-    }
-
-    public void end() {
-        System.exit(0);
     }
 }
