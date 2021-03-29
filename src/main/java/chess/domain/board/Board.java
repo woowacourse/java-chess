@@ -3,6 +3,9 @@ package chess.domain.board;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.RealPiece;
+import chess.domain.piece.strategy.KingStrategy;
+import chess.domain.piece.strategy.RookStrategy;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -14,13 +17,8 @@ public final class Board {
 
     private final Map<Position, Piece> coordinates;
 
-    private Board(Map<Position, Piece> coordinates) {
+    public Board(Map<Position, Piece> coordinates) {
         this.coordinates = coordinates;
-    }
-
-    // TODO
-    public static Board ofEmpty() {
-        return new Board(new HashMap<>());
     }
 
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {

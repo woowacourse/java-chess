@@ -7,7 +7,8 @@ import java.util.List;
 public final class WhitePawnStrategy implements PieceStrategy {
 
     private static final String NAME = "p";
-    private static final double VALUE = 1;
+    private static final double ORIGINAL_VALUE = 1;
+    private static final double DUPLICATE_VALUE = 0.5;
 
     @Override
     public List<Direction> directions() {
@@ -36,6 +37,6 @@ public final class WhitePawnStrategy implements PieceStrategy {
 
     @Override
     public double value() {
-        return VALUE;
+        return ORIGINAL_VALUE;
     }
 }

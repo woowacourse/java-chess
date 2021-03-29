@@ -12,7 +12,7 @@ public abstract class StageState implements GameState {
         this.game = game;
     }
 
-    protected Game currentBoard() {
+    protected Game currentGame() {
         return game;
     }
 

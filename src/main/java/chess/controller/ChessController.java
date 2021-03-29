@@ -12,7 +12,7 @@ public final class ChessController {
 
     public void run() {
         OutputView.printGuideMessage();
-        GameManager gameManager = new GameManager(new InitialState(Game.initiate()));
+        GameManager gameManager = new GameManager(new InitialState());
         while (gameManager.isNotFinished()) {
             try {
                 final CommandAsString command = new CommandAsString(InputView.receiveInput());

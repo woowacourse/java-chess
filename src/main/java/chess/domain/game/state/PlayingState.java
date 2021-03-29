@@ -19,7 +19,7 @@ public abstract class PlayingState extends StageState {
     public GameState execute(final CommandAsString command) {
         System.out.println("launched execute from playing state");
         if (command.isEnd()) {
-            return new EndState(currentBoard());
+            return new EndState(currentGame());
         }
         if (command.isMove()) {
             return executeMove(command.source(), command.target());

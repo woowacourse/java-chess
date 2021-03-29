@@ -15,11 +15,6 @@ public final class Game {
         this.board = board;
     }
 
-    public static Game initiate() {
-        // todo
-        return new Game(Board.ofEmpty());
-    }
-
     public Game move(final Position sourcePosition, final Position targetPosition) {
         if (!board.hasAvailablePath(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("경로 안에서 체스말이 이동할 수 없습니다.");
