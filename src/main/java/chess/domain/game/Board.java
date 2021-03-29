@@ -4,16 +4,38 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private final Pieces pieces;
+    private Pieces pieces;
+    private Map<Position, Piece> pieceByPosition;
 
     public Board(Pieces pieces) {
+        for (Position position : Position.all()) {
+            pieceByPosition = new HashMap<>();
+            pieceByPosition.put(position, new Empty());
+        }
         this.pieces = pieces;
+    }
+
+    public Board(Map<Position, Piece> maps) {
+        this.pieceByPosition = maps;
+        this.pieces = new Pieces();
+    }
+
+    public void print() {
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
+                System.out.print(pieceByPosition.get(Position.of(column, row))
+                                                .display());
+            }
+            System.out.println();
+        }
     }
 
     public void move(Color color, Position from, Position to) {
