@@ -18,12 +18,12 @@ public abstract class GeneralPiece extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
+    public final boolean isBlank() {
         return false;
     }
 
     @Override
-    public boolean isPawn() {
+    public final boolean isPawn() {
         return false;
     }
 
