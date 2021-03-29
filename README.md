@@ -146,15 +146,15 @@
 
 ## 5단계 - DB 적용
 
-- [ ] 메인 페이지 View
+- [x] 메인 페이지 View
 
-  - [ ] 방 목록
-    - [ ] 생성되어 있는 방들의 목록
+  - [x] 방 목록
+    - [x] 생성되어 있는 방들의 목록
       - [x] 각 방의 제목들을 나열한다.
-      - [ ] 방의 제목을 클릭하면, 진행중인 상태의 체스 게임 보드 화면으로 이동한다. (링크)
-    - [ ] 각 방 오른쪽에 삭제 버튼
+      - [x] 방의 제목을 클릭하면, 진행중인 상태의 체스 게임 보드 화면으로 이동한다. (링크)
+    - [x] 각 방 오른쪽에 삭제 버튼
       - [x] 삭제버튼을 누르면, `방을 삭제하시겠습니까?` 확인 창이 뜬다.
-      - [ ] `확인` 을 누르면, 방을 삭제한다.
+      - [x] `확인` 을 누르면, 방을 삭제한다.
       - [x] `취소` 를 누르면, 아무 일도 발생하지 않는다.
   - [x] 방 생성
     - [x] 방 제목 입력 칸
@@ -203,44 +203,44 @@
   - [x] 게임 종료 (게임 방 삭제 버튼을 클릭한 경우 또는 King이 잡힌 경우)
   - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
   
-- [ ] API
-  - [ ] 방 생성
-    - [ ] `POST : "/create-chess-room?room-title=${방 제목}"` 요청
-      - [ ] 새로운 체스 게임, 플레이어들 생성.
-      - [ ] 초기 기물 배치 세팅
-      - [ ] `생성한 게임 id`를 반환
-      - [ ] Controller에서 `GET : "/chess-board?id=${생성한 게임 id}"` redirect
-  - [ ] 기존 방 접속
-    - [ ] 방 클릭
-      - [ ] `GET : "/chess-board?id={게임 id}"` 요청
-      - [ ] 체스 보드의 모든 정보와 게임 id를 함께 반환
-      - [ ] 보이지 않는 html element에 게임 id 저장
-  - [ ] 체스 보드 출력
-    - [ ] `isKingDead` 값을 보이지 않는 html element에 저장
-    - [ ] `직전 턴 이었던 팀의 색깔` 값을 보이지 않는 html element에 저장
-      - [ ] html, css rendering이 완료되고, js가 해당 html element 내의 text값을 읽었을 때, `true`이면, `alert("${직전 턴 이었던 팀의 색깔} 팀이 이겼습니다.")` 로 안내창 띄움.
-        - [ ] `GET : "/delete?id={게임 id}"` 요청
-  - [ ] 방 나가기 
-    - [ ] `GET : "/"` 요청
-    - [ ] 메인 페이지 (방 목록) 화면으로 이동
-  - [ ] 방 삭제
-    - [ ] `GET : "/delete?id={게임 id}"` 요청
-    - [ ] 해당 게임 id에 관련된 `기물 위치 정보(player_piece_position)`들, `플레이어 정보(player)`들, `체스 게임 정보(chess_game)`  DB에서 모두 삭제
-    - [ ] `GET : "/"` 으로 redirect
-  - [ ] 기물 이동
+- [x] API
+  - [x] 방 생성
+    - [x] `POST : "/create-chess-room?room-title=${방 제목}"` 요청
+      - [x] 새로운 체스 게임, 플레이어들 생성.
+      - [x] 초기 기물 배치 세팅
+      - [x] `생성한 게임 id`를 반환
+      - [x] Controller에서 `GET : "/chess-board?id=${생성한 게임 id}"` redirect
+  - [x] 기존 방 접속
+    - [x] 방 클릭
+      - [x] `GET : "/chess-board?id={게임 id}"` 요청
+      - [x] 체스 보드의 모든 정보와 게임 id를 함께 반환
+      - [x] 보이지 않는 html element에 게임 id 저장
+  - [x] 체스 보드 출력
+    - [x] `isKingDead` 값을 보이지 않는 html element에 저장
+    - [x] `직전 턴 이었던 팀의 색깔` 값을 보이지 않는 html element에 저장
+      - [x] html, css rendering이 완료되고, js가 해당 html element 내의 text값을 읽었을 때, `true`이면, `alert("${직전 턴 이었던 팀의 색깔} 팀이 이겼습니다.")` 로 안내창 띄움.
+        - [x] `GET : "/delete?id={게임 id}"` 요청
+  - [x] 방 나가기 
+    - [x] `GET : "/"` 요청
+    - [x] 메인 페이지 (방 목록) 화면으로 이동
+  - [x] 방 삭제
+    - [x] `GET : "/delete?id={게임 id}"` 요청
+    - [x] 해당 게임 id에 관련된 `기물 위치 정보(player_piece_position)`들, `플레이어 정보(player)`들, `체스 게임 정보(chess_game)`  DB에서 모두 삭제
+    - [x] `GET : "/"` 으로 redirect
+  - [x] 기물 이동
 
-    - [ ] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "${출발 위치}", "destination": "${도착 위치}"}"` 요청
-    - [ ] 이동 가능한 경우
-      - [ ] 기물 이동, 턴 전환 DB 업데이트
-      - [ ] 정상 이동 응답 반환
-    - [ ] 이동 불가능한 경우
-      - [ ] DB 업데이트를 아무것도 하지 않음
-    - [ ] 이동 불가 에러, 에러 메세지 응답 반환
-    - [ ] `ajax` 에서 정상 이동 결과를 받았을 때
-      - [ ] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
-    - [ ] `ajax` 에서 정상 에러 결과를 받으면,  
-      - [ ] View에서 js로 `alert("{에러 메세지}")` 창 띄움.
-      - [ ] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
+    - [x] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "${출발 위치}", "destination": "${도착 위치}"}"` 요청
+    - [x] 이동 가능한 경우
+      - [x] 기물 이동, 턴 전환 DB 업데이트
+      - [x] 정상 이동 응답 반환
+    - [x] 이동 불가능한 경우
+      - [x] DB 업데이트를 아무것도 하지 않음
+    - [x] 이동 불가 에러, 에러 메세지 응답 반환
+    - [x] `ajax` 에서 정상 이동 결과를 받았을 때
+      - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
+    - [x] `ajax` 에서 정상 에러 결과를 받으면,  
+      - [x] View에서 js로 `alert("{에러 메세지}")` 창 띄움.
+      - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
 
   
 
@@ -359,11 +359,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 # Todo list
 
-
-
-- [x] 도메인 의존 구조 정리
-- [ ] View <->  Controller <-> Service <-> Domain 연결
-- [ ] jquery, bootstrap static 파일로 저장
-- [ ] alert, confirm 창 bootstrap 적용
 - [ ] 테스트 코드 연결
+- [ ] Console Controller 연결
+- [ ] Console, DB 와 관련없는 과거 클래스 삭제
+- [ ] 네이밍 변경
 - [ ] 체스보드 View 꾸미기
