@@ -4,6 +4,7 @@ package chess.db.controller;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.MoveResponse;
@@ -40,7 +41,7 @@ public class WebUIDBController {
     }
 
     public void run() {
-        port(8080);
+        staticFiles.location("/public");
         handleHomeRequest();
         handleCreateChessRoomRequest();
         handleEnterChessRoomRequest();

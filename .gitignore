@@ -20,4 +20,4 @@ bin/
 *.iml
 *.ipr
 
-/src/main/resources/sql/chess_erd.*
+
