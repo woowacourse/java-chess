@@ -1,10 +1,13 @@
 # step1 피드백
 - [x] guava 의존성 제거(spark에 포함되어 있음)
 - [ ] null 대신 exception으로 처리하기
+  -> exception을 날리면 예외 상황으로 처리됨. 내가 하고 싶은 것은 계속 움직이다가 움직일 수 없는 상태까지 가는 것! 
+  (이 경우 막혔을 때 예외를 날리면 안 된다고 생각)
 - [x] isKing, isPawn 오버라이드 방식으로 메소드 수정
 - [x] Position isPawnLine -> NumberRows로 비교
 - [ ] TDD, 단위테스트, 통합테스트 학습하고 최대한 꼼꼼하게 작성하기
 - [ ] Position의 유무 다시 체크해보기
+  -> Test code 작성이 어려움..ㅠㅠ 만약 Position을 가지고 있지 않다면 각 말의 이동은 어떻게 체크할 수 있을까?
 
 # step2
 
