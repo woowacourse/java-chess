@@ -45,5 +45,8 @@ class FinishedTest {
 
     @Test
     void isRunning() {
+        assertFalse(finished.isRunning());
     }
+
+    // todo: result 테스트코드 작성하기
 }
