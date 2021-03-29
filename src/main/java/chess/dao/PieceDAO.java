@@ -29,54 +29,59 @@ public class PieceDAO {
     }
 
     public long createPiece(long gridId, Piece piece) throws SQLException {
-        boolean isBlack = piece.isBlack();
-        String position = String.valueOf(piece.position().x()) + String.valueOf(piece.position().y());
-        String name = String.valueOf(piece.name());
-        String query = "INSERT INTO piece (isBlack, position, gridId, name) VALUES (?, ?, ?, ?)";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
-        pstmt.setString(SECOND_PARAMETER_INDEX, position);
-        pstmt.setLong(THIRD_PARAMETER_INDEX, gridId);
-        pstmt.setString(FOURTH_PARAMETER_INDEX, name);
-        pstmt.executeUpdate();
-        ResultSet rs = pstmt.getGeneratedKeys();
-        if (rs.next()) {
-            long result = rs.getLong(FIRST_COLUMN);
-            con.closeConnection(connection);
-            return result;
+        try (Connection connection = con.getConnection()) {
+            boolean isBlack = piece.isBlack();
+            String position = String.valueOf(piece.position().x()) + String.valueOf(piece.position().y());
+            String name = String.valueOf(piece.name());
+            String query = "INSERT INTO piece (isBlack, position, gridId, name) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
+            pstmt.setString(SECOND_PARAMETER_INDEX, position);
+            pstmt.setLong(THIRD_PARAMETER_INDEX, gridId);
+            pstmt.setString(FOURTH_PARAMETER_INDEX, name);
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getLong(FIRST_COLUMN);
+            }
+            throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
+        } catch (Exception e) {
+            throw e;
         }
-        throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
     public List<PieceDto> findPiecesByGridId(long gridId) throws SQLException {
-        Connection connection = con.getConnection();
-        String query = "SELECT * FROM piece WHERE gridId = ?";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
-        ResultSet rs = pstmt.executeQuery();
-        List<PieceDto> pieces = new ArrayList<>();
-        while (rs.next()) {
-            pieces.add(new PieceDto(
-                    rs.getLong(FIRST_COLUMN),
-                    rs.getBoolean(SECOND_COLUMN),
-                    rs.getString(THIRD_COLUMN),
-                    rs.getLong(FOURTH_COLUMN),
-                    rs.getString(FIFTH_COLUMN)
-            ));
+        try (Connection connection = con.getConnection()) {
+            String query = "SELECT * FROM piece WHERE gridId = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+            ResultSet rs = pstmt.executeQuery();
+            List<PieceDto> pieces = new ArrayList<>();
+            while (rs.next()) {
+                pieces.add(new PieceDto(
+                        rs.getLong(FIRST_COLUMN),
+                        rs.getBoolean(SECOND_COLUMN),
+                        rs.getString(THIRD_COLUMN),
+                        rs.getLong(FOURTH_COLUMN),
+                        rs.getString(FIFTH_COLUMN)
+                ));
+            }
+            return pieces;
+        } catch (Exception e) {
+            throw e;
         }
-        con.closeConnection(connection);
-        return pieces;
     }
 
     public void updatePiece(long pieceId, boolean isBlack, char name) throws SQLException {
-        Connection connection = con.getConnection();
-        String query = "UPDATE piece SET isBlack = ?, name = ?  WHERE pieceId = ?";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
-        pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
-        pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
-        pstmt.executeUpdate();
-        con.closeConnection(connection);
+        try (Connection connection = con.getConnection()) {
+            String query = "UPDATE piece SET isBlack = ?, name = ?  WHERE pieceId = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
+            pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
+            pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

@@ -23,7 +23,6 @@ public class GridDAO {
     private static final int SECOND_PARAMETER_INDEX = 2;
     private static final int THIRD_PARAMETER_INDEX = 3;
 
-
     private final ConnectionSetup con;
 
     public GridDAO() {
@@ -35,90 +34,100 @@ public class GridDAO {
         boolean isBlackTurn = grid.isMyTurn(Color.BLACK);
         boolean isFinished = grid.isFinished();
 
-        String query = "INSERT INTO grid (isBlackTurn, isFinished, roomId) VALUES (?, ?, ?)";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
-        pstmt.setBoolean(SECOND_PARAMETER_INDEX, isFinished);
-        pstmt.setLong(THIRD_PARAMETER_INDEX, roomId);
-        pstmt.executeUpdate();
-        ResultSet rs = pstmt.getGeneratedKeys();
-        if (rs.next()) {
-            long result = rs.getLong(FIRST_COLUMN);
-            con.closeConnection(connection);
-            return result;
+        try (Connection connection = con.getConnection()) {
+            String query = "INSERT INTO grid (isBlackTurn, isFinished, roomId) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
+            pstmt.setBoolean(SECOND_PARAMETER_INDEX, isFinished);
+            pstmt.setLong(THIRD_PARAMETER_INDEX, roomId);
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getLong(FIRST_COLUMN);
+            }
+            throw new IllegalArgumentException("값을 잘못 입력하여 아무 값도 삽입되지 않았습니다.");
+        } catch (Exception e) {
+            throw e;
         }
-        throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
     public GridDto findGridByGridId(long gridId) throws SQLException {
         String query = "SELECT * FROM grid WHERE gridId = ? LIMIT 1";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            return null;
+        try (Connection connection = con.getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return new GridDto(
+                    rs.getLong(FIRST_COLUMN),
+                    rs.getBoolean(SECOND_COLUMN),
+                    rs.getBoolean(THIRD_COLUMN),
+                    rs.getLong(FOURTH_COLUMN),
+                    rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
+                    rs.getBoolean(SIXTH_COLUMN)
+            );
+        } catch (Exception e) {
+            throw e;
         }
-        GridDto gridDto = new GridDto(
-                rs.getLong(FIRST_COLUMN),
-                rs.getBoolean(SECOND_COLUMN),
-                rs.getBoolean(THIRD_COLUMN),
-                rs.getLong(FOURTH_COLUMN),
-                rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
-                rs.getBoolean(SIXTH_COLUMN)
-        );
-        con.closeConnection(connection);
-        return gridDto;
     }
 
     public GridDto findRecentGridByRoomId(long roomId) throws SQLException {
-        String query = "SELECT * FROM grid WHERE roomId = ? ORDER BY createdAt DESC LIMIT 1";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(FIRST_PARAMETER_INDEX, roomId);
-        pstmt.executeQuery();
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            return null;
+        try (Connection connection = con.getConnection()) {
+            String query = "SELECT * FROM grid WHERE roomId = ? ORDER BY createdAt DESC LIMIT 1";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setLong(FIRST_PARAMETER_INDEX, roomId);
+            pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            GridDto gridDto = new GridDto(
+                    rs.getLong(FIRST_COLUMN),
+                    rs.getBoolean(SECOND_COLUMN),
+                    rs.getBoolean(THIRD_COLUMN),
+                    rs.getLong(FOURTH_COLUMN),
+                    rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
+                    rs.getBoolean(SIXTH_COLUMN)
+            );
+            return gridDto;
+        } catch (Exception e) {
+            throw e;
         }
-        GridDto gridDto = new GridDto(
-                rs.getLong(FIRST_COLUMN),
-                rs.getBoolean(SECOND_COLUMN),
-                rs.getBoolean(THIRD_COLUMN),
-                rs.getLong(FOURTH_COLUMN),
-                rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
-                rs.getBoolean(SIXTH_COLUMN)
-        );
-        con.closeConnection(connection);
-        return gridDto;
     }
 
     public void changeToStarting(long gridId) throws SQLException {
-        String query = "UPDATE grid SET isStarted = true WHERE gridId = ?";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
-        pstmt.executeUpdate();
-        con.closeConnection(connection);
+        try (Connection connection = con.getConnection()) {
+            String query = "UPDATE grid SET isStarted = true WHERE gridId = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public void changeTurn(long gridId, boolean isBlackTurn) throws SQLException {
-        Connection connection = con.getConnection();
-        String query = "UPDATE grid SET isBlackTurn = ? WHERE gridId = ?";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
-        pstmt.setLong(SECOND_PARAMETER_INDEX, gridId);
-        pstmt.executeUpdate();
-        con.closeConnection(connection);
+        try (Connection connection = con.getConnection()) {
+            String query = "UPDATE grid SET isBlackTurn = ? WHERE gridId = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
+            pstmt.setLong(SECOND_PARAMETER_INDEX, gridId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public void changeToFinished(long gridId) throws SQLException {
-        String query = "UPDATE grid SET isFinished = true WHERE gridId = ?";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
-        pstmt.executeUpdate();
-        con.closeConnection(connection);
+        try (Connection connection = con.getConnection()) {
+            String query = "UPDATE grid SET isFinished = true WHERE gridId = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

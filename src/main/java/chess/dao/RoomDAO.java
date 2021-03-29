@@ -19,33 +19,36 @@ public class RoomDAO {
     }
 
     public long createRoom(String roomName) throws SQLException {
-        String query = "INSERT INTO room (roomName) VALUES (?)";
-        Connection connection = con.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
-        pstmt.executeUpdate();
-        ResultSet rs = pstmt.getGeneratedKeys();
-
-        if (rs.next()) {
-            long roomId = rs.getLong(FIRST_COLUMN);
-            con.closeConnection(connection);
-            return roomId;
+        try (Connection connection = con.getConnection()) {
+            String query = "INSERT INTO room (roomName) VALUES (?)";
+            PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                long roomId = rs.getLong(FIRST_COLUMN);
+                con.closeConnection(connection);
+                return roomId;
+            }
+            throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
+        } catch (Exception e) {
+            throw e;
         }
-        throw new SQLException("아무 값도 삽입되지 않았습니다.");
     }
 
     public Optional<Long> findRoomIdByName(String roomName) throws SQLException {
-        Connection connection = con.getConnection();
-        String query = "SELECT roomId FROM room WHERE roomName = ? ORDER BY roomId DESC";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
-        ResultSet rs = pstmt.executeQuery();
+        try (Connection connection = con.getConnection()) {
+            String query = "SELECT roomId FROM room WHERE roomName = ? ORDER BY roomId DESC";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(FIRST_PARAMETER_INDEX, roomName);
+            ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) {
-            return Optional.ofNullable(null);
+            if (!rs.next()) {
+                return Optional.ofNullable(null);
+            }
+            return Optional.ofNullable(rs.getLong(ROOM_ID_COLUMN_NAME));
+        } catch (Exception e) {
+            throw e;
         }
-        Optional<Long> result = Optional.ofNullable(rs.getLong(ROOM_ID_COLUMN_NAME));
-        con.closeConnection(connection);
-        return result;
     }
 }
