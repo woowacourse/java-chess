@@ -29,30 +29,6 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public PlayerPiecePosition save(PlayerPiecePosition playerPiecePosition)
-        throws SQLException {
-        ResultSet generatedKeys = getResultSet(playerPiecePosition);
-        if (generatedKeys.next()) {
-            return new PlayerPiecePosition(
-                generatedKeys.getLong(1),
-                playerPiecePosition.getPlayerEntity(),
-                playerPiecePosition.getPieceEntity(),
-                playerPiecePosition.getPositionEntity());
-        }
-        throw new SQLException("PiecePositionEntity를 save()할 수 없습니다.");
-    }
-
-    private ResultSet getResultSet(PlayerPiecePosition playerPiecePositionEntity)
-        throws SQLException {
-        String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
-        pstmt.setLong(1, playerPiecePositionEntity.getPlayerEntity().getId());
-        pstmt.setLong(2, playerPiecePositionEntity.getPieceEntity().getId());
-        pstmt.setLong(3, playerPiecePositionEntity.getPositionEntity().getId());
-        pstmt.executeUpdate();
-        return pstmt.getGeneratedKeys();
-    }
-
     public Map<PositionEntity, PieceEntity> findAllByGameId(Long gameId) throws SQLException {
         ResultSet rs = getResultSetToFindAllByGameId(gameId);
         Map<PositionEntity, PieceEntity> results = new HashMap<>();
