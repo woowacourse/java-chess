@@ -377,7 +377,17 @@ FROM
             
             
             
-            
+SELECT 
+	id, position_id 
+FROM player_piece_position 
+	INNER JOIN (
+		SELECT 
+			player.id AS player_id 
+		FROM player 
+	WHERE chess_game_id = 264
+	) AS players 
+		ON player_piece_position.player_id = players.player_id 
+WHERE player_piece_position.position_id = 1495;
             
             
             

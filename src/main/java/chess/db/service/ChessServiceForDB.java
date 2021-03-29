@@ -40,11 +40,13 @@ public class ChessServiceForDB {
         return chessGameForDB.getAllGamesIdAndTitle();
     }
 
-    public MoveResponseDTOForDB requestMove(MoveRequestDTOForDB moveRequestDTO) throws SQLException {
+    public MoveResponseDTOForDB requestMove(MoveRequestDTOForDB moveRequestDTO)
+        throws SQLException {
         return createMoveResponse(moveRequestDTO);
     }
 
-    private MoveResponseDTOForDB createMoveResponse(MoveRequestDTOForDB moveRequestDTO) throws SQLException {
+    private MoveResponseDTOForDB createMoveResponse(MoveRequestDTOForDB moveRequestDTO)
+        throws SQLException {
         try {
             chessGameForDB.move(moveRequestDTO);
         } catch (Exception e) {

@@ -5,7 +5,6 @@ import static chess.beforedb.domain.player.type.TeamColor.BLACK;
 import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.domain.game.GameStatusEntity;
 import chess.db.entity.ChessGameEntity;
 import java.sql.SQLException;

@@ -2,7 +2,6 @@ package chess.db.controller;
 
 
 import static spark.Spark.get;
-import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
@@ -92,7 +91,8 @@ public class WebUIDBController {
 
     private void handleMoveRequest() {
         post(ROOT + MOVE, APPLICATION_JSON, (req, res) -> {
-            MoveRequestDTOForDB moveRequestDTO = gson.fromJson(req.body(), MoveRequestDTOForDB.class);
+            MoveRequestDTOForDB moveRequestDTO = gson
+                .fromJson(req.body(), MoveRequestDTOForDB.class);
             MoveResponseDTOForDB moveResponse = chessServiceForDB.requestMove(moveRequestDTO);
             res.type(APPLICATION_JSON);
             return gson.toJson(moveResponse);

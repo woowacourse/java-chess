@@ -6,9 +6,7 @@ import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.db.entity.ChessGameEntity;
-import chess.db.entity.PlayerEntity;
 import java.sql.SQLException;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

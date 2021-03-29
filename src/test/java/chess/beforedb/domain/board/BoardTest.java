@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.DBCleaner;
-import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
-import chess.beforedb.domain.game.ChessGame;
 import chess.db.controller.dto.request.MoveRequestDTOForDB;
 import chess.db.domain.game.ChessGameForDB;
 import chess.utils.PositionConverter;

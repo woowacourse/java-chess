@@ -1,43 +1,13 @@
 package chess.db.domain.board;
 
-import static chess.beforedb.domain.piece.type.PieceType.BISHOP;
-import static chess.beforedb.domain.piece.type.PieceType.KING;
-import static chess.beforedb.domain.piece.type.PieceType.KNIGHT;
-import static chess.beforedb.domain.piece.type.PieceType.PAWN;
-import static chess.beforedb.domain.piece.type.PieceType.QUEEN;
-import static chess.beforedb.domain.piece.type.PieceType.ROOK;
-import static chess.beforedb.domain.player.type.TeamColor.BLACK;
-import static chess.beforedb.domain.player.type.TeamColor.WHITE;
-import static chess.beforedb.domain.position.type.File.A;
-import static chess.beforedb.domain.position.type.File.B;
-import static chess.beforedb.domain.position.type.File.C;
-import static chess.beforedb.domain.position.type.File.D;
-import static chess.beforedb.domain.position.type.File.E;
-import static chess.beforedb.domain.position.type.File.F;
-import static chess.beforedb.domain.position.type.File.G;
-import static chess.beforedb.domain.position.type.File.H;
-import static chess.beforedb.domain.position.type.Rank.EIGHT;
-import static chess.beforedb.domain.position.type.Rank.ONE;
-import static chess.beforedb.domain.position.type.Rank.SEVEN;
-import static chess.beforedb.domain.position.type.Rank.TWO;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.db.dao.ChessGameDAO;
-import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerDAO;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.game.ChessGameForDB;
-import chess.db.domain.piece.PieceEntity;
-import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class BoardForDBTest {
     private final PlayerPiecePositionDAO playerPiecePositionDAO = new PlayerPiecePositionDAO();
@@ -57,7 +27,6 @@ class BoardForDBTest {
         chessGameForDB = new ChessGameForDB();
         chessGameForDB.createNew(new BoardDefaultSetting(), "testTitle");
     }
-
 
 //    @DisplayName("DB에서 체스 판 정보 가져오기")
 //    @Test

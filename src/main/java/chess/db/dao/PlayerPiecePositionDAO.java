@@ -1,15 +1,11 @@
 package chess.db.dao;
 
 import static chess.db.dao.DBConnection.getConnection;
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import chess.beforedb.domain.piece.type.PieceWithColorType;
-import chess.beforedb.domain.position.type.File;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.board.PiecePositionNew;
 import chess.db.domain.piece.PieceEntity;
 import chess.db.domain.position.PositionEntity;
-import chess.db.entity.PlayerPiecePosition;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,8 +42,7 @@ public class PlayerPiecePositionDAO {
             + "AS players_id_of_selected_game ON player_piece_position.player_id = players_id_of_selected_game.player_id;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-        return rs;
+        return pstmt.executeQuery();
     }
 
     public List<PiecePositionFromDB> findAllByPlayerId(Long playerId) throws SQLException {
@@ -72,33 +67,6 @@ public class PlayerPiecePositionDAO {
                 + "WHERE player_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerId);
-        return pstmt.executeQuery();
-    }
-
-    public PieceWithColorType findPieceWithColorTypeByChessGameIdAndFileAndRank(Long gameId,
-        Long positionId)
-        throws SQLException {
-        ResultSet rs = getResultSetToFindPieceWithColorType(gameId, positionId);
-        if (!rs.next()) {
-            return null;
-        }
-        String pieceName = rs.getString("piece_name");
-        String pieceColor = rs.getString("piece_color");
-        return PieceWithColorType.of(pieceName, pieceColor);
-    }
-
-    private ResultSet getResultSetToFindPieceWithColorType(Long gameId, Long positionId)
-        throws SQLException {
-        String query = "SELECT name AS piece_name, color AS piece_color FROM piece "
-            + "INNER JOIN (SELECT piece_id FROM player_piece_position "
-            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) "
-            + "AS players_id_of_selected_game ON player_piece_position.player_id = players_id_of_selected_game.player_id "
-            + "AND player_piece_position.position_id = ?) "
-            + "AS player_piece_position_of_selected_game "
-            + "ON player_piece_position_of_selected_game.piece_id = piece.id";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        pstmt.setLong(2, positionId);
         return pstmt.executeQuery();
     }
 
@@ -133,9 +101,10 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public void removeAll() throws SQLException {
-        String query = "DELETE FROM player_piece_position";
+    public void removePiecePositionOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
+        String query = "DELETE FROM player_piece_position WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, gamePiecePosition.getPlayerPiecePositionId());
         pstmt.executeUpdate();
     }
 
@@ -146,10 +115,9 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public void removePiecePositionOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
-        String query = "DELETE FROM player_piece_position WHERE id = ?";
+    public void removeAll() throws SQLException {
+        String query = "DELETE FROM player_piece_position";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gamePiecePosition.getPlayerPiecePositionId());
         pstmt.executeUpdate();
     }
 }

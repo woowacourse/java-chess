@@ -2,8 +2,8 @@ package chess.beforedb.controller.console;
 
 import chess.beforedb.controller.console.dto.CommandRequestDTO;
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
-import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.dto.response.MoveResponse;
+import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.service.ChessService;
 import chess.beforedb.view.InputView;
 import chess.beforedb.view.OutputView;

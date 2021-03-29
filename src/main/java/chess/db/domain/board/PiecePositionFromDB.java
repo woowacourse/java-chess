@@ -4,8 +4,6 @@ import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
-import chess.db.domain.piece.PieceEntity;
-import chess.db.domain.position.PositionEntity;
 
 public class PiecePositionFromDB {
     private final PieceType pieceType;

@@ -2,7 +2,6 @@ package chess.beforedb.controller.web;
 
 
 import static spark.Spark.get;
-import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 

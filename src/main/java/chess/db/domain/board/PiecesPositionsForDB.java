@@ -1,6 +1,5 @@
 package chess.db.domain.board;
 
-import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.position.type.File;
 import chess.beforedb.domain.position.type.Rank;
 import chess.db.dao.GamePiecePosition;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 public class PiecesPositionsForDB {
-    private static final String NOT_EXISTS = ".";
     private final PlayerPiecePositionDAO playerPiecePositionDAO;
 
     public PiecesPositionsForDB() {
@@ -52,31 +50,24 @@ public class PiecesPositionsForDB {
 
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {
         List<String> cellsStatus = new ArrayList<>();
+        Map<PositionEntity, CellForDB> allCells = this.getAllCellsStatusByGameId(gameId);
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
-            getCellsStatusByGameIdAndRankInOrderAsString(gameId, rank, cellsStatus);
+            cellsStatus.addAll(getCellsStatusAsStringByGameIdAndRank(rank, allCells));
         }
         return cellsStatus;
     }
 
-    private void getCellsStatusByGameIdAndRankInOrderAsString(Long gameId, Rank rank,
-        List<String> cellsStatus) throws SQLException {
+    private List<String> getCellsStatusAsStringByGameIdAndRank(Rank rank,
+        Map<PositionEntity, CellForDB> allCells) {
+
+        List<String> cells = new ArrayList<>();
         for (File file : File.values()) {
             PositionEntity position = PositionEntity.of(file, rank);
-            PieceWithColorType pieceWithColorType = playerPiecePositionDAO
-                .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
-            addCellStatusAsString(cellsStatus, pieceWithColorType);
+            CellForDB cell = allCells.get(position);
+            cells.add(cell.getStatus());
         }
-    }
-
-    private void addCellStatusAsString(List<String> cellsStatus,
-        PieceWithColorType pieceWithColorType) {
-
-        String pieceName = NOT_EXISTS;
-        if (pieceWithColorType != null) {
-            pieceName = pieceWithColorType.getName();
-        }
-        cellsStatus.add(pieceName);
+        return cells;
     }
 
     public void removeAllPiecesPositionsByPlayerId(Long playerId) throws SQLException {

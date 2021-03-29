@@ -4,7 +4,6 @@ import static chess.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.DBCleaner;
-import chess.beforedb.domain.game.ChessGame;
 import chess.beforedb.domain.position.type.File;
 import chess.db.domain.game.ChessGameForDB;
 import chess.utils.PositionConverter;

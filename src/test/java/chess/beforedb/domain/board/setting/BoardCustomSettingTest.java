@@ -15,13 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.DBCleaner;
-import chess.beforedb.domain.game.ChessGame;
 import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
 import chess.db.domain.game.ChessGameForDB;
-import chess.utils.PositionConverter;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

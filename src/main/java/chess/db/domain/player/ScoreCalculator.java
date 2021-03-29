@@ -1,9 +1,7 @@
 package chess.db.domain.player;
 
-import static chess.beforedb.domain.piece.type.PieceType.*;
+import static chess.beforedb.domain.piece.type.PieceType.PAWN;
 
-import chess.beforedb.domain.piece.Pawn;
-import chess.beforedb.domain.piece.Piece;
 import chess.beforedb.domain.position.type.File;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.piece.PawnEntity;

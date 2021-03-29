@@ -2,16 +2,11 @@ package chess.db.dao;
 
 
 import static chess.db.dao.DBConnection.getConnection;
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import chess.beforedb.domain.player.type.TeamColor;
-import chess.db.entity.ChessGameEntity;
-import chess.db.entity.PlayerEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerDAO {
 

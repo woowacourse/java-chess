@@ -2,8 +2,8 @@ package chess.beforedb.service;
 
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.controller.dto.response.BoardResponseDTO;
-import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.dto.response.MoveResponse;
+import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.game.ChessGame;
 import chess.beforedb.domain.player.Scores;

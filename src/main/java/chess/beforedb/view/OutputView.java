@@ -1,8 +1,8 @@
 package chess.beforedb.view;
 
 import chess.beforedb.controller.dto.response.BoardResponseDTO;
-import chess.beforedb.controller.dto.response.ResponseDTO;
 import chess.beforedb.controller.dto.response.MoveResponse;
+import chess.beforedb.controller.dto.response.ResponseDTO;
 import java.util.ArrayList;
 import java.util.List;
 
