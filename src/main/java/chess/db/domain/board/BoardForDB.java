@@ -62,11 +62,8 @@ public class BoardForDB {
 
 
     public void validateRoute(Long gameId, MoveRequestForDB moveRequestForDB) throws SQLException {
-        Map<PositionEntity, CellForDB> cells = new HashMap<>();
-        piecesPositionsForDB.setCellsStatusByGameId(gameId, cells);
-
+        Map<PositionEntity, CellForDB> cells = playersForDB.getAllCellsStatusByGameId(gameId);
         CellForDB startPositionCell = cells.get(moveRequestForDB.getStartPosition());
-
         validateOwnPiece(startPositionCell, moveRequestForDB.getCurrentTurnTeamColor());
         validateMoveRoute(cells, moveRequestForDB);
     }

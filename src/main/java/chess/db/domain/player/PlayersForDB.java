@@ -6,6 +6,7 @@ import static chess.beforedb.domain.player.type.TeamColor.WHITE;
 import chess.beforedb.domain.player.type.TeamColor;
 import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerDAO;
+import chess.db.domain.board.CellForDB;
 import chess.db.domain.board.PiecePositionFromDB;
 import chess.db.domain.board.PiecesPositionsForDB;
 import chess.db.domain.game.ScoresEntity;
@@ -16,6 +17,7 @@ import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PlayersForDB {
     private final PlayerDAO playerDAO;
@@ -132,5 +134,11 @@ public class PlayersForDB {
         piecesPositionsForDB.removePiecesPositionsByPlayerId(whitePlayerId);
         piecesPositionsForDB.removePiecesPositionsByPlayerId(blackPlayerId);
         playerDAO.removeAllByChessGame(gameId);
+    }
+
+    public Map<PositionEntity, CellForDB> getAllCellsStatusByGameId(Long gameId)
+        throws SQLException {
+
+        return piecesPositionsForDB.getAllCellsStatusByGameId(gameId);
     }
 }

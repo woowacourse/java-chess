@@ -13,6 +13,7 @@ import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePosition;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,26 +40,38 @@ public class PiecesPositionsForDB {
         );
     }
 
-    public Map<PositionEntity, CellForDB> setCellsStatusByGameId(Long gameId,
-        Map<PositionEntity, CellForDB> cells) throws SQLException {
+    public Map<PositionEntity, CellForDB> getAllCellsStatusByGameId(Long gameId)
+        throws SQLException {
 
+        Map<PositionEntity, CellForDB> allCells = new HashMap<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
-            getCellsStatusByGameIdAndRank(gameId, rank, cells);
+            allCells.putAll(getCellsStatusByGameIdAndRank(gameId, rank));
+        }
+        return allCells;
+    }
+
+    private Map<PositionEntity, CellForDB> getCellsStatusByGameIdAndRank(Long gameId, Rank rank)
+        throws SQLException {
+
+        Map<PositionEntity, CellForDB> cells = new HashMap<>();
+        for (File file : File.values()) {
+            PositionEntity position = PositionEntity.of(file, rank);
+            CellForDB cell = getCellByGameIdAndPosition(gameId, position);
+            cells.put(position, cell);
         }
         return cells;
     }
 
-    private void getCellsStatusByGameIdAndRank(Long gameId, Rank rank,
-        Map<PositionEntity, CellForDB> cells) throws SQLException {
-        for (File file : File.values()) {
-            PositionEntity position = PositionEntity.of(file, rank);
-            PieceWithColorType pieceWithColorType = playerPiecePositionDAO
-                .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
-            PieceEntity piece = PieceEntity.of(pieceWithColorType);
-            PiecePosition piecePosition = new PiecePosition(piece, position);
-            putCellStatus(cells, piecePosition);
-        }
+    private CellForDB getCellByGameIdAndPosition(Long gameId, PositionEntity position)
+        throws SQLException {
+
+        PieceWithColorType pieceWithColorType = playerPiecePositionDAO
+            .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
+        PieceEntity piece = PieceEntity.of(pieceWithColorType);
+        CellForDB cell = new CellForDB();
+        cell.put(piece);
+        return cell;
     }
 
     private void putCellStatus(Map<PositionEntity, CellForDB> cells, PiecePosition piecePosition) {
