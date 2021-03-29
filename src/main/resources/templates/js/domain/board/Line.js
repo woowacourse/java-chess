@@ -8,7 +8,7 @@ export class Line {
 
     constructor(row) {
         for (let column of Line.#COL_NAMES) {
-            this.#cells.push(new Cell(row + column))
+            this.#cells.push(new Cell(column + row))
         }
 
         this.#dom = this.#createDom()
@@ -21,7 +21,7 @@ export class Line {
                 `<div class="line"></div>`
             ).firstElementChild
 
-        for(let cell of this.#cells) {
+        for (let cell of this.#cells) {
             wrapper.appendChild(cell.dom)
         }
 

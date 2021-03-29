@@ -26,6 +26,16 @@ export class Board {
         return wrapper
     }
 
+    setPieces(pieces) {
+        for (let piece of pieces) {
+            console.log(pieces)
+            let dom = document.getElementById(piece.location)
+            console.log(dom)
+            dom.classList.add(piece.color)
+            dom.textContent = piece.notation
+        }
+    }
+
     get dom() {
         return this.#dom
     }

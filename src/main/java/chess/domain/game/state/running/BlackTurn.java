@@ -6,7 +6,6 @@ import chess.domain.game.state.finished.End;
 import chess.domain.piece.Position;
 
 public class BlackTurn extends Running {
-
     public BlackTurn(final ChessGame chessGame) {
         super(chessGame);
     }

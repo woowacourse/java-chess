@@ -1,29 +1,28 @@
 package chess.controller.dto;
 
+import chess.domain.board.Board;
 import chess.domain.piece.ChessPiece;
 
 public class PieceDto {
 
     private final String notation;
-    private final int row;
-    private final int column;
+    private final String position;
 
     public PieceDto(ChessPiece piece) {
         this.notation = piece.getNotation();
-        this.row = piece.getRow();
-        this.column = piece.getColumn();
+        position = toPosition(piece.getRow(), piece.getColumn());
+    }
+
+    private String toPosition(int row, int column) {
+        return (char) (column + 'a') + String.valueOf(Board.getRow() - row);
     }
 
     public String getNotation() {
         return notation;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
+    public String getPosition() {
+        return position;
     }
 
 }

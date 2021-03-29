@@ -19,10 +19,10 @@ public class ChessController {
     private static final String CHESS_GAME = "chessGame";
 
     public void run() {
-        get("/", this::start, gson::toJson);
-        get("/move/:source/:target", this::move, gson::toJson);
+        patch("/start", this::start, gson::toJson);
+        patch("/move/:source/:target", this::move, gson::toJson);
         get("/status", this::status, gson::toJson);
-        get("/end", this::end, gson::toJson);
+        patch("/end", this::end, gson::toJson);
     }
 
     public Object start(Request request, Response response) {
