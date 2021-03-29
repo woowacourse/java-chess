@@ -4,10 +4,18 @@
 
 
 .chessBoard td {
-  text-align: center;
+  background-image: url("/img/whiteTile.jpeg");
   width: 5em;
   height: 5em;
-  background-image: url("/img/whiteTile.jpeg");
+  max-height: 100%;
+  text-align: center;
+  overflow: visible;
+}
+
+.chessBoard td > img {
+  position: relative;
+  bottom: 0.3em;
+  filter: drop-shadow(0 3px 2px #000000);
 }
 
 .chessBoard tr:nth-child(odd) td:nth-child(even),
