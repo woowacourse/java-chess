@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.feature.Color;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 	public static final String TURN_MESSAGE = "%s의 차례입니다.";
@@ -89,5 +90,17 @@ public class ChessGame {
 
 	public void changeState(State state) {
 		this.state = state;
+	}
+
+	public Color getTurn() {
+		return turn;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public Map<Position, Piece> getChessBoardAsMap() {
+		return chessBoard.getChessBoard();
 	}
 }

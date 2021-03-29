@@ -80,6 +80,10 @@ public class Position {
 		return Position.of(this.row.getIndex() + direction.getYDegree(), this.column.getIndex() + direction.getXDegree());
 	}
 
+	public String getPosition() {
+		return "" + this.column.getColumn() + this.row.getRow();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

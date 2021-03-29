@@ -41,13 +41,18 @@ table.chessboard {
     margin: 80px auto;
     background: #999;
     border: 25px solid #333;
-    border-collapse: collapse; /* */
+    border-collapse: collapse;
 }
 td.chessboard {
     width: 70px; height: 70px;
-    border: 2px solid #333; /* */
+    border: 2px solid #333;
+    text-align: center;
 }
 tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
 tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
     background: white;
+}
+
+img.chessboard {
+    width: 50px; height: 50px;
 }

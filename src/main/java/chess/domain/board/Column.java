@@ -43,4 +43,8 @@ public enum Column {
 	public int getIndex() {
 		return index;
 	}
+
+	public char getColumn() {
+		return column;
+	}
 }

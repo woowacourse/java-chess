@@ -38,16 +38,16 @@ public abstract class Piece {
 		return type.nameByColor(color);
 	}
 
-	private Color getColor() {
+	private Color color() {
 		return color;
 	}
 
 	public boolean isNotAlly(Piece piece) {
-		return !this.getColor().equals(piece.getColor());
+		return !this.color().equals(piece.color());
 	}
 
 	public boolean isSameColor(Color color) {
-		return this.getColor().equals(color);
+		return this.color().equals(color);
 	}
 
 	public boolean isBlank() {
@@ -82,6 +82,14 @@ public abstract class Piece {
 
 	public Position nextPosition(Direction direction) {
 		return position.nextPosition(direction);
+	}
+
+	public String getType() {
+		return type.getName();
+	}
+
+	public String getColor() {
+		return color.getColor();
 	}
 
 	public abstract boolean isMovable(ChessBoard chessBoard, Direction direction, Position targetPosition);

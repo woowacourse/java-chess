@@ -1,7 +1,15 @@
 package chess.domain.feature;
 
 public enum Color {
-	BLACK, WHITE, NO_COLOR;
+	BLACK("black"),
+	WHITE("white"),
+	NO_COLOR("blank");
+
+	private final String color;
+
+	Color(String color) {
+		this.color = color;
+	}
 
 	public boolean isWhite() {
 		return this.equals(WHITE);
@@ -19,5 +27,9 @@ public enum Color {
 			return Color.BLACK;
 		}
 		throw new IllegalArgumentException();
+	}
+
+	public String getColor() {
+		return color;
 	}
 }

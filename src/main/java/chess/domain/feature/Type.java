@@ -9,22 +9,26 @@ public enum Type {
 	ROOK("R", 5),
 	BLANK(".", 0);
 
-	private final String name;
+	private final String initial;
 	private final double score;
 
-	Type(String name, double score) {
-		this.name = name;
+	Type(String initial, double score) {
+		this.initial = initial;
 		this.score = score;
 	}
 
 	public String nameByColor(Color color) {
 		if (color == Color.WHITE) {
-			return name.toLowerCase();
+			return initial.toLowerCase();
 		}
-		return name;
+		return initial;
 	}
 
 	public double getScore() {
 		return score;
+	}
+
+	public String getName() {
+		return this.name();
 	}
 }
