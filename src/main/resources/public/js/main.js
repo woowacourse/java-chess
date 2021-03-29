@@ -129,7 +129,7 @@ async function move(sourcePosition, targetPosition) {
     });
 }
 
-async function settingImg(sourcePosition, targetPosition) {
+function settingImg(sourcePosition, targetPosition) {
     const source = document.getElementById(sourcePosition);
     const target = document.getElementById(targetPosition);
     const piece = source.getElementsByTagName("img")[0];
@@ -139,7 +139,7 @@ async function settingImg(sourcePosition, targetPosition) {
     target.appendChild(piece);
 }
 
-async function changeTurnText() {
+function changeTurnText() {
     if (document.getElementById("user-turn").innerText === 'White') {
         document.getElementById("user-turn").innerText = 'Black';
         return;
@@ -152,7 +152,7 @@ async function checkEndGame() {
     .then(res => {
         return res.json();
     })
-    .then(async obj => {
+    .then(obj => {
         if (obj.code === "401") {
             alert(obj.message);
             location.replace('/result');
