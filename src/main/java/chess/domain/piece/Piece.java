@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.position.Position;
+import chess.domain.result.Score;
 import java.util.List;
 
 public interface Piece {
@@ -11,9 +12,9 @@ public interface Piece {
 
     Path pathFrom(final Direction direction, final Position position);
 
-    boolean canReplace(final Piece piece);
+    boolean isDifferentColor(final Piece piece);
 
-    boolean blockedBy(final Piece piece);
+    boolean isSameColor(final Piece piece);
 
     boolean isColor(final PieceColor color);
 
@@ -22,4 +23,8 @@ public interface Piece {
     boolean isKing();
 
     boolean isEmpty();
+
+    String getName();
+
+    Score score();
 }
