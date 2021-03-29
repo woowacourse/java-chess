@@ -68,10 +68,10 @@ public class BoardForDB {
         }
         startPositionPiece.setPositionId(moveRequestForDB.getDestinationId());
         playersPieces.updatePiecePosition(startPositionPiece);
-        playersPieces.calculateAndUpdateScoresOfGame(gameId);
     }
 
     public ScoresEntity getScores(Long gameId) throws SQLException {
+        playersPieces.calculateAndUpdateScoresOfGame(gameId);
         return playersPieces.getPlayersScores(gameId);
     }
 

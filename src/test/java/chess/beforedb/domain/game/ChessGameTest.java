@@ -1,5 +1,6 @@
 package chess.beforedb.domain.game;
 
+import static chess.TestFixture.TEST_TITLE;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_BP;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_KG;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_NT;
@@ -16,14 +17,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.DBCleaner;
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.board.setting.BoardCustomSetting;
 import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.player.Scores;
+import chess.db.controller.dto.request.MoveRequestDTOForDB;
+import chess.db.domain.game.ChessGameForDB;
+import chess.db.domain.game.GameStatusResponseDTO;
 import chess.utils.PositionConverter;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,17 +41,25 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ChessGameTest {
     private static final String EMPTY_CELL_STATUS = ".";
 
+    @AfterEach
+    void tearDown() throws SQLException {
+        DBCleaner.removeAll();
+    }
+
     @DisplayName("보드 기본 세팅 객체 주입 테스트")
     @Test
-    void boardDefaultSettingInjection() {
-        assertThatCode(() -> new ChessGame(new BoardDefaultSetting()))
+    void boardDefaultSettingInjection() throws SQLException {
+        ChessGameForDB chessGameForDB = new ChessGameForDB();
+
+        assertThatCode(() -> chessGameForDB.createNew(new BoardDefaultSetting(), TEST_TITLE))
             .doesNotThrowAnyException();
     }
 
     @DisplayName("보드 Custom 세팅 객체 주입 테스트")
     @Test
-    void boardCustomSettingInjection() {
-        assertThatCode(() -> new ChessGame(new BoardCustomSetting(Arrays.asList(
+    void boardCustomSettingInjection() throws SQLException {
+        ChessGameForDB chessGameForDB = new ChessGameForDB();
+        assertThatCode(() -> chessGameForDB.createNew(new BoardCustomSetting(Arrays.asList(
             null, B_KG, B_RK, null, null, null, null, null,
             B_PN, null, B_PN, B_BP, null, null, null, null,
             null, B_PN, null, null, B_QN, null, null, null,
@@ -52,34 +68,15 @@ class ChessGameTest {
             null, null, null, null, null, W_PN, null, W_PN,
             null, null, null, null, null, W_PN, W_PN, null,
             null, null, null, null, W_RK, null, null, null
-        )))).doesNotThrowAnyException();
+        )), TEST_TITLE)).doesNotThrowAnyException();
     }
 
     @DisplayName("보드 세팅 객체 주입시, 타입 에러 테스트")
     @Test
-    void boardSettingInjectionTypeError() {
-        assertThatThrownBy(() -> new ChessGame(null))
+    void boardSettingInjectionTypeError() throws SQLException {
+        ChessGameForDB chessGameForDB = new ChessGameForDB();
+        assertThatThrownBy(() -> chessGameForDB.createNew(null, TEST_TITLE))
             .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("체스 게임을 먼저 시작했으면, 기물을 이동시킬 수 있다.")
-    @Test
-    void canMovePieceAfterStart() {
-        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO("a2", "a4");
-
-        assertThatCode(() -> chessGame.move(moveRequestDTO))
-            .doesNotThrowAnyException();
-    }
-
-    @DisplayName("체스 게임을 먼저 시작했으면, 체스 게임으로부터 보드 상태 정보를 받을 수 있다.")
-    @Test
-    void canGetBoardStatusAfterStart() {
-        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO("a2", "a4");
-
-        assertThatCode(() -> chessGame.move(moveRequestDTO))
-            .doesNotThrowAnyException();
     }
 
     @DisplayName("King이 잡혔는지 확인")
@@ -87,7 +84,7 @@ class ChessGameTest {
     class KingDead {
         @DisplayName("King이 1개만 잡혔을 때")
         @Test
-        void isOneKingDead() {
+        void isOneKingDead() throws SQLException {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     null, B_KG, B_RK, null, null, null, null, null,
@@ -100,14 +97,15 @@ class ChessGameTest {
                     null, null, null, null, W_RK, null, null, null)
             );
 
-            ChessGame chessGame = new ChessGame(customBoardSetting);
+            ChessGameForDB chessGameForDB = new ChessGameForDB();
+            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGame.isKingDead()).isTrue();
+            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isTrue();
         }
 
         @DisplayName("2개의 킹들이 모두 잡혔을 때")
         @Test
-        void isAllKingsDead() {
+        void isAllKingsDead() throws SQLException {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     null, null, B_RK, null, null, null, null, null,
@@ -120,14 +118,15 @@ class ChessGameTest {
                     null, null, null, null, W_RK, null, null, null)
             );
 
-            ChessGame chessGame = new ChessGame(customBoardSetting);
+            ChessGameForDB chessGameForDB = new ChessGameForDB();
+            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGame.isKingDead()).isTrue();
+            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isTrue();
         }
 
         @DisplayName("King이 잡히지 않았을 때")
         @Test
-        void isNotKingDead() {
+        void isNotKingDead() throws SQLException {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     null, B_KG, B_RK, null, null, null, null, null,
@@ -140,9 +139,10 @@ class ChessGameTest {
                     null, null, null, null, W_RK, W_KG, null, null)
             );
 
-            ChessGame chessGame = new ChessGame(customBoardSetting);
+            ChessGameForDB chessGameForDB = new ChessGameForDB();
+            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGame.isKingDead()).isFalse();
+            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isFalse();
         }
     }
 
@@ -151,7 +151,7 @@ class ChessGameTest {
     class ScoreCalculate {
         @DisplayName("Pawn이 한 File에 2개 이상 존재하는 경우")
         @Test
-        void scores() {
+        void scores() throws SQLException {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     null, B_KG, B_RK, null, null, null, null, null,
@@ -164,17 +164,18 @@ class ChessGameTest {
                     null, null, null, null, W_RK, W_KG, null, null)
             );
 
-            ChessGame chessGame = new ChessGame(customBoardSetting);
+            ChessGameForDB chessGameForDB = new ChessGameForDB();
+            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-            Scores scores = chessGame.getScores();
+            GameStatusResponseDTO gameStatus = chessGameForDB.getGameStatus(gameId);
 
-            assertThat(scores.getBlackPlayerScore()).isEqualTo(20);
-            assertThat(scores.getWhitePlayerScore()).isEqualTo(19.5);
+            assertThat(gameStatus.getWhitePlayerScore()).isEqualTo(19.5);
+            assertThat(gameStatus.getBlackPlayerScore()).isEqualTo(20);
         }
 
         @DisplayName("기물을 이동하여 적 기물을 잡은 후, Pawn이 한 File에 2개 이상 존재하는 경우")
         @Test
-        void scoresAfterKillEnemyPieceByPawn() {
+        void scoresAfterKillEnemyPieceByPawn() throws SQLException {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     B_RK, B_NT, B_BP, B_QN, B_KG, B_BP, B_NT, B_RK,
@@ -187,16 +188,18 @@ class ChessGameTest {
                     W_RK, W_NT, W_BP, W_QN, W_KG, W_BP, W_NT, W_RK)
             );
 
-            ChessGame chessGame = new ChessGame(customBoardSetting);
+            ChessGameForDB chessGameForDB = new ChessGameForDB();
+            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
 
-            MoveRequestDTO moveRequestDTO
-                = new MoveRequestDTO("a4", "b5");
+            MoveRequestDTOForDB moveRequestDTO
+                = new MoveRequestDTOForDB(gameId, "a4", "b5");
 
-            chessGame.move(moveRequestDTO);
-            Scores scores = chessGame.getScores();
+            chessGameForDB.move(moveRequestDTO);
 
-            assertThat(scores.getBlackPlayerScore()).isEqualTo(37);
-            assertThat(scores.getWhitePlayerScore()).isEqualTo(37);
+            GameStatusResponseDTO gameStatus = chessGameForDB.getGameStatus(gameId);
+
+            assertThat(gameStatus.getWhitePlayerScore()).isEqualTo(37);
+            assertThat(gameStatus.getBlackPlayerScore()).isEqualTo(37);
         }
     }
 
@@ -238,7 +241,7 @@ class ChessGameTest {
 
                 @DisplayName("위 방향으로 이동")
                 @Test
-                void moveUp() {
+                void moveUp() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -263,7 +266,7 @@ class ChessGameTest {
 
                 @DisplayName("아래 방향으로 이동")
                 @Test
-                void moveDown() {
+                void moveDown() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -288,7 +291,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 방향으로 이동")
                 @Test
-                void moveRight() {
+                void moveRight() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -313,7 +316,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 방향으로 이동")
                 @Test
-                void moveLeft() {
+                void moveLeft() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -338,7 +341,7 @@ class ChessGameTest {
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenPieceExistsOnRoute() {
+                void cannotMoveWhenPieceExistsOnRoute() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -363,7 +366,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenMyPieceExistsAtDestination() {
+                void cannotMoveWhenMyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -388,7 +391,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
                 @Test
-                void canMoveWhenEnemyPieceExistsAtDestination() {
+                void canMoveWhenEnemyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -442,7 +445,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
                 @Test
-                void moveLeftUpDiagonal() {
+                void moveLeftUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -467,7 +470,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
                 @Test
-                void moveLeftDownDiagonal() {
+                void moveLeftDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -492,7 +495,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
                 @Test
-                void moveRightUpDiagonal() {
+                void moveRightUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -517,7 +520,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
                 @Test
-                void moveRightDownDiagonal() {
+                void moveRightDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -542,7 +545,7 @@ class ChessGameTest {
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenPieceExistsOnRoute() {
+                void cannotMoveWhenPieceExistsOnRoute() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -567,7 +570,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenMyPieceExistsAtDestination() {
+                void cannotMoveWhenMyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             B_PN, null, null, null, null, null, null, null,
@@ -592,7 +595,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
                 @Test
-                void canMoveWhenEnemyPieceExistsAtDestination() {
+                void canMoveWhenEnemyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             W_BP, null, null, null, null, null, null, null,
@@ -646,7 +649,7 @@ class ChessGameTest {
 
                 @DisplayName("위 방향으로 이동")
                 @Test
-                void moveUp() {
+                void moveUp() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -671,7 +674,7 @@ class ChessGameTest {
 
                 @DisplayName("아래 방향으로 이동")
                 @Test
-                void moveDown() {
+                void moveDown() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -696,7 +699,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 방향으로 이동")
                 @Test
-                void moveRight() {
+                void moveRight() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -721,7 +724,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 방향으로 이동")
                 @Test
-                void moveLeft() {
+                void moveLeft() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -746,7 +749,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
                 @Test
-                void moveLeftUpDiagonal() {
+                void moveLeftUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -771,7 +774,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
                 @Test
-                void moveLeftDownDiagonal() {
+                void moveLeftDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -796,7 +799,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
                 @Test
-                void moveRightUpDiagonal() {
+                void moveRightUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -821,7 +824,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
                 @Test
-                void moveRightDownDiagonal() {
+                void moveRightDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -846,7 +849,7 @@ class ChessGameTest {
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenPieceExistsOnRoute() {
+                void cannotMoveWhenPieceExistsOnRoute() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -871,7 +874,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenMyPieceExistsAtDestination() {
+                void cannotMoveWhenMyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             B_PN, null, null, null, null, null, null, null,
@@ -896,7 +899,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
                 @Test
-                void canMoveWhenEnemyPieceExistsAtDestination() {
+                void canMoveWhenEnemyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             W_BP, null, null, null, null, null, null, null,
@@ -950,7 +953,7 @@ class ChessGameTest {
 
                 @DisplayName("위 방향으로 한 칸 이동")
                 @Test
-                void moveUp() {
+                void moveUp() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -975,7 +978,7 @@ class ChessGameTest {
 
                 @DisplayName("아래 방향으로 한 칸 이동")
                 @Test
-                void moveDown() {
+                void moveDown() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1000,7 +1003,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 방향으로 한 칸 이동")
                 @Test
-                void moveRight() {
+                void moveRight() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1025,7 +1028,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 방향으로 한 칸 이동")
                 @Test
-                void moveLeft() {
+                void moveLeft() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1050,7 +1053,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 위 대각선 방향으로 한 칸 이동")
                 @Test
-                void moveLeftUpDiagonal() {
+                void moveLeftUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1075,7 +1078,7 @@ class ChessGameTest {
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 한 칸 이동")
                 @Test
-                void moveLeftDownDiagonal() {
+                void moveLeftDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1100,7 +1103,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 위 대각선 방향으로 한 칸 이동")
                 @Test
-                void moveRightUpDiagonal() {
+                void moveRightUpDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1125,7 +1128,7 @@ class ChessGameTest {
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 한 칸 이동")
                 @Test
-                void moveRightDownDiagonal() {
+                void moveRightDownDiagonal() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1150,7 +1153,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
                 @Test
-                void cannotMoveWhenMyPieceExistsAtDestination() {
+                void cannotMoveWhenMyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1175,7 +1178,7 @@ class ChessGameTest {
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
                 @Test
-                void canMoveWhenEnemyPieceExistsAtDestination() {
+                void canMoveWhenEnemyPieceExistsAtDestination() throws SQLException {
                     BoardSetting customBoardSetting = new BoardCustomSetting(
                         Arrays.asList(
                             null, null, null, null, null, null, null, null,
@@ -1231,7 +1234,7 @@ class ChessGameTest {
 
             @DisplayName("왼쪽 왼쪽 위 방향으로 한 번 이동")
             @Test
-            void moveLeftLeftUp() {
+            void moveLeftLeftUp() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1256,7 +1259,7 @@ class ChessGameTest {
 
             @DisplayName("왼쪽 왼쪽 아래 방향으로 한 번 이동")
             @Test
-            void moveLeftLeftDown() {
+            void moveLeftLeftDown() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1281,7 +1284,7 @@ class ChessGameTest {
 
             @DisplayName("왼쪽 위 위 방향으로 한 번 이동")
             @Test
-            void moveLeftUpUp() {
+            void moveLeftUpUp() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1306,7 +1309,7 @@ class ChessGameTest {
 
             @DisplayName("왼쪽 아래 아래 방향으로 한 번 이동")
             @Test
-            void moveLeftDownDown() {
+            void moveLeftDownDown() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1331,7 +1334,7 @@ class ChessGameTest {
 
             @DisplayName("오른쪽 오른쪽 위 방향으로 한 번 이동")
             @Test
-            void moveRightRightUp() {
+            void moveRightRightUp() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1356,7 +1359,7 @@ class ChessGameTest {
 
             @DisplayName("오른쪽 오른쪽 아래 방향으로 한 번 이동")
             @Test
-            void moveRightRightDown() {
+            void moveRightRightDown() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1381,7 +1384,7 @@ class ChessGameTest {
 
             @DisplayName("오른쪽 위 위 방향으로 한 번 이동")
             @Test
-            void moveRightUpUp() {
+            void moveRightUpUp() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1406,7 +1409,7 @@ class ChessGameTest {
 
             @DisplayName("오른쪽 아래 아래 방향으로 한 번 이동")
             @Test
-            void moveRightDownDown() {
+            void moveRightDownDown() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1431,7 +1434,7 @@ class ChessGameTest {
 
             @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
             @Test
-            void cannotMoveWhenMyPieceExistsAtDestination() {
+            void cannotMoveWhenMyPieceExistsAtDestination() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1456,7 +1459,7 @@ class ChessGameTest {
 
             @DisplayName("이동 경로 중간에 적 기물이 존재해도, 이동할 수 있다.")
             @Test
-            void canMoveWhenEnemyPieceExistsOnRoute() {
+            void canMoveWhenEnemyPieceExistsOnRoute() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1481,7 +1484,7 @@ class ChessGameTest {
 
             @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
             @Test
-            void canMoveWhenEnemyPieceExistsAtDestination() {
+            void canMoveWhenEnemyPieceExistsAtDestination() throws SQLException {
                 BoardSetting customBoardSetting = new BoardCustomSetting(
                     Arrays.asList(
                         null, null, null, null, null, null, null, null,
@@ -1542,7 +1545,7 @@ class ChessGameTest {
                 class MoveForwardOneCell {
                     @DisplayName("아래 방향으로 한 칸 이동")
                     @Test
-                    void moveForwardOneCell() {
+                    void moveForwardOneCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1567,7 +1570,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsAtDestination() {
+                    void cannotMoveWhenPieceExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1592,7 +1595,7 @@ class ChessGameTest {
 
                     @DisplayName("위 방향으로 이동할 수 없다.")
                     @Test
-                    void cannotMoveBackwardOneCell() {
+                    void cannotMoveBackwardOneCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1617,7 +1620,7 @@ class ChessGameTest {
 
                     @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
                     @Test
-                    void cannotMoveForwardTwoCellWhenNotAtFirstPosition() {
+                    void cannotMoveForwardTwoCellWhenNotAtFirstPosition() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1646,7 +1649,7 @@ class ChessGameTest {
                 class MoveForwardTwoCells {
                     @DisplayName("처음 위치에 있을 때, 앞으로 두 칸 전진 이동")
                     @Test
-                    void moveForwardTwoCellWhenAtFirstPosition() {
+                    void moveForwardTwoCellWhenAtFirstPosition() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1671,7 +1674,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsAtDestination() {
+                    void cannotMoveWhenPieceExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1696,7 +1699,7 @@ class ChessGameTest {
 
                     @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsOnRoute() {
+                    void cannotMoveWhenPieceExistsOnRoute() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1721,7 +1724,7 @@ class ChessGameTest {
 
                     @DisplayName("위 방향으로 이동할 수 없다.")
                     @Test
-                    void moveBackwardTwoCell() {
+                    void moveBackwardTwoCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1750,7 +1753,7 @@ class ChessGameTest {
                 class MoveDiagonalOneCell {
                     @DisplayName("적이 왼쪽 대각선에 있을 때, 이동 가능")
                     @Test
-                    void moveDiagonalLeftWhenEnemyPieceExists() {
+                    void moveDiagonalLeftWhenEnemyPieceExists() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1775,7 +1778,7 @@ class ChessGameTest {
 
                     @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
                     @Test
-                    void moveDiagonalRightWhenEnemyPieceExists() {
+                    void moveDiagonalRightWhenEnemyPieceExists() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1800,7 +1803,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
                     @Test
-                    void cannotMoveDiagonalLeftWhenEnemyPieceNotExistsAtDestination() {
+                    void cannotMoveDiagonalLeftWhenEnemyPieceNotExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1825,7 +1828,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
                     @Test
-                    void cannotMoveDiagonalRightWhenEnemyPieceNotExistsAtDestination() {
+                    void cannotMoveDiagonalRightWhenEnemyPieceNotExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1882,7 +1885,7 @@ class ChessGameTest {
                 class MoveForwardOneCell {
                     @DisplayName("위 방향으로 한 칸 이동")
                     @Test
-                    void moveForwardOneCell() {
+                    void moveForwardOneCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1905,7 +1908,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsAtDestination() {
+                    void cannotMoveWhenPieceExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1928,7 +1931,7 @@ class ChessGameTest {
 
                     @DisplayName("아래 방향으로 이동할 수 없다.")
                     @Test
-                    void cannotMoveBackwardOneCell() {
+                    void cannotMoveBackwardOneCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1951,7 +1954,7 @@ class ChessGameTest {
 
                     @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
                     @Test
-                    void cannotMoveForwardTwoCellWhenNotAtFirstPosition() {
+                    void cannotMoveForwardTwoCellWhenNotAtFirstPosition() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -1978,7 +1981,7 @@ class ChessGameTest {
                 class MoveForwardTwoCells {
                     @DisplayName("처음 위치에 있을 때, 앞으로 두 칸 전진 이동")
                     @Test
-                    void moveForwardTwoCellWhenAtFirstPosition() {
+                    void moveForwardTwoCellWhenAtFirstPosition() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2001,7 +2004,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsAtDestination() {
+                    void cannotMoveWhenPieceExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2024,7 +2027,7 @@ class ChessGameTest {
 
                     @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
                     @Test
-                    void cannotMoveWhenPieceExistsOnRoute() {
+                    void cannotMoveWhenPieceExistsOnRoute() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2047,7 +2050,7 @@ class ChessGameTest {
 
                     @DisplayName("아래 방향으로 이동할 수 없다.")
                     @Test
-                    void moveBackwardTwoCell() {
+                    void moveBackwardTwoCell() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2074,7 +2077,7 @@ class ChessGameTest {
                 class MoveDiagonalOneCell {
                     @DisplayName("적이 왼쪽 대각선에 있을 때, 이동 가능")
                     @Test
-                    void moveDiagonalLeftWhenEnemyPieceExists() {
+                    void moveDiagonalLeftWhenEnemyPieceExists() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2097,7 +2100,7 @@ class ChessGameTest {
 
                     @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
                     @Test
-                    void moveDiagonalRightWhenEnemyPieceExists() {
+                    void moveDiagonalRightWhenEnemyPieceExists() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2120,7 +2123,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
                     @Test
-                    void cannotMoveDiagonalLeftWhenEnemyPieceNotExistsAtDestination() {
+                    void cannotMoveDiagonalLeftWhenEnemyPieceNotExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
@@ -2143,7 +2146,7 @@ class ChessGameTest {
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
                     @Test
-                    void cannotMoveDiagonalRightWhenEnemyPieceNotExistsAtDestination() {
+                    void cannotMoveDiagonalRightWhenEnemyPieceNotExistsAtDestination() throws SQLException {
                         BoardSetting customBoardSetting = new BoardCustomSetting(
                             Arrays.asList(
                                 null, null, null, null, null, null, null, null,
