@@ -89,8 +89,4 @@ public final class ChessResult {
         result.put(winner().oppositeTeamName(), totalScore(winner().oppositeTeam()));
         return result;
     }
-
-    public boolean isTie() {
-        return winner().undefined();
-    }
 }

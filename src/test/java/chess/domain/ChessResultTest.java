@@ -57,12 +57,6 @@ class ChessResultTest {
     }
 
     @Test
-    @DisplayName("무승부 확인 기능")
-    void isTie() {
-        assertThat(result.isTie()).isTrue();
-    }
-
-    @Test
     @DisplayName("결과 점수 반환 기능")
     void getResult() {
         chessBoard.put(new Position("e", "8"), Blank.getInstance());

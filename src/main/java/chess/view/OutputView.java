@@ -4,7 +4,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-import java.util.Map;
+import java.util.*;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -47,14 +49,20 @@ public class OutputView {
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
-    public static void printResult(final Map<String, Double> result, Team winner, boolean isTie) {
-        if (isTie) {
+    public static void printResult(final Map<String, Double> result, Team winner) {
+        if (isTie(result.values())) {
             System.out.println("무승부입니다.");
             printResultScores(result);
             return;
         }
         System.out.println(winner.teamName() + "팀이 승리하였습니다.");
         printResultScores(result);
+    }
+
+    private static boolean isTie(Collection<Double> scores) {
+        return scores.stream()
+                .reduce((winner, loser) -> winner - loser)
+                .get() == 0;
     }
 
     private static void printResultScores(Map<String, Double> result) {
