@@ -1,6 +1,7 @@
 package chess.beforedb.domain.board.setting;
 
 
+import static chess.TestFixture.TEST_TITLE;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_BP;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_KG;
 import static chess.beforedb.domain.piece.type.PieceWithColorType.B_PN;
@@ -13,17 +14,28 @@ import static chess.beforedb.domain.piece.type.PieceWithColorType.W_RK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.DBCleaner;
 import chess.beforedb.domain.game.ChessGame;
+import chess.db.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.db.domain.game.ChessGameForDB;
 import chess.utils.PositionConverter;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardCustomSettingTest {
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        DBCleaner.removeAll();
+    }
+
     @DisplayName("보드 Custom 세팅")
     @Test
-    void boardCustomSetting() {
+    void boardCustomSetting() throws SQLException {
         BoardSetting customBoardSetting = new BoardCustomSetting(
             Arrays.asList(
                 null, B_KG, B_RK, null, null, null, null, null,
@@ -36,23 +48,21 @@ class BoardCustomSettingTest {
                 null, null, null, null, W_RK, null, null, null)
         );
 
-        ChessGame chessGame = new ChessGame(customBoardSetting);
+        ChessGameForDB chessGame = new ChessGameForDB();
+        Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-        List<String> cellsStatus = chessGame.boardCellsStatus();
+        BoardStatusResponseDTOForDB boardStatus = chessGame.getBoardStatus(gameId);
 
-        int cellIndexOfBlackPawn = PositionConverter.convertToCellsStatusIndex("a7");
-        int cellIndexOfBlackKing = PositionConverter.convertToCellsStatusIndex("b8");
-        int cellIndexOfEmpty1 = PositionConverter.convertToCellsStatusIndex("b7");
-        int cellIndexOfWhiteKnight = PositionConverter.convertToCellsStatusIndex("f4");
-        int cellIndexOfWhiteQueen = PositionConverter.convertToCellsStatusIndex("g4");
-        int cellIndexOfEmpty2 = PositionConverter.convertToCellsStatusIndex("g3");
-
-        assertThat(cellsStatus.get(cellIndexOfBlackPawn)).isEqualTo("P");
-        assertThat(cellsStatus.get(cellIndexOfBlackKing)).isEqualTo("K");
-        assertThat(cellsStatus.get(cellIndexOfEmpty1)).isEqualTo(".");
-        assertThat(cellsStatus.get(cellIndexOfWhiteKnight)).isEqualTo("n");
-        assertThat(cellsStatus.get(cellIndexOfWhiteQueen)).isEqualTo("q");
-        assertThat(cellsStatus.get(cellIndexOfEmpty2)).isEqualTo(".");
+        assertThat(boardStatus.getCellsStatus()).containsExactly(
+            ".", "K", "R", ".", ".", ".", ".", ".",
+            "P", ".", "P", "B", ".", ".", ".", ".",
+            ".", "P", ".", ".", "Q", ".", ".", ".",
+            ".", ".", ".", ".", ".", ".", ".", ".",
+            ".", ".", ".", ".", ".", "n", "q", ".",
+            ".", ".", ".", ".", ".", "p", ".", "p",
+            ".", ".", ".", ".", ".", "p", "p", ".",
+            ".", ".", ".", ".", "r", ".", ".", "."
+        );
     }
 
     @DisplayName("보드 Custom 세팅 객체 생성 에러")
