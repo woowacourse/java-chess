@@ -16,10 +16,18 @@ function createChessBoard() {
 }
 
 function makeTable(pieces) {
-    const table = document.getElementById("chess-board");
+    const table = document.createElement('table');
+    table.id = 'chess-board';
     for (let i = 0; i < 8; i++) {
         table.appendChild(makeTr(pieces, i));
     }
+
+    const hyperText = document.createElement('h2');
+    hyperText.innerHTML = "현재 <span id='user-turn'> White</span>의 턴입니다!";
+
+    const container = document.querySelector(".main-container");
+    container.appendChild(hyperText);
+    container.appendChild(table);
 }
 
 function makeTr(pieces, row) {
@@ -132,7 +140,7 @@ async function settingImg(sourcePosition, targetPosition) {
 }
 
 async function changeTurnText() {
-    if (document.getElementById("user-").innerText === 'White') {
+    if (document.getElementById("user-turn").innerText === 'White') {
         document.getElementById("user-turn").innerText = 'Black';
         return;
     }
