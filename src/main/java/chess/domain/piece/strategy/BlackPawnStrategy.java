@@ -4,24 +4,25 @@ import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.List;
 
-public final class RookStrategy implements PieceStrategy {
+public final class BlackPawnStrategy implements PieceStrategy {
 
-    private static final String NAME = "r";
-    private static final double VALUE = 5;
+    private static final String NAME = "p";
+    private static final double ORIGINAL_VALUE = 1;
+    private static final double DUPLICATED_VALUE = 0.5;
 
     @Override
     public List<Direction> directions() {
-        return Direction.straightDirection();
+        return Direction.blackPawnDirection();
     }
 
     @Override
     public Path pathFrom(Direction direction, Position position) {
-        return position.longPath(direction);
+        return position.shortPath(direction);
     }
 
     @Override
     public boolean isPawn() {
-        return false;
+        return true;
     }
 
     @Override
@@ -36,6 +37,6 @@ public final class RookStrategy implements PieceStrategy {
 
     @Override
     public double value() {
-        return VALUE;
+        return ORIGINAL_VALUE;
     }
 }

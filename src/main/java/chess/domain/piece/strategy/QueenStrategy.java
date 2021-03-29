@@ -4,14 +4,14 @@ import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.List;
 
-public final class RookStrategy implements PieceStrategy {
+public final class QueenStrategy implements PieceStrategy {
 
-    private static final String NAME = "r";
-    private static final double VALUE = 5;
+    private static final String NAME = "q";
+    private static final double VALUE = 9;
 
     @Override
     public List<Direction> directions() {
-        return Direction.straightDirection();
+        return Direction.everyDirection();
     }
 
     @Override

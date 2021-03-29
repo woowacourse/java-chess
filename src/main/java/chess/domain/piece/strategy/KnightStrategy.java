@@ -4,19 +4,19 @@ import chess.domain.board.Path;
 import chess.domain.position.Position;
 import java.util.List;
 
-public final class RookStrategy implements PieceStrategy {
+public final class KnightStrategy implements PieceStrategy {
 
-    private static final String NAME = "r";
-    private static final double VALUE = 5;
+    private static final String NAME = "n";
+    private static final double VALUE = 3;
 
     @Override
     public List<Direction> directions() {
-        return Direction.straightDirection();
+        return Direction.knightDirection();
     }
 
     @Override
     public Path pathFrom(Direction direction, Position position) {
-        return position.longPath(direction);
+        return position.shortPath(direction);
     }
 
     @Override

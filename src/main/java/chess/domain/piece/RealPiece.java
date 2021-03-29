@@ -12,7 +12,7 @@ public final class RealPiece implements Piece {
     private final PieceColor color;
     private final PieceStrategy pieceStrategy;
 
-    protected RealPiece(final PieceColor color, final PieceStrategy pieceStrategy) {
+    public RealPiece(final PieceColor color, final PieceStrategy pieceStrategy) {
         this.color = color;
         this.pieceStrategy = pieceStrategy;
     }
