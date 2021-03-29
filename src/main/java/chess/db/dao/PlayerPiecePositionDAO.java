@@ -17,6 +17,15 @@ import java.util.List;
 
 public class PlayerPiecePositionDAO {
 
+    public void save(Long playerId, Long pieceId, Long positionId) throws SQLException {
+        String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setLong(1, playerId);
+        pstmt.setLong(2, pieceId);
+        pstmt.setLong(3, positionId);
+        pstmt.executeUpdate();
+    }
+
     public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -26,15 +35,15 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public PlayerPiecePosition save(PlayerPiecePosition playerPiecePositionEntity)
+    public PlayerPiecePosition save(PlayerPiecePosition playerPiecePosition)
         throws SQLException {
-        ResultSet generatedKeys = getResultSet(playerPiecePositionEntity);
+        ResultSet generatedKeys = getResultSet(playerPiecePosition);
         if (generatedKeys.next()) {
             return new PlayerPiecePosition(
                 generatedKeys.getLong(1),
-                playerPiecePositionEntity.getPlayerEntity(),
-                playerPiecePositionEntity.getPieceEntity(),
-                playerPiecePositionEntity.getPositionEntity());
+                playerPiecePosition.getPlayerEntity(),
+                playerPiecePosition.getPieceEntity(),
+                playerPiecePosition.getPositionEntity());
         }
         throw new SQLException("PiecePositionEntity를 save()할 수 없습니다.");
     }

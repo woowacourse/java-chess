@@ -7,7 +7,6 @@ import chess.db.dao.GamePiecePosition;
 import chess.db.dao.PiecePosition;
 import chess.db.dao.PlayerPiecePositionDAO;
 import chess.db.domain.piece.PieceEntity;
-import chess.db.domain.player.ScoreCalculator;
 import chess.db.domain.position.PositionEntity;
 import chess.db.entity.PlayerEntity;
 import chess.db.entity.PlayerPiecePosition;
@@ -20,24 +19,17 @@ import java.util.Map;
 public class PiecesPositionsForDB {
     private static final String NOT_EXISTS = ".";
     private final PlayerPiecePositionDAO playerPiecePositionDAO;
-    private final ScoreCalculator scoreCalculator;
-
 
     public PiecesPositionsForDB() {
         playerPiecePositionDAO = new PlayerPiecePositionDAO();
-        scoreCalculator = new ScoreCalculator();
     }
 
     public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
         playerPiecePositionDAO.save(playerId, piecePosition);
     }
 
-    public void save(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
-        throws SQLException {
-
-        playerPiecePositionDAO.save(
-            new PlayerPiecePosition(playerEntity, piecePositionEntities)
-        );
+    public void save(PlayerEntity playerEntity, PiecePosition piecePosition) throws SQLException {
+        playerPiecePositionDAO.save(new PlayerPiecePosition(playerEntity, piecePosition));
     }
 
     public Map<PositionEntity, CellForDB> getAllCellsStatusByGameId(Long gameId)
@@ -74,13 +66,6 @@ public class PiecesPositionsForDB {
         return cell;
     }
 
-    private void putCellStatus(Map<PositionEntity, CellForDB> cells, PiecePosition piecePosition) {
-        CellForDB cell = new CellForDB();
-        cell.put(piecePosition.getPieceEntity());
-        cells.put(piecePosition.getPositionEntity(), cell);
-    }
-
-
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {
         List<String> cellsStatus = new ArrayList<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
@@ -110,74 +95,8 @@ public class PiecesPositionsForDB {
         cellsStatus.add(pieceName);
     }
 
-    public void getScoreOfPlayer(PlayerEntity playerEntity) throws SQLException {
-        List<PiecePositionFromDB> allPiecesPositionsFromDBOfPlayer
-            = playerPiecePositionDAO.findAllByPlayer(playerEntity);
-        // scoreCalculator.
-    }
-
-    public List<PiecePositionFromDB> getAllPiecesPositionsOfPlayer(Long playerId)
-        throws SQLException {
-
-        return playerPiecePositionDAO.findAllByPlayerId(playerId);
-    }
-
-    public List<PlayerPiecePosition> getAllPiecesPositionsOfPlayer(PlayerEntity playerEntity)
-        throws SQLException {
-
-        List<PiecePositionFromDB> piecesPositionsFromDB
-            = playerPiecePositionDAO.findAllByPlayer(playerEntity);
-
-        return getParsedPiecePositionEntities(playerEntity, piecesPositionsFromDB);
-    }
-
-    private List<PlayerPiecePosition> getParsedPiecePositionEntities(
-        PlayerEntity playerEntity, List<PiecePositionFromDB> piecesPositionsFromDB) {
-
-        List<PlayerPiecePosition> playerPiecePositionEntities = new ArrayList<>();
-        for (PiecePositionFromDB piecePositionFromDB : piecesPositionsFromDB) {
-            PiecePosition piecePositionEntities =
-                getParsedPiecePositionEntities(piecePositionFromDB);
-            playerPiecePositionEntities.add(
-                new PlayerPiecePosition(playerEntity, piecePositionEntities));
-        }
-        return playerPiecePositionEntities;
-    }
-
-    private PiecePosition getParsedPiecePositionEntities(
-        PiecePositionFromDB piecePositionFromDB) {
-
-        PieceEntity pieceEntity = PieceEntity.of(
-            piecePositionFromDB.getPieceType(), piecePositionFromDB.getTeamColor());
-
-        PositionEntity positionEntity = PositionEntity.of(
-            piecePositionFromDB.getFile(), piecePositionFromDB.getRank());
-
-        return new PiecePosition(pieceEntity, positionEntity);
-    }
-
-    public void updatePiecePosition(PlayerEntity playerEntity, PiecePosition piecePositionEntities)
-        throws SQLException {
-
-        playerPiecePositionDAO.updatePiecePosition(
-            new PlayerPiecePosition(playerEntity, piecePositionEntities)
-        );
-    }
-
-    public void removePiece(PlayerPiecePosition playerPiecePositionEntity) throws SQLException {
-        playerPiecePositionDAO.removePiece(playerPiecePositionEntity);
-    }
-
-    public void removePiecesPositionsByPlayerId(Long playerId) throws SQLException {
+    public void removeAllPiecesPositionsByPlayerId(Long playerId) throws SQLException {
         playerPiecePositionDAO.removeAllByPlayer(playerId);
-    }
-
-    public PieceEntity getPieceByGameIdAndPosition(Long gameId, PositionEntity position)
-        throws SQLException {
-
-        PieceWithColorType pieceWithColorType = playerPiecePositionDAO
-            .findPieceWithColorTypeByChessGameIdAndFileAndRank(gameId, position.getId());
-        return PieceEntity.of(pieceWithColorType);
     }
 
     public GamePiecePosition getGamePiecePositionByGameIdAndPosition(Long gameId,
@@ -193,5 +112,15 @@ public class PiecesPositionsForDB {
 
     public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
         playerPiecePositionDAO.updatePiecePosition(gamePiecePosition);
+    }
+
+    public void save(Long playerId, Long pieceId, Long positionId) throws SQLException {
+        playerPiecePositionDAO.save(playerId, pieceId, positionId);
+    }
+
+    public List<PiecePositionFromDB> getAllPiecesPositionsOfPlayer(Long playerId)
+        throws SQLException {
+
+        return playerPiecePositionDAO.findAllByPlayerId(playerId);
     }
 }
