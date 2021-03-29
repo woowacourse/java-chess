@@ -6,6 +6,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.beforedb.domain.piece.type.PieceType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.domain.piece.BishopEntity;
+import chess.db.domain.piece.KingEntity;
+import chess.db.domain.piece.KnightEntity;
+import chess.db.domain.piece.PawnEntity;
+import chess.db.domain.piece.PieceEntity;
+import chess.db.domain.piece.QueenEntity;
+import chess.db.domain.piece.RookEntity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,39 +21,39 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {
-    private List<Piece> expectedPieces;
+    private List<PieceEntity> expectedPieces;
 
     @BeforeEach
     void setUp() {
         expectedPieces = Arrays.asList(
-            new Pawn(BLACK),
-            new Rook(BLACK),
-            new Knight(BLACK),
-            new Bishop(BLACK),
-            new Queen(BLACK),
-            new King(BLACK),
-            new Pawn(WHITE),
-            new Rook(WHITE),
-            new Knight(WHITE),
-            new Bishop(WHITE),
-            new Queen(WHITE),
-            new King(WHITE)
+            new PawnEntity(BLACK),
+            new RookEntity(BLACK),
+            new KnightEntity(BLACK),
+            new BishopEntity(BLACK),
+            new QueenEntity(BLACK),
+            new KingEntity(BLACK),
+            new PawnEntity(WHITE),
+            new RookEntity(WHITE),
+            new KnightEntity(WHITE),
+            new BishopEntity(WHITE),
+            new QueenEntity(WHITE),
+            new KingEntity(WHITE)
         );
     }
 
     @DisplayName("기물 캐싱")
     @Test
     void piecesCaching() {
-        List<Piece> cachedPieces = new ArrayList<>();
+        List<PieceEntity> cachedPieces = new ArrayList<>();
         for (TeamColor teamColor : TeamColor.values()) {
             assertPiecesCachingWithColor(teamColor, cachedPieces);
         }
         assertThat(cachedPieces).containsExactlyInAnyOrderElementsOf(expectedPieces);
     }
 
-    private void assertPiecesCachingWithColor(TeamColor teamColor, List<Piece> cachedPieces) {
+    private void assertPiecesCachingWithColor(TeamColor teamColor, List<PieceEntity> cachedPieces) {
         for (PieceType pieceType : PieceType.values()) {
-            Piece cachedPiece = Piece.of(pieceType, teamColor);
+            PieceEntity cachedPiece = PieceEntity.of(pieceType, teamColor);
             cachedPieces.add(cachedPiece);
         }
     }
