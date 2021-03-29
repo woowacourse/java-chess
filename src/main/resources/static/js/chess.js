@@ -23,10 +23,37 @@ function printArr(myArr, currentTeamType) {
 
     let element = document.querySelector('.current-team-type');
     element.textContent = "현재 턴 : " + currentTeamType;
-    document.getElementsByClassName('piece').forEach(piece => {
+    Array.from(document.getElementsByClassName('piece')).forEach(piece => {
         piece.addEventListener('click', function (event) {
-
-        });
+                let current = document.querySelector(".current");
+                let destination = document.querySelector(".destination");
+                if (current.value.length === 0) {
+                    current.value = piece.id;
+                    return;
+                }
+                if (destination.value.length === 0) {
+                    destination.value = piece.id;
+                    var data = JSON.stringify({
+                        "current": current.value,
+                        "destination": destination.value,
+                        "teamType": currentTeamType
+                    });
+                    var post = new XMLHttpRequest();
+                    post.open("POST", "http://localhost:8080/main/post", true);
+                    post.send(data);
+                    current.value = '';
+                    destination.value = '';
+                    post.onreadystatechange = function () {
+                        if (post.readyState === 4 && post.status === 200) {
+                            var myArr = JSON.parse(post.responseText).data;
+                            Array.from(document.getElementsByClassName('piece'))
+                                .forEach(t => t.remove());
+                            printArr(myArr.rows, myArr.currentTeamType);
+                        }
+                    }
+                }
+            }
+        );
     });
 }
 

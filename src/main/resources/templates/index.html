@@ -14,8 +14,12 @@
 
 <section id="status">
     <div class="current-team-type">현재 턴 :</div>
-    <div class="piece-current-position">선택 기물 현재 위치 :</div>
-    <div class="piece-destination">선택 기물 목적지 위치 :</div>
+    <form action="/none" method="post">
+        <div class="piece-current-position">선택 기물 현재 위치 : <input class="current" name="current"
+                                                                 value=""></div>
+        <div class="piece-destination">선택 기물 목적지 위치 : <input class="destination" name="destination" readonly type="text"
+                                                             value=""></div>
+    </form>
 </section>
 </body>
 <script src="/js/chess.js" type="text/javascript"></script>
