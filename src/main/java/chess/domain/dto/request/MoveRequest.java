@@ -1,6 +1,7 @@
 package chess.domain.dto.request;
 
 public class MoveRequest {
+
     private final String source;
     private final String target;
 

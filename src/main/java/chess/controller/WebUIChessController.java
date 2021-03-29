@@ -5,7 +5,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.JsonTransformer;
+import chess.domain.JsonTransformer;
 import chess.domain.ChessResult;
 import chess.domain.dto.request.MoveRequest;
 import chess.domain.dto.response.Response;
