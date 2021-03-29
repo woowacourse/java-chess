@@ -1,0 +1,16 @@
+.chessBoard table {
+  margin: 0.5em auto;
+}
+
+
+.chessBoard td {
+  text-align: center;
+  width: 5em;
+  height: 5em;
+  background-image: url("/img/whiteTile.jpeg");
+}
+
+.chessBoard tr:nth-child(odd) td:nth-child(even),
+.chessBoard tr:nth-child(even) td:nth-child(odd) {
+  background-image: url("/img/blackTile.jpeg");
+}

@@ -1,6 +1,9 @@
 package chess;
 
-import chess.controller.ChessController;
+import static spark.Spark.get;
+import static spark.Spark.staticFiles;
+
+import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -8,15 +11,15 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-//        get("/", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "index.html");
-//        });
-        ChessController chessController = new ChessController();
-        chessController.run();
+        staticFiles.location("/public");
+
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "chess-game.html");
+        });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    public static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
