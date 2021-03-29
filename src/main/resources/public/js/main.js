@@ -72,6 +72,7 @@ async function onSelectPiece(event) {
     await move(pastClickedPiece.id, nowClickedPiece.id);
     nowClickedPiece.classList.remove("clicked");
     pastClickedPiece.classList.remove("clicked");
+    await checkEndGame();
 }
 
 function decideClickedPiece() {
@@ -115,4 +116,16 @@ async function move(sourcePosition, targetPosition) {
         }
         target.appendChild(piece);
     });
+}
+
+async function checkEndGame() {
+    await fetch("/end")
+    .then(res => {
+        return res.json();
+    })
+    .then(obj => {
+        if (obj.code === "401") {
+            alert(obj.message);
+        }
+    })
 }
