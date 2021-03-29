@@ -3,24 +3,46 @@ import {PieceFactory} from "../domain/piece/PieceFactory.js";
 
 export class ChessController {
 
+    #ajax
     #chessGame
     #turn
     #selected
 
     constructor(chessGame) {
         this.#chessGame = chessGame
+        this.#ajax = new Ajax(chessGame.gameId)
     }
 
     run() {
-        this.startEventHandler();
-        this.moveEventHandler();
+        this.startEventHandler()
+        this.moveEventHandler()
+        this.loadEventHandler()
     }
 
     async #start() {
+        let gameId = prompt('게임 아이디를 입력하세요')
+        this.#chessGame.gameId = gameId
+
         let result
         try {
-            result = await new Ajax().patch('start', '')
+            result = await this.#ajax.get('start')
         } catch (e) {
+            alert(e.message)
+            return
+        }
+
+        await this.#printGameStatus()
+        this.#resultHandler(result)
+    }
+
+    async #load() {
+        let gameId = prompt('게임 아이디를 입력하세요')
+        this.#chessGame.gameId = gameId
+
+        let result
+        try {
+            result = await this.#ajax.get('load')
+        } catch(e) {
             alert(e.message)
             return
         }
@@ -54,7 +76,7 @@ export class ChessController {
     }
 
     async #printGameStatus() {
-        let result = await new Ajax().get('status')
+        let result = await this.#ajax.get('status')
 
         this.#chessGame.setStatus(result)
     }
@@ -97,7 +119,7 @@ export class ChessController {
 
 
     async #sendMoveRequest(source, target) {
-        return await new Ajax().patch('move', `
+        return await this.#ajax.patch('move', `
                 {
                     "source" : "${source}",
                     "target" : "${target}"
@@ -116,6 +138,13 @@ export class ChessController {
         document.getElementById('start_button')
             .addEventListener('click', async e => {
                 await this.#start()
+            })
+    }
+
+    loadEventHandler() {
+        document.getElementById('load_button')
+            .addEventListener('click', async e => {
+                await this.#load()
             })
     }
 

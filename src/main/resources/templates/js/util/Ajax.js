@@ -1,8 +1,8 @@
 export class Ajax {
     static #URL = 'http://localhost:4567/'
 
-    constructor(url) {
-
+    constructor(gameId) {
+        Ajax.#URL += gameId + "/"
     }
 
     async get(uri) {

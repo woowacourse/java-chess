@@ -8,6 +8,7 @@ export class ChessGame {
     #board = new Board()
     #informationBar = new InformationBar()
     #status = new Status()
+    #gameId
 
     constructor() {
         this.#dom = this.#createDom()
@@ -43,6 +44,14 @@ export class ChessGame {
             .createContextualFragment(
                 `<div class="chess_game"></div>`
             ).firstElementChild
+    }
+
+    set gameId(gameId) {
+        this.#gameId = gameId
+    }
+
+    get gameId() {
+        return this.#gameId
     }
 
 }

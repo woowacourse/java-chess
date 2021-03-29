@@ -1,25 +1,27 @@
 package chess.service;
 
 import chess.controller.dto.MessageDto;
-import chess.controller.dto.StatusDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
 
-public class StatusService {
+public class EndService {
 
     private final String gameId;
 
-    public StatusService(String gameId) {
+    public EndService(String gameId) {
         this.gameId = gameId;
     }
 
-    public StatusDto getStatus() {
+    public Object end() {
         ChessGame chessGame = getChessGameByGameId(gameId);
 
-        double whiteScore = chessGame.getWhiteScore();
-        double blackScore = chessGame.getBlackScore();
+        try {
+            chessGame.end();
+        } catch (RuntimeException e) {
+            return new MessageDto(e.getMessage());
+        }
 
-        return new StatusDto(whiteScore, blackScore);
+        return new MessageDto("finished");
     }
 
     private ChessGame getChessGameByGameId(String gameId) {

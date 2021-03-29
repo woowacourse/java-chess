@@ -1,14 +1,7 @@
 package chess.controller;
 
-import chess.service.MoveService;
-import chess.service.StatusService;
-import chess.controller.dto.GameDto;
-import chess.controller.dto.MessageDto;
 import chess.controller.dto.MoveDto;
-import chess.controller.dto.StatusDto;
-import chess.domain.board.Board;
-import chess.domain.game.ChessGame;
-import chess.domain.piece.PieceFactory;
+import chess.service.*;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
@@ -22,79 +15,51 @@ public class ChessController {
     private static final String CHESS_GAME = "chessGame";
 
     public void run() {
-        patch("/start", this::start, gson::toJson);
-        patch("/move", this::move, gson::toJson);
-        patch("/end", this::end, gson::toJson);
-        get("/status", this::status, gson::toJson);
+        get("/:gameId/start", this::start, gson::toJson);
+        get("/:gameId/load", this::load, gson::toJson);
+        patch("/:gameId/move", this::move, gson::toJson);
+        patch("/:gameId/end", this::end, gson::toJson);
+        get("/:gameId/status", this::status, gson::toJson);
     }
 
     public Object start(Request request, Response response) {
-        setNewGameToSessionIfSessionIsNewOrIsFinished(request);
-        ChessGame chessGame = getChessGameFromSession(request);
+        String gameId = request.params(":gameId");
+        StartService startService = new StartService(gameId, response);
 
-        try {
-            chessGame.start();
-        } catch (RuntimeException e) {
-            response.status(400);
-            return new MessageDto(e.getMessage());
-        }
+        return startService.startNewGame();
+    }
 
-        return new GameDto(chessGame);
+    public Object load(Request request, Response response) {
+        String gameId = request.params(":gameId");
+        LoadService loadService = new LoadService(gameId, response);
+
+        return loadService.loadByGameId();
     }
 
     public Object move(Request request, Response response) {
+        String gameId = request.params(":gameId");
         MoveDto moveDto = gson.fromJson(request.body(), MoveDto.class);
 
         String source = moveDto.getSource();
         String target = moveDto.getTarget();
 
-        ChessGame chessGame = getChessGameFromSession(request);
+        MoveService moveService = new MoveService(gameId, response);
 
-        MoveService moveService = new MoveService(chessGame);
-
-        try {
-            moveService.move(source, target);
-        } catch (RuntimeException e) {
-            response.status(400);
-            return new MessageDto(e.getMessage());
-        }
-
-        return new GameDto(chessGame);
+        return moveService.move(source, target);
     }
 
     public Object status(Request request, Response response) {
-        ChessGame chessGame = getChessGameFromSession(request);
+        String gameId = request.params(":gameId");
+        StatusService statusService = new StatusService(gameId);
 
-        StatusService statusService = new StatusService(chessGame);
-        StatusDto statusDto = null;
-
-        try {
-            statusDto = statusService.getStatus();
-        } catch(RuntimeException e) {
-            return new MessageDto(e.getMessage());
-        }
-
-        return statusDto;
+        return statusService.getStatus();
     }
 
     public Object end(Request request, Response response) {
-        ChessGame chessGame = getChessGameFromSession(request);
+        String gameId = request.params(":gameId");
+        EndService endService = new EndService(gameId);
 
-        chessGame.end();
-
-        return new MessageDto("finish");
-    }
-
-    void setNewGameToSessionIfSessionIsNewOrIsFinished(Request request) {
-        if(request.session().isNew() || getChessGameFromSession(request).isFinished()) {
-            request.session().attribute(CHESS_GAME,
-                    new ChessGame(new Board(PieceFactory.createPieces()))
-            );
-        }
-    }
-
-    ChessGame getChessGameFromSession(Request request) {
-        return request.session().attribute(CHESS_GAME);
+        return endService.end();
     }
 
 }

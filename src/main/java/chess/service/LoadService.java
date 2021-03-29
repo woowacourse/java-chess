@@ -1,25 +1,32 @@
 package chess.service;
 
+import chess.controller.dto.GameDto;
 import chess.controller.dto.MessageDto;
-import chess.controller.dto.StatusDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
+import spark.Response;
 
-public class StatusService {
+public class LoadService {
 
     private final String gameId;
+    private final Response response;
 
-    public StatusService(String gameId) {
+    public LoadService(String gameId, Response response) {
         this.gameId = gameId;
+        this.response = response;
     }
 
-    public StatusDto getStatus() {
-        ChessGame chessGame = getChessGameByGameId(gameId);
+    public Object loadByGameId() {
+        ChessGame chessGame = null;
 
-        double whiteScore = chessGame.getWhiteScore();
-        double blackScore = chessGame.getBlackScore();
+        try {
+            chessGame = getChessGameByGameId(gameId);
+        } catch (RuntimeException e) {
+            response.status(400);
+            return new MessageDto(e.getMessage());
+        }
 
-        return new StatusDto(whiteScore, blackScore);
+        return new GameDto(chessGame);
     }
 
     private ChessGame getChessGameByGameId(String gameId) {
