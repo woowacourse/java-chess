@@ -58,6 +58,7 @@ function changeCurrentTeamType(currentTeamType) {
 
 function addMovableEvent(piece, currentTeamType) {
     piece.addEventListener('click', function (event) {
+        event.stopPropagation();
         const current = document.querySelector('.current');
         if (isPieceChosenForTheFirst(current)) {
             current.value = piece.id;
@@ -98,7 +99,7 @@ function sendMoveRequest(current, destination, currentTeamType) {
             return;
         }
         if (isExceptionThrown(xmlHttp)) {
-            alert('기물을 움직일 수 없습니다. 다시 시도해주세요.');
+            alert(this.responseText);
             const currentPiece = document.getElementById(current);
             currentPiece.style.border = '1px solid black';
         }
@@ -113,7 +114,7 @@ function removeOutdatedChessBoard() {
 }
 
 function isExceptionThrown(xmlHttp) {
-    return xmlHttp.readyState === 4 && xmlHttp.status === 500;
+    return (xmlHttp.readyState === 4 && xmlHttp.status === 500);
 }
 
 initiate();

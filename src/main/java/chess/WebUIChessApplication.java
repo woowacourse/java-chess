@@ -35,14 +35,19 @@ public class WebUIChessApplication {
         });
         post("/chessboard/move", (req, res) -> {
             RequestDTO requestDTO = new Gson().fromJson(req.body(), RequestDTO.class);
+            res.type("application/json");
             Coordinate current = Coordinate.from(requestDTO.getCurrent());
             Coordinate destination = Coordinate.from(requestDTO.getDestination());
             TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
             chessBoard.move(current, destination, teamType);
             currentTeamType = currentTeamType.findOppositeTeam();
-            res.type("application/json");
             BoardDTO boardDTO = BoardDTO.from(chessBoard, currentTeamType);
             return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "hi", new Gson().toJsonTree(boardDTO)));
+        });
+        exception(RuntimeException.class, (e, req, res) -> {
+            res.status(500);
+            res.type("application/json");
+            res.body(e.getMessage());
         });
     }
 
