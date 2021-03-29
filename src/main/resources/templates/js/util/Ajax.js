@@ -1,12 +1,18 @@
 export class Ajax {
     static #URL = 'http://localhost:4567/'
 
-    constructor(gameId) {
-        Ajax.#URL += gameId + "/"
+    #chessGame
+
+    constructor(chessGame) {
+        this.#chessGame = chessGame
+    }
+
+    get URL() {
+        return Ajax.#URL + this.#chessGame.gameId + "/"
     }
 
     async get(uri) {
-        let result = await fetch(Ajax.#URL + uri)
+        let result = await fetch(this.URL + uri)
         if(result.ok) return await result.json()
 
         throw await result.json()
@@ -21,7 +27,7 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(Ajax.#URL + uri, option)
+        let result = await fetch(this.URL + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()
@@ -36,7 +42,7 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(Ajax.#URL + uri, option)
+        let result = await fetch(this.URLL + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()
@@ -51,7 +57,7 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(Ajax.#URL + uri, option)
+        let result = await fetch(this.URL + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()

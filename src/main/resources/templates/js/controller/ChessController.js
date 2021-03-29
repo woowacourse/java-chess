@@ -10,7 +10,7 @@ export class ChessController {
 
     constructor(chessGame) {
         this.#chessGame = chessGame
-        this.#ajax = new Ajax(chessGame.gameId)
+        this.#ajax = new Ajax(chessGame)
     }
 
     run() {
