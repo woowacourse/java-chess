@@ -6,6 +6,7 @@ import chess.beforedb.domain.board.setting.BoardDefaultSetting;
 import chess.beforedb.domain.board.setting.BoardSetting;
 import chess.beforedb.domain.piece.type.PieceWithColorType;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.controller.MoveRequestDTOForDB;
 import chess.db.dao.ChessGameDAO;
 import chess.db.dao.PiecePosition;
 import chess.db.domain.board.BoardForDB;
@@ -78,7 +79,7 @@ public class ChessGameForDB {
         return chessGameResponseDTOs;
     }
 
-    public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
+    public void move(MoveRequestDTOForDB moveRequestDTO) throws SQLException {
         ChessGameEntity chessGameEntity = chessGameDAO.findById(moveRequestDTO.getGameId());
         MoveRequestForDB moveRequestForDB
             = new MoveRequestForDB(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
@@ -128,8 +129,8 @@ public class ChessGameForDB {
         return chessGameEntity.getOppositeTeamColorName();
     }
 
-    public void end() throws SQLException {
-        playersForDB.removePlayersOfChessGame(chessGameEntity);
-        chessGameDAO.remove(chessGameEntity);
+    public void end(Long gameId) throws SQLException {
+        boardForDB.removeAllPlayersAndPiecesPositionsOfGame(gameId);
+        chessGameDAO.remove(gameId);
     }
 }

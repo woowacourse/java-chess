@@ -105,14 +105,6 @@ public class PlayersForDB {
     public PlayerEntity getPlayerColorOf(TeamColor teamColor) {
         return findPlayerByTeamColor(teamColor);
     }
-
-    public void removePlayersOfChessGame(ChessGameEntity chessGameEntity) throws SQLException {
-        for (PlayerEntity playerEntity : playerEntities) {
-            piecesPositionsForDB.removePiecesPositionsOfPlayer(playerEntity);
-        }
-        playerDAO.removeAllByChessGame(chessGameEntity);
-    }
-
     public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor)
         throws SQLException {
         return playerDAO.findIdByGameIdAndTeamColor(gameId, teamColor);
@@ -137,5 +129,13 @@ public class PlayersForDB {
         double whitePlayerScore = playerDAO.findScoreByPlayerId(whitePlayerId);
         double blackPlayerScore = playerDAO.findScoreByPlayerId(blackPlayerId);
         return new ScoresEntity(whitePlayerScore, blackPlayerScore);
+    }
+
+    public void removeAllPlayersAndPiecesPositions(Long gameId) throws SQLException {
+        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
+        piecesPositionsForDB.removePiecesPositionsByPlayerId(whitePlayerId);
+        piecesPositionsForDB.removePiecesPositionsByPlayerId(blackPlayerId);
+        playerDAO.removeAllByChessGame(gameId);
     }
 }

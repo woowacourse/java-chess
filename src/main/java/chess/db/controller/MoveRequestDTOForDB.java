@@ -1,12 +1,19 @@
-package chess.beforedb.controller.dto.request;
+package chess.db.controller;
 
-public class MoveRequestDTO {
+
+public class MoveRequestDTOForDB {
+    private final Long gameId;
     private final String startPosition;
     private final String destination;
 
-    public MoveRequestDTO(String startPosition, String destination) {
+    public MoveRequestDTOForDB(Long gameId, String startPosition, String destination) {
+        this.gameId = gameId;
         this.startPosition = startPosition;
         this.destination = destination;
+    }
+
+    public Long getGameId() {
+        return gameId;
     }
 
     public String getStartPosition() {

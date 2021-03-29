@@ -99,5 +99,9 @@ public class BoardForDB {
             .filter(cell -> !cell.isEmpty() && cell.getPieceType() == KING)
             .count() < NUMBER_OF_ALL_KINGS;
     }
+
+    public void removeAllPlayersAndPiecesPositionsOfGame(Long gameId) throws SQLException {
+        playersForDB.removeAllPlayersAndPiecesPositions(gameId);
+    }
 }
 

@@ -208,10 +208,10 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public void removeAllByPlayer(PlayerEntity playerEntity) throws SQLException {
+    public void removeAllByPlayer(Long playerId) throws SQLException {
         String query = "DELETE FROM player_piece_position WHERE player_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerEntity.getId());
+        pstmt.setLong(1, playerId);
         pstmt.executeUpdate();
     }
 

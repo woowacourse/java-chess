@@ -23,7 +23,7 @@ public class WebUIDBController {
     private static final String CREATE_CHESS_ROOM = "create-chess-room";
     private static final String CHESS_BOARD = "chess-board";
     private static final String MOVE = "move";
-    private static final String END_COMMAND_INPUT = "end";
+    private static final String END = "end";
     private static final String CHESS_BOARD_VIEW = "chess-board.html";
     private static final String HOME_VIEW = "index.html";
     private static final String RESPONSE_DTO = "responseDTO";
@@ -94,8 +94,9 @@ public class WebUIDBController {
     }
 
     private void handleEndRequest() {
-        get(ROOT + END_COMMAND_INPUT, (req, res) -> {
-            chessServiceForDB.endGame();
+        get(ROOT + END, (req, res) -> {
+            Long roomId = Long.valueOf(req.queryParams("id"));
+            chessServiceForDB.endGame(roomId);
             res.redirect(ROOT);
             return null;
         });

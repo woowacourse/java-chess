@@ -155,8 +155,8 @@ public class PiecesPositionsForDB {
         playerPiecePositionDAO.removePiece(playerPiecePositionEntity);
     }
 
-    public void removePiecesPositionsOfPlayer(PlayerEntity playerEntity) throws SQLException {
-        playerPiecePositionDAO.removeAllByPlayer(playerEntity);
+    public void removePiecesPositionsByPlayerId(Long playerId) throws SQLException {
+        playerPiecePositionDAO.removeAllByPlayer(playerId);
     }
 
     public PieceEntity getPieceByGameIdAndPosition(Long gameId, PositionEntity position)

@@ -50,7 +50,7 @@ class ChessGameDAOTest {
     @Test
     void remove() throws SQLException {
 
-        chessGameDAO.remove(chessGameEntity);
+        chessGameDAO.remove(chessGameEntity.getId());
         ChessGameEntity deletedChessRoom = chessGameDAO.findById(chessGameEntity.getId());
 
         assertThat(deletedChessRoom).isNull();

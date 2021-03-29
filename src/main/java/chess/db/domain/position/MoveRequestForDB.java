@@ -3,13 +3,14 @@ package chess.db.domain.position;
 import chess.beforedb.controller.dto.request.MoveRequestDTO;
 import chess.beforedb.domain.piece.type.Direction;
 import chess.beforedb.domain.player.type.TeamColor;
+import chess.db.controller.MoveRequestDTOForDB;
 
 public class MoveRequestForDB {
     private final TeamColor currentTurnTeamColor;
     private final PositionEntity startPosition;
     private final PositionEntity destination;
 
-    public MoveRequestForDB(TeamColor currentTurnTeamColor, MoveRequestDTO moveRequestDTO) {
+    public MoveRequestForDB(TeamColor currentTurnTeamColor, MoveRequestDTOForDB moveRequestDTO) {
         this.currentTurnTeamColor = currentTurnTeamColor;
         startPosition = PositionEntity.of(moveRequestDTO.getStartPosition());
         destination = PositionEntity.of(moveRequestDTO.getDestination());

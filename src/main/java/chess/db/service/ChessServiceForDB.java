@@ -80,8 +80,7 @@ public class ChessServiceForDB {
             cellsStatus.subList(RANK8_FIRST_INDEX, BOARD_ALL_CELLS_SIZE));
     }
 
-    public void endGame() throws SQLException {
-        // chessGameForDB = null;
-        chessGameForDB.end();
+    public void endGame(Long gameId) throws SQLException {
+        chessGameForDB.end(gameId);
     }
 }
