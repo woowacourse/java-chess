@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
