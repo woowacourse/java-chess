@@ -32,7 +32,6 @@ public class WebUIChessApplication {
 //
         post("/move", (req, res) -> {
             MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
-            System.out.println(moveRequestDto);
             return chessService.move(moveRequestDto);
         }, JSON_TRANSFORMER);
 

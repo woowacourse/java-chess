@@ -17,8 +17,6 @@ async function createChessBoard() {
             alert(data.message);
             return;
         }
-        console.log("/grid/roomName")
-        console.log(data);
         cleanChessBoard();
         createChessBoardAndPieces(data.data.gridDto, data.data.piecesResponseDto);
     } catch (e) {
@@ -53,8 +51,6 @@ function createChessBoardAndPieces(gridDto, piecesResponseDto) {
         pieces.push(piecesResponseDto.slice(i * 8, (i + 1) * 8));
     }
     store.pieces = pieces;
-    console.log("게임 시작 시 저장되는 store");
-    console.log(store);
     const table = document.getElementById("chess-board");
     for (let i = 0; i < 8; i++) {
         const newTr = document.createElement("tr");
@@ -257,8 +253,6 @@ async function restart() {
             alert(data.message);
             return;
         }
-        console.log("restart");
-        console.log(data);
         cleanChessBoard();
         createChessBoardAndPieces(data.data.gridDto, data.data.piecesResponseDto);
         start();
