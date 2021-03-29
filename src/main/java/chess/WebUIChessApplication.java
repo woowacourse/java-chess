@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -22,8 +23,10 @@ public class WebUIChessApplication {
             return render(model, "registration.html");
         });
 
-		get("/menu", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
+		post("/menu", (req, res) -> {
+            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
+            Map<String, Object> model = new HashMap<>();
+            model.put("user", user);
 			return render(model, "menu.html");
 		});
 
