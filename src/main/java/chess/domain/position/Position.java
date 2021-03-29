@@ -29,6 +29,10 @@ public final class Position {
         return CACHE.get(positionName);
     }
 
+    public static Position of(final Column column, final Row row) {
+        return CACHE.get(column.value() + row.value());
+    }
+
     public Position move(final Direction direction) {
         final Column newColumn = column.move(direction);
         final Row newRow = row.move(direction);
@@ -52,7 +56,7 @@ public final class Position {
         return new Path(visitedPositions);
     }
 
-    public boolean canMove(Direction direction) {
+    private boolean canMove(Direction direction) {
         return column.canMove(direction) && row.canMove(direction);
     }
 
@@ -62,6 +66,10 @@ public final class Position {
 
     public String name() {
         return column.value() + row.value();
+    }
+
+    public Column column() {
+        return column;
     }
 
     private static void cache() {

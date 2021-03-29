@@ -11,7 +11,7 @@ public interface PieceStrategy {
 
     Path pathFrom(final Direction direction, final Position position);
 
-    boolean canReplace(final Piece piece);
+    boolean isDifferentColor(final Piece piece);
 
     boolean blockedBy(final Piece piece);
 
@@ -19,5 +19,7 @@ public interface PieceStrategy {
 
     boolean isKing();
 
-    double score();
+    String name();
+
+    double value();
 }

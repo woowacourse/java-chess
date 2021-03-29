@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.position.Position;
+import chess.domain.result.Score;
 import java.util.List;
 
 public class EmptyPiece implements Piece {
@@ -27,12 +28,12 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
-    public boolean canReplace(Piece piece) {
+    public boolean isDifferentColor(Piece piece) {
         throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물을 대체할 수 없습니다.");
     }
 
     @Override
-    public boolean blockedBy(Piece piece) {
+    public boolean isSameColor(Piece piece) {
         throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물이 가로막을 수 없습니다.");
     }
 
@@ -54,5 +55,15 @@ public class EmptyPiece implements Piece {
     @Override
     public boolean isEmpty() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return ".";
+    }
+
+    @Override
+    public Score score() {
+        return Score.MIN;
     }
 }

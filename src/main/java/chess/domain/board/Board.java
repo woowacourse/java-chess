@@ -71,7 +71,7 @@ public final class Board {
                 piece.directions()
                 .stream()
                 .map(direction -> piece.pathFrom(direction, sourcePosition))
-                .map(path -> path.removeObstacleInPath(piece, this))
+                .map(path -> path.removeObstacleInPath(sourcePosition, this))
                 .flatMap(List::stream)
                 .collect(Collectors.toList()));
     }

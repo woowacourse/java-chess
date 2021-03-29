@@ -17,14 +17,37 @@ public final class Path {
         return positions.contains(targetPosition);
     }
 
-    public List<Position> removeObstacleInPath(final Piece piece, final Board board) {
+    public List<Position> removeObstacleInPath(final Position position, final Board board) {
+        final Piece piece = board.pieceAt(position);
+        if (piece.isPawn()) {
+            return calculatePawnPath(position, board);
+        }
+        return calculateNonePawnPath(piece, board);
+    }
+
+    private List<Position> calculatePawnPath(final Position position, final Board board) {
+        final List<Position> cleanPath = new ArrayList<>();
+        for (Position target : positions) {
+            final Piece piece = board.pieceAt(position);
+            final Piece otherPiece = board.pieceAt(target);
+            if (position.isOfColumn(target.column()) && otherPiece.isEmpty()) {
+                cleanPath.add(target);
+            }
+            if (!position.isOfColumn(target.column()) && piece.isDifferentColor(otherPiece)) {
+                cleanPath.add(target);
+            }
+        }
+        return cleanPath;
+    }
+
+    private List<Position> calculateNonePawnPath(final Piece piece, final Board board) {
         final List<Position> cleanPath = new ArrayList<>();
         for (Position position : positions) {
             final Piece otherPiece = board.pieceAt(position);
-            if (piece.canReplace(otherPiece)) {
+            if (piece.isDifferentColor(otherPiece)) {
                 cleanPath.add(position);
             }
-            if (piece.blockedBy(otherPiece)) {
+            if (piece.isSameColor(otherPiece)) {
                 break;
             }
         }

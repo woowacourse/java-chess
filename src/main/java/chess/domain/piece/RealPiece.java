@@ -4,6 +4,7 @@ import chess.domain.board.Path;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.piece.strategy.PieceStrategy;
 import chess.domain.position.Position;
+import chess.domain.result.Score;
 import java.util.List;
 
 public final class RealPiece implements Piece {
@@ -27,15 +28,12 @@ public final class RealPiece implements Piece {
     }
 
     @Override
-    public boolean canReplace(final Piece piece) {
-        return pieceStrategy.canReplace(piece);
-//        if (isPawn()) {
-//
-//        }
+    public boolean isDifferentColor(final Piece piece) {
+        return pieceStrategy.isDifferentColor(piece);
     }
 
     @Override
-    public boolean blockedBy(final Piece piece) {
+    public boolean isSameColor(final Piece piece) {
         return pieceStrategy.blockedBy(piece);
     }
 
@@ -57,5 +55,15 @@ public final class RealPiece implements Piece {
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return pieceStrategy.name();
+    }
+
+    @Override
+    public Score score() {
+        return new Score(pieceStrategy.value());
     }
 }
