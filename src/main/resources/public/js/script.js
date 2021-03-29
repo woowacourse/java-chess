@@ -85,6 +85,10 @@ function addEvent() {
 createChessBoard();
 
 function selectPiece(event) {
+    if (store.gridDto.isFinished) {
+        alert("이미 게임이 끝났습니다. 게임을 다시 시작하시고 싶으면 Restart 버튼을 눌러주세요.")
+        return;
+    }
     const clickPiece = event.target.closest("td");
     const clickedPiece = getClickedPiece();
 
@@ -211,10 +215,6 @@ async function finish() {
             url: `/grid/${store.gridDto.gridId}/finish`,
         });
         const data = res.data;
-        if (data.code !== 200) {
-            alert(data.message);
-            return;
-        }
         if (data.code === 204) {
             store.gridDto.isFinished = true;
         }
