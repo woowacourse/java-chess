@@ -63,4 +63,13 @@ public class PieceDAO {
         }
         return pieces;
     }
+
+    public void updatePiece(long pieceId, boolean isBlack, char name) throws SQLException {
+        String query = "UPDATE piece SET isBlack = ?, name = ?  WHERE pieceId = ?";
+        PreparedStatement pstmt = con.getConnection().prepareStatement(query);
+        pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlack);
+        pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
+        pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
+        pstmt.executeUpdate();
+    }
 }

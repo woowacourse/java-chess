@@ -36,4 +36,15 @@ public class PieceDto implements ResponseDto {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "PieceDto{" +
+                "pieceId=" + pieceId +
+                ", isBlack=" + isBlack +
+                ", position='" + position + '\'' +
+                ", gridId=" + gridId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

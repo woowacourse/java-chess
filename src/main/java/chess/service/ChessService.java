@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
+    private static final char EMPTY_PIECE_NAME = '.';
     private final Grid grid;
     private final RoomDAO roomDAO;
     private final GridDAO gridDAO;
@@ -40,7 +41,6 @@ public class ChessService {
 
     public Response move(MoveRequestDto requestDto) {
         try {
-            System.out.println(requestDto.getPiecesDto());
             List<Piece> pieces = requestDto.getPiecesDto().stream()
                     .map(pieceDto -> {
                         Color color = null;
@@ -60,8 +60,23 @@ public class ChessService {
             List<Line> lines = Lines.from(pieces).lines();
             Grid grid = new Grid(new CustomGridStrategy(lines));
             grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
+
+            PieceDto sourcePieceDto = requestDto.getPiecesDto().stream()
+                    .filter(pieceDto -> {
+                        return pieceDto.getPosition().equals(requestDto.getSourcePosition());
+                    })
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 체스말입니다."));
+            PieceDto targetPieceDto = requestDto.getPiecesDto().stream()
+                    .filter(pieceDto -> {
+                        return pieceDto.getPosition().equals(requestDto.getTargetPosition());
+                    })
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 체스말입니다."));
+            pieceDAO.updatePiece(sourcePieceDto.getPieceId(), sourcePieceDto.isBlack(), EMPTY_PIECE_NAME);
+            pieceDAO.updatePiece(targetPieceDto.getPieceId(), sourcePieceDto.isBlack(), sourcePieceDto.getName().charAt(0));
             return new Response(ResponseCode.NO_CONTENT);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLException e) {
             return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
         }
     }
