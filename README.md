@@ -162,10 +162,12 @@
 
 - [x] DB
   - 서버를 재시작 해도, 이전에 존재하던 모든 방들의 게임을 이어서 할 수 있어야 한다.
+  
   - [x] 서버를 시작했을 때
+    
     - [x] Controller, Service, ChessGame을 실행시킨다.
-    - [x] Board 생성시, 모든 보드 칸들을 Empty 상태인 Cell로 초기화한다.
-
+  - [x] Board 생성시, 모든 보드 칸들을 Empty 상태인 Cell로 초기화한다.
+  
   - [x] 체스 게임 방을 생성하거나, 기존에 존재하는 방에 들어갔을 때
     - [x] 체스 게임 방을 새로 생성했을 때
       - [x] 모든 것들을 새로 만들어서 DB에 저장한다. (캐싱되어있는 기물들과 보드 칸 위치들 제외)
@@ -173,8 +175,8 @@
           - [x] 체스 게임 title
           - [x] 현재 차례 팀 색깔 (초기 기본값 "white")
         - [x] 백 팀, 흑 팀 플레이어
-          - [x] 맨 처음 배치상태의 기물들
-
+        - [x] 맨 처음 배치상태의 기물들
+  
     - [x] ChessGame id를 통해, DB에 저장되어있는 게임 정보를 ChessGame 객체에 로드한다.
       - [x] 체스 게임
         - [x] 요청받은 체스게임을 DB에서 가져온다.
@@ -184,6 +186,7 @@
       - [x] 보드의 Cell들
         - [x] Board의 모든 Cell들을 Empty로 초기화한다.
         - [x] 저장되어있는 마지막 배치 상태의 기물들을 DB에서 가져와 Board의 Cell에 저장한다.
+    
   - [x] 보드 상태 출력 요청
     
     - [x] Board에 있는 모든 Cell들의 상태 정보를 반환한다.
@@ -194,15 +197,53 @@
     - [x] 이동이 가능할 때
       - [x] 움직인 기물의 위치 정보를 DB와 Board(Cell)에 모두 업데이트한다.
     - [x] 상대방의 기물을 잡았을 때
-      - [x] 잡힌 기물을 DB와 Board(Cell)에서 모두 삭제한다.
+    - [x] 잡힌 기물을 DB와 Board(Cell)에서 모두 삭제한다.
     - [x] ChessGame의 현재 차례 팀 색깔 정보를 DB와 ChessGame에 모두 업데이트한다.
-
+  
   - [x] 게임 종료 (게임 방 삭제 버튼을 클릭한 경우 또는 King이 잡힌 경우)
-    - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
-    
+  - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
+  
+- [ ] API
+  - [ ] 방 생성
+    - [ ] `POST : "/create-chess-room"` 요청
+      - [ ] 새로운 체스 게임, 플레이어들 생성.
+      - [ ] 초기 기물 배치 세팅
+      - [ ] `생성한 게임 id`를 반환
+      - [ ] Controller에서 `GET : "/chess-board?id={생성한 게임 id}"` redirect
+  - [ ] 기존 방 접속
+    - [ ] 방 클릭
+      - [ ] `GET : "/chess-board?id={게임 id}"` 요청
+      - [ ] 체스 보드의 모든 정보와 게임 id를 함께 반환
+      - [ ] 보이지 않는 html element에 게임 id 저장
+  - [ ] 체스 보드 출력
+    - [ ] `isKingDead` 값을 보이지 않는 html element에 저장
+    - [ ] `직전 턴 이었던 팀의 색깔` 값을 보이지 않는 html element에 저장
+      - [ ] html, css rendering이 완료되고, js가 해당 html element 내의 text값을 읽었을 때, `true`이면, `alert("${직전 턴 이었던 팀의 색깔} 팀이 이겼습니다.")` 로 안내창 띄움.
+        - [ ] `GET : "/delete?id={게임 id}"` 요청
+  - [ ] 방 나가기 
+    - [ ] `GET : "/"` 요청
+    - [ ] 메인 페이지 (방 목록) 화면으로 이동
+  - [ ] 방 삭제
+    - [ ] `GET : "/delete?id={게임 id}"` 요청
+    - [ ] 해당 게임 id에 관련된 `기물 위치 정보(player_piece_position)`들, `플레이어 정보(player)`들, `체스 게임 정보(chess_game)`  DB에서 모두 삭제
+    - [ ] `GET : "/"` 으로 redirect
+  - [ ] 기물 이동
 
-    ​    
-    
+    - [ ] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "{출발 위치}", "destination": "{도착 위치}"}"` 요청
+    - [ ] 이동 가능한 경우
+      - [ ] 기물 이동, 턴 전환 DB 업데이트
+      - [ ] 정상 이동 응답 반환
+    - [ ] 이동 불가능한 경우
+      - [ ] DB 업데이트를 아무것도 하지 않음
+    - [ ] 이동 불가 에러, 에러 메세지 응답 반환
+    - [ ] `ajax` 에서 정상 이동 결과를 받았을 때
+      - [ ] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
+    - [ ] `ajax` 에서 정상 에러 결과를 받으면,  
+      - [ ] View에서 js로 `alert("{에러 메세지}")` 창 띄움.
+      - [ ] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
+
+  
+
   - 방 목록
     - 방
       - id (Long)
@@ -216,7 +257,7 @@
             - 기물
               - id (Long)
               - 이름 (String)
-              - 위치
+            - 위치
                 - id (Long)
                 - File (String)
                 - Rank (String)
@@ -320,7 +361,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-- [ ] 도메인 의존 구조 정리
+- [x] 도메인 의존 구조 정리
 - [ ] View <->  Controller <-> Service <-> Domain 연결
+- [ ] jquery, bootstrap static 파일로 저장
+- [ ] alert, confirm 창 bootstrap 적용
 - [ ] 테스트 코드 연결
 - [ ] 체스보드 View 꾸미기
