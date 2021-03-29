@@ -6,12 +6,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,8 +19,10 @@ public class ChessBoard {
     private static final int BOARD_SIZE = 8;
     private static final int NUMBER_OF_KINGS = 2;
     private static final int COLUMN_NEIGHBOR_PAWN = 2;
+    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
+    private static final String SAME_POSITION = "같은 위치로 이동할 수 없습니다.";
 
-    private final List<List<Square>> chessBoard = new ArrayList<>(BOARD_SIZE);
+    private final Map<Position, Piece> chessBoard = new HashMap<>();
 
     public ChessBoard() {
         initBlank();
@@ -35,83 +35,86 @@ public class ChessBoard {
 
     private void initBlank() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            chessBoard.add(
-                new ArrayList<>(Arrays.asList(
-                    new Square(Position.of(i, 0), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 1), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 2), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 3), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 4), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 5), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 6), new Blank(Color.NO_COLOR)),
-                    new Square(Position.of(i, 7), new Blank(Color.NO_COLOR))
-                ))
-            );
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                chessBoard.put(Position.of(i, j), new Blank(Color.NO_COLOR));
+            }
         }
     }
 
     private void initBlack() {
-        getSquare(Position.of("a8")).addPiece(new Rook(Color.BLACK));
-        getSquare(Position.of("b8")).addPiece(new Knight(Color.BLACK));
-        getSquare(Position.of("c8")).addPiece(new Bishop(Color.BLACK));
-        getSquare(Position.of("d8")).addPiece(new Queen(Color.BLACK));
-        getSquare(Position.of("e8")).addPiece(new King(Color.BLACK));
-        getSquare(Position.of("f8")).addPiece(new Bishop(Color.BLACK));
-        getSquare(Position.of("g8")).addPiece(new Knight(Color.BLACK));
-        getSquare(Position.of("h8")).addPiece(new Rook(Color.BLACK));
-
-        getSquare(Position.of("a7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("b7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("c7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("d7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("e7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("f7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("g7")).addPiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("h7")).addPiece(new Pawn(Color.BLACK));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            chessBoard.put(Position.of(1, i), new Pawn(Color.BLACK));
+        }
+        chessBoard.put(Position.of(0, 0), new Rook(Color.BLACK));
+        chessBoard.put(Position.of(0, 1), new Knight(Color.BLACK));
+        chessBoard.put(Position.of(0, 2), new Bishop(Color.BLACK));
+        chessBoard.put(Position.of(0, 3), new Queen(Color.BLACK));
+        chessBoard.put(Position.of(0, 4), new King(Color.BLACK));
+        chessBoard.put(Position.of(0, 5), new Bishop(Color.BLACK));
+        chessBoard.put(Position.of(0, 6), new Knight(Color.BLACK));
+        chessBoard.put(Position.of(0, 7), new Rook(Color.BLACK));
     }
 
     private void initWhite() {
-        getSquare(Position.of("a1")).addPiece(new Rook(Color.WHITE));
-        getSquare(Position.of("b1")).addPiece(new Knight(Color.WHITE));
-        getSquare(Position.of("c1")).addPiece(new Bishop(Color.WHITE));
-        getSquare(Position.of("d1")).addPiece(new Queen(Color.WHITE));
-        getSquare(Position.of("e1")).addPiece(new King(Color.WHITE));
-        getSquare(Position.of("f1")).addPiece(new Bishop(Color.WHITE));
-        getSquare(Position.of("g1")).addPiece(new Knight(Color.WHITE));
-        getSquare(Position.of("h1")).addPiece(new Rook(Color.WHITE));
-
-        getSquare(Position.of("a2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("b2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("c2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("d2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("e2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("f2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("g2")).addPiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("h2")).addPiece(new Pawn(Color.WHITE));
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            chessBoard.put(Position.of(6, i), new Pawn(Color.WHITE));
+        }
+        chessBoard.put(Position.of(7, 0), new Rook(Color.WHITE));
+        chessBoard.put(Position.of(7, 1), new Knight(Color.WHITE));
+        chessBoard.put(Position.of(7, 2), new Bishop(Color.WHITE));
+        chessBoard.put(Position.of(7, 3), new Queen(Color.WHITE));
+        chessBoard.put(Position.of(7, 4), new King(Color.WHITE));
+        chessBoard.put(Position.of(7, 5), new Bishop(Color.WHITE));
+        chessBoard.put(Position.of(7, 6), new Knight(Color.WHITE));
+        chessBoard.put(Position.of(7, 7), new Rook(Color.WHITE));
     }
 
-    public List<List<Square>> getChessBoard() {
+    public Map<Position, Piece> getChessBoard() {
         return chessBoard;
     }
 
     public void move(String source, String target) {
-        Square sourceSquare = getSquare(Position.of(source));
-        Square targetSquare = getSquare(Position.of(target));
-        sourceSquare.move(this, targetSquare);
+        Position sourcePosition = getPosition(Position.of(source));
+        Position targetPosition = getPosition(Position.of(target));
+
+        validateMove(sourcePosition, targetPosition);
+
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+
+        if (sourcePiece.isMovable(this, sourcePosition, targetPosition)) {
+            chessBoard.put(sourcePosition, new Blank(Color.NO_COLOR));
+            chessBoard.put(targetPosition, sourcePiece);
+            return;
+        }
+        throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
     }
 
-    public Square getSquare(Position position) {
-        return chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(square -> square.hasSamePosition(position))
+    private void validateMove(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException(SAME_POSITION);
+        }
+    }
+
+    public Position getPosition(Position target) {
+        return chessBoard.keySet()
+            .stream()
+            .filter(position -> position.equals(target))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
 
+    public Piece getPiece(Position position) {
+        return chessBoard.get(position);
+    }
+
+    public boolean isBlank(Position position) {
+        return chessBoard.get(position).isBlank();
+    }
+
     public boolean isOver() {
-        long kingCount = chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(Square::hasKing)
+        long kingCount = chessBoard.values()
+            .stream()
+            .filter(Piece::isKing)
             .count();
         return kingCount < NUMBER_OF_KINGS;
     }
@@ -124,19 +127,19 @@ public class ChessBoard {
     }
 
     private double calculateScore(Color color) {
-        return chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(square -> square.hasSameColor(color))
-            .mapToDouble(Square::score)
+        return chessBoard.values().stream()
+            .filter(piece -> piece.isSameColor(color))
+            .mapToDouble(Piece::score)
             .sum();
     }
 
     private Map<Column, Long> calculatePawnCount(Color color) {
-        return chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(Square::hasPawn)
-            .filter(square -> square.hasSameColor(color))
-            .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
+        return chessBoard.entrySet()
+            .stream()
+            .filter(piece -> piece.getValue().isPawn())
+            .filter(piece -> piece.getValue().isSameColor(color))
+            .collect(Collectors
+                .groupingBy(position -> position.getKey().getColumn(), Collectors.counting()));
     }
 
     private double calculatePunishmentScore(Map<Column, Long> pawnCount) {

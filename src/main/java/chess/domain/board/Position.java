@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public class Position {
 
     private static final String OUT_OF_BOUND_MESSAGE = "체스판 범위를 벗어난 위치입니다.";
+    private static final int BLACK_STARTING_POSITION = 1;
+    private static final int WHITE_STARTING_POSITION = 6;
 
     private static final Map<String, Position> cache = new HashMap<>();
 
@@ -66,6 +69,13 @@ public class Position {
     public Position nextPosition(Direction direction) {
         return Position.of(this.row.getIndex() + direction.getYDegree(),
             this.column.getIndex() + direction.getXDegree());
+    }
+
+    public boolean isStartingPosition(Color color) {
+        if (color == Color.BLACK) {
+            return row.getIndex() == BLACK_STARTING_POSITION;
+        }
+        return row.getIndex() == WHITE_STARTING_POSITION;
     }
 
     @Override

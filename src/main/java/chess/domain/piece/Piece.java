@@ -1,17 +1,20 @@
 package chess.domain.piece;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.board.Direction;
+import chess.domain.board.Position;
+import chess.domain.piece.strategy.MoveStrategy;
 import java.util.List;
 
 public abstract class Piece {
 
     private final Color color;
-    private final boolean iterable;
+    private final MoveStrategy moveStategy;
     protected Type type;
 
-    public Piece(Color color, boolean iterable) {
+    public Piece(Color color, MoveStrategy moveStrategy) {
         this.color = color;
-        this.iterable = iterable;
+        this.moveStategy = moveStrategy;
     }
 
     public String getName() {
@@ -52,7 +55,11 @@ public abstract class Piece {
 
     public abstract List<Direction> direction();
 
-    public boolean isIterable() {
-        return iterable;
+    public boolean isMovable(
+        ChessBoard chessBoard,
+        Position sourcePosition,
+        Position targetPosition
+    ) {
+        return moveStategy.movable(chessBoard, sourcePosition, targetPosition, this);
     }
 }

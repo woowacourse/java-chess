@@ -1,10 +1,10 @@
 package chess.view;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.Square;
+import chess.domain.board.Position;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
-import java.util.List;
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
@@ -28,10 +28,8 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        for (List<Square> rank : chessBoard.getChessBoard()) {
-            for (Square square : rank) {
-                System.out.print(square.getName());
-            }
+        for (Map.Entry<Position, Piece> board: chessBoard.getChessBoard().entrySet()) {
+            System.out.println(board.getValue());
             System.out.println();
         }
         System.out.println();

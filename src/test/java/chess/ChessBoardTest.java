@@ -10,8 +10,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,21 +34,21 @@ public class ChessBoardTest {
     @DisplayName("체스 초기 기물 배치 확인")
     @CsvSource(value = {"0, 4, K", "7, 4, k", "1, 0, P", "6, 0, p", "5, 0, ."}, delimiter = ',')
     void pieceLocationCheck(int i, int j, String value) {
-        assertThat(chessBoard.getChessBoard().get(i).get(j).getName()).isEqualTo(value);
+        assertThat(chessBoard.getPiece(Position.of(i, j)).getName()).isEqualTo(value);
     }
 
     @Test
     @DisplayName("폰 움직임 성공")
     void movePawnSuccess() {
         chessBoard.move("b2", "b3");
-        assertThat(chessBoard.getChessBoard().get(5).get(1).getName()).isEqualTo("p");
+        assertThat(chessBoard.getPiece(Position.of(5, 1)).getName()).isEqualTo("p");
     }
 
     @Test
     @DisplayName("시작점에 있는 폰은 두 칸 전진 가능")
     void movePawnStart() {
         chessBoard.move("b2", "b4");
-        assertThat(chessBoard.getChessBoard().get(4).get(1).getName()).isEqualTo("p");
+        assertThat(chessBoard.getPiece(Position.of(4, 1)).getName()).isEqualTo("p");
     }
 
     @Test
@@ -56,7 +58,7 @@ public class ChessBoardTest {
         chessBoard.move("c5", "c4");
         chessBoard.move("c4", "c3");
         chessBoard.move("b2", "c3");
-        assertThat(chessBoard.getChessBoard().get(5).get(2).getName()).isEqualTo("p");
+        assertThat(chessBoard.getPiece(Position.of(5, 2)).getName()).isEqualTo("p");
     }
 
     @Test
@@ -99,7 +101,7 @@ public class ChessBoardTest {
     void moveRookSuccess() {
         chessBoard.move("a2", "a3");
         chessBoard.move("a1", "a2");
-        assertThat(chessBoard.getChessBoard().get(6).get(0).getName()).isEqualTo("r");
+        assertThat(chessBoard.getPiece(Position.of(6, 0)).getName()).isEqualTo("r");
     }
 
     @Test
@@ -117,7 +119,7 @@ public class ChessBoardTest {
         chessBoard.move("a1", "a3");
         chessBoard.move("a3", "b3");
         chessBoard.move("b3", "b7");
-        assertThat(chessBoard.getChessBoard().get(1).get(1).getName()).isEqualTo("r");
+        assertThat(chessBoard.getPiece(Position.of(1, 1)).getName()).isEqualTo("r");
     }
 
     @Test
@@ -125,7 +127,7 @@ public class ChessBoardTest {
     void moveBishopSuccess() {
         chessBoard.move("b2", "b3");
         chessBoard.move("c1", "b2");
-        assertThat(chessBoard.getChessBoard().get(6).get(1).getName()).isEqualTo("b");
+        assertThat(chessBoard.getPiece(Position.of(6, 1)).getName()).isEqualTo("b");
     }
 
     @Test
@@ -142,14 +144,14 @@ public class ChessBoardTest {
         chessBoard.move("b2", "b3");
         chessBoard.move("c1", "a3");
         chessBoard.move("a3", "e7");
-        assertThat(chessBoard.getChessBoard().get(1).get(4).getName()).isEqualTo("b");
+        assertThat(chessBoard.getPiece(Position.of(1, 4)).getName()).isEqualTo("b");
     }
 
     @Test
     @DisplayName("나이트 이동 성공")
     void moveKnightSuccess() {
         chessBoard.move("b1", "a3");
-        assertThat(chessBoard.getChessBoard().get(5).get(0).getName()).isEqualTo("n");
+        assertThat(chessBoard.getPiece(Position.of(5, 0)).getName()).isEqualTo("n");
     }
 
     @Test
@@ -173,25 +175,26 @@ public class ChessBoardTest {
     @Test
     @DisplayName("한 쪽의 킹이 죽고 끝났을 때 점수 계산")
     void scoreTest2() {
-        ChessBoard emptyChessBoard = new ChessBoard();
-        emptyChessBoard.getSquare(Position.of("b8")).addPiece(new King(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("c8")).addPiece(new Rook(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("a7")).addPiece(new Pawn(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("c7")).addPiece(new Pawn(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("d7")).addPiece(new Bishop(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("b6")).addPiece(new Pawn(Color.BLACK));
-        emptyChessBoard.getSquare(Position.of("e6")).addPiece(new Queen(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard();
+        Map<Position, Piece> board = chessBoard.getChessBoard();
+        board.put(Position.of("b8"), new King(Color.BLACK));
+        board.put(Position.of("c8"), (new Rook(Color.BLACK)));
+        board.put(Position.of("a7"), (new Pawn(Color.BLACK)));
+        board.put(Position.of("c7"), (new Pawn(Color.BLACK)));
+        board.put(Position.of("d7"), (new Bishop(Color.BLACK)));
+        board.put(Position.of("b6"), (new Pawn(Color.BLACK)));
+        board.put(Position.of("e6"), (new Queen(Color.BLACK)));
 
-        emptyChessBoard.getSquare(Position.of("f4")).addPiece(new Knight(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("g4")).addPiece(new Queen(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("f3")).addPiece(new Pawn(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("h3")).addPiece(new Pawn(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("f2")).addPiece(new Pawn(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("g2")).addPiece(new Pawn(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("e1")).addPiece(new Rook(Color.WHITE));
-        emptyChessBoard.getSquare(Position.of("f1")).addPiece(new King(Color.WHITE));
+        board.put(Position.of("f4"), (new Knight(Color.WHITE)));
+        board.put(Position.of("g4"), (new Queen(Color.WHITE)));
+        board.put(Position.of("f3"), (new Pawn(Color.WHITE)));
+        board.put(Position.of("h3"), (new Pawn(Color.WHITE)));
+        board.put(Position.of("f2"), (new Pawn(Color.WHITE)));
+        board.put(Position.of("g2"), (new Pawn(Color.WHITE)));
+        board.put(Position.of("e1"), (new Rook(Color.WHITE)));
+        board.put(Position.of("f1"), (new King(Color.WHITE)));
 
-        assertThat(emptyChessBoard.getScore(Color.BLACK)).isEqualTo(20.0);
-        assertThat(emptyChessBoard.getScore(Color.WHITE)).isEqualTo(19.5);
+        assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(20.0);
+        assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(19.5);
     }
 }
