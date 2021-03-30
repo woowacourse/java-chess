@@ -22,8 +22,8 @@ public enum Direction {
     WWN(-2, -1),
     WWS(-2, 1);
 
-    private static final String SAME_TARGET = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
-    public static final String NOT_MOVABLE_DIRECTION = "이동할 수 없는 방향입니다.";
+    private static final String SAME_TARGET = "[ERROR] 현재 위치와 같은 곳으로 이동할 수 없습니다.";
+    public static final String NOT_MOVABLE_DIRECTION = "[ERROR] 이동할 수 없는 방향입니다.";
 
     private final int xDegree;
     private final int yDegree;

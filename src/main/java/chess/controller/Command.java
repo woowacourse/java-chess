@@ -11,7 +11,7 @@ public enum Command {
     MOVE("move"),
     STATUS("status");
 
-    public static final String INVALID_COMMAND = "올바른 명령어가 아닙니다.";
+    public static final String INVALID_COMMAND = "[ERROR] 올바른 명령어가 아닙니다.";
     private static final int COMMAND_INDEX = 0;
 
     private final String command;

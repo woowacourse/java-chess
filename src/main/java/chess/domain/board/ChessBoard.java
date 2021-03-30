@@ -16,8 +16,8 @@ public class ChessBoard {
 
     private static final int BOARD_SIZE = 8;
     private static final int NUMBER_OF_KINGS = 2;
-    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
-    private static final String SAME_POSITION = "같은 위치로 이동할 수 없습니다.";
+    private static final String NOT_MOVABLE_POSITION = "[ERROR] 이동할 수 없는 위치입니다.";
+    private static final String SAME_POSITION = "[ERROR] 같은 위치로 이동할 수 없습니다.";
 
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
 

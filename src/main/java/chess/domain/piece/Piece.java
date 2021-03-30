@@ -8,7 +8,8 @@ import java.util.List;
 
 public abstract class Piece {
 
-    public static final String CANNOT_MOVE = "이동할 수 없는 방향입니다.";
+    public static final String CANNOT_MOVE = "[ERROR] 이동할 수 없는 방향입니다.";
+
     private final Color color;
     private final MoveStrategy moveStrategy;
     protected Type type;
