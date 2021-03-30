@@ -78,7 +78,6 @@ public abstract class Piece {
 
     public final void validateRoute(final Piece targetPiece, final Lines lines) {
         validateSourcePieceEmpty();
-//        validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
         validateSteps(targetPiece, lines);
     }

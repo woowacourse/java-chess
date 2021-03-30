@@ -1,15 +1,38 @@
 package chess.domain.state;
 
-import chess.domain.grid.Grid;
+import chess.domain.grid.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public final class WhiteTurn extends Playing {
     @Override
-    final GameState move(final Grid grid, final Piece sourcePiece, final Piece targetPiece) {
+    public GameState start() {
+        throw new IllegalArgumentException("게임이 이미 시작하였습니다.");
+    }
+
+    @Override
+    public GameState status() {
+        return new Status();
+    }
+
+    @Override
+    public GameState end() {
+        return new End();
+    }
+
+    @Override
+    public final GameState move(ChessGame game, final Position sourcePosition, final Position targetPosition) {
+        Piece sourcePiece = game.grid().piece(sourcePosition);
+        Piece targetPiece = game.grid().piece(targetPosition);
         validateSourcePieceIsEmpty(sourcePiece);
         validateIfWhite(sourcePiece);
-        grid.move(sourcePiece, targetPiece);
+        if(isKingCaught(targetPiece)){
+            game.winner(sourcePiece.color());
+            return new End();
+        }
+        sourcePiece.validateRoute(targetPiece, game.grid().lines());
+        game.grid().update(sourcePiece, targetPiece);
         return new BlackTurn();
     }
 

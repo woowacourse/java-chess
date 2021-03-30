@@ -10,7 +10,7 @@ import java.util.List;
 public final class NormalGridStrategy implements GridStrategy {
 
     @Override
-    public List<Line> LinesInInitGrid() {
+    public List<Line> linesInInitGrid() {
         List<Line> lineGroup = new ArrayList<>();
         lineGroup.add(Line.general(Row.EIGHTH, Color.BLACK));
         lineGroup.add(Line.pawn(Row.SEVENTH, Color.BLACK));

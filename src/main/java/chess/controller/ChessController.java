@@ -1,86 +1,78 @@
 package chess.controller;
 
+import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.GridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
-import chess.domain.state.*;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ChessController {
     private static final String COMMAND_START = "start";
     private static final String COMMAND_END = "end";
     private static final String COMMAND_MOVE = "move";
     private static final String COMMAND_STATUS = "status";
-
-    private GameState gameState;
-
-    public ChessController() {
-        this.gameState = new Ready();
-    }
+    private static final String WHITE_SPACE_DELIMITER = " ";
 
     public final void run() {
         OutputView.printChessInstruction();
         GridStrategy gridStrategy = new NormalGridStrategy();
         Grid grid = new Grid(gridStrategy);
+        ChessGame game = new ChessGame(grid);
         do {
-            command(grid);
+            command(game);
         }
-        while (!gameState.isFinished());
+        while (!game.isFinished());
     }
 
-    private void command(final Grid grid) {
+    private void command(final ChessGame game) {
         try {
-            runCommand(grid);
+            runCommand(game);
         } catch (IllegalArgumentException error) {
             OutputView.printError(error);
         }
     }
 
-    private void runCommand(final Grid grid) {
+    private void runCommand(final ChessGame game) {
         String command = InputView.command();
         if (command.equals(COMMAND_START)) {
-            startCommand(grid, command);
+            startCommand(game);
             return;
         }
         if (command.equals(COMMAND_END)) {
-            endCommand();
+            endCommand(game);
             return;
         }
         if (command.equals(COMMAND_STATUS)) {
-            statusCommand(grid);
+            statusCommand(game);
             return;
         }
         if (command.startsWith(COMMAND_MOVE)) {
-            moveCommand(grid, command);
+            moveCommand(game, command);
             return;
         }
         throw new IllegalArgumentException("잘못 입력 하셨습니다.");
     }
 
-    private void startCommand(final Grid grid, final String command) {
-        if (gameState instanceof Ready) {
-            OutputView.printGridStatus(grid.lines());
-            gameState = gameState.run(grid, command);
-            return;
-        }
-        throw new IllegalArgumentException("게임이 이미 시작 하였습니다.");
+    private void startCommand(final ChessGame game) {
+        OutputView.printGridStatus(game.grid().lines());
+        game.start();
     }
 
-    private void endCommand() {
-        gameState = new End();
+    private void endCommand(ChessGame game) {
+        game.end();
     }
 
-    private void statusCommand(final Grid grid) {
-        if (gameState instanceof Ready) {
-            throw new IllegalArgumentException("게임을 아직 시작 하지 않았습니다.");
-        }
-        if (gameState instanceof Playing) {
-            gameState = new Status();
-        }
-        double blackScore = grid.score(Color.BLACK);
-        double whiteScore = grid.score(Color.WHITE);
+    private void statusCommand(final ChessGame game) {
+        game.status();
+        double blackScore = game.grid().score(Color.BLACK);
+        double whiteScore = game.grid().score(Color.WHITE);
         OutputView.printScores(Color.BLACK, blackScore);
         OutputView.printScores(Color.WHITE, whiteScore);
         if (blackScore > whiteScore) {
@@ -91,21 +83,17 @@ public class ChessController {
         }
     }
 
-    private void moveCommand(final Grid grid, final String command) {
-        if (!(gameState instanceof Playing)) {
-            throw new IllegalArgumentException("게임을 아직 시작 하지 않았습니다.");
-        }
-        gameState = gameState.run(grid, command);
-        if (!grid.kingSurvived(Color.BLACK)) {
-            OutputView.printWinner(Color.WHITE);
-            gameState = new End();
+    private void moveCommand(final ChessGame game, final String command) {
+        List<String> moveInput = Arrays.asList(command.split(WHITE_SPACE_DELIMITER));
+        Position sourcePosition = new Position(moveInput.get(1));
+        Position targetPosition = new Position(moveInput.get(2));
+        Piece sourcePiece = game.grid().piece(sourcePosition);
+        Piece targetPiece = game.grid().piece(targetPosition);
+        game.move(sourcePiece, targetPiece);
+        if (game.isGameOver()) {
+            OutputView.printWinner(game.getWinner());
             return;
         }
-        if (!grid.kingSurvived(Color.WHITE)) {
-            OutputView.printWinner(Color.BLACK);
-            gameState = new End();
-            return;
-        }
-        OutputView.printGridStatus(grid.lines());
+        OutputView.printGridStatus(game.grid().lines());
     }
 }

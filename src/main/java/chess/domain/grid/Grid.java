@@ -3,7 +3,6 @@ package chess.domain.grid;
 import chess.domain.grid.gridStrategy.GridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -14,7 +13,7 @@ public final class Grid {
     private final Score score;
 
     public Grid(final GridStrategy gridStrategy) {
-        List<Line> lineGroup = gridStrategy.LinesInInitGrid();
+        List<Line> lineGroup = gridStrategy.linesInInitGrid();
         lines = new Lines(lineGroup);
         score = new Score(lines);
     }
@@ -31,26 +30,10 @@ public final class Grid {
         return score.score(color);
     }
 
-    public final void move(final Piece sourcePiece, final Piece targetPiece) {
-        sourcePiece.validateRoute(targetPiece, lines);
-        update(sourcePiece, targetPiece);
-    }
-
-    private void update(final Piece sourcePiece, final Piece targetPiece) {
+    public void update(final Piece sourcePiece, final Piece targetPiece) {
         Position sourcePosition = sourcePiece.position();
         Position targetPosition = targetPiece.position();
         lines.assign(sourcePosition, new Empty(sourcePosition));
         lines.assign(targetPosition, sourcePiece);
-    }
-
-    public final boolean kingSurvived(Color color) {
-        return lines
-                .lines()
-                .stream()
-                .flatMap(line -> line.pieces()
-                        .stream()
-                        .filter(piece -> piece instanceof King && piece.color() == color))
-                .findAny()
-                .isPresent();
     }
 }
