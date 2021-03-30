@@ -8,6 +8,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
@@ -51,6 +52,13 @@ public class WebChessGameController {
         post("/movablePositions", (req, res) -> {
             String startPoint = req.queryParams("clickedSection");
             return chessGame.movablePositionsByStartPoint(startPoint);
+        }, new JsonTransformer());
+
+        post("/move", "application/json", (req, res) -> {
+            String startPoint = req.queryParams("startPoint");
+            String endPoint = req.queryParams("endPoint");
+            chessGame.move(startPoint, endPoint);
+            return true;
         }, new JsonTransformer());
     }
 

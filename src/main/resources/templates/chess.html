@@ -127,6 +127,7 @@
 
     let startPoint = "";
     let endPoint = "";
+    let movablePosition = [];
     let startPointCheck = false;
 
     // 우리 팀 차례의 말을 클릭하면
@@ -150,15 +151,14 @@
             if (startPoint !== "" && endPoint === "") {
                 if (clickedSection === startPoint) {
                     const point = document.getElementById(clickedSection);
-                    point.classList.remove("selected");
-                    removeAllMovablePosition();
+                    removeAllMovablePosition(point);
                     startPoint = "";
+                    movablePosition = [];
                 } else {
-                    endPoint = clickedSection;
-                    // move();
-                    startPoint = "";
-                    endPoint = "";
-                    startPointCheck = false;
+                    if (movablePosition.includes(clickedSection)) {
+                        endPoint = clickedSection;
+                        move();
+                    }
                 }
             }
         });
@@ -175,6 +175,7 @@
                 method: "POST",
                 dataType: "json"
             }).done(function (positions) {
+                movablePosition = positions;
                 showMovablePositions(clickedSection, positions);
                 startPoint = clickedSection;
                 startPointCheck = true;
@@ -194,12 +195,37 @@
         }
     }
 
-    function removeAllMovablePosition() {
+    function removeAllMovablePosition(point) {
+        point.classList.remove("selected");
         const movable = Array.prototype.slice.call(document.querySelectorAll(".movable"));
-
         movable.forEach(function(section){
             section.classList.remove("movable");
             section.removeAttribute("style");
+        });
+    }
+
+    function move() {
+        $.ajax({
+            url: "/move",
+            data: {
+                startPoint : startPoint,
+                endPoint : endPoint
+            },
+            method: "POST",
+            dataType: "json"
+        }).done(function (success) {
+            const start = document.getElementById(startPoint);
+            const end = document.getElementById(endPoint);
+            const image = start.children[0];
+            if (end.hasChildNodes()) {
+                end.removeChild(end.children[0]);
+            }
+            end.appendChild(image);
+            removeAllMovablePosition(start);
+            startPoint = "";
+            endPoint = "";
+            startPointCheck = false;
+            movablePosition = [];
         });
     }
 </script>
