@@ -25,5 +25,13 @@ function updateResult(resultDTO) {
 
 initiate();
 document.getElementById('restart').addEventListener('click', function (event) {
-    window.location = '/';
+    const xmlHttp = new XMLHttpRequest();
+    const url = 'http://localhost:8080/chessboard/restart';
+    xmlHttp.onreadystatechange = function () {
+        if (isValidHttpResponse(xmlHttp)) {
+            window.location = JSON.parse(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open('GET', url, true);
+    xmlHttp.send();
 });

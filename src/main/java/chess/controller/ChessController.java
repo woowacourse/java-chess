@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.dto.BoardDTO;
 import chess.dto.RequestDTO;
+import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 import chess.repository.ConnectionManager;
 import chess.service.ChessService;
@@ -34,14 +35,15 @@ public class ChessController {
         return GSON.toJsonTree(boardDTO);
     }
 
-//
-//    public void showResult() {
-//        get("/chessboard/result/show", (request, response) -> {
-//            response.type("application/json");
-//            Result result = chessBoard.calculateScores();
-//            TeamType winnerTeamType = chessBoard.findWinnerTeam();
-//            ResultDTO resultDTO = ResultDTO.from(result, winnerTeamType);
-//            return new Gson().toJsonTree(resultDTO);
-//        });
-//    }
+    public static JsonElement showResult(Request request, Response response) throws SQLException {
+        response.type(RESPONSE_JSON);
+        ResultDTO resultDTO = chessService.calculateResult();
+        return GSON.toJsonTree(resultDTO);
+    }
+
+    public static JsonElement restart(Request request, Response response) throws SQLException {
+        response.type(RESPONSE_JSON);
+        chessService.resetDefault();
+        return GSON.toJsonTree("/");
+    }
 }

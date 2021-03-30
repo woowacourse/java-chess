@@ -5,8 +5,10 @@ import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
 import chess.domain.history.History;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.dto.BoardDTO;
 import chess.dto.RequestDTO;
+import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 
 import java.sql.SQLException;
@@ -52,5 +54,23 @@ public class ChessService {
         TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
         chessBoard.move(current, destination, teamType);
         return BoardDTO.from(chessBoard, teamType.findOppositeTeam());
+    }
+
+    public ResultDTO calculateResult() throws SQLException {
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
+        List<History> histories = chessRepository.findAllHistories();
+        histories.forEach(t -> {
+            Coordinate source = Coordinate.from(t.getSource());
+            Coordinate destination = Coordinate.from(t.getDestination());
+            TeamType teamType = TeamType.valueOf(t.getTeam());
+            chessBoard.move(source, destination, teamType);
+        });
+        Result result = chessBoard.calculateScores();
+        TeamType winnerTeamType = chessBoard.findWinnerTeam();
+        return ResultDTO.from(result, winnerTeamType);
+    }
+
+    public void resetDefault() throws SQLException {
+        chessRepository.deleteAllHistories();
     }
 }

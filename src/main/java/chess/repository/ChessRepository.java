@@ -61,4 +61,10 @@ public class ChessRepository {
         preparedStatement.setString(1, String.valueOf(id));
         preparedStatement.executeUpdate();
     }
+
+    public void deleteAllHistories() throws SQLException {
+        String query = "TRUNCATE history";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
+    }
 }
