@@ -3,7 +3,9 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -42,5 +44,17 @@ public class ChessWebController {
         }
         Map<Position, Piece> pieces = board.pieces();
         return PositionToStringMap(pieces);
+    }
+
+    public List<String> movablePositions(String source) {
+        List<String> positions = new ArrayList<>();
+        try {
+            for (Position position : board.movablePositions(source)) {
+                positions.add(position.positionToString());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return positions;
     }
 }

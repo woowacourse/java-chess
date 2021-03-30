@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 import chess.controller.ChessWebController;
 import com.google.gson.Gson;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -29,10 +30,19 @@ public class WebUIChessApplication {
             Map<String, String> boardInfo = webController.start();
             return gson.toJson(boardInfo);
         });
+
         put("/move", (request, response) -> {
             Map<String, String> requestBody = gson.fromJson(request.body(), HashMap.class) ;
             Map<String, String> boardInfo = webController.movedPiece(requestBody.get("source"), requestBody.get("target"));
             return gson.toJson(boardInfo);
+        });
+
+        get("/movablePositions", (request, response) -> {
+            String source = request.queryParams("source");
+            System.out.println("이동위치!");
+            System.out.println(source);
+            List<String> movablePositions = webController.movablePositions(source);
+            return gson.toJson(movablePositions);
         });
     }
 

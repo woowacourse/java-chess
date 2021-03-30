@@ -16,6 +16,7 @@ const SYMBOL_TO_IMAGE_PATH = {
     "K": DEFAULT_PATH + "blackKing.png"
 };
 let boardInfo = {};
+let movablePosition = {};
 let isClicked = false;
 let source = null;
 
@@ -38,7 +39,7 @@ function boardInit() {
     .then(imageSetting)
     .catch((error) => {
         console.log(error);
-    })
+    });
 }
 
 function imageSetting(responseData) {
@@ -76,10 +77,12 @@ function divClickEvent(event) {
             alert("상대방의 턴입니다.");
             return;
         }
+        getMovablePositions(targetPosition);
         isClicked = true;
         source = event.target;
         source.style.backgroundColor = "yellow";
     } else {
+        movablePositionSetting(false);
         if (source === event.target) {
             isClicked = false;
             source.style.backgroundColor = "";
@@ -110,7 +113,7 @@ function movedPieces(source, target) {
     .then(imageSetting)
     .catch((error) => {
         console.log(error);
-    })
+    });
 }
 
 function getOption(methodType, bodyData) {
@@ -126,5 +129,33 @@ function getOption(methodType, bodyData) {
 function restartAsk() {
     if (confirm("게임이 끝났습니다. 시작하겠습니까?") === true) {
         boardInit();
+    }
+}
+
+function getMovablePositions(sourcePosition) {
+    fetch(API_URL + "movablePositions?source=" + sourcePosition)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(" ");
+        }
+        return response.json();
+    })
+    .then((responseData) => {
+        movablePosition = responseData;
+        movablePositionSetting(true);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+function movablePositionSetting(isDisplay) {
+    for (id of movablePosition) {
+        const item = document.getElementById(id);
+        if (isDisplay === true) {
+            item.style.backgroundColor = "cornflowerblue";
+        } else {
+            item.style.backgroundColor = "";
+        }
     }
 }
