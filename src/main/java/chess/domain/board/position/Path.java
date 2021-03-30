@@ -34,7 +34,7 @@ public class Path {
         for (int i = 0; i < pathSize && isMoveAblePath(source, path.get(i), board, isPrePositionAbleToMove); i++) {
             Position target = path.get(i);
             filterPaths.add(target);
-            isPrePositionAbleToMove = board.pickPiece(target).isEmpty();
+            isPrePositionAbleToMove = board.pickPiece(target).isEmptyPiece();
         }
         return filterPaths;
     }

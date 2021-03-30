@@ -58,7 +58,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
