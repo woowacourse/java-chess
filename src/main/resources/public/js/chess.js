@@ -1,11 +1,48 @@
 addClickListener();
+// init();
+
+unicodeMap = {
+    "R": "♜",
+    "B": "♝",
+    "Q": "♛",
+    "N": "♞",
+    "P": "♟",
+    "K": "♚",
+    "r": "♖",
+    "p": "♙",
+    "b": "♗",
+    "q": "♕",
+    "n": "♘",
+    "k": "♔",
+}
 
 function addClickListener(){
     document.getElementById("chessboard").addEventListener("click", selectPieces)
+    document.getElementById("startButton").addEventListener("click", start)
+}
+
+function init(){
+    fetch('http://localhost:4567/pieces')
+        .then(response => response.json())
+        .then(function (pieces){
+            for(let position in pieces){
+                document.getElementById(position).innerText = unicodeMap[pieces[position]]
+            }
+        });
 }
 
 function start(){
-    postData("/start")
+    let response = postData("/start")
+    response.then(function (result){
+        // if(result == 200){
+        //     alert("게임을 시작합니다.")
+        // }
+        // if(result == 400){
+        //     alert("이미 시작 하였습니다.")
+        // }
+        init();
+    })
+
 }
 
 function move(source, target) {
@@ -55,3 +92,5 @@ async function postData(url = '', data = {}) {
     })
     return response.json();
 }
+
+

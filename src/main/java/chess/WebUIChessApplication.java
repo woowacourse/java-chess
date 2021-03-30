@@ -27,9 +27,12 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        get("/pieces", (req,res)->{
+           Map<String, String> pieceMap = grid.pieceMap();
+           return new Gson().toJson(pieceMap);
+        });
+
         post("/move", (req, res) -> {
-            System.out.println("===================");
-            System.out.println("req" + req.body());
             PositionDTO positionDTO = GSON.fromJson(req.body(), PositionDTO.class);
             String sourcePosition = positionDTO.getSourcePosition();
             String targetPosition = positionDTO.getTargetPosition();
@@ -44,8 +47,14 @@ public class WebUIChessApplication {
         });
 
         post("/start", (req, res) -> {
-            chessGame.start();
-            return render(null, "index.html");
+//            try{
+                chessGame.start();
+                return null;
+//                return 200;
+//            }
+//            catch (IllegalArgumentException error){
+//                return 400;
+//            }
         });
     }
 

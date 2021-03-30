@@ -48,6 +48,10 @@ public final class Position {
         return Column.isValid(nextColumn) && Row.isValid(nextRow);
     }
 
+    public String positionToString(){
+        return String.valueOf(this.column.getReference()) + String.valueOf(this.row.getReference());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
