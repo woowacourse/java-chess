@@ -21,6 +21,7 @@ public class ChessBoard {
 	private static final double PAWN_PUNISHMENT_RATIO = 0.5;
 	private static final int NUMBER_OF_KINGS = 2;
 	private static final int MINIMUM_PUNISHABLE_PAWN_COUNT = 2;
+	public static final int KING_DEATH_SCORE = -1;
 
 	private final Map<Position, Piece> board = new LinkedHashMap<>();
 
@@ -103,10 +104,20 @@ public class ChessBoard {
 	}
 
 	public double getScore(Color color) {
+		if (isKingDead(color)) {
+			return KING_DEATH_SCORE;
+		}
 		double score = calculateScoreBeforePunishment(color);
 		Map<Column, Long> pawnCountPerColumn = calculatePawnCount(color);
 		double punishmentScore = calculatePunishmentScore(pawnCountPerColumn);
 		return score - punishmentScore;
+	}
+
+	private boolean isKingDead(Color color) {
+		return board.values()
+				.stream()
+				.filter(piece -> piece.isSameColor(color))
+				.noneMatch(Piece::isKing);
 	}
 
 	private double calculateScoreBeforePunishment(Color color) {

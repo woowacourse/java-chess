@@ -82,8 +82,8 @@ public class ChessGame {
 	}
 
 	public Result result() {
-		double blackScore = chessBoard.getScore(Color.WHITE);
-		double whiteScore = chessBoard.getScore(Color.BLACK);
+		double blackScore = chessBoard.getScore(Color.BLACK);
+		double whiteScore = chessBoard.getScore(Color.WHITE);
 
 		return new Result(blackScore, whiteScore);
 	}

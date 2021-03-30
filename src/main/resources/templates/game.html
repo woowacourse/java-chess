@@ -89,6 +89,7 @@
         <td id="h1" class="chessboard"><img class="chessboard" src="../images/{{{h1.color}}}{{{h1.type}}}.png"/></td>
     </tr>
 </table>
+<div id="result">{{result.blackOutcome}}{{result.whiteOutcome}}</div>
 <label class="move"><b>움직일 말의 위치</b></label>
 <input id="move" class="move" type="text" placeholder="move source target" autofocus><br/><br/>
 <form method="post">
@@ -96,7 +97,7 @@
     <input type="text" placeholder="저장할 파일명" name="save">
     <input class="save" type="submit" value="저장"/><br/><br/>
 </form>
-<input class="exit" type="button" onclick="location.href='/';" value="종료"/><br/><br/>
+<input class="exit" type="button" onclick="location.href='/menu';" value="종료"/><br/><br/>
 </body>
 <script src="../js/game.js"></script>
 </html>

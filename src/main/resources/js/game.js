@@ -5,7 +5,8 @@ $move.addEventListener('keyup', movePieceRequest);
 function movePieceRequest(event) {
     const moveCommand = event.target.value;
     if (event.key === "Enter" && moveCommand !== "") {
-        const trimmedMoveCommand = event.target.value
+        event.target.value = "";
+        const trimmedMoveCommand = moveCommand
             .replace(/\s+/g, ' ')
             .trim()
         const http = new XMLHttpRequest();
@@ -26,7 +27,6 @@ function movePieceRequest(event) {
             }
         }
         http.send(trimmedMoveCommand);
-        event.target.value = "";
     }
 }
 
@@ -41,4 +41,10 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
     document.querySelector("#" + sourcePosition).innerHTML = source.innerHTML
     document.querySelector("#" + targetPosition).innerHTML = target.innerHTML
     document.querySelector("h1").innerHTML = turn.innerHTML
+
+    const result = xmlDoc.querySelector("#result").textContent
+    if (result !== "") {
+        alert("black: " + result[0] + " / white : " + result[1])
+        window.location.replace("/menu")
+    }
 }

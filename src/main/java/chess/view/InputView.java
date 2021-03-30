@@ -11,7 +11,7 @@ import static chess.domain.gamestate.Option.COMMAND_INDEX;
 
 public class InputView {
 	private static final String INVALID_OPTION_ERROR = "옵션을 정확하게 입력해주세요.";
-	private static final String SPACE = "\\s";
+	public static final String SPACE = "\\s";
 
 	private static final Scanner SCANNER = new Scanner(System.in);
 

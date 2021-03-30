@@ -18,6 +18,9 @@ public class Running implements State {
 			return;
 		}
 		chessGame.movePiece(input);
+		if (!chessGame.isOngoing()) {
+			chessGame.changeState(new Status());
+		}
 	}
 
 	@Override
