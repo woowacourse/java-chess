@@ -22,7 +22,7 @@ public enum Row {
         this.value = value;
     }
 
-    public Row moveBy(int value) {
+    public Row move(int value) {
         if ((this.ordinal() + value) < 0 || this.ordinal() + value >= rows.length) {
             throw new IllegalArgumentException("범위를 넘어가는 move 입니다");
         }
@@ -48,5 +48,10 @@ public enum Row {
 
     public int unitDirection(Row to) {
         return diff(to) / Math.abs(diff(to));
+    }
+
+    public boolean canMove(int value) {
+        int movedIndex = this.ordinal() + value;
+        return movedIndex >= 0 && movedIndex < rows.length;
     }
 }

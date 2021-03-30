@@ -50,18 +50,19 @@ public class Position {
     public List<Position> positionsOfDirection(int columnValue, int rowValue) {
         List<Position> positions = new ArrayList<>();
         Position temp = this;
-        try {
-            while(true) {
-                temp = temp.moveBy(columnValue, rowValue);
-                positions.add(temp);
-            }
-        } catch (IllegalArgumentException e) {
-            return positions;
+        while (temp.canMove(columnValue, rowValue)) {
+            temp = temp.move(columnValue, rowValue);
+            positions.add(temp);
         }
+        return positions;
     }
 
-    public Position moveBy(int columnValue, int rowValue) {
-        return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
+    private boolean canMove(int columnValue, int rowValue) {
+        return column.canMove(columnValue) && row.canMove(rowValue);
+    }
+
+    public Position move(int columnValue, int rowValue) {
+        return Position.of(column.move(columnValue), row.move(rowValue));
     }
 
     public boolean isOrthogonal(Position to) {
@@ -115,7 +116,7 @@ public class Position {
         int columnDirection = column.unitDirection(to.column);
         Position temp = Position.of(column, row);
         while (!temp.equals(to)) {
-            temp = temp.moveBy(columnDirection, rowDirection);
+            temp = temp.move(columnDirection, rowDirection);
             betweenPosition.add(temp);
         }
         return betweenPosition;

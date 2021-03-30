@@ -25,14 +25,14 @@ class RowTest {
     @MethodSource("rows")
     void moveBy(int value, Row expected) {
         Row row = Row.SIX;
-        assertThat(row.moveBy(value)).isEqualTo(expected);
+        assertThat(row.move(value)).isEqualTo(expected);
     }
 
     @Test
     void moveByException() {
         Row row = Row.SIX;
-        assertThatThrownBy(() -> row.moveBy(3)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> row.moveBy(-6)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> row.move(3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> row.move(-6)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

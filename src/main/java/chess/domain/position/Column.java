@@ -21,7 +21,7 @@ public enum Column {
         this.value = value;
     }
 
-    public Column moveBy(int value) {
+    public Column move(int value) {
         if ((this.ordinal() + value) < 0 || this.ordinal() + value >= columns.length) {
             throw new IllegalArgumentException("범위를 넘어가는 move 입니다");
         }
@@ -47,5 +47,10 @@ public enum Column {
 
     public int unitDirection(Column to) {
         return diff(to) / Math.abs(diff(to));
+    }
+
+    public boolean canMove(int value) {
+        int movedIndex = this.ordinal() + value;
+        return movedIndex >= 0 && movedIndex < columns.length;
     }
 }

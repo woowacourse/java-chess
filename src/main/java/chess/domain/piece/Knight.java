@@ -49,14 +49,14 @@ public class Knight extends Division {
 
     public List<Position> movablePosition(Position position) {
         List<Position> positions = new ArrayList<>();
-        positions.add(position.moveBy(2,1));
-        positions.add(position.moveBy(2,-1));
-        positions.add(position.moveBy(1,2));
-        positions.add(position.moveBy(1,-2));
-        positions.add(position.moveBy(-1,2));
-        positions.add(position.moveBy(-1,-2));
-        positions.add(position.moveBy(-2,1));
-        positions.add(position.moveBy(-2,-1));
+        positions.add(position.move(2,1));
+        positions.add(position.move(2,-1));
+        positions.add(position.move(1,2));
+        positions.add(position.move(1,-2));
+        positions.add(position.move(-1,2));
+        positions.add(position.move(-1,-2));
+        positions.add(position.move(-2,1));
+        positions.add(position.move(-2,-1));
 
         return positions;
     }
