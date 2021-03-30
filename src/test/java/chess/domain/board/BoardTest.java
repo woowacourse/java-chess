@@ -20,7 +20,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         BoardFactory boardFactory = new BoardFactory();
-        board = boardFactory.getBoard();
+        board = boardFactory.createBoard();
     }
 
     @Test
