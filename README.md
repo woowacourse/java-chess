@@ -65,3 +65,15 @@
 <br>
 
 ### 서버 기능 명세
+- [ ] GET(`/start`): 새로운 게임 시작 요청
+  - ResponseDto: gamestatus, turn, pieces, score
+- [ ] GET('/end'): 게임 종료 및 결과 출력
+  - ResponseDto: gamestatus, pieces, score, result
+- [ ] GET('/move?source=xx&target=xx'): 기물 이동 및 제거
+  - ResponseDto: gamestatus, turn, pieces, score
+  
+> * gamestatus: 현재 게임 상태
+> * turn: 현재 턴
+> * pieces: 전체 기물의 정보 (location, team, type)
+> * score: 현재 점수 (black, white)
+> * result: 게임 결과 (승무패)
