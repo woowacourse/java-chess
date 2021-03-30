@@ -38,9 +38,9 @@ body {
 }
 
 table.chessboard {
-    margin: 80px auto;
+    margin: 40px auto;
     background: #999;
-    border: 25px solid #333;
+    border: 10px solid #333;
     border-collapse: collapse;
 }
 td.chessboard {
@@ -48,6 +48,7 @@ td.chessboard {
     border: 2px solid #333;
     text-align: center;
 }
+
 tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
 tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
     background: white;

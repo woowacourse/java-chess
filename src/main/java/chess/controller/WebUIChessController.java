@@ -5,7 +5,6 @@ import chess.domain.feature.Color;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
 import chess.domain.gamestate.Ready;
-import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.Collections;
@@ -19,22 +18,11 @@ public class WebUIChessController {
         return chessGame;
     }
 
-    public void playGame(ChessGame chessGame) {
-        while (chessGame.isOngoing()) {
-            play(chessGame);
-        }
-    }
-
-    public void play(ChessGame chessGame) {
+    public void movePiece(ChessGame chessGame, List<String> input) {
         try {
-            List<String> input = InputView.takeInput();
             chessGame.play(input);
-            if (chessGame.isOngoing()) {
-                OutputView.printChessBoard(chessGame.getChessBoard());
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            play(chessGame);
         }
     }
 
