@@ -1,11 +1,13 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Color {
     WHITE("백"),
     BLACK("흑"),
     NOTHING("NOTHING");
 
-    private String name;
+    private final String name;
 
     Color(String name) {
         this.name = name;

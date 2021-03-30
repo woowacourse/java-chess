@@ -1,8 +1,8 @@
 package chess.domain;
 
 public class RequestDto {
-    private String source;
-    private String target;
+    private final String source;
+    private final String target;
 
     public RequestDto(String sourcePoint, String targetPoint) {
         this.source = sourcePoint;

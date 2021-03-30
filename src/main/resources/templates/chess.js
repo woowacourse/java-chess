@@ -1,5 +1,9 @@
 let $squares = document.querySelector("table");
+let $blackScore = document.querySelector(".black-score");
+let $whiteScore = document.querySelector(".white-score");
 $squares.addEventListener('click', getPoint);
+$blackScore.addEventListener('click', toggleScore);
+$whiteScore.addEventListener('click', toggleScore);
 
 function hi() {
     for (let j = 1; j<= 8; j++) {
@@ -49,16 +53,26 @@ async function move(sourcePoint, targetPoint) {
             'Content-Type': 'application/json'
         }
     }).then(res => res.json());
-    console.log(response);
 
+    if(response === 333) {
+        if(confirm('킹이 죽어 게임이 끝났습니다.\n 다시 게임하시겠습니까?')){
+            await fetch('/result')
+            .then(res => res.json());
+            location.replace("/result");
+        } else {
+            alert('~~승');
+        }
+    }
     if(response === 200) {
-        alert('성공');
         movePiece(sourcePoint, targetPoint);
     }
     if (response === 401) {
-        alert('실패');
+        alert('불가능한 이동입니다.');
         toggleClicked(sourcePoint, targetPoint);
     }
+}
+
+function showResult() {
 }
 
 function getPoint(event) {
@@ -72,10 +86,7 @@ function getPoint(event) {
         if (list[i].classList.contains("clicked")) {
             sourcePoint = list[i].id;
             targetPoint = clickedId;
-                document.getElementById(targetPoint).classList.toggle("clicked");
-
-            console.log(sourcePoint, targetPoint);
-
+            document.getElementById(targetPoint).classList.toggle("clicked");
             move(sourcePoint, targetPoint);
             return;
         }
@@ -83,6 +94,35 @@ function getPoint(event) {
     document.getElementById(clickedId).classList.toggle("clicked");
 }
 
+function renderScore(color, score) {
+    let scoreDiv = `${score}`;
+    if(color === "BLACK") {
+        $blackScore.innerHTML = scoreDiv;
+    } else {
+        $whiteScore.innerHTML = scoreDiv;
+    }
+}
 
+async function toggleScore() {
+    let color = event.target;
+    color.classList.toggle("selected");
+    if(color.classList.contains("selected")){
+        score(color);
+    } else {
+        color.innerText = "점수 보기";
+    }
+}
+
+async function score(color) {
+    let colorName = color.id;
+    const score = await fetch('/score', {
+        method: 'POST',
+        body: colorName,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json());
+    renderScore(colorName, score);
+}
 
 hi();
