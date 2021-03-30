@@ -1,3 +1,7 @@
+body {
+    margin-left: 300px;
+}
+
 td {
     width: 60px;
     height: 75px;
@@ -18,8 +22,4 @@ img {
 
 .clickedTile {
     background-color: #F5D042;
-}
-
-.chess-board {
-
 }
