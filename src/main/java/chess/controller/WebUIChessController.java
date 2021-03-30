@@ -11,6 +11,7 @@ import chess.domain.user.User;
 import chess.domain.user.UserDAO;
 import chess.view.OutputView;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +23,24 @@ public class WebUIChessController {
     private final Gson gson = new Gson();
     private ChessGame chessGame;
 
-    private static Map<String, Object> getChessBoardModelToRender(ChessGame chessGame) {
+    public Map<String, Object> chessBoard() {
+        if (chessGame == null) {
+            initializeChessBoard();
+        }
+        return getChessBoardModelToRender(chessGame);
+    }
+
+    public Map<String, Object> movePiece(List<String> input) {
+        try {
+            chessGame.play(input);
+            return getChessBoardModelToRender(chessGame);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private Map<String, Object> getChessBoardModelToRender(ChessGame chessGame) {
         Map<String, Object> model = new HashMap<>();
         Map<Position, Piece> chessBoard = chessGame.getChessBoardAsMap();
         Color turn = chessGame.getTurn();
@@ -38,32 +56,41 @@ public class WebUIChessController {
         }
         Result result = chessGame.result();
         model.put("result", result);
+        initializeChessBoard();
         return model;
     }
 
-    public Map<String, Object> initializeChessBoard() {
+    private void initializeChessBoard() {
         ChessBoard chessBoard = new ChessBoard();
         chessGame = new ChessGame(chessBoard, Color.WHITE, new Ready());
         chessGame.start(Collections.singletonList("start"));
-        return getChessBoardModelToRender(chessGame);
-    }
-
-    public Map<String, Object> movePiece(List<String> input) {
-        try {
-            chessGame.play(input);
-            return getChessBoardModelToRender(chessGame);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
     }
 
     public void gameResult() {
         try {
             Result result = chessGame.calculateResult();
             OutputView.printResult(result);
-            initializeChessBoard();
+            chessBoard();
         } catch (UnsupportedOperationException ignored) {
+        }
+    }
+
+    public boolean verifyUser(String request) {
+        try {
+            JsonObject userJson = gson.fromJson(request, JsonObject.class);
+            String id = userJson.get("userId").getAsString();
+            String pwd = userJson.get("password").getAsString();
+
+            User user = new User(id, pwd);
+            User userToCompare = userDAO.findByUserId(id);
+            if (!user.equals(userToCompare)) {
+                throw new IllegalArgumentException();
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 

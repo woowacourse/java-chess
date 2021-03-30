@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.WebUIChessController;
-import chess.domain.user.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -39,23 +38,21 @@ public class WebUIChessApplication {
         });
 
         post("/menu", (req, res) -> {
-//            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
-            // 검증
-            Map<String, Object> model = new HashMap<>();
-//            model.put("user", user);
-            return render(model, "menu.html");
+            boolean isVerifiedUser = webUIChessController.verifyUser(req.body());
+            if (!isVerifiedUser) {
+                res.status(400);
+            }
+            return isVerifiedUser;
         });
 
         get("/menu", (req, res) -> {
-//            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
-            // 검증
+            // cookie session
             Map<String, Object> model = new HashMap<>();
-//            model.put("user", user);
             return render(model, "menu.html");
         });
 
         get("/game", (req, res) -> {
-            Map<String, Object> model = webUIChessController.initializeChessBoard();
+            Map<String, Object> model = webUIChessController.chessBoard();
             return render(model, "game.html");
         });
 
