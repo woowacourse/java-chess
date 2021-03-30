@@ -1,4 +1,4 @@
-package chess.util;
+package chess.domain.result;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
@@ -8,15 +8,23 @@ import chess.domain.position.Row;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RenderingUtils {
+public final class TurnResult implements Result {
 
     private static final String BLANK = " ";
     private static final String COLUMN_INFO = "\n  a b c d e f g h\n";
 
-    private RenderingUtils() {
+    private final Board board;
+
+    public TurnResult(final Board board) {
+        this.board = board;
     }
 
-    public static String renderBoard(Board board) {
+    @Override
+    public String visualAsString() {
+        return renderBoard(board);
+    }
+
+    private String renderBoard(final Board board) {
         final String visualBoard = Stream.of(Row.values())
                 .map(index -> index.value() + BLANK + renderRow(board, index) + index.value())
                 .collect(Collectors.joining(System.lineSeparator()))
@@ -24,7 +32,7 @@ public class RenderingUtils {
         return COLUMN_INFO + visualBoard + COLUMN_INFO;
     }
 
-    private static String renderRow(Board board, Row row) {
+    private String renderRow(final Board board, final Row row) {
         return Stream.of(Column.values())
                 .map(column -> Position.of(column, row))
                 .map(position -> renderPosition(board.pieceAt(position)))
@@ -32,7 +40,7 @@ public class RenderingUtils {
                 ;
     }
 
-    private static String renderPosition(Piece piece) {
+    private String renderPosition(final Piece piece) {
         return piece.getName() + BLANK;
     }
 }

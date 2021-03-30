@@ -2,7 +2,8 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
-import chess.domain.game.Result;
+import chess.domain.result.EndResult;
+import chess.domain.result.Result;
 
 public final class EndState extends PlayingState {
 
@@ -16,14 +17,13 @@ public final class EndState extends PlayingState {
     }
 
     @Override
-    public Result statusResult() {
-        // end game needs to say something
-        return null;
+    public Result turnResult() {
+        return new EndResult(currentBoard());
     }
 
     @Override
-    public Result scoreResult() {
-        return null;
+    public Result statusResult() {
+        throw new IllegalArgumentException("게임이 종료된 후에는 점수를 조회할 수 없습니다.");
     }
 
     @Override

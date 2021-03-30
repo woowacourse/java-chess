@@ -30,10 +30,12 @@ public final class Board {
         return pathsOf(sourcePosition).contains(targetPosition);
     }
 
-    public List<Piece> remainingPieces() {
+    public List<Piece> remainingSpecialPieces(final Color color) {
         return coordinates.values()
                 .stream()
                 .filter(piece -> !piece.isEmpty())
+                .filter(piece -> !piece.isPawn())
+                .filter(piece -> piece.isColor(color))
                 .collect(Collectors.toList())
                 ;
     }
@@ -48,6 +50,14 @@ public final class Board {
                 .filter(Piece::isKing)
                 .count()
                 ;
+    }
+
+    public Piece remainingKing() {
+        return coordinates.values()
+                .stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("킹이 없습니다."));
     }
 
     public int pawnCount(final Column column, final Color color) {

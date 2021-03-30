@@ -2,7 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
-import chess.domain.game.Result;
+import chess.domain.result.Result;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
@@ -34,12 +34,10 @@ public final class InitialState implements GameState {
 
     @Override
     public GameState execute(final CommandAsString command) {
-        System.out.println("launched execute from initial state");
         if (command.isEnd()) {
             return new EndState(initiateBoard());
         }
         if (command.isStart()) {
-            System.out.println("launched start from initial state");
             return new WhiteTurnState(initiateBoard());
         }
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
@@ -60,12 +58,12 @@ public final class InitialState implements GameState {
 
 
     @Override
-    public Result statusResult() {
+    public Result turnResult() {
         throw new IllegalArgumentException("게임이 시작하기 전에는 게임 상황을 볼 수 없습니다.");
     }
 
     @Override
-    public Result scoreResult() {
+    public Result statusResult() {
         throw new IllegalArgumentException("게임이 시작하기 전에는 게임 상황을 볼 수 없습니다.");
     }
 
