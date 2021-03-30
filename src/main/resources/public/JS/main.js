@@ -13,6 +13,7 @@ function createChessBoard() {
     ]
 
     makeTable(pieces);
+    addEvent();
 }
 
 function makeTable(pieces) {
@@ -29,6 +30,7 @@ function makeTable(pieces) {
             if (pieceName !== ".") {
                 const piece = document.createElement("img");
                 piece.src = "images/" + pieceName + ".png";
+                piece.id = newTd.id;
                 newTd.appendChild(piece);
             }
             if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
@@ -37,8 +39,82 @@ function makeTable(pieces) {
             else {
                 newTd.className = "blackTile";
             }
-                table.appendChild(newTd);
+            table.appendChild(newTd);
         }
         table.appendChild(newTr);
+    }
+}
+
+function addEvent() {
+    const table = document.getElementById("chess-board");
+    table.addEventListener("click", selectTile);
+}
+
+function selectTile(event) {
+    const clickPiece = event.target.closest("td");
+    const clickedPiece = getClickedPiece();
+    if(clickedPiece) {
+        clickedPiece.classList.remove("clickedTile");
+        clickedPiece.classList.toggle("clicked");
+        console.log(clickedPiece.id + " to " + clickPiece.id);
+        move(clickedPiece.id, clickPiece.id);
+    }else {
+        clickPiece.classList.toggle("clicked");
+        clickPiece.classList.add("clickedTile");
+    }
+}
+
+function getClickedPiece() {
+    const pieces = document.getElementsByTagName("td");
+    for (let i = 0; i < pieces.length; i++) {
+        if(pieces[i].classList.contains("clicked")) {
+            return pieces[i];
+        }
+    }
+    return null;
+}
+
+async function move(from, to) {
+    data = {
+        from: from,
+        to: to
+    }
+    const response = await fetch('/move', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json());
+
+    console.log(response);
+    if(response === 200) {
+        const piece = document.getElementById(from).src;
+        console.log(piece);
+        changeImage(from, to);
+        changeTurn();
+    }
+    else if(response === 400) {
+        alert("이상하게 움직이지마!");
+    }
+}
+
+function changeImage(sourcePosition, targetPosition) {
+    const source = document.getElementById(sourcePosition);
+    const target = document.getElementById(targetPosition);
+    const piece = source.getElementsByTagName("img")[0];
+    if (target.getElementsByTagName("img")[0]) {
+        target.getElementsByTagName("img")[0].remove();
+    }
+    target.appendChild(piece);
+}
+
+function changeTurn() {
+    const currentTurn = document.querySelector('.turn');
+    if(currentTurn.textContent === "White Turn") {
+        currentTurn.textContent = "Black Turn";
+    }
+    else {
+        currentTurn.textContent = "White Turn";
     }
 }
