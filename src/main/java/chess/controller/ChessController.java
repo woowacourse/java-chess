@@ -24,7 +24,7 @@ public class ChessController {
 
     public static JsonElement updateChessBoard(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        BoardDTO boardDTO = chessService.get();
+        BoardDTO boardDTO = chessService.findLatestBoard();
         return GSON.toJsonTree(boardDTO);
     }
 

@@ -3,7 +3,7 @@ package chess.service;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
-import chess.domain.history.History;
+import chess.domain.history.Histories;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 import chess.dto.BoardDTO;
@@ -12,7 +12,6 @@ import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class ChessService {
 
@@ -22,49 +21,50 @@ public class ChessService {
         this.chessRepository = chessRepository;
     }
 
-    public BoardDTO get() throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
-        List<History> histories = chessRepository.findAllHistories();
-
-        histories.forEach(t -> {
-            Coordinate source = Coordinate.from(t.getSource());
-            Coordinate destination = Coordinate.from(t.getDestination());
-            TeamType teamType = TeamType.valueOf(t.getTeam());
-            chessBoard.move(source, destination, teamType);
-        });
+    public BoardDTO findLatestBoard() throws SQLException {
+        ChessBoard chessBoard = generateDefaultChessBoard();
+        Histories histories = new Histories(chessRepository.findAllHistories());
+        histories.restoreLatestChessBoard(chessBoard);
         if (chessBoard.isKingCheckmate() || histories.isEmpty()) {
-            return BoardDTO.from(new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard()), TeamType.WHITE);
+            return BoardDTO.from(generateDefaultChessBoard(), TeamType.WHITE);
         }
-        String beforeTurnTeam = histories.get(histories.size() - 1).getTeam();
-        return BoardDTO.from(chessBoard, TeamType.valueOf(beforeTurnTeam).findOppositeTeam());
+        TeamType nextTeamType = histories.findNextTeamType();
+        return BoardDTO.from(chessBoard, nextTeamType);
+    }
+
+    private ChessBoard generateDefaultChessBoard() {
+        return new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
     }
 
     public BoardDTO move(RequestDTO requestDTO) throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
-        List<History> histories = chessRepository.findAllHistories();
-        histories.forEach(t -> {
-            Coordinate source = Coordinate.from(t.getSource());
-            Coordinate destination = Coordinate.from(t.getDestination());
-            TeamType teamType = TeamType.valueOf(t.getTeam());
-            chessBoard.move(source, destination, teamType);
-        });
-        chessRepository.insertHistory(requestDTO.getCurrent(), requestDTO.getDestination(), requestDTO.getTeamType());
+        ChessBoard chessBoard = generateDefaultChessBoard();
+        Histories histories = new Histories(chessRepository.findAllHistories());
+        histories.restoreLatestChessBoard(chessBoard);
+        moveChessBoard(chessBoard, requestDTO);
+        TeamType nextTeamType = TeamType.valueOf(requestDTO.getTeamType())
+                .findOppositeTeam();
+        updateHistory(requestDTO);
+        return BoardDTO.from(chessBoard, nextTeamType);
+    }
+
+    private void updateHistory(RequestDTO requestDTO) throws SQLException {
+        String current = requestDTO.getCurrent();
+        String destination = requestDTO.getDestination();
+        String teamType = requestDTO.getTeamType();
+        chessRepository.insertHistory(current, destination, teamType);
+    }
+
+    private void moveChessBoard(ChessBoard chessBoard, RequestDTO requestDTO) {
         Coordinate current = Coordinate.from(requestDTO.getCurrent());
         Coordinate destination = Coordinate.from(requestDTO.getDestination());
         TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
         chessBoard.move(current, destination, teamType);
-        return BoardDTO.from(chessBoard, teamType.findOppositeTeam());
     }
 
     public ResultDTO calculateResult() throws SQLException {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
-        List<History> histories = chessRepository.findAllHistories();
-        histories.forEach(t -> {
-            Coordinate source = Coordinate.from(t.getSource());
-            Coordinate destination = Coordinate.from(t.getDestination());
-            TeamType teamType = TeamType.valueOf(t.getTeam());
-            chessBoard.move(source, destination, teamType);
-        });
+        ChessBoard chessBoard = generateDefaultChessBoard();
+        Histories histories = new Histories(chessRepository.findAllHistories());
+        histories.restoreLatestChessBoard(chessBoard);
         Result result = chessBoard.calculateScores();
         TeamType winnerTeamType = chessBoard.findWinnerTeam();
         return ResultDTO.from(result, winnerTeamType);
