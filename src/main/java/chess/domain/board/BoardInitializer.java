@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
@@ -64,8 +64,8 @@ public class BoardInitializer {
     }
 
     private static Piece[] getEmptyLine() {
-        final Piece[] pieces = new Empty[BOARD_LENGTH];
-        Arrays.fill(pieces, Empty.getInstance());
+        final Piece[] pieces = new EmptyPiece[BOARD_LENGTH];
+        Arrays.fill(pieces, EmptyPiece.getInstance());
         return pieces;
     }
 }

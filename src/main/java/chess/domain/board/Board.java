@@ -4,7 +4,7 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.king.King;
@@ -60,7 +60,7 @@ public class Board {
     }
 
     private void putEmpty(final Position position) {
-        board.put(position, Empty.getInstance());
+        board.put(position, EmptyPiece.getInstance());
     }
 
     public Path getAbleToMove(final Position source) {

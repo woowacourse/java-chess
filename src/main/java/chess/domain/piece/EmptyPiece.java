@@ -4,16 +4,16 @@ import chess.domain.board.position.Position;
 
 import java.util.Collections;
 
-public class Empty extends Piece {
+public class EmptyPiece extends Piece {
 
-    private static final Empty EMPTY = new Empty();
+    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece();
 
-    private Empty() {
+    private EmptyPiece() {
         super(Owner.NONE, new Score(0), Collections.emptyList(), MaxDistance.EMPTY);
     }
 
-    public static Empty getInstance() {
-        return EMPTY;
+    public static EmptyPiece getInstance() {
+        return EMPTY_PIECE;
     }
 
     @Override
