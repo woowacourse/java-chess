@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Division {
@@ -51,5 +52,19 @@ public class Queen extends Division {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    public List<Position> movablePosition(Position position) {
+        List<Position> positions = new ArrayList<>();
+        positions.addAll(position.positionsOfDirection(1,0));
+        positions.addAll(position.positionsOfDirection(-1,0));
+        positions.addAll(position.positionsOfDirection(0,1));
+        positions.addAll(position.positionsOfDirection(0,-1));
+        positions.addAll(position.positionsOfDirection(1,1));
+        positions.addAll(position.positionsOfDirection(1,-1));
+        positions.addAll(position.positionsOfDirection(-1,1));
+        positions.addAll(position.positionsOfDirection(-1,-1));
+
+        return positions;
     }
 }
