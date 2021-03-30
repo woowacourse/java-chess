@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
-import chess.domain.dto.RankDto;
+import chess.dto.RankDto;
 import chess.domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;

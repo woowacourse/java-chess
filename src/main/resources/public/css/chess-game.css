@@ -26,7 +26,7 @@ h1 {
   align-items: center;
   padding: 30px 0 40px;
   position: relative;
-  background-image: url("/img/darkBoardBorder.jpeg");
+  background-image: url("/img/board/darkBoardBorder.jpeg");
   user-select: none;
   box-shadow: 0 14px 28px #000000, 0 10px 10px #000000;
 }
@@ -48,12 +48,12 @@ h1 {
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("/img/whiteTile.jpeg");
+  background-image: url("/img/board/whiteTile.jpeg");
 }
 
 .rank:nth-of-type(odd) .position:nth-of-type(odd),
 .rank:nth-of-type(even) .position:nth-of-type(even) {
-  background-image: url("/img/blackTile.jpeg");
+  background-image: url("/img/board/blackTile.jpeg");
 }
 
 .position:after {
@@ -75,7 +75,7 @@ h1 {
   color: #ffffff;
   position: absolute;
   top: 25px;
-  left: -20px;
+  right: -19px;
 }
 
 .file-texts {
@@ -86,4 +86,12 @@ h1 {
   justify-content: space-around;
   width: calc(100% - 10%);
   bottom: 10px;
+}
+
+.selected {
+  box-shadow: inset 0px 0px 10px 3px cyan;
+}
+
+.movable {
+  box-shadow: inset 0px 0px 10px 3px chartreuse;
 }

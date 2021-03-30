@@ -269,6 +269,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return xpoint.name() + ypoint.getValue();
+        return xpoint.getName() + ypoint.getValue();
     }
 }

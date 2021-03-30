@@ -1,8 +1,11 @@
 package chess.utils;
 
 import chess.domain.board.Board;
+import chess.domain.board.position.Position;
 import chess.domain.board.position.Ypoint;
-import chess.domain.dto.RankDto;
+import chess.dto.MovableResponseDto;
+import chess.dto.PositionDto;
+import chess.dto.RankDto;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +29,13 @@ public class DtoAssembler {
             .stream()
             .map(Piece::getSymbol)
             .collect(Collectors.toList());
+    }
+
+    public static MovableResponseDto movableResponse(List<Position> positions) {
+        return new MovableResponseDto(
+            positions.stream()
+            .map(PositionDto::new)
+            .collect(Collectors.toList())
+        );
     }
 }
