@@ -1,6 +1,7 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.staticFileLocation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
+        staticFileLocation("public");
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
