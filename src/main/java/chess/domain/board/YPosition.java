@@ -5,14 +5,14 @@ import chess.domain.exceptions.InvalidMoveException;
 import java.util.Arrays;
 
 public enum YPosition {
-    Eight(8),
-    Seven(7),
-    Six(6),
-    Five(5),
-    Four(4),
-    Three(3),
-    Two(2),
-    One(1);
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
 
     private final int yPosition;
 
