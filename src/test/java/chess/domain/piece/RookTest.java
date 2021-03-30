@@ -18,7 +18,7 @@ class RookTest {
 
     @BeforeEach
     void setUp() {
-        rook = new Rook(Color.BLANK, Position.of("e5"));
+        rook = new Rook(Color.BLACK, Position.of("e5"));
 
         Pieces pieces = new Pieces();
         pieces.init();

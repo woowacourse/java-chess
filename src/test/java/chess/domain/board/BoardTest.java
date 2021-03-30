@@ -139,7 +139,7 @@ public class BoardTest {
     @Test
     @DisplayName("게임이 끝나지 않을때 승자 확인")
     void name() {
-        assertThat(board.winner()).isEqualTo(Color.BLANK);
+        assertThat(board.winner()).isNull();
     }
 
     @Test

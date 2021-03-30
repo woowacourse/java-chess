@@ -3,7 +3,6 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ class ReadyTest {
     @Test
     @DisplayName("우승자 확인 테스트 ")
     void winner() {
-        assertThat(ready.winner()).isEqualTo(Color.BLANK);
+        assertThat(ready.winner()).isNull();
     }
 
     @Test
