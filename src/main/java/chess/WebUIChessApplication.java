@@ -31,10 +31,6 @@ public class WebUIChessApplication {
         });
         put("/move", (request, response) -> {
             Map<String, String> requestBody = gson.fromJson(request.body(), HashMap.class) ;
-            System.out.println("이동");
-            System.out.println(requestBody);
-            System.out.println(requestBody.get("source"));
-            System.out.println(requestBody.get("target"));
             Map<String, String> boardInfo = webController.movedPiece(requestBody.get("source"), requestBody.get("target"));
             return gson.toJson(boardInfo);
         });
