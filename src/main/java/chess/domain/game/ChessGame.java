@@ -9,8 +9,8 @@ import java.util.List;
 public class ChessGame {
 
     public static final String TURN_MESSAGE = "%s의 차례입니다.";
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     private final ChessBoard chessBoard;
     private Color turn;

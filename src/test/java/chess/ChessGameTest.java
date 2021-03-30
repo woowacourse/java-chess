@@ -36,6 +36,6 @@ public class ChessGameTest {
         assertThatThrownBy(() -> {
             chessGame.run(Arrays.asList("move", "b7", "b6"));
         }).isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(String.format(chessGame.TURN_MESSAGE, Color.WHITE));
+            .hasMessageContaining(String.format(ChessGame.TURN_MESSAGE, Color.WHITE));
     }
 }
