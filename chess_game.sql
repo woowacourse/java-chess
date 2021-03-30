@@ -6,7 +6,7 @@ flush privileges;
 
 CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-show tables;
+use chess_game;
 
 set global max_connections = 100000;
 
