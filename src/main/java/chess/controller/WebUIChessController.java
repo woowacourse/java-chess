@@ -5,12 +5,9 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.JsonTransformer;
 import chess.domain.ChessResult;
+import chess.domain.JsonTransformer;
 import chess.domain.dto.request.MoveRequest;
-import chess.domain.dto.response.Response;
-import chess.domain.game.ChessGame;
-import chess.domain.position.Position;
 import chess.domain.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;

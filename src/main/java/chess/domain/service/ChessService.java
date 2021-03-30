@@ -7,6 +7,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 
 public class ChessService {
+
     private ChessGame chessGame;
 
     public ChessService() {
