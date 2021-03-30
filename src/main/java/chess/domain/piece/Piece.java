@@ -21,7 +21,6 @@ public abstract class Piece {
         this.maxDistance = maxDistance;
     }
 
-
     public List<Path> ableToPath(final Position source) {
         return directions.stream()
                 .map(direction -> ableToPathDirection(source, direction))

@@ -14,6 +14,10 @@ public class MoveCommand {
         this.target = target;
     }
 
+    public static MoveCommand of(final String input) {
+        return of(input.split(" "));
+    }
+
     public static MoveCommand of(final String[] input) {
         validateMoveCommand(input);
         return new MoveCommand(Position.of(input[1]), Position.of(input[2]));
@@ -23,10 +27,6 @@ public class MoveCommand {
         if (input.length == PARAMETER_SIZE) {
             throw new IllegalArgumentException("이동 명령으로 옳지않은 양식입니다.");
         }
-    }
-
-    public static MoveCommand of(final String input) {
-        return of(input.split(" "));
     }
 
     public Position source() {
