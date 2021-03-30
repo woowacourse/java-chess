@@ -1,13 +1,26 @@
+body {
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .board {
     display: grid;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     width: 480px;
     height: 480px;
+    position: absolute;
     grid-template-columns: repeat(8, 60px);
 }
 
 .item {
     text-align: center;
+    height: 60px;
 }
 
 .dark {

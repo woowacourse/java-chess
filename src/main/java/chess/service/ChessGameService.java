@@ -2,13 +2,26 @@ package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.Point;
+import chess.dto.RequestDto;
 import com.google.gson.Gson;
 
 public class ChessGameService {
     ChessGame chessGame = new ChessGame();
+    Gson gson = new Gson();
 
     public String getPiece(String point) {
-        Gson gson = new Gson();
         return gson.toJson(chessGame.getBoard().get(Point.of(point)));
+    }
+
+    public int movePiece(String body) {
+        RequestDto requestDto = gson.fromJson(body, RequestDto.class);
+        try {
+            chessGame.playTurn(Point.of(requestDto.getSourcePoint()), Point.of(requestDto.getTargetPoint()));
+        } catch (Exception e) {
+            System.out.println("@@@@@" + e.getMessage());
+            return 400;
+        }
+        System.out.println("--------------------------------------asdfsafasdfasdfsadfsdasadfsadf");
+        return 200;
     }
 }

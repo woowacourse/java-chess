@@ -20,9 +20,9 @@ public class ChessWebController {
             return render(model, "index.html");
         });
 
-        post("/point", (req, res) -> {
-            return chessGameService.getPiece(req.body());
-        });
+        post("/point", (req, res) -> chessGameService.getPiece(req.body()));
+        post("/move", (req, res) -> chessGameService.movePiece(req.body()));
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
