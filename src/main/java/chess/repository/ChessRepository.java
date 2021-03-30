@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ChessRepository {
 
@@ -26,7 +25,6 @@ public class ChessRepository {
         preparedStatement.setString(2, destination);
         preparedStatement.setString(3, team);
         preparedStatement.executeUpdate();
-        System.out.println("좌표 삽입 성공");
     }
 
     public List<History> findAllHistories() throws SQLException {
@@ -35,31 +33,16 @@ public class ChessRepository {
         ResultSet resultSet = preparedStatement.executeQuery();
         List<History> histories = new ArrayList<>();
         while (resultSet.next()) {
-            History history = new History(
-                    resultSet.getString("source"), resultSet.getString("destination"), resultSet.getString("team"));
+            History history = generateHistoryFrom(resultSet);
             histories.add(history);
         }
         return histories;
     }
 
-    public Optional<History> findHistoryById(int id) throws SQLException {
-        String query = "SELECT * FROM history WHERE ID = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, String.valueOf(id));
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (!resultSet.next()) {
-            return Optional.empty();
-        }
-        History history = new History(
-                resultSet.getString("source"), resultSet.getString("destination"), resultSet.getString("team"));
-        return Optional.of(history);
-    }
-
-    public void deleteHistoryById(int id) throws SQLException {
-        String query = "DELETE FROM history WHERE ID = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, String.valueOf(id));
-        preparedStatement.executeUpdate();
+    private History generateHistoryFrom(ResultSet resultSet) throws SQLException {
+        return new History(resultSet.getString("source"),
+                resultSet.getString("destination"),
+                resultSet.getString("team"));
     }
 
     public void deleteAllHistories() throws SQLException {
