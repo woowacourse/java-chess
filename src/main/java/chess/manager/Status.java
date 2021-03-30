@@ -53,7 +53,7 @@ public class Status {
 
     private static int penaltyScorePawnCount(Board board, Vertical vertical, Owner owner) {
         int pawnCount = (int) Arrays.stream(Horizontal.values())
-                .map(horizontal -> board.of(vertical, horizontal))
+                .map(horizontal -> board.pickPiece(vertical, horizontal))
                 .filter(piece -> piece.isSameOwnerPawn(owner))
                 .count();
         if (pawnCount > 1) {

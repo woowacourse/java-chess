@@ -35,16 +35,16 @@ public class Path {
     }
 
     private Path filterPieceRules(Position source, Board board) {
-        Piece sourcePiece = board.of(source);
+        Piece sourcePiece = board.pickPiece(source);
         List<Position> filterPaths = new ArrayList<>();
         for (Position target : this.path) {
-            if (sourcePiece.isSameTeam(board.of(target))) {
+            if (sourcePiece.isSameTeam(board.pickPiece(target))) {
                 break;
             }
-            if (sourcePiece.isReachable(source, target, board.of(target))) {
+            if (sourcePiece.isReachable(source, target, board.pickPiece(target))) {
                 filterPaths.add(target);
             }
-            if (sourcePiece.isEnemy(board.of(target))) {
+            if (sourcePiece.isEnemy(board.pickPiece(target))) {
                 break;
             }
         }

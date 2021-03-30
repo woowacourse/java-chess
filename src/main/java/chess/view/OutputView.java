@@ -22,7 +22,7 @@ public class OutputView {
     public static void printBoard(final Board board) {
         for (final Horizontal horizontal : Horizontal.values()) {
             for (final Vertical vertical : Vertical.values()) {
-                final Piece piece = board.of(Position.of(vertical, horizontal));
+                final Piece piece = board.pickPiece(Position.of(vertical, horizontal));
                 System.out.print(piece.getSymbol());
             }
             System.out.println();
@@ -50,7 +50,7 @@ public class OutputView {
             return;
         }
 
-        final Piece piece = board.of(position);
+        final Piece piece = board.pickPiece(position);
         System.out.print(piece.getSymbol());
     }
 

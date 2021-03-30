@@ -30,7 +30,7 @@ public class ChessManager {
     }
 
     private void validateSourcePiece(final Position source) {
-        if (board.of(source).isEmpty()) {
+        if (board.pickPiece(source).isEmpty()) {
             throw new IllegalArgumentException("지정한 칸에는 체스말이 존재하지 않습니다.");
         }
     }

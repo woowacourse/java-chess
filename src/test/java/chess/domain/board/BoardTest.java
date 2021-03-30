@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,7 +48,7 @@ public class BoardTest {
         Horizontal[] horizontals = Horizontal.values();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                assertThat(board.of(verticals[j], horizontals[i])).isEqualTo(piecesList.get(i).get(j));
+                assertThat(board.pickPiece(verticals[j], horizontals[i])).isEqualTo(piecesList.get(i).get(j));
             }
         }
     }
@@ -82,7 +81,7 @@ public class BoardTest {
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
     void of() {
-        final Piece piece = board.of(Vertical.B, Horizontal.TWO);
+        final Piece piece = board.pickPiece(Vertical.B, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
     }
@@ -95,7 +94,7 @@ public class BoardTest {
 
         board.move(source, target);
 
-        assertThat(board.of(source)).isInstanceOf(Empty.class);
-        assertThat(board.of(target)).isInstanceOf(Pawn.class);
+        assertThat(board.pickPiece(source)).isInstanceOf(Empty.class);
+        assertThat(board.pickPiece(target)).isInstanceOf(Pawn.class);
     }
 }

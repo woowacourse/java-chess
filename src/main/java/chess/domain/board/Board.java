@@ -21,16 +21,16 @@ public class Board {
         this.board = board;
     }
 
-    public Piece of(final Position position) {
+    public Piece pickPiece(final Position position) {
         return board.get(position);
     }
 
-    public Piece of(final Vertical vertical, final Horizontal horizontal) {
-        return of(Position.of(vertical, horizontal));
+    public Piece pickPiece(final Vertical vertical, final Horizontal horizontal) {
+        return pickPiece(Position.of(vertical, horizontal));
     }
 
     private Path ableToPath(final Position source) {
-        final Piece sourcePiece = of(source);
+        final Piece sourcePiece = this.pickPiece(source);
         final List<Path> paths = sourcePiece.ableToPath(source);
         return Path.of(paths, source, this);
     }
@@ -71,12 +71,12 @@ public class Board {
         return board.containsValue(King.getInstanceOf(owner));
     }
 
-    public boolean isTargetKing(Position target) {
-        return of(target).isKing();
+    public boolean isTargetKing(final Position target) {
+        return this.pickPiece(target).isKing();
     }
 
     public boolean isPositionSameOwner(final Position position, final Owner owner) {
-        return of(position).isSameOwner(owner);
+        return this.pickPiece(position).isSameOwner(owner);
     }
 
     public List<Piece> pieces() {
