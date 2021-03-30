@@ -33,8 +33,8 @@ public class WebController {
         });
 
         post("/play/move", (req, res) -> {
-            String source = req.queryParams("source"); //req.headers("source");
-            String target = req.queryParams("target"); //req.headers("target");
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
             try {
                 chessService.move(source, target);
                 return GSON.toJson(chessService.moveResponse());

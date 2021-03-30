@@ -24,6 +24,11 @@
 
     <div id="teamInfoUI">
         <div id="turn">{{turn}}팀의 차례입니다.</div>
+        <div id="score">
+            {{#scores}}
+            <div id="{{team}}">{{team}} 점수 | {{score}}점</div>
+            {{/scores}}
+        </div>
         <form action="/end" method="get">
             <button>종료하기</button>
         </form>

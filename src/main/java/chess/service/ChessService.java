@@ -2,9 +2,10 @@ package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Commands;
-import chess.domain.dto.BoardDto;
 import chess.domain.dto.GameInfoDto;
+import chess.domain.dto.ScoresDto;
 import chess.domain.utils.BoardInitializer;
+import chess.view.OutputView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +27,7 @@ public class ChessService {
     }
 
     public Map<String, Object> initResponse() {
-        GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
-        Map<String, Object> model = new HashMap<>();
-        model.put("squares", gameInfoDto.getSquares());
-        model.put("turn", gameInfoDto.getTurn());
-        return model;
+        return makeCommonResponse();
     }
 
     public void end() {
@@ -45,16 +42,15 @@ public class ChessService {
     }
 
     public Map<String, Object> moveResponse() {
-        GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
-        Map<String, Object> model = new HashMap<>();
-        model.put("squares", gameInfoDto.getSquares());
-        model.put("turn", gameInfoDto.getTurn());
-        return model;
+        return makeCommonResponse();
     }
 
-    public Map<String, Object> errorResponse(String message) {
+    private Map<String, Object> makeCommonResponse() {
+        final GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
         Map<String, Object> model = new HashMap<>();
-        model.put("error", message);
+        model.put("squares", gameInfoDto.squares());
+        model.put("turn", gameInfoDto.turn());
+        model.put("scores", gameInfoDto.scores());
         return model;
     }
 }
