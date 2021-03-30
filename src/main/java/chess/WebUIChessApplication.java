@@ -14,6 +14,11 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+
+        get("/chess", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "chess.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
