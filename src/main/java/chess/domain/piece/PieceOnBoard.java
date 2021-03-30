@@ -172,6 +172,11 @@ public abstract class PieceOnBoard implements Piece {
         return position;
     }
 
+    @Override
+    public void setPosition(Position end) {
+        position = end;
+    }
+
     public Score getScore() {
         return new Score(pieceType.getScore());
     }
@@ -197,11 +202,6 @@ public abstract class PieceOnBoard implements Piece {
             return pieceType.getName().toUpperCase();
         }
         return pieceType.getName().toLowerCase();
-    }
-
-    @Override
-    public void setPosition(Position end) {
-        position = end;
     }
 
     @Override

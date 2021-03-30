@@ -158,6 +158,9 @@ public class Position {
         return alpha;
     }
 
+    public String getPosition() {
+        return String.valueOf(alpha) + number;
+    }
 
     @Override
     public String toString() {
