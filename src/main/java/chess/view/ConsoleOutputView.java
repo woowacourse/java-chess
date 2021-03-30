@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.controller.dto.response.BoardResponseDTO;
-import chess.controller.dto.response.MoveResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import java.util.ArrayList;
 import java.util.List;
