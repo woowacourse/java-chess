@@ -51,4 +51,12 @@ public class ResultTest {
         assertThat(result.score(Color.WHITE)).isEqualTo(19.5);
         assertThat(result.score(Color.BLACK)).isEqualTo(20.0);
     }
+
+    @Test
+    @DisplayName("각 진영 별 승패 판별")
+    void winOrLose() {
+        Result result = new Result(chessBoard.getChessBoard());
+        assertThat(result.winOrLose(Color.WHITE)).isEqualTo("패");
+        assertThat(result.winOrLose(Color.BLACK)).isEqualTo("승");
+    }
 }
