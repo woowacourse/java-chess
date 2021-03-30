@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.console;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.command.Command;

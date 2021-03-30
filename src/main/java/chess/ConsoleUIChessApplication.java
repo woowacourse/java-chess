@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ConsoleChessController;
+import chess.console.ConsoleChessController;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 
