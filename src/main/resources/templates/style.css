@@ -1,0 +1,59 @@
+*{
+    box-sizing: inherit;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+.section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: burlywood;
+}
+.title{
+    font-size: 2.5em;
+}
+
+.chessboard {
+    background-color: beige;
+}
+
+.chesstable {
+    width: 100%;
+    flex: 1 1 auto;
+}
+.chesstable th {
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 0;
+}
+
+.chesstable td {
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    font-size: 2em;
+    line-height: 0;
+}
+
+.dark {
+    background-color: darkgray;
+    border: 0.5px solid black;
+}
+
+.light {
+    background-color: white;
+    border: 0.5px solid black;
+}
