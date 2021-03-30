@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     private static String checkBoard(final Map<Position, Piece> chessBoard, final Position position) {
-        if (Objects.isNull(chessBoard.get(position))) {
+        if ("blank".equals(chessBoard.get(position).getPiece())){
             return ".";
         }
         return chessBoard.get(position).getPiece();
