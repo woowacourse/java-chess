@@ -57,38 +57,38 @@ public abstract class OneCellMoveStrategy implements MoveStrategy {
 
     public List<Position> findPositions(final Pieces basePieces, final Pieces targetPieces,
                                         final Position position, final Direction direction) {
-        Position nextPosition = position.findNextPosition(direction);
-        return findPositionByNextPosition(basePieces, targetPieces, nextPosition);
+        Position targetPosition = position.findTargetPosition(direction);
+        return findPositionByTargetPosition(basePieces, targetPieces, targetPosition);
     }
 
-    private List<Position> findPositionByNextPosition(final Pieces basePieces, final Pieces targetPieces,
-                                                      final Position nextPosition) {
-        Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-        Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+    private List<Position> findPositionByTargetPosition(final Pieces basePieces, final Pieces targetPieces,
+                                                        final Position targetPosition) {
+        Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+        Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
         if (targetPiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
+            return Collections.singletonList(targetPosition);
         }
         if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
+            return Collections.singletonList(targetPosition);
         }
         return Collections.emptyList();
     }
 
     public List<Position> findPositions(final Pieces basePieces, final Pieces targetPieces,
                                         final Position position, final Direction direction, final int index) {
-        Position nextPosition = position.findNextPosition(direction, index);
-        return findPositionByNextPawnPosition(basePieces, targetPieces, nextPosition);
+        Position targetPosition = position.findTargetPosition(direction, index);
+        return findPositionByTargetPawnPosition(basePieces, targetPieces, targetPosition);
     }
 
-    private List<Position> findPositionByNextPawnPosition(final Pieces basePieces, final Pieces targetPieces,
-                                                          final Position nextPosition) {
-        Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-        Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+    private List<Position> findPositionByTargetPawnPosition(final Pieces basePieces, final Pieces targetPieces,
+                                                            final Position targetPosition) {
+        Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+        Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
         if (targetPiece.isPresent()) {
             return Collections.emptyList();
         }
         if (!basePiece.isPresent()) {
-            return Collections.singletonList(nextPosition);
+            return Collections.singletonList(targetPosition);
         }
         return Collections.emptyList();
     }
