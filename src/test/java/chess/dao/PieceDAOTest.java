@@ -23,6 +23,7 @@ class PieceDAOTest {
     private void findByTeamColorAndPieceTypeOf(PieceType pieceType) throws SQLException {
         for (TeamColor teamColor : TeamColor.values()) {
             Piece piece = pieceDAO.findByPieceTypeAndTeamColor(pieceType, teamColor);
+
             assertThat(piece.getPieceType()).isSameAs(pieceType);
             assertThat(piece.getTeamColor()).isSameAs(teamColor);
         }

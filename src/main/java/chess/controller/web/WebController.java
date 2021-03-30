@@ -90,8 +90,7 @@ public class WebController {
 
     private void handleMoveRequest() {
         post(ROOT + MOVE, APPLICATION_JSON, (req, res) -> {
-            MoveRequestDTO moveRequestDTO = gson
-                .fromJson(req.body(), MoveRequestDTO.class);
+            MoveRequestDTO moveRequestDTO = gson.fromJson(req.body(), MoveRequestDTO.class);
             MoveResponseDTO moveResponse = chessWebService.requestMove(moveRequestDTO);
             res.type(APPLICATION_JSON);
             return gson.toJson(moveResponse);

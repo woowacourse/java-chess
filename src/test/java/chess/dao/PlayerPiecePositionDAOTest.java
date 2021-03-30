@@ -126,8 +126,7 @@ class PlayerPiecePositionDAOTest {
         for (PiecePositionEntity piecePositionEntity : piecesPositionsFromDB) {
             actualPiecesPositions.put(
                 Position.of(piecePositionEntity.getFile(), piecePositionEntity.getRank()),
-                Piece.of(piecePositionEntity.getPieceType(),
-                    piecePositionEntity.getTeamColor())
+                Piece.of(piecePositionEntity.getPieceType(), piecePositionEntity.getTeamColor())
             );
         }
 
@@ -184,13 +183,13 @@ class PlayerPiecePositionDAOTest {
 
         playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePositionEntityToRemove);
 
-        Map<Position, Piece> foundAllByGame1 = playerPiecePositionDAO
-            .findAllByGameId(chessGame1.getId());
+        Map<Position, Piece> foundAllByGame1
+            = playerPiecePositionDAO.findAllByGameId(chessGame1.getId());
 
         assertThat(foundAllByGame1).doesNotContainEntry(whitePositionOfGame1, whitePieceOfGame1);
 
-        Map<Position, Piece> foundAllByGame2 = playerPiecePositionDAO
-            .findAllByGameId(chessGame2.getId());
+        Map<Position, Piece> foundAllByGame2
+            = playerPiecePositionDAO.findAllByGameId(chessGame2.getId());
 
         Map<Position, Piece> expectedOfGame2 = new HashMap<>();
         expectedOfGame2.put(blackPositionOfGame2, blackPieceOfGame2);
