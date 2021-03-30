@@ -9,9 +9,11 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractPiece implements Piece {
     private final Team team;
+    private final String name;
 
-    protected AbstractPiece(Team team) {
+    protected AbstractPiece(Team team, String name) {
         this.team = team;
+        this.name = name;
     }
 
     protected boolean isBlackTeam() {
@@ -51,6 +53,6 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public String toString() {
-        return pieceName() + "_" + team.toString();
+        return name + "_" + team.toString();
     }
 }

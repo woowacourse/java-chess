@@ -5,12 +5,12 @@ import chess.domain.board.Strategy;
 import chess.domain.board.Team;
 
 public class Rook extends AbstractPiece {
-
+    private static final String NAME = "rook";
     public static final double POINT = 5;
     private static final int MOVE_RANGE = 8;
 
     public Rook(Team team) {
-        super(team);
+        super(team, NAME);
     }
 
     @Override
@@ -39,10 +39,5 @@ public class Rook extends AbstractPiece {
     @Override
     public double getPoint() {
         return POINT;
-    }
-
-    @Override
-    public String pieceName() {
-        return "rook";
     }
 }

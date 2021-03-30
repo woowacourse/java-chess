@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.service.ChessService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -8,8 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebController {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final ChessService chessService;
 
@@ -23,9 +27,11 @@ public class WebController {
             return render(chessService.startRequest(), "chessStart.html");
         });
 
-        get("/play/continue", (req, res) -> {
-            chessService.continuedGame();
-            return render(chessService.moveRequest(), "chessGame.html");
+        post("/play/move", (req, res) -> {
+            String source = req.headers("source");
+            String target = req.headers("target");
+            chessService.move(source, target);
+            return GSON.toJson(chessService.moveRequest());
         });
 
         get("/play/new", (req, res) -> {

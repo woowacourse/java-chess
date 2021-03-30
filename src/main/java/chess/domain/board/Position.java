@@ -129,4 +129,12 @@ public class Position {
     public String toString() {
         return file.getFile() + rank.getRank();
     }
+
+    public String getFile() {
+        return file.getFile();
+    }
+
+    public String getRank() {
+        return String.valueOf(rank.getRank());
+    }
 }

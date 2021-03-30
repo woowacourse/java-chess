@@ -6,12 +6,13 @@ import chess.domain.board.Team;
 
 public class King extends AbstractPiece {
 
+    private static final String NAME = "king";
     public static final double POINT = 0;
     private static final int MOVE_RANGE = 1;
 
 
     public King(Team team) {
-        super(team);
+        super(team, NAME);
     }
 
     @Override
@@ -42,8 +43,4 @@ public class King extends AbstractPiece {
         return false;
     }
 
-    @Override
-    public String pieceName() {
-        return "king";
-    }
 }

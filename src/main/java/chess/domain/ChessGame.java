@@ -37,14 +37,20 @@ public class ChessGame {
         return new PointDto(calculatePoint());
     }
 
+//    public void move(Commands command) {
+//        try {
+//            final Path path = new Path(command.path());
+//            board.move(path, turn);
+//            movePiece(path);
+//        } catch (IllegalArgumentException e) {
+//            OutputView.printErrorMessage(e.getMessage());
+//        }
+//    }
+
     public void move(Commands command) {
-        try {
-            final Path path = new Path(command.path());
-            board.move(path, turn);
-            movePiece(path);
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
+        final Path path = new Path(command.path());
+        board.move(path, turn);
+        movePiece(path);
     }
 
     private void movePiece(Path path) {

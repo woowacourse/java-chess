@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.domain.ChessGame;
+import chess.domain.command.Commands;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.utils.BoardInitializer;
@@ -39,8 +40,15 @@ public class ChessService {
     public void continuedGame() {
     }
 
+    public void move(String source, String target) {
+        chessGame.move(new Commands(String.join(" ", "move", source, target)));
+    }
+
     public Map<String, Object> moveRequest() {
+        GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
         Map<String, Object> model = new HashMap<>();
+        model.put("squares", gameInfoDto.getSquares());
+        model.put("turn", gameInfoDto.getTurn());
         return model;
     }
 }
