@@ -139,16 +139,12 @@ public class Position {
         return reversedSource;
     }
 
-    public Rank getRank() {
-        return rank;
+    public File getFile() {
+        return file;
     }
 
     public int getRankValue() {
         return rank.getValue();
-    }
-
-    public File getFile() {
-        return file;
     }
 
     public int getFileValue() {
