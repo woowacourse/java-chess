@@ -12,8 +12,8 @@ public class Position {
     public static final String OUT_OF_BOUND_MESSAGE = "움직일려는 좌표가 보드판을 넘어갑니다.";
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
-    private XPosition xPosition;
-    private YPosition yPosition;
+    private final XPosition xPosition;
+    private final YPosition yPosition;
 
     static {
         for (XPosition xposition : XPosition.values()) {
@@ -42,9 +42,7 @@ public class Position {
     public static Position from(final String positionKey) {
         return Optional
             .ofNullable(CACHE.get(positionKey))
-            .orElseGet(() -> {
-                throw new InvalidMoveException(Position.OUT_OF_BOUND_MESSAGE);
-            });
+            .orElseThrow(() -> new InvalidMoveException(Position.OUT_OF_BOUND_MESSAGE));
     }
 
     public static Position of(final char xRawPosition, final int yRawPosition) {
@@ -57,6 +55,12 @@ public class Position {
         char xRawPosition = xPosition.getValue();
         int yRawPosition = yPosition.getValue();
         return of(xRawPosition, yRawPosition);
+    }
+
+    public Position moveUnit(final int xVector, final int yVector) {
+        XPosition xNewPosition = xPosition.moveUnit(xVector);
+        YPosition yNewPosition = yPosition.moveUnit(yVector);
+        return Position.of(xNewPosition, yNewPosition);
     }
 
     public boolean isLineMove(final Position target) {
@@ -83,11 +87,6 @@ public class Position {
 
     public boolean sameYPosition(final int rawYPosition) {
         return yPosition.samePosition(rawYPosition);
-    }
-
-    public void moveUnit(final int xVector, final int yVector) {
-        xPosition = xPosition.moveUnit(xVector);
-        yPosition = yPosition.moveUnit(yVector);
     }
 
     @Override
