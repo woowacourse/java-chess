@@ -10,7 +10,6 @@ public class Application {
         OutputView.printInitMessage();
         final ChessBoard chessBoard = new ChessBoard();
         ChessGameController chessGameController = new ChessGameController(chessBoard);
-
         chessGameController.run();
     }
 
