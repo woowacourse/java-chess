@@ -15,17 +15,17 @@ public enum ColumnConverter {
     G("g", 6),
     H("h", 7);
 
-    private final String col;
+    private final String column;
     private final int location;
 
-    ColumnConverter(final String col, final int location) {
-        this.col = col;
+    ColumnConverter(final String column, final int location) {
+        this.column = column;
         this.location = location;
     }
 
     public static int getLocation(final String col) {
         return Arrays.stream(ColumnConverter.values())
-                .filter(value -> value.col.equals(col))
+                .filter(value -> value.column.equals(col))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 좌표입니다."))
                 .location;

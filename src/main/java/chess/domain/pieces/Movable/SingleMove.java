@@ -5,7 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public interface SingleMove {
-    default boolean isMoveAbleDir(final Board board, final int nextRow, final int nextCol, final Team team) {
+    default boolean isMoveAbleDirection(final Board board, final int nextRow, final int nextCol, final Team team) {
         if (!board.validateRange(nextRow, nextCol)) {
             return false;
         }

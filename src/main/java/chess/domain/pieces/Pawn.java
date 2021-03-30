@@ -26,21 +26,21 @@ public final class Pawn extends NoKingPieces {
         return new Pawn(position, "P", team, SCORE);
     }
 
-    public static Pawn of(final Team team, final int col) {
-        return new Pawn(team, getInitPosition(team, col));
+    public static Pawn of(final Team team, final int column) {
+        return new Pawn(team, getInitPosition(team, column));
     }
 
     public static List<Pawn> getInitPawns(final Team team) {
         List<Pawn> pawns = new ArrayList<>();
-        ColumnConverter.getPawnInitCols().forEach((col) -> pawns.add(Pawn.of(team, col)));
+        ColumnConverter.getPawnInitCols().forEach((column) -> pawns.add(Pawn.of(team, column)));
         return pawns;
     }
 
-    private static Position getInitPosition(final Team team, final int col) {
+    private static Position getInitPosition(final Team team, final int column) {
         if (team.equals(Team.BLACK)) {
-            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
+            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), column);
         }
-        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
+        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), column);
     }
 
     @Override
@@ -57,10 +57,10 @@ public final class Pawn extends NoKingPieces {
 
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
         Position curPosition = getPosition();
-        if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getCol())) {
+        if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getColumn())) {
             return;
         }
-        Position movedPosition = new Position(curPosition.getRow() + getStraightRow(degree), curPosition.getCol());
+        Position movedPosition = new Position(curPosition.getRow() + getStraightRow(degree), curPosition.getColumn());
 
         if (!board.piecesByTeam(Team.BLACK).containByPosition(movedPosition) && !board.piecesByTeam(Team.WHITE).containByPosition(movedPosition)) {
             movablePositions.add(movedPosition);
@@ -85,31 +85,31 @@ public final class Pawn extends NoKingPieces {
 
     private void addBlackTeamAttackPosition(final List<Position> movablePositions, final Board board) {
         int[] rowDir = {1, 1};
-        int[] colDir = {-1, 1};
-        checkAttackPosition(movablePositions, board, rowDir, colDir);
+        int[] columnDir = {-1, 1};
+        checkAttackPosition(movablePositions, board, rowDir, columnDir);
     }
 
     private void addWhiteTeamAttackPosition(final List<Position> movablePositions, final Board board) {
         int[] rowDir = {-1, -1};
-        int[] colDir = {-1, 1};
-        checkAttackPosition(movablePositions, board, rowDir, colDir);
+        int[] columnDir = {-1, 1};
+        checkAttackPosition(movablePositions, board, rowDir, columnDir);
     }
 
-    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] rowDir, final int[] colDir) {
+    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] rowDir, final int[] columnDir) {
         Position curPosition = getPosition();
         for (int dir = 0; dir < rowDir.length; ++dir) {
             int nextRow = curPosition.getRow() + rowDir[dir];
-            int nextCol = curPosition.getCol() + colDir[dir];
+            int nextCol = curPosition.getColumn() + columnDir[dir];
             addAttackablePosition(movablePositions, board, nextRow, nextCol);
         }
     }
 
-    private void addAttackablePosition(final List<Position> movablePositions, Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
+    private void addAttackablePosition(final List<Position> movablePositions, Board board, final int nextRow, final int nextColumn) {
+        if (!board.validateRange(nextRow, nextColumn)) {
             return;
         }
 
-        Position attackPosition = new Position(nextRow, nextCol);
+        Position attackPosition = new Position(nextRow, nextColumn);
         Pieces otherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(getTeam()));
 
         if (otherTeamPieces.containByPosition(attackPosition)) {
@@ -118,7 +118,7 @@ public final class Pawn extends NoKingPieces {
     }
 
     @Override
-    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextColumn) {
         throw new UnsupportedOperationException();
     }
 

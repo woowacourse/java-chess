@@ -14,7 +14,7 @@ public final class King extends Piece implements SingleMove {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 0.0;
-    private static final int INIT_COL = 4;
+    private static final int INIT_COLUMN = 4;
 
     private King(final Team team, final Position position) {
         super(position, "K", team, SCORE);
@@ -28,37 +28,37 @@ public final class King extends Piece implements SingleMove {
         return new King(position, "K", team, SCORE);
     }
 
-    public static King of(final Team team, final int col) {
-        if (col != INIT_COL) {
+    public static King of(final Team team, final int column) {
+        if (column != INIT_COLUMN) {
             throw new IllegalArgumentException("잘못된 초기 위치입니다.");
         }
-        return new King(team, getInitPosition(team, col));
+        return new King(team, getInitPosition(team, column));
     }
 
-    private static Position getInitPosition(final Team team, final int col) {
+    private static Position getInitPosition(final Team team, final int column) {
         if (team.equals(Team.BLACK)) {
-            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
+            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), column);
         }
-        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
+        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), column);
     }
 
     public static List<King> getInitKing(final Team team) {
         List<King> kings = new ArrayList<>();
-        ColumnConverter.getKingInitCols().forEach((col) -> kings.add(King.of(team, col)));
+        ColumnConverter.getKingInitCols().forEach((column) -> kings.add(King.of(team, column)));
         return kings;
     }
 
     @Override
     public List<Position> getMovablePositions(final Board board) {
         int[] rowDirection = {0, 0, -1, 1, -1, 1, -1, 1};
-        int[] colDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
+        int[] columnDirection = {-1, 1, 0, 0, -1, 1, 1, -1};
 
-        return getMovablePositionsByDir(board, rowDirection, colDirection);
+        return getMovablePositionsByDirection(board, rowDirection, columnDirection);
     }
 
     @Override
-    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
-        return isMoveAbleDir(board, nextRow, nextCol, getTeam());
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextColumn) {
+        return isMoveAbleDirection(board, nextRow, nextColumn, getTeam());
     }
 
     @Override

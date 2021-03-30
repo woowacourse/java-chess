@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public interface MultiMove {
-    default boolean isMoveAbleDir(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol, final Team team) {
+    default boolean isMoveAbleDirection(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol, final Team team) {
         if (!board.validateRange(nextRow, nextCol)) {
             return false;
         }

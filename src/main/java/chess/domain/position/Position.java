@@ -8,16 +8,16 @@ public final class Position {
     public static final int RANGE_MIN_PIVOT = 0;
 
     private final int row;
-    private final int col;
+    private final int column;
 
-    public Position(final int row, final int col) {
-        validateRange(row, col);
+    public Position(final int row, final int column) {
+        validateRange(row, column);
         this.row = row;
-        this.col = col;
+        this.column = column;
     }
 
-    private void validateRange(final int row, final int col) {
-        if (row < RANGE_MIN_PIVOT || col < RANGE_MIN_PIVOT) {
+    private void validateRange(final int row, final int column) {
+        if (row < RANGE_MIN_PIVOT || column < RANGE_MIN_PIVOT) {
             throw new IllegalArgumentException("좌표에는 음수가 들어갈 수 없습니다.");
         }
     }
@@ -26,12 +26,12 @@ public final class Position {
         return row;
     }
 
-    public int getCol() {
-        return col;
+    public int getColumn() {
+        return column;
     }
 
-    public boolean sameCol(final int col) {
-        return this.col == col;
+    public boolean sameColumn(final int column) {
+        return this.column == column;
     }
 
     public boolean isInitPositionByTeam(final Team team) {
@@ -43,11 +43,11 @@ public final class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return row == position.row && col == position.col;
+        return row == position.row && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(row, column);
     }
 }
