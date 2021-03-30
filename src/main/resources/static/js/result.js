@@ -24,3 +24,6 @@ function updateResult(resultDTO) {
 }
 
 initiate();
+document.getElementById('restart').addEventListener('click', function (event) {
+    window.location = '/';
+});

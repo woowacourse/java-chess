@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
@@ -19,7 +20,7 @@ import static spark.Spark.*;
 public class WebChessController {
     private static TeamType CURRENT_TEAM_TYPE = TeamType.WHITE;
 
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
 
     public WebChessController(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
@@ -39,6 +40,10 @@ public class WebChessController {
     public void getChessBoard() {
         get("/chessboard", (request, response) -> {
             response.type("application/json");
+            if (chessBoard.isKingCheckmate()) {
+                this.chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
+                CURRENT_TEAM_TYPE = TeamType.WHITE;
+            }
             BoardDTO boardDTO = BoardDTO.from(chessBoard, CURRENT_TEAM_TYPE);
             return new Gson().toJsonTree(boardDTO);
         });
