@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class AbstractState implements State {
 
@@ -60,6 +61,9 @@ public abstract class AbstractState implements State {
     @Override
     public List<Position> movablePositions(String source) {
         Position sourcePosition = Position.of(source);
+        if (Objects.isNull(sourcePosition)) {
+            throw new IllegalArgumentException("빈 공간은 이동경로가 없습니다.");
+        }
         return pieces.movablePositions(sourcePosition);
     }
 }
