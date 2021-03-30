@@ -36,7 +36,7 @@ class ChessGameDAOTest {
         chessGameDAO.save(chessGame1);
         ChessGameEntity foundChessGame = chessGameDAO.findById(chessGame1.getId());
 
-        assertThat(foundChessGame.getTitle()).endsWith(chessGame1.getTitle());
+        assertThat(foundChessGame.getTitle()).isEqualTo(chessGame1.getTitle());
 
         String testTitle2 = TEST_TITLE + "2";
 
