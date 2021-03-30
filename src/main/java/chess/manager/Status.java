@@ -20,8 +20,7 @@ public class Status {
     }
 
     public static Status statusOfBoard(final Board board) {
-        return new Status(ownerScore(board, Owner.WHITE),
-                ownerScore(board, Owner.BLACK));
+        return new Status(ownerScore(board, Owner.WHITE), ownerScore(board, Owner.BLACK));
     }
 
     private static Score ownerScore(final Board board, final Owner owner) {

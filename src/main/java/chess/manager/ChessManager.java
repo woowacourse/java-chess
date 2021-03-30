@@ -22,11 +22,19 @@ public class ChessManager {
     public void move(final MoveCommand command) {
         validateSourcePiece(command.source());
         validateTurn(command.source());
-        boolean isKing = isTargetKing(command.target());
         board.move(command.source(), command.target());
-        // TODO 왕이 죽었는지 체크하는 로직 더 생각해보기
-        isEnd = isKing;
+    }
+
+    public void changeTurn() {
         turn = turn.reverse();
+    }
+
+    public void endGameByDiedKing() {
+        isEnd = isDiedKing();
+    }
+
+    private boolean isDiedKing() {
+        return !board.isKingAlive(this.turn.reverse());
     }
 
     private void validateSourcePiece(final Position source) {
@@ -39,10 +47,6 @@ public class ChessManager {
         if (!board.isPositionSameOwner(source, turn)) {
             throw new IllegalArgumentException("현재는 " + turn.name() + "플레이어의 턴입니다.");
         }
-    }
-
-    private boolean isTargetKing(final Position target) {
-        return board.isTargetKing(target);
     }
 
     public Path getReachablePositions(final ShowCommand command) {

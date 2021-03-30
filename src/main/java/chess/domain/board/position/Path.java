@@ -39,7 +39,8 @@ public class Path {
         return filterPaths;
     }
 
-    private boolean isMoveAblePath(final Position source, final Position target, final Board board, final boolean isPrePositionAbleToMove) {
+    private boolean isMoveAblePath(
+            final Position source, final Position target, final Board board, final boolean isPrePositionAbleToMove) {
         Piece sourcePiece = board.pickPiece(source);
         Piece targetPiece = board.pickPiece(target);
         return sourcePiece.isDifferentTeam(targetPiece)

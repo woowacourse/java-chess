@@ -30,6 +30,8 @@ public enum Command {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
             chessManager.move(MoveCommand.of(input));
+            chessManager.changeTurn();
+            chessManager.endGameByDiedKing();
             OutputView.printBoard(chessManager.getBoard());
         }
     },
