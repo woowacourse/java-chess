@@ -3,14 +3,14 @@ package chess.controller;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebController {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -24,19 +24,24 @@ public class WebController {
     public void play(){
         get("/play", (req, res) -> {
             chessService.start();
-            return render(chessService.startRequest(), "chessStart.html");
-        });
-
-        post("/play/move", (req, res) -> {
-            String source = req.headers("source");
-            String target = req.headers("target");
-            chessService.move(source, target);
-            return GSON.toJson(chessService.moveRequest());
+            return render(chessService.startResponse(), "chessStart.html");
         });
 
         get("/play/new", (req, res) -> {
             chessService.playNewGame();
-            return render(chessService.initRequest(), "chessGame.html");
+            return render(chessService.initResponse(), "chessGame.html");
+        });
+
+        post("/play/move", (req, res) -> {
+            String source = req.queryParams("source"); //req.headers("source");
+            String target = req.queryParams("target"); //req.headers("target");
+            try {
+                chessService.move(source, target);
+                return GSON.toJson(chessService.moveResponse());
+            } catch (IllegalArgumentException e) {
+                res.status(400);
+                return e.getMessage();
+            }
         });
 
         get("/play/end", (req, res) -> {

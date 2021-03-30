@@ -16,20 +16,6 @@ public class SquaresDto {
         this.squares = toDto(board);
     }
 
-//    private List<SquareDto> toDto(Board board) {
-//        Map<Position, Piece> eachBoard = board.board();
-//        List<Position> positions = Position.getAllPositions();
-//
-//        Map<Position, Piece> entireBoard = new LinkedHashMap<>();
-//        for (Position position : positions) {
-//            entireBoard.put(position, eachBoard.get(position));
-//        }
-//
-//        return entireBoard.entrySet()
-//                .stream()
-//                .map(entry -> new SquareDto(entry.getKey(), entry.getValue())).collect(Collectors.toList());
-//    }
-
     private List<SquareDto> toDto(Board board) {
         Map<Position, Piece> eachBoard = board.board();
         List<Position> positions = Position.getAllPositions();

@@ -9,16 +9,81 @@ for (let i = 0; i < squares.length; i++) {
     });
 }
 
-function makeMoveRequest(source, target) {
-    var request = new XMLHttpRequest();
-    request.open("POST", `./move?source=${source.id}&target=${target.id}`);
-    request.send();
+// function update(board, turn) {
+//     for (i = 0; i < board.length; i++) {
+//         let pieceId = board[i].position.file + board[i].position.rank;
+//         let piece = document.getElementById(pieceId);
+//
+//         if (board[i].piece) {
+//             let pieceImage = board[i].piece.name + "_" + board[i].piece.team.toLowerCase();
+//             piece.firstElementChild.src = "../images/" + pieceImage + ".png";
+//         } else {
+//             piece.firstElementChild.src = "../images/blank.png";
+//         }
+//     }
+//
+//     let currentTeam = document.getElementById("turn");
+//     currentTeam.innerText = turn + "팀 차례입니다.";
+// }
+
+// function move(source, target) {
+//     const moveContents = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'source': source.id,
+//             'target': target.id
+//         }
+//     };
+//     fetch("/play/move", moveContents)
+//         .then(response => {
+//             console.log(response);
+//             if (!response.ok) {
+//                 alert(response.responseText);
+//             }
+//             const parsedResponse = response.text().then(text => {
+//                 return text ? JSON.parse(text) : {}
+//             });
+//             return new Promise((resolve) => {
+//                 parsedResponse.then(data => resolve({'status': response.status, 'body': data}));
+//             });
+//         })
+//         .then(response => {
+//             let board = response.body.squares;
+//             let turn = response.body.turn;
+//             update(board, turn);
+//         });
+//     initialize();
+// }
+
+function move(source, target){
+    const moveContents = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'source': source.id,
+            'target': target.id
+        }
+    };
+    $.ajax({
+            type: "POST",
+            url: "/play/move",
+            data : {
+                "source": source.id,
+                "target": target.id,
+            },
+            dataType: "json",
+            success: update,
+            error: showError,
+            complete: initialize,
+        })
 }
 
-function update(board, turn) {
-    console.log("board");
-    console.log(board);
-    for (i = 0; i < board.length; i++) {
+function update(response) {
+    const board = response.squares;
+    const turn = response.turn;
+
+    for (let i = 0; i < board.length; i++) {
         let pieceId = board[i].position.file + board[i].position.rank;
         let piece = document.getElementById(pieceId);
 
@@ -30,40 +95,16 @@ function update(board, turn) {
         }
     }
 
-    let currentTeam = document.getElementById("turn");
-    currentTeam.innerText = turn + "팀 차례입니다.";
+    const nowTurn = document.getElementById("turn");
+    nowTurn.innerText = turn + "팀 차례입니다.";
 }
 
-function move(source, target) {
-    const moveContents = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'source': source.id,
-            'target': target.id
-        }
-    };
-    console.log(moveContents);
-    fetch("/play/move", moveContents)
-        .then(response => {
-            if (!response.ok) {
-                alert("이동할 수 없는 곳입니다.");
-            }
-            const parsedResponse = response.text().then(text => {
-                return text ? JSON.parse(text) : {}
-            });
-            return new Promise((resolve) => {
-                parsedResponse.then(data => resolve({'status': response.status, 'body': data}));
-            });
-        })
-        .then(response => {
-            let board = response.body.squares;
-            let turn = response.body.turn;
-            console.log(board);
-            console.log(turn);
-            update(board, turn);
-        });
-    initialize();
+function update2(response) {
+    alert("update");
+}
+
+function showError(response) {
+    alert(response.responseText);
 }
 
 function initialize() {

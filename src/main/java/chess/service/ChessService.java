@@ -16,7 +16,7 @@ public class ChessService {
         this.chessGame = new ChessGame();
     }
 
-    public Map<String, Object> startRequest() {
+    public Map<String, Object> startResponse() {
         Map<String, Object> model = new HashMap<>();
         return model;
     }
@@ -25,7 +25,7 @@ public class ChessService {
         chessGame.initBoard(BoardInitializer.init()); //보드 초기화
     }
 
-    public Map<String, Object> initRequest() {
+    public Map<String, Object> initResponse() {
         GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
         Map<String, Object> model = new HashMap<>();
         model.put("squares", gameInfoDto.getSquares());
@@ -44,11 +44,17 @@ public class ChessService {
         chessGame.move(new Commands(String.join(" ", "move", source, target)));
     }
 
-    public Map<String, Object> moveRequest() {
+    public Map<String, Object> moveResponse() {
         GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
         Map<String, Object> model = new HashMap<>();
         model.put("squares", gameInfoDto.getSquares());
         model.put("turn", gameInfoDto.getTurn());
+        return model;
+    }
+
+    public Map<String, Object> errorResponse(String message) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("error", message);
         return model;
     }
 }
