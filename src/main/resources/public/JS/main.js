@@ -1,5 +1,6 @@
 createChessBoard();
-
+const startButton = document.getElementById("start");
+startButton.addEventListener("click", clickStart);
 function createChessBoard() {
     const pieces = [
         ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
@@ -120,4 +121,8 @@ function changeTurn() {
     else {
         currentTurn.textContent = "White Turn";
     }
+}
+
+function clickStart() {
+    console.log("1");
 }

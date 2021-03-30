@@ -1,7 +1,3 @@
-body {
-    margin-left: 300px;
-}
-
 td {
     width: 60px;
     height: 75px;
@@ -22,4 +18,28 @@ img {
 
 .clickedTile {
     background-color: #F5D042;
+}
+
+.start-button {
+    text-align: center;
+    width: 200px;
+    height: 70px;
+    font-size: 50px;
+    margin-left: 315px;
+}
+
+.currentTurn {
+    margin-left: 315px;
+}
+.title {;
+    text-align: center;
+}
+.chess-board {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #7b9acc;
+    margin: auto;
+    width: 35vw;
+    height: 35vw;
 }
