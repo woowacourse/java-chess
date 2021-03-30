@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.piece.Vector;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -18,12 +18,13 @@ public abstract class DoubleMove implements MoveStrategy {
     @Override
     public List<List<Position>> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
-        for (Direction direction : directions()) {
+        for (Vector direction : directions()) {
             positions.add(position.move(direction));
-            positions.add(position.move(direction).move(direction));
+            positions.add(position.move(direction)
+                                  .move(direction));
         }
         return Collections.singletonList(positions);
     }
 
-    public abstract List<Direction> directions();
+    public abstract List<Vector> directions();
 }

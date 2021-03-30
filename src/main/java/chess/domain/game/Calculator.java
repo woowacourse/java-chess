@@ -5,7 +5,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import javafx.geometry.Pos;
 
 import java.util.Arrays;
 import java.util.HashMap;

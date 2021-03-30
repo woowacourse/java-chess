@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.piece.Vector;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +11,8 @@ public class PawnDoubleMove extends DoubleMove {
         super(color);
     }
 
-    public List<Direction> directions() {
-        return Collections.singletonList(new Direction(0, color.moveUnit()));
+    public List<Vector> directions() {
+        return Collections.singletonList(new Vector(0, color.moveUnit()));
     }
 
 }

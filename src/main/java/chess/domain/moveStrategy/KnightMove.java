@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.piece.Vector;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,16 +13,16 @@ public class KnightMove extends SingleMove {
     }
 
     @Override
-    public List<Direction> directions() {
+    public List<Vector> directions() {
         return Arrays.asList(
-                new Direction(2, 1),
-                new Direction(2, -1),
-                new Direction(-2, 1),
-                new Direction(-2, -1),
-                new Direction(1, 2),
-                new Direction(1, -2),
-                new Direction(-1, 2),
-                new Direction(-1, -2)
+                new Vector(2, 1),
+                new Vector(2, -1),
+                new Vector(-2, 1),
+                new Vector(-2, -1),
+                new Vector(1, 2),
+                new Vector(1, -2),
+                new Vector(-1, 2),
+                new Vector(-1, -2)
         );
     }
 }

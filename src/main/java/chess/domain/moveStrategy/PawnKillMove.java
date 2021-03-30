@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.piece.Vector;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +12,10 @@ public class PawnKillMove extends SingleMove {
     }
 
     @Override
-    public List<Direction> directions() {
+    public List<Vector> directions() {
         return Arrays.asList(
-                new Direction(1, color.moveUnit()),
-                new Direction(-1, color.moveUnit())
+                new Vector(1, color.moveUnit()),
+                new Vector(-1, color.moveUnit())
         );
     }
 }

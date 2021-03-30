@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import chess.domain.piece.Vector;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -21,5 +21,5 @@ public abstract class MultipleMove implements MoveStrategy {
                            .collect(Collectors.toList());
     }
 
-    public abstract List<Direction> directions();
+    public abstract List<Vector> directions();
 }

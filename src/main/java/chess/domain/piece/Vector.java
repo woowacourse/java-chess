@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-public class Direction {
+public class Vector {
     private final int column;
     private final int row;
 
-    public Direction(int column, int row) {
+    public Vector(int column, int row) {
         this.column = column;
         this.row = row;
     }
