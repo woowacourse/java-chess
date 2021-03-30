@@ -6,13 +6,15 @@ import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
+import javafx.util.Pair;
 
 public class Controller {
 
     public void run() {
         ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
         OutputView.gameStart();
-        if (Command.START.equals(Command.findCommand(InputView.input()))) {
+        String input = InputView.input();
+        if (Command.START.equals(validCommand(input))) {
             startGame(chessGame);
         }
     }
@@ -25,11 +27,18 @@ public class Controller {
 
     public void playGame(ChessGame chessGame) {
         String input = InputView.input();
+        Command command = validCommand(input);
+        try {
+            validatePlayCommand(command);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            playGame(chessGame);
+        }
 
-        if (Command.MOVE.equals(Command.findCommand(input))) {
+        if (Command.MOVE.equals(command)) {
             move(chessGame, input);
         }
-        if (Command.END.equals(Command.findCommand(input))
+        if (Command.END.equals(command)
             || chessGame.isOver()) {
             endGame(chessGame);
         }
@@ -48,8 +57,25 @@ public class Controller {
     public void endGame(ChessGame chessGame) {
         OutputView.gameEnd();
         Result result = chessGame.gameResult();
-        if (Command.STATUS.equals(Command.findCommand(InputView.input()))) {
+        String input = InputView.input();
+        if (Command.STATUS.equals(validCommand(input))) {
             OutputView.printResult(result);
         }
+    }
+
+    private Command validCommand(String input) {
+        try {
+            return Command.findCommand(input);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return validCommand(InputView.input());
+        }
+    }
+
+    private void validatePlayCommand(Command command) {
+        if (Command.MOVE.equals(command) || Command.END.equals(command)) {
+            return;
+        }
+        throw new IllegalArgumentException(Command.INVALID_COMMAND);
     }
 }
