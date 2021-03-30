@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.controller;
 
 import java.util.Arrays;
 import java.util.List;
