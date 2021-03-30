@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.position.Position;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;

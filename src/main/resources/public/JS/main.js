@@ -56,8 +56,9 @@ function selectTile(event) {
     if(clickedPiece) {
         clickedPiece.classList.remove("clickedTile");
         clickedPiece.classList.toggle("clicked");
-        console.log(clickedPiece.id + " to " + clickPiece.id);
-        move(clickedPiece.id, clickPiece.id);
+        if(clickedPiece !== clickPiece) {
+            move(clickedPiece.id, clickPiece.id);
+        }
     }else {
         clickPiece.classList.toggle("clicked");
         clickPiece.classList.add("clickedTile");
@@ -75,7 +76,7 @@ function getClickedPiece() {
 }
 
 async function move(from, to) {
-    data = {
+    let data = {
         from: from,
         to: to
     }
@@ -87,15 +88,17 @@ async function move(from, to) {
         }
     }).then(res => res.json());
 
-    console.log(response);
-    if(response === 200) {
-        const piece = document.getElementById(from).src;
-        console.log(piece);
+    if(response.code === "200") {
         changeImage(from, to);
         changeTurn();
     }
-    else if(response === 400) {
-        alert("이상하게 움직이지마!");
+    else if(response.code === "300") {
+        changeImage(from, to);
+        changeTurn();
+        alert(response.message + "가 승리했습니다!");
+    }
+    else if(response.code === "400") {
+        alert(response.message);
     }
 }
 
