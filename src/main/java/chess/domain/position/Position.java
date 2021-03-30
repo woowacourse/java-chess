@@ -1,9 +1,6 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Position {
     private final Column column;
@@ -40,6 +37,10 @@ public class Position {
 
     private static String toKey(final Column column, final Row row) {
         return column.value() + row.value();
+    }
+
+    public static Collection<Position> all() {
+        return cache.values();
     }
 
     public List<Position> positionsOfDirection(int columnValue, int rowValue) {

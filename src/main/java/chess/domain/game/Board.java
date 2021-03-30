@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -69,35 +70,8 @@ public class Board {
         return isKingDead;
     }
 
-    public double score(Color color) {
-        double score = 0;
-        for (Column column : Column.values()) {
-            score += scoreByColumn(color, column);
-        }
-        return score;
-    }
-
-    private double scoreByColumn(Color color, Column column) {
-        int pawnCount = 0;
-        double score = 0;
-        for (Row row : Row.values()) {
-            Piece piece = pieceByPosition.get(Position.of(column, row));
-            if (piece.isSameColor(color)) {
-                score += piece.score();
-                if (piece.isPawn()) {
-                    pawnCount += 1;
-                }
-            }
-        }
-
-        if (pawnCount >= 2) {
-            score -= 0.5 * pawnCount;
-        }
-
-        return score;
-    }
 
     public Map<Position, Piece> allPieces() {
-        return pieceByPosition;
+        return Collections.unmodifiableMap(pieceByPosition);
     }
 }

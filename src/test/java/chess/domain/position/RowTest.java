@@ -35,9 +35,4 @@ class RowTest {
         assertThatThrownBy(() -> row.move(-6)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void getBetween() {
-        Row row = Row.SIX;
-        assertThat(row.getBetween(Row.THREE)).contains(Row.FOUR, Row.FIVE);
-    }
 }
