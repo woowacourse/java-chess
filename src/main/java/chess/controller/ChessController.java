@@ -12,8 +12,6 @@ import spark.Response;
 
 import java.sql.SQLException;
 
-import static spark.Spark.exception;
-
 public class ChessController {
     private static final Gson GSON = new Gson();
     private static final String RESPONSE_JSON = "application/json";
@@ -46,12 +44,4 @@ public class ChessController {
 //            return new Gson().toJsonTree(resultDTO);
 //        });
 //    }
-
-    public void runExceptionHandler() {
-        exception(RuntimeException.class, (exception, request, response) -> {
-            response.status(500);
-            response.type("application/json");
-            response.body(exception.getMessage());
-        });
-    }
 }
