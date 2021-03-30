@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.domain.result;
 
 public interface Result {
 

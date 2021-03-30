@@ -2,25 +2,26 @@ package chess.domain.game;
 
 import chess.domain.CommandAsString;
 import chess.domain.game.state.GameState;
+import chess.domain.result.Result;
 
-public final class GameManager {
+public final class Game {
 
     private final GameState gameState;
 
-    public GameManager(final GameState gameState) {
+    public Game(final GameState gameState) {
         this.gameState = gameState;
     }
 
-    public GameManager execute(final CommandAsString command) {
+    public Game execute(final CommandAsString command) {
         final GameState newGameState = gameState.execute(command);
-        return new GameManager(newGameState);
+        return new Game(newGameState);
     }
 
     public Result result(final CommandAsString command) {
         if (command.isStatus()) {
-            return gameState.scoreResult();
+            return gameState.statusResult();
         }
-        return gameState.statusResult();
+        return gameState.turnResult();
     }
 
     public boolean isNotFinished() {

@@ -50,10 +50,10 @@ public class StatusResult implements Result {
         for (Column column : Column.values()) {
             final int pawnCount = board.pawnCount(column, color);
             if (pawnCount == 1) {
-                score = score.add(new Score(PAWN_SCORE));
+                score = score.add(new Score(1));
             }
             if (pawnCount > 1) {
-                score = score.add(new Score(DUPLICATED_PAWN_SCORE * pawnCount));
+                score = score.add(new Score(0.5 * pawnCount));
             }
         }
         return score;

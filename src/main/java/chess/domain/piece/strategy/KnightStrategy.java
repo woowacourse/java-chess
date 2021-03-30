@@ -7,7 +7,7 @@ import java.util.List;
 public final class KnightStrategy implements PieceStrategy {
 
     private static final String NAME = "n";
-    private static final double VALUE = 3;
+    private static final double VALUE = 2.5;
 
     @Override
     public List<Direction> directions() {
