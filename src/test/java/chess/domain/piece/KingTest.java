@@ -16,9 +16,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class KingTest {
-
-    private King king;
-
     private static Stream<Arguments> destinations() {
         return Stream.of(
                 Arguments.of(Position.from("b6")),
@@ -31,6 +28,7 @@ class KingTest {
                 Arguments.of(Position.from("d4"))
         );
     }
+    private King king;
 
     @BeforeEach
     void setUp() {
@@ -44,13 +42,6 @@ class KingTest {
         king.moveToEmpty(position, new Pieces());
         assertTrue(king.hasPosition(position));
     }
-
-    @Test
-    void cornerMove() {
-        assertThatCode(() -> king.moveToEmpty(Position.from("a4"), new Pieces()))
-                .doesNotThrowAnyException();
-    }
-
 
     @Test
     @DisplayName("킹 이동 가능한 위치 값 들 확인")

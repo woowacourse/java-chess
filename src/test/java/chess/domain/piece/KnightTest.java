@@ -45,13 +45,6 @@ class KnightTest {
     }
 
     @Test
-    void cornerMove() {
-        assertThatCode(() -> knight.moveToEmpty(Position.from("c4"), new Pieces()))
-                .doesNotThrowAnyException();
-    }
-
-
-    @Test
     @DisplayName("나이트 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
