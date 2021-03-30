@@ -42,10 +42,6 @@ public abstract class Piece {
         return source.getDistance(target) <= this.maxDistanceValue();
     }
 
-    public boolean isSameTeam(final Piece other) {
-        return this.owner.isSame(other.owner);
-    }
-
     public boolean isDifferentTeam(final Piece other) {
         return this.owner.isDifferent(other.owner);
     }
@@ -56,10 +52,6 @@ public abstract class Piece {
 
     public boolean isSameOwnerPawn(final Owner owner) {
         return this.isPawn() && this.owner.isSame(owner);
-    }
-
-    public boolean isKing() {
-        return false;
     }
 
     public boolean isPawn() {

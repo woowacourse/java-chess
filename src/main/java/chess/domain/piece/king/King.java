@@ -39,9 +39,4 @@ public abstract class King extends Piece {
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
     }
-
-    @Override
-    public boolean isKing() {
-        return true;
-    }
 }
