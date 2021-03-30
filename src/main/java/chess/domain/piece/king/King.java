@@ -2,7 +2,6 @@ package chess.domain.piece.king;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
-import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
@@ -11,12 +10,10 @@ import java.util.List;
 
 public abstract class King extends Piece {
 
-    private King(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
-        super(owner, score, directions, maxDistance);
-    }
+    private static final int MAX_DISTANCE = 1;
 
-    protected King(final Owner owner, final Score score, final List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.KING);
+    private King(final Owner owner, final Score score, final List<Direction> directions) {
+        super(owner, score, directions);
     }
 
     protected King(final Owner owner) {
@@ -33,6 +30,11 @@ public abstract class King extends Piece {
         }
 
         throw new IllegalArgumentException("Invalid King");
+    }
+
+    @Override
+    public int maxDistance() {
+        return MAX_DISTANCE;
     }
 
     @Override

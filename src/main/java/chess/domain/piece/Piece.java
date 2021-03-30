@@ -12,13 +12,11 @@ public abstract class Piece {
     private final Owner owner;
     private final Score score;
     private final List<Direction> directions;
-    private final MaxDistance maxDistance;
 
-    public Piece(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
+    public Piece(final Owner owner, final Score score, final List<Direction> directions) {
         this.owner = owner;
         this.directions = directions;
         this.score = score;
-        this.maxDistance = maxDistance;
     }
 
     public List<Path> movablePath(final Position source) {
@@ -38,7 +36,7 @@ public abstract class Piece {
     }
 
     private boolean isValidDistance(final Position source, final Position target) {
-        return source.getDistance(target) <= this.maxDistanceValue();
+        return source.getDistance(target) <= this.maxDistance();
     }
 
     public boolean isDifferentTeam(final Piece other) {
@@ -69,9 +67,7 @@ public abstract class Piece {
         return this.score;
     }
 
-    public int maxDistanceValue() {
-        return this.maxDistance.value();
-    }
+    public abstract int maxDistance();
 
     public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 
