@@ -5,8 +5,12 @@ import static chess.domain.player.type.TeamColor.WHITE;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
-import chess.domain.game.ChessGameEntity;
+import chess.dao.entity.PiecePositionEntity;
+import chess.domain.board.setting.BoardDefaultSetting;
+import chess.domain.game.ChessGame;
+import chess.utils.DBCleaner;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,11 +19,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessGameDAOTest {
+    public static final int NUMBER_OF_PIECES_OF_ONE_PLAYER = 16;
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
+    private final PlayerDAO playerDAO = new PlayerDAO();
+    private final PlayerPiecePositionDAO piecePositionDAO = new PlayerPiecePositionDAO();
 
     @AfterEach
     void tearDown() throws SQLException {
-        chessGameDAO.removeAll();
+        DBCleaner.removeAll();
     }
 
     @DisplayName("체스 게임 저장 및 조회")
@@ -107,5 +114,38 @@ class ChessGameDAOTest {
         List<ChessGameEntity> foundAllChessGames = chessGameDAO.findAll();
 
         assertThat(foundAllChessGames).hasSize(0);
+    }
+
+    @DisplayName("종료를 요청하면, 현재 진행중인 ChessGame에 관련된 모든 정보 삭제")
+    @Test
+    void endGame() throws SQLException {
+        ChessGame chessGame = new ChessGame();
+        chessGame.createNew(new BoardDefaultSetting(), "game1");
+        chessGame.createNew(new BoardDefaultSetting(), "game2");
+
+        List<ChessGameEntity> allChessGames = chessGameDAO.findAll();
+        assertThat(allChessGames).hasSize(2);
+
+        for (ChessGameEntity chessGameEntity : allChessGames) {
+            Long whitePlayerId = playerDAO
+                .findIdByGameIdAndTeamColor(chessGameEntity.getId(), WHITE);
+            Long blackPlayerId = playerDAO
+                .findIdByGameIdAndTeamColor(chessGameEntity.getId(), BLACK);
+
+            assertThat(whitePlayerId).isNotNull();
+            assertThat(blackPlayerId).isNotNull();
+
+            assertPiecesSizeOfPlayers(whitePlayerId);
+            assertPiecesSizeOfPlayers(blackPlayerId);
+        }
+
+        chessGame.remove(allChessGames.get(0).getId());
+
+        assertThat(chessGameDAO.findAll()).hasSize(1);
+    }
+
+    private void assertPiecesSizeOfPlayers(Long playerId) throws SQLException {
+        List<PiecePositionEntity> piecesPositions = piecePositionDAO.findAllByPlayerId(playerId);
+        assertThat(piecesPositions).hasSize(NUMBER_OF_PIECES_OF_ONE_PLAYER);
     }
 }

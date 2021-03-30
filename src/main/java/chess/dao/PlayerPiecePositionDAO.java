@@ -2,11 +2,11 @@ package chess.dao;
 
 import static chess.dao.setting.DBConnection.getConnection;
 
-import chess.dao.entity.GamePiecePosition;
-import chess.dao.entity.PiecePositionFromDB;
-import chess.dao.entity.PositionEntity;
-import chess.domain.piece.PieceEntity;
-import chess.domain.position.PiecePositionNew;
+import chess.dao.entity.GamePiecePositionEntity;
+import chess.dao.entity.PiecePositionEntity;
+import chess.domain.piece.Piece;
+import chess.domain.position.PiecePosition;
+import chess.domain.position.Position;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class PlayerPiecePositionDAO {
 
-    public void save(Long playerId, PiecePositionNew piecePosition) throws SQLException {
+    public void save(Long playerId, PiecePosition piecePosition) throws SQLException {
         String query = "INSERT INTO player_piece_position (player_id, piece_id, position_id) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, playerId);
@@ -26,13 +26,13 @@ public class PlayerPiecePositionDAO {
         pstmt.executeUpdate();
     }
 
-    public Map<PositionEntity, PieceEntity> findAllByGameId(Long gameId) throws SQLException {
+    public Map<Position, Piece> findAllByGameId(Long gameId) throws SQLException {
         ResultSet rs = getResultSetToFindAllByGameId(gameId);
-        Map<PositionEntity, PieceEntity> results = new HashMap<>();
+        Map<Position, Piece> results = new HashMap<>();
         while (rs.next()) {
-            PieceEntity pieceEntity = PieceEntity.of(rs.getLong("piece_id"));
-            PositionEntity positionEntity = PositionEntity.of(rs.getLong("position_id"));
-            results.put(positionEntity, pieceEntity);
+            Piece piece = Piece.of(rs.getLong("piece_id"));
+            Position position = Position.of(rs.getLong("position_id"));
+            results.put(position, piece);
         }
         return results;
     }
@@ -46,11 +46,11 @@ public class PlayerPiecePositionDAO {
         return pstmt.executeQuery();
     }
 
-    public List<PiecePositionFromDB> findAllByPlayerId(Long playerId) throws SQLException {
+    public List<PiecePositionEntity> findAllByPlayerId(Long playerId) throws SQLException {
         ResultSet rs = getResultSet(playerId);
-        List<PiecePositionFromDB> results = new ArrayList<>();
+        List<PiecePositionEntity> results = new ArrayList<>();
         while (rs.next()) {
-            results.add(new PiecePositionFromDB(
+            results.add(new PiecePositionEntity(
                 rs.getString("piece_name"),
                 rs.getString("piece_color"),
                 rs.getString("file_value"),
@@ -71,7 +71,7 @@ public class PlayerPiecePositionDAO {
         return pstmt.executeQuery();
     }
 
-    public GamePiecePosition findGamePiecePositionByGameIdAndPositionId(Long gameId,
+    public GamePiecePositionEntity findGamePiecePositionByGameIdAndPositionId(Long gameId,
         Long positionId) throws SQLException {
         ResultSet rs = getResultSetToFindPiecePosition(gameId, positionId);
         if (!rs.next()) {
@@ -79,7 +79,7 @@ public class PlayerPiecePositionDAO {
         }
         Long foundPlayerPiecePositionId = rs.getLong("id");
         Long foundPositionId = rs.getLong("position_id");
-        return new GamePiecePosition(foundPlayerPiecePositionId, foundPositionId);
+        return new GamePiecePositionEntity(foundPlayerPiecePositionId, foundPositionId);
     }
 
     private ResultSet getResultSetToFindPiecePosition(Long gameId, Long positionId)
@@ -94,18 +94,20 @@ public class PlayerPiecePositionDAO {
         return pstmt.executeQuery();
     }
 
-    public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
+    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity)
+        throws SQLException {
         String query = "UPDATE player_piece_position SET position_id = ? WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gamePiecePosition.getPositionId());
-        pstmt.setLong(2, gamePiecePosition.getPlayerPiecePositionId());
+        pstmt.setLong(1, gamePiecePositionEntity.getPositionId());
+        pstmt.setLong(2, gamePiecePositionEntity.getPlayerPiecePositionId());
         pstmt.executeUpdate();
     }
 
-    public void removePiecePositionOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
+    public void removePiecePositionOfGame(GamePiecePositionEntity gamePiecePositionEntity)
+        throws SQLException {
         String query = "DELETE FROM player_piece_position WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gamePiecePosition.getPlayerPiecePositionId());
+        pstmt.setLong(1, gamePiecePositionEntity.getPlayerPiecePositionId());
         pstmt.executeUpdate();
     }
 

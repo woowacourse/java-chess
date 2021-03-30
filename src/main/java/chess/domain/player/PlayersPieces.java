@@ -3,32 +3,32 @@ package chess.domain.player;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
-import chess.dao.entity.GamePiecePosition;
-import chess.dao.entity.PiecePositionFromDB;
-import chess.dao.entity.PositionEntity;
-import chess.domain.board.CellForDB;
+import chess.dao.entity.GamePiecePositionEntity;
+import chess.dao.entity.PiecePositionEntity;
+import chess.domain.board.Cell;
 import chess.domain.board.setting.BoardSetting;
-import chess.domain.piece.PieceEntity;
+import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
-import chess.domain.player.score.ScoresEntity;
-import chess.domain.position.PiecePositionNew;
-import chess.domain.position.PiecesPositionsForDB;
-import chess.domain.position.cache.PositionEntitiesCache;
+import chess.domain.player.score.Scores;
+import chess.domain.position.PiecePosition;
+import chess.domain.position.PiecesPositions;
+import chess.domain.position.Position;
+import chess.domain.position.cache.PositionsCache;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class PlayersPieces {
-    private final PlayersForDB playersForDB;
-    private final PiecesPositionsForDB piecesPositionsForDB;
+    private final Players players;
+    private final PiecesPositions piecesPositions;
 
     public PlayersPieces() {
-        this.playersForDB = new PlayersForDB();
-        this.piecesPositionsForDB = new PiecesPositionsForDB();
+        this.players = new Players();
+        this.piecesPositions = new PiecesPositions();
     }
 
     public void createAndSaveNewPlayers(Long gameId) throws SQLException {
-        playersForDB.createAndSaveNewPlayers(gameId);
+        players.createAndSaveNewPlayers(gameId);
     }
 
     public void saveInitialPieces(BoardSetting boardSetting, Long gameId) throws SQLException {
@@ -36,72 +36,74 @@ public class PlayersPieces {
         List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
         for (int index = 0; index < piecesSetting.size(); index++) {
             PieceWithColorType pieceWithColorType = piecesSetting.get(index);
-            PieceEntity pieceEntity = PieceEntity.of(pieceWithColorType);
-            PositionEntity positionEntity = PositionEntitiesCache.get(index);
-            PiecePositionNew piecePositionNew = new PiecePositionNew(pieceEntity, positionEntity);
-            savePieceIfExists(playersIds, piecePositionNew);
+            Piece piece = Piece.of(pieceWithColorType);
+            Position position = PositionsCache.get(index);
+            PiecePosition piecePosition = new PiecePosition(piece, position);
+            savePieceIfExists(playersIds, piecePosition);
         }
     }
 
     private PlayersIds getPlayersIdOfGame(Long gameId) throws SQLException {
-        Long whitePlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
+        Long whitePlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
         return new PlayersIds(whitePlayerId, blackPlayerId);
     }
 
-    private void savePieceIfExists(PlayersIds playersIds, PiecePositionNew piecePositionNew)
+    private void savePieceIfExists(PlayersIds playersIds, PiecePosition piecePosition)
         throws SQLException {
-        if (piecePositionNew.isPieceExists()) {
-            if (piecePositionNew.getTeamColor() == WHITE) {
-                piecesPositionsForDB.save(playersIds.getWhitePlayerId(), piecePositionNew);
+        if (piecePosition.isPieceExists()) {
+            if (piecePosition.getTeamColor() == WHITE) {
+                piecesPositions.save(playersIds.getWhitePlayerId(), piecePosition);
                 return;
             }
-            piecesPositionsForDB.save(playersIds.getBlackPlayerId(), piecePositionNew);
+            piecesPositions.save(playersIds.getBlackPlayerId(), piecePosition);
         }
     }
 
-    public Map<PositionEntity, CellForDB> getAllCellsByGameId(Long gameId) throws SQLException {
-        return piecesPositionsForDB.getAllCellsStatusByGameId(gameId);
+    public Map<Position, Cell> getAllCellsByGameId(Long gameId) throws SQLException {
+        return piecesPositions.getAllCellsStatusByGameId(gameId);
     }
 
-    public GamePiecePosition getGamePiecePositionByGameIdAndPosition(Long gameId,
-        PositionEntity position) throws SQLException {
+    public GamePiecePositionEntity getGamePiecePositionByGameIdAndPosition(Long gameId,
+        Position position) throws SQLException {
 
-        return piecesPositionsForDB.getGamePiecePositionByGameIdAndPosition(gameId, position);
+        return piecesPositions.getGamePiecePositionByGameIdAndPosition(gameId, position);
     }
 
-    public void removePieceOfGame(GamePiecePosition gamePiecePosition) throws SQLException {
-        piecesPositionsForDB.removePieceOfGame(gamePiecePosition);
+    public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity)
+        throws SQLException {
+        piecesPositions.removePieceOfGame(gamePiecePositionEntity);
     }
 
     public void calculateAndUpdateScoresOfGame(Long gameId) throws SQLException {
-        Long whitePlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
-        List<PiecePositionFromDB> whitePiecesPositions = piecesPositionsForDB
+        Long whitePlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
+        List<PiecePositionEntity> whitePiecesPositions = piecesPositions
             .getAllPiecesPositionsOfPlayer(whitePlayerId);
-        List<PiecePositionFromDB> blackPiecesPositions = piecesPositionsForDB
+        List<PiecePositionEntity> blackPiecesPositions = piecesPositions
             .getAllPiecesPositionsOfPlayer(blackPlayerId);
-        playersForDB.calculateAndUpdateScores(whitePlayerId, whitePiecesPositions);
-        playersForDB.calculateAndUpdateScores(blackPlayerId, blackPiecesPositions);
+        players.calculateAndUpdateScores(whitePlayerId, whitePiecesPositions);
+        players.calculateAndUpdateScores(blackPlayerId, blackPiecesPositions);
     }
 
-    public void updatePiecePosition(GamePiecePosition gamePiecePosition) throws SQLException {
-        piecesPositionsForDB.updatePiecePosition(gamePiecePosition);
+    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity)
+        throws SQLException {
+        piecesPositions.updatePiecePosition(gamePiecePositionEntity);
     }
 
     public void removeAllPlayersAndPiecesPositions(Long gameId) throws SQLException {
-        Long whitePlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playersForDB.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
-        piecesPositionsForDB.removeAllPiecesPositionsByPlayerId(whitePlayerId);
-        piecesPositionsForDB.removeAllPiecesPositionsByPlayerId(blackPlayerId);
-        playersForDB.removeAllByChessGame(gameId);
+        Long whitePlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
+        Long blackPlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
+        piecesPositions.removeAllPiecesPositionsByPlayerId(whitePlayerId);
+        piecesPositions.removeAllPiecesPositionsByPlayerId(blackPlayerId);
+        players.removeAllByChessGame(gameId);
     }
 
-    public ScoresEntity getPlayersScores(Long gameId) throws SQLException {
-        return playersForDB.getPlayersScores(gameId);
+    public Scores getPlayersScores(Long gameId) throws SQLException {
+        return players.getPlayersScores(gameId);
     }
 
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {
-        return piecesPositionsForDB.getCellsStatusByGameIdInOrderAsString(gameId);
+        return piecesPositions.getCellsStatusByGameIdInOrderAsString(gameId);
     }
 }

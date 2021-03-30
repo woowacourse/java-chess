@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.dto.request.MoveRequestDTOForDB;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
@@ -45,17 +45,17 @@ class ChessGameTest {
     @DisplayName("보드 기본 세팅 객체 주입 테스트")
     @Test
     void boardDefaultSettingInjection() {
-        ChessGameForDB chessGameForDB = new ChessGameForDB();
+        ChessGame chessGame = new ChessGame();
 
-        assertThatCode(() -> chessGameForDB.createNew(new BoardDefaultSetting(), TEST_TITLE))
+        assertThatCode(() -> chessGame.createNew(new BoardDefaultSetting(), TEST_TITLE))
             .doesNotThrowAnyException();
     }
 
     @DisplayName("보드 Custom 세팅 객체 주입 테스트")
     @Test
     void boardCustomSettingInjection() {
-        ChessGameForDB chessGameForDB = new ChessGameForDB();
-        assertThatCode(() -> chessGameForDB.createNew(new BoardCustomSetting(Arrays.asList(
+        ChessGame chessGame = new ChessGame();
+        assertThatCode(() -> chessGame.createNew(new BoardCustomSetting(Arrays.asList(
             null, B_KG, B_RK, null, null, null, null, null,
             B_PN, null, B_PN, B_BP, null, null, null, null,
             null, B_PN, null, null, B_QN, null, null, null,
@@ -70,8 +70,8 @@ class ChessGameTest {
     @DisplayName("보드 세팅 객체 주입시, 타입 에러 테스트")
     @Test
     void boardSettingInjectionTypeError() throws SQLException {
-        ChessGameForDB chessGameForDB = new ChessGameForDB();
-        assertThatThrownBy(() -> chessGameForDB.createNew(null, TEST_TITLE))
+        ChessGame chessGame = new ChessGame();
+        assertThatThrownBy(() -> chessGame.createNew(null, TEST_TITLE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -93,10 +93,10 @@ class ChessGameTest {
                     null, null, null, null, W_RK, null, null, null)
             );
 
-            ChessGameForDB chessGameForDB = new ChessGameForDB();
-            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+            ChessGame chessGame = new ChessGame();
+            Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isTrue();
+            assertThat(chessGame.getBoardStatus(gameId).isKingDead()).isTrue();
         }
 
         @DisplayName("2개의 킹들이 모두 잡혔을 때")
@@ -114,10 +114,10 @@ class ChessGameTest {
                     null, null, null, null, W_RK, null, null, null)
             );
 
-            ChessGameForDB chessGameForDB = new ChessGameForDB();
-            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+            ChessGame chessGame = new ChessGame();
+            Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isTrue();
+            assertThat(chessGame.getBoardStatus(gameId).isKingDead()).isTrue();
         }
 
         @DisplayName("King이 잡히지 않았을 때")
@@ -135,10 +135,10 @@ class ChessGameTest {
                     null, null, null, null, W_RK, W_KG, null, null)
             );
 
-            ChessGameForDB chessGameForDB = new ChessGameForDB();
-            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+            ChessGame chessGame = new ChessGame();
+            Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-            assertThat(chessGameForDB.getBoardStatus(gameId).isKingDead()).isFalse();
+            assertThat(chessGame.getBoardStatus(gameId).isKingDead()).isFalse();
         }
     }
 
@@ -160,10 +160,10 @@ class ChessGameTest {
                     null, null, null, null, W_RK, W_KG, null, null)
             );
 
-            ChessGameForDB chessGameForDB = new ChessGameForDB();
-            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+            ChessGame chessGame = new ChessGame();
+            Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-            GameStatusResponseDTO gameStatus = chessGameForDB.getGameStatus(gameId);
+            GameStatusResponseDTO gameStatus = chessGame.getGameStatus(gameId);
 
             assertThat(gameStatus.getWhitePlayerScore()).isEqualTo(19.5);
             assertThat(gameStatus.getBlackPlayerScore()).isEqualTo(20);
@@ -184,15 +184,15 @@ class ChessGameTest {
                     W_RK, W_NT, W_BP, W_QN, W_KG, W_BP, W_NT, W_RK)
             );
 
-            ChessGameForDB chessGameForDB = new ChessGameForDB();
-            Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+            ChessGame chessGame = new ChessGame();
+            Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-            MoveRequestDTOForDB moveRequestDTO
-                = new MoveRequestDTOForDB(gameId, "a4", "b5");
+            MoveRequestDTO moveRequestDTO
+                = new MoveRequestDTO(gameId, "a4", "b5");
 
-            chessGameForDB.move(moveRequestDTO);
+            chessGame.move(moveRequestDTO);
 
-            GameStatusResponseDTO gameStatus = chessGameForDB.getGameStatus(gameId);
+            GameStatusResponseDTO gameStatus = chessGame.getGameStatus(gameId);
 
             assertThat(gameStatus.getWhitePlayerScore()).isEqualTo(37);
             assertThat(gameStatus.getBlackPlayerScore()).isEqualTo(37);
@@ -226,14 +226,14 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCannotMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -251,7 +251,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -277,7 +277,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -303,7 +303,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -330,7 +330,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -356,7 +356,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -382,7 +382,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -408,7 +408,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -439,14 +439,14 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCannotMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -464,15 +464,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCanMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -490,7 +490,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -516,7 +516,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -542,7 +542,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -568,15 +568,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCannotMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -594,15 +594,15 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCannotMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -620,7 +620,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -651,14 +651,14 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGameForDB = new ChessGameForDB();
-                    Long gameId = chessGameForDB.createNew(customBoardSetting, TEST_TITLE);
+                    ChessGame chessGame = new ChessGame();
+                    Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-                    chessGameForDB.changeToNextTurn(gameId);
+                    chessGame.changeToNextTurn(gameId);
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGameForDB, gameId, startPositionInput, destinationInput);
+                    assertCannotMove(chessGame, gameId, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -676,7 +676,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -702,7 +702,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -728,7 +728,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -754,7 +754,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -780,7 +780,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -806,7 +806,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -832,7 +832,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -858,7 +858,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -884,7 +884,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -910,7 +910,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -936,7 +936,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -967,7 +967,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -992,7 +992,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1018,7 +1018,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1044,7 +1044,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1069,7 +1069,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1095,7 +1095,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1121,7 +1121,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1147,7 +1147,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1173,7 +1173,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1199,7 +1199,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1225,7 +1225,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1258,7 +1258,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1283,7 +1283,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1309,7 +1309,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1335,7 +1335,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1361,7 +1361,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1387,7 +1387,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1413,7 +1413,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1439,7 +1439,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1465,7 +1465,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1491,7 +1491,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1517,7 +1517,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1543,7 +1543,7 @@ class ChessGameTest {
                         null, null, null, null, null, null, null, null)
                 );
 
-                ChessGameForDB chessGame = new ChessGameForDB();
+                ChessGame chessGame = new ChessGame();
                 Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                 chessGame.changeToNextTurn(gameId);
@@ -1578,7 +1578,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     chessGame.changeToNextTurn(gameId);
@@ -1606,7 +1606,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1632,7 +1632,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1658,7 +1658,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1684,7 +1684,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1714,7 +1714,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1740,7 +1740,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1766,7 +1766,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1792,7 +1792,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1822,7 +1822,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1848,7 +1848,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1875,7 +1875,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1902,7 +1902,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         chessGame.changeToNextTurn(gameId);
@@ -1935,7 +1935,7 @@ class ChessGameTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    ChessGameForDB chessGame = new ChessGameForDB();
+                    ChessGame chessGame = new ChessGame();
                     Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                     String startPositionInput = "d5";
@@ -1961,7 +1961,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d5";
@@ -1985,7 +1985,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d5";
@@ -2009,7 +2009,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d5";
@@ -2033,7 +2033,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d5";
@@ -2061,7 +2061,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2085,7 +2085,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2109,7 +2109,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2133,7 +2133,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d3";
@@ -2161,7 +2161,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2185,7 +2185,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2210,7 +2210,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2235,7 +2235,7 @@ class ChessGameTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        ChessGameForDB chessGame = new ChessGameForDB();
+                        ChessGame chessGame = new ChessGame();
                         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
                         String startPositionInput = "d2";
@@ -2248,15 +2248,15 @@ class ChessGameTest {
         }
     }
 
-    private void assertCanMove(ChessGameForDB chessGame, Long gameId, String startPositionInput,
+    private void assertCanMove(ChessGame chessGame, Long gameId, String startPositionInput,
         String destinationInput) throws SQLException {
 
         List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
         String pieceToMove
             = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
 
-        MoveRequestDTOForDB moveRequestDTO
-            = new MoveRequestDTOForDB(gameId, startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO
+            = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
 
         chessGame.move(moveRequestDTO);
         List<String> cellsStatusAfterMove = chessGame.getBoardStatus(gameId).getCellsStatus();
@@ -2275,7 +2275,7 @@ class ChessGameTest {
         ).isEqualTo(expectedCellStatus);
     }
 
-    private void assertCannotMove(ChessGameForDB chessGame, Long gameId, String startPositionInput,
+    private void assertCannotMove(ChessGame chessGame, Long gameId, String startPositionInput,
         String destinationInput) throws SQLException {
 
         List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
@@ -2285,8 +2285,8 @@ class ChessGameTest {
         String destinationCellStatus
             = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(destinationInput));
 
-        MoveRequestDTOForDB moveRequestDTO
-            = new MoveRequestDTOForDB(gameId, startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO
+            = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
 
         assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);

@@ -2,7 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.entity.PositionEntity;
+import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.sql.SQLException;
@@ -22,9 +22,9 @@ class PositionDAOTest {
 
     private void findByRanksInFileOf(File file) throws SQLException {
         for (Rank rank : Rank.values()) {
-            PositionEntity positionEntity = positionDAO.findByFileAndRank(file, rank);
-            assertThat(positionEntity.getFile()).isSameAs(file);
-            assertThat(positionEntity.getRank()).isSameAs(rank);
+            Position position = positionDAO.findByFileAndRank(file, rank);
+            assertThat(position.getFile()).isSameAs(file);
+            assertThat(position.getRank()).isSameAs(rank);
         }
     }
 }

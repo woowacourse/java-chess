@@ -3,7 +3,7 @@ package chess.domain.board.setting;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.game.ChessGameForDB;
+import chess.domain.game.ChessGame;
 import chess.domain.position.type.File;
 import chess.utils.DBCleaner;
 import chess.utils.position.converter.PositionConverter;
@@ -27,7 +27,7 @@ class BoardDefaultSettingTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        ChessGameForDB chessGame = new ChessGameForDB();
+        ChessGame chessGame = new ChessGame();
         Long gameId = chessGame.createNew(new BoardDefaultSetting(), TEST_TITLE);
         cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
         blackPiecesExceptPawns = Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R");

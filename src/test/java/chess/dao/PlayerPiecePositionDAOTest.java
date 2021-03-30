@@ -17,12 +17,12 @@ import static chess.domain.position.type.Rank.TWO;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.entity.GamePiecePosition;
-import chess.dao.entity.PiecePositionFromDB;
-import chess.dao.entity.PositionEntity;
-import chess.domain.game.ChessGameEntity;
-import chess.domain.piece.PieceEntity;
-import chess.domain.position.PiecePositionNew;
+import chess.dao.entity.ChessGameEntity;
+import chess.dao.entity.GamePiecePositionEntity;
+import chess.dao.entity.PiecePositionEntity;
+import chess.domain.piece.Piece;
+import chess.domain.position.PiecePosition;
+import chess.domain.position.Position;
 import chess.utils.DBCleaner;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -37,14 +37,14 @@ class PlayerPiecePositionDAOTest {
     private final ChessGameDAO chessGameDAO = new ChessGameDAO();
     private final PlayerDAO playerDAO = new PlayerDAO();
     private final PlayerPiecePositionDAO playerPiecePositionDAO = new PlayerPiecePositionDAO();
-    private final PieceEntity whitePieceOfGame1 = PieceEntity.of(BISHOP, WHITE);
-    private final PieceEntity blackPieceOfGame1 = PieceEntity.of(PAWN, BLACK);
-    private final PositionEntity whitePositionOfGame1 = PositionEntity.of(H, ONE);
-    private final PositionEntity blackPositionOfGame1 = PositionEntity.of(A, EIGHT);
-    private final PieceEntity whitePieceOfGame2 = PieceEntity.of(KNIGHT, WHITE);
-    private final PieceEntity blackPieceOfGame2 = PieceEntity.of(ROOK, BLACK);
-    private final PositionEntity whitePositionOfGame2 = PositionEntity.of(D, FIVE);
-    private final PositionEntity blackPositionOfGame2 = PositionEntity.of(C, TWO);
+    private final Piece whitePieceOfGame1 = Piece.of(BISHOP, WHITE);
+    private final Piece blackPieceOfGame1 = Piece.of(PAWN, BLACK);
+    private final Position whitePositionOfGame1 = Position.of(H, ONE);
+    private final Position blackPositionOfGame1 = Position.of(A, EIGHT);
+    private final Piece whitePieceOfGame2 = Piece.of(KNIGHT, WHITE);
+    private final Piece blackPieceOfGame2 = Piece.of(ROOK, BLACK);
+    private final Position whitePositionOfGame2 = Position.of(D, FIVE);
+    private final Position blackPositionOfGame2 = Position.of(C, TWO);
     private ChessGameEntity chessGame1;
     private ChessGameEntity chessGame2;
     private Long blackPlayerIdOfGame1;
@@ -62,10 +62,10 @@ class PlayerPiecePositionDAOTest {
         playerDAO.save(BLACK, chessGame1.getId());
         blackPlayerIdOfGame1 = playerDAO.findIdByGameIdAndTeamColor(chessGame1.getId(), BLACK);
 
-        PiecePositionNew whitePiecePositionOfGame1
-            = new PiecePositionNew(whitePieceOfGame1, whitePositionOfGame1);
-        PiecePositionNew blackPiecePositionOfGame1
-            = new PiecePositionNew(blackPieceOfGame1, blackPositionOfGame1);
+        PiecePosition whitePiecePositionOfGame1
+            = new PiecePosition(whitePieceOfGame1, whitePositionOfGame1);
+        PiecePosition blackPiecePositionOfGame1
+            = new PiecePosition(blackPieceOfGame1, blackPositionOfGame1);
 
         playerPiecePositionDAO.save(whitePlayerIdOfGame1, whitePiecePositionOfGame1);
         playerPiecePositionDAO.save(blackPlayerIdOfGame1, blackPiecePositionOfGame1);
@@ -76,10 +76,10 @@ class PlayerPiecePositionDAOTest {
         playerDAO.save(BLACK, chessGame2.getId());
         blackPlayerIdOfGame2 = playerDAO.findIdByGameIdAndTeamColor(chessGame2.getId(), BLACK);
 
-        PiecePositionNew whitePiecePositionOfGame2
-            = new PiecePositionNew(whitePieceOfGame2, whitePositionOfGame2);
-        PiecePositionNew blackPiecePositionOfGame2
-            = new PiecePositionNew(blackPieceOfGame2, blackPositionOfGame2);
+        PiecePosition whitePiecePositionOfGame2
+            = new PiecePosition(whitePieceOfGame2, whitePositionOfGame2);
+        PiecePosition blackPiecePositionOfGame2
+            = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
 
         playerPiecePositionDAO.save(whitePlayerIdOfGame2, whitePiecePositionOfGame2);
         playerPiecePositionDAO.save(blackPlayerIdOfGame2, blackPiecePositionOfGame2);
@@ -93,19 +93,19 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 게임의 모든 기물과 해당 위치 조회")
     @Test
     void findAllByGameId() throws SQLException {
-        Map<PositionEntity, PieceEntity> foundAllByGame1 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame1 = playerPiecePositionDAO
             .findAllByGameId(chessGame1.getId());
 
-        Map<PositionEntity, PieceEntity> expectedOfGame1 = new HashMap<>();
+        Map<Position, Piece> expectedOfGame1 = new HashMap<>();
         expectedOfGame1.put(blackPositionOfGame1, blackPieceOfGame1);
         expectedOfGame1.put(whitePositionOfGame1, whitePieceOfGame1);
 
         assertThat(foundAllByGame1).containsExactlyInAnyOrderEntriesOf(expectedOfGame1);
 
-        Map<PositionEntity, PieceEntity> foundAllByGame2 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame2 = playerPiecePositionDAO
             .findAllByGameId(chessGame2.getId());
 
-        Map<PositionEntity, PieceEntity> expectedOfGame2 = new HashMap<>();
+        Map<Position, Piece> expectedOfGame2 = new HashMap<>();
         expectedOfGame2.put(blackPositionOfGame2, blackPieceOfGame2);
         expectedOfGame2.put(whitePositionOfGame2, whitePieceOfGame2);
 
@@ -115,23 +115,23 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 플레이어의 모든 기물과 해당 위치 조회")
     @Test
     void findAllByPlayerId() throws SQLException {
-        PiecePositionNew blackPiecePositionOfGame2
-            = new PiecePositionNew(blackPieceOfGame2, blackPositionOfGame2);
+        PiecePosition blackPiecePositionOfGame2
+            = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
         playerPiecePositionDAO.save(blackPlayerIdOfGame1, blackPiecePositionOfGame2);
 
-        List<PiecePositionFromDB> piecesPositionsFromDB
+        List<PiecePositionEntity> piecesPositionsFromDB
             = playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame1);
 
-        Map<PositionEntity, PieceEntity> actualPiecesPositions = new HashMap<>();
-        for (PiecePositionFromDB piecePositionFromDB : piecesPositionsFromDB) {
+        Map<Position, Piece> actualPiecesPositions = new HashMap<>();
+        for (PiecePositionEntity piecePositionEntity : piecesPositionsFromDB) {
             actualPiecesPositions.put(
-                PositionEntity.of(piecePositionFromDB.getFile(), piecePositionFromDB.getRank()),
-                PieceEntity.of(piecePositionFromDB.getPieceType(),
-                    piecePositionFromDB.getTeamColor())
+                Position.of(piecePositionEntity.getFile(), piecePositionEntity.getRank()),
+                Piece.of(piecePositionEntity.getPieceType(),
+                    piecePositionEntity.getTeamColor())
             );
         }
 
-        Map<PositionEntity, PieceEntity> expectedOfBlackPlayerOfGame1 = new HashMap<>();
+        Map<Position, Piece> expectedOfBlackPlayerOfGame1 = new HashMap<>();
         expectedOfBlackPlayerOfGame1.put(blackPositionOfGame1, blackPieceOfGame1);
         expectedOfBlackPlayerOfGame1.put(blackPositionOfGame2, blackPieceOfGame2);
 
@@ -142,57 +142,57 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 게임, 특정 위치의 기물 id 조회")
     @Test
     void findGamePiecePositionByGameIdAndPositionId() throws SQLException {
-        GamePiecePosition gamePiecePosition = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntity = playerPiecePositionDAO
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
-        assertThat(gamePiecePosition.getPositionId()).isEqualTo(blackPositionOfGame1.getId());
+        assertThat(gamePiecePositionEntity.getPositionId()).isEqualTo(blackPositionOfGame1.getId());
     }
 
     @DisplayName("플레이어의 기물 위치 업데이트")
     @Test
     void updatePiecePosition() throws SQLException {
-        GamePiecePosition gamePiecePositionBeforeUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntityBeforeUpdate = playerPiecePositionDAO
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
-        gamePiecePositionBeforeUpdate.setPositionId(whitePositionOfGame2.getId());
-        playerPiecePositionDAO.updatePiecePosition(gamePiecePositionBeforeUpdate);
+        gamePiecePositionEntityBeforeUpdate.setPositionId(whitePositionOfGame2.getId());
+        playerPiecePositionDAO.updatePiecePosition(gamePiecePositionEntityBeforeUpdate);
 
-        GamePiecePosition blackPositionOfGame1AfterUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity blackPositionOfGame1AfterUpdate = playerPiecePositionDAO
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
         assertThat(blackPositionOfGame1AfterUpdate).isNull();
 
-        GamePiecePosition whitePositionOfGame2AfterUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity whitePositionOfGame2AfterUpdate = playerPiecePositionDAO
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), whitePositionOfGame2.getId());
 
         assertThat(whitePositionOfGame2AfterUpdate.getPositionId())
             .isEqualTo(whitePositionOfGame2.getId());
         assertThat(whitePositionOfGame2AfterUpdate.getPlayerPiecePositionId())
-            .isEqualTo(gamePiecePositionBeforeUpdate.getPlayerPiecePositionId());
+            .isEqualTo(gamePiecePositionEntityBeforeUpdate.getPlayerPiecePositionId());
     }
 
     @DisplayName("특정 게임에서 특정 위치의 기물 삭제")
     @Test
     void removePiecePositionOfGame() throws SQLException {
-        GamePiecePosition gamePiecePositionToRemove = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntityToRemove = playerPiecePositionDAO
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), whitePositionOfGame1.getId());
 
-        playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePositionToRemove);
+        playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePositionEntityToRemove);
 
-        Map<PositionEntity, PieceEntity> foundAllByGame1 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame1 = playerPiecePositionDAO
             .findAllByGameId(chessGame1.getId());
 
         assertThat(foundAllByGame1).doesNotContainEntry(whitePositionOfGame1, whitePieceOfGame1);
 
-        Map<PositionEntity, PieceEntity> foundAllByGame2 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame2 = playerPiecePositionDAO
             .findAllByGameId(chessGame2.getId());
 
-        Map<PositionEntity, PieceEntity> expectedOfGame2 = new HashMap<>();
+        Map<Position, Piece> expectedOfGame2 = new HashMap<>();
         expectedOfGame2.put(blackPositionOfGame2, blackPieceOfGame2);
         expectedOfGame2.put(whitePositionOfGame2, whitePieceOfGame2);
 
@@ -202,8 +202,8 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 플레이어의 모든 기물 삭제")
     @Test
     void removeAllByPlayer() throws SQLException {
-        PiecePositionNew blackPiecePositionOfGame2
-            = new PiecePositionNew(blackPieceOfGame2, blackPositionOfGame2);
+        PiecePosition blackPiecePositionOfGame2
+            = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
         playerPiecePositionDAO.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
 
         playerPiecePositionDAO.removeAllByPlayer(whitePlayerIdOfGame2);
@@ -217,8 +217,8 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("모든 게임의 모든 기물 위치 삭제")
     @Test
     void removeAll() throws SQLException {
-        PiecePositionNew blackPiecePositionOfGame2
-            = new PiecePositionNew(blackPieceOfGame2, blackPositionOfGame2);
+        PiecePosition blackPiecePositionOfGame2
+            = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
         playerPiecePositionDAO.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
 
         playerPiecePositionDAO.removeAll();

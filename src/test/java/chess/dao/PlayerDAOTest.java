@@ -5,7 +5,7 @@ import static chess.domain.player.type.TeamColor.WHITE;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.game.ChessGameEntity;
+import chess.dao.entity.ChessGameEntity;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

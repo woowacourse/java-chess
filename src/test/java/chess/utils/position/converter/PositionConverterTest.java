@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
-import chess.domain.game.ChessGameForDB;
+import chess.domain.game.ChessGame;
 import chess.utils.DBCleaner;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class PositionConverterTest {
                 null, null, null, null, W_RK, null, null, null)
         );
 
-        ChessGameForDB chessGame = new ChessGameForDB();
+        ChessGame chessGame = new ChessGame();
         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
         List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 

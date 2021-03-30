@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.dto.response.BoardStatusResponseDTOForDB;
-import chess.domain.game.ChessGameForDB;
+import chess.domain.game.ChessGame;
 import chess.utils.DBCleaner;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ class BoardCustomSettingTest {
                 null, null, null, null, W_RK, null, null, null)
         );
 
-        ChessGameForDB chessGame = new ChessGameForDB();
+        ChessGame chessGame = new ChessGame();
         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
         BoardStatusResponseDTOForDB boardStatus = chessGame.getBoardStatus(gameId);

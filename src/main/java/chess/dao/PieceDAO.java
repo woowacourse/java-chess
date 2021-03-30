@@ -3,8 +3,8 @@ package chess.dao;
 
 import static chess.dao.setting.DBConnection.getConnection;
 
-import chess.dao.entity.PieceFromDB;
-import chess.domain.piece.PieceEntity;
+import chess.dao.entity.PieceEntity;
+import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import java.sql.PreparedStatement;
@@ -13,14 +13,14 @@ import java.sql.SQLException;
 
 public class PieceDAO {
 
-    public PieceEntity findByPieceTypeAndTeamColor(PieceType pieceType, TeamColor teamColor)
+    public Piece findByPieceTypeAndTeamColor(PieceType pieceType, TeamColor teamColor)
         throws SQLException {
         ResultSet rs = getResultSet(pieceType, teamColor);
         if (rs == null) {
             return null;
         }
-        return PieceEntity.castedFrom(
-            new PieceFromDB(
+        return Piece.castedFrom(
+            new PieceEntity(
                 rs.getLong("id"),
                 rs.getString("name"),
                 rs.getString("color")));

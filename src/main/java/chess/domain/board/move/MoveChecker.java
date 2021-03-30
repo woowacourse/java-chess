@@ -6,170 +6,170 @@ import static chess.domain.piece.type.PieceType.KNIGHT;
 import static chess.domain.piece.type.PieceType.QUEEN;
 import static chess.domain.piece.type.PieceType.ROOK;
 
-import chess.dao.entity.PositionEntity;
-import chess.domain.board.CellForDB;
-import chess.domain.piece.PieceEntity;
+import chess.domain.board.Cell;
+import chess.domain.piece.Piece;
 import chess.domain.piece.type.Direction;
 import chess.domain.piece.type.PieceType;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MoveChecker {
 
-    public boolean canMove(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
-        PieceEntity startPositionPieceToMove = getStartPositionPiece(cells, moveRequestForDB);
+    public boolean canMove(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
+        Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
         PieceType pieceTypeToMove = startPositionPieceToMove.getPieceType();
         if ((pieceTypeToMove == ROOK) || (pieceTypeToMove == BISHOP)
             || (pieceTypeToMove == QUEEN)) {
-            return canMoveByDefaultMoveStrategy(moveRequestForDB, cells);
+            return canMoveByDefaultMoveStrategy(moveRequest, cells);
         }
         if (pieceTypeToMove == KNIGHT || pieceTypeToMove == KING) {
-            return canByKnightMoveStrategy(moveRequestForDB, cells);
+            return canByKnightMoveStrategy(moveRequest, cells);
         }
-        return canMoveByPawnMoveStrategy(moveRequestForDB, cells);
+        return canMoveByPawnMoveStrategy(moveRequest, cells);
     }
 
-    private boolean canMoveByDefaultMoveStrategy(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
+    private boolean canMoveByDefaultMoveStrategy(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
 
-        PieceEntity startPositionPieceToMove = getStartPositionPiece(cells, moveRequestForDB);
-        if (isNotCorrectDirection(moveRequestForDB, startPositionPieceToMove)
-            || isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequestForDB)) {
+        Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
+        if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)
+            || isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequest)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        if (isOwnPieceExistsInDestination(cells, moveRequestForDB)) {
+        if (isOwnPieceExistsInDestination(cells, moveRequest)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;
     }
 
-    private boolean canMoveByPawnMoveStrategy(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
+    private boolean canMoveByPawnMoveStrategy(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
 
-        PieceEntity startPositionPieceToMove = getStartPositionPiece(cells, moveRequestForDB);
-        if (isNotCorrectDirection(moveRequestForDB, startPositionPieceToMove)) {
+        Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
+        if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        Direction moveRequestDirection = moveRequestForDB.getDirection();
+        Direction moveRequestDirection = moveRequest.getDirection();
         if (moveRequestDirection.isForward()) {
-            return canMoveForward(moveRequestForDB, cells);
+            return canMoveForward(moveRequest, cells);
         }
-        return canMoveDiagonal(moveRequestForDB, cells);
+        return canMoveDiagonal(moveRequest, cells);
     }
 
-    private boolean canMoveForward(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
+    private boolean canMoveForward(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
 
-        if (moveRequestForDB.isRankForwardedBy(1)) {
-            return canMoveOneRankForward(moveRequestForDB, cells);
+        if (moveRequest.isRankForwardedBy(1)) {
+            return canMoveOneRankForward(moveRequest, cells);
         }
-        if (moveRequestForDB.isRankForwardedBy(2)) {
-            return canMoveTwoRankForward(moveRequestForDB, cells);
+        if (moveRequest.isRankForwardedBy(2)) {
+            return canMoveTwoRankForward(moveRequest, cells);
         }
         throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
     }
 
 
-    private boolean canMoveOneRankForward(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
-        if (isAnyPieceExistsAtDestination(cells, moveRequestForDB.getDestination())) {
+    private boolean canMoveOneRankForward(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
+        if (isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         return true;
     }
 
-    private boolean canMoveTwoRankForward(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
+    private boolean canMoveTwoRankForward(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
 
-        if (!moveRequestForDB.isStartPositionFirstPawnPosition()) {
+        if (!moveRequest.isStartPositionFirstPawnPosition()) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        if (isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequestForDB)
-            || isAnyPieceExistsAtDestination(cells, moveRequestForDB.getDestination())) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
-        }
-        return true;
-    }
-
-    private boolean canMoveDiagonal(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
-
-        PositionEntity nextPosition = moveRequestForDB.getNextPositionOfStartPosition();
-        if (!(isEnemyExistsAtDestination(cells, moveRequestForDB)
-            && nextPosition.equals(moveRequestForDB.getDestination()))) {
+        if (isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequest)
+            || isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         return true;
     }
 
+    private boolean canMoveDiagonal(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
 
-    private boolean canByKnightMoveStrategy(MoveRequestForDB moveRequestForDB,
-        Map<PositionEntity, CellForDB> cells) {
-        PieceEntity startPositionKnightToMove = getStartPositionPiece(cells, moveRequestForDB);
-        if (isNotCorrectDirection(moveRequestForDB, startPositionKnightToMove)) {
+        Position nextPosition = moveRequest.getNextPositionOfStartPosition();
+        if (!(isEnemyExistsAtDestination(cells, moveRequest)
+            && nextPosition.equals(moveRequest.getDestination()))) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        return true;
+    }
+
+
+    private boolean canByKnightMoveStrategy(MoveRequest moveRequest,
+        Map<Position, Cell> cells) {
+        Piece startPositionKnightToMove = getStartPositionPiece(cells, moveRequest);
+        if (isNotCorrectDirection(moveRequest, startPositionKnightToMove)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        PositionEntity nextPosition = moveRequestForDB.getNextPositionOfStartPosition();
-        if (!(moveRequestForDB.isDestination(nextPosition)
-            && !isOwnPieceExistsInDestination(cells, moveRequestForDB))) {
+        Position nextPosition = moveRequest.getNextPositionOfStartPosition();
+        if (!(moveRequest.isDestination(nextPosition)
+            && !isOwnPieceExistsInDestination(cells, moveRequest))) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;
     }
 
-    private boolean isNotCorrectDirection(MoveRequestForDB moveRequestForDB,
-        PieceEntity startPositionPieceToMove) {
-        return !startPositionPieceToMove.isCorrectMoveDirection(moveRequestForDB.getDirection());
+    private boolean isNotCorrectDirection(MoveRequest moveRequest,
+        Piece startPositionPieceToMove) {
+        return !startPositionPieceToMove.isCorrectMoveDirection(moveRequest.getDirection());
     }
 
-    private PieceEntity getStartPositionPiece(Map<PositionEntity, CellForDB> cells,
-        MoveRequestForDB moveRequestForDB) {
+    private Piece getStartPositionPiece(Map<Position, Cell> cells,
+        MoveRequest moveRequest) {
 
-        CellForDB startPositionCell = cells.get(moveRequestForDB.getStartPosition());
+        Cell startPositionCell = cells.get(moveRequest.getStartPosition());
         return startPositionCell.getPieceEntity();
     }
 
-    public boolean isOwnPieceExistsInDestination(Map<PositionEntity, CellForDB> cells,
-        MoveRequestForDB moveRequestForDB) {
+    public boolean isOwnPieceExistsInDestination(Map<Position, Cell> cells,
+        MoveRequest moveRequest) {
 
-        CellForDB destinationCell = findCell(cells, moveRequestForDB.getDestination());
+        Cell destinationCell = findCell(cells, moveRequest.getDestination());
         if (destinationCell.isEmpty()) {
             return false;
         }
-        return destinationCell.getTeamColor() == moveRequestForDB.getCurrentTurnTeamColor();
+        return destinationCell.getTeamColor() == moveRequest.getCurrentTurnTeamColor();
     }
 
-    public boolean isAnyPieceExistsOnRouteBeforeDestination(Map<PositionEntity, CellForDB> cells,
-        MoveRequestForDB moveRequestForDB) {
+    public boolean isAnyPieceExistsOnRouteBeforeDestination(Map<Position, Cell> cells,
+        MoveRequest moveRequest) {
 
-        PositionEntity movingPosition = moveRequestForDB.getNextPositionOfStartPosition();
-        List<PositionEntity> canMovePositions = new ArrayList<>();
-        while (!movingPosition.equals(moveRequestForDB.getDestination())) {
+        Position movingPosition = moveRequest.getNextPositionOfStartPosition();
+        List<Position> canMovePositions = new ArrayList<>();
+        while (!movingPosition.equals(moveRequest.getDestination())) {
             canMovePositions.add(movingPosition);
-            movingPosition = movingPosition.moveTo(moveRequestForDB.getDirection());
+            movingPosition = movingPosition.moveTo(moveRequest.getDirection());
         }
         return !canMovePositions.stream()
             .map(cells::get)
-            .allMatch(CellForDB::isEmpty);
+            .allMatch(Cell::isEmpty);
     }
 
-    private CellForDB findCell(Map<PositionEntity, CellForDB> cells,
-        PositionEntity positionEntity) {
-        return cells.get(positionEntity);
+    private Cell findCell(Map<Position, Cell> cells,
+        Position position) {
+        return cells.get(position);
     }
 
-    public boolean isAnyPieceExistsAtDestination(Map<PositionEntity, CellForDB> cells,
-        PositionEntity destination) {
-        CellForDB destinationCell = findCell(cells, destination);
+    public boolean isAnyPieceExistsAtDestination(Map<Position, Cell> cells,
+        Position destination) {
+        Cell destinationCell = findCell(cells, destination);
         return !destinationCell.isEmpty();
     }
 
-    public boolean isEnemyExistsAtDestination(Map<PositionEntity, CellForDB> cells,
-        MoveRequestForDB moveRequestForDB) {
-        CellForDB destinationCell = findCell(cells, moveRequestForDB.getDestination());
+    public boolean isEnemyExistsAtDestination(Map<Position, Cell> cells,
+        MoveRequest moveRequest) {
+        Cell destinationCell = findCell(cells, moveRequest.getDestination());
         return !destinationCell.isEmpty()
-            && destinationCell.getTeamColor() != moveRequestForDB.getCurrentTurnTeamColor();
+            && destinationCell.getTeamColor() != moveRequest.getCurrentTurnTeamColor();
     }
 }

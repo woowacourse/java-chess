@@ -4,9 +4,9 @@ import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.dto.request.MoveRequestDTOForDB;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardDefaultSetting;
-import chess.domain.game.ChessGameForDB;
+import chess.domain.game.ChessGame;
 import chess.utils.DBCleaner;
 import chess.utils.position.converter.PositionConverter;
 import java.sql.SQLException;
@@ -17,13 +17,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
-    private ChessGameForDB chessGameForDB;
+    private ChessGame chessGame;
     private Long gameId;
 
     @BeforeEach
     void setUp() throws SQLException {
-        chessGameForDB = new ChessGameForDB();
-        gameId = chessGameForDB.createNew(new BoardDefaultSetting(), TEST_TITLE);
+        chessGame = new ChessGame();
+        gameId = chessGame.createNew(new BoardDefaultSetting(), TEST_TITLE);
     }
 
     @AfterEach
@@ -34,12 +34,12 @@ class BoardTest {
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 빈 칸인 경우")
     @Test
     void cannotMovePieceAtStartPositionEmpty() throws SQLException {
-        MoveRequestDTOForDB moveRequestDTOForDB = new MoveRequestDTOForDB(gameId, "a3", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, "a3", "a4");
 
-        assertThatThrownBy(() -> chessGameForDB.move(moveRequestDTOForDB))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
-        List<String> cellsStatus = chessGameForDB.getBoardStatus(gameId).getCellsStatus();
+        List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 
         assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a3")))
             .isEqualTo(".");
@@ -51,12 +51,12 @@ class BoardTest {
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 적의 기물이 있는 경우")
     @Test
     void cannotMovePieceAtStartPositionEnemyPiece() throws SQLException {
-        MoveRequestDTOForDB moveRequestDTOForDB = new MoveRequestDTOForDB(gameId, "a7", "a6");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, "a7", "a6");
 
-        assertThatThrownBy(() -> chessGameForDB.move(moveRequestDTOForDB))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
-        List<String> cellsStatus = chessGameForDB.getBoardStatus(gameId).getCellsStatus();
+        List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 
         assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a7")))
             .isEqualTo("P");
@@ -68,10 +68,10 @@ class BoardTest {
     @DisplayName("백 팀 Pawn - 기물 이동")
     @Test
     void movePiece() throws SQLException {
-        MoveRequestDTOForDB moveRequestDTOForDB = new MoveRequestDTOForDB(gameId, "a2", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, "a2", "a4");
 
-        chessGameForDB.move(moveRequestDTOForDB);
-        List<String> cellsStatus = chessGameForDB.getBoardStatus(gameId).getCellsStatus();
+        chessGame.move(moveRequestDTO);
+        List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 
         assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a2")))
             .isEqualTo(".");
@@ -83,12 +83,12 @@ class BoardTest {
     @DisplayName("백 팀 Pawn - 기물이 이동할 수 없는 도착위치")
     @Test
     void cannotMovePieceToDestination() throws SQLException {
-        MoveRequestDTOForDB moveRequestDTOForDB = new MoveRequestDTOForDB(gameId, "a2", "a5");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, "a2", "a5");
 
-        assertThatThrownBy(() -> chessGameForDB.move(moveRequestDTOForDB))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
-        List<String> cellsStatus = chessGameForDB.getBoardStatus(gameId).getCellsStatus();
+        List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 
         assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a2")))
             .isEqualTo("p");

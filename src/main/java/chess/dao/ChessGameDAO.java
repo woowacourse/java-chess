@@ -4,8 +4,8 @@ package chess.dao;
 import static chess.dao.setting.DBConnection.getConnection;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
-import chess.domain.game.ChessGameEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

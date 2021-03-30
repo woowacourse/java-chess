@@ -3,7 +3,7 @@ package chess.dao;
 
 import static chess.dao.setting.DBConnection.getConnection;
 
-import chess.dao.entity.PositionEntity;
+import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class PositionDAO {
 
-    public PositionEntity findByFileAndRank(File file, Rank rank) throws SQLException {
+    public Position findByFileAndRank(File file, Rank rank) throws SQLException {
         String query = "SELECT * FROM position WHERE file_value = ? AND rank_value = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, file.getValue());
@@ -21,7 +21,7 @@ public class PositionDAO {
         if (!rs.next()) {
             return null;
         }
-        return new PositionEntity(
+        return new Position(
             rs.getLong("id"),
             rs.getString("file_value"),
             rs.getString("rank_value"));
