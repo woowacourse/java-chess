@@ -36,4 +36,11 @@ public final class King extends AbstractPiece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.everyDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
 }

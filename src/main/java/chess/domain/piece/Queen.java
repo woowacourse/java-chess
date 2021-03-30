@@ -31,4 +31,11 @@ public final class Queen extends AbstractPiece {
     public double score() {
         return SCORE;
     }
+
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.everyDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
 }

@@ -31,4 +31,11 @@ public final class Rook extends AbstractPiece {
     public double score() {
         return SCORE;
     }
+
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.linearDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
 }

@@ -31,4 +31,11 @@ public final class Bishop extends AbstractPiece {
         validateObstacle(position, direction, pieces);
         return new Rook(color, position);
     }
+
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.diagonalDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
 }

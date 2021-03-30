@@ -31,4 +31,11 @@ public final class Knight extends AbstractPiece {
         validateObstacle(position, direction, pieces);
         return new Knight(color, position);
     }
+
+    @Override
+    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.knightDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
 }

@@ -93,8 +93,12 @@ public final class Pawn extends AbstractPiece {
     public List<Position> movablePositions(Map<Position, Piece> pieces) {
         final List<Direction> directions = findPawnDirection();
 
-        final List<Position> positions = Positions(pieces, directions, ABLE_LENGTH);
-        // 폰의 경우 여기에 2칸전진기능 추가
-        return positions;
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
+
+    @Override
+    protected List<Position> positions(Map<Position, Piece> pieces, List<Direction> directions,
+        int ableLength) {
+        return super.positions(pieces, directions, ableLength);
     }
 }

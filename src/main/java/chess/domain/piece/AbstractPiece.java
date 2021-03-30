@@ -87,30 +87,39 @@ public abstract class AbstractPiece implements Piece {
         return false;
     }
 
-    @Override
-    public List<Position> movablePositions(Map<Position, Piece> pieces) {
-        return null;
-    }
-
-    protected List<Position> Positions(Map<Position, Piece> pieces, List<Direction> directions, int ableLength) {
+    protected List<Position> positions(Map<Position, Piece> pieces, List<Direction> directions,
+        int ableLength) {
         final List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
-            for (int i = 0; i < ableLength; i++) {
-                int dx = direction.getXDegree();
-                int dy = direction.getYDegree();
-                if (position.isAdd(dx, dy)) {
-                    Position movePosition = position.addedPosition(dx, dy);
-                    Piece piece = pieces.get(movePosition);
-                    if (!Objects.isNull(piece) && piece.isSameColor(color)) {
-                        break;
-                    }
-                    positions.add(movePosition);
-                    if (!Objects.isNull(piece)){
-                        break;
-                    }
-                }
-            }
+            addMovableDirectionPositions(pieces, ableLength, positions, direction);
         }
         return positions;
+    }
+
+    private void addMovableDirectionPositions(Map<Position, Piece> pieces, int ableLength,
+        List<Position> positions,
+        Direction direction) {
+        boolean isStop = false;
+        int distance = 1;
+        while (!isStop && distance <= ableLength) {
+            isStop = addMovablePosition(pieces, positions, direction, distance);
+            distance++;
+        }
+    }
+
+    private boolean addMovablePosition(Map<Position, Piece> pieces, List<Position> positions,
+        Direction direction, int distance) {
+        int dx = direction.getXDegree() * distance;
+        int dy = direction.getYDegree() * distance;
+        if (!position.isAdd(dx, dy)) {
+            return true;
+        }
+        Position movePosition = position.addedPosition(dx, dy);
+        Piece piece = pieces.get(movePosition);
+        if (!Objects.isNull(piece) && piece.isSameColor(color)) {
+            return true;
+        }
+        positions.add(movePosition);
+        return !Objects.isNull(piece);
     }
 }
