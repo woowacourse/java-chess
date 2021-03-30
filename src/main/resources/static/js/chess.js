@@ -1,6 +1,6 @@
 function initiate() {
     const xmlHttp = new XMLHttpRequest();
-    const url = "http://localhost:8080/chessboard";
+    const url = "http://localhost:8080/chessboard/update";
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             const boardDTO = JSON.parse(this.responseText);
