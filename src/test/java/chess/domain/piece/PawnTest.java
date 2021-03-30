@@ -107,4 +107,48 @@ public class PawnTest {
 
         assertThatThrownBy(() -> pawn.moveForKill(to, new Pieces())).isInstanceOf(IllegalArgumentException.class);
     }
+
+
+    @Test
+    @DisplayName("검정 폰 기본 이동 가능 위치")
+    void possiblePositions() {
+        Position from = Position.from("a3");
+        Pawn pawn = new Pawn(Color.BLACK, from);
+        assertThat(pawn.movablePosition(from)).contains(Position.from("a2"));
+    }
+
+
+    @Test
+    @DisplayName("검정 폰 시작점 이동 가능 위치")
+    void possiblePositionsAtStart() {
+        Position from = Position.from("a7");
+        Pawn pawn = new Pawn(Color.BLACK, from);
+        assertThat(pawn.movablePosition(from)).contains(
+                Position.from("a5"),
+                Position.from("a6")
+        );
+    }
+
+
+    @Test
+    @DisplayName("하얀 폰 기본 이동 가능 위치")
+    void whitePossiblePositions() {
+        Position from = Position.from("a3");
+        Pawn pawn = new Pawn(Color.WHITE, from);
+        assertThat(pawn.movablePosition(from)).contains(Position.from("a4"));
+    }
+
+
+    @Test
+    @DisplayName("하얀 폰 시작점 이동 가능 위치")
+    void whitePossiblePositionsAtStart() {
+        Position from = Position.from("a2");
+        Pawn pawn = new Pawn(Color.WHITE, from);
+        assertThat(pawn.movablePosition(from)).contains(
+                Position.from("a3"),
+                Position.from("a4")
+        );
+    }
+
+
 }
