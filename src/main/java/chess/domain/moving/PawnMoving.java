@@ -19,10 +19,11 @@ public class PawnMoving implements Moving {
     public List<Position> allMovablePositions(final Piece piece, final Board board) {
         movablePositions = new ArrayList<>();
         addAttackablePositions(piece, board);
+        int positionsSize = movablePositions.size();
         addStraightPosition(board, piece, 1);
         Position currentPosition = piece.position();
         Team team = board.teamByPiece(piece);
-        if (currentPosition.isSameInitPawnPositionByTeam(team)) {
+        if (currentPosition.isSameInitPawnPositionByTeam(team) && positionsSize < movablePositions.size()) {
             addStraightPosition(board, piece, 2);
         }
         return movablePositions;
