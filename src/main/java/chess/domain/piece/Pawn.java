@@ -87,4 +87,11 @@ public class Pawn extends Division {
         }
         return positions;
     }
+
+    public List<Position> killablePosition(Position from) {
+        List<Position> positions = new ArrayList<>();
+        positions.add(from.moveBy(1, color.moveUnit()));
+        positions.add(from.moveBy(-1, color.moveUnit()));
+        return positions;
+    }
 }

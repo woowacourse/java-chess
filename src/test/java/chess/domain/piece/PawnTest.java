@@ -150,5 +150,25 @@ public class PawnTest {
         );
     }
 
+    @Test
+    @DisplayName("검정 폰 kill 가능 위치")
+    void blackKillablePositionsAtStart() {
+        Position from = Position.from("b2");
+        Pawn pawn = new Pawn(Color.BLACK, from);
+        assertThat(pawn.killablePosition(from)).contains(
+                Position.from("a1"),
+                Position.from("c1")
+        );
+    }
+    @Test
+    @DisplayName("하얀 폰 kill 가능 위치")
+    void whileKillablePositionsAtStart() {
+        Position from = Position.from("b2");
+        Pawn pawn = new Pawn(Color.WHITE, from);
+        assertThat(pawn.killablePosition(from)).contains(
+                Position.from("a3"),
+                Position.from("c3")
+        );
+    }
 
 }
