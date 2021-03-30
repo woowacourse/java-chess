@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>체스 게임</title>
+  <link rel= "stylesheet" type="text/css" href="chess-css.css">
+</head>
+<body>
+  <br/>
+  <h1>체스게임</h1>
+  <div class="wrapper">
+    <div class="chess-board">
+      <div class="chess-file">
+        <div class="chess-symbol">A</div>
+        <div class="chess-symbol">B</div>
+        <div class="chess-symbol">C</div>
+        <div class="chess-symbol">D</div>
+        <div class="chess-symbol">E</div>
+        <div class="chess-symbol">F</div>
+        <div class="chess-symbol">G</div>
+        <div class="chess-symbol">H</div>
+      </div>
+      <div class="chess-container">
+        <div class="chess-rank">
+          <div class="chess-symbol">1</div>
+          <div class="chess-symbol">2</div>
+          <div class="chess-symbol">3</div>
+          <div class="chess-symbol">4</div>
+          <div class="chess-symbol">5</div>
+          <div class="chess-symbol">6</div>
+          <div class="chess-symbol">7</div>
+          <div class="chess-symbol">8</div>
+        </div>
+        <div class="chess-map">
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="0" data-position-y="7">
+              <div id="a8" class="{{a8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="6">
+              <div id="a7" class="{{a7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="5">
+              <div id="a6" class="{{a6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="4">
+              <div id="a5" class="{{a5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="3">
+              <div id="a4" class="{{a4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="2">
+              <div id="a3" class="{{a3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="1">
+              <div id="a2" class="{{a2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="0" data-position-y="0">
+              <div id="a1"  class="{{a1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="1" data-position-y="7">
+              <div id="b8" class="{{b8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="6">
+              <div id="b7" class="{{b7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="5">
+              <div id="b6" class="{{b6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="4">
+              <div id="b5" class="{{b5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="3">
+              <div id="b4" class="{{b4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="2">
+              <div id="b3" class="{{b3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="1">
+              <div id="b2" class="{{b2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="0">
+              <div id="b1" class="{{b1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="2" data-position-y="7">
+              <div id="c8" class="{{c8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="6">
+              <div id="c7" class="{{c7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="5">
+              <div id="c6" class="{{c6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="4">
+              <div id="c5" class="{{c5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="3">
+              <div id="c4" class="{{c4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="2">
+              <div id="c3" class="{{c3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="1">
+              <div id="c2" class="{{c2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="0">
+              <div id="c1" class="{{c1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="3" data-position-y="7">
+              <div id="d8" class="{{d8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="6">
+              <div id="d7" class="{{d7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="5">
+              <div id="d6" class="{{d6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="4">
+              <div id="d5" class="{{d5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="3">
+              <div id="d4" cclass="{{d4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="2">
+              <div id="d3" class="{{d3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="1">
+              <div id="d2" class="{{d2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="0">
+              <div id="d1" class="{{d1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="4" data-position-y="7">
+              <div id="e8" class="{{e8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="6">
+              <div id="e7" class="{{e7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="5">
+              <div id="e6" class="{{e6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="4">
+              <div id="e5" class="{{e5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="3">
+              <div id="e4" class="{{e4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="2">
+              <div id="e3" class="{{e3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="1">
+              <div id="e2" class="{{e2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="0">
+              <div id="e1" class="{{e1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="5" data-position-y="7">
+              <div id="f8" class="{{f8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="6">
+              <div id="f7" class="{{f7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="5">
+              <div id="f6" class="{{f6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="4">
+              <div id="f5" class="{{f5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="3">
+              <div id="f4" class="{{f4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="2">
+              <div id="f3" class="{{f3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="1">
+              <div id="f2" class="{{f2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="0">
+              <div id="f1" class="{{f1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="6" data-position-y="7">
+              <div id="g8" class="{{g8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="6">
+              <div id="g7" class="{{g7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="5">
+              <div id="g6" class="{{g6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="4">
+              <div id="g5" class="{{g5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="1z">
+              <div id="g4" class="{{g4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="1">
+              <div id="g3" class="{{g3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="1">
+              <div id="g2" class="{{g2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="1">
+              <div id="g1" class="{{g1.piece}}"></div>
+            </div>
+          </div>
+          <div class="chess-row">
+            <div class="chess-col" data-position-x="0" data-position-y="0">
+              <div id="h8" class="{{h8.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="1" data-position-y="0">
+              <div id="h7" class="{{h7.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="2" data-position-y="0">
+              <div id="h6" class="{{h6.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="3" data-position-y="0">
+              <div id="h5" class="{{h5.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="4" data-position-y="0">
+              <div id="h4" class="{{h4.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="5" data-position-y="0">
+              <div id="h3" class="{{h3.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="6" data-position-y="0">
+              <div id="h2" class="{{h2.piece}}"></div>
+            </div>
+            <div class="chess-col" data-position-x="7" data-position-y="0">
+              <div id="h1" class="{{h1.piece}}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="chess-rank">
+          <div class="chess-symbol">1</div>
+          <div class="chess-symbol">2</div>
+          <div class="chess-symbol">3</div>
+          <div class="chess-symbol">4</div>
+          <div class="chess-symbol">5</div>
+          <div class="chess-symbol">6</div>
+          <div class="chess-symbol">7</div>
+          <div class="chess-symbol">8</div>
+        </div>
+      </div>
+      <div class="chess-file">
+        <div class="chess-symbol">A</div>
+        <div class="chess-symbol">B</div>
+        <div class="chess-symbol">C</div>
+        <div class="chess-symbol">D</div>
+        <div class="chess-symbol">E</div>
+        <div class="chess-symbol">F</div>
+        <div class="chess-symbol">G</div>
+        <div class="chess-symbol">H</div>
+      </div>
+    </div>
+  </div>
+  <div class="button">
+    <form action="init.html" method="post">
+      <input type="submit" name="restart" value="게임종료">
+    </form>
+  </div>
+  <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
+
