@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,7 +32,7 @@ public class PositionTest {
     @MethodSource("positions")
     void moveBy(int column, int row, Position expected) {
         Position position = Position.of(Column.D, Row.SIX);
-        assertThat(position.move(column, row)).isEqualTo(expected);
+        assertThat(position.move(new Direction(column, row))).isEqualTo(expected);
     }
 
     @Test

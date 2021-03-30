@@ -17,7 +17,7 @@ public abstract class MultipleMove implements MoveStrategy {
     @Override
     public List<List<Position>> movablePositions(Position position) {
         return directions().stream()
-                           .map(direction -> position.positionsOfDirection(direction.column(), direction.row()))
+                           .map(position::positionsOf)
                            .collect(Collectors.toList());
     }
 

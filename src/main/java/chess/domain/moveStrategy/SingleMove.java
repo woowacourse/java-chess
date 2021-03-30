@@ -19,7 +19,7 @@ public abstract class SingleMove implements MoveStrategy {
     public List<List<Position>> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions()) {
-            positions.add(position.move(direction.column(), direction.row()));
+            positions.add(position.move(direction));
         }
         return Collections.singletonList(positions);
     }

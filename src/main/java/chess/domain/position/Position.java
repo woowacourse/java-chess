@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.*;
 
 public class Position {
@@ -43,26 +45,25 @@ public class Position {
         return cache.values();
     }
 
-    public List<Position> positionsOfDirection(int columnValue, int rowValue) {
+    public List<Position> positionsOf(Direction direction) {
         List<Position> positions = new ArrayList<>();
         Position temp = this;
-        while (temp.canMove(columnValue, rowValue)) {
-            temp = temp.move(columnValue, rowValue);
+        while (temp.canMove(direction)) {
+            temp = temp.move(direction);
             positions.add(temp);
         }
         return positions;
     }
 
-    private boolean canMove(int columnValue, int rowValue) {
-        return column.canMove(columnValue) && row.canMove(rowValue);
+    public boolean canMove(Direction direction) {
+        return column.canMove(direction.column()) && row.canMove(direction.row());
     }
 
-    public Position move(int columnValue, int rowValue) {
-        return Position.of(column.move(columnValue), row.move(rowValue));
+    public Position move(Direction direction) {
+        return Position.of(column.move(direction.column()), row.move(direction.row()));
     }
 
     public boolean hasRow(Row row) {
         return this.row.equals(row);
     }
-
 }

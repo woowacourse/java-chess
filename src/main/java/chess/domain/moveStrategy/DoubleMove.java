@@ -19,8 +19,8 @@ public abstract class DoubleMove implements MoveStrategy {
     public List<List<Position>> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions()) {
-            positions.add(position.move(direction.column(), direction.row()));
-            positions.add(position.move(2 * direction.column(), 2 * direction.row()));
+            positions.add(position.move(direction));
+            positions.add(position.move(direction).move(direction));
         }
         return Collections.singletonList(positions);
     }
