@@ -22,8 +22,6 @@ public class WebUIChessApplication {
         post("/chessboard/move", chessController::move);
         get("/chessboard/result/show", chessController::showResult);
         get("/chessboard/restart", chessController::restart);
-        get("/chessboard", chessController::updateChessBoard);
-        post("/chessboard/move", chessController::move);
         exception(RuntimeException.class, ExceptionHandler::bindException);
     }
 

@@ -47,18 +47,18 @@ public class ChessService {
         return BoardDTO.from(chessBoard, nextTeamType);
     }
 
-    private void updateHistory(RequestDTO requestDTO) throws SQLException {
-        String current = requestDTO.getCurrent();
-        String destination = requestDTO.getDestination();
-        String teamType = requestDTO.getTeamType();
-        chessRepository.insertHistory(current, destination, teamType);
-    }
-
     private void moveChessBoard(ChessBoard chessBoard, RequestDTO requestDTO) {
         Coordinate current = Coordinate.from(requestDTO.getCurrent());
         Coordinate destination = Coordinate.from(requestDTO.getDestination());
         TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
         chessBoard.move(current, destination, teamType);
+    }
+
+    private void updateHistory(RequestDTO requestDTO) throws SQLException {
+        String current = requestDTO.getCurrent();
+        String destination = requestDTO.getDestination();
+        String teamType = requestDTO.getTeamType();
+        chessRepository.insertHistory(current, destination, teamType);
     }
 
     public ResultDTO calculateResult() throws SQLException {
