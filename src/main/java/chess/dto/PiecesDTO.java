@@ -34,11 +34,11 @@ public class PiecesDTO {
                 .map(piece -> {
                     Position position = piece.position();
                     return new PieceDTO(team.name(), piece.initial(),
-                            Col.col(position.col()) + Row.row(position.row()));
+                            Col.initial(position.col()) + Row.initial(position.row()));
                 }).collect(Collectors.toList()));
     }
 
-    public List<PieceDTO> getPieceDTOs() {
+    public List<PieceDTO> toList() {
         return pieceDTOs;
     }
 }

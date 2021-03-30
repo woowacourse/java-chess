@@ -20,6 +20,7 @@ public final class ChessGame {
         BoardFactory boardFactory = new BoardFactory();
         this.board = boardFactory.board();
         this.currentTurn = Team.WHITE;
+        this.isPlaying = true;
     }
 
     public final void move(final String startPoint, final String endPoint) {
@@ -50,6 +51,17 @@ public final class ChessGame {
         return board.scoreByTeam(team);
     }
 
+    public final boolean checkRightTurn(final String clickedSection) {
+        Pieces pieces = board.piecesByTeam(currentTurn);
+        return pieces.containsPosition(position(clickedSection));
+    }
+
+    public final List<String> movablePositionsByStartPoint(final String startPoint) {
+        Pieces pieces = board.piecesByTeam(currentTurn);
+        Piece piece = pieces.pieceByPosition(position(startPoint));
+        return piece.movablePositions(board);
+    }
+
     public final Board board() {
         return board;
     }
@@ -60,16 +72,5 @@ public final class ChessGame {
 
     public Team turn() {
         return currentTurn;
-    }
-
-    public boolean checkRightTurn(final String clickedSection) {
-        Pieces pieces = board.piecesByTeam(currentTurn);
-        return pieces.containsPosition(position(clickedSection));
-    }
-
-    public List<String> movablePositionsByStartPoint(final String startPoint) {
-        Pieces pieces = board.piecesByTeam(currentTurn);
-        Piece piece = pieces.pieceByPosition(position(startPoint));
-        return piece.movablePositions(board);
     }
 }

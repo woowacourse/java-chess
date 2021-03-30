@@ -36,7 +36,7 @@ public final class Position {
     }
 
     public String position() {
-        return Col.col(this.col) + Row.row(this.row);
+        return Col.initial(this.col) + Row.initial(this.row);
     }
 
     public final int row() {

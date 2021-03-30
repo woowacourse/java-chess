@@ -33,7 +33,7 @@ public enum Col {
                 .location;
     }
 
-    public static String col(final int location) {
+    public static String initial(final int location) {
         return Arrays.stream(Col.values())
                 .filter(value -> value.location == location)
                 .findFirst()
