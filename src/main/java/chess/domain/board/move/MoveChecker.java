@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MoveChecker {
+    private static final String CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE = "이동할 수 없는 도착위치 입니다.";
 
     public boolean canMove(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
@@ -36,10 +37,10 @@ public class MoveChecker {
         Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)
             || isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequest)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         if (isOwnPieceExistsInDestination(cells, moveRequest)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         return true;
     }
@@ -47,7 +48,7 @@ public class MoveChecker {
     private boolean canMoveByPawnMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         Direction moveRequestDirection = moveRequest.getDirection();
         if (moveRequestDirection.isForward()) {
@@ -63,24 +64,24 @@ public class MoveChecker {
         if (moveRequest.isRankForwardedBy(2)) {
             return canMoveTwoRankForward(moveRequest, cells);
         }
-        throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
     }
 
 
     private boolean canMoveOneRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
         if (isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         return true;
     }
 
     private boolean canMoveTwoRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
         if (!moveRequest.isStartPositionFirstPawnPosition()) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         if (isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequest)
             || isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         return true;
     }
@@ -89,7 +90,7 @@ public class MoveChecker {
         Position nextPosition = moveRequest.getNextPositionOfStartPosition();
         if (!(isEnemyExistsAtDestination(cells, moveRequest)
             && nextPosition.equals(moveRequest.getDestination()))) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         return true;
     }
@@ -98,12 +99,12 @@ public class MoveChecker {
     private boolean canByKnightMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionKnightToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionKnightToMove)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         Position nextPosition = moveRequest.getNextPositionOfStartPosition();
         if (!(moveRequest.isDestination(nextPosition)
             && !isOwnPieceExistsInDestination(cells, moveRequest))) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         return true;
     }
