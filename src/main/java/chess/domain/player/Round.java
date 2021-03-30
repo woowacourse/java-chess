@@ -31,18 +31,19 @@ public class Round {
 
     private void moveByTurn(final Position sourcePosition, final Position targetPosition) {
         if (whitePlayer.isFinish()) {
-            Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
-            Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());
-            blackPlayer.move(source, target, whitePlayer.getState());
-            whitePlayer.toRunningState(blackPlayer.getState());
-            checkPieces(whitePlayer.getState(), target);
+            move(blackPlayer, whitePlayer, sourcePosition, targetPosition);
             return;
         }
-        Source source = Source.valueOf(sourcePosition, whitePlayer.getState());
-        Target target = Target.valueOf(source, targetPosition, whitePlayer.getState());
-        whitePlayer.move(source, target, blackPlayer.getState());
-        blackPlayer.toRunningState(whitePlayer.getState());
-        checkPieces(blackPlayer.getState(), target);
+        move(whitePlayer, blackPlayer, sourcePosition, targetPosition);
+    }
+
+    private void move(final Player currentPlayer, final Player anotherPlayer,
+                      final Position sourcePosition, final Position targetPosition) {
+        Source source = Source.valueOf(sourcePosition, currentPlayer.getState());
+        Target target = Target.valueOf(source, targetPosition, currentPlayer.getState());
+        currentPlayer.move(source, target, anotherPlayer.getState());
+        anotherPlayer.toRunningState(currentPlayer.getState());
+        checkPieces(anotherPlayer.getState(), target);
     }
 
     private void checkPieces(final State state, final Target target) {
