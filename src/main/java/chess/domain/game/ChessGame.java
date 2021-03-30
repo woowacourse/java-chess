@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
@@ -40,6 +41,9 @@ public class ChessGame {
     }
 
     private void validateTurn(Piece sourcePiece) {
+        if (sourcePiece.isBlank()) {
+            throw new IllegalArgumentException(Blank.BLANK_ERROR);
+        }
         if (!sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
         }
