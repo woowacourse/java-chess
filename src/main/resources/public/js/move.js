@@ -92,6 +92,6 @@ function mark(clickedLocation) {
     if (clickedLocation.style.boxShadow) {
         clickedLocation.style.boxShadow = "";
     } else {
-        clickedLocation.style.boxShadow = "inset 3px 3px #ffff60";
+        clickedLocation.style.boxShadow = "inset 3px 3px black";
     }
 }
