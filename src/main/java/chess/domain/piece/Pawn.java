@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final char SIGNATURE = 'p';
+
     private static final int BLACK_PAWN_INITIAL_Y = 7;
     private static final int WHITE_PAWN_INITIAL_Y = 2;
 
@@ -88,5 +90,10 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public char signature() {
+        return SIGNATURE;
     }
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final char SIGNATURE = 'n';
+
     private Knight(final Location location, final Team team) {
         super(location, team);
     }
@@ -43,5 +45,10 @@ public class Knight extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char signature() {
+        return SIGNATURE;
     }
 }

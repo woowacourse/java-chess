@@ -108,6 +108,12 @@ public abstract class Piece {
         return location.getY();
     }
 
+    public abstract char signature();
+
+    public Team team() {
+        return team;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
