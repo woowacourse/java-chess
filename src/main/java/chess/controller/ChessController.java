@@ -56,29 +56,27 @@ public class ChessController {
     }
 
     private void printChessBoard(final ChessGame chessGame) {
-        final Map<PositionDto, String> chessBoard = convertToBlackPrintName(chessGame);
+        final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
         chessBoard.putAll(convertToWhitePrintName(chessGame));
         OutputView.printChessBoard(chessBoard);
     }
 
-    private Map<PositionDto, String> convertToBlackPrintName(final ChessGame chessGame) {
+    private Map<Position, String> convertToBlackPrintName(final ChessGame chessGame) {
         final Map<Position, Piece> blackPosition = chessGame.getBlackTeam().getPiecePosition();
-        final Map<PositionDto, String> blackPrintFormat = new HashMap<>();
+        final Map<Position, String> blackPrintFormat = new HashMap<>();
         for (Position position : blackPosition.keySet()) {
             final Piece piece = blackPosition.get(position);
-            PositionDto positionDto = new PositionDto(position.getX(), position.getY());
-            blackPrintFormat.put(positionDto, PieceNameConverter.convert(piece).toUpperCase());
+            blackPrintFormat.put(position, PieceNameConverter.convert(piece).toUpperCase());
         }
         return blackPrintFormat;
     }
 
-    private Map<PositionDto, String> convertToWhitePrintName(final ChessGame chessGame) {
+    private Map<Position, String> convertToWhitePrintName(final ChessGame chessGame) {
         final Map<Position, Piece> whitePosition = chessGame.getWhiteTeam().getPiecePosition();
-        final Map<PositionDto, String> whitePrintFormat = new HashMap<>();
+        final Map<Position, String> whitePrintFormat = new HashMap<>();
         for (Position position : whitePosition.keySet()) {
             final Piece piece = whitePosition.get(position);
-            PositionDto positionDto = new PositionDto(position.getX(), position.getY());
-            whitePrintFormat.put(positionDto, PieceNameConverter.convert(piece).toLowerCase());
+            whitePrintFormat.put(position, PieceNameConverter.convert(piece).toLowerCase());
         }
         return whitePrintFormat;
     }
