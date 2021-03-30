@@ -6,7 +6,6 @@ import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
-import javafx.util.Pair;
 
 public class Controller {
 
