@@ -22,11 +22,11 @@ public class Path {
 
     public static Path filterPaths(final List<Path> paths, final Position source, final Board board) {
         return Path.of(paths.stream()
-                .flatMap(path -> path.filterPath(source, board).stream())
+                .flatMap(path -> path.filterPathBySourcePieceAndOtherPiece(source, board).stream())
                 .collect(Collectors.toList()));
     }
 
-    private Path filterPath(final Position source, final Board board) {
+    private Path filterPathBySourcePieceAndOtherPiece(final Position source, final Board board) {
         boolean isPrePositionMovable = true;
         int pathSize = this.path.size();
         Path filterPaths = new Path(new ArrayList<>());
