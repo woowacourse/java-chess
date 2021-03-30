@@ -2,6 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Knight extends Division {
 
     public static final double KNIGHT_SCORE = 2.5;
@@ -40,5 +43,21 @@ public class Knight extends Division {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+
+
+    public List<Position> movablePosition(Position position) {
+        List<Position> positions = new ArrayList<>();
+        positions.add(position.moveBy(2,1));
+        positions.add(position.moveBy(2,-1));
+        positions.add(position.moveBy(1,2));
+        positions.add(position.moveBy(1,-2));
+        positions.add(position.moveBy(-1,2));
+        positions.add(position.moveBy(-1,-2));
+        positions.add(position.moveBy(-2,1));
+        positions.add(position.moveBy(-2,-1));
+
+        return positions;
     }
 }
