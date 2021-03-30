@@ -49,9 +49,9 @@ public class Location {
         if (location.length() != LOCATION_SIZE) {
             throw new IllegalArgumentException("좌표가 잘못 입력되었습니다.");
         }
-        int xPos = location.charAt(0) - 'a' + 1;
-        int yPos = Character.digit(location.charAt(1), 10);
-        return Location.of(xPos, yPos);
+        int x = location.charAt(0) - 'a' + 1;
+        int y = Character.digit(location.charAt(1), 10);
+        return Location.of(x, y);
     }
 
     private static void validateRange(final int x, final int y) {
