@@ -7,6 +7,7 @@ import chess.controller.converter.StringPositionConverter;
 import chess.controller.dto.RoundStatusDTO;
 import chess.controller.dto.PieceDTO;
 import chess.domain.ChessGame;
+import chess.domain.ChessGameImpl;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.Map;
 
 public class ChessController {
 
-    private final ChessGame chessGame;
     private final StringPositionConverter stringPositionConverter;
+    private ChessGame chessGame;
 
     public ChessController(ChessGame chessGame) {
         this.chessGame = chessGame;
@@ -55,5 +56,9 @@ public class ChessController {
         Position current = stringPositionConverter.convert(currentPosition);
         Position target = stringPositionConverter.convert(targetPosition);
         chessGame.movePiece(current, target);
+    }
+
+    public void restart() {
+        chessGame = ChessGameImpl.initialGame();
     }
 }

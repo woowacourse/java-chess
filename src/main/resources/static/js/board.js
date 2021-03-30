@@ -5,6 +5,7 @@ class Board {
   #roundStatus;
 
   drawBoard(pieces) {
+    $board.innerHTML = '';
     for (let i = 7; i >= 0; i--) {
       for (let j = 0; j < 8; j++) {
         const boardElement = document.createElement('div');
@@ -67,7 +68,8 @@ class Board {
   validateContinuable() {
     let kingDead = this.#roundStatus.kingDead;
     if (kingDead) {
-      console.log('왕이 죽음');
+      const winner = this.#roundStatus.currentColor === 'WHITE' ? 'BLACK' : 'WHITE';
+      alert(`왕이 죽었습니다. ${winner} 승리`);
     }
   }
 }

@@ -1,4 +1,5 @@
 const $board = document.querySelector('.board');
+const $restart = document.querySelector('#restart');
 document.addEventListener('DOMContentLoaded', eventHandler);
 
 const fetchService = new FetchService();
@@ -7,6 +8,7 @@ const board = new Board();
 function eventHandler() {
   createBoard();
   $board.addEventListener('click', clickEvent);
+  $restart.addEventListener('click', restart);
 }
 
 function createBoard() {
@@ -45,4 +47,10 @@ function movePosition(targetBoardItem) {
     board.updateRoundStatus(result);
     board.validateContinuable();
   });
+}
+
+function restart() {
+  alert('다시 시작합니다.');
+  fetchService.get('http://localhost:4567/restart')
+  .then(result => createBoard());
 }

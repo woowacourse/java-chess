@@ -17,7 +17,7 @@ public class WebUIChessApplication {
         ObjectMapper objectMapper = new ObjectMapper();
 
         get("/", (req, res) -> {
-            res.redirect("index.html");;
+            res.redirect("index.html");
             return null;
         });
 
@@ -31,6 +31,11 @@ public class WebUIChessApplication {
             String targetPosition = request.get("targetPosition");
             chessController.move(currentPosition, targetPosition);
             return objectMapper.writeValueAsString(chessController.movablePositions());
+        });
+
+        get("/restart", (req, res) -> {
+            chessController.restart();
+            return true;
         });
     }
 }
