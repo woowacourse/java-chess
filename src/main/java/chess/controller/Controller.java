@@ -11,8 +11,6 @@ import java.util.List;
 
 public class Controller {
 
-    private static final int COMMAND_INDEX = 0;
-
     public void run() {
         ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
         OutputView.gameStart();

@@ -12,6 +12,7 @@ public enum Command {
     STATUS("status");
 
     public static final String INVALID_COMMAND = "올바른 명령어가 아닙니다.";
+    private static final int COMMAND_INDEX = 0;
 
     private final String command;
 
@@ -25,7 +26,7 @@ public enum Command {
 
     public static Command findCommand(List<String> input) {
         return Arrays.stream(values())
-            .filter(value -> value.command.equals(input.get(0)))
+            .filter(value -> value.command.equals(input.get(COMMAND_INDEX)))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND));
     }
