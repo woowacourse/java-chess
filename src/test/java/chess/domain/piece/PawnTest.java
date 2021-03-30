@@ -114,7 +114,7 @@ public class PawnTest {
     void possiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.BLACK, from);
-        assertThat(pawn.movablePosition(from)).contains(Position.from("a2"));
+        assertThat(pawn.movablePositions(from)).contains(Position.from("a2"));
     }
 
 
@@ -123,7 +123,7 @@ public class PawnTest {
     void possiblePositionsAtStart() {
         Position from = Position.from("a7");
         Pawn pawn = new Pawn(Color.BLACK, from);
-        assertThat(pawn.movablePosition(from)).contains(
+        assertThat(pawn.movablePositions(from)).contains(
                 Position.from("a5"),
                 Position.from("a6")
         );
@@ -135,7 +135,7 @@ public class PawnTest {
     void whitePossiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.WHITE, from);
-        assertThat(pawn.movablePosition(from)).contains(Position.from("a4"));
+        assertThat(pawn.movablePositions(from)).contains(Position.from("a4"));
     }
 
 
@@ -144,7 +144,7 @@ public class PawnTest {
     void whitePossiblePositionsAtStart() {
         Position from = Position.from("a2");
         Pawn pawn = new Pawn(Color.WHITE, from);
-        assertThat(pawn.movablePosition(from)).contains(
+        assertThat(pawn.movablePositions(from)).contains(
                 Position.from("a3"),
                 Position.from("a4")
         );
@@ -155,7 +155,7 @@ public class PawnTest {
     void blackKillablePositionsAtStart() {
         Position from = Position.from("b2");
         Pawn pawn = new Pawn(Color.BLACK, from);
-        assertThat(pawn.killablePosition(from)).contains(
+        assertThat(pawn.killablePositions(from)).contains(
                 Position.from("a1"),
                 Position.from("c1")
         );
@@ -165,7 +165,7 @@ public class PawnTest {
     void whileKillablePositionsAtStart() {
         Position from = Position.from("b2");
         Pawn pawn = new Pawn(Color.WHITE, from);
-        assertThat(pawn.killablePosition(from)).contains(
+        assertThat(pawn.killablePositions(from)).contains(
                 Position.from("a3"),
                 Position.from("c3")
         );

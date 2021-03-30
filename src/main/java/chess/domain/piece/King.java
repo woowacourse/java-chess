@@ -45,17 +45,23 @@ public class King extends Division {
         return false;
     }
 
-    public List<Position> movablePosition(Position position) {
+    @Override
+    public List<Position> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
-        positions.add(position.move(1,1));
-        positions.add(position.move(1,0));
-        positions.add(position.move(1,-1));
-        positions.add(position.move(0,1));
-        positions.add(position.move(0,-1));
-        positions.add(position.move(-1,1));
-        positions.add(position.move(-1,0));
-        positions.add(position.move(-1,-1));
+        positions.add(position.move(1, 1));
+        positions.add(position.move(1, 0));
+        positions.add(position.move(1, -1));
+        positions.add(position.move(0, 1));
+        positions.add(position.move(0, -1));
+        positions.add(position.move(-1, 1));
+        positions.add(position.move(-1, 0));
+        positions.add(position.move(-1, -1));
 
         return positions;
+    }
+
+    @Override
+    public List<Position> killablePositions(Position position) {
+        return movablePositions(position);
     }
 }

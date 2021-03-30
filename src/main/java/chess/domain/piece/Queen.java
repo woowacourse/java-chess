@@ -54,7 +54,8 @@ public class Queen extends Division {
         return false;
     }
 
-    public List<Position> movablePosition(Position position) {
+    @Override
+    public List<Position> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(position.positionsOfDirection(1,0));
         positions.addAll(position.positionsOfDirection(-1,0));
@@ -66,5 +67,10 @@ public class Queen extends Division {
         positions.addAll(position.positionsOfDirection(-1,-1));
 
         return positions;
+    }
+
+    @Override
+    public List<Position> killablePositions(Position position) {
+        return movablePositions(position);
     }
 }

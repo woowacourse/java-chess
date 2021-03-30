@@ -47,7 +47,7 @@ class KingTest {
     @DisplayName("킹 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = king.movablePosition(position);
+        List<Position> positions = king.movablePositions(position);
         assertThat(positions).contains(
                 Position.from("b6"),
                 Position.from("c6"),

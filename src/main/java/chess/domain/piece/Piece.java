@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public interface Piece {
     void moveToEmpty(Position to, Pieces pieces);
 
@@ -16,6 +18,8 @@ public interface Piece {
 
     boolean isSameColor(Color color);
 
+    boolean isSameColor(Piece piece);
+
     boolean isEmpty();
 
     boolean isKing();
@@ -25,4 +29,8 @@ public interface Piece {
     boolean isPawn();
 
     Column getColumn();
+
+    List<Position> movablePositions(Position position);
+
+    List<Position> killablePositions(Position position);
 }

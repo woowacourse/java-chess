@@ -50,7 +50,8 @@ public class Bishop extends Division {
     }
 
 
-    public List<Position> movablePosition(Position position) {
+    @Override
+    public List<Position> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(position.positionsOfDirection(1,1));
         positions.addAll(position.positionsOfDirection(1,-1));
@@ -58,5 +59,10 @@ public class Bishop extends Division {
         positions.addAll(position.positionsOfDirection(-1,-1));
 
         return positions;
+    }
+
+    @Override
+    public List<Position> killablePositions(Position position) {
+        return movablePositions(position);
     }
 }

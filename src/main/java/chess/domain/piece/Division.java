@@ -4,6 +4,8 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
+import java.util.List;
+
 public abstract class Division extends Basis {
     protected final Color color;
     protected Position position;
@@ -46,6 +48,10 @@ public abstract class Division extends Basis {
         return this.color.equals(color);
     }
 
+    public boolean isSameColor(Piece piece) {
+        return piece.isSameColor(this.color);
+    }
+
     @Override
     public boolean isEmpty() {
         return false;
@@ -63,4 +69,8 @@ public abstract class Division extends Basis {
     public Column getColumn() {
         return position.column();
     }
+
+    public abstract List<Position> movablePositions(Position position);
+
+    public abstract List<Position> killablePositions(Position position);
 }

@@ -48,7 +48,7 @@ class KnightTest {
     @DisplayName("나이트 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = knight.movablePosition(position);
+        List<Position> positions = knight.movablePositions(position);
         assertThat(positions).contains(
                 Position.from("b7"),
                 Position.from("d7"),

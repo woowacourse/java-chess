@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public abstract class Basis implements Piece {
     private final String displayName;
 
@@ -17,6 +19,7 @@ public abstract class Basis implements Piece {
     public abstract Position getPosition();
 
     public abstract boolean isSameColor(Color color);
+    public abstract boolean isSameColor(Piece piece);
 
     public abstract boolean isEmpty();
 
@@ -31,6 +34,9 @@ public abstract class Basis implements Piece {
 
     public abstract Column getColumn();
 
+    public abstract List<Position> movablePositions(Position position);
+
+    public abstract List<Position> killablePositions(Position position);
 
     @Override
     public String display() {

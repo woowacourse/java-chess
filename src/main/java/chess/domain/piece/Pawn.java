@@ -79,7 +79,7 @@ public class Pawn extends Division {
     }
 
 
-    public List<Position> movablePosition(Position from) {
+    public List<Position> movablePositions(Position from) {
         List<Position> positions = new ArrayList<>();
         positions.add(from.move(0, color.moveUnit()));
         if (from.hasRow(color.initPawnRow())) {
@@ -88,7 +88,8 @@ public class Pawn extends Division {
         return positions;
     }
 
-    public List<Position> killablePosition(Position from) {
+    @Override
+    public List<Position> killablePositions(Position from) {
         List<Position> positions = new ArrayList<>();
         positions.add(from.move(1, color.moveUnit()));
         positions.add(from.move(-1, color.moveUnit()));

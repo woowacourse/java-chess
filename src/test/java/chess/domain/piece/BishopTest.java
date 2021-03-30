@@ -61,7 +61,7 @@ class BishopTest {
     @DisplayName("비숍 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = bishop.movablePosition(position);
+        List<Position> positions = bishop.movablePositions(position);
         assertThat(positions).contains(
                 Position.from("b4"),
                 Position.from("a3"),

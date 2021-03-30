@@ -67,7 +67,7 @@ class QueenTest {
     @DisplayName("퀸 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = queen.movablePosition(position);
+        List<Position> positions = queen.movablePositions(position);
         assertThat(positions).contains(
                 Position.from("a5"),
                 Position.from("b5"),

@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public class Empty extends Basis {
     public Empty() {
         super(".");
@@ -34,6 +36,11 @@ public class Empty extends Basis {
     }
 
     @Override
+    public boolean isSameColor(Piece piece) {
+        return false;
+    }
+
+    @Override
     public boolean isEmpty() {
         return true;
     }
@@ -55,6 +62,16 @@ public class Empty extends Basis {
 
     @Override
     public Column getColumn() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Position> movablePositions(Position position) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<Position> killablePositions(Position position) {
         throw new UnsupportedOperationException();
     }
 }

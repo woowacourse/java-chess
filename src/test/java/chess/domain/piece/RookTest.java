@@ -65,7 +65,7 @@ class RookTest {
     @DisplayName("룩 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = rook.movablePosition(position);
+        List<Position> positions = rook.movablePositions(position);
         assertThat(positions).contains(
                 Position.from("a5"),
                 Position.from("b5"),

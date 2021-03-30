@@ -8,7 +8,9 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Board {
     private Pieces pieces;
@@ -51,21 +53,32 @@ public class Board {
         pieces.delete(piece);
     }
 
-    public void move2(Color color, Position from, Position to) {
+    public void action(Color color, Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
-
-        List<Piece> between = Arrays.asList(new Empty());
-        if (toPiece.isEmpty()) {
-            fromPiece.moveToEmpty(to, pieces);
-            return;
-        }
-        if (toPiece.isSameColor(color)) {
+        if (toPiece.isSameColor(fromPiece)) {
             throw new IllegalArgumentException();
         }
-        fromPiece.moveForKill(to, pieces);
-        pieces.delete(toPiece);
+        move2(from, to);
     }
+
+    public void move2(Position from, Position to) {
+        Piece fromPiece = pieceByPosition.get(from);
+        Piece toPiece = pieceByPosition.get(to);
+        List<Position> positions;
+        if (toPiece.isEmpty()) {
+            positions = fromPiece.movablePositions(from);
+        }
+        else {
+            positions = fromPiece.killablePositions(from);
+        }
+
+        if (positions.contains(to)) {
+            pieceByPosition.put(to, fromPiece);
+            pieceByPosition.put(from, new Empty());
+        }
+    }
+
     public Piece pickStartPiece(Color color, Position position) {
         Piece piece = pieces.getPieceOf(position);
         if (piece.isSameColor(color)) {

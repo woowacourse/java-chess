@@ -45,9 +45,8 @@ public class Knight extends Division {
         return false;
     }
 
-
-
-    public List<Position> movablePosition(Position position) {
+    @Override
+    public List<Position> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         positions.add(position.move(2,1));
         positions.add(position.move(2,-1));
@@ -59,5 +58,10 @@ public class Knight extends Division {
         positions.add(position.move(-2,-1));
 
         return positions;
+    }
+
+    @Override
+    public List<Position> killablePositions(Position position) {
+        return movablePositions(position);
     }
 }
