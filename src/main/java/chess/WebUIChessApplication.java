@@ -1,7 +1,7 @@
 package chess;
 
 import chess.controller.WebUIChessController;
-import chess.domain.User;
+import chess.domain.user.User;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -30,19 +30,27 @@ public class WebUIChessApplication {
             return render(model, "registration.html");
         });
 
+        post("/registration", (req, res) -> {
+            boolean isRegistrationSuccessful = webUIChessController.addUser(req.body());
+            if (!isRegistrationSuccessful) {
+                res.status(500);
+            }
+            return isRegistrationSuccessful;
+        });
+
         post("/menu", (req, res) -> {
-            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
+//            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
             // 검증
             Map<String, Object> model = new HashMap<>();
-            model.put("user", user);
+//            model.put("user", user);
             return render(model, "menu.html");
         });
 
         get("/menu", (req, res) -> {
-            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
+//            User user = new User(req.queryParams("id"), req.queryParams("pwd"));
             // 검증
             Map<String, Object> model = new HashMap<>();
-            model.put("user", user);
+//            model.put("user", user);
             return render(model, "menu.html");
         });
 
