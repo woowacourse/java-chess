@@ -97,4 +97,32 @@ class PieceTest {
         // then
         assertThat(pathToTarget).isEmpty();
     }
+
+    @DisplayName("기물 이둥 테스트")
+    @Test
+    void move() {
+        King king = King.of(Location.of(5, 1), Team.WHITE);
+        king.move(Location.of(4, 2));
+        assertThat(king).isEqualTo(King.of(Location.of(4, 2), Team.WHITE));
+    }
+
+    @DisplayName("기물 위치 확인 테스트")
+    @Test
+    void isHere() {
+        King king = King.of(Location.of(5, 1), Team.WHITE);
+        assertThat(king.isHere(Location.of(5, 1))).isTrue();
+    }
+
+    @DisplayName("팀 확인 테스트")
+    @Test
+    void isSameTeam() {
+        King king = King.of(Location.of(5, 1), Team.WHITE);
+        Queen whiteQueen = Queen.of(Location.of(4, 1), Team.WHITE);
+        Queen blackQueen = Queen.of(Location.of(4, 8), Team.BLACK);
+
+        assertThat(king.isSameTeam(Team.WHITE)).isTrue();
+        assertThat(king.isSameTeam(Team.BLACK)).isFalse();
+        assertThat(king.isSameTeam(whiteQueen)).isTrue();
+        assertThat(king.isSameTeam(blackQueen)).isFalse();
+    }
 }

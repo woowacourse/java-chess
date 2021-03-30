@@ -300,4 +300,12 @@ class BoardTest {
         assertThatThrownBy(() -> testBoard.move(source, target, Team.WHITE))
             .isInstanceOf(MoveFailureException.class);
     }
+
+    @DisplayName("기물이 이동할 능력이 있어도, 중간에 말이 있으면 움직이지 못한다.")
+    @Test
+    void move_with_obstacle() {
+        assertThatThrownBy(
+            () -> initialBoard.move(Location.of(1, 1), Location.of(1, 3), Team.WHITE)
+        ).isInstanceOf(MoveFailureException.class);
+    }
 }
