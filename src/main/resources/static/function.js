@@ -1,6 +1,7 @@
 const BOARD = document.querySelector("#board");
 const API_URL = "http://localhost:4567/";
 const DEFAULT_PATH = "./image/";
+const MOVABLE_CLASS_NAME = "movable";
 const SYMBOL_TO_IMAGE_PATH = {
     "p": DEFAULT_PATH + "whitePawn.png",
     "P": DEFAULT_PATH + "blackPawn.png",
@@ -16,7 +17,7 @@ const SYMBOL_TO_IMAGE_PATH = {
     "K": DEFAULT_PATH + "blackKing.png"
 };
 let boardInfo = {};
-let movablePosition = {};
+let movablePosition = [];
 let isClicked = false;
 let source = null;
 
@@ -82,17 +83,24 @@ function divClickEvent(event) {
         source = event.target;
         source.style.backgroundColor = "yellow";
     } else {
+
+        console.log(targetPosition);
+        console.log(movablePosition);
+        if (source !== event.target && !movablePosition.includes(targetPosition)) {
+            alert("움직일 수 없는 위치입니다.");
+            return;
+        }
         movablePositionSetting(false);
         if (source === event.target) {
             isClicked = false;
             source.style.backgroundColor = "";
             source = null;
-        } else {
-            isClicked = false;
-            source.style.backgroundColor = "";
-            const sourcePosition = source.getAttribute("id");
-            movedPieces(sourcePosition, targetPosition);
+            return;
         }
+        const sourcePosition = source.getAttribute("id");
+        isClicked = false;
+        source.style.backgroundColor = "";
+        movedPieces(sourcePosition, targetPosition);
     }
 }
 
@@ -153,9 +161,9 @@ function movablePositionSetting(isDisplay) {
     for (id of movablePosition) {
         const item = document.getElementById(id);
         if (isDisplay === true) {
-            item.style.backgroundColor = "cornflowerblue";
+            item.classList.add(MOVABLE_CLASS_NAME);
         } else {
-            item.style.backgroundColor = "";
+            item.classList.remove(MOVABLE_CLASS_NAME);
         }
     }
 }
