@@ -37,3 +37,8 @@ body {
     width: 100%;
     height: 100%;
 }
+
+.clicked {
+    border: 5px solid #F5D042;
+    box-sizing: border-box;
+}

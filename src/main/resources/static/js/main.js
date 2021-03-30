@@ -14,6 +14,7 @@ const WQueen = "../img/WQ.png";
 let $chessBoard = document.querySelector(".chessBoard");
 
 initChessBoard();
+$chessBoard.addEventListener("click", clickPosition);
 
 function initChessBoard() {
     for (let i = 0; i < 8; i++) {
@@ -109,4 +110,9 @@ function initPieceImage(row, column) {
         return whiteColumn[column];
     }
     return "";
+}
+
+function clickPosition(event) {
+    const fromPosition = event.target.closest("img");
+    fromPosition.classList.toggle("clicked");
 }
