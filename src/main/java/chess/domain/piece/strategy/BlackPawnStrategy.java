@@ -7,8 +7,7 @@ import java.util.List;
 public final class BlackPawnStrategy implements PieceStrategy {
 
     private static final String NAME = "p";
-    private static final double ORIGINAL_VALUE = 1;
-    private static final double DUPLICATED_VALUE = 0.5;
+    private static final double VALUE = 1;
 
     @Override
     public List<Direction> directions() {
@@ -37,6 +36,6 @@ public final class BlackPawnStrategy implements PieceStrategy {
 
     @Override
     public double value() {
-        return ORIGINAL_VALUE;
+        return VALUE;
     }
 }
