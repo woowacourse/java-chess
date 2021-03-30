@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class SingleMove implements MoveStrategy {
+public abstract class DoubleMove implements MoveStrategy {
     protected Color color;
 
-    public SingleMove(Color color) {
+    public DoubleMove(Color color) {
         this.color = color;
     }
 
@@ -20,6 +20,7 @@ public abstract class SingleMove implements MoveStrategy {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions()) {
             positions.add(position.move(direction.column(), direction.row()));
+            positions.add(position.move(2 * direction.column(), 2 * direction.row()));
         }
         return Collections.singletonList(positions);
     }

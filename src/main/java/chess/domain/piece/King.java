@@ -8,7 +8,7 @@ import java.util.List;
 
 public class King extends Division {
     public static final int KING_SCORE = 0;
-    private final MoveStrategy moveStrategy = new KingMove();
+    private final MoveStrategy moveStrategy = new KingMove(color);
 
     public King(Color color) {
         super(color, "k");

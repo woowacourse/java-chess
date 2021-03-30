@@ -10,7 +10,7 @@ public class Rook extends Division {
 
     public static final int ROOK_SCORE = 5;
 
-    private final MoveStrategy moveStrategy = new RookMove();
+    private final MoveStrategy moveStrategy = new RookMove(color);
 
     public Rook(Color color) {
         super(color, "r");

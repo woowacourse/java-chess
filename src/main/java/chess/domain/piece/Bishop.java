@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Bishop extends Division {
     public static final int BISHOP_SCORE = 3;
-    private final MoveStrategy moveStrategy = new BishopMove();
+    private final MoveStrategy moveStrategy = new BishopMove(color);
 
     public Bishop(Color color) {
         super(color, "b");

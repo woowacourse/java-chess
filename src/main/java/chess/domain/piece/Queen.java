@@ -9,7 +9,7 @@ import java.util.List;
 public class Queen extends Division {
 
     public static final int QUEEN_SCORE = 9;
-    private final MoveStrategy moveStrategy = new QueenMove();
+    private final MoveStrategy moveStrategy = new QueenMove(color);
 
     public Queen(Color color) {
         super(color, "q");

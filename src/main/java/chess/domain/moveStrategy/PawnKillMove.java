@@ -6,18 +6,16 @@ import chess.domain.piece.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public class RookMove extends MultipleMove {
-    public RookMove(Color color) {
+public class PawnKillMove extends SingleMove {
+    public PawnKillMove(Color color) {
         super(color);
     }
 
     @Override
     public List<Direction> directions() {
         return Arrays.asList(
-                new Direction(1, 0),
-                new Direction(0, 1),
-                new Direction(-1, 0),
-                new Direction(0, -1)
+                new Direction(1, color.moveUnit()),
+                new Direction(-1, color.moveUnit())
         );
     }
 }

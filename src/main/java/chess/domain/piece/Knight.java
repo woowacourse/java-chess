@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Knight extends Division {
     public static final double KNIGHT_SCORE = 2.5;
-    private final MoveStrategy moveStrategy = new KnightMove();
+    private final MoveStrategy moveStrategy = new KnightMove(color);
 
     public Knight(Color color) {
         super(color, "n");
