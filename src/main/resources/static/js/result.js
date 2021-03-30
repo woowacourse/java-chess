@@ -23,15 +23,21 @@ function updateResult(resultDTO) {
     document.getElementById('winner-team').innerText = '우승팀 : ' + resultDTO.winnerTeamType;
 }
 
-initiate();
-document.getElementById('restart').addEventListener('click', function (event) {
-    const xmlHttp = new XMLHttpRequest();
-    const url = 'http://localhost:8080/chessboard/restart';
-    xmlHttp.onreadystatechange = function () {
-        if (isValidHttpResponse(xmlHttp)) {
-            window.location = JSON.parse(xmlHttp.responseText);
+function addRestartEvent() {
+    const restartButton = document.getElementById('restart');
+    restartButton.addEventListener('click', function (event) {
+        const xmlHttp = new XMLHttpRequest();
+        const url = 'http://localhost:8080/chessboard/restart';
+        xmlHttp.onreadystatechange = function () {
+            if (isValidHttpResponse(xmlHttp)) {
+                window.location = JSON.parse(xmlHttp.responseText);
+            }
         }
-    }
-    xmlHttp.open('GET', url, true);
-    xmlHttp.send();
-});
+        xmlHttp.open('GET', url, true);
+        xmlHttp.send();
+    });
+
+}
+
+initiate();
+addRestartEvent();
