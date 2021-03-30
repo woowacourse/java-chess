@@ -77,7 +77,6 @@ public class ConsoleController {
             responseDTO = chessConsoleService.getCurrentBoard();
             ConsoleOutputView.printBoard(responseDTO);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return new ResponseDTO(false);
         }
         return responseDTO;

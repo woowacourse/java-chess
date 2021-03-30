@@ -55,6 +55,7 @@ public class ChessConsoleService {
     }
 
     public ResponseDTO getCurrentBoard() throws SQLException {
+        validateGameStarted();
         GameStatusResponseDTO gameStatusResponseDTO = chessGame.getGameStatus(gameId);
         BoardStatusResponseDTO boardStatusResponseDTO = chessGame.getBoardStatus(gameId);
         return new ResponseDTO(
