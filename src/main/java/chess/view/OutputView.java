@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        for (Map.Entry<Position, Piece> board: chessBoard.getChessBoard().entrySet()) {
+        for (Map.Entry<Position, Piece> board : chessBoard.getChessBoard().entrySet()) {
             System.out.print(board.getValue().getName());
             newlineByIndex(board);
         }
@@ -42,14 +42,16 @@ public class OutputView {
     }
 
     public static void printResult(Result result) {
-        System.out.printf(RESULT_FORMAT,
+        String blackResult = String.format(RESULT_FORMAT,
             Color.BLACK.name(),
             result.score(Color.BLACK),
             result.winOrLose(Color.BLACK));
-        System.out.printf(RESULT_FORMAT,
+        String whiteResult = String.format(RESULT_FORMAT,
             Color.WHITE.name(),
             result.score(Color.WHITE),
             result.winOrLose(Color.WHITE));
+        System.out.println(blackResult);
+        System.out.println(whiteResult);
     }
 
     public static void gameEnd() {
