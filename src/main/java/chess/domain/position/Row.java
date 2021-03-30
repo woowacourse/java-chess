@@ -37,4 +37,8 @@ public enum Row {
                 .findAny()
                 .orElseThrow(() -> new PositionException("유효하지 않은 행입니다."));
     }
+
+    public String number() {
+        return lineName;
+    }
 }

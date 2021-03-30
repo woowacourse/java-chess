@@ -94,4 +94,8 @@ public final class Board {
                 .filter(piece -> piece.isPawn() && piece.isSideEqualTo(side))
                 .count();
     }
+
+    public Map<Position, Piece> asMap() {
+        return board;
+    }
 }

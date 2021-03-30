@@ -77,4 +77,9 @@ public abstract class GamePiece implements Piece {
         }
         return initial;
     }
+
+    @Override
+    public String getSide() {
+        return side.toString();
+    }
 }
