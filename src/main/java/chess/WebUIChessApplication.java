@@ -17,6 +17,8 @@ public class WebUIChessApplication {
         webChessController.getChessBoard();
         webChessController.postMovement();
         webChessController.runExceptionHandler();
+        webChessController.getResult();
+        webChessController.showResult();
     }
 
     private static void setConfiguration() {

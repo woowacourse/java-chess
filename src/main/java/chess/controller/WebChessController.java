@@ -3,8 +3,10 @@ package chess.controller;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.dto.BoardDTO;
 import chess.dto.RequestDTO;
+import chess.dto.ResultDTO;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -38,7 +40,7 @@ public class WebChessController {
         get("/chessboard", (request, response) -> {
             response.type("application/json");
             BoardDTO boardDTO = BoardDTO.from(chessBoard, CURRENT_TEAM_TYPE);
-            return new Gson().toJson(new Gson().toJsonTree(boardDTO));
+            return new Gson().toJsonTree(boardDTO);
         });
     }
 
@@ -52,7 +54,24 @@ public class WebChessController {
             chessBoard.move(current, destination, teamType);
             CURRENT_TEAM_TYPE = teamType.findOppositeTeam();
             BoardDTO boardDTO = BoardDTO.from(chessBoard, CURRENT_TEAM_TYPE);
-            return new Gson().toJson(new Gson().toJsonTree(boardDTO));
+            return new Gson().toJsonTree(boardDTO);
+        });
+    }
+
+    public void getResult() {
+        get("/chessboard/result", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "result.html");
+        });
+    }
+
+    public void showResult() {
+        get("/chessboard/result/show", (request, response) -> {
+            response.type("application/json");
+            Result result = chessBoard.calculateScores();
+            TeamType winnerTeamType = chessBoard.findWinnerTeam();
+            ResultDTO resultDTO = ResultDTO.from(result, winnerTeamType);
+            return new Gson().toJsonTree(resultDTO);
         });
     }
 

@@ -4,6 +4,9 @@ function initiate() {
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             const boardDTO = JSON.parse(this.responseText);
+            if (boardDTO.isCheckmate === true) {
+                window.location.href = 'chessboard/result';
+            }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
         }
     }
@@ -95,6 +98,9 @@ function sendMoveRequest(current, destination, currentTeamType) {
         if (isValidHttpResponse(xmlHttp)) {
             removeOutdatedChessBoard();
             const boardDTO = JSON.parse(this.responseText);
+            if (boardDTO.isCheckmate === true) {
+                window.location.href = 'chessboard/result';
+            }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
             return;
         }

@@ -10,10 +10,12 @@ public class BoardDTO {
 
     private final List<RowDTO> rows;
     private final TeamType currentTeamType;
+    private final boolean isCheckmate;
 
-    private BoardDTO(List<RowDTO> rows, TeamType currentTeamType) {
+    private BoardDTO(List<RowDTO> rows, TeamType currentTeamType, boolean isCheckmate) {
         this.rows = rows;
         this.currentTeamType = currentTeamType;
+        this.isCheckmate = isCheckmate;
     }
 
     public static BoardDTO from(ChessBoard chessBoard, TeamType currentTeamType) {
@@ -27,7 +29,7 @@ public class BoardDTO {
             RowDTO rowDTO = new RowDTO(piecesByRow);
             rows.add(rowDTO);
         }
-        return new BoardDTO(rows, currentTeamType);
+        return new BoardDTO(rows, currentTeamType, chessBoard.isKingCheckmate());
     }
 
     private static List<PieceDTO> writePiecesByRow(Rank rank, Map<Coordinate, Cell> cells) {
@@ -47,5 +49,9 @@ public class BoardDTO {
 
     public TeamType getCurrentTeamType() {
         return currentTeamType;
+    }
+
+    public boolean isCheckmate() {
+        return isCheckmate;
     }
 }
