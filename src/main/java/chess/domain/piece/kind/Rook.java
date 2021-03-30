@@ -7,13 +7,10 @@ import java.util.List;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
-import jdk.nashorn.internal.objects.annotations.Getter;
 
 public final class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
     private static final String ROOK_NAME = "r";
-
-    private final String image;
 
     private static final List<Direction> rookDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
 
@@ -39,9 +36,5 @@ public final class Rook extends Piece {
     @Override
     public double score() {
         return ROOK_SCORE;
-    }
-
-    public String getImage() {
-        return image;
     }
 }

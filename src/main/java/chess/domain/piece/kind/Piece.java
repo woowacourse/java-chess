@@ -15,9 +15,16 @@ public abstract class Piece {
     protected final Name name;
     protected final Color color;
 
+    public String getImage() {
+        return image;
+    }
+
+    protected String image;
+
     public Piece(String name, Color color) {
         this.name = new Name(name, color);
         this.color = color;
+        this.image = "";
     }
 
     public abstract double score();

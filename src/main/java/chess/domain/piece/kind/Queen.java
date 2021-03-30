@@ -9,6 +9,14 @@ public final class Queen extends Piece {
 
     public Queen(Color color) {
         super(QUEEN_NAME, color);
+        this.image = makeImage();
+    }
+
+    private String makeImage() {
+        if(this.color.isSameAs(Color.BLACK)) {
+            return "black_queen.png";
+        }
+        return "white_queen.png";
     }
 
     @Override

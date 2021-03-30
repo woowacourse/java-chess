@@ -3,44 +3,37 @@ package chess;
 import static spark.Spark.*;
 
 import chess.domain.ChessGame;
-import chess.domain.User;
+import chess.domain.RequestDto;
+import chess.domain.board.Point;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 public class WebUIChessApplication {
+    private static final Gson GSON = new Gson();
+
     public static void main(String[] args) {
         staticFiles.location("/templates");
 
         ChessGame chessGame = new ChessGame();
+        ChessService chessService = new ChessService(chessGame);
 
-        get("/users", (req, res) -> {
-            User user = new User();
-            user.setName("dd");
-            user.setAge("12");
-
+        get("/chess", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("user", user);
-
-            return render(model, "result.html");
+            return render(model, "index.html");
         });
 
-        get("/", (req, res) -> {
-            User user = new User();
-            user.setName("dd");
-            user.setAge("12");
+        post("/board", (req, res) -> {
+            return GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getImage());
+        });
 
-            // Rook rook = new Rook(Color.BLACK);
-
-            Map<String, Object> model = new HashMap<>();
-            model.put("user", user);
-            // model.put("rook", rook);
-
-            return render(model, "index.html");
+        post("/move", (req, res) -> {
+            RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
+             return chessService.move(requestDto);
         });
     }
 

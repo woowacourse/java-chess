@@ -10,6 +10,14 @@ public final class Knight extends Piece {
 
     public Knight(Color color) {
         super(KNIGHT_NAME, color);
+        this.image = makeImage();
+    }
+
+    private String makeImage() {
+        if(this.color.isSameAs(Color.BLACK)) {
+            return "black_knight.png";
+        }
+        return "white_knight.png";
     }
 
     @Override
