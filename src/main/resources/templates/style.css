@@ -1,3 +1,10 @@
+:root{
+    --board-dark: #664585;
+    --board-light: #7a699b;
+    --piece-white: white;
+    --piece-black: black;
+}
+
 *{
     box-sizing: inherit;
 }
@@ -49,11 +56,17 @@ body{
 }
 
 .dark {
-    background-color: darkgray;
+    background-color: var(--board-dark);
     border: 0.5px solid black;
 }
 
 .light {
-    background-color: white;
+    background-color: var(--board-light);
     border: 0.5px solid black;
+}
+.black{
+    color: var(--piece-black);
+}
+.white{
+    color: var(--piece-white);
 }
