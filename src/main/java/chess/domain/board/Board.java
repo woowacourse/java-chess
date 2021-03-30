@@ -71,10 +71,6 @@ public class Board {
         return board.containsValue(King.getInstanceOf(owner));
     }
 
-    public boolean isTargetKing(final Position target) {
-        return pickPiece(target).isKing();
-    }
-
     public boolean isPositionSameOwner(final Position position, final Owner owner) {
         return pickPiece(position).isSameOwner(owner);
     }
