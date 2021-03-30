@@ -111,8 +111,6 @@ function request_move_post() {
   xhr.open('POST', '/move', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.responseType = 'json';
-  console.log('start_position : ' + start_position);
-  console.log('destination : ' + destination);
   xhr.send(JSON.stringify({
     gameId : game_id,
     startPosition: start_position,
