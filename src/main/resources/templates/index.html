@@ -2,9 +2,161 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>우아한 체스게임</title>
+    <link rel="shortcut icon" href="/css/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/css/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/common.css"/>
+
 </head>
 <body>
-Hello World!!
+
+<div class="chess-game">
+
+    <div class="game-title">
+        <h1 class="game-title-header">우아한 체스게임</h1>
+    </div>
+
+    <button class="button is-primary is-light chess-start-btn">게임 시작</button>
+    <button class="button is-warning is-light hidden chess-status-btn">점수 확인</button>
+    <button class="button is-danger is-light hidden chess-end-btn">게임 종료</button>
+
+
+    <div class="score-info">
+        <span class="tag is-black score score-tag hidden">Black</span>
+        <progress class="progress is-danger is-medium score score-black hidden" value="38" max="38"></progress>
+        <span class="tag is-black score score-black-value-tag hidden"></span>
+
+        <span class="tag is-white score score-tag hidden">White</span>
+        <progress class="progress is-info is-medium score score-white hidden" value="38" max="38"></progress>
+        <span class="tag is-white score score-white-value-tag hidden"></span>
+    </div>
+
+    <div>
+        <div class="control">
+            <input class="input is-success is-medium chess-piece-position from" placeholder="from" type="text" value="">
+            <input class="input is-success is-medium chess-piece-position to" placeholder="to" type="text" value="">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="turn-info text">누구 차례?</div>
+        <div class="notification is-black turn-info color">
+            <!--(is-white, is-black)   턴을 어떻게 알 수 있을까?-->
+        </div>
+    </div>
+
+    <div class="chess-board">
+
+        <table class="">
+            <tbody>
+            <tr>
+                <td id="a8" class="black"></td>
+                <td id="b8" class="white"></td>
+                <td id="c8" class="black"></td>
+                <td id="d8" class="white"></td>
+                <td id="e8" class="black"></td>
+                <td id="f8" class="white"></td>
+                <td id="g8" class="black"></td>
+                <td id="h8" class="white"></td>
+                <th class="chess-board-info chess-row">8</th>
+            </tr>
+            <tr>
+                <td id="a7" class="white"></td>
+                <td id="b7" class="black"></td>
+                <td id="c7" class="white"></td>
+                <td id="d7" class="black"></td>
+                <td id="e7" class="white"></td>
+                <td id="f7" class="black"></td>
+                <td id="g7" class="white"></td>
+                <td id="h7" class="black"></td>
+                <th class="chess-board-info chess-row">7</th>
+            </tr>
+            <tr>
+                <td id="a6" class="black"></td>
+                <td id="b6" class="white"></td>
+                <td id="c6" class="black"></td>
+                <td id="d6" class="white"></td>
+                <td id="e6" class="black"></td>
+                <td id="f6" class="white"></td>
+                <td id="g6" class="black"></td>
+                <td id="h6" class="white"></td>
+                <th class="chess-board-info chess-row">6</th>
+            </tr>
+            <tr>
+                <td id="a5" class="white"></td>
+                <td id="b5" class="black"></td>
+                <td id="c5" class="white"></td>
+                <td id="d5" class="black"></td>
+                <td id="e5" class="white"></td>
+                <td id="f5" class="black"></td>
+                <td id="g5" class="white"></td>
+                <td id="h5" class="black"></td>
+                <th class="chess-board-info chess-row">5</th>
+            </tr>
+            <tr>
+                <td id="a4" class="black"></td>
+                <td id="b4" class="white"></td>
+                <td id="c4" class="black"></td>
+                <td id="d4" class="white"></td>
+                <td id="e4" class="black"></td>
+                <td id="f4" class="white"></td>
+                <td id="g4" class="black"></td>
+                <td id="h4" class="white"></td>
+                <th class="chess-board-info chess-row">4</th>
+            </tr>
+            <tr>
+                <td id="a3" class="white"></td>
+                <td id="b3" class="black"></td>
+                <td id="c3" class="white"></td>
+                <td id="d3" class="black"></td>
+                <td id="e3" class="white"></td>
+                <td id="f3" class="black"></td>
+                <td id="g3" class="white"></td>
+                <td id="h3" class="black"></td>
+                <th class="chess-board-info chess-row">3</th>
+            </tr>
+            <tr>
+                <td id="a2" class="black"></td>
+                <td id="b2" class="white"></td>
+                <td id="c2" class="black"></td>
+                <td id="d2" class="white"></td>
+                <td id="e2" class="black"></td>
+                <td id="f2" class="white"></td>
+                <td id="g2" class="black"></td>
+                <td id="h2" class="white"></td>
+                <th class="chess-board-info chess-row">2</th>
+            </tr>
+            <tr>
+                <td id="a1" class="white"></td>
+                <td id="b1" class="black"></td>
+                <td id="c1" class="white"></td>
+                <td id="d1" class="black"></td>
+                <td id="e1" class="white"></td>
+                <td id="f1" class="black"></td>
+                <td id="g1" class="white"></td>
+                <td id="h1" class="black"></td>
+                <th class="chess-board-info chess-row">1</th>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th class="chess-board-info chess-column">a</th>
+                <th class="chess-board-info chess-column">b</th>
+                <th class="chess-board-info chess-column">c</th>
+                <th class="chess-board-info chess-column">d</th>
+                <th class="chess-board-info chess-column">e</th>
+                <th class="chess-board-info chess-column">f</th>
+                <th class="chess-board-info chess-column">g</th>
+                <th class="chess-board-info chess-column">h</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/common.js"></script>
 </body>
 </html>

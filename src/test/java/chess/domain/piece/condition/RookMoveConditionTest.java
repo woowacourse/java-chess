@@ -35,15 +35,15 @@ class RookMoveConditionTest {
     @Test
     void isSatisfyBy_false() {
         RookMoveCondition condition = new RookMoveCondition();
+        Piece rook = Piece.createRook(Color.WHITE, 0, 1);
         Board board = new Board(Arrays.asList(
-                Piece.createRook(Color.WHITE, 0, 1),
+                rook,
                 Piece.createPawn(Color.WHITE, 3, 1),
                 Piece.createPawn(Color.WHITE, 0, 2)
         ));
 
-        boolean actualCol = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 0, 1),
-                new Position(0, 4));
-        boolean actualRow = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 0, 1),
+        boolean actualCol = condition.isSatisfyBy(board, rook, new Position(0, 4));
+        boolean actualRow = condition.isSatisfyBy(board, rook,
                 new Position(7, 1));
 
         assertThat(actualCol).isFalse();

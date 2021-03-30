@@ -10,14 +10,28 @@ public class BoardDto {
 
     private final int row;
     private final int column;
-    List<PieceDto> pieceDtos;
+    private final List<PieceDto> pieceDtos;
+    private final boolean isFinished;
 
     public BoardDto(final Board board) {
+        this(false, board);
+    }
+
+    public BoardDto(final boolean isFinished, final Board board) {
+        this.isFinished = isFinished;
         this.row = board.getRow();
         this.column = board.getColumn();
         this.pieceDtos = board.getPieces().stream()
                 .map(PieceDto::new)
                 .collect(toList());
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public List<PieceDto> getPieceDtos() {
+        return pieceDtos;
     }
 
     public int getRow() {
@@ -26,10 +40,6 @@ public class BoardDto {
 
     public int getColumn() {
         return column;
-    }
-
-    public List<PieceDto> getPieceDtos() {
-        return pieceDtos;
     }
 
 }
