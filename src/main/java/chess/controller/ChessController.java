@@ -21,7 +21,7 @@ public class ChessController {
         }
         Command command;
         do {
-            command = getMenu();
+            command = getCommand();
         } while (!chessManager.isEnd() && !command.isEnd());
 
         OutputView.printGameResult(chessManager.getStatus());
@@ -45,16 +45,16 @@ public class ChessController {
         }
     }
 
-    private Command getMenu() {
+    private Command getCommand() {
         try {
-            return executeMenu(InputView.getUserCommand());
+            return executeCommand(InputView.getUserCommand());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return getMenu();
+            return getCommand();
         }
     }
 
-    private Command executeMenu(final String input) {
+    private Command executeCommand(final String input) {
         final Command command = Command.of(input);
         command.execute(chessManager, input);
         return command;
