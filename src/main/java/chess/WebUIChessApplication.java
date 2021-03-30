@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.staticFiles;
 
-import chess.domain.dto.BoardDto;
 import chess.utils.BoardUtil;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -28,8 +27,7 @@ public class WebUIChessApplication {
         get("/test", (req, res) -> {
             res.status(200);
             res.type("application/json");
-            BoardDto boardDto = BoardDto.from(BoardUtil.generateInitialBoard());
-            return gson.toJson(boardDto);
+            return "";
         });
     }
 

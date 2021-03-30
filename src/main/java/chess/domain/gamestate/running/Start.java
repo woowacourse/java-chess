@@ -1,8 +1,6 @@
 package chess.domain.gamestate.running;
 
 import chess.domain.board.Board;
-import chess.domain.dto.BoardDto;
-import chess.domain.dto.ResponseDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.finished.End;
@@ -32,11 +30,6 @@ public class Start extends Running {
     @Override
     public void processMove(String input, Team currentTeam) {
         throw new IllegalArgumentException("[ERROR] 현재 move 상태가 아닙니다.");
-    }
-
-    @Override
-    public ResponseDto getProcessResult() {
-        return ResponseDto.withBoard(BoardDto.from(board));
     }
 
     @Override

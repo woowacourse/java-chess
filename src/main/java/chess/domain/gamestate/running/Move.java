@@ -1,8 +1,6 @@
 package chess.domain.gamestate.running;
 
 import chess.domain.board.Board;
-import chess.domain.dto.BoardDto;
-import chess.domain.dto.ResponseDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.finished.End;
@@ -42,11 +40,6 @@ public class Move extends Running {
         Location source = Location.of(splittedInput[SOURCE_INDEX]);
         Location target = Location.of(splittedInput[TARGET_INDEX]);
         board.move(source, target, currentTeam);
-    }
-
-    @Override
-    public ResponseDto getProcessResult() {
-        return ResponseDto.withBoard(BoardDto.from(board));
     }
 
     @Override

@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.dto.ResponseDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.running.Ready;
@@ -39,9 +38,5 @@ public class ChessGame {
 
     public boolean isFinished() {
         return state.isFinished();
-    }
-
-    public ResponseDto getProcessResult() {
-        return state.getProcessResult();
     }
 }
