@@ -16,7 +16,7 @@ public abstract class Rook extends Piece {
     }
 
     protected Rook(final Owner owner) {
-        this(owner, new Score(5.0d), Direction.straightDirections(), MaxDistance.ROOK);
+        this(owner, Score.ROOK_SCORE, Direction.straightDirections(), MaxDistance.ROOK);
     }
 
     public static Rook getInstanceOf(final Owner owner) {

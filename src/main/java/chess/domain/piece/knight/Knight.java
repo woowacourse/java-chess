@@ -16,7 +16,7 @@ public abstract class Knight extends Piece {
     }
 
     protected Knight(final Owner owner) {
-        this(owner, new Score(2.5), Direction.knightDirections(), MaxDistance.KNIGHT);
+        this(owner, Score.KNIGHT_SCORE, Direction.knightDirections(), MaxDistance.KNIGHT);
     }
 
     public static Knight getInstanceOf(final Owner owner) {

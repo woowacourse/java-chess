@@ -20,7 +20,7 @@ public abstract class Bishop extends Piece {
     }
 
     public Bishop(final Owner owner) {
-        this(owner, new Score(3.0d), Direction.diagonalDirections());
+        this(owner, Score.BISHOP_SCORE, Direction.diagonalDirections());
     }
 
     public static Bishop getInstanceOf(final Owner owner) {

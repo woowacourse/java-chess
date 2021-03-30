@@ -17,7 +17,7 @@ public abstract class Pawn extends Piece {
     }
 
     protected Pawn(final Owner owner, final List<Direction> directions) {
-        this(owner, new Score(1.0d), directions, MaxDistance.PAWN);
+        this(owner, Score.PAWN_SCORE, directions, MaxDistance.PAWN);
     }
 
     public static Pawn getInstanceOf(final Owner owner) {

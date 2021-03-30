@@ -16,7 +16,7 @@ public abstract class Queen extends Piece {
     }
 
     protected Queen(final Owner owner) {
-        this(owner, new Score(9.0d), Direction.allDirections(), MaxDistance.QUEEN);
+        this(owner, Score.QUEEN_SCORE, Direction.allDirections(), MaxDistance.QUEEN);
     }
 
     public static Queen getInstanceOf(final Owner owner) {

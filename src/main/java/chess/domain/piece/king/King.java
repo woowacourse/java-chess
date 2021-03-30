@@ -20,7 +20,7 @@ public abstract class King extends Piece {
     }
 
     protected King(final Owner owner) {
-        this(owner, new Score(0.0d), Direction.allDirections());
+        this(owner, Score.ZERO_SCORE, Direction.allDirections());
     }
 
     public static King getInstanceOf(final Owner owner) {
