@@ -32,7 +32,7 @@ public abstract class Piece implements Movable {
         }
     }
 
-    public final boolean areYouHere(Location location) {
+    public final boolean isHere(Location location) {
         return this.location.equals(location);
     }
 

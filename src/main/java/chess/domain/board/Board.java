@@ -97,7 +97,7 @@ public class Board {
     public Piece find(Location location) {
         return pieces
             .stream()
-            .filter(piece -> piece.areYouHere(location))
+            .filter(piece -> piece.isHere(location))
             .findFirst()
             .orElseThrow(() -> new MoveFailureException("해당 위치에 체스 말이 존재하지 않습니다."));
     }
@@ -105,7 +105,7 @@ public class Board {
     public boolean isExistent(Location location) {
         return pieces
             .stream()
-            .anyMatch(piece -> piece.areYouHere(location));
+            .anyMatch(piece -> piece.isHere(location));
     }
 
     private void removeIfExistent(Location target) {
