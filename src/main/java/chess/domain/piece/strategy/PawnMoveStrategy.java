@@ -17,6 +17,8 @@ public class PawnMoveStrategy implements MoveStrategy {
         Piece sourcePiece
     ) {
         Direction direction = Direction.findDirection(sourcePosition, targetPosition);
+        sourcePiece.validateDirection(direction);
+
         if (direction.getXDegree() == LINEAR_DIRECTION_DEGREE) {
             return linearPawnMove(chessBoard, sourcePosition, targetPosition, sourcePiece,
                 direction);

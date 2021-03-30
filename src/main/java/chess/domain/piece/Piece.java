@@ -8,6 +8,7 @@ import java.util.List;
 
 public abstract class Piece {
 
+    public static final String CANNOT_MOVE = "이동할 수 없는 방향입니다.";
     private final Color color;
     private final MoveStrategy moveStrategy;
     protected Type type;
@@ -61,5 +62,12 @@ public abstract class Piece {
 
     public double score() {
         return type.getScore();
+    }
+
+    public void validateDirection(Direction direction) {
+        List<Direction> directions = this.direction();
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException(CANNOT_MOVE);
+        }
     }
 }

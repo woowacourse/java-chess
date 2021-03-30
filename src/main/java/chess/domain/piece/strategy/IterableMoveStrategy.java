@@ -15,6 +15,8 @@ public class IterableMoveStrategy implements MoveStrategy {
         Piece sourcePiece
     ) {
         Direction direction = Direction.findDirection(sourcePosition, targetPosition);
+        sourcePiece.validateDirection(direction);
+
         Position nextPosition = sourcePosition.nextPosition(direction);
         while (!nextPosition.equals(targetPosition)) {
             if (!chessBoard.isBlank(nextPosition)) {
