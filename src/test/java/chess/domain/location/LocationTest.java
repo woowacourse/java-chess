@@ -26,11 +26,11 @@ class LocationTest {
     @Test
     void create_validation() {
         assertThatThrownBy(() -> Location.of(1, 0))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(LocationCacheMissException.class);
         assertThatThrownBy(() -> Location.of(9, 0))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(LocationCacheMissException.class);
         assertThatThrownBy(() -> Location.of(1, 9))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(LocationCacheMissException.class);
     }
 
     @DisplayName("객체 생성 및 유효성 검사 - 문자열 좌표")
@@ -41,13 +41,13 @@ class LocationTest {
         String input2 = "y1";
 
         // when
-        Location location = Location.of(input1);
+        Location location = Location.convert(input1);
 
         // then
         assertThat(location.getX()).isEqualTo(1);
         assertThat(location.getY()).isEqualTo(1);
-        assertThatThrownBy(() -> Location.of(input2))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Location.convert(input2))
+            .isInstanceOf(LocationCacheMissException.class);
     }
 
     @DisplayName("수평, 수직 테스트")
@@ -121,5 +121,15 @@ class LocationTest {
 
         assertThat(inRange).isTrue();
         assertThat(notInRange).isFalse();
+    }
+
+    @DisplayName("정상적으로 캐시에서 값을 가져온 경우 동일한 객체가 생성된다.")
+    @Test
+    void cache_hit() {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
+                assertThat(Location.of(x, y)).isSameAs(Location.of(x, y));
+            }
+        }
     }
 }

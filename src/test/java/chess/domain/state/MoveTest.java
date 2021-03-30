@@ -73,7 +73,7 @@ class MoveTest {
     @Test
     void bringResult() {
         Board expectedBoard = BoardUtil.generateInitialBoard();
-        expectedBoard.move(Location.of("a2"), Location.of("a3"), Team.WHITE);
+        expectedBoard.move(Location.convert("a2"), Location.convert("a3"), Team.WHITE);
 
         BoardResult boardResult = move.bringResult();
         assertThat(boardResult.getPieces())

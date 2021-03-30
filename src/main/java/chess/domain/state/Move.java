@@ -43,8 +43,8 @@ public class Move implements State {
     @Override
     public BoardResult bringResult() {
         String[] words = command.split(BLANK);
-        Location source = Location.of(words[SOURCE_LOCATION_INDEX].trim());
-        Location target = Location.of(words[TARGET_LOCATION_INDEX].trim());
+        Location source = Location.convert(words[SOURCE_LOCATION_INDEX].trim());
+        Location target = Location.convert(words[TARGET_LOCATION_INDEX].trim());
 
         board.move(source, target, team);
         return new BoardResult(board.toList());

@@ -1,34 +1,57 @@
 package chess.domain.location;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Location {
 
     private static final int MIN_LOCATION = 1;
     private static final int MAX_LOCATION = 8;
     private static final int LOCATION_SIZE = 2;
+    private static final int CONVERSION_INDEX = 1;
+    private static final Location[][] CACHE = new Location[MAX_LOCATION][MAX_LOCATION];
+
+    static {
+        IntStream.rangeClosed(MIN_LOCATION, MAX_LOCATION)
+            .boxed()
+            .flatMap(
+                y -> IntStream.rangeClosed(MIN_LOCATION, MAX_LOCATION)
+                    .mapToObj(x -> new Location(x, y))
+            )
+            .forEach(
+                location ->
+                    CACHE[location.y - CONVERSION_INDEX][location.x - CONVERSION_INDEX] = location
+            );
+    }
 
     private final int x;
     private final int y;
 
     private Location(final int x, final int y) {
+        validateRange(x, y);
         this.x = x;
         this.y = y;
     }
 
-    public static Location of(final int x, final int y) {
-        validateRange(x, y);
-        return new Location(x, y);
+    private static Location bringCacheData(int x, int y) {
+        try {
+            return CACHE[y - CONVERSION_INDEX][x - CONVERSION_INDEX];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new LocationCacheMissException(x, y);
+        }
     }
 
-    public static Location of(final String location) {
+    public static Location of(final int x, final int y) {
+        return bringCacheData(x, y);
+    }
+
+    public static Location convert(final String location) {
         if (location.length() != LOCATION_SIZE) {
             throw new IllegalArgumentException("좌표가 잘못 입력되었습니다.");
         }
         int xPos = location.charAt(0) - 'a' + 1;
         int yPos = Character.digit(location.charAt(1), 10);
-        validateRange(xPos, yPos);
-        return new Location(xPos, yPos);
+        return Location.of(xPos, yPos);
     }
 
     private static void validateRange(final int x, final int y) {
