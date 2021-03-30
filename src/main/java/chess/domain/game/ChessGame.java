@@ -31,8 +31,12 @@ public class ChessGame {
 
         validateTurn(sourcePiece);
 
-        chessBoard.move(source, target);
-        turn = turn.getOppositeColor();
+        try {
+            chessBoard.move(source, target);
+            turn = turn.getOppositeColor();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     private void validateTurn(Piece sourcePiece) {

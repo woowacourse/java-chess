@@ -27,14 +27,22 @@ public class Controller {
         String input = InputView.input();
 
         if (Command.MOVE.equals(Command.findCommand(input))) {
-            chessGame.run(Command.parseCommand(input));
-            OutputView.printChessBoard(chessGame.getChessBoard());
-            playGame(chessGame);
+            move(chessGame, input);
         }
         if (Command.END.equals(Command.findCommand(input))
             || chessGame.isOver()) {
             endGame(chessGame);
         }
+    }
+
+    private void move(ChessGame chessGame, String input) {
+        try {
+            chessGame.run(Command.parseCommand(input));
+            OutputView.printChessBoard(chessGame.getChessBoard());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        playGame(chessGame);
     }
 
     public void endGame(ChessGame chessGame) {
