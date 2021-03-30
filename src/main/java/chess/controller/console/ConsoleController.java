@@ -95,8 +95,7 @@ public class ConsoleController {
     private ResponseDTO move(CommandRequestDTO commandRequestDTO) {
         String startPositionInput = commandRequestDTO.getStartPositionInput();
         String destinationInput = commandRequestDTO.getDestinationInput();
-        MoveRequestDTO moveRequestDTO
-            = new MoveRequestDTO(startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(startPositionInput, destinationInput);
         try {
             chessConsoleService.requestMove(moveRequestDTO);
         } catch (Exception e) {

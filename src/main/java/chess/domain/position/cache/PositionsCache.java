@@ -46,20 +46,19 @@ public class PositionsCache {
 
     public static Position find(File file, Rank rank) {
         return POSITIONS.stream()
-            .filter(positionEntity ->
-                positionEntity.getFile() == file && positionEntity.getRank() == rank)
+            .filter(position -> position.getFile() == file && position.getRank() == rank)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 위치 입니다."));
+    }
+
+    public static Position findById(Long positionId) {
+        return POSITIONS.stream()
+            .filter(position -> position.getId().equals(positionId))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 위치 입니다."));
     }
 
     public static Position get(int index) {
         return POSITIONS.get(index);
-    }
-
-    public static Position findById(Long positionId) {
-        return POSITIONS.stream()
-            .filter(positionEntity -> positionEntity.getId().equals(positionId))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 위치 입니다."));
     }
 }

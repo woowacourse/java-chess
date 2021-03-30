@@ -24,11 +24,8 @@ public class PiecesPositions {
         playerPiecePositionDAO.save(playerId, piecePosition);
     }
 
-    public Map<Position, Cell> getAllCellsStatusByGameId(Long gameId)
-        throws SQLException {
-
-        Map<Position, Piece> existsPieces
-            = playerPiecePositionDAO.findAllByGameId(gameId);
+    public Map<Position, Cell> getAllCellsStatusByGameId(Long gameId) throws SQLException {
+        Map<Position, Piece> existsPieces = playerPiecePositionDAO.findAllByGameId(gameId);
         Map<Position, Cell> allCells = new HashMap<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
@@ -84,11 +81,13 @@ public class PiecesPositions {
 
     public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity)
         throws SQLException {
+
         playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePositionEntity);
     }
 
     public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity)
         throws SQLException {
+
         playerPiecePositionDAO.updatePiecePosition(gamePiecePositionEntity);
     }
 

@@ -34,9 +34,7 @@ public class ScoreCalculator {
         return scoreOfPawnsInFile + scoreOfPiecesExceptPawnInFile;
     }
 
-    private List<Piece> getAllPiecesInFile(List<PiecePositionEntity> piecesPositions,
-        File file) {
-
+    private List<Piece> getAllPiecesInFile(List<PiecePositionEntity> piecesPositions, File file) {
         return piecesPositions.stream()
             .filter(piecePosition -> piecePosition.getFile() == file)
             .map(piecePosition ->

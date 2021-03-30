@@ -2,11 +2,11 @@ package chess.controller.dto.response;
 
 import java.util.List;
 
-public class BoardStatusResponseDTOForDB {
+public class BoardStatusResponseDTO {
     private final List<String> cellsStatus;
     private final boolean isKingDead;
 
-    public BoardStatusResponseDTOForDB(List<String> cellsStatus, boolean isKingDead) {
+    public BoardStatusResponseDTO(List<String> cellsStatus, boolean isKingDead) {
         this.cellsStatus = cellsStatus;
         this.isKingDead = isKingDead;
     }

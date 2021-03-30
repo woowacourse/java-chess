@@ -14,7 +14,7 @@ import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.domain.game.ChessGame;
 import chess.utils.DBCleaner;
 import java.sql.SQLException;
@@ -48,7 +48,7 @@ class BoardCustomSettingTest {
         ChessGame chessGame = new ChessGame();
         Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
-        BoardStatusResponseDTOForDB boardStatus = chessGame.getBoardStatus(gameId);
+        BoardStatusResponseDTO boardStatus = chessGame.getBoardStatus(gameId);
 
         assertThat(boardStatus.getCellsStatus()).containsExactly(
             ".", "K", "R", ".", ".", ".", ".", ".",

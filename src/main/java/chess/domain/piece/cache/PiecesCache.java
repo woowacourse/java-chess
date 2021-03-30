@@ -19,6 +19,7 @@ import java.util.List;
 public class PiecesCache {
     private static final PieceDAO PIECE_DAO = new PieceDAO();
     private static final List<Piece> PIECES = new ArrayList<>();
+    private static final String PIECE_NOT_FOUND_ERROR_MESSAGE = "존재하지 않는 기물입니다.";
 
     private PiecesCache() {
     }
@@ -57,13 +58,13 @@ public class PiecesCache {
         return PIECES.stream()
             .filter(piece -> piece.getPieceType() == pieceType && piece.getTeamColor() == teamColor)
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_ERROR_MESSAGE));
     }
 
     public static Piece findById(Long pieceId) {
         return PIECES.stream()
             .filter(piece -> piece.getId().equals(pieceId))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_ERROR_MESSAGE));
     }
 }

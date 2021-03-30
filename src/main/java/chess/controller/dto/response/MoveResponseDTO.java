@@ -12,12 +12,4 @@ public class MoveResponseDTO {
     public MoveResponseDTO(boolean isMoveError) {
         this(isMoveError, null);
     }
-
-    public boolean isMoveError() {
-        return isMoveError;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
 }

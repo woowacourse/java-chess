@@ -2,7 +2,7 @@ package chess.service;
 
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
-import chess.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
 import chess.controller.dto.response.MoveResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
@@ -22,11 +22,10 @@ public class ChessConsoleService {
     private static final int RANK6_FIRST_INDEX = RANK5_FIRST_INDEX + FILES_SIZE_IN_ONE_RANK;
     private static final int RANK7_FIRST_INDEX = RANK6_FIRST_INDEX + FILES_SIZE_IN_ONE_RANK;
     private static final int RANK8_FIRST_INDEX = RANK7_FIRST_INDEX + FILES_SIZE_IN_ONE_RANK;
-    private Long gameId;
 
     private final BoardSetting boardSetting;
-
     private ChessGame chessGame;
+    private Long gameId;
 
     public ChessConsoleService(BoardSetting boardSetting) {
         this.boardSetting = boardSetting;
@@ -43,9 +42,7 @@ public class ChessConsoleService {
         return createMoveResponse(moveRequestDTO);
     }
 
-    private MoveResponseDTO createMoveResponse(MoveRequestDTO moveRequestDTO)
-        throws SQLException {
-
+    private MoveResponseDTO createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
         chessGame.move(moveRequestDTO);
         chessGame.changeToNextTurn(gameId);
         return new MoveResponseDTO(false);
@@ -59,12 +56,11 @@ public class ChessConsoleService {
 
     public ResponseDTO getCurrentBoard() throws SQLException {
         GameStatusResponseDTO gameStatusResponseDTO = chessGame.getGameStatus(gameId);
-        BoardStatusResponseDTOForDB boardStatusResponseDTOForDB
-            = chessGame.getBoardStatus(gameId);
+        BoardStatusResponseDTO boardStatusResponseDTO = chessGame.getBoardStatus(gameId);
         return new ResponseDTO(
             gameStatusResponseDTO,
-            boardStatusResponseDTOForDB.isKingDead(),
-            getBoardResponseDTO(boardStatusResponseDTOForDB.getCellsStatus()));
+            boardStatusResponseDTO.isKingDead(),
+            getBoardResponseDTO(boardStatusResponseDTO.getCellsStatus()));
     }
 
     private BoardResponseDTO getBoardResponseDTO(List<String> cellsStatus) {

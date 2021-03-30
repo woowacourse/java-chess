@@ -4,7 +4,7 @@ import static chess.domain.piece.type.PieceType.KING;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
-import chess.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.domain.board.move.MoveChecker;
 import chess.domain.board.move.MoveRequest;
@@ -52,9 +52,7 @@ public class Board {
         }
     }
 
-    private void validateMoveRoute(Map<Position, Cell> cells,
-        MoveRequest moveRequest) {
-
+    private void validateMoveRoute(Map<Position, Cell> cells, MoveRequest moveRequest) {
         if (!moveChecker.canMove(moveRequest, cells)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
@@ -77,9 +75,9 @@ public class Board {
         return playersPieces.getPlayersScores(gameId);
     }
 
-    public BoardStatusResponseDTOForDB getStatus(Long gameId) throws SQLException {
+    public BoardStatusResponseDTO getStatus(Long gameId) throws SQLException {
         List<String> cellsStatus = playersPieces.getCellsStatusByGameIdInOrderAsString(gameId);
-        return new BoardStatusResponseDTOForDB(cellsStatus, isKingDead(cellsStatus));
+        return new BoardStatusResponseDTO(cellsStatus, isKingDead(cellsStatus));
     }
 
     private boolean isKingDead(List<String> cellsStatus) {

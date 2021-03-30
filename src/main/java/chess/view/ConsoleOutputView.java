@@ -66,8 +66,4 @@ public class ConsoleOutputView {
         double whiteTeamScore = responseDTO.getWhitePlayerScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
-
-    public static void printErrorMessage(MoveResponseDTO moveResponse) {
-        System.out.println("에러 : " + moveResponse.getErrorMessage());
-    }
 }

@@ -2,7 +2,7 @@ package chess.service;
 
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
-import chess.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
 import chess.controller.dto.response.MoveResponseDTO;
@@ -40,13 +40,11 @@ public class ChessWebService {
         return chessGame.getAllGamesIdAndTitle();
     }
 
-    public MoveResponseDTO requestMove(MoveRequestDTO moveRequestDTO)
-        throws SQLException {
+    public MoveResponseDTO requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {
         return createMoveResponse(moveRequestDTO);
     }
 
-    private MoveResponseDTO createMoveResponse(MoveRequestDTO moveRequestDTO)
-        throws SQLException {
+    private MoveResponseDTO createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
         try {
             chessGame.move(moveRequestDTO);
         } catch (Exception e) {
@@ -58,12 +56,11 @@ public class ChessWebService {
 
     public ResponseDTO getGameStatus(Long gameId) throws SQLException {
         GameStatusResponseDTO gameStatusResponseDTO = chessGame.getGameStatus(gameId);
-        BoardStatusResponseDTOForDB boardStatusResponseDTOForDB
-            = chessGame.getBoardStatus(gameId);
+        BoardStatusResponseDTO boardStatusResponseDTO = chessGame.getBoardStatus(gameId);
         return new ResponseDTO(
             gameStatusResponseDTO,
-            boardStatusResponseDTOForDB.isKingDead(),
-            getBoardResponseDTO(boardStatusResponseDTOForDB.getCellsStatus()));
+            boardStatusResponseDTO.isKingDead(),
+            getBoardResponseDTO(boardStatusResponseDTO.getCellsStatus()));
     }
 
     private BoardResponseDTO getBoardResponseDTO(List<String> cellsStatus) {

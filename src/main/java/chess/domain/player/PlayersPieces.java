@@ -51,6 +51,7 @@ public class PlayersPieces {
 
     private void savePieceIfExists(PlayersIds playersIds, PiecePosition piecePosition)
         throws SQLException {
+        
         if (piecePosition.isPieceExists()) {
             if (piecePosition.getTeamColor() == WHITE) {
                 piecesPositions.save(playersIds.getWhitePlayerId(), piecePosition);

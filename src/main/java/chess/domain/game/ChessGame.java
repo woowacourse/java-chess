@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.controller.dto.request.MoveRequestDTO;
-import chess.controller.dto.response.BoardStatusResponseDTOForDB;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
 import chess.dao.ChessGameDAO;
@@ -59,7 +59,7 @@ public class ChessGame {
         board.move(chessGameEntity.getId(), moveRequest);
     }
 
-    public BoardStatusResponseDTOForDB getBoardStatus(Long gameId) throws SQLException {
+    public BoardStatusResponseDTO getBoardStatus(Long gameId) throws SQLException {
         return board.getStatus(gameId);
     }
 
