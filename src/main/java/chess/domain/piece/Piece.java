@@ -21,13 +21,13 @@ public abstract class Piece {
         this.maxDistance = maxDistance;
     }
 
-    public List<Path> ableToPath(final Position source) {
+    public List<Path> movablePath(final Position source) {
         return directions.stream()
-                .map(direction -> ableToPathDirection(source, direction))
+                .map(direction -> movablePathDirection(source, direction))
                 .collect(Collectors.toList());
     }
 
-    public Path ableToPathDirection(final Position source, final Direction direction) {
+    public Path movablePathDirection(final Position source, final Direction direction) {
         List<Position> path = new ArrayList<>();
         Position target = source;
         while (target.isValidPosition(direction) && isValidDistance(source, target.next(direction))) {

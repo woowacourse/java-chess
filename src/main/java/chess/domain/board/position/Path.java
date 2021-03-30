@@ -27,24 +27,24 @@ public class Path {
     }
 
     private Path filterPath(final Position source, final Board board) {
-        boolean isPrePositionAbleToMove = true;
+        boolean isPrePositionMovable = true;
         int pathSize = this.path.size();
         Path filterPaths = new Path(new ArrayList<>());
 
-        for (int i = 0; i < pathSize && isMoveAblePath(source, path.get(i), board, isPrePositionAbleToMove); i++) {
+        for (int i = 0; i < pathSize && isMovablePosition(source, path.get(i), board, isPrePositionMovable); i++) {
             Position target = path.get(i);
             filterPaths.add(target);
-            isPrePositionAbleToMove = board.pickPiece(target).isEmptyPiece();
+            isPrePositionMovable = board.pickPiece(target).isEmptyPiece();
         }
         return filterPaths;
     }
 
-    private boolean isMoveAblePath(
-            final Position source, final Position target, final Board board, final boolean isPrePositionAbleToMove) {
+    private boolean isMovablePosition(
+            final Position source, final Position target, final Board board, final boolean isPrePositionMovable) {
         Piece sourcePiece = board.pickPiece(source);
         Piece targetPiece = board.pickPiece(target);
         return sourcePiece.isDifferentTeam(targetPiece)
-                && isPrePositionAbleToMove
+                && isPrePositionMovable
                 && sourcePiece.isReachable(source, target, targetPiece);
     }
 

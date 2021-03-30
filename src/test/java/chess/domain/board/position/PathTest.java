@@ -47,7 +47,7 @@ class PathTest {
         Piece sourcePiece = Pawn.getInstanceOf(Owner.BLACK);
         Position source = Position.of("a7");
 
-        List<Path> paths = sourcePiece.ableToPath(source);
+        List<Path> paths = sourcePiece.movablePath(source);
 
         Path filterPath = Path.filterPaths(paths, source, board);
 

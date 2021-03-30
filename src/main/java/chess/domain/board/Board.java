@@ -31,7 +31,7 @@ public class Board {
 
     private Path ableToPath(final Position source) {
         final Piece sourcePiece = pickPiece(source);
-        final List<Path> paths = sourcePiece.ableToPath(source);
+        final List<Path> paths = sourcePiece.movablePath(source);
         return Path.filterPaths(paths, source, this);
     }
 
