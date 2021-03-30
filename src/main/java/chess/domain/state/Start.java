@@ -17,7 +17,7 @@ public class Start implements State {
         team = Team.WHITE;
     }
 
-    private static void validate(String command) {
+    private static void validate(final String command) {
         CommandType commandType = CommandType.from(command);
         if (!commandType.equals(CommandType.START) && !commandType.equals(CommandType.END)) {
             throw new UnsupportedCommandException(commandType);
@@ -25,7 +25,7 @@ public class Start implements State {
     }
 
     @Override
-    public void receive(String command) {
+    public void receive(final String command) {
         validate(command);
         commandType = CommandType.from(command);
     }

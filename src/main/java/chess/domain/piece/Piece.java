@@ -19,7 +19,7 @@ public abstract class Piece implements Movable {
         this.team = team;
     }
 
-    protected static int getInitialY(Team team) {
+    protected static int getInitialY(final Team team) {
         if (team.isBlack()) {
             return BLACK_INITIAL_Y;
         }
@@ -32,11 +32,11 @@ public abstract class Piece implements Movable {
         }
     }
 
-    public final boolean isHere(Location location) {
+    public final boolean isHere(final Location location) {
         return this.location.equals(location);
     }
 
-    public List<Location> findPath(Location target) {
+    public List<Location> findPath(final Location target) {
         List<Location> path = new ArrayList<>();
         int subX = location.subtractX(target);
         int subY = location.subtractY(target);
@@ -51,12 +51,12 @@ public abstract class Piece implements Movable {
         return path;
     }
 
-    public boolean isSameTeam(Piece other) {
+    public boolean isSameTeam(final Piece other) {
         return (isBlackTeam() && other.isBlackTeam())
             || (isWhiteTeam() && other.isWhiteTeam());
     }
 
-    public boolean isSameTeam(Team team) {
+    public boolean isSameTeam(final Team team) {
         return this.team.equals(team);
     }
 

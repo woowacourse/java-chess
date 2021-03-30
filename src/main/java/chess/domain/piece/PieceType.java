@@ -11,7 +11,7 @@ public enum PieceType {
     private final char value;
     private final double score;
 
-    PieceType(char value, double score) {
+    PieceType(final char value, final double score) {
         this.value = value;
         this.score = score;
     }

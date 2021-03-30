@@ -33,7 +33,7 @@ public class Location {
         this.y = y;
     }
 
-    private static Location bringCacheData(int x, int y) {
+    private static Location bringCacheData(final int x, final int y) {
         try {
             return CACHE[y - CONVERSION_INDEX][x - CONVERSION_INDEX];
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -60,7 +60,7 @@ public class Location {
         }
     }
 
-    private static boolean isRange(int x, int y) {
+    private static boolean isRange(final int x, final int y) {
         return (MIN_LOCATION <= x && x <= MAX_LOCATION)
             && (MIN_LOCATION <= y && y <= MAX_LOCATION);
     }
@@ -97,11 +97,11 @@ public class Location {
         return this.y == y;
     }
 
-    public Location moveByStep(int dx, int dy) {
+    public Location moveByStep(final int dx, final int dy) {
         return Location.of(x + dx, y + dy);
     }
 
-    public boolean isRangeByStep(int dx, int dy) {
+    public boolean isRangeByStep(final int dx, final int dy) {
         return isRange(x + dx, y + dy);
     }
 

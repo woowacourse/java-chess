@@ -13,12 +13,12 @@ public class Wait implements State {
     private CommandType commandType;
     private String command;
 
-    public Wait(Board board, Team team) {
+    public Wait(final Board board, final Team team) {
         this.board = board;
         this.team = team;
     }
 
-    private static void validate(String command) {
+    private static void validate(final String command) {
         CommandType commandType = CommandType.from(command);
         if (commandType.equals(CommandType.START)) {
             throw new UnsupportedCommandException(commandType);
@@ -26,7 +26,7 @@ public class Wait implements State {
     }
 
     @Override
-    public void receive(String command) {
+    public void receive(final String command) {
         validate(command);
         this.commandType = CommandType.from(command);
         this.command = command;

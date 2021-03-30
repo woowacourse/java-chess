@@ -14,20 +14,20 @@ public class ScoreResult implements Result {
     private final double blackScore;
     private final double whiteScore;
 
-    private ScoreResult(List<Piece> pieces) {
+    private ScoreResult(final List<Piece> pieces) {
         this.blackScore = score(pieces, Team.BLACK);
         this.whiteScore = score(pieces, Team.WHITE);
     }
 
-    public static ScoreResult yield(List<Piece> pieces) {
+    public static ScoreResult yield(final List<Piece> pieces) {
         return new ScoreResult(pieces);
     }
 
-    private double score(List<Piece> pieces, Team team) {
+    private double score(final List<Piece> pieces, final Team team) {
         return scoreExceptPawn(pieces, team) + scorePawn(pieces, team);
     }
 
-    private double scoreExceptPawn(List<Piece> pieces, Team team) {
+    private double scoreExceptPawn(final List<Piece> pieces, final Team team) {
         return pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))
@@ -36,7 +36,7 @@ public class ScoreResult implements Result {
             .sum();
     }
 
-    private double scorePawn(List<Piece> pieces, Team team) {
+    private double scorePawn(final List<Piece> pieces, final Team team) {
         final Map<Integer, Long> frequencyPerX = pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))

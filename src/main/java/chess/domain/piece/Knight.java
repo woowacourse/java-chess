@@ -40,7 +40,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Location> findPath(Location target) {
+    public List<Location> findPath(final Location target) {
         return Collections.emptyList();
     }
 

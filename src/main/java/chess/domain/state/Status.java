@@ -10,13 +10,13 @@ public class Status implements State {
     private final Board board;
     private final Team team;
 
-    public Status(Board board, Team team) {
+    public Status(final Board board, final Team team) {
         this.board = board;
         this.team = team;
     }
 
     @Override
-    public void receive(String command) {
+    public void receive(final String command) {
         throw new UnsupportedCommandException("점수확인 중에는 입력 받을 수 없습니다.");
     }
 

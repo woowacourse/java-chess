@@ -15,11 +15,11 @@ public enum CommandType {
 
     private final String description;
 
-    CommandType(String description) {
+    CommandType(final String description) {
         this.description = description;
     }
 
-    public static CommandType from(String command) {
+    public static CommandType from(final String command) {
         validate(command);
         String kind = command.split(BLANK)[0];
 
@@ -29,7 +29,7 @@ public enum CommandType {
             .orElseThrow(() -> new CommandNotFoundException(command));
     }
 
-    private static void validate(String command) {
+    private static void validate(final String command) {
         String[] words = command.split(BLANK);
         String commandType = words[0];
         if (commandType.equals(MOVE.description) && words.length != MOVE_COMMAND_WORDS) {

@@ -4,7 +4,7 @@ import chess.domain.result.Result;
 
 public interface State {
 
-    void receive(String command);
+    void receive(final String command);
 
     State next();
 

@@ -10,14 +10,14 @@ public class PieceDto {
     private final int x;
     private final int y;
 
-    private PieceDto(Team team, char pieceLetter, int x, int y) {
+    private PieceDto(final Team team, final char pieceLetter, int x, int y) {
         this.team = team;
         this.pieceLetter = pieceLetter;
         this.x = x;
         this.y = y;
     }
 
-    public static PieceDto from(Piece piece) {
+    public static PieceDto from(final Piece piece) {
         return new PieceDto(piece.getTeam(), piece.getPieceType().getValue(), piece.getX(),
             piece.getY());
     }

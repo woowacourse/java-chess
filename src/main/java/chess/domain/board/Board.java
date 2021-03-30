@@ -35,7 +35,7 @@ public class Board {
         return new Board(pieces);
     }
 
-    public void move(Location source, Location target, Team team) {
+    public void move(final Location source, final Location target, final Team team) {
         validateSameLocation(source, target);
         Piece sourcePiece = find(source);
         validateTeam(sourcePiece, team);
@@ -49,25 +49,25 @@ public class Board {
         sourcePiece.move(target);
     }
 
-    private void validateTeam(Piece piece, Team team) {
+    private void validateTeam(final Piece piece, final Team team) {
         if (!piece.isSameTeam(team)) {
             throw new MoveFailureException("상대의 말은 움직일 수 없습니다.");
         }
     }
 
-    private void validateIsNotSameTeam(Location target, Piece piece) {
+    private void validateIsNotSameTeam(final Location target, final Piece piece) {
         if (isExistent(target) && piece.isSameTeam(find(target))) {
             throw new MoveFailureException("목표 위치에 같은 팀의 말이 있습니다.");
         }
     }
 
-    private void validateMoveCapable(Location target, Piece piece) {
+    private void validateMoveCapable(final Location target, final Piece piece) {
         if (!piece.isMovable(target)) {
             throw new MoveFailureException("해당 체스 말은 해당 위치로 이동할 능력이 없습니다.");
         }
     }
 
-    private void validateNotExistentInPath(List<Location> pathToTarget) {
+    private void validateNotExistentInPath(final List<Location> pathToTarget) {
         boolean isExistent = pathToTarget.stream()
             .anyMatch(this::isExistent);
 
@@ -76,13 +76,14 @@ public class Board {
         }
     }
 
-    private void validateSameLocation(Location source, Location target) {
+    private void validateSameLocation(final Location source, final Location target) {
         if (source.equals(target)) {
             throw new MoveFailureException("현재 말의 위치와 목표 위치는 같을 수 없습니다.");
         }
     }
 
-    private void validatePawnMovable(Piece sourcePiece, Location source, Location target) {
+    private void validatePawnMovable(final Piece sourcePiece, final Location source,
+        final Location target) {
         if (sourcePiece.isPawn()) {
             int subX = source.subtractX(target);
             if (subX == 0 && isExistent(target)) {
@@ -94,7 +95,7 @@ public class Board {
         }
     }
 
-    public Piece find(Location location) {
+    public Piece find(final Location location) {
         return pieces
             .stream()
             .filter(piece -> piece.isHere(location))
@@ -102,20 +103,20 @@ public class Board {
             .orElseThrow(() -> new MoveFailureException("해당 위치에 체스 말이 존재하지 않습니다."));
     }
 
-    public boolean isExistent(Location location) {
+    public boolean isExistent(final Location location) {
         return pieces
             .stream()
             .anyMatch(piece -> piece.isHere(location));
     }
 
-    private void removeIfExistent(Location target) {
+    private void removeIfExistent(final Location target) {
         if (isExistent(target)) {
             Piece targetPiece = find(target);
             pieces.remove(targetPiece);
         }
     }
 
-    public boolean isKingAlive(Team team) {
+    public boolean isKingAlive(final Team team) {
         return pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))

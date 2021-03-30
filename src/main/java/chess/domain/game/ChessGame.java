@@ -22,11 +22,11 @@ public class ChessGame {
         return state.needsParam();
     }
 
-    public void receiveCommand(String command) {
+    public void receiveCommand(final String command) {
         state.receive(command);
     }
 
-    public boolean supports(ResultType board) {
+    public boolean supports(final ResultType board) {
         return Objects.equals(board, state.bringResultType());
     }
 
@@ -34,7 +34,7 @@ public class ChessGame {
         return state.bringResult();
     }
 
-    public void progress(boolean isSuccessful) {
+    public void progress(final boolean isSuccessful) {
         if (isSuccessful) {
             state = state.next();
             return;
@@ -42,3 +42,4 @@ public class ChessGame {
         state = state.before();
     }
 }
+

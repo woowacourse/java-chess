@@ -23,7 +23,7 @@ public class Pawn extends Piece {
         super(location, team);
     }
 
-    public static Pawn of(Location location, Team team) {
+    public static Pawn of(final Location location, final Team team) {
         return new Pawn(location, team);
     }
 
@@ -36,7 +36,7 @@ public class Pawn extends Piece {
         ).collect(Collectors.toList());
     }
 
-    private List<Location> makePossibleLocation(Location target) {
+    private List<Location> makePossibleLocation(final Location target) {
         int dy = UP_DIRECTION;
         if (team.isBlack()) {
             dy = DOWN_DIRECTION;
@@ -47,7 +47,7 @@ public class Pawn extends Piece {
         return locations;
     }
 
-    private List<Location> bringAlwaysMovableLocations(int dy) {
+    private List<Location> bringAlwaysMovableLocations(final int dy) {
         List<Location> locations =
             IntStream.rangeClosed(LEFT_DIRECTION, RIGHT_DIRECTION)
                 .filter(dx -> location.isRangeByStep(dx, dy))
@@ -57,7 +57,7 @@ public class Pawn extends Piece {
         return locations;
     }
 
-    private void addOnlyInitialMovableLocation(int dy, List<Location> locations) {
+    private void addOnlyInitialMovableLocation(final int dy, final List<Location> locations) {
         if (isInitialLocation() && location.isRangeByStep(0, INITIAL_PAWN_MOVE_DISTANCE * dy)) {
             locations.add(location.moveByStep(0, INITIAL_PAWN_MOVE_DISTANCE * dy));
         }

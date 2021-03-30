@@ -6,7 +6,7 @@ import chess.domain.state.exception.UnsupportedCommandException;
 public class End implements State {
 
     @Override
-    public void receive(String command) {
+    public void receive(final String command) {
         throw new UnsupportedCommandException("게임이 끝났습니다. 입력받을 수 없습니다.");
     }
 

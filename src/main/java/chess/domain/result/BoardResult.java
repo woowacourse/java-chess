@@ -7,7 +7,7 @@ public class BoardResult implements Result {
 
     private final List<Piece> pieces;
 
-    public BoardResult(List<Piece> pieces) {
+    public BoardResult(final List<Piece> pieces) {
         this.pieces = pieces;
     }
 

@@ -8,11 +8,11 @@ public class PiecesDto {
 
     private final List<PieceDto> pieces;
 
-    private PiecesDto(List<PieceDto> pieces) {
+    private PiecesDto(final List<PieceDto> pieces) {
         this.pieces = pieces;
     }
 
-    public static PiecesDto from(BoardResult boardResult) {
+    public static PiecesDto from(final BoardResult boardResult) {
         List<PieceDto> castedPieces = boardResult.getPieces()
             .stream()
             .map(PieceDto::from)

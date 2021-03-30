@@ -17,7 +17,7 @@ public class Queen extends Piece {
         super(Location.of(x, getInitialY(team)), team);
     }
 
-    public static Queen of(Location location, Team team) {
+    public static Queen of(final Location location, final Team team) {
         return new Queen(location, team);
     }
 

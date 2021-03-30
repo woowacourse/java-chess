@@ -16,14 +16,14 @@ public class Move implements State {
     private final Team team;
     private final String command;
 
-    public Move(Board board, Team team, String command) {
+    public Move(final Board board, final Team team, final String command) {
         this.board = board;
         this.team = team;
         this.command = command;
     }
 
     @Override
-    public void receive(String command) {
+    public void receive(final String command) {
         throw new UnsupportedCommandException("움직이는 동작 중에는 입력 받을 수 없습니다.");
     }
 
