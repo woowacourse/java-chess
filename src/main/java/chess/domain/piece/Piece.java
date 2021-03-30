@@ -8,12 +8,22 @@ import java.util.Objects;
 
 public abstract class Piece implements Movable {
 
+    private static final int WHITE_INITIAL_Y = 1;
+    private static final int BLACK_INITIAL_Y = 8;
+
     protected final Team team;
     protected Location location;
 
     protected Piece(final Location location, final Team team) {
         this.location = location;
         this.team = team;
+    }
+
+    protected static int getInitialY(Team team) {
+        if (team.isBlack()) {
+            return BLACK_INITIAL_Y;
+        }
+        return WHITE_INITIAL_Y;
     }
 
     public final void move(final Location target) {
@@ -66,8 +76,6 @@ public abstract class Piece implements Movable {
         return false;
     }
 
-    public abstract PieceType getPieceType();
-
     public int getX() {
         return location.getX();
     }
@@ -96,4 +104,6 @@ public abstract class Piece implements Movable {
     public int hashCode() {
         return Objects.hash(team, location);
     }
+
+    public abstract PieceType getPieceType();
 }

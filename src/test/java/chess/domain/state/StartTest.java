@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.Board;
 import chess.domain.result.BoardResult;
 import chess.domain.state.exception.UnsupportedCommandException;
-import chess.utils.BoardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,7 @@ class StartTest {
     @Test
     void bringResult() {
         final BoardResult boardResult = start.bringResult();
-        Board initialBoard = BoardUtil.generateInitialBoard();
+        Board initialBoard = Board.createWithInitialLocation();
 
         assertThat(boardResult.getPieces())
             .isEqualTo(initialBoard.toList());

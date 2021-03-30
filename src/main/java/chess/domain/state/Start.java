@@ -5,7 +5,6 @@ import chess.domain.result.BoardResult;
 import chess.domain.state.command.CommandType;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
-import chess.utils.BoardUtil;
 
 public class Start implements State {
 
@@ -14,7 +13,7 @@ public class Start implements State {
     private CommandType commandType;
 
     public Start() {
-        board = BoardUtil.generateInitialBoard();
+        board = Board.createWithInitialLocation();
         team = Team.WHITE;
     }
 

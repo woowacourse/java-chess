@@ -5,6 +5,7 @@ import chess.domain.team.Team;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Pawn extends Piece {
 
@@ -15,6 +16,8 @@ public class Pawn extends Piece {
     private static final int BLACK_PAWN_INITIAL_Y = 7;
     private static final int WHITE_PAWN_INITIAL_Y = 2;
     private static final int INITIAL_PAWN_MOVE_DISTANCE = 2;
+    private static final int MINIMUM_X = 1;
+    private static final int MAXIMUM_X = 8;
 
     private Pawn(final Location location, final Team team) {
         super(location, team);
@@ -24,12 +27,13 @@ public class Pawn extends Piece {
         return new Pawn(location, team);
     }
 
-    @Override
-    public boolean isMovable(final Location target) {
-        List<Location> nextLocations = makePossibleLocation(target);
-
-        return nextLocations.stream()
-            .anyMatch(location -> location.equals(target));
+    public static List<Piece> createInitialPieces() {
+        return Stream.concat(
+            IntStream.rangeClosed(MINIMUM_X, MAXIMUM_X)
+                .mapToObj(x -> of(Location.of(x, WHITE_PAWN_INITIAL_Y), Team.WHITE)),
+            IntStream.rangeClosed(MINIMUM_X, MAXIMUM_X)
+                .mapToObj(x -> of(Location.of(x, BLACK_PAWN_INITIAL_Y), Team.BLACK))
+        ).collect(Collectors.toList());
     }
 
     private List<Location> makePossibleLocation(Location target) {
@@ -62,6 +66,14 @@ public class Pawn extends Piece {
     private boolean isInitialLocation() {
         return (team.isBlack() && location.isSameY(BLACK_PAWN_INITIAL_Y))
             || (team.isWhite() && location.isSameY(WHITE_PAWN_INITIAL_Y));
+    }
+
+    @Override
+    public boolean isMovable(final Location target) {
+        List<Location> nextLocations = makePossibleLocation(target);
+
+        return nextLocations.stream()
+            .anyMatch(location -> location.equals(target));
     }
 
     @Override

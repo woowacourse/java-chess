@@ -8,7 +8,6 @@ import chess.domain.location.Location;
 import chess.domain.result.BoardResult;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
-import chess.utils.BoardUtil;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,7 +71,7 @@ class MoveTest {
     @DisplayName("이동상태 - 결과는 이동한 위치를 가진 보드이다.")
     @Test
     void bringResult() {
-        Board expectedBoard = BoardUtil.generateInitialBoard();
+        Board expectedBoard = Board.createWithInitialLocation();
         expectedBoard.move(Location.convert("a2"), Location.convert("a3"), Team.WHITE);
 
         BoardResult boardResult = move.bringResult();
