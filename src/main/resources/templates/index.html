@@ -32,10 +32,14 @@
             display: table-cell;
             vertical-align: middle;
         }
+
+        .clicked {
+            box-shadow: inset 0px 0px 10px 3px chartreuse;
+        }
     </style>
 </head>
 <body>
-    <div class="chessboard">
+    <div id="chessboard" class="chessboard">
         <!-- 1st -->
         <div id="a8" class="white">&#9820;</div>
         <div id="b8" class="black">&#9822;</div>
@@ -109,5 +113,10 @@
         <div id="g1" class="black">&#9816;</div>
         <div id="h1" class="white">&#9814;</div>
     </div>
+
+    <form action="/start" method="post">
+        <input type="submit" value="게임 시작">
+    </form>
+    <script src="js/chess.js" charset="utf-8"></script>
 </body>
 </html>

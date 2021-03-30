@@ -1,18 +1,51 @@
 package chess;
 
+import chess.domain.grid.ChessGame;
+import chess.domain.grid.Grid;
+import chess.domain.grid.gridStrategy.NormalGridStrategy;
+import chess.domain.position.Position;
+import chess.dto.PositionDTO;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    public static final Gson GSON = new Gson();
+
     public static void main(String[] args) {
+        staticFiles.location("/public");
+        Grid grid = new Grid(new NormalGridStrategy());
+        ChessGame chessGame = new ChessGame(grid);
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
+        });
+
+        post("/move", (req, res) -> {
+            System.out.println("===================");
+            System.out.println("req" + req.body());
+            PositionDTO positionDTO = GSON.fromJson(req.body(), PositionDTO.class);
+            String sourcePosition = positionDTO.getSourcePosition();
+            String targetPosition = positionDTO.getTargetPosition();
+            System.out.println(sourcePosition + targetPosition);
+            try{
+                chessGame.move(grid.piece(new Position(sourcePosition)), grid.piece(new Position(targetPosition)));
+                return "200";
+            }
+            catch (IllegalArgumentException error){
+                return "400";
+            }
+        });
+
+        post("/start", (req, res) -> {
+            chessGame.start();
+            return render(null, "index.html");
         });
     }
 
