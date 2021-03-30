@@ -1,3 +1,6 @@
+
+const HOME = 'http://localhost:4567';
+
 const piece_cells = document.getElementsByClassName("piece-cell");
 
 const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -94,11 +97,9 @@ for (let i = 0; i < piece_cells.length; i++) {
     if (!is_start_position_clicked) {
       start_position = event.target.id;
       is_start_position_clicked = true;
-      console.log('start_position : ' + start_position);
       return;
     }
     destination = event.target.id;
-    console.log('destination : ' + destination);
     request_move_post();
   });
 }
@@ -107,7 +108,7 @@ const game_id = document.getElementById('game-id').innerText;
 
 function request_move_post() {
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:4567/move', true);
+  xhr.open('POST', '/move', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.responseType = 'json';
   console.log('start_position : ' + start_position);
@@ -126,7 +127,7 @@ function request_move_post() {
       alert(move_response['errorMessage']);
       return;
     }
-    window.location.href='http://localhost:4567/chess-board?id=' + game_id;
+    window.location.href = HOME + '/chess-board?id=' + game_id;
   };
 }
 
@@ -134,7 +135,7 @@ const is_king_dead = document.getElementById('is-king-dead');
 if (is_king_dead.innerText === "true") {
   const before_turn_team_name = document.getElementById('before-turn-team-name');
   alert(before_turn_team_name.innerText + ' 팀이 이겼습니다.');
-  window.location.href='http://localhost:4567/delete?id=' + game_id;
+  window.location.href = HOME + '/delete?id=' + game_id;
 }
 
 

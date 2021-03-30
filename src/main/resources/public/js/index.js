@@ -1,7 +1,11 @@
-const enter_room_buttons =  document.getElementsByClassName("enter-room-button");
-for (let i = 0; i < enter_room_buttons.length; i++) {
-  enter_room_buttons[i].addEventListener('click', (event) => {
-    window.location.href='http://localhost:4567/chess-board?id=' + event.target.parentElement.id;
+
+const HOME = 'http://localhost:4567';
+
+const create_room_buttons =  document.getElementsByClassName("enter-room-button");
+
+for (let i = 0; i < create_room_buttons.length; i++) {
+  create_room_buttons[i].addEventListener('click', (event) => {
+    window.location.href = HOME + '/chess-board?id=' + event.target.parentElement.id;
   });
 }
 
@@ -10,7 +14,7 @@ for (let i = 0; i < remove_room_buttons.length; i++) {
   remove_room_buttons[i].addEventListener('click', (event) => {
     const is_delete = confirm('정말 삭제하시겠습니까?');
     if (is_delete === true) {
-      window.location.href='http://localhost:4567/delete?id=' + event.target.parentElement.id;
+      window.location.href = HOME + '/delete?id=' + event.target.parentElement.id;
     }
   });
 }
