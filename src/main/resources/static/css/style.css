@@ -31,6 +31,7 @@ body {
 .chessColumn {
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .chessRow > .chessColumn > img {
@@ -39,6 +40,5 @@ body {
 }
 
 .clicked {
-    border: 5px solid #F5D042;
-    box-sizing: border-box;
+    background-color: #FCE77D !important;
 }

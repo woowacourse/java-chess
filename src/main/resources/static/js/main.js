@@ -38,7 +38,6 @@ function initChessBoard() {
             chessBoardColumn.id = initPiecePosition(i, j);
             chessBoardColumn.appendChild(pieceImg);
             chessBoardRow.appendChild(chessBoardColumn);
-
         }
         $chessBoard.appendChild(chessBoardRow);
     }
@@ -113,6 +112,16 @@ function initPieceImage(row, column) {
 }
 
 function clickPosition(event) {
-    const fromPosition = event.target.closest("img");
-    fromPosition.classList.toggle("clicked");
+    const positions = document.querySelectorAll(".chessColumn");
+    for (let i = 0; i < positions.length; i++) {
+        if (positions[i].classList.contains("clicked")) {
+            console.log(positions[i].id + ", " + event.target.id);
+            positions[i].classList.remove("clicked");
+            return;
+        }
+    }
+    if (event.target.closest("img") === null) {
+        return;
+    }
+    event.target.closest(".chessColumn").classList.toggle("clicked");
 }
