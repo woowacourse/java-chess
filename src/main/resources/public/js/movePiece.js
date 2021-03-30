@@ -9,7 +9,7 @@ async function onClickPosition(event) {
         const position = event.target.parentElement;
         position.classList.add("selected");
 
-        const response = await fetch("./move", {
+        const response = await fetch("./movable", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"id": position.id})

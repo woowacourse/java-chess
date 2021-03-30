@@ -9,6 +9,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -101,5 +102,9 @@ public class Board {
         return new ArrayList<>(
             moveStrategy.currentPositionMoveStrategy(this, position)
         );
+    }
+
+    public Map<Position, Piece> squares() {
+        return Collections.unmodifiableMap(this.squares);
     }
 }

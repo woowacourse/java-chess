@@ -6,6 +6,7 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.WebUIChessGameController;
 import chess.dto.MovableRequestDto;
+import chess.dto.MoveRequestDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +25,15 @@ public class WebUIChessApplication {
             return render(model, "chess-game.html");
         });
 
-        post("/move", (req, res) -> {
-            MovableRequestDto movableRequestDto = gson.fromJson(req.body(), MovableRequestDto.class);
+        post("/movable", (req, res) -> {
+            MovableRequestDto movableRequestDto = gson
+                .fromJson(req.body(), MovableRequestDto.class);
             return webUIChessGameController.movablePath(movableRequestDto);
+        }, gson::toJson);
+
+        post("/move", (req, res) -> {
+            MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
+            return webUIChessGameController.move(moveRequestDto);
         }, gson::toJson);
     }
 
