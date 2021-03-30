@@ -32,14 +32,26 @@ public class ChessService {
             return move(requestDto);
         });
 
-        post("/score", (req, res) -> score(req.body()));
-    }
+        post("/color", (req, res) -> {
+            if(chessGame.getBoard().get(Point.of(req.body())).isSameTeam(Color.BLACK)){
+                return "흑";
+            } else {
+                return "백";
+            }
+        });
 
-    public void rerun() {
-        get("/result", (req, res) -> {
+        post("/turn", (req, res) -> {
+            if(chessGame.nextTurn().isSameAs(Color.BLACK)){
+                return "백";
+            } else {
+                return "흑";
+            }
+        });
+
+        post("/score", (req, res) -> score(req.body()));
+
+        get("/rerun", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
-            model.put("opposite", "adf");
-            model.put("winner", "asdf");
             this.chessGame = new ChessGame();
             return render(model, "index.html");
         });

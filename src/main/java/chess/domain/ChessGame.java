@@ -35,10 +35,10 @@ public final class ChessGame {
 
     public void playTurn(Point source, Point target) {
         board.movePiece(source, target, currentColor);
-        this.currentColor = switchTurn();
+        this.currentColor = nextTurn();
     }
 
-    private Color switchTurn() {
+    public Color nextTurn() {
         if (this.currentColor.equals(WHITE)) {
             return BLACK;
         }

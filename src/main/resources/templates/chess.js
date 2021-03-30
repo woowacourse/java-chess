@@ -40,6 +40,32 @@ function movePiece(sourcePoint, targetPoint) {
     toggleClicked(sourcePoint, targetPoint);
 }
 
+function colorData(point) {
+    return {
+        method: 'POST',
+        body: point,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+}
+
+async function gameFinishedAlert(targetPoint) {
+    await fetch('/color', colorData(targetPoint)).then(function (repsponse) {
+        repsponse.text().then(function (text) {
+            alert(text + '팀이 승리하였습니다.');
+        })
+    });
+}
+
+async function colorText(targetPoint) {
+    await fetch('/color', colorData(targetPoint)).then(function (repsponse) {
+        repsponse.text().then(function (text) {
+            text;
+        })
+    });
+}
+
 async function move(sourcePoint, targetPoint) {
     let data = {
         source: sourcePoint,
@@ -55,15 +81,24 @@ async function move(sourcePoint, targetPoint) {
     }).then(res => res.json());
 
     if(response === 333) {
+        movePiece(sourcePoint, targetPoint);
+        document.getElementById("notice").innerText = "게임 끝!";
         if(confirm('킹이 죽어 게임이 끝났습니다.\n 다시 게임하시겠습니까?')){
-            await fetch('/result')
-            .then(res => res.json());
-            location.replace("/result");
+            await gameFinishedAlert(targetPoint);
+            fetch('/rerun')
+                .then(location.replace("/chess"));
         } else {
-            alert('~~승');
+            await gameFinishedAlert(targetPoint);
         }
     }
     if(response === 200) {
+        await fetch('/turn', {
+            method: 'POST'
+        }).then(function (repsponse) {
+            repsponse.text().then(function (text) {
+                document.getElementById("notice").innerText = text + "팀의 차례입니다."
+            })
+        });
         movePiece(sourcePoint, targetPoint);
     }
     if (response === 401) {
@@ -72,16 +107,12 @@ async function move(sourcePoint, targetPoint) {
     }
 }
 
-function showResult() {
-}
-
 function getPoint(event) {
     let clickedId = event.target.closest("td").id;
     let sourcePoint;
     let targetPoint;
 
     const list = document.querySelectorAll("td");
-
     for (let i = 0; i < list.length; i++) {
         if (list[i].classList.contains("clicked")) {
             sourcePoint = list[i].id;
