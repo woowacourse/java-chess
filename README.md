@@ -361,7 +361,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-- [ ] 네이밍 변경
 - [ ] 체스보드 View 꾸미기
 - [ ] README.md 정리
 - [ ] SQL 파일 정리 (constrain 등 이름 수정)
