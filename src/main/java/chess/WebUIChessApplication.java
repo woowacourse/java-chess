@@ -10,7 +10,7 @@ import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.ScoreBoard;
 import chess.domain.chessgame.Turn;
 import chess.domain.gamestate.GameState;
-import chess.dto.BoardDtoWeb;
+import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import chess.dto.PointDto;
 import com.google.gson.Gson;
@@ -37,17 +37,17 @@ public class WebUIChessApplication {
         Spark.staticFileLocation("/public");
 
         get("/", (req, res) -> {
-            BoardDtoWeb boardDtoWeb = new BoardDtoWeb(board);
+            BoardWebDto boardWebDto = new BoardWebDto(board);
             Map<String, Object> model = new HashMap<>();
-            model.put("board", boardDtoWeb);
+            model.put("board", boardWebDto);
             return render(model);
         });
 
         put("/start", (req, res) -> {
             chessGame.start();
             gameDao
-                .addSerializedBoardAndStatus(new BoardDtoWeb(board), new GameStatusDto(chessGame));
-            return gson.toJson(new BoardDtoWeb(board));
+                .addSerializedBoardAndStatus(new BoardWebDto(board), new GameStatusDto(chessGame));
+            return gson.toJson(new BoardWebDto(board));
         });
 
         get("/movablePoints/:point", "application/json", (req, res) -> {
@@ -64,12 +64,10 @@ public class WebUIChessApplication {
             body = (Map<String, String>) gson.fromJson(req.body(), body.getClass());
             Point source = Point.of(body.get("source"));
             Point destination = Point.of(body.get("destination"));
-            Map<String, Object> model = new HashMap<>();
             chessGame.move(source, destination);
             gameDao
-                .addSerializedBoardAndStatus(new BoardDtoWeb(board), new GameStatusDto(chessGame));
-            model.put("board", new BoardDtoWeb(board));
-            return gson.toJson(model);
+                .addSerializedBoardAndStatus(new BoardWebDto(board), new GameStatusDto(chessGame));
+            return gson.toJson(new BoardWebDto(board));
         });
 
         get("/getGameStatus", "application/json",

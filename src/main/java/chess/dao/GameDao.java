@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Turn;
-import chess.dto.BoardDtoWeb;
+import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -68,23 +68,24 @@ public class GameDao {
         return baos.toByteArray();
     }
 
-    public void addSerializedBoardAndStatus(BoardDtoWeb boardDtoWeb, GameStatusDto gameStatusDto)
+    public void addSerializedBoardAndStatus(BoardWebDto boardWebDto, GameStatusDto gameStatusDto)
         throws IOException, SQLException {
-        byte[] serializedBoard = serializedObject(boardDtoWeb);
+        byte[] serializedBoard = serializedObject(boardWebDto);
         byte[] serializedGameStatus = serializedObject(gameStatusDto);
-        PreparedStatement pstmt = connection().prepareStatement(INSERT_BOARD_AND_STATUS_QUERY);
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(INSERT_BOARD_AND_STATUS_QUERY);
         pstmt.setBytes(1, serializedBoard);
         pstmt.setBytes(2, serializedGameStatus);
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
-    private BoardDtoWeb firstRow() throws IOException, SQLException {
+    private void generateFirstRow() throws IOException, SQLException {
         Board board = new Board();
-        BoardDtoWeb boardDtoWeb = new BoardDtoWeb(board);
+        BoardWebDto boardWebDto = new BoardWebDto(board);
         GameStatusDto gameStatusDto =
             new GameStatusDto(new ChessGame(board, new Turn(Team.WHITE)));
-        addSerializedBoardAndStatus(boardDtoWeb, gameStatusDto);
-        return boardDtoWeb;
+        addSerializedBoardAndStatus(boardWebDto, gameStatusDto);
     }
 
     private Object deserializedObject(byte[] bytes) throws IOException, ClassNotFoundException {
@@ -93,26 +94,31 @@ public class GameDao {
         return ois.readObject();
     }
 
-    public BoardDtoWeb latestBoard() throws IOException, ClassNotFoundException, SQLException {
-        PreparedStatement pstmt = connection().prepareStatement(SELECT_BOARD_QUERY);
+    public BoardWebDto latestBoard() throws IOException, ClassNotFoundException, SQLException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(SELECT_BOARD_QUERY);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
-            return firstRow();
+            generateFirstRow();
+            return latestBoard();
         }
         byte[] serializedBoard = rs.getBytes("serialized_board");
-        return (BoardDtoWeb) deserializedObject(serializedBoard);
+        connection.close();
+        return (BoardWebDto) deserializedObject(serializedBoard);
     }
 
-    public GameStatusDto latestGameStatus()
-        throws SQLException, IOException, ClassNotFoundException {
-        PreparedStatement pstmt = connection().prepareStatement(SELECT_STATUS_QUERY);
+    public GameStatusDto latestGameStatus() throws SQLException, IOException, ClassNotFoundException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(SELECT_STATUS_QUERY);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
-            firstRow();
+            generateFirstRow();
+            return latestGameStatus();
         }
         byte[] serializedStatus = rs.getBytes("serialized_status");
+        connection.close();
         return (GameStatusDto) deserializedObject(serializedStatus);
     }
 }

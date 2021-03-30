@@ -10,7 +10,7 @@ export const removeHighlight = () => {
 export const move = (source, destination) => {
   getBoardAfterMove(source, destination).then(board => {
     updateGameState();
-    reloadSquares(board["board"]["board"]);
+    reloadSquares(board["board"]);
   });
 }
 
