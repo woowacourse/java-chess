@@ -13,6 +13,78 @@ for (let i = 0; i < piece_cells.length; i++) {
   }
 }
 
+for (let i = 0; i < piece_cells.length; i++) {
+  const img = document.createElement('IMG');
+  img.style.width = '100%';
+  img.style.height = '100%';
+  if (piece_cells[i].innerText === 'P') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-pawn.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'R') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-rook.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'N') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-knight.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'B') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-bishop.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'Q') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-queen.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'K') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/black-king.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'p') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-pawn.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'r') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-rook.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'n') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-knight.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'b') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-bishop.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'q') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-queen.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === 'k') {
+    piece_cells[i].innerText = '';
+    img.src = '/images/white-king.png';
+    img.id = piece_cells[i].id;
+  }
+  if (piece_cells[i].innerText === '.') {
+    piece_cells[i].innerText = '';
+    img.id = piece_cells[i].id;
+    continue;
+  }
+  piece_cells[i].appendChild(img);
+}
+
 let is_start_position_clicked = false;
 let start_position = null;
 let destination = null;
@@ -22,9 +94,11 @@ for (let i = 0; i < piece_cells.length; i++) {
     if (!is_start_position_clicked) {
       start_position = event.target.id;
       is_start_position_clicked = true;
+      console.log('start_position : ' + start_position);
       return;
     }
     destination = event.target.id;
+    console.log('destination : ' + destination);
     request_move_post();
   });
 }
@@ -36,6 +110,8 @@ function request_move_post() {
   xhr.open('POST', 'http://localhost:4567/move', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.responseType = 'json';
+  console.log('start_position : ' + start_position);
+  console.log('destination : ' + destination);
   xhr.send(JSON.stringify({
     gameId : game_id,
     startPosition: start_position,

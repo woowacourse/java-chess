@@ -94,10 +94,6 @@ public abstract class Piece {
         return PiecesCache.findById(pieceId);
     }
 
-    protected boolean isNotCorrectDirection(Direction moveCommandDirection) {
-        return !directions.contains(moveCommandDirection);
-    }
-
     public Long getId() {
         return id;
     }
