@@ -14,16 +14,13 @@ public abstract class Piece {
     private final List<Direction> directions;
     private final MaxDistance maxDistance;
 
-    public Piece(Owner owner, Score score, List<Direction> directions, MaxDistance maxDistance) {
+    public Piece(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
         this.owner = owner;
         this.directions = directions;
         this.score = score;
         this.maxDistance = maxDistance;
     }
 
-    public Piece(Owner owner, Score score, List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.EMPTY);
-    }
 
     public List<Path> ableToPath(final Position source) {
         return directions.stream()
@@ -31,7 +28,7 @@ public abstract class Piece {
                 .collect(Collectors.toList());
     }
 
-    public Path ableToPathDirection(Position source, Direction direction) {
+    public Path ableToPathDirection(final Position source, final Direction direction) {
         List<Position> path = new ArrayList<>();
         Position target = source;
         while (target.isValidPosition(direction) && isValidDistance(source, target.next(direction))) {
@@ -41,7 +38,7 @@ public abstract class Piece {
         return Path.of(path);
     }
 
-    private boolean isValidDistance(Position source, Position target) {
+    private boolean isValidDistance(final Position source, final Position target) {
         return source.getDistance(target) <= this.maxDistanceValue();
     }
 
@@ -57,7 +54,7 @@ public abstract class Piece {
         return this.owner.isSame(owner);
     }
 
-    public boolean isSameOwnerPawn(Owner owner) {
+    public boolean isSameOwnerPawn(final Owner owner) {
         return this.isPawn() && this.owner.isSame(owner);
     }
 

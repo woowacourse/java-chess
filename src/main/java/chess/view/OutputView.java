@@ -29,7 +29,7 @@ public class OutputView {
         }
     }
 
-    public static void printRestartGame(Board board) {
+    public static void printRestartGame(final Board board) {
         System.out.println("게임을 재시작합니다.");
         printBoard(board);
     }
@@ -82,7 +82,7 @@ public class OutputView {
         System.out.println("게임을 종료합니다.");
     }
 
-    public static void printError(RuntimeException runtimeException) {
+    public static void printError(final RuntimeException runtimeException) {
         System.out.println(runtimeException.getMessage());
     }
 }

@@ -11,7 +11,7 @@ public enum MaxDistance {
 
     private final int value;
 
-    MaxDistance(int value) {
+    MaxDistance(final int value) {
         this.value = value;
     }
 

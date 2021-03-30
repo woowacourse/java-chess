@@ -34,11 +34,11 @@ public class Position {
         return new Position(input);
     }
 
-    public boolean isValidPosition(Direction direction) {
+    public boolean isValidPosition(final Direction direction) {
         return !this.isEscapePosition(direction);
     }
 
-    public boolean isEscapePosition(Direction direction) {
+    public boolean isEscapePosition(final Direction direction) {
         try {
             this.next(direction);
         } catch (IllegalArgumentException e) {

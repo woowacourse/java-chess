@@ -9,7 +9,7 @@ public class Empty extends Piece {
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
-        super(Owner.NONE, new Score(0), Collections.emptyList());
+        super(Owner.NONE, new Score(0), Collections.emptyList(), MaxDistance.EMPTY);
     }
 
     public static Empty getInstance() {

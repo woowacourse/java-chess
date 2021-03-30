@@ -11,16 +11,12 @@ import java.util.List;
 
 public abstract class Queen extends Piece {
 
-    private Queen(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+    private Queen(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
         super(owner, score, directions, maxDistance);
     }
 
-    protected Queen(final Owner owner, final Score score, final List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.QUEEN);
-    }
-
     protected Queen(final Owner owner) {
-        this(owner, new Score(9.0d), Direction.allDirections());
+        this(owner, new Score(9.0d), Direction.allDirections(), MaxDistance.QUEEN);
     }
 
     public static Queen getInstanceOf(final Owner owner) {

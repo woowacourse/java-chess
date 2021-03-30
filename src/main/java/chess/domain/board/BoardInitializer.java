@@ -26,7 +26,7 @@ public class BoardInitializer {
         return new Board(map);
     }
 
-    public static void resetBoard(Map<Position, Piece> board) {
+    public static void resetBoard(final Map<Position, Piece> board) {
         putLineInMap(board, Horizontal.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
         putLineInMap(board, Horizontal.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
         putLineInMap(board, Horizontal.SIX, getEmptyLine());

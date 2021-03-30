@@ -41,7 +41,7 @@ public class ChessManager {
         }
     }
 
-    private boolean isTargetKing(Position target) {
+    private boolean isTargetKing(final Position target) {
         return board.isTargetKing(target);
     }
 

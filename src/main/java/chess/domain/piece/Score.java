@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final Score ZERO_SCORE = new Score(0);
     private static final double PAWN_PENALTY_SCORE = 0.5d;
 
     private final double value;

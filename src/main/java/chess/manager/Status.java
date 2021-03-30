@@ -28,7 +28,7 @@ public class Status {
         if (board.isKingAlive(owner)) {
             return calculateOwnerScore(board, owner);
         }
-        return new Score(0);
+        return Score.ZERO_SCORE;
     }
 
     private static Score calculateOwnerScore(final Board board, final Owner owner) {
@@ -40,7 +40,7 @@ public class Status {
         return board.pieces().stream()
                 .filter(piece -> piece.isSameOwner(owner))
                 .map(Piece::score)
-                .reduce(new Score(0), Score::sum);
+                .reduce(Score.ZERO_SCORE, Score::sum);
     }
 
     private static int getPawnCountInVertical(final Board board, final Owner owner) {
@@ -51,7 +51,7 @@ public class Status {
         return totalCount;
     }
 
-    private static int penaltyScorePawnCount(Board board, Vertical vertical, Owner owner) {
+    private static int penaltyScorePawnCount(final Board board, final Vertical vertical, final Owner owner) {
         int pawnCount = (int) Arrays.stream(Horizontal.values())
                 .map(horizontal -> board.pickPiece(vertical, horizontal))
                 .filter(piece -> piece.isSameOwnerPawn(owner))

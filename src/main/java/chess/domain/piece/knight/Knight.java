@@ -11,16 +11,12 @@ import java.util.List;
 
 public abstract class Knight extends Piece {
 
-    private Knight(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+    private Knight(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
         super(owner, score, directions, maxDistance);
     }
 
-    protected Knight(final Owner owner, final Score score, final List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.KNIGHT);
-    }
-
     protected Knight(final Owner owner) {
-        this(owner, new Score(2.5), Direction.knightDirections());
+        this(owner, new Score(2.5), Direction.knightDirections(), MaxDistance.KNIGHT);
     }
 
     public static Knight getInstanceOf(final Owner owner) {

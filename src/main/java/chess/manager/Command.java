@@ -9,39 +9,39 @@ import java.util.Arrays;
 public enum Command {
     START("start", 1) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             OutputView.printBoard(chessManager.getBoard());
         }
     },
     RESTART("restart", 1) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             chessManager.resetBoard();
             OutputView.printRestartGame(chessManager.getBoard());
         }
     },
     END("end", 1) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             OutputView.printEndGame();
         }
     },
     MOVE("move", 3) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             chessManager.move(MoveCommand.of(input));
             OutputView.printBoard(chessManager.getBoard());
         }
     },
     STATUS("status", 1) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             OutputView.printStatus(chessManager.getStatus());
         }
     },
     SHOW("show", 2) {
         @Override
-        public void execute(ChessManager chessManager, String input) {
+        public void execute(final ChessManager chessManager, final String input) {
             OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(ShowCommand.of(input)));
         }
     };
@@ -54,7 +54,7 @@ public enum Command {
         this.parameterCount = parameterCount;
     }
 
-    public abstract void execute(ChessManager chessManager, String input);
+    public abstract void execute(final ChessManager chessManager, final String input);
 
     public static Command of(final String line) {
         String[] splitLine = line.split(" ");

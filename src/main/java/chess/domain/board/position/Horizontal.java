@@ -30,7 +30,7 @@ public enum Horizontal {
                 .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 가로열 위치입니다."));
     }
 
-    private static void validateParseInt(String input) {
+    private static void validateParseInt(final String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException ne) {

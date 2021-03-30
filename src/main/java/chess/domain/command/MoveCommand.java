@@ -19,7 +19,7 @@ public class MoveCommand {
         return new MoveCommand(Position.of(input[1]), Position.of(input[2]));
     }
 
-    private static void validateMoveCommand(String[] input) {
+    private static void validateMoveCommand(final String[] input) {
         if (input.length == PARAMETER_SIZE) {
             throw new IllegalArgumentException("이동 명령으로 옳지않은 양식입니다.");
         }

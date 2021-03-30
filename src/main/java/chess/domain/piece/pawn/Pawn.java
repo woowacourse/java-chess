@@ -12,19 +12,15 @@ import java.util.List;
 
 public abstract class Pawn extends Piece {
 
-    private Pawn(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+    private Pawn(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
         super(owner, score, directions, maxDistance);
     }
 
-    protected Pawn(final Owner owner, final Score score, final List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.PAWN);
-    }
-
     protected Pawn(final Owner owner, final List<Direction> directions) {
-        this(owner, new Score(1.0d), directions);
+        this(owner, new Score(1.0d), directions, MaxDistance.PAWN);
     }
 
-    public static Pawn getInstanceOf(Owner owner) {
+    public static Pawn getInstanceOf(final Owner owner) {
         if (owner.isSame(Owner.BLACK)) {
             return BlackPawn.getInstance();
         }

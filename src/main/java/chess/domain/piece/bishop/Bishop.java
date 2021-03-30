@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class Bishop extends Piece {
 
-    private Bishop(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
+    private Bishop(final Owner owner, final Score score, final List<Direction> directions, final MaxDistance maxDistance) {
         super(owner, score, directions, maxDistance);
     }
 
@@ -38,10 +38,5 @@ public abstract class Bishop extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public String getSymbol() {
-        return "B";
     }
 }
