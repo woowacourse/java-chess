@@ -46,4 +46,10 @@ class BoardTest {
         board2.move2(Position.from("a7"), Position.from("a6"));
         board2.print();
     }
+
+    @Test
+    void score() {
+        System.out.println(board2.score2(Color.BLACK));
+        System.out.println(board2.score2(Color.WHITE));
+    }
 }

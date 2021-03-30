@@ -7,7 +7,6 @@ import chess.domain.piece.Pieces;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import java.util.Map;
 
 public class Board {
     private Pieces pieces;
+    private boolean isKingDead = false;
     private Map<Position, Piece> pieceByPosition;
 
     public Board(Pieces pieces) {
@@ -57,9 +57,12 @@ public class Board {
 
     public void action(Color color, Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
+        if (!fromPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("from 잘못 입력");
+        }
         Piece toPiece = pieceByPosition.get(to);
         if (toPiece.isSameColor(color)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("같은 색깔의 말을 잡을 수 없습니다.");
         }
         move2(from, to);
     }
@@ -72,14 +75,14 @@ public class Board {
 
         if (toPiece.isEmpty()) {
             routes = fromPiece.movablePositions(from);
-        }
-        else {
+        } else {
             routes = fromPiece.killablePositions(from);
         }
         for (List<Position> route : routes) {
             for (Position position : route) {
                 positions.add(position);
-                if (!pieceByPosition.get(position).isEmpty()) {
+                if (!pieceByPosition.get(position)
+                                    .isEmpty()) {
                     break;
                 }
             }
@@ -88,6 +91,9 @@ public class Board {
         if (positions.contains(to)) {
             pieceByPosition.put(to, fromPiece);
             pieceByPosition.put(from, new Empty());
+            if (toPiece.isKing()) {
+                isKingDead = true;
+            }
         }
     }
 
@@ -99,6 +105,10 @@ public class Board {
         throw new IllegalArgumentException();
     }
 
+    public boolean isKingDead() {
+        return isKingDead;
+    }
+
     public boolean isNotEnd() {
         return pieces.toList()
                      .stream()
@@ -108,6 +118,38 @@ public class Board {
 
     public double score(Color color) {
         return pieces.score(color);
+    }
+
+    public double score2(Color color) {
+        double score = 0;
+        for (Column column : Column.values()) {
+            score += scoreByColumn(color, column);
+        }
+        return score;
+    }
+
+    private double scoreByColumn(Color color, Column column) {
+        int pawnCount = 0;
+        double score = 0;
+        for (Row row : Row.values()) {
+            Piece piece = pieceByPosition.get(Position.of(column, row));
+            if (piece.isSameColor(color)) {
+                score += piece.score();
+                if (piece.isPawn()) {
+                    pawnCount += 1;
+                }
+            }
+        }
+
+        if (pawnCount >= 2) {
+            score -= 0.5 * pawnCount;
+        }
+
+        return score;
+    }
+
+    public Map<Position, Piece> allPieces2() {
+        return pieceByPosition;
     }
 
     public Map<Position, Piece> allPieces() {
