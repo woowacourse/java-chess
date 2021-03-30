@@ -89,7 +89,7 @@
         <div id="status">
             <div class="score">
                 <img src="./img/black_team.png">
-                <p>
+                <p id="black-score">
                     {{black-score}}
                 </p>
             </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="score">
                 <img src="./img/white_team.png">
-                <p>
+                <p id="white-score">
                     {{white-score}}
                 </p>
             </div>
@@ -213,7 +213,7 @@
             },
             method: "POST",
             dataType: "json"
-        }).done(function (success) {
+        }).done(function (currentStatus) {
             const start = document.getElementById(startPoint);
             const end = document.getElementById(endPoint);
             const image = start.children[0];
@@ -222,11 +222,35 @@
             }
             end.appendChild(image);
             removeAllMovablePosition(start);
+            settingCurrentStatus(currentStatus);
+            checkEndGame(currentStatus);
             startPoint = "";
             endPoint = "";
             startPointCheck = false;
             movablePosition = [];
         });
+    }
+
+    function settingCurrentStatus(currentStatus) {
+        const blackScore = document.getElementById("black-score");
+        const whiteScore = document.getElementById("white-score");
+        const turn = document.getElementById("turn");
+
+        blackScore.innerText = currentStatus.blackScore;
+        whiteScore.innerText = currentStatus.whiteScore;
+        turn.removeChild(turn.children[0]);
+        if (currentStatus.turn === "BLACK") {
+            turn.insertAdjacentHTML("beforeend", "<img src=\"./img/black_turn.png\">");
+        } else {
+            turn.insertAdjacentHTML("beforeend", "<img src=\"./img/white_turn.png\">");
+        }
+    }
+
+    function checkEndGame(currentStatus) {
+        if (!currentStatus.ends) {
+            alert(currentStatus.winner + " WIN!!");
+            window.location.href = "/";
+        }
     }
 </script>
 <script>

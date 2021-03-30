@@ -4,11 +4,11 @@ import chess.JsonTransformer;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.dto.PiecesDTO;
+import chess.dto.StatusDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
@@ -58,8 +58,13 @@ public class WebChessGameController {
             String startPoint = req.queryParams("startPoint");
             String endPoint = req.queryParams("endPoint");
             chessGame.move(startPoint, endPoint);
-            return true;
+            return currentStatus(chessGame);
         }, new JsonTransformer());
+    }
+
+    private StatusDTO currentStatus(ChessGame chessGame) {
+        String turn = chessGame.turn().name();
+        return new StatusDTO(turn, chessGame);
     }
 
     private void gameInformation(ChessGame chessGame, Map<String, Object> model) {
