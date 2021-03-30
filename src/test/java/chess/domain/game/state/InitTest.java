@@ -78,4 +78,11 @@ public class InitTest {
     void testIsNotEndTrue() {
         assertThat(this.init.isNotEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("초기 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.init.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
 }

@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
+import java.util.List;
 
 public class ChessGame {
 
@@ -48,5 +49,9 @@ public class ChessGame {
 
     public boolean isNotEnd() {
         return state.isNotEnd();
+    }
+
+    public List<Position> movablePath(final Position position) {
+        return this.state.movablePath(position);
     }
 }

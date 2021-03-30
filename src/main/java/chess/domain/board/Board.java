@@ -8,6 +8,7 @@ import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -92,5 +93,13 @@ public class Board {
             .stream()
             .filter(piece -> piece.isSameColor(color))
             .collect(Collectors.toList());
+    }
+
+    public List<Position> movablePath(Position position) {
+        Piece piece = pieceByPosition(position);
+        MoveStrategy moveStrategy = piece.moveStrategy();
+        return new ArrayList<>(
+            moveStrategy.currentPositionMoveStrategy(this, position)
+        );
     }
 }

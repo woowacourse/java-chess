@@ -100,4 +100,18 @@ class WhiteTurnTest {
     void testIsNotEndTrue() {
         assertThat(this.whiteTurn.isNotEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("백색 차례에서 백색말의 movablePath 명령시 결과 반환")
+    void testMovablePathOfSameColor() {
+        assertThat(this.whiteTurn.movablePath(Position.of("a2")))
+            .containsExactly(Position.of("a4"), Position.of("a3"));
+    }
+
+    @Test
+    @DisplayName("흑색 차례에서 백색말의 movablePath 명령시 예외 반환")
+    void testMovablePathOfDifferentColorException() {
+        assertThatThrownBy(() -> this.whiteTurn.movablePath(Position.of("a7")))
+            .isInstanceOf(IllegalStateException.class);
+    }
 }

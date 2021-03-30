@@ -100,4 +100,18 @@ class BlackTurnTest {
     void testIsNotEndTrue() {
         assertThat(this.blackTurn.isNotEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("흑색 차례에서 흑색말의 movablePath 명령시 결과 반환")
+    void testMovablePathOfSameColor() {
+        assertThat(this.blackTurn.movablePath(Position.of("a7")))
+            .containsExactly(Position.of("a6"), Position.of("a5"));
+    }
+
+    @Test
+    @DisplayName("흑색 차례에서 백색말의 movablePath 명령시 예외 반환")
+    void testMovablePathOfDifferentColorException() {
+        assertThatThrownBy(() -> this.blackTurn.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
 }

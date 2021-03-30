@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import java.util.List;
 
 public class Init extends Preparing {
 
@@ -57,5 +58,10 @@ public class Init extends Preparing {
     @Override
     public boolean isNotEnd() {
         return true;
+    }
+
+    @Override
+    public List<Position> movablePath(Position position) {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
     }
 }

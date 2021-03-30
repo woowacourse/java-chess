@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import java.util.List;
 
 public class End extends Ended {
 
@@ -57,5 +58,10 @@ public class End extends Ended {
     @Override
     public boolean isNotEnd() {
         return false;
+    }
+
+    @Override
+    public List<Position> movablePath(Position position) {
+        throw new IllegalStateException();
     }
 }

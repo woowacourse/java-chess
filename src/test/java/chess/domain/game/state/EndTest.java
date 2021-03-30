@@ -79,4 +79,11 @@ public class EndTest {
         assertThat(this.end.isNotEnd()).isFalse();
     }
 
+    @Test
+    @DisplayName("프로그램 종료 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.end.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
 }

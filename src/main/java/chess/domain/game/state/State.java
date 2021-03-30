@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import java.util.List;
 
 public interface State {
 
@@ -24,4 +25,6 @@ public interface State {
     boolean isFinished();
 
     boolean isNotEnd();
+
+    List<Position> movablePath(Position position);
 }

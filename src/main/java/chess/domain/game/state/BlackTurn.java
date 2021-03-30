@@ -3,6 +3,7 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
+import java.util.List;
 
 public class BlackTurn extends Running {
 
@@ -28,5 +29,16 @@ public class BlackTurn extends Running {
         }
 
         return new BlackWin(afterStartBoard());
+    }
+
+    @Override
+    public List<Position> movablePath(Position position) {
+        Piece sourcePiece = afterStartBoard().pieceByPosition(position);
+
+        if (sourcePiece.isWhite()) {
+            throw new IllegalStateException("흑색 차례엔 흑색 말만 이동 가능합니다.");
+        }
+
+        return afterStartBoard().movablePath(position);
     }
 }

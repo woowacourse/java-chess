@@ -80,4 +80,11 @@ class BlackWinTest {
     void testIsNotEndTrue() {
         assertThat(this.blackWin.isNotEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("흑색 승리 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.blackWin.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
 }
