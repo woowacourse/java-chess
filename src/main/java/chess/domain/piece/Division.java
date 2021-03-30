@@ -70,7 +70,7 @@ public abstract class Division extends Basis {
         return position.column();
     }
 
-    public abstract List<Position> movablePositions(Position position);
+    public abstract List<List<Position>> movablePositions(Position position);
 
-    public abstract List<Position> killablePositions(Position position);
+    public abstract List<List<Position>> killablePositions(Position position);
 }

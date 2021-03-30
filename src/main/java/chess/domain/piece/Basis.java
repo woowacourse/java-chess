@@ -34,9 +34,9 @@ public abstract class Basis implements Piece {
 
     public abstract Column getColumn();
 
-    public abstract List<Position> movablePositions(Position position);
+    public abstract List<List<Position>> movablePositions(Position position);
 
-    public abstract List<Position> killablePositions(Position position);
+    public abstract List<List<Position>> killablePositions(Position position);
 
     @Override
     public String display() {

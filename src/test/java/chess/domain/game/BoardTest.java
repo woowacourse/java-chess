@@ -35,4 +35,15 @@ class BoardTest {
         assertThatThrownBy(() -> board.pickStartPiece(Color.WHITE, Position.from("a7")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+
+    @Test
+    void action() {
+    }
+
+    @Test
+    void move2() {
+        board2.move2(Position.from("a7"), Position.from("a6"));
+        board2.print();
+    }
 }

@@ -66,12 +66,12 @@ public class Empty extends Basis {
     }
 
     @Override
-    public List<Position> movablePositions(Position position) {
+    public List<List<Position>> movablePositions(Position position) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Position> killablePositions(Position position) {
+    public List<List<Position>> killablePositions(Position position) {
         throw new UnsupportedOperationException();
     }
 }

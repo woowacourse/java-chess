@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Division {
@@ -46,7 +47,7 @@ public class Knight extends Division {
     }
 
     @Override
-    public List<Position> movablePositions(Position position) {
+    public List<List<Position>> movablePositions(Position position) {
         List<Position> positions = new ArrayList<>();
         positions.add(position.move(2,1));
         positions.add(position.move(2,-1));
@@ -57,11 +58,11 @@ public class Knight extends Division {
         positions.add(position.move(-2,1));
         positions.add(position.move(-2,-1));
 
-        return positions;
+        return Collections.singletonList(positions);
     }
 
     @Override
-    public List<Position> killablePositions(Position position) {
+    public List<List<Position>> killablePositions(Position position) {
         return movablePositions(position);
     }
 }

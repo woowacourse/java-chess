@@ -65,22 +65,11 @@ class RookTest {
     @DisplayName("룩 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = rook.movablePositions(position);
+        List<List<Position>> positions = rook.movablePositions(position);
         assertThat(positions).contains(
-                Position.from("a5"),
-                Position.from("b5"),
-                Position.from("d5"),
-                Position.from("e5"),
-                Position.from("f5"),
-                Position.from("g5"),
-                Position.from("h5"),
-                Position.from("c1"),
-                Position.from("c2"),
-                Position.from("c3"),
-                Position.from("c4"),
-                Position.from("c6"),
-                Position.from("c7"),
-                Position.from("c8")
-        );
+                Arrays.asList(Position.from("b5"), Position.from("a5")),
+                Arrays.asList(Position.from("d5"), Position.from("e5"), Position.from("f5"), Position.from("g5"), Position.from("h5")),
+                Arrays.asList(Position.from("c4"), Position.from("c3"), Position.from("c2"), Position.from("c1")),
+                Arrays.asList(Position.from("c6"), Position.from("c7"), Position.from("c8")));
     }
 }

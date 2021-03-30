@@ -7,7 +7,9 @@ import chess.domain.piece.Pieces;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import javafx.geometry.Pos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,7 @@ public class Board {
     public void action(Color color, Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
-        if (toPiece.isSameColor(fromPiece)) {
+        if (toPiece.isSameColor(color)) {
             throw new IllegalArgumentException();
         }
         move2(from, to);
@@ -65,12 +67,22 @@ public class Board {
     public void move2(Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
-        List<Position> positions;
+        List<Position> positions = new ArrayList<>();
+        List<List<Position>> routes;
+
         if (toPiece.isEmpty()) {
-            positions = fromPiece.movablePositions(from);
+            routes = fromPiece.movablePositions(from);
         }
         else {
-            positions = fromPiece.killablePositions(from);
+            routes = fromPiece.killablePositions(from);
+        }
+        for (List<Position> route : routes) {
+            for (Position position : route) {
+                positions.add(position);
+                if (!pieceByPosition.get(position).isEmpty()) {
+                    break;
+                }
+            }
         }
 
         if (positions.contains(to)) {

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -114,7 +116,7 @@ public class PawnTest {
     void possiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.BLACK, from);
-        assertThat(pawn.movablePositions(from)).contains(Position.from("a2"));
+        assertThat(pawn.movablePositions(from)).contains(Arrays.asList(Position.from("a2")));
     }
 
 
@@ -124,9 +126,7 @@ public class PawnTest {
         Position from = Position.from("a7");
         Pawn pawn = new Pawn(Color.BLACK, from);
         assertThat(pawn.movablePositions(from)).contains(
-                Position.from("a5"),
-                Position.from("a6")
-        );
+                Arrays.asList(Position.from("a6"), Position.from("a5")));
     }
 
 
@@ -135,7 +135,7 @@ public class PawnTest {
     void whitePossiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.WHITE, from);
-        assertThat(pawn.movablePositions(from)).contains(Position.from("a4"));
+        assertThat(pawn.movablePositions(from)).contains(Arrays.asList(Position.from("a4")));
     }
 
 
@@ -145,9 +145,7 @@ public class PawnTest {
         Position from = Position.from("a2");
         Pawn pawn = new Pawn(Color.WHITE, from);
         assertThat(pawn.movablePositions(from)).contains(
-                Position.from("a3"),
-                Position.from("a4")
-        );
+                Arrays.asList(Position.from("a3"), Position.from("a4")));
     }
 
     @Test
@@ -155,20 +153,20 @@ public class PawnTest {
     void blackKillablePositionsAtStart() {
         Position from = Position.from("b2");
         Pawn pawn = new Pawn(Color.BLACK, from);
-        assertThat(pawn.killablePositions(from)).contains(
-                Position.from("a1"),
-                Position.from("c1")
-        );
+        assertThat(pawn.killablePositions(from)
+                       .get(0)).contains(
+                Position.from("a1"), Position.from("c1"));
     }
+
     @Test
     @DisplayName("하얀 폰 kill 가능 위치")
     void whileKillablePositionsAtStart() {
         Position from = Position.from("b2");
         Pawn pawn = new Pawn(Color.WHITE, from);
-        assertThat(pawn.killablePositions(from)).contains(
+        assertThat(pawn.killablePositions(from)
+                       .get(0)).contains(
                 Position.from("a3"),
                 Position.from("c3")
         );
     }
-
 }

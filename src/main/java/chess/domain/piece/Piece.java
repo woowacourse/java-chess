@@ -30,7 +30,7 @@ public interface Piece {
 
     Column getColumn();
 
-    List<Position> movablePositions(Position position);
+    List<List<Position>> movablePositions(Position position);
 
-    List<Position> killablePositions(Position position);
+    List<List<Position>> killablePositions(Position position);
 }

@@ -61,19 +61,12 @@ class BishopTest {
     @DisplayName("비숍 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = bishop.movablePositions(position);
+        List<List<Position>> positions = bishop.movablePositions(position);
         assertThat(positions).contains(
-                Position.from("b4"),
-                Position.from("a3"),
-                Position.from("d4"),
-                Position.from("e3"),
-                Position.from("f2"),
-                Position.from("g1"),
-                Position.from("b6"),
-                Position.from("a7"),
-                Position.from("d6"),
-                Position.from("e7"),
-                Position.from("f8")
-                );
+                Arrays.asList(Position.from("b4"),Position.from("a3")),
+                Arrays.asList(Position.from("d4"),Position.from("e3"),Position.from("f2"),Position.from("g1")),
+                Arrays.asList(Position.from("b6"),Position.from("a7")),
+                Arrays.asList(Position.from("d6"),Position.from("e7"),Position.from("f8"))
+        );
     }
 }

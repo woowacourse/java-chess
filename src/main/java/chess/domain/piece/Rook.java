@@ -3,7 +3,9 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Rook extends Division {
 
@@ -52,18 +54,19 @@ public class Rook extends Division {
 
 
     @Override
-    public List<Position> movablePositions(Position position) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(position.positionsOfDirection(1,0));
-        positions.addAll(position.positionsOfDirection(-1,0));
-        positions.addAll(position.positionsOfDirection(0,1));
-        positions.addAll(position.positionsOfDirection(0,-1));
-
-        return positions;
+    public List<List<Position>> movablePositions(Position position) {
+        List<Direction> directions = Arrays.asList(
+                new Direction(1, 0),
+                new Direction(0, 1),
+                new Direction(-1, 0),
+                new Direction(0, -1));
+        return directions.stream()
+                         .map(direction -> position.positionsOfDirection(direction.column(), direction.row()))
+                         .collect(Collectors.toList());
     }
 
     @Override
-    public List<Position> killablePositions(Position position) {
+    public List<List<Position>> killablePositions(Position position) {
         return null;
     }
 }
