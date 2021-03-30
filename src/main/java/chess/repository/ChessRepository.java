@@ -37,4 +37,11 @@ public class ChessRepository {
                 resultSet.getString("source"), resultSet.getString("destination"), resultSet.getString("team"));
         return Optional.of(history);
     }
+
+    public void deleteHistoryById(int id) throws SQLException {
+        String query = "DELETE FROM history WHERE ID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, String.valueOf(id));
+        preparedStatement.executeUpdate();
+    }
 }

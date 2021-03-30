@@ -18,21 +18,21 @@ class ChessRepositoryTest {
     private History testHistory = new History("3e", "4a", "BLACK");
 
     @BeforeEach
-    void setup() {
+    void setup() throws SQLException {
         connection = ConnectionManager.makeConnection();
         chessRepository = new ChessRepository(connection);
+        chessRepository.insertHistory("3e", "4a", "BLACK");
     }
 
     @AfterEach
     void teardown() throws SQLException {
         connection.close();
+        chessRepository.deleteHistoryById(1);
     }
 
     @DisplayName("history를 추가 및 조한다.")
     @Test
     void insertHistory() throws SQLException {
-        chessRepository.insertHistory("3e", "4a", "BLACK");
-
         History result = chessRepository.findHistoryById(1)
                 .get();
 
