@@ -144,7 +144,23 @@
             method: "POST",
             dataType: "json"
         }).done(function (turn) {
-            getMovablePosition(clickedSection, turn);
+            if (startPoint === "") {
+                getMovablePosition(clickedSection, turn);
+            }
+            if (startPoint !== "" && endPoint === "") {
+                if (clickedSection === startPoint) {
+                    const point = document.getElementById(clickedSection);
+                    point.classList.remove("selected");
+                    removeAllMovablePosition();
+                    startPoint = "";
+                } else {
+                    endPoint = clickedSection;
+                    // move();
+                    startPoint = "";
+                    endPoint = "";
+                    startPointCheck = false;
+                }
+            }
         });
     });
 
@@ -168,7 +184,7 @@
 
     function showMovablePositions(clickedSection, positions) {
         const startPoint = document.getElementById(clickedSection);
-        startPoint.classList.toggle("selected");
+        startPoint.classList.add("selected");
         const imgUrl = startPoint.children[0].src
         for (let i = 0; i < positions.length; i++) {
             const position = positions[i];
@@ -176,6 +192,15 @@
             section.style.backgroundImage = "url(" + imgUrl +")";
             section.classList.add("movable");
         }
+    }
+
+    function removeAllMovablePosition() {
+        const movable = Array.prototype.slice.call(document.querySelectorAll(".movable"));
+
+        movable.forEach(function(section){
+            section.classList.remove("movable");
+            section.removeAttribute("style");
+        });
     }
 </script>
 <script>
