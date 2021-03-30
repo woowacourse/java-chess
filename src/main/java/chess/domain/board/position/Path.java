@@ -12,46 +12,46 @@ public class Path {
 
     private final List<Position> path;
 
-    private Path(List<Position> path) {
+    private Path(final List<Position> path) {
         this.path = path;
     }
 
-    public static Path of(List<Position> path) {
+    public static Path of(final List<Position> path) {
         return new Path(path);
     }
 
-    public static Path of(List<Path> paths, Position source, Board board) {
-        return new Path(
-                filterPaths(paths, source, board).stream()
-                        .flatMap(Path::stream)
-                        .collect(Collectors.toList())
-        );
+    public static Path filterPaths(final List<Path> paths, final Position source, final Board board) {
+        return Path.of(paths.stream()
+                .flatMap(path -> path.filterPath(source, board).stream())
+                .collect(Collectors.toList()));
     }
 
-    private static List<Path> filterPaths(List<Path> paths, Position source, Board board) {
-        return paths.stream()
-                .map(path -> path.filterPieceRules(source, board))
-                .collect(Collectors.toList());
-    }
+    private Path filterPath(final Position source, final Board board) {
+        boolean isPrePositionAbleToMove = true;
+        int pathSize = this.path.size();
+        Path filterPaths = new Path(new ArrayList<>());
 
-    private Path filterPieceRules(Position source, Board board) {
-        Piece sourcePiece = board.pickPiece(source);
-        List<Position> filterPaths = new ArrayList<>();
-        for (Position target : this.path) {
-            if (sourcePiece.isSameTeam(board.pickPiece(target))) {
-                break;
-            }
-            if (sourcePiece.isReachable(source, target, board.pickPiece(target))) {
-                filterPaths.add(target);
-            }
-            if (sourcePiece.isEnemy(board.pickPiece(target))) {
-                break;
-            }
+        for (int i = 0; i < pathSize && isMoveAblePath(source, path.get(i), board, isPrePositionAbleToMove); i++) {
+            Position target = path.get(i);
+            filterPaths.add(target);
+            isPrePositionAbleToMove = board.pickPiece(target).isEmpty();
         }
-        return new Path(filterPaths);
+        return filterPaths;
     }
 
-    public boolean contains(Position position) {
+    private boolean isMoveAblePath(final Position source, final Position target, final Board board, final boolean isPrePositionAbleToMove) {
+        Piece sourcePiece = board.pickPiece(source);
+        Piece targetPiece = board.pickPiece(target);
+        return sourcePiece.isDifferentTeam(targetPiece)
+                && isPrePositionAbleToMove
+                && sourcePiece.isReachable(source, target, targetPiece);
+    }
+
+    private void add(final Position position) {
+        this.path.add(position);
+    }
+
+    public boolean contains(final Position position) {
         return path.contains(position);
     }
 

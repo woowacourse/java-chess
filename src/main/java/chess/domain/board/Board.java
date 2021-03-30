@@ -22,7 +22,7 @@ public class Board {
     }
 
     public Piece pickPiece(final Position position) {
-        return board.get(position);
+        return this.board.get(position);
     }
 
     public Piece pickPiece(final Vertical vertical, final Horizontal horizontal) {
@@ -30,9 +30,9 @@ public class Board {
     }
 
     private Path ableToPath(final Position source) {
-        final Piece sourcePiece = this.pickPiece(source);
+        final Piece sourcePiece = pickPiece(source);
         final List<Path> paths = sourcePiece.ableToPath(source);
-        return Path.of(paths, source, this);
+        return Path.filterPaths(paths, source, this);
     }
 
     public void move(final Position source, final Position target) {
@@ -72,11 +72,11 @@ public class Board {
     }
 
     public boolean isTargetKing(final Position target) {
-        return this.pickPiece(target).isKing();
+        return pickPiece(target).isKing();
     }
 
     public boolean isPositionSameOwner(final Position position, final Owner owner) {
-        return this.pickPiece(position).isSameOwner(owner);
+        return pickPiece(position).isSameOwner(owner);
     }
 
     public List<Piece> pieces() {

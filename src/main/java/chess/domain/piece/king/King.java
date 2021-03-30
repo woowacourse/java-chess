@@ -24,11 +24,11 @@ public abstract class King extends Piece {
     }
 
     public static King getInstanceOf(final Owner owner) {
-        if (owner.isSameTeam(Owner.BLACK)) {
+        if (owner.isSame(Owner.BLACK)) {
             return BlackKing.getInstance();
         }
 
-        if (owner.isSameTeam(Owner.WHITE)) {
+        if (owner.isSame(Owner.WHITE)) {
             return WhiteKing.getInstance();
         }
 

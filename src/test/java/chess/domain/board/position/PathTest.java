@@ -49,7 +49,7 @@ class PathTest {
 
         List<Path> paths = sourcePiece.ableToPath(source);
 
-        Path filterPath = Path.of(paths, source, board);
+        Path filterPath = Path.filterPaths(paths, source, board);
 
         assertThat(filterPath.contains(Position.of("a6"))).isTrue();
         assertThat(filterPath.contains(Position.of("a5"))).isTrue();

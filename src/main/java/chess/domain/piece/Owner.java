@@ -19,7 +19,11 @@ public enum Owner {
         return this.reverse().equals(other);
     }
 
-    public boolean isSameTeam(final Owner other) {
+    public boolean isSame(final Owner other) {
         return this.equals(other);
+    }
+
+    public boolean isDifferent(final Owner other) {
+        return !this.equals(other);
     }
 }

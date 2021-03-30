@@ -25,10 +25,10 @@ public abstract class Pawn extends Piece {
     }
 
     public static Pawn getInstanceOf(Owner owner) {
-        if (owner.isSameTeam(Owner.BLACK)) {
+        if (owner.isSame(Owner.BLACK)) {
             return BlackPawn.getInstance();
         }
-        if (owner.isSameTeam(Owner.WHITE)) {
+        if (owner.isSame(Owner.WHITE)) {
             return WhitePawn.getInstance();
         }
 
