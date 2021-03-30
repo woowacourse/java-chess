@@ -47,7 +47,7 @@ public class PlayerPiecePositionDAO {
     }
 
     public List<PiecePositionEntity> findAllByPlayerId(Long playerId) throws SQLException {
-        ResultSet rs = getResultSet(playerId);
+        ResultSet rs = getResultSetOfPlayerIds(playerId);
         List<PiecePositionEntity> results = new ArrayList<>();
         while (rs.next()) {
             results.add(new PiecePositionEntity(
@@ -59,7 +59,7 @@ public class PlayerPiecePositionDAO {
         return results;
     }
 
-    private ResultSet getResultSet(Long playerId) throws SQLException {
+    private ResultSet getResultSetOfPlayerIds(Long playerId) throws SQLException {
         String query =
             "SELECT piece.name AS piece_name, piece.color AS piece_color, position.file_value AS file_value, position.rank_value AS rank_value "
                 + "FROM player_piece_position "
@@ -73,7 +73,7 @@ public class PlayerPiecePositionDAO {
 
     public GamePiecePositionEntity findGamePiecePositionByGameIdAndPositionId(Long gameId,
         Long positionId) throws SQLException {
-        ResultSet rs = getResultSetToFindPiecePosition(gameId, positionId);
+        ResultSet rs = getResultSetOfFindGamePiecePosition(gameId, positionId);
         if (!rs.next()) {
             return null;
         }
@@ -82,7 +82,7 @@ public class PlayerPiecePositionDAO {
         return new GamePiecePositionEntity(foundPlayerPiecePositionId, foundPositionId);
     }
 
-    private ResultSet getResultSetToFindPiecePosition(Long gameId, Long positionId)
+    private ResultSet getResultSetOfFindGamePiecePosition(Long gameId, Long positionId)
         throws SQLException {
         String query = "SELECT id, position_id FROM player_piece_position "
             + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "

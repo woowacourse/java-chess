@@ -28,7 +28,7 @@ public class ChessGameDAO {
     }
 
     public ChessGameEntity findById(Long id) throws SQLException {
-        ResultSet rs = getResultSet(id);
+        ResultSet rs = getResultSetOfFindById(id);
         if (rs == null) {
             return null;
         }
@@ -38,7 +38,7 @@ public class ChessGameDAO {
             rs.getString("current_turn_team_color"));
     }
 
-    private ResultSet getResultSet(Long id) throws SQLException {
+    private ResultSet getResultSetOfFindById(Long id) throws SQLException {
         String query = "SELECT * FROM chess_game WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, id);
@@ -50,7 +50,7 @@ public class ChessGameDAO {
     }
 
     public List<ChessGameEntity> findAll() throws SQLException {
-        ResultSet rs = getResultSet();
+        ResultSet rs = getResultSetOfFindById();
         List<ChessGameEntity> results = new ArrayList<>();
         while (rs.next()) {
             results.add(new ChessGameEntity(
@@ -62,14 +62,14 @@ public class ChessGameDAO {
         return results;
     }
 
-    private ResultSet getResultSet() throws SQLException {
+    private ResultSet getResultSetOfFindById() throws SQLException {
         String query = "SELECT * FROM chess_game";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         return pstmt.executeQuery();
     }
 
     public GameStatusEntity findStatusByGameId(Long gameId) throws SQLException {
-        ResultSet rs = getResultSetOfGameStatus(gameId);
+        ResultSet rs = getResultSetOfFindGameStatusByGameId(gameId);
         if (!rs.next()) {
             return null;
         }
@@ -78,7 +78,7 @@ public class ChessGameDAO {
             rs.getString("current_turn_team_color"));
     }
 
-    private ResultSet getResultSetOfGameStatus(Long gameId) throws SQLException {
+    private ResultSet getResultSetOfFindGameStatusByGameId(Long gameId) throws SQLException {
         String query = "SELECT * FROM chess_game WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setLong(1, gameId);

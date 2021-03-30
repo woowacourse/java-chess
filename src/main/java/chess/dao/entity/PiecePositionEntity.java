@@ -11,11 +11,11 @@ public class PiecePositionEntity {
     private final File file;
     private final Rank rank;
 
-    public PiecePositionEntity(String pieceName, String pieceColor, String fileValue,
+    public PiecePositionEntity(String pieceName, String pieceColorValue, String fileValue,
         String rankValue) {
 
         pieceType = PieceType.valueOf(pieceName);
-        teamColor = TeamColor.of(pieceColor);
+        teamColor = TeamColor.of(pieceColorValue);
         file = File.of(fileValue);
         rank = Rank.of(rankValue);
     }

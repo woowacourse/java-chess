@@ -8,10 +8,10 @@ public class PieceEntity {
     private final PieceType pieceType;
     private final TeamColor teamColor;
 
-    public PieceEntity(Long id, String name, String color) {
+    public PieceEntity(Long id, String name, String colorValue) {
         this.id = id;
         this.pieceType = PieceType.find(name);
-        this.teamColor = TeamColor.of(color);
+        this.teamColor = TeamColor.of(colorValue);
     }
 
     public Long getId() {

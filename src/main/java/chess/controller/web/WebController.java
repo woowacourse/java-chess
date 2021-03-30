@@ -48,8 +48,7 @@ public class WebController {
 
     private void handleHomeRequest() {
         get(ROOT, (req, res) -> {
-            List<ChessGameResponseDTO> allRoomsIdAndTitle
-                = chessWebService.getAllRoomsIdAndTitle();
+            List<ChessGameResponseDTO> allRoomsIdAndTitle = chessWebService.getAllRoomsIdAndTitle();
             Map<String, Object> model = new HashMap<>();
             model.put("allChessGameRooms", allRoomsIdAndTitle);
             return render(model, HOME_VIEW);
