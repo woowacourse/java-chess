@@ -115,18 +115,14 @@ async function move(sourcePosition, targetPosition) {
         body: JSON.stringify(data)
     };
 
-    await fetch("/move", option)
-    .then(res => {
-        return res.json();
-    })
-    .then(obj => {
-        if (obj.code === "401") {
-            alert(obj.message);
-            return;
-        }
-        settingImg(sourcePosition, targetPosition);
-        changeTurnText();
-    });
+    const response = await fetch("/move", option)
+    .then(res => res.json());
+    if (response.code === "401") {
+        alert(response.message);
+        return;
+    }
+    settingImg(sourcePosition, targetPosition);
+    changeTurnText();
 }
 
 function settingImg(sourcePosition, targetPosition) {
@@ -148,14 +144,10 @@ function changeTurnText() {
 }
 
 async function checkEndGame() {
-    await fetch("/end")
-    .then(res => {
-        return res.json();
-    })
-    .then(obj => {
-        if (obj.code === "212") {
-            alert(obj.message);
-            location.replace('/result');
-        }
-    })
+    const response = await fetch("/end")
+    .then(res => res.json());
+    if (response.code === "212") {
+        alert(response.message);
+        location.replace('/result');
+    }
 }
