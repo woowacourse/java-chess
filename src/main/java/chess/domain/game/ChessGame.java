@@ -46,8 +46,7 @@ public class ChessGame {
     }
 
     public Result gameResult() {
-        Result result = new Result(chessBoard.getChessBoard());
-        return result;
+        return new Result(chessBoard.getChessBoard());
     }
 
     public ChessBoard getChessBoard() {

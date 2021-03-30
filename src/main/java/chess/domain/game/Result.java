@@ -16,21 +16,16 @@ public class Result {
     private static final int COLUMN_NEIGHBOR_PAWN = 2;
     private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
     private final Map<Position, Piece> chessBoard;
-    private final Map<Color, Double> result = new HashMap<>();
 
     public Result(Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
-    public Map<Color, Double> getResult() {
-        return result;
-    }
-
     public String winOrLose(Color color) {
-        if (result.get(color) > result.get(color.getOppositeColor())) {
+        if (score(color) > score(color.getOppositeColor())) {
             return WIN;
         }
-        if (result.get(color) == result.get(color.getOppositeColor())) {
+        if (score(color) == score(color.getOppositeColor())) {
             return DRAW;
         }
         return LOSE;
