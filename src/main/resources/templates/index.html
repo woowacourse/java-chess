@@ -1,10 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chessboard using Pure CSS and HTML</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-Hello World!!
+
+<div class="chessboard">
+    <!-- 1st -->
+    <div class="white" id="a8">&#9820;</div>
+    <div class="black" id="b8">&#9822;</div>
+    <div class="white" id="c8">&#9821;</div>
+    <div class="black" id="d8">&#9819;</div>
+    <div class="white" id="e8">&#9818;</div>
+    <div class="black" id="f8">&#9821;</div>
+    <div class="white" id="g8">&#9822;</div>
+    <div class="black" id="h8">&#9820;</div>
+    <!-- 2nd -->
+    <div class="black" id="a7">&#9823;</div>
+    <div class="white" id="b7">&#9823;</div>
+    <div class="black" id="c7">&#9823;</div>
+    <div class="white" id="d7">&#9823;</div>
+    <div class="black" id="e7">&#9823;</div>
+    <div class="white" id="f7">&#9823;</div>
+    <div class="black" id="g7">&#9823;</div>
+    <div class="white" id="h7">&#9823;</div>
+    <!-- 3th -->
+    <div class="white" id="a6"></div>
+    <div class="black" id="b6"></div>
+    <div class="white" id="c6"></div>
+    <div class="black" id="d6"></div>
+    <div class="white" id="e6"></div>
+    <div class="black" id="f6"></div>
+    <div class="white" id="g6"></div>
+    <div class="black" id="h6"></div>
+    <!-- 4st -->
+    <div class="black" id="a5"></div>
+    <div class="white" id="b5"></div>
+    <div class="black" id="c5"></div>
+    <div class="white" id="d5"></div>
+    <div class="black" id="e5"></div>
+    <div class="white" id="f5"></div>
+    <div class="black" id="g5"></div>
+    <div class="white" id="h5"></div>
+    <!-- 5th -->
+    <div class="white" id="a4"></div>
+    <div class="black" id="b4"></div>
+    <div class="white" id="c4"></div>
+    <div class="black" id="d4"></div>
+    <div class="white" id="e4"></div>
+    <div class="black" id="f4"></div>
+    <div class="white" id="g4"></div>
+    <div class="black" id="h4"></div>
+    <!-- 6th -->
+    <div class="black" id="a3"></div>
+    <div class="white" id="b3"></div>
+    <div class="black" id="c3"></div>
+    <div class="white" id="d3"></div>
+    <div class="black" id="e3"></div>
+    <div class="white" id="f3"></div>
+    <div class="black" id="g3"></div>
+    <div class="white" id="h3"></div>
+    <!-- 7th -->
+    <div class="white" id="a2">&#9817;</div>
+    <div class="black" id="b2">&#9817;</div>
+    <div class="white" id="c2">&#9817;</div>
+    <div class="black" id="d2">&#9817;</div>
+    <div class="white" id="e2">&#9817;</div>
+    <div class="black" id="f2">&#9817;</div>
+    <div class="white" id="g2">&#9817;</div>
+    <div class="black" id="h2">&#9817;</div>
+    <!-- 8th -->
+    <div class="black" id="a1">&#9814;</div>
+    <div class="white" id="b1">&#9816;</div>
+    <div class="black" id="c1">&#9815;</div>
+    <div class="white" id="d1">&#9813;</div>
+    <div class="black" id="e1">&#9812;</div>
+    <div class="white" id="f1">&#9815;</div>
+    <div class="black" id="g1">&#9816;</div>
+    <div class="white" id="h1">&#9814;</div>
+</div>
+<script src="js/script.js"></script>
 </body>
 </html>

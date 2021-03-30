@@ -20,6 +20,10 @@ public final class Position implements Comparable<Position> {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
 
+    public Position(final String position) {
+        this(Horizontal.of(position.split("")[0]), Vertical.of(position.split("")[1]));
+    }
+
     public Position(final int horizontal, final int vertical) {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
