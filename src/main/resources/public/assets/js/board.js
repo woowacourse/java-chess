@@ -23,12 +23,23 @@ const points = numbers(boardSize).flatMap(
 
 export async function getBoardAfterMove(source, destination) {
   const response = await fetch(
-      "./move?source=" + source + "&destination=" + destination);
+      "./move", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          "source": source,
+          "destination": destination
+        })
+      });
   return await response.json();
 }
 
 export async function getInitializedBoard() {
-  const response = await fetch("./start");
+  const response = await fetch("./start", {
+    method: "PUT"
+  });
   return await response.json();
 }
 
@@ -63,8 +74,10 @@ export const reloadBoard = () => {
 
   const blackTurn = document.querySelector(".blackTurn");
   blackTurn.style.position = "fixed";
-  blackTurn.style.left = (boardRect.right - boardRect.width / 24).toString() + "px";
-  blackTurn.style.top = (boardRect.top - boardRect.width / 24 - 4).toString() + "px";
+  blackTurn.style.left = (boardRect.right - boardRect.width / 24).toString()
+      + "px";
+  blackTurn.style.top = (boardRect.top - boardRect.width / 24 - 4).toString()
+      + "px";
   blackTurn.style.width = (boardRect.width / 24).toString() + "px";
   blackTurn.style.height = (boardRect.width / 24).toString() + "px";
 }

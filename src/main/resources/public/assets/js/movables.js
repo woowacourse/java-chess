@@ -13,7 +13,8 @@ async function getMovables(point) {
 export const addMovables = (point) => {
   getMovables(point).then(movables => {
     for (const i in movables) {
-      const square = document.querySelector("#" + movables[i].x + movables[i].y);
+      const square = document.querySelector(
+          "#" + movables[i].x + movables[i].y);
       const moveDiv = document.createElement("div");
       moveDiv.classList.add("movable");
       moveDiv.value = point;

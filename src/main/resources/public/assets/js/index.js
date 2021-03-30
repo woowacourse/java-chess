@@ -1,8 +1,7 @@
 import {getInitializedBoard, reloadBoard} from "./board.js";
-import {updateTurnBadge} from "./turnBadge.js";
 import {addMovables, removeAllMovables} from "./movables.js";
 import {move, reloadSquares, removeHighlight} from "./squares.js";
-import {checkGameState} from "./gameState.js";
+import {updateGameState} from "./gameState.js";
 
 const clickSquare = function (event) {
   removeHighlight();
@@ -19,8 +18,7 @@ const clickSquare = function (event) {
 const start = function () {
   getInitializedBoard().then(board => {
     reloadSquares(board["board"]);
-    checkGameState();
-    updateTurnBadge();
+    updateGameState();
   });
 }
 
@@ -32,8 +30,10 @@ const addEventToSquares = () => {
 }
 
 const exitGame = () => {
-  fetch("./exit").then(response => {
-    checkGameState();
+  fetch("./exit", {
+    method: "PUT"
+  }).then(response => {
+    updateGameState();
   });
 }
 
@@ -44,9 +44,8 @@ const addEventToScreen = () => {
 }
 
 window.onload = () => {
-  checkGameState();
+  updateGameState();
   reloadBoard();
-  updateTurnBadge();
   addEventToSquares();
   addEventToScreen();
 };

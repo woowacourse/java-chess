@@ -1,3 +1,5 @@
+import {updateTurnBadge} from "./turnBadge.js";
+
 const teams = {
   w: "white",
   b: "black",
@@ -17,17 +19,20 @@ async function getGameStatus() {
 const blurContents = (isBlur) => {
   if (isBlur) {
     blurs.forEach(blur => {
-      document.querySelectorAll(blur).forEach(content => content.classList.add("blur"))
+      document.querySelectorAll(blur).forEach(
+          content => content.classList.add("blur"))
     });
     return;
   }
   blurs.forEach(blur => {
-    document.querySelectorAll(blur).forEach(content => content.classList.remove("blur"))
+    document.querySelectorAll(blur).forEach(
+        content => content.classList.remove("blur"))
   });
 }
 
-export const checkGameState = () => {
+export const updateGameState = () => {
   getGameStatus().then(gameStatus => {
+    updateTurnBadge(gameStatus["turn"]);
     if (gameStatus["gameState"] === "Ready") {
       launch.style.visibility = "visible";
       result.style.visibility = "hidden";

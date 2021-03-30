@@ -1,6 +1,5 @@
-import {updateTurnBadge} from "./turnBadge.js";
 import {getBoardAfterMove} from "./board.js";
-import {checkGameState} from "./gameState.js";
+import {updateGameState} from "./gameState.js";
 
 export const removeHighlight = () => {
   document.querySelectorAll(".selected").forEach(selected => {
@@ -10,9 +9,8 @@ export const removeHighlight = () => {
 
 export const move = (source, destination) => {
   getBoardAfterMove(source, destination).then(board => {
-    checkGameState();
+    updateGameState();
     reloadSquares(board["board"]["board"]);
-    updateTurnBadge();
   });
 }
 

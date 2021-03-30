@@ -1,12 +1,15 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.put;
 
 import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.ScoreBoard;
+import chess.domain.chessgame.Turn;
+import chess.domain.gamestate.GameState;
 import chess.dto.BoardDtoWeb;
 import chess.dto.GameStatusDto;
 import chess.dto.PointDto;
@@ -28,27 +31,22 @@ public class WebUIChessApplication {
     public static void main(String[] args)
         throws IOException, SQLException, ClassNotFoundException {
         GameDao gameDao = new GameDao();
-        GameStatusDto gameStatusDto = gameDao.latestGameStatus();
-        Board board = gameDao.latestBoard().toEntity();
-        ChessGame chessGame = new ChessGame(gameStatusDto.toTurnEntity(), new ScoreBoard(board),
-            gameStatusDto.toGameStateEntity(board));
+        Board board = boardFromDb(gameDao);
+        ChessGame chessGame = chessGameFromDb(board, gameDao);
 
         Spark.staticFileLocation("/public");
+
         get("/", (req, res) -> {
             BoardDtoWeb boardDtoWeb = new BoardDtoWeb(board);
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardDtoWeb);
-            return render(model, "index.html");
+            return render(model);
         });
 
-        get("/start", (req, res) -> {
+        put("/start", (req, res) -> {
             chessGame.start();
             gameDao
                 .addSerializedBoardAndStatus(new BoardDtoWeb(board), new GameStatusDto(chessGame));
-            return gson.toJson(new BoardDtoWeb(board));
-        });
-
-        get("/board", "application/json", (req, res) -> {
             return gson.toJson(new BoardDtoWeb(board));
         });
 
@@ -61,9 +59,11 @@ public class WebUIChessApplication {
             return gson.toJson(pointDtos);
         });
 
-        get("/move", "application/json", (req, res) -> {
-            Point source = Point.of(req.queryParams("source"));
-            Point destination = Point.of(req.queryParams("destination"));
+        put("/move", "application/json", (req, res) -> {
+            Map<String, String> body = new HashMap<>();
+            body = (Map<String, String>) gson.fromJson(req.body(), body.getClass());
+            Point source = Point.of(body.get("source"));
+            Point destination = Point.of(body.get("destination"));
             Map<String, Object> model = new HashMap<>();
             chessGame.move(source, destination);
             gameDao
@@ -72,21 +72,29 @@ public class WebUIChessApplication {
             return gson.toJson(model);
         });
 
-        get("/getGameStatus", "application/json", (req, res) -> {
-            return gson.toJson(new GameStatusDto(chessGame));
-        });
+        get("/getGameStatus", "application/json",
+            (req, res) -> gson.toJson(new GameStatusDto(chessGame)));
 
-        get("/currentTurn", "application/json", (req, res) -> {
-            return gson.toJson(chessGame.currentTurn());
-        });
-
-        get("/exit", (req, res) -> {
-           chessGame.end();
-           return gson.toJson(new String("success"));
+        put("/exit", (req, res) -> {
+            chessGame.end();
+            return gson.toJson("success");
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static Board boardFromDb(GameDao gameDao)
+        throws SQLException, IOException, ClassNotFoundException {
+        return gameDao.latestBoard().toEntity();
+    }
+
+    private static ChessGame chessGameFromDb(Board board, GameDao gameDao)
+        throws SQLException, IOException, ClassNotFoundException {
+        GameStatusDto gameStatusDto = gameDao.latestGameStatus();
+        Turn turn = gameStatusDto.toTurnEntity();
+        GameState gameState = gameStatusDto.toGameStateEntity(board);
+        return new ChessGame(turn, new ScoreBoard(board), gameState);
+    }
+
+    private static String render(Map<String, Object> model) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
     }
 }
