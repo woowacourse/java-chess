@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.moveStrategy.MoveStrategy;
+import chess.domain.moveStrategy.QueenMove;
 import chess.domain.position.Position;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Queen extends Division {
 
     public static final int QUEEN_SCORE = 9;
+    private final MoveStrategy moveStrategy = new QueenMove();
 
     public Queen(Color color) {
         super(color, "q");
@@ -31,18 +32,7 @@ public class Queen extends Division {
 
     @Override
     public List<List<Position>> movablePositions(Position position) {
-        List<Direction> directions = Arrays.asList(
-                new Direction(1, 0),
-                new Direction(0, 1),
-                new Direction(-1, 0),
-                new Direction(0, -1),
-                new Direction(1, 1),
-                new Direction(1, -1),
-                new Direction(-1, 1),
-                new Direction(-1, -1));
-        return directions.stream()
-                         .map(direction -> position.positionsOfDirection(direction.column(), direction.row()))
-                         .collect(Collectors.toList());
+        return moveStrategy.movablePositions(position);
     }
 
     @Override

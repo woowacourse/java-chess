@@ -1,14 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.moveStrategy.KnightMove;
+import chess.domain.moveStrategy.MoveStrategy;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Division {
-
     public static final double KNIGHT_SCORE = 2.5;
+    private final MoveStrategy moveStrategy = new KnightMove();
 
     public Knight(Color color) {
         super(color, "n");
@@ -31,17 +31,7 @@ public class Knight extends Division {
 
     @Override
     public List<List<Position>> movablePositions(Position position) {
-        List<Position> positions = new ArrayList<>();
-        positions.add(position.move(2, 1));
-        positions.add(position.move(2, -1));
-        positions.add(position.move(1, 2));
-        positions.add(position.move(1, -2));
-        positions.add(position.move(-1, 2));
-        positions.add(position.move(-1, -2));
-        positions.add(position.move(-2, 1));
-        positions.add(position.move(-2, -1));
-
-        return Collections.singletonList(positions);
+        return moveStrategy.movablePositions(position);
     }
 
     @Override
