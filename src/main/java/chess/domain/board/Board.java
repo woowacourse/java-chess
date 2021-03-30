@@ -8,8 +8,11 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
+import chess.dto.SquareDto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -142,5 +145,14 @@ public class Board {
             .filter(Piece::isKing)
             .findFirst()
             .get().color();
+    }
+
+    public List<SquareDto> squareDtos() {
+        List<SquareDto> squareDtos = new ArrayList<>();
+
+        board.keySet()
+            .forEach(key -> squareDtos.add(new SquareDto(key.toString(), board.get(key).toString())));
+
+        return squareDtos;
     }
 }

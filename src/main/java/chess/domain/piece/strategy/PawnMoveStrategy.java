@@ -1,9 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
-import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.exceptions.OverDistanceException;
-import chess.domain.piece.Piece;
 
 public class PawnMoveStrategy extends BasicMoveStrategy {
 

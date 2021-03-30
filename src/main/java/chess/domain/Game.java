@@ -5,6 +5,9 @@ import chess.domain.board.InitializedBoard;
 import chess.domain.board.Point;
 import chess.domain.board.Position;
 import chess.domain.piece.PieceColor;
+import chess.dto.SquareDto;
+
+import java.util.List;
 
 public class Game {
 
@@ -26,6 +29,7 @@ public class Game {
         this.board = new Board(initializedBoard.board());
         this.point = new Point(board);
         this.gameState = GameState.START;
+        this.turnColor = PieceColor.WHITE;
     }
 
     public void end() {
@@ -51,6 +55,10 @@ public class Game {
         this.turnColor = turnColor.oppositeColor();
     }
 
+    public PieceColor turnColor() {
+        return turnColor;
+    }
+
     public double computeWhitePoint() {
         return point.whitePoint();
     }
@@ -65,5 +73,9 @@ public class Game {
 
     public PieceColor winnerColor() {
         return board.winnerColor();
+    }
+
+    public List<SquareDto> squareDtos() {
+        return board.squareDtos();
     }
 }
