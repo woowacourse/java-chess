@@ -1,24 +1,21 @@
 package chess;
 
-import chess.controller.WebChessController;
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardGenerator;
+import chess.controller.ChessController;
+import chess.controller.MoveController;
 
-import static spark.Spark.port;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
         setConfiguration();
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
-        WebChessController webChessController = new WebChessController(chessBoard);
-        webChessController.getMainPage();
-        webChessController.getChessBoard();
-        webChessController.postMovement();
-        webChessController.runExceptionHandler();
-        webChessController.getResult();
-        webChessController.showResult();
+        get("/", MoveController::moveToMainPage);
+        get("/chessboard/result", MoveController::moveToResultPage);
+        get("/chessboard", ChessController::updateChessBoard);
+        post("/chessboard/move", ChessController::move);
+//
+//        webChessController.runExceptionHandler();
+//        webChessController.showResult();
     }
 
     private static void setConfiguration() {
