@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Command;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
@@ -15,7 +16,7 @@ public class Controller {
     public void run() {
         ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
         OutputView.gameStart();
-        if (InputView.isStart()) {
+        if (Command.START.equals(Command.findCommand(InputView.input()))) {
             startGame(chessGame);
         }
     }
@@ -27,14 +28,15 @@ public class Controller {
     }
 
     public void playGame(ChessGame chessGame) {
-        List<String> input = InputView.moveOrEnd();
+        String input = InputView.input();
 
-        if (InputView.MOVE.equals(input.get(COMMAND_INDEX))) {
-            chessGame.run(input);
+        if (Command.MOVE.equals(Command.findCommand(input))) {
+            chessGame.run(Command.parseCommand(input));
             OutputView.printChessBoard(chessGame.getChessBoard());
             playGame(chessGame);
         }
-        if (InputView.END.equals(input.get(COMMAND_INDEX)) || chessGame.isOver()) {
+        if (Command.END.equals(Command.findCommand(input))
+            || chessGame.isOver()) {
             endGame(chessGame);
         }
     }
@@ -42,7 +44,7 @@ public class Controller {
     public void endGame(ChessGame chessGame) {
         OutputView.gameEnd();
         Result result = chessGame.gameResult();
-        if (InputView.isStatus()) {
+        if (Command.STATUS.equals(Command.findCommand(InputView.input()))) {
             OutputView.printResult(result);
         }
     }
