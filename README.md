@@ -331,10 +331,3 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
 <br>
-
-
-# Todo list
-
-
-- [ ] 학습로그 작성
-- [ ] Pull request
