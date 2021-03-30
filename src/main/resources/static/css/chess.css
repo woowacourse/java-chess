@@ -1,7 +1,7 @@
 #board {
     display: grid;
-    grid-template-columns: repeat(8, 103px);
-    grid-template-rows: repeat(8, 103px);
+    grid-template-columns: repeat(8, 105px);
+    grid-template-rows: repeat(8, 105px);
     position: absolute;
 }
 
