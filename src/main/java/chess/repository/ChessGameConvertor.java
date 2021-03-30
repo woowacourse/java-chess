@@ -17,7 +17,7 @@ public class ChessGameConvertor {
 
     private static Gson gson = new Gson();
 
-    static class Temp {
+    private static class Temp {
 
         private final String className;
         private final int row;
@@ -31,7 +31,7 @@ public class ChessGameConvertor {
 
     }
 
-    static class Wrapper {
+    private static class Wrapper {
         private final String state;
         private final List<Temp> pieces;
 
@@ -47,6 +47,7 @@ public class ChessGameConvertor {
         public String getState() {
             return state;
         }
+
     }
 
     public static String chessGameToJson(ChessGame chessGame) {

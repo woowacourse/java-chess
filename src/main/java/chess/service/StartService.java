@@ -8,6 +8,8 @@ import chess.domain.piece.PieceFactory;
 import chess.repository.GameRepository;
 import spark.Response;
 
+import java.sql.SQLException;
+
 public class StartService {
 
     private final String gameId;
@@ -22,9 +24,8 @@ public class StartService {
         ChessGame chessGame = null;
 
         try {
-            validateChessGameIdExist(gameId);
             chessGame = saveGameAndStart(gameId);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | SQLException e) {
             response.status(400);
             return new MessageDto(e.getMessage());
         }
@@ -32,19 +33,18 @@ public class StartService {
         return new GameDto(chessGame);
     }
 
-    private ChessGame saveGameAndStart(String gameId) {
+    private ChessGame saveGameAndStart(String gameId) throws SQLException {
         ChessGame chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         chessGame.start();
 
-        GameRepository.save(gameId, chessGame);
+        if(GameRepository.isExistGameIdInDAO(gameId)){
+            throw new IllegalArgumentException("이미 존재하는 게임 아이디 입니다.");
+        }
+
+        GameRepository.saveToCache(gameId, chessGame);
+        GameRepository.saveToDAO(gameId, chessGame);
 
         return chessGame;
-    }
-
-    private void validateChessGameIdExist(String gameId) {
-        if (GameRepository.findByGameId(gameId).isPresent()) {
-            throw new IllegalArgumentException("게임 ID가 이미 존재합니다.");
-        }
     }
 
 }

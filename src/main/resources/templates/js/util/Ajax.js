@@ -7,18 +7,18 @@ export class Ajax {
         this.#chessGame = chessGame
     }
 
-    get URL() {
-        return Ajax.#URL + this.#chessGame.gameId + "/"
+    getURL(gameId) {
+        return Ajax.#URL + gameId + "/"
     }
 
-    async get(uri) {
-        let result = await fetch(this.URL + uri)
+    async get(gameId, uri) {
+        let result = await fetch(this.getURL(gameId) + uri)
         if(result.ok) return await result.json()
 
         throw await result.json()
     }
 
-    async post(uri, data) {
+    async post(gameId, uri, data) {
         const option = {
             method: 'POST',
             headers: {
@@ -27,13 +27,13 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(this.URL + uri, option)
+        let result = await fetch(this.getURL(gameId) + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()
     }
 
-    async delete(uri, data) {
+    async delete(gameId, uri, data) {
         const option = {
             method: 'DELETE',
             headers: {
@@ -42,13 +42,13 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(this.URLL + uri, option)
+        let result = await fetch(this.getURL(gameId) + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()
     }
 
-    async patch(uri, data) {
+    async patch(gameId, uri, data) {
         const option = {
             method: 'PATCH',
             headers: {
@@ -57,7 +57,7 @@ export class Ajax {
             body: data
         }
 
-        let result = await fetch(this.URL + uri, option)
+        let result = await fetch(this.getURL(gameId) + uri, option)
         if(result.ok) return await result.json()
 
         throw await result.json()

@@ -1,17 +1,12 @@
 package chess.dao;
 
-import chess.domain.game.ChessGame;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ChessDAO {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_name"; // MySQL DATABASE 이름
+        String database = "chess"; // MySQL DATABASE 이름
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root"; //  MySQL 서버 아이디
         String password = "root"; // MySQL 서버 비밀번호
@@ -46,19 +41,40 @@ public class ChessDAO {
         }
     }
 
-    public void addChessGame(ChessGameEntity chessGame) throws SQLException {
-        String query = "INSERT INTO chess_gmae VALUES (?, ?)";
+    public void addChessGame(String gameId, String data) throws SQLException {
+        String query = "INSERT INTO chess VALUES (?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGame.getGameId());
-        pstmt.setString(2, chessGame.getData());
+        pstmt.setString(1, gameId);
+        pstmt.setString(2, data);
         pstmt.executeUpdate();
     }
 
-    public void updateChessGame(ChessGameEntity chessGame) throws SQLException {
-        String query = "UPDATE SET data=? WHERE game_id = ?";
+    public void updateChessGame(String gameId, String data) throws SQLException {
+        String query = "UPDATE chess SET data=? WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGame.getData());
-        pstmt.setString(2, chessGame.getGameId());
+        pstmt.setString(1, data);
+        pstmt.setString(2, gameId);
         pstmt.execute();
     }
+
+    public String findChessGameByGameId(String gameId) throws SQLException {
+        String query = "SELECT data FROM chess WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet resultSet = pstmt.executeQuery();
+        resultSet.next();
+
+        return resultSet.getString("data");
+    }
+
+    public boolean isExistGameId(String gameId) throws SQLException {
+        String query = "SELECT count(*) as count FROM chess WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet resultSet = pstmt.executeQuery();
+        resultSet.next();
+
+        return resultSet.getInt("count") != 0;
+    }
+
 }

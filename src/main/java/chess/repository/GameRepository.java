@@ -1,32 +1,58 @@
 package chess.repository;
 
+import chess.dao.ChessDAO;
 import chess.domain.game.ChessGame;
-import com.google.gson.Gson;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class GameRepository {
-    static Gson gson = new Gson();
 
+    private static ChessDAO chessDAO = new ChessDAO();
     private static Map<String, ChessGame> repository = new HashMap<>();
-    private static Map<String, String> stringRepository = new HashMap<>();
 
-    public static void save(String gameId, ChessGame chessGame) {
-        stringRepository.put(gameId, ChessGameConvertor.chessGameToJson(chessGame));
+    public static void saveToCache(String gameId, ChessGame chessGame) {
         repository.put(gameId, chessGame);
     }
 
-    public static Optional<ChessGame> findByGameId(String gameId) {
-        return Optional.ofNullable(repository.getOrDefault(gameId, null));
+    public static void saveToDAO(String gameId, ChessGame chessGame) throws SQLException {
+        chessDAO.addChessGame(
+                gameId,
+                ChessGameConvertor.chessGameToJson(chessGame)
+        );
     }
 
-    public static Optional<ChessGame> findByGameIdViaStringRepo(String gameId) {
-        String s = stringRepository.get(gameId);
-
-        ChessGame chessGame = ChessGameConvertor.jsonToChessGame(s);
-        return Optional.of(chessGame);
+    public static void updateToDAO(String gameId, ChessGame chessGame) throws SQLException {
+        chessDAO.updateChessGame(
+                gameId,
+                ChessGameConvertor.chessGameToJson(chessGame)
+        );
     }
 
+    public static ChessGame findByGameIdFromCache(String gameId) {
+        Optional<ChessGame> chessGame = Optional.ofNullable(repository.getOrDefault(gameId, null));
+
+        if (!chessGame.isPresent()) {
+            throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
+        }
+
+        return chessGame.get();
+    }
+
+    public static ChessGame findByGameIdFromDAO(String gameId) throws SQLException {
+        Optional<String> chessGameJson = Optional.ofNullable(chessDAO.findChessGameByGameId(gameId));
+
+        if (!chessGameJson.isPresent()) {
+            throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
+        }
+
+        ChessGame chessGame = ChessGameConvertor.jsonToChessGame(chessGameJson.get());
+        return chessGame;
+    }
+
+    public static boolean isExistGameIdInDAO(String gameId) throws SQLException {
+        return chessDAO.isExistGameId(gameId);
+    }
 }

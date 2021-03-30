@@ -13,7 +13,7 @@ public class EndService {
     }
 
     public Object end() {
-        ChessGame chessGame = getChessGameByGameId(gameId);
+        ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
 
         try {
             chessGame.end();
@@ -22,18 +22,6 @@ public class EndService {
         }
 
         return new MessageDto("finished");
-    }
-
-    private ChessGame getChessGameByGameId(String gameId) {
-        validateChessGameIdExist(gameId);
-
-        return GameRepository.findByGameId(gameId).get();
-    }
-
-    private void validateChessGameIdExist(String gameId) {
-        if (!GameRepository.findByGameId(gameId).isPresent()) {
-            throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
-        }
     }
 
 }

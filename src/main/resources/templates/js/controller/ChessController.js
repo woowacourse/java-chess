@@ -17,19 +17,21 @@ export class ChessController {
         this.startEventHandler()
         this.moveEventHandler()
         this.loadEventHandler()
+        this.saveEventHandler()
     }
 
     async #start() {
         let gameId = prompt('게임 아이디를 입력하세요')
-        this.#chessGame.gameId = gameId
 
         let result
         try {
-            result = await this.#ajax.get('start')
+            result = await this.#ajax.get(gameId, 'start')
         } catch (e) {
             alert(e.message)
             return
         }
+
+        this.#chessGame.gameId = gameId
 
         await this.#printGameStatus()
         this.#resultHandler(result)
@@ -37,15 +39,16 @@ export class ChessController {
 
     async #load() {
         let gameId = prompt('게임 아이디를 입력하세요')
-        this.#chessGame.gameId = gameId
 
         let result
         try {
-            result = await this.#ajax.get('load')
-        } catch(e) {
+            result = await this.#ajax.get(gameId, 'load')
+        } catch (e) {
             alert(e.message)
             return
         }
+
+        this.#chessGame.gameId = gameId
 
         await this.#printGameStatus()
         this.#resultHandler(result)
@@ -71,12 +74,24 @@ export class ChessController {
         }
     }
 
+    async #save() {
+
+        try {
+            await this.#ajax.post(this.#chessGame.gameId, 'save', '')
+        } catch (e) {
+            alert(e.message)
+            return
+        }
+
+        alert("저장 완료")
+    }
+
     #finished(winner) {
         this.#chessGame.setWinner(winner)
     }
 
     async #printGameStatus() {
-        let result = await this.#ajax.get('status')
+        let result = await this.#ajax.get(this.#chessGame.gameId, 'status')
 
         this.#chessGame.setStatus(result)
     }
@@ -86,20 +101,20 @@ export class ChessController {
         let pieces = PieceFactory.getPiecesByPieceDtos(result)
         this.#chessGame.setPieces(pieces)
 
-        if(result.status === 'running') {
+        if (result.status === 'running') {
             this.#chessGame.setTurn(result.turn)
             this.#turn = result.turn
         }
 
-        if(result.status !== 'running') {
+        if (result.status !== 'running') {
             this.#finished(this.#calculateWinner(result))
         }
 
     }
 
     #calculateWinner(result) {
-        if(result.status === 'blackWin') return "black"
-        if(result.status === 'whiteWin') return "white"
+        if (result.status === 'blackWin') return "black"
+        if (result.status === 'whiteWin') return "white"
         return this.#chessGame.getWinnerByScore
     }
 
@@ -124,7 +139,7 @@ export class ChessController {
 
 
     async #sendMoveRequest(source, target) {
-        return await this.#ajax.patch('move', `
+        return await this.#ajax.patch(this.#chessGame.gameId, 'move', `
                 {
                     "source" : "${source}",
                     "target" : "${target}"
@@ -150,6 +165,13 @@ export class ChessController {
         document.getElementById('load_button')
             .addEventListener('click', async e => {
                 await this.#load()
+            })
+    }
+
+    saveEventHandler() {
+        document.getElementById('save_button')
+            .addEventListener('click', async e => {
+                await this.#save()
             })
     }
 

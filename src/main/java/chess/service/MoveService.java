@@ -22,7 +22,7 @@ public class MoveService {
     }
 
     public Object move(String source, String target) {
-        ChessGame chessGame = getChessGameByGameId(gameId);
+        ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
 
         validateRightInputs(source, target);
         Position sourcePosition = getPositionFromInput(source);
@@ -41,19 +41,6 @@ public class MoveService {
 
         return new GameDto(chessGame);
     }
-
-    private ChessGame getChessGameByGameId(String gameId) {
-        validateChessGameIdExist(gameId);
-
-        return GameRepository.findByGameId(gameId).get();
-    }
-
-    private void validateChessGameIdExist(String gameId) {
-        if (!GameRepository.findByGameId(gameId).isPresent()) {
-            throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
-        }
-    }
-
 
     private void validateRightInputs(String source, String target) {
         if (isRightPositionFormat(source) && isRightPositionFormat(target)) {
