@@ -1,14 +1,16 @@
 package chess.domain.piece;
 
 public enum PieceColor {
-    BLACK("흑"),
-    WHITE("백"),
-    VOID("공허");
+    BLACK("B", "흑"),
+    WHITE("W", "백"),
+    VOID("empty", "무");
 
     private String name;
+    private final String symbol;
 
-    PieceColor(String name) {
+    PieceColor(String name, String symbol) {
         this.name = name;
+        this.symbol = symbol;
     }
 
     public PieceColor oppositeColor() {
@@ -29,5 +31,9 @@ public enum PieceColor {
 
     public String getName() {
         return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }
