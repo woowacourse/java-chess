@@ -166,8 +166,6 @@
   - [x] 서버를 시작했을 때
     
     - [x] Controller, Service, ChessGame을 실행시킨다.
-  - [x] Board 생성시, 모든 보드 칸들을 Empty 상태인 Cell로 초기화한다.
-  
   - [x] 체스 게임 방을 생성하거나, 기존에 존재하는 방에 들어갔을 때
     - [x] 체스 게임 방을 새로 생성했을 때
       - [x] 모든 것들을 새로 만들어서 DB에 저장한다. (캐싱되어있는 기물들과 보드 칸 위치들 제외)
@@ -176,16 +174,8 @@
           - [x] 현재 차례 팀 색깔 (초기 기본값 "white")
         - [x] 백 팀, 흑 팀 플레이어
         - [x] 맨 처음 배치상태의 기물들
-  
-    - [x] ChessGame id를 통해, DB에 저장되어있는 게임 정보를 ChessGame 객체에 로드한다.
-      - [x] 체스 게임
-        - [x] 요청받은 체스게임을 DB에서 가져온다.
-      - [x] 백 팀, 흑 팀 플레이어
-        - [x] Players의 기존 Collection을 clear() 한다.
-        - [x] 불러온 체스게임의 플레이어들을 DB에서 가져와 Collection에 저장한다.
-      - [x] 보드의 Cell들
-        - [x] Board의 모든 Cell들을 Empty로 초기화한다.
-        - [x] 저장되어있는 마지막 배치 상태의 기물들을 DB에서 가져와 Board의 Cell에 저장한다.
+  - [x] 체스 게임
+      - [x] 요청받은 체스게임을 DB에서 가져온다.
     
   - [x] 보드 상태 출력 요청
     
@@ -195,13 +185,13 @@
     - [x] 이동이 불가능 할  때
       - [x] 예외를 발생시키고 어떤 업데이트도 하지 않는다.
     - [x] 이동이 가능할 때
-      - [x] 움직인 기물의 위치 정보를 DB와 Board(Cell)에 모두 업데이트한다.
+      - [x] 움직인 기물의 위치 정보를 DB에 업데이트한다.
     - [x] 상대방의 기물을 잡았을 때
-    - [x] 잡힌 기물을 DB와 Board(Cell)에서 모두 삭제한다.
-    - [x] ChessGame의 현재 차례 팀 색깔 정보를 DB와 ChessGame에 모두 업데이트한다.
+    - [x] 잡힌 기물을 DB에서 삭제한다.
+    - [x] ChessGame의 현재 차례 팀 색깔 정보를 다음 턴 색깔로 변경 후, DB 에 업데이트한다.
   
   - [x] 게임 종료 (게임 방 삭제 버튼을 클릭한 경우 또는 King이 잡힌 경우)
-  - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
+    - [x] 종료할 ChessGame에 대한 모든 정보들(chess_game, player, player_piece_position)을 DB에서 모두 삭제한다.
   
 - [x] API
   - [x] 방 생성
@@ -229,43 +219,21 @@
     - [x] `GET : "/"` 으로 redirect
   - [x] 기물 이동
 
-    - [x] `ajax POST : "/move"` 로 `JSON : "{"startPosition": "${출발 위치}", "destination": "${도착 위치}"}"` 요청
+    - [x] `ajax POST : "/move"` 로 `JSON : "{"gameId": "${체스 게임 id}", "startPosition": "${출발 위치}", "destination": "${도착 위치}"}"` 요청
     - [x] 이동 가능한 경우
       - [x] 기물 이동, 턴 전환 DB 업데이트
       - [x] 정상 이동 응답 반환
+      - [x] `ajax` 에서 정상 이동 결과를 받았을 때
+        - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect 
     - [x] 이동 불가능한 경우
       - [x] DB 업데이트를 아무것도 하지 않음
-    - [x] 이동 불가 에러, 에러 메세지 응답 반환
-    - [x] `ajax` 에서 정상 이동 결과를 받았을 때
-      - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
-    - [x] `ajax` 에서 정상 에러 결과를 받으면,  
-      - [x] View에서 js로 `alert("{에러 메세지}")` 창 띄움.
-      - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
+      - [x] 이동 불가 에러, 에러 메세지 응답 반환
+      - [x] `ajax` 에서 이동 불가능 에러 결과를 받으면,  
+        - [x] View에서 js로 `alert("{에러 메세지}")` 창 띄움.
+        - [x] 바로 `GET : "/chess-board?id={게임 id}"` 로 redirect
 
-  
-
-  - 방 목록
-    - 방
-      - id (Long)
-      - 방 제목 (String)
-      - 현재 차례 팀 색깔 (String)
-      - 백 팀 플레이어 id (Long)
-      - 흑 팀 플레이어 id (Long)
-        - 플레이어
-          - id (Long)
-          - 갖고있는 기물들
-            - 기물
-              - id (Long)
-              - 이름 (String)
-            - 위치
-                - id (Long)
-                - File (String)
-                - Rank (String)
-
-- [ ] 테이블 구성
+- [x] 테이블 구성
 ```sql
--- MySQL Workbench Forward Engineering
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -273,22 +241,66 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema chess_game
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema chess_game
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `chess_game` DEFAULT CHARACTER SET utf8 ;
 USE `chess_game` ;
 
+
 -- -----------------------------------------------------
--- Table `chess_game`.`chess_room`
+-- Table `chess_game`.`chess_game`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game`.`chess_room` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`chess_game` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL DEFAULT '제목 없는 방',
   `current_turn_team_color` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `current_turn_team_color_UNIQUE` (`current_turn_team_color` ASC) VISIBLE)
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `chess_game`.`player`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chess_game`.`player` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `team_color` VARCHAR(255) NOT NULL,
+  `score` DECIMAL(7,3) UNSIGNED NOT NULL DEFAULT 38.0,
+  `chess_game_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `chess_game_id`),
+  INDEX `fk_player_chess_game1_idx` (`chess_game_id` ASC) VISIBLE,
+  CONSTRAINT `fk_player_chess_game1`
+    FOREIGN KEY (`chess_game_id`)
+    REFERENCES `chess_game`.`chess_game` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `chess_game`.`player_piece_position`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chess_game`.`player_piece_position` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `player_id` BIGINT UNSIGNED NOT NULL,
+  `piece_id` BIGINT UNSIGNED NOT NULL,
+  `position_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `player_id`, `piece_id`, `position_id`),
+  INDEX `fk_piece_position_piece_idx` (`piece_id` ASC) VISIBLE,
+  INDEX `fk_piece_position_position1_idx` (`position_id` ASC) VISIBLE,
+  INDEX `fk_piece_position_player1_idx` (`player_id` ASC) VISIBLE,
+  CONSTRAINT `fk_piece_position_piece`
+    FOREIGN KEY (`piece_id`)
+    REFERENCES `chess_game`.`piece` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_piece_position_position1`
+    FOREIGN KEY (`position_id`)
+    REFERENCES `chess_game`.`position` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_piece_position_player1`
+    FOREIGN KEY (`player_id`)
+    REFERENCES `chess_game`.`player` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -299,31 +311,7 @@ CREATE TABLE IF NOT EXISTS `chess_game`.`piece` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `color` VARCHAR(255) NOT NULL,
-  `player_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  INDEX `fk_piece_player1_idx` (`player_id` ASC) VISIBLE,
-  CONSTRAINT `fk_piece_player1`
-    FOREIGN KEY (`player_id`)
-    REFERENCES `chess_game`.`player` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `chess_game`.`player`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game`.`player` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `chess_room_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_player_chess_room1_idx` (`chess_room_id` ASC) VISIBLE,
-  CONSTRAINT `fk_player_chess_room1`
-    FOREIGN KEY (`chess_room_id`)
-    REFERENCES `chess_game`.`chess_room` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -334,16 +322,7 @@ CREATE TABLE IF NOT EXISTS `chess_game`.`position` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `file_value` VARCHAR(255) NOT NULL,
   `rank_value` VARCHAR(255) NOT NULL,
-  `piece_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `file_value_UNIQUE` (`file_value` ASC) VISIBLE,
-  UNIQUE INDEX `rank_value_UNIQUE` (`rank_value` ASC) VISIBLE,
-  INDEX `fk_position_piece_idx` (`piece_id` ASC) VISIBLE,
-  CONSTRAINT `fk_position_piece`
-    FOREIGN KEY (`piece_id`)
-    REFERENCES `chess_game`.`piece` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -354,15 +333,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 <br>
 
 
-
-
-
 # Todo list
 
 
-
-- [ ] 체스보드 View 꾸미기
-- [ ] README.md 정리
-- [ ] SQL 파일 정리 (constrain 등 이름 수정)
 - [ ] 학습로그 작성
 - [ ] Pull request
