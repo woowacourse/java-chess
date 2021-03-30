@@ -51,7 +51,7 @@ public class WebUIChessController {
 
         get("/end", (req, res) -> {
             if (chessGame.isGameOver()) {
-                return new Response("401", "게임 종료");
+                return new Response("212", "게임 종료");
             }
             return new Response("200", "게임 진행중");
         }, JSON_TRANSFORMER);

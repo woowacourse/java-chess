@@ -153,7 +153,7 @@ async function checkEndGame() {
         return res.json();
     })
     .then(obj => {
-        if (obj.code === "401") {
+        if (obj.code === "212") {
             alert(obj.message);
             location.replace('/result');
         }
