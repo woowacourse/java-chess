@@ -9,7 +9,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.HashMap;
+import chess.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -19,7 +20,7 @@ public class ChessBoard {
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final String SAME_POSITION = "같은 위치로 이동할 수 없습니다.";
 
-    private final Map<Position, Piece> chessBoard = new HashMap<>();
+    private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
         initBlank();

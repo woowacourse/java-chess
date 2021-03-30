@@ -16,6 +16,7 @@ public class OutputView {
     public static final String GAME_END = "> 체스 게임이 종료되었습니다.";
     public static final String STATUS_COMMAND = "> 결과 확인: status";
     public static final String RESULT_FORMAT = "%s: %.1f점";
+    public static final int BOARD_MAXIMUM_INDEX = 7;
 
     private OutputView() {
     }
@@ -29,10 +30,15 @@ public class OutputView {
 
     public static void printChessBoard(ChessBoard chessBoard) {
         for (Map.Entry<Position, Piece> board: chessBoard.getChessBoard().entrySet()) {
-            System.out.println(board.getValue());
+            System.out.print(board.getValue().getName());
+            newlineByIndex(board);
+        }
+    }
+
+    private static void newlineByIndex(Map.Entry<Position, Piece> board) {
+        if (board.getKey().getColumnAsIndex() == BOARD_MAXIMUM_INDEX) {
             System.out.println();
         }
-        System.out.println();
     }
 
     public static void printResult(Result result) {
