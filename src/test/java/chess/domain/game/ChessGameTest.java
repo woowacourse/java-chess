@@ -69,7 +69,7 @@ class ChessGameTest {
 
     @DisplayName("보드 세팅 객체 주입시, 타입 에러 테스트")
     @Test
-    void boardSettingInjectionTypeError() throws SQLException {
+    void boardSettingInjectionTypeError() {
         ChessGame chessGame = new ChessGame();
         assertThatThrownBy(() -> chessGame.createNew(null, TEST_TITLE))
             .isInstanceOf(IllegalArgumentException.class);
@@ -163,6 +163,7 @@ class ChessGameTest {
             ChessGame chessGame = new ChessGame();
             Long gameId = chessGame.createNew(customBoardSetting, TEST_TITLE);
 
+            chessGame.move(new MoveRequestDTO(gameId, "h3", "h4"));
             GameStatusResponseDTO gameStatus = chessGame.getGameStatus(gameId);
 
             assertThat(gameStatus.getWhitePlayerScore()).isEqualTo(19.5);
