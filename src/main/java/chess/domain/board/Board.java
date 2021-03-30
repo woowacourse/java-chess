@@ -1,8 +1,15 @@
 package chess.domain.board;
 
 import chess.domain.location.Location;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.team.Team;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -14,6 +21,17 @@ public class Board {
     }
 
     public static Board of(final List<Piece> pieces) {
+        return new Board(pieces);
+    }
+
+    public static Board createWithInitialLocation() {
+        List<Piece> pieces = new ArrayList<>();
+        pieces.addAll(Rook.createInitialPieces());
+        pieces.addAll(Knight.createInitialPieces());
+        pieces.addAll(Bishop.createInitialPieces());
+        pieces.addAll(King.createInitialPieces());
+        pieces.addAll(Queen.createInitialPieces());
+        pieces.addAll(Pawn.createInitialPieces());
         return new Board(pieces);
     }
 

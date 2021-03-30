@@ -29,8 +29,17 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        initialBoard = BoardUtil.generateInitialBoard();
+        initialBoard = Board.createWithInitialLocation();
         testBoard = BoardUtil.generateBoard(TEST_BOARD);
+    }
+
+    @DisplayName("기물들이 초기위치를 가지는 보드 생성 테스트")
+    @Test
+    void createWithInitialLocation() {
+        Board initialBoard = Board.createWithInitialLocation();
+
+        assertThat(initialBoard.toList())
+            .containsExactlyInAnyOrderElementsOf(BoardUtil.generateInitialBoard().toList());
     }
 
     @DisplayName("체스 말은 시작위치와 목표위치가 같으면 이동하지 못한다.")
