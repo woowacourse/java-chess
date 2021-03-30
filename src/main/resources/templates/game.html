@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chess Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+<div id="gameTitle">
+    Chess Game
+</div>
+<table class="board">
+    <tbody class="board squares">
+    <tr class="eight">
+        <td class="a odd" id="a8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h8">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="seven">
+        <td class="a odd" id="a7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h7">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="six">
+        <td class="a odd" id="a6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h6">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="five">
+        <td class="a odd" id="a5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h5">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="four">
+        <td class="a odd" id="a4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h4">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="three">
+        <td class="a odd" id="a3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h3">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="two">
+        <td class="a odd" id="a2">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b2">
+            <img src="./img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h2">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    <tr class="one">
+        <td class="a odd" id="a1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="b even" id="b1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="c odd" id="c1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="d even" id="d1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="e odd" id="e1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="f even" id="f1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="g odd" id="g1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+        <td class="h even" id="h1">
+            <img src="../img/Blank.png" width="100%"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="info">
+    <div id="infoTitle">INFO</div>
+    <div id="scoreboard">
+        <div id="white">White: <span>38.0</span></div>
+        <div id="black">Black: <span>38.0</span></div>
+    </div>
+    <div id="turn">White</div>
+    <div id="buttons">
+        <button type="button" id="restart">Restart</button>
+        <button type="button" id="end">End</button>
+    </div>
+</div>
+<script src="game.js"></script>
+</body>
+
+</html>
