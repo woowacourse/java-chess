@@ -2,9 +2,13 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.pieces.Piece;
+import chess.domain.pieces.Pieces;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+
+import java.util.List;
 
 public final class ChessGame {
     private Board board;
@@ -56,5 +60,16 @@ public final class ChessGame {
 
     public Team turn() {
         return currentTurn;
+    }
+
+    public boolean checkRightTurn(final String clickedSection) {
+        Pieces pieces = board.piecesByTeam(currentTurn);
+        return pieces.containsPosition(position(clickedSection));
+    }
+
+    public List<String> movablePositionsByStartPoint(final String startPoint) {
+        Pieces pieces = board.piecesByTeam(currentTurn);
+        Piece piece = pieces.pieceByPosition(position(startPoint));
+        return piece.movablePositions(board);
     }
 }

@@ -35,6 +35,10 @@ public final class Position {
         return (row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
 
+    public String position() {
+        return Col.col(this.col) + Row.row(this.row);
+    }
+
     public final int row() {
         return row;
     }

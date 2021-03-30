@@ -122,3 +122,14 @@ body::after {
 .score p {
     margin-top: 60px;
 }
+
+.selected {
+    background-color: yellow;
+    opacity: 0.5;
+}
+
+.movable {
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    opacity: 0.4;
+}

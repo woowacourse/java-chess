@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidMovePositionException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
     private Position position;
@@ -54,6 +55,13 @@ public abstract class Piece {
 
     public final Double score() {
         return information.score();
+    }
+
+    public final List<String> movablePositions(final Board board) {
+        List<Position> positions = this.moving.allMovablePositions(this, board);
+        return positions.stream()
+                .map(Position::position)
+                .collect(Collectors.toList());
     }
 
     public abstract boolean isKing();

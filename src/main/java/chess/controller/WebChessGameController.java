@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.JsonTransformer;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.dto.PiecesDTO;
@@ -41,6 +42,16 @@ public class WebChessGameController {
             gameInformation(chessGame, model);
             return render(model, "chess.html");
         });
+
+        post("/myTurn", "application/json", (req, res) -> {
+            String clickedSection = req.queryParams("clickedSection");
+            return chessGame.checkRightTurn(clickedSection);
+        }, new JsonTransformer());
+
+        post("/movablePositions", (req, res) -> {
+            String startPoint = req.queryParams("clickedSection");
+            return chessGame.movablePositionsByStartPoint(startPoint);
+        }, new JsonTransformer());
     }
 
     private void gameInformation(ChessGame chessGame, Map<String, Object> model) {
