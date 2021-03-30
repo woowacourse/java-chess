@@ -26,8 +26,10 @@ public class OutputView {
 
         for (int y = 0; y < BOARD_SIZE; y++) {
             printRow(board[y]);
-            System.out.println();
+            System.out.println(" | " + (BOARD_SIZE - y));
         }
+        System.out.println("---------");
+        System.out.println("abcdefgh");
     }
 
     private static void printRow(char[] chars) {
