@@ -3,19 +3,14 @@ package chess.service;
 import chess.domain.ChessGame;
 import chess.domain.command.Commands;
 import chess.domain.dto.GameInfoDto;
-import chess.domain.dto.ScoresDto;
 import chess.domain.utils.BoardInitializer;
-import chess.view.OutputView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessService {
+    public static final String MOVE_COMMAND = "move";
     private ChessGame chessGame;
-
-    public void start() {
-        this.chessGame = new ChessGame();
-    }
 
     public Map<String, Object> startResponse() {
         Map<String, Object> model = new HashMap<>();
@@ -23,7 +18,8 @@ public class ChessService {
     }
 
     public void playNewGame() {
-        chessGame.initBoard(BoardInitializer.init()); //보드 초기화
+        this.chessGame = new ChessGame();
+        chessGame.initBoard(BoardInitializer.init());
     }
 
     public Map<String, Object> initResponse() {
@@ -34,15 +30,16 @@ public class ChessService {
         chessGame.endGame();
     }
 
-    public void continuedGame() {
-    }
-
     public void move(String source, String target) {
-        chessGame.move(new Commands(String.join(" ", "move", source, target)));
+        chessGame.move(new Commands(String.join(" ", MOVE_COMMAND, source, target)));
     }
 
     public Map<String, Object> moveResponse() {
-        return makeCommonResponse();
+        final Map<String, Object> model = makeCommonResponse();
+        if (chessGame.isEnd()) { // if king dead,
+            model.put("winner", chessGame.winner());
+        }
+        return model;
     }
 
     private Map<String, Object> makeCommonResponse() {

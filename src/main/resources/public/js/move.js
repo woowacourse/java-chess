@@ -44,10 +44,21 @@ function update(response) {
     const nowTurn = document.getElementById("turn");
     nowTurn.innerText = turn + "팀 차례입니다.";
 
+    let message = "";
+
     for (let i = 0; i < scores.length; i++) {
         const team = scores[i].team.toLowerCase();
         const score = document.getElementById(team);
         score.innerText = team + " 점수 | " + scores[i].score;
+        message += team + " 점수 | " + scores[i].score + "\n";
+    }
+
+    const winner = response.winner;
+    if (winner != null) {
+        message += winner + "팀이 이겼습니다.🤭";
+        alert(message);
+        window.location = "http://localhost:4567/play/new";
+        return;
     }
 }
 

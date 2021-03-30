@@ -23,7 +23,6 @@ public class WebController {
 
     public void play(){
         get("/play", (req, res) -> {
-            chessService.start();
             return render(chessService.startResponse(), "chessStart.html");
         });
 
@@ -42,12 +41,6 @@ public class WebController {
                 res.status(400);
                 return e.getMessage();
             }
-        });
-
-        get("/play/end", (req, res) -> {
-            chessService.end();
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "chessEnd.html");
         });
     }
 
