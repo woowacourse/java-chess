@@ -14,6 +14,7 @@ public class Result {
     public static final String LOSE = "패";
     private static final int COLUMN_NEIGHBOR_PAWN = 2;
     private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
+
     private final Map<Position, Piece> chessBoard;
 
     public Result(Map<Position, Piece> chessBoard) {
