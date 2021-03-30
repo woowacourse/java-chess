@@ -1,13 +1,14 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardGenerator;
-import chess.domain.board.Coordinate;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 import chess.dto.BoardDTO;
 import chess.dto.RequestDTO;
 import chess.dto.ResultDTO;
+import chess.repository.ChessRepository;
+import chess.repository.ConnectionManager;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -21,6 +22,7 @@ public class WebChessController {
     private static TeamType CURRENT_TEAM_TYPE = TeamType.WHITE;
 
     private ChessBoard chessBoard;
+    private ChessService chessService = new ChessService(new ChessRepository(ConnectionManager.makeConnection()));
 
     public WebChessController(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
@@ -40,11 +42,7 @@ public class WebChessController {
     public void getChessBoard() {
         get("/chessboard", (request, response) -> {
             response.type("application/json");
-            if (chessBoard.isKingCheckmate()) {
-                this.chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
-                CURRENT_TEAM_TYPE = TeamType.WHITE;
-            }
-            BoardDTO boardDTO = BoardDTO.from(chessBoard, CURRENT_TEAM_TYPE);
+            BoardDTO boardDTO = chessService.get();
             return new Gson().toJsonTree(boardDTO);
         });
     }
@@ -53,12 +51,7 @@ public class WebChessController {
         post("/chessboard/move", (request, response) -> {
             response.type("application/json");
             RequestDTO requestDTO = new Gson().fromJson(request.body(), RequestDTO.class);
-            Coordinate current = Coordinate.from(requestDTO.getCurrent());
-            Coordinate destination = Coordinate.from(requestDTO.getDestination());
-            TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
-            chessBoard.move(current, destination, teamType);
-            CURRENT_TEAM_TYPE = teamType.findOppositeTeam();
-            BoardDTO boardDTO = BoardDTO.from(chessBoard, CURRENT_TEAM_TYPE);
+            BoardDTO boardDTO = chessService.move(requestDTO);
             return new Gson().toJsonTree(boardDTO);
         });
     }

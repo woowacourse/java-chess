@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ChessRepository {
@@ -14,6 +16,7 @@ public class ChessRepository {
 
     public ChessRepository(Connection connection) {
         this.connection = connection;
+
     }
 
     public void insertHistory(String source, String destination, String team) throws SQLException {
@@ -23,6 +26,20 @@ public class ChessRepository {
         preparedStatement.setString(2, destination);
         preparedStatement.setString(3, team);
         preparedStatement.executeUpdate();
+        System.out.println("좌표 삽입 성공");
+    }
+
+    public List<History> findAllHistories() throws SQLException {
+        String query = "SELECT * FROM history";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<History> histories = new ArrayList<>();
+        while (resultSet.next()) {
+            History history = new History(
+                    resultSet.getString("source"), resultSet.getString("destination"), resultSet.getString("team"));
+            histories.add(history);
+        }
+        return histories;
     }
 
     public Optional<History> findHistoryById(int id) throws SQLException {
