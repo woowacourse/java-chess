@@ -1,5 +1,7 @@
 package chess.domain.dto.request;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ class MoveRequestTest {
         final Gson gson = new Gson();
         final MoveRequest moveRequest = gson.fromJson("{'source': 'a1', 'target': 'a3'}",
             MoveRequest.class);
-        System.out.println(moveRequest.source());
-        System.out.println(moveRequest.target());
+        assertThat(moveRequest.source()).isEqualTo("a1");
+        assertThat(moveRequest.target()).isEqualTo("a3");
     }
 }
