@@ -13,10 +13,11 @@ public class PawnMoving implements Moving {
     private final int[] whiteColDirection = {-1, 1};
     private final int[] blackRowDirection = {1, 1};
     private final int[] blackColDirection = {-1, 1};
-    private final List<Position> movablePositions = new ArrayList<>();
+    private List<Position> movablePositions = new ArrayList<>();
 
     @Override
     public List<Position> allMovablePositions(final Piece piece, final Board board) {
+        movablePositions = new ArrayList<>();
         addAttackablePositions(piece, board);
         addStraightPosition(board, piece, 1);
         Position currentPosition = piece.position();

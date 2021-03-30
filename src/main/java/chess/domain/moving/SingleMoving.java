@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SingleMoving implements Moving {
-    private final List<Position> movablePositions = new ArrayList<>();
+    private List<Position> movablePositions = new ArrayList<>();
 
     public List<Position> movablePositions(final Piece piece, final Board board, final int[] rowDirection, final int[] colDirection) {
+        movablePositions = new ArrayList<>();
         Position currentPosition = piece.position();
         Team team = board.teamByPiece(piece);
 

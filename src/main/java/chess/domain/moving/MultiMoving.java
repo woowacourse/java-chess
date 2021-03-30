@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MultiMoving implements Moving {
-    private final List<Position> movablePositions = new ArrayList<>();
+    private List<Position> movablePositions = new ArrayList<>();
 
     public List<Position> movablePositions(final Piece piece, final Board board, final int[] rowDirection, final int[] colDirection) {
+        movablePositions = new ArrayList<>();
         for (int direction = 0; direction < rowDirection.length; ++direction) {
             addMovablePositions(piece, board, rowDirection[direction], colDirection[direction]);
         }
