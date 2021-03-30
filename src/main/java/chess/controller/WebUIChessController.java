@@ -11,6 +11,7 @@ import chess.domain.dto.request.MoveRequest;
 import chess.domain.dto.response.Response;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
+import chess.domain.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class WebUIChessController {
         staticFiles.location("/public");
         port(8080);
 
-        final ChessGame chessGame = new ChessGame();
+        final ChessService chessService = new ChessService();
         get("/", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -34,43 +35,25 @@ public class WebUIChessController {
         post("/move", (req, res) -> {
             final String requests = req.body();
             final MoveRequest moveRequest = GSON.fromJson(requests, MoveRequest.class);
-
-            try {
-                chessGame.move(getPositionByCommands(moveRequest.source().split("")),
-                    getPositionByCommands(moveRequest.target().split("")));
-
-                if (chessGame.isKingDead()) {
-                    chessGame.changeGameOver();
-                }
-                chessGame.nextTurn();
-                return new Response("200", "성공");
-            } catch (UnsupportedOperationException | IllegalArgumentException e) {
-                return new Response("401", e.getMessage());
-            }
+            return chessService.move(moveRequest);
         }, JSON_TRANSFORMER);
 
         get("/end", (req, res) -> {
-            if (chessGame.isGameOver()) {
-                return new Response("212", "게임 종료");
-            }
-            return new Response("200", "게임 진행중");
+            return chessService.end();
         }, JSON_TRANSFORMER);
 
         get("/result", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
-            final ChessResult chessResult = new ChessResult(chessGame.board());
+            final ChessResult chessResult = chessService.chessResult();
             model.put("opposite", chessResult.winner().oppositeTeamName());
             model.put("winner", chessResult.winner().teamName());
+            chessService.restart();
             return render(model, "result.html");
         });
     }
 
     private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private Position getPositionByCommands(final String[] commands) {
-        return new Position(commands[0], commands[1]);
     }
 
 }
