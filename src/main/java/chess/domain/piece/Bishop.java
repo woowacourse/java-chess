@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private static final String SYMBOL = "Bb";
+    private static final String BLACK = "black";
     private static final double SCORE = 3;
 
     private Bishop(final String piece, final Color color, final Position position) {
@@ -16,7 +17,7 @@ public class Bishop extends Piece {
     public static Bishop from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Bishop(piece, Color.BLACK, position);
+            return new Bishop(BLACK + piece, Color.BLACK, position);
         }
         return new Bishop(piece, Color.WHITE, position);
     }

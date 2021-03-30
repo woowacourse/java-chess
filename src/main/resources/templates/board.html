@@ -13,7 +13,7 @@
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <!-- <link rel="stylesheet" href="css/styles.css" /> -->
+    <link rel="stylesheet" href="/css/style.css" />
     <!-- <link rel="icon" href="favicon.png" /> -->
     <title>체스게임!</title>
 
@@ -41,11 +41,7 @@
     <div class="game-wrapper flex-wrap d-flex">
         <div class="chess-board flex-wrap d-flex">
             {{#tilesDto.tiles}}
-            이름 : {{position}}, 나이 : {{piece}}
-            <br>
-            <!--
-                        <div class="tile d-flex" id="{{position}}"><img alt="" src="/img/{{piece}}.png"></div>
-            -->
+            <div class="tile d-flex" id="{{position}}"><img alt="" src="css/image/{{piece}}.png"></div>
             {{/tilesDto.tiles}}
         </div>
     </div>

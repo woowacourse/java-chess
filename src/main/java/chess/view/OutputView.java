@@ -8,7 +8,6 @@ import chess.domain.position.Rank;
 import chess.view.dto.PlayerResultDto;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class OutputView {
@@ -37,7 +36,7 @@ public class OutputView {
     }
 
     private static String checkBoard(final Map<Position, Piece> chessBoard, final Position position) {
-        if ("blank".equals(chessBoard.get(position).getPiece())){
+        if ("blank".equals(chessBoard.get(position).getPiece())) {
             return ".";
         }
         return chessBoard.get(position).getPiece();

@@ -9,11 +9,8 @@
 }
 
 body {
-    background-image: linear-gradient(90deg, red, orange, yellow, green, blue, navy, purple);
-    align-content: center;
-
-    word-break: break-word;
-    margin: 0;
+    background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),
+            url("image/bono.png");
 }
 
 h1 span {
@@ -53,13 +50,6 @@ h1 span:nth-child(7) {
 
 h1 span:nth-child(8) {
     animation-delay: .7s;
-}
-
-@keyframes bounce {
-    100% {
-        top: -20px;
-        text-shadow: 0 1px 0 #CCC, 0 2px 0 #CCC, 0 3px 0 #CCC, 0 4px 0 #CCC, 0 5px 0 #CCC, 0 6px 0 #CCC, 0 7px 0 #CCC, 0 8px 0 #CCC, 0 9px 0 #CCC, 0 50px 25px rgba(0, 0, 0, .2);
-    }
 }
 
 .flex-wrap {
@@ -117,8 +107,11 @@ h1 span:nth-child(8) {
     margin: -1px;
 }
 
-.tile {
+/*.tile {
     background-color: beige;
+}*/
+.tile {
+    background-color: transparent !important;
 }
 
 .tile:nth-child(-2n+7),

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -17,14 +18,15 @@ public class ChessBoardFactoryTest {
     void initialize() {
         ChessBoard chessBoard = ChessBoardFactory.initializeBoard();
         Map<Position, Piece> boards = chessBoard.boards();
+        Piece blank = new Blank();
 
         Piece piece1 = boards.get(Position.valueOf("1", "a"));
         Piece piece2 = boards.get(Position.valueOf("2", "a"));
         Piece piece3 = boards.get(Position.valueOf("3", "a"));
 
-        assertThat(piece1).isEqualTo(null);
-        assertThat(piece2).isEqualTo(null);
-        assertThat(piece3).isEqualTo(null);
+        assertThat(piece1).isEqualTo(blank);
+        assertThat(piece2).isEqualTo(blank);
+        assertThat(piece3).isEqualTo(blank);
     }
 
     @DisplayName("유효한(1~8, a~h)의 범위가 아니면 에러가 발생한다.")

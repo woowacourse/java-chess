@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Blank extends Piece{
+public class Blank extends Piece {
     private static final String SYMBOL = "blank";
 
     public Blank() {

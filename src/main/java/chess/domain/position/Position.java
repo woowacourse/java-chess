@@ -7,8 +7,10 @@ public class Position {
 
     static {
         Arrays.stream(Rank.values())
+                .filter(rank -> !rank.isEmpty())
                 .forEach(rankValue ->
                         Arrays.stream(File.values())
+                                .filter(file -> !file.isEmpty())
                                 .forEach(fileValue ->
                                         POSITIONS.put(rankValue.getRank() + fileValue.getFile(),
                                                 new Position(rankValue, fileValue))
@@ -46,7 +48,7 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
-    public static Position emptyPosition(){
+    public static Position emptyPosition() {
         return new Position(Rank.EMPTY, File.EMPTY);
     }
 
@@ -69,7 +71,7 @@ public class Position {
         int newRank = this.rank.getValue() + rank;
         int newFile = this.file.getValue() + file;
 
-         if (canMove(newRank, newFile)) {
+        if (canMove(newRank, newFile)) {
             Rank findRank = Rank.findByValue(newRank);
             File findFile = File.findByValue(newFile);
             return POSITIONS.get(findRank.getRank() + findFile.getFile());

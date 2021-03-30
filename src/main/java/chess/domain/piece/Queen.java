@@ -2,12 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.piece.direction.MoveStrategies;
 import chess.domain.position.Position;
-import chess.domain.position.Target;
 
 import java.util.List;
 
 public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
+    private static final String BLACK = "black";
     private static final double SCORE = 9;
 
     private Queen(final String piece, final Color color, final Position position) {
@@ -17,7 +17,7 @@ public class Queen extends Piece {
     public static Queen from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Queen(piece, Color.BLACK, position);
+            return new Queen(BLACK + piece, Color.BLACK, position);
         }
         return new Queen(piece, Color.WHITE, position);
     }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class King extends Piece {
     private static final String SYMBOL = "Kk";
+    private static final String BLACK = "black";
     private static final double SCORE = 0;
 
     private King(final String piece, final Color color, final Position position) {
@@ -16,7 +17,7 @@ public class King extends Piece {
     public static King from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new King(piece, Color.BLACK, position);
+            return new King(BLACK + piece, Color.BLACK, position);
         }
         return new King(piece, Color.WHITE, position);
     }

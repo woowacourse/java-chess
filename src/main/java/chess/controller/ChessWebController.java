@@ -1,20 +1,21 @@
 package chess.controller;
 
-import chess.domain.User;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
+import chess.domain.command.Ready;
+import chess.domain.piece.PieceFactory;
+import chess.domain.player.ChessGame;
+import chess.domain.state.StateFactory;
 import chess.service.ChessService;
+import chess.service.dto.TilesDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
-import static spark.Spark.post;
 
 public class ChessWebController {
     private final ChessService chessService;
@@ -34,14 +35,22 @@ public class ChessWebController {
 
     public void run() {
         get("/", (req, res) -> {
-            ChessBoard chessBoard = ChessBoardFactory.initializeBoard();
-            System.out.println("체크체크체킃");
-            //TilesDto tilesDto = new TilesDto(chessBoard);
-            System.out.println("gdkjgldajflakdf");
+            TilesDto tilesDto = new TilesDto(chessService.emptyBoard());
             Map<String, Object> model = new HashMap<>();
-           // model.put("tilesDto", toJson(tilesDto));
+            model.put("tilesDto", tilesDto);
             return render(model, "board.html");
         });
 
+        get("/start", (req, res) -> {
+            ChessBoard chessBoard = ChessBoardFactory.initializeBoard();
+
+            ChessGame chessGame = new ChessGame(StateFactory.initialization(PieceFactory.whitePieces()),
+                    StateFactory.initialization(PieceFactory.blackPieces()), new Ready());
+
+            TilesDto tilesDto = new TilesDto(chessGame.getBoard());
+            Map<String, Object> model = new HashMap<>();
+            model.put("tilesDto", tilesDto);
+            return render(model, "board.html");
+        });
     }
 }

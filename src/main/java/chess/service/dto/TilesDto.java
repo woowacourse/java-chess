@@ -1,10 +1,9 @@
-/*
 package chess.service.dto;
 
 import chess.domain.board.ChessBoard;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TilesDto {
@@ -12,14 +11,14 @@ public class TilesDto {
 
     public TilesDto(final ChessBoard chessBoard) {
         this.tiles = chessBoard.boards()
-                .entrySet()
+                .values()
                 .stream()
-                .map((key, value) ->  )
+                .map(TileDto::new)
                 .collect(Collectors.toList());
+        Collections.reverse(tiles);
     }
 
     public List<TileDto> getTiles() {
         return tiles;
     }
 }
-*/

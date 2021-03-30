@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
+    private static final String BLACK = "black";
     private static final double SCORE = 1;
 
     private Pawn(final String piece, final Color color, final MoveStrategies moveStrategies, final Position position) {
@@ -17,7 +18,7 @@ public class Pawn extends Piece {
     public static Pawn from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Pawn(piece, Color.BLACK, new MoveStrategies(new South(), new Southeast(), new Southwest()), position);
+            return new Pawn(BLACK + piece, Color.BLACK, new MoveStrategies(new South(), new Southeast(), new Southwest()), position);
         }
         return new Pawn(piece, Color.WHITE, new MoveStrategies(new North(), new Northeast(), new Northwest()), position);
     }
