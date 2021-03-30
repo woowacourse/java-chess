@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Position {
     private final Column column;
@@ -43,10 +42,6 @@ public class Position {
         return column.value() + row.value();
     }
 
-    public static List<Position> all() {
-        return new ArrayList<>(cache.values());
-    }
-
     public List<Position> positionsOfDirection(int columnValue, int rowValue) {
         List<Position> positions = new ArrayList<>();
         Position temp = this;
@@ -65,73 +60,8 @@ public class Position {
         return Position.of(column.move(columnValue), row.move(rowValue));
     }
 
-    public boolean isOrthogonal(Position to) {
-        return hasRow(to.row) || hasColumn(to.column);
-    }
-
-    public boolean isDiagonal(Position to) {
-        return Math.abs(row.diff(to.row)) == Math.abs(column.diff(to.column));
-    }
-
     public boolean hasRow(Row row) {
         return this.row.equals(row);
-    }
-
-    private boolean hasColumn(Column column) {
-        return this.column.equals(column);
-    }
-
-    public List<Position> getBetween(Position to) {
-        List<Position> betweenPosition = new ArrayList<>();
-        if (hasColumn(to.column)) {
-            betweenPosition.addAll(betweenPositionsHasSameColumn(to));
-        }
-        if (hasRow(to.row)) {
-            betweenPosition.addAll(betweenPositionsHasSameRow(to));
-        }
-        if (isDiagonal(to)) {
-            betweenPosition.addAll(betweenPositionsByDiagonal(to));
-        }
-        return betweenPosition;
-    }
-
-    private List<Position> betweenPositionsHasSameColumn(Position to) {
-        return row.getBetween(to.row)
-                  .stream()
-                  .map(row -> Position.of(column, row))
-                  .collect(Collectors.toList());
-    }
-
-
-    private List<Position> betweenPositionsHasSameRow(Position to) {
-        return column.getBetween(to.column)
-                     .stream()
-                     .map(column -> Position.of(column, row))
-                     .collect(Collectors.toList());
-    }
-
-    private List<Position> betweenPositionsByDiagonal(Position to) {
-        List<Position> betweenPosition = new ArrayList<>();
-        int rowDirection = row.unitDirection(to.row);
-        int columnDirection = column.unitDirection(to.column);
-        Position temp = Position.of(column, row);
-        while (!temp.equals(to)) {
-            temp = temp.move(columnDirection, rowDirection);
-            betweenPosition.add(temp);
-        }
-        return betweenPosition;
-    }
-
-    public int diffRow(Position to) {
-        return row.diff(to.row);
-    }
-
-    public int diffColumn(Position to) {
-        return column.diff(to.column);
-    }
-
-    public Column column() {
-        return column;
     }
 
 }

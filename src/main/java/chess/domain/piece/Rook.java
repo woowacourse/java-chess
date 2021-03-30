@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,30 +10,8 @@ public class Rook extends Division {
 
     public static final int ROOK_SCORE = 5;
 
-    public Rook(Color color, Position position) {
-        super(color, "r", position);
-    }
-
-    @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
-        if (position.isOrthogonal(to)) {
-            validateNoneBetween(to, pieces);
-            position = to;
-        }
-    }
-
-    private void validateNoneBetween(Position to, Pieces pieces) {
-        List<Position> positions = position.getBetween(to);
-        if (positions.stream()
-                     .filter(pieces::hasPieceOf)
-                     .anyMatch(pieces::hasPieceOf)) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    @Override
-    public void moveForKill(Position to, Pieces pieces) {
-        this.moveToEmpty(to, pieces);
+    public Rook(Color color) {
+        super(color, "r");
     }
 
     @Override

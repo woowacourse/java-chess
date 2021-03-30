@@ -10,29 +10,8 @@ public class Bishop extends Division {
 
     public static final int BISHOP_SCORE = 3;
 
-    public Bishop(Color color, Position position) {
-        super(color, "b", position);
-    }
-
-    @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
-        if (position.isDiagonal(to)) {
-            validateNoneBetween(to, pieces);
-            position = to;
-        }
-    }
-
-    private void validateNoneBetween(Position to, Pieces pieces) {
-        List<Position> positions = position.getBetween(to);
-        if (positions.stream()
-                     .anyMatch(pieces::hasPieceOf)) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    @Override
-    public void moveForKill(Position to, Pieces pieces) {
-        this.moveToEmpty(to, pieces);
+    public Bishop(Color color) {
+        super(color, "b");
     }
 
     @Override

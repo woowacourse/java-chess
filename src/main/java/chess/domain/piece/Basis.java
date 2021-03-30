@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -12,17 +11,9 @@ public abstract class Basis implements Piece {
         this.displayName = displayName;
     }
 
-    public abstract void moveToEmpty(Position to, Pieces pieces);
-
-    public abstract void moveForKill(Position to, Pieces pieces);
-
-    public abstract Position getPosition();
-
     public abstract boolean isSameColor(Color color);
-    public abstract boolean isSameColor(Piece piece);
 
     public abstract boolean isEmpty();
-
 
     public abstract boolean isKing();
 
@@ -31,8 +22,6 @@ public abstract class Basis implements Piece {
 
 
     public abstract boolean isPawn();
-
-    public abstract Column getColumn();
 
     public abstract List<List<Position>> movablePositions(Position position);
 

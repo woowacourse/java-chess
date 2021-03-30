@@ -5,9 +5,6 @@ import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 class BoardTest {
 
     private Board board;
@@ -16,40 +13,12 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         board = BoardFactory.create();
-        board2 = BoardFactory.create2();
-    }
-
-    @Test
-    void validatePieceToMove() {
-        assertThatCode(() -> board.pickStartPiece(Color.WHITE, Position.from("a2")))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    void print() {
-        board2.print();
-    }
-
-    @Test
-    void validatePieceToMoveError() {
-        assertThatThrownBy(() -> board.pickStartPiece(Color.WHITE, Position.from("a7")))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-
-    @Test
-    void action() {
-    }
-
-    @Test
-    void move2() {
-        board2.move2(Position.from("a7"), Position.from("a6"));
-        board2.print();
+        board2 = BoardFactory.create();
     }
 
     @Test
     void score() {
-        System.out.println(board2.score2(Color.BLACK));
-        System.out.println(board2.score2(Color.WHITE));
+        System.out.println(board2.score(Color.BLACK));
+        System.out.println(board2.score(Color.WHITE));
     }
 }

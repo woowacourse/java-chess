@@ -10,25 +10,8 @@ public class King extends Division {
 
     public static final int KING_SCORE = 0;
 
-    public King(Color color, Position position) {
-        super(color, "k", position);
-    }
-
-    @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
-        int diffRow = Math.abs(position.diffRow(to));
-        int diffColumn = Math.abs(position.diffColumn(to));
-
-        if ((diffRow | diffColumn) == 1) {
-            position = to;
-            return;
-        }
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public void moveForKill(Position to, Pieces pieces) {
-        this.moveToEmpty(to, pieces);
+    public King(Color color) {
+        super(color, "k");
     }
 
     @Override

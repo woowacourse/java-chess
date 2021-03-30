@@ -17,7 +17,7 @@ public class Game {
     }
 
     public void move(Position from, Position to) {
-        board.move(turn.color(), from, to);
+        board.action(turn.color(), from, to);
         turn.next();
     }
 
