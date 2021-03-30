@@ -46,4 +46,9 @@ public class Move extends Running {
     public boolean isMove() {
         return true;
     }
+
+    @Override
+    public String getValue() {
+        return "move";
+    }
 }

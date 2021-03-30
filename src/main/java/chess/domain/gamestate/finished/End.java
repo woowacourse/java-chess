@@ -31,4 +31,9 @@ public class End extends AbstractState {
     public boolean isMove() {
         return false;
     }
+
+    @Override
+    public String getValue() {
+        return "end";
+    }
 }

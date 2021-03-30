@@ -11,4 +11,6 @@ public interface State {
     State changeCommand(CommandType command);
 
     void processMove(String input, Team currentTeam);
+
+    String getValue();
 }

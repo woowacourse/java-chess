@@ -5,17 +5,15 @@ import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.running.Ready;
 import chess.domain.team.Team;
-import chess.utils.BoardUtil;
 
-public class ChessGame {
+public class Room {
 
-    private Team currentTeam;
     private State state;
+    private Team currentTeam;
 
-    public ChessGame() {
-        Board board = BoardUtil.generateInitialBoard();
-        this.currentTeam = Team.WHITE;
-        this.state = new Ready(board);
+    public Room(State state, Team currentTeam) {
+        this.state = state;
+        this.currentTeam = currentTeam;
     }
 
     public void play(String input) {
@@ -38,5 +36,13 @@ public class ChessGame {
 
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public State state() {
+        return state;
+    }
+
+    public Team currentTeam() {
+        return currentTeam;
     }
 }

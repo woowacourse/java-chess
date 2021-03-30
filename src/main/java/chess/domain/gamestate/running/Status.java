@@ -36,4 +36,9 @@ public class Status extends Running {
     public boolean isMove() {
         return false;
     }
+
+    @Override
+    public String getValue() {
+        return "status";
+    }
 }
