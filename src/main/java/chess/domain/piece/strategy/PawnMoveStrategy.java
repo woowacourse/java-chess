@@ -28,12 +28,15 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
             throw new IllegalArgumentException("폰이 움직일 수 있는 범위를 벗어났습니다.");
         }
 
+        if (moveOrder.getTo().hasPiece()) {
+            throw new IllegalArgumentException("폰은 이동하려는 위치에 기물이 있으면 갈 수 없습니다.");
+        }
         return super.canMove(moveOrder);
     }
 
     private boolean isDiagonal(MoveOrder moveOrder) {
         Color color = moveOrder.getFrom().getPiece().getColor();
-        if (color == Color.WHITE){
+        if (color == Color.WHITE) {
             return Direction.isNorthDiagonal(moveOrder.getDirection());
         }
         return Direction.isSouthDiagonal(moveOrder.getDirection());

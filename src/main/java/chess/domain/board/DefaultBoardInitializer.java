@@ -26,12 +26,13 @@ import static java.util.stream.Collectors.toList;
 public class DefaultBoardInitializer implements BoardInitializer {
     private static DefaultBoardInitializer boardInitializer = new DefaultBoardInitializer();
 
-    private DefaultBoardInitializer(){
+    private DefaultBoardInitializer() {
     }
 
-    public static Board getBoard(){
+    public static Board getBoard() {
         return boardInitializer.createBoard();
     }
+
     @Override
     public Board createBoard() {
         return new Board(initialize());

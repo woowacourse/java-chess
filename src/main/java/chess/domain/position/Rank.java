@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -38,7 +38,8 @@ public enum Rank {
     }
 
     public static Rank from(String letter) {
-        return Objects.requireNonNull(SEARCH_MAP.get(letter), "해당하는 문자의 Rank가 없습니다.");
+        return Optional.ofNullable(SEARCH_MAP.get(letter))
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 문자의 Rank가 없습니다."));
     }
 
     public static Rank from(int coordinate) {

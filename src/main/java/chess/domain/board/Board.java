@@ -36,6 +36,11 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 포지션을 찾을 수 없습니다."));
     }
 
+    public Color findColorByPosition(Position position){
+        Piece colorablePiece = findByPosition(position).getPiece();
+        return colorablePiece.getColor();
+    }
+
     public MoveResult move(Position from, Position to) {
         Square fromSquare = this.findByPosition(from);
         return fromSquare.move(createMoveOrder(from, to));

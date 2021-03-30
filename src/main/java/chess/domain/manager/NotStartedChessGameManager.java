@@ -15,6 +15,6 @@ public class NotStartedChessGameManager extends NotRunningGameManager{
 
     @Override
     public ChessGameStatistics getStatistics() {
-        throw new IllegalArgumentException("게임이 진행중이지 않아 실행할 수 없습니다.");
+        throw new UnsupportedOperationException("게임이 진행중이지 않아 실행할 수 없습니다.");
     }
 }

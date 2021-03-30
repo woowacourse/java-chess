@@ -34,7 +34,7 @@ public class RunningGameManager implements ChessGameManager {
 
     @Override
     public void move(Position from, Position to) {
-        if (board.findByPosition(from).getPiece().getColor() != currentColor) {
+        if (board.findColorByPosition(from) != currentColor) {
             throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
         }
         MoveResult moveResult = board.move(from, to);
@@ -67,7 +67,7 @@ public class RunningGameManager implements ChessGameManager {
                 .filter(ColoredPieces::isKingAlive)
                 .map(ColoredPieces::getColor)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("왕이 다 죽어 승자가 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("왕이 다 죽어 승자가 없습니다."));
     }
 
     @Override
