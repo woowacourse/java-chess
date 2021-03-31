@@ -54,4 +54,8 @@ public class ChessGame {
     public List<Position> movablePath(final Position position) {
         return this.state.movablePath(position);
     }
+
+    public State state() {
+        return this.state.state();
+    }
 }

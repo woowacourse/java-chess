@@ -85,4 +85,10 @@ public class InitTest {
         assertThatThrownBy(() -> this.init.movablePath(Position.of("a2")))
             .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    @DisplayName("초기 상태에서 state 명령시 초기 상태 반환")
+    void testState(){
+        assertThat(this.init.state()).isInstanceOf(Init.class);
+    }
 }

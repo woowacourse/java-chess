@@ -104,8 +104,8 @@ class WhiteTurnTest {
     @Test
     @DisplayName("백색 차례에서 백색말의 movablePath 명령시 결과 반환")
     void testMovablePathOfSameColor() {
-        assertThat(this.whiteTurn.movablePath(Position.of("a2")))
-            .containsExactly(Position.of("a4"), Position.of("a3"));
+        assertThat(this.whiteTurn.movablePath(Position.of("b2")))
+            .containsExactly(Position.of("b3"), Position.of("b4"));
     }
 
     @Test
@@ -113,5 +113,11 @@ class WhiteTurnTest {
     void testMovablePathOfDifferentColorException() {
         assertThatThrownBy(() -> this.whiteTurn.movablePath(Position.of("a7")))
             .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("백색 차례에서 state 명령시 백색 차례 반환")
+    void testState(){
+        assertThat(this.whiteTurn.state()).isInstanceOf(WhiteTurn.class);
     }
 }

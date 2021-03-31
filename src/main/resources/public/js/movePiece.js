@@ -10,10 +10,37 @@ async function onInitBoard(event) {
         headers: {'Content-Type': 'application/json'}
     });
 
-    board(await response.json());
+    boardAndState(await response.json());
 }
 
-function board(board) {
+function state(state) {
+    let message;
+
+    if (state.includes("Init")) {
+        message = "게임 시작 전 입니다.";
+    }
+    if (state.includes("WhiteTurn")) {
+        message = "백색 차례 입니다.";
+    }
+    if (state.includes("BlackTurn")) {
+        message = "흑색 차례 입니다.";
+    }
+    if (state.includes("WhiteWin")) {
+        message = "백색의 승리입니다!";
+    }
+    if (state.includes("BlackWin")) {
+        message = "흑색의 승리입니다!";
+    }
+    if (state.includes("End")) {
+        message = "게임이 종료되었습니다.";
+    }
+
+    const pTag = document.querySelector(".current-chess-game-message");
+    pTag.innerText = message;
+}
+
+function boardAndState(board) {
+    state(board.state);
     vacateAllPositions();
 
     for (let i = 0; i < 64; i++) {
@@ -88,7 +115,7 @@ async function onMovePiece(event) {
             })
         });
 
-        board(await response.json());
+        boardAndState(await response.json());
 
         offSelectedPosition();
         offMovableAllPositions();
@@ -108,7 +135,7 @@ async function onMovePiece(event) {
             })
         });
 
-        board(await response.json());
+        boardAndState(await response.json());
 
         offSelectedPosition();
         offMovableAllPositions();

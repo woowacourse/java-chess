@@ -27,4 +27,6 @@ public interface State {
     boolean isNotEnd();
 
     List<Position> movablePath(Position position);
+
+    State state();
 }

@@ -86,4 +86,10 @@ public class EndTest {
             .isInstanceOf(IllegalStateException.class);
     }
 
+    @Test
+    @DisplayName("프로그램 종료에서 state 명령시 프로그램 종료 반환")
+    void testState(){
+        assertThat(this.end.state()).isInstanceOf(End.class);
+    }
+
 }

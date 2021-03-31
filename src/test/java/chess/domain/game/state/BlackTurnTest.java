@@ -114,4 +114,10 @@ class BlackTurnTest {
         assertThatThrownBy(() -> this.blackTurn.movablePath(Position.of("a2")))
             .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    @DisplayName("흑색 차례에서 state 명령시 흑색 차례 반환")
+    void testState(){
+        assertThat(this.blackTurn.state()).isInstanceOf(BlackTurn.class);
+    }
 }

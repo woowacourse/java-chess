@@ -16,11 +16,14 @@ public class WebUIChessGameController {
 
     public WebUIChessGameController() {
         this.chessGame = new ChessGame(new Board());
+    }
+
+    public void initStart() {
         this.chessGame.start();
     }
 
     public BoardDto board() {
-        return DtoAssembler.board(this.chessGame.board());
+        return DtoAssembler.board(this.chessGame.board(), this.chessGame.state());
     }
 
     public MovableResponseDto movablePath(final MovableRequestDto movableRequestDto) {
@@ -32,6 +35,6 @@ public class WebUIChessGameController {
         Position source = Position.of(moveRequestDto.getSource());
         Position target = Position.of(moveRequestDto.getTarget());
         this.chessGame.move(source, target);
-        return DtoAssembler.board(this.chessGame.board());
+        return DtoAssembler.board(this.chessGame.board(), this.chessGame.state());
     }
 }

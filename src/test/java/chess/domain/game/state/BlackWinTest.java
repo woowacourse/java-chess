@@ -87,4 +87,10 @@ class BlackWinTest {
         assertThatThrownBy(() -> this.blackWin.movablePath(Position.of("a2")))
             .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    @DisplayName("흑색 승리에서 state 명령시 흑색 승리 반환")
+    void testState(){
+        assertThat(this.blackWin.state()).isInstanceOf(BlackWin.class);
+    }
 }
