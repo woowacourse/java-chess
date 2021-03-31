@@ -34,6 +34,21 @@ public class WebUIChessApplication {
             return jsonString;
         });
 
+        post("/move", (req, res) -> {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> map = mapper.readValue(req.body(), new TypeReference<Map<String, String>>() {});
+            String sourceValue = map.get("source");
+            String targetValue = map.get("target");
+            Position source = Position.of(sourceValue.charAt(0), sourceValue.charAt(1));
+            Position target = Position.of(targetValue.charAt(0), targetValue.charAt(1));
+            chessBoard.movePiece(source, target);
+            ChessStatusDto chessStatusDto = new ChessStatusDto(chessBoard.getChessBoard(),
+                    Color.from(map.get("turn")).reverse(),
+                    chessBoard.sumScoreByColor(Color.BLACK),
+                    chessBoard.sumScoreByColor(Color.WHITE));
+            return mapper.writeValueAsString(chessStatusDto);
+        });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
