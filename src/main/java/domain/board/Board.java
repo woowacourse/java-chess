@@ -11,28 +11,28 @@ public class Board {
 
     public static final int CHESS_BOARD_SIZE = 8;
     public static final int PAWN_ALLY_COUNT_CONDITION = 2;
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> pieces;
 
     public Board() {
-        board = InitialBoard.emptyBoard();
+        pieces = InitialBoard.emptyBoard();
     }
 
     public void initChessPieces() {
-        InitialBoard.initChessPieces(board);
+        InitialBoard.initChessPieces(pieces);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    public Map<Position, Piece> getPieces() {
+        return pieces;
     }
 
     public Piece piece(Position position) {
-        return board.getOrDefault(position, new EmptyPiece());
+        return pieces.getOrDefault(position, new EmptyPiece());
     }
 
     public void move(Position source, Position target) {
         validateMove(source, target);
         Piece piece = piece(source);
-        piece.validateMove(Collections.unmodifiableMap(board), source, target);
+        piece.validateMove(Collections.unmodifiableMap(pieces), source, target);
         put(source, new EmptyPiece());
         put(target, piece);
     }
@@ -53,17 +53,20 @@ public class Board {
     }
 
     public void put(Position position, Piece piece) {
-        board.put(position, piece);
+        pieces.put(position, piece);
     }
 
     public Score piecesScore(Color color) {
-        BoardResult boardResult = new BoardResult(board);
+        BoardResult boardResult = new BoardResult(pieces);
         return boardResult.piecesScore(color);
     }
 
     public boolean isKingAlive(Color color){
-        BoardResult boardResult = new BoardResult(board);
+        BoardResult boardResult = new BoardResult(pieces);
         return boardResult.isKingAlive(color);
     }
 
+    public Map<Position, Piece> getBoard() {
+        return pieces;
+    }
 }

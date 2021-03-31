@@ -5,6 +5,7 @@ import domain.board.Score;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -15,8 +16,18 @@ public class ChessGame {
     public ChessGame() {
         board = new Board();
         board.initChessPieces();
-        this.isPlaying = false;
-        this.isBlackTurn = false;
+        isPlaying = false;
+        isBlackTurn = false;
+    }
+
+    public ChessGame of(boolean isPlaying) {
+        if (isPlaying) {
+            ChessGame chessGame = new ChessGame();
+            chessGame.start();
+            return chessGame;
+        }
+        this.exit();
+        return this;
     }
 
     public boolean isPlaying() {
@@ -50,6 +61,10 @@ public class ChessGame {
 
     public Board board() {
         return board;
+    }
+
+    public Map<Position, Piece> pieces() {
+        return board.getPieces();
     }
 
     public Score score(Color color) {

@@ -21,6 +21,7 @@ public class WebUIChessApplication {
         port(8080);
         staticFiles.location("/static");
         getMainPage();
+        putChessGame();
     }
 
     private static void getMainPage() {
@@ -28,6 +29,15 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "main.html");
         });
+    }
+
+    private static void putChessGame() {
+        put("/api/chessGame", (request, response) -> {
+            response.type("application/json");
+            ChessGameRequestDto chessGameRequestDto = GSON
+                .fromJson(request.body(), ChessGameRequestDto.class);
+            return chessGameService.putChessGame(chessGameRequestDto);
+        }, GSON::toJson);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
