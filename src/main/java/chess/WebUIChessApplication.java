@@ -1,10 +1,11 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
-import chess.controller.ChessWebController;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,13 @@ public class WebUIChessApplication {
 //        Spark.port(8080);
 
         staticFileLocation("/static");
-        final ChessWebController webController = new ChessWebController();
+        final ChessService webController = new ChessService();
         Gson gson = new Gson();
+
+        get("/room", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "room.html");
+        });
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -31,17 +37,26 @@ public class WebUIChessApplication {
             return gson.toJson(boardInfo);
         });
 
+        post("/join", (request, response) -> {
+            Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class) ;
+            int boardId = (int) (double) requestBody.get("boardId");
+            Map<String, String> boardInfo = webController.joinBoard(boardId);
+            return gson.toJson(boardInfo);
+        });
+
         put("/move", (request, response) -> {
-            Map<String, String> requestBody = gson.fromJson(request.body(), HashMap.class) ;
-            Map<String, String> boardInfo = webController.movedPiece(requestBody.get("source"), requestBody.get("target"));
+            Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class) ;
+            int boardId = (int) (double) requestBody.get("boardId");
+            String source = (String) requestBody.get("source");
+            String target = (String) requestBody.get("target");
+            Map<String, String> boardInfo = webController.movedPiece(boardId, source, target);
             return gson.toJson(boardInfo);
         });
 
         get("/movablePositions", (request, response) -> {
+            String boardId = request.queryParams("boardId");
             String source = request.queryParams("source");
-            System.out.println("이동위치!");
-            System.out.println(source);
-            List<String> movablePositions = webController.movablePositions(source);
+            List<String> movablePositions = webController.movablePositions(Integer.parseInt(boardId), source);
             return gson.toJson(movablePositions);
         });
     }
