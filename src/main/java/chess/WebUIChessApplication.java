@@ -10,8 +10,7 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -44,6 +43,10 @@ public class WebUIChessApplication {
 
         get("/score/black", (req,res)->{
             return grid.score(Color.BLACK);
+        }, GSON::toJson);
+
+        get("/gameover", (req,res)->{
+            return Arrays.asList(chessGame.isGameOver(), chessGame.getWinner());
         }, GSON::toJson);
 
         post("/move", (req, res) -> {

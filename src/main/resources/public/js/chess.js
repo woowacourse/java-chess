@@ -43,8 +43,12 @@ function start(){
         showTurn()
         showWhiteScore()
         showBlackScore()
+        showResetButton()
     })
+}
 
+function showResetButton() {
+    document.getElementById("resetButton").style.display = null;
 }
 
 async function move(source, target) {
@@ -62,13 +66,14 @@ async function move(source, target) {
     showTurnReverse()
     showWhiteScore()
     showBlackScore()
+    checkGameOver()
 }
 
 function showTurn(){
     fetch('http://localhost:4567/turn')
         .then(response => response.json())
         .then(function (turn){
-            document.getElementById("turn").innerText = "TURN: " + turn;
+            document.getElementById("status").innerText = "TURN: " + turn;
         });
 }
 
@@ -82,7 +87,7 @@ function showTurnReverse(){
             else{
                 turn = "BLACK"
             }
-            document.getElementById("turn").innerText = "TURN: " + turn;
+            document.getElementById("status").innerText = "TURN: " + turn;
         });
 }
 
@@ -99,6 +104,17 @@ function showBlackScore(){
         .then(response => response.json())
         .then(function (score){
             document.getElementById("blackScore").innerText = "BLACK SCORE: " + score;
+        });
+}
+
+function checkGameOver(){
+    fetch('http://localhost:4567/gameover')
+        .then(response => response.json())
+        .then(function (gameOver){
+            if(gameOver[0] == true){
+                alert("게임 종료!" + gameOver[1]+ " 승리!")
+                document.getElementById("status").innerText = gameOver[1]+ " 승리!";
+            }
         });
 }
 
