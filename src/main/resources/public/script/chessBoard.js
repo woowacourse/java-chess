@@ -17,31 +17,36 @@ async function reflectBoard() {
     }
 
     resetBoard()
-    const table = document.getElementById("chessBoard");
-    for (let i = 0; i < 8; i++) {
-        const newTr = document.createElement("tr");
-        for (let j = 0; j < 8; j++) {
-            const newTd = document.createElement("td");
+    fillBoard()
 
-            const row = String(8 - i); // 열(12345678)
-            const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
-            const column = String.fromCharCode(asciiNum + j);
-            let position = column + row;
-            newTd.id = position;
-            const pieceName = data[position].teamColor
-                + data[position].pieceType;
-
-            if (data[position].pieceType !== BLANK) {
-                const piece = document.createElement("img");
-                piece.src = "images/" + pieceName + ".png";
-                newTd.appendChild(piece);
-            }
-
-            newTr.appendChild(newTd);
-        }
-        table.appendChild(newTr);
-    }
     eventList()
+
+    function fillBoard() {
+        const table = document.getElementById("chessBoard");
+        for (let i = 0; i < 8; i++) {
+            const newTr = document.createElement("tr");
+            for (let j = 0; j < 8; j++) {
+                const newTd = document.createElement("td");
+
+                const row = String(8 - i); // 열(12345678)
+                const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
+                const column = String.fromCharCode(asciiNum + j);
+                let position = column + row;
+                newTd.id = position;
+                const pieceName = data[position].teamColor
+                    + data[position].pieceType;
+
+                if (data[position].pieceType !== BLANK) {
+                    const piece = document.createElement("img");
+                    piece.src = "images/" + pieceName + ".png";
+                    newTd.appendChild(piece);
+                }
+
+                newTr.appendChild(newTd);
+            }
+            table.appendChild(newTr);
+        }
+    }
 }
 
 function resetBoard() {
@@ -112,16 +117,15 @@ async function move(source, target) {
     } catch (e) {
         console.log(e);
     }
-
     if (!data.runningGame) {
         reflectBoard()
         alert("게임이 종료되었습니다.");
         return
     }
-
     if (!data.isMove) {
         alert("올바른 위치를 입력하여 주세요");
     }
+
     console.log(data);
 
     modifyScore(data.whiteScore, data.blackScore)
