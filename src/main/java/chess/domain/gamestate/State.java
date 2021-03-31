@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.board.Board;
 import chess.domain.team.Team;
 
 public interface State {
@@ -11,6 +12,8 @@ public interface State {
     State changeCommand(CommandType command);
 
     void processMove(String input, Team currentTeam);
+
+    Board getBoard();
 
     String getValue();
 }

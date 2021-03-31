@@ -14,17 +14,10 @@ public class Ready extends Running {
 
     @Override
     public State changeCommand(CommandType command) {
-        validateCommand(command);
         if (command == CommandType.START) {
             return new Start(board);
         }
-        return new End(board);
-    }
-
-    private void validateCommand(CommandType command) {
-        if (command != CommandType.START && command != CommandType.END) {
-            throw new IllegalArgumentException("[ERROR] start 혹은 end만 가능합니다.");
-        }
+        throw new IllegalArgumentException("[ERROR] 게임을 시작해주세요.");
     }
 
     @Override

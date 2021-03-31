@@ -8,9 +8,11 @@ import static spark.Spark.staticFiles;
 import chess.controller.ChessController;
 import chess.domain.dto.ErrorResponseDto;
 import chess.domain.dto.OkResponseDto;
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.move.MoveRequestDto;
 import com.google.gson.Gson;
-import com.mysql.cj.x.protobuf.Mysqlx.Error;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -34,7 +36,8 @@ public class WebUIChessApplication {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 Long roomId = Long.valueOf(req.params(":id"));
-                return gson.toJson(OkResponseDto.payload(controller.start(roomId)));
+                List<PieceDto> result = controller.start(roomId);
+                return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }
@@ -44,15 +47,21 @@ public class WebUIChessApplication {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 Long roomId = Long.valueOf(req.params(":id"));
-                return gson.toJson(OkResponseDto.payload(controller.end(roomId)));
+                List<PieceDto> result = controller.end(roomId);
+                return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }
         });
 
         post("/room/:id/move", (req, res) -> {
-            String command = "move";
-            return command;
+            try {
+                Long roomId = Long.valueOf(req.params(":id"));
+                MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
+                return controller.move(roomId, moveRequestDto.getSource(), moveRequestDto.getTarget());
+            } catch (Exception e) {
+                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+            }
         });
     }
 

@@ -27,7 +27,7 @@ public class PieceUtil {
     public static Piece generatePieceByPieceDto(PieceDto pieceDto) {
         char signature = pieceDto.getSignature();
         Location location = Location.of(pieceDto.getLocation());
-        Team team = Team.valueOf(pieceDto.getTeam());
+        Team team = Team.of(pieceDto.getTeam());
         if (signature == 'r') {
             return Rook.of(location, team);
         }

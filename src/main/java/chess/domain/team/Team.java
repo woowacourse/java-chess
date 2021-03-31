@@ -10,6 +10,13 @@ public enum Team {
         this.value = value;
     }
 
+    public static Team of(String signature) {
+        if (signature.equals("W")) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public boolean isBlack() {
         return this == BLACK;
     }
