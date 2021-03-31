@@ -56,6 +56,9 @@ public final class PiecePosition {
     }
 
     public final void movePiece(final Position current, final Position destination) {
+        if (havePiece(destination)) {
+            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+        }
         final Piece chosenPiece = choosePiece(current);
         piecePosition.remove(current);
         piecePosition.put(destination, chosenPiece);
