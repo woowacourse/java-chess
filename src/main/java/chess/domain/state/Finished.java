@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.piece.Color;
 
-public class End implements State {
+public class Finished implements State{
 
     @Override
     public Color color() {
@@ -16,12 +16,12 @@ public class End implements State {
 
     @Override
     public State end() {
-        return new Finished();
+        throw new IllegalArgumentException();
     }
 
     @Override
     public State status() {
-        return new Status();
+        return null;
     }
 
     @Override

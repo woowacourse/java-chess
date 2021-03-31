@@ -1,17 +1,35 @@
 package chess.domain.state;
 
-import chess.domain.game.Command;
+import chess.domain.piece.Color;
 
 public class BlackTurn implements State {
+    @Override
+    public Color color() {
+        return Color.BLACK;
+    }
 
     @Override
-    public State action(Command command) {
-        if (command == Command.MOVE) {
-            return new WhiteTurn();
-        }
-        if (command == Command.END) {
-            return new End();
-        }
+    public State opposite() {
+        return new WhiteTurn();
+    }
+
+    @Override
+    public State end() {
+        return null;
+    }
+
+    @Override
+    public State status() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public State start() {
         throw new IllegalArgumentException();
     }
 }

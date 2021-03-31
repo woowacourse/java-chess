@@ -11,8 +11,12 @@ public class ChessController {
     public void run() {
         Board board = BoardFactory.create();
         Game game = new Game(board);
+
         OutputView.printWillPlayGameMessage();
-        game.action(Command.from(InputView.inputCommand()));
+        Command.from(InputView.inputCommand()).action(game);
+        if (game.isFinished()) {
+            return;
+        }
 
         OutputView.printWayToMove();
         OutputView.display(game.allBoard());
@@ -38,22 +42,13 @@ public class ChessController {
 
     private void tryOneTurn(Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
-        game.action(Command.from(InputView.inputCommand()));
+        Command.from(InputView.inputCommand()).action(game);
         OutputView.display(game.allBoard());
     }
 
     private void printScoreIfWanted(Game game) {
-        if (willWatchScore()) {
+        if (game.isStatus()) {
             OutputView.printScore(game.score());
-        }
-    }
-
-    private boolean willWatchScore() {
-        try {
-            return Command.from(InputView.inputCommand()) == Command.STATUS;
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return willWatchScore();
         }
     }
 }
