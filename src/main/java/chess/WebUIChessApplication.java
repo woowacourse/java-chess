@@ -5,6 +5,7 @@ import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
+import chess.exception.NotExistsPieceException;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -31,8 +32,12 @@ public class WebUIChessApplication {
         });
 //
         post("/move", (req, res) -> {
-            MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
-            return chessService.move(moveRequestDto);
+            try {
+                MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
+                return chessService.move(moveRequestDto);
+            } catch (NotExistsPieceException e) {
+                return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
+            }
         }, GSON::toJson);
 
         get("/grid/:roomName", (req, res) -> {
@@ -60,7 +65,7 @@ public class WebUIChessApplication {
         }, GSON::toJson);
 
         exception(Exception.class, (exception, request, response) -> {
-            Response res = new Response(ResponseCode.SERVER_ERROR);
+            Response res = new Response(ResponseCode.SERVER_ERROR.getCode(), exception.getMessage());
             response.body(GSON.toJson(res));
         });
     }

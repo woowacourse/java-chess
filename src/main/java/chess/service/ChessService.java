@@ -18,6 +18,7 @@ import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
+import chess.exception.NotExistsPieceException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,48 +39,44 @@ public class ChessService {
         pieceDAO = new PieceDAO();
     }
 
-    public Response move(MoveRequestDto requestDto) {
-        try {
-            GridDto gridDto = requestDto.getGridDto();
-            List<Piece> pieces = requestDto.getPiecesDto().stream()
-                    .map(pieceDto -> {
-                        Color color = null;
-                        if (pieceDto.isBlack()) {
-                            color = Color.BLACK;
-                        }
-                        if (!pieceDto.isBlack()) {
-                            color = Color.WHITE;
-                        }
-                        return PieceFactory.from(
-                                pieceDto.getName().charAt(0),
-                                color, pieceDto.getPosition().charAt(0),
-                                pieceDto.getPosition().charAt(1)
-                        );
-                    })
-                    .collect(Collectors.toList());
-            List<Line> lines = Lines.from(pieces).lines();
+    public Response move(MoveRequestDto requestDto) throws SQLException {
+        GridDto gridDto = requestDto.getGridDto();
+        List<Piece> pieces = requestDto.getPiecesDto().stream()
+                .map(pieceDto -> {
+                    Color color = null;
+                    if (pieceDto.isBlack()) {
+                        color = Color.BLACK;
+                    }
+                    if (!pieceDto.isBlack()) {
+                        color = Color.WHITE;
+                    }
+                    return PieceFactory.from(
+                            pieceDto.getName().charAt(0),
+                            color, pieceDto.getPosition().charAt(0),
+                            pieceDto.getPosition().charAt(1)
+                    );
+                })
+                .collect(Collectors.toList());
+        List<Line> lines = Lines.from(pieces).lines();
 
-            Grid grid = new Grid(new CustomGridStrategy(lines, Color.findColorByTurn(requestDto.getGridDto().isBlackTurn())));
-            grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
-            gridDAO.changeTurn(gridDto.getGridId(), !gridDto.isBlackTurn());
-            PieceDto sourcePieceDto = requestDto.getPiecesDto().stream()
-                    .filter(pieceDto -> {
-                        return pieceDto.getPosition().equals(requestDto.getSourcePosition());
-                    })
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 체스말입니다."));
-            PieceDto targetPieceDto = requestDto.getPiecesDto().stream()
-                    .filter(pieceDto -> {
-                        return pieceDto.getPosition().equals(requestDto.getTargetPosition());
-                    })
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 체스말입니다."));
-            pieceDAO.updatePiece(sourcePieceDto.getPieceId(), sourcePieceDto.isBlack(), EMPTY_PIECE_NAME);
-            pieceDAO.updatePiece(targetPieceDto.getPieceId(), sourcePieceDto.isBlack(), sourcePieceDto.getName().charAt(0));
-            return new Response(ResponseCode.NO_CONTENT);
-        } catch (IllegalArgumentException | SQLException e) {
-            return new Response(ResponseCode.WRONG_ARGUMENTS.getCode(), e.getMessage());
-        }
+        Grid grid = new Grid(new CustomGridStrategy(lines, Color.findColorByTurn(requestDto.getGridDto().isBlackTurn())));
+        grid.move(requestDto.getSourcePosition(), requestDto.getTargetPosition());
+        gridDAO.changeTurn(gridDto.getGridId(), !gridDto.isBlackTurn());
+        PieceDto sourcePieceDto = requestDto.getPiecesDto().stream()
+                .filter(pieceDto -> {
+                    return pieceDto.getPosition().equals(requestDto.getSourcePosition());
+                })
+                .findFirst()
+                .orElseThrow(() -> new NotExistsPieceException("존재하지 않는 체스말입니다."));
+        PieceDto targetPieceDto = requestDto.getPiecesDto().stream()
+                .filter(pieceDto -> {
+                    return pieceDto.getPosition().equals(requestDto.getTargetPosition());
+                })
+                .findFirst()
+                .orElseThrow(() -> new NotExistsPieceException("존재하지 않는 체스말입니다."));
+        pieceDAO.updatePiece(sourcePieceDto.getPieceId(), sourcePieceDto.isBlack(), EMPTY_PIECE_NAME);
+        pieceDAO.updatePiece(targetPieceDto.getPieceId(), sourcePieceDto.isBlack(), sourcePieceDto.getName().charAt(0));
+        return new Response(ResponseCode.NO_CONTENT);
     }
 
     public void start(long gridId) throws SQLException {
