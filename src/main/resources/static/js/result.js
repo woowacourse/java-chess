@@ -12,7 +12,7 @@ function showResult() {
 }
 
 function getBaseUrl() {
-    return 'http://localhost:8080/result' + roomId;
+    return 'http://localhost:8080/chessgame/' + roomId;
 }
 
 function isValidHttpResponse(xmlHttp) {
