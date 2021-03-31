@@ -16,6 +16,8 @@ public interface ChessGameManager {
 
     boolean isNotEnd();
 
+    boolean isEnd();
+
     boolean isStart();
 
     boolean isKingDead();

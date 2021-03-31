@@ -15,4 +15,8 @@ public class ChessService {
     public MoveResult move(Position from, Position to) {
         return chessGameManager.move(from, to);
     }
+
+    public boolean isEnd() {
+        return chessGameManager.isEnd();
+    }
 }

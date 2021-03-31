@@ -2,6 +2,7 @@ package chess.controller.web;
 
 import chess.controller.web.dto.BasicResponseDto;
 import chess.controller.web.dto.MoveRequestDto;
+import chess.controller.web.dto.MoveResponseDto;
 import chess.controller.web.dto.StartResponseDto;
 import chess.controller.web.dto.WebResponseDto;
 import chess.service.ChessService;
@@ -13,7 +14,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.controller.web.dto.BasicResponseDto.EMPTY_DATA;
 import static spark.Spark.*;
 
 public class WebController {
@@ -29,6 +29,17 @@ public class WebController {
             return render(model, "index.html");
         });
 
+        gameRouting(chessService);
+
+        exceptionHandling();
+    }
+
+    //필요한거 start, stop, load, 끝났는지 확인 끝났는지는 어떻게 체킹할까
+    //isEnd 던질까?
+    // 다시하시겠습니까?
+    //start
+    //
+    private static void gameRouting(ChessService chessService) {
         path("/game", () -> {
             get("/start", (request, response) -> {
                 chessService.start();
@@ -40,10 +51,12 @@ public class WebController {
                 MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
                 chessService.move(moveRequestDto.getFromPosition(), moveRequestDto.getToPosition());
                 response.type("application/json; charset=utf-8");
-                return gson.toJson(BasicResponseDto.createSuccessResponseDto(EMPTY_DATA));
+                return gson.toJson(BasicResponseDto.createSuccessResponseDto(new MoveResponseDto(chessService.isEnd())));
             });
         });
+    }
 
+    private static void exceptionHandling() {
         exception(IllegalArgumentException.class, (e, request, response) -> {
             response.status(BAD_REQUEST);
             response.type("application/json; charset=utf-8");

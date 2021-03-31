@@ -9,6 +9,11 @@ public class NotStartedChessGameManager extends NotRunningGameManager{
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public boolean isStart() {
         return false;
     }

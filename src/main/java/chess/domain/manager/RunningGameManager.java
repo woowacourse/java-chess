@@ -90,6 +90,11 @@ public class RunningGameManager implements ChessGameManager {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public boolean isStart() {
         return true;
     }

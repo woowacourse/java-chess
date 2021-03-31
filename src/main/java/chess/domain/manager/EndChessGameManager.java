@@ -15,6 +15,11 @@ public class EndChessGameManager extends NotRunningGameManager {
     }
 
     @Override
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
     public boolean isStart() {
         return true;
     }
