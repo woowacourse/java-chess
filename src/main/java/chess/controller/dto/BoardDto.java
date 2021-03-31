@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.dto;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.domain.game.ImpossibleMoveException;
 import chess.domain.game.PieceNotFoundException;
-import chess.view.PieceDto;
+import chess.controller.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;

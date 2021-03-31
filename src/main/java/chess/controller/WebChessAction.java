@@ -5,7 +5,7 @@ import chess.domain.TeamColor;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessResult;
 import chess.util.StringPositionConverter;
-import chess.view.BoardDto;
+import chess.controller.dto.BoardDto;
 import spark.Request;
 import spark.Response;
 
@@ -16,18 +16,7 @@ import static chess.WebUIChessApplication.render;
 
 public class WebChessAction {
 
-    private static WebChessAction instance;
     private ChessGame chessGame;
-
-    private WebChessAction() {
-    }
-
-    public static WebChessAction getInstance() {
-        if (instance == null) {
-            instance = new WebChessAction();
-        }
-        return instance;
-    }
 
     public String index(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();

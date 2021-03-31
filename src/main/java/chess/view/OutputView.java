@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.controller.dto.BoardDto;
+import chess.controller.dto.PieceDto;
+import chess.controller.dto.PositionDto;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import chess.domain.game.ChessResult;

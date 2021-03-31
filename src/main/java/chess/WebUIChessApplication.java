@@ -12,15 +12,17 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
 
-        get("/", WebChessAction.getInstance()::index);
+        WebChessAction webChessAction = new WebChessAction();
 
-        get("/game", WebChessAction.getInstance()::start);
+        get("/", webChessAction::index);
 
-        post("/move", WebChessAction.getInstance()::move);
+        get("/game", webChessAction::start);
 
-        get("/end", WebChessAction.getInstance()::end);
+        post("/move", webChessAction::move);
 
-        post("/status", WebChessAction.getInstance()::status);
+        get("/end", webChessAction::end);
+
+        post("/status", webChessAction::status);
     }
 
     public static String render(Map<String, Object> model, String templatePath) {

@@ -6,7 +6,7 @@ import chess.domain.game.ChessResult;
 import chess.domain.game.ImpossibleMoveException;
 import chess.domain.game.PieceNotFoundException;
 import chess.util.MessagePositionConverter;
-import chess.view.BoardDto;
+import chess.controller.dto.BoardDto;
 import chess.view.OutputView;
 
 import java.util.List;
