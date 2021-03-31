@@ -5,9 +5,15 @@ import static chess.domain.player.type.TeamColor.WHITE;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
 import chess.dao.entity.PiecePositionEntity;
+import chess.dao.player.PlayerDAO;
+import chess.dao.player.PlayerRepository;
+import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
+import chess.dao.playerpieceposition.PlayerPiecePositionRepository;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
 import chess.utils.DBCleaner;
@@ -20,9 +26,9 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameDAOTest {
     public static final int NUMBER_OF_PIECES_OF_ONE_PLAYER = 16;
-    private final ChessGameDAO chessGameDAO = new ChessGameDAO();
-    private final PlayerDAO playerDAO = new PlayerDAO();
-    private final PlayerPiecePositionDAO piecePositionDAO = new PlayerPiecePositionDAO();
+    private final ChessGameRepository chessGameRepository = new ChessGameDAO();
+    private final PlayerRepository playerRepository = new PlayerDAO();
+    private final PlayerPiecePositionRepository piecePositionDAO = new PlayerPiecePositionDAO();
 
     @AfterEach
     void tearDown() throws SQLException {
@@ -33,17 +39,17 @@ class ChessGameDAOTest {
     @Test
     void saveAndFind() throws SQLException {
         ChessGameEntity chessGame1 = new ChessGameEntity(TEST_TITLE);
-        chessGameDAO.save(chessGame1);
-        ChessGameEntity foundChessGame = chessGameDAO.findById(chessGame1.getId());
+        chessGameRepository.save(chessGame1);
+        ChessGameEntity foundChessGame = chessGameRepository.findById(chessGame1.getId());
 
         assertThat(foundChessGame.getTitle()).isEqualTo(chessGame1.getTitle());
 
         String testTitle2 = TEST_TITLE + "2";
 
         ChessGameEntity chessGame2 = new ChessGameEntity(testTitle2);
-        chessGameDAO.save(chessGame2);
+        chessGameRepository.save(chessGame2);
 
-        List<ChessGameEntity> foundAllChessGames = chessGameDAO.findAll();
+        List<ChessGameEntity> foundAllChessGames = chessGameRepository.findAll();
         List<Long> foundAllChessGameIds = foundAllChessGames.stream()
             .map(ChessGameEntity::getId)
             .collect(Collectors.toList());
@@ -56,9 +62,9 @@ class ChessGameDAOTest {
     @Test
     void findStatusByGameId() throws SQLException {
         ChessGameEntity chessGame = new ChessGameEntity(TEST_TITLE);
-        ChessGameEntity savedChessGame = chessGameDAO.save(chessGame);
+        ChessGameEntity savedChessGame = chessGameRepository.save(chessGame);
 
-        GameStatusEntity gameStatus = chessGameDAO.findStatusByGameId(savedChessGame.getId());
+        GameStatusEntity gameStatus = chessGameRepository.findStatusByGameId(savedChessGame.getId());
 
         assertThat(gameStatus.getCurrentTurnTeamColor()).isSameAs(WHITE);
         assertThat(gameStatus.getTitle()).isEqualTo(TEST_TITLE);
@@ -68,15 +74,15 @@ class ChessGameDAOTest {
     @Test
     void updateCurrentTurnTeamColor() throws SQLException {
         ChessGameEntity chessGame = new ChessGameEntity(TEST_TITLE);
-        chessGameDAO.save(chessGame);
-        ChessGameEntity foundChessGame = chessGameDAO.findById(chessGame.getId());
+        chessGameRepository.save(chessGame);
+        ChessGameEntity foundChessGame = chessGameRepository.findById(chessGame.getId());
 
         assertThat(foundChessGame.getCurrentTurnTeamColor()).isSameAs(WHITE);
 
         chessGame.setCurrentTurnTeamColor(BLACK);
-        chessGameDAO.updateCurrentTurnTeamColor(chessGame);
+        chessGameRepository.updateCurrentTurnTeamColor(chessGame);
 
-        ChessGameEntity foundChessGameAfterChange = chessGameDAO.findById(chessGame.getId());
+        ChessGameEntity foundChessGameAfterChange = chessGameRepository.findById(chessGame.getId());
 
         assertThat(foundChessGameAfterChange.getCurrentTurnTeamColor()).isEqualTo(BLACK);
     }
@@ -85,15 +91,15 @@ class ChessGameDAOTest {
     @Test
     void remove() throws SQLException {
         ChessGameEntity chessGame1 = new ChessGameEntity(TEST_TITLE);
-        chessGameDAO.save(chessGame1);
+        chessGameRepository.save(chessGame1);
 
         String testTitle2 = TEST_TITLE + "2";
         ChessGameEntity chessGame2 = new ChessGameEntity(testTitle2);
-        chessGameDAO.save(chessGame2);
+        chessGameRepository.save(chessGame2);
 
-        chessGameDAO.remove(chessGame1.getId());
+        chessGameRepository.remove(chessGame1.getId());
 
-        List<ChessGameEntity> foundAllChessGames = chessGameDAO.findAll();
+        List<ChessGameEntity> foundAllChessGames = chessGameRepository.findAll();
 
         assertThat(foundAllChessGames).hasSize(1);
         assertThat(foundAllChessGames.get(0).getId()).isEqualTo(chessGame2.getId());
@@ -103,15 +109,15 @@ class ChessGameDAOTest {
     @Test
     void removeAll() throws SQLException {
         ChessGameEntity chessGame1 = new ChessGameEntity(TEST_TITLE);
-        chessGameDAO.save(chessGame1);
+        chessGameRepository.save(chessGame1);
 
         String testTitle2 = TEST_TITLE + "2";
         ChessGameEntity chessGame2 = new ChessGameEntity(testTitle2);
-        chessGameDAO.save(chessGame2);
+        chessGameRepository.save(chessGame2);
 
-        chessGameDAO.removeAll();
+        chessGameRepository.removeAll();
 
-        List<ChessGameEntity> foundAllChessGames = chessGameDAO.findAll();
+        List<ChessGameEntity> foundAllChessGames = chessGameRepository.findAll();
 
         assertThat(foundAllChessGames).hasSize(0);
     }
@@ -123,13 +129,13 @@ class ChessGameDAOTest {
         chessGame.createNew(new BoardDefaultSetting(), "game1");
         chessGame.createNew(new BoardDefaultSetting(), "game2");
 
-        List<ChessGameEntity> allChessGames = chessGameDAO.findAll();
+        List<ChessGameEntity> allChessGames = chessGameRepository.findAll();
         assertThat(allChessGames).hasSizeGreaterThan(0);
 
         for (ChessGameEntity chessGameEntity : allChessGames) {
-            Long whitePlayerId = playerDAO
+            Long whitePlayerId = playerRepository
                 .findIdByGameIdAndTeamColor(chessGameEntity.getId(), WHITE);
-            Long blackPlayerId = playerDAO
+            Long blackPlayerId = playerRepository
                 .findIdByGameIdAndTeamColor(chessGameEntity.getId(), BLACK);
 
             assertThat(whitePlayerId).isNotNull();
@@ -141,7 +147,7 @@ class ChessGameDAOTest {
 
         chessGame.remove(allChessGames.get(0).getId());
 
-        assertThat(chessGameDAO.findAll()).hasSize(1);
+        assertThat(chessGameRepository.findAll()).hasSize(1);
     }
 
     private void assertPiecesSizeOfPlayers(Long playerId) throws SQLException {

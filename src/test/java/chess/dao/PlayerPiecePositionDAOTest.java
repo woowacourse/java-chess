@@ -17,9 +17,15 @@ import static chess.domain.position.type.Rank.TWO;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
+import chess.dao.player.PlayerDAO;
+import chess.dao.player.PlayerRepository;
+import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
+import chess.dao.playerpieceposition.PlayerPiecePositionRepository;
 import chess.domain.piece.Piece;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.PiecePosition;
@@ -35,9 +41,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerPiecePositionDAOTest {
-    private final ChessGameDAO chessGameDAO = new ChessGameDAO();
-    private final PlayerDAO playerDAO = new PlayerDAO();
-    private final PlayerPiecePositionDAO playerPiecePositionDAO = new PlayerPiecePositionDAO();
+    private final ChessGameRepository chessGameRepository = new ChessGameDAO();
+    private final PlayerRepository playerRepository = new PlayerDAO();
+    private final PlayerPiecePositionRepository playerPiecePositionRepository = new PlayerPiecePositionDAO();
     private final Piece whitePieceOfGame1 = Piece.of(BISHOP, WHITE);
     private final Piece blackPieceOfGame1 = Piece.of(PAWN, BLACK);
     private final Position whitePositionOfGame1 = Position.of(H, ONE);
@@ -55,33 +61,33 @@ class PlayerPiecePositionDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        chessGame1 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        chessGame1 = chessGameRepository.save(new ChessGameEntity(TEST_TITLE));
 
-        playerDAO.save(TeamColor.values(), chessGame1.getId());
-        whitePlayerIdOfGame1 = playerDAO.findIdByGameIdAndTeamColor(chessGame1.getId(), WHITE);
-        blackPlayerIdOfGame1 = playerDAO.findIdByGameIdAndTeamColor(chessGame1.getId(), BLACK);
+        playerRepository.save(TeamColor.values(), chessGame1.getId());
+        whitePlayerIdOfGame1 = playerRepository.findIdByGameIdAndTeamColor(chessGame1.getId(), WHITE);
+        blackPlayerIdOfGame1 = playerRepository.findIdByGameIdAndTeamColor(chessGame1.getId(), BLACK);
 
         PiecePosition whitePiecePositionOfGame1
             = new PiecePosition(whitePieceOfGame1, whitePositionOfGame1);
         PiecePosition blackPiecePositionOfGame1
             = new PiecePosition(blackPieceOfGame1, blackPositionOfGame1);
 
-        playerPiecePositionDAO.save(whitePlayerIdOfGame1, whitePiecePositionOfGame1);
-        playerPiecePositionDAO.save(blackPlayerIdOfGame1, blackPiecePositionOfGame1);
+        playerPiecePositionRepository.save(whitePlayerIdOfGame1, whitePiecePositionOfGame1);
+        playerPiecePositionRepository.save(blackPlayerIdOfGame1, blackPiecePositionOfGame1);
 
-        chessGame2 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
+        chessGame2 = chessGameRepository.save(new ChessGameEntity(TEST_TITLE));
 
-        playerDAO.save(TeamColor.values(), chessGame2.getId());
-        whitePlayerIdOfGame2 = playerDAO.findIdByGameIdAndTeamColor(chessGame2.getId(), WHITE);
-        blackPlayerIdOfGame2 = playerDAO.findIdByGameIdAndTeamColor(chessGame2.getId(), BLACK);
+        playerRepository.save(TeamColor.values(), chessGame2.getId());
+        whitePlayerIdOfGame2 = playerRepository.findIdByGameIdAndTeamColor(chessGame2.getId(), WHITE);
+        blackPlayerIdOfGame2 = playerRepository.findIdByGameIdAndTeamColor(chessGame2.getId(), BLACK);
 
         PiecePosition whitePiecePositionOfGame2
             = new PiecePosition(whitePieceOfGame2, whitePositionOfGame2);
         PiecePosition blackPiecePositionOfGame2
             = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
 
-        playerPiecePositionDAO.save(whitePlayerIdOfGame2, whitePiecePositionOfGame2);
-        playerPiecePositionDAO.save(blackPlayerIdOfGame2, blackPiecePositionOfGame2);
+        playerPiecePositionRepository.save(whitePlayerIdOfGame2, whitePiecePositionOfGame2);
+        playerPiecePositionRepository.save(blackPlayerIdOfGame2, blackPiecePositionOfGame2);
     }
 
     @AfterEach
@@ -92,7 +98,7 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 게임의 모든 기물과 해당 위치 조회")
     @Test
     void findAllByGameId() throws SQLException {
-        Map<Position, Piece> foundAllByGame1 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame1 = playerPiecePositionRepository
             .findAllByGameId(chessGame1.getId());
 
         Map<Position, Piece> expectedOfGame1 = new HashMap<>();
@@ -101,7 +107,7 @@ class PlayerPiecePositionDAOTest {
 
         assertThat(foundAllByGame1).containsExactlyInAnyOrderEntriesOf(expectedOfGame1);
 
-        Map<Position, Piece> foundAllByGame2 = playerPiecePositionDAO
+        Map<Position, Piece> foundAllByGame2 = playerPiecePositionRepository
             .findAllByGameId(chessGame2.getId());
 
         Map<Position, Piece> expectedOfGame2 = new HashMap<>();
@@ -116,10 +122,10 @@ class PlayerPiecePositionDAOTest {
     void findAllByPlayerId() throws SQLException {
         PiecePosition blackPiecePositionOfGame2
             = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
-        playerPiecePositionDAO.save(blackPlayerIdOfGame1, blackPiecePositionOfGame2);
+        playerPiecePositionRepository.save(blackPlayerIdOfGame1, blackPiecePositionOfGame2);
 
         List<PiecePositionEntity> piecesPositionsFromDB
-            = playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame1);
+            = playerPiecePositionRepository.findAllByPlayerId(blackPlayerIdOfGame1);
 
         Map<Position, Piece> actualPiecesPositions = new HashMap<>();
         for (PiecePositionEntity piecePositionEntity : piecesPositionsFromDB) {
@@ -140,7 +146,7 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 게임, 특정 위치의 기물 id 조회")
     @Test
     void findGamePiecePositionByGameIdAndPositionId() throws SQLException {
-        GamePiecePositionEntity gamePiecePositionEntity = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntity = playerPiecePositionRepository
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
@@ -150,20 +156,20 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("플레이어의 기물 위치 업데이트")
     @Test
     void updatePiecePosition() throws SQLException {
-        GamePiecePositionEntity gamePiecePositionEntityBeforeUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntityBeforeUpdate = playerPiecePositionRepository
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
         gamePiecePositionEntityBeforeUpdate.setPositionId(whitePositionOfGame2.getId());
-        playerPiecePositionDAO.updatePiecePosition(gamePiecePositionEntityBeforeUpdate);
+        playerPiecePositionRepository.updatePiecePosition(gamePiecePositionEntityBeforeUpdate);
 
-        GamePiecePositionEntity blackPositionOfGame1AfterUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity blackPositionOfGame1AfterUpdate = playerPiecePositionRepository
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), blackPositionOfGame1.getId());
 
         assertThat(blackPositionOfGame1AfterUpdate).isNull();
 
-        GamePiecePositionEntity whitePositionOfGame2AfterUpdate = playerPiecePositionDAO
+        GamePiecePositionEntity whitePositionOfGame2AfterUpdate = playerPiecePositionRepository
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), whitePositionOfGame2.getId());
 
@@ -176,19 +182,19 @@ class PlayerPiecePositionDAOTest {
     @DisplayName("특정 게임에서 특정 위치의 기물 삭제")
     @Test
     void removePiecePositionOfGame() throws SQLException {
-        GamePiecePositionEntity gamePiecePositionEntityToRemove = playerPiecePositionDAO
+        GamePiecePositionEntity gamePiecePositionEntityToRemove = playerPiecePositionRepository
             .findGamePiecePositionByGameIdAndPositionId(
                 chessGame1.getId(), whitePositionOfGame1.getId());
 
-        playerPiecePositionDAO.removePiecePositionOfGame(gamePiecePositionEntityToRemove);
+        playerPiecePositionRepository.removePiecePositionOfGame(gamePiecePositionEntityToRemove);
 
         Map<Position, Piece> foundAllByGame1
-            = playerPiecePositionDAO.findAllByGameId(chessGame1.getId());
+            = playerPiecePositionRepository.findAllByGameId(chessGame1.getId());
 
         assertThat(foundAllByGame1).doesNotContainEntry(whitePositionOfGame1, whitePieceOfGame1);
 
         Map<Position, Piece> foundAllByGame2
-            = playerPiecePositionDAO.findAllByGameId(chessGame2.getId());
+            = playerPiecePositionRepository.findAllByGameId(chessGame2.getId());
 
         Map<Position, Piece> expectedOfGame2 = new HashMap<>();
         expectedOfGame2.put(blackPositionOfGame2, blackPieceOfGame2);
@@ -202,14 +208,14 @@ class PlayerPiecePositionDAOTest {
     void removeAllByPlayer() throws SQLException {
         PiecePosition blackPiecePositionOfGame2
             = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
-        playerPiecePositionDAO.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
+        playerPiecePositionRepository.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
 
-        playerPiecePositionDAO.removeAllByPlayer(whitePlayerIdOfGame2);
+        playerPiecePositionRepository.removeAllByPlayer(whitePlayerIdOfGame2);
 
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(whitePlayerIdOfGame1)).hasSize(1);
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame1)).hasSize(1);
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(whitePlayerIdOfGame2)).isEmpty();
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame2)).hasSize(1);
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(whitePlayerIdOfGame1)).hasSize(1);
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(blackPlayerIdOfGame1)).hasSize(1);
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(whitePlayerIdOfGame2)).isEmpty();
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(blackPlayerIdOfGame2)).hasSize(1);
     }
 
     @DisplayName("모든 게임의 모든 기물 위치 삭제")
@@ -217,13 +223,13 @@ class PlayerPiecePositionDAOTest {
     void removeAll() throws SQLException {
         PiecePosition blackPiecePositionOfGame2
             = new PiecePosition(blackPieceOfGame2, blackPositionOfGame2);
-        playerPiecePositionDAO.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
+        playerPiecePositionRepository.save(whitePlayerIdOfGame2, blackPiecePositionOfGame2);
 
-        playerPiecePositionDAO.removeAll();
+        playerPiecePositionRepository.removeAll();
 
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(whitePlayerIdOfGame1)).isEmpty();
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame1)).isEmpty();
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(whitePlayerIdOfGame2)).isEmpty();
-        assertThat(playerPiecePositionDAO.findAllByPlayerId(blackPlayerIdOfGame2)).isEmpty();
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(whitePlayerIdOfGame1)).isEmpty();
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(blackPlayerIdOfGame1)).isEmpty();
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(whitePlayerIdOfGame2)).isEmpty();
+        assertThat(playerPiecePositionRepository.findAllByPlayerId(blackPlayerIdOfGame2)).isEmpty();
     }
 }

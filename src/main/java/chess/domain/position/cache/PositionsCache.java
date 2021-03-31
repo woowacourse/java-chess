@@ -1,6 +1,7 @@
 package chess.domain.position.cache;
 
-import chess.dao.PositionDAO;
+import chess.dao.position.PositionDAO;
+import chess.dao.position.PositionRepository;
 import chess.domain.position.Position;
 import chess.domain.position.type.File;
 import chess.domain.position.type.Rank;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PositionsCache {
-    private static final PositionDAO POSITION_DAO = new PositionDAO();
+    private static final PositionRepository POSITION_DAO = new PositionDAO();
     private static final List<Position> POSITIONS = new ArrayList<>();
 
     private PositionsCache() {

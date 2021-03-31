@@ -1,20 +1,23 @@
 package chess.utils;
 
-import chess.dao.ChessGameDAO;
-import chess.dao.PlayerDAO;
-import chess.dao.PlayerPiecePositionDAO;
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
+import chess.dao.player.PlayerDAO;
+import chess.dao.player.PlayerRepository;
+import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
+import chess.dao.playerpieceposition.PlayerPiecePositionRepository;
 import java.sql.SQLException;
 
 public class DBCleaner {
-    private static final ChessGameDAO chessGameDAO = new ChessGameDAO();
-    private static final PlayerDAO playerDAO = new PlayerDAO();
-    private static final PlayerPiecePositionDAO playerPiecePositionDAO
+    private static final ChessGameRepository CHESS_GAME_REPOSITORY = new ChessGameDAO();
+    private static final PlayerRepository PLAYER_REPOSITORY = new PlayerDAO();
+    private static final PlayerPiecePositionRepository PLAYER_PIECE_POSITION_REPOSITORY
         = new PlayerPiecePositionDAO();
 
     public static void removeAll() throws SQLException {
-        playerPiecePositionDAO.removeAll();
-        playerDAO.removeAll();
-        chessGameDAO.removeAll();
+        PLAYER_PIECE_POSITION_REPOSITORY.removeAll();
+        PLAYER_REPOSITORY.removeAll();
+        CHESS_GAME_REPOSITORY.removeAll();
     }
 
 }

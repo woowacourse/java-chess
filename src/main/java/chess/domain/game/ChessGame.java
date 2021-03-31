@@ -4,7 +4,8 @@ import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
-import chess.dao.ChessGameDAO;
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
 import chess.domain.board.Board;
@@ -19,17 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
-    private final ChessGameDAO chessGameDAO;
+    private final ChessGameRepository chessGameRepository;
     private final Board board;
 
     public ChessGame() {
         board = new Board();
-        chessGameDAO = new ChessGameDAO();
+        chessGameRepository = new ChessGameDAO();
     }
 
     public Long createNew(BoardSetting boardSetting, String title) throws SQLException {
         validate(boardSetting);
-        ChessGameEntity chessGameEntity = chessGameDAO.save(new ChessGameEntity(title));
+        ChessGameEntity chessGameEntity = chessGameRepository.save(new ChessGameEntity(title));
         board.createAndSaveNewPlayersAndPiecesPositionsOfGame(
             chessGameEntity.getId(), boardSetting);
         return chessGameEntity.getId();
@@ -44,7 +45,7 @@ public class ChessGame {
 
     public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
         List<ChessGameResponseDTO> chessGameResponseDTOs = new ArrayList<>();
-        for (ChessGameEntity chessGameEntity : chessGameDAO.findAll()) {
+        for (ChessGameEntity chessGameEntity : chessGameRepository.findAll()) {
             chessGameResponseDTOs.add(
                 new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
         }
@@ -52,7 +53,7 @@ public class ChessGame {
     }
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
-        ChessGameEntity chessGameEntity = chessGameDAO.findById(moveRequestDTO.getGameId());
+        ChessGameEntity chessGameEntity = chessGameRepository.findById(moveRequestDTO.getGameId());
         MoveRequest moveRequest
             = new MoveRequest(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
         board.validateRoute(chessGameEntity.getId(), moveRequest);
@@ -64,7 +65,7 @@ public class ChessGame {
     }
 
     public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
-        GameStatusEntity gameStatusEntity = chessGameDAO.findStatusByGameId(gameId);
+        GameStatusEntity gameStatusEntity = chessGameRepository.findStatusByGameId(gameId);
         Scores scores = board.getScores(gameId);
         return new GameStatusResponseDTO(
             gameId,
@@ -75,14 +76,14 @@ public class ChessGame {
     }
 
     public void changeToNextTurn(Long gameId) throws SQLException {
-        ChessGameEntity chessGameEntity = chessGameDAO.findById(gameId);
+        ChessGameEntity chessGameEntity = chessGameRepository.findById(gameId);
         TeamColor currentTurnTeamColor = chessGameEntity.getCurrentTurnTeamColor();
         chessGameEntity.setCurrentTurnTeamColor(currentTurnTeamColor.oppositeTeamColor());
-        chessGameDAO.updateCurrentTurnTeamColor(chessGameEntity);
+        chessGameRepository.updateCurrentTurnTeamColor(chessGameEntity);
     }
 
     public void remove(Long gameId) throws SQLException {
         board.removeAllPlayersAndPiecesPositionsOfGame(gameId);
-        chessGameDAO.remove(gameId);
+        chessGameRepository.remove(gameId);
     }
 }

@@ -7,7 +7,8 @@ import static chess.domain.piece.type.PieceType.PAWN;
 import static chess.domain.piece.type.PieceType.QUEEN;
 import static chess.domain.piece.type.PieceType.ROOK;
 
-import chess.dao.PieceDAO;
+import chess.dao.piece.PieceDAO;
+import chess.dao.piece.PieceRepository;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PiecesCache {
-    private static final PieceDAO PIECE_DAO = new PieceDAO();
+    private static final PieceRepository PIECE_DAO = new PieceDAO();
     private static final List<Piece> PIECES = new ArrayList<>();
     private static final String PIECE_NOT_FOUND_ERROR_MESSAGE = "존재하지 않는 기물입니다.";
 
