@@ -41,7 +41,7 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             ChessResult result = new ChessResult(game.board());
             model.put("team", result.winner().teamName());
-            
+
             return render(model, "test.html");
         });
 
@@ -49,9 +49,9 @@ public class WebUIChessApplication {
             RequestDto dto = gson.fromJson(req.body(), RequestDto.class);
             try {
                 game.move(new Position(dto.getSource()), new Position(dto.getTarget()));
-                return "200";
+                return 200;
             } catch (IllegalArgumentException | IllegalStateException e) {
-                return "401";
+                return 401;
             }
         });
     }

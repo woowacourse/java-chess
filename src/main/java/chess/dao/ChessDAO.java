@@ -46,11 +46,12 @@ public class ChessDAO {
         }
     }
 
-//    public void addGame(String gameId, ChessGame game) throws SQLException {
-//        String query = "INSERT INTO games VALUES (?, ?, ?)";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, user.getUserId());
-//        pstmt.setString(2, user.getName());
-//        pstmt.executeUpdate();
-//    }
+    public void addGame(String gameId, ChessGame game) throws SQLException {
+        String query = "INSERT INTO games VALUES (?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        pstmt.setString(2, game.boardForDAO());
+        pstmt.setString(3, game.turnForDAO());
+        pstmt.executeUpdate();
+    }
 }

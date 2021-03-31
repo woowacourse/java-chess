@@ -51,4 +51,12 @@ public final class ChessGame {
     public Map<Position, Piece> board() {
         return board.unwrap();
     }
+
+    public String boardForDAO() {
+        return "sth";
+    }
+
+    public String turnForDAO() {
+        return "white";
+    }
 }
