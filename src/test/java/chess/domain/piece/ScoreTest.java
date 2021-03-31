@@ -57,11 +57,11 @@ class ScoreTest {
         Score elevenScore = new Score(11);
 
         //when
-        boolean isHigher = score.isHigherThan(oneScore);
-        boolean isLower = score.isHigherThan(elevenScore);
+        boolean isTrue = score.isHigherThan(oneScore);
+        boolean isFalse = score.isHigherThan(elevenScore);
 
         //then
-        assertThat(isHigher).isTrue();
-        assertThat(isLower).isFalse();
+        assertThat(isTrue).isTrue();
+        assertThat(isFalse).isFalse();
     }
 }
