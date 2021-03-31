@@ -23,10 +23,30 @@ let source = null;
 
 window.onload = () => {
     const divs = BOARD.querySelectorAll("div");
-    boardInit();
+    // boardInit();
+    boardJoin();
     for (const div of divs) {
         div.addEventListener("click", divClickEvent);
     }
+}
+
+function boardJoin() {
+    const newData = {
+        "boardId": 1,
+    }
+    const option = getOption("POST", newData);
+
+    fetch(API_URL + "join", option)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(" ");
+        }
+        return response.json();
+    })
+    .then(imageSetting)
+    .catch((error) => {
+        console.log(error);
+    });
 }
 
 function boardInit() {
@@ -83,9 +103,6 @@ function divClickEvent(event) {
         source = event.target;
         source.style.backgroundColor = "yellow";
     } else {
-
-        console.log(targetPosition);
-        console.log(movablePosition);
         if (source !== event.target && !movablePosition.includes(targetPosition)) {
             alert("움직일 수 없는 위치입니다.");
             return;
@@ -106,6 +123,7 @@ function divClickEvent(event) {
 
 function movedPieces(source, target) {
     const newData = {
+        "boardId": 1,
         "source": source,
         "target": target
     }
@@ -141,7 +159,7 @@ function restartAsk() {
 }
 
 function getMovablePositions(sourcePosition) {
-    fetch(API_URL + "movablePositions?source=" + sourcePosition)
+    fetch(API_URL + "movablePositions?source=" + sourcePosition + "&boardId=" + 1)
     .then((response) => {
         if (!response.ok) {
             throw new Error(" ");
