@@ -37,6 +37,10 @@ public class WebUIChessApplication {
             }
             return gson.toJson(pieces);
         });
+
+        post("/move", (req, res) -> {
+            return req.body();
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

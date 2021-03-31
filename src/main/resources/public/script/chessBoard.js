@@ -40,7 +40,36 @@ async function start() {
         }
         table.appendChild(newTr);
     }
+    eventList()
+}
 
+function eventList() {
+    const table = document.getElementById("chessBoard");
+    table.addEventListener("click", selectPiece);
+}
+
+function selectPiece(event) {
+    const clickPiece = event.target.closest("td");
+    const clickedPiece = getClickedPiece();
+
+    if (clickedPiece) {
+        clickedPiece.classList.toggle("clicked");
+        const sourcePosition = clickedPiece.id;
+        const targetPosition = clickPiece.id;
+        move(sourcePosition, targetPosition);
+    } else {
+        clickPiece.classList.toggle("clicked");
+    }
+}
+
+function getClickedPiece() {
+    const tds = document.getElementsByTagName("td");
+    for (let i = 0; i < tds.length; i++) {
+        if (tds[i].classList.contains("clicked")) {
+            return tds[i];
+        }
+    }
+    return null;
 }
 
 async function move(source, target) {
@@ -50,16 +79,15 @@ async function move(source, target) {
      * target : String
      */
     try {
-        const res = await axios({
+        await axios({
             method: 'post',
             url: '/move',
             data: {
-                source,
-                target
+                source: source,
+                target: target
             }
         });
     } catch (e) {
         console.log(e);
     }
 }
-
