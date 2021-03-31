@@ -213,5 +213,3 @@ INSERT INTO piece (name, color) VALUES ('BISHOP', 'black');
 INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
 INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
-
-
