@@ -1,6 +1,6 @@
 const BLANK = ".";
 
-async function waitingMove() {
+async function runMove() {
     /**
      * batch Piece on Board
      */
@@ -15,6 +15,7 @@ async function waitingMove() {
     } catch (e) {
         console.log(e);
     }
+
     resetBoard()
     const table = document.getElementById("chessBoard");
     for (let i = 0; i < 8; i++) {
@@ -104,8 +105,16 @@ async function move(source, target) {
     } catch (e) {
         console.log(e);
     }
+
+    if (!data.runningGame) {
+        runMove()
+        alert("게임이 종료되었습니다.");
+        return
+    }
+
     if (!data.isMove) {
         alert("올바른 위치를 입력하여 주세요");
     }
-    waitingMove()
+
+    runMove()
 }

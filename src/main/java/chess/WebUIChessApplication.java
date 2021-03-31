@@ -42,11 +42,16 @@ public class WebUIChessApplication {
         post("/move", (req, res) -> {
             MoveRequestDTO moveRequestDto = gson.fromJson(req.body(), MoveRequestDTO.class);
             MoveResultDTO moveResultDto;
+
+            if (!chessBoard.isPlaying()) {
+                return new MoveResultDTO(false, chessBoard.isPlaying());
+            }
+
             try {
                 chessBoard.move(moveRequestDto.getSource(), moveRequestDto.getTarget());
-                moveResultDto = new MoveResultDTO(true);
+                moveResultDto = new MoveResultDTO(true, chessBoard.isPlaying());
             } catch (IllegalArgumentException exception) {
-                moveResultDto = new MoveResultDTO(false);
+                moveResultDto = new MoveResultDTO(false, chessBoard.isPlaying());
             }
             return moveResultDto;
         }, gson::toJson);
