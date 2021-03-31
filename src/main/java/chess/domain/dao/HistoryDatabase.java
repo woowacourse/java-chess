@@ -12,6 +12,10 @@ public class HistoryDatabase {
         commands = new ArrayList<>();
     }
 
+    public HistoryDatabase(List<CommandDto> commands) {
+        this.commands = commands;
+    }
+
     public void insert(CommandDto commandDto) {
         commands.add(commandDto);
     }

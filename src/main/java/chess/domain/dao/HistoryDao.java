@@ -14,6 +14,8 @@ public class HistoryDao {
     private final HistoryDatabase history = new HistoryDatabase();
 
     public void insert(CommandDto commandDto) throws SQLException {
+        System.out.println("====");
+        System.out.println("insert");
         int id = 0;
         if (!history.isEmpty()){
             id = history.lastIndex();
@@ -31,7 +33,7 @@ public class HistoryDao {
         history.insert(commandDto);
     }
 
-    public void clearCommand() throws SQLException {
+    public void clear() throws SQLException {
         String query = "DELETE FROM history";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -58,14 +60,14 @@ public class HistoryDao {
         history.delete(commandDto);
     }
 
-    public List<CommandDto> selectAll(CommandDto commandDto) throws SQLException {
+    public List<CommandDto> selectAll() throws SQLException {
         List<CommandDto> commands = new ArrayList<>();
         String query = "SELECT * FROM history";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next())
-                commands.add(new CommandDto(rs.getString("command")));
+                commands.add(new CommandDto(rs.getString("data")));
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

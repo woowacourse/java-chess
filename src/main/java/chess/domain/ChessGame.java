@@ -4,12 +4,15 @@ import chess.domain.board.Board;
 import chess.domain.board.Path;
 import chess.domain.board.Team;
 import chess.domain.command.Commands;
+import chess.domain.dao.HistoryDatabase;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 
 import java.util.EnumMap;
+import java.util.List;
 
 public class ChessGame {
 
@@ -110,5 +113,13 @@ public class ChessGame {
 
     public Team turn() {
         return turn;
+    }
+
+    public void makeBoardStateOf(HistoryDatabase historyDatabase) {
+        final List<CommandDto> commands = historyDatabase.commands();
+        for (CommandDto commandInDB : commands) {
+            final Path path = new Path(new Commands(commandInDB.command()).path());
+            movePiece(path);
+        }
     }
 }

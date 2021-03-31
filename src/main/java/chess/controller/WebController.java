@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.domain.dao.HistoryDatabase;
+import chess.domain.dto.CommandDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,26 +17,36 @@ public class WebController {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final ChessService chessService;
+    private HistoryDatabase historyDatabase;
 
     public WebController(ChessService chessService) {
         this.chessService = chessService;
+        this.historyDatabase = new HistoryDatabase();
+    }
+
+    public WebController(ChessService chessService, HistoryDatabase historyDatabase) {
+        this.chessService = chessService;
+        this.historyDatabase = historyDatabase;
     }
 
     public void play() {
         get("/play", (req, res) -> {
+            chessService.init();
             return render(chessService.startResponse(), "chessStart.html");
         });
 
         get("/play/new", (req, res) -> {
-            chessService.playNewGame();
+            chessService.play();
             return render(chessService.initResponse(), "chessGame.html");
         });
 
         post("/play/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
+            String command = makeMoveCmd(req.queryParams("source"), req.queryParams("target"));
             try {
-                chessService.move(source, target);
+                chessService.move(command);
+                historyDatabase.insert(new CommandDto(command));
                 return GSON.toJson(chessService.moveResponse());
             } catch (IllegalArgumentException e) {
                 res.status(400);
@@ -42,10 +54,24 @@ public class WebController {
             }
         });
 
+        get("/play/end", (req, res) -> {
+            chessService.end();
+            return render(chessService.endResponse(), "chessGame.html");
+        });
+
         get("/play/continue", (req, res) -> {
-            chessService.continueLastGame();
+            if (historyDatabase.isEmpty()) {
+                // 만약 historyDB가 연결되어있지 않다면 새로운 게임을 하도록 넘겨주어야함.
+                return render(chessService.initResponse(), "chessGame.html");
+            }
+            // historyDB가 연결되어있다면 이어하기를 가능하도록 해야함.
+            chessService.continueLastGame(historyDatabase);
             return render(chessService.continueResponse(), "chessGame.html");
         });
+    }
+
+    private String makeMoveCmd(String source, String target) {
+        return String.join(" ", "move", source, target);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

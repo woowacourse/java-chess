@@ -2,24 +2,32 @@ package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Commands;
+import chess.domain.dao.HistoryDao;
+import chess.domain.dao.HistoryDatabase;
+import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.utils.BoardInitializer;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessService {
-    public static final String MOVE_COMMAND = "move";
     private ChessGame chessGame;
+    private HistoryDao historyDao;
+
+    public ChessService(HistoryDao historyDao) {
+        this.chessGame = new ChessGame();
+        this.historyDao = historyDao;
+    }
+
+    public void init() throws SQLException {
+        chessGame.initBoard(BoardInitializer.init());
+    }
 
     public Map<String, Object> startResponse() {
         Map<String, Object> model = new HashMap<>();
         return model;
-    }
-
-    public void playNewGame() {
-        this.chessGame = new ChessGame();
-        chessGame.initBoard(BoardInitializer.init());
     }
 
     public Map<String, Object> initResponse() {
@@ -30,8 +38,9 @@ public class ChessService {
         chessGame.endGame();
     }
 
-    public void move(String source, String target) {
-        chessGame.move(new Commands(String.join(" ", MOVE_COMMAND, source, target)));
+    public void move(String command) throws SQLException {
+        chessGame.move(new Commands(command));
+        historyDao.insert(new CommandDto(command));
     }
 
     public Map<String, Object> moveResponse() {
@@ -51,11 +60,20 @@ public class ChessService {
         return model;
     }
 
-    public void continueLastGame() {
+    public void continueLastGame(HistoryDatabase historyDatabase) throws SQLException {
+        chessGame.makeBoardStateOf(historyDatabase);
+        play();
     }
 
     public Map<String, Object> continueResponse() {
-        Map<String, Object> model = new HashMap<>();
-        return model;
+        return makeCommonResponse();
+    }
+
+    public Map<String, Object> endResponse() {
+        return new HashMap<>();
+    }
+
+    public void play() throws SQLException {
+        historyDao.clear();
     }
 }
