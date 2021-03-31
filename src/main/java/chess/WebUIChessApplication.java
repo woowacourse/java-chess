@@ -4,7 +4,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
-import chess.domain.DTO.moveDTO;
+import chess.domain.DTO.MoveRequestDTO;
+import chess.domain.DTO.MoveResultDTO;
 import chess.domain.DTO.pieceOnBoardDTO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
@@ -39,10 +40,16 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-            moveDTO moveDto = gson.fromJson(req.body(), moveDTO.class);
-            chessBoard.move(moveDto.getSource(), moveDto.getTarget());
-            return gson.toJson(moveDto);
-        });
+            MoveRequestDTO moveRequestDto = gson.fromJson(req.body(), MoveRequestDTO.class);
+            MoveResultDTO moveResultDto;
+            try {
+                chessBoard.move(moveRequestDto.getSource(), moveRequestDto.getTarget());
+                moveResultDto = new MoveResultDTO(true);
+            } catch (IllegalArgumentException exception) {
+                moveResultDto = new MoveResultDTO(false);
+            }
+            return moveResultDto;
+        }, gson::toJson);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

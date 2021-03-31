@@ -61,10 +61,17 @@ function selectPiece(event) {
         clickedPiece.classList.toggle("clicked");
         const sourcePosition = clickedPiece.id;
         const targetPosition = clickPiece.id;
-        move(sourcePosition, targetPosition);
-    } else {
-        clickPiece.classList.toggle("clicked");
+
+        if (sourcePosition != targetPosition) {
+            move(sourcePosition, targetPosition);
+            return
+        }
+        if (sourcePosition == targetPosition) {
+            clickedPiece.classList.toggle("clicked");
+        }
     }
+    clickPiece.classList.toggle("clicked");
+
 }
 
 function getClickedPiece() {
@@ -83,8 +90,9 @@ async function move(source, target) {
      * source : String
      * target : String
      */
+    let data;
     try {
-        await axios({
+        const res = await axios({
             method: 'post',
             url: '/move',
             data: {
@@ -92,8 +100,12 @@ async function move(source, target) {
                 target: target
             }
         });
+        data = res.data;
     } catch (e) {
         console.log(e);
+    }
+    if (!data.isMove) {
+        alert("올바른 위치를 입력하여 주세요");
     }
     waitingMove()
 }

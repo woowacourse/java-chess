@@ -1,11 +1,11 @@
 package chess.domain.DTO;
 
-public class moveDTO {
+public class MoveRequestDTO {
 
     private String source;
     private String target;
 
-    public moveDTO(String source, String target) {
+    public MoveRequestDTO(String source, String target) {
         this.source = source;
         this.target = target;
     }
