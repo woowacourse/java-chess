@@ -20,7 +20,7 @@ public class WebUIChessApplication {
         staticFileLocation("/static");
         Gson gson = new Gson();
 
-        post("/chessboard/move", (req, res) ->{
+        post("/chessboard", (req, res) ->{
             chessBoard.move(gson.fromJson(req.body(), MovementDto.class));
            return chessBoard.getChessBoardDto();
         }, gson::toJson);
