@@ -25,7 +25,7 @@ public abstract class Piece {
                 .collect(Collectors.toList());
     }
 
-    public Path movablePathDirection(final Position source, final Direction direction) {
+    private Path movablePathDirection(final Position source, final Direction direction) {
         List<Position> path = new ArrayList<>();
         Position target = source;
         while (target.isValidPosition(direction) && isValidDistance(source, target.next(direction))) {
