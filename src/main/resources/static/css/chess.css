@@ -120,7 +120,11 @@ body::after {
 }
 
 .score p {
-    margin-top: 60px;
+    margin-top: 0;
+}
+
+.nickname {
+    margin-bottom: 0;
 }
 
 .selected {
@@ -132,4 +136,14 @@ body::after {
     background-repeat: no-repeat;
     background-size: 60px 60px;
     opacity: 0.4;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#white-score, #black-score {
+    margin-bottom: 50px;
 }

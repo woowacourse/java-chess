@@ -11,9 +11,10 @@ CREATE TABLE user
 
 CREATE TABLE result
 (
-    id      INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_id INT         NOT NULL,
-    result  VARCHAR(12) NOT NULL
+    id      INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    winner  INT NOT NULL,
+    loser   INT NOT NULL
 )
 
 CREATE TABLE room

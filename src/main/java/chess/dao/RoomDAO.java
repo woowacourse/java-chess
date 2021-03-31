@@ -28,7 +28,7 @@ public class RoomDAO {
     public List<RoomDTO> allRooms() throws SQLException {
         String query = "SELECT room.id, room.title, black.nickname AS black_user, white.nickname AS white_user, room.status " +
                 "FROM room JOIN user as black on black.id = room.black_user " +
-                "JOIN user as white on white.id = room.white_user";
+                "JOIN user as white on white.id = room.white_user ORDER BY room.status DESC, room.id DESC";
         PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 

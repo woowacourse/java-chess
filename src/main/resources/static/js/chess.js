@@ -132,19 +132,24 @@ function updateStatus(currentStatus) {
 function checkEndGame(currentStatus) {
     if (!currentStatus.ends) {
         alert(currentStatus.winner + " WIN!!");
-        gameInitialize();
-        window.location.href = "/";
+        gameInitialize(currentStatus.winner, currentStatus.loser);
     }
 }
 
-function gameInitialize() {
+function gameInitialize(winner, loser) {
     $.ajax({
         url: "/initialize",
         data: {
-            roomId: roomId
+            roomId: roomId,
+            winner: winner,
+            loser: loser
         },
         method: "POST",
         dataType: "json"
+    }).done(function (success) {
+        if (success) {
+            window.location.href = "/";
+        }
     });
 }
 

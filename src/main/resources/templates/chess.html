@@ -90,9 +90,14 @@
         <div id="status">
             <div class="score">
                 <img src="./img/black_team.png">
-                <p id="black-score">
-                    {{black-score}}
-                </p>
+                <div class="information">
+                    <p class="nickname">
+                        {{users.blackUser}}
+                    </p>
+                    <p id="black-score">
+                        {{black-score}}
+                    </p>
+                </div>
             </div>
             <div id="turn">
                 {{#if isWhite}}
@@ -103,9 +108,14 @@
             </div>
             <div class="score">
                 <img src="./img/white_team.png">
-                <p id="white-score">
-                    {{white-score}}
-                </p>
+                <div class="information">
+                    <p class="nickname">
+                        {{users.whiteUser}}
+                    </p>
+                    <p id="white-score">
+                        {{white-score}}
+                    </p>
+                </div>
             </div>
             <div id="bottom">
                 <form action="/" method="get">

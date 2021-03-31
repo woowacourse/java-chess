@@ -29,12 +29,20 @@ footer {
 
 #rooms {
     background-color: burlywood;
-    width: 50%;
+    width: 85%;
+    height: 250px;
+    overflow: auto;
+    margin-right: 60px;
+}
+
+#result {
+    background-color: burlywood;
+    width: 40%;
     height: 250px;
     overflow: auto;
 }
 
-#rooms table {
+#rooms table, #result table {
     width: 100%;
     height: auto;
     text-align: center;
@@ -64,6 +72,10 @@ th, td {
 
 #create-button {
     margin-top: 10px;
-    width: 50%;
+    width: 85%;
     text-align: end;
+}
+
+#right {
+    width: 100%;
 }

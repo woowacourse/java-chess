@@ -1,19 +1,14 @@
 package chess.controller;
 
-import chess.dao.ConnectDB;
-import chess.dao.LogDAO;
-import chess.dao.RoomDAO;
+import chess.dao.*;
 import chess.domain.ChessGame;
 import chess.domain.Team;
-import chess.dto.PiecesDTO;
-import chess.dto.StatusDTO;
+import chess.dto.*;
 import chess.util.JsonTransformer;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -26,19 +21,31 @@ public class WebChessGameController {
 
         goHome(connectDB);
         createNewRoom(connectDB);
-        enterRoom();
+        enterRoom(connectDB);
         startGame(connectDB, chessGame);
         continueGame(connectDB, chessGame);
         checkCurrentTurn(chessGame);
         findMovablePosition(chessGame);
         movePiece(connectDB, chessGame);
-        initialize(chessGame, connectDB);
+        initialize(connectDB);
     }
 
     private void goHome(ConnectDB connectDB) {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            List<ResultDTO> results = new ArrayList<>();
+            ResultDAO resultDAO = new ResultDAO(connectDB);
+            UserDAO userDAO = new UserDAO(connectDB);
+            List<UserDTO> users = userDAO.findAll();
+            for (UserDTO user : users) {
+                int userId = user.getId();
+                int winCount = resultDAO.winCountByUserId(userId);
+                int loseCount = resultDAO.loseCountByUserId(userId);
+                results.add(new ResultDTO(userDAO.findNicknameById(userId), winCount, loseCount));
+            }
             model.put("rooms", new RoomDAO(connectDB).allRooms());
+            Collections.sort(results);
+            model.put("results", results);
             return render(model, "index.html");
         });
     }
@@ -51,13 +58,16 @@ public class WebChessGameController {
         });
     }
 
-    private void enterRoom() {
+    private void enterRoom(ConnectDB connectDB) {
         get("/enter", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomNumber = req.queryParams("id");
-            model.put("number", roomNumber);
+            String roomId = req.queryParams("id");
+            model.put("number", roomId);
             model.put("button", "새로운게임");
             model.put("isWhite", true);
+            UserDAO userDAO = new UserDAO(connectDB);
+            UsersDTO users = userDAO.findByRoomId(roomId);
+            model.put("users", users);
             return render(model, "chess.html");
         });
     }
@@ -69,7 +79,9 @@ public class WebChessGameController {
             chessGame.initialize();
             LogDAO logDAO = new LogDAO(connectDB);
             logDAO.deleteLogByRoomId(roomId);
-            gameInformation(chessGame, model, roomId);
+            UserDAO userDAO = new UserDAO(connectDB);
+            UsersDTO users = userDAO.findByRoomId(roomId);
+            gameInformation(chessGame, model, roomId, users);
             return render(model, "chess.html");
         });
     }
@@ -82,12 +94,14 @@ public class WebChessGameController {
             LogDAO logDAO = new LogDAO(connectDB);
             List<String[]> logs = logDAO.allLogByRoomId(roomId);
             logs.forEach(positions -> chessGame.move(positions[0], positions[1]));
-            gameInformation(chessGame, model, roomId);
+            UserDAO userDAO = new UserDAO(connectDB);
+            UsersDTO users = userDAO.findByRoomId(roomId);
+            gameInformation(chessGame, model, roomId, users);
             return render(model, "chess.html");
         });
     }
 
-    private void gameInformation(ChessGame chessGame, Map<String, Object> model, String roomId) {
+    private void gameInformation(ChessGame chessGame, Map<String, Object> model, String roomId, UsersDTO users) {
         PiecesDTO piecesDTOs = PiecesDTO.create(chessGame.board());
         model.put("pieces", piecesDTOs.toList());
         model.put("button", "초기화");
@@ -95,6 +109,7 @@ public class WebChessGameController {
         model.put("black-score", chessGame.scoreByTeam(Team.BLACK));
         model.put("white-score", chessGame.scoreByTeam(Team.WHITE));
         model.put("number", roomId);
+        model.put("users", users);
     }
 
     private void checkCurrentTurn(ChessGame chessGame) {
@@ -119,20 +134,24 @@ public class WebChessGameController {
             chessGame.move(startPoint, endPoint);
             LogDAO logDAO = new LogDAO(connectDB);
             logDAO.createLog(roomId, startPoint, endPoint);
-            return currentStatus(chessGame);
+            UserDAO userDAO = new UserDAO(connectDB);
+            UsersDTO users = userDAO.findByRoomId(roomId);
+            return new StatusDTO(chessGame, users);
         }, new JsonTransformer());
     }
 
-    private StatusDTO currentStatus(ChessGame chessGame) {
-        String turn = chessGame.turn().name();
-        return new StatusDTO(turn, chessGame);
-    }
-
-    private void initialize(ChessGame chessGame, ConnectDB connectDB) {
+    private void initialize(ConnectDB connectDB) {
         post("/initialize", "application/json", (req, res) -> {
             String roomId = req.queryParams("roomId");
+            String winner = req.queryParams("winner");
+            String loser = req.queryParams("loser");
             RoomDAO roomDAO = new RoomDAO(connectDB);
             roomDAO.changeStatusEndByRoomId(roomId);
+            UserDAO userDAO = new UserDAO(connectDB);
+            int winnerId = userDAO.findUserIdByNickname(winner);
+            int loserId = userDAO.findUserIdByNickname(loser);
+            ResultDAO resultDAO = new ResultDAO(connectDB);
+            resultDAO.saveGameResult(roomId, winnerId, loserId);
             return true;
         }, new JsonTransformer());
     }
