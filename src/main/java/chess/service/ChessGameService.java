@@ -17,11 +17,13 @@ public class ChessGameService {
         RequestDto requestDto = gson.fromJson(body, RequestDto.class);
         try {
             chessGame.playTurn(Point.of(requestDto.getSourcePoint()), Point.of(requestDto.getTargetPoint()));
+            if (!chessGame.isProgressing()) {
+                return 0;
+            }
+            return 200;
         } catch (Exception e) {
             System.out.println("@@@@@" + e.getMessage());
             return 400;
         }
-        System.out.println("--------------------------------------asdfsafasdfasdfsadfsdasadfsadf");
-        return 200;
     }
 }

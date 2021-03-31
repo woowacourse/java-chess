@@ -1,6 +1,6 @@
 console.log("js 로드 성공")
 
-let movePoint = {
+const movePoint = {
     sourcePoint: null,
     targetPoint: null
 };
@@ -29,11 +29,13 @@ async function updatePoint(id) {
     } else if (movePoint.sourcePoint !== null && movePoint.targetPoint === null) {
         movePoint.targetPoint = id;
         const response = await move(movePoint);
-        if (response === 200) {
+        if (response === 0) {
+            alert('왕 죽음')
+        }
+        else if (response === 200) {
             updateBoard(movePoint);
             movePoint.sourcePoint = null;
             movePoint.targetPoint = null;
-            alert('성공')
         } else {
             movePoint.sourcePoint = null;
             movePoint.targetPoint = null;
