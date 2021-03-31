@@ -14,7 +14,6 @@ import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import chess.dto.PointDto;
 import com.google.gson.Gson;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +25,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 
-    private static final Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
 
-    public static void main(String[] args)
-        throws IOException, SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException {
         GameDao gameDao = new GameDao();
         Board board = boardFromDb(gameDao);
         ChessGame chessGame = chessGameFromDb(board, gameDao);
@@ -46,8 +44,8 @@ public class WebUIChessApplication {
         put("/start", (req, res) -> {
             chessGame.start();
             gameDao
-                .addSerializedBoardAndStatus(new BoardWebDto(board), new GameStatusDto(chessGame));
-            return gson.toJson(new BoardWebDto(board));
+                .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame));
+            return GSON.toJson(new BoardWebDto(board));
         });
 
         get("/movablePoints/:point", "application/json", (req, res) -> {
@@ -56,36 +54,34 @@ public class WebUIChessApplication {
             List<PointDto> pointDtos = movablePoints.stream()
                 .map(PointDto::new)
                 .collect(Collectors.toList());
-            return gson.toJson(pointDtos);
+            return GSON.toJson(pointDtos);
         });
 
         put("/move", "application/json", (req, res) -> {
             Map<String, String> body = new HashMap<>();
-            body = (Map<String, String>) gson.fromJson(req.body(), body.getClass());
+            body = (Map<String, String>) GSON.fromJson(req.body(), body.getClass());
             Point source = Point.of(body.get("source"));
             Point destination = Point.of(body.get("destination"));
             chessGame.move(source, destination);
             gameDao
-                .addSerializedBoardAndStatus(new BoardWebDto(board), new GameStatusDto(chessGame));
-            return gson.toJson(new BoardWebDto(board));
+                .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame));
+            return GSON.toJson(new BoardWebDto(board));
         });
 
         get("/getGameStatus", "application/json",
-            (req, res) -> gson.toJson(new GameStatusDto(chessGame)));
+            (req, res) -> GSON.toJson(new GameStatusDto(chessGame)));
 
         put("/exit", (req, res) -> {
             chessGame.end();
-            return gson.toJson("success");
+            return GSON.toJson("success");
         });
     }
 
-    private static Board boardFromDb(GameDao gameDao)
-        throws SQLException, IOException, ClassNotFoundException {
+    private static Board boardFromDb(GameDao gameDao) throws SQLException {
         return gameDao.latestBoard().toEntity();
     }
 
-    private static ChessGame chessGameFromDb(Board board, GameDao gameDao)
-        throws SQLException, IOException, ClassNotFoundException {
+    private static ChessGame chessGameFromDb(Board board, GameDao gameDao) throws SQLException {
         GameStatusDto gameStatusDto = gameDao.latestGameStatus();
         Turn turn = gameStatusDto.toTurnEntity();
         GameState gameState = gameStatusDto.toGameStateEntity(board);

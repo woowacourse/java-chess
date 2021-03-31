@@ -3,14 +3,12 @@ package chess.dto;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.SquareState;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardWebDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class BoardWebDto {
 
     private final List<PieceDto> board;
 

@@ -6,11 +6,7 @@ import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Turn;
 import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,6 +18,8 @@ public class GameDao {
     private static final String INSERT_BOARD_AND_STATUS_QUERY = "INSERT INTO chess (serialized_board, serialized_status) VALUES (?, ?)";
     private static final String SELECT_BOARD_QUERY = "SELECT serialized_board FROM chess ORDER BY id DESC LIMIT 1";
     public static final String SELECT_STATUS_QUERY = "SELECT serialized_status FROM chess ORDER BY id DESC LIMIT 1";
+
+    private static final Gson GSON = new Gson();
 
     private Connection connection() {
         Connection connection = null;
@@ -61,40 +59,25 @@ public class GameDao {
         }
     }
 
-    private byte[] serializedObject(Object object) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(object);
-        return baos.toByteArray();
-    }
-
-    public void addSerializedBoardAndStatus(BoardWebDto boardWebDto, GameStatusDto gameStatusDto)
-        throws IOException, SQLException {
-        byte[] serializedBoard = serializedObject(boardWebDto);
-        byte[] serializedGameStatus = serializedObject(gameStatusDto);
+    public void insertBoardAndStatusDto(BoardWebDto boardWebDto, GameStatusDto gameStatusDto)
+        throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = connection.prepareStatement(INSERT_BOARD_AND_STATUS_QUERY);
-        pstmt.setBytes(1, serializedBoard);
-        pstmt.setBytes(2, serializedGameStatus);
+        pstmt.setString(1, GSON.toJson(boardWebDto));
+        pstmt.setString(2, GSON.toJson(gameStatusDto));
         pstmt.executeUpdate();
         closeConnection(connection);
     }
 
-    private void generateFirstRow() throws IOException, SQLException {
+    private void generateFirstRow() throws SQLException {
         Board board = new Board();
         BoardWebDto boardWebDto = new BoardWebDto(board);
         GameStatusDto gameStatusDto =
             new GameStatusDto(new ChessGame(board, new Turn(Team.WHITE)));
-        addSerializedBoardAndStatus(boardWebDto, gameStatusDto);
+        insertBoardAndStatusDto(boardWebDto, gameStatusDto);
     }
 
-    private Object deserializedObject(byte[] bytes) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        return ois.readObject();
-    }
-
-    public BoardWebDto latestBoard() throws IOException, ClassNotFoundException, SQLException {
+    public BoardWebDto latestBoard() throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = connection.prepareStatement(SELECT_BOARD_QUERY);
         ResultSet rs = pstmt.executeQuery();
@@ -103,12 +86,12 @@ public class GameDao {
             generateFirstRow();
             return latestBoard();
         }
-        byte[] serializedBoard = rs.getBytes("serialized_board");
+        String serializedBoard = rs.getString("serialized_board");
         connection.close();
-        return (BoardWebDto) deserializedObject(serializedBoard);
+        return GSON.fromJson(serializedBoard, BoardWebDto.class);
     }
 
-    public GameStatusDto latestGameStatus() throws SQLException, IOException, ClassNotFoundException {
+    public GameStatusDto latestGameStatus() throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = connection.prepareStatement(SELECT_STATUS_QUERY);
         ResultSet rs = pstmt.executeQuery();
@@ -117,8 +100,8 @@ public class GameDao {
             generateFirstRow();
             return latestGameStatus();
         }
-        byte[] serializedStatus = rs.getBytes("serialized_status");
+        String serializedStatus = rs.getString("serialized_status");
         connection.close();
-        return (GameStatusDto) deserializedObject(serializedStatus);
+        return GSON.fromJson(serializedStatus, GameStatusDto.class);
     }
 }

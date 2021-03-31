@@ -8,10 +8,8 @@ import chess.domain.gamestate.Finished;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Running;
-import java.io.Serializable;
 
-public class GameStatusDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class GameStatusDto {
 
     private static final String BLACK = "b";
     private static final String WHITE = "w";

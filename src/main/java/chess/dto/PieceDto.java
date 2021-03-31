@@ -4,10 +4,8 @@ import chess.domain.board.Point;
 import chess.domain.board.SquareState;
 import chess.domain.board.Team;
 import chess.domain.piece.Piece;
-import java.io.Serializable;
 
-public class PieceDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class PieceDto {
 
     private static final String EMPTY_PIECE = "e";
     private static final String BLACK = "b";
