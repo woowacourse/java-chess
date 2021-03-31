@@ -50,12 +50,11 @@ public class Round {
         if (state.isKing(target.getPosition())) {
             isEnd = true;
         }
-        if (isEnd) {
-            this.command = command.end();
-            return;
-        }
         if (state.findPiece(target.getPosition()).isPresent()) {
             state.removePiece(target.getPosition());
+        }
+        if (isEnd) {
+            this.command = command.end();
         }
     }
 

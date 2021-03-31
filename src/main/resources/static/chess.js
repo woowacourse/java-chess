@@ -118,7 +118,9 @@ function request_move_post() {
         destination = null;
         is_start_position_clicked = false;
     }
+
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', '/move', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.responseType = 'json';
@@ -126,6 +128,7 @@ function request_move_post() {
         source: start_position,
         target: destination
     }));
+
     start_position = null;
     destination = null;
     is_start_position_clicked = false;
