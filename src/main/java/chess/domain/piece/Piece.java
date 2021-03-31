@@ -127,4 +127,7 @@ public class Piece {
         return position.calculateGradient(target);
     }
 
+    public Shape getShape() {
+        return shape;
+    }
 }
