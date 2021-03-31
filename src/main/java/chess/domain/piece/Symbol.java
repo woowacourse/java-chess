@@ -15,7 +15,7 @@ public enum Symbol {
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
+    public String asString() {
         return symbol;
     }
 }

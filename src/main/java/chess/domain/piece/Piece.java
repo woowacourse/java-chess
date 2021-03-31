@@ -62,7 +62,7 @@ public abstract class Piece {
         return owner.isBlack();
     }
 
-    public String symbol() {
-        return symbol.getSymbol();
+    public Symbol symbol() {
+        return symbol;
     }
 }

@@ -1,12 +1,13 @@
-package chess.view;
+package chess.view.console;
 
-import chess.controller.ScoreDto;
+import chess.controller.dto.ScoreDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Symbol;
 
 import java.util.Queue;
 
@@ -31,12 +32,12 @@ public class OutputView {
     }
 
     private static String decidePieceSymbol(final Piece piece) {
-        final String symbol = piece.symbol();
+        final Symbol symbol = piece.symbol();
 
         if (piece.isBlack()) {
-            return symbol.toUpperCase();
+            return symbol.asString().toUpperCase();
         }
-        return symbol.toLowerCase();
+        return symbol.asString().toLowerCase();
     }
 
     public static void printScore(final ScoreDto scoreDto) {

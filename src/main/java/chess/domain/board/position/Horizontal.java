@@ -45,4 +45,8 @@ public enum Horizontal {
     public Horizontal add(final Direction direction, final Distance distance) {
         return of(index + direction.getY() * distance.getValue());
     }
+
+    public int getIndex() {
+        return index;
+    }
 }

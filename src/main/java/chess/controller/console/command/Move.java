@@ -1,8 +1,8 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
 import chess.domain.board.position.Position;
 import chess.domain.manager.ChessGame;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
 public class Move extends Command {
     public Move(String line) {

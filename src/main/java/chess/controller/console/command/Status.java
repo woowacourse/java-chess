@@ -1,11 +1,15 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
+import chess.controller.dto.ScoreDto;
 import chess.domain.board.position.Position;
 import chess.domain.manager.ChessGame;
-import chess.view.OutputView;
+import chess.domain.piece.Score;
+import chess.domain.player.Player;
+import chess.domain.player.Scores;
+import chess.view.console.OutputView;
 
-public class Show extends Command {
-    public Show(String line) {
+public class Status extends Command {
+    public Status(String line) {
         super(line);
     }
 
@@ -38,10 +42,16 @@ public class Show extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-//        final List<Position> reachablePositions = chessManager.getReachablePositions(super.source());
-//        OutputView.printReachableBoard(chessManager.board(), reachablePositions);
+        final Scores scoreTable = chessGame.scores();
+        for (final Player player : scoreTable.players()) {
+            final Score score = scoreTable.get(player);
+            OutputView.printScore(new ScoreDto(player.owner(), score.score()));
+        }
+    }
 
-        OutputView.printBoard(chessGame.board());
+    @Override
+    public Position source() {
+        throw new IllegalArgumentException("Source parameter 가 존재하지 않습니다.");
     }
 
     @Override

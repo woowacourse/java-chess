@@ -1,15 +1,15 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
 import chess.domain.board.position.Position;
 import chess.domain.manager.ChessGame;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
-public class Start extends Command {
-
-    public Start(String line) {
+public class Show extends Command {
+    public Show(String line) {
         super(line);
     }
 
+    @Override
     public Command read(final String input) {
         final Menu menu = Menu.of(input);
 
@@ -38,13 +38,10 @@ public class Start extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        chessGame.initNewGame();
-        OutputView.printBoard(chessGame.board());
-    }
+//        final List<Position> reachablePositions = chessManager.getReachablePositions(super.source());
+//        OutputView.printReachableBoard(chessManager.board(), reachablePositions);
 
-    @Override
-    public Position source() {
-        throw new IllegalArgumentException("Source parameter 가 존재하지 않습니다.");
+        OutputView.printBoard(chessGame.board());
     }
 
     @Override
