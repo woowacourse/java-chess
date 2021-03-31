@@ -34,6 +34,7 @@ public class WebUIChessApplication {
 
         get("/room/:id", (req, res) -> {
             try {
+                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 Long roomId = Long.valueOf(req.params(":id"));
                 List<PieceDto> result = controller.findPiecesByRoomId(roomId);
                 return gson.toJson(OkResponseDto.payload(result));
@@ -66,6 +67,7 @@ public class WebUIChessApplication {
 
         post("/room/:id/move", (req, res) -> {
             try {
+                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 Long roomId = Long.valueOf(req.params(":id"));
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
                 List<PieceDto> result = controller.move(roomId, moveRequestDto.getSource(), moveRequestDto.getTarget());
