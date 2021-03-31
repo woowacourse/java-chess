@@ -51,12 +51,16 @@ public class PlayersPieces {
 
     private void savePieceIfExists(PlayersIds playersIds, PiecePosition piecePosition) throws SQLException {
         if (piecePosition.isPieceExists()) {
-            if (piecePosition.getTeamColor() == WHITE) {
-                piecesPositions.save(playersIds.getWhitePlayerId(), piecePosition);
-                return;
-            }
-            piecesPositions.save(playersIds.getBlackPlayerId(), piecePosition);
+            savePiecePositionByPlayerTeamColor(playersIds, piecePosition);
         }
+    }
+
+    private void savePiecePositionByPlayerTeamColor(PlayersIds playersIds, PiecePosition piecePosition) throws SQLException {
+        if (piecePosition.getTeamColor() == WHITE) {
+            piecesPositions.save(playersIds.getWhitePlayerId(), piecePosition);
+            return;
+        }
+        piecesPositions.save(playersIds.getBlackPlayerId(), piecePosition);
     }
 
     public Map<Position, Cell> getAllCellsByGameId(Long gameId) throws SQLException {

@@ -57,7 +57,8 @@ public class ConsoleInputView {
         if (commandInput.equals(MOVE_COMMAND)) {
             return parseMoveCommandLineInput(splitCommandLineInput);
         }
-        if (commandInput.equals(START_COMMAND) || commandInput.equals(STATUS_COMMAND)
+        if (commandInput.equals(START_COMMAND)
+            || commandInput.equals(STATUS_COMMAND)
             || commandInput.equals(END_COMMAND)) {
             return parseCommandLineInputExceptMoveCommand(splitCommandLineInput);
         }
@@ -71,9 +72,7 @@ public class ConsoleInputView {
         return new CommandRequestDTO(commandInput, startPositionInput, destinationInput);
     }
 
-    private static CommandRequestDTO parseCommandLineInputExceptMoveCommand(
-        String[] splitCommandLineInput) {
-
+    private static CommandRequestDTO parseCommandLineInputExceptMoveCommand(String[] splitCommandLineInput) {
         String commandInput = splitCommandLineInput[COMMAND_INDEX];
         return new CommandRequestDTO(commandInput);
     }

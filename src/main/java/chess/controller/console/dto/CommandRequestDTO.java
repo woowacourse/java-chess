@@ -5,9 +5,7 @@ public class CommandRequestDTO {
     private final String startPositionInput;
     private final String destinationInput;
 
-    public CommandRequestDTO(String commandInput, String startPositionInput,
-        String destinationInput) {
-
+    public CommandRequestDTO(String commandInput, String startPositionInput, String destinationInput) {
         this.commandInput = commandInput;
         this.startPositionInput = startPositionInput;
         this.destinationInput = destinationInput;

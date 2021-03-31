@@ -52,8 +52,4 @@ public enum PieceWithColorType {
     public TeamColor getTeamColor() {
         return teamColor;
     }
-
-    public String getName() {
-        return pieceType.getName(teamColor);
-    }
 }

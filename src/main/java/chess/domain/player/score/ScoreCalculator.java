@@ -24,21 +24,16 @@ public class ScoreCalculator {
     private double getScoreOfFile(List<PiecePositionEntity> piecesPositions, File file) {
         List<Piece> allPiecesInFile = getAllPiecesInFile(piecesPositions, file);
         List<Piece> pawnsInFile = getAllPawnsInFile(allPiecesInFile);
-        List<Piece> piecesInFileExceptPawn
-            = getPiecesInFileExceptPawn(allPiecesInFile, pawnsInFile);
-
+        List<Piece> piecesInFileExceptPawn = getPiecesInFileExceptPawn(allPiecesInFile, pawnsInFile);
         double scoreOfPawnsInFile = getScoreOfPawnsInFile(pawnsInFile);
-        double scoreOfPiecesExceptPawnInFile
-            = getScoreOfPiecesExceptPawnInFile(piecesInFileExceptPawn);
-
+        double scoreOfPiecesExceptPawnInFile = getScoreOfPiecesExceptPawnInFile(piecesInFileExceptPawn);
         return scoreOfPawnsInFile + scoreOfPiecesExceptPawnInFile;
     }
 
     private List<Piece> getAllPiecesInFile(List<PiecePositionEntity> piecesPositions, File file) {
         return piecesPositions.stream()
             .filter(piecePosition -> piecePosition.getFile() == file)
-            .map(piecePosition ->
-                Piece.of(piecePosition.getPieceType(), piecePosition.getTeamColor()))
+            .map(piecePosition -> Piece.of(piecePosition.getPieceType(), piecePosition.getTeamColor()))
             .collect(Collectors.toList());
     }
 
@@ -48,9 +43,7 @@ public class ScoreCalculator {
             .collect(Collectors.toList());
     }
 
-    private List<Piece> getPiecesInFileExceptPawn(List<Piece> allPiecesInFile,
-        List<Piece> pawnsInFile) {
-
+    private List<Piece> getPiecesInFileExceptPawn(List<Piece> allPiecesInFile, List<Piece> pawnsInFile) {
         List<Piece> allPiecesInFileExceptPawn = new ArrayList<>(allPiecesInFile);
         allPiecesInFileExceptPawn.removeAll(pawnsInFile);
         return allPiecesInFileExceptPawn;

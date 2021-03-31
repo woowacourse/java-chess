@@ -28,9 +28,7 @@ public class Board {
         moveChecker = new MoveChecker();
     }
 
-    public void createAndSaveNewPlayersAndPiecesPositionsOfGame(Long gameId,
-        BoardSetting boardSetting) throws SQLException {
-
+    public void createAndSaveNewPlayersAndPiecesPositionsOfGame(Long gameId, BoardSetting boardSetting) throws SQLException {
         playersPieces.createAndSaveNewPlayers(gameId);
         playersPieces.saveInitialPieces(boardSetting, gameId);
     }
@@ -77,7 +75,9 @@ public class Board {
 
     private boolean isKingDead(List<String> cellsStatus) {
         return cellsStatus.stream()
-            .filter(cellStatus -> cellStatus.equals(KING.getName(WHITE)) || cellStatus.equals(KING.getName(BLACK)))
+            .filter(cellStatus ->
+                cellStatus.equals(KING.getName(WHITE))
+                    || cellStatus.equals(KING.getName(BLACK)))
             .count() < NUMBER_OF_ALL_KINGS;
     }
 

@@ -10,9 +10,7 @@ public class GameStatusResponseDTO {
     private final double whitePlayerScore;
     private final double blackPlayerScore;
 
-    public GameStatusResponseDTO(Long gameId, String title, TeamColor teamColor,
-        double whitePlayerScore, double blackPlayerScore) {
-
+    public GameStatusResponseDTO(Long gameId, String title, TeamColor teamColor, double whitePlayerScore, double blackPlayerScore) {
         this.gameId = gameId;
         this.title = title;
         this.currentTurnTeamColorName = teamColor.getName();

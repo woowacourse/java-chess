@@ -35,9 +35,7 @@ public class PiecesPositions {
         return allCells;
     }
 
-    private Map<Position, Cell> getCellsStatusByGameIdAndRank(Rank rank,
-        Map<Position, Piece> existsPieces) {
-
+    private Map<Position, Cell> getCellsStatusByGameIdAndRank(Rank rank, Map<Position, Piece> existsPieces) {
         Map<Position, Cell> cells = new HashMap<>();
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
@@ -57,9 +55,7 @@ public class PiecesPositions {
         return cellsStatus;
     }
 
-    private List<String> getCellsStatusAsStringByGameIdAndRank(Rank rank,
-        Map<Position, Cell> allCells) {
-
+    private List<String> getCellsStatusAsStringByGameIdAndRank(Rank rank, Map<Position, Cell> allCells) {
         List<String> cells = new ArrayList<>();
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
@@ -73,28 +69,19 @@ public class PiecesPositions {
         playerPiecePositionRepository.removeAllByPlayer(playerId);
     }
 
-    public GamePiecePositionEntity getGamePiecePositionByGameIdAndPosition(Long gameId,
-        Position startPosition) throws SQLException {
-
-        return playerPiecePositionRepository
-            .findGamePiecePositionByGameIdAndPositionId(gameId, startPosition.getId());
+    public GamePiecePositionEntity getGamePiecePositionByGameIdAndPosition(Long gameId, Position startPosition) throws SQLException {
+        return playerPiecePositionRepository.findGamePiecePositionByGameIdAndPositionId(gameId, startPosition.getId());
     }
 
-    public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity)
-        throws SQLException {
-
+    public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity) throws SQLException {
         playerPiecePositionRepository.removePiecePositionOfGame(gamePiecePositionEntity);
     }
 
-    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity)
-        throws SQLException {
-
+    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity) throws SQLException {
         playerPiecePositionRepository.updatePiecePosition(gamePiecePositionEntity);
     }
 
-    public List<PiecePositionEntity> getAllPiecesPositionsOfPlayer(Long playerId)
-        throws SQLException {
-
+    public List<PiecePositionEntity> getAllPiecesPositionsOfPlayer(Long playerId) throws SQLException {
         return playerPiecePositionRepository.findAllByPlayerId(playerId);
     }
 }

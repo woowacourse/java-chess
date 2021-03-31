@@ -58,7 +58,9 @@ public class PiecesCache {
 
     public static Piece find(PieceType pieceType, TeamColor teamColor) {
         return PIECES.stream()
-            .filter(piece -> piece.getPieceType() == pieceType && piece.getTeamColor() == teamColor)
+            .filter(piece ->
+                piece.getPieceType() == pieceType
+                    && piece.getTeamColor() == teamColor)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_ERROR_MESSAGE));
     }

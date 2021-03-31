@@ -11,13 +11,11 @@ import java.sql.SQLException;
 public class DBCleaner {
     private static final ChessGameRepository CHESS_GAME_REPOSITORY = new ChessGameDAO();
     private static final PlayerRepository PLAYER_REPOSITORY = new PlayerDAO();
-    private static final PlayerPiecePositionRepository PLAYER_PIECE_POSITION_REPOSITORY
-        = new PlayerPiecePositionDAO();
+    private static final PlayerPiecePositionRepository PLAYER_PIECE_POSITION_REPOSITORY = new PlayerPiecePositionDAO();
 
     public static void removeAll() throws SQLException {
         PLAYER_PIECE_POSITION_REPOSITORY.removeAll();
         PLAYER_REPOSITORY.removeAll();
         CHESS_GAME_REPOSITORY.removeAll();
     }
-
 }

@@ -49,8 +49,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
             .findAny()
-            .orElseThrow(
-                () -> new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE));
+            .orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE));
     }
 
     private static Direction diagonalDirection(int fileDiff, int rankDiff) {
@@ -92,8 +91,7 @@ public enum Direction {
     }
 
     public boolean isDiagonal() {
-        List<Direction> diagonalDirections
-            = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+        List<Direction> diagonalDirections = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
         return diagonalDirections.contains(this);
     }
 
@@ -104,17 +102,10 @@ public enum Direction {
         return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
     }
 
-    public static List<Direction> pawnDirections(String color) {
-        if (TeamColor.of(color) == TeamColor.BLACK) {
-            return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
-        }
-        return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
-    }
-
     public static List<Direction> knightDirections() {
-        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
-            Direction.LEFT_DOWN_DOWN, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP,
-            Direction.RIGHT_RIGHT_UP, Direction.RIGHT_RIGHT_DOWN);
+        return Arrays.asList(
+            Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.RIGHT_RIGHT_DOWN, Direction.RIGHT_RIGHT_UP,
+            Direction.LEFT_DOWN_DOWN, Direction.LEFT_UP_UP, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP);
     }
 
 

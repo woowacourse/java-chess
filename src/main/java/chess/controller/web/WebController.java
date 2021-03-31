@@ -57,8 +57,7 @@ public class WebController {
 
     private void handleCreateChessRoomRequest() {
         post(ROOT + CREATE_CHESS_ROOM, (req, res) -> {
-            Long createdChessGameId
-                = chessWebService.createNewChessGame(req.queryParams("room-title"));
+            Long createdChessGameId = chessWebService.createNewChessGame(req.queryParams("room-title"));
             res.redirect(ROOT + CHESS_BOARD + "?id=" + createdChessGameId);
             return null;
         });
@@ -75,9 +74,7 @@ public class WebController {
         });
     }
 
-    private void putBoardRanksToModel(Map<String, Object> model,
-        BoardResponseDTO boardResponseDTO) {
-
+    private void putBoardRanksToModel(Map<String, Object> model, BoardResponseDTO boardResponseDTO) {
         model.put("rank8", boardResponseDTO.getRank8());
         model.put("rank7", boardResponseDTO.getRank7());
         model.put("rank6", boardResponseDTO.getRank6());

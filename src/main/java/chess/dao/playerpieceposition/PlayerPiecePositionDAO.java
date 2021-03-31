@@ -23,9 +23,12 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
 
     @Override
     public Map<Position, Piece> findAllByGameId(Long gameId) throws SQLException {
-        String query = "SELECT piece_id, position_id FROM player_piece_position "
-            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) "
-            + "AS players_id_of_selected_game ON player_piece_position.player_id = players_id_of_selected_game.player_id;";
+        String query = "SELECT piece_id, position_id "
+            + "FROM player_piece_position "
+            + "INNER JOIN "
+            + "(SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) "
+            + "AS players_id_of_selected_game "
+            + "ON player_piece_position.player_id = players_id_of_selected_game.player_id;";
         ResultSet resultSet = SQLQuery.select(query, gameId);
         Map<Position, Piece> results = new HashMap<>();
         while (resultSet.next()) {
@@ -59,7 +62,9 @@ public class PlayerPiecePositionDAO implements PlayerPiecePositionRepository {
     @Override
     public GamePiecePositionEntity findGamePiecePositionByGameIdAndPositionId(Long gameId, Long positionId) throws SQLException {
         String query = "SELECT id, position_id FROM player_piece_position "
-            + "INNER JOIN (SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) AS players "
+            + "INNER JOIN "
+            + "(SELECT player.id AS player_id FROM player WHERE chess_game_id = ?) "
+            + "AS players "
             + "ON player_piece_position.player_id = players.player_id "
             + "WHERE player_piece_position.position_id = ?;";
         ResultSet resultSet = SQLQuery.select(query, gameId, positionId);

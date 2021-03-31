@@ -11,9 +11,7 @@ public class ResponseDTO {
     private final BoardResponseDTO boardResponseDTO;
     private final boolean isEnd;
 
-    public ResponseDTO(GameStatusResponseDTO gameStatusResponseDTO, boolean isKingDead,
-        BoardResponseDTO boardResponseDTO) {
-
+    public ResponseDTO(GameStatusResponseDTO gameStatusResponseDTO, boolean isKingDead, BoardResponseDTO boardResponseDTO) {
         this.gameId = gameStatusResponseDTO.getGameId();
         this.title = gameStatusResponseDTO.getTitle();
         this.whitePlayerScore = gameStatusResponseDTO.getWhitePlayerScore();

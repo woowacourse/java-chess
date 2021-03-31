@@ -31,14 +31,12 @@ public class ChessGame {
     public Long createNew(BoardSetting boardSetting, String title) throws SQLException {
         validate(boardSetting);
         ChessGameEntity chessGameEntity = chessGameRepository.save(new ChessGameEntity(title));
-        board.createAndSaveNewPlayersAndPiecesPositionsOfGame(
-            chessGameEntity.getId(), boardSetting);
+        board.createAndSaveNewPlayersAndPiecesPositionsOfGame(chessGameEntity.getId(), boardSetting);
         return chessGameEntity.getId();
     }
 
     private void validate(BoardSetting boardSetting) {
-        if (!(boardSetting instanceof BoardDefaultSetting
-            || boardSetting instanceof BoardCustomSetting)) {
+        if (!(boardSetting instanceof BoardDefaultSetting || boardSetting instanceof BoardCustomSetting)) {
             throw new IllegalArgumentException("유효하지 않은 보드 세팅 객체 타입 입니다.");
         }
     }
@@ -46,16 +44,14 @@ public class ChessGame {
     public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
         List<ChessGameResponseDTO> chessGameResponseDTOs = new ArrayList<>();
         for (ChessGameEntity chessGameEntity : chessGameRepository.findAll()) {
-            chessGameResponseDTOs.add(
-                new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
+            chessGameResponseDTOs.add(new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
         }
         return chessGameResponseDTOs;
     }
 
     public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
         ChessGameEntity chessGameEntity = chessGameRepository.findById(moveRequestDTO.getGameId());
-        MoveRequest moveRequest
-            = new MoveRequest(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
+        MoveRequest moveRequest = new MoveRequest(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
         board.validateRoute(chessGameEntity.getId(), moveRequest);
         board.move(chessGameEntity.getId(), moveRequest);
     }

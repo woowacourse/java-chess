@@ -54,8 +54,7 @@ class ChessGameDAOTest {
             .map(ChessGameEntity::getId)
             .collect(Collectors.toList());
 
-        assertThat(foundAllChessGameIds)
-            .containsExactlyInAnyOrder(chessGame1.getId(), chessGame2.getId());
+        assertThat(foundAllChessGameIds).containsExactlyInAnyOrder(chessGame1.getId(), chessGame2.getId());
     }
 
     @DisplayName("체스 게임 이름, 현재 턴 팀 색깔 가져오기")
@@ -133,10 +132,8 @@ class ChessGameDAOTest {
         assertThat(allChessGames).hasSizeGreaterThan(0);
 
         for (ChessGameEntity chessGameEntity : allChessGames) {
-            Long whitePlayerId = playerRepository
-                .findIdByGameIdAndTeamColor(chessGameEntity.getId(), WHITE);
-            Long blackPlayerId = playerRepository
-                .findIdByGameIdAndTeamColor(chessGameEntity.getId(), BLACK);
+            Long whitePlayerId = playerRepository.findIdByGameIdAndTeamColor(chessGameEntity.getId(), WHITE);
+            Long blackPlayerId = playerRepository.findIdByGameIdAndTeamColor(chessGameEntity.getId(), BLACK);
 
             assertThat(whitePlayerId).isNotNull();
             assertThat(blackPlayerId).isNotNull();

@@ -17,8 +17,7 @@ public abstract class Piece {
     private final double score;
     private final List<Direction> directions;
 
-    public Piece(Long id, PieceType pieceType, TeamColor teamColor, double score,
-        List<Direction> directions) {
+    public Piece(Long id, PieceType pieceType, TeamColor teamColor, double score, List<Direction> directions) {
         this.id = id;
         this.pieceType = pieceType;
         this.teamColor = teamColor;
@@ -26,8 +25,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public Piece(PieceType pieceType, TeamColor teamColor, double score,
-        List<Direction> directions) {
+    public Piece(PieceType pieceType, TeamColor teamColor, double score, List<Direction> directions) {
         this.id = null;
         this.pieceType = pieceType;
         this.teamColor = teamColor;
@@ -50,8 +48,7 @@ public abstract class Piece {
         if (pieceWithColorType == null) {
             return null;
         }
-        return PiecesCache
-            .find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
+        return PiecesCache.find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
     }
 
     public static Piece of(PieceType pieceType, TeamColor teamColor) {

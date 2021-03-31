@@ -38,7 +38,6 @@ public class Position {
     public static Position of(String position) {
         String file = String.valueOf(position.charAt(FILE_INDEX));
         String rank = String.valueOf(position.charAt(RANK_INDEX));
-
         return Position.of(File.of(file), Rank.of(rank));
     }
 
@@ -49,10 +48,8 @@ public class Position {
     public Direction calculateDirection(Position destination) {
         File destinationFile = destination.getFile();
         Rank destinationRank = destination.getRank();
-
         int fileDiff = destinationFile.getOrder() - file.getOrder();
         int rankDiff = destinationRank.getValue() - rank.getValue();
-
         return Direction.of(fileDiff, rankDiff);
     }
 
@@ -61,8 +58,7 @@ public class Position {
     }
 
     public boolean isRankForwardedBy(Position destination, int rankDiff) {
-        return rank.isDiff(destination.getRank(), rankDiff)
-            && file.isSameAs(destination.getFile());
+        return rank.isDiff(destination.getRank(), rankDiff) && file.isSameAs(destination.getFile());
     }
 
     public boolean isFirstPawnPosition(TeamColor teamColor) {

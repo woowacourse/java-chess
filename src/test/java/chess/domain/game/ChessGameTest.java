@@ -2249,15 +2249,10 @@ class ChessGameTest {
         }
     }
 
-    private void assertCanMove(ChessGame chessGame, Long gameId, String startPositionInput,
-        String destinationInput) throws SQLException {
-
+    private void assertCanMove(ChessGame chessGame, Long gameId, String startPositionInput, String destinationInput) throws SQLException {
         List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
-        String pieceToMove
-            = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
-
-        MoveRequestDTO moveRequestDTO
-            = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
+        String pieceToMove = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
 
         chessGame.move(moveRequestDTO);
         List<String> cellsStatusAfterMove = chessGame.getBoardStatus(gameId).getCellsStatus();
@@ -2266,9 +2261,7 @@ class ChessGameTest {
         assertPiecePosition(destinationInput, pieceToMove, cellsStatusAfterMove);
     }
 
-    private void assertPiecePosition(String positionInput, String expectedCellStatus,
-        List<String> actualCellsStatus) {
-
+    private void assertPiecePosition(String positionInput, String expectedCellStatus, List<String> actualCellsStatus) {
         assertThat(
             actualCellsStatus.get(
                 PositionConverter.convertToCellsStatusIndex(positionInput)
@@ -2276,18 +2269,13 @@ class ChessGameTest {
         ).isEqualTo(expectedCellStatus);
     }
 
-    private void assertCannotMove(ChessGame chessGame, Long gameId, String startPositionInput,
-        String destinationInput) throws SQLException {
-
+    private void assertCannotMove(ChessGame chessGame, Long gameId, String startPositionInput, String destinationInput) throws SQLException {
         List<String> cellsStatus = chessGame.getBoardStatus(gameId).getCellsStatus();
 
-        String startPositionCellStatus
-            = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
-        String destinationCellStatus
-            = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(destinationInput));
+        String startPositionCellStatus = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(startPositionInput));
+        String destinationCellStatus = cellsStatus.get(PositionConverter.convertToCellsStatusIndex(destinationInput));
 
-        MoveRequestDTO moveRequestDTO
-            = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(gameId, startPositionInput, destinationInput);
 
         assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);

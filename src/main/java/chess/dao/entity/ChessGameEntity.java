@@ -11,7 +11,7 @@ public class ChessGameEntity {
     private TeamColor currentTurnTeamColor;
 
     public ChessGameEntity(String title) {
-        this.currentTurnTeamColor = WHITE;
+        currentTurnTeamColor = WHITE;
         if (title.isEmpty()) {
             this.title = "제목 없는 방";
             return;
