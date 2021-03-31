@@ -117,3 +117,6 @@
 - [x] Piece에게 팀을 주면 해당 팀에 해당하는 초기 위치의 Pieces를 얻어오게 수정
 - [x] getBoard 메소드명을 역할에 맞춰 createBoard로 변경
 - [x] 축약한 네이밍 수정
+- [x] pawn 이동 버그 수정
+ 
+---

@@ -13,6 +13,8 @@ public final class Pawn extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "7";
     private static final String WHITE_TEAM_ROW = "2";
     private static final double SCORE = 1.0;
+    public static final int SINGLE_MOVE_DEGREE = 1;
+    public static final int DOUBLE_MOVE_DEGREE = 2;
 
     private Pawn(final Team team, final Position position) {
         super(position, "P", team, SCORE);
@@ -47,10 +49,10 @@ public final class Pawn extends NoKingPieces {
     public List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
         addAttackablePositions(movablePositions, board);
-        addMovablePositions(movablePositions, board, 1);
+        addMovablePositions(movablePositions, board, SINGLE_MOVE_DEGREE);
 
-        if (getPosition().isInitPositionByTeam(getTeam())) {
-            addMovablePositions(movablePositions, board, 2);
+        if (getPosition().isInitPositionByTeam(getTeam()) && canDoubleMove(board)) {
+            addMovablePositions(movablePositions, board, DOUBLE_MOVE_DEGREE);
         }
         return movablePositions;
     }
@@ -65,6 +67,12 @@ public final class Pawn extends NoKingPieces {
         if (!board.piecesByTeam(Team.BLACK).containByPosition(movedPosition) && !board.piecesByTeam(Team.WHITE).containByPosition(movedPosition)) {
             movablePositions.add(movedPosition);
         }
+    }
+
+    private boolean canDoubleMove(final Board board) {
+        Position curPosition = getPosition();
+        Position oneMovedPosition = new Position(curPosition.getRow() + getStraightRow(1), curPosition.getColumn());
+        return !board.piecesByTeam(Team.BLACK).containByPosition(oneMovedPosition) && !board.piecesByTeam(Team.WHITE).containByPosition(oneMovedPosition);
     }
 
     private int getStraightRow(final int degree) {
