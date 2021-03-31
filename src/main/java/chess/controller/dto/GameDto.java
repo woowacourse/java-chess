@@ -7,8 +7,8 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class GameDto {
-    private static String BLACK = "black";
-    private static String WHITE = "white";
+    private static final String BLACK = "black";
+    private static final String WHITE = "white";
 
     private final String status;
     private final String turn;
@@ -31,7 +31,7 @@ public class GameDto {
     }
 
     private String getTurn(ChessGame chessGame) {
-        if(chessGame.isBlackTurn()) {
+        if (chessGame.isBlackTurn()) {
             return BLACK;
         }
 
@@ -39,7 +39,7 @@ public class GameDto {
     }
 
     private String getWinner(ChessGame chessGame) {
-        if(chessGame.getWinnerColorNotation().isPresent()) {
+        if (chessGame.getWinnerColorNotation().isPresent()) {
             return chessGame.getWinnerColorNotation().get();
         }
 

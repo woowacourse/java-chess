@@ -10,7 +10,6 @@ import chess.repository.GameRepository;
 import spark.Response;
 
 public class MoveService {
-    private static final String COMMAND = "move";
     private static final String POSITION_FORMAT = "[a-h][1-8]";
 
     private final String gameId;
