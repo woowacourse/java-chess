@@ -5,7 +5,6 @@ import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.Position;
 import chess.domain.PositionInformation;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;

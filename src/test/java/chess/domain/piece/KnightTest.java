@@ -5,7 +5,6 @@ import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.Position;
 import chess.domain.PositionInformation;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -18,7 +17,7 @@ class KnightTest {
     @DisplayName("기물들이 있을 때 나이트의 움직임 테스트")
     void movablePositions() {
         List<Position> expectedMovablePositions = Arrays.asList(
-            Position.of(2,5),
+            Position.of(2, 5),
             Position.of(5, 2),
             Position.of(1, 2),
             Position.of(1, 4),

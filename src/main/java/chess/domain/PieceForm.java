@@ -22,7 +22,7 @@ public enum PieceForm {
     private final String name;
     private final BiFunction<TeamColor, Position, Piece> function;
 
-    PieceForm(String name, BiFunction<TeamColor,Position, Piece> function) {
+    PieceForm(String name, BiFunction<TeamColor, Position, Piece> function) {
         this.name = name;
         this.function = function;
     }

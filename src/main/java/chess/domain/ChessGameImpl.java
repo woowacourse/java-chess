@@ -80,7 +80,7 @@ public final class ChessGameImpl implements ChessGame {
         Set<Position> enemiesAttackPositions = pieces
             .attackPositionsByColor(currentColor.reverse());
 
-        if(!isKingDead()) {
+        if (!isKingDead()) {
             return enemiesAttackPositions.contains(
                 pieces.kingByColor(currentColor)
                     .currentPosition()

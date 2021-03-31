@@ -29,8 +29,10 @@ class AvailableDirectionsTest {
             Collections.singletonList(PieceDirection.UP)
         );
 
-        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0), TeamColor.WHITE);
-        List<PositionInformation> existPiecePositions = Collections.singletonList(new PositionInformation(Position.of(0, 5), TeamColor.WHITE));
+        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0),
+            TeamColor.WHITE);
+        List<PositionInformation> existPiecePositions = Collections
+            .singletonList(new PositionInformation(Position.of(0, 5), TeamColor.WHITE));
         boolean iterable = true;
 
         List<Position> movablePositions = availableDirections.allMovablePositions(
@@ -52,8 +54,10 @@ class AvailableDirectionsTest {
             Collections.singletonList(PieceDirection.UP)
         );
 
-        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0),TeamColor.WHITE);
-        List<PositionInformation> existPiecePositions = Collections.singletonList(new PositionInformation(Position.of(0, 5),TeamColor.WHITE));
+        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0),
+            TeamColor.WHITE);
+        List<PositionInformation> existPiecePositions = Collections
+            .singletonList(new PositionInformation(Position.of(0, 5), TeamColor.WHITE));
         boolean iterable = false;
 
         List<Position> movablePositions = availableDirections.allMovablePositions(

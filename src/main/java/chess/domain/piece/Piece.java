@@ -34,8 +34,9 @@ public abstract class Piece {
         PositionInformation currentPosition =
             new PositionInformation(this.currentPosition, pieceDetails.color());
 
-        movablePositions = availableDirections.allMovablePositions(existPiecePositions, currentPosition,
-            pieceDetails.iterable());
+        movablePositions = availableDirections
+            .allMovablePositions(existPiecePositions, currentPosition,
+                pieceDetails.iterable());
     }
 
     public boolean samePosition(Position position) {

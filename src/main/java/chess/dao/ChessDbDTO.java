@@ -3,6 +3,7 @@ package chess.dao;
 import java.util.Objects;
 
 public class ChessDbDTO {
+
     private Long id;
     private Long gameid;
     private String name;

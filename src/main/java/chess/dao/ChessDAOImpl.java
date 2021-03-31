@@ -23,14 +23,15 @@ public class ChessDAOImpl implements ChessDAO {
 
     @Override
     public Long saveGame(List<Piece> pieces, Long gameId) {
-        try (Connection connection = sql2o.beginTransaction()){
+        try (Connection connection = sql2o.beginTransaction()) {
             connection.createQuery("delete from game where gameid = :gameId")
                 .addParameter("gameId", gameId)
                 .executeUpdate();
 
-            Query query = connection.createQuery("insert into game(gameid, name, color, position) values(:gameid, :name, :color,:position)");
+            Query query = connection.createQuery(
+                "insert into game(gameid, name, color, position) values(:gameid, :name, :color,:position)");
             pieces.forEach(piece -> {
-                query.addParameter("gameid",gameId)
+                query.addParameter("gameid", gameId)
                     .addParameter("name", piece.name())
                     .addParameter("color", piece.color())
                     .addParameter("position", piece.currentPosition().columnAndRow())
@@ -44,7 +45,7 @@ public class ChessDAOImpl implements ChessDAO {
 
     @Override
     public List<Piece> loadGame(Long gameId) {
-        try (Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             List<ChessDbDTO> results = con.createQuery("select * from game where gameid=:gameId")
                 .addParameter("gameId", gameId)
                 .executeAndFetch(ChessDbDTO.class);
@@ -59,7 +60,7 @@ public class ChessDAOImpl implements ChessDAO {
 
     @Override
     public void removeGame(Long gameId) {
-        try (Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery("delete from game where gameid=:gameId")
                 .addParameter("gameId", gameId)
                 .executeUpdate();

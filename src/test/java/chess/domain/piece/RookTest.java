@@ -5,9 +5,7 @@ import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.Position;
 import chess.domain.PositionInformation;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -30,14 +28,6 @@ class RookTest {
         );
 
         Rook rook = new Rook(WHITE, Position.of(3, 3));
-
-        List<Position> existPiecePositions =
-            new ArrayList<>(Collections.singletonList(Position.of(3, 5)));
-
-        List<Position> enemiesPositions =
-            Collections.singletonList(Position.of(4, 3));
-        existPiecePositions.addAll(enemiesPositions);
-
 
         List<PositionInformation> positionInformation = Arrays.asList(
             new PositionInformation(Position.of(3, 5), WHITE),

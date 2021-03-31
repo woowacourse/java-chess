@@ -27,7 +27,7 @@ class FetchService {
     fetch(url, {
       method: 'DELETE',
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json'
       }
     });
   }

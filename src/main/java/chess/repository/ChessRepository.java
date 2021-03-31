@@ -21,8 +21,8 @@ public class ChessRepository {
         return chessGames.computeIfAbsent(gameId,
             (id) -> {
                 List<Piece> pieces = chessDAO.loadGame(id);
-                if(pieces.size() == 0) {
-                    pieces = PieceFactory.initialPieces(8,0,7);
+                if (pieces.size() == 0) {
+                    pieces = PieceFactory.initialPieces(8, 0, 7);
                 }
                 return ChessGameImpl.from(Pieces.from(pieces), TeamColor.WHITE);
             }

@@ -19,7 +19,7 @@ function eventHandler() {
 }
 
 function setGameId({key, target}) {
-  if(key === 'Enter' && target.value.length > 0) {
+  if (key === 'Enter' && target.value.length > 0) {
     gameId = target.value;
     createBoard();
   }
@@ -43,7 +43,7 @@ function updateRoundStatus() {
 }
 
 function clickEvent({target}) {
-  if(!target.classList.contains('ask-form')){
+  if (!target.classList.contains('ask-form')) {
     let targetBoardItem = target.closest(".board-item");
 
     if (targetBoardItem.classList.contains('movable')) {

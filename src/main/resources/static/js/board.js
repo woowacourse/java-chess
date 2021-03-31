@@ -37,7 +37,8 @@ class Board {
   }
 
   selectItem(boardItem) {
-    if (this.#selectedItem === boardItem || !(boardItem.id in this.#roundStatus.movablePositions)) {
+    if (this.#selectedItem === boardItem || !(boardItem.id
+        in this.#roundStatus.movablePositions)) {
       this.clearSelectedItem();
       return;
     }
@@ -66,7 +67,8 @@ class Board {
   validateContinuable() {
     let kingDead = this.#roundStatus.kingDead;
     if (kingDead) {
-      const winner = this.#roundStatus.currentColor === 'WHITE' ? 'BLACK' : 'WHITE';
+      const winner = this.#roundStatus.currentColor === 'WHITE' ? 'BLACK'
+          : 'WHITE';
       alert(`왕이 죽었습니다. ${winner} 승리`);
       exit();
     }
