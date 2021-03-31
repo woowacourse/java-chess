@@ -18,6 +18,10 @@
             background-size: 1200px 1200px;
         }
 
+        .table_container > .chessboard:hover {
+            background-color: rebeccapurple;
+        }
+
         .chessboard {
             height: 150px;
             width: 150px;
@@ -105,18 +109,17 @@
         <div id="g1" class="chessboard"></div>
         <div id="h1" class="chessboard"></div>
     </div>
-    <div style="text-align: center;">
-        <div class="row">
+        <div class="row" style="text-align: center">
             <form name="moveForm" action="/move" method="post" onsubmit="return validateMove()">
                 <input type="text" name="source" placeholder="source" style="width:240px;height:60px;font-size:30px;">
                 <input type="text" name="target" placeholder="target" style="width:240px;height:60px;font-size:30px;">
-                <input type="submit" value="move"  style="width:240px;height:60px;font-size:30px;">
+                <input type="submit" id="move" value="move" style="width:240px;height:60px;font-size:30px;" >
             </form>
             <form action="/end" onsubmit="return confirmExit()">
                 <button type="submit"  style="width:240px;height:60px;font-size:30px;">end</button>
             </form>
             <form action="/status" method="post">
-                <button type="submit" style="width:240px;height:60px;font-size:30px;">status</button>
+                <button type="submit" id="status" style="width:240px;height:60px;font-size:30px;">status</button>
             </form>
         </div>
     </div>
@@ -142,6 +145,19 @@
         n: 'white-knight',
         N: 'black-knight'
     };
+
+    window.onload = function () {
+        let winner = "{{winner}}";
+        let move = document.getElementById("move");
+        let status = document.getElementById("status");
+        if(!winner){
+            move.disabled = false;
+            status.disabled = false;
+        } else{
+            move.disabled = true;
+            status.disabled = true;
+        }
+    }
 
     function validateMove() {
         let moveForm = document.moveForm;
