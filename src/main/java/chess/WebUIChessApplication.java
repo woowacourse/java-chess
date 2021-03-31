@@ -1,6 +1,5 @@
 package chess;
 
-import chess.controller.ChessController;
 import chess.domain.game.Game;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -26,7 +25,7 @@ public class WebUIChessApplication {
 
         post("/move", (req, res) -> {
            Request request = GSON.fromJson(req.body(), Request.class);
-            return chessService.move(request, game);
+           return chessService.move(request, game);
         }, jsonTransformer);
     }
 

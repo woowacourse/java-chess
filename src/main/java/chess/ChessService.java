@@ -10,6 +10,9 @@ public class ChessService {
         String to = request.to();
         try {
             game.move(Position.from(from), Position.from(to));
+            if(!game.isNotEnd()) {
+                return new Response("300", "끝", game.winner().getColor().name());
+            }
             return new Response("200", "성공", game.currentPlayer().toString());
         } catch (Exception e) {
             return new Response("400", e.getMessage(), game.currentPlayer().toString());

@@ -38,6 +38,11 @@ public class Game {
         return turn.player();
     }
 
+    public Player winner() {
+        turn.next();
+        return turn.player();
+    }
+
     public Pieces getPieces() {
         return pieces;
     }

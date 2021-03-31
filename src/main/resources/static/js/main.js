@@ -153,6 +153,9 @@ function move(from, to) {
         }
         changeImg(from, to);
         changeTurnText();
+        if (obj.code === "300") {
+            alert(obj.turn + " 승리!");
+        }
     });
 }
 
