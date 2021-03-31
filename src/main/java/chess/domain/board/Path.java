@@ -33,7 +33,9 @@ public final class Path {
             if (position.isOfColumn(target.column()) && otherPiece.isEmpty()) {
                 cleanPath.add(target);
             }
-            if (!position.isOfColumn(target.column()) && piece.isDifferentColor(otherPiece)) {
+            if (!position.isOfColumn(target.column())
+                    && piece.isDifferentColor(otherPiece)
+                    && !otherPiece.isEmpty()) {
                 cleanPath.add(target);
             }
         }
