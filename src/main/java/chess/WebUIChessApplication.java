@@ -54,10 +54,14 @@ public class WebUIChessApplication {
             Queue<String> commands =
                     new ArrayDeque<>(Arrays.asList("move", moveRequestDto.getSource(), moveRequestDto.getTarget()));
 
-            ROUND.execute(commands);
-
             res.type("application/json");
-            return "{\"message\":\"200\"}";
+
+            try {
+                ROUND.execute(commands);
+            } catch (RuntimeException runtimeException) {
+                return "{\"status\":\"500\", \"message\":\"" + runtimeException.getMessage() + "\"}";
+            }
+            return "{\"status\":\"200\", \"message\":\"성공\"}";
         });
     }
 

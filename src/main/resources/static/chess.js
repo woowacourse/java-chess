@@ -132,8 +132,8 @@ function request_move_post() {
 
     xhr.onload = function () {
         const move_response = xhr.response;
-        if (move_response['message'] !== '200') {
-            alert('이동 에러 발생');
+        if (move_response['status'] === '500') {
+            alert(move_response['message']);
             return;
         }
         window.location.href = '/';
