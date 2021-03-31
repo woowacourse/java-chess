@@ -9,7 +9,7 @@ public class ConnectDB {
         Connection con = null;
         String server = "localhost:13306";
         String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
+        String option = "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
         String userName = "root";
         String password = "root";
 
