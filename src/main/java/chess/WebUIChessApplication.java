@@ -36,7 +36,6 @@ public class WebUIChessApplication {
 //
         get("/new", (req, res) -> {
             Map<String, String> model = webController.startGame();
-//            return render(model, "board.html");
             return gson.toJson(model);
         });
 

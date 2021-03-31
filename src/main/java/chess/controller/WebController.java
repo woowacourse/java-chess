@@ -20,6 +20,7 @@ public class WebController {
     }
 
     public Map<String, String> startGame() {
+        game = new Game(new InitialState());
         CommandAsString command = new CommandAsString("start");
         game = game.execute(command);
         Result result = game.result(command);
