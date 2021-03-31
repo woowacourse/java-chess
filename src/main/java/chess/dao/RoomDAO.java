@@ -27,7 +27,6 @@ public class RoomDAO {
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 long roomId = rs.getLong(FIRST_COLUMN);
-                con.closeConnection(connection);
                 return roomId;
             }
             throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
