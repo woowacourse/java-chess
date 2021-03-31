@@ -11,7 +11,7 @@ const WBishop = "../img/WB.png";
 const WKing = "../img/WK.png";
 const WQueen = "../img/WQ.png";
 
-let $chessBoard = document.getElementById('chessBoard');
+export let chessBoard = document.getElementById('chessBoard');
 
 initChessBoard();
 
@@ -22,6 +22,8 @@ function initChessBoard() {
         for (let j = 0; j < 8; j++) {
             let chessBoardColumn = document.createElement('div');
             chessBoardColumn.setAttribute("class", "chessColumn");
+            let boardInitial = getBoardInitial(i, j);
+            chessBoardColumn.setAttribute("id", boardInitial);
             chessBoardColumn.style = initChessBoardColor(i, j);
 
             let pieceImg = document.createElement('img');
@@ -34,8 +36,14 @@ function initChessBoard() {
             chessBoardColumn.appendChild(pieceImg);
             chessBoardRow.appendChild(chessBoardColumn);
         }
-        $chessBoard.appendChild(chessBoardRow);
+        chessBoard.appendChild(chessBoardRow);
     }
+}
+
+function getBoardInitial(row, column) {
+    const rowArray = ["8", "7", "6", "5", "4", "3", "2", "1"];
+    const columnArray = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    return columnArray[column] + rowArray[row];
 }
 
 function initChessBoardColor(row, column) {
@@ -56,7 +64,7 @@ function initPieceImage(row, column) {
         if (column === 2 || column === 5) {
             return BBishop;
         }
-        if (column === 3) {
+        if (column === 4) {
             return BKing;
         }
         return BQueen;
@@ -77,7 +85,7 @@ function initPieceImage(row, column) {
         if (column === 2 || column === 5) {
             return WBishop;
         }
-        if (column === 3) {
+        if (column === 4) {
             return WKing;
         }
         return WQueen;
