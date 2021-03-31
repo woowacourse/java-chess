@@ -41,4 +41,9 @@ public class BlackTurn extends Running {
 
         return afterStartBoard().movablePath(position);
     }
+
+    @Override
+    public String state() {
+        return "BlackTurn";
+    }
 }

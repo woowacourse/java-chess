@@ -28,5 +28,5 @@ public interface State {
 
     List<Position> movablePath(Position position);
 
-    State state();
+    String state();
 }

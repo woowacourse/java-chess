@@ -31,7 +31,7 @@ public class DtoAssembler {
         return rankDtos;
     }
 
-    public static ChessGameDto board(final Board board, State state, Score score) {
+    public static ChessGameDto board(final Board board, String state, Score score) {
         List<SquareDto> squareDtos = new ArrayList<>();
         Map<Position, Piece> squares = board.squares();
 
@@ -43,7 +43,7 @@ public class DtoAssembler {
 
         ScoreDto scoreDto = new ScoreDto(score.white(), score.black());
 
-        return new ChessGameDto(squareDtos, state.toString(), scoreDto);
+        return new ChessGameDto(squareDtos, state, scoreDto);
     }
 
     private static List<String> ypointSymbols(Board board, Ypoint ypoint) {

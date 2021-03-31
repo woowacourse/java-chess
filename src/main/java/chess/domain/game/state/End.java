@@ -64,4 +64,9 @@ public class End extends Ended {
     public List<Position> movablePath(Position position) {
         throw new IllegalStateException();
     }
+
+    @Override
+    public String state() {
+        return "End";
+    }
 }

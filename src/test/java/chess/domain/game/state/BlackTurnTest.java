@@ -104,8 +104,8 @@ class BlackTurnTest {
     @Test
     @DisplayName("흑색 차례에서 흑색말의 movablePath 명령시 결과 반환")
     void testMovablePathOfSameColor() {
-        assertThat(this.blackTurn.movablePath(Position.of("a7")))
-            .containsExactly(Position.of("a6"), Position.of("a5"));
+        assertThat(this.blackTurn.movablePath(Position.of("b8")))
+            .containsExactly(Position.of("a6"), Position.of("c6"));
     }
 
     @Test
@@ -118,6 +118,6 @@ class BlackTurnTest {
     @Test
     @DisplayName("흑색 차례에서 state 명령시 흑색 차례 반환")
     void testState(){
-        assertThat(this.blackTurn.state()).isInstanceOf(BlackTurn.class);
+        assertThat(this.blackTurn.state()).isEqualTo("BlackTurn");
     }
 }

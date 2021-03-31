@@ -104,8 +104,8 @@ class WhiteTurnTest {
     @Test
     @DisplayName("백색 차례에서 백색말의 movablePath 명령시 결과 반환")
     void testMovablePathOfSameColor() {
-        assertThat(this.whiteTurn.movablePath(Position.of("b2")))
-            .containsExactly(Position.of("b3"), Position.of("b4"));
+        assertThat(this.whiteTurn.movablePath(Position.of("b1")))
+            .containsExactly(Position.of("a3"), Position.of("c3"));
     }
 
     @Test
@@ -118,6 +118,6 @@ class WhiteTurnTest {
     @Test
     @DisplayName("백색 차례에서 state 명령시 백색 차례 반환")
     void testState(){
-        assertThat(this.whiteTurn.state()).isInstanceOf(WhiteTurn.class);
+        assertThat(this.whiteTurn.state()).isEqualTo("WhiteTurn");
     }
 }

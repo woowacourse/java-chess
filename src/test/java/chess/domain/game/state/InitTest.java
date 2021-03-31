@@ -89,6 +89,6 @@ public class InitTest {
     @Test
     @DisplayName("초기 상태에서 state 명령시 초기 상태 반환")
     void testState(){
-        assertThat(this.init.state()).isInstanceOf(Init.class);
+        assertThat(this.init.state()).isEqualTo("Init");
     }
 }

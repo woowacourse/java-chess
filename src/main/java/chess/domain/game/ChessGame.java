@@ -55,7 +55,7 @@ public class ChessGame {
         return this.state.movablePath(position);
     }
 
-    public State state() {
+    public String state() {
         return this.state.state();
     }
 

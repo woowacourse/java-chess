@@ -13,9 +13,4 @@ public abstract class AfterStart implements State {
     protected Board afterStartBoard() {
         return this.board;
     }
-
-    @Override
-    public State state() {
-        return this;
-    }
 }
