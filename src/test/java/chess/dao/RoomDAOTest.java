@@ -19,4 +19,10 @@ class RoomDAOTest {
     void allRooms() throws SQLException {
         roomDAO.allRooms();
     }
+
+    @Test
+    @DisplayName("방 status 변경")
+    void changeStatus() throws SQLException {
+        roomDAO.changeStatusEndByRoomId("5");
+    }
 }

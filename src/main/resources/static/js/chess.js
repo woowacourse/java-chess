@@ -140,6 +140,9 @@ function checkEndGame(currentStatus) {
 function gameInitialize() {
     $.ajax({
         url: "/initialize",
+        data: {
+            roomId: roomId
+        },
         method: "POST",
         dataType: "json"
     });

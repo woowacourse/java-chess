@@ -51,4 +51,11 @@ public class RoomDAO {
         }
         return rooms;
     }
+
+    public void changeStatusEndByRoomId(String roomId) throws SQLException {
+        String query = "UPDATE room SET status = 0 WHERE id = ?";
+        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+        statement.setString(1, roomId);
+        statement.executeUpdate();
+    }
 }

@@ -32,7 +32,7 @@ public class WebChessGameController {
         checkCurrentTurn(chessGame);
         findMovablePosition(chessGame);
         movePiece(connectDB, chessGame);
-        initialize(chessGame);
+        initialize(chessGame, connectDB);
     }
 
     private void goHome(ConnectDB connectDB) {
@@ -128,9 +128,11 @@ public class WebChessGameController {
         return new StatusDTO(turn, chessGame);
     }
 
-    private void initialize(ChessGame chessGame) {
+    private void initialize(ChessGame chessGame, ConnectDB connectDB) {
         post("/initialize", "application/json", (req, res) -> {
-            chessGame.initialize();
+            String roomId = req.queryParams("roomId");
+            RoomDAO roomDAO = new RoomDAO(connectDB);
+            roomDAO.changeStatusEndByRoomId(roomId);
             return true;
         }, new JsonTransformer());
     }
