@@ -30,7 +30,7 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
-//
+
         post("/move", (req, res) -> {
             try {
                 MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
@@ -52,7 +52,7 @@ public class WebUIChessApplication {
             chessService.start(Long.parseLong(gridId));
             return new Response(ResponseCode.NO_CONTENT);
         }, GSON::toJson);
-//
+
         post("/grid/:gridId/finish", (req, res) -> {
             String gridId = req.params("gridId");
             chessService.finish(Long.parseLong(gridId));
