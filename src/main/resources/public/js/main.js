@@ -2,6 +2,7 @@ const startButton = document.getElementById("start");
 startButton.addEventListener("click", createChessBoard);
 
 async function createChessBoard() {
+    startButton.setAttribute("style", "display: none");
     const response = await fetch("/start")
     .then(res => res.json())
 
