@@ -31,6 +31,9 @@ public class PawnStrategy implements CanMoveStrategy {
         if (Objects.nonNull(movedPositionPiece)) {
             return false;
         }
+        if (destination == movedPosition) {
+            return true;
+        }
         movedPosition = movedPosition.moveTowardDirection(target.directionToDestination(destination));
         movedPositionPiece = board.findPieceFromPosition(movedPosition);
 
