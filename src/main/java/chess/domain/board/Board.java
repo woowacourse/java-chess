@@ -11,9 +11,15 @@ import java.util.Map;
 public final class Board {
 
     private State state;
+    private final Players players;
 
     public Board() {
-        state = new Ready();
+        this(new Ready(), new Players("player1", "player2"));
+    }
+
+    public Board(final State state, final Players players) {
+        this.state = state;
+        this.players = players;
     }
 
     public void movePiece(final String sourceValue, final String targetValue) {
@@ -48,5 +54,9 @@ public final class Board {
 
     public List<Position> movablePositions(String source) {
         return state.movablePositions(source);
+    }
+
+    public Players players() {
+        return players;
     }
 }
