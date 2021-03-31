@@ -11,6 +11,8 @@ public interface PieceRepository {
 
     void update(long pieceId, Piece piece) throws SQLException;
 
+    // deletePieceByLocation(String location)
+
     void deleteAll() throws SQLException;
 
     int count() throws SQLException;

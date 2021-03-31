@@ -43,7 +43,7 @@ public class JdbcRoomRepository implements RoomRepository {
             if (rs.next()) {
                 return rs.getLong(1);
             }
-            throw new IllegalArgumentException("[ERROR] insert - Piece정보를 DB에 저장하지 못했습니다.");
+            throw new IllegalArgumentException("[ERROR] insert - 해당 정보로 방을 만들 수 없습니다.");
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -102,7 +102,7 @@ public class JdbcRoomRepository implements RoomRepository {
                 Timestamp createdAt = rs.getTimestamp("created_at");
                 return new RoomDto(id, userid, name, state, currentTeam, createdAt);
             }
-            throw new IllegalArgumentException("[ERROR] findRoomById - DB로부터 Room정보를 가져오지 못했습니다.");
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
         } catch (SQLException e) {
             throw e;
         } finally {

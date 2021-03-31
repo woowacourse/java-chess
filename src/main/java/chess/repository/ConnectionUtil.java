@@ -10,7 +10,7 @@ public class ConnectionUtil {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소
         String database = "CHESS"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
+        String option = "?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8";
         String userName = "root"; //  MySQL 서버 아이디
         String password = "password"; // MySQL 서버 비밀번호
 

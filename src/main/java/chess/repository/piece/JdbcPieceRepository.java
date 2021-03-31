@@ -194,7 +194,7 @@ public class JdbcPieceRepository implements PieceRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                result.add(new PieceDto(id, roomId, signature, team, location));
+                result.add(new PieceDto(id, roomid, signature, team, location));
             }
             return result;
         } catch (SQLException e) {

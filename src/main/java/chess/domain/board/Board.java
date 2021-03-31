@@ -1,12 +1,12 @@
 package chess.domain.board;
 
+import chess.domain.dto.PieceDto;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import chess.domain.team.Winner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -20,6 +20,10 @@ public class Board {
 
     public static Board of(final List<Piece> pieces) {
         return new Board(pieces);
+    }
+
+    public static Board from(final List<PieceDto> pieceDtos) {
+        return null;
     }
 
     public void move(Location source, Location target, Team currentTurnTeam) {
@@ -120,5 +124,9 @@ public class Board {
             .stream()
             .filter(Piece::isKing)
             .count() != NUM_OF_KING;
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }
