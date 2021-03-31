@@ -57,6 +57,13 @@ header {
   padding: 5px;
 }
 
+.remove-room {
+  position: absolute;
+  display: inline;
+  right: 20px;
+  color: #D18063
+}
+
 .create {
   position: relative;
   cursor: pointer;

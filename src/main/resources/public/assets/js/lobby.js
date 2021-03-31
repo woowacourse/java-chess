@@ -1,7 +1,7 @@
 const roomNameCountMin = 2;
 
 document.querySelector(".title").addEventListener("click", () => {
-  window.location.href = "./";
+  window.location.reload();
 });
 
 document.querySelector(".create").addEventListener("click", async () => {
@@ -33,3 +33,18 @@ document.querySelector(".rooms").addEventListener("click", (event) => {
     window.location.href = "./room/" + event.target.id;
   }
 });
+
+document.querySelector(".rooms").addEventListener("click", async (event) => {
+  if (event.target.classList.contains("remove-room")) {
+    const idToBeRemoved = event.target.closest(".room").getAttribute("id").toString();
+    console.log(idToBeRemoved)
+    await fetch("./room", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({id: idToBeRemoved})
+    });
+    window.location.reload();
+  }
+})

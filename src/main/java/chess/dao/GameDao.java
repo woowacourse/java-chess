@@ -24,6 +24,7 @@ public class GameDao {
     private static final String SELECT_BOARD_QUERY = "SELECT board FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
     private static final String SELECT_STATUS_QUERY = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
     private static final String SELECT_OPENED_ROOMS_QUERY = "SELECT id, name FROM room WHERE is_opened = true";
+    private static final String CLOSE_ROOM_QUERY = "UPDATE room SET is_opened = false WHERE id = (?)";
 
     private static final Gson GSON = new Gson();
 
@@ -67,7 +68,8 @@ public class GameDao {
 
     public String insertRoom(RoomDto roomDto) throws SQLException {
         Connection connection = connection();
-        PreparedStatement pstmt = connection.prepareStatement(INSERT_ROOM_QUERY, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pstmt = connection
+            .prepareStatement(INSERT_ROOM_QUERY, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, roomDto.getName());
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
@@ -77,7 +79,8 @@ public class GameDao {
         return roomId;
     }
 
-    public void insertBoardAndStatusDto(BoardWebDto boardWebDto, GameStatusDto gameStatusDto, String roomId)
+    public void insertBoardAndStatusDto(BoardWebDto boardWebDto, GameStatusDto gameStatusDto,
+        String roomId)
         throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = connection.prepareStatement(INSERT_BOARD_AND_STATUS_QUERY);
@@ -137,5 +140,13 @@ public class GameDao {
         }
         closeConnection(connection);
         return result;
+    }
+
+    public void closeRoom(String roomId) throws SQLException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(CLOSE_ROOM_QUERY);
+        pstmt.setString(1, roomId);
+        pstmt.executeUpdate();
+        closeConnection(connection);
     }
 }
