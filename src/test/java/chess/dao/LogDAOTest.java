@@ -22,4 +22,10 @@ class LogDAOTest {
         logDAO.createLog("5", "c2", "c4");
         logDAO.deleteLogByRoomId("5");
     }
+
+    @Test
+    @DisplayName("방에 따른 모든 로그 가져오기")
+    void allLogByRoomId() throws SQLException {
+        logDAO.allLogByRoomId("5");
+    }
 }

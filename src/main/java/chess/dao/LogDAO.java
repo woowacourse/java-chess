@@ -1,7 +1,10 @@
 package chess.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LogDAO {
     private final ConnectDB connectDB;
@@ -24,5 +27,22 @@ public class LogDAO {
         PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
         statement.setString(1, roomId);
         statement.executeUpdate();
+    }
+
+    public List<String[]> allLogByRoomId(String roomId) throws SQLException {
+        String query = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
+        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+        statement.setString(1, roomId);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<String[]> logs = new ArrayList<>();
+
+        while (resultSet.next()) {
+            String[] positions = new String[2];
+            positions[0] = resultSet.getString("start_position");
+            positions[1] = resultSet.getString("end_position");
+            logs.add(positions);
+        }
+        return logs;
     }
 }

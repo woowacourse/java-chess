@@ -113,19 +113,16 @@
                 </form>
                 <form action="start" method="post">
                     <input type="hidden" name="room-id" value={{number}}>
-                    <input type="submit" value={{button}}>
+                    <input id="init-button" type="submit" value={{button}}>
                 </form>
                 <form action="continue" method="post">
+                    <input type="hidden" name="room-id" value={{number}}>
                     <input type="submit" value="이어하기">
                 </form>
             </div>
         </div>
     </div>
 </div>
-<script>
-    const id = document.getElementById("room-id");
-    console.log(id.value);
-</script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/chess.js"></script>
 <script>
