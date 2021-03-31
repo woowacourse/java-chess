@@ -25,6 +25,10 @@ public class WebUIChessApplication {
             return render(model, "chess-game.html");
         });
 
+        post("/init", (req, res) -> {
+            return webUIChessGameController.board();
+        }, gson::toJson);
+
         post("/movable", (req, res) -> {
             MovableRequestDto movableRequestDto = gson
                 .fromJson(req.body(), MovableRequestDto.class);

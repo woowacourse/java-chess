@@ -19,6 +19,10 @@ public class WebUIChessGameController {
         this.chessGame.start();
     }
 
+    public BoardDto board() {
+        return DtoAssembler.board(this.chessGame.board());
+    }
+
     public MovableResponseDto movablePath(final MovableRequestDto movableRequestDto) {
         List<Position> positions = this.chessGame.movablePath(movableRequestDto.position());
         return DtoAssembler.movableResponse(positions);
