@@ -102,3 +102,29 @@
 
 
 
+## 테이블
+
+```mysql
+CREATE TABLE board (
+	board_id INTEGER NOT NULL AUTO_INCREMENT,
+	white_player VARCHAR(12),
+	black_player VARCHAR(12),
+	turn_is_white BOOLEAN NOT NULL DEFAULT true,
+	is_finish BOOLEAN NOT NULL DEFAULT false, 
+	PRIMARY KEY (board_id)
+);
+```
+
+
+
+```mysql
+CREATE TABLE piece (
+	piece_id INTEGER NOT NULL AUTO_INCREMENT,
+	board_id INTEGER NOT NULL,
+	piece_position VARCHAR(2) NOT NULL,
+	piece_symbol VARCHAR(1) NOT NULL,
+	PRIMARY KEY (piece_id),
+	FOREIGN KEY (board_id) REFERENCES board (board_id)
+);
+```
+
