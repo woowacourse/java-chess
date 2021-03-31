@@ -37,4 +37,8 @@ public enum Vertical {
     public int getWeight() {
         return weight;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

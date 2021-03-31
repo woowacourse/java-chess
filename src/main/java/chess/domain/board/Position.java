@@ -77,4 +77,8 @@ public class Position {
         Vertical vertical = getVertical();
         return vertical == Vertical.ONE || vertical == Vertical.EIGHT;
     }
+
+    public String convertToString(){
+        return horizontal.getValue() + vertical.getValue();
+    }
 }
