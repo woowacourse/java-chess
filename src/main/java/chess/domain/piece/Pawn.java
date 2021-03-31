@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class Pawn extends Piece {
-    private static final char NAME_WHEN_BLACK = 'P';
-    private static final char NAME_WHEN_WHITE = 'p';
+    public static final char NAME_WHEN_BLACK = 'P';
+    public static final char NAME_WHEN_WHITE = 'p';
     private static final int STEP_RANGE = 1;
     private static final int TWO_STEP_RANGE = 2;
     private static final int SCORE = 1;

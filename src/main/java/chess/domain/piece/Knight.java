@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class Knight extends Piece {
-    private static final char NAME_WHEN_BLACK = 'N';
-    private static final char NAME_WHEN_WHITE = 'n';
+    public static final char NAME_WHEN_BLACK = 'N';
+    public static final char NAME_WHEN_WHITE = 'n';
     private static final int STEP_RANGE = 1;
     private static final double SCORE = 2.5;
 

@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class King extends Piece {
-    private static final char NAME_WHEN_BLACK = 'K';
-    private static final char NAME_WHEN_WHITE = 'k';
+    public static final char NAME_WHEN_BLACK = 'K';
+    public static final char NAME_WHEN_WHITE = 'k';
     private static final int STEP_RANGE = 1;
     private static final int SCORE = 0;
 

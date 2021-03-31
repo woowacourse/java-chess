@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public final class Empty extends Piece {
-    private static final char NAME = '.';
+    public static final char NAME = '.';
 
     public Empty(final Column column, final Row row) {
         super(Color.BLACK, column.getName(), row.getName());

@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class Bishop extends Piece {
-    private static final char NAME_WHEN_BLACK = 'B';
-    private static final char NAME_WHEN_WHITE = 'b';
+    public static final char NAME_WHEN_BLACK = 'B';
+    public static final char NAME_WHEN_WHITE = 'b';
     private static final int STEP_RANGE = 8;
     private static final int SCORE = 3;
 
