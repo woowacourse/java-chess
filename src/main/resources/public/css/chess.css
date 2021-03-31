@@ -8,6 +8,10 @@ h1 {
     padding-bottom: 20px;
 }
 
+p {
+    padding-bottom: 0px;
+}
+
 #chessBoard {
     display: inline-block;
     width: 500px;
@@ -24,14 +28,34 @@ h1 {
     text-align: center;
 }
 
-#teamInfoUI {
+#InfoUI {
     display: inline-block;
     width: 30%;
     margin: 30px;
 }
 
+/*#teamInfoUI {*/
+/*    display: inline-block;*/
+/*    width: 30%;*/
+/*    margin: 30px;*/
+/*}*/
+
+#teamInfoUI {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
 #teamInfoUI div {
     margin: 10px;
+}
+
+#btnInfoUI {
+    padding-top: 50px;
+    margin: 10px 10px 0;
+}
+
+#btnInfoUI .btn {
+    display: inline-block;
 }
 
 .square {

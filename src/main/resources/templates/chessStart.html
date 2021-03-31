@@ -2,13 +2,16 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/chess.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/start.css" rel="stylesheet" type="text/css"/>
     <title>Play Chess!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>Play Chess!</h1>
-<button onclick="playNewGame()">새 게임 시작하기</button>
-<button onclick="continueLastGame()">지난 게임 이어하기</button>
+<div class ="page">
+    <button onclick="playNewGame()" class="fun-btn">새 게임 시작하기</button>
+    <button onclick="continueLastGame()" class="fun-btn">지난 게임 이어하기</button>
+</div>
 </body>
 <script>
     const playNewGame = function () {
@@ -18,5 +21,12 @@
     const continueLastGame = function () {
         window.location = "http://localhost:4567/play/continue";
     }
+
+    $('.btn').on('click', function(event) {
+        $(this).toggleClass('start-event');
+        var $page = $('.btnContainer');
+        $page.toggleClass('color-start')
+            .toggleClass('bg-animate-color');
+    });
 </script>
 </html>

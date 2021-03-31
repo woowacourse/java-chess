@@ -1,37 +1,43 @@
 package chess.domain.dao;
 
-import chess.db.MySQLConnector;
-import chess.domain.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class HistoryDaoTest {
+class HistoryDaoTest {
     private HistoryDao historyDao;
-    private HistoryDatabase history;
 
     @BeforeEach
-    public void setup() throws SQLException {
+    void setUp() {
         historyDao = new HistoryDao();
-        history = new HistoryDatabase();
     }
 
     @Test
-    public void connection() {
-        Connection con = MySQLConnector.getConnection();
-        assertNotNull(con);
+    void insert() throws SQLException {
+        historyDao.insert("minjeong");
     }
 
     @Test
-    public void addUser() throws Exception {
-        CommandDto commandDto = new CommandDto("start");
-        history.insert(commandDto);
-        historyDao.insert(commandDto);
+    void name() throws SQLException{
+        final int id = historyDao.findIdByName("minjeong");
+        System.out.println(id);
+    }
+
+    @Test
+    void delete() throws SQLException{
+        historyDao.delete("minjeong");
+    }
+
+    @Test
+    void selectAll() throws SQLException{
+        historyDao.insert("minjeong");
+        historyDao.insert("joanne");
+        final List<String> names = historyDao.selectAll();
+        assertThat(names).contains("minjeong", "joanne");
     }
 }
-

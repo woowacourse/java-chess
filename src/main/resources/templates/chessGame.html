@@ -22,16 +22,22 @@
         {{/squares}}
     </div>
 
-    <div id="teamInfoUI">
-        <div id="turn">{{turn}}팀의 차례입니다.</div>
-        <div id="score">
-            {{#scores}}
-            <div id="{{team}}">{{team}} 점수 | {{score}}점</div>
-            {{/scores}}
+    <div id="InfoUI">
+        <div id="teamInfoUI">
+            <div id="turn">{{turn}}팀의 차례입니다.</div>
+            <div id="score">
+                {{#scores}}
+                <div id="{{team}}">{{team}} 점수 | {{score}}점</div>
+                {{/scores}}
+            </div>
         </div>
-        <form action="/play" method="get">
-            <button>종료하기</button>
-        </form>
+        <div id="btnInfoUI">
+            <p> 🗣 종료 전 저장하기를 눌러야 게임을 이어할 수 있습니다.</p>
+            <button onclick="save()" class="btn">저장하기</button>
+            <form action="/play" method="get" class="btn">
+                <button>종료하기</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

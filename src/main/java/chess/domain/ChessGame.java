@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Path;
 import chess.domain.board.Team;
 import chess.domain.command.Commands;
-import chess.domain.dao.HistoryDatabase;
+import chess.domain.dao.CommandDatabase;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
@@ -115,10 +115,10 @@ public class ChessGame {
         return turn;
     }
 
-    public void makeBoardStateOf(HistoryDatabase historyDatabase) {
-        final List<CommandDto> commands = historyDatabase.commands();
+    public void makeBoardStateOf(CommandDatabase commandDatabase) {
+        final List<CommandDto> commands = commandDatabase.commands();
         for (CommandDto commandInDB : commands) {
-            final Path path = new Path(new Commands(commandInDB.command()).path());
+            final Path path = new Path(new Commands(commandInDB.data()).path());
             movePiece(path);
         }
     }

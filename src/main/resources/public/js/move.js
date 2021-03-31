@@ -98,3 +98,19 @@ function mark(clickedLocation) {
         clickedLocation.style.boxShadow = "inset 0px 0px 10px 3px #ffff60";
     }
 }
+
+function save() {
+    const saveName = prompt("게임을 저장합니다 ✍🏻 게임을 무엇이라고 저장할까요?");
+    if (saveName != null) {
+        $.ajax({
+            type: "POST",
+            url: "/play/save",
+            data: {
+                "name" : saveName
+            },
+            dataType: "json",
+            success: alert("저장되었습니다."),
+            error: showError,
+        })
+    }
+}

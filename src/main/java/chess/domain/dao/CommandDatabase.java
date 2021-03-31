@@ -5,14 +5,14 @@ import chess.domain.dto.CommandDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryDatabase {
+public class CommandDatabase {
     private List<CommandDto> commands;
 
-    public HistoryDatabase() {
+    public CommandDatabase() {
         commands = new ArrayList<>();
     }
 
-    public HistoryDatabase(List<CommandDto> commands) {
+    public CommandDatabase(List<CommandDto> commands) {
         this.commands = commands;
     }
 
