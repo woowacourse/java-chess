@@ -3,9 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.piece.info.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -145,6 +143,20 @@ public class ChessBoard {
     public boolean hasSamePositionPiece(Position target) {
         return chessBoard.keySet().stream()
                 .anyMatch(position -> position.equals(target));
+    }
+
+    public List<Position> routes(Piece sourcePiece, Position source) {
+        List<Position> routes = new ArrayList<>();
+        for (Position target : Position.POSITIONS) {
+            try {
+                validateMovable(sourcePiece, source, target);
+                validateSameColor(source, target);
+                routes.add(target);
+            }catch (Exception e) {
+                continue;
+            }
+        }
+        return routes;
     }
 
 

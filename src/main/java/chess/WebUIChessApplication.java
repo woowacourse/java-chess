@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.ChessBoard;
 import chess.domain.dto.ChessStatusDto;
+import chess.domain.piece.Piece;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,12 +11,14 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static ChessBoard chessBoard = ChessBoard.generate();
+    private static ObjectMapper mapper = new ObjectMapper();
     public static void main(String[] args) {
 
         staticFileLocation("static");
@@ -25,7 +28,6 @@ public class WebUIChessApplication {
         });
 
         get("/board", (req, res) -> {
-            ObjectMapper mapper = new ObjectMapper();
             ChessStatusDto chessStatusDto = new ChessStatusDto(chessBoard.getChessBoard(),
                     Color.WHITE,
                     chessBoard.sumScoreByColor(Color.BLACK),
@@ -34,8 +36,16 @@ public class WebUIChessApplication {
             return jsonString;
         });
 
+        post("/route", (req, res) -> {
+            Map<String, String> map = mapper.readValue(req.body(), new TypeReference<Map<String, String>>() {});
+            String sourceValue = map.get("source");
+            Position source = Position.of(sourceValue.charAt(0), sourceValue.charAt(1));
+            Piece sourcePiece = chessBoard.findByPosition(source);
+            List<Position> routes = chessBoard.routes(sourcePiece, source);
+            return mapper.writeValueAsString(routes);
+        });
+
         post("/move", (req, res) -> {
-            ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(req.body(), new TypeReference<Map<String, String>>() {});
             String sourceValue = map.get("source");
             String targetValue = map.get("target");

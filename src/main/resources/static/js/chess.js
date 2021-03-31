@@ -68,6 +68,7 @@ function movePiece(event) {
         console.log(document.getElementById('turn').innerText)
         if (event.target.style.color == document.getElementById('turn').innerText.toLowerCase() && source == '') {
             source = event.target.closest('div').id;
+            showRoute(source);
             return;
         }
     }
@@ -77,6 +78,33 @@ function movePiece(event) {
         }
     }
 }
+
+function showRoute(source) {
+    const position = {
+        source: source
+    }
+    fetch("/route", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(position)
+    })
+        .then(response => {
+            return response.json()
+        }).then(data => {
+        addNextRoute(data);
+    })
+}
+
+function addNextRoute(data) {
+    for (let value of data) {
+        console.log(value.x)
+        console.log(value.y)
+        document.getElementById((value.x + value.y)).classList.add('suggest');
+    }
+}
+
 
 function selectTarget(event) {
     target = event.target.closest('div').id;
@@ -107,6 +135,7 @@ function updateBoard(data) {
         for (let j = 0; j < 8; j++) {
             const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
             const piece = data.chessBoard[boxDiv.id];
+            boxDiv.classList.remove('suggest');
             boxDiv.innerHTML = makePiece(piece);
         }
     }
