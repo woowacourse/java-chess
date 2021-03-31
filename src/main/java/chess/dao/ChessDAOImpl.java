@@ -39,8 +39,8 @@ public class ChessDAOImpl implements ChessDAO {
             });
             query.executeBatch();
             connection.commit();
+            return gameId;
         }
-        return null;
     }
 
     @Override

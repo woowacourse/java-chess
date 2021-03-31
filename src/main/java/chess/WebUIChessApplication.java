@@ -32,7 +32,7 @@ public class WebUIChessApplication {
         get("/:gameId/roundstatus", (req, res) -> {
             String gameId = req.params(":gameId");
             return objectMapper
-                .writeValueAsString(chessController.movablePositions(Long.parseLong(gameId)));
+                .writeValueAsString(chessController.roundStatus(Long.parseLong(gameId)));
         });
 
         post("/:gameId/move", (req, res) -> {
@@ -42,7 +42,7 @@ public class WebUIChessApplication {
             String targetPosition = request.get("targetPosition");
             chessController.move(Long.parseLong(gameId), currentPosition, targetPosition);
             return objectMapper
-                .writeValueAsString(chessController.movablePositions(Long.parseLong(gameId)));
+                .writeValueAsString(chessController.roundStatus(Long.parseLong(gameId)));
         });
 
         get("/:gameId/restart", (req, res) -> {

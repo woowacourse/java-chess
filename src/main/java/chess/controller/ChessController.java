@@ -31,7 +31,7 @@ public class ChessController {
             .collect(toList());
     }
 
-    public RoundStatusDTO movablePositions(Long gameId) {
+    public RoundStatusDTO roundStatus(Long gameId) {
         ChessGame chessGame = chessRepository.createGame(gameId);
         List<Piece> pieces = chessGame.currentColorPieces();
         return new RoundStatusDTO(
