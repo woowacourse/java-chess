@@ -19,8 +19,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         staticFiles.location("/public");
-        Grid grid = new Grid(new NormalGridStrategy());
-        ChessGame chessGame = new ChessGame(grid);
+        ChessGame chessGame = new ChessGame(new Grid(new NormalGridStrategy()));
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -28,7 +27,7 @@ public class WebUIChessApplication {
         });
 
         get("/pieces", (req,res)->{
-           Map<String, String> pieceMap = grid.pieceMap();
+           Map<String, String> pieceMap = chessGame.pieceMap();
            return pieceMap;
         }, GSON::toJson);
 
@@ -38,11 +37,11 @@ public class WebUIChessApplication {
         }, GSON::toJson);
 
         get("/score/white", (req,res)->{
-            return grid.score(Color.WHITE);
+            return chessGame.score(Color.WHITE);
         }, GSON::toJson);
 
         get("/score/black", (req,res)->{
-            return grid.score(Color.BLACK);
+            return chessGame.score(Color.BLACK);
         }, GSON::toJson);
 
         get("/gameover", (req,res)->{
@@ -55,7 +54,8 @@ public class WebUIChessApplication {
             String targetPosition = positionDTO.getTargetPosition();
             System.out.println(sourcePosition + targetPosition);
             try{
-                chessGame.move(grid.piece(new Position(sourcePosition)), grid.piece(new Position(targetPosition)));
+                chessGame.move(chessGame.grid().piece(new Position(sourcePosition)),
+                        chessGame.grid().piece(new Position(targetPosition)));
                 return "200";
             }
             catch (IllegalArgumentException error){
@@ -66,6 +66,16 @@ public class WebUIChessApplication {
         post("/start", (req, res) -> {
             try{
                 chessGame.start();
+                return 200;
+            }
+            catch (IllegalArgumentException error){
+                return 201;
+            }
+        });
+
+        post("/reset", (req, res) -> {
+            try{
+                chessGame.reset();
                 return 200;
             }
             catch (IllegalArgumentException error){

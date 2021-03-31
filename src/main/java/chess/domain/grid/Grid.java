@@ -49,7 +49,6 @@ public final class Grid {
                 .flatMap(line -> line
                         .pieces()
                         .stream()
-                        .filter(piece -> !piece.isEmpty())
                         .map(piece -> new SimpleEntry<>(piece.position().positionToString(),
                                 Character.toString(piece.name()))))
                 .collect(toMap(Entry::getKey, Entry::getValue));

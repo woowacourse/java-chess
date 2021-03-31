@@ -3,21 +3,23 @@ addClickListener();
 unicodeMap = {
     "R": "♜",
     "B": "♝",
-    "Q": "♛",
+    "Q": "♚",
     "N": "♞",
     "P": "♟",
-    "K": "♚",
+    "K": "♛",
     "r": "♖",
     "p": "♙",
     "b": "♗",
-    "q": "♕",
+    "q": "♔",
     "n": "♘",
-    "k": "♔",
+    "k": "♕",
+    ".": ""
 }
 
 function addClickListener(){
     document.getElementById("chessboard").addEventListener("click", selectPieces)
     document.getElementById("startButton").addEventListener("click", start)
+    document.getElementById("resetButton").addEventListener("click", reset)
 }
 
 function init(){
@@ -44,6 +46,16 @@ function start(){
         showWhiteScore()
         showBlackScore()
         showResetButton()
+    })
+}
+
+function reset(){
+    let response = postData("/reset")
+    response.then(function (result){
+        if(result == 200){
+            alert("게임을 리셋합니다.")
+        }
+        start()
     })
 }
 

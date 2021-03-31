@@ -1,5 +1,6 @@
 package chess.domain.grid;
 
+import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.state.BlackTurn;
@@ -7,8 +8,10 @@ import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.domain.state.WhiteTurn;
 
+import java.util.Map;
+
 public class ChessGame {
-    private final Grid grid;
+    private Grid grid;
     private GameState gameState;
     private boolean gameOver;
     private Color winner;
@@ -63,5 +66,20 @@ public class ChessGame {
             return Color.BLACK;
         }
         return null;
+    }
+
+    public void reset(){
+        this.gameState = new Ready();
+        this.gameOver = false;
+        this.winner = null;
+        this.grid = new Grid(new NormalGridStrategy());
+    }
+
+    public Map<String, String> pieceMap(){
+        return grid.pieceMap();
+    }
+
+    public final double score(final Color color) {
+        return grid.score(color);
     }
 }
