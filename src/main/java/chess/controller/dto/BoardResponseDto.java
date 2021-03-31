@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BoardResponseDto {
-    List<String> pieces;
+    private final List<String> pieces;
 
-    private BoardResponseDto(List<String> pieces) {
+    private BoardResponseDto(final List<String> pieces) {
         this.pieces = pieces;
     }
 
-    public static BoardResponseDto toBoard(Board board) {
+    public static BoardResponseDto toBoard(final Board board) {
         return new BoardResponseDto(board.pieces().stream()
                 .map(Piece::getSymbol)
                 .collect(Collectors.toList()));

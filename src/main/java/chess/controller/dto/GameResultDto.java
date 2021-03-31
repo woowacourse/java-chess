@@ -9,13 +9,13 @@ public class GameResultDto {
     private final double blackScore;
     private final Owner winner;
 
-    public GameResultDto(double whiteScore, double blackScore, Owner winner) {
+    public GameResultDto(final double whiteScore, final double blackScore, final Owner winner) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
         this.winner = winner;
     }
 
-    public static GameResultDto toStatus(Status status) {
+    public static GameResultDto toStatus(final Status status) {
         return new GameResultDto(status.whiteScore(), status.blackScore(), status.judgeWinner());
     }
 

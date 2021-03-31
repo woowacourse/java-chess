@@ -2,8 +2,8 @@ package chess.controller.dto;
 
 public class PositionResponseDto {
 
-    int x;
-    int y;
+    private final int x;
+    private final int y;
 
     public PositionResponseDto(final int x, final int y) {
         this.x = x;
