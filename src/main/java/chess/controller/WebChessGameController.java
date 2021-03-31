@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.util.JsonTransformer;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.dto.PiecesDTO;
 import chess.dto.StatusDTO;
+import chess.util.JsonTransformer;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,7 +20,11 @@ public class WebChessGameController {
         ChessGame chessGame = new ChessGame();
         chessGame.initialize();
         get("/", home());
-        post("/enter", enterRoom());
+        get("/enter", enterRoom());
+        post("/createNewGame", (req, res) -> {
+            // 방생성
+            return true;
+        }, new JsonTransformer());
         post("/start", gameSetting(chessGame));
         post("/myTurn", "application/json", currentTurn(chessGame), new JsonTransformer());
         post("/movablePositions", movablePositions(chessGame), new JsonTransformer());
@@ -38,7 +42,7 @@ public class WebChessGameController {
     private Route enterRoom() {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("button", "시작");
+            model.put("button", "새로운게임");
             model.put("isWhite", true);
             return render(model, "chess.html");
         };
@@ -48,6 +52,7 @@ public class WebChessGameController {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             chessGame.initialize();
+            // history db 지우기
             gameInformation(chessGame, model);
             return render(model, "chess.html");
         };

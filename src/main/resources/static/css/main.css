@@ -26,3 +26,44 @@ footer {
     right: 0;
     bottom: 0;
 }
+
+#rooms {
+    background-color: burlywood;
+    width: 50%;
+    height: 250px;
+    overflow: auto;
+}
+
+#rooms table {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tbody tr {
+    height: 60px;
+}
+
+th {
+    padding: 10px;
+}
+
+th, td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.fixed {
+    background-color: burlywood;
+    position: sticky;
+    top: 0;
+}
+
+#create-button {
+    margin-top: 10px;
+    width: 50%;
+    text-align: end;
+}

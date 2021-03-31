@@ -10,9 +10,67 @@
     <div id="title">
         <p>Woowa Kingdom Chess</p>
     </div>
-    <div id="button">
-        <form action="enter" method="post">
-            <input type="submit" value="start">
+    <div id="rooms">
+        <table>
+            <thead>
+            <tr>
+                <th class="fixed">No.</th>
+                <th class="fixed">방 이름</th>
+                <th class="fixed">black 팀</th>
+                <th class="fixed">white 팀</th>
+                <th class="fixed">상태</th>
+                <th class="fixed">입장</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>테스트</td>
+                <td>air</td>
+                <td>junseo</td>
+                <td>진행중</td>
+                <td>
+                    <button onclick="location.href = '/enter'">입장하기</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>테스트2</td>
+                <td>air</td>
+                <td>junseo</td>
+                <td>종료</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>테스트2</td>
+                <td>air</td>
+                <td>junseo</td>
+                <td>종료</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>테스트2</td>
+                <td>air</td>
+                <td>junseo</td>
+                <td>종료</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>테스트2</td>
+                <td>air</td>
+                <td>junseo</td>
+                <td>종료</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="create-button">
+        <form action="" method="">
+            <input type="button" value="방 만들기" onclick="createRoom()">
         </form>
     </div>
 </div>
@@ -20,5 +78,31 @@
     image source:
     <cite><a href="https://kr.freepik.com/vectors/banner">kr.freepik.com</a></cite>
 </footer>
+<script type="text/javascript">
+    function createRoom() {
+        let name = prompt("방 이름을 입력해주세요");
+        if (name !== "") {
+            newGame(name);
+        } else {
+            alert("방 이름은 한 글자 이상이어야합니다.");
+        }
+    }
+
+    function newGame(name) {
+        $.ajax({
+            url: "/createNewGame",
+            data: {
+                name: name
+            },
+            method: "POST",
+            dataType: "json"
+        }).done(function (success) {
+            if (success) {
+                location.reload();
+            }
+        });
+    }
+</script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 </body>
 </html>
