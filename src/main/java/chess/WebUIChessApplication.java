@@ -13,6 +13,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
@@ -57,6 +58,11 @@ public class WebUIChessApplication {
             String roomId = req.params("roomId");
             return new Response(ResponseCode.OK, chessService.restart(Long.parseLong(roomId)));
         }, GSON::toJson);
+
+        exception(Exception.class, (exception, request, response) -> {
+            Response res = new Response(ResponseCode.SERVER_ERROR);
+            response.body(GSON.toJson(res));
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
