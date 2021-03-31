@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.command.Command;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -44,7 +43,7 @@ public class Game {
     }
 
     public void action(Command command) {
-        if (command.isMove()) {
+        if (command == Command.MOVE) {
             List<String> positions = command.getOptions();
             move(Position.from(positions.get(0)), Position.from(positions.get(1)));
         }

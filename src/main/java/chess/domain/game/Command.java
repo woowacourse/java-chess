@@ -1,9 +1,9 @@
-package chess.domain.command;
+package chess.domain.game;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum Commands {
+public enum Command {
     START(0),
     END(0),
     MOVE(2),
@@ -12,14 +12,14 @@ public enum Commands {
     private int optionCount;
     private List<String> options;
 
-    Commands(int optionCount) {
+    Command(int optionCount) {
         this.optionCount = optionCount;
         this.options = Arrays.asList(new String[optionCount]);
     }
 
-    public static Commands from(String commandInput) {
+    public static Command from(String commandInput) {
         String[] c = commandInput.split("\\s+");
-        Commands commands = Commands.valueOf(c[0].toUpperCase());
+        Command commands = Command.valueOf(c[0].toUpperCase());
         commands.setOptions(c);
         return commands;
     }
@@ -35,5 +35,9 @@ public enum Commands {
         if (commandsInput.length != optionCount + 1) {
             throw new IllegalArgumentException("잘못된 갯수의 옵션 입력입니다.");
         }
+    }
+
+    public List<String> getOptions() {
+        return options;
     }
 }

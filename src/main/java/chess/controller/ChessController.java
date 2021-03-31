@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.command.Command;
+import chess.domain.game.Command;
 import chess.domain.game.Board;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Game;
@@ -12,7 +12,7 @@ public class ChessController {
         Board board = BoardFactory.create();
         Game game = new Game(board);
         OutputView.printWillPlayGameMessage();
-        game.action(new Command(InputView.inputCommand()));
+        game.action(Command.from(InputView.inputCommand()));
 
         OutputView.printWayToMove();
         OutputView.display(game.allBoard());
@@ -38,7 +38,7 @@ public class ChessController {
 
     private void tryOneTurn(Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
-        game.action(new Command(InputView.inputCommand()));
+        game.action(Command.from(InputView.inputCommand()));
         OutputView.display(game.allBoard());
     }
 
@@ -50,7 +50,7 @@ public class ChessController {
 
     private boolean willWatchScore() {
         try {
-            return new Command(InputView.inputCommand()).isStatus();
+            return Command.from(InputView.inputCommand()) == Command.STATUS;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return willWatchScore();

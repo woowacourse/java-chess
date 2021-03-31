@@ -1,15 +1,15 @@
 package chess.domain.state;
 
-import chess.domain.command.Command;
+import chess.domain.game.Command;
 
 public class WhiteTurn implements State {
 
     @Override
     public State action(Command command) {
-        if (command.isMove()) {
+        if (command == Command.MOVE) {
             return new BlackTurn();
         }
-        if (command.isEnd()) {
+        if (command == Command.END) {
             return  new End();
         }
 
