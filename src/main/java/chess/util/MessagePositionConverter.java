@@ -17,9 +17,9 @@ public class MessagePositionConverter {
     public static List<Position> convert(String message) {
         String[] splitPositions = message.split(MESSAGE_SPLIT_REGEX);
         Position currentPosition = StringPositionConverter
-                .convert(splitPositions[CURRENT_POSITION_INDEX]);
+                .convertToPosition(splitPositions[CURRENT_POSITION_INDEX]);
         Position targetPosition = StringPositionConverter
-                .convert(splitPositions[TARGET_POSITION_INDEX]);
+                .convertToPosition(splitPositions[TARGET_POSITION_INDEX]);
         return Arrays.asList(currentPosition, targetPosition);
     }
 }

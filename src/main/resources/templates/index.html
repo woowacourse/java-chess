@@ -2,9 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <style>
+        .container {
+
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .menu_container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: 100px;
+            margin-left: -89px;
+            text-align: center;
+        }
+
+        .main_img {
+            width: 50%;
+            height: 50%;
+            float: contour;
+        }
+
+        a {
+            -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 20px 30px;
+        }
+
+        a.button {
+            font-weight: bold;
+            color: rgba(30, 22, 54, 0.8);
+            box-shadow: rgba(30, 22, 54, 0.8) 0 0px 0px 2px inset;
+        }
+
+        a.button:hover {
+            color: rgba(255, 255, 255, 0.85);
+            box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+        }
+
+        a.button2 {
+            font-weight: bold;
+            color: rgba(30, 22, 54, 0.8);
+            box-shadow: rgba(30, 22, 54, 0.8) 0 0px 0px 2px inset;
+        }
+
+        a.button2:hover {
+            color: rgba(255, 255, 255, 0.85);
+            box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div class="container">
+    <div class="menu_container">
+        <h1 class="title">CHESS</h1>
+        <div ><img class="main_img" src="/img/mainPage.jpg" style="max-width: 35%"></div>
+        <div class="wrap">
+            <a href="/game" class="button">새로운 게임 시작</a>
+            <a href="/game_continue" class="button2">지난 게임 계속하기</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

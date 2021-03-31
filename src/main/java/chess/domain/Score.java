@@ -31,10 +31,6 @@ public class Score {
         return value;
     }
 
-    public boolean isBiggerThan(Score score) {
-        return value > score.value;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

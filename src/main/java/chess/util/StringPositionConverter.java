@@ -9,7 +9,7 @@ public class StringPositionConverter {
     private StringPositionConverter() {
     }
 
-    public static Position convert(String message) {
+    public static Position convertToPosition(String message) {
         char[] rowAndColumn = message.toCharArray();
         int x = rowAndColumn[0] - 'a';
         int y = rowAndColumn[1] - '0' - MIN_INDEX;

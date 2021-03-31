@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.ChessResult;
 import chess.domain.Position;
-import chess.exception.ImpossibleMoveException;
-import chess.exception.PieceNotFoundException;
+import chess.domain.game.ChessGame;
+import chess.domain.game.ChessResult;
+import chess.domain.game.ImpossibleMoveException;
+import chess.domain.game.PieceNotFoundException;
 import chess.util.MessagePositionConverter;
 import chess.view.BoardDto;
 import chess.view.OutputView;
@@ -13,11 +13,22 @@ import java.util.List;
 
 public class ChessAction {
 
+    private static ChessAction instance;
     private ChessGame chessGame;
+
+    private ChessAction() {
+    }
+
+    public static ChessAction getInstance() {
+        if (instance == null) {
+            instance = new ChessAction();
+        }
+        return instance;
+    }
 
     public GameStatus start() {
         chessGame = new ChessGame();
-        OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
+        OutputView.printBoard(new BoardDto(chessGame.getPieces(), chessGame.getBoardSize(), chessGame.getCurrentColor()));
         return GameStatus.RUN;
     }
 
@@ -31,7 +42,7 @@ public class ChessAction {
         Position targetPosition = positions.get(1);
         chessGame.move(currentPosition, targetPosition);
 
-        OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
+        OutputView.printBoard(new BoardDto(chessGame.getPieces(), chessGame.getBoardSize(), chessGame.getCurrentColor()));
 
         return chessStatus();
     }
