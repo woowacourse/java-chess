@@ -2,12 +2,12 @@ import {Piece} from "./Piece.js";
 
 export class PieceFactory {
     static #pieces = {
-        'r' : '♜',
-        'n' : '♞',
-        'b' : '♝',
-        'k' : '♛',
-        'q' : '♚',
-        'p' : '♟'
+        'r': '♜',
+        'n': '♞',
+        'b': '♝',
+        'k': '♚',
+        'q': '♛',
+        'p': '♟'
     }
 
     static getPieceByNotation(notation, location) {
@@ -25,7 +25,7 @@ export class PieceFactory {
     static getPiecesByPieceDtos({pieceDtos}) {
         let pieces = []
 
-        for(let pieceDto of pieceDtos) {
+        for (let pieceDto of pieceDtos) {
             pieces.push(this.getPieceByNotation(pieceDto.notation, pieceDto.position))
         }
 
