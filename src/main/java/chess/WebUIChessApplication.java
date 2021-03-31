@@ -26,30 +26,42 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
 
     private static final Gson GSON = new Gson();
+    private static final GameDao GAME_DAO = new GameDao();
 
-    public static void main(String[] args) throws SQLException {
-        GameDao gameDao = new GameDao();
-        Board board = boardFromDb(gameDao);
-        ChessGame chessGame = chessGameFromDb(board, gameDao);
+    public static void main(String[] args){
+
 
         Spark.staticFileLocation("/public");
 
         get("/", (req, res) -> {
-            BoardWebDto boardWebDto = new BoardWebDto(board);
+            Map<String, Object> model = new HashMap<>();
+            model.put("rooms", GAME_DAO.openedRooms());
+            return render(model, "lobby.html");
+        });
+
+        get("/room/:id", (req, res) -> {
+            BoardWebDto boardWebDto = GAME_DAO.latestBoard(req.params("id"));
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardWebDto);
-            return render(model);
+            model.put("roomId", req.params(":id"));
+            return render(model, "index.html");
         });
 
-        put("/start", (req, res) -> {
+        put("/room/:id/start", (req, res) -> {
+            Board board = boardFromDb(req.params(":id"));
+            ChessGame chessGame = chessGameFromDb(board, req.params(":id"));
             chessGame.start();
-            gameDao
-                .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame));
-            return GSON.toJson(new BoardWebDto(board));
+            BoardWebDto boardWebDto = new BoardWebDto(board);
+            GameStatusDto gameStatusDto = new GameStatusDto(chessGame);
+            GAME_DAO.insertBoardAndStatusDto(boardWebDto, gameStatusDto, req.params(":id"));
+            return GSON.toJson(boardWebDto);
         });
 
-        get("/movablePoints/:point", "application/json", (req, res) -> {
+        get("/room/:id/movablePoints/:point", "application/json", (req, res) -> {
             Point currentPoint = Point.of(req.params("point"));
+            String roomId = req.params("id");
+            Board board = boardFromDb(roomId);
+            ChessGame chessGame = chessGameFromDb(board, roomId);
             List<Point> movablePoints = chessGame.movablePoints(currentPoint);
             List<PointDto> pointDtos = movablePoints.stream()
                 .map(PointDto::new)
@@ -57,38 +69,51 @@ public class WebUIChessApplication {
             return GSON.toJson(pointDtos);
         });
 
-        put("/move", "application/json", (req, res) -> {
-            Map<String, String> body = new HashMap<>();
-            body = (Map<String, String>) GSON.fromJson(req.body(), body.getClass());
+        put("room/:id/move", "application/json", (req, res) -> {
+            String roomId = req.params("id");
+            Board board = boardFromDb(roomId);
+            ChessGame chessGame = chessGameFromDb(board, roomId);
+            Map<String, String> body = GSON.fromJson(req.body(), Map.class);
             Point source = Point.of(body.get("source"));
             Point destination = Point.of(body.get("destination"));
             chessGame.move(source, destination);
-            gameDao
-                .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame));
+            GAME_DAO
+                .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame), roomId);
             return GSON.toJson(new BoardWebDto(board));
         });
 
-        get("/getGameStatus", "application/json",
-            (req, res) -> GSON.toJson(new GameStatusDto(chessGame)));
+        get("room/:id/getGameStatus", "application/json", (req, res) ->  {
+                String roomId = req.params("id");
+                Board board = boardFromDb(roomId);
+                ChessGame chessGame = chessGameFromDb(board, roomId);
+                return GSON.toJson(new GameStatusDto(chessGame));
+        });
 
-        put("/exit", (req, res) -> {
+        put("room/:id/exit", (req, res) -> {
+            String roomId = req.params("id");
+            Board board = boardFromDb(roomId);
+            ChessGame chessGame = chessGameFromDb(board, roomId);
             chessGame.end();
+            BoardWebDto boardWebDto = new BoardWebDto(board);
+            GameStatusDto gameStatusDto = new GameStatusDto(chessGame);
+            GAME_DAO.insertBoardAndStatusDto(boardWebDto, gameStatusDto, req.params(":id"));
             return GSON.toJson("success");
         });
     }
 
-    private static Board boardFromDb(GameDao gameDao) throws SQLException {
-        return gameDao.latestBoard().toEntity();
+    private static Board boardFromDb(String roomId) throws SQLException {
+        return GAME_DAO.latestBoard(roomId).toEntity();
     }
 
-    private static ChessGame chessGameFromDb(Board board, GameDao gameDao) throws SQLException {
-        GameStatusDto gameStatusDto = gameDao.latestGameStatus();
+    private static ChessGame chessGameFromDb(Board board, String roomId)
+        throws SQLException {
+        GameStatusDto gameStatusDto = GAME_DAO.latestGameStatus(roomId);
         Turn turn = gameStatusDto.toTurnEntity();
         GameState gameState = gameStatusDto.toGameStateEntity(board);
         return new ChessGame(turn, new ScoreBoard(board), gameState);
     }
 
-    private static String render(Map<String, Object> model) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
+    private static String render(Map<String, Object> model, String viewName) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, viewName));
     }
 }

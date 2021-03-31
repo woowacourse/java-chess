@@ -21,9 +21,9 @@ const points = numbers(boardSize).flatMap(
     })
 );
 
-export async function getBoardAfterMove(source, destination) {
+export async function getBoardAfterMove(source, destination, roomId) {
   const response = await fetch(
-      "./move", {
+      "./"+ roomId +"/move", {
         headers: {
           "Content-Type": "application/json"
         },
@@ -36,8 +36,8 @@ export async function getBoardAfterMove(source, destination) {
   return await response.json();
 }
 
-export async function getInitializedBoard() {
-  const response = await fetch("./start", {
+export async function getInitializedBoard(roomId) {
+  const response = await fetch("./"+ roomId +"/start", {
     method: "PUT"
   });
   return await response.json();

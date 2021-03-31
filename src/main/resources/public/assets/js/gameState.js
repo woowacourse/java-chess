@@ -11,8 +11,8 @@ const blurs = ["header", ".square", ".board", ".blackTurn", ".whiteTurn"];
 const launch = document.querySelector(".launch");
 const result = document.querySelector(".result");
 
-async function getGameStatus() {
-  const response = await fetch("./getGameStatus");
+async function getGameStatus(roomId) {
+  const response = await fetch("./" + roomId + "/getGameStatus");
   return await response.json();
 }
 
@@ -30,8 +30,8 @@ const blurContents = (isBlur) => {
   });
 }
 
-export const updateGameState = () => {
-  getGameStatus().then(gameStatus => {
+export const updateGameState = (roomId) => {
+  getGameStatus(roomId).then(gameStatus => {
     updateTurnBadge(gameStatus["turn"]);
     if (gameStatus["gameState"] === "Ready") {
       launch.style.visibility = "visible";

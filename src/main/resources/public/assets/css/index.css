@@ -1,6 +1,7 @@
 @font-face {
     font-family: "pencil";
-    src: url("../fonts/SaucerBB.ttf") format("truetype")
+    src: url("../fonts/SaucerBB.ttf") format("truetype");
+    src: url("../fonts/나눔손글씨 가람연꽃.ttf") format("truetype");
 }
 
 html {
@@ -39,7 +40,26 @@ header {
     text-align: center;
 }
 
-.exit {
+.rooms {
+    position: relative;
+    display: block;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px 0 black;
+    font-family: "pencil", sans-serif;
+    font-size: x-large;
+    width: 80%;
+    min-width: 360px;
+    margin: 0 auto;
+    padding: 10px 5px 5px 5px;
+}
+
+.room {
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.exit, .create {
     position: relative;
     cursor: pointer;
     font-family: "pencil", sans-serif;

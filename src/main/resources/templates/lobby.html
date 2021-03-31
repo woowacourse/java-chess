@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <title>체스</title>
+  <link href="/assets/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <header>
+    <h2 class="title">Paper Chess</h2>
+    <h2 class="create">create</h2>
+  </header>
+  <section>
+    <div class="rooms">
+      {{#rooms}}
+        <div class="room" id="{{id}}"> {{name}} </div>
+        <hr width="90%" color="#eeeeee" />
+      {{/rooms}}
+    </div>
+  </section>
+  <script type="module" src="/assets/js/lobby.js"></script>
+</body>
+</html>

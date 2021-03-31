@@ -5,13 +5,13 @@ export const removeAllMovables = () => {
   });
 }
 
-async function getMovables(point) {
-  const response = await fetch("./movablePoints/" + point);
+async function getMovables(point, roomId) {
+  const response = await fetch("./" + roomId + "/movablePoints/" + point);
   return await response.json();
 }
 
-export const addMovables = (point) => {
-  getMovables(point).then(movables => {
+export const addMovables = (point, roomId) => {
+  getMovables(point, roomId).then(movables => {
     for (const i in movables) {
       const square = document.querySelector(
           "#" + movables[i].x + movables[i].y);

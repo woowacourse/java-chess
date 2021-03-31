@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>체스</title>
-  <link href="/assets/css/index.css" rel="stylesheet" type="text/css"></link>
+  <link href="/assets/css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="launch"><p>Click anywhere to start</p></div>
@@ -14,7 +14,7 @@
 </header>
 <section>
   <div class="board-container">
-    <img class="board" src="/assets/images/board.png">
+    <img class="board" id="{{roomId}}" src="/assets/images/board.png">
     {{#board}}
     {{#board}}
     {{#.}} {{#.}}
@@ -22,8 +22,8 @@
     {{/.}} {{/.}}
     {{/board}}
     {{/board}}
-    <img class="whiteTurn" src="assets/images/white_turn.png">
-    <img class="blackTurn" src="assets/images/black_turn.png">
+    <img class="whiteTurn" src="/assets/images/white_turn.png">
+    <img class="blackTurn" src="/assets/images/black_turn.png">
   </div>
 </section>
 <script type="module" src="/assets/js/index.js"></script>

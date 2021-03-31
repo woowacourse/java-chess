@@ -3,22 +3,24 @@ import {addMovables, removeAllMovables} from "./movables.js";
 import {move, reloadSquares, removeHighlight} from "./squares.js";
 import {updateGameState} from "./gameState.js";
 
+const roomId = document.querySelector(".board").id;
+
 const clickSquare = function (event) {
   removeHighlight();
   if (event.target.classList.contains("movable")) {
-    move(event.target.value, event.target.closest(".square").id);
+    move(event.target.value, event.target.closest(".square").id, roomId);
     removeAllMovables();
     return;
   }
   removeAllMovables();
   document.querySelector("#" + event.target.id).classList.add("selected");
-  addMovables(event.target.id);
+  addMovables(event.target.id, roomId);
 };
 
 const start = function () {
-  getInitializedBoard().then(board => {
+  getInitializedBoard(roomId).then(board => {
     reloadSquares(board["board"]);
-    updateGameState();
+    updateGameState(roomId);
   });
 }
 
@@ -30,10 +32,10 @@ const addEventToSquares = () => {
 }
 
 const exitGame = () => {
-  fetch("./exit", {
+  fetch("./" + roomId + "/exit", {
     method: "PUT"
   }).then(response => {
-    updateGameState();
+    updateGameState(roomId);
   });
 }
 
@@ -43,8 +45,12 @@ const addEventToScreen = () => {
   document.querySelector(".exit").addEventListener("click", exitGame);
 }
 
+document.querySelector(".title").addEventListener("click", () => {
+  window.location.href = window.location.href = "../";
+});
+
 window.onload = () => {
-  updateGameState();
+  updateGameState(roomId);
   reloadBoard();
   addEventToSquares();
   addEventToScreen();

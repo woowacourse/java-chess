@@ -7,9 +7,9 @@ export const removeHighlight = () => {
   });
 }
 
-export const move = (source, destination) => {
-  getBoardAfterMove(source, destination).then(board => {
-    updateGameState();
+export const move = (source, destination, roomId) => {
+  getBoardAfterMove(source, destination, roomId).then(board => {
+    updateGameState(roomId);
     reloadSquares(board["board"]);
   });
 }
