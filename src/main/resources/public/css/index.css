@@ -1,0 +1,72 @@
+.chess-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.tile {
+    width: 80px;
+    height: 80px;
+}
+.start-white > .tile:nth-of-type(odd) {
+    background-color: lightblue;
+}
+.start-black > .tile:nth-of-type(even) {
+    background-color: lightblue;
+}
+.start-white > .tile:hover {
+    background-color: goldenrod;
+}
+.start-black > .tile:hover {
+    background-color: goldenrod;
+}
+.base-background {
+    background-color: palegoldenrod;
+}
+.board {
+    width: 640px;
+    height: 640px;
+}
+.rainbow-bg {
+    animation: rainbow-bg 2.5s linear;
+    animation-iteration-count: infinite;
+}
+@keyframes rainbow-bg {
+    100%,0%{
+        background-color: rgb(255,0,0);
+    }
+    8%{
+        background-color: rgb(255,127,0);
+    }
+    16%{
+        background-color: rgb(255,255,0);
+    }
+    25%{
+        background-color: rgb(127,255,0);
+    }
+    33%{
+        background-color: rgb(0,255,0);
+    }
+    41%{
+        background-color: rgb(0,255,127);
+    }
+    50%{
+        background-color: rgb(0,255,255);
+    }
+    58%{
+        background-color: rgb(0,127,255);
+    }
+    66%{
+        background-color: rgb(0,0,255);
+    }
+    75%{
+        background-color: rgb(127,0,255);
+    }
+    83%{
+        background-color: rgb(255,0,255);
+    }
+    91%{
+        background-color: rgb(255,0,127);
+    }
+}

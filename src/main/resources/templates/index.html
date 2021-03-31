@@ -2,42 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/index.css">
     <title>체스</title>
-    <style>
-        .chess-horizontal {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .tile {
-            width: 80px;
-            height: 80px;
-        }
-        .start-white > .tile:nth-of-type(odd) {
-            background-color: saddlebrown;
-        }
-        .start-black > .tile:nth-of-type(even) {
-            background-color: saddlebrown;
-        }
-        .start-white > .tile:hover {
-            background-color: rosybrown;
-        }
-        .start-black > .tile:hover {
-            background-color: rosybrown;
-        }
-        .base-background {
-            background-color: burlywood;
-        }
-        .board {
-            width: 640px;
-            height: 640px;
-        }
-        .movable {
-            background-color: coral !important;
-        }
-    </style>
 </head>
 
 <body>

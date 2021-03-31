@@ -67,7 +67,7 @@ async function findPath() {
 function showMovablePosition() {
     $path.forEach(path => {
         let tile = document.getElementById(path);
-        tile.classList.add("movable");
+        tile.classList.add("rainbow-bg");
     });
 }
 
@@ -78,7 +78,7 @@ function clearMovablePosition() {
 
     $path.forEach(path => {
         let tile = document.getElementById(path);
-        tile.classList.remove("movable");
+        tile.classList.remove("rainbow-bg");
     });
 
     $path = null;
