@@ -44,7 +44,7 @@ public class Game {
 
     public void action(Command command) {
         if (command == Command.MOVE) {
-            List<String> positions = command.getOptions();
+            List<String> positions = command.options();
             move(Position.from(positions.get(0)), Position.from(positions.get(1)));
         }
         state = state.action(command);

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CommandTest {
     @Test
     void start() {
-        Assertions.assertThat(Command.from("start")).isEqualTo(Command.START);
+        assertThat(Command.from("start")).isEqualTo(Command.START);
         assertThat(Command.from("Start")).isEqualTo(Command.START);
         assertThat(Command.from("START")).isEqualTo(Command.START);
     }
