@@ -125,7 +125,7 @@ function request_move_post() {
       alert(move_response['errorMessage']);
       return;
     }
-    window.location.href = HOME + '/chess-board?id=' + game_id;
+    window.location.href = HOME + '/rooms?id=' + game_id;
   };
 }
 

@@ -19,7 +19,7 @@ public class PieceDAO {
         if (rs == null) {
             return null;
         }
-        return Piece.castedFrom(
+        return Piece.of(
             new PieceEntity(
                 rs.getLong("id"),
                 rs.getString("name"),
