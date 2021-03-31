@@ -27,6 +27,12 @@ public class Location {
         if (location.length() != NUM_OF_COORDINATES) {
             throw new IllegalArgumentException("[ERROR] 좌표는 x와 y값 두개로 이루어져야 합니다.");
         }
+        if (Character.isDigit(location.charAt(X_POS_INDEX))) {
+            int xPos = Character.digit(location.charAt(X_POS_INDEX), 10);
+            int yPos = Character.digit(location.charAt(Y_POS_INDEX), 10);
+            validateRange(xPos, yPos);
+            return new Location(xPos, yPos);
+        }
         int xPos = location.charAt(X_POS_INDEX) - 'a' + 1;
         int yPos = Character.digit(location.charAt(Y_POS_INDEX), 10);
         validateRange(xPos, yPos);

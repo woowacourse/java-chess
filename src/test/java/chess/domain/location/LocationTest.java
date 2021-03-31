@@ -29,6 +29,8 @@ class LocationTest {
         // given
         String validInput1 = "a1";
         String validInput2 = "b7";
+        String validInput3 = "11";
+        String validInput4 = "27";
 
         String inValidInput1 = "h9";
         String inValidInput2 = "z1";
@@ -37,6 +39,8 @@ class LocationTest {
         assertAll(
             () -> assertThat(Location.of(validInput1)).isEqualTo(Location.of(1, 1)),
             () -> assertThat(Location.of(validInput2)).isEqualTo(Location.of(2, 7)),
+            () -> assertThat(Location.of(validInput3)).isEqualTo(Location.of(1, 1)),
+            () -> assertThat(Location.of(validInput4)).isEqualTo(Location.of(2, 7)),
             () -> assertThatThrownBy(() -> Location.of(inValidInput1)).isInstanceOf(IllegalArgumentException.class),
             () -> assertThatThrownBy(() -> Location.of(inValidInput2)).isInstanceOf(IllegalArgumentException.class)
         );
