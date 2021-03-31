@@ -1,6 +1,6 @@
 const BLANK = ".";
 
-async function start() {
+async function waitingMove() {
     /**
      * batch Piece on Board
      */
@@ -15,7 +15,7 @@ async function start() {
     } catch (e) {
         console.log(e);
     }
-
+    resetBoard()
     const table = document.getElementById("chessBoard");
     for (let i = 0; i < 8; i++) {
         const newTr = document.createElement("tr");
@@ -41,6 +41,11 @@ async function start() {
         table.appendChild(newTr);
     }
     eventList()
+}
+
+function resetBoard() {
+    const chessBoard = document.getElementById("chessBoard");
+    chessBoard.innerHTML = '';
 }
 
 function eventList() {
@@ -90,4 +95,5 @@ async function move(source, target) {
     } catch (e) {
         console.log(e);
     }
+    waitingMove()
 }
