@@ -1,6 +1,6 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Vertical;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Owner;
 
@@ -17,8 +17,8 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    public boolean isFirstLine(final Horizontal horizontal) {
-        return Horizontal.SEVEN.equals(horizontal);
+    public boolean isFirstLine(final Vertical vertical) {
+        return Vertical.SEVEN.equals(vertical);
     }
 
     @Override

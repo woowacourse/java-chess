@@ -1,5 +1,7 @@
 package chess.manager;
 
+import chess.controller.dto.BoardResponseDto;
+import chess.controller.dto.ShowPathResponseDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Path;
@@ -25,18 +27,6 @@ public class ChessManager {
         board.move(command.source(), command.target());
     }
 
-    public void changeTurn() {
-        turn = turn.reverse();
-    }
-
-    public void endGameByDiedKing() {
-        isEnd = isDiedKing();
-    }
-
-    private boolean isDiedKing() {
-        return !board.isKingAlive(this.turn.reverse());
-    }
-
     private void validateSourcePiece(final Position source) {
         if (board.pickPiece(source).isEmptyPiece()) {
             throw new IllegalArgumentException("지정한 칸에는 체스말이 존재하지 않습니다.");
@@ -49,17 +39,8 @@ public class ChessManager {
         }
     }
 
-    public Path getReachablePositions(final ShowCommand command) {
-        validateSourcePiece(command.source());
-        return board.getAbleToMove(command.source());
-    }
-
-    public Status getStatus() {
-        return Status.statusOfBoard(board);
-    }
-
-    public boolean isEnd() {
-        return isEnd;
+    public void changeTurn() {
+        turn = turn.reverse();
     }
 
     public void resetBoard() {
@@ -67,7 +48,32 @@ public class ChessManager {
         board.resetBoard();
     }
 
-    public Board getBoard() {
-        return board;
+    public void endGameByDiedKing() {
+        isEnd = isDiedKing();
+    }
+
+    private boolean isDiedKing() {
+        return !board.isKingAlive(this.turn.reverse());
+    }
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+
+    public Status getStatus() {
+        return Status.statusOfBoard(board);
+    }
+
+    public Path movablePath(final ShowCommand command) {
+        validateSourcePiece(command.source());
+        return board.movablePath(command.source());
+    }
+
+    public BoardResponseDto getBoardResponseDto() {
+        return BoardResponseDto.toBoard(board);
+    }
+
+    public ShowPathResponseDto findPathByPosition(final ShowCommand showCommand) {
+        return ShowPathResponseDto.toPath(movablePath(showCommand));
     }
 }

@@ -10,14 +10,14 @@ public enum Command {
     START("start", 1) {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
-            OutputView.printBoard(chessManager.getBoard());
+            OutputView.printBoard(chessManager.getBoardResponseDto());
         }
     },
     RESTART("restart", 1) {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
             chessManager.resetBoard();
-            OutputView.printRestartGame(chessManager.getBoard());
+            OutputView.printRestartGame(chessManager.getBoardResponseDto());
         }
     },
     END("end", 1) {
@@ -32,7 +32,7 @@ public enum Command {
             chessManager.move(MoveCommand.of(input));
             chessManager.changeTurn();
             chessManager.endGameByDiedKing();
-            OutputView.printBoard(chessManager.getBoard());
+            OutputView.printBoard(chessManager.getBoardResponseDto());
         }
     },
     STATUS("status", 1) {
@@ -44,7 +44,8 @@ public enum Command {
     SHOW("show", 2) {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
-            OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(ShowCommand.of(input)));
+            OutputView.printMovablePath(chessManager.getBoardResponseDto(),
+                    chessManager.findPathByPosition(ShowCommand.of(input)));
         }
     };
 

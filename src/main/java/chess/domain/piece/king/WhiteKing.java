@@ -1,8 +1,6 @@
 package chess.domain.piece.king;
 
-import chess.domain.direction.Direction;
 import chess.domain.piece.Owner;
-import chess.domain.piece.Score;
 
 public class WhiteKing extends King {
 

@@ -1,14 +1,15 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.position.Horizontal;
-import chess.domain.board.position.Path;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Vertical;
-import chess.domain.piece.Piece;
+import chess.controller.dto.BoardResponseDto;
+import chess.controller.dto.PositionResponseDto;
+import chess.controller.dto.ShowPathResponseDto;
 import chess.manager.Status;
 
+import java.util.List;
+
 public class OutputView {
+
+    private static final int CHESS_BOARD_LINE_PIECE_COUNT = 8;
 
     private OutputView() {
     }
@@ -19,39 +20,42 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(final Board board) {
-        for (final Horizontal horizontal : Horizontal.values()) {
-            for (final Vertical vertical : Vertical.values()) {
-                final Piece piece = board.pickPiece(Position.of(vertical, horizontal));
-                System.out.print(piece.getSymbol());
-            }
+    public static void printBoard(final BoardResponseDto boardResponseDto) {
+        int count = 0;
+        for (String symbol : boardResponseDto.getPieces()) {
+            System.out.print(symbol);
+            printLineSeperatorByPieceCount(++count);
+        }
+    }
+
+    private static void printLineSeperatorByPieceCount(int count) {
+        if (count % CHESS_BOARD_LINE_PIECE_COUNT == 0) {
             System.out.println();
         }
     }
 
-    public static void printRestartGame(final Board board) {
+    public static void printRestartGame(final BoardResponseDto board) {
         System.out.println("게임을 재시작합니다.");
         printBoard(board);
     }
 
-    public static void printAbleToMove(final Board board, final Path ableToMove) {
-        for (final Horizontal horizontal : Horizontal.values()) {
-            for (final Vertical vertical : Vertical.values()) {
-                final Position position = Position.of(vertical, horizontal);
-                printPieceOrAbleToMoveSymbol(board, position, ableToMove);
-            }
-            System.out.println();
+    public static void printMovablePath(final BoardResponseDto boardResponseDto,
+                                        final ShowPathResponseDto showPathResponseDto) {
+        List<PositionResponseDto> path = showPathResponseDto.getPath();
+        List<String> pieces = parseMovablePathOrPiece(boardResponseDto.getPieces(), path);
+        int count = 0;
+        for (String symbol : pieces) {
+            System.out.print(symbol);
+            printLineSeperatorByPieceCount(++count);
         }
     }
 
-    private static void printPieceOrAbleToMoveSymbol(final Board board, final Position position, final Path ableToMove) {
-        if (ableToMove.contains(position)) {
-            System.out.print("*");
-            return;
+    private static List<String> parseMovablePathOrPiece(final List<String> pieces, final List<PositionResponseDto> path) {
+        for (PositionResponseDto positionResponseDto : path) {
+            System.out.println("y = " + positionResponseDto.getY() + ", x = " + positionResponseDto.getX());
+            pieces.set(((8 - positionResponseDto.getY()) * 8) + ((positionResponseDto.getX() - 1)), "*");
         }
-
-        final Piece piece = board.pickPiece(position);
-        System.out.print(piece.getSymbol());
+        return pieces;
     }
 
 

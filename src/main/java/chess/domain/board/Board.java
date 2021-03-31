@@ -25,8 +25,8 @@ public class Board {
         return this.board.get(position);
     }
 
-    public Piece pickPiece(final Vertical vertical, final Horizontal horizontal) {
-        return pickPiece(Position.of(vertical, horizontal));
+    public Piece pickPiece(final Horizontal horizontal, final Vertical vertical) {
+        return pickPiece(Position.of(horizontal, vertical));
     }
 
     private Path ableToPath(final Position source) {
@@ -46,6 +46,7 @@ public class Board {
         }
     }
 
+    //TODO 메서드명 isUnMovablePath 로 변경하기
     private boolean isUnableToMove(final Position source, final Position target) {
         return !ableToPath(source).contains(target);
     }
@@ -63,7 +64,8 @@ public class Board {
         board.put(position, EmptyPiece.getInstance());
     }
 
-    public Path getAbleToMove(final Position source) {
+    //TODO 메서드명 movablePath로 변경하기
+    public Path movablePath(final Position source) {
         return ableToPath(source);
     }
 

@@ -43,12 +43,12 @@ public class BoardTest {
                 Arrays.asList(getEmptyLine()),
                 Arrays.asList(getPiecesOfSecondLine(Owner.WHITE)),
                 Arrays.asList(getPiecesOfFirstLine(Owner.WHITE))
-                );
-        Vertical[] verticals = Vertical.values();
+        );
         Horizontal[] horizontals = Horizontal.values();
+        Vertical[] verticals = Vertical.values();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                assertThat(board.pickPiece(verticals[j], horizontals[i])).isEqualTo(piecesList.get(i).get(j));
+                assertThat(board.pickPiece(horizontals[j], verticals[i])).isEqualTo(piecesList.get(i).get(j));
             }
         }
     }
@@ -81,7 +81,7 @@ public class BoardTest {
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
     void of() {
-        final Piece piece = board.pickPiece(Vertical.B, Horizontal.TWO);
+        final Piece piece = board.pickPiece(Horizontal.B, Vertical.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
     }
@@ -89,8 +89,8 @@ public class BoardTest {
     @DisplayName("입력한 위치로 이동된다.")
     @Test
     void moveTest() {
-        final Position source = Position.of(Vertical.B, Horizontal.TWO);
-        final Position target = Position.of(Vertical.B, Horizontal.THREE);
+        final Position source = Position.of(Horizontal.B, Vertical.TWO);
+        final Position target = Position.of(Horizontal.B, Vertical.THREE);
 
         board.move(source, target);
 

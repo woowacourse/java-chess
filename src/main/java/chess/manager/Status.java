@@ -44,15 +44,15 @@ public class Status {
 
     private static int getPawnCountInVertical(final Board board, final Owner owner) {
         int totalCount = 0;
-        for (final Vertical vertical : Vertical.values()) {
-            totalCount += penaltyScorePawnCount(board, vertical, owner);
+        for (final Horizontal horizontal : Horizontal.values()) {
+            totalCount += penaltyScorePawnCount(board, horizontal, owner);
         }
         return totalCount;
     }
 
-    private static int penaltyScorePawnCount(final Board board, final Vertical vertical, final Owner owner) {
-        int pawnCount = (int) Arrays.stream(Horizontal.values())
-                .map(horizontal -> board.pickPiece(vertical, horizontal))
+    private static int penaltyScorePawnCount(final Board board, final Horizontal horizontal, final Owner owner) {
+        int pawnCount = (int) Arrays.stream(Vertical.values())
+                .map(vertical -> board.pickPiece(horizontal, vertical))
                 .filter(piece -> piece.isSameOwnerPawn(owner))
                 .count();
         if (pawnCount > 1) {

@@ -7,24 +7,24 @@ import java.util.Objects;
 public class Position {
     private static final int POSITION_VALID_SIZE = 2;
 
-    private final Vertical vertical;
     private final Horizontal horizontal;
+    private final Vertical vertical;
 
-    private Position(final Vertical vertical, final Horizontal horizontal) {
+    private Position(final Horizontal horizontal, final Vertical vertical) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
 
     private Position(final String[] inputs) {
-        this(Vertical.parse(inputs[0]), Horizontal.parse(inputs[1]));
+        this(Horizontal.parse(inputs[0]), Vertical.parse(inputs[1]));
     }
 
     private Position(final String input) {
         this(input.split(""));
     }
 
-    public static Position of(final Vertical vertical, final Horizontal horizontal) {
-        return new Position(vertical, horizontal);
+    public static Position of(final Horizontal horizontal, final Vertical vertical) {
+        return new Position(horizontal, vertical);
     }
 
     public static Position of(final String input) {
@@ -78,15 +78,27 @@ public class Position {
                     + this.vertical.getDistance(other.vertical)) / 3;
         }
 
-        throw new IllegalArgumentException("직선이나 대각선 경로가 아니라서 거리를 측정할 수 없습니다.");
+        throw new IllegalArgumentException("체스에 존재하지 않는 이동 방향 이라서 거리를 측정할 수 없습니다.");
     }
 
     public Position next(final Direction direction) {
-        return new Position(vertical.add(direction.getX()), horizontal.add(direction.getY()));
+        return new Position(horizontal.add(direction.getX()), vertical.add(direction.getY()));
     }
 
     public Horizontal getHorizontal() {
         return horizontal;
+    }
+
+    public Vertical getVertical() {
+        return vertical;
+    }
+
+    public int getHorizontalIndex() {
+        return horizontal.getIndex();
+    }
+
+    public int getVerticalIndex() {
+        return vertical.getIndex();
     }
 
     @Override

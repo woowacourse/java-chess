@@ -1,7 +1,7 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
@@ -32,7 +32,7 @@ public abstract class Pawn extends Piece {
     }
 
     private boolean isValidStraightMove(final Position source, final Position target) {
-        if (this.isFirstLine(source.getHorizontal())) {
+        if (this.isFirstLine(source.getVertical())) {
             return true;
         }
         return source.getDistance(target) == 1;
@@ -63,5 +63,5 @@ public abstract class Pawn extends Piece {
         return true;
     }
 
-    protected abstract boolean isFirstLine(final Horizontal horizontal);
+    protected abstract boolean isFirstLine(final Vertical vertical);
 }
