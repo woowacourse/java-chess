@@ -28,7 +28,11 @@ public class ChessGame {
         this.isEnd = false;
     }
 
-    public void move(final Position current, final Position destination) {
+    public boolean havePieceInCurrentTurn(final Position position) {
+        return currentTurn.havePiece(position);
+    }
+
+    public boolean move(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurn.choosePiece(current);
         validateMovable(current, destination, chosenPiece);
 
@@ -39,6 +43,7 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         changeTurn();
+        return true;
     }
 
     private void validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
@@ -46,6 +51,8 @@ public class ChessGame {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
     }
+
+
 
     private void killEnemyPiece(Position destination, Team enemy) {
         Piece piece = enemy.killPiece(destination);
