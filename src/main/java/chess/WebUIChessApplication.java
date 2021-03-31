@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
+import chess.dto.ErrorDto;
 import chess.dto.WebBoardDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -30,10 +31,18 @@ public class WebUIChessApplication {
         });
 
         get("/chess/move", (req, res) -> {
-            chessGame.move(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
             WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
-            Map<String, Object> model = webBoardDto.getBoardDto();
-            return render(model, "main.html");
+            try {
+                chessGame.move(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
+                WebBoardDto movedBoardDto = new WebBoardDto(chessGame.board());
+                Map<String, Object> model = movedBoardDto.getBoardDto();
+                return render(model, "main.html");
+            } catch(IllegalArgumentException e) {
+                Map<String, Object> model = webBoardDto.getBoardDto();
+                ErrorDto errorDto = new ErrorDto(e.getMessage());
+                model.put("error", errorDto.getMsg());
+                return render(model, "main.html");
+            }
         });
 
         post("/restart", (req, res) -> {
