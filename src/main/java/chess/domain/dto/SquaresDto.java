@@ -30,5 +30,7 @@ public class SquaresDto {
                 .map(entry -> new SquareDto(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
 
-    public List<SquareDto> squares() {return squares;}
+    public List<SquareDto> squares() {
+        return squares;
+    }
 }

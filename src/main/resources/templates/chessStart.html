@@ -8,10 +8,15 @@
 <body>
 <h1>Play Chess!</h1>
 <button onclick="playNewGame()">새 게임 시작하기</button>
+<button onclick="continueLastGame()">지난 게임 이어하기</button>
 </body>
 <script>
     const playNewGame = function () {
         window.location = "http://localhost:4567/play/new";
+    }
+
+    const continueLastGame = function () {
+        window.location = "http://localhost:4567/play/continue";
     }
 </script>
 </html>

@@ -8,7 +8,6 @@ import chess.domain.dto.BoardDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.view.OutputView;
 
 import java.util.EnumMap;
 

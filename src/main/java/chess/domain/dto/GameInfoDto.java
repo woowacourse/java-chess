@@ -2,7 +2,6 @@ package chess.domain.dto;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Team;
-import chess.view.OutputView;
 
 import java.util.List;
 

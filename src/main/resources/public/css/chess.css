@@ -39,13 +39,13 @@ h1 {
 }
 
 .square:nth-child(-2n+7),
-.square:nth-child(8) ~.square:nth-child(-2n+16),
-.square:nth-child(16) ~.square:nth-child(-2n+23),
-.square:nth-child(25) ~.square:nth-child(-2n+32),
-.square:nth-child(32) ~.square:nth-child(-2n+39),
-.square:nth-child(41) ~.square:nth-child(-2n+48),
-.square:nth-child(47) ~.square:nth-child(-2n+55),
-.square:nth-child(57) ~.square:nth-child(-2n+64) {
+.square:nth-child(8) ~ .square:nth-child(-2n+16),
+.square:nth-child(16) ~ .square:nth-child(-2n+23),
+.square:nth-child(25) ~ .square:nth-child(-2n+32),
+.square:nth-child(32) ~ .square:nth-child(-2n+39),
+.square:nth-child(41) ~ .square:nth-child(-2n+48),
+.square:nth-child(47) ~ .square:nth-child(-2n+55),
+.square:nth-child(57) ~ .square:nth-child(-2n+64) {
     background-color: #855e42;
 }
 

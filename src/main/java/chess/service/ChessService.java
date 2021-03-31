@@ -36,7 +36,7 @@ public class ChessService {
 
     public Map<String, Object> moveResponse() {
         final Map<String, Object> model = makeCommonResponse();
-        if (chessGame.isEnd()) { // if king dead,
+        if (chessGame.isEnd()) {
             model.put("winner", chessGame.winner());
         }
         return model;
@@ -48,6 +48,14 @@ public class ChessService {
         model.put("squares", gameInfoDto.squares());
         model.put("turn", gameInfoDto.turn());
         model.put("scores", gameInfoDto.scores());
+        return model;
+    }
+
+    public void continueLastGame() {
+    }
+
+    public Map<String, Object> continueResponse() {
+        Map<String, Object> model = new HashMap<>();
         return model;
     }
 }

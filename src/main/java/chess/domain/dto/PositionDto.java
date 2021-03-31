@@ -23,7 +23,7 @@ public class PositionDto {
 
     @Override
     public String toString() {
-        return file+rank;
+        return file + rank;
     }
 
     @Override

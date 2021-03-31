@@ -3,13 +3,12 @@ package chess.domain.board;
 import chess.domain.piece.Pawn;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Position {
     private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
 
     static {
-        for (final Rank rank: Rank.values()) {
+        for (final Rank rank : Rank.values()) {
             makePositionWith(rank);
         }
     }
