@@ -30,31 +30,27 @@ body{
 .title{
     font-size: 2.5em;
 }
-
-.chessboard {
-    background-color: beige;
+.chessboard_section{
+    display: flex;
+    flex-direction: column;
 }
 
-.chesstable {
-    width: 100%;
-    flex: 1 1 auto;
+.row{
+    display: flex;
+    flex-direction: row;
 }
-.chesstable th {
-    width: 1em;
-    height: 1em;
+.cell{
+    width:60px;
+    height:60px;
+    border: 1px solid black;
+    font-size: 2rem;
     text-align: center;
-    font-size: 1.5em;
-    line-height: 0;
 }
-
-.chesstable td {
-    width: 2em;
-    height: 2em;
-    text-align: center;
-    font-size: 2em;
-    line-height: 0;
+.position {
+    width: 60px;
+    height: 60px;
+    border: 1px solid black;
 }
-
 .dark {
     background-color: var(--board-dark);
     border: 0.5px solid black;

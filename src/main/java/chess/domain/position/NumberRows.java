@@ -49,4 +49,7 @@ public enum NumberRows {
         return NumberRows.getInstance(number + value);
     }
 
+    public String number(){
+        return String.valueOf(number);
+    }
 }

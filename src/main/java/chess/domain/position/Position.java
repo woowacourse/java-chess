@@ -82,6 +82,10 @@ public class Position {
         return column.alpha().charAt(0);
     }
 
+    public String position() {
+        return column.alpha() + row.number();
+    }
+
     @Override
     public String toString() {
         return "Position{" +
