@@ -10,6 +10,7 @@ import chess.domain.DTO.pieceOnBoardDTO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.result.ResultDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,19 +42,25 @@ public class WebUIChessApplication {
 
         post("/move", (req, res) -> {
             MoveRequestDTO moveRequestDto = gson.fromJson(req.body(), MoveRequestDTO.class);
-            MoveResultDTO moveResultDto;
-
-            if (!chessBoard.isPlaying()) {
-                return new MoveResultDTO(false, chessBoard.isPlaying());
-            }
+            ResultDto result;
 
             try {
                 chessBoard.move(moveRequestDto.getSource(), moveRequestDto.getTarget());
-                moveResultDto = new MoveResultDTO(true, chessBoard.isPlaying());
+                if (!chessBoard.isPlaying()) {
+                    throw new IllegalArgumentException("game End state");
+                }
+                result = chessBoard.result();
+                return new MoveResultDTO(true,
+                    chessBoard.isPlaying(),
+                    result.whiteScore().getScore(),
+                    result.blackScore().getScore());
             } catch (IllegalArgumentException exception) {
-                moveResultDto = new MoveResultDTO(false, chessBoard.isPlaying());
+                result = chessBoard.result();
+                return new MoveResultDTO(false,
+                    chessBoard.isPlaying(),
+                    result.whiteScore().getScore(),
+                    result.blackScore().getScore());
             }
-            return moveResultDto;
         }, gson::toJson);
     }
 

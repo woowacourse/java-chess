@@ -115,6 +115,10 @@ async function move(source, target) {
     if (!data.isMove) {
         alert("올바른 위치를 입력하여 주세요");
     }
-
+    console.log(data);
+    document.getElementById("whitePoint").innerText = "white Point: "
+        + data.whiteScore;
+    document.getElementById("blackPoint").innerText = "black Point: "
+        + data.blackScore;
     runMove()
 }
