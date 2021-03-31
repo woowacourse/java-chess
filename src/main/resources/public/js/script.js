@@ -12,6 +12,7 @@ function checkGameStatus() {
         url: '/checkStatus'
     })
         .then(function (res) {
+            console.log(res);
             if (!res.data) {
                 location.replace("/finish")
             }
