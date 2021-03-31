@@ -31,14 +31,12 @@ public class ChessGameDAO {
     }
 
     public void create() throws SQLException {
-        System.out.println("실행전");
         try (Connection con = factory.getConnection()) {
             String query = "INSERT INTO chess_games(state) VALUES(?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, "Ready");
             preparedStatement.executeUpdate();
         }
-        System.out.println("실행후");
     }
 
     public void deleteById(Long id) throws SQLException {
