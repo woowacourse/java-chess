@@ -3,6 +3,7 @@ package chess.dao;
 import java.sql.*;
 
 public class ChessDAO {
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -31,50 +32,56 @@ public class ChessDAO {
         return con;
     }
 
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
     public void addChessGame(String gameId, String data) throws SQLException {
         String query = "INSERT INTO chess VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameId);
-        pstmt.setString(2, data);
-        pstmt.executeUpdate();
+
+        try (Connection conn = getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, gameId);
+            pstmt.setString(2, data);
+            pstmt.executeUpdate();
+        }
+
     }
 
     public void updateChessGame(String gameId, String data) throws SQLException {
         String query = "UPDATE chess SET data=? WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, data);
-        pstmt.setString(2, gameId);
-        pstmt.execute();
+
+        try (Connection conn = getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, data);
+            pstmt.setString(2, gameId);
+            pstmt.execute();
+        }
+
     }
 
     public String findChessGameByGameId(String gameId) throws SQLException {
         String query = "SELECT data FROM chess WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameId);
-        ResultSet resultSet = pstmt.executeQuery();
-        resultSet.next();
 
-        return resultSet.getString("data");
+        try (Connection conn = getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, gameId);
+            ResultSet resultSet = pstmt.executeQuery();
+            resultSet.next();
+
+            return resultSet.getString("data");
+        }
+
     }
 
     public boolean isExistGameId(String gameId) throws SQLException {
         String query = "SELECT count(*) as count FROM chess WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameId);
-        ResultSet resultSet = pstmt.executeQuery();
-        resultSet.next();
 
-        return resultSet.getInt("count") != 0;
+        try (Connection conn = getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, gameId);
+            ResultSet resultSet = pstmt.executeQuery();
+            resultSet.next();
+
+            return resultSet.getInt("count") != 0;
+        }
+
     }
 
 }
