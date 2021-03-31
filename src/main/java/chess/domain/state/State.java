@@ -1,7 +1,21 @@
 package chess.domain.state;
 
-import chess.domain.game.Command;
+import chess.domain.piece.Color;
 
 public interface State {
-    State action(Command command);
+    Color color();
+
+    State opposite();
+
+    State end();
+
+    State status();
+
+    boolean isEnd();
+
+    State start();
+
+    State finish();
+
+    boolean isFinished();
 }

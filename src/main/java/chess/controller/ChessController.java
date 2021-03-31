@@ -11,14 +11,23 @@ public class ChessController {
     public void run() {
         Board board = BoardFactory.create();
         Game game = new Game(board);
-        OutputView.printWillPlayGameMessage();
-        game.action(Command.from(InputView.inputCommand()));
-
-        OutputView.printWayToMove();
-        OutputView.display(game.allBoard());
-
+        if (willNotPlay(game)) {
+            return;
+        }
         play(game);
         printScoreIfWanted(game);
+    }
+
+    private boolean willNotPlay(Game game) {
+        try {
+            OutputView.printStartMessage();
+            Command.from(InputView.inputCommand())
+                   .action(game);
+            return game.isFinished();
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return willNotPlay(game);
+        }
     }
 
     private void play(Game game) {
@@ -37,23 +46,22 @@ public class ChessController {
     }
 
     private void tryOneTurn(Game game) {
-        OutputView.printCurrentPlayer(game.currentPlayer());
-        game.action(Command.from(InputView.inputCommand()));
         OutputView.display(game.allBoard());
+        OutputView.printCurrentPlayer(game.currentPlayer());
+        Command.from(InputView.inputCommand())
+               .action(game);
     }
 
     private void printScoreIfWanted(Game game) {
-        if (willWatchScore()) {
-            OutputView.printScore(game.score());
+        if (game.isEnd() && !game.isFinished()) {
+            OutputView.printWillWatchStatusMessage();
+            Command.from(InputView.inputCommand())
+                   .action(game);
         }
-    }
 
-    private boolean willWatchScore() {
-        try {
-            return Command.from(InputView.inputCommand()) == Command.STATUS;
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return willWatchScore();
+        if (game.isStatus()) {
+            OutputView.printScore(game.score());
+            game.finish();
         }
     }
 }

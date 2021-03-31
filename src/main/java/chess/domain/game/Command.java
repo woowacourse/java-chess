@@ -1,13 +1,37 @@
 package chess.domain.game;
 
+import chess.domain.location.Position;
+import chess.domain.state.State;
+
 import java.util.Arrays;
 import java.util.List;
 
 public enum Command {
-    START(0),
-    END(0),
-    MOVE(2),
-    STATUS(0);
+    START(0) {
+        @Override
+        public void action(Game game) {
+            game.start();
+        }
+    },
+    END(0) {
+        @Override
+        public void action(Game game) {
+            game.end();
+        }
+    },
+    MOVE(2) {
+        @Override
+        public void action(Game game) {
+            game.move(Position.from(options().get(0)), Position.from(options().get(1)));
+        }
+
+    },
+    STATUS(0) {
+        @Override
+        public void action(Game game) {
+            game.status();
+        }
+    };
 
     public static final String SPACE_REGEX = "\\s+";
     private int optionCount;
@@ -41,4 +65,6 @@ public enum Command {
     public List<String> options() {
         return options;
     }
+
+    public abstract void action(Game game);
 }

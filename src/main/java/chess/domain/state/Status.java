@@ -1,11 +1,46 @@
 package chess.domain.state;
 
-import chess.domain.game.Command;
+import chess.domain.piece.Color;
 
 public class Status implements State {
 
     @Override
-    public State action(Command command) {
-        return null;
+    public Color color() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State opposite() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State end() {
+        return new Finished();
+    }
+
+    @Override
+    public State status() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public boolean isEnd() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State start() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State finish() {
+        return new Finished();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

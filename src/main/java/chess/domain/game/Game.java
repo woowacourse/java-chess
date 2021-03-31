@@ -1,19 +1,17 @@
 package chess.domain.game;
 
+import chess.domain.location.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.location.Position;
-import chess.domain.state.End;
 import chess.domain.state.Init;
 import chess.domain.state.State;
+import chess.domain.state.Status;
 
-import java.util.List;
 import java.util.Map;
 
 public class Game {
     private final Board board;
     private final Calculator calculator = new Calculator();
-    private final Turn turn = new Turn();
     private State state;
 
     public Game(Board board) {
@@ -22,16 +20,40 @@ public class Game {
     }
 
     public void move(Position from, Position to) {
-        board.action(turn.color(), from, to);
-        turn.next();
+        board.action(state.color(), from, to);
+        if (board.isKingDead()) {
+            end();
+            return;
+        }
+        state = state.opposite();
+}
+
+    public void start() {
+        state = state.start();
+    }
+
+    public void end() {
+        state = state.end();
+    }
+
+    public void status() {
+        state = state.status();
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
     }
 
     public boolean isNotEnd() {
-        return (!(state instanceof End));
+        return !isEnd();
+    }
+
+    public boolean isStatus() {
+        return state instanceof Status;
     }
 
     public Color currentPlayer() {
-        return turn.color();
+        return state.color();
     }
 
     public Map<Color, Double> score() {
@@ -42,11 +64,11 @@ public class Game {
         return board.allPieces();
     }
 
-    public void action(Command command) {
-        if (command == Command.MOVE) {
-            List<String> positions = command.options();
-            move(Position.from(positions.get(0)), Position.from(positions.get(1)));
-        }
-        state = state.action(command);
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public State finish() {
+        return state.finish();
     }
 }

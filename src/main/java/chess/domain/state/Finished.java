@@ -2,30 +2,31 @@ package chess.domain.state;
 
 import chess.domain.piece.Color;
 
-public class BlackTurn implements State {
+public class Finished implements State{
+
     @Override
     public Color color() {
-        return Color.BLACK;
-    }
-
-    @Override
-    public State opposite() {
-        return new WhiteTurn();
-    }
-
-    @Override
-    public State end() {
-        return new End();
-    }
-
-    @Override
-    public State status() {
         throw new IllegalArgumentException();
     }
 
     @Override
+    public State opposite() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State end() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State status() {
+        return null;
+    }
+
+    @Override
     public boolean isEnd() {
-        return false;
+        return true;
     }
 
     @Override
@@ -40,6 +41,6 @@ public class BlackTurn implements State {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
