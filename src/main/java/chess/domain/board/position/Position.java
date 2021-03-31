@@ -106,12 +106,12 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return vertical == position.vertical && horizontal == position.horizontal;
+        return horizontal == position.horizontal && vertical == position.vertical;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vertical, horizontal);
+        return Objects.hash(horizontal, vertical);
     }
 
     @Override
