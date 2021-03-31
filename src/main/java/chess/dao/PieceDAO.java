@@ -45,8 +45,6 @@ public class PieceDAO {
                 return rs.getLong(FIRST_COLUMN);
             }
             throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -67,8 +65,6 @@ public class PieceDAO {
                 ));
             }
             return pieces;
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -80,8 +76,6 @@ public class PieceDAO {
             pstmt.setString(SECOND_PARAMETER_INDEX, String.valueOf(name));
             pstmt.setLong(THIRD_PARAMETER_INDEX, pieceId);
             pstmt.executeUpdate();
-        } catch (Exception e) {
-            throw e;
         }
     }
 }

@@ -30,8 +30,6 @@ public class RoomDAO {
                 return roomId;
             }
             throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -46,8 +44,6 @@ public class RoomDAO {
                 return Optional.empty();
             }
             return Optional.ofNullable(rs.getLong(ROOM_ID_COLUMN_NAME));
-        } catch (Exception e) {
-            throw e;
         }
     }
 }

@@ -46,8 +46,6 @@ public class GridDAO {
                 return rs.getLong(FIRST_COLUMN);
             }
             throw new IllegalArgumentException("값을 잘못 입력하여 아무 값도 삽입되지 않았습니다.");
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -68,8 +66,6 @@ public class GridDAO {
                     rs.getObject(FIFTH_COLUMN, LocalDateTime.class),
                     rs.getBoolean(SIXTH_COLUMN)
             );
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -92,8 +88,6 @@ public class GridDAO {
                     rs.getBoolean(SIXTH_COLUMN)
             );
             return gridDto;
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -103,8 +97,6 @@ public class GridDAO {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
             pstmt.executeUpdate();
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -115,8 +107,6 @@ public class GridDAO {
             pstmt.setBoolean(FIRST_PARAMETER_INDEX, isBlackTurn);
             pstmt.setLong(SECOND_PARAMETER_INDEX, gridId);
             pstmt.executeUpdate();
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -126,8 +116,6 @@ public class GridDAO {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setLong(FIRST_PARAMETER_INDEX, gridId);
             pstmt.executeUpdate();
-        } catch (Exception e) {
-            throw e;
         }
     }
 }
