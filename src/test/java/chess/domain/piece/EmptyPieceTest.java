@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.piece.pawn.Pawn;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class EmptyPieceTest {
 

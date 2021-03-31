@@ -1,8 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Vertical;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
@@ -19,10 +17,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BoardInitializerTest {
 
