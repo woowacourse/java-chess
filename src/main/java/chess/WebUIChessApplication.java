@@ -2,12 +2,11 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
-import chess.dto.PieceDto;
 import chess.dto.WebBoardDto;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,13 @@ public class WebUIChessApplication {
         });
 
         post("/main", (req, res) -> {
+            WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
+            Map<String, Object> model = webBoardDto.getBoardDto();
+            return render(model, "main.html");
+        });
+
+        get("/chess/move", (req, res) -> {
+            chessGame.move(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
             WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
             Map<String, Object> model = webBoardDto.getBoardDto();
             return render(model, "main.html");
