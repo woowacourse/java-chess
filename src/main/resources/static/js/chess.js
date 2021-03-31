@@ -1,3 +1,4 @@
+const roomId = document.getElementById("room-id").value;
 let startPoint = "";
 let endPoint = "";
 let movablePosition = [];
@@ -92,6 +93,7 @@ function move() {
     $.ajax({
         url: "/move",
         data: {
+            roomId: roomId,
             startPoint: startPoint,
             endPoint: endPoint
         },

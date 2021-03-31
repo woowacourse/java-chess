@@ -31,7 +31,7 @@ CREATE TABLE log
     room_id        INT         NOT NULL,
     start_position VARCHAR(12) NOT NULL,
     end_position   VARCHAR(12) NOT NULL,
-    register_date  timestamp
+    register_date  timestamp DEFAULT NOW()
 )
 
 -- 초기 데이터 생성

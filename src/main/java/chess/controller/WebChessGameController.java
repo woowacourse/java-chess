@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.dao.ConnectDB;
+import chess.dao.LogDAO;
 import chess.dao.RoomDAO;
 import chess.domain.ChessGame;
 import chess.domain.Team;
@@ -28,7 +29,7 @@ public class WebChessGameController {
         post("/start", gameSetting(chessGame));
         post("/myTurn", "application/json", currentTurn(chessGame), new JsonTransformer());
         post("/movablePositions", movablePositions(chessGame), new JsonTransformer());
-        post("/move", "application/json", move(chessGame), new JsonTransformer());
+        post("/move", "application/json", move(chessGame, connectDB), new JsonTransformer());
         post("/initialize", "application/json", initialize(chessGame), new JsonTransformer());
     }
 
@@ -51,7 +52,7 @@ public class WebChessGameController {
     private Route enterRoom() {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomNumber = req.queryParams(":id");
+            String roomNumber = req.queryParams("id");
             model.put("number", roomNumber);
             model.put("button", "새로운게임");
             model.put("isWhite", true);
@@ -62,9 +63,11 @@ public class WebChessGameController {
     private Route gameSetting(ChessGame chessGame) {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            String roomNumber = req.queryParams("room-id");
             chessGame.initialize();
             // history db 지우기
             gameInformation(chessGame, model);
+            model.put("number", roomNumber);
             return render(model, "chess.html");
         };
     }
@@ -92,11 +95,14 @@ public class WebChessGameController {
         };
     }
 
-    private Route move(ChessGame chessGame) {
+    private Route move(ChessGame chessGame, ConnectDB connectDB) {
         return (req, res) -> {
+            String roomId = req.queryParams("roomId");
             String startPoint = req.queryParams("startPoint");
             String endPoint = req.queryParams("endPoint");
             chessGame.move(startPoint, endPoint);
+            LogDAO logDAO = new LogDAO(connectDB);
+            logDAO.createLog(roomId, startPoint, endPoint);
             return currentStatus(chessGame);
         };
     }

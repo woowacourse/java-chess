@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="total">
+    <input id="room-id" type="hidden" value={{number}}>
     <div id="top">
         <p>Woowa Kingdom Chess</p>
     </div>
@@ -111,6 +112,7 @@
                     <input type="submit" value="나가기">
                 </form>
                 <form action="start" method="post">
+                    <input type="hidden" name="room-id" value={{number}}>
                     <input type="submit" value={{button}}>
                 </form>
                 <form action="continue" method="post">
@@ -120,6 +122,10 @@
         </div>
     </div>
 </div>
+<script>
+    const id = document.getElementById("room-id");
+    console.log(id.value);
+</script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/chess.js"></script>
 <script>
