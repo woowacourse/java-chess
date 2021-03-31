@@ -38,7 +38,7 @@ const index = {
 
             fromInput.value = "";
             toInput.value = "";
-        })
+        });
 
     },
 
@@ -50,8 +50,8 @@ const index = {
             .then(boardDto => {
                 clearBoard();
                 placePieces(boardDto.pieceDtos);
-                winToggleButtons(boardDto.isFinished);
-                changeTurn(boardDto.isFinished);
+                winToggleButtons(boardDto.finished);
+                changeTurn(boardDto.finished);
             })
             .catch(error => {
                 alert("잘못된 명령입니다!")
@@ -73,7 +73,7 @@ const index = {
             })
             .then(boardDto => {
                 placePieces(boardDto.pieceDtos);
-                startAndEndToggleButtons(boardDto.isFinished);
+                startAndEndToggleButtons(boardDto.finished);
             })
             .catch(error => {
                 alert("잘못된 명령입니다!");
@@ -94,7 +94,7 @@ const index = {
             })
             .then(boardDto => {
                 clearBoard();
-                startAndEndToggleButtons(boardDto.isFinished);
+                startAndEndToggleButtons(boardDto.finished);
             })
             .catch(error => {
                 alert("잘못된 명령입니다!")
@@ -124,9 +124,9 @@ decideClickedPosition = (target) => {
     }
 }
 
-changeTurn = (isFinished) => {
+changeTurn = (finished) => {
     console.log("changeTurn 실행")
-    if (isFinished) {
+    if (finished) {
         return;
     }
 
@@ -150,8 +150,10 @@ printScores = (scoreDtos) => {
     document.querySelector(".score-white-value-tag").innerText = scoreDtos.whiteScore;
 }
 
-winToggleButtons = (isFinished) => {
-    if (isFinished) {
+winToggleButtons = (finished) => {
+    alert(`게임 끝남!? : ${finished}`);
+    if (finished) {
+        console.log("게임 끝남!")
         document.querySelector(".chess-start-btn").classList.remove("hidden");
         document.querySelector(".chess-status-btn").classList.add("hidden");
         document.querySelector(".chess-end-btn").classList.add("hidden");
@@ -164,8 +166,8 @@ winToggleButtons = (isFinished) => {
     document.querySelector(".chess-end-btn").classList.remove("hidden");
 }
 
-startAndEndToggleButtons = (isFinished) => {
-    if (isFinished) {
+startAndEndToggleButtons = (finished) => {
+    if (finished) {
         document.querySelector(".chess-start-btn").classList.remove("hidden");
         document.querySelector(".chess-status-btn").classList.add("hidden");
         document.querySelector(".chess-end-btn").classList.add("hidden");
