@@ -6,8 +6,8 @@
     <link href="/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<script hidden id="roomNumber">
-    const roomNumber = '{{roomNumber}}';
+<script hidden id="roomId">
+    const roomId = '{{roomId}}';
 </script>
 <section id="board">
     <script id="template-list-piece" type="text/template">
@@ -20,11 +20,11 @@
     <form class="piece-move-form">
         <div class="piece-current-position">선택 기물 현재 위치<br>
             <label>
-                <input class="current" name="current" readonly value="">
+                <input class="current-position" name="current" readonly value="">
             </label>
         </div>
     </form>
 </section>
 </body>
-<script src="/js/chess.js" type="text/javascript"></script>
+<script src="/js/game.js" type="text/javascript"></script>
 </html>

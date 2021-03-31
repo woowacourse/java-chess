@@ -1,21 +1,21 @@
-function getBaseUrl() {
-    return 'http://localhost:8080/chessgame/' + roomNumber;
-}
-
 function initiate() {
     const xmlHttp = new XMLHttpRequest();
-    const url = getBaseUrl() + '/update';
+    const url = getBaseUrl() + '/show';
     xmlHttp.onreadystatechange = function () {
-        if (isValidHttpResponse(xmlHttp)) {
+        if (isValidHttpResponse(this)) {
             const boardDTO = JSON.parse(this.responseText);
             if (boardDTO.isCheckmate === true) {
-                window.location.href = 'chessboard/result';
+                window.location.href = 'result/' + roomId;
             }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
         }
     }
     xmlHttp.open('GET', url, true);
     xmlHttp.send();
+}
+
+function getBaseUrl() {
+    return 'http://localhost:8080/chessgame/' + roomId;
 }
 
 function isValidHttpResponse(xmlHttp) {
@@ -52,33 +52,33 @@ function calculateCoordinate(i, j) {
 
 function generatePieceUrl(piece) {
     if (piece === null) {
-        return "Blank";
+        return 'Blank';
     }
-    const teamPrefix = (piece.teamType === "BLACK") ? "B" : "W";
+    const teamPrefix = (piece.teamType === 'BLACK') ? 'B' : 'W';
     return teamPrefix + piece.name.toUpperCase();
 }
 
 function changeCurrentTeamType(currentTeamType) {
-    const teamTypeElement = document.querySelector('.current-team-type');
-    teamTypeElement.textContent = currentTeamType;
+    const currentTeamTypeNode = document.querySelector('.current-team-type');
+    currentTeamTypeNode.textContent = currentTeamType;
 }
 
 function addMovableEvent(piece, currentTeamType) {
     piece.addEventListener('click', function (event) {
         event.stopPropagation();
-        const current = document.querySelector('.current');
-        if (isPieceChosenForTheFirst(current)) {
-            current.value = piece.id;
+        const currentPosition = document.querySelector('.current-position');
+        if (isPieceChosenForTheFirst(currentPosition)) {
+            currentPosition.value = piece.id;
             piece.style.border = '1px solid red';
             return;
         }
         if (isPieceChosenAlready(piece)) {
-            current.value = '';
+            currentPosition.value = '';
             piece.style.border = '1px solid black';
             return;
         }
-        sendMoveRequest(current.value, piece.id, currentTeamType);
-        current.value = '';
+        sendMoveRequest(currentPosition.value, piece.id, currentTeamType);
+        currentPosition.value = '';
     });
 }
 
@@ -90,25 +90,25 @@ function isPieceChosenAlready(piece) {
     return piece.style.border === '1px solid red';
 }
 
-function sendMoveRequest(current, destination, currentTeamType) {
+function sendMoveRequest(current, destination, teamType) {
+    const xmlHttp = new XMLHttpRequest();
+    const url = getBaseUrl() + '/move';
     const requestData = JSON.stringify({
         "current": current,
         "destination": destination,
-        "teamType": currentTeamType
+        "teamType": teamType
     });
-    const xmlHttp = new XMLHttpRequest();
-    const url = getBaseUrl() + '/move';
     xmlHttp.onreadystatechange = function () {
-        if (isValidHttpResponse(xmlHttp)) {
+        if (isValidHttpResponse(this)) {
             removeOutdatedChessBoard();
             const boardDTO = JSON.parse(this.responseText);
             if (boardDTO.isCheckmate === true) {
-                window.location.href = '/result/' + roomNumber;
+                window.location.href = '/result/' + roomId;
             }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
             return;
         }
-        if (isExceptionThrown(xmlHttp)) {
+        if (isExceptionThrown(this)) {
             alert(this.responseText);
             const currentPiece = document.getElementById(current);
             currentPiece.style.border = '1px solid black';
@@ -120,7 +120,7 @@ function sendMoveRequest(current, destination, currentTeamType) {
 
 function removeOutdatedChessBoard() {
     Array.from(document.getElementsByClassName('piece'))
-        .forEach(t => t.remove());
+        .forEach(piece => piece.remove());
 }
 
 function isExceptionThrown(xmlHttp) {

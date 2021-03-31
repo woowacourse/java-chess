@@ -1,12 +1,12 @@
 package chess.dto;
 
-public class RequestDTO {
+public class MoveRequestDTO {
 
     private final String current;
     private final String destination;
     private final String teamType;
 
-    public RequestDTO(String current, String destination, String teamType) {
+    public MoveRequestDTO(String current, String destination, String teamType) {
         this.current = current;
         this.destination = destination;
         this.teamType = teamType;

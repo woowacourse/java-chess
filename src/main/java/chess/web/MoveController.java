@@ -20,15 +20,15 @@ public class MoveController {
 
     public static String moveToGamePage(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        String roomNumber = request.params(":roomNumber");
-        model.put("roomNumber", roomNumber);
+        String roomId = request.params(":roomId");
+        model.put("roomId", roomId);
         return render(model, "game.html");
     }
 
     public static String moveToResultPage(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        String roomNumber = request.params(":roomNumber");
-        model.put("roomNumber", roomNumber);
+        String roomId = request.params(":roomId");
+        model.put("roomId", roomId);
         return render(model, "result.html");
     }
 

@@ -7,7 +7,7 @@ import chess.domain.history.Histories;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 import chess.dto.BoardDTO;
-import chess.dto.RequestDTO;
+import chess.dto.MoveRequestDTO;
 import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 
@@ -21,11 +21,11 @@ public class ChessService {
         this.chessRepository = chessRepository;
     }
 
-    public BoardDTO findLatestBoard(int roomId) throws SQLException {
+    public BoardDTO findLatestBoardByRoomId(int roomId) throws SQLException {
         ChessBoard chessBoard = generateDefaultChessBoard();
         Histories histories = new Histories(chessRepository.findAllHistoriesByRoomId(roomId));
-        histories.restoreLatestChessBoard(chessBoard);
-        if (chessBoard.isKingCheckmate() || histories.isEmpty()) {
+        histories.restoreChessBoardAsLatest(chessBoard);
+        if (histories.isEmpty() || chessBoard.isKingCheckmate()) {
             return BoardDTO.from(generateDefaultChessBoard(), TeamType.WHITE);
         }
         TeamType nextTeamType = histories.findNextTeamType();
@@ -36,35 +36,35 @@ public class ChessService {
         return new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
     }
 
-    public BoardDTO move(RequestDTO requestDTO, int roomId) throws SQLException {
+    public BoardDTO move(MoveRequestDTO moveRequestDTO, int roomId) throws SQLException {
         ChessBoard chessBoard = generateDefaultChessBoard();
         Histories histories = new Histories(chessRepository.findAllHistoriesByRoomId(roomId));
-        histories.restoreLatestChessBoard(chessBoard);
-        moveChessBoard(chessBoard, requestDTO);
-        TeamType nextTeamType = TeamType.valueOf(requestDTO.getTeamType())
+        histories.restoreChessBoardAsLatest(chessBoard);
+        moveChessBoard(chessBoard, moveRequestDTO);
+        TeamType nextTeamType = TeamType.valueOf(moveRequestDTO.getTeamType())
                 .findOppositeTeam();
-        updateHistory(requestDTO, roomId);
+        updateHistory(moveRequestDTO, roomId);
         return BoardDTO.from(chessBoard, nextTeamType);
     }
 
-    private void moveChessBoard(ChessBoard chessBoard, RequestDTO requestDTO) {
-        Coordinate current = Coordinate.from(requestDTO.getCurrent());
-        Coordinate destination = Coordinate.from(requestDTO.getDestination());
-        TeamType teamType = TeamType.valueOf(requestDTO.getTeamType());
+    private void moveChessBoard(ChessBoard chessBoard, MoveRequestDTO moveRequestDTO) {
+        Coordinate current = Coordinate.from(moveRequestDTO.getCurrent());
+        Coordinate destination = Coordinate.from(moveRequestDTO.getDestination());
+        TeamType teamType = TeamType.valueOf(moveRequestDTO.getTeamType());
         chessBoard.move(current, destination, teamType);
     }
 
-    private void updateHistory(RequestDTO requestDTO, int roomId) throws SQLException {
-        String current = requestDTO.getCurrent();
-        String destination = requestDTO.getDestination();
-        String teamType = requestDTO.getTeamType();
-        chessRepository.insertHistoryByRoomId(current, destination, teamType, roomId);
+    private void updateHistory(MoveRequestDTO moveRequestDTO, int roomId) throws SQLException {
+        String current = moveRequestDTO.getCurrent();
+        String destination = moveRequestDTO.getDestination();
+        String teamType = moveRequestDTO.getTeamType();
+        chessRepository.insertHistory(current, destination, teamType, roomId);
     }
 
     public ResultDTO calculateResult(int roomId) throws SQLException {
         ChessBoard chessBoard = generateDefaultChessBoard();
         Histories histories = new Histories(chessRepository.findAllHistoriesByRoomId(roomId));
-        histories.restoreLatestChessBoard(chessBoard);
+        histories.restoreChessBoardAsLatest(chessBoard);
         Result result = chessBoard.calculateScores();
         TeamType winnerTeamType = chessBoard.findWinnerTeam();
         return ResultDTO.from(result, winnerTeamType);

@@ -37,7 +37,7 @@ class HistoriesTest {
         Map<Coordinate, Cell> cells = ChessBoardGenerator.generateDefaultChessBoard();
         ChessBoard chessBoard = new ChessBoard(cells);
 
-        histories.restoreLatestChessBoard(chessBoard);
+        histories.restoreChessBoardAsLatest(chessBoard);
         Cell a3 = cells.get(Coordinate.from("a3"));
         Cell a6 = cells.get(Coordinate.from("a6"));
 

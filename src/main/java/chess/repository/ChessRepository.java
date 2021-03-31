@@ -18,18 +18,8 @@ public class ChessRepository {
         this.connection = Objects.requireNonNull(connection, "DB에 연결되지 않았습니다.");
     }
 
-    public void insertHistoryByRoomId(String source, String destination, String team, int roomId) throws SQLException {
-        String query = "INSERT INTO history (SOURCE, DESTINATION, TEAM, ROOM_ID) VALUES (?, ?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, source);
-        preparedStatement.setString(2, destination);
-        preparedStatement.setString(3, team);
-        preparedStatement.setString(4, String.valueOf(roomId));
-        preparedStatement.executeUpdate();
-    }
-
     public List<History> findAllHistoriesByRoomId(int roomId) throws SQLException {
-        String query = "SELECT * FROM history WHERE ROOM_ID = ?";
+        String query = "SELECT * FROM HISTORY WHERE ROOM_ID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, String.valueOf(roomId));
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -47,8 +37,18 @@ public class ChessRepository {
                 resultSet.getString("team"));
     }
 
+    public void insertHistory(String source, String destination, String team, int roomId) throws SQLException {
+        String query = "INSERT INTO HISTORY (SOURCE, DESTINATION, TEAM, ROOM_ID) VALUES (?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, source);
+        preparedStatement.setString(2, destination);
+        preparedStatement.setString(3, team);
+        preparedStatement.setString(4, String.valueOf(roomId));
+        preparedStatement.executeUpdate();
+    }
+
     public void deleteAllHistoriesByRoomId(int roomId) throws SQLException {
-        String query = "DELETE FROM history WHERE ROOM_ID = ?";
+        String query = "DELETE FROM HISTORY WHERE ROOM_ID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, String.valueOf(roomId));
         preparedStatement.executeUpdate();

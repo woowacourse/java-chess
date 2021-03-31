@@ -1,7 +1,7 @@
 package chess.web;
 
 import chess.dto.BoardDTO;
-import chess.dto.RequestDTO;
+import chess.dto.MoveRequestDTO;
 import chess.dto.ResultDTO;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -21,31 +21,31 @@ public class ChessController {
         this.chessService = chessService;
     }
 
-    public JsonElement updateChessBoard(Request request, Response response) throws SQLException {
+    public JsonElement showChessBoard(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.valueOf(request.params(":roomNumber"));
-        BoardDTO boardDTO = chessService.findLatestBoard(roomId);
+        int roomId = Integer.parseInt(request.params(":roomId"));
+        BoardDTO boardDTO = chessService.findLatestBoardByRoomId(roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement move(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.valueOf(request.params(":roomNumber"));
-        RequestDTO requestDTO = GSON.fromJson(request.body(), RequestDTO.class);
-        BoardDTO boardDTO = chessService.move(requestDTO, roomId);
+        int roomId = Integer.parseInt(request.params(":roomId"));
+        MoveRequestDTO moveRequestDTO = GSON.fromJson(request.body(), MoveRequestDTO.class);
+        BoardDTO boardDTO = chessService.move(moveRequestDTO, roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement showResult(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.valueOf(request.params(":roomNumber"));
+        int roomId = Integer.parseInt(request.params(":roomNumber"));
         ResultDTO resultDTO = chessService.calculateResult(roomId);
         return GSON.toJsonTree(resultDTO);
     }
 
     public JsonElement restart(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.valueOf(request.params(":roomNumber"));
+        int roomId = Integer.parseInt(request.params(":roomNumber"));
         chessService.resetDefaultByRoomId(roomId);
         return GSON.toJsonTree("/");
     }

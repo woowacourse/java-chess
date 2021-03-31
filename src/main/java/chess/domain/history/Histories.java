@@ -14,7 +14,7 @@ public class Histories {
         this.histories = histories;
     }
 
-    public void restoreLatestChessBoard(ChessBoard chessBoard) {
+    public void restoreChessBoardAsLatest(ChessBoard chessBoard) {
         histories.forEach(history -> updateChessBoardByEachHistory(chessBoard, history));
     }
 
