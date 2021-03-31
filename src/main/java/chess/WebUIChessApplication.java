@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.ChessResult;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
@@ -29,9 +30,19 @@ public class WebUIChessApplication {
             return gson.toJson(boardDto.getBoard());
         });
 
+        get("/checkStatus", (req, res) -> game.isRunning());
+
         put("/restart", (req, res) -> {
             game.restartGame();
             return 200;
+        });
+
+        get("/finish", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            ChessResult result = new ChessResult(game.board());
+            model.put("team", result.winner().teamName());
+            
+            return render(model, "test.html");
         });
 
         post("/move", (req, res) -> {

@@ -6,6 +6,18 @@ function movePieces(source, target) {
     document.querySelector("#" + source).innerText = "";
 }
 
+function checkGameStatus() {
+    axios({
+        method: 'get',
+        url: '/checkStatus'
+    })
+        .then(function (res) {
+            if (!res.data) {
+                location.replace("/finish")
+            }
+        })
+}
+
 function move(source, target) {
     axios({
         method: 'post',
@@ -16,18 +28,13 @@ function move(source, target) {
         }
     })
         .then(function (response) {
-            console.log(response.data)
             if (response.data === 200) {
                 movePieces(source, target);
+                checkGameStatus();
                 return;
             }
             alert("잘못된 이동입니다.");
         })
-        // .catch(function (error) {
-        //     console.log("에러")
-            // handle error
-        //     console.log(error);
-        // })
 }
 
 function select(event) {

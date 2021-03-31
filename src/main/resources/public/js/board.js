@@ -4,7 +4,7 @@ const button = document.querySelector("input");
 window.addEventListener('DOMContentLoaded', syncBoard)
 button.addEventListener('click', restartGame)
 
-function restartGame() {
+export function restartGame() {
     axios({
         method: 'put',
         url: '/restart'
@@ -14,7 +14,7 @@ function restartGame() {
         })
 }
 
-function syncBoard() {
+export function syncBoard() {
     axios({
         method: 'get',
         url: '/drawBoard'

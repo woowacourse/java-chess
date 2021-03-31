@@ -9,13 +9,13 @@ class PieceTest {
     @Test
     @DisplayName("진영에 따라 이름 생성 기능")
     void checkName() {
-        assertThat(new Bishop(Team.BLACK).name()).isEqualTo("B");
-        assertThat(new King(Team.BLACK).name()).isEqualTo("K");
-        assertThat(new Knight(Team.BLACK).name()).isEqualTo("N");
-        assertThat(new Pawn(Team.BLACK).name()).isEqualTo("P");
-        assertThat(new Queen(Team.BLACK).name()).isEqualTo("Q");
-        assertThat(new Rook(Team.BLACK).name()).isEqualTo("R");
-        assertThat(new Bishop(Team.WHITE).name()).isEqualTo("b");
-        assertThat(new King(Team.WHITE).name()).isEqualTo("k");
+        assertThat(new Bishop(Team.BLACK).name()).isEqualTo("black_b");
+        assertThat(new King(Team.BLACK).name()).isEqualTo("black_k");
+        assertThat(new Knight(Team.BLACK).name()).isEqualTo("black_n");
+        assertThat(new Pawn(Team.BLACK).name()).isEqualTo("black_p");
+        assertThat(new Queen(Team.BLACK).name()).isEqualTo("black_q");
+        assertThat(new Rook(Team.BLACK).name()).isEqualTo("black_r");
+        assertThat(new Bishop(Team.WHITE).name()).isEqualTo("white_b");
+        assertThat(new King(Team.WHITE).name()).isEqualTo("white_k");
     }
 }

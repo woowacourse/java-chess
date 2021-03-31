@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게임이 끝났습니다!</title>
+    <script type="module" src="js/finished.js" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-source : {{source}}
+<div>
+    <h1>게임이 끝났습니다!</h1>
+    <div>승자는 {{team}} 입니다!</div>
+</div>
+<input type="button" class="black" value="재시작!">
 </body>
 </html>
