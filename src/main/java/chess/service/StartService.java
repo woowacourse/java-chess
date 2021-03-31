@@ -37,12 +37,11 @@ public class StartService {
         ChessGame chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         chessGame.start();
 
-        if(GameRepository.isExistGameIdInDAO(gameId)){
+        if (GameRepository.isGameIdExistingInDB(gameId)) {
             throw new IllegalArgumentException("이미 존재하는 게임 아이디 입니다.");
         }
 
         GameRepository.saveToCache(gameId, chessGame);
-        GameRepository.saveToDAO(gameId, chessGame);
 
         return chessGame;
     }
