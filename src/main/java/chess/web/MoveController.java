@@ -17,6 +17,10 @@ public class MoveController {
         return render("index.html");
     }
 
+    public static String moveToGamePage(Request request, Response response) {
+        return render("game.html");
+    }
+
     public static String moveToResultPage(Request request, Response response) {
         return render("result.html");
     }

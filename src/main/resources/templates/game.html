@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess Game : Play</title>
+    <link href="/css/chess.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<section id="board">
+    <script id="template-list-piece" type="text/template">
+        <img src="/images/{url}.png" id="{coordinate}" class="piece" alt="img"/>
+    </script>
+</section>
+<section id="status">
+    <div class="current-team-message">현재 팀</div>
+    <div class="current-team-type"></div>
+    <form class="piece-move-form">
+        <div class="piece-current-position">선택 기물 현재 위치<br>
+            <label>
+                <input class="current" name="current" readonly value="">
+            </label>
+        </div>
+    </form>
+</section>
+</body>
+<script src="/js/chess.js" type="text/javascript"></script>
+</html>
