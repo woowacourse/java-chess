@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
 import chess.domain.piece.info.Score;
@@ -17,10 +16,6 @@ public class Bishop extends Piece {
             Position.of('f', '8'));
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('c', '1'),
             Position.of('f', '1'));
-
-    public Bishop(String name, Color color) {
-        super(name, color, new Score(0), new BishopMoveStrategy());
-    }
 
     public Bishop(String name, Color color, Score score) {
         super(name, color, score, new BishopMoveStrategy());

@@ -93,6 +93,9 @@ public class ChessBoard {
             return;
         }
         Pawn pawn = (Pawn) sourcePiece;
+        if (pawn.isAttackAble(source, target)) {
+            validateEmpty(findByPosition(target));
+        }
         if (!pawn.isAttackAble(source, target)) {
             validateCrossOrDiagonalRoute(source, target);
         }
@@ -143,4 +146,6 @@ public class ChessBoard {
         return chessBoard.keySet().stream()
                 .anyMatch(position -> position.equals(target));
     }
+
+
 }
