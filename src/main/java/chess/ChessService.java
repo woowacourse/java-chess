@@ -21,6 +21,7 @@ public class ChessService {
     private static final Gson GSON = new Gson();
     private final ChessDAO chessDAO = new ChessDAO();
     private ChessGame chessGame;
+    private User user;
 
     public ChessService() {
         this.chessGame = new ChessGame();
@@ -31,13 +32,15 @@ public class ChessService {
 
         post("/board", (req, res) -> GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getImage()));
 
+        post("/piecename", (req, res) -> GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getName()));
+
         post("/move", (req, res) -> {
             RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
             return move(requestDto);
         });
 
         post("/color", (req, res) -> {
-            if(chessGame.getBoard().get(Point.of(req.body())).isSameTeam(Color.BLACK)){
+            if (chessGame.getBoard().get(Point.of(req.body())).isSameTeam(Color.BLACK)) {
                 return "흑";
             } else {
                 return "백";
@@ -45,10 +48,10 @@ public class ChessService {
         });
 
         post("/turn", (req, res) -> {
-            if(chessGame.nextTurn().isSameAs(Color.BLACK)){
-                return "백";
+            if (chessGame.nextTurn().isSameAs(Color.BLACK)) {
+                return "WHITE";
             } else {
-                return "흑";
+                return "BLACK";
             }
         });
 
@@ -66,9 +69,9 @@ public class ChessService {
         });
 
         post("/user", (req, res) -> {
-            User user = new User(req.queryParams("name"), req.queryParams("password"));
+            user = new User(req.queryParams("name"), req.queryParams("password"));
             Map<String, Object> model = new HashMap<>();
-            if(chessDAO.findByUserNameAndPwd(user.getId(), user.getPwd()) == null){
+            if (chessDAO.findByUserNameAndPwd(user.getId(), user.getPwd()) == null) {
                 return render(model, "start.html");
             }
             model.put("user", user);
@@ -82,8 +85,14 @@ public class ChessService {
 
         post("/signup", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
-            User user = new User(req.queryParams("name"), req.queryParams("password"));
+            user = new User(req.queryParams("name"), req.queryParams("password"));
             chessDAO.addUser(user);
+            return render(model, "start.html");
+        });
+
+        post("/addboard", (req, res) -> {
+            final Map<String, Object> model = new HashMap<>();
+            chessDAO.addBoard(chessDAO.findUserIdByUser(user), req.body(), chessGame.nextTurn());
             return render(model, "start.html");
         });
     }
@@ -100,6 +109,7 @@ public class ChessService {
             if(chessGame.isEnd()) {
                 return 333;
             }
+
             return 200;
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
             return 401;

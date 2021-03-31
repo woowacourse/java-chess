@@ -18,7 +18,18 @@ import chess.domain.piece.kind.Queen;
 import chess.domain.piece.kind.Rook;
 
 public enum PieceType {
-    ROOK(INITIAL_COLUMN_OF_ROOK) {
+    ROOK(INITIAL_COLUMN_OF_ROOK, "r") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new Rook(BLACK);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new Rook(WHITE);
+            }
+            return new Empty(NOTHING);
+        }
+
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -30,7 +41,19 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    KNIGHT(INITIAL_COLUMN_OF_KNIGHT) {
+
+    KNIGHT(INITIAL_COLUMN_OF_KNIGHT, "n") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new Knight(BLACK);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new Knight(WHITE);
+            }
+            return new Empty(NOTHING);
+        }
+
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -42,7 +65,18 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    BISHOP(INITIAL_COLUMN_OF_BISHOP) {
+    BISHOP(INITIAL_COLUMN_OF_BISHOP, "b") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new Bishop(BLACK);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new Bishop(WHITE);
+            }
+            return new Empty(NOTHING);
+        }
+
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -54,7 +88,18 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    QUEEN(INITIAL_COLUMN_OF_QUEEN) {
+    QUEEN(INITIAL_COLUMN_OF_QUEEN, "q") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new Queen(BLACK);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new Queen(WHITE);
+            }
+            return new Empty(NOTHING);
+        }
+
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -66,7 +111,18 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    KING(INITIAL_COLUMN_OF_KING) {
+    KING(INITIAL_COLUMN_OF_KING, "k") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new King(BLACK);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new King(WHITE);
+            }
+            return new Empty(NOTHING);
+        }
+
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -80,9 +136,11 @@ public enum PieceType {
     };
 
     private final List<Integer> column;
+    protected final String pieceName;
 
-    PieceType(List<Integer> column) {
+    PieceType(List<Integer> column, String pieceName) {
         this.column = column;
+        this.pieceName = pieceName;
     }
 
     private static Piece createDefaultPieces(int row, int column) {
@@ -99,12 +157,23 @@ public enum PieceType {
         return matchColumn(column).create(row, column);
     }
 
+
+    public static Piece findPiece(String name) {
+        return Arrays.stream(PieceType.values())
+            .filter(piece -> piece.pieceName.equals(name))
+            .map(pieceType -> pieceType.of(name))
+            .findAny()
+            .orElseGet(() -> new Empty(NOTHING));
+    }
+
     private static PieceType matchColumn(int column) {
         return Arrays.stream(PieceType.values())
             .filter(piece -> piece.column.contains(column))
             .findFirst()
             .orElseThrow(RuntimeException::new);
     }
+
+    public abstract Piece of(String name);
 
     public abstract Piece create(int row, int column);
 

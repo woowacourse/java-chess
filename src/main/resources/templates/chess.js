@@ -89,7 +89,8 @@ async function move(sourcePoint, targetPoint) {
                 .then(location.replace("/chess"));
         } else {
             await gameFinishedAlert(targetPoint);
-            location.replace("/start");
+            makeBoardInfo();
+            // location.replace("/");
         }
     }
     if(response === 200) {
@@ -156,5 +157,29 @@ async function score(color) {
     }).then(res => res.json());
     renderScore(colorName, score);
 }
+
+async function makeBoardInfo() {
+    let boardInfo = "";
+    for (let j = 8; j >= 1; j--) {
+        for(let i = 0; i<8;i++) {
+            let row = String.fromCharCode('a'.charCodeAt(0) + i);
+            let point = row + j;
+            await fetch('/piecename', {
+                method: 'POST',
+                body: point,
+            }).then(res => res.json()).then(data => {
+                boardInfo += data;
+            });
+        }
+    }
+    await fetch('/addboard', {
+        method: 'POST',
+        body: boardInfo,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+
 
 hi();

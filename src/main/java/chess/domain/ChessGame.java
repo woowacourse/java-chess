@@ -20,6 +20,10 @@ public final class ChessGame {
         this.board = initialize(new HashMap<>());
     }
 
+    public ChessGame(Board board) {
+        this.board = board;
+    }
+
     private Board initialize(Map<Point, Piece> boardMap) {
         for (int i = 0; i < BOARD_SIZE; i++) {
             initializeColumn(boardMap, i);

@@ -5,8 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.HashMap;
+import java.util.Map;
 import chess.domain.User;
+import chess.domain.board.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.kind.Piece;
 
 public class ChessDAO {
     public Connection getConnection() {
@@ -65,6 +70,16 @@ public class ChessDAO {
         return new User(rs.getString("user_name"), rs.getString("user_password"));
     }
 
+    public String findUserIdByUser(User user) throws SQLException {
+        String query = "SELECT user_id FROM user WHERE user_name = ? AND user_password = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, user.getId());
+        pstmt.setString(2, user.getPwd());
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) return null;
+        return rs.getString("user_id");
+    }
+
     public User findByUserNameAndPwd(String name, String password) throws SQLException {
         String query = "select * from user where user_name = ? and user_password = ?;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -73,5 +88,38 @@ public class ChessDAO {
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) return null;
         return new User(rs.getString("user_name"), rs.getString("user_password"));
+    }
+
+    public void addBoard(String userId, String boardInfo, Color color) throws SQLException {
+        System.out.println("&&&&&" + userId + "%%%%%" + boardInfo + "####" + color);
+        String query = "INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userId);
+
+        pstmt.setString(2, boardInfo);
+        pstmt.setString(3, color.name());
+        pstmt.executeUpdate();
+    }
+
+    public BoardDto findBoard(String userId) throws SQLException {
+        String query = "SELECT * FROM board WHERE user_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userId);
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) return null;
+        Map<Point, Piece> chessBoard = new HashMap<>();
+
+        String info = rs.getString("board_info");
+        if(info == null ){
+            return new BoardDto(chessBoard);
+        }
+        for(int i = 0; i< 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Point point = Point.valueOf(i, j);
+                Piece piece = PieceType.findPiece(String.valueOf(info.charAt(i*8+j)));  //"K"
+                chessBoard.put(point, piece);
+            }
+        }
+        return new BoardDto(chessBoard);
     }
 }

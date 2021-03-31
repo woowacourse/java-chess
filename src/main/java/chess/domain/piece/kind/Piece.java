@@ -14,11 +14,6 @@ public abstract class Piece {
 
     protected final Name name;
     protected final Color color;
-
-    public String getImage() {
-        return image;
-    }
-
     protected String image;
 
     public Piece(String name, Color color) {
@@ -64,6 +59,10 @@ public abstract class Piece {
 
     public final String getName() {
         return name.getName();
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @Override
