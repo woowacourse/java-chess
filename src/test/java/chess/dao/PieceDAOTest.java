@@ -19,18 +19,18 @@ class PieceDAOTest {
 
     private ChessGameDAO chessGameDAO;
     private PieceDAO pieceDAO;
+    private Long chessGameId;
 
     @BeforeEach
     void setUp() throws SQLException {
         chessGameDAO = new ChessGameDAO();
         pieceDAO = new PieceDAO();
-
-        chessGameDAO.create();
+        chessGameId = chessGameDAO.create();
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        chessGameDAO.deleteById(chessGameDAO.findLatestOne().getId());
+        chessGameDAO.deleteById(chessGameId);
     }
 
     @DisplayName("모든 피스를 조회하는 기능 ")
@@ -40,8 +40,8 @@ class PieceDAOTest {
         ChessGameEntity chessGame = chessGameDAO.findLatestOne();
 
         //when
-        pieceDAO.save(chessGame.getId(), Piece.createBishop(Color.BLACK, 1, 2));
-        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGame.getId());
+        pieceDAO.save(chessGameId, Piece.createBishop(Color.BLACK, 1, 2));
+        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
 
         //then
         assertAll(
@@ -60,7 +60,7 @@ class PieceDAOTest {
         ChessGameEntity chessGame = chessGameDAO.findLatestOne();
 
         //when
-        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGame.getId());
+        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
 
         //then
         assertAll(
@@ -73,13 +73,13 @@ class PieceDAOTest {
     void testDelete() throws SQLException {
         //given
         ChessGameEntity chessGame = chessGameDAO.findLatestOne();
-        pieceDAO.save(chessGame.getId(), Piece.createBishop(Color.BLACK, 0, 0));
+        pieceDAO.save(chessGameId, Piece.createBishop(Color.BLACK, 0, 0));
 
         //when
-        pieceDAO.delete(chessGame.getId(), 0, 0);
+        pieceDAO.delete(chessGameId, 0, 0);
 
         //then
-        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGame.getId());
+        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
         assertThat(pieces).isEmpty();
     }
 
@@ -89,10 +89,10 @@ class PieceDAOTest {
         //given
         ChessGameEntity chessGame = chessGameDAO.findLatestOne();
         Piece piece = Piece.createBishop(Color.BLACK, 0, 0);
-        pieceDAO.save(chessGame.getId(), piece);
+        pieceDAO.save(chessGameId, piece);
 
         //when
-        Piece findPiece = pieceDAO.findOneByPosition(chessGame.getId(), 0, 0);
+        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 0, 0);
 
         //then
         assertThat(findPiece).isEqualTo(piece);
@@ -104,13 +104,13 @@ class PieceDAOTest {
         //given
         ChessGameEntity chessGame = chessGameDAO.findLatestOne();
         Piece piece = Piece.createBishop(Color.BLACK, 0, 0);
-        pieceDAO.save(chessGame.getId(), piece);
+        pieceDAO.save(chessGameId, piece);
 
         //when
-        pieceDAO.update(chessGame.getId(), 0, 0, 2, 1);
+        pieceDAO.update(chessGameId, 0, 0, 2, 1);
 
         //then
-        Piece findPiece = pieceDAO.findOneByPosition(chessGame.getId(), 2, 1);
+        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 2, 1);
         assertThat(findPiece).isEqualTo(Piece.createBishop(Color.BLACK, 2, 1));
     }
 

@@ -3,10 +3,7 @@ package chess.dao;
 import chess.domain.game.ChessGameEntity;
 import chess.exception.NotFoundChessGameException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ChessGameDAO {
 
@@ -30,13 +27,19 @@ public class ChessGameDAO {
         }
     }
 
-    public void create() throws SQLException {
+    public Long create() throws SQLException {
         try (Connection con = factory.getConnection()) {
             String query = "INSERT INTO chess_games(state) VALUES(?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
+            PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, "Ready");
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getLong(Statement.RETURN_GENERATED_KEYS);
+            }
         }
+
+        throw new IllegalArgumentException("데이터가 제대로 생성되지 않았습니다");
     }
 
     public void deleteById(Long id) throws SQLException {
