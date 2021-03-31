@@ -8,13 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RoomRepository {
 
     private final Connection connection;
 
     public RoomRepository(Connection connection) {
-        this.connection = connection;
+        this.connection = Objects.requireNonNull(connection, "DB에 연결되지 않았습니다.");
     }
 
     public List<Room> findAllRooms() throws SQLException {
