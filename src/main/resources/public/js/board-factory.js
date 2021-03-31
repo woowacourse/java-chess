@@ -1,19 +1,22 @@
 const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-const WHITE = "white";
-const BLACK = "black";
-const $board = document.querySelector("#board");
+const WHITE_SQUARE = "white-square";
+const BLACK_SQUARE = "black-square";
 
-export function buildBoard() {
-    if ($board.childElementCount === 0) {
-        $board.insertAdjacentHTML("afterbegin", build());
+document.addEventListener("DOMContentLoaded", buildBoard);
+
+function buildBoard() {
+    const $board = document.querySelector("#board");
+    if ($board == null) {
+        document.querySelector("body").insertAdjacentHTML("afterend", build());
     }
 }
 
 function build() {
-    let html = '';
+    let html = '<div id="board">';
     for (let rank = 8; rank >= 1; rank--) {
         html += addSquaresAtRank(rank);
     }
+    html += "</div>";
     return html;
 }
 
@@ -31,7 +34,7 @@ function addSquare(rank, fileIndex) {
 }
 
 function getSquareColor(rank, fileIndex) {
-    return isWhite(rank, fileIndex) ? WHITE : BLACK;
+    return isWhite(rank, fileIndex) ? WHITE_SQUARE : BLACK_SQUARE;
 }
 
 function isWhite(rank, fileIndex) {

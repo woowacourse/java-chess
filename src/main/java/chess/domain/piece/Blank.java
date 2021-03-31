@@ -9,6 +9,7 @@ public class Blank implements Piece {
     public static final Blank INSTANCE = new Blank();
     
     private static final String SYMBOL = ".";
+    private static final String NAME = "BLANK";
     private static final double SCORE = 0;
     
     private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다.";
@@ -41,6 +42,16 @@ public class Blank implements Piece {
     @Override
     public String getSymbol() {
         return SYMBOL;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.BLANK;
     }
     
     @Override

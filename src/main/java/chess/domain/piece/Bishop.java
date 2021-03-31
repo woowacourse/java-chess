@@ -11,6 +11,7 @@ public class Bishop extends AbstractPiece {
     
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "b";
+    private static final String NAME = "BISHOP";
     private static final double SCORE = 3;
 
     static {
@@ -50,7 +51,12 @@ public class Bishop extends AbstractPiece {
     public String getSymbol() {
         return changeColorSymbol(SYMBOL);
     }
-    
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
     @Override
     public double getScore() {
         return SCORE;

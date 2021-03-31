@@ -6,9 +6,12 @@
     <link rel="stylesheet" type="text/css" href="/css/chess.css"/>
 </head>
 <body>
-<form id="start-button" action="/new" method="post">
-    <input type="submit" value="시작하기">
-</form>
+<script id="new-board" type="text/plain">
+    {{#board}}
+        {{key}}:{{value}},
+    {{/board}}
+</script>
 <script src="/js/board-factory.js"></script>
+<script src="/js/piece-factory.js"></script>
 </body>
 </html>

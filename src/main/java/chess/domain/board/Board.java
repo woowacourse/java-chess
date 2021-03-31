@@ -7,7 +7,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.stream.Collectors.counting;

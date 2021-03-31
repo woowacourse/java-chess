@@ -28,6 +28,11 @@ public abstract class AbstractPiece implements Piece {
     public boolean isBlank() {
         return false;
     }
+
+   @Override
+   public Color getColor() {
+        return color;
+   }
     
     protected void checkObstacleExistsAtDirection(MovePosition movePosition, Direction direction, Board board) {
         Position sourcePosition = movePosition.getSourcePosition();

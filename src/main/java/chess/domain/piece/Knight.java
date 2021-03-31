@@ -11,6 +11,7 @@ public class Knight extends AbstractPiece {
     
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "n";
+    private static final String NAME = "KNIGHT";
     private static final double SCORE = 2.5;
 
     static {
@@ -48,6 +49,11 @@ public class Knight extends AbstractPiece {
     @Override
     public String getSymbol() {
         return changeColorSymbol(SYMBOL);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
     
     @Override

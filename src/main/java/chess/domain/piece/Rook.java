@@ -11,6 +11,7 @@ public class Rook extends AbstractPiece {
     
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "r";
+    private static final String NAME = "ROOK";
     private static final double SCORE = 5;
 
     static {
@@ -49,6 +50,11 @@ public class Rook extends AbstractPiece {
     @Override
     public String getSymbol() {
         return changeColorSymbol(SYMBOL);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
     
     @Override
