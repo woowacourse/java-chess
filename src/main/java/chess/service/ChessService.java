@@ -27,13 +27,11 @@ import java.util.stream.Collectors;
 public class ChessService {
 
     private static final char EMPTY_PIECE_NAME = '.';
-    private final Grid grid;
     private final RoomDAO roomDAO;
     private final GridDAO gridDAO;
     private final PieceDAO pieceDAO;
 
     public ChessService() {
-        grid = new Grid(new NormalGridStrategy());
         roomDAO = new RoomDAO();
         gridDAO = new GridDAO();
         pieceDAO = new PieceDAO();
