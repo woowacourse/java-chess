@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.CommandMenu;
 import chess.controller.dto.BoardResponseDto;
 import chess.controller.dto.GameResultDto;
 import chess.controller.dto.ShowPathResponseDto;
@@ -8,8 +10,6 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.manager.ChessManager;
 import chess.manager.Status;
-import chess.controller.command.Command;
-import chess.controller.command.CommandMenu;
 import chess.view.InputView;
 import chess.view.OutputView;
 
