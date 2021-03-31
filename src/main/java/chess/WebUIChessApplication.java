@@ -3,6 +3,8 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.staticFileLocation;
 
+import chess.controller.WebController;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -13,10 +15,28 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
 
         staticFileLocation("/public");
+        WebController webController = new WebController();
+        Gson gson = new Gson();
+//
+//        get("/", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            return render(model, "index.html");
+//        });
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model, "board.html");
+        });
+
+//        get("/new", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            return render(model, "board.html");
+//        });
+//
+        get("/new", (req, res) -> {
+            Map<String, String> model = webController.startGame();
+//            return render(model, "board.html");
+            return gson.toJson(model);
         });
     }
 

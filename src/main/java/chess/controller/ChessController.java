@@ -17,7 +17,7 @@ public final class ChessController {
                 final CommandAsString command = new CommandAsString(InputView.receiveInput());
                 game = game.execute(command);
                 final Result result = game.result(command);
-                OutputView.print(result.visualAsString());
+                OutputView.print(result.infoAsString());
             } catch (IllegalArgumentException e) {
                 OutputView.printError(e);
             }

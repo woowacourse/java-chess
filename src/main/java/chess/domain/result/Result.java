@@ -1,6 +1,12 @@
 package chess.domain.result;
 
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
+
 public interface Result {
 
-    String visualAsString();
+    String infoAsString();
+
+    Map<Position, Piece> infoAsMap();
 }

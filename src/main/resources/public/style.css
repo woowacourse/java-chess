@@ -1,0 +1,28 @@
+
+.position {
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+}
+
+.position1 {
+  background-color: peru;
+}
+
+.position:hover {
+  background-color: darkseagreen;
+  cursor: pointer;
+}
+
+.position2 {
+  background-color: saddlebrown;
+}
+
+#board {
+  width: 600px;
+  border: 25px solid #333;
+  text-align: center;
+  font-size: 0px;
+}

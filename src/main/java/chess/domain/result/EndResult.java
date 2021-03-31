@@ -3,6 +3,8 @@ package chess.domain.result;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
 
 public class EndResult implements Result {
 
@@ -13,8 +15,13 @@ public class EndResult implements Result {
     }
 
     @Override
-    public String visualAsString() {
+    public String infoAsString() {
         return renderEnding(board);
+    }
+
+    @Override
+    public Map<Position, Piece> infoAsMap() {
+        return null;
     }
 
     private String renderEnding(Board board) {

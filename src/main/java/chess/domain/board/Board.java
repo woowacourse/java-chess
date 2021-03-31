@@ -80,4 +80,8 @@ public final class Board {
                 .flatMap(List::stream)
                 .collect(Collectors.toList()));
     }
+
+    public Map<Position, Piece> coordiates() {
+        return coordinates;
+    }
 }
