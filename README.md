@@ -1,6 +1,26 @@
 # java-chess
 체스 게임 구현을 위한 저장소
 
+## Getting Started
+
+- 실행하기 전에 아래의 SQL을 실행하여 데이터베이스와 테이블을 만듭니다.
+
+```sql
+CREATE DATABASE chess CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+use chess;
+
+CREATE TABLE chess (
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    serialized_board blob NOT NULL,
+    serialized_status blob NOT NULL
+);
+```
+
+- SQL을 직접 작성하는 대신 `./create_chess_db.sql`을 사용할 수도 있습니다.
+
+## 요구 사항
+
 - [x] 체스판 구현
     - [x] 기본 세팅
         - ![체스 기본 세팅](https://mblogthumb-phinf.pstatic.net/20160119_249/xzizazhz2_14531957418980athc_JPEG/7_00001.jpg?type=w2 )
