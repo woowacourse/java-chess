@@ -126,4 +126,8 @@ public final class ChessGame {
     public Map<Position, Piece> currentWhitePiecePosition() {
         return whiteTeam.currentPiecePosition();
     }
+
+    public Team getCurrentTurnTeam() {
+        return currentTurnTeam;
+    }
 }
