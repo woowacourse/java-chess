@@ -8,9 +8,6 @@ CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use chess_game;
 
-set global max_connections = 100000;
-
-set wait_timeout = 30;
 
 -- MySQL Workbench Forward Engineering
 
@@ -18,9 +15,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema chess_game
--- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema chess_game
@@ -116,14 +110,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-
-
-
 -- ----------------------------------------------------
 -- queries
 -- ----------------------------------------------------
-
-use chess_game;
 
 -- ----------------------------------------------------
 -- position
@@ -201,6 +190,7 @@ INSERT INTO position (file_value, rank_value) VALUES ('f', '8');
 INSERT INTO position (file_value, rank_value) VALUES ('g', '8');
 INSERT INTO position (file_value, rank_value) VALUES ('h', '8');
 
+
 -- ----------------------------------------------------
 -- piece
 -- ----------------------------------------------------
@@ -218,5 +208,3 @@ INSERT INTO piece (name, color) VALUES ('BISHOP', 'black');
 INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
 INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
-            
-            
