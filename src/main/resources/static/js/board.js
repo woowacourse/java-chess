@@ -68,6 +68,7 @@ class Board {
     if (kingDead) {
       const winner = this.#roundStatus.currentColor === 'WHITE' ? 'BLACK' : 'WHITE';
       alert(`왕이 죽었습니다. ${winner} 승리`);
+      exit();
     }
   }
 

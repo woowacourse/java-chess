@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
-    body {
-      margin: 0;
+    body, html {
+      width: 100%;
+      height: 100%;
+    }
+    .chess {
+      margin: 0 auto;
     }
 
     .board {
@@ -98,7 +102,7 @@
       <div class="game-status">
       </div>
       <button type="button" id="save">게임 저장</button>
-      <button type="button" id="restart">다시 시작</button>
+      <button type="button" id="reload">게임 불러오기</button>
       <button type="button" id="exit">게임 종료</button>
     </div>
 
@@ -109,16 +113,6 @@
           placeholder="게임 id를 입력해주세요"
           autofocus
       />
-    </div>
-
-    <div class="chat">
-      채팅
-      <ul id="userlist"></ul>
-      <div id="contents"></div>
-      <div id="chat-control">
-        <input id="message" placeholder="메세지를 입력해주세요.">
-        <button id="send">보내기</button>
-      </div>
     </div>
   </div>
 </div>

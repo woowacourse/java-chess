@@ -1,6 +1,6 @@
 const $board = document.querySelector('.board');
 const $gameStatus = document.querySelector('.game-status');
-const $restart = document.querySelector('#restart');
+const $reload = document.querySelector('#reload');
 const $exit = document.querySelector('#exit');
 const $save = document.querySelector('#save');
 const $askForm = document.querySelector('#ask-form');
@@ -12,7 +12,7 @@ let gameId;
 
 function eventHandler() {
   $board.addEventListener('click', clickEvent);
-  $restart.addEventListener('click', restart);
+  $reload.addEventListener('click', reload);
   $exit.addEventListener('click', exit);
   $askForm.addEventListener('keyup', setGameId)
   $save.addEventListener('click', save);
@@ -69,10 +69,8 @@ function movePosition(targetBoardItem) {
   });
 }
 
-function restart() {
-  alert('다시 시작합니다.');
-  fetchService.get(`http://localhost:4567/${gameId}/restart`)
-  .then(result => createBoard());
+function reload() {
+  window.location.reload();
 }
 
 function exit() {
