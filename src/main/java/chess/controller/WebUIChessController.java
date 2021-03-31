@@ -29,6 +29,10 @@ public class WebUIChessController {
             return render(model, "index.html");
         });
 
+        get("/start", (req, res) -> {
+            return chessService.start();
+        }, JSON_TRANSFORMER);
+
         post("/move", (req, res) -> {
             final String requests = req.body();
             final MoveRequest moveRequest = GSON.fromJson(requests, MoveRequest.class);

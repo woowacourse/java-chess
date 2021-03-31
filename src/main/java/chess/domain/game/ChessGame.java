@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class ChessGame {
@@ -21,6 +22,10 @@ public class ChessGame {
 
     public boolean isGameOver() {
         return gameOver.isGameOver();
+    }
+
+    public Team nowTurn() {
+        return turn.now();
     }
 
     public void nextTurn() {

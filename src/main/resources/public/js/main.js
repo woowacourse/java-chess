@@ -1,21 +1,21 @@
-createChessBoard();
+createChessBoard().then();
 
-function createChessBoard() {
-    const pieces = [
-        ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
-        new Array(8).fill("BP"),
-        new Array(8),
-        new Array(8),
-        new Array(8),
-        new Array(8),
-        new Array(8).fill("WP"),
-        ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
-    ]
-    makeTable(pieces);
+async function createChessBoard() {
+    const response = await fetch("/start")
+    .then(res => res.json())
+
+    const responseDto = response.responseDto;
+    const boardDto = responseDto.boardDto;
+    let pieces = [];
+    for (let i = 0; i < 64; i += 8) {
+        pieces.push(responseDto.pieceDtos.slice(i, i + 8));
+        pieces[i / 8] = pieces[i / 8].map(x => x.name);
+    }
+    makeTable(pieces, boardDto);
     addClickEventListener();
 }
 
-function makeTable(pieces) {
+function makeTable(pieces, boardDto) {
     const table = document.createElement('table');
     table.id = 'chess-board';
     for (let i = 0; i < 8; i++) {
@@ -28,6 +28,7 @@ function makeTable(pieces) {
     const container = document.querySelector(".main-container");
     container.appendChild(hyperText);
     container.appendChild(table);
+    document.getElementById('user-turn').innerText = boardDto.team;
 }
 
 function makeTr(pieces, row) {
@@ -41,7 +42,7 @@ function makeTr(pieces, row) {
 function makeTd(pieces, row, col) {
     const newTd = document.createElement("td");
     newTd.id = String.fromCharCode('a'.charCodeAt(0) + col) + String(8 - row);
-    if (pieces[row][col]) {
+    if (pieces[row][col] && pieces[row][col] !== ".") {
         const piece = document.createElement("img");
         piece.src = "img/" + pieces[row][col] + ".png";
         newTd.appendChild(piece);
