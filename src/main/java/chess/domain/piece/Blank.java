@@ -12,6 +12,10 @@ public class Blank extends Piece {
         super(SYMBOL, Color.BLANK, new MoveStrategies(), Position.emptyPosition());
     }
 
+    public Blank(final Position position) {
+        super(SYMBOL, Color.BLANK, new MoveStrategies(), position);
+    }
+
     @Override
     public double score(List<Piece> pieces) {
         throw new UnsupportedOperationException();

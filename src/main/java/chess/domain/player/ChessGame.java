@@ -3,13 +3,17 @@ package chess.domain.player;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
 
+import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessGame {
     private final Player whitePlayer;
@@ -107,5 +111,14 @@ public class ChessGame {
             return blackPlayer;
         }
         return whitePlayer;
+    }
+
+    public Pieces getAllPieces() {
+        List<Piece> whitePieces = whitePlayer.getState().pieces().getPieces();
+        List<Piece> blackPieces = blackPlayer.getState().pieces().getPieces();
+
+        List<Piece> allPieces = Stream.concat(whitePieces.stream(), blackPieces.stream())
+                .collect(Collectors.toList());
+        return new Pieces(allPieces);
     }
 }

@@ -10,7 +10,7 @@
 
 body {
     background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),
-            url("image/bono.png");
+            url("image/bemin.png");
 }
 
 h1 span {
@@ -93,11 +93,21 @@ h1 span:nth-child(8) {
     background-color: black;
 }
 
-.info-wrapper {
+.game-setting {
     background-color: white;
     min-width: 180px;
     width: 15%;
     border-radius: 10px;
+}
+
+#start:hover {
+    cursor: pointer;
+    background-color: #441a03;
+}
+
+#end:hover {
+    cursor: pointer;
+    background-color: #441a03;
 }
 
 .tile {
@@ -107,11 +117,15 @@ h1 span:nth-child(8) {
     margin: -1px;
 }
 
-/*.tile {
-    background-color: beige;
-}*/
 .tile {
+    background-color: beige;
+}
+/*.tile {
     background-color: transparent !important;
+}*/
+
+.tile:hover{
+    cursor: pointer;
 }
 
 .tile:nth-child(-2n+7),

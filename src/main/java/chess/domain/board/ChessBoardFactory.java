@@ -14,7 +14,7 @@ public class ChessBoardFactory {
     public static ChessBoard initializeBoard() {
         Map<String, Position> positions = Position.getPositions();
         Map<Position, Piece> board = new LinkedHashMap<>();
-        positions.values().forEach(value -> board.put(value, new Blank()));
+        positions.values().forEach(value -> board.put(value, new Blank(value)));
         return new ChessBoard(board);
     }
 }
