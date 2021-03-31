@@ -1,0 +1,28 @@
+.chess_board {
+    border: 1px solid black;
+}
+
+.wrapper {
+    border: 35px solid black;
+    width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(8, 100px);
+    grid-template-rows: repeat(8, 100px);
+    grid-auto-flow: row;
+}
+
+.white {
+    background: white;
+}
+
+.black {
+    background: darkgray;
+}
+
+.selector img{
+    position: absolute; top:0; left: 0;
+    width: 100%;
+    height: 100%;
+}

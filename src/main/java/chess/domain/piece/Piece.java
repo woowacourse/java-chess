@@ -31,11 +31,11 @@ public abstract class Piece {
         return name.nameByColor(color);
     }
 
-    protected Color color() {
+    public Color color() {
         return color;
     }
 
-    protected Position position() {
+    public Position position() {
         return position;
     }
 
