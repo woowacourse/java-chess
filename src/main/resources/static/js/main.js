@@ -17,6 +17,9 @@ initChessBoard();
 $chessBoard.addEventListener("click", clickPosition);
 
 function initChessBoard() {
+    const turnText = document.createElement("h2");
+    turnText.innerHTML = "현재 턴 : <span id='user-turn'> WHITE</span>";
+
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement("div");
         chessBoardRow.setAttribute("class", "chessRow");
@@ -40,6 +43,7 @@ function initChessBoard() {
             chessBoardRow.appendChild(chessBoardColumn);
         }
         $chessBoard.appendChild(chessBoardRow);
+        $chessBoard.appendChild(turnText);
     }
 }
 
@@ -115,8 +119,9 @@ function clickPosition(event) {
     const positions = document.querySelectorAll(".chessColumn");
     for (let i = 0; i < positions.length; i++) {
         if (positions[i].classList.contains("clicked")) {
-            console.log(positions[i].id + ", " + event.target.id);
+            console.log(positions[i].id + ", " + event.target.closest("div").id);
             positions[i].classList.remove("clicked");
+            move(positions[i].id, event.target.closest("div").id);
             return;
         }
     }
@@ -124,4 +129,47 @@ function clickPosition(event) {
         return;
     }
     event.target.closest(".chessColumn").classList.toggle("clicked");
+}
+
+function move(from, to) {
+    const data = {
+        from: from,
+        to: to
+    };
+
+    console.log(JSON.stringify(data))
+    fetch("/move", {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        return res.json();
+    }).then(obj => {
+        if (obj.code === "400") {
+            alert(obj.message);
+            return;
+        }
+        changeImg(from, to);
+        changeTurnText();
+    });
+}
+
+function changeImg(fromPosition, toPosition) {
+    const from = document.getElementById(fromPosition);
+    const to = document.getElementById(toPosition);
+    const piece = from.getElementsByTagName("img")[0];
+    if (to.getElementsByTagName("img")[0]) {
+        to.getElementsByTagName("img")[0].remove();
+    }
+    to.appendChild(piece);
+}
+
+function changeTurnText() {
+    if (document.getElementById("user-turn").innerText === 'WHITE') {
+        document.getElementById("user-turn").innerText = 'BLACK';
+        return;
+    }
+    document.getElementById("user-turn").innerText = 'WHITE';
 }

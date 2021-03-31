@@ -7,6 +7,15 @@ h1 {
     margin-bottom: 35px;
 }
 
+h2 {
+    color:#333D79;
+    width: 35vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 body {
     background-color:#FCF6F5;
 }
