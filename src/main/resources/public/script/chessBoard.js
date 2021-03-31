@@ -1,6 +1,6 @@
 const BLANK = ".";
 
-async function runMove() {
+async function reflectBoard() {
     /**
      * batch Piece on Board
      */
@@ -85,6 +85,13 @@ function getClickedPiece() {
     return null;
 }
 
+function modifyScore(whiteScore, blackScore) {
+    document.getElementById("whitePoint").innerText = "white Point: "
+        + whiteScore;
+    document.getElementById("blackPoint").innerText = "black Point: "
+        + blackScore;
+}
+
 async function move(source, target) {
     /**
      * run move
@@ -107,7 +114,7 @@ async function move(source, target) {
     }
 
     if (!data.runningGame) {
-        runMove()
+        reflectBoard()
         alert("게임이 종료되었습니다.");
         return
     }
@@ -116,9 +123,21 @@ async function move(source, target) {
         alert("올바른 위치를 입력하여 주세요");
     }
     console.log(data);
-    document.getElementById("whitePoint").innerText = "white Point: "
-        + data.whiteScore;
-    document.getElementById("blackPoint").innerText = "black Point: "
-        + data.blackScore;
-    runMove()
+
+    modifyScore(data.whiteScore, data.blackScore)
+    reflectBoard()
+}
+
+async function reset() {
+    try {
+        await axios({
+            method: 'post',
+            url: '/reset',
+        });
+    } catch (e) {
+        console.log(e);
+    }
+    const defaultScore = 38;
+    modifyScore(defaultScore, defaultScore);
+    reflectBoard();
 }

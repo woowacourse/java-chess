@@ -15,15 +15,17 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 
+
     public static void main(String[] args) {
         Gson gson = new Gson();
         staticFileLocation("public");
-        ChessBoard chessBoard = new ChessBoard();
+        AtomicReference<ChessBoard> chessBoard = new AtomicReference<>(new ChessBoard());
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
@@ -32,7 +34,7 @@ public class WebUIChessApplication {
 
         post("/start", (req, res) -> {
             Map<String, pieceOnBoardDTO> pieces = new HashMap<>();
-            for (Entry<Position, Piece> entry : chessBoard.getChessBoard().entrySet()) {
+            for (Entry<Position, Piece> entry : chessBoard.get().getChessBoard().entrySet()) {
                 pieces.put(entry.getKey().getPosition(),
                     new pieceOnBoardDTO(entry.getValue().getColor(),
                         entry.getValue().getPieceName()));
@@ -45,23 +47,29 @@ public class WebUIChessApplication {
             ResultDto result;
 
             try {
-                chessBoard.move(moveRequestDto.getSource(), moveRequestDto.getTarget());
-                if (!chessBoard.isPlaying()) {
+                chessBoard.get().move(moveRequestDto.getSource(), moveRequestDto.getTarget());
+                if (!chessBoard.get().isPlaying()) {
                     throw new IllegalArgumentException("game End state");
                 }
-                result = chessBoard.result();
+                result = chessBoard.get().result();
                 return new MoveResultDTO(true,
-                    chessBoard.isPlaying(),
+                    chessBoard.get().isPlaying(),
                     result.whiteScore().getScore(),
                     result.blackScore().getScore());
             } catch (IllegalArgumentException exception) {
-                result = chessBoard.result();
+                result = chessBoard.get().result();
                 return new MoveResultDTO(false,
-                    chessBoard.isPlaying(),
+                    chessBoard.get().isPlaying(),
                     result.whiteScore().getScore(),
                     result.blackScore().getScore());
             }
         }, gson::toJson);
+
+        post("/reset", (req, res) -> {
+            chessBoard.set(new ChessBoard());
+            res.redirect("");
+            return res;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
