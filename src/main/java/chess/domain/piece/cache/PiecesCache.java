@@ -28,6 +28,7 @@ public class PiecesCache {
         try {
             cachePieces();
         } catch (SQLException e) {
+            System.out.println("DB로부터 색깔별 기물 캐싱에 실패했습니다.");
             e.printStackTrace();
         }
     }
