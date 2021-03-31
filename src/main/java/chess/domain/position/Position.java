@@ -5,6 +5,7 @@ import chess.domain.position.exception.PositionException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class Position {
     private static final int POSITION_LENGTH = 2;
@@ -163,5 +164,9 @@ public class Position {
         int result = row != null ? row.hashCode() : 0;
         result = 31 * result + (column != null ? column.hashCode() : 0);
         return result;
+    }
+
+    public String stringPosition() {
+        return this.column.column() + this.row.row();
     }
 }

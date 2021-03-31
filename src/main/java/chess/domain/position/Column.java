@@ -34,4 +34,8 @@ public enum Column {
                 .findAny()
                 .orElseThrow(InvalidColumnException::new);
     }
+
+    public String column() {
+        return this.name().toLowerCase(Locale.ROOT);
+    }
 }

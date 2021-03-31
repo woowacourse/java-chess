@@ -1,23 +1,14 @@
 createChessBoard();
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", clickStart);
-function createChessBoard() {
-    const pieces = [
-        ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
-        new Array(8).fill("BP"),
-        new Array(8).fill("."),
-        new Array(8).fill("."),
-        new Array(8).fill("."),
-        new Array(8).fill("."),
-        new Array(8).fill("WP"),
-        ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
-    ]
 
-    makeTable(pieces);
+function createChessBoard() {
+    makeTable();
+    syncBoard();
     addEvent();
 }
 
-function makeTable(pieces) {
+function makeTable() {
     const table = document.getElementById("chess-board");
     for (let i = 0; i < 8; i++) {
         const newTr = document.createElement("tr");
@@ -27,17 +18,9 @@ function makeTable(pieces) {
             const row = String(8 - i);
             const column = String.fromCharCode('a'.charCodeAt(0) + j);
             newTd.id = column + row;
-            let pieceName = pieces[i][j];
-            if (pieceName !== ".") {
-                const piece = document.createElement("img");
-                piece.src = "images/" + pieceName + ".png";
-                piece.id = newTd.id;
-                newTd.appendChild(piece);
-            }
             if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
                 newTd.className = "whiteTile";
-            }
-            else {
+            } else {
                 newTd.className = "blackTile";
             }
             table.appendChild(newTd);
@@ -54,13 +37,13 @@ function addEvent() {
 function selectTile(event) {
     const clickPiece = event.target.closest("td");
     const clickedPiece = getClickedPiece();
-    if(clickedPiece) {
+    if (clickedPiece) {
         clickedPiece.classList.remove("clickedTile");
         clickedPiece.classList.toggle("clicked");
-        if(clickedPiece !== clickPiece) {
+        if (clickedPiece !== clickPiece) {
             move(clickedPiece.id, clickPiece.id);
         }
-    }else {
+    } else {
         clickPiece.classList.toggle("clicked");
         clickPiece.classList.add("clickedTile");
     }
@@ -69,7 +52,7 @@ function selectTile(event) {
 function getClickedPiece() {
     const pieces = document.getElementsByTagName("td");
     for (let i = 0; i < pieces.length; i++) {
-        if(pieces[i].classList.contains("clicked")) {
+        if (pieces[i].classList.contains("clicked")) {
             return pieces[i];
         }
     }
@@ -87,15 +70,17 @@ async function move(from, to) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json());
+    }).then(res => {
+        return res.json();
+    });
 
     if(response.code === "200") {
         changeImage(from, to);
-        changeTurn();
+        changeTurn(response.turn);
     }
     else if(response.code === "300") {
         changeImage(from, to);
-        changeTurn();
+        changeTurn(response.turn);
         alert(response.message + "가 승리했습니다!");
     }
     else if(response.code === "400") {
@@ -113,16 +98,45 @@ function changeImage(sourcePosition, targetPosition) {
     target.appendChild(piece);
 }
 
-function changeTurn() {
+function changeTurn(turn) {
     const currentTurn = document.querySelector('.turn');
-    if(currentTurn.textContent === "White Turn") {
-        currentTurn.textContent = "Black Turn";
-    }
-    else {
-        currentTurn.textContent = "White Turn";
-    }
+    currentTurn.textContent = turn;
 }
 
 function clickStart() {
-    console.log("1");
+    fetch('/restart', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function () {
+        syncBoard();
+    });
+}
+
+async function syncBoard() {
+    const board = await fetch('/currentBoard',{
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    });
+
+    const positions = Object.keys(board);
+    const pieces = Object.values(board);
+    for (let i = 0; i < positions.length; i++) {
+        const position = document.getElementById(positions[i]);
+        if(position.getElementsByTagName("img")[0]){
+            position.getElementsByTagName("img")[0].remove();
+        }
+        if(pieces[i] === "."){
+            continue;
+        }
+        const piece = document.createElement("img");
+
+        piece.src = "images/" + pieces[i] + ".png";
+        position.appendChild(piece);
+    }
 }

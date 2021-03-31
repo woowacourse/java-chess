@@ -31,14 +31,16 @@ img {
 .currentTurn {
     margin-left: 315px;
 }
-.title {;
+
+.title {
     text-align: center;
 }
+
 .chess-board {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 5px solid #7b9acc;
+    border: 5px solid #614c39;
     margin: auto;
     width: 35vw;
     height: 35vw;

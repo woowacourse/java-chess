@@ -81,4 +81,8 @@ public abstract class Piece {
     public boolean forward(Position from, Position to) {
         throw new InvalidMethodCallException();
     }
+
+    public Side side() {
+        return this.side;
+    }
 }

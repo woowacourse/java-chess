@@ -3,6 +3,7 @@ package chess.domain.position;
 import chess.domain.position.exception.InvalidRowException;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Row {
     EIGHTH(8), SEVENTH(7), SIXTH(6), FIFTH(5),
@@ -35,5 +36,9 @@ public enum Row {
                 .filter(row -> row.value == targetValue)
                 .findAny()
                 .orElseThrow(InvalidRowException::new);
+    }
+
+    public String row() {
+        return Integer.toString(this.value);
     }
 }

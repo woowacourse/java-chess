@@ -1,8 +1,5 @@
 package chess;
 
-import chess.domain.Board;
-import chess.domain.ChessGame;
-import chess.domain.position.Position;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,17 +17,24 @@ public class WebUIChessApplication {
 
         JsonTransformer jsonTransformer = new JsonTransformer();
         staticFiles.location("/public");
-        ChessGame chessGame = new ChessGame(Board.getGamingBoard());
-        chessGame.start();
+        chessService.initChessGame();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+        post("/restart", (req, res) -> {
+            chessService.initChessGame();
+            return "보드 초기화 성공!";
+        }, jsonTransformer);
         post("/move", (req, res) -> {
             RequestPosition requestPosition = GSON.fromJson(req.body(), RequestPosition.class);
-            return chessService.move(requestPosition, chessGame);
+            return chessService.move(requestPosition);
         }, jsonTransformer);
+        post("/currentBoard", (req, res) -> {
+            return chessService.getCurrentBoard();
+        }, jsonTransformer);
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

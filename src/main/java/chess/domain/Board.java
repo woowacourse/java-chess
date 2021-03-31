@@ -9,6 +9,7 @@ import chess.domain.position.Row;
 import chess.exception.InvalidCommandException;
 import chess.exception.InvalidMovementException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,5 +150,9 @@ public class Board {
             return Side.BLACK;
         }
         return Side.WHITE;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
