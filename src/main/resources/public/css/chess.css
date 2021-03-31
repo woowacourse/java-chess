@@ -79,3 +79,33 @@ body {
     color: black;
     text-align: center;
 }
+
+.gameResult {
+    margin: auto;
+    width: 25vw;
+    height: 25vw;
+    background-color: #6F3B48;
+    box-shadow: 3px 3px 3px 3px gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.gameResult > h2, .gameResult > h3 {
+    color:#F3E4DF;
+    text-align: center;
+}
+
+.gameResult > button {
+    font-size: 15px;
+    background-color:#F3E4DF;
+    color: #6F3B48;
+    margin-left: 25%;
+    width: 50%;
+    height: 10%;
+    border-radius: 50px;
+}
+
+.gameResult > button:hover {
+    cursor: pointer;
+}

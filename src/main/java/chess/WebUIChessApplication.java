@@ -2,7 +2,6 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -25,7 +24,6 @@ public class WebUIChessApplication {
             whiteTeam = Team.whiteTeam();
             blackTeam = Team.blackTeam();
             chessGame = new ChessGame(blackTeam, whiteTeam);
-            final Map<Position, Piece> piecePosition = chessGame.generateChessBoard();
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });

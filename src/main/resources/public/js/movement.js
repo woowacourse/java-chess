@@ -1,9 +1,12 @@
 import {chessBoard} from './initialize.js';
 import {whiteTeamCurrentTurn} from "./initialize.js";
 import {blackTeamCurrentTurn} from "./initialize.js";
+import {finishGame} from "./finishGame.js";
 
 const whiteTeamScoreUI = document.getElementById("whiteTeamScore");
 const blackTeamScoreUI = document.getElementById("blackTeamScore");
+const player1 = document.getElementById("player1");
+const player2 = document.getElementById("player2");
 
 let start = undefined;
 let destination = undefined;
@@ -59,9 +62,10 @@ function serverMoveRequest(startPoint, destPoint) {
             return response.json();
         })
         .then(data => {
-            movePieceUI(data.start, data.destination, data.isPlaying);
+            movePieceUI(data.start, data.destination);
             updateScoreUI(data.whiteTeamScore, data.blackTeamScore);
             updateTurn(data.currentTurnTeam);
+            checkIsPlaying(data);
         })
         .catch(error => {
             console.log(error)
@@ -69,7 +73,7 @@ function serverMoveRequest(startPoint, destPoint) {
         })
 }
 
-function movePieceUI(start, destination, isPlaying) {
+function movePieceUI(start, destination) {
     let startPosition = document.getElementById(start);
     let destinationPosition = document.getElementById(destination);
     let pieceImg = startPosition.firstChild.src;
@@ -77,13 +81,6 @@ function movePieceUI(start, destination, isPlaying) {
     startPosition.firstChild.style = "display: none";
     destinationPosition.firstChild.src = pieceImg;
     destinationPosition.firstChild.style = "display: block";
-    checkIsPlaying(isPlaying);
-}
-
-function checkIsPlaying(isPlaying) {
-    if (!isPlaying) {
-        alert("게임이 종료되었습니다!");
-    }
 }
 
 function updateScoreUI(whiteTeamScore, blackTeamScore) {
@@ -98,5 +95,15 @@ function updateTurn(currentTurnTeam) {
     } else {
         whiteTeamCurrentTurn.innerText = "Current Turn";
         blackTeamCurrentTurn.innerText = "";
+    }
+}
+
+function checkIsPlaying(data) {
+    if (!data.isPlaying) {
+        alert(data.currentTurnTeam + "의 왕이 잡혔습니다! 게임이 종료됩니다!");
+        player1.style.display = "none";
+        player2.style.display = "none";
+        chessBoard.style.display = "none";
+        finishGame(data);
     }
 }

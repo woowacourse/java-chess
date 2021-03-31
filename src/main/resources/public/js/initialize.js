@@ -12,18 +12,15 @@ const WKing = "../img/WK.png";
 const WQueen = "../img/WQ.png";
 
 export let chessBoard = document.getElementById('chessBoard');
+export let gameResultWindow = document.getElementById("gameResult");
 export const whiteTeamCurrentTurn = document.getElementById("whiteTeamCurrentTurn");
 export const blackTeamCurrentTurn = document.getElementById("blackTeamCurrentTurn");
 
 initChessBoard();
 initCurrentTurn();
 
-function initCurrentTurn() {
-    whiteTeamCurrentTurn.innerText = "Current Turn";
-    blackTeamCurrentTurn.innerText = "";
-}
-
 function initChessBoard() {
+    gameResultWindow.style.display = "none";
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement('div');
         chessBoardRow.setAttribute("class", "chessRow");
@@ -99,4 +96,9 @@ function initPieceImage(row, column) {
         return WQueen;
     }
     return "";
+}
+
+function initCurrentTurn() {
+    whiteTeamCurrentTurn.innerText = "Current Turn";
+    blackTeamCurrentTurn.innerText = "";
 }
