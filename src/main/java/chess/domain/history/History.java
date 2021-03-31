@@ -6,12 +6,12 @@ public class History {
 
     private final String source;
     private final String destination;
-    private final String team;
+    private final String teamType;
 
-    public History(String source, String destination, String team) {
+    public History(String source, String destination, String teamType) {
         this.source = source;
         this.destination = destination;
-        this.team = team;
+        this.teamType = teamType;
     }
 
     public String getSource() {
@@ -22,8 +22,8 @@ public class History {
         return destination;
     }
 
-    public String getTeam() {
-        return team;
+    public String getTeamType() {
+        return teamType;
     }
 
     @Override
@@ -31,11 +31,11 @@ public class History {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         History history = (History) o;
-        return Objects.equals(source, history.source) && Objects.equals(destination, history.destination) && Objects.equals(team, history.team);
+        return Objects.equals(source, history.source) && Objects.equals(destination, history.destination) && Objects.equals(teamType, history.teamType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(source, destination, team);
+        return Objects.hash(source, destination, teamType);
     }
 }

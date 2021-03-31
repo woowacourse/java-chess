@@ -34,15 +34,15 @@ public class ChessRepository {
     private History generateHistoryFrom(ResultSet resultSet) throws SQLException {
         return new History(resultSet.getString("source"),
                 resultSet.getString("destination"),
-                resultSet.getString("team"));
+                resultSet.getString("team_type"));
     }
 
-    public void insertHistory(String source, String destination, String team, int roomId) throws SQLException {
-        String query = "INSERT INTO HISTORY (SOURCE, DESTINATION, TEAM, ROOM_ID) VALUES (?, ?, ?, ?)";
+    public void insertHistory(String source, String destination, String teamType, int roomId) throws SQLException {
+        String query = "INSERT INTO HISTORY (SOURCE, DESTINATION, TEAM_TYPE, ROOM_ID) VALUES (?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, source);
         preparedStatement.setString(2, destination);
-        preparedStatement.setString(3, team);
+        preparedStatement.setString(3, teamType);
         preparedStatement.setString(4, String.valueOf(roomId));
         preparedStatement.executeUpdate();
     }

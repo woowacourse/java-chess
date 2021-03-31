@@ -21,7 +21,7 @@ public class Histories {
     private void updateChessBoardByEachHistory(ChessBoard chessBoard, History history) {
         Coordinate source = Coordinate.from(history.getSource());
         Coordinate destination = Coordinate.from(history.getDestination());
-        TeamType teamType = TeamType.valueOf(history.getTeam());
+        TeamType teamType = TeamType.valueOf(history.getTeamType());
         chessBoard.move(source, destination, teamType);
     }
 
@@ -35,7 +35,7 @@ public class Histories {
         }
         int historyCounts = histories.size();
         String teamTypeValue = histories.get(historyCounts - 1)
-                .getTeam();
+                .getTeamType();
         return TeamType.valueOf(teamTypeValue)
                 .findOppositeTeam();
     }
