@@ -14,19 +14,23 @@ public class MoveController {
     }
 
     public static String moveToMainPage(Request request, Response response) {
-        return render("index.html");
+        Map<String, Object> model = new HashMap<>();
+        return render(model, "index.html");
     }
 
     public static String moveToGamePage(Request request, Response response) {
-        return render("game.html");
+        Map<String, Object> model = new HashMap<>();
+        String roomNumber = request.params(":roomNumber");
+        model.put("roomNumber", roomNumber);
+        return render(model, "game.html");
     }
 
     public static String moveToResultPage(Request request, Response response) {
-        return render("result.html");
+        Map<String, Object> model = new HashMap<>();
+        return render(model, "result.html");
     }
 
-    private static String render(String templatePath) {
-        Map<String, Object> model = new HashMap<>();
+    private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

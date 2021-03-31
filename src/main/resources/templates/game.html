@@ -6,6 +6,10 @@
     <link href="/css/chess.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<script hidden id="roomNumber">
+    const roomNumber = '{{roomNumber}}';
+</script>
+
 <section id="board">
     <script id="template-list-piece" type="text/template">
         <img src="/images/{url}.png" id="{coordinate}" class="piece" alt="img"/>

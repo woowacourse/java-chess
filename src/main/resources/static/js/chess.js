@@ -1,6 +1,10 @@
+function getBaseUrl() {
+    return 'http://localhost:8080/chessgame/' + roomNumber;
+}
+
 function initiate() {
     const xmlHttp = new XMLHttpRequest();
-    const url = "http://localhost:8080/chessgame/update";
+    const url = getBaseUrl() + '/update';
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             const boardDTO = JSON.parse(this.responseText);
@@ -93,7 +97,7 @@ function sendMoveRequest(current, destination, currentTeamType) {
         "teamType": currentTeamType
     });
     const xmlHttp = new XMLHttpRequest();
-    const url = 'http://localhost:8080/chessgame/move';
+    const url = getBaseUrl() + '/move';
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             removeOutdatedChessBoard();

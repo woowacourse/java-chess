@@ -5,18 +5,23 @@ function initiate() {
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             const response = JSON.parse(xmlHttp.responseText);
             const roomListNode = document.getElementById('room-list');
-            const html = '<a href=\"chessgame/{roomNumber}\">{name}</a>';
             for (let i = 0; i < response.length; i++) {
-                const li = document.createElement('li');
-                const roomNodeHtml = html.replace('{roomNumber}', response[i].roomNumber)
-                    .replace('{name}', response[i].name);
-                li.insertAdjacentHTML('beforeend', roomNodeHtml);
-                roomListNode.appendChild(li);
+                const roomNode = createRoom(response[i].id, response[i].name);
+                roomListNode.appendChild(roomNode);
             }
         }
     };
     xmlHttp.open('GET', url, true);
     xmlHttp.send();
+}
+
+function createRoom(roomNumber, name) {
+    const roomNode = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = '/chessgame/' + roomNumber;
+    link.textContent = name;
+    roomNode.appendChild(link);
+    return roomNode;
 }
 
 function addRoomRegistrationEvent() {
@@ -30,14 +35,9 @@ function addRoomRegistrationEvent() {
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 const roomListNode = document.getElementById('room-list');
-                const html = '<a href=\"chessgame/{roomNumber}\">{name}</a>';
-                const li = document.createElement('li');
                 const response = JSON.parse(xmlHttp.responseText);
-                const roomNodeHtml = html.replace('{roomNumber}', response.roomNumber)
-                    .replace('{name}', response.name);
-                li.insertAdjacentHTML('beforeend', roomNodeHtml);
-                roomListNode.appendChild(li);
-
+                const roomNode = createRoom(response.id, response.name);
+                roomListNode.appendChild(roomNode);
             }
         };
         xmlHttp.open('POST', url, true);
