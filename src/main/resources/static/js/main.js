@@ -4,15 +4,6 @@ const apiService = new ChessService();
 
 const $chessTable = document.querySelector(".chessboard");
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-const pieceTypeIcon = {
-  "KING" : '<i class="fas fa-chess-king"></i>',
-  "QUEEN" : '<i class="fas fa-chess-queen"></i>',
-  "BISHOP" : '<i class="fas fa-chess-bishop"></i>',
-  "ROOK" : '<i class="fas fa-chess-rook"></i>',
-  "PAWN" : '<i class="fas fa-chess-pawn"></i>',
-  "KNIGHT" : '<i class="fas fa-chess-knight"></i>',
-  "BLANK" : ''
-}
 
 function drawTable(data) {
   let innerValue = ''
@@ -25,9 +16,18 @@ function drawTable(data) {
     for (let j = 1; j < 9; j++) {
       const column = alpha[j]
       const id = column + row;
-      const piece = data[id]['pieceType'];
-      innerValue += `<div class="cell ${(row + j) % 2 === 0 ? "light"
-          : "dark"}" id="${id}">${pieceTypeIcon[piece]}</div>`;
+      const pieceObj = data[id]
+      const piece = pieceObj['pieceType'].toLowerCase();
+      const color = pieceObj['teamColor'].toLowerCase();
+
+      const icon = `<i class="fas fa-chess-${piece} ${color}"></i>`
+      if(piece === "blank"){
+        innerValue += `<div class="cell ${(row + j) % 2 === 0 ? "light"
+            : "dark"}" id="${id}"></div>`;
+      }else{
+        innerValue += `<div class="cell ${(row + j) % 2 === 0 ? "light"
+            : "dark"}" id="${id}">${icon}</div>`;
+      }
     }
 
     innerValue += "</div>";
