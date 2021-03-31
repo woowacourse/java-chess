@@ -1,11 +1,13 @@
 package chess.repository.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.dto.PieceDto;
 import chess.domain.location.Location;
 import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.team.Team;
 import java.sql.SQLException;
@@ -39,6 +41,20 @@ class JdbcPieceRepositoryTest {
     @Test
     void deleteAll() throws SQLException {
         assertThat(repository.count()).isEqualTo(0);
+    }
+
+    @Test
+    void deletePieceById() throws SQLException {
+        // given
+        Queen piece = Queen.of(Location.of(1, 1), Team.WHITE);
+
+        // when
+        long id = repository.insert(0, piece);
+        repository.deletePieceById(id);
+
+        // then
+        assertThatThrownBy(() -> repository.findPieceById(id))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

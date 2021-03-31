@@ -20,4 +20,6 @@ public interface PieceRepository {
     PieceDto findPieceById(long pieceId) throws SQLException;
 
     List<PieceDto> findPiecesByRoomId(long roomId) throws SQLException;
+
+    void deletePieceById(long id) throws SQLException;
 }

@@ -122,6 +122,28 @@ public class JdbcPieceRepository implements PieceRepository {
     }
 
     @Override
+    public void deletePieceById(long id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "DELETE FROM pieces WHERE id = " + id;
+            conn = connectionUtil.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    @Override
     public void deleteAll() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
