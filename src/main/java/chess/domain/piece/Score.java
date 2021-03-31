@@ -22,16 +22,16 @@ public class Score {
         return new Score(this.value + score.value);
     }
 
-    public double value() {
-        return this.value;
-    }
-
     public Score calculatePawnPenaltyScore(final int pawnCountInLine) {
         return new Score(this.value - (PAWN_PENALTY_SCORE * pawnCountInLine));
     }
 
     public boolean isHigherThan(Score other) {
         return this.value > other.value;
+    }
+
+    public double value() {
+        return this.value;
     }
 
     @Override
