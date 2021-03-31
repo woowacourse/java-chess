@@ -48,4 +48,8 @@ public final class CommandAsString {
     public boolean isStatus() {
         return "status".equalsIgnoreCase(commandInputs[0]);
     }
+
+    public boolean isShow() {
+        return "show".equalsIgnoreCase(commandInputs[0]);
+    }
 }

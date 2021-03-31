@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 import chess.controller.WebController;
 import com.google.gson.Gson;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -43,6 +44,13 @@ public class WebUIChessApplication {
             Map<String, String> requestBody = gson.fromJson(req.body(), HashMap.class);
             Map<String, String> model = webController.move(requestBody.get("source"), requestBody.get("target"));
             return gson.toJson(model);
+        });
+
+
+        get("/availablePositions", (request, response) -> {
+            String source = request.queryParams("source");
+            List<String> movablePositions = webController.calculatePath(source);
+            return gson.toJson(movablePositions);
         });
     }
 

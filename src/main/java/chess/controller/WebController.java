@@ -7,9 +7,12 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
 import chess.view.OutputView;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class WebController {
 
@@ -38,6 +41,17 @@ public class WebController {
         return convertToStringMap(result.infoAsMap());
     }
 
+    public List<String> calculatePath(String source) {
+        CommandAsString command = new CommandAsString("show " + source);
+        try {
+            game = game.execute(command);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+        }
+        Result result = game.result(command);
+        return convertToStringList(result.infoAsList());
+    }
+
     private Map<String, String> convertToStringMap(Map<Position, Piece> coordinates) {
         Map<String, String> stringBoard = new HashMap<>();
         for (Entry<Position, Piece> entry : coordinates.entrySet()) {
@@ -46,5 +60,11 @@ public class WebController {
             stringBoard.put(position.name(), piece.getName());
         }
         return stringBoard;
+    }
+
+    private List<String> convertToStringList(List<Position> pathPositions) {
+        return pathPositions.stream()
+                .map(position -> position.name())
+                .collect(Collectors.toList());
     }
 }

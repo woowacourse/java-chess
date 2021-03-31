@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
+import chess.domain.result.PathResult;
 import chess.domain.result.Result;
 import chess.domain.result.StatusResult;
 import chess.domain.result.TurnResult;
@@ -25,7 +26,7 @@ public abstract class TurnState extends PlayingState {
         if (command.isMove()) {
             return executeMove(command.source(), command.target());
         }
-        if (command.isStatus()) {
+        if (command.isStatus() || command.isShow()) {
             return this;
         }
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
@@ -49,6 +50,11 @@ public abstract class TurnState extends PlayingState {
     @Override
     public Result statusResult() {
         return new StatusResult(currentBoard());
+    }
+
+    @Override
+    public Result pathResult(final Position source) {
+        return new PathResult(currentBoard(), source);
     }
 
     @Override

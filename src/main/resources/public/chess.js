@@ -16,6 +16,8 @@ const PIECE_IMAGE_MAP = {
   "K": "./images/blackKing.png",
 }
 let boardInfo = {};
+let availablePositions = [];
+const AVAILABLE_POSITION_CLASS = "available";
 let positionSelected = false;
 let source = null;
 
@@ -57,18 +59,15 @@ function selectPosition(event) {
       console.log("빈 공간은 움직일 수 없습니다.")
       return;
     }
-    // getMovablePositions(targetPosition);
+    getAvailablePositions(selectedPosition);
     positionSelected = true;
     source = event.target;
     source.style.backgroundColor = "yellow";
   } else {
     console.log(selectedPosition);
-    // console.log(movablePosition);
-    // if (source !== event.target) {
-    //   alert("움직일 수 없는 위치입니다.");
-    //   return;
-    // }
-    // movablePositionSetting(false);
+    console.log(availablePositions);
+
+    visualizeAvailablePositions(false);
     if (source === event.target) {
       positionSelected = false;
       source.style.backgroundColor = "";
@@ -110,4 +109,32 @@ function getOption(methodType, bodyData) {
     },
     body: JSON.stringify(bodyData)
   };
+}
+
+function getAvailablePositions(sourcePosition) {
+  fetch(API_URL + "availablePositions?source=" + sourcePosition)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(" ");
+    }
+    return response.json();
+  })
+  .then((responseData) => {
+    availablePositions = responseData;
+    visualizeAvailablePositions(true);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
+
+function visualizeAvailablePositions(visible) {
+  for (const id of availablePositions) {
+    const item = document.getElementById(id);
+    if (visible === true) {
+      item.classList.add(AVAILABLE_POSITION_CLASS);
+    } else {
+      item.classList.remove(AVAILABLE_POSITION_CLASS);
+    }
+  }
 }

@@ -87,7 +87,7 @@ public final class Board {
                 ;
     }
 
-    private Path pathsOf(final Position sourcePosition) {
+    public Path pathsOf(final Position sourcePosition) {
         final Piece piece = coordinates.get(sourcePosition);
         return new Path(
                 piece.directions()
@@ -98,7 +98,7 @@ public final class Board {
                 .collect(Collectors.toList()));
     }
 
-    public Map<Position, Piece> coordiates() {
+    public Map<Position, Piece> coordinates() {
         return coordinates;
     }
 }

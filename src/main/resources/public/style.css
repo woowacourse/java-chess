@@ -20,6 +20,10 @@
   background-color: saddlebrown;
 }
 
+.available {
+  background-color: aquamarine;
+}
+
 #board {
   width: 600px;
   border: 25px solid #333;
