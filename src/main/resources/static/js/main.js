@@ -1,38 +1,51 @@
 import data from "../json/sample.js";
 
+const $chessTable = document.querySelector(".chessboard");
 
-const $chessboardSection = document.querySelector(".chessboard_section");
+function drawTable(data) {
+  let innerValue = ''
 
-function drawBoard(data) {
-    let innerValue = ''
+  for (let row = 8; row > 0; row--) {
+    innerValue +=
+        `<div class="row"> 
+          <div class="position">${row}</div>`;
 
-    for (let i = 9; i > 0; i--) {
-        innerValue += `<div class="row">`;
-        for (let j = 0; j < 9; j++) {
-            innerValue += makeCell(i, j, data);
-        }
-        innerValue += "</div>";
+    for (let column = 1; column < 9; column++) {
+      innerValue += `<div class="cell ${(row + column) % 2 === 0 ? "light"
+          : "dark"}" id="${row}${column}">${data[row][column]}</div>`;
     }
 
-    $chessboardSection.innerHTML = innerValue;
+    innerValue += "</div>";
+  }
+
+  $chessTable.insertAdjacentHTML('beforeend', innerValue);
 }
 
-function makeCell(i, j, data) {
-    function makePosition() {
-        return `<div class="position">${data[i][j]}</div>`;
-    }
+drawTable(data);
 
-    function makeBoardCell() {
-        return `<div class="cell ${(i + j) % 2 === 0 ? "light" : "dark"}">${data[i][j]}</div>`;
-    }
+let currentP;
+let targetP;
+let count = 0;
 
-    if (i === 9 || j === 0) {
-        return makePosition();
+function checkIfBoard(event) {
+  const {target} = event;
+  if (target.classList.contains("cell")) {
+    count++;
+    target.classList.toggle("clicked")
+    if (count === 1) {
+      currentP = target;
     }
-
-    return makeBoardCell()
+    if(count ===2){
+      targetP = target;
+      const source = currentP.innerText;
+      currentP.innerText = ''
+      targetP.innerText = source;
+    }
+    if(count >2){
+      alert("NO~")
+    }
+    console.log("current", currentP, "target", targetP);
+  }
 }
 
-drawBoard(data);
-
-console.log(data[1][1]);
+$chessTable.addEventListener("click", checkIfBoard)
