@@ -44,7 +44,7 @@ public class RoomDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (!rs.next()) {
-                return Optional.ofNullable(null);
+                return Optional.empty();
             }
             return Optional.ofNullable(rs.getLong(ROOM_ID_COLUMN_NAME));
         } catch (Exception e) {
