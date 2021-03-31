@@ -20,8 +20,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
     private static final String ROOT = "/";
-    private static final String CREATE_CHESS_ROOM = "create-chess-room";
-    private static final String CHESS_BOARD = "chess-board";
+    private static final String CREATE_CHESS_ROOM = "rooms";
+    private static final String CHESS_BOARD = "rooms";
     private static final String MOVE = "move";
     private static final String DELETE = "delete";
     private static final String CHESS_BOARD_VIEW = "chess-board.html";

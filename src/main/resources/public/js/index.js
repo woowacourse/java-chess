@@ -5,7 +5,7 @@ const enter_room_buttons =  document.getElementsByClassName("enter-room-button")
 
 for (let i = 0; i < enter_room_buttons.length; i++) {
   enter_room_buttons[i].addEventListener('click', (event) => {
-    window.location.href = HOME + '/chess-board?id=' + event.target.parentElement.id;
+    window.location.href = HOME + '/rooms?id=' + event.target.parentElement.id;
   });
 }
 
