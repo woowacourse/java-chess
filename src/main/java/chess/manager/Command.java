@@ -1,5 +1,7 @@
 package chess.manager;
 
+import chess.controller.dto.BoardResponseDto;
+import chess.controller.dto.StatusResponseDto;
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
 import chess.view.OutputView;
@@ -10,7 +12,7 @@ public enum Command {
     START("start", 1) {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
-            OutputView.printBoard(chessManager.getBoardResponseDto());
+            OutputView.printBoard(BoardResponseDto.toBoard(chessManager.getBoard()));
         }
     },
     RESTART("restart", 1) {
@@ -38,7 +40,9 @@ public enum Command {
     STATUS("status", 1) {
         @Override
         public void execute(final ChessManager chessManager, final String input) {
-            OutputView.printStatus(chessManager.getStatus());
+            Status status = chessManager.getStatus();
+            StatusResponseDto statusResponseDto = StatusResponseDto.toStatus(status);
+            OutputView.printStatus(statusResponseDto);
         }
     },
     SHOW("show", 2) {

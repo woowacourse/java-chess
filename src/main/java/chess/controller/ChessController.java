@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.dto.GameResultDto;
 import chess.manager.ChessManager;
 import chess.manager.Command;
 import chess.view.InputView;
@@ -24,7 +25,7 @@ public class ChessController {
             command = getCommand();
         } while (!chessManager.isEnd() && !command.isEnd());
 
-        OutputView.printGameResult(chessManager.getStatus());
+        OutputView.printGameResult(GameResultDto.toStatus(chessManager.getStatus()));
     }
 
     private Command firstCommand() {

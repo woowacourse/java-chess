@@ -1,15 +1,17 @@
 package chess.view;
 
-import chess.controller.dto.BoardResponseDto;
-import chess.controller.dto.PositionResponseDto;
-import chess.controller.dto.ShowPathResponseDto;
-import chess.manager.Status;
+import chess.controller.dto.*;
+import chess.domain.piece.Owner;
 
 import java.util.List;
 
 public class OutputView {
 
     private static final int CHESS_BOARD_LINE_PIECE_COUNT = 8;
+    private static final int CONVERT_PRINT_VERTICAL_NUMBER = 8;
+    private static final int CONVERT_PRINT_HORIZONTAL_NUMBER = 1;
+    private static final String MOVABLE_PATH = "*";
+
 
     private OutputView() {
     }
@@ -24,11 +26,11 @@ public class OutputView {
         int count = 0;
         for (String symbol : boardResponseDto.getPieces()) {
             System.out.print(symbol);
-            printLineSeperatorByPieceCount(++count);
+            printLineSeparatorByPieceCount(++count);
         }
     }
 
-    private static void printLineSeperatorByPieceCount(int count) {
+    private static void printLineSeparatorByPieceCount(int count) {
         if (count % CHESS_BOARD_LINE_PIECE_COUNT == 0) {
             System.out.println();
         }
@@ -46,38 +48,42 @@ public class OutputView {
         int count = 0;
         for (String symbol : pieces) {
             System.out.print(symbol);
-            printLineSeperatorByPieceCount(++count);
+            printLineSeparatorByPieceCount(++count);
         }
     }
 
-    private static List<String> parseMovablePathOrPiece(final List<String> pieces, final List<PositionResponseDto> path) {
+    private static List<String> parseMovablePathOrPiece(final List<String> pieces,
+                                                        final List<PositionResponseDto> path) {
         for (PositionResponseDto positionResponseDto : path) {
             System.out.println("y = " + positionResponseDto.getY() + ", x = " + positionResponseDto.getX());
-            pieces.set(((8 - positionResponseDto.getY()) * 8) + ((positionResponseDto.getX() - 1)), "*");
+            pieces.set(((CONVERT_PRINT_VERTICAL_NUMBER - positionResponseDto.getY()) * CONVERT_PRINT_VERTICAL_NUMBER)
+                    + ((positionResponseDto.getX() - CONVERT_PRINT_HORIZONTAL_NUMBER)), MOVABLE_PATH);
         }
         return pieces;
     }
 
 
-    public static void printStatus(final Status status) {
-        System.out.println("White score : " + status.whiteScore());
-        System.out.println("Black score : " + status.blackScore());
+    public static void printStatus(final StatusResponseDto statusResponseDto) {
+        System.out.println("White score : " + statusResponseDto.getWhiteScore());
+        System.out.println("Black score : " + statusResponseDto.getBlackScore());
     }
 
-    public static void printGameResult(final Status status) {
-        printStatus(status);
+    public static void printGameResult(final GameResultDto gameResultDto) {
+        System.out.println("White score : " + gameResultDto.getWhiteScore());
+        System.out.println("Black score : " + gameResultDto.getBlackScore());
 
         System.out.println("=== 게임 결과 ===");
 
-        if (status.whiteScore() > status.blackScore()) {
+        Owner winner = gameResultDto.getWinner();
+        if (winner == Owner.WHITE) {
             System.out.println("화이트의 승리입니다.");
         }
 
-        if (status.whiteScore() < status.blackScore()) {
+        if (winner == Owner.BLACK) {
             System.out.println("블랙의 승리입니다.");
         }
 
-        if (status.whiteScore() == status.blackScore()) {
+        if (winner == Owner.NONE) {
             System.out.println("무승부입니다.");
         }
     }

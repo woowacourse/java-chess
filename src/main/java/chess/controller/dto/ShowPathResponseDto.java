@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShowPathResponseDto {
-    List<PositionResponseDto> path;
+    private List<PositionResponseDto> path;
 
     public ShowPathResponseDto(final List<PositionResponseDto> path) {
         this.path = path;

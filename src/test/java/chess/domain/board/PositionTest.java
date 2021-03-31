@@ -1,7 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Vertical1;
+import chess.domain.board.position.Vertical;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class PositionTest {
     @DisplayName("Position 객체 생성")
     @Test
     void create() {
-        final Position position = Position.of(Vertical1.A, Horizontal.FIVE);
+        final Position position = Position.of(Horizontal.A, Vertical.FIVE);
         assertThat(position).isInstanceOf(Position.class);
     }
 }

@@ -61,6 +61,17 @@ public class Status {
         return 0;
     }
 
+    public Owner judgeWinner() {
+        if (whiteScore.isHigherThan(blackScore)) {
+            return Owner.BLACK;
+        }
+
+        if (blackScore.isHigherThan(whiteScore)) {
+            return Owner.WHITE;
+        }
+        return Owner.NONE;
+    }
+
     public double whiteScore() {
         return whiteScore.value();
     }

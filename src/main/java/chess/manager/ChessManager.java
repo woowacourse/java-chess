@@ -76,4 +76,8 @@ public class ChessManager {
     public ShowPathResponseDto findPathByPosition(final ShowCommand showCommand) {
         return ShowPathResponseDto.toPath(movablePath(showCommand));
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }
