@@ -19,7 +19,7 @@ public enum CommandMenu {
     private final String command;
     private final BiFunction<ChessController, List<String>, Command> biFunction;
 
-    CommandMenu(String command, BiFunction<ChessController, List<String>, Command> biFunction) {
+    CommandMenu(final String command, final BiFunction<ChessController, List<String>, Command> biFunction) {
         this.command = command;
         this.biFunction = biFunction;
     }

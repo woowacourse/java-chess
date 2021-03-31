@@ -17,7 +17,7 @@ public class Status extends Executer {
         return new Status(chessController);
     }
 
-    private static void validateStatusCommand(List<String> inputCommand) {
+    private static void validateStatusCommand(final List<String> inputCommand) {
         if (inputCommand.size() != STATUS_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 status 명령어 입니다.");
         }

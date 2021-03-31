@@ -17,7 +17,7 @@ public class End extends Executer {
         return new End(chessController);
     }
 
-    private static void validateEndCommand(List<String> inputCommand) {
+    private static void validateEndCommand(final List<String> inputCommand) {
         if (inputCommand.size() != END_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 end 명령어 입니다.");
         }

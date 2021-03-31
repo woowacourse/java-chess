@@ -14,7 +14,7 @@ public class Move extends Executer {
     private final Position source;
     private final Position target;
 
-    private Move(ChessController chessController, final Position source, final Position target) {
+    private Move(final ChessController chessController, final Position source, final Position target) {
         super(chessController);
         this.source = source;
         this.target = target;
@@ -29,7 +29,7 @@ public class Move extends Executer {
         return Move.of(chessController, inputCommand.get(SOURCE_INDEX), inputCommand.get(TARGET_INDEX));
     }
 
-    private static void validateMoveCommand(List<String> inputCommand) {
+    private static void validateMoveCommand(final List<String> inputCommand) {
         if (inputCommand.size() != MENU_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 move 명령어 입니다.");
         }

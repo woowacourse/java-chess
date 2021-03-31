@@ -72,7 +72,7 @@ public class ChessController {
     public void restart() {
         chessManager.resetBoard();
         Board board = chessManager.getBoard();
-        OutputView.printBoard(BoardResponseDto.toBoard(board));
+        OutputView.printRestartGame(BoardResponseDto.toBoard(board));
         initCommand();
     }
 

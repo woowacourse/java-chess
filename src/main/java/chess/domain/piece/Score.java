@@ -26,7 +26,7 @@ public class Score {
         return new Score(this.value - (PAWN_PENALTY_SCORE * pawnCountInLine));
     }
 
-    public boolean isHigherThan(Score other) {
+    public boolean isHigherThan(final Score other) {
         return this.value > other.value;
     }
 
@@ -35,7 +35,7 @@ public class Score {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;

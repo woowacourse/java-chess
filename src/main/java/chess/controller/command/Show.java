@@ -22,7 +22,7 @@ public class Show extends Executer {
         return new Show(chessController, Position.of(inputCommand.get(SOURCE_INDEX)));
     }
 
-    private static void validateShowCommand(List<String> inputCommand) {
+    private static void validateShowCommand(final List<String> inputCommand) {
         if (inputCommand.size() != SHOW_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 show 명령어 입니다.");
         }

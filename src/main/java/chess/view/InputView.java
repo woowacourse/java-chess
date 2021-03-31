@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String COMMAND_DELIMETER = " ";
+    private static final String COMMAND_DELIMITER = " ";
 
     private InputView() {
     }
@@ -14,6 +14,6 @@ public class InputView {
     private final static Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> getUserCommand() {
-        return Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMETER));
+        return Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));
     }
 }

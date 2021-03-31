@@ -12,7 +12,6 @@ public class OutputView {
     private static final int CONVERT_PRINT_HORIZONTAL_NUMBER = 1;
     private static final String MOVABLE_PATH = "*";
 
-
     private OutputView() {
     }
 
@@ -30,7 +29,7 @@ public class OutputView {
         }
     }
 
-    private static void printLineSeparatorByPieceCount(int count) {
+    private static void printLineSeparatorByPieceCount(final int count) {
         if (count % CHESS_BOARD_LINE_PIECE_COUNT == 0) {
             System.out.println();
         }

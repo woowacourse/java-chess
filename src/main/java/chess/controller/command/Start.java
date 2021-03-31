@@ -17,7 +17,7 @@ public class Start extends Executer {
         return new Start(chessController);
     }
 
-    private static void validateStartCommand(List<String> inputCommand) {
+    private static void validateStartCommand(final List<String> inputCommand) {
         if (inputCommand.size() != START_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 start 명령어 입니다.");
         }

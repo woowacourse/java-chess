@@ -17,7 +17,7 @@ public class Restart extends Executer {
         return new Restart(chessController);
     }
 
-    private static void validateStartCommand(List<String> inputCommand) {
+    private static void validateStartCommand(final List<String> inputCommand) {
         if (inputCommand.size() != RESTART_COMMAND_PARAMETER_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 restart 명령어 입니다.");
         }

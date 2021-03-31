@@ -6,7 +6,7 @@ public abstract class Executer implements Command {
 
     protected final ChessController chessController;
 
-    public Executer(ChessController chessController) {
+    public Executer(final ChessController chessController) {
         this.chessController = chessController;
     }
 
