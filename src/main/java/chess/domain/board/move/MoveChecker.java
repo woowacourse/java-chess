@@ -18,22 +18,35 @@ import java.util.Map;
 public class MoveChecker {
     private static final String CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE = "이동할 수 없는 도착위치 입니다.";
 
-    public boolean canMove(MoveRequest moveRequest, Map<Position, Cell> cells) {
-        Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
-        PieceType pieceTypeToMove = startPositionPieceToMove.getPieceType();
-        if ((pieceTypeToMove == ROOK) || (pieceTypeToMove == BISHOP)
-            || (pieceTypeToMove == QUEEN)) {
-            return canMoveByDefaultMoveStrategy(moveRequest, cells);
+    public void validateMoving(MoveRequest moveRequest, Map<Position, Cell> cells) {
+        PieceType pieceTypeToMove = getPieceTypeToMove(moveRequest, cells);
+        if (isPieceTypeMoveByDefaultStrategy(pieceTypeToMove)) {
+            validateDefaultMoving(moveRequest, cells);
+            return;
         }
-        if (pieceTypeToMove == KNIGHT || pieceTypeToMove == KING) {
-            return canByKnightMoveStrategy(moveRequest, cells);
+        if (isPieceTypeMoveBySpecialStrategy(pieceTypeToMove)) {
+            validateMovingByKnightMoveStrategy(moveRequest, cells);
+            return;
         }
-        return canMoveByPawnMoveStrategy(moveRequest, cells);
+        validateMovingByPawnMoveStrategy(moveRequest, cells);
     }
 
-    private boolean canMoveByDefaultMoveStrategy(MoveRequest moveRequest,
-        Map<Position, Cell> cells) {
+    private PieceType getPieceTypeToMove(MoveRequest moveRequest, Map<Position, Cell> cells) {
+        Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
+        return startPositionPieceToMove.getPieceType();
+    }
 
+    private boolean isPieceTypeMoveByDefaultStrategy(PieceType pieceTypeToMove) {
+        return pieceTypeToMove == ROOK
+            || pieceTypeToMove == BISHOP
+            || pieceTypeToMove == QUEEN;
+    }
+
+    private boolean isPieceTypeMoveBySpecialStrategy(PieceType pieceTypeToMove) {
+        return pieceTypeToMove == KNIGHT || pieceTypeToMove == KING;
+    }
+
+    private void validateDefaultMoving(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)
             || isAnyPieceExistsOnRouteBeforeDestination(cells, moveRequest)) {
@@ -42,40 +55,40 @@ public class MoveChecker {
         if (isOwnPieceExistsInDestination(cells, moveRequest)) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
-        return true;
     }
 
-    private boolean canMoveByPawnMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingByPawnMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionPieceToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionPieceToMove)) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         Direction moveRequestDirection = moveRequest.getDirection();
         if (moveRequestDirection.isForward()) {
-            return canMoveForward(moveRequest, cells);
+            validateMovingForward(moveRequest, cells);
+            return;
         }
-        return canMoveDiagonal(moveRequest, cells);
+        validateMovingDiagonal(moveRequest, cells);
     }
 
-    private boolean canMoveForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
         if (moveRequest.isRankForwardedBy(1)) {
-            return canMoveOneRankForward(moveRequest, cells);
+            validateMovingOneRankForward(moveRequest, cells);
+            return;
         }
         if (moveRequest.isRankForwardedBy(2)) {
-            return canMoveTwoRankForward(moveRequest, cells);
+            validateMovingTwoRankForward(moveRequest, cells);
+            return;
         }
         throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
     }
 
-
-    private boolean canMoveOneRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingOneRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
         if (isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
-        return true;
     }
 
-    private boolean canMoveTwoRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingTwoRankForward(MoveRequest moveRequest, Map<Position, Cell> cells) {
         if (!moveRequest.isStartPositionFirstPawnPosition()) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
@@ -83,20 +96,17 @@ public class MoveChecker {
             || isAnyPieceExistsAtDestination(cells, moveRequest.getDestination())) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
-        return true;
     }
 
-    private boolean canMoveDiagonal(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingDiagonal(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Position nextPosition = moveRequest.getNextPositionOfStartPosition();
         if (!(isEnemyExistsAtDestination(cells, moveRequest)
             && nextPosition.equals(moveRequest.getDestination()))) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
-        return true;
     }
 
-
-    private boolean canByKnightMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
+    private void validateMovingByKnightMoveStrategy(MoveRequest moveRequest, Map<Position, Cell> cells) {
         Piece startPositionKnightToMove = getStartPositionPiece(cells, moveRequest);
         if (isNotCorrectDirection(moveRequest, startPositionKnightToMove)) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
@@ -106,7 +116,6 @@ public class MoveChecker {
             && !isOwnPieceExistsInDestination(cells, moveRequest))) {
             throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
-        return true;
     }
 
     private boolean isNotCorrectDirection(MoveRequest moveRequest, Piece startPositionPieceToMove) {
@@ -114,14 +123,11 @@ public class MoveChecker {
     }
 
     private Piece getStartPositionPiece(Map<Position, Cell> cells, MoveRequest moveRequest) {
-
         Cell startPositionCell = cells.get(moveRequest.getStartPosition());
         return startPositionCell.getPieceEntity();
     }
 
-    public boolean isOwnPieceExistsInDestination(Map<Position, Cell> cells,
-        MoveRequest moveRequest) {
-
+    public boolean isOwnPieceExistsInDestination(Map<Position, Cell> cells, MoveRequest moveRequest) {
         Cell destinationCell = findCell(cells, moveRequest.getDestination());
         if (destinationCell.isEmpty()) {
             return false;
@@ -129,9 +135,11 @@ public class MoveChecker {
         return destinationCell.getTeamColor() == moveRequest.getCurrentTurnTeamColor();
     }
 
-    public boolean isAnyPieceExistsOnRouteBeforeDestination(Map<Position, Cell> cells,
-        MoveRequest moveRequest) {
+    private Cell findCell(Map<Position, Cell> cells, Position position) {
+        return cells.get(position);
+    }
 
+    public boolean isAnyPieceExistsOnRouteBeforeDestination(Map<Position, Cell> cells, MoveRequest moveRequest) {
         Position movingPosition = moveRequest.getNextPositionOfStartPosition();
         List<Position> canMovePositions = new ArrayList<>();
         while (!movingPosition.equals(moveRequest.getDestination())) {
@@ -141,10 +149,6 @@ public class MoveChecker {
         return !canMovePositions.stream()
             .map(cells::get)
             .allMatch(Cell::isEmpty);
-    }
-
-    private Cell findCell(Map<Position, Cell> cells, Position position) {
-        return cells.get(position);
     }
 
     public boolean isAnyPieceExistsAtDestination(Map<Position, Cell> cells, Position destination) {

@@ -53,9 +53,7 @@ public class Board {
     }
 
     private void validateMoveRoute(Map<Position, Cell> cells, MoveRequest moveRequest) {
-        if (!moveChecker.canMove(moveRequest, cells)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
-        }
+        moveChecker.validateMoving(moveRequest, cells);
     }
 
     public void move(Long gameId, MoveRequest moveRequest) throws SQLException {
