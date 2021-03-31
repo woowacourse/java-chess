@@ -9,49 +9,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    private static Map<Position, Piece> pieceByPosition = new HashMap<>();
+    private static final Map<Position, Piece> pieceByPosition = new HashMap<>();
+    private static final Column[] ROOK_COLUMNS = {Column.A, Column.H};
+    private static final Column[] KNIGHT_COLUMNS = {Column.B, Column.G};
+    private static final Column[] BISHOP_COLUMNS = {Column.C, Column.F};
+    private static final Column[] KING_COLUMNS = {Column.D};
+    private static final Column[] QUEEN_COLUMNS = {Column.E};
+    private static final Row[] EMPTY_ROWS = {Row.THREE, Row.FOUR, Row.FIVE, Row.SIX};
 
     static {
-        setUpGeneral();
-        setUpOthers();
+        setUpPiece();
+        setUpEmpty();
+    }
+
+    private static void setUpPiece() {
+        setUpPieceByColor(Color.BLACK);
+        setUpPieceByColor(Color.WHITE);
+    }
+
+    private static void setUpPieceByColor(Color color) {
+        setUpColumnsInRow(ROOK_COLUMNS, color.initGeneralRow(), new Rook(color));
+        setUpColumnsInRow(KNIGHT_COLUMNS, color.initGeneralRow(), new Knight(color));
+        setUpColumnsInRow(BISHOP_COLUMNS, color.initGeneralRow(), new Bishop(color));
+        setUpColumnsInRow(QUEEN_COLUMNS, color.initGeneralRow(), new Queen(color));
+        setUpColumnsInRow(KING_COLUMNS, color.initGeneralRow(), new King(color));
+        setUpColumnsInRow(Column.values(), color.initPawnRow(), new Pawn(color));
+    }
+
+    private static void setUpColumnsInRow(Column[] columns, Row row, Piece piece) {
+        for (Column column : columns) {
+            pieceByPosition.put(Position.of(column, row), piece);
+        }
+    }
+
+    private static void setUpEmpty() {
+        for (Row row : EMPTY_ROWS) {
+            setUpColumnsInRow(Column.values(), row, new Empty());
+        }
     }
 
     public static Board create() {
         return new Board(pieceByPosition);
-    }
-
-    private static void setUpGeneral() {
-        setUpGeneralByColor(Color.BLACK, Row.EIGHT);
-        setUpGeneralByColor(Color.WHITE, Row.ONE);
-    }
-
-    private static void setUpGeneralByColor(Color color, Row row) {
-        pieceByPosition.put(Position.of(Column.A, row), new Rook(color));
-        pieceByPosition.put(Position.of(Column.B, row), new Knight(color));
-        pieceByPosition.put(Position.of(Column.C, row), new Bishop(color));
-        pieceByPosition.put(Position.of(Column.D, row), new Queen(color));
-        pieceByPosition.put(Position.of(Column.E, row), new King(color));
-        pieceByPosition.put(Position.of(Column.F, row), new Bishop(color));
-        pieceByPosition.put(Position.of(Column.G, row), new Knight(color));
-        pieceByPosition.put(Position.of(Column.H, row), new Rook(color));
-    }
-
-    public static void setUpOthers() {
-        Pawn blackPawn = new Pawn(Color.BLACK);
-        Pawn whitePawn = new Pawn(Color.WHITE);
-        Empty empty = new Empty();
-
-        setUpRow(Row.SEVEN, blackPawn);
-        setUpRow(Row.SIX, empty);
-        setUpRow(Row.FIVE, empty);
-        setUpRow(Row.FOUR, empty);
-        setUpRow(Row.THREE, empty);
-        setUpRow(Row.TWO, whitePawn);
-    }
-
-    private static void setUpRow(Row row, Piece piece) {
-        for (Column column : Column.values()) {
-            pieceByPosition.put(Position.of(column, row), piece);
-        }
     }
 }
