@@ -83,6 +83,10 @@ public final class Position implements Comparable<Position> {
         return vertical;
     }
 
+    public String position() {
+        return this.horizontal.symbol() + this.vertical.symbol();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

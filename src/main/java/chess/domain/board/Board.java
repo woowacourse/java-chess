@@ -91,4 +91,9 @@ public final class Board {
                 .filter(Piece::isKing)
                 .count() != 2;
     }
+
+    public void refresh() {
+        Map<Position, Piece> board = BoardInitializer.initializeBoard();
+        this.chessBoard.putAll(board);
+    }
 }

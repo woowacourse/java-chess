@@ -27,7 +27,7 @@ public abstract class Piece {
     }
 
     public final String name() {
-        return name;
+        return team.teamName() + "_" + name.toLowerCase();
     }
 
     public final Team team() {

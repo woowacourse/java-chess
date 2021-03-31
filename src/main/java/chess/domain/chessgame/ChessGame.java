@@ -42,6 +42,12 @@ public final class ChessGame {
         gameState.endGame();
     }
 
+    public void restartGame() {
+        board.refresh();
+        turn.refresh();
+        gameState.refresh();
+    }
+
     public Map<Position, Piece> board() {
         return board.unwrap();
     }

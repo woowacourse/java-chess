@@ -14,4 +14,8 @@ public final class GameState {
     public void endGame() {
         this.isRunning = false;
     }
+
+    public void refresh() {
+        isRunning = true;
+    }
 }

@@ -1,10 +1,7 @@
 const $chessboard = document.querySelector(".chessboard");
-$chessboard.addEventListener("click", alertMy);
+$chessboard.addEventListener("click", select);
 
 function movePieces(source, target) {
-    // const sourcePiece = document.querySelector("#" + source).textContent;
-    // const targetPiece = document.querySelector("#" + target).textContent;
-    // console.log(sourcePiece + " " + targetPiece);
     document.querySelector("#" + target).innerText = document.querySelector("#" + source).textContent;
     document.querySelector("#" + source).innerText = "";
 }
@@ -26,14 +23,14 @@ function move(source, target) {
             }
             alert("잘못된 이동입니다.");
         })
-        .catch(function (error) {
-            console.log("에러")
+        // .catch(function (error) {
+        //     console.log("에러")
             // handle error
-            console.log(error);
-        })
+        //     console.log(error);
+        // })
 }
 
-function alertMy(event) {
+function select(event) {
     const targets = $chessboard.querySelectorAll("div");
     for (let i = 0; i < targets.length; i++) {
         if (targets[i].classList.contains("select")) {

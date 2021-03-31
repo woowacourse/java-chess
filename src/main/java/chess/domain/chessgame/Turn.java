@@ -16,4 +16,8 @@ public final class Turn {
     public void next() {
         team = team.oppositeTeam();
     }
+
+    public void refresh() {
+        team = Team.WHITE;
+    }
 }

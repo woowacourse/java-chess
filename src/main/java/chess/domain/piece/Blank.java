@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public final class Blank extends Piece {
     private static final Piece blank = new Blank();
-    private static final String INITIAL_NAME = ".";
+    private static final String INITIAL_NAME = "blank";
 
     private Blank() {
         super(Team.NOTHING, INITIAL_NAME);
