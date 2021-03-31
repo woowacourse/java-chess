@@ -1,30 +1,6 @@
-function initiate() {
-    const xmlHttp = new XMLHttpRequest();
-    const url = 'http://localhost:8080/room/update'
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-            const response = JSON.parse(xmlHttp.responseText);
-            const roomListNode = document.getElementById('room-list');
-            for (let i = 0; i < response.length; i++) {
-                const roomNode = createRoom(response[i].id, response[i].name);
-                roomListNode.appendChild(roomNode);
-            }
-        }
-    };
-    xmlHttp.open('GET', url, true);
-    xmlHttp.send();
-}
+const ROOM_LIST_NODE = document.getElementById('room-list');
 
-function createRoom(roomNumber, name) {
-    const roomNode = document.createElement('li');
-    const link = document.createElement('a');
-    link.href = '/chessgame/' + roomNumber;
-    link.textContent = name;
-    roomNode.appendChild(link);
-    return roomNode;
-}
-
-function addRoomRegistrationEvent() {
+function initiateRoomRegistrationEvent() {
     const createButton = document.getElementById('create-button');
     createButton.addEventListener('click', function (event) {
         event.preventDefault();
@@ -33,11 +9,10 @@ function addRoomRegistrationEvent() {
         const roomName = document.getElementById('room-name').value;
         const requestData = JSON.stringify({'name': roomName});
         xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                const roomListNode = document.getElementById('room-list');
-                const response = JSON.parse(xmlHttp.responseText);
-                const roomNode = createRoom(response.id, response.name);
-                roomListNode.appendChild(roomNode);
+            if (isValidHttpResponse(this)) {
+                const responseData = JSON.parse(xmlHttp.responseText);
+                const roomNode = createRoomNode(responseData.id, responseData.name);
+                ROOM_LIST_NODE.appendChild(roomNode);
             }
         };
         xmlHttp.open('POST', url, true);
@@ -45,5 +20,34 @@ function addRoomRegistrationEvent() {
     });
 }
 
-initiate();
-addRoomRegistrationEvent();
+function isValidHttpResponse(xmlHttp) {
+    return xmlHttp.readyState === 4 && xmlHttp.status === 200;
+}
+
+function createRoomNode(id, name) {
+    const roomNode = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = '/chessgame/' + id;
+    link.textContent = name;
+    roomNode.appendChild(link);
+    return roomNode;
+}
+
+function showRoomList() {
+    const xmlHttp = new XMLHttpRequest();
+    const url = 'http://localhost:8080/room/show'
+    xmlHttp.onreadystatechange = function () {
+        if (isValidHttpResponse(this)) {
+            const roomList = JSON.parse(this.responseText);
+            for (let i = 0; i < roomList.length; i++) {
+                const roomNode = createRoomNode(roomList[i].id, roomList[i].name);
+                ROOM_LIST_NODE.appendChild(roomNode);
+            }
+        }
+    };
+    xmlHttp.open('GET', url, true);
+    xmlHttp.send();
+}
+
+initiateRoomRegistrationEvent();
+showRoomList();

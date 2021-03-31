@@ -17,16 +17,16 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        setConfiguration();
         Connection connection = ConnectionManager.makeConnection();
         ChessController chessController = initializeChessController(connection);
         RoomController roomController = initializeRoomController(connection);
+        setConfiguration();
 
         get("/", MoveController::moveToMainPage);
         get("/chessgame/:roomNumber", MoveController::moveToGamePage);
         get("/result/:roomNumber", MoveController::moveToResultPage);
 
-        get("/room/update", roomController::updateRooms);
+        get("/room/show", roomController::showRooms);
         post("/room/add", roomController::insertRoom);
 
         get("/chessgame/:roomNumber/update", chessController::updateChessBoard);

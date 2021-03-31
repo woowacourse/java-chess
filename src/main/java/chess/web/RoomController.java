@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RoomController {
+    private static final Gson GSON = new Gson();
+    private static final String RESPONSE_JSON = "application/json";
 
     private final RoomService roomService;
 
@@ -18,17 +20,18 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    public JsonElement updateRooms(Request request, Response response) throws SQLException {
-        response.type("application/json");
-        List<RoomDTO> roomDTOs = roomService.updateRooms();
-        return new Gson().toJsonTree(roomDTOs);
+    public JsonElement showRooms(Request request, Response response) throws SQLException {
+        response.type(RESPONSE_JSON);
+        List<RoomDTO> roomDTOs = roomService.findAllRooms();
+        return GSON.toJsonTree(roomDTOs);
     }
 
     public JsonElement insertRoom(Request request, Response response) throws SQLException {
-        response.type("application/json");
-        RoomDTO roomDTO = new Gson().fromJson(request.body(), RoomDTO.class);
-        roomService.insertRoom(roomDTO.getName());
+        response.type(RESPONSE_JSON);
+        RoomDTO requestDTO = GSON.fromJson(request.body(), RoomDTO.class);
+        String roomName = requestDTO.getName();
+        roomService.insertRoom(roomName);
         RoomDTO responseDTO = roomService.findLatestRoom();
-        return new Gson().toJsonTree(responseDTO);
+        return GSON.toJsonTree(responseDTO);
     }
 }

@@ -16,15 +16,15 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public List<RoomDTO> updateRooms() throws SQLException {
+    public List<RoomDTO> findAllRooms() throws SQLException {
         return roomRepository.findAllRooms()
                 .stream()
                 .map(RoomDTO::from)
                 .collect(Collectors.toList());
     }
 
-    public void insertRoom(String name) throws SQLException {
-        roomRepository.insertRoom(name);
+    public void insertRoom(String roomName) throws SQLException {
+        roomRepository.insertRoom(roomName);
     }
 
     public RoomDTO findLatestRoom() throws SQLException {
