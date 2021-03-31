@@ -24,15 +24,15 @@ public class WebUIChessApplication {
 
         get("/", MoveController::moveToMainPage);
         get("/chessgame/:roomNumber", MoveController::moveToGamePage);
-        get("/result", MoveController::moveToResultPage);
+        get("/result/:roomNumber", MoveController::moveToResultPage);
 
         get("/room/update", roomController::updateRooms);
         post("/room/add", roomController::insertRoom);
 
         get("/chessgame/:roomNumber/update", chessController::updateChessBoard);
         post("/chessgame/:roomNumber/move", chessController::move);
-        get("/chessgame/result/show", chessController::showResult);
-        get("/chessgame/restart", chessController::restart);
+        get("/result/:roomNumber/show", chessController::showResult);
+        get("/chessgame/:roomNumber/restart", chessController::restart);
         exception(RuntimeException.class, ExceptionHandler::bindException);
     }
 

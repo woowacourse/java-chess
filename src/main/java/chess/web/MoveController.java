@@ -27,6 +27,8 @@ public class MoveController {
 
     public static String moveToResultPage(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
+        String roomNumber = request.params(":roomNumber");
+        model.put("roomNumber", roomNumber);
         return render(model, "result.html");
     }
 

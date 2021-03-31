@@ -1,6 +1,6 @@
 function initiate() {
     const xmlHttp = new XMLHttpRequest();
-    const url = 'http://localhost:8080/chessgame/result/show';
+    const url = 'http://localhost:8080/result/' + roomNumber + '/show';
     xmlHttp.onreadystatechange = function () {
         if (isValidHttpResponse(xmlHttp)) {
             const resultDTO = JSON.parse(this.responseText);
@@ -27,7 +27,7 @@ function addRestartEvent() {
     const restartButton = document.getElementById('restart');
     restartButton.addEventListener('click', function (event) {
         const xmlHttp = new XMLHttpRequest();
-        const url = 'http://localhost:8080/chessgame/restart';
+        const url = 'http://localhost:8080/chessgame/' + roomNumber + '/restart';
         xmlHttp.onreadystatechange = function () {
             if (isValidHttpResponse(xmlHttp)) {
                 window.location = JSON.parse(xmlHttp.responseText);
