@@ -1,18 +1,12 @@
 package chess.dao;
 
 import chess.domain.game.ChessGameEntity;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Position;
 import chess.exception.NotFoundChessGameException;
-import chess.exception.NotFoundPieceException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChessGameDAO {
 
@@ -32,16 +26,8 @@ public class ChessGameDAO {
                 throw new NotFoundChessGameException();
             }
 
-            return new ChessGameEntity(rs.getLong("id"),rs.getString("state"));
-
-            //todo: 나중에 코드 가져오기!!
-//            long id = rs.getLong("id");
-//            Board board = new Board(findAllPiecesByChessGame(id));
-//            ChessGame chessGame = new ChessGame(board);
-//            chessGame.changeState(StateFactory.valueOf(rs.getString("state"), chessGame));
-//            return chessGame;
+            return new ChessGameEntity(rs.getLong("id"), rs.getString("state"));
         }
-
     }
 
     public void create() throws SQLException {
