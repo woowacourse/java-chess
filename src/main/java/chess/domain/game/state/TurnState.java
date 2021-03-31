@@ -54,7 +54,7 @@ public abstract class TurnState extends PlayingState {
 
     @Override
     public Result pathResult(final Position source) {
-        return new PathResult(currentBoard(), source);
+        return new PathResult(currentBoard(), source, currentTurnColor);
     }
 
     @Override
