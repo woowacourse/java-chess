@@ -89,6 +89,7 @@ async function move(sourcePoint, targetPoint) {
                 .then(location.replace("/chess"));
         } else {
             await gameFinishedAlert(targetPoint);
+            location.replace("/start");
         }
     }
     if(response === 200) {

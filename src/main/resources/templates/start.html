@@ -5,15 +5,14 @@
     <title>체스 방 입장</title>
 </head>
 <body>
-<h1>회원가입을 진행합니다.</h1>
-<form action="/signup" method="post">
+<h1>체스 게임을 시작하시겠습니까?</h1>
+<form action="/user" method="post" name="login">
     이름: <input type="text" name="name" id="name">
     <br>
     비밀번호: <input type="text" name="password" id="password">
     <br>
-    <input type="submit" value="회원가입" onclick=alertSuccess()>
-</form>
+    <input type="submit" value="입장하기" onsubmit=alertUser()>
+</form><button id="signup">회원가입</button>
 </body>
-<script src = "user.js">
-</script>
+<script src = "user.js"></script>
 </html>

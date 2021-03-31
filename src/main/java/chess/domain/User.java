@@ -1,27 +1,36 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public class User {
-    private String name;
-    private String age;
-    private String image = "black_bishop.png";
+    private String id;
+    private String pwd;
 
-    public String getImage() {
-        return "white_bishop.png";
+    public User(String id, String pwd) {
+        this.id = id;
+        this.pwd = pwd;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPwd() {
+        return pwd;
     }
 
-    public String getAge() {
-        return age;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        User user = (User)o;
+        return id.equals(user.id) && pwd.equals(user.pwd);
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, pwd);
     }
 }

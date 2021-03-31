@@ -2,13 +2,16 @@ package chess;
 
 import static spark.Spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 
 import chess.domain.ChessGame;
 import chess.domain.RequestDto;
+import chess.domain.User;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import spark.ModelAndView;
@@ -16,13 +19,14 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessService {
     private static final Gson GSON = new Gson();
+    private final ChessDAO chessDAO = new ChessDAO();
     private ChessGame chessGame;
 
     public ChessService() {
         this.chessGame = new ChessGame();
         get("/chess", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model, "chess.html");
         });
 
         post("/board", (req, res) -> GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getImage()));
@@ -53,7 +57,34 @@ public class ChessService {
         get("/rerun", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
             this.chessGame = new ChessGame();
-            return render(model, "index.html");
+            return render(model, "chess.html");
+        });
+
+        get("/", (req, res) -> {
+            final Map<String, Object> model = new HashMap<>();
+            return render(model, "start.html");
+        });
+
+        post("/user", (req, res) -> {
+            User user = new User(req.queryParams("name"), req.queryParams("password"));
+            Map<String, Object> model = new HashMap<>();
+            if(chessDAO.findByUserNameAndPwd(user.getId(), user.getPwd()) == null){
+                return render(model, "start.html");
+            }
+            model.put("user", user);
+            return render(model, "chess.html");
+        });
+
+        get("/adduser", (req, res) -> {
+            final Map<String, Object> model = new HashMap<>();
+            return render(model, "form.html");
+        });
+
+        post("/signup", (req, res) -> {
+            final Map<String, Object> model = new HashMap<>();
+            User user = new User(req.queryParams("name"), req.queryParams("password"));
+            chessDAO.addUser(user);
+            return render(model, "start.html");
         });
     }
 
