@@ -160,7 +160,8 @@ public abstract class PieceOnBoard implements Piece {
 
     @Override
     public boolean isEnemyTeam(Piece comparePiece) {
-        return teamColor != comparePiece.getColor();
+        return (teamColor == TeamColor.WHITE && comparePiece.getColor() == TeamColor.BLACK) ||
+            (teamColor == TeamColor.BLACK && comparePiece.getColor() == TeamColor.WHITE);
     }
 
     @Override
