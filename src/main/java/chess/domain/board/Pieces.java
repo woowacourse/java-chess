@@ -25,20 +25,29 @@ public final class Pieces {
     private static final int BLACK_PAWN_ROW = 6;
     private static final int WHITE_PAWN_ROW = 1;
     private static final int WHITE_GENERAL_ROW = 0;
-    private static final int MAX_BLANK_ROW = 5;
-    private static final int MIN_BLANK_ROW = 1;
     private static final int DUPLICATE_COUNT = 2;
     private static final int TOTAL_KING_SIZE = 2;
     private static final double DUPLICATE_PAWN_SCORE = 0.5;
 
-    private final Map<Position, Piece> pieces = new LinkedHashMap<>();
+    private final Map<Position, Piece> pieces;
 
-    public void init() {
-        initGeneral(BLACK_GENERAL_ROW, Color.BLACK);
-        initPawn(BLACK_PAWN_ROW, Color.BLACK);
-        for (int x = MAX_BLANK_ROW; x > MIN_BLANK_ROW; x--) {
+    public Pieces() {
+        this(new LinkedHashMap<>());
+        for (int x = MAX_INDEX; x >= MIN_INDEX; x--) {
             initBlank(x);
         }
+    }
+
+    public Pieces(Map<Position, Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public void init() {
+        for (int x = MAX_INDEX; x >= MIN_INDEX; x--) {
+            initBlank(x);
+        }
+        initGeneral(BLACK_GENERAL_ROW, Color.BLACK);
+        initPawn(BLACK_PAWN_ROW, Color.BLACK);
         initPawn(WHITE_PAWN_ROW, Color.WHITE);
         initGeneral(WHITE_GENERAL_ROW, Color.WHITE);
     }
