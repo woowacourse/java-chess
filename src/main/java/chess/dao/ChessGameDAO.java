@@ -1,12 +1,8 @@
 package chess.dao;
 
 
-import static chess.dao.setting.DBConnection.getConnection;
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
-
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GameStatusEntity;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,95 +12,60 @@ public class ChessGameDAO {
 
     public ChessGameEntity save(ChessGameEntity chessRoomEntity) throws SQLException {
         String query = "INSERT INTO chess_game (title, current_turn_team_color) VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
-        pstmt.setString(1, chessRoomEntity.getTitle());
-        pstmt.setString(2, chessRoomEntity.getCurrentTurnTeamColor().getValue());
-        pstmt.executeUpdate();
-        ResultSet generatedKeys = pstmt.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            chessRoomEntity.setId(generatedKeys.getLong(1));
-        }
+        Long id = SQLQuery.insert(query, chessRoomEntity.getTitle(), chessRoomEntity.getCurrentTurnTeamColor().getValue());
+        chessRoomEntity.setId(id);
         return chessRoomEntity;
     }
 
     public ChessGameEntity findById(Long id) throws SQLException {
-        ResultSet rs = getResultSetOfFindById(id);
-        if (rs == null) {
+        String query = "SELECT * FROM chess_game WHERE id = ?";
+        ResultSet resultSet = SQLQuery.select(query, id);
+        if (!resultSet.next()) {
             return null;
         }
         return new ChessGameEntity(
-            rs.getLong("id"),
-            rs.getString("title"),
-            rs.getString("current_turn_team_color"));
-    }
-
-    private ResultSet getResultSetOfFindById(Long id) throws SQLException {
-        String query = "SELECT * FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, id);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            return null;
-        }
-        return rs;
+            resultSet.getLong("id"),
+            resultSet.getString("title"),
+            resultSet.getString("current_turn_team_color"));
     }
 
     public List<ChessGameEntity> findAll() throws SQLException {
-        ResultSet rs = getResultSetOfFindById();
+        String query = "SELECT * FROM chess_game";
+        ResultSet resultSet = SQLQuery.select(query);
         List<ChessGameEntity> results = new ArrayList<>();
-        while (rs.next()) {
+        while (resultSet.next()) {
             results.add(new ChessGameEntity(
-                rs.getLong("id"),
-                rs.getString("title"),
-                rs.getString("current_turn_team_color")
-            ));
+                resultSet.getLong("id"),
+                resultSet.getString("title"),
+                resultSet.getString("current_turn_team_color")));
         }
         return results;
     }
 
-    private ResultSet getResultSetOfFindById() throws SQLException {
-        String query = "SELECT * FROM chess_game";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        return pstmt.executeQuery();
-    }
-
     public GameStatusEntity findStatusByGameId(Long gameId) throws SQLException {
-        ResultSet rs = getResultSetOfFindGameStatusByGameId(gameId);
-        if (!rs.next()) {
+        String query = "SELECT * FROM chess_game WHERE id = ?";
+        ResultSet resultSet = SQLQuery.select(query, gameId);
+        if (!resultSet.next()) {
             return null;
         }
         return new GameStatusEntity(
-            rs.getString("title"),
-            rs.getString("current_turn_team_color"));
+            resultSet.getString("title"),
+            resultSet.getString("current_turn_team_color"));
     }
 
-    private ResultSet getResultSetOfFindGameStatusByGameId(Long gameId) throws SQLException {
-        String query = "SELECT * FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        return pstmt.executeQuery();
-    }
-
-    public ChessGameEntity updateCurrentTurnTeamColor(ChessGameEntity chessGameEntity)
-        throws SQLException {
+    public ChessGameEntity updateCurrentTurnTeamColor(ChessGameEntity chessGameEntity) throws SQLException {
         String query = "UPDATE chess_game SET current_turn_team_color = ? WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGameEntity.getCurrentTurnTeamColor().getValue());
-        pstmt.setLong(2, chessGameEntity.getId());
-        pstmt.executeUpdate();
+        SQLQuery.updateOrRemove(query, chessGameEntity.getCurrentTurnTeamColor().getValue(), chessGameEntity.getId());
         return chessGameEntity;
     }
 
     public void remove(Long gameId) throws SQLException {
         String query = "DELETE FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        pstmt.executeUpdate();
+        SQLQuery.updateOrRemove(query, gameId);
     }
 
     public void removeAll() throws SQLException {
         String query = "DELETE FROM chess_game";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+        SQLQuery.updateOrRemove(query);
     }
 }

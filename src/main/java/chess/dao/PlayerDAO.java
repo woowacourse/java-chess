@@ -1,10 +1,7 @@
 package chess.dao;
 
 
-import static chess.dao.setting.DBConnection.getConnection;
-
 import chess.domain.player.type.TeamColor;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,40 +9,25 @@ public class PlayerDAO {
 
     public void save(TeamColor[] teamColors, Long gameId) throws SQLException {
         String query = "INSERT INTO player (team_color, chess_game_id) VALUES (?, ?), (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, teamColors[0].getValue());
-        pstmt.setLong(2, gameId);
-        pstmt.setString(3, teamColors[1].getValue());
-        pstmt.setLong(4, gameId);
-        pstmt.executeUpdate();
+        SQLQuery.insert(query, teamColors[0].getValue(), gameId, teamColors[1].getValue(), gameId);
     }
 
     public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
-        ResultSet rs = getResultSetOfPlayer(gameId, teamColor);
-        if (!rs.next()) {
+        String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
+        ResultSet resultSet = SQLQuery.select(query, gameId, teamColor.getValue());
+        if (!resultSet.next()) {
             return null;
         }
-        return rs.getLong("id");
-    }
-
-    private ResultSet getResultSetOfPlayer(Long gameId, TeamColor teamColor) throws SQLException {
-        String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        pstmt.setString(2, teamColor.getValue());
-        return pstmt.executeQuery();
+        return resultSet.getLong("id");
     }
 
     public void removeAllByChessGame(Long gameId) throws SQLException {
         String query = "DELETE FROM player WHERE chess_game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, gameId);
-        pstmt.executeUpdate();
+        SQLQuery.updateOrRemove(query, gameId);
     }
 
     public void removeAll() throws SQLException {
         String query = "DELETE FROM player";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+        SQLQuery.updateOrRemove(query);
     }
 }

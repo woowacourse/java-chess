@@ -2,6 +2,7 @@ package chess.dao.setting;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBConnection {
@@ -13,27 +14,20 @@ public class DBConnection {
     private static Connection CONNECTION;
 
     static {
-        loadJDBCDriver();
-        connectDriverManager();
-    }
-
-    private static void loadJDBCDriver() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
+            loadJDBCDriver();
+            connectDriverManager();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void connectDriverManager() {
-        try {
-            CONNECTION = DriverManager.getConnection(
-                "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USER_NAME, PASSWORD);
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
+    private static void loadJDBCDriver() throws ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+    }
+
+    private static void connectDriverManager() throws SQLException {
+        CONNECTION = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USER_NAME, PASSWORD);
     }
 
     public static Connection getConnection() {
