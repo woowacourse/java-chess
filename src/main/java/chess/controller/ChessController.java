@@ -1,10 +1,19 @@
 package chess.controller;
 
+import chess.controller.dto.BoardResponseDto;
 import chess.controller.dto.GameResultDto;
+import chess.controller.dto.ShowPathResponseDto;
+import chess.controller.dto.StatusResponseDto;
+import chess.domain.board.Board;
+import chess.domain.board.position.Position;
 import chess.manager.ChessManager;
-import chess.manager.Command;
+import chess.manager.Status;
+import chess.controller.command.Command;
+import chess.controller.command.CommandMenu;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public class ChessController {
 
@@ -16,29 +25,20 @@ public class ChessController {
 
     public void run() {
         OutputView.printGuideStartGame();
-        Command firstCommand = firstCommand();
+        Command firstCommand = initFirstCommand();
         if (firstCommand.isEnd()) {
             return;
         }
-        Command command;
-        do {
-            command = getCommand();
-        } while (!chessManager.isEnd() && !command.isEnd());
-
+        initCommand();
         OutputView.printGameResult(GameResultDto.toStatus(chessManager.getStatus()));
-    }
-
-    private Command firstCommand() {
-        Command command = initFirstCommand();
-        command.execute(chessManager, "");
-        return command;
     }
 
     private Command initFirstCommand() {
         try {
-            String userInput = InputView.getUserCommand();
-            Command command = Command.of(userInput);
-            command.isFirstCommand();
+            List<String> userInput = InputView.getUserCommand();
+            Command command = CommandMenu.findCommandByInputCommand(this, userInput);
+            validFirstCommand(command);
+            command.execute();
             return command;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
@@ -46,18 +46,63 @@ public class ChessController {
         }
     }
 
-    private Command getCommand() {
+    private void validFirstCommand(Command command) {
+        if (command.isStart() || command.isEnd()) {
+            return;
+        }
+        throw new IllegalArgumentException("첫 입력은 start(게임시작) 또는 end(게임종료)만 가능합니다.");
+    }
+
+    private void initCommand() {
         try {
-            return executeCommand(InputView.getUserCommand());
+            final Command command =
+                    CommandMenu.findCommandByInputCommand(this, InputView.getUserCommand());
+            command.execute();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return getCommand();
+            initCommand();
         }
     }
 
-    private Command executeCommand(final String input) {
-        final Command command = Command.of(input);
-        command.execute(chessManager, input);
-        return command;
+    public void startGame() {
+        Board board = chessManager.getBoard();
+        OutputView.printBoard(BoardResponseDto.toBoard(board));
+    }
+
+    public void restart() {
+        chessManager.resetBoard();
+        Board board = chessManager.getBoard();
+        OutputView.printBoard(BoardResponseDto.toBoard(board));
+        initCommand();
+    }
+
+    public void end() {
+        OutputView.printEndGame();
+    }
+
+    public void move(final Position target, final Position source) {
+        chessManager.move(target, source);
+        chessManager.changeTurn();
+        OutputView.printBoard(BoardResponseDto.toBoard(chessManager.getBoard()));
+        if (chessManager.isDiedKing()) {
+            end();
+            return;
+        }
+        initCommand();
+    }
+
+    public void status() {
+        Status status = chessManager.getStatus();
+        StatusResponseDto statusResponseDto = StatusResponseDto.toStatus(status);
+        OutputView.printStatus(statusResponseDto);
+        initCommand();
+    }
+
+    public void show(final Position source) {
+        BoardResponseDto boardResponseDto = BoardResponseDto.toBoard(chessManager.getBoard());
+        ShowPathResponseDto showPathResponseDto =
+                ShowPathResponseDto.toPath(chessManager.movablePath(source));
+        OutputView.printMovablePath(boardResponseDto, showPathResponseDto);
+        initCommand();
     }
 }

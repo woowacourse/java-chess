@@ -55,7 +55,6 @@ public class OutputView {
     private static List<String> parseMovablePathOrPiece(final List<String> pieces,
                                                         final List<PositionResponseDto> path) {
         for (PositionResponseDto positionResponseDto : path) {
-            System.out.println("y = " + positionResponseDto.getY() + ", x = " + positionResponseDto.getX());
             pieces.set(((CONVERT_PRINT_VERTICAL_NUMBER - positionResponseDto.getY()) * CONVERT_PRINT_VERTICAL_NUMBER)
                     + ((positionResponseDto.getX() - CONVERT_PRINT_HORIZONTAL_NUMBER)), MOVABLE_PATH);
         }
