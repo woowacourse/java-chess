@@ -23,26 +23,30 @@ public class ChessController {
 
     public JsonElement updateChessBoard(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        BoardDTO boardDTO = chessService.findLatestBoard();
+        int roomId = Integer.valueOf(request.params(":roomNumber"));
+        BoardDTO boardDTO = chessService.findLatestBoard(roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement move(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
+        int roomId = Integer.valueOf(request.params(":roomNumber"));
         RequestDTO requestDTO = GSON.fromJson(request.body(), RequestDTO.class);
-        BoardDTO boardDTO = chessService.move(requestDTO);
+        BoardDTO boardDTO = chessService.move(requestDTO, roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement showResult(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        ResultDTO resultDTO = chessService.calculateResult();
+        int roomId = Integer.valueOf(request.params(":roomNumber"));
+        ResultDTO resultDTO = chessService.calculateResult(roomId);
         return GSON.toJsonTree(resultDTO);
     }
 
     public JsonElement restart(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        chessService.resetDefault();
+        int roomId = Integer.valueOf(request.params(":roomNumber"));
+        chessService.resetDefaultByRoomId(roomId);
         return GSON.toJsonTree("/");
     }
 }
