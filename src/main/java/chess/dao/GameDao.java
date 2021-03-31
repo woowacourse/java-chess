@@ -13,11 +13,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameDao {
 
+    private static final String INSERT_ROOM_QUERY = "INSERT INTO room (name, is_opened) VALUES(?, true)";
     private static final String INSERT_BOARD_AND_STATUS_QUERY = "INSERT INTO play_log (board, game_status, room_id) VALUES (?, ?, ?)";
     private static final String SELECT_BOARD_QUERY = "SELECT board FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
     private static final String SELECT_STATUS_QUERY = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
@@ -29,7 +31,7 @@ public class GameDao {
         Connection connection = null;
         String server = "localhost:13306";
         String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
+        String option = "?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
         String userName = "root";
         String password = "root";
 
@@ -61,6 +63,18 @@ public class GameDao {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public String insertRoom(RoomDto roomDto) throws SQLException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(INSERT_ROOM_QUERY, Statement.RETURN_GENERATED_KEYS);
+        pstmt.setString(1, roomDto.getName());
+        pstmt.executeUpdate();
+        ResultSet rs = pstmt.getGeneratedKeys();
+        rs.next();
+        String roomId = rs.getString(1);
+        closeConnection(connection);
+        return roomId;
     }
 
     public void insertBoardAndStatusDto(BoardWebDto boardWebDto, GameStatusDto gameStatusDto, String roomId)
@@ -121,7 +135,7 @@ public class GameDao {
         while (rs.next()) {
             result.add(new RoomDto(rs.getString(1), rs.getString(2)));
         }
-
+        closeConnection(connection);
         return result;
     }
 }

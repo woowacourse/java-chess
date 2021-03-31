@@ -2,6 +2,7 @@ package chess;
 
 import static spark.Spark.get;
 import static spark.Spark.put;
+import static spark.Spark.post;
 
 import chess.dao.GameDao;
 import chess.domain.board.Board;
@@ -13,7 +14,9 @@ import chess.domain.gamestate.GameState;
 import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import chess.dto.PointDto;
+import chess.dto.RoomDto;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -30,13 +33,28 @@ public class WebUIChessApplication {
 
     public static void main(String[] args){
 
-
         Spark.staticFileLocation("/public");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("rooms", GAME_DAO.openedRooms());
             return render(model, "lobby.html");
+        });
+
+        post("/room", "application/json", (req, res) -> {
+            try {
+                RoomDto newRoom = GSON.fromJson(req.body(), RoomDto.class);
+                String roomId = GAME_DAO.insertRoom(newRoom);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("result", "success");
+                jsonObject.addProperty("roomId", roomId);
+                return GSON.toJson(jsonObject);
+            } catch (IllegalArgumentException e) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("result", "fail");
+                jsonObject.addProperty("message", e.getMessage());
+                return GSON.toJson(jsonObject);
+            }
         });
 
         get("/room/:id", (req, res) -> {
@@ -73,7 +91,7 @@ public class WebUIChessApplication {
             String roomId = req.params("id");
             Board board = boardFromDb(roomId);
             ChessGame chessGame = chessGameFromDb(board, roomId);
-            Map<String, String> body = GSON.fromJson(req.body(), Map.class);
+            Map<String, String> body = GSON.fromJson(req.body(), HashMap.class);
             Point source = Point.of(body.get("source"));
             Point destination = Point.of(body.get("destination"));
             chessGame.move(source, destination);
@@ -97,7 +115,7 @@ public class WebUIChessApplication {
             BoardWebDto boardWebDto = new BoardWebDto(board);
             GameStatusDto gameStatusDto = new GameStatusDto(chessGame);
             GAME_DAO.insertBoardAndStatusDto(boardWebDto, gameStatusDto, req.params(":id"));
-            return GSON.toJson("success");
+            return GSON.toJson("SUCCESS");
         });
     }
 

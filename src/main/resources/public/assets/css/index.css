@@ -32,7 +32,7 @@ header {
 
 .title {
     position: relative;
-    cursor: default;
+    cursor: pointer;
     font-family: "pencil", sans-serif;
     font-size: xx-large;
     margin: 0 auto;
@@ -40,26 +40,7 @@ header {
     text-align: center;
 }
 
-.rooms {
-    position: relative;
-    display: block;
-    background-color: #ffffff;
-    box-shadow: 2px 2px 5px 0 black;
-    font-family: "pencil", sans-serif;
-    font-size: x-large;
-    width: 80%;
-    min-width: 360px;
-    margin: 0 auto;
-    padding: 10px 5px 5px 5px;
-}
-
-.room {
-    text-align: center;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.exit, .create {
+.exit {
     position: relative;
     cursor: pointer;
     font-family: "pencil", sans-serif;
