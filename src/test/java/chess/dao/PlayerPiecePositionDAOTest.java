@@ -17,11 +17,11 @@ import static chess.domain.position.type.Rank.TWO;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.game.ChessGameDAO;
-import chess.dao.game.ChessGameRepository;
 import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
 import chess.dao.player.PlayerDAO;
 import chess.dao.player.PlayerRepository;
 import chess.dao.playerpieceposition.PlayerPiecePositionDAO;

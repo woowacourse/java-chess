@@ -5,9 +5,9 @@ import static chess.domain.player.type.TeamColor.WHITE;
 import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.dao.entity.ChessGameEntity;
 import chess.dao.game.ChessGameDAO;
 import chess.dao.game.ChessGameRepository;
-import chess.dao.entity.ChessGameEntity;
 import chess.dao.player.PlayerDAO;
 import chess.dao.player.PlayerRepository;
 import chess.domain.player.type.TeamColor;

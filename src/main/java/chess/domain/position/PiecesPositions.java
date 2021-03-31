@@ -1,8 +1,8 @@
 package chess.domain.position;
 
-import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
+import chess.dao.playerpieceposition.PlayerPiecePositionDAO;
 import chess.dao.playerpieceposition.PlayerPiecePositionRepository;
 import chess.domain.board.Cell;
 import chess.domain.piece.Piece;

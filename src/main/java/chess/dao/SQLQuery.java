@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class SQLQuery {
 
     public static Long insert(String query, Object... parameters) throws SQLException {
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query,RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query, RETURN_GENERATED_KEYS);
         setParameters(preparedStatement, parameters);
         preparedStatement.executeUpdate();
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
