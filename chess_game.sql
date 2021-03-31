@@ -15,13 +15,18 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema chess_game
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema chess_game
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `chess_game` DEFAULT CHARACTER SET utf8 ;
 USE `chess_game` ;
-
 
 -- -----------------------------------------------------
 -- Table `chess_game`.`chess_game`
@@ -31,7 +36,22 @@ CREATE TABLE IF NOT EXISTS `chess_game`.`chess_game` (
   `title` VARCHAR(255) NOT NULL DEFAULT '제목 없는 방',
   `current_turn_team_color` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 684
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `chess_game`.`piece`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chess_game`.`piece` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `color` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 13
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -40,16 +60,28 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `chess_game`.`player` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `team_color` VARCHAR(255) NOT NULL,
-  `score` DECIMAL(7,3) UNSIGNED NOT NULL DEFAULT 38.0,
   `chess_game_id` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `chess_game_id`),
   INDEX `fk_player_chess_game1_idx` (`chess_game_id` ASC) VISIBLE,
   CONSTRAINT `fk_player_chess_game1`
     FOREIGN KEY (`chess_game_id`)
-    REFERENCES `chess_game`.`chess_game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `chess_game`.`chess_game` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1277
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `chess_game`.`position`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `chess_game`.`position` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `file_value` VARCHAR(255) NOT NULL,
+  `rank_value` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 65
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -66,48 +98,21 @@ CREATE TABLE IF NOT EXISTS `chess_game`.`player_piece_position` (
   INDEX `fk_piece_position_player1_idx` (`player_id` ASC) VISIBLE,
   CONSTRAINT `fk_piece_position_piece`
     FOREIGN KEY (`piece_id`)
-    REFERENCES `chess_game`.`piece` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_piece_position_position1`
-    FOREIGN KEY (`position_id`)
-    REFERENCES `chess_game`.`position` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `chess_game`.`piece` (`id`),
   CONSTRAINT `fk_piece_position_player1`
     FOREIGN KEY (`player_id`)
-    REFERENCES `chess_game`.`player` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `chess_game`.`piece`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game`.`piece` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `color` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `chess_game`.`position`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game`.`position` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `file_value` VARCHAR(255) NOT NULL,
-  `rank_value` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+    REFERENCES `chess_game`.`player` (`id`),
+  CONSTRAINT `fk_piece_position_position1`
+    FOREIGN KEY (`position_id`)
+    REFERENCES `chess_game`.`position` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2927
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 
 -- ----------------------------------------------------
@@ -208,3 +213,5 @@ INSERT INTO piece (name, color) VALUES ('BISHOP', 'black');
 INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
 INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
+
+

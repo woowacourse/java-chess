@@ -49,9 +49,7 @@ public class PlayersPieces {
         return new PlayersIds(whitePlayerId, blackPlayerId);
     }
 
-    private void savePieceIfExists(PlayersIds playersIds, PiecePosition piecePosition)
-        throws SQLException {
-
+    private void savePieceIfExists(PlayersIds playersIds, PiecePosition piecePosition) throws SQLException {
         if (piecePosition.isPieceExists()) {
             if (piecePosition.getTeamColor() == WHITE) {
                 piecesPositions.save(playersIds.getWhitePlayerId(), piecePosition);
@@ -65,30 +63,25 @@ public class PlayersPieces {
         return piecesPositions.getAllCellsStatusByGameId(gameId);
     }
 
-    public GamePiecePositionEntity getGamePiecePositionByGameIdAndPosition(Long gameId,
-        Position position) throws SQLException {
-
+    public GamePiecePositionEntity getGamePiecePositionByGameIdAndPosition(Long gameId, Position position) throws SQLException {
         return piecesPositions.getGamePiecePositionByGameIdAndPosition(gameId, position);
     }
 
-    public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity)
-        throws SQLException {
+    public void removePieceOfGame(GamePiecePositionEntity gamePiecePositionEntity) throws SQLException {
         piecesPositions.removePieceOfGame(gamePiecePositionEntity);
     }
 
-    public void calculateAndUpdateScoresOfGame(Long gameId) throws SQLException {
+    public Scores getScores(Long gameId) throws SQLException {
         Long whitePlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, WHITE);
         Long blackPlayerId = players.getPlayerIdByGameIdAndTeamColor(gameId, BLACK);
-        List<PiecePositionEntity> whitePiecesPositions = piecesPositions
-            .getAllPiecesPositionsOfPlayer(whitePlayerId);
-        List<PiecePositionEntity> blackPiecesPositions = piecesPositions
-            .getAllPiecesPositionsOfPlayer(blackPlayerId);
-        players.calculateAndUpdateScores(whitePlayerId, whitePiecesPositions);
-        players.calculateAndUpdateScores(blackPlayerId, blackPiecesPositions);
+        List<PiecePositionEntity> whitePiecesPositions = piecesPositions.getAllPiecesPositionsOfPlayer(whitePlayerId);
+        List<PiecePositionEntity> blackPiecesPositions = piecesPositions.getAllPiecesPositionsOfPlayer(blackPlayerId);
+        double whitePlayerScore = players.getCalculatedScore(whitePiecesPositions);
+        double blackPlayerScore = players.getCalculatedScore(blackPiecesPositions);
+        return new Scores(whitePlayerScore, blackPlayerScore);
     }
 
-    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity)
-        throws SQLException {
+    public void updatePiecePosition(GamePiecePositionEntity gamePiecePositionEntity) throws SQLException {
         piecesPositions.updatePiecePosition(gamePiecePositionEntity);
     }
 
@@ -98,10 +91,6 @@ public class PlayersPieces {
         piecesPositions.removeAllPiecesPositionsByPlayerId(whitePlayerId);
         piecesPositions.removeAllPiecesPositionsByPlayerId(blackPlayerId);
         players.removeAllByChessGame(gameId);
-    }
-
-    public Scores getPlayersScores(Long gameId) throws SQLException {
-        return players.getPlayersScores(gameId);
     }
 
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {

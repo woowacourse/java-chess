@@ -34,27 +34,6 @@ class PlayerDAOTest {
         assertThat(whitePlayerId).isNotNull();
     }
 
-    @DisplayName("점수 업데이트 및 조회")
-    @Test
-    void updateScoreAndFindByPlayerId() throws SQLException {
-        ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-        Long gameId = chessGame.getId();
-
-        playerDAO.save(WHITE, gameId);
-
-        Long whitePlayerIdBeforeUpdateScore = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
-        double scoreBeforeUpdate = playerDAO.findScoreByPlayerId(whitePlayerIdBeforeUpdateScore);
-
-        assertThat(scoreBeforeUpdate).isEqualTo(38.0);
-
-        double newScore = 2.54;
-        playerDAO.updateScore(whitePlayerIdBeforeUpdateScore, newScore);
-
-        double scoreAfterUpdate = playerDAO.findScoreByPlayerId(whitePlayerIdBeforeUpdateScore);
-
-        assertThat(scoreAfterUpdate).isEqualTo(newScore);
-    }
-
     @DisplayName("특정 체스 게임의 모든 플레이어들 삭제")
     @Test
     void removeAllByChessGame() throws SQLException {

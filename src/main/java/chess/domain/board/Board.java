@@ -57,24 +57,17 @@ public class Board {
     }
 
     public void move(Long gameId, MoveRequest moveRequest) throws SQLException {
-        GamePiecePositionEntity startPositionPiece = playersPieces
-            .getGamePiecePositionByGameIdAndPosition(gameId, moveRequest.getStartPosition());
-        GamePiecePositionEntity destinationPiece = playersPieces
-            .getGamePiecePositionByGameIdAndPosition(gameId, moveRequest.getDestination());
+        GamePiecePositionEntity startPositionPiece = playersPieces.getGamePiecePositionByGameIdAndPosition(gameId, moveRequest.getStartPosition());
+        GamePiecePositionEntity destinationPiece = playersPieces.getGamePiecePositionByGameIdAndPosition(gameId, moveRequest.getDestination());
         if (destinationPiece != null) {
             playersPieces.removePieceOfGame(destinationPiece);
         }
         startPositionPiece.setPositionId(moveRequest.getDestinationId());
         playersPieces.updatePiecePosition(startPositionPiece);
-        updateScoreIfPieceDead(gameId);
-    }
-
-    private void updateScoreIfPieceDead(Long gameId) throws SQLException {
-        playersPieces.calculateAndUpdateScoresOfGame(gameId);
     }
 
     public Scores getScores(Long gameId) throws SQLException {
-        return playersPieces.getPlayersScores(gameId);
+        return playersPieces.getScores(gameId);
     }
 
     public BoardStatusResponseDTO getStatus(Long gameId) throws SQLException {
@@ -84,9 +77,7 @@ public class Board {
 
     private boolean isKingDead(List<String> cellsStatus) {
         return cellsStatus.stream()
-            .filter(cellStatus ->
-                cellStatus.equals(KING.getName(WHITE))
-                    || cellStatus.equals(KING.getName(BLACK)))
+            .filter(cellStatus -> cellStatus.equals(KING.getName(WHITE)) || cellStatus.equals(KING.getName(BLACK)))
             .count() < NUMBER_OF_ALL_KINGS;
     }
 

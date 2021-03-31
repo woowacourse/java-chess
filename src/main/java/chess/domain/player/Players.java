@@ -25,27 +25,15 @@ public class Players {
         playerDAO.save(BLACK, gameId);
     }
 
-    public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor)
-        throws SQLException {
+    public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
         return playerDAO.findIdByGameIdAndTeamColor(gameId, teamColor);
-    }
-
-    public Scores getPlayersScores(Long gameId) throws SQLException {
-        Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
-        Long blackPlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, BLACK);
-        double whitePlayerScore = playerDAO.findScoreByPlayerId(whitePlayerId);
-        double blackPlayerScore = playerDAO.findScoreByPlayerId(blackPlayerId);
-        return new Scores(whitePlayerScore, blackPlayerScore);
     }
 
     public void removeAllByChessGame(Long gameId) throws SQLException {
         playerDAO.removeAllByChessGame(gameId);
     }
 
-    public void calculateAndUpdateScores(Long playerId, List<PiecePositionEntity> piecesPositions)
-        throws SQLException {
-
-        double score = scoreCalculator.getCalculatedScore(piecesPositions);
-        playerDAO.updateScore(playerId, score);
+    public double getCalculatedScore(List<PiecePositionEntity> piecePositionEntities) {
+        return scoreCalculator.getCalculatedScore(piecePositionEntities);
     }
 }

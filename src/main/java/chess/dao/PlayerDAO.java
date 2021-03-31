@@ -34,25 +34,6 @@ public class PlayerDAO {
         return pstmt.executeQuery();
     }
 
-    public double findScoreByPlayerId(Long playerId) throws SQLException {
-        String query = "SELECT score FROM player WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setLong(1, playerId);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            throw new SQLException("해당 아이디의 플레이어를 찾을 수 없습니다.");
-        }
-        return rs.getDouble("score");
-    }
-
-    public void updateScore(Long playerId, double score) throws SQLException {
-        String query = "UPDATE player SET score = ? WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setDouble(1, score);
-        pstmt.setLong(2, playerId);
-        pstmt.executeUpdate();
-    }
-
     public void removeAllByChessGame(Long gameId) throws SQLException {
         String query = "DELETE FROM player WHERE chess_game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
