@@ -1,10 +1,4 @@
-// fetch("http://localhost:4567").then((response) =>
-//     console.log(response)
-// )
-//
-// fetch("http://localhost:4567")
-// .then((response) => response.json())
-// .then((data) => console.log(data))
+const BLANK = ".";
 
 async function start() {
     /**
@@ -31,13 +25,22 @@ async function start() {
             const row = String(8 - i); // 열(12345678)
             const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
             const column = String.fromCharCode(asciiNum + j);
-            newTd.id = column + row;
-            newTd.innerText = data[column + row].teamColor + data[column
-            + row].pieceType
+            let position = column + row;
+            newTd.id = position;
+            const pieceName = data[position].teamColor
+                + data[position].pieceType;
+
+            if (data[position].pieceType !== BLANK) {
+                const piece = document.createElement("img");
+                piece.src = "images/" + pieceName + ".png";
+                newTd.appendChild(piece);
+            }
+
             newTr.appendChild(newTd);
         }
         table.appendChild(newTr);
     }
+
 }
 
 async function move(source, target) {

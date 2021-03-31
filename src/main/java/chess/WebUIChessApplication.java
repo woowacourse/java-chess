@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import chess.domain.DTO.pieceOnBoardDTO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -27,9 +28,12 @@ public class WebUIChessApplication {
         });
 
         post("/start", (req, res) -> {
-            Map<String, Piece> pieces = new HashMap<>();
+            Map<String, pieceOnBoardDTO> pieces = new HashMap<>();
             for (Entry<Position, Piece> entry : chessBoard.getChessBoard().entrySet()) {
-                pieces.put(entry.getKey().getPosition(), entry.getValue());
+//                pieces.put(entry.getKey().getPosition(), entry.getValue());
+                pieces.put(entry.getKey().getPosition(),
+                    new pieceOnBoardDTO(entry.getValue().getColor(),
+                        entry.getValue().getPieceName()));
             }
             return gson.toJson(pieces);
         });
