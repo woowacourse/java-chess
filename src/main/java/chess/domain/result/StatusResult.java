@@ -5,9 +5,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
-public class StatusResult implements Result {
+public final class StatusResult implements Result {
 
     private static final double PAWN_SCORE = 1;
     private static final double DUPLICATED_PAWN_SCORE = 0.5;
@@ -25,7 +26,12 @@ public class StatusResult implements Result {
 
     @Override
     public Map<Position, Piece> infoAsMap() {
-        return null;
+        throw new IllegalArgumentException("점수는 맵으로 활용할 수 없습니다.");
+    }
+
+    @Override
+    public List<Position> infoAsList() {
+        throw new IllegalArgumentException("점수는 리스트로 활용할 수 없습니다.");
     }
 
     private String renderScore(final Board board) {

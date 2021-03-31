@@ -21,6 +21,10 @@ public final class Game {
         if (command.isStatus()) {
             return gameState.statusResult();
         }
+
+        if (command.isShow()) {
+            return gameState.pathResult(command.source());
+        }
         return gameState.turnResult();
     }
 

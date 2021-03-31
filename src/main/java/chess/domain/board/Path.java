@@ -56,7 +56,7 @@ public final class Path {
         return cleanPath;
     }
 
-    public boolean isEmpty() {
-        return positions.isEmpty();
+    public List<Position> positions() {
+        return positions;
     }
 }
