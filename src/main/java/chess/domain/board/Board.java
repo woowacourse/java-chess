@@ -71,7 +71,7 @@ public class Board {
         if (targetPiece.isSameTeam(boardStatus.getLastTurn())) {
             throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
         }
-        boardStatus.changeTurn();
+        boardStatus.nextTurn();
     }
 
     private void checkDeadKing(Piece piece) {
@@ -140,6 +140,10 @@ public class Board {
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public Team nowTurn() {
+        return boardStatus.getLastTurn();
     }
 
     public Map<Position, Piece> getBoard() {

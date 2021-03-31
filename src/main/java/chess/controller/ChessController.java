@@ -52,8 +52,10 @@ public class ChessController {
 
     public BoardDto move(String target, String destination) {
         chessGame.move(target, destination);
-        Board board = chessGame.getBoard();
-        return new BoardDto(board);
+        if (chessGame.isBeforeEnd()) {
+            return new BoardDto(chessGame.getBoard());
+        }
+        return new BoardDto(chessGame.winner());
     }
 
     public List<String> movablePosition(String target) {

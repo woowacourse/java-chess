@@ -49,9 +49,9 @@ async function postFetchPath(url) {
 async function moveBoard() {
     await postFetchMove("move").then(data => {
         $board = data;
+        clearBoard();
+        refreshBoard();
     });
-    clearBoard();
-    refreshBoard();
 }
 
 async function findPath() {
@@ -85,6 +85,7 @@ function clearMovablePosition() {
 }
 
 async function createBoard() {
+    clearBoard();
     await getFetch("create").then(data => {
         $board = data;
     })
@@ -99,6 +100,11 @@ function clearBoard() {
 }
 
 function refreshBoard() {
+    if ($board.turn != null) {
+        confirm($board.turn + "(이)가 승리했습니다!!");
+        createBoard();
+        return;
+    }
     let boardKeys = Object.keys($board.board);
     let boardSize = boardKeys.length;
     for (let i = 0; i < boardSize; i++) {

@@ -67,6 +67,10 @@ public class ChessGame {
         return !start;
     }
 
+    public Team winner() {
+        return board.nowTurn();
+    }
+
     public Board getBoard() {
         return board;
     }

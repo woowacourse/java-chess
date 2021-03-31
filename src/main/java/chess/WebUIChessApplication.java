@@ -11,6 +11,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -44,7 +45,6 @@ public class WebUIChessApplication {
                 MoveRequestDto moveRequestDto = objectMapper.readValue(req.body(), MoveRequestDto.class);
                 BoardDto boardDto =
                         chessController.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
-
                 return objectMapper.writeValueAsString(boardDto);
             }
             catch (Exception e) {
