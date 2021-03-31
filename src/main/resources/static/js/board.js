@@ -55,9 +55,7 @@ class Board {
     .forEach(child => child.classList.remove('movable'));
   }
 
-  updateRoundStatus(roundStatus) {
-    const score = roundStatus.score;
-    this.$score.innerHTML =`현재 점수 <br> 화이트 : ${score.whiteTeamScore}   블랙 : ${score.blackTeamScore}`;
+  updateBoardStatus(roundStatus) {
     this.#roundStatus = roundStatus;
   }
 
@@ -71,5 +69,9 @@ class Board {
       const winner = this.#roundStatus.currentColor === 'WHITE' ? 'BLACK' : 'WHITE';
       alert(`왕이 죽었습니다. ${winner} 승리`);
     }
+  }
+
+  getScore() {
+    return this.#roundStatus.score;
   }
 }

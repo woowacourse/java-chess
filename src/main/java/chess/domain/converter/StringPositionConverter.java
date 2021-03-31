@@ -1,4 +1,4 @@
-package chess.controller.converter;
+package chess.domain.converter;
 
 import chess.domain.Position;
 

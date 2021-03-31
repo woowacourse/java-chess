@@ -3,12 +3,12 @@ package chess.controller;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-import chess.controller.converter.StringPositionConverter;
-import chess.controller.dto.RoundStatusDTO;
 import chess.controller.dto.PieceDTO;
+import chess.controller.dto.RoundStatusDTO;
 import chess.domain.ChessGame;
-import chess.domain.ChessGameImpl;
+import chess.repository.ChessRepository;
 import chess.domain.Position;
+import chess.domain.converter.StringPositionConverter;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
@@ -16,21 +16,25 @@ import java.util.Map;
 public class ChessController {
 
     private final StringPositionConverter stringPositionConverter;
-    private ChessGame chessGame;
-
-    public ChessController(ChessGame chessGame) {
-        this.chessGame = chessGame;
+    private final ChessRepository chessRepository;
+    public ChessController() {
         this.stringPositionConverter = new StringPositionConverter();
+        this.chessRepository = new ChessRepository();
     }
 
-    public List<PieceDTO> startGame() {
+    public List<PieceDTO> loadGame(Long id) {
+        ChessGame chessGame = chessRepository.createGame(id);
         List<Piece> pieces = chessGame.pieces().asList();
+        System.out.println("----------pieces-------------");
+        System.out.println(pieces.size());
+        System.out.println("----------pieces-------------");
         return pieces.stream()
             .map(PieceDTO::new)
             .collect(toList());
     }
 
-    public RoundStatusDTO movablePositions() {
+    public RoundStatusDTO movablePositions(Long gameId) {
+        ChessGame chessGame = chessRepository.createGame(gameId);
         List<Piece> pieces = chessGame.currentColorPieces();
         return new RoundStatusDTO(
             mapMovablePositions(pieces),
@@ -52,13 +56,23 @@ public class ChessController {
             ));
     }
 
-    public void move(String currentPosition, String targetPosition) {
+    public void move(Long gameId, String currentPosition, String targetPosition) {
+        ChessGame chessGame = chessRepository.createGame(gameId);
+
         Position current = stringPositionConverter.convert(currentPosition);
         Position target = stringPositionConverter.convert(targetPosition);
         chessGame.movePiece(current, target);
     }
 
-    public void restart() {
-        chessGame = ChessGameImpl.initialGame();
+    public void restart(Long gameId) {
+        chessRepository.restart(gameId);
+    }
+
+    public void exitGame(Long gameId) {
+        chessRepository.endGame(gameId);
+    }
+
+    public void saveGame(Long gameId) {
+        chessRepository.save(gameId);
     }
 }

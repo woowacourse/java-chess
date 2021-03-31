@@ -61,6 +61,7 @@
       width: 700px;
       height: 800px;
     }
+
     /*.result-board {*/
     /*  border: solid 1px black;*/
     /*  display: inline-block;*/
@@ -77,6 +78,7 @@
       width: 1100px;
       height: 800px;
     }
+
     #contents {
       height: 500px;
     }
@@ -84,32 +86,39 @@
 
   </style>
   <script crossorigin="anonymous" src="https://kit.fontawesome.com/fb005c2c2f.js"></script>
-  <script src="./js/fetchService.js" type="text/javascript" defer ></script>
-  <script src="./js/board.js" type="text/javascript" defer ></script>
-  <script src="./js/chess.js" type="text/javascript" defer ></script>
+  <script src="./js/fetchService.js" type="text/javascript" defer></script>
+  <script src="./js/board.js" type="text/javascript" defer></script>
+  <script src="./js/chess.js" type="text/javascript" defer></script>
 
 </head>
 <body>
 <div class="chess">
   <div class="game">
     <div class="result-board">
-      <div class="score">
+      <div class="game-status">
       </div>
+      <button type="button" id="save">게임 저장</button>
       <button type="button" id="restart">다시 시작</button>
-      <button type="button">게임 종료</button>
+      <button type="button" id="exit">게임 종료</button>
     </div>
 
     <div class="board">
+      <input
+          id="ask-form"
+          class="ask-form"
+          placeholder="게임 id를 입력해주세요"
+          autofocus
+      />
     </div>
-  </div>
 
-  <div class="chat">
-    채팅
-    <ul id="userlist"></ul>
-    <div id="contents"></div>
-    <div id="chat-control">
-      <input id="message" placeholder="메세지를 입력해주세요.">
-      <button id="send">보내기</button>
+    <div class="chat">
+      채팅
+      <ul id="userlist"></ul>
+      <div id="contents"></div>
+      <div id="chat-control">
+        <input id="message" placeholder="메세지를 입력해주세요.">
+        <button id="send">보내기</button>
+      </div>
     </div>
   </div>
 </div>

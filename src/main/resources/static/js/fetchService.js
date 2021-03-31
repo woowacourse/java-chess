@@ -22,4 +22,13 @@ class FetchService {
       return JSON.parse(jsonString);
     })
   }
+
+  delete(url) {
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    });
+  }
 }
