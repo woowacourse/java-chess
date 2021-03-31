@@ -6,7 +6,7 @@ import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.State;
 
-import chess.domain.gamestate.finished.End;
+import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import chess.repository.piece.JdbcPieceRepository;
@@ -18,6 +18,7 @@ import chess.utils.StateUtil;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessService {
 
@@ -27,7 +28,7 @@ public class ChessService {
     public List<PieceDto> start(long roomId) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomById(roomId);
 
-        Room room = generateRoomDomainFromDtos(roomDto, Collections.emptyList());
+        Room room = generateRoomDomainFromDB(roomDto, Collections.emptyList());
         room.play("start");
         roomRepository.update(roomId, roomDto.getName(), room);
 
@@ -42,7 +43,7 @@ public class ChessService {
         RoomDto roomDto = roomRepository.findRoomById(roomId);
         List<PieceDto> pieces = pieceRepository.findPiecesByRoomId(roomId);
 
-        Room room = generateRoomDomainFromDtos(roomDto, pieces);
+        Room room = generateRoomDomainFromDB(roomDto, pieces);
         room.play("end");
         roomRepository.update(roomId, roomDto.getName(), room);
 
@@ -51,13 +52,36 @@ public class ChessService {
 
     public List<PieceDto> move(Long roomId, String source, String target) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomById(roomId);
+        List<PieceDto> piecesInDb = pieceRepository.findPiecesByRoomId(roomId);
 
-        List<PieceDto> pieces = pieceRepository.findPiecesByRoomId(roomId);
-        Board board = Board.of(PieceUtil.generatePiecesByPieceDtos(pieces));
-        return null;
+        Room room = generateRoomDomainFromDB(roomDto, piecesInDb);
+        room.play("move " + source + " " + target);
+        roomRepository.update(roomId, roomDto.getName(), room);
+
+        Board board = room.state().getBoard();
+        List<Piece> pieces = room.state().getBoard().getPieces();
+
+        if (pieces.size() != piecesInDb.size()) {
+            PieceDto pieceInDBAtSource = piecesInDb.stream()
+                .filter(pieceDto -> pieceDto.getLocation().equals(source))
+                .findFirst().get();
+            PieceDto pieceInDBAtTarget = piecesInDb.stream()
+                .filter(pieceDto -> pieceDto.getLocation().equals(target))
+                .findFirst().get();
+
+            Piece pieceInTarget = board.find(Location.of(target));
+            pieceRepository.update(pieceInDBAtSource.getId(), pieceInTarget);
+            pieceRepository.deletePieceById(pieceInDBAtTarget.getId());
+            return pieceRepository.findPiecesByRoomId(roomId);
+        }
+
+        for (int i = 0; i < pieces.size(); i++) {
+            pieceRepository.update(piecesInDb.get(i).getId(), pieces.get(i));
+        }
+        return pieceRepository.findPiecesByRoomId(roomId);
     }
 
-    private Room generateRoomDomainFromDtos(RoomDto roomDto, List<PieceDto> pieceDtos) {
+    private Room generateRoomDomainFromDB(RoomDto roomDto, List<PieceDto> pieceDtos) {
         Board board = Board.of(PieceUtil.generatePiecesByPieceDtos(pieceDtos));
         State state = StateUtil.generateState(roomDto.getState(), board);
         Room room = new Room(state, Team.of(roomDto.getCurrentTeam()));

@@ -23,7 +23,7 @@ class JdbcRoomRepositoryTest {
 
     @Test
     void insert() throws SQLException {
-        repository.insert(0, "테스트2", new Room(new Ready(BoardUtil.generateInitialBoard()), Team.WHITE));
+        repository.insert(0, "테스트123", new Room(new Ready(BoardUtil.generateInitialBoard()), Team.WHITE));
     }
 
     @Test

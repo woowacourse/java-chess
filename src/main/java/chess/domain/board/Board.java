@@ -22,10 +22,6 @@ public class Board {
         return new Board(pieces);
     }
 
-    public static Board from(final List<PieceDto> pieceDtos) {
-        return null;
-    }
-
     public void move(Location source, Location target, Team currentTurnTeam) {
         validateIsNotSameLocation(source, target);
         Piece sourcePiece = find(source);
