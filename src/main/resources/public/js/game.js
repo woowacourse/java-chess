@@ -4,6 +4,8 @@ let $destination;
 let $path;
 
 const $boardFrame = document.getElementById("board-frame");
+const $black = document.getElementById("black");
+const $white = document.getElementById("white");
 
 createBoard();
 
@@ -100,11 +102,12 @@ function clearBoard() {
 }
 
 function refreshBoard() {
-    if ($board.turn != null) {
+    if ($board.end == "true") {
         confirm($board.turn + "(이)가 승리했습니다!!");
         createBoard();
         return;
     }
+    changeTurn($board.turn);
     let boardKeys = Object.keys($board.board);
     let boardSize = boardKeys.length;
     for (let i = 0; i < boardSize; i++) {
@@ -120,7 +123,6 @@ function refreshBoard() {
 
 function setTarget(e) {
     try {
-        console.log("실행");
         if (!e.target.id) {
             $target = e.target.closest(".tile").id;
             findPath($target);
@@ -160,6 +162,17 @@ function move() {
     moveBoard();
     $target = null;
     $destination = null;
+}
+
+function changeTurn(team) {
+    console.log(team)
+    if (team == "BLACK") {
+        $black.classList.remove("turn");
+        $white.classList.add("turn");
+        return;
+    }
+    $black.classList.add("turn");
+    $white.classList.remove("turn");
 }
 
 document.addEventListener("click", createMoveCommand);

@@ -8,18 +8,23 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 public class BoardDto {
+    private static final String END_FALSE = "false";
+
     private Map<String, PieceDto> board;
     private String turn;
+    private String end;
 
-    public BoardDto(Board board) {
+    public BoardDto(Board board, Team turn) {
+        this(board, turn.name(), END_FALSE);
+    }
+
+    public BoardDto(Board board, String turn, String end) {
         this.board = board.getBoard()
                 .entrySet()
                 .stream()
                 .collect(toMap(entry -> entry.getKey().convertToString(), entry -> new PieceDto(entry.getValue())));
-    }
-
-    public BoardDto(Team turn) {
-        this.turn = turn.name();
+        this.turn = turn;
+        this.end = end;
     }
 
     public Map<String, PieceDto> getBoard() {
@@ -36,5 +41,13 @@ public class BoardDto {
 
     public void setTurn(String turn) {
         this.turn = turn;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 }

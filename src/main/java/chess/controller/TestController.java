@@ -9,6 +9,6 @@ public class TestController {
         ChessGame chessGame = new ChessGame();
         chessGame.settingBoard();
         Board board = chessGame.getBoard();
-        return new BoardDto(board);
+        return new BoardDto(board, chessGame.nowTurn());
     }
 }

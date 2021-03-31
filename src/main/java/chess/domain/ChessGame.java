@@ -67,7 +67,7 @@ public class ChessGame {
         return !start;
     }
 
-    public Team winner() {
+    public Team nowTurn() {
         return board.nowTurn();
     }
 

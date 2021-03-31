@@ -11,8 +11,7 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
-    private static final String STATUS = "status";
-    private static final String END = "end";
+    private static final String END_TRUE = "true";
 
     private ChessGame chessGame;
 
@@ -47,15 +46,15 @@ public class ChessController {
         chessGame = new ChessGame();
         chessGame.settingBoard();
         Board board = chessGame.getBoard();
-        return new BoardDto(board);
+        return new BoardDto(board, chessGame.nowTurn());
     }
 
     public BoardDto move(String target, String destination) {
         chessGame.move(target, destination);
         if (chessGame.isBeforeEnd()) {
-            return new BoardDto(chessGame.getBoard());
+            return new BoardDto(chessGame.getBoard(), chessGame.nowTurn());
         }
-        return new BoardDto(chessGame.winner());
+        return new BoardDto(chessGame.getBoard(), chessGame.nowTurn().name(), END_TRUE);
     }
 
     public List<String> movablePosition(String target) {
@@ -63,6 +62,6 @@ public class ChessController {
     }
 
     public BoardDto boardDto() {
-        return new BoardDto(chessGame.getBoard());
+        return new BoardDto(chessGame.getBoard(), chessGame.nowTurn());
     }
 }

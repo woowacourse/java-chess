@@ -31,6 +31,23 @@ div#board-frame {
     position: absolute;
     left: 30%;
 }
+.player {
+    width: 250px;
+    height: 500px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.turn {
+    background-color: p;
+    animation: turn-bg 2.5s linear;
+    animation-iteration-count: infinite;
+}
 .board {
     width: 640px;
     height: 640px;
@@ -75,5 +92,44 @@ div#board-frame {
     }
     91%{
         background-color: rgb(255,0,127);
+    }
+}
+
+@keyframes turn-bg {
+    100%,0%{
+        background-color: rgb(255,218,185);
+    }
+    8%{
+        background-color: rgb(255,208,169);
+    }
+    16%{
+        background-color: rgb(255,198,156);
+    }
+    25%{
+        background-color: rgb(255,188,143);
+    }
+    33%{
+        background-color: rgb(255,178,129);
+    }
+    41%{
+        background-color: rgb(255,168,115);
+    }
+    50%{
+        background-color: rgb(255,158,100);
+    }
+    58%{
+        background-color: rgb(255,168,115);
+    }
+    66%{
+        background-color: rgb(255,178,129);
+    }
+    75%{
+        background-color: rgb(255,188,143);
+    }
+    83%{
+        background-color: rgb(255,198,169);
+    }
+    91%{
+        background-color: rgb(255,208,185);
     }
 }
