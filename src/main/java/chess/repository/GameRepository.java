@@ -41,15 +41,16 @@ public class GameRepository {
         return chessGame.get();
     }
 
-    public static ChessGame findByGameIdFromDB(String gameId) throws SQLException {
-        Optional<String> chessGameJson = Optional.ofNullable(chessDAO.findChessGameByGameId(gameId));
+    public static ChessGame findByGameIdFromDB(String gameId) {
+        String chessGameJson = null;
 
-        if (!chessGameJson.isPresent()) {
+        try {
+            chessGameJson = chessDAO.findChessGameByGameId(gameId);
+        } catch (SQLException e) {
             throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
         }
 
-        ChessGame chessGame = ChessGameConvertor.jsonToChessGame(chessGameJson.get());
-        return chessGame;
+        return ChessGameConvertor.jsonToChessGame(chessGameJson);
     }
 
     public static boolean isGameIdExistingInDB(String gameId) throws SQLException {
