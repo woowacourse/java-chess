@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.BoardStatusDto;
 import chess.exception.GameIsNotStartException;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -63,5 +64,9 @@ public class ChessController {
 
     public BoardDto boardDto() {
         return new BoardDto(chessGame.getBoard(), chessGame.nowTurn());
+    }
+
+    public BoardStatusDto boardStatusDto() {
+        return new BoardStatusDto(chessGame.boardStatus());
     }
 }

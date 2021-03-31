@@ -43,6 +43,19 @@ div#board-frame {
     justify-content: space-between;
     align-items: flex-start;
 }
+.player-score {
+    width: 100px;
+    height: 400px;
+    position: absolute;
+    top: 18%;
+    left: 20%;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 .turn {
     background-color: p;
     animation: turn-bg 2.5s linear;

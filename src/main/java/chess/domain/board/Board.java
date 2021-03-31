@@ -149,4 +149,8 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
+
+    public BoardStatus getBoardStatus() {
+        return boardStatus;
+    }
 }

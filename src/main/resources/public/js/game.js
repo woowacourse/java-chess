@@ -2,10 +2,13 @@ let $board;
 let $target;
 let $destination;
 let $path;
+let $status;
 
 const $boardFrame = document.getElementById("board-frame");
 const $black = document.getElementById("black");
 const $white = document.getElementById("white");
+const $blackScore = document.getElementById("black-score");
+const $whiteScore = document.getElementById("white-score");
 
 createBoard();
 
@@ -73,6 +76,23 @@ function showMovablePosition() {
     });
 }
 
+async function findScore() {
+    await postFetchPath("score").then(data => {
+        $status = data;
+    });
+    console.log($status + ", black = " + $status.blackScore + ", white = " + $status.whiteScore);
+    showScore();
+}
+
+function showScore() {
+    $blackScore.innerHTML = `
+        <label>${$status.blackScore}</label>
+    `;
+    $whiteScore.innerHTML = `
+        <label>${$status.whiteScore}</label>
+    `;
+}
+
 function clearMovablePosition() {
     if ($path == null) {
         return;
@@ -108,6 +128,7 @@ function refreshBoard() {
         return;
     }
     changeTurn($board.turn);
+    findScore();
     let boardKeys = Object.keys($board.board);
     let boardSize = boardKeys.length;
     for (let i = 0; i < boardSize; i++) {

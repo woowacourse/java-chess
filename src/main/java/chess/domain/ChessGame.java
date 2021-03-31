@@ -74,4 +74,8 @@ public class ChessGame {
     public Board getBoard() {
         return board;
     }
+
+    public BoardStatus boardStatus() {
+        return board.getBoardStatus();
+    }
 }

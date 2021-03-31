@@ -54,7 +54,11 @@ public class BoardStatus {
         return lastTurn;
     }
 
-    public Team nowTurn() {
-        return changeTurn();
+    public Score getBlackScore() {
+        return blackScore;
+    }
+
+    public Score getWhiteScore() {
+        return whiteScore;
     }
 }
