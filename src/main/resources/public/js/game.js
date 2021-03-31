@@ -1,6 +1,7 @@
 let $board;
 let $target;
 let $destination;
+let $path;
 
 const $boardFrame = document.getElementById("board-frame");
 
@@ -10,7 +11,7 @@ function getFetch(url) {
     return fetch(url).then(response => response.json());
 }
 
-function postFetch(url) {
+function postFetchMove(url) {
     return fetch(url, {
         method: 'post',
         headers: {
@@ -28,12 +29,59 @@ function postFetch(url) {
     });
 }
 
+async function postFetchPath(url) {
+    return fetch(url, {
+        method: 'post',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            "target": $target,
+        })
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+    });
+}
+
 async function moveBoard() {
-    await postFetch("move").then(data => {
+    await postFetchMove("move").then(data => {
         $board = data;
     });
     clearBoard();
     refreshBoard();
+}
+
+async function findPath() {
+    clearMovablePosition();
+
+    await postFetchPath("movable").then(data => {
+        $path = data;
+    });
+    console.log($path);
+    showMovablePosition();
+}
+
+function showMovablePosition() {
+    $path.forEach(path => {
+        let tile = document.getElementById(path);
+        tile.classList.add("movable");
+    });
+}
+
+function clearMovablePosition() {
+    if ($path == null) {
+        return;
+    }
+
+    $path.forEach(path => {
+        let tile = document.getElementById(path);
+        tile.classList.remove("movable");
+    });
+
+    $path = null;
 }
 
 async function createBoard() {
@@ -45,7 +93,9 @@ async function createBoard() {
 
 function clearBoard() {
     const $pieces = $boardFrame.querySelectorAll('.piece');
-    $pieces.forEach(piece => piece.remove());
+    $pieces.forEach(piece => {
+        piece.remove();
+    });
 }
 
 function refreshBoard() {
@@ -64,8 +114,10 @@ function refreshBoard() {
 
 function setTarget(e) {
     try {
+        console.log("실행");
         if (!e.target.id) {
             $target = e.target.closest(".tile").id;
+            findPath($target);
         }
     } catch (e) {
         console.log("체스말을 선택해야합니다.");
@@ -73,6 +125,8 @@ function setTarget(e) {
 }
 
 function setDestination(e) {
+    clearMovablePosition();
+
     try {
         if (!e.target.id) {
             $destination = e.target.closest(".tile").id;
@@ -98,7 +152,7 @@ function createMoveCommand(e) {
 function move() {
     console.log("이동! 타겟: " + $target + ", 목적지: " + $destination);
     moveBoard();
-    $target = $destination;
+    $target = null;
     $destination = null;
 }
 

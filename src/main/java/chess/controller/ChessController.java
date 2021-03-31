@@ -8,6 +8,8 @@ import chess.exception.GameIsNotStartException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessController {
     private static final String STATUS = "status";
     private static final String END = "end";
@@ -52,6 +54,10 @@ public class ChessController {
         chessGame.move(target, destination);
         Board board = chessGame.getBoard();
         return new BoardDto(board);
+    }
+
+    public List<String> movablePosition(String target) {
+        return chessGame.findMovablePosition(target);
     }
 
     public BoardDto boardDto() {

@@ -7,6 +7,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int MIN_BORDER = 1;
@@ -41,6 +42,16 @@ public class Board {
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
         checkMovable(targetMovablePositions, destination);
         return move(target, destination, targetPiece);
+    }
+
+    public List<String> movablePositions(Position target) {
+        Piece targetPiece = findPieceFromPosition(target);
+        List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
+
+        return targetMovablePositions.stream()
+                .filter(destination -> board.get(target).isMovable(target, destination, this))
+                .map(Position::convertToString)
+                .collect(Collectors.toList());
     }
 
     private boolean move(Position target, Position destination, Piece targetPiece) {

@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.MovablePositionDto;
 import chess.domain.dto.MoveRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
@@ -49,6 +50,11 @@ public class WebUIChessApplication {
             catch (Exception e) {
                 return objectMapper.writeValueAsString(chessController.boardDto());
             }
+        });
+
+        post("/movable", (req, res) -> {
+            MovablePositionDto movablePositionDto = objectMapper.readValue(req.body(), MovablePositionDto.class);
+            return objectMapper.writeValueAsString(chessController.movablePosition(movablePositionDto.getTarget()));
         });
     }
 

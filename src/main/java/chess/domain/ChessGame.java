@@ -4,6 +4,8 @@ import chess.domain.board.*;
 import chess.domain.piece.Team;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessGame {
     private static final int HORIZONTAL_INDEX = 0;
     private static final int VERTICAL_INDEX = 1;
@@ -39,6 +41,10 @@ public class ChessGame {
         board.movePiece(convertStringToPosition(target)
                 , convertStringToPosition(destination));
         board.applyStatus();
+    }
+
+    public List<String> findMovablePosition(String target) {
+        return board.movablePositions(convertStringToPosition(target));
     }
 
     public void status() {
