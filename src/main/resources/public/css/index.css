@@ -1,3 +1,6 @@
+body {
+    background-image: url('../images/background.png');
+}
 .chess-horizontal {
     display: flex;
     flex-direction: row;
@@ -10,19 +13,23 @@
     height: 80px;
 }
 .start-white > .tile:nth-of-type(odd) {
-    background-color: lightblue;
+    background-color: mediumpurple;
 }
 .start-black > .tile:nth-of-type(even) {
-    background-color: lightblue;
+    background-color: mediumpurple;
 }
 .start-white > .tile:hover {
-    background-color: goldenrod;
+    background-color: palevioletred;
 }
 .start-black > .tile:hover {
-    background-color: goldenrod;
+    background-color: palevioletred;
 }
 .base-background {
-    background-color: palegoldenrod;
+    background-color: plum;
+}
+div#board-frame {
+    position: absolute;
+    left: 30%;
 }
 .board {
     width: 640px;
