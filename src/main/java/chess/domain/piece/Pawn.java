@@ -86,7 +86,7 @@ public class Pawn extends PieceOnBoard {
             candidates.add(position);
         }
         position = source.moveDown().moveDown();
-        if (validBlank(source.moveUp().moveUp(), chessBoard) && source
+        if (validBlank(source.moveDown().moveDown(), chessBoard) && source
             .isPawnNotMoving(this.getColor())) {
             candidates.add(position);
         }
