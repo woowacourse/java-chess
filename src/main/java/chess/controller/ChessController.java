@@ -23,8 +23,7 @@ public class ChessController {
             OutputView.printRequestCommandMessage();
             String[] splitCommand = InputView.command().split(" ");
             String firstCommand = splitCommand[0];
-            Commands commands = Commands.validCommands();
-            Command command = commands.findCommandByText(firstCommand);
+            Command command = Commands.findCommandByText(firstCommand);
             command.execute(chessGame, splitCommand);
             showResultByCommand(command, chessGame);
         } catch (Exception e) {
