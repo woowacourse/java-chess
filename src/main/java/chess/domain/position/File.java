@@ -34,7 +34,7 @@ public enum File {
 
     public static File from(String letter) {
         return Optional.ofNullable(SEARCH_MAP.get(letter))
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 문자의 Rank가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 문자의 File이 없습니다."));
     }
 
     public static File from(int coordinate) {
