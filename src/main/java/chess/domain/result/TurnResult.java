@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,8 +21,13 @@ public final class TurnResult implements Result {
     }
 
     @Override
-    public String visualAsString() {
+    public String infoAsString() {
         return renderBoard(board);
+    }
+
+    @Override
+    public Map<Position, Piece> infoAsMap() {
+        return board.coordiates();
     }
 
     private String renderBoard(final Board board) {

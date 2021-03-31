@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
+import chess.domain.position.Position;
+import java.util.Map;
 
 public class StatusResult implements Result {
 
@@ -17,8 +19,13 @@ public class StatusResult implements Result {
     }
 
     @Override
-    public String visualAsString() {
+    public String infoAsString() {
         return renderScore(board);
+    }
+
+    @Override
+    public Map<Position, Piece> infoAsMap() {
+        return null;
     }
 
     private String renderScore(final Board board) {
