@@ -1,9 +1,19 @@
-.centered {
-    text-align: center;
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: 'SDSamliphopangche_Outline', serif !important;
+}
+#chess-game {
+    margin-bottom: 5px;
+    font-size: 38px;
 }
 .chessboard {
-    width: 640px;
-    height: 640px;
+    width: 650px;
+    height: 649px;
     margin: 0 auto;
     border: 5px solid #333;
 }
@@ -27,6 +37,10 @@
     display: table-cell;
     vertical-align:middle;
 }
-.cell:hover {
+.piece-cell:hover {
     background-color: cornflowerblue;
+}
+#status-btn {
+    margin-top: 10px;
+    width: 650px;
 }
