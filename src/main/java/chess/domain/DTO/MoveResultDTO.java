@@ -6,6 +6,7 @@ public class MoveResultDTO {
     boolean runningGame;
     Double whiteScore;
     Double blackScore;
+    String winner;
 
     public MoveResultDTO(boolean isMove, boolean runningGame, Double whiteScore,
         Double blackScore) {
@@ -29,5 +30,13 @@ public class MoveResultDTO {
 
     public Double getBlackScore() {
         return blackScore;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 }

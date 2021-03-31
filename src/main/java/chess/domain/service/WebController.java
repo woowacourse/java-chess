@@ -36,11 +36,11 @@ public class WebController {
         return gson.toJson(moveResultDTO);
     }
 
-    private static MoveResultDTO createMoveResultDTO(MoveRequestDTO moveRequestDto) {
+    private static MoveResultDTO createMoveResultDTO(MoveRequestDTO moveRequestDTO) {
         ResultDto result;
         MoveResultDTO moveResultDTO;
         try {
-            chessBoard.move(moveRequestDto.getSource(), moveRequestDto.getTarget());
+            chessBoard.move(moveRequestDTO.getSource(), moveRequestDTO.getTarget());
             checkGameEnd();
 
             result = chessBoard.result();
@@ -48,6 +48,9 @@ public class WebController {
         } catch (IllegalArgumentException exception) {
             result = chessBoard.result();
             moveResultDTO = getMoveResultDTO(result, false);
+        }
+        if (!chessBoard.isPlaying()) {
+            moveResultDTO.setWinner(result.getWinner());
         }
         return moveResultDTO;
     }

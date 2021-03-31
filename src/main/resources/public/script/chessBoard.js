@@ -1,4 +1,5 @@
 const BLANK = ".";
+let GAME_END = false;
 
 async function reflectBoard() {
     /**
@@ -60,6 +61,10 @@ function eventList() {
 }
 
 function selectPiece(event) {
+    if (GAME_END) {
+        alert("게임이 이미 종료되었습니다.");
+        return;
+    }
     const clickPiece = event.target.closest("td");
     const clickedPiece = getClickedPiece();
 
@@ -119,7 +124,8 @@ async function move(source, target) {
     }
     if (!data.runningGame) {
         reflectBoard()
-        alert("게임이 종료되었습니다.");
+        alert("게임이 종료되었습니다. 승자는 " + data.winner + "입니다.");
+        GAME_END = true;
         return
     }
     if (!data.isMove) {
@@ -142,6 +148,7 @@ async function reset() {
         console.log(e);
     }
     const defaultScore = 38;
+    GAME_END = false;
     modifyScore(defaultScore, defaultScore);
     reflectBoard();
 }
