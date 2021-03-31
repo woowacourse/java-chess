@@ -1,9 +1,9 @@
 package chess.controller.web;
 
 import chess.controller.web.dto.MoveRequestDto;
-import chess.controller.web.dto.MoveResponseDto;
-import chess.controller.web.dto.StartResponseDto;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,6 +15,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import spark.Spark;
 
 import java.io.IOException;
@@ -34,7 +36,7 @@ class WebControllerTest {
     }
 
     @AfterEach
-    void shutDown(){
+    void shutDown() {
         Spark.stop();
         Spark.awaitStop();
     }
@@ -44,17 +46,19 @@ class WebControllerTest {
     void whenCallStartRestApi() throws IOException {
         // Given
         // When
-        StartResponseDto startResponseDto = callStartRestApi();
-
+        JsonObject basicResponseDto = callStartRestApi();
+        JsonElement data = basicResponseDto.get("data");
+        JsonElement isStart = data.getAsJsonObject().get("isStart");
         // Then
-        assertThat(startResponseDto).isEqualTo(new StartResponseDto(true));
+        assertThat(isStart.getAsBoolean()).isTrue();
     }
 
-    private StartResponseDto callStartRestApi() throws IOException {
+    private JsonObject callStartRestApi() throws IOException {
         HttpGet request = new HttpGet("http://localhost:8081/game/start");
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
         String responseEntity = EntityUtils.toString(response.getEntity());
-        return gson.fromJson(responseEntity, StartResponseDto.class);
+
+        return gson.fromJson(responseEntity, JsonObject.class);
     }
 
     @DisplayName("체스말을 움직이는 /game/move 요청 테스트")
@@ -62,22 +66,41 @@ class WebControllerTest {
     void whenCallMoveRestApi() throws IOException {
         // Given
         callStartRestApi();
+
+        // When
+        JsonObject basicResponseDto = callMoveRestApi("a2", "a3");
+        boolean isError = basicResponseDto.get("isError").getAsBoolean();
+
+        // Then
+        assertThat(isError).isFalse();
+    }
+
+    private JsonObject callMoveRestApi(String from, String to) throws IOException {
         HttpPost request = new HttpPost("http://localhost:8081/game/move");
         request.setHeader("Content-Type", "application/json;charset=utf-8");
 
-        MoveRequestDto moveRequestDto = new MoveRequestDto("a2", "a3", "1");
+        MoveRequestDto moveRequestDto = new MoveRequestDto(from, to, "1");
         String jsonValue = gson.toJson(moveRequestDto);
         HttpEntity httpEntity = new StringEntity(jsonValue, "utf-8");
         request.setEntity(httpEntity);
-
-        // When
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
 
         String responseEntity = EntityUtils.toString(response.getEntity());
-        System.out.println(responseEntity);
-        MoveResponseDto moveResponseDto = gson.fromJson(responseEntity, MoveResponseDto.class);
+
+        return gson.fromJson(responseEntity, JsonObject.class);
+    }
+
+    @DisplayName("/game/move API 요청시 이동할 수 없으면 json의 isError가 true가 되는지")
+    @ParameterizedTest
+    @CsvSource({"a1,a2,동일한 진영의 말이 있어서 행마할 수 없습니다.", "a3,a4,현재 움직일 수 있는 진영의 기물이 아닙니다.", "a2,a5,폰이 움직일 수 있는 범위를 벗어났습니다."})
+    void whenCantMoveReturnErrorJson(String from, String to, String expectedErrorMsg) throws IOException {
+        // Given
+        callStartRestApi();
+
+        // When
+        JsonObject errorJson = callMoveRestApi(from, to);
 
         // Then
-        assertThat(moveResponseDto).isEqualTo(new MoveResponseDto(true));
+        assertThat(errorJson.get("errorMsg").getAsString()).isEqualTo(expectedErrorMsg);
     }
 }

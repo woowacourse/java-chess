@@ -2,7 +2,7 @@ package chess.controller.web.dto;
 
 import java.util.Objects;
 
-public class StartResponseDto {
+public class StartResponseDto implements WebResponseDto{
     private final boolean isStart;
 
     public StartResponseDto(boolean isStart) {
