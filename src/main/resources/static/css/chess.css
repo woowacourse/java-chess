@@ -1,0 +1,33 @@
+body {
+    margin: 20px;
+}
+
+#board {
+    border: 48px solid #462921;
+    width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(8, 75px);
+    grid-template-rows: repeat(8, 75px);
+    grid-auto-flow: row;
+}
+
+.box {
+    padding: 20px;
+    font-size: 150%;
+    background-color: #b5915f;
+    color: #000;
+    text-align: center;
+}
+
+.box:nth-child(-2n+8),
+.box:nth-child(8) ~ .box:nth-child(-2n+15),
+.box:nth-child(16) ~ .box:nth-child(-2n+24),
+.box:nth-child(24) ~ .box:nth-child(-2n+31),
+.box:nth-child(32) ~ .box:nth-child(-2n+40),
+.box:nth-child(40) ~ .box:nth-child(-2n+47),
+.box:nth-child(48) ~ .box:nth-child(-2n+56),
+.box:nth-child(56) ~ .box:nth-child(-2n+63) {
+    background-color: #441a03;
+}
