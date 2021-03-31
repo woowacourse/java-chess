@@ -1,9 +1,10 @@
 package chess.domain;
 
 
+import chess.domain.game.ChessGame;
+import chess.domain.game.ImpossibleMoveException;
+import chess.domain.game.PieceNotFoundException;
 import chess.domain.piece.*;
-import chess.exception.ImpossibleMoveException;
-import chess.exception.PieceNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -90,9 +91,17 @@ public class ChessGameTest {
         //given
         Piece queen = new Queen(TeamColor.WHITE, Position.of(3, 0));
         Piece knight = new Knight(TeamColor.BLACK, Position.of(3, 3));
+        Piece pawn1 = new Pawn(TeamColor.BLACK, Position.of(0, 1));
+        Piece pawn2 = new Pawn(TeamColor.BLACK, Position.of(0, 2));
+        Piece pawn3 = new Pawn(TeamColor.BLACK, Position.of(1, 1));
+
         Pieces pieces = new Pieces();
         pieces.add(queen);
         pieces.add(knight);
+        pieces.add(pawn1);
+        pieces.add(pawn2);
+        pieces.add(pawn3);
+
         ChessGame chessGame = new ChessGame(pieces, TeamColor.WHITE);
 
         //when
@@ -101,6 +110,6 @@ public class ChessGameTest {
 
         //than
         assertThat(whiteScore).isEqualTo(Score.from(9));
-        assertThat(blackScore).isEqualTo(Score.from(2.5));
+        assertThat(blackScore).isEqualTo(Score.from(4.5));
     }
 }

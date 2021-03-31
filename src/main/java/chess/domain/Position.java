@@ -2,12 +2,10 @@ package chess.domain;
 
 import chess.domain.piece.direction.Direction;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toMap;
 
 public class Position {
 
@@ -15,14 +13,14 @@ public class Position {
     private static final int MAX_POSITION = 7;
     private static final int MIN_POSITION = 0;
 
-    private static final Map<Integer, Position> positions;
+    private static final List<Position> positions;
 
     static {
         positions = IntStream.rangeClosed(0, MAX_POSITION)
                 .boxed()
                 .flatMap(x -> IntStream.rangeClosed(0, MAX_POSITION)
                         .mapToObj(y -> new Position(x, y)))
-                .collect(toMap(position -> position.x * ROW_SIZE + position.y, Function.identity()));
+                .collect(Collectors.toList());
     }
 
     private final int x;
@@ -56,6 +54,10 @@ public class Position {
 
     public int row() {
         return x;
+    }
+
+    public int column() {
+        return y;
     }
 
     @Override

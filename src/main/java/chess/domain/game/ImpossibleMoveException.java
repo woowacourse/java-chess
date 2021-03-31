@@ -1,4 +1,4 @@
-package chess.exception;
+package chess.domain.game;
 
 public class ImpossibleMoveException extends ChessException {
     public ImpossibleMoveException() {

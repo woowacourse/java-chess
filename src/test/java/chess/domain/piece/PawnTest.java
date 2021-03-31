@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.TeamColor;
-import chess.exception.ImpossibleMoveException;
+import chess.domain.game.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
