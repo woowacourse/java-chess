@@ -16,6 +16,16 @@ public class ChessGame {
         gameOver = new GameOver();
     }
 
+    public ChessGame(final Board board) {
+        this(board, new Turn(), new GameOver());
+    }
+
+    public ChessGame(final Board board, final Turn turn, final GameOver gameOver) {
+        this.board = board;
+        this.turn = turn;
+        this.gameOver = gameOver;
+    }
+
     public void changeGameOver() {
         gameOver.changeGameOver();
     }

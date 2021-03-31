@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ConnectionSetupTest {
+
     private ConnectionSetup connectionSetup;
 
     @BeforeEach
@@ -16,7 +17,7 @@ class ConnectionSetupTest {
 
     @Test
     public void connection() {
-        final Connection con = connectionSetup.getConnection();
+        final Connection con = ConnectionSetup.getConnection();
         assertNotNull(con);
     }
 }

@@ -26,6 +26,7 @@ public class WebUIChessController {
         final ChessService chessService = new ChessService();
         get("/", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
+            chessService.init();
             return render(model, "index.html");
         });
 

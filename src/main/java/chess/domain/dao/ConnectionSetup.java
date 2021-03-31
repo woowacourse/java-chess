@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionSetup {
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection con = null;
         final String server = "localhost:3306"; // MySQL 서버 주소
         final String database = "chess"; // MySQL DATABASE 이름
@@ -32,7 +32,7 @@ public class ConnectionSetup {
     }
 
     // 드라이버 연결해제
-    public void closeConnection(Connection con) {
+    public static void closeConnection(final Connection con) {
         try {
             if (con != null) {
                 con.close();

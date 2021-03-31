@@ -1,4 +1,5 @@
-createChessBoard().then();
+const startButton = document.getElementById("start");
+startButton.addEventListener("click", createChessBoard);
 
 async function createChessBoard() {
     const response = await fetch("/start")

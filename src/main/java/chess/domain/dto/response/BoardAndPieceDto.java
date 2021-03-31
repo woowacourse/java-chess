@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardAndPieceDto implements ResponseDto {
+
     private final BoardDto boardDto;
     private final List<PieceDto> pieceDtos;
 
