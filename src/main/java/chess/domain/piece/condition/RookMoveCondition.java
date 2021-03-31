@@ -52,8 +52,7 @@ public class RookMoveCondition extends MoveCondition {
                     minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol;
         }
 
-
-        throw new IllegalArgumentException("잘못된 접근입니다.");
+        return chessPiece -> false;
     }
 
 }
