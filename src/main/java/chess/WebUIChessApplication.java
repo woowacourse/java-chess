@@ -1,22 +1,29 @@
 package chess;
 
+import chess.controller.WebChessAction;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        staticFiles.location("/static");
+
+        get("/", WebChessAction.getInstance()::index);
+
+        get("/game", WebChessAction.getInstance()::start);
+
+        post("/move", WebChessAction.getInstance()::move);
+
+        get("/end", WebChessAction.getInstance()::end);
+
+        post("/status", WebChessAction.getInstance()::status);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    public static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

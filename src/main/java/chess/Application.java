@@ -3,13 +3,13 @@ package chess;
 import chess.controller.ChessAction;
 import chess.controller.GameStatus;
 import chess.controller.Option;
-import chess.exception.ChessException;
+import chess.domain.game.ChessException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        ChessAction chessAction = new ChessAction();
+        ChessAction chessAction = ChessAction.getInstance();
         OutputView.printStartGame();
         playChess(chessAction);
     }
