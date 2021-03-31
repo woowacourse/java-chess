@@ -11,4 +11,12 @@ public class BoardDto implements ResponseDto {
         this.team = team;
         this.isGameOver = isGameOver;
     }
+
+    public String team() {
+        return team;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
 }

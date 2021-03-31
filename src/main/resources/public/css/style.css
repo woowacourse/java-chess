@@ -20,6 +20,11 @@ img {
     margin: auto;
 }
 
+button {
+    margin: 0 auto;
+    display: block;
+}
+
 .chess-board {
     text-align: center;
     margin: auto;

@@ -20,6 +20,12 @@ public class ChessGame {
         this(board, new Turn(), new GameOver());
     }
 
+    public ChessGame(final Board board, final String team, final boolean isGameOver) {
+        this.board = board;
+        this.turn = new Turn(team);
+        this.gameOver = new GameOver(isGameOver);
+    }
+
     public ChessGame(final Board board, final Turn turn, final GameOver gameOver) {
         this.board = board;
         this.turn = turn;

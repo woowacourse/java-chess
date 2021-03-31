@@ -2,6 +2,7 @@ package chess.domain.service;
 
 import chess.domain.ChessResult;
 import chess.domain.board.Board;
+import chess.domain.dao.BoardDao;
 import chess.domain.dao.PieceDao;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.PieceDto;
@@ -19,19 +20,25 @@ import java.util.Map;
 public class ChessService {
 
     private final PieceDao pieceDao;
+    private final BoardDao boardDao;
     private ChessGame chessGame;
 
     public ChessService() {
-        chessGame = new ChessGame();
         pieceDao = new PieceDao();
+        boardDao = new BoardDao();
     }
 
     public void init() throws SQLException {
         if (pieceDao.load() == null) {
             pieceDao.save(new Board().unwrap());
         }
+        if (boardDao.load() == null) {
+            final String name = chessGame.nowTurn().teamName();
+            boardDao.save(new BoardDto(name, chessGame.isGameOver()));
+        }
         final Map<Position, Piece> chessBoard = pieceDao.load();
-        chessGame = new ChessGame(new Board(chessBoard));
+        final BoardDto boardDto = boardDao.load();
+        chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
     }
 
     public Response move(final MoveRequest moveRequest) {
@@ -44,14 +51,16 @@ public class ChessService {
             }
             pieceDao.save(chessGame.board().unwrap());
             chessGame.nextTurn();
+            boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), false));
             return new Response("200", "성공");
         } catch (UnsupportedOperationException | IllegalArgumentException | SQLException e) {
             return new Response("401", e.getMessage());
         }
     }
 
-    public Response end() {
+    public Response end() throws SQLException {
         if (chessGame.isGameOver()) {
+            boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), true));
             return new Response("212", "게임 종료");
         }
         return new Response("200", "게임 진행중");
@@ -64,6 +73,7 @@ public class ChessService {
     public void restart() throws SQLException {
         chessGame = new ChessGame();
         pieceDao.deleteAll();
+        boardDao.deleteAll();
     }
 
     private Position getPositionByCommands(final String[] commands) {
