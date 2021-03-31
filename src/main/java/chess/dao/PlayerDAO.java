@@ -10,11 +10,13 @@ import java.sql.SQLException;
 
 public class PlayerDAO {
 
-    public void save(TeamColor teamColor, Long gameId) throws SQLException {
-        String query = "INSERT INTO player (team_color, chess_game_id) VALUES (?, ?)";
+    public void save(TeamColor[] teamColors, Long gameId) throws SQLException {
+        String query = "INSERT INTO player (team_color, chess_game_id) VALUES (?, ?), (?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, teamColor.getValue());
+        pstmt.setString(1, teamColors[0].getValue());
         pstmt.setLong(2, gameId);
+        pstmt.setString(3, teamColors[1].getValue());
+        pstmt.setLong(4, gameId);
         pstmt.executeUpdate();
     }
 

@@ -21,6 +21,7 @@ import chess.dao.entity.ChessGameEntity;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
 import chess.domain.piece.Piece;
+import chess.domain.player.type.TeamColor;
 import chess.domain.position.PiecePosition;
 import chess.domain.position.Position;
 import chess.utils.DBCleaner;
@@ -56,10 +57,8 @@ class PlayerPiecePositionDAOTest {
     void setUp() throws SQLException {
         chessGame1 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
 
-        playerDAO.save(WHITE, chessGame1.getId());
+        playerDAO.save(TeamColor.values(), chessGame1.getId());
         whitePlayerIdOfGame1 = playerDAO.findIdByGameIdAndTeamColor(chessGame1.getId(), WHITE);
-
-        playerDAO.save(BLACK, chessGame1.getId());
         blackPlayerIdOfGame1 = playerDAO.findIdByGameIdAndTeamColor(chessGame1.getId(), BLACK);
 
         PiecePosition whitePiecePositionOfGame1
@@ -71,9 +70,9 @@ class PlayerPiecePositionDAOTest {
         playerPiecePositionDAO.save(blackPlayerIdOfGame1, blackPiecePositionOfGame1);
 
         chessGame2 = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
-        playerDAO.save(WHITE, chessGame2.getId());
+
+        playerDAO.save(TeamColor.values(), chessGame2.getId());
         whitePlayerIdOfGame2 = playerDAO.findIdByGameIdAndTeamColor(chessGame2.getId(), WHITE);
-        playerDAO.save(BLACK, chessGame2.getId());
         blackPlayerIdOfGame2 = playerDAO.findIdByGameIdAndTeamColor(chessGame2.getId(), BLACK);
 
         PiecePosition whitePiecePositionOfGame2

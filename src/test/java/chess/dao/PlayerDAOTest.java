@@ -6,6 +6,7 @@ import static chess.utils.TestFixture.TEST_TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.dao.entity.ChessGameEntity;
+import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,7 @@ class PlayerDAOTest {
         ChessGameEntity chessGame = chessGameDAO.save(new ChessGameEntity(TEST_TITLE));
         Long gameId = chessGame.getId();
 
-        playerDAO.save(WHITE, gameId);
+        playerDAO.save(TeamColor.values(), gameId);
 
         Long whitePlayerId = playerDAO.findIdByGameIdAndTeamColor(gameId, WHITE);
 
@@ -42,10 +43,8 @@ class PlayerDAOTest {
         Long game1Id = chessGame1.getId();
         Long game2Id = chessGame2.getId();
 
-        playerDAO.save(WHITE, game1Id);
-        playerDAO.save(BLACK, game1Id);
-        playerDAO.save(WHITE, game2Id);
-        playerDAO.save(BLACK, game2Id);
+        playerDAO.save(TeamColor.values(), game1Id);
+        playerDAO.save(TeamColor.values(), game2Id);
 
         playerDAO.removeAllByChessGame(game1Id);
 
@@ -68,10 +67,8 @@ class PlayerDAOTest {
         Long game1Id = chessGame1.getId();
         Long game2Id = chessGame2.getId();
 
-        playerDAO.save(WHITE, game1Id);
-        playerDAO.save(BLACK, game1Id);
-        playerDAO.save(WHITE, game2Id);
-        playerDAO.save(BLACK, game2Id);
+        playerDAO.save(TeamColor.values(), game1Id);
+        playerDAO.save(TeamColor.values(), game2Id);
 
         playerDAO.removeAll();
 

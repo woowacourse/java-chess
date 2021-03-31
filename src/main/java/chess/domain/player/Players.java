@@ -1,12 +1,8 @@
 package chess.domain.player;
 
-import static chess.domain.player.type.TeamColor.BLACK;
-import static chess.domain.player.type.TeamColor.WHITE;
-
 import chess.dao.PlayerDAO;
 import chess.dao.entity.PiecePositionEntity;
 import chess.domain.player.score.ScoreCalculator;
-import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,8 +17,7 @@ public class Players {
     }
 
     public void createAndSaveNewPlayers(Long gameId) throws SQLException {
-        playerDAO.save(WHITE, gameId);
-        playerDAO.save(BLACK, gameId);
+        playerDAO.save(TeamColor.values(), gameId);
     }
 
     public Long getPlayerIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException {
