@@ -17,14 +17,14 @@ public class GameRepository {
         repository.put(gameId, chessGame);
     }
 
-    public static void saveToDAO(String gameId, ChessGame chessGame) throws SQLException {
+    public static void saveToDB(String gameId, ChessGame chessGame) throws SQLException {
         chessDAO.addChessGame(
                 gameId,
                 ChessGameConvertor.chessGameToJson(chessGame)
         );
     }
 
-    public static void updateToDAO(String gameId, ChessGame chessGame) throws SQLException {
+    public static void updateToDB(String gameId, ChessGame chessGame) throws SQLException {
         chessDAO.updateChessGame(
                 gameId,
                 ChessGameConvertor.chessGameToJson(chessGame)
@@ -41,7 +41,7 @@ public class GameRepository {
         return chessGame.get();
     }
 
-    public static ChessGame findByGameIdFromDAO(String gameId) throws SQLException {
+    public static ChessGame findByGameIdFromDB(String gameId) throws SQLException {
         Optional<String> chessGameJson = Optional.ofNullable(chessDAO.findChessGameByGameId(gameId));
 
         if (!chessGameJson.isPresent()) {
@@ -52,7 +52,7 @@ public class GameRepository {
         return chessGame;
     }
 
-    public static boolean isExistGameIdInDAO(String gameId) throws SQLException {
+    public static boolean isGameIdExistingInDB(String gameId) throws SQLException {
         return chessDAO.isExistGameId(gameId);
     }
 }
