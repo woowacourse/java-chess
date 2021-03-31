@@ -91,4 +91,9 @@ public abstract class AbstractPiece implements Piece {
             throw new IllegalArgumentException(ERROR_CAN_NOT_MOVE);
         }
     }
+
+    @Override
+    public Position position() {
+        return position;
+    }
 }
