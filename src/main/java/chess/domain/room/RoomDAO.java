@@ -1,10 +1,15 @@
 package chess.domain.room;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomDAO {
+    private final Gson gson = new Gson();
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -44,10 +49,11 @@ public class RoomDAO {
     }
 
     public void addRoom(Room room) throws SQLException {
-        String query = "INSERT INTO room VALUES (?, ?)";
+        String query = "INSERT INTO room (room_id, state) VALUES (?, ?) ON DUPLICATE KEY UPDATE state=?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, room.getRoomId());
         pstmt.setString(2, room.getState().toString());
+        pstmt.setString(3, room.getState().toString());
         pstmt.executeUpdate();
     }
 
@@ -61,6 +67,18 @@ public class RoomDAO {
 
         return new Room(
                 rs.getString("room_id"),
-                (JsonObject) rs.getObject("state"));
+                gson.fromJson(rs.getString("state"), JsonObject.class));
+    }
+
+    public List<Room> getAllRoom() throws SQLException {
+        String query = "SELECT room_id FROM room";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<Room> rooms = new ArrayList<>();
+        while (rs.next()) {
+            rooms.add(new Room(rs.getString("room_id"), null));
+        }
+        return rooms;
     }
 }

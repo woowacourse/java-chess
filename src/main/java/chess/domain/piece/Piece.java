@@ -18,7 +18,6 @@ public abstract class Piece {
 	private Position position;
 
 	protected Piece(Color color, Position position) {
-		validateColor(color);
 		this.color = color;
 		this.position = position;
 	}
@@ -26,12 +25,6 @@ public abstract class Piece {
 	protected Piece(Position position) {
 		this.color = Color.NO_COLOR;
 		this.position = position;
-	}
-
-	private void validateColor(final Color color) {
-		if (Color.NO_COLOR.equals(color)) {
-			throw new IllegalArgumentException(NO_COLOR_ERROR);
-		}
 	}
 
 	public String getName() {

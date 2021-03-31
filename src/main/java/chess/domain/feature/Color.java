@@ -33,7 +33,7 @@ public enum Color {
 
 	public static Color convert(String color) {
 		return Arrays.stream(values())
-				.filter(value -> value.name().equals(color))
+				.filter(value -> value.color.equals(color))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}

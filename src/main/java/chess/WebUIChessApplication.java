@@ -24,6 +24,11 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        get("/save", (req, res) -> {
+            Map<String, Object> model = webUIChessController.getSavedRooms();
+            return render(model, "save.html");
+        });
+
         post("/game", (req, res) -> {
             Map<String, Object> model = webUIChessController.chessBoard();
             model.put("room_id", req.queryParams("room_id"));
@@ -40,13 +45,19 @@ public class WebUIChessApplication {
             return render(model, "game.html");
         });
 
-        get("/game/save", "application/json", (req, res) -> {
+        post("/game/load", "application/json", (req, res) -> {
             Map<String, Object> model = webUIChessController.loadRoom(req.body());
             if (model == null) {
                 res.status(400);
             }
             return render(model, "game.html");
         });
+
+//        post("/game/load", (req, res) -> {
+//            Map<String, Object> model = webUIChessController.chessBoard();
+//            model.put("room_id", req.queryParams("room_id"));
+//            return render(model, "game.html");
+//        });
 
         post("/game/save", "application/json", (req, res) -> {
             boolean isRegistrationSuccessful = webUIChessController.saveRoom(req.body());

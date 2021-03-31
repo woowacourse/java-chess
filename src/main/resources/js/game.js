@@ -57,7 +57,7 @@ function saveGame() {
         state: createStateJson(),
     };
     const http = new XMLHttpRequest();
-    const url = '/game/save' + name;
+    const url = '/game/save';
 
     http.open('POST', url);
     http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
