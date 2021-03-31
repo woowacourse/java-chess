@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Shape;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PieceDAOTest {
 
@@ -36,9 +35,6 @@ class PieceDAOTest {
     @DisplayName("모든 피스를 조회하는 기능 ")
     @Test
     void testFindAllPiecesByChessGameId() throws SQLException {
-        //given
-        ChessGameEntity chessGame = chessGameDAO.findLatestOne();
-
         //when
         pieceDAO.save(chessGameId, Piece.createBishop(Color.BLACK, 1, 2));
         List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
@@ -56,9 +52,6 @@ class PieceDAOTest {
     @DisplayName("chess게임이 만들어진 처음 상태일 때, 모든 피스를 조회하는 기능 ㄴ")
     @Test
     void testFindAllPiecesByChessGameIdWhenStart() throws SQLException {
-        //given
-        ChessGameEntity chessGame = chessGameDAO.findLatestOne();
-
         //when
         List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
 
@@ -72,7 +65,6 @@ class PieceDAOTest {
     @Test
     void testDelete() throws SQLException {
         //given
-        ChessGameEntity chessGame = chessGameDAO.findLatestOne();
         pieceDAO.save(chessGameId, Piece.createBishop(Color.BLACK, 0, 0));
 
         //when
@@ -87,7 +79,6 @@ class PieceDAOTest {
     @Test
     void testFindOneByPosition() throws SQLException {
         //given
-        ChessGameEntity chessGame = chessGameDAO.findLatestOne();
         Piece piece = Piece.createBishop(Color.BLACK, 0, 0);
         pieceDAO.save(chessGameId, piece);
 
@@ -102,7 +93,6 @@ class PieceDAOTest {
     @Test
     void update() throws SQLException {
         //given
-        ChessGameEntity chessGame = chessGameDAO.findLatestOne();
         Piece piece = Piece.createBishop(Color.BLACK, 0, 0);
         pieceDAO.save(chessGameId, piece);
 
