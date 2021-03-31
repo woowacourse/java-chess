@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.dao.ConnectDB;
+import chess.dao.RoomDAO;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.dto.PiecesDTO;
@@ -17,14 +19,12 @@ import static spark.Spark.post;
 
 public class WebChessGameController {
     public void start() {
+        ConnectDB connectDB = new ConnectDB();
         ChessGame chessGame = new ChessGame();
         chessGame.initialize();
-        get("/", home());
+        get("/", home(new RoomDAO(connectDB)));
+        post("/createNewGame", newRoom(connectDB));
         get("/enter", enterRoom());
-        post("/createNewGame", (req, res) -> {
-            // 방생성
-            return true;
-        }, new JsonTransformer());
         post("/start", gameSetting(chessGame));
         post("/myTurn", "application/json", currentTurn(chessGame), new JsonTransformer());
         post("/movablePositions", movablePositions(chessGame), new JsonTransformer());
@@ -32,9 +32,18 @@ public class WebChessGameController {
         post("/initialize", "application/json", initialize(chessGame), new JsonTransformer());
     }
 
-    private Route home() {
+    private Route newRoom(ConnectDB connectDB) {
+        return (req, res) -> {
+            RoomDAO roomDAO = new RoomDAO(connectDB);
+            roomDAO.createRoom(req.queryParams("name"));
+            return true;
+        };
+    }
+
+    private Route home(RoomDAO roomDAO) {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("rooms", roomDAO.allRooms());
             return render(model, "index.html");
         };
     }
@@ -42,6 +51,8 @@ public class WebChessGameController {
     private Route enterRoom() {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            String roomNumber = req.queryParams(":id");
+            model.put("number", roomNumber);
             model.put("button", "새로운게임");
             model.put("isWhite", true);
             return render(model, "chess.html");

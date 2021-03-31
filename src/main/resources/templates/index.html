@@ -23,55 +23,25 @@
             </tr>
             </thead>
             <tbody>
+            {{#rooms}}
             <tr>
-                <td>1</td>
-                <td>테스트</td>
-                <td>air</td>
-                <td>junseo</td>
-                <td>진행중</td>
+                <td class="no">{{@index}}</td>
+                <td>{{title}}</td>
+                <td>{{blackUser}}</td>
+                <td>{{whiteUser}}</td>
+                <td>{{status}}</td>
                 <td>
-                    <button onclick="location.href = '/enter'">입장하기</button>
+                    {{#if playing}}
+                    <button onclick="location.href = '/enter?id={{id}}'">입장하기</button>
+                    {{/if}}
                 </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>테스트2</td>
-                <td>air</td>
-                <td>junseo</td>
-                <td>종료</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>테스트2</td>
-                <td>air</td>
-                <td>junseo</td>
-                <td>종료</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>테스트2</td>
-                <td>air</td>
-                <td>junseo</td>
-                <td>종료</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>테스트2</td>
-                <td>air</td>
-                <td>junseo</td>
-                <td>종료</td>
-                <td></td>
-            </tr>
+            {{/rooms}}
             </tbody>
         </table>
     </div>
     <div id="create-button">
-        <form action="" method="">
-            <input type="button" value="방 만들기" onclick="createRoom()">
-        </form>
+        <input type="button" value="방 만들기" onclick="createRoom()">
     </div>
 </div>
 <footer>
@@ -79,6 +49,11 @@
     <cite><a href="https://kr.freepik.com/vectors/banner">kr.freepik.com</a></cite>
 </footer>
 <script type="text/javascript">
+    let nos = document.querySelectorAll('.no');
+    for (let i = 0; i < nos.length; ++i) {
+        nos[i].innerHTML = i + 1;
+    }
+
     function createRoom() {
         let name = prompt("방 이름을 입력해주세요");
         if (name !== "") {
