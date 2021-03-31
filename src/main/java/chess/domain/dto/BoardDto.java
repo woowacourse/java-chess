@@ -6,10 +6,10 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 
-public class BoardInitializeDto {
+public class BoardDto {
     private Map<String, PieceDto> board;
 
-    public BoardInitializeDto(Board board) {
+    public BoardDto(Board board) {
         this.board = board.getBoard()
                 .entrySet()
                 .stream()

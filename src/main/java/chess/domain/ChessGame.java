@@ -35,6 +35,12 @@ public class ChessGame {
         board.applyStatus();
     }
 
+    public void move(String target, String destination) {
+        board.movePiece(convertStringToPosition(target)
+                , convertStringToPosition(destination));
+        board.applyStatus();
+    }
+
     public void status() {
         OutputView.printStatus(board.score(Team.BLACK), board.score(Team.WHITE));
     }

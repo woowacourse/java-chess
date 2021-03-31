@@ -1,8 +1,8 @@
 package chess;
 
-import chess.controller.TestController;
-import chess.domain.ChessGame;
-import chess.domain.dto.BoardInitializeDto;
+import chess.controller.ChessController;
+import chess.domain.dto.BoardDto;
+import chess.domain.dto.MoveRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.Spark;
@@ -15,10 +15,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebUIChessApplication {
-
     public static void main(String[] args) {
         Spark.staticFileLocation("public");
-        TestController testController = new TestController();
+        ChessController chessController = new ChessController();
         ObjectMapper objectMapper = new ObjectMapper();
 
         get("/", (req, res) -> {
@@ -35,13 +34,21 @@ public class WebUIChessApplication {
         });*/
 
         get("/create", (req, res) -> {
-            BoardInitializeDto run = testController.run();
-            return objectMapper.writeValueAsString(run);
+            BoardDto boardDto = chessController.start();
+            return objectMapper.writeValueAsString(boardDto);
         });
 
         post("/move", (req, res) -> {
-            BoardInitializeDto run = testController.run();
-            return objectMapper.writeValueAsString(run);
+            try {
+                MoveRequestDto moveRequestDto = objectMapper.readValue(req.body(), MoveRequestDto.class);
+                BoardDto boardDto =
+                        chessController.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
+
+                return objectMapper.writeValueAsString(boardDto);
+            }
+            catch (Exception e) {
+                return objectMapper.writeValueAsString(chessController.boardDto());
+            }
         });
     }
 
