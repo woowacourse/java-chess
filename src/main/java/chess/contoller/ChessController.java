@@ -52,6 +52,7 @@ public class ChessController {
             validateCommand(chessGame, input);
         }
         OutputView.printGameOverInfo();
+        OutputView.printMessage(chessGame.winner());
     }
 
     private void validateCommand(ChessGame chessGame, List<String> input) {

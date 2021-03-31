@@ -42,6 +42,6 @@ public class Running implements GameState {
 
     @Override
     public String winner() {
-        return "무승부입니다.";
+        return board.winner();
     }
 }

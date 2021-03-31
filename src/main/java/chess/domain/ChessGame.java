@@ -39,11 +39,11 @@ public class ChessGame {
 
     public void move(List<String> arguments) {
         validateMoveArgument(arguments);
-        state = state.move();
 
         Point source = Point.of(arguments.get(SOURCE_INDEX));
         Point destination = Point.of(arguments.get(DESTINATION_INDEX));
         move(source, destination, turn.now());
+        state = state.move();
         turn.nextTurn();
 
         board = state.board();
