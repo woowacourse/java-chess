@@ -51,13 +51,13 @@
 
 ## 4 단계 - 웹 어플리케이션 구현
 - [x] 초기 웹 연결
-- [ ] Start 버튼 누를시에 초기 체스 말 세팅
+- [x] Start 버튼 누를시에 초기 체스 말 세팅
 - [ ] move 기능 구현
 - [ ] 실시간 차례 및 게임 점수 구현
 - [ ] 게임 end 구현
 
 ## 고려 사항
-- [ ] PieceInfo + PieceColor 포장 객체 
+- [x] PieceInfo + PieceColor 포장 객체 
 - [x] Position of 다른 인자 메소드 만들기 
 
 ## 구성요소

@@ -144,4 +144,8 @@ public class Board {
     public PieceColor winnerColor() {
         return this.deadKingColor.oppositeColor();
     }
+
+    public Map<Position, Piece> recentBoard() {
+        return this.board;
+    }
 }

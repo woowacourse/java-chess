@@ -23,6 +23,13 @@ body {
     height : 300px;
 }
 
+.start { 
+    background-color: #b96318;
+}
+
+.end {
+    background-color: #fbd996;
+}
 
 .slot-row {
     display : flex;

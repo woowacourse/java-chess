@@ -89,6 +89,10 @@ public class Position {
         return yPosition.samePosition(rawYPosition);
     }
 
+    public String symbol() {
+        return xPosition.getValue() + String.valueOf(yPosition.getValue());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
