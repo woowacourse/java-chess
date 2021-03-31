@@ -17,6 +17,7 @@ public class HistoryDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -32,6 +33,8 @@ public class HistoryDao {
 
             if (!rs.next()) return id;
             id = rs.getInt("HistoryId");
+
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -44,6 +47,8 @@ public class HistoryDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
+
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -57,6 +62,8 @@ public class HistoryDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next())
                 names.add(rs.getString("Name"));
+
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

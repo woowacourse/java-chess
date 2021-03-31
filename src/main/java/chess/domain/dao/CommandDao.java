@@ -28,6 +28,7 @@ public class CommandDao {
             preparedStatement.setString(1, commandDto.data());
             preparedStatement.setString(2, historyId);
             preparedStatement.executeUpdate();
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -38,6 +39,7 @@ public class CommandDao {
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -49,6 +51,7 @@ public class CommandDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, "1");
             preparedStatement.executeUpdate();
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -63,6 +66,8 @@ public class CommandDao {
             while (rs.next())
                 commands.add(new CommandDto(
                         rs.getString("Data")));
+
+            MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
