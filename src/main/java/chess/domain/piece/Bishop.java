@@ -9,14 +9,4 @@ public class Bishop extends Piece {
     public Bishop(Team team) {
         super(BISHOP_NAME, team, SCORE, new BishopMoveStrategy());
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

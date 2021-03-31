@@ -20,9 +20,13 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public abstract boolean isKing();
+    public boolean isKing() {
+        return false;
+    }
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return false;
+    }
 
     private String convertName(String name, Team team) {
         if (team.isBlack()) {
@@ -61,6 +65,10 @@ public abstract class Piece {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Team getNextTurnOwner() {
+        return team.getOpposite();
     }
 
     public double getScore() {

@@ -9,14 +9,4 @@ public class Knight extends Piece {
     public Knight(Team team) {
         super(KNIGHT_NAME, team, SCORE, new KnightMoveStrategy());
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

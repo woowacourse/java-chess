@@ -51,7 +51,7 @@ public class Board {
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
 
-            return targetPiece.getTeam();
+            return targetPiece.getNextTurnOwner();
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
     }
