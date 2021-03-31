@@ -1,11 +1,10 @@
 const $board = document.querySelector(".board");
-$board.addEventListener("click", onClickPosition);
+$board.addEventListener("click", onMovePiece);
 
-async function onClickPosition(event) {
-    offSelectedPosition();
-    offMovableAllPositions();
-
+async function onMovePiece(event) {
     if (event.target && event.target.parentElement.className === "position") {
+        offSelectedPosition();
+        offMovableAllPositions();
         const position = event.target.parentElement;
         position.classList.add("selected");
 
@@ -20,6 +19,38 @@ async function onClickPosition(event) {
         for (const dto of result.positionDtos) {
             $board.querySelector("#" + dto.id).classList.add("movable");
         }
+        return;
+    }
+
+    if (event.target && event.target.classList.contains("movable")) {
+        const sourcePosition = $board.querySelector(".selected");
+        const targetPosition = event.target;
+
+        const response = await fetch("./move", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "source": sourcePosition.id,
+                "target": targetPosition.id
+            })
+        });
+
+        const board = await response.json();
+
+        for (let i = 0; i < 64; i++) {
+            console.log("##########" + i);
+            console.log(board.squareDtos[i].position);
+            console.log(board.squareDtos[i].piece);
+        }
+
+        offSelectedPosition();
+        offMovableAllPositions();
+        return;
+    }
+
+    if (event.target && event.target.className === "position") {
+        offSelectedPosition();
+        offMovableAllPositions();
     }
 }
 
