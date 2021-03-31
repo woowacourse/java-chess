@@ -4,7 +4,6 @@ import chess.domain.Position;
 import chess.domain.TeamColor;
 
 import java.util.List;
-import java.util.Optional;
 
 public class PawnDirections extends PieceDirections {
 
@@ -12,14 +11,19 @@ public class PawnDirections extends PieceDirections {
         super(false, Direction.forwardDirection(teamColor), Direction.forwardDiagonal(teamColor));
     }
 
-    public Optional<Position> additionalMovePosition(Position currentPosition, List<Position> existPiecePositions) {
+    public void additionalMovePosition(Position currentPosition, List<Position> existPiecePositions, List<Position> movablePositions) {
         Direction moveDirection = moveDirections().get(0);
-        Position nextOneStep = currentPosition.go(moveDirection);
-        Position nextTwoStep = nextOneStep.go(moveDirection);
-
-        if (existPiecePositions.contains(nextTwoStep)) {
-            return Optional.empty();
+        if (currentPosition.invalidGo(moveDirection)) {
+            return;
         }
-        return Optional.of(nextTwoStep);
+        Position nextOneStep = currentPosition.go(moveDirection);
+        if (nextOneStep.invalidGo(moveDirection)) {
+            return;
+        }
+        Position nextTwoStep = nextOneStep.go(moveDirection);
+        if (existPiecePositions.contains(nextTwoStep)) {
+            return;
+        }
+        movablePositions.add(nextTwoStep);
     }
 }
