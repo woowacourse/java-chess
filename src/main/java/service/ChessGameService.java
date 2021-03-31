@@ -1,10 +1,12 @@
 package service;
 
 import domain.chessgame.ChessGame;
+import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 import dto.request.ChessGameRequestDto;
 import dto.request.PiecesRequestDto;
+import dto.request.ScoreResponseDto;
 import dto.response.ChessGameResponseDto;
 import dto.response.PieceResponseDto;
 import dto.response.PiecesResponseDto;
@@ -40,4 +42,9 @@ public class ChessGameService {
         }
         return new PiecesResponseDto(chessGame, pieceResponseDtos());
     }
+
+    public ScoreResponseDto getScore() {
+        return new ScoreResponseDto(chessGame.score(Color.BLACK), chessGame.score(Color.WHITE));
+    }
+
 }

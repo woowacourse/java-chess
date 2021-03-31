@@ -3,7 +3,8 @@ package domain.piece;
 public enum Color {
 
     BLACK("흑", true),
-    WHITE("백", false);
+    WHITE("백", false),
+    NONE("무색", true);
 
     private final String name;
     private final boolean isBlack;

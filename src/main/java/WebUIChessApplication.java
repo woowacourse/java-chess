@@ -23,6 +23,7 @@ public class WebUIChessApplication {
         getMainPage();
         putChessGame();
         putPieces();
+        getScore();
     }
 
     private static void getMainPage() {
@@ -47,6 +48,13 @@ public class WebUIChessApplication {
             PiecesRequestDto piecesRequestDto = GSON
                 .fromJson(request.body(), PiecesRequestDto.class);
             return chessGameService.putPiece(piecesRequestDto);
+        }, GSON::toJson);
+    }
+
+    private static void getScore() {
+        get("/api/score", (request, response) -> {
+            response.type("application/json");
+            return chessGameService.getScore();
         }, GSON::toJson);
     }
 

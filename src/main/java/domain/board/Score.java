@@ -25,7 +25,7 @@ public class Score {
         return new Score(value - (count * 0.5));
     }
 
-    public double value() {
+    public double getValue() {
         return value;
     }
 
