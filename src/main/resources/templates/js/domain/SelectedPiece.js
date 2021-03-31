@@ -4,7 +4,7 @@ export class SelectedPiece {
     #selected
 
     constructor() {
-        if(SelectedPiece.#instance) {
+        if (SelectedPiece.#instance) {
             return SelectedPiece.#instance
         }
 

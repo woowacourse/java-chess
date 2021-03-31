@@ -22,10 +22,11 @@
 DROP TABLE IF EXISTS `chess`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chess` (
-  `game_id` varchar(100) NOT NULL,
-  `data` text NOT NULL,
-  PRIMARY KEY (`game_id`)
+CREATE TABLE `chess`
+(
+    `game_id` varchar(100) NOT NULL,
+    `data`    text         NOT NULL,
+    PRIMARY KEY (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

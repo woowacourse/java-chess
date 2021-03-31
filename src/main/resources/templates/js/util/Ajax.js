@@ -13,7 +13,7 @@ export class Ajax {
 
     async get(gameId, uri) {
         let result = await fetch(this.getURL(gameId) + uri)
-        if(result.ok) return await result.json()
+        if (result.ok) return await result.json()
 
         throw await result.json()
     }
@@ -28,7 +28,7 @@ export class Ajax {
         }
 
         let result = await fetch(this.getURL(gameId) + uri, option)
-        if(result.ok) return await result.json()
+        if (result.ok) return await result.json()
 
         throw await result.json()
     }
@@ -43,7 +43,7 @@ export class Ajax {
         }
 
         let result = await fetch(this.getURL(gameId) + uri, option)
-        if(result.ok) return await result.json()
+        if (result.ok) return await result.json()
 
         throw await result.json()
     }
@@ -58,7 +58,7 @@ export class Ajax {
         }
 
         let result = await fetch(this.getURL(gameId) + uri, option)
-        if(result.ok) return await result.json()
+        if (result.ok) return await result.json()
 
         throw await result.json()
     }

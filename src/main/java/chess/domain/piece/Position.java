@@ -5,7 +5,6 @@ import chess.domain.piece.condition.MoveCondition;
 import chess.exception.ChessPieceMoveNotAllowException;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Position {
 

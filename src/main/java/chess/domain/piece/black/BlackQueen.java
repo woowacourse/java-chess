@@ -1,9 +1,9 @@
 package chess.domain.piece.black;
 
 import chess.domain.piece.Position;
-import chess.domain.piece.condition.*;
+import chess.domain.piece.condition.MoveCondition;
+import chess.domain.piece.condition.QueenMoveCondition;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

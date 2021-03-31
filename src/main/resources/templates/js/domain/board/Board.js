@@ -40,7 +40,7 @@ export class Board {
     }
 
     #clear() {
-        while(this.#dom.hasChildNodes()) {
+        while (this.#dom.hasChildNodes()) {
             this.#dom.removeChild(this.#dom.firstChild)
         }
         this.#lines = []

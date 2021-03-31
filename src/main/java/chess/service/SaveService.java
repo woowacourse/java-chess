@@ -21,7 +21,7 @@ public class SaveService {
 
         try {
             ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
-            GameRepository.updateToDAO(gameId, chessGame);
+            GameRepository.updateToDB(gameId, chessGame);
         } catch (RuntimeException | SQLException e) {
             response.status(400);
             return new MessageDto(e.getMessage());

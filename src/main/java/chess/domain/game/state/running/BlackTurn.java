@@ -1,7 +1,7 @@
 package chess.domain.game.state.running;
 
-import chess.domain.game.state.finished.BlackWin;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.finished.BlackWin;
 import chess.domain.game.state.finished.End;
 import chess.domain.piece.Position;
 

@@ -6,8 +6,6 @@ import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
 import spark.Response;
 
-import java.sql.SQLException;
-
 public class LoadService {
 
     private final String gameId;
@@ -22,9 +20,9 @@ public class LoadService {
         ChessGame chessGame = null;
 
         try {
-            chessGame = GameRepository.findByGameIdFromDAO(gameId);
+            chessGame = GameRepository.findByGameIdFromDB(gameId);
             GameRepository.saveToCache(gameId, chessGame);
-        } catch (RuntimeException | SQLException e) {
+        } catch (RuntimeException e) {
             response.status(400);
             return new MessageDto(e.getMessage());
         }

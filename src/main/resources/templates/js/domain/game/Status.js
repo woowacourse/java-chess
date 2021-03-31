@@ -16,8 +16,8 @@ export class Status {
     }
 
     getWinnerByScore() {
-        if(this.#blackScore > this.#whiteScore) return 'black'
-        if(this.#blackScore < this.#whiteScore) return 'white'
+        if (this.#blackScore > this.#whiteScore) return 'black'
+        if (this.#blackScore < this.#whiteScore) return 'white'
     }
 
     #createDom() {
