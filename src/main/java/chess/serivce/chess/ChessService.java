@@ -87,4 +87,8 @@ public class ChessService {
         Room room = new Room(state, Team.of(roomDto.getCurrentTeam()));
         return room;
     }
+
+    public List<PieceDto> findPiecesByRoomId(Long roomId) throws SQLException {
+        return pieceRepository.findPiecesByRoomId(roomId);
+    }
 }

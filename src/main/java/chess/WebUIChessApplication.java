@@ -32,6 +32,16 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        get("/room/:id", (req, res) -> {
+            try {
+                Long roomId = Long.valueOf(req.params(":id"));
+                List<PieceDto> result = controller.findPiecesByRoomId(roomId);
+                return gson.toJson(OkResponseDto.payload(result));
+            } catch (Exception e) {
+                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+            }
+        });
+
         get("/room/:id/start", (req, res) -> {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
@@ -58,7 +68,8 @@ public class WebUIChessApplication {
             try {
                 Long roomId = Long.valueOf(req.params(":id"));
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
-                return controller.move(roomId, moveRequestDto.getSource(), moveRequestDto.getTarget());
+                List<PieceDto> result = controller.move(roomId, moveRequestDto.getSource(), moveRequestDto.getTarget());
+                return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }

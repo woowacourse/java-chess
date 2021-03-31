@@ -21,4 +21,8 @@ public class ChessController {
     public List<PieceDto> move(Long roomId, String source, String target) throws SQLException {
         return service.move(roomId, source, target);
     }
+
+    public List<PieceDto> findPiecesByRoomId(Long roomId) throws SQLException {
+        return service.findPiecesByRoomId(roomId);
+    }
 }
