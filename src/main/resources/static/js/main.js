@@ -6,7 +6,17 @@ const $chessTable = document.querySelector(".chessboard");
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 function drawTable(data) {
-  let innerValue = ''
+  let innerValue = `<div class="row">
+            <div class="position"></div>
+            <div class="position">a</div>
+            <div class="position">b</div>
+            <div class="position">c</div>
+            <div class="position">d</div>
+            <div class="position">e</div>
+            <div class="position">f</div>
+            <div class="position">g</div>
+            <div class="position">h</div>
+        </div>`;
 
   for (let row = 8; row > 0; row--) {
     innerValue +=
@@ -33,13 +43,13 @@ function drawTable(data) {
     innerValue += "</div>";
   }
 
-  $chessTable.insertAdjacentHTML('beforeend', innerValue);
+  $chessTable.innerHTML = innerValue;
 }
 
 apiService.getChessBoard().then(drawTable);
 
-let currentP;
-let targetP;
+let sourcePosition;
+let targetPosition;
 let count = 0;
 
 function checkIfBoard(event) {
@@ -48,18 +58,18 @@ function checkIfBoard(event) {
     count++;
     target.classList.toggle("clicked")
     if (count === 1) {
-      currentP = target;
+      sourcePosition = target.getAttribute("id");
     }
     if (count === 2) {
-      targetP = target;
-      const source = currentP.innerText;
-      currentP.innerText = ''
-      targetP.innerText = source;
+      count = 0;
+      targetPosition = target.getAttribute("id");
+      apiService.moveSourceToTarget(sourcePosition, targetPosition)
+      .then(() => apiService.getChessBoard())
+      .then(drawTable);
     }
     if (count > 2) {
       alert("NO~")
     }
-    console.log("current", currentP, "target", targetP);
   }
 }
 

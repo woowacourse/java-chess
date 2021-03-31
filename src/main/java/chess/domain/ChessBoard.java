@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.dto.ChessBoardDto;
+import chess.domain.dto.MovementDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
@@ -74,6 +75,10 @@ public class ChessBoard {
 
     public Map<Position, Piece> getChessBoard() {
         return gameState.getChessBoard();
+    }
+
+    public void move(MovementDto movementDto){
+        move(movementDto.getSource(), movementDto.getTarget());
     }
 
     public void move(String source, String target) {
