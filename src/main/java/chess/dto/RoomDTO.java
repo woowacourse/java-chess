@@ -12,6 +12,10 @@ public class RoomDTO {
         this.name = name;
     }
 
+    public RoomDTO(String name) {
+        this(0, name);
+    }
+
     public static RoomDTO from(Room room) {
         return new RoomDTO(room.getId(), room.getName());
     }

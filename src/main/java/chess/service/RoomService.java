@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.room.Room;
 import chess.dto.RoomDTO;
 import chess.repository.RoomRepository;
 
@@ -20,5 +21,15 @@ public class RoomService {
                 .stream()
                 .map(RoomDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    public void insertRoom(String name) throws SQLException {
+        roomRepository.insertRoom(name);
+    }
+
+    public RoomDTO findLatestRoom() throws SQLException {
+        Room room = roomRepository.findLatestRoom()
+                .orElseThrow(() -> new IllegalStateException("Room이 없습니다."));
+        return RoomDTO.from(room);
     }
 }

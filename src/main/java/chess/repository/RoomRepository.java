@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class RoomRepository {
 
@@ -30,5 +31,25 @@ public class RoomRepository {
             rooms.add(room);
         }
         return rooms;
+    }
+
+    public void insertRoom(String name) throws SQLException {
+        String query = "INSERT INTO Room (NAME) VALUES (?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.executeUpdate();
+    }
+
+    public Optional<Room> findLatestRoom() throws SQLException {
+        String query = "SELECT * FROM Room ORDER BY ID DESC LIMIT 1";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (!resultSet.next()) {
+            return Optional.empty();
+        }
+        int id = Integer.parseInt(resultSet.getString("id"));
+        String name = resultSet.getString("name");
+        Room room = new Room(id, name);
+        return Optional.of(room);
     }
 }

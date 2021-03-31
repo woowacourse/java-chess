@@ -23,4 +23,12 @@ public class RoomController {
         List<RoomDTO> roomDTOs = roomService.updateRooms();
         return new Gson().toJsonTree(roomDTOs);
     }
+
+    public JsonElement insertRoom(Request request, Response response) throws SQLException {
+        response.type("application/json");
+        RoomDTO roomDTO = new Gson().fromJson(request.body(), RoomDTO.class);
+        roomService.insertRoom(roomDTO.getName());
+        RoomDTO responseDTO = roomService.findLatestRoom();
+        return new Gson().toJsonTree(responseDTO);
+    }
 }

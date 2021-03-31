@@ -25,7 +25,9 @@ public class WebUIChessApplication {
         get("/", MoveController::moveToMainPage);
         get("/chessgame", MoveController::moveToGamePage);
         get("/result", MoveController::moveToResultPage);
+
         get("/room/update", roomController::updateRooms);
+        post("/room/add", roomController::insertRoom);
 
         get("/chessgame/update", chessController::updateChessBoard);
         post("/chessgame/move", chessController::move);
