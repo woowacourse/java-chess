@@ -18,7 +18,7 @@ public abstract class Piece {
 
     public Piece(String name) {
         this.name = name;
-        this.color = null;
+        this.color = Color.NONE;
         this.score = null;
     }
 
@@ -45,6 +45,10 @@ public abstract class Piece {
 
     public boolean isBlack() {
         return color.isBlack();
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public boolean isNotEmpty() {

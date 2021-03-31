@@ -5,7 +5,7 @@ import static spark.Spark.staticFiles;
 
 import com.google.gson.Gson;
 import dto.request.ChessGameRequestDto;
-import dto.request.PieceRequestDto;
+import dto.request.PiecesRequestDto;
 import java.util.HashMap;
 import java.util.Map;
 import service.ChessGameService;
@@ -22,6 +22,7 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
         getMainPage();
         putChessGame();
+        putPieces();
     }
 
     private static void getMainPage() {
@@ -37,6 +38,15 @@ public class WebUIChessApplication {
             ChessGameRequestDto chessGameRequestDto = GSON
                 .fromJson(request.body(), ChessGameRequestDto.class);
             return chessGameService.putChessGame(chessGameRequestDto);
+        }, GSON::toJson);
+    }
+
+    private static void putPieces() {
+        put("/api/pieces", (request, response) -> {
+            response.type("application/json");
+            PiecesRequestDto piecesRequestDto = GSON
+                .fromJson(request.body(), PiecesRequestDto.class);
+            return chessGameService.putPiece(piecesRequestDto);
         }, GSON::toJson);
     }
 

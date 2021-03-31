@@ -1,12 +1,10 @@
 package service;
 
 import domain.chessgame.ChessGame;
-import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 import dto.request.ChessGameRequestDto;
-import dto.request.PieceRequestDto;
-import dto.request.StatusResponseDto;
+import dto.request.PiecesRequestDto;
 import dto.response.ChessGameResponseDto;
 import dto.response.PieceResponseDto;
 import dto.response.PiecesResponseDto;
@@ -33,4 +31,13 @@ public class ChessGameService {
         return pieceResponseDtos;
     }
 
+    public PiecesResponseDto putPiece(PiecesRequestDto piecesRequestDto) {
+        try {
+            chessGame.move(new Position(piecesRequestDto.getSource()),
+                new Position(piecesRequestDto.getTarget()));
+        } catch (Exception e) {
+            return new PiecesResponseDto(chessGame, pieceResponseDtos(), e.getMessage());
+        }
+        return new PiecesResponseDto(chessGame, pieceResponseDtos());
+    }
 }

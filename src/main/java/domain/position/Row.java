@@ -22,6 +22,10 @@ public class Row {
         validateChessCoordinate(chessCoordinate);
     }
 
+    public String chessCoordinate(){
+        return chessRows.get(value);
+    }
+
     private void validateChessCoordinate(String chessCoordinate) {
         if (!chessRows.contains(String.valueOf(chessCoordinate.charAt(1)))) {
             throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");

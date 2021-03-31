@@ -28,6 +28,10 @@ public class Column {
         }
     }
 
+    public String chessCoordinate(){
+        return chessColumns.get(value);
+    }
+
     public Column sum(Column column) {
         return new Column(value + column.value);
     }

@@ -79,6 +79,10 @@ public class Position {
         return row.isChessBoardPosition() && column.isChessBoardPosition();
     }
 
+    public String chessCoordinate() {
+        return column.chessCoordinate() + row.chessCoordinate();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
