@@ -1,21 +1,25 @@
-function initiate() {
+function showResult() {
     const xmlHttp = new XMLHttpRequest();
-    const url = 'http://localhost:8080/result/' + roomNumber + '/show';
+    const url = getBaseUrl() + '/show/result';
     xmlHttp.onreadystatechange = function () {
-        if (isValidHttpResponse(xmlHttp)) {
+        if (isValidHttpResponse(this)) {
             const resultDTO = JSON.parse(this.responseText);
-            updateResult(resultDTO);
+            printResult(resultDTO);
         }
     }
     xmlHttp.open('GET', url, true);
     xmlHttp.send();
 }
 
+function getBaseUrl() {
+    return 'http://localhost:8080/result' + roomId;
+}
+
 function isValidHttpResponse(xmlHttp) {
     return xmlHttp.readyState === 4 && xmlHttp.status === 200;
 }
 
-function updateResult(resultDTO) {
+function printResult(resultDTO) {
     const blackTeamScore = resultDTO.blackTeamScore;
     const whiteTeamScore = resultDTO.whiteTeamScore;
     document.getElementById('black-team-score').innerText = '흑팀 : ' + blackTeamScore + '점';
@@ -24,20 +28,19 @@ function updateResult(resultDTO) {
 }
 
 function addRestartEvent() {
-    const restartButton = document.getElementById('restart');
+    const restartButton = document.getElementById('restart-button');
     restartButton.addEventListener('click', function (event) {
         const xmlHttp = new XMLHttpRequest();
-        const url = 'http://localhost:8080/chessgame/' + roomNumber + '/restart';
+        const url = getBaseUrl() + '/restart';
         xmlHttp.onreadystatechange = function () {
-            if (isValidHttpResponse(xmlHttp)) {
-                window.location = JSON.parse(xmlHttp.responseText);
+            if (isValidHttpResponse(this)) {
+                window.location = JSON.parse(this.responseText);
             }
         }
         xmlHttp.open('GET', url, true);
         xmlHttp.send();
     });
-
 }
 
-initiate();
+showResult();
 addRestartEvent();

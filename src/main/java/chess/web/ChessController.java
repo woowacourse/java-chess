@@ -38,15 +38,15 @@ public class ChessController {
 
     public JsonElement showResult(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomNumber"));
+        int roomId = Integer.parseInt(request.params(":roomId"));
         ResultDTO resultDTO = chessService.calculateResult(roomId);
         return GSON.toJsonTree(resultDTO);
     }
 
     public JsonElement restart(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomNumber"));
-        chessService.resetDefaultByRoomId(roomId);
+        int roomId = Integer.parseInt(request.params(":roomId"));
+        chessService.resetHistoriesByRoomId(roomId);
         return GSON.toJsonTree("/");
     }
 }

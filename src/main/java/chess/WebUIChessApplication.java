@@ -20,20 +20,17 @@ public class WebUIChessApplication {
         Connection connection = ConnectionManager.makeConnection();
         ChessController chessController = initializeChessController(connection);
         RoomController roomController = initializeRoomController(connection);
-        setConfiguration();
 
+        setConfiguration();
         get("/", MoveController::moveToMainPage);
         get("/chessgame/:roomId", MoveController::moveToGamePage);
         get("/result/:roomId", MoveController::moveToResultPage);
-
         get("/room/show", roomController::showRooms);
         post("/room/add", roomController::insertRoom);
-
         get("/chessgame/:roomId/show", chessController::showChessBoard);
         post("/chessgame/:roomId/move", chessController::move);
-
-        get("/result/:roomNumber/show", chessController::showResult);
-        get("/chessgame/:roomNumber/restart", chessController::restart);
+        get("/chessgame/:roomId/show/result", chessController::showResult);
+        get("/chessgame/:roomId/restart", chessController::restart);
         exception(RuntimeException.class, ExceptionHandler::bindException);
     }
 

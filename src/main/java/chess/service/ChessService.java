@@ -70,7 +70,7 @@ public class ChessService {
         return ResultDTO.from(result, winnerTeamType);
     }
 
-    public void resetDefaultByRoomId(int roomId) throws SQLException {
+    public void resetHistoriesByRoomId(int roomId) throws SQLException {
         chessRepository.deleteAllHistoriesByRoomId(roomId);
     }
 }
