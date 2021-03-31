@@ -10,7 +10,7 @@ public class CatchingPieceBlackPawnMoveCondition extends MoveCondition {
     public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
-                isEnemyExist(board, piece, target) &&
+                isThereAnyEnemies(board, piece, target) &&
                 isNotTheChessPieceGoOffTheBoard(target);
     }
 
@@ -19,7 +19,7 @@ public class CatchingPieceBlackPawnMoveCondition extends MoveCondition {
                 target.equals(new Position(piece.getRow() + 1, piece.getColumn() + 1));
     }
 
-    private boolean isEnemyExist(final Board board, final ChessPiece piece, final Position target) {
+    private boolean isThereAnyEnemies(final Board board, final ChessPiece piece, final Position target) {
         return board.getWhitePieces().stream()
                 .anyMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&

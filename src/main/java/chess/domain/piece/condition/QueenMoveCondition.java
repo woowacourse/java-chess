@@ -13,8 +13,8 @@ public class QueenMoveCondition extends MoveCondition {
     public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
-                isNotExistObstacleOnPath(board, piece, target) &&
-                isNotExistSameColorObstacleOnTarget(board, piece, target) &&
+                isThereNoObstacleInThePath(board, piece, target) &&
+                isThereNoObstacleOfTheSameColorAtTarget(board, piece, target) &&
                 isNotTheChessPieceGoOffTheBoard(target);
     }
 
@@ -31,22 +31,22 @@ public class QueenMoveCondition extends MoveCondition {
                 == Math.abs(piece.getRow() - target.getRow());
     }
 
-    private boolean isNotExistObstacleOnPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleInThePath(Board board, ChessPiece piece, Position target) {
         if (Math.abs(piece.getPosition().calculateGradient(target)) == 1) {
-            return isNotExistObstacleOnXPath(board, piece, target);
+            return isThereNoObstacleOnXPath(board, piece, target);
         }
 
-        return isNotExistObstacleOnCrossPath(board, piece, target);
+        return isThereNoObstacleOnCrossPath(board, piece, target);
     }
 
-    private boolean isNotExistObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
-                .filter(isExistObstacleOnCrossPath(piece, target))
+                .filter(isThereNoObstacleOnCrossPath(piece, target))
                 .peek(p -> System.out.println(p.getRow() + ":" + p.getColumn()))
-                .noneMatch(isExistObstacleOnCrossPath(piece, target));
+                .noneMatch(isThereNoObstacleOnCrossPath(piece, target));
     }
 
-    private Predicate<ChessPiece> isExistObstacleOnCrossPath(final ChessPiece piece, final Position target) {
+    private Predicate<ChessPiece> isThereNoObstacleOnCrossPath(final ChessPiece piece, final Position target) {
         int maxCol = Math.max(piece.getColumn(), target.getColumn());
         int minCol = Math.min(piece.getColumn(), target.getColumn());
         int maxRow = Math.max(piece.getRow(), target.getRow());
@@ -65,7 +65,7 @@ public class QueenMoveCondition extends MoveCondition {
         return pieceOnBoard -> false;
     }
 
-    private boolean isNotExistSameColorObstacleOnTarget(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOfTheSameColorAtTarget(Board board, ChessPiece piece, Position target) {
         return board.getWhitePieces().stream()
                 .noneMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
@@ -74,15 +74,15 @@ public class QueenMoveCondition extends MoveCondition {
     }
 
 
-    private boolean isNotExistObstacleOnXPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOnXPath(Board board, ChessPiece piece, Position target) {
         List<ChessPiece> pieces = board.getAllPieces();
 
         return pieces.stream()
-                .filter(isExistInMoveArea(piece, target))
+                .filter(isTherePieceInTheMovementArea(piece, target))
                 .noneMatch(hasSameGradientWithSourceAndTarget(piece, target));
     }
 
-    private Predicate<ChessPiece> isExistInMoveArea(ChessPiece piece, Position target) {
+    private Predicate<ChessPiece> isTherePieceInTheMovementArea(ChessPiece piece, Position target) {
         int maxCol = Math.max(piece.getColumn(), target.getColumn());
         int minCol = Math.min(piece.getColumn(), target.getColumn());
         int maxRow = Math.max(piece.getRow(), target.getRow());

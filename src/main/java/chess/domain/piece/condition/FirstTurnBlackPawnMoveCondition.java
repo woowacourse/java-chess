@@ -13,7 +13,7 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
     public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
-                isNotExistPieceOnPath(board, piece, target) &&
+                isThereNoPieceOnPath(board, piece, target) &&
                 isNotTheChessPieceGoOffTheBoard(target);
     }
 
@@ -21,15 +21,15 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
         return target.equals(new Position(piece.getRow() + 2, piece.getColumn())) && piece.getRow() == 1;
     }
 
-    private boolean isNotExistPieceOnPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoPieceOnPath(Board board, ChessPiece piece, Position target) {
         List<ChessPiece> pieces = board.getAllPieces();
 
         return pieces.stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistInMoveArea(piece, target));
+                .noneMatch(isTherePieceInTheMovementArea(piece, target));
     }
 
-    private Predicate<ChessPiece> isExistInMoveArea(final ChessPiece piece, final Position target) {
+    private Predicate<ChessPiece> isTherePieceInTheMovementArea(final ChessPiece piece, final Position target) {
         return pieceOnBoard -> pieceOnBoard.getColumn() == piece.getColumn() &&
                 piece.getRow() <= pieceOnBoard.getRow() && pieceOnBoard.getRow() <= target.getRow();
     }

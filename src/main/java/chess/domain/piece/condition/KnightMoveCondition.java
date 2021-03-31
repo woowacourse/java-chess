@@ -15,7 +15,7 @@ public class KnightMoveCondition extends MoveCondition {
     public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
-                isNotExistSameColorPieceOnPath(board, piece, target) &&
+                isThereNoObstacleOfTheSameColorOnPath(board, piece, target) &&
                 isNotTheChessPieceGoOffTheBoard(target);
     }
 
@@ -27,7 +27,7 @@ public class KnightMoveCondition extends MoveCondition {
                 ).anyMatch(position -> position.equals(target));
     }
 
-    public boolean isNotExistSameColorPieceOnPath(Board board, ChessPiece piece, Position target) {
+    public boolean isThereNoObstacleOfTheSameColorOnPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
                 .noneMatch(pieceOnBoard ->
                         pieceOnBoard.isSamePosition(target) &&

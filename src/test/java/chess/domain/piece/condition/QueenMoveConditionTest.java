@@ -36,7 +36,7 @@ class QueenMoveConditionTest {
 
     @DisplayName("퀸의 이동 경로에 장애물이 있으면 안된다.")
     @Test
-    void isSatisfiedBy_notAllowObstaclesOnPath() {
+    void isSatisfiedBy_notAllowObstacleOnPath() {
         QueenMoveCondition condition = new QueenMoveCondition();
         Board board = new Board(Arrays.asList(
                 WhiteQueen.createWithCoordinate(4, 4),
