@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.dto.ChessBoardDto;
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.pieceinformations.TeamColor;
@@ -88,6 +90,10 @@ public class ChessBoard {
 
     public void terminate() {
         gameState = gameState.terminate();
+    }
+
+    public Map<String, PieceDto> getChessBoardDto() {
+        return new ChessBoardDto(gameState.getChessBoard()).getChessBoard();
     }
 
 }

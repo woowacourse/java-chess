@@ -39,6 +39,11 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
+    public String getPieceType(){
+        return pieceType.name();
+    }
+
+    @Override
     public TeamColor getColor() {
         return teamColor;
     }

@@ -11,6 +11,8 @@ public interface Piece {
 
     String getPieceName();
 
+    String getPieceType();
+
     TeamColor getColor();
 
     void dead();

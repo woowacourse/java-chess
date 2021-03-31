@@ -23,8 +23,13 @@ public class Blank implements Piece {
     }
 
     @Override
+    public String getPieceType() {
+        return "BLANK";
+    }
+
+    @Override
     public TeamColor getColor() {
-        throw new UnsupportedOperationException("빈칸입니다.");
+        return TeamColor.NONE;
     }
 
     @Override

@@ -1,6 +1,18 @@
-import data from "../json/sample.js";
+import ChessService from "./ChessService.js";
+
+const apiService = new ChessService();
 
 const $chessTable = document.querySelector(".chessboard");
+const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+const pieceTypeIcon = {
+  "KING" : '<i class="fas fa-chess-king"></i>',
+  "QUEEN" : '<i class="fas fa-chess-queen"></i>',
+  "BISHOP" : '<i class="fas fa-chess-bishop"></i>',
+  "ROOK" : '<i class="fas fa-chess-rook"></i>',
+  "PAWN" : '<i class="fas fa-chess-pawn"></i>',
+  "KNIGHT" : '<i class="fas fa-chess-knight"></i>',
+  "BLANK" : ''
+}
 
 function drawTable(data) {
   let innerValue = ''
@@ -10,9 +22,12 @@ function drawTable(data) {
         `<div class="row"> 
           <div class="position">${row}</div>`;
 
-    for (let column = 1; column < 9; column++) {
-      innerValue += `<div class="cell ${(row + column) % 2 === 0 ? "light"
-          : "dark"}" id="${row}${column}">${data[row][column]}</div>`;
+    for (let j = 1; j < 9; j++) {
+      const column = alpha[j]
+      const id = column + row;
+      const piece = data[id]['pieceType'];
+      innerValue += `<div class="cell ${(row + j) % 2 === 0 ? "light"
+          : "dark"}" id="${id}">${pieceTypeIcon[piece]}</div>`;
     }
 
     innerValue += "</div>";
@@ -21,7 +36,7 @@ function drawTable(data) {
   $chessTable.insertAdjacentHTML('beforeend', innerValue);
 }
 
-drawTable(data);
+apiService.getChessBoard().then(drawTable);
 
 let currentP;
 let targetP;
@@ -35,13 +50,13 @@ function checkIfBoard(event) {
     if (count === 1) {
       currentP = target;
     }
-    if(count ===2){
+    if (count === 2) {
       targetP = target;
       const source = currentP.innerText;
       currentP.innerText = ''
       targetP.innerText = source;
     }
-    if(count >2){
+    if (count > 2) {
       alert("NO~")
     }
     console.log("current", currentP, "target", targetP);
