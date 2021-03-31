@@ -1,5 +1,7 @@
 package chess.domain.feature;
 
+import java.util.Arrays;
+
 public enum Color {
 	BLACK("black"),
 	WHITE("white"),
@@ -27,6 +29,13 @@ public enum Color {
 			return Color.BLACK;
 		}
 		throw new IllegalArgumentException();
+	}
+
+	public static Color convert(String color) {
+		return Arrays.stream(values())
+				.filter(value -> value.name().equals(color))
+				.findFirst()
+				.orElseThrow(IllegalArgumentException::new);
 	}
 
 	public String getColor() {

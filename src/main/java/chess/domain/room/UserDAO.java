@@ -1,4 +1,4 @@
-package chess.domain.user;
+package chess.domain.room;
 
 import java.sql.*;
 

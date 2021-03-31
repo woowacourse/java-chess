@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>체스</title>
-	<link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
-	<h1>로그인</h1><br/>
-	<div class="container">
-		<label class="id"><b>아이디</b></label>
-		<input type="text" placeholder="Enter Username" name="id" required><br/><br/>
+    <h1>메인 화면</h1>
+    <img src="../images/menu.jpeg">
+    <form action="/game" method="post">
+        <label class="room_id"><b>방 이름</b></label>
+        <input type="text" placeholder="방 이름" name="room_id" required><br/><br/>
 
-		<label class="password"><b>패스워드</b></label>
-		<input type="password" placeholder="Enter Password" name="pwd" required><br/><br/>
-
-		<input type="button" value="login"/>
-	</div>
-	<br/><br/>
-	<h1>회원 가입</h1><br/>
-	<input type="button" onclick="location.href='/registration';" value="회원가입 하러가기"/>
+        <input type="submit" value="새 게임"/><br/><br/>
+    </form>
+    <input type="button" onclick="window.location.href='/save'" value="저장된 게임 불러오기"/><br/><br/>
 </body>
 <script src="../js/index.js"></script>
 </html>

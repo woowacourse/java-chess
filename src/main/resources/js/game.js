@@ -1,8 +1,8 @@
 const $move = document.querySelector('input[class="move"]')
-const $exit = document.querySelector('input[class="exit"]')
+const $save = document.querySelector('input[value="save"]')
 
 $move.addEventListener('keyup', movePieceRequest);
-$exit.addEventListener('click', exit);
+$save.addEventListener('click', saveGame);
 
 function movePieceRequest(event) {
     const moveCommand = event.target.value;
@@ -12,7 +12,7 @@ function movePieceRequest(event) {
             .replace(/\s+/g, ' ')
             .trim()
         const http = new XMLHttpRequest();
-        const url = '/game';
+        const url = '/game/move';
 
         http.open('POST', url);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -38,11 +38,11 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
 
     let source = xmlDoc.querySelector("#" + sourcePosition);
     let target = xmlDoc.querySelector("#" + targetPosition);
-    let turn = xmlDoc.querySelector("h1");
+    let turn = xmlDoc.querySelector("#turn");
 
     document.querySelector("#" + sourcePosition).innerHTML = source.innerHTML
     document.querySelector("#" + targetPosition).innerHTML = target.innerHTML
-    document.querySelector("h1").innerHTML = turn.innerHTML
+    document.querySelector("#turn").innerHTML = turn.innerHTML
 
     const result = xmlDoc.querySelector("#result").textContent
     if (result !== "") {
@@ -51,31 +51,42 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
     }
 }
 
-function exit() {
-    const id = document.querySelector('input[name=id]').value;
-    const pwd = document.querySelector('input[name=pwd]').value;
-    if (id !== "" && pwd !== "") {
-        const params = {
-            userId: id,
-            password: pwd,
-        };
-        const http = new XMLHttpRequest();
-        const url = '/menu';
+function saveGame() {
+    const params = {
+        room_id: document.querySelector('#room').className,
+        state: createStateJson(),
+    };
+    const http = new XMLHttpRequest();
+    const url = '/game/save' + name;
 
-        http.open('POST', url);
-        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-        http.onreadystatechange = function () {
-            if (http.readyState === XMLHttpRequest.DONE) {
-                if (http.status === 200) {
-                    // cookie session
-                    alert(id + "님 환영합니다!")
-                    window.location.replace("/menu")
-                } else {
-                    alert("가입해라")
-                    window.location.replace("/")
-                }
+    http.open('POST', url);
+    http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+    http.onreadystatechange = function () {
+        if (http.readyState === XMLHttpRequest.DONE) {
+            if (http.status === 200) {
+                alert("성공적으로 저장되었습니다.")
+            } else {
+                alert("저장할 수 없습니다.")
             }
-        };
-        http.send(JSON.stringify(params));
+        }
+    };
+    http.send(JSON.stringify(params));
+}
+
+function createStateJson() {
+    const status  = document.querySelectorAll('td')
+    let state = {
+        turn: document.querySelector('#turn').className,
+    };
+    for (var i = 0; i < status.length; i++) {
+        const position = status[i].id;
+        const img = status[i].querySelector('img');
+        const color = img.id.split("_")[0]
+        const type = img.id.split("_")[1]
+        state[position] = {
+            color: color,
+            type: type,
+        }
     }
+    return state
 }

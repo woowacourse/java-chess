@@ -1,4 +1,4 @@
-package chess.domain.user;
+package chess.domain.room;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

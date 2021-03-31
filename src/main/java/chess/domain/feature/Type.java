@@ -1,34 +1,53 @@
 package chess.domain.feature;
 
+import chess.domain.board.Position;
+import chess.domain.piece.*;
+
+import java.util.Arrays;
+import java.util.function.BiFunction;
+
 public enum Type {
-	PAWN("P", 1),
-	QUEEN("Q", 9),
-	KING("K", 0),
-	BISHOP("B", 3),
-	KNIGHT("N", 2.5),
-	ROOK("R", 5),
-	BLANK(".", 0);
+    PAWN("P", 1, Pawn::new),
+    QUEEN("Q", 9, Queen::new),
+    KING("K", 0, King::new),
+    BISHOP("B", 3, Bishop::new),
+    KNIGHT("N", 2.5, Knight::new),
+    ROOK("R", 5, Rook::new),
+    BLANK(".", 0, Blank::new);
 
-	private final String initial;
-	private final double score;
+    private final String initial;
+    private final double score;
+    private final BiFunction<Color, Position, Piece> expression;
 
-	Type(String initial, double score) {
-		this.initial = initial;
-		this.score = score;
-	}
+    Type(String initial, double score, BiFunction<Color, Position, Piece> expression) {
+        this.initial = initial;
+        this.score = score;
+        this.expression = expression;
+    }
 
-	public String nameByColor(Color color) {
-		if (color == Color.WHITE) {
-			return initial.toLowerCase();
-		}
-		return initial;
-	}
+    public Piece createPiece(Position position, Color color) {
+        return this.expression.apply(color, position);
+    }
 
-	public double getScore() {
-		return score;
-	}
+    public static Type convert(String type) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(type))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
 
-	public String getName() {
-		return this.name();
-	}
+    public String nameByColor(Color color) {
+        if (color == Color.WHITE) {
+            return initial.toLowerCase();
+        }
+        return initial;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public String getName() {
+        return this.name();
+    }
 }

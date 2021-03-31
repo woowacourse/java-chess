@@ -24,39 +24,13 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/registration", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "registration.html");
-        });
-
-        post("/registration", (req, res) -> {
-            boolean isRegistrationSuccessful = webUIChessController.addUser(req.body());
-            if (!isRegistrationSuccessful) {
-                res.status(500);
-            }
-            return isRegistrationSuccessful;
-        });
-
-        post("/menu", (req, res) -> {
-            boolean isVerifiedUser = webUIChessController.verifyUser(req.body());
-            if (!isVerifiedUser) {
-                res.status(400);
-            }
-            return isVerifiedUser;
-        });
-
-        get("/menu", (req, res) -> {
-            // cookie session
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "menu.html");
-        });
-
-        get("/game", (req, res) -> {
+        post("/game", (req, res) -> {
             Map<String, Object> model = webUIChessController.chessBoard();
+            model.put("room_id", req.queryParams("room_id"));
             return render(model, "game.html");
         });
 
-        post("/game", (req, res) -> {
+        post("/game/move", (req, res) -> {
             List<String> moveCommand = getMoveCommand(req);
             Map<String, Object> model = webUIChessController.movePiece(moveCommand);
             if (model == null) {
@@ -66,9 +40,20 @@ public class WebUIChessApplication {
             return render(model, "game.html");
         });
 
-        get("/save", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "save.html");
+        get("/game/save", "application/json", (req, res) -> {
+            Map<String, Object> model = webUIChessController.loadRoom(req.body());
+            if (model == null) {
+                res.status(400);
+            }
+            return render(model, "game.html");
+        });
+
+        post("/game/save", "application/json", (req, res) -> {
+            boolean isRegistrationSuccessful = webUIChessController.saveRoom(req.body());
+            if (!isRegistrationSuccessful) {
+                res.status(500);
+            }
+            return isRegistrationSuccessful;
         });
     }
 
