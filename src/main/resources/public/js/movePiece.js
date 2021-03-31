@@ -1,4 +1,4 @@
-const $initBoard = document.querySelector("#startButton");
+const $initBoard = document.querySelector("#initStart");
 $initBoard.addEventListener("click", onInitBoard);
 
 const $board = document.querySelector(".board");
