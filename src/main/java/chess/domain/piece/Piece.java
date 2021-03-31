@@ -3,8 +3,8 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
+import chess.domain.game.ImpossibleMoveException;
 import chess.domain.piece.moving.PieceMoving;
-import chess.exception.ImpossibleMoveException;
 
 import java.util.List;
 

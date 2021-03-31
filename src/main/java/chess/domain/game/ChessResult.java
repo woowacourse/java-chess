@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.game;
+
+import chess.domain.Score;
 
 public class ChessResult {
     private final Score whiteTeamScore;
@@ -9,11 +11,11 @@ public class ChessResult {
         this.blackTeamScore = blackTeamScore;
     }
 
-    public Score whiteTeamScore() {
-        return whiteTeamScore;
+    public double getWhiteTeamScore() {
+        return whiteTeamScore.value();
     }
 
-    public Score blackTeamScore() {
-        return blackTeamScore;
+    public double getBlackTeamScore() {
+        return blackTeamScore.value();
     }
 }
