@@ -1,22 +1,20 @@
 package chess.domain.piece;
 
+import chess.domain.location.Position;
 import chess.domain.moveStrategy.MoveStrategy;
 import chess.domain.moveStrategy.PawnDoubleMove;
 import chess.domain.moveStrategy.PawnKillMove;
 import chess.domain.moveStrategy.PawnSingleMove;
-import chess.domain.location.Position;
 
 import java.util.List;
 
 public class Pawn extends Division {
 
     public static final int PAWN_SCORE = 1;
-    private final MoveStrategy pawnSingleMove = new PawnSingleMove(color);
     private final MoveStrategy pawnDoubleMove = new PawnDoubleMove(color);
-    private final MoveStrategy pawnKillMove = new PawnKillMove(color);
 
     public Pawn(Color color) {
-        super(color, "p");
+        super(color, "p", new PawnSingleMove(color), new PawnKillMove(color));
     }
 
     @Override
@@ -25,13 +23,13 @@ public class Pawn extends Division {
     }
 
     @Override
-    public double score() {
-        return PAWN_SCORE;
+    public boolean isPawn() {
+        return true;
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public double score() {
+        return PAWN_SCORE;
     }
 
     @Override
@@ -39,11 +37,11 @@ public class Pawn extends Division {
         if (from.hasRow(color.initPawnRow())) {
             return pawnDoubleMove.movablePositions(from);
         }
-        return pawnSingleMove.movablePositions(from);
+        return super.movablePositions(from);
     }
 
     @Override
     public List<List<Position>> killablePositions(Position from) {
-        return pawnKillMove.movablePositions(from);
+        return super.killablePositions(from);
     }
 }

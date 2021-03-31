@@ -1,19 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.moveStrategy.MoveStrategy;
 import chess.domain.moveStrategy.RookMove;
-import chess.domain.location.Position;
-
-import java.util.List;
 
 public class Rook extends Division {
-
     public static final int ROOK_SCORE = 5;
 
-    private final MoveStrategy moveStrategy = new RookMove(color);
-
     public Rook(Color color) {
-        super(color, "r");
+        super(color, "r", new RookMove(color), new RookMove(color));
     }
 
     @Override
@@ -22,22 +15,12 @@ public class Rook extends Division {
     }
 
     @Override
-    public double score() {
-        return ROOK_SCORE;
-    }
-
-    @Override
     public boolean isPawn() {
         return false;
     }
 
     @Override
-    public List<List<Position>> movablePositions(Position position) {
-        return moveStrategy.movablePositions(position);
-    }
-
-    @Override
-    public List<List<Position>> killablePositions(Position position) {
-        return movablePositions(position);
+    public double score() {
+        return ROOK_SCORE;
     }
 }

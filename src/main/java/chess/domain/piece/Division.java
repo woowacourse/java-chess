@@ -1,15 +1,20 @@
 package chess.domain.piece;
 
 import chess.domain.location.Position;
+import chess.domain.moveStrategy.MoveStrategy;
 
 import java.util.List;
 
 public abstract class Division extends Basis {
     protected final Color color;
+    private final MoveStrategy moveStrategy;
+    private final MoveStrategy killStrategy;
 
-    public Division(Color color, String displayName) {
+    public Division(Color color, String displayName, MoveStrategy moveStrategy, MoveStrategy killStrategy) {
         super(displayName);
         this.color = color;
+        this.moveStrategy = moveStrategy;
+        this.killStrategy = killStrategy;
     }
 
     @Override
@@ -33,11 +38,15 @@ public abstract class Division extends Basis {
 
     public abstract boolean isKing();
 
-    public abstract double score();
-
     public abstract boolean isPawn();
 
-    public abstract List<List<Position>> movablePositions(Position position);
+    public abstract double score();
 
-    public abstract List<List<Position>> killablePositions(Position position);
+    public List<List<Position>> movablePositions(Position position) {
+        return moveStrategy.movablePositions(position);
+    }
+
+    public List<List<Position>> killablePositions(Position position) {
+        return killStrategy.movablePositions(position);
+    }
 }

@@ -25,13 +25,13 @@ public class Empty extends Basis {
     }
 
     @Override
-    public double score() {
-        return 0;
+    public boolean isPawn() {
+        return false;
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
+    public double score() {
+        return 0;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
-import chess.domain.piece.Color;
 import chess.domain.location.Vector;
+import chess.domain.piece.Color;
 
 import java.util.Collections;
 import java.util.List;

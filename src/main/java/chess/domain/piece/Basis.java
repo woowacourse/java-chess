@@ -17,11 +17,9 @@ public abstract class Basis implements Piece {
 
     public abstract boolean isKing();
 
+    public abstract boolean isPawn();
 
     public abstract double score();
-
-
-    public abstract boolean isPawn();
 
     public abstract List<List<Position>> movablePositions(Position position);
 

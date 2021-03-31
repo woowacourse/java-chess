@@ -14,9 +14,9 @@ public interface Piece {
 
     boolean isKing();
 
-    double score();
-
     boolean isPawn();
+
+    double score();
 
     List<List<Position>> movablePositions(Position position);
 

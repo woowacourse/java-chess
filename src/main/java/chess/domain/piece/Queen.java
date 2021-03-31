@@ -1,18 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.moveStrategy.MoveStrategy;
 import chess.domain.moveStrategy.QueenMove;
-import chess.domain.location.Position;
-
-import java.util.List;
 
 public class Queen extends Division {
-
     public static final int QUEEN_SCORE = 9;
-    private final MoveStrategy moveStrategy = new QueenMove(color);
 
     public Queen(Color color) {
-        super(color, "q");
+        super(color, "q", new QueenMove(color), new QueenMove(color));
     }
 
     @Override
@@ -21,22 +15,12 @@ public class Queen extends Division {
     }
 
     @Override
-    public double score() {
-        return QUEEN_SCORE;
-    }
-
-    @Override
     public boolean isPawn() {
         return false;
     }
 
     @Override
-    public List<List<Position>> movablePositions(Position position) {
-        return moveStrategy.movablePositions(position);
-    }
-
-    @Override
-    public List<List<Position>> killablePositions(Position position) {
-        return movablePositions(position);
+    public double score() {
+        return QUEEN_SCORE;
     }
 }
