@@ -5,9 +5,11 @@ import chess.Strategy.KingMoveStrategy;
 public class King extends Piece {
     private static final String KING_NAME = "K";
     private static final double SCORE = 0;
+    private static final String whiteUnicode = "&#9813;";
+    private static final String blackUnicode = "&#9819;";
 
     public King(Team team) {
-        super(KING_NAME, team, SCORE, new KingMoveStrategy());
+        super(KING_NAME, whiteUnicode, blackUnicode, team, SCORE, new KingMoveStrategy());
     }
 
     @Override
