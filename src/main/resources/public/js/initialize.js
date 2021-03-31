@@ -12,8 +12,16 @@ const WKing = "../img/WK.png";
 const WQueen = "../img/WQ.png";
 
 export let chessBoard = document.getElementById('chessBoard');
+export const whiteTeamCurrentTurn = document.getElementById("whiteTeamCurrentTurn");
+export const blackTeamCurrentTurn = document.getElementById("blackTeamCurrentTurn");
 
 initChessBoard();
+initCurrentTurn();
+
+function initCurrentTurn() {
+    whiteTeamCurrentTurn.innerText = "Current Turn";
+    blackTeamCurrentTurn.innerText = "";
+}
 
 function initChessBoard() {
     for (let i = 0; i < 8; i++) {
@@ -24,12 +32,12 @@ function initChessBoard() {
             chessBoardColumn.setAttribute("class", "chessColumn");
             let boardInitial = getBoardInitial(i, j);
             chessBoardColumn.setAttribute("id", boardInitial);
-            chessBoardColumn.style = initChessBoardColor(i, j);
+            chessBoardColumn.style.backgroundColor = initChessBoardColor(i, j);
 
             let pieceImg = document.createElement('img');
             let positionPiece = initPieceImage(i, j);
             if (positionPiece === "") {
-                pieceImg.style = "display: none";
+                pieceImg.style.display = "none";
             }
             pieceImg.src = positionPiece;
 
@@ -48,9 +56,9 @@ function getBoardInitial(row, column) {
 
 function initChessBoardColor(row, column) {
     if ((row + column) % 2 === 0) {
-        return "background-color: #522632";
+        return "#522632";
     }
-    return "background-color: #F3E4DF";
+    return "#F3E4DF";
 }
 
 function initPieceImage(row, column) {

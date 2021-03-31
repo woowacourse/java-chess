@@ -1,4 +1,9 @@
 import {chessBoard} from './initialize.js';
+import {whiteTeamCurrentTurn} from "./initialize.js";
+import {blackTeamCurrentTurn} from "./initialize.js";
+
+const whiteTeamScoreUI = document.getElementById("whiteTeamScore");
+const blackTeamScoreUI = document.getElementById("blackTeamScore");
 
 let start = undefined;
 let destination = undefined;
@@ -54,7 +59,9 @@ function serverMoveRequest(startPoint, destPoint) {
             return response.json();
         })
         .then(data => {
-            movePieceUI(data.start, data.destination);
+            movePieceUI(data.start, data.destination, data.isPlaying);
+            updateScoreUI(data.whiteTeamScore, data.blackTeamScore);
+            updateTurn(data.currentTurnTeam);
         })
         .catch(error => {
             console.log(error)
@@ -62,7 +69,7 @@ function serverMoveRequest(startPoint, destPoint) {
         })
 }
 
-function movePieceUI(start, destination) {
+function movePieceUI(start, destination, isPlaying) {
     let startPosition = document.getElementById(start);
     let destinationPosition = document.getElementById(destination);
     let pieceImg = startPosition.firstChild.src;
@@ -70,4 +77,26 @@ function movePieceUI(start, destination) {
     startPosition.firstChild.style = "display: none";
     destinationPosition.firstChild.src = pieceImg;
     destinationPosition.firstChild.style = "display: block";
+    checkIsPlaying(isPlaying);
+}
+
+function checkIsPlaying(isPlaying) {
+    if (!isPlaying) {
+        alert("게임이 종료되었습니다!");
+    }
+}
+
+function updateScoreUI(whiteTeamScore, blackTeamScore) {
+    whiteTeamScoreUI.innerText = "Score: " + whiteTeamScore;
+    blackTeamScoreUI.innerText = "Score: " + blackTeamScore;
+}
+
+function updateTurn(currentTurnTeam) {
+    if (currentTurnTeam === "blackTeam") {
+        whiteTeamCurrentTurn.innerText = "";
+        blackTeamCurrentTurn.innerText = "Current Turn";
+    } else {
+        whiteTeamCurrentTurn.innerText = "Current Turn";
+        blackTeamCurrentTurn.innerText = "";
+    }
 }

@@ -12,8 +12,8 @@ body {
     width: 100vw;
     display: flex;
     justify-content: center;
-    margin-top: 35px;
-    margin-bottom: 35px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .chessBoard {
@@ -21,8 +21,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 5px solid #522632;
-    margin: auto;
+    border: 3px solid #522632;
     width: 35vw;
     height: 35vw;
 }
@@ -42,4 +41,41 @@ body {
 .chessRow > .chessColumn > img {
     width: 100%;
     height: 100%;
+}
+
+.chess {
+    display: flex;
+    flex-direction: row;
+}
+
+.player1 {
+    margin: auto;
+    width: 13vw;
+    height: 13vw;
+    background-color: #6F3B48;
+    box-shadow: 3px 3px 3px 3px gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.player2 {
+    margin: auto;
+    width: 13vw;
+    height: 13vw;
+    background-color: #E5CCC8;
+    box-shadow: 3px 3px 3px 3px gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.player1 > h2, .player1 > h3, .player1 > h4 {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.player2 > h2, .player2 > h3, .player2 > h4 {
+    color: black;
+    text-align: center;
 }

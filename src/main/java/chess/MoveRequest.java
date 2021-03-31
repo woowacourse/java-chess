@@ -1,10 +1,10 @@
 package chess;
 
-public class MoveDTO {
+public class MoveRequest {
     private String start;
     private String destination;
 
-    public MoveDTO(String start, String destination) {
+    public MoveRequest(String start, String destination) {
         this.start = start;
         this.destination = destination;
     }
