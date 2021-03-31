@@ -25,7 +25,6 @@ public final class Lines {
         Line line = line(row);
         line.assignPiece(column, piece);
         piece(position).moveTo(position);
-
     }
 
     public final Piece piece(final Position position) {

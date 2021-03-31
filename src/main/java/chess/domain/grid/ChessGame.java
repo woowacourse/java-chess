@@ -2,8 +2,10 @@ package chess.domain.grid;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.state.BlackTurn;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
+import chess.domain.state.WhiteTurn;
 
 public class ChessGame {
     private final Grid grid;
@@ -51,5 +53,15 @@ public class ChessGame {
 
     public boolean isGameOver(){
         return gameOver;
+    }
+
+    public Color turn(){
+        if(gameState instanceof WhiteTurn){
+            return Color.WHITE;
+        }
+        if(gameState instanceof BlackTurn){
+            return Color.BLACK;
+        }
+        return null;
     }
 }

@@ -1,5 +1,4 @@
 addClickListener();
-// init();
 
 unicodeMap = {
     "R": "♜",
@@ -34,20 +33,23 @@ function init(){
 function start(){
     let response = postData("/start")
     response.then(function (result){
-        // if(result == 200){
-        //     alert("게임을 시작합니다.")
-        // }
-        // if(result == 400){
-        //     alert("이미 시작 하였습니다.")
-        // }
-        init();
+        if(result == 200){
+            alert("게임을 시작합니다.")
+        }
+        if(result == 201){
+            alert("진행중 게임을 불러옵니다.")
+        }
+        init()
+        showTurn()
+        showWhiteScore()
+        showBlackScore()
     })
 
 }
 
-function move(source, target) {
+async function move(source, target) {
     let response = postData("/move", {source:source.id, target:target.id})
-    response.then(function (result){
+    await response.then(function (result){
         if(result == 400){
             alert("잘못된 움직임 입니다.")
         }
@@ -57,6 +59,47 @@ function move(source, target) {
             document.getElementById(source.id).innerText = "";
         }
     })
+    showTurnReverse()
+    showWhiteScore()
+    showBlackScore()
+}
+
+function showTurn(){
+    fetch('http://localhost:4567/turn')
+        .then(response => response.json())
+        .then(function (turn){
+            document.getElementById("turn").innerText = "TURN: " + turn;
+        });
+}
+
+function showTurnReverse(){
+    fetch('http://localhost:4567/turn')
+        .then(response => response.json())
+        .then(function (turn){
+            if(turn == "BLACK"){
+                turn = "WHITE"
+            }
+            else{
+                turn = "BLACK"
+            }
+            document.getElementById("turn").innerText = "TURN: " + turn;
+        });
+}
+
+function showWhiteScore(){
+    fetch('http://localhost:4567/score/white')
+        .then(response => response.json())
+        .then(function (score){
+            document.getElementById("whiteScore").innerText = "WHITE SCORE: " + score;
+        });
+}
+
+function showBlackScore(){
+    fetch('http://localhost:4567/score/black')
+        .then(response => response.json())
+        .then(function (score){
+            document.getElementById("blackScore").innerText = "BLACK SCORE: " + score;
+        });
 }
 
 function selectPieces(event){

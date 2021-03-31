@@ -3,6 +3,7 @@ package chess;
 import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.dto.PositionDTO;
 import com.google.gson.Gson;
@@ -29,8 +30,21 @@ public class WebUIChessApplication {
 
         get("/pieces", (req,res)->{
            Map<String, String> pieceMap = grid.pieceMap();
-           return new Gson().toJson(pieceMap);
-        });
+           return pieceMap;
+        }, GSON::toJson);
+
+        get("/turn", (req,res)->{
+            Color turn = chessGame.turn();
+            return turn;
+        }, GSON::toJson);
+
+        get("/score/white", (req,res)->{
+            return grid.score(Color.WHITE);
+        }, GSON::toJson);
+
+        get("/score/black", (req,res)->{
+            return grid.score(Color.BLACK);
+        }, GSON::toJson);
 
         post("/move", (req, res) -> {
             PositionDTO positionDTO = GSON.fromJson(req.body(), PositionDTO.class);
@@ -47,14 +61,13 @@ public class WebUIChessApplication {
         });
 
         post("/start", (req, res) -> {
-//            try{
+            try{
                 chessGame.start();
-                return null;
-//                return 200;
-//            }
-//            catch (IllegalArgumentException error){
-//                return 400;
-//            }
+                return 200;
+            }
+            catch (IllegalArgumentException error){
+                return 201;
+            }
         });
     }
 
