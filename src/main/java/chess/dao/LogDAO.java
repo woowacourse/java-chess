@@ -18,4 +18,11 @@ public class LogDAO {
         statement.setString(3, endPoint);
         statement.executeUpdate();
     }
+
+    public void deleteLogByRoomId(String roomId) throws SQLException {
+        String query = "DELETE FROM log WHERE room_id = ?";
+        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+        statement.setString(1, roomId);
+        statement.executeUpdate();
+    }
 }

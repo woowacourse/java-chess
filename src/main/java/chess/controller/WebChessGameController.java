@@ -26,7 +26,7 @@ public class WebChessGameController {
         get("/", home(new RoomDAO(connectDB)));
         post("/createNewGame", newRoom(connectDB));
         get("/enter", enterRoom());
-        post("/start", gameSetting(chessGame));
+        post("/start", gameSetting(chessGame, connectDB));
         post("/myTurn", "application/json", currentTurn(chessGame), new JsonTransformer());
         post("/movablePositions", movablePositions(chessGame), new JsonTransformer());
         post("/move", "application/json", move(chessGame, connectDB), new JsonTransformer());
@@ -60,14 +60,16 @@ public class WebChessGameController {
         };
     }
 
-    private Route gameSetting(ChessGame chessGame) {
+    private Route gameSetting(ChessGame chessGame, ConnectDB connectDB) {
         return (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomNumber = req.queryParams("room-id");
+            String roomId = req.queryParams("room-id");
             chessGame.initialize();
             // history db 지우기
+            LogDAO logDAO = new LogDAO(connectDB);
+            logDAO.deleteLogByRoomId(roomId);
             gameInformation(chessGame, model);
-            model.put("number", roomNumber);
+            model.put("number", roomId);
             return render(model, "chess.html");
         };
     }
