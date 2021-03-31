@@ -87,6 +87,12 @@
         {{#jsonFormatChessBoard}}
             <div id="jsonFormatChessBoard" style="display: none">{{.}}</div>
         {{/jsonFormatChessBoard}}
+        {{#whiteScore}}
+            <div id="whiteScore" style="display: none">{{.}}</div>
+        {{/whiteScore}}
+        {{#blackScore}}
+            <div id="blackScore" style="display: none">{{.}}</div>
+        {{/blackScore}}
         <script type="text/javascript" src="./chess.js"></script>
     </body>
 </html>

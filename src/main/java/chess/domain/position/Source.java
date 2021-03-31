@@ -12,6 +12,7 @@ public class Source {
     }
 
     public static Source valueOf(final Position position, final State state) {
+        Piece piece1 = state.findPiece(position).get();
         Piece piece = state.findPiece(position)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("해당 위치에 기물없음! 입력 값: %s", position)));
         return new Source(piece);
