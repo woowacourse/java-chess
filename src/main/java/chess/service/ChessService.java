@@ -6,9 +6,9 @@ import chess.domain.board.Coordinate;
 import chess.domain.history.Histories;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
-import chess.dto.BoardDTO;
 import chess.dto.MoveRequestDTO;
 import chess.dto.ResultDTO;
+import chess.dto.board.BoardDTO;
 import chess.repository.ChessRepository;
 
 import java.sql.SQLException;
@@ -26,10 +26,10 @@ public class ChessService {
         Histories histories = new Histories(chessRepository.findAllHistoriesByRoomId(roomId));
         histories.restoreChessBoardAsLatest(chessBoard);
         if (histories.isEmpty() || chessBoard.isKingCheckmate()) {
-            return BoardDTO.from(generateDefaultChessBoard(), TeamType.WHITE);
+            return BoardDTO.of(generateDefaultChessBoard(), TeamType.WHITE);
         }
         TeamType nextTeamType = histories.findNextTeamType();
-        return BoardDTO.from(chessBoard, nextTeamType);
+        return BoardDTO.of(chessBoard, nextTeamType);
     }
 
     private ChessBoard generateDefaultChessBoard() {
@@ -44,7 +44,7 @@ public class ChessService {
         TeamType nextTeamType = TeamType.valueOf(moveRequestDTO.getTeamType())
                 .findOppositeTeam();
         updateHistory(moveRequestDTO, roomId);
-        return BoardDTO.from(chessBoard, nextTeamType);
+        return BoardDTO.of(chessBoard, nextTeamType);
     }
 
     private void moveChessBoard(ChessBoard chessBoard, MoveRequestDTO moveRequestDTO) {
@@ -67,7 +67,7 @@ public class ChessService {
         histories.restoreChessBoardAsLatest(chessBoard);
         Result result = chessBoard.calculateScores();
         TeamType winnerTeamType = chessBoard.findWinnerTeam();
-        return ResultDTO.from(result, winnerTeamType);
+        return ResultDTO.of(result, winnerTeamType);
     }
 
     public void resetHistoriesByRoomId(int roomId) throws SQLException {

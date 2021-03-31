@@ -15,7 +15,7 @@ public class ResultDTO {
         this.winnerTeamType = winnerTeamType;
     }
 
-    public static ResultDTO from(Result result, TeamType winnerTeamType) {
+    public static ResultDTO of(Result result, TeamType winnerTeamType) {
         return new ResultDTO(result.getBlackTeamScore(), result.getWhiteTeamScore(), winnerTeamType);
     }
 

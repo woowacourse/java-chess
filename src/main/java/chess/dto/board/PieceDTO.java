@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.board;
 
 import chess.domain.board.Cell;
 import chess.domain.piece.Piece;

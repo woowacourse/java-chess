@@ -1,8 +1,8 @@
 package chess.web;
 
-import chess.dto.BoardDTO;
 import chess.dto.MoveRequestDTO;
 import chess.dto.ResultDTO;
+import chess.dto.board.BoardDTO;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
