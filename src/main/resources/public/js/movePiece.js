@@ -1,11 +1,64 @@
+const $initBoard = document.querySelector("#startButton");
+$initBoard.addEventListener("click", onInitBoard);
+
 const $board = document.querySelector(".board");
 $board.addEventListener("click", onMovePiece);
 
+async function onInitBoard(event) {
+    const response = await fetch("./init", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+    });
+
+    board(await response.json());
+}
+
+function board(board) {
+    vacateAllPositions();
+
+    for (let i = 0; i < 64; i++) {
+        const position = board.squareDtos[i].position;
+        const piece = board.squareDtos[i].piece;
+        const positionTag = $board.querySelector("#" + position);
+        const imgTag = positionTag.firstElementChild;
+
+        if (piece === ".") {                     // 빈 칸일 경우
+            if (imgTag) {
+                positionTag.removeChild(imgTag);
+            }
+            continue;
+        }
+
+        if (piece === piece.toLowerCase()) {    // 소문자 -> 백색 말일 경우
+            const newImgTag = document.createElement("img");
+            newImgTag.src = "/img/whitePieces/" + piece + ".png";
+            positionTag.appendChild(newImgTag);
+        }
+
+        if (piece === piece.toUpperCase()) {    // 대문자 -> 흑색 말일 경우
+            const newImgTag = document.createElement("img");
+            newImgTag.src = "../img/blackPieces/" + piece + ".png";
+            positionTag.appendChild(newImgTag);
+        }
+    }
+}
+
+function vacateAllPositions() {
+    const positions = $board.querySelectorAll(".position");
+    for (const position of positions) {
+        const pieceImage = position.firstElementChild;
+        if (pieceImage) {
+            position.removeChild(pieceImage);
+        }
+    }
+}
+
 async function onMovePiece(event) {
     if (event.target && event.target.parentElement.className === "position") {
+        const position = event.target.parentElement;
         offSelectedPosition();
         offMovableAllPositions();
-        const position = event.target.parentElement;
+
         position.classList.add("selected");
 
         const response = await fetch("./movable", {
@@ -22,6 +75,26 @@ async function onMovePiece(event) {
         return;
     }
 
+    if(event.target && event.target.parentElement.className === "position movable") {
+        const sourcePosition = $board.querySelector(".selected");
+        const targetPosition = event.target.parentElement;
+
+        const response = await fetch("./move", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "source": sourcePosition.id,
+                "target": targetPosition.id
+            })
+        });
+
+        board(await response.json());
+
+        offSelectedPosition();
+        offMovableAllPositions();
+        return;
+    }
+
     if (event.target && event.target.classList.contains("movable")) {
         const sourcePosition = $board.querySelector(".selected");
         const targetPosition = event.target;
@@ -35,13 +108,7 @@ async function onMovePiece(event) {
             })
         });
 
-        const board = await response.json();
-
-        for (let i = 0; i < 64; i++) {
-            console.log("##########" + i);
-            console.log(board.squareDtos[i].position);
-            console.log(board.squareDtos[i].piece);
-        }
+        board(await response.json());
 
         offSelectedPosition();
         offMovableAllPositions();
