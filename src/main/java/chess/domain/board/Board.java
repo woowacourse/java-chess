@@ -29,7 +29,7 @@ public class Board {
         return pickPiece(Position.of(horizontal, vertical));
     }
 
-    private Path ableToPath(final Position source) {
+    public Path movablePath(final Position source) {
         final Piece sourcePiece = pickPiece(source);
         final List<Path> paths = sourcePiece.movablePath(source);
         return Path.filterPaths(paths, source, this);
@@ -41,14 +41,13 @@ public class Board {
     }
 
     private void validateMove(final Position source, final Position target) {
-        if (isUnableToMove(source, target)) {
+        if (isUnmovableMove(source, target)) {
             throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
-    //TODO 메서드명 isUnMovablePath 로 변경하기
-    private boolean isUnableToMove(final Position source, final Position target) {
-        return !ableToPath(source).contains(target);
+    private boolean isUnmovableMove(final Position source, final Position target) {
+        return !movablePath(source).contains(target);
     }
 
     private void movePiece(final Position source, final Position target) {
@@ -62,11 +61,6 @@ public class Board {
 
     private void putEmpty(final Position position) {
         board.put(position, EmptyPiece.getInstance());
-    }
-
-    //TODO 메서드명 movablePath로 변경하기
-    public Path movablePath(final Position source) {
-        return ableToPath(source);
     }
 
     public boolean isKingAlive(final Owner owner) {
