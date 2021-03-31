@@ -52,5 +52,4 @@ public class PieceDAOTest {
         assertThat(pieceDto.isBlack()).isEqualTo(false);
         assertThat(pieceDto.getName()).isEqualTo("k");
     }
-
 }
