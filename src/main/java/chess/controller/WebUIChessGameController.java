@@ -12,13 +12,13 @@ import java.util.List;
 
 public class WebUIChessGameController {
 
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
 
     public WebUIChessGameController() {
-        this.chessGame = new ChessGame(new Board());
     }
 
     public void initStart() {
+        this.chessGame = new ChessGame(new Board());
         this.chessGame.start();
     }
 

@@ -26,6 +26,7 @@ public class WebUIChessApplication {
         });
 
         post("/init", (req, res) -> {
+            webUIChessGameController.initStart();
             return webUIChessGameController.board();
         }, gson::toJson);
 
