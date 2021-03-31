@@ -1,15 +1,10 @@
 package chess.domain.dao;
 
-import chess.db.MySQLConnector;
 import chess.domain.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CommandDaoTest {
     private CommandDao commandDao;
@@ -22,16 +17,10 @@ public class CommandDaoTest {
     }
 
     @Test
-    public void connection() {
-        Connection con = MySQLConnector.getConnection();
-        assertNotNull(con);
-    }
-
-    @Test
     public void addUser() throws Exception {
-        CommandDto commandDto = new CommandDto("start", "1");
+        CommandDto commandDto = new CommandDto("start");
         history.insert(commandDto);
-        commandDao.insert(commandDto);
+        commandDao.insert(commandDto, "1");
     }
 }
 

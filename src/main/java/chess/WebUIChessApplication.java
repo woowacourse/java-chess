@@ -4,6 +4,7 @@ import chess.controller.WebController;
 import chess.db.MySQLConnector;
 import chess.domain.dao.CommandDao;
 import chess.domain.dao.CommandDatabase;
+import chess.domain.dao.HistoryDao;
 import chess.service.ChessService;
 
 import java.sql.SQLException;
@@ -15,13 +16,17 @@ public class WebUIChessApplication {
         staticFiles.location("/public");
 
         final CommandDao commandDao = new CommandDao();
+        final HistoryDao historyDao = new HistoryDao();
         if (MySQLConnector.getConnection() != null) {
              final WebController webController =
-                     new WebController(new ChessService(commandDao), new CommandDatabase(commandDao.selectAll()));
+                     new WebController(
+                             new ChessService(commandDao, historyDao),
+                             new CommandDatabase(commandDao.selectAll())
+                     );
              webController.play();
         }
 
-        final WebController webController = new WebController(new ChessService(commandDao));
+        final WebController webController = new WebController(new ChessService(commandDao, historyDao));
         webController.play();
     }
 }

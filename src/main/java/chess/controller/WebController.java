@@ -46,7 +46,7 @@ public class WebController {
             String command = makeMoveCmd(req.queryParams("source"), req.queryParams("target"));
             try {
                 chessService.move(command);
-                commandDatabase.insert(new CommandDto(command, "1"));
+                commandDatabase.insert(new CommandDto(command));
                 return GSON.toJson(chessService.moveResponse());
             } catch (IllegalArgumentException e) {
                 res.status(400);
@@ -72,6 +72,7 @@ public class WebController {
         post("/play/save", (req, res) -> {
             String name = req.queryParams("name");
             try {
+                chessService.flush(name, commandDatabase);
                 return GSON.toJson(chessService.continueResponse());
             } catch (IllegalArgumentException e) {
                 res.status(400);

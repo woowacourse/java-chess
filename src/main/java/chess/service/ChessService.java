@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.command.Commands;
 import chess.domain.dao.CommandDao;
 import chess.domain.dao.CommandDatabase;
+import chess.domain.dao.HistoryDao;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.utils.BoardInitializer;
@@ -15,10 +16,12 @@ import java.util.Map;
 public class ChessService {
     private ChessGame chessGame;
     private CommandDao commandDao;
+    private HistoryDao historyDao;
 
-    public ChessService(CommandDao commandDao) {
+    public ChessService(CommandDao commandDao, HistoryDao historyDao) {
         this.chessGame = new ChessGame();
         this.commandDao = commandDao;
+        this.historyDao = historyDao;
     }
 
     public void init() throws SQLException {
@@ -40,7 +43,7 @@ public class ChessService {
 
     public void move(String command) throws SQLException {
         chessGame.move(new Commands(command));
-        commandDao.insert(new CommandDto(command, "1"));
+        commandDao.insert(new CommandDto(command) ,"1");
     }
 
     public Map<String, Object> moveResponse() {
@@ -75,5 +78,15 @@ public class ChessService {
 
     public void play() throws SQLException {
         commandDao.clear();
+    }
+
+    public void flush(String name, CommandDatabase commandDatabase) throws SQLException {
+        try {
+            historyDao.insert(name);
+            final int id = historyDao.findIdByName(name);
+            commandDao.insertAll(commandDatabase, String.valueOf(id));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -11,19 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandDao {
-    private final CommandDatabase cmdDatabase = new CommandDatabase();
 
-    public void insert(CommandDto commandDto) throws SQLException {
+    public CommandDao() {}
+
+    public void insertAll(CommandDatabase commandDatabase, String historyId) throws SQLException {
+        final List<CommandDto> commands = commandDatabase.commands();
+        for (CommandDto command : commands) {
+            insert(command, historyId);
+        }
+    }
+
+    public void insert(CommandDto commandDto, String historyId) throws SQLException {
         String query = "INSERT INTO Command (Data, HistoryId) VALUES (?, ?)";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, commandDto.data());
-            preparedStatement.setString(2, commandDto.historyId());
+            preparedStatement.setString(2, historyId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        cmdDatabase.insert(commandDto);
     }
 
     public void clear() throws SQLException {
@@ -34,19 +41,17 @@ public class CommandDao {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        cmdDatabase.clear();
     }
 
     public void delete(CommandDto commandDto) throws SQLException {
         String query = "DELETE FROM Command WHERE HistoryId = ?";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, commandDto.historyId());
+            preparedStatement.setString(1, "1");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        cmdDatabase.delete(commandDto);
     }
 
     public List<CommandDto> selectAll() throws SQLException {
@@ -57,8 +62,7 @@ public class CommandDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next())
                 commands.add(new CommandDto(
-                        rs.getString("Data"),
-                        rs.getString("HistoryId")));
+                        rs.getString("Data")));
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
