@@ -46,9 +46,9 @@ public class ChessDAOImpl implements ChessDAO {
     @Override
     public List<Piece> loadGame(Long gameId) {
         try (Connection con = sql2o.open()) {
-            List<ChessDbDTO> results = con.createQuery("select * from game where gameid=:gameId")
+            List<ChessDTO> results = con.createQuery("select * from game where gameid=:gameId")
                 .addParameter("gameId", gameId)
-                .executeAndFetch(ChessDbDTO.class);
+                .executeAndFetch(ChessDTO.class);
             return results.stream()
                 .map(result -> {
                     Position position = converter.convert(result.getPosition());

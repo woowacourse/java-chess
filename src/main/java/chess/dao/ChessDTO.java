@@ -2,7 +2,7 @@ package chess.dao;
 
 import java.util.Objects;
 
-public class ChessDbDTO {
+public class ChessDTO {
 
     private Long id;
     private Long gameid;
@@ -58,7 +58,7 @@ public class ChessDbDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ChessDbDTO that = (ChessDbDTO) o;
+        ChessDTO that = (ChessDTO) o;
         return Objects.equals(getId(), that.getId()) && Objects
             .equals(getGameid(), that.getGameid()) && Objects
             .equals(getName(), that.getName()) && getColor() == that.getColor()

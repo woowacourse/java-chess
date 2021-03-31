@@ -18,12 +18,12 @@ public class ChessController {
     private final StringPositionConverter stringPositionConverter;
     private final ChessRepository chessRepository;
 
-    public ChessController() {
+    public ChessController(ChessRepository chessRepository) {
         this.stringPositionConverter = new StringPositionConverter();
-        this.chessRepository = new ChessRepository();
+        this.chessRepository = chessRepository;
     }
 
-    public List<PieceDTO> loadGame(Long id) {
+    public List<PieceDTO> startGame(Long id) {
         ChessGame chessGame = chessRepository.createGame(id);
         List<Piece> pieces = chessGame.pieces().asList();
         return pieces.stream()

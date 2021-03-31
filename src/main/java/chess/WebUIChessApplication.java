@@ -6,6 +6,8 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.ChessController;
+import chess.dao.ChessDAOImpl;
+import chess.repository.ChessRepositoryImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         staticFiles.location("/static");
-        ChessController chessController = new ChessController();
+        ChessController chessController = new ChessController(new ChessRepositoryImpl(new ChessDAOImpl()));
         ObjectMapper objectMapper = new ObjectMapper();
 
         get("/", (req, res) -> {
@@ -24,7 +26,7 @@ public class WebUIChessApplication {
         get("/:gameId/pieces", (req, res) -> {
             String gameId = req.params(":gameId");
             return objectMapper
-                .writeValueAsString(chessController.loadGame(Long.parseLong(gameId)));
+                .writeValueAsString(chessController.startGame(Long.parseLong(gameId)));
         });
 
         get("/:gameId/roundstatus", (req, res) -> {
