@@ -13,7 +13,7 @@ import java.util.Map;
 public class ChessGame {
     private static final int SOURCE_INDEX = 1;
     private static final int DESTINATION_INDEX = 2;
-    public static final int MOVE_ARGUMENTS_COUNT = 3;
+    private static final int MOVE_ARGUMENTS_COUNT = 3;
 
     private final Turn turn;
     private Board board;
@@ -73,5 +73,9 @@ public class ChessGame {
 
     public Map<Point, Square> board() {
         return board.board();
+    }
+
+    public String winner() {
+        return state.winner();
     }
 }

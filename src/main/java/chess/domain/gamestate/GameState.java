@@ -1,6 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.board.Board;
+import chess.domain.board.Team;
 
 public interface GameState {
 
@@ -15,4 +16,6 @@ public interface GameState {
     Board board();
 
     boolean isRunning();
+
+    String winner();
 }

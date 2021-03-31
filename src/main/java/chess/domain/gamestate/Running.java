@@ -39,4 +39,9 @@ public class Running implements GameState {
     public boolean isRunning() {
         return board.isRunning();
     }
+
+    @Override
+    public String winner() {
+        return "무승부입니다.";
+    }
 }

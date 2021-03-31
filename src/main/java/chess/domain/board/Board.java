@@ -54,4 +54,12 @@ public class Board {
     public Map<Point, Square> board() {
         return squares;
     }
+
+    public String winner() {
+        return squares.values().stream()
+                .filter(Square::isKing)
+                .map(Square::team)
+                .findFirst()
+                .orElseGet(() -> "무승부 입니다.");
+    }
 }

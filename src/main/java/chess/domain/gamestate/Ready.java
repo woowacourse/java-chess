@@ -69,4 +69,9 @@ public class Ready implements GameState {
     public boolean isRunning() {
         return board.isRunning();
     }
+
+    @Override
+    public String winner() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않습니다.");
+    }
 }

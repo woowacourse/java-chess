@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
+import chess.domain.board.Team;
 import chess.dto.ErrorDto;
 import chess.dto.WebBoardDto;
 import spark.ModelAndView;
@@ -19,7 +20,7 @@ public class WebUIChessApplication {
         ChessGame chessGame = new ChessGame(new Board());
         chessGame.start();
 
-        get("/", (req, res) -> {
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "init.html");
         });
@@ -27,6 +28,8 @@ public class WebUIChessApplication {
         post("/main", (req, res) -> {
             WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
             Map<String, Object> model = webBoardDto.getBoardDto();
+            model.put("whiteScore", Double.toString(chessGame.score(Team.WHITE)));
+            model.put("blackScore", Double.toString(chessGame.score(Team.BLACK)));
             return render(model, "main.html");
         });
 
@@ -36,6 +39,8 @@ public class WebUIChessApplication {
                 chessGame.move(Arrays.asList("move", req.queryParams("source"), req.queryParams("target")));
                 WebBoardDto movedBoardDto = new WebBoardDto(chessGame.board());
                 Map<String, Object> model = movedBoardDto.getBoardDto();
+                model.put("whiteScore", Double.toString(chessGame.score(Team.WHITE)));
+                model.put("blackScore", Double.toString(chessGame.score(Team.BLACK)));
                 return render(model, "main.html");
             } catch(IllegalArgumentException e) {
                 Map<String, Object> model = webBoardDto.getBoardDto();
@@ -44,6 +49,15 @@ public class WebUIChessApplication {
                 return render(model, "main.html");
             }
         });
+
+        if (!chessGame.isRunning()) {
+            get("/chess/move", (req, res) -> {
+                WebBoardDto boardDto = new WebBoardDto(chessGame.board());
+                Map<String, Object> model = boardDto.getBoardDto();
+                model.put("winner", chessGame.winner());
+                return render(model, "main.html");
+            });
+        }
 
         post("/restart", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

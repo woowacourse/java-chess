@@ -9,6 +9,11 @@
 <body>
   <br/>
   <h1>체스게임</h1>
+  <div>
+    화이트 현재 점수 : {{whiteScore}}
+    <br/>
+    블랙 현재 점수 : {{blackScore}}
+  </div>
   <div class="wrapper">
     <div class="chess-board">
       <div class="chess-file">
@@ -275,6 +280,11 @@
     {{#error}}
       {{{error}}}
     {{/error}}
+  </script>
+  <script>
+    {{#winner}}
+      {{{winner}}}
+    {{/winner}}
   </script>
 </body>
 </html>

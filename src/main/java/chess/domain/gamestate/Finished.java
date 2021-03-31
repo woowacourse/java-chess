@@ -1,6 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.board.Board;
+import chess.domain.board.Team;
 
 public class Finished implements GameState {
     private Board board;
@@ -37,5 +38,10 @@ public class Finished implements GameState {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public String winner() {
+        return board.winner();
     }
 }
