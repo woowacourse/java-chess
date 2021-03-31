@@ -2,14 +2,16 @@ package chess.dto;
 
 import java.util.List;
 
-public class BoardDto {
+public class ChessGameDto {
 
     private final List<SquareDto> squareDtos;
     private final String state;
+    private final ScoreDto score;
 
-    public BoardDto(final List<SquareDto> squareDtos, final String state) {
+    public ChessGameDto(final List<SquareDto> squareDtos, final String state, final ScoreDto score) {
         this.squareDtos = squareDtos;
         this.state = state;
+        this.score = score;
     }
 
     public List<SquareDto> getSquareDtos() {
@@ -17,6 +19,10 @@ public class BoardDto {
     }
 
     public String getState() {
-        return state;
+        return this.state;
+    }
+
+    public ScoreDto getScore() {
+        return this.score;
     }
 }

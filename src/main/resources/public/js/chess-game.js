@@ -10,42 +10,49 @@ async function onInitBoard(event) {
         headers: {'Content-Type': 'application/json'}
     });
 
-    boardAndState(await response.json());
+    boardAndInfo(await response.json());
 }
 
-function state(state) {
-    let message;
+function state(chessGame) {
+    let message1 = "";
+    let message2 = "";
+    let score = "";
 
-    if (state.includes("Init")) {
-        message = "게임 시작 전 입니다.";
+    if (chessGame.state.includes("WhiteTurn")) {
+        message1 = "백색 차례 입니다.";
     }
-    if (state.includes("WhiteTurn")) {
-        message = "백색 차례 입니다.";
+    if (chessGame.state.includes("BlackTurn")) {
+        message1 = "흑색 차례 입니다.";
     }
-    if (state.includes("BlackTurn")) {
-        message = "흑색 차례 입니다.";
+    if (chessGame.state.includes("WhiteWin")) {
+        message1 = "🎉 백색의 승리입니다! 🎉";
+        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
+        score = "백색 " + chessGame.score.white + "점  /  ";
+        score += "흑색 " + chessGame.score.black + "점";
+
     }
-    if (state.includes("WhiteWin")) {
-        message = "백색의 승리입니다!";
-    }
-    if (state.includes("BlackWin")) {
-        message = "흑색의 승리입니다!";
-    }
-    if (state.includes("End")) {
-        message = "게임이 종료되었습니다.";
+    if (chessGame.state.includes("BlackWin")) {
+        message1 = "🎉 흑색의 승리입니다! 🎉";
+        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
+        score = "백색 " + chessGame.score.white + "점  /  ";
+        score += "흑색 " + chessGame.score.black + "점";
     }
 
-    const pTag = document.querySelector(".current-chess-game-message");
-    pTag.innerText = message;
+    const messageTag1 = document.querySelector(".current-chess-game-message1");
+    const messageTag2 = document.querySelector(".current-chess-game-message2");
+    const scoreTag = document.querySelector(".current-chess-game-score");
+    messageTag1.innerText = message1;
+    messageTag2.innerText = message2;
+    scoreTag.innerText = score;
 }
 
-function boardAndState(board) {
-    state(board.state);
+function boardAndInfo(chessGame) {
+    state(chessGame);
     vacateAllPositions();
 
     for (let i = 0; i < 64; i++) {
-        const position = board.squareDtos[i].position;
-        const piece = board.squareDtos[i].piece;
+        const position = chessGame.squareDtos[i].position;
+        const piece = chessGame.squareDtos[i].piece;
         const positionTag = $board.querySelector("#" + position);
         const imgTag = positionTag.firstElementChild;
 
@@ -102,7 +109,8 @@ async function onMovePiece(event) {
         return;
     }
 
-    if(event.target && event.target.parentElement.className === "position movable") {
+    if (event.target && event.target.parentElement.className
+        === "position movable") {
         const sourcePosition = $board.querySelector(".selected");
         const targetPosition = event.target.parentElement;
 
@@ -115,7 +123,7 @@ async function onMovePiece(event) {
             })
         });
 
-        boardAndState(await response.json());
+        boardAndInfo(await response.json());
 
         offSelectedPosition();
         offMovableAllPositions();
@@ -135,7 +143,7 @@ async function onMovePiece(event) {
             })
         });
 
-        boardAndState(await response.json());
+        boardAndInfo(await response.json());
 
         offSelectedPosition();
         offMovableAllPositions();

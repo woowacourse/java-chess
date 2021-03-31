@@ -3,12 +3,14 @@ package chess.utils;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Ypoint;
+import chess.domain.game.Score;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
-import chess.dto.BoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.MovableResponseDto;
 import chess.dto.PositionDto;
 import chess.dto.RankDto;
+import chess.dto.ScoreDto;
 import chess.dto.SquareDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class DtoAssembler {
         return rankDtos;
     }
 
-    public static BoardDto board(final Board board, State state) {
+    public static ChessGameDto board(final Board board, State state, Score score) {
         List<SquareDto> squareDtos = new ArrayList<>();
         Map<Position, Piece> squares = board.squares();
 
@@ -39,7 +41,9 @@ public class DtoAssembler {
             squareDtos.add(new SquareDto(position.toString(), piece.getSymbol()));
         }
 
-        return new BoardDto(squareDtos, state.toString());
+        ScoreDto scoreDto = new ScoreDto(score.white(), score.black());
+
+        return new ChessGameDto(squareDtos, state.toString(), scoreDto);
     }
 
     private static List<String> ypointSymbols(Board board, Ypoint ypoint) {

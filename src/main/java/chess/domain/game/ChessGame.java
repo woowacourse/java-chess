@@ -58,4 +58,9 @@ public class ChessGame {
     public State state() {
         return this.state.state();
     }
+
+    public Score score() {
+        ScoreCalculator scoreCalculator = new ScoreCalculator(this.state.board());
+        return new Score(scoreCalculator.totalWhiteScore(), scoreCalculator.totalBlackScore());
+    }
 }
