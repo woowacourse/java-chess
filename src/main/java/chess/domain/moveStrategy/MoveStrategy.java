@@ -1,6 +1,6 @@
 package chess.domain.moveStrategy;
 
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 
 import java.util.List;
 

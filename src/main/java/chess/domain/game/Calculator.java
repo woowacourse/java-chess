@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.location.Column;
+import chess.domain.location.Position;
+import chess.domain.location.Row;
 
 import java.util.Arrays;
 import java.util.HashMap;

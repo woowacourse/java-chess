@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.location;
 
 public class Vector {
     private final int column;

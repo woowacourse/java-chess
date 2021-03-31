@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.moveStrategy.BishopMove;
 import chess.domain.moveStrategy.MoveStrategy;
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 
 import java.util.List;
 

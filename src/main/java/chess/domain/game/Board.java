@@ -3,7 +3,7 @@ package chess.domain.game;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;

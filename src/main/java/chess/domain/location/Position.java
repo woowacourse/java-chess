@@ -1,6 +1,4 @@
-package chess.domain.position;
-
-import chess.domain.piece.Vector;
+package chess.domain.location;
 
 import java.util.*;
 

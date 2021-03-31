@@ -4,7 +4,7 @@ import chess.domain.moveStrategy.MoveStrategy;
 import chess.domain.moveStrategy.PawnDoubleMove;
 import chess.domain.moveStrategy.PawnKillMove;
 import chess.domain.moveStrategy.PawnSingleMove;
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 
 import java.util.List;
 

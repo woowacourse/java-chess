@@ -3,7 +3,7 @@ package chess.domain.game;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;

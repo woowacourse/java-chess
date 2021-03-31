@@ -28,7 +28,7 @@ public enum Command {
     private void setOptions(String[] argv) {
         validateOptionSize(argv);
         for (int i = 0; i < optionCount; i++) {
-            this.options.set(i, argv[i+1]);
+            this.options.set(i, argv[i + 1]);
         }
     }
 

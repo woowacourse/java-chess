@@ -1,4 +1,4 @@
-package chess.domain.position;
+package chess.domain.location;
 
 public enum Column {
     A("a"),

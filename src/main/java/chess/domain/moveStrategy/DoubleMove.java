@@ -1,8 +1,8 @@
 package chess.domain.moveStrategy;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Vector;
-import chess.domain.position.Position;
+import chess.domain.location.Vector;
+import chess.domain.location.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;

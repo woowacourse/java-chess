@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Row;
+import chess.domain.location.Row;
 
 public enum Color {
     BLACK,

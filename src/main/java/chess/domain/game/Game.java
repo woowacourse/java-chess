@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.location.Position;
 import chess.domain.state.End;
 import chess.domain.state.Init;
 import chess.domain.state.State;
