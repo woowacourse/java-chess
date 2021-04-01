@@ -27,7 +27,7 @@ public final class Pawn extends Piece {
     }
 
     private String makeImage() {
-        if(this.color.isSameAs(Color.BLACK)) {
+        if (this.color.isSameAs(Color.BLACK)) {
             return "black_pawn.png";
         }
         return "white_pawn.png";

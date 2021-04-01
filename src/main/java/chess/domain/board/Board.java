@@ -6,7 +6,6 @@ import java.util.Map;
 import chess.domain.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Piece;
 

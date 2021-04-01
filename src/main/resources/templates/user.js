@@ -2,7 +2,7 @@ let $signup = document.querySelector("#signup");
 
 $signup.addEventListener('click', addUser);
 
-async function addUser() {
+function addUser() {
     location.replace('/adduser');
 }
 
@@ -15,6 +15,7 @@ function alertUser() {
     // if(document.getElementById("name").onsubmit == false)
     // alert('로그인 성공');
 }
+
 // async function startGame(event) {
 //     console.log(event.target);
 //     let data = {

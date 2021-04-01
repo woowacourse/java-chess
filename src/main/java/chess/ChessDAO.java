@@ -39,7 +39,6 @@ public class ChessDAO {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
         return con;
     }
 
@@ -55,77 +54,88 @@ public class ChessDAO {
 
     public void addUser(User user) throws SQLException {
         String query = "INSERT INTO user (user_name, user_password) VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, user.getId());
-        System.out.println(user.getId());
-        pstmt.setString(2, user.getPwd());
-        pstmt.executeUpdate();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, user.getId());
+        preparedStatement.setString(2, user.getPwd());
+        preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 
     public User findByUserId(String userId) throws SQLException {
         String query = "SELECT * FROM user WHERE user_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) return null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (!rs.next())
+            return null;
         return new User(rs.getString("user_name"), rs.getString("user_password"));
     }
 
     public String findUserIdByUser(User user) throws SQLException {
         String query = "SELECT user_id FROM user WHERE user_name = ? AND user_password = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, user.getId());
-        pstmt.setString(2, user.getPwd());
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) return null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, user.getId());
+        preparedStatement.setString(2, user.getPwd());
+        ResultSet rs = preparedStatement.executeQuery();
+        if (!rs.next())
+            return null;
         return rs.getString("user_id");
     }
 
     public User findByUserNameAndPwd(String name, String password) throws SQLException {
         String query = "select * from user where user_name = ? and user_password = ?;";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, name);
-        pstmt.setString(2, password);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) return null;
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, password);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (!rs.next())
+            return null;
+        // closeConnection(connection);
         return new User(rs.getString("user_name"), rs.getString("user_password"));
     }
 
     public void addBoard(String userId, String boardInfo, Color color) throws SQLException {
         String query = "INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        if(findBoard(userId) != null) {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        if (findBoard(userId) != null) {
             deleteBoard(userId);
         }
-        pstmt.setString(1, userId);
-        pstmt.setString(2, boardInfo);
-        pstmt.setString(3, color.name());
-        pstmt.executeUpdate();
+        preparedStatement.setString(1, userId);
+        preparedStatement.setString(2, boardInfo);
+        preparedStatement.setString(3, color.name());
+        preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 
-    public void deleteBoard(String userId) throws SQLException{
+    public void deleteBoard(String userId) throws SQLException {
         String query = "DELETE FROM board WHERE user_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
-        pstmt.executeUpdate();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 
     public BoardDto findBoard(String userId) throws SQLException {
         String query = "SELECT * FROM board WHERE user_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
-        ResultSet rs = pstmt.executeQuery();
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, userId);
+        ResultSet rs = preparedStatement.executeQuery();
         Map<Point, Piece> chessBoard = new HashMap<>();
-
         if (!rs.next()) {
             return null;
         }
-
         String info = rs.getString("board_info");
-        for(int i = 0; i< 8; i++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Point point = Point.valueOf(i, j);
-                Piece piece = PieceType.findPiece(String.valueOf(info.charAt(i*8+j)));  //"K"
+                Piece piece = PieceType.findPiece(String.valueOf(info.charAt(i * 8 + j)));  //"K"
                 chessBoard.put(point, piece);
             }
         }

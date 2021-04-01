@@ -8,8 +8,8 @@ $whiteScore.addEventListener('click', toggleScore);
 $exit.addEventListener('click', toggleExit);
 
 async function hi() {
-    for (let j = 1; j<= 8; j++) {
-        for(let i = 0; i<8;i++) {
+    for (let j = 1; j <= 8; j++) {
+        for (let i = 0; i < 8; i++) {
             let row = String.fromCharCode('a'.charCodeAt(0) + i);
             let point = row + j;
             await fetch('/board', {
@@ -23,9 +23,9 @@ async function hi() {
 }
 
 function renderImage(input) {
-    if(input === "") {
+    if (input === "") {
         return `<img className="piece">`;
-    } else{
+    } else {
         return `<img src=${input} class="piece">`;
     }
 }
@@ -82,20 +82,19 @@ async function move(sourcePoint, targetPoint) {
         }
     }).then(res => res.json());
 
-    if(response === 333) {
+    if (response === 333) {
         movePiece(sourcePoint, targetPoint);
         document.getElementById("notice").innerText = "게임 끝!";
-        if(confirm('킹이 죽어 게임이 끝났습니다.\n 다시 게임하시겠습니까?')){
+        if (confirm('킹이 죽어 게임이 끝났습니다.\n다시 게임하시겠습니까?')) {
             await gameFinishedAlert(targetPoint);
-            fetch('/rerun')
+            fetch('/restart')
                 .then(location.replace("/chess"));
         } else {
             await gameFinishedAlert(targetPoint);
             makeBoardInfo();
-            // location.replace("/");
         }
     }
-    if(response === 200) {
+    if (response === 200) {
         await fetch('/turn', {
             method: 'POST'
         }).then(function (repsponse) {
@@ -131,7 +130,7 @@ function getPoint(event) {
 
 function renderScore(color, score) {
     let scoreDiv = `${score}`;
-    if(color === "BLACK") {
+    if (color === "BLACK") {
         $blackScore.innerHTML = scoreDiv;
     } else {
         $whiteScore.innerHTML = scoreDiv;
@@ -141,7 +140,7 @@ function renderScore(color, score) {
 async function toggleScore() {
     let color = event.target;
     color.classList.toggle("selected");
-    if(color.classList.contains("selected")){
+    if (color.classList.contains("selected")) {
         score(color);
     } else {
         color.innerText = "점수 보기";
@@ -163,10 +162,10 @@ async function score(color) {
 async function makeBoardInfo() {
     let boardInfo = "";
     for (let j = 8; j >= 1; j--) {
-        for(let i = 0; i<8;i++) {
+        for (let i = 0; i < 8; i++) {
             let row = String.fromCharCode('a'.charCodeAt(0) + i);
             let point = row + j;
-            await fetch('/piecename', {
+            await fetch('/piece', {
                 method: 'POST',
                 body: point,
             }).then(res => res.json()).then(data => {

@@ -153,8 +153,8 @@ public enum PieceType {
         }
     };
 
-    private final List<Integer> column;
     protected final String pieceName;
+    private final List<Integer> column;
 
     PieceType(List<Integer> column, String pieceName) {
         this.column = column;
@@ -174,7 +174,6 @@ public enum PieceType {
     public static Piece findPiece(int row, int column) {
         return matchColumn(column).create(row, column);
     }
-
 
     public static Piece findPiece(String name) {
         return Arrays.stream(PieceType.values())

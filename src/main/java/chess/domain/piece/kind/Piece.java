@@ -37,9 +37,11 @@ public abstract class Piece {
         checkCorrectDirection(Direction.findDirection(source, target));
     }
 
-    public void checkCorrectDistance(Point source, Point target, Piece targetPiece) {}
+    public void checkCorrectDistance(Point source, Point target, Piece targetPiece) {
+    }
 
-    public void checkCorrectDirection(Direction direction) {}
+    public void checkCorrectDirection(Direction direction) {
+    }
 
     public boolean isKnight() {
         return false;

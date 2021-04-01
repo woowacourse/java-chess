@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import java.util.Arrays;
-
 public enum Color {
     WHITE("백"),
     BLACK("흑"),

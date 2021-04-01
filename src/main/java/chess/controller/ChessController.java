@@ -35,7 +35,7 @@ public final class ChessController {
         ChessGame chessGame = new ChessGame();
         OutputView.printBoard(chessGame);
         while (true) {
-            if(chessGame.isEnd() || isFinished(chessGame)) {
+            if (chessGame.isEnd() || isFinished(chessGame)) {
                 break;
             }
         }

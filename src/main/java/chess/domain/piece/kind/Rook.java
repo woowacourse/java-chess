@@ -20,7 +20,7 @@ public final class Rook extends Piece {
     }
 
     private String makeImage() {
-        if(this.color.isSameAs(Color.BLACK)) {
+        if (this.color.isSameAs(Color.BLACK)) {
             return "black_rook.png";
         }
         return "white_rook.png";

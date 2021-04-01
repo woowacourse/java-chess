@@ -21,7 +21,7 @@ public final class Bishop extends Piece {
     }
 
     private String makeImage() {
-        if(this.color.isSameAs(Color.BLACK)) {
+        if (this.color.isSameAs(Color.BLACK)) {
             return "black_bishop.png";
         }
         return "white_bishop.png";

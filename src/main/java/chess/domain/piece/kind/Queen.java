@@ -13,7 +13,7 @@ public final class Queen extends Piece {
     }
 
     private String makeImage() {
-        if(this.color.isSameAs(Color.BLACK)) {
+        if (this.color.isSameAs(Color.BLACK)) {
             return "black_queen.png";
         }
         return "white_queen.png";

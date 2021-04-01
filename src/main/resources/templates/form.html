@@ -7,13 +7,13 @@
 <body>
 <h1>회원가입을 진행합니다.</h1>
 <form action="/signup" method="post">
-    이름: <input type="text" name="name" id="name">
+    이름: <input id="name" name="name" type="text">
     <br>
-    비밀번호: <input type="text" name="password" id="password">
+    비밀번호: <input id="password" name="password" type="text">
     <br>
-    <input type="submit" value="회원가입" onclick=alertSuccess()>
+    <input onclick=alertSuccess() type="submit" value="회원가입">
 </form>
 </body>
-<script src = "user.js">
+<script src="user.js">
 </script>
 </html>
