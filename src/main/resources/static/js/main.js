@@ -1,16 +1,3 @@
-const BRook = "../img/BR.png";
-const BKnight = "../img/BN.png";
-const BBishop = "../img/BB.png";
-const BQueen = "../img/BQ.png";
-const BKing = "../img/BK.png";
-const BPawn = "../img/BP.png";
-const WPawn = "../img/WP.png";
-const WRook = "../img/WR.png";
-const WKnight = "../img/WN.png";
-const WBishop = "../img/WB.png";
-const WQueen = "../img/WQ.png";
-const WKing = "../img/WK.png";
-
 let $chessBoard = document.querySelector(".chessBoard");
 const button = document.querySelector("button");
 let gameFinished = false;
@@ -39,13 +26,11 @@ function initChessBoard() {
             chessBoardColumn.style = initChessBoardColor(i, j);
 
             let pieceImg = document.createElement("img");
-            let positionPiece = initPieceImage(i, j);
 
-            if (positionPiece === "") {
+            if (initPieceImage(i, j) === "") {
                 pieceImg.style = "display: none";
             }
-            pieceImg.src = positionPiece;
-
+            pieceImg.src = "../img/" + initPieceImage(i, j) + ".png";
             chessBoardColumn.id = initPiecePosition(i, j);
             chessBoardColumn.appendChild(pieceImg);
             chessBoardRow.appendChild(chessBoardColumn);
@@ -86,39 +71,33 @@ function initPiecePosition(row, column) {
 }
 
 function initPieceImage(row, column) {
+    const blackSymbol = "B";
+    const whiteSymbol = "W";
+    const generalColumn = {
+        0: "R",
+        1: "K",
+        2: "B",
+        3: "Q",
+        4: "K",
+        5: "B",
+        6: "K",
+        7: "R",
+    };
+    const pawnSymbol = "P";
+
     if (row === 0) {
-        const blackColumn = {
-            0: BRook,
-            1: BKnight,
-            2: BBishop,
-            3: BQueen,
-            4: BKing,
-            5: BBishop,
-            6: BKnight,
-            7: BRook,
-        };
-        return blackColumn[column];
+        return blackSymbol + generalColumn[column];
     }
 
     if (row === 1) {
-        return BPawn;
+        return blackSymbol + pawnSymbol;
     }
     if (row === 6) {
-        return WPawn;
+        return whiteSymbol + pawnSymbol;
     }
 
     if (row === 7) {
-        const whiteColumn = {
-            0: WRook,
-            1: WKnight,
-            2: WBishop,
-            3: WQueen,
-            4: WKing,
-            5: WBishop,
-            6: WKnight,
-            7: WRook,
-        };
-        return whiteColumn[column];
+        return whiteSymbol + generalColumn[column];
     }
     return "";
 }

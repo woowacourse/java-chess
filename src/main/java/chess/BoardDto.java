@@ -25,10 +25,8 @@ public class BoardDto {
             String positionName = position.column().value() + position.row().value();
             result.put(positionName, pieceName);
         }
-
         this.board = result;
     }
-
     public Map<String, String> getBoard() {
         return board;
     }
