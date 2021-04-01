@@ -92,7 +92,8 @@ async function showTurn() {
 }
 
 async function showTurnReverse() {
-    let turn = fetch('http://localhost:4567/turn')
+    let turn = await fetch('http://localhost:4567/turn')
+    turn = await turn.json()
     if (turn === "BLACK") {
         turn = "WHITE"
     } else {
