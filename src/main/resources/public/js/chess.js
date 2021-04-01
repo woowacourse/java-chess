@@ -77,8 +77,7 @@ async function move(source, target) {
         alert("잘못된 움직임 입니다.")
     }
     if (response === 200) {
-        let sourceText = document.getElementById(source.id).textContent;
-        document.getElementById(target.id).innerText = sourceText;
+        document.getElementById(target.id).innerText = document.getElementById(source.id).textContent;
         document.getElementById(source.id).innerText = "";
     }
     showTurnReverse()
@@ -94,7 +93,7 @@ async function showTurn() {
 
 async function showTurnReverse() {
     let turn = fetch('http://localhost:4567/turn')
-    if (turn == "BLACK") {
+    if (turn === "BLACK") {
         turn = "WHITE"
     } else {
         turn = "BLACK"

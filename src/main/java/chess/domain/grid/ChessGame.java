@@ -13,6 +13,8 @@ import chess.domain.state.WhiteTurn;
 import java.util.Map;
 
 public final class ChessGame {
+    private static final int POSITION_START_INDEX = 1;
+    private static final int POSITION_END_INDEX = 3;
     private Grid grid;
     private GameState gameState;
     private boolean gameOver;
@@ -21,6 +23,13 @@ public final class ChessGame {
     public ChessGame(final Grid grid) {
         this.grid = grid;
         gameState = new Ready();
+    }
+
+    public final void reset() {
+        this.gameState = new Ready();
+        this.gameOver = false;
+        this.winner = null;
+        this.grid = new Grid(new NormalGridStrategy());
     }
 
     public final Grid grid() {
@@ -70,13 +79,6 @@ public final class ChessGame {
         return null;
     }
 
-    public final void reset() {
-        this.gameState = new Ready();
-        this.gameOver = false;
-        this.winner = null;
-        this.grid = new Grid(new NormalGridStrategy());
-    }
-
     public final Map<String, String> pieceMap() {
         return grid.pieceMap();
     }
@@ -93,55 +95,63 @@ public final class ChessGame {
         String nameAndPosition = chess.getChess();
         String turn = chess.getTurn();
         grid = new Grid(new EmptyGridStrategy());
-        for(int i = 0; i < nameAndPosition.length(); i += 3){
+        for(int i = 0; i < nameAndPosition.length(); i += POSITION_END_INDEX){
             char name = nameAndPosition.charAt(i);
-            String position = nameAndPosition.substring(i+1,i+3);
+            String position = nameAndPosition.substring(i+ POSITION_START_INDEX,i+ POSITION_END_INDEX);
             Position piecePosition = new Position(position);
-
-            if(name=='b'){
-                grid.assign(new Bishop(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='B'){
-                grid.assign(new Bishop(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='k'){
-                grid.assign(new King(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='K'){
-                grid.assign(new King(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='p'){
-                grid.assign(new Pawn(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='P'){
-                grid.assign(new Pawn(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='q'){
-                grid.assign(new Queen(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='Q'){
-                grid.assign(new Queen(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='r'){
-                grid.assign(new Rook(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='R'){
-                grid.assign(new Rook(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='n'){
-                grid.assign(new Knight(Color.WHITE, piecePosition), piecePosition);
-            }
-            if(name=='N'){
-                grid.assign(new Knight(Color.BLACK, piecePosition), piecePosition);
-            }
-            if(name=='.'){
-                grid.assign(new Empty(piecePosition), piecePosition);
-            }
+            distributePieces(grid, name, piecePosition);
         }
+        assignTurn(turn);
+
+    }
+
+    private void assignTurn(String turn) {
         if(turn.equals("BLACK")){
             gameState = new BlackTurn();
             return;
         }
         gameState = new WhiteTurn();
+    }
+
+    private void distributePieces(final Grid grid, char name, Position piecePosition){
+        if(name=='b'){
+            grid.assign(new Bishop(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='B'){
+            grid.assign(new Bishop(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='k'){
+            grid.assign(new King(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='K'){
+            grid.assign(new King(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='p'){
+            grid.assign(new Pawn(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='P'){
+            grid.assign(new Pawn(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='q'){
+            grid.assign(new Queen(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='Q'){
+            grid.assign(new Queen(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='r'){
+            grid.assign(new Rook(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='R'){
+            grid.assign(new Rook(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='n'){
+            grid.assign(new Knight(Color.WHITE, piecePosition), piecePosition);
+        }
+        if(name=='N'){
+            grid.assign(new Knight(Color.BLACK, piecePosition), piecePosition);
+        }
+        if(name=='.'){
+            grid.assign(new Empty(piecePosition), piecePosition);
+        }
     }
 }
