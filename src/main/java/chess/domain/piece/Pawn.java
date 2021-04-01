@@ -26,10 +26,14 @@ public class Pawn extends Piece {
             throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
         }
         if ((this.position().sameY(BLACK_INITIAL_Y) || this.position().sameY(WHITE_INITIAL_Y)) &&
-                (Math.abs(this.position().yDistance(targetPiece.position())) <= 2)) {
+                (Math.abs(this.position().yDistance(targetPiece.position())) <= 2) && targetPiece.isEmpty()) {
             return;
         }
         if (Math.abs(this.position().yDistance(targetPiece.position())) != 1) {
+            throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
+        }
+        if (Math.abs(this.position().yDistance(targetPiece.position())) == 1 &&
+                this.position().xDistance(targetPiece.position()) == 0 && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
         }
     }

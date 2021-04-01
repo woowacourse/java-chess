@@ -1,9 +1,5 @@
 ## 할일
-* 테스트 코드 싹 다 수정...........
-* pawn 이동을 game으로 옮겨야하나
-* chessBoard 만들기
-* position 이름 생각하기
-* piece한테 메시지 보내서 position 비교하기
+* 게임 상태 관리
 
 ## 완료한 일
 * Position 포장가

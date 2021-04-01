@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
+import chess.domain.state.WhiteTurn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,7 @@ public class ChessGameTest {
     @Test
     void 현재_기물_확인_테스트() {
         ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         assertThat(chessGame.getPiecesByAllPosition().size()).isEqualTo(64);
     }
@@ -28,8 +30,8 @@ public class ChessGameTest {
                 new Bishop(Color.WHITE, Position.of("c8")),
                 new Pawn(Color.BLACK, Position.of("f5")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("c8"), Position.of("f5"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+        whiteTurn.movePieceFromSourceToTarget(Position.of("c8"), Position.of("f5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -52,8 +54,8 @@ public class ChessGameTest {
                 new King(Color.WHITE, Position.of("d8")),
                 new Pawn(Color.BLACK, Position.of("e7")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("e7"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+        whiteTurn.movePieceFromSourceToTarget(Position.of("d8"), Position.of("e7"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -65,8 +67,8 @@ public class ChessGameTest {
                 new King(Color.WHITE, Position.of("d8")),
                 new Pawn(Color.BLACK, Position.of("d7")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d7"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+        whiteTurn.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d7"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -78,8 +80,9 @@ public class ChessGameTest {
                 new Knight(Color.WHITE, Position.of("b8")),
                 new Pawn(Color.BLACK, Position.of("d7")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("b8"), Position.of("d7"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+
+        whiteTurn.movePieceFromSourceToTarget(Position.of("b8"), Position.of("d7"));
 
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
@@ -92,8 +95,9 @@ public class ChessGameTest {
                 new Queen(Color.WHITE, Position.of("d8")),
                 new Pawn(Color.BLACK, Position.of("d1")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+
+        whiteTurn.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
 
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
@@ -106,8 +110,9 @@ public class ChessGameTest {
                 new Queen(Color.WHITE, Position.of("d8")),
                 new Pawn(Color.BLACK, Position.of("d1")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+
+        whiteTurn.movePieceFromSourceToTarget(Position.of("d8"), Position.of("d1"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -119,8 +124,9 @@ public class ChessGameTest {
                 new Rook(Color.WHITE, Position.of("a8")),
                 new Pawn(Color.BLACK, Position.of("a5")));
         Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces);
-        chessGame.movePieceFromSourceToTarget(Position.of("a8"), Position.of("a5"));
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
+
+        whiteTurn.movePieceFromSourceToTarget(Position.of("a8"), Position.of("a5"));
 
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
@@ -135,10 +141,10 @@ public class ChessGameTest {
         Position source = Position.of("a7");
         Position target = Position.of("a5");
 
-        ChessGame chessGame = new ChessGame(pieces);
+        WhiteTurn whiteTurn = new WhiteTurn(pieces);
 
         assertThatThrownBy(() ->
-                chessGame.movePieceFromSourceToTarget(source, target))
+                whiteTurn.movePieceFromSourceToTarget(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

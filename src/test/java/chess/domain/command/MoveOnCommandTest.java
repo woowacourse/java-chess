@@ -35,7 +35,7 @@ public class MoveOnCommandTest {
     @DisplayName("move source위치 target위치 형식이 아닐 시 예외")
     @Test
     void 형식_예외() {
-        ChessGame chessGame = new ChessGame(new Pieces(PieceFactory.initialPieces()), Color.WHITE, new Running());
+        ChessGame chessGame = new ChessGame();
         String[] splitCommand = new String[]{"move", "a2", "a3", "23"};
         assertThatThrownBy(() -> moveOnCommand.execute(chessGame, splitCommand))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -45,15 +45,19 @@ public class MoveOnCommandTest {
     @Test
     void move를_실행() {
         List<Piece> current = Arrays.asList(
+                new King(Color.BLACK, Position.of("e8")),
                 new Bishop(Color.WHITE, Position.of("c8")),
                 new Pawn(Color.BLACK, Position.of("f5")));
-        Pieces pieces = new Pieces(current);
-        ChessGame chessGame = new ChessGame(pieces, Color.WHITE, new Running());
-        String[] splitCommand = new String[]{"move", "c8", "f5"};
-
+        ChessGame chessGame = new ChessGame();
+        String[] splitCommand = new String[]{"move", "a2", "a3"};
+        chessGame.start();
         moveOnCommand.execute(chessGame, splitCommand);
+        boolean result = chessGame.getPiecesByAllPosition()
+                .stream()
+                .anyMatch(piece -> piece.position()
+                                .equals(Position.of("a2")) && piece.isEmpty());
 
-        assertThat(pieces.getPieces().size()).isEqualTo(1);
+        assertThat(result).isTrue();
     }
 
     @DisplayName("체스 보드를 출력해야한다.")
