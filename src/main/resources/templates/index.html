@@ -3,82 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <title>Chessboard using Pure CSS and HTML</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css"></head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <script type="module" src="/js/index.js"></script>
+</head>
 <body>
-
-<div class="chessboard">
+<div id="chessboard" class="chessboard">
     <!-- 1st -->
-    <div class="white">&#9820;</div>
-    <div class="black">&#9822;</div>
-    <div class="white">&#9821;</div>
-    <div class="black">&#9819;</div>
-    <div class="white">&#9818;</div>
-    <div class="black">&#9821;</div>
-    <div class="white">&#9822;</div>
-    <div class="black">&#9820;</div>
+    <div id="a8" class="cell white"></div>
+    <div id="b8" class="cell black"></div>
+    <div id="c8" class="cell white"></div>
+    <div id="d8" class="cell black"></div>
+    <div id="e8" class="cell white"></div>
+    <div id="f8" class="cell black"></div>
+    <div id="g8" class="cell white"></div>
+    <div id="h8" class="cell black"></div>
     <!-- 2nd -->
-    <div class="black">&#9823;</div>
-    <div class="white">&#9823;</div>
-    <div class="black">&#9823;</div>
-    <div class="white">&#9823;</div>
-    <div class="black">&#9823;</div>
-    <div class="white">&#9823;</div>
-    <div class="black">&#9823;</div>
-    <div class="white">&#9823;</div>
+    <div id="a7" class="cell black"></div>
+    <div id="b7" class="cell white"></div>
+    <div id="c7" class="cell black"></div>
+    <div id="d7" class="cell white"></div>
+    <div id="e7" class="cell black"></div>
+    <div id="f7" class="cell white"></div>
+    <div id="g7" class="cell black"></div>
+    <div id="h7" class="cell white"></div>
     <!-- 3th -->
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
+    <div id="a6" class="cell white"></div>
+    <div id="b6" class="cell black"></div>
+    <div id="c6" class="cell white"></div>
+    <div id="d6" class="cell black"></div>
+    <div id="e6" class="cell white"></div>
+    <div id="f6" class="cell black"></div>
+    <div id="g6" class="cell white"></div>
+    <div id="h6" class="cell black"></div>
     <!-- 4st -->
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
+    <div id="a5" class="cell black"></div>
+    <div id="b5" class="cell white"></div>
+    <div id="c5" class="cell black"></div>
+    <div id="d5" class="cell white"></div>
+    <div id="e5" class="cell black"></div>
+    <div id="f5" class="cell white"></div>
+    <div id="g5" class="cell black"></div>
+    <div id="h5" class="cell white"></div>
     <!-- 5th -->
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
+    <div id="a4" class="cell white"></div>
+    <div id="b4" class="cell black"></div>
+    <div id="c4" class="cell white"></div>
+    <div id="d4" class="cell black"></div>
+    <div id="e4" class="cell white"></div>
+    <div id="f4" class="cell black"></div>
+    <div id="g4" class="cell white"></div>
+    <div id="h4" class="cell black"></div>
     <!-- 6th -->
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
-    <div class="black"></div>
-    <div class="white"></div>
+    <div id="a3" class="cell black"></div>
+    <div id="b3" class="cell white"></div>
+    <div id="c3" class="cell black"></div>
+    <div id="d3" class="cell white"></div>
+    <div id="e3" class="cell black"></div>
+    <div id="f3" class="cell white"></div>
+    <div id="g3" class="cell black"></div>
+    <div id="h3" class="cell white"></div>
     <!-- 7th -->
-    <div class="white">&#9817;</div>
-    <div class="black">&#9817;</div>
-    <div class="white">&#9817;</div>
-    <div class="black">&#9817;</div>
-    <div class="white">&#9817;</div>
-    <div class="black">&#9817;</div>
-    <div class="white">&#9817;</div>
-    <div class="black">&#9817;</div>
+    <div id="a2" class="cell white"></div>
+    <div id="b2" class="cell black"></div>
+    <div id="c2" class="cell white"></div>
+    <div id="d2" class="cell black"></div>
+    <div id="e2" class="cell white"></div>
+    <div id="f2" class="cell black"></div>
+    <div id="g2" class="cell white"></div>
+    <div id="h2" class="cell black"></div>
     <!-- 8th -->
-    <div class="black">&#9814;</div>
-    <div class="white">&#9816;</div>
-    <div class="black">&#9815;</div>
-    <div class="white">&#9813;</div>
-    <div class="black">&#9812;</div>
-    <div class="white">&#9815;</div>
-    <div class="black">&#9816;</div>
-    <div class="white">&#9814;</div>
+    <div id="a1" class="cell black"></div>
+    <div id="b1" class="cell white"></div>
+    <div id="c1" class="cell black"></div>
+    <div id="d1" class="cell white"></div>
+    <div id="e1" class="cell black"></div>
+    <div id="f1" class="cell white"></div>
+    <div id="g1" class="cell black"></div>
+    <div id="h1" class="cell white"></div>
+</div>
+<br/>
+<div class="center">
+    <button id="startBtn" class="btn third" type="button">Start</button>
+    <button id="loadBtn" class="btn third" style="display:none;" type="button">Load</button>
+    <button id="resetBtn" class="btn third" type="button">Reset</button>
+    <button id="saveBtn" class="btn third" style="display:none;" type="button">Save</button>
+</div>
+<br/>
+<div class="center">
+    <div id="status"></div>
+    <br/>
+    <div id="whiteScore"></div>
+    <br/>
+    <div id="blackScore"></div>
+    <br/>
 </div>
 </body>
 </html>

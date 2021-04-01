@@ -3,16 +3,16 @@ package chess.controller.web.dto;
 import java.util.Objects;
 
 public class PieceDto {
-    private final String type;
+    private final String notation;
     private final String color;
 
-    public PieceDto(String type, String color) {
-        this.type = type;
+    public PieceDto(String notation, String color) {
+        this.notation = notation;
         this.color = color;
     }
 
-    public String getType() {
-        return type;
+    public String getNotation() {
+        return notation;
     }
 
     public String getColor() {
@@ -20,15 +20,20 @@ public class PieceDto {
     }
 
     @Override
+    public String toString() {
+        return notation;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PieceDto)) return false;
         PieceDto pieceDto = (PieceDto) o;
-        return Objects.equals(getType(), pieceDto.getType()) && Objects.equals(getColor(), pieceDto.getColor());
+        return Objects.equals(getNotation(), pieceDto.getNotation()) && Objects.equals(getColor(), pieceDto.getColor());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getType(), getColor());
+        return Objects.hash(getNotation(), getColor());
     }
 }

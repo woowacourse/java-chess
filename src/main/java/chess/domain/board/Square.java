@@ -4,6 +4,7 @@ import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -51,15 +52,19 @@ public class Square {
         return position;
     }
 
-    public String getNotationText(){
+    public Color getColor() {
+        return getPiece().getColor();
+    }
+
+    public String getNotationText() {
         return piece.getNotationText();
     }
 
-    public boolean isSameRank(Rank rank){
+    public boolean isSameRank(Rank rank) {
         return this.position.isSameRank(rank);
     }
 
-    public boolean isSamePosition(Position position){
+    public boolean isSamePosition(Position position) {
         return this.position.equals(position);
     }
 

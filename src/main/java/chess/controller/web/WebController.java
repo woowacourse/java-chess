@@ -18,7 +18,7 @@ import static spark.Spark.*;
 
 public class WebController {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static final int BAD_REQUEST = 500;
+    private static final int HTTP_STATUS_OK = 200;
     public static final String EMPTY_ERROR_MSG = "";
 
     public static void start() {
@@ -34,31 +34,26 @@ public class WebController {
         exceptionHandling();
     }
 
-    //필요한거 start, stop, load, 끝났는지 확인 끝났는지는 어떻게 체킹할까
-    //isEnd 던질까?
-    // 다시하시겠습니까?
-    //start
-    //
     private static void gameRouting(ChessService chessService) {
         path("/game", () -> {
             get("/start", (request, response) -> {
                 chessService.start();
                 response.type("application/json; charset=utf-8");
-                return gson.toJson(BasicResponseDto.createSuccessResponseDto(new StartResponseDto(true)));
-            });
+                return BasicResponseDto.createSuccessResponseDto(new StartResponseDto(true, chessService.getPieces()));
+            }, gson::toJson);
 
             post("/move", (request, response) -> {
                 MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
                 chessService.move(moveRequestDto.getFromPosition(), moveRequestDto.getToPosition());
                 response.type("application/json; charset=utf-8");
-                return gson.toJson(BasicResponseDto.createSuccessResponseDto(new MoveResponseDto(chessService.isEnd())));
-            });
+                return BasicResponseDto.createSuccessResponseDto(new MoveResponseDto(chessService.isEnd()));
+            }, gson::toJson);
         });
     }
 
     private static void exceptionHandling() {
         exception(IllegalArgumentException.class, (e, request, response) -> {
-            response.status(BAD_REQUEST);
+            response.status(HTTP_STATUS_OK);
             response.type("application/json; charset=utf-8");
             response.body(gson.toJson(new BasicResponseDto(true, e.getMessage(), new WebResponseDto() {
             })));

@@ -36,6 +36,12 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 포지션을 찾을 수 없습니다."));
     }
 
+    public List<Square> getAliveSquares() {
+        return board.stream()
+                .filter(square -> square.getPiece().isNotBlank())
+                .collect(toList());
+    }
+
     public Color findColorByPosition(Position position) {
         Piece colorablePiece = findByPosition(position).getPiece();
         return colorablePiece.getColor();

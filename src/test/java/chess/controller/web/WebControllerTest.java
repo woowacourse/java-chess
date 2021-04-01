@@ -26,7 +26,7 @@ import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
 class WebControllerTest {
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @BeforeEach
     void setUp() {
