@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.piece.Team;
-import java.util.Locale;
 
 public class Turn {
 

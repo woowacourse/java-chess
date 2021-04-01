@@ -24,7 +24,7 @@ public class Position implements Comparable<Position> {
     }
 
     public static Position from(final String position) {
-       return getPositionByCommands(position.split(""));
+        return getPositionByCommands(position.split(""));
     }
 
     private static Position getPositionByCommands(final String[] commands) {
