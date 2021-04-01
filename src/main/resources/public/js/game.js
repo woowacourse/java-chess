@@ -75,7 +75,7 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
 
     let source = xmlDoc.querySelector("#" + sourcePosition);
     let target = xmlDoc.querySelector("#" + targetPosition);
-    let turn = xmlDoc.querySelector("#turn");
+    let turn = xmlDoc.querySelector("#turn")
 
     document.querySelector("#" + sourcePosition).innerHTML = source.innerHTML
     document.querySelector("#" + targetPosition).innerHTML = target.innerHTML
@@ -90,10 +90,11 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
 
 function saveGame() {
     const params = {
-        room_id: document.querySelector('#room').className,
-        turn: document.querySelector('#turn').className,
+        room_id: document.querySelector('#room').firstElementChild.className,
+        turn: document.querySelector('#turn').firstElementChild.className,
         state: createStateJson(),
     };
+    console.log(params)
     const http = new XMLHttpRequest();
     const url = '/game/save';
 
@@ -114,7 +115,7 @@ function saveGame() {
 function createStateJson() {
     const status  = document.querySelectorAll('td')
     let state = {};
-    for (var i = 0; i < status.length; i++) {
+    for (let i = 0; i < status.length; i++) {
         const position = status[i].id;
         const img = status[i].querySelector('img');
         const color = img.id.split("_")[0]

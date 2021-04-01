@@ -6,8 +6,12 @@
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<h1 id="room" class="{{{room_id}}}">ROOM {{room_id}}</h1>
-<h1 id="turn" class="{{{turn.color}}}">{{turn.color}}의 차례입니다.</h1>
+<div id="room">
+    <h1 style="font-size:50px;" class="{{{room_id}}}">ROOM {{room_id}}</h1>
+</div>
+<div id="turn">
+    <label style="color:darkgreen;font-size:30px;" class="{{{turn.color}}}">{{turn.color}}의 차례입니다.</label>
+</div>
 <table class="chessboard">
     <tr id="8" class="chessboard">
         <td id="a8" class="chessboard">
