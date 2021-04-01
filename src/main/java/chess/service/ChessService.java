@@ -14,17 +14,19 @@ import java.util.Objects;
 
 public class ChessService {
 
-    public Map<String, String> start() {
-        Board board = new Board();
+    public Map<String, Integer> start(String whitePlayer, String blackPlayer) {
+        Map<String, Integer> boardInfo = new HashMap<>();
+        Board board = new Board(whitePlayer, blackPlayer);
         board.init();
         try {
             BoardDAO boardDAO = BoardDAO.instance();
-            boardDAO.createBoard(new WebBoardDTO(board), new WebPiecesDTO(board.pieces()));
+            int boardId = boardDAO
+                .createBoard(new WebBoardDTO(board), new WebPiecesDTO(board.pieces()));
+            boardInfo.put("boardId", boardId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        Map<Position, Piece> pieces = board.pieces();
-        return PositionToStringMap(pieces, board);
+        return boardInfo;
     }
 
     private Map<String, String> PositionToStringMap(Map<Position, Piece> pieces, Board board) {
@@ -32,6 +34,8 @@ public class ChessService {
         for (Position position : pieces.keySet()) {
             boardInfo.put(position.positionToString(), getSymbol(pieces.get(position)));
         }
+        boardInfo.put("whitePlayer", board.players().getWhitePlayer());
+        boardInfo.put("blackPlayer", board.players().getBlackPlayer());
         boardInfo.put("isFinish", String.valueOf(board.isFinish()));
         boardInfo.put("turn", board.turn().color());
         return boardInfo;
@@ -86,5 +90,31 @@ public class ChessService {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public List<Map<String, Object>> searchBoard(String playerName) {
+        BoardDAO boardDAO = BoardDAO.instance();
+        try {
+            List<WebBoardDTO> webBoardDTOS = boardDAO.searchBoard(playerName);
+            List<Map<String, Object>> boards = webBoardDTOSToBoards(webBoardDTOS);
+            return boards;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private List<Map<String, Object>> webBoardDTOSToBoards(List<WebBoardDTO> webBoardDTOS) {
+        List<Map<String, Object>> boards = new ArrayList<>();
+        for (WebBoardDTO webBoardDTO : webBoardDTOS) {
+            Map<String, Object> board = new HashMap<>();
+            board.put("boardId", webBoardDTO.getBoardId());
+            board.put("whitePlayer", webBoardDTO.getWhitePlayer());
+            board.put("blackPlayer", webBoardDTO.getBlackPlayer());
+            board.put("isFinish", webBoardDTO.getIsFinish());
+            board.put("turnIsWhite", webBoardDTO.getTurnIsWhite());
+            boards.add(board);
+        }
+        return boards;
     }
 }
