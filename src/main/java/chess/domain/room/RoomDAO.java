@@ -49,12 +49,14 @@ public class RoomDAO {
     }
 
     public void addRoom(Room room) throws SQLException {
-        String query = "INSERT INTO room (room_id, turn, state) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE state=?";
+        String query = "INSERT INTO room (room_id, turn, state) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE turn=?, state=?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, room.getRoomId());
         pstmt.setString(2, room.getTurn());
         pstmt.setString(3, room.getState().toString());
-        pstmt.setString(4, room.getState().toString());
+
+        pstmt.setString(4, room.getTurn().toString());
+        pstmt.setString(5, room.getState().toString());
         pstmt.executeUpdate();
     }
 

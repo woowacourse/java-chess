@@ -15,9 +15,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        staticFiles.location("");
-
-        Map<String, WebUIChessController> games = new HashMap<>();
+        staticFiles.location("/public");
 
         WebUIChessController webUIChessController = new WebUIChessController();
 

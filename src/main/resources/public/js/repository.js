@@ -15,7 +15,7 @@ function loadGame(event) {
         if (http.readyState === XMLHttpRequest.DONE) {
             if (http.status === 200) {
                 alert("성공적으로 게임을 불러왔습니다.")
-                window.history.pushState({"html" : http.responseText},"체스", "/game/load");
+                // window.history.pushState({"html" : http.responseText},"체스", "/game/load");
                 document.write(http.responseText);
             } else {
                 alert("게임을 불러올 수 없습니다.")
