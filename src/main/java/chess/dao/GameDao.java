@@ -36,8 +36,8 @@ public class GameDao {
         + "    black_user.lose as blackLose\n"
         + "FROM \n"
         + "\troom AS r\n"
-        + "    INNER JOIN users AS black_user ON r.white = black_user.name\n"
-        + "    INNER JOIN users AS white_user ON r.black = white_user.name\n"
+        + "    INNER JOIN users AS black_user ON r.black = black_user.name\n"
+        + "    INNER JOIN users AS white_user ON r.white = white_user.name\n"
         + "WHERE r.id = ?;";
     private static final String SELECT_STATUS_QUERY = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
     private static final String SELECT_OPENED_ROOMS_QUERY = "SELECT id, name, white, black FROM room WHERE is_opened = true";
@@ -135,8 +135,12 @@ public class GameDao {
 
         rs.next();
 
-        return new RoomUsersDto(rs.getString(1), rs.getString(2), rs.getString(3),
-            rs.getString(4), rs.getString(5), rs.getString(6));
+        return new RoomUsersDto(rs.getString("whiteName"),
+            rs.getString("whiteWin"),
+            rs.getString("whiteLose"),
+            rs.getString("blackName"),
+            rs.getString("blackWin"),
+            rs.getString("blackLose"));
     }
 
     public BoardWebDto latestBoard(String roomId) throws SQLException {
@@ -186,6 +190,39 @@ public class GameDao {
     public void closeRoom(String roomId) throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = connection.prepareStatement(CLOSE_ROOM_QUERY);
+        pstmt.setString(1, roomId);
+        pstmt.executeUpdate();
+        closeConnection(connection);
+    }
+
+    public void addUserStat(String roomId, Team winnerTeam) throws SQLException {
+        String winner = "white";
+        String loser = "black";
+        if (winnerTeam.isBlack()) {
+            winner = "black";
+            loser = "white";
+        }
+        updateWinner(roomId, winner);
+        updateLoser(roomId, loser);
+    }
+
+    private void updateWinner(String roomId, String winner) throws SQLException {
+        String updateWinnerQueryForm = "UPDATE users\n"
+            + "SET users.win = users.win + 1\n"
+            + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(String.format(updateWinnerQueryForm, winner));
+        pstmt.setString(1, roomId);
+        pstmt.executeUpdate();
+        closeConnection(connection);
+    }
+
+    private void updateLoser(String roomId, String loser) throws SQLException {
+        String updateLoserQuery = "UPDATE users\n"
+            + "SET users.lose = users.lose + 1\n"
+            + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(String.format(updateLoserQuery, loser));
         pstmt.setString(1, roomId);
         pstmt.executeUpdate();
         closeConnection(connection);

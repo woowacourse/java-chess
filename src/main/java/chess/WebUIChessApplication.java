@@ -7,6 +7,7 @@ import static spark.Spark.put;
 import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.ScoreBoard;
 import chess.domain.chessgame.Turn;
@@ -92,6 +93,10 @@ public class WebUIChessApplication {
             return GSON.toJson(pointDtos);
         });
 
+        get("/room/:id/stat", "application/json", (req, res) -> {
+            return GSON.toJson(GAME_DAO.roomUsers(req.params("id")));
+        });
+
         put("/room/:id/move", "application/json", (req, res) -> {
             String roomId = req.params("id");
             Board board = boardFromDb(roomId);
@@ -103,6 +108,9 @@ public class WebUIChessApplication {
             GAME_DAO
                 .insertBoardAndStatusDto(new BoardWebDto(board), new GameStatusDto(chessGame),
                     roomId);
+            if (!chessGame.isOngoing() && chessGame.winner() != Team.NONE) {
+                GAME_DAO.addUserStat(roomId, chessGame.winner());
+            }
             return GSON.toJson(new BoardWebDto(board));
         });
 

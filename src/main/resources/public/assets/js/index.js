@@ -17,11 +17,26 @@ const clickSquare = function (event) {
   addMovables(event.target.id, roomId);
 };
 
-const start = function () {
-  getInitializedBoard(roomId).then(board => {
-    reloadSquares(board["board"]);
-    updateGameState(roomId);
-  });
+const start = async () => {
+  const board = await getInitializedBoard(roomId)
+  reloadSquares(board["board"]);
+  updateGameState(roomId);
+}
+
+const usersTemplate = (users) => `<p><strong>BLACK</strong>  닉네임:${users.blackName} 승:${users.blackWin} 패:${users.blackLose}</p>
+    <p><strong>WHITE</strong>  닉네임:${users.whiteName} 승:${users.whiteWin} 패:${users.whiteLose}</p>`;
+
+const reloadUsers = async () => {
+  const response = await fetch("./" + roomId + "/stat");
+  const result = await response.json();
+  console.log(result);
+  console.log(result);
+  document.querySelector(".stat").innerHTML = usersTemplate(result);
+}
+
+const restart = async() => {
+  await start();
+  await reloadUsers();
 }
 
 const addEventToSquares = () => {
@@ -41,7 +56,7 @@ const exitGame = () => {
 
 const addEventToScreen = () => {
   document.querySelector(".launch").addEventListener("click", start);
-  document.querySelector(".result").addEventListener("click", start);
+  document.querySelector(".result").addEventListener("click", restart);
   document.querySelector(".exit").addEventListener("click", exitGame);
 }
 

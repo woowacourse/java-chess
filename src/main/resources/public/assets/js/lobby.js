@@ -1,5 +1,3 @@
-const roomNameCountMin = 2;
-
 document.querySelector(".title").addEventListener("click", () => {
   window.location.reload();
 });
