@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.command.Command;
+import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.exception.InvalidCommandException;
 
@@ -9,8 +10,17 @@ public final class ChessGame {
 
     private State state;
 
+    private String id;
+    private String name;
+
     public ChessGame(State state) {
         this.state = state;
+    }
+
+    public static ChessGame initChessGame() {
+        ChessGame chessGame = new ChessGame(new Ready(Board.createGamingBoard()));
+        chessGame.start();
+        return chessGame;
     }
 
     public void start() {
@@ -52,5 +62,21 @@ public final class ChessGame {
 
     public boolean isGameSet() {
         return state.isGameSet();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
