@@ -54,3 +54,7 @@
 - 게임 생성
   - new-game 버튼
   - 사용자가 게임 이름 입력(setName)
+  
+# UML
+
+![이미지](/Users/joy/repo/woowa_tech_course/lv1/java-chess/src/main/img/chess_UML.png)
