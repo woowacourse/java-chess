@@ -11,6 +11,7 @@ import chess.domain.dto.response.BoardAndPieceDto;
 import chess.domain.dto.response.Response;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -90,17 +91,19 @@ public class ChessService {
         final List<PieceDto> pieceDtos = new ArrayList<>();
         chessBoard.forEach((position, piece) -> {
             final String positionValue = position.horizontal().symbol() + position.vertical().symbol();
-            String name = "";
-            if (!piece.name().equals(".")) {
-                if (piece.team().teamName().equals("Black")) {
-                    name = "B" + piece.name();
-                } else {
-                    name = "W" + piece.name().toUpperCase();
-                }
-            }
-            pieceDtos.add(new PieceDto(positionValue, name));
+            pieceDtos.add(new PieceDto(positionValue, imgFileName(piece)));
         });
         return new Response("200", "성공", new BoardAndPieceDto(boardDto, pieceDtos));
+    }
+
+    private String imgFileName(final Piece piece) {
+        if (piece.isBlank()) {
+            return "";
+        }
+        if (piece.team() == Team.BLACK) {
+            return "B" + piece.name();
+        }
+        return "W" + piece.name().toUpperCase();
     }
 
 }
