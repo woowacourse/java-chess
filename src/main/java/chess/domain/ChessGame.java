@@ -4,7 +4,10 @@ import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+
+import java.util.Map;
 
 import static chess.controller.ChessController.boardFactory;
 
@@ -20,16 +23,17 @@ public class ChessGame {
         turnOwner = Team.WHITE;
     }
 
-    public void move(String command) {
+    public void move(String target, String destination) {
         boardInitializeCheck();
-        String[] commands = command.split(DELIMITER);
-        turnOwner = board.movePiece(convertStringToPosition(commands[TARGET_POSITION_INDEX]),
-                convertStringToPosition(commands[DESTINATION_POSITION_INDEX]), turnOwner);
+        turnOwner = board.movePiece(convertStringToPosition(target),
+                convertStringToPosition(destination), turnOwner);
     }
 
-    public double status(Team team) {
+    public String scoreStatus() {
         boardInitializeCheck();
-        return board.calculateScore(team);
+        double whiteScore = board.calculateScore(Team.WHITE);
+        double blackScore = board.calculateScore(Team.BLACK);
+        return "백 : " + whiteScore + "  흑 : " + blackScore;
     }
 
     public void end() {

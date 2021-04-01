@@ -36,11 +36,13 @@ function clickDiv(e) {
     if(e.target || e.target.classList.contains("piece")){
         if (firstClickPosition === "") {
             firstClickPosition = e.target.id;
+            document.getElementById(firstClickPosition).style.backgroundColor = 'yellow';
             return;
         }
         if (firstClickPosition !== "" && secondClickPosition === "") {
             secondClickPosition = e.target.id;
-            sendMoveInformation(firstClickPosition, secondClickPosition);
+            movePiece(firstClickPosition, secondClickPosition);
+            document.getElementById(firstClickPosition).style.backgroundColor = '';
             firstClickPosition = "";
             secondClickPosition = "";
             return;
@@ -49,28 +51,26 @@ function clickDiv(e) {
     return e.target;
 }
 
-function sendMoveInformation(targetPosition, destinationPosition) {
-    console.log(targetPosition);
-    console.log(destinationPosition);
+async function movePiece(targetPosition, destinationPosition) {
+    const boardInfo = await sendMoveInformation(targetPosition, destinationPosition);
+    renewBoard(boardInfo);
+}
 
+async function sendMoveInformation(targetPosition, destinationPosition) {
     const bodyValue = {
         target : targetPosition,
         destination : destinationPosition
     }
 
-    fetch("/move", {
+    let boardInformation = await fetch("/move", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(bodyValue)
     })
-        .then(res => {
-
-        })
-        .catch(err => {
-
-        });
+    boardInformation = await boardInformation.json();
+    return boardInformation.boardInfo;
 }
 
 function getBoardColor(index, color) {
@@ -98,14 +98,13 @@ async function renewBoard(boardInfo) {
 }
 
 async function initiateBoard() {
-    return fetch("/initiateBoard")
-        .then(res => {
-            return res.json();
-        })
-        .then(res => {
-            return res.boardInfo;
-        })
-        .catch(err => {
-            console.log("error");
-        })
+    let initialBoardInformation = await fetch("/initiateBoard")
+    initialBoardInformation = await initialBoardInformation.json();
+    return initialBoardInformation.boardInfo;
+}
+
+async function alertScore() {
+    let scoreInformation = await fetch("/scoreStatus")
+    scoreInformation = await scoreInformation.json();
+    alert(scoreInformation.scoreMessage);
 }

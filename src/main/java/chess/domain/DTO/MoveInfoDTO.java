@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.DTO;
 
 public class MoveInfoDTO {
     private String target;

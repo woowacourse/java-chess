@@ -5,10 +5,12 @@
     <link href="chessBoard.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<button value="startGame" onclick="startGame()">게임 시작하기</button>
 <h1 class="centered">체스 게임</h1>
+<div class="button-center">
+    <button id="startButton" class="btn third" type="button" onclick="startGame()">Start</button>
+    <button id="loadButton" class="btn third" type="button" onclick="alertScore()">Score</button>
+</div>
 <div class="chessboard">
-<!--    <div class="white" id="h1">&#9814;</div>-->
 </div>
 </body>
 <script src="chess.js"></script>

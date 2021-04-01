@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.domain.BoardDTO;
+import chess.domain.DTO.BoardDTO;
 import chess.domain.ChessGame;
 
 public class BoardService {

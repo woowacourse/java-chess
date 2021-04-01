@@ -1,7 +1,9 @@
 package chess.controller;
 
-import chess.domain.BoardDTO;
+import chess.domain.DTO.BoardDTO;
 import chess.domain.ChessGame;
+import chess.domain.DTO.MoveInfoDTO;
+import chess.domain.DTO.ScoreDTO;
 import chess.domain.board.BoardFactory;
 import chess.service.BoardService;
 import com.google.gson.Gson;
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessController {
     public static final BoardFactory boardFactory = new BoardFactory();
@@ -24,23 +27,23 @@ public class ChessController {
             return render(new HashMap<>(), "chess.html");
         });
 
-        get("/boardInfo", (req, res) -> {
-            BoardDTO dto = boardService.initiateBoard(chessGame);
-            return new Gson().toJson(dto);
-        });
-
         get("/initiateBoard", (req, res) -> {
-            BoardDTO dto = boardService.initiateBoard(chessGame);
-            return new Gson().toJson(dto);
+            BoardDTO boardDTO = boardService.initiateBoard(chessGame);
+            return new Gson().toJson(boardDTO);
         });
 
+        get("/scoreStatus", (req, res) -> {
+            ScoreDTO scoreDTO = ScoreDTO.of(chessGame.scoreStatus());
+            return new Gson().toJson(scoreDTO);
+        });
 
-//        post("/move", (req, res) -> {
-//            MoveInfoDTO moveInfoDTO = new Gson().fromJson(req.body(), MoveInfoDTO.class);
-//
-//        });
+        post("/move", (req, res) -> {
+            MoveInfoDTO moveInfoDTO = new Gson().fromJson(req.body(), MoveInfoDTO.class);
+            chessGame.move(moveInfoDTO.getTarget(), moveInfoDTO.getDestination());
+            BoardDTO boardDTO = BoardDTO.of(chessGame.getBoard());
+            return new Gson().toJson(boardDTO);
+        });
     }
-
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
