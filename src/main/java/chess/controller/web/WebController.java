@@ -9,27 +9,37 @@ import chess.domain.manager.ChessGame;
 import chess.domain.piece.Piece;
 import chess.view.web.OutputView;
 import chess.view.web.PieceSymbolMapper;
+import org.json.JSONObject;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class WebController {
 
+    private ChessGame chessGame;
+
     public void mapping(){
         staticFiles.location("/public");
-        init();
-
+        serviceRoot();
+        click();
     }
 
-    private void init(){
+    private void serviceRoot(){
         get("/", (req, res) -> {
-            final ChessGame chessGame = new ChessGame();
+            chessGame = new ChessGame();
             chessGame.initNewGame();
 
             BoardDto boardDto = new BoardDto();
             boardDto.setBoard(boardMapping(chessGame.board()));
 
             return OutputView.printBoard("board", boardDto);
+        });
+    }
+
+    private void click(){
+        post("/click", (req, res) -> {
+            JSONObject jsonData = new JSONObject(req.body());
+            String position = jsonData.getString("position");
+            return position;
         });
     }
 
