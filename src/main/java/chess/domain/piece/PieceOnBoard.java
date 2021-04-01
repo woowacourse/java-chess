@@ -173,7 +173,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     private boolean isEnemyTeam(Piece comparePiece) {
-        return teamColor != comparePiece.getColor();
+        return teamColor.counterpart() == comparePiece.getColor();
     }
 
 }
