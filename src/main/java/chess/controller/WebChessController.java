@@ -6,6 +6,7 @@ import chess.domain.command.MoveOnCommand;
 import chess.domain.command.StartOnCommand;
 import chess.domain.dto.PiecesDto;
 import chess.domain.dto.requestDto.MoveRequestDto;
+import chess.domain.dto.responseDto.ResponseDto;
 import chess.view.OutputView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,7 +49,7 @@ public class WebChessController {
         get("/data", (req, res) -> {
             PiecesDto piecesDto = new PiecesDto(chessGame.getPiecesByAllPosition());
             String piecesDtoJson = gson.toJson(piecesDto);
-            return piecesDtoJson;
+            return gson.toJson(new ResponseDto(true, piecesDtoJson));
         });
 
         post("/move", (req, res) -> {
@@ -59,14 +60,9 @@ public class WebChessController {
                 moveOnCommand.execute(chessGame, sourceTarget);
                 PiecesDto piecesDto = new PiecesDto(chessGame.getPiecesByAllPosition());
                 String piecesDtoJson = gson.toJson(piecesDto);
-                res.body(piecesDtoJson);
-                OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
-                return piecesDtoJson;
+                return gson.toJson(new ResponseDto(true, piecesDtoJson));
             } catch (Exception e) {
-                res.status(402);
-                System.out.println(e.getMessage());
-                res.body(e.getMessage());
-                return res;
+                return gson.toJson(new ResponseDto(false, e.getMessage()));
             }
         });
     }
