@@ -1,9 +1,30 @@
 window.onload = start();
 
 function start() {
+    let isNewGame = getParameterByName('newGame');
+    if (isNewGame === 'yes') {
+        startNewGame();
+    } else {
+        continueGame();
+    }
+}
+
+function startNewGame() {
     $.ajax({
         type: "POST",
         url: "/game",
+        dataType: "json",
+        success: setBoard
+    });
+}
+
+function continueGame() {
+    $.ajax({
+        type: "POST",
+        url: "/continue",
+        data: {
+            roomName: getParameterByName('roomName')
+        },
         dataType: "json",
         success: setBoard
     });
@@ -19,18 +40,24 @@ function setBoard(res) {
             document.getElementById(squares[i].position).firstElementChild.src = "../img/Blank.png";
         }
     }
-    turnSetting("W");
+    turnSetting(res.turn);
     status();
 }
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 document.addEventListener("click", squareClick);
-document.getElementById("end").addEventListener("click", goHome);
-document.getElementById("restart").addEventListener("click", start);
+document.getElementById("end").addEventListener("click", endGame);
+document.getElementById("restart").addEventListener("click", startNewGame);
 
 function squareClick(event) {
     if (event.target.parentNode.parentNode.parentNode.parentNode.classList.contains("board")
         && !event.target.parentNode.classList.contains("selected")) {
-        console.log("yes");
         event.target.parentNode.classList.add("selected");
 
         let numberOfSelectedSquares = document.getElementsByClassName("selected").length;
@@ -53,8 +80,20 @@ function squareClick(event) {
     }
 }
 
+function endGame() {
+    $.ajax({
+        type: "POST",
+        url: "/end",
+        data: {
+            roomName: getParameterByName('roomName')
+        },
+        dataType: "json",
+    });
+
+    goHome();
+}
+
 function goHome() {
-    initGame();
     window.location.href = "/";
 }
 
@@ -64,7 +103,8 @@ function move() {
         url: "/move",
         data: {
             source: document.getElementsByClassName("source")[0].id,
-            target: document.getElementsByClassName("target")[0].id
+            target: document.getElementsByClassName("target")[0].id,
+            roomName:  getParameterByName('roomName')
         },
         dataType: "text",
         success: switchPiece,
@@ -104,7 +144,6 @@ function turnSetting(turn) {
     turnBoard.innerHTML = turnColor;
 }
 
-
 function status() {
     $.ajax({
         type: "POST",
@@ -128,13 +167,6 @@ function clearSelect() {
 
     selected[1].classList.remove("selected");
     selected[0].classList.remove("selected");
-}
-function initGame() {
-    $.ajax({
-        type: "POST",
-        url: "/initialize",
-        dataType: "json",
-    });
 }
 
 function printStatus(res) {
