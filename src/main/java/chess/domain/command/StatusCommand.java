@@ -14,12 +14,10 @@ public class StatusCommand extends CommandInit {
     }
 
     public double getWhiteScore() {
-        handle(EMPTY_STRING);
         return whiteScore;
     }
 
     public double getBlackScore() {
-        handle(EMPTY_STRING);
         return blackScore;
     }
 
