@@ -1,9 +1,9 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.domain.dto.BoardDto;
-import chess.domain.dto.MovablePositionDto;
-import chess.domain.dto.MoveRequestDto;
+import chess.dto.BoardDto;
+import chess.dto.MovablePositionDto;
+import chess.dto.MoveRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.Spark;
@@ -23,16 +23,13 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model, "main.html");
         });
 
-        /*get("/start", (req, res) -> {
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGame chessGame = new ChessGame();
-            chessGame.settingBoard();
-            model.put("board", chessGame.getBoard());
             return render(model, "index.html");
-        });*/
+        });
 
         get("/create", (req, res) -> {
             BoardDto boardDto = chessController.start();

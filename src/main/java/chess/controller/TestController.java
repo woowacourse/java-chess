@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.dto.BoardDto;
+import chess.dto.BoardDto;
 
 public class TestController {
     public BoardDto run() {
