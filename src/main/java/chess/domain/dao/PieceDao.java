@@ -12,13 +12,10 @@ import java.util.TreeMap;
 
 public final class PieceDao {
 
-    private final Connection conn;
-
-    public PieceDao() {
-        conn = ConnectionSetup.getConnection();
-    }
+    private Connection conn;
 
     public Map<Position, Piece> load() throws SQLException {
+        conn = ConnectionSetup.getConnection();
         final String query = "SELECT * FROM pieces";
         final PreparedStatement pstmt = conn.prepareStatement(query);
         final ResultSet rs = pstmt.executeQuery();
@@ -34,7 +31,7 @@ public final class PieceDao {
             final String name = rs.getString("name");
             pieces.put(position, PieceFactory.correctPiece(name));
         } while (rs.next());
-
+        ConnectionSetup.closeConnection(conn);
         return pieces;
     }
 
@@ -46,16 +43,20 @@ public final class PieceDao {
     }
 
     public void savePiece(final Position position, final Piece piece) throws SQLException {
+        conn = ConnectionSetup.getConnection();
         final String query = "INSERT INTO pieces VALUES (?, ?)";
         final PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
         pstmt.setString(2, piece.name());
         pstmt.executeUpdate();
+        ConnectionSetup.closeConnection(conn);
     }
 
     public void deleteAll() throws SQLException {
+        conn = ConnectionSetup.getConnection();
         final String query = "DELETE FROM pieces";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.executeUpdate();
+        ConnectionSetup.closeConnection(conn);
     }
 }
