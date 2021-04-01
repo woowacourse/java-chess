@@ -17,18 +17,18 @@ public final class ChessGame {
     private Color currentColor = WHITE;
 
     public ChessGame() {
-        this.board = initialize(new HashMap<>());
+        this.board = new Board(initialize(new HashMap<>()));
     }
 
-    public ChessGame(Board board) {
-        this.board = board;
+    public ChessGame(Map<Point, Piece> boardInfo) {
+        this.board = new Board(boardInfo);
     }
 
-    private Board initialize(Map<Point, Piece> boardMap) {
+    private Map<Point, Piece> initialize(Map<Point, Piece> boardMap) {
         for (int i = 0; i < BOARD_SIZE; i++) {
             initializeColumn(boardMap, i);
         }
-        return new Board(boardMap);
+        return boardMap;
     }
 
     private void initializeColumn(Map<Point, Piece> boardMap, int i) {

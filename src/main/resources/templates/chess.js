@@ -1,16 +1,18 @@
 let $squares = document.querySelector("table");
 let $blackScore = document.querySelector(".black-score");
 let $whiteScore = document.querySelector(".white-score");
+let $exit = document.querySelector("#exit");
 $squares.addEventListener('click', getPoint);
 $blackScore.addEventListener('click', toggleScore);
 $whiteScore.addEventListener('click', toggleScore);
+$exit.addEventListener('click', toggleExit);
 
-function hi() {
+async function hi() {
     for (let j = 1; j<= 8; j++) {
         for(let i = 0; i<8;i++) {
             let row = String.fromCharCode('a'.charCodeAt(0) + i);
             let point = row + j;
-            fetch('/board', {
+            await fetch('/board', {
                 method: 'POST',
                 body: point,
             }).then(res => res.json()).then(data => {
@@ -178,8 +180,14 @@ async function makeBoardInfo() {
         headers: {
             'Content-Type': 'application/json'
         }
+    }).then(res => {
+        alert('게임 나가기!');
+        location.replace('/');
     });
 }
 
+function toggleExit() {
+    makeBoardInfo();
+}
 
 hi();

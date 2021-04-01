@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import chess.domain.User;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
@@ -91,13 +92,21 @@ public class ChessDAO {
     }
 
     public void addBoard(String userId, String boardInfo, Color color) throws SQLException {
-        System.out.println("&&&&&" + userId + "%%%%%" + boardInfo + "####" + color);
         String query = "INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
+        if(findBoard(userId) != null) {
+            deleteBoard(userId);
+        }
         pstmt.setString(1, userId);
-
         pstmt.setString(2, boardInfo);
         pstmt.setString(3, color.name());
+        pstmt.executeUpdate();
+    }
+
+    public void deleteBoard(String userId) throws SQLException{
+        String query = "DELETE FROM board WHERE user_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userId);
         pstmt.executeUpdate();
     }
 
@@ -106,13 +115,13 @@ public class ChessDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, userId);
         ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) return null;
         Map<Point, Piece> chessBoard = new HashMap<>();
 
-        String info = rs.getString("board_info");
-        if(info == null ){
-            return new BoardDto(chessBoard);
+        if (!rs.next()) {
+            return null;
         }
+
+        String info = rs.getString("board_info");
         for(int i = 0; i< 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Point point = Point.valueOf(i, j);

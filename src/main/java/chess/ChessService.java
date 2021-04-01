@@ -14,23 +14,33 @@ import chess.domain.RequestDto;
 import chess.domain.User;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
+import chess.view.OutputView;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessService {
     private static final Gson GSON = new Gson();
     private final ChessDAO chessDAO = new ChessDAO();
-    private ChessGame chessGame;
+    private ChessGame chessGame = new ChessGame();
     private User user;
 
     public ChessService() {
-        this.chessGame = new ChessGame();
         get("/chess", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("user", user);
             return render(model, "chess.html");
         });
 
-        post("/board", (req, res) -> GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getImage()));
+        post("/board", (req, res) -> {
+            String userId = chessDAO.findUserIdByUser(user);
+            BoardDto boardDto = chessDAO.findBoard(userId);
+            if(boardDto == null) {
+                chessGame = new ChessGame();
+            }else {
+                chessGame = new ChessGame(boardDto.getBoard());
+            }
+            return GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getImage());
+        });
 
         post("/piecename", (req, res) -> GSON.toJson(chessGame.getBoard().get(Point.of(req.body())).getName()));
 
@@ -60,7 +70,8 @@ public class ChessService {
         get("/rerun", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
             this.chessGame = new ChessGame();
-            return render(model, "chess.html");
+            chessDAO.deleteBoard(chessDAO.findUserIdByUser(user));
+            return render(model, "/chess");
         });
 
         get("/", (req, res) -> {
@@ -75,6 +86,7 @@ public class ChessService {
                 return render(model, "start.html");
             }
             model.put("user", user);
+
             return render(model, "chess.html");
         });
 
@@ -109,7 +121,6 @@ public class ChessService {
             if(chessGame.isEnd()) {
                 return 333;
             }
-
             return 200;
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
             return 401;

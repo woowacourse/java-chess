@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.*;
 import static chess.domain.piece.PieceType.Constants.*;
 import static chess.domain.piece.kind.Pawn.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +23,10 @@ public enum PieceType {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
-                return new Rook(BLACK);
+                return new Rook(WHITE);
             }
             if (name.equals(this.pieceName.toUpperCase())) {
-                return new Rook(WHITE);
+                return new Rook(BLACK);
             }
             return new Empty(NOTHING);
         }
@@ -46,10 +47,10 @@ public enum PieceType {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
-                return new Knight(BLACK);
+                return new Knight(WHITE);
             }
             if (name.equals(this.pieceName.toUpperCase())) {
-                return new Knight(WHITE);
+                return new Knight(BLACK);
             }
             return new Empty(NOTHING);
         }
@@ -69,10 +70,10 @@ public enum PieceType {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
-                return new Bishop(BLACK);
+                return new Bishop(WHITE);
             }
             if (name.equals(this.pieceName.toUpperCase())) {
-                return new Bishop(WHITE);
+                return new Bishop(BLACK);
             }
             return new Empty(NOTHING);
         }
@@ -92,10 +93,10 @@ public enum PieceType {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
-                return new Queen(BLACK);
+                return new Queen(WHITE);
             }
             if (name.equals(this.pieceName.toUpperCase())) {
-                return new Queen(WHITE);
+                return new Queen(BLACK);
             }
             return new Empty(NOTHING);
         }
@@ -115,10 +116,10 @@ public enum PieceType {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
-                return new King(BLACK);
+                return new King(WHITE);
             }
             if (name.equals(this.pieceName.toUpperCase())) {
-                return new King(WHITE);
+                return new King(BLACK);
             }
             return new Empty(NOTHING);
         }
@@ -131,6 +132,23 @@ public enum PieceType {
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new King(WHITE);
             }
+            return createDefaultPieces(row, column);
+        }
+    },
+    PAWN(new ArrayList<>(), "p") {
+        @Override
+        public Piece of(String name) {
+            if (name.equals(this.pieceName)) {
+                return new Pawn(WHITE);
+            }
+            if (name.equals(this.pieceName.toUpperCase())) {
+                return new Pawn(BLACK);
+            }
+            return new Empty(NOTHING);
+        }
+
+        @Override
+        public Piece create(int row, int column) {
             return createDefaultPieces(row, column);
         }
     };
@@ -160,7 +178,7 @@ public enum PieceType {
 
     public static Piece findPiece(String name) {
         return Arrays.stream(PieceType.values())
-            .filter(piece -> piece.pieceName.equals(name))
+            .filter(piece -> piece.pieceName.equals(name) || piece.pieceName.equals(name.toLowerCase()))
             .map(pieceType -> pieceType.of(name))
             .findAny()
             .orElseGet(() -> new Empty(NOTHING));
