@@ -5,8 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ChessBoardDAOTest {
     private ChessBoardDAO chessBoardDAO;
@@ -28,10 +29,14 @@ class ChessBoardDAOTest {
     }
 
     @Test
-    void addPosition() {
+    void addPosition() throws SQLException {
+        ChessBoardDTOForDAO chessBoardDTOForDAO = new ChessBoardDTOForDAO("a8", "WHITE", "ROOK", "alive");
+        System.out.println(chessBoardDTOForDAO.getPosition());
+        chessBoardDAO.addPosition(chessBoardDTOForDAO);
     }
 
     @Test
-    void removePositions() {
+    void removePositions() throws SQLException {
+        chessBoardDAO.removePositions();
     }
 }

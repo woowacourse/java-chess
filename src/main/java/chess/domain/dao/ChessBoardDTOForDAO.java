@@ -1,5 +1,7 @@
 package chess.domain.dao;
 
+import java.util.Objects;
+
 public class ChessBoardDTOForDAO {
     private String position;
     private String teamColor;
@@ -43,5 +45,18 @@ public class ChessBoardDTOForDAO {
 
     public String getAlive() {
         return alive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessBoardDTOForDAO that = (ChessBoardDTOForDAO) o;
+        return Objects.equals(position, that.position) && Objects.equals(teamColor, that.teamColor) && Objects.equals(pieceType, that.pieceType) && Objects.equals(alive, that.alive);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, teamColor, pieceType, alive);
     }
 }
