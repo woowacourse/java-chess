@@ -20,7 +20,6 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
-    private static final int ONE = 1;
 
     public static void main(String[] args) {
         staticFiles.location("/templates");
@@ -36,6 +35,18 @@ public class WebUIChessApplication {
             ChessGame chessGame = new ChessGame(new Board());
             chessGame.start();
             CHESS_GAME_DAO.updateChessGameState();
+            WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
+            Map<String, Object> model = webBoardDto.getBoardDto();
+            model.put("whiteScore", new ScoreDto(chessGame.score(Team.WHITE)));
+            model.put("blackScore", new ScoreDto(chessGame.score(Team.BLACK)));
+            return render(model, "main.html");
+        });
+
+        get("/chess/load", (req, res) -> {
+            ChessGame chessGame = new ChessGame(new Board());
+            chessGame.start();
+            List<String> moves = CHESS_GAME_DAO.getRunningGameMove();
+            moves.forEach(move -> chessGame.move(Arrays.asList(move.split(" "))));
             WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
             Map<String, Object> model = webBoardDto.getBoardDto();
             model.put("whiteScore", new ScoreDto(chessGame.score(Team.WHITE)));
