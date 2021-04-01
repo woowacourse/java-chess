@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import chess.domain.ChessBoard;
+import chess.domain.dao.ChessBoardDAO;
 import chess.domain.dto.MovementDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -15,10 +16,12 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
     private static final ChessBoard chessBoard = new ChessBoard();
+    private static final ChessBoardDAO chessBoardDao = new ChessBoardDAO();
 
     public static void main(String[] args) {
         staticFileLocation("/static");
         Gson gson = new Gson();
+        chessBoardDao.getConnection();
 
         post("/chessboard", (req, res) ->{
             chessBoard.move(gson.fromJson(req.body(), MovementDto.class));
@@ -38,6 +41,7 @@ public class WebUIChessApplication {
         get("/chessboard/terminate", (req, res) -> {
             res.type("application/json");
             chessBoard.terminate();
+
             return chessBoard.result();
         }, gson::toJson);
 
