@@ -46,10 +46,11 @@ public final class Path {
         final List<Position> cleanPath = new ArrayList<>();
         for (Position position : positions) {
             final Piece otherPiece = board.pieceAt(position);
-            if (piece.isDifferentColor(otherPiece)) {
-                cleanPath.add(position);
-            }
             if (piece.isSameColor(otherPiece)) {
+                break;
+            }
+            cleanPath.add(position);
+            if (piece.isDifferentColor(otherPiece) && !otherPiece.isEmpty()) {
                 break;
             }
         }
