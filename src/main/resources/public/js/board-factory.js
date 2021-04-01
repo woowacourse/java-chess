@@ -5,10 +5,31 @@ const BLACK_SQUARE = "black-square";
 document.addEventListener("DOMContentLoaded", buildBoard);
 
 function buildBoard() {
-    const $board = document.querySelector("#board");
+    let $board = document.getElementById("board");
     if ($board == null) {
-        document.querySelector("body").insertAdjacentHTML("afterend", build());
+        document.querySelector("body").insertAdjacentHTML("afterbegin", build());
+        $board = document.getElementById("board");
     }
+    $board.addEventListener("click", onSelectSquareColor);
+    $board.addEventListener("mouseover", onMouseOverSquare);
+    $board.addEventListener("mouseout", onRevertSquareColor);
+}
+
+function onSelectSquareColor(event) {
+    let squareClassList = event.target.closest("div").classList;
+    if (squareClassList.contains("selected")) {
+        squareClassList.remove("selected");
+    } else {
+        squareClassList.add("selected");
+    }
+}
+
+function onMouseOverSquare(event) {
+    event.target.closest("div").classList.add("over-square");
+}
+
+function onRevertSquareColor(event) {
+    event.target.closest("div").classList.remove("over-square");
 }
 
 function build() {

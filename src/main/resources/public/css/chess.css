@@ -15,6 +15,14 @@
     color: #f0d9b5;
 }
 
+.selected {
+    background-color: darkseagreen;
+}
+
+.over-square {
+    background-color: darkseagreen;
+}
+
 .hidden {
     display: none;
 }
