@@ -7,7 +7,7 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 
 import chess.dao.ChessDao;
-import chess.dto.User;
+import chess.dto.UserDto;
 import chess.dto.BoardDto;
 
 class ChessDaoTest {
@@ -21,20 +21,20 @@ class ChessDaoTest {
 
     @Test
     public void addUser() throws Exception {
-        User user = new User("testUser", "testPwd");
-        chessDAO.addUser(user);
+        UserDto userDto = new UserDto("testUser", "testPwd");
+        chessDAO.addUser(userDto);
     }
 
     @Test
     void find() throws Exception {
-        User user = chessDAO.findByUserId("2");
-        assertEquals(new User("testUser", "testPwd"), user);
+        UserDto userDto = chessDAO.findByUserId("2");
+        assertEquals(new UserDto("testUser", "testPwd"), userDto);
     }
 
     @Test
     void findNamePwd() throws Exception {
-        User user = chessDAO.findByUserNameAndPwd("dusdn", "1230");
-        assertEquals(new User("dusdn", "1230"), user);
+        UserDto userDto = chessDAO.findByUserNameAndPwd("dusdn", "1230");
+        assertEquals(new UserDto("dusdn", "1230"), userDto);
     }
 
     @Test

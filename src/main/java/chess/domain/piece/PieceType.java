@@ -19,7 +19,7 @@ import chess.domain.piece.kind.Queen;
 import chess.domain.piece.kind.Rook;
 
 public enum PieceType {
-    ROOK(INITIAL_COLUMN_OF_ROOK, "r") {
+    ROOK(INITIAL_COLUMN_OF_ROOK, Rook.ROOK_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
@@ -43,7 +43,7 @@ public enum PieceType {
         }
     },
 
-    KNIGHT(INITIAL_COLUMN_OF_KNIGHT, "n") {
+    KNIGHT(INITIAL_COLUMN_OF_KNIGHT, Knight.KNIGHT_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
@@ -66,7 +66,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    BISHOP(INITIAL_COLUMN_OF_BISHOP, "b") {
+    BISHOP(INITIAL_COLUMN_OF_BISHOP, Bishop.BISHOP_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
@@ -89,7 +89,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    QUEEN(INITIAL_COLUMN_OF_QUEEN, "q") {
+    QUEEN(INITIAL_COLUMN_OF_QUEEN, Queen.QUEEN_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
@@ -112,7 +112,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    KING(INITIAL_COLUMN_OF_KING, "k") {
+    KING(INITIAL_COLUMN_OF_KING, King.KING_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {
@@ -135,7 +135,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    PAWN(new ArrayList<>(), "p") {
+    PAWN(new ArrayList<>(), PAWN_NAME) {
         @Override
         public Piece of(String name) {
             if (name.equals(this.pieceName)) {

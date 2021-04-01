@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.dto.BoardDto;
-import chess.dto.User;
+import chess.dto.UserDto;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
@@ -53,17 +53,17 @@ public class ChessDao {
         }
     }
 
-    public void addUser(User user) throws SQLException {
+    public void addUser(UserDto userDto) throws SQLException {
         String query = "INSERT INTO user (user_name, user_password) VALUES (?, ?)";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, user.getId());
-        preparedStatement.setString(2, user.getPwd());
+        preparedStatement.setString(1, userDto.getName());
+        preparedStatement.setString(2, userDto.getPwd());
         preparedStatement.executeUpdate();
         closeConnection(connection);
     }
 
-    public User findByUserId(String userId) throws SQLException {
+    public UserDto findByUserId(String userId) throws SQLException {
         String query = "SELECT * FROM user WHERE user_id = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -71,22 +71,22 @@ public class ChessDao {
         ResultSet rs = preparedStatement.executeQuery();
         if (!rs.next())
             return null;
-        return new User(rs.getString("user_name"), rs.getString("user_password"));
+        return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
     }
 
-    public String findUserIdByUser(User user) throws SQLException {
+    public String findUserIdByUser(UserDto userDto) throws SQLException {
         String query = "SELECT user_id FROM user WHERE user_name = ? AND user_password = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, user.getId());
-        preparedStatement.setString(2, user.getPwd());
+        preparedStatement.setString(1, userDto.getName());
+        preparedStatement.setString(2, userDto.getPwd());
         ResultSet rs = preparedStatement.executeQuery();
         if (!rs.next())
             return null;
         return rs.getString("user_id");
     }
 
-    public User findByUserNameAndPwd(String name, String password) throws SQLException {
+    public UserDto findByUserNameAndPwd(String name, String password) throws SQLException {
         String query = "select * from user where user_name = ? and user_password = ?;";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -96,7 +96,7 @@ public class ChessDao {
         if (!rs.next())
             return null;
         // closeConnection(connection);
-        return new User(rs.getString("user_name"), rs.getString("user_password"));
+        return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
     }
 
     public void addBoard(String userId, String boardInfo, Color color) throws SQLException {

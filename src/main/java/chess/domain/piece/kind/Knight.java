@@ -4,9 +4,9 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 
 public final class Knight extends Piece {
+    public static final String KNIGHT_NAME = "n";
     private static final double KNIGHT_SCORE = 2.5;
     private static final int POSSIBLE_DISTANCE_OF_KNIGHT = 5;
-    private static final String KNIGHT_NAME = "n";
 
     public Knight(Color color) {
         super(KNIGHT_NAME, color);

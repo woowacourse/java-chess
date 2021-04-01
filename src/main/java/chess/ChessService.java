@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import chess.dao.ChessDao;
 import chess.domain.ChessGame;
 import chess.dto.RequestDto;
-import chess.dto.User;
+import chess.dto.UserDto;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.dto.BoardDto;
@@ -25,22 +25,22 @@ public class ChessService {
     private static final Gson GSON = new Gson();
 
     private static ChessGame chessGame;
-    private static User user;
+    private static UserDto userDto;
 
     public static String makeChessBoard(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
+        model.put("user", userDto);
         return render(model, "chess.html");
     }
 
     static String restartChess(Request req, Response res) throws SQLException {
         chessGame = new ChessGame();
-        chessDAO.deleteBoard(chessDAO.findUserIdByUser(user));
+        chessDAO.deleteBoard(chessDAO.findUserIdByUser(userDto));
         return render(new HashMap<>(), "/chess");
     }
 
     public static String matchBoardImageSouce(Request request, Response response) throws SQLException {
-        String userId = chessDAO.findUserIdByUser(user);
+        String userId = chessDAO.findUserIdByUser(userDto);
         BoardDto boardDto = chessDAO.findBoard(userId);
         chessGame = makeChessGame(boardDto);
         return GSON.toJson(chessGame.getBoard().get(Point.of(request.body())).getImage());
@@ -63,7 +63,7 @@ public class ChessService {
     }
 
     public static String addBoard(Request req, Response res) throws SQLException {
-        chessDAO.addBoard(chessDAO.findUserIdByUser(user), req.body(), chessGame.nextTurn());
+        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), req.body(), chessGame.nextTurn());
         return render(new HashMap<>(), "start.html");
     }
 
@@ -100,18 +100,18 @@ public class ChessService {
     }
 
     public static String signUp(Request req, Response res) throws SQLException {
-        User user = new User(req.queryParams("name"), req.queryParams("password"));
-        chessDAO.addUser(user);
+        UserDto userDto = new UserDto(req.queryParams("name"), req.queryParams("password"));
+        chessDAO.addUser(userDto);
         return render(new HashMap<>(), "start.html");
     }
 
     public static String login(Request req, Response res) throws SQLException {
-        user = new User(req.queryParams("name"), req.queryParams("password"));
+        userDto = new UserDto(req.queryParams("name"), req.queryParams("password"));
         Map<String, Object> model = new HashMap<>();
-        if (chessDAO.findByUserNameAndPwd(user.getId(), user.getPwd()) == null) {
+        if (chessDAO.findByUserNameAndPwd(userDto.getName(), userDto.getPwd()) == null) {
             return render(model, "start.html");
         }
-        model.put("user", user);
+        model.put("user", userDto);
         return render(model, "chess.html");
     }
 

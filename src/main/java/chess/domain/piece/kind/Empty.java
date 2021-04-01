@@ -3,8 +3,8 @@ package chess.domain.piece.kind;
 import chess.domain.piece.Color;
 
 public final class Empty extends Piece {
+    public static final String EMPTY_PIECE_NAME = ".";
     private static final int EMPTY_SCORE = 0;
-    private static final String EMPTY_PIECE_NAME = ".";
 
     public Empty(Color color) {
         super(EMPTY_PIECE_NAME, color);

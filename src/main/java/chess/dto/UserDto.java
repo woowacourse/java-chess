@@ -2,17 +2,17 @@ package chess.dto;
 
 import java.util.Objects;
 
-public class User {
-    private String id;
+public class UserDto {
+    private String name;
     private String pwd;
 
-    public User(String id, String pwd) {
-        this.id = id;
+    public UserDto(String name, String pwd) {
+        this.name = name;
         this.pwd = pwd;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public String getPwd() {
@@ -25,12 +25,12 @@ public class User {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        User user = (User)o;
-        return id.equals(user.id) && pwd.equals(user.pwd);
+        UserDto userDto = (UserDto)o;
+        return name.equals(userDto.name) && pwd.equals(userDto.pwd);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pwd);
+        return Objects.hash(name, pwd);
     }
 }
