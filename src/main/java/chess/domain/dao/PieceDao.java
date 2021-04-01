@@ -57,8 +57,7 @@ public class PieceDao {
         final Map<Position, Piece> pieces = new TreeMap<>();
         do {
             final String positionValue = rs.getString("position");
-            final Position position = new Position(positionValue.split("")[0],
-                positionValue.split("")[1]);
+            final Position position = Position.from(positionValue);
             final String name = rs.getString("name");
             pieces.put(position, PIECES.get(name));
         } while (rs.next());
@@ -76,7 +75,7 @@ public class PieceDao {
     public void savePiece(final Position position, final Piece piece) throws SQLException {
         String query = "INSERT INTO pieces VALUES (?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, position.horizontal().symbol() + position.vertical().symbol());
+        pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
         pstmt.setString(2, piece.name());
         pstmt.executeUpdate();
     }

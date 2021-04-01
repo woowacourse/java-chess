@@ -48,17 +48,13 @@ public final class ChessController {
     }
 
     private void move(final ChessGame chessGame, final List<String> runtimeCommands) {
-        final Position start = getPositionByCommands(runtimeCommands.get(1).split(""));
-        final Position end = getPositionByCommands(runtimeCommands.get(2).split(""));
+        final Position start = Position.from(runtimeCommands.get(1));
+        final Position end = Position.from(runtimeCommands.get(2));
         chessGame.move(start, end);
 
         if (chessGame.isKingDead()) {
             chessGame.changeGameOver();
         }
-    }
-
-    private Position getPositionByCommands(final String[] commands) {
-        return new Position(commands[0], commands[1]);
     }
 
     private void showResult(final Board board) {

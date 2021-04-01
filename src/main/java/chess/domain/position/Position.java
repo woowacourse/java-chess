@@ -23,6 +23,14 @@ public class Position implements Comparable<Position> {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
 
+    public static Position from(final String position) {
+       return getPositionByCommands(position.split(""));
+    }
+
+    private static Position getPositionByCommands(final String[] commands) {
+        return new Position(commands[0], commands[1]);
+    }
+
     public List<Integer> subtract(final Position source) {
         return Arrays.asList(this.horizontal.subtract(source.horizontal), this.vertical.subtract(source.vertical));
     }

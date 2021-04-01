@@ -43,8 +43,8 @@ public class ChessService {
 
     public Response move(final MoveRequest moveRequest) {
         try {
-            final Position source = getPositionByCommands(moveRequest.source().split(""));
-            final Position target = getPositionByCommands(moveRequest.target().split(""));
+            final Position source = Position.from(moveRequest.source());
+            final Position target = Position.from(moveRequest.target());
             chessGame.move(source, target);
 
             if (chessGame.isKingDead()) {
@@ -79,10 +79,6 @@ public class ChessService {
         chessGame = new ChessGame();
         pieceDao.deleteAll();
         boardDao.deleteAll();
-    }
-
-    private Position getPositionByCommands(final String[] commands) {
-        return new Position(commands[0], commands[1]);
     }
 
     public Response start() {
