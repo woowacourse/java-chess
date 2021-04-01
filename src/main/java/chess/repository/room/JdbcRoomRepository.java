@@ -23,7 +23,8 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public long insert(long userId, String name, Room room) throws SQLException {
+    public long insert(long userId,
+        String name, Room room) throws SQLException {
         int userIdIdx = 1;
         int nameIdx = 2;
         int stateIdx = 3;
@@ -103,6 +104,80 @@ public class JdbcRoomRepository implements RoomRepository {
                 return new RoomDto(id, userid, name, state, currentTeam, createdAt);
             }
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+    }
+
+    @Override
+    public RoomDto findRoomByRoomName(String roomName) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM rooms WHERE name = ?";
+            conn = connectionUtil.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, roomName);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                long id = rs.getLong("id");
+                long userid = rs.getLong("userid");
+                String name = rs.getString("name");
+                String state = rs.getString("state");
+                String currentTeam = rs.getString("currentteam");
+                Timestamp createdAt = rs.getTimestamp("created_at");
+                return new RoomDto(id, userid, name, state, currentTeam, createdAt);
+            }
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean isExistRoomName(String roomName) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT COUNT(*) FROM rooms WHERE name = ?";
+            conn = connectionUtil.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, roomName);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count == 0) {
+                    return true;
+                }
+                return false;
+            }
+            throw new IllegalArgumentException("[ERROR] SQL 에러");
         } catch (SQLException e) {
             throw e;
         } finally {

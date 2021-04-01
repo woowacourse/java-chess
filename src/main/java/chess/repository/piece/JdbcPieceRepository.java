@@ -218,6 +218,9 @@ public class JdbcPieceRepository implements PieceRepository {
                 String location = rs.getString("location");
                 result.add(new PieceDto(id, roomid, signature, team, location));
             }
+            if (result.size() == 0) {
+                throw new IllegalArgumentException("[ERROR] 아직 시작되지 않은 방입니다.");
+            }
             return result;
         } catch (SQLException e) {
             throw e;

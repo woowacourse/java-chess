@@ -32,45 +32,56 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/room/:id", (req, res) -> {
+        get("/createroom/:name", (req, res) -> {
+            try {
+                String roomName = req.params(":name");
+                controller.createRoom(roomName);
+                return gson.toJson(OkResponseDto.payload(roomName));
+            } catch (Exception e) {
+                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+            }
+        });
+
+        get("/room/:name", (req, res) -> {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
-                Long roomId = Long.valueOf(req.params(":id"));
-                List<PieceDto> result = controller.findPiecesByRoomId(roomId);
+                String roomName = req.params(":name");
+                List<PieceDto> result = controller.findPiecesByRoomName(roomName);
+                res.type("application/json");
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }
         });
 
-        get("/room/:id/start", (req, res) -> {
+        get("/room/:name/start", (req, res) -> {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
-                Long roomId = Long.valueOf(req.params(":id"));
-                List<PieceDto> result = controller.start(roomId);
+                String roomName = req.params(":name");
+                List<PieceDto> result = controller.start(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }
         });
 
-        get("/room/:id/end", (req, res) -> {
+        get("/room/:name/end", (req, res) -> {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
-                Long roomId = Long.valueOf(req.params(":id"));
-                List<PieceDto> result = controller.end(roomId);
+                String roomName = req.params(":name");
+                List<PieceDto> result = controller.end(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
             }
         });
 
-        post("/room/:id/move", (req, res) -> {
+        post("/room/:name/move", (req, res) -> {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
-                Long roomId = Long.valueOf(req.params(":id"));
+                String roomName = req.params(":name");
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
-                List<PieceDto> result = controller.move(roomId, moveRequestDto.getSource(), moveRequestDto.getTarget());
+                List<PieceDto> result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));

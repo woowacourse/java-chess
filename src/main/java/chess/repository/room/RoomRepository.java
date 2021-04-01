@@ -11,6 +11,10 @@ public interface RoomRepository {
 
     void update(long roomId, String name, Room room) throws SQLException;
 
+    RoomDto findRoomByRoomName(String name) throws SQLException;
+
+    boolean isExistRoomName(String name) throws SQLException;
+
     RoomDto findRoomById(long roomId) throws SQLException;
 
     List<RoomDto> findRoomsByUserId(long userId) throws SQLException;

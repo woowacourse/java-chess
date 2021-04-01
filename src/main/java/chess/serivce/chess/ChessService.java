@@ -6,6 +6,7 @@ import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.State;
 
+import chess.domain.gamestate.running.Ready;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
@@ -13,6 +14,7 @@ import chess.repository.piece.JdbcPieceRepository;
 import chess.repository.piece.PieceRepository;
 import chess.repository.room.JdbcRoomRepository;
 import chess.repository.room.RoomRepository;
+import chess.utils.BoardUtil;
 import chess.utils.PieceUtil;
 import chess.utils.StateUtil;
 import java.sql.SQLException;
@@ -25,38 +27,38 @@ public class ChessService {
     private final RoomRepository roomRepository = new JdbcRoomRepository();
     private final PieceRepository pieceRepository = new JdbcPieceRepository();
 
-    public List<PieceDto> start(long roomId) throws SQLException {
-        RoomDto roomDto = roomRepository.findRoomById(roomId);
+    public List<PieceDto> start(String roomName) throws SQLException {
+        RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
 
         Room room = generateRoomDomainFromDB(roomDto, Collections.emptyList());
         room.play("start");
-        roomRepository.update(roomId, roomDto.getName(), room);
+        roomRepository.update(roomDto.getId(), roomDto.getName(), room);
 
         Board board = room.state().getBoard();
         for (Piece piece : board.getPieces()) {
-            pieceRepository.insert(roomId, piece);
+            pieceRepository.insert(roomDto.getId(), piece);
         }
-        return pieceRepository.findPiecesByRoomId(roomId);
+        return pieceRepository.findPiecesByRoomId(roomDto.getId());
     }
 
-    public List<PieceDto> end(Long roomId) throws SQLException {
-        RoomDto roomDto = roomRepository.findRoomById(roomId);
-        List<PieceDto> pieces = pieceRepository.findPiecesByRoomId(roomId);
+    public List<PieceDto> end(String roomName) throws SQLException {
+        RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
+        List<PieceDto> pieces = pieceRepository.findPiecesByRoomId(roomDto.getId());
 
         Room room = generateRoomDomainFromDB(roomDto, pieces);
         room.play("end");
-        roomRepository.update(roomId, roomDto.getName(), room);
+        roomRepository.update(roomDto.getId(), roomDto.getName(), room);
 
         return pieces;
     }
 
-    public List<PieceDto> move(Long roomId, String source, String target) throws SQLException {
-        RoomDto roomDto = roomRepository.findRoomById(roomId);
-        List<PieceDto> piecesInDb = pieceRepository.findPiecesByRoomId(roomId);
+    public List<PieceDto> move(String roomName, String source, String target) throws SQLException {
+        RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
+        List<PieceDto> piecesInDb = pieceRepository.findPiecesByRoomId(roomDto.getId());
 
         Room room = generateRoomDomainFromDB(roomDto, piecesInDb);
         room.play("move " + source + " " + target);
-        roomRepository.update(roomId, roomDto.getName(), room);
+        roomRepository.update(roomDto.getId(), roomDto.getName(), room);
 
         Board board = room.state().getBoard();
         List<Piece> pieces = room.state().getBoard().getPieces();
@@ -72,13 +74,13 @@ public class ChessService {
             Piece pieceInTarget = board.find(Location.of(target));
             pieceRepository.update(pieceInDBAtSource.getId(), pieceInTarget);
             pieceRepository.deletePieceById(pieceInDBAtTarget.getId());
-            return pieceRepository.findPiecesByRoomId(roomId);
+            return pieceRepository.findPiecesByRoomId(roomDto.getId());
         }
 
         for (int i = 0; i < pieces.size(); i++) {
             pieceRepository.update(piecesInDb.get(i).getId(), pieces.get(i));
         }
-        return pieceRepository.findPiecesByRoomId(roomId);
+        return pieceRepository.findPiecesByRoomId(roomDto.getId());
     }
 
     private Room generateRoomDomainFromDB(RoomDto roomDto, List<PieceDto> pieceDtos) {
@@ -88,7 +90,19 @@ public class ChessService {
         return room;
     }
 
-    public List<PieceDto> findPiecesByRoomId(Long roomId) throws SQLException {
-        return pieceRepository.findPiecesByRoomId(roomId);
+    public List<PieceDto> findPiecesByRoomName(String roomName) throws SQLException {
+        RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
+        return pieceRepository.findPiecesByRoomId(roomDto.getId());
+    }
+
+    public void createRoom(String roomName) throws SQLException {
+        if (!roomRepository.isExistRoomName(roomName)) {
+            throw new IllegalArgumentException("[ERROR] 이미 존재하는 방입니다. 다른 이름을 사용해주세요.");
+        }
+
+        int userId = 0; // TODO: 임시 아이디 (유저 기능 구현시 활용)
+        Room newRoom = new Room(new Ready(BoardUtil.generateInitialBoard()), Team.WHITE);
+
+        roomRepository.insert(userId, roomName, newRoom);
     }
 }
