@@ -29,6 +29,12 @@ public class Board {
         swapPieces(source, target);
     }
 
+    public Set<Position> movablePath(Position source) {
+        Piece piece = pieceOfPosition(source);
+        MoveStrategy moveStrategy = piece.moveStrategy();
+        return moveStrategy.moveStrategy(this, source);
+    }
+
     private Boolean isNotMovablePosition(Position source, Position target) {
         Piece piece = pieceOfPosition(source);
         MoveStrategy moveStrategy = piece.moveStrategy();

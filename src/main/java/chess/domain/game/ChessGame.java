@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ChessGame {
     private State state;
@@ -23,6 +24,10 @@ public class ChessGame {
     public void move(Position source, Position target) {
         this.state.moveIfValidColor(source, target);
         this.state = stateByFinished();
+    }
+
+    public Set<Position> movablePath(Position source) {
+        return state.movablePath(source);
     }
 
     private State stateByFinished() {
@@ -58,5 +63,13 @@ public class ChessGame {
 
     public boolean isInit() {
         return state.isInit();
+    }
+
+    public void reset(Board board) {
+        this.state = new Init(board);
+    }
+
+    public State state() {
+        return state;
     }
 }

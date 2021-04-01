@@ -5,7 +5,11 @@ import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
+import java.util.Set;
+
 public class WhiteTurn extends Running {
+    public static final String WHITE_TURN = "white turn";
+
     public WhiteTurn(Board board) {
         super(board);
     }
@@ -32,5 +36,21 @@ public class WhiteTurn extends Running {
             );
         }
         board().moveIfValidPosition(source, target);
+    }
+
+    @Override
+    public Set<Position> movablePath(Position source) {
+        Piece sourcePiece = board().pieceOfPosition(source);
+        if (sourcePiece.isBlack()) {
+            throw new UnsupportedOperationException(
+                    Color.WHITE.name() + "턴엔 " + Color.WHITE.name() + "말만 이동 가능합니다."
+            );
+        }
+        return board().movablePath(source);
+    }
+
+    @Override
+    public String toString() {
+        return WHITE_TURN;
     }
 }

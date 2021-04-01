@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.piece.team.Color;
 
 public class BlackWin extends Finished {
+    public static final String BLACK_WINS = "black wins";
+
     public BlackWin(Board board) {
         super(board);
     }
@@ -16,5 +18,10 @@ public class BlackWin extends Finished {
     @Override
     public Color winner() {
         return Color.BLACK;
+    }
+
+    @Override
+    public String toString() {
+        return BLACK_WINS;
     }
 }

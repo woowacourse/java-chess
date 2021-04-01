@@ -245,10 +245,6 @@ public class Position {
         return vector;
     }
 
-    public int yValue() {
-        return ypoint.getValue();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -268,6 +264,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return xpoint.name() + ypoint.getValue();
+        return xpoint.getName() + ypoint.getValue();
     }
 }

@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
 import java.util.Map;
+import java.util.Set;
 
 public abstract class Started implements State {
     private final Board board;
@@ -46,5 +47,15 @@ public abstract class Started implements State {
     @Override
     public boolean isInit() {
         return false;
+    }
+
+    @Override
+    public Set<Position> movablePath(Position source) {
+        throw new UnsupportedOperationException("현재 수행할 수 없는 명령입니다.");
+    }
+
+    @Override
+    public String toString() {
+        throw new UnsupportedOperationException();
     }
 }
