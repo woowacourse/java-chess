@@ -1,13 +1,20 @@
 package chess.domain.board;
 
+import chess.domain.chessgame.ChessGame;
+import chess.domain.chessgame.GameState;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
+import chess.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

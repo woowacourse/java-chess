@@ -5,8 +5,16 @@ import chess.domain.piece.Team;
 public final class Turn {
     private Team team;
 
+    public Turn(Team team) {
+        this.team = team;
+    }
+
     public Turn() {
-        team = Team.WHITE;
+        this(Team.WHITE);
+    }
+
+    public Turn(String team) {
+        this(Team.matchingTeam(team));
     }
 
     public Team now() {

@@ -1,24 +1,39 @@
 package chess.domain.chessgame;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class ChessGame {
+    private static final String DEFAULT_GAME_ID = "game_001";
+
+    private final String gameId;
     private final Board board;
     private final Turn turn;
     private final GameState gameState;
 
-    public ChessGame(Board board) {
+    public ChessGame(String gameId, Board board, Turn turn, GameState gameState) {
+        this.gameId = gameId;
         this.board = board;
-        this.turn = new Turn();
-        this.gameState = new GameState();
+        this.turn = turn;
+        this.gameState = gameState;
+    }
+
+    public ChessGame(Board board) {
+        this(DEFAULT_GAME_ID, board, new Turn(), new GameState());
     }
 
     public ChessGame() {
         this(new Board());
+    }
+
+    public ChessGame(String game_id, String pieces, String turn) {
+        this(game_id, BoardInitializer.boardFromString(pieces), new Turn(turn), new GameState());
     }
 
     public boolean isRunning() {
@@ -53,10 +68,26 @@ public final class ChessGame {
     }
 
     public String boardForDAO() {
-        return "sth";
+        return board.unwrap().values()
+                .stream()
+        .map(Piece::name)
+        .collect(Collectors.joining(","));
     }
 
     public String turnForDAO() {
-        return "white";
+        return turn.now().teamName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessGame game = (ChessGame) o;
+        return gameId.equals(game.gameId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameId);
     }
 }
