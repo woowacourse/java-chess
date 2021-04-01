@@ -29,10 +29,6 @@ body {
 .base-background {
     background-color: plum;
 }
-div#board-frame {
-    position: absolute;
-    left: 30%;
-}
 .title {
     width: 500px;
     height: 300px;
@@ -40,7 +36,7 @@ div#board-frame {
     color: violet;
     position: absolute;
     top: 42%;
-    left: 10%;
+    left: 9%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -54,7 +50,7 @@ div#board-frame {
     color: purple;
     position: absolute;
     top: 42.4%;
-    left: 10.25%;
+    left: 9.25%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -89,6 +85,11 @@ div#board-frame {
 .turn {
     animation: turn-bg 2.5s linear;
     animation-iteration-count: infinite;
+}
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .board {
     width: 640px;
