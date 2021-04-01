@@ -44,4 +44,14 @@ public class ChessWebController {
         return game.winnerColor()
             .getName();
     }
+
+    public String whiteScore() {
+        double rawWhiteScore = game.computeWhitePoint();
+        return String.valueOf(rawWhiteScore);
+    }
+
+    public String blackScore() {
+        double rawBlackScore = game.computeBlackPoint();
+        return String.valueOf(rawBlackScore);
+    }
 }

@@ -24,6 +24,7 @@ public class Game {
         this.board = new Board(RequestedBoard.board());
         this.point = new Point(board);
         this.gameState = GameState.START;
+        this.turnColor = PieceColor.WHITE;
     }
 
     public void end() {

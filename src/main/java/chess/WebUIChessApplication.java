@@ -35,9 +35,8 @@ public class WebUIChessApplication {
                 Piece piece = elem.getValue();
                 initialChessBoard.put(position.symbol(), piece.symbol());
             }
-            submitData.put("chessBoard", initialChessBoard);
             submitData.put("turn", webController.getTurn());
-
+            submitData.put("chessBoard", initialChessBoard);
             return gson.toJson(submitData);
         });
 
@@ -47,9 +46,18 @@ public class WebUIChessApplication {
             String moveRawCommand = (String) requestBody.get("move");
             String moveResult = webController.move(moveRawCommand);
             submitData.put("isSuccess", moveResult);
+            submitData.put("turn", webController.getTurn());
             if (webController.isEnd()) {
                 submitData.put("winner", webController.winnerColor());
             }
+            submitData.put("turn", webController.getTurn());
+            return gson.toJson(submitData);
+        });
+
+        post("/grade", (req, res) -> {
+            Map<String, Object> submitData = new HashMap<>();
+            submitData.put("whiteScore", webController.whiteScore());
+            submitData.put("blackScore", webController.blackScore());
             return gson.toJson(submitData);
         });
     }

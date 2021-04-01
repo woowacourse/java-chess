@@ -1,5 +1,6 @@
 import {changeTurn} from "./ChangeTurn.js";
 import {packedImage} from "./PackImage.js";
+import {requestScore} from "./RequestScore.js";
 
 export const serveInitialBoard = () => {
     const $startButton = document.getElementById("start-button");
@@ -17,7 +18,7 @@ const requestInitialBoard = () => {
 
     axios.post("/initial")
     .then(response => allocateInitialPiece(response))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error)); 
 }
 
 const allocateInitialPiece = (response) => {
@@ -30,4 +31,6 @@ const allocateInitialPiece = (response) => {
         let image = packedImage(key, chessBoard[key]);
         pieceArea.appendChild(image);
     }
+
+    requestScore();
 }

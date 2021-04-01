@@ -1,6 +1,8 @@
+import { changeTurn } from "./ChangeTurn.js";
 import {
     switchImage, voidImage
 } from "./PackImage.js";
+import { requestScore } from "./RequestScore.js";
 
 const moveCommand = () => {
     sendMoveCommand(localStorage.activateFirstPiece, localStorage.activateSecondPiece);
@@ -17,8 +19,9 @@ const sendMoveCommand = (firstSlot, secondSlot) => {
 
 const isValidMove = (response) => {
     const data = response.data;
+    console.log(data);
     if (data["isSuccess"] == "true") {
-        movePiece();
+        movePiece(data);
         isEnd(data);
         return;
     }
@@ -32,12 +35,12 @@ const initializedMove = () => {
 }
 
 const isEnd = (data) => {
-    if (data["isEnd"] == "true") {
+    if (data["winner"]) {
         alert("게임이 끝났습니다." + data["winner"] + "의 승리입니다.");
     }
 }
 
-const movePiece = () => {
+const movePiece = (data) => {
     const $firstSlotDiv = document.getElementById(localStorage.activateFirstPiece);
     const $firstSlotPieceName = extractPiece($firstSlotDiv);
     const $secondSlotDiv = document.getElementById(localStorage.activateSecondPiece);
@@ -48,6 +51,8 @@ const movePiece = () => {
     clearPiece($secondSlotDiv);
     $firstSlotDiv.appendChild($voidImage);
     $secondSlotDiv.appendChild($switchPiece);
+    switchTurn(data);
+    requestScore();
     initializedMove();
 };
 
@@ -59,6 +64,11 @@ const extractPiece = ($slot) => {
 const clearPiece = ($slot) => {
     const packedImage = $slot.querySelector(".PackedPiece");
     packedImage.remove();
+}
+
+const switchTurn = (data) => {
+    const thisTurnColor = data["turn"];
+    changeTurn(thisTurnColor);
 }
 
 export const activatePiece = () => {
