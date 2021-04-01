@@ -30,7 +30,7 @@ public class BoardDAO extends AbstractDAO {
     }
 
     // 방 생성 함수
-    public void createBoard(WebBoardDTO webBoardDTO, WebPiecesDTO webPiecesDTO) throws SQLException {
+    public int createBoard(WebBoardDTO webBoardDTO, WebPiecesDTO webPiecesDTO) throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = null;
         connection.setAutoCommit(false);
@@ -50,6 +50,7 @@ public class BoardDAO extends AbstractDAO {
             PiecesDAO piecesDAO = PiecesDAO.instance();
             piecesDAO.addPieces(boardID, webPiecesDTO.getPieces(), connection);
             connection.commit();
+            return boardID;
         } catch (Exception e) {
             connection.rollback();
             System.out.println(e.getMessage());
@@ -59,6 +60,7 @@ public class BoardDAO extends AbstractDAO {
             }
             closeConnection(connection);
         }
+        throw new SQLException();
     }
 
     // 방 검색 함수
