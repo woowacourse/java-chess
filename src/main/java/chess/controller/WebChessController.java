@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import static spark.Spark.get;
 
 public class WebChessController {
     private ChessGame chessGame = null;
     private Gson gson = null;
+
     public void run() {
         gson = new Gson();
 
@@ -28,21 +30,21 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-         get("/startChessGame", (req, res) -> {
-             if (chessGame != null && !chessGame.isEnd()) {
-                 return gson.toJson(new ResponseDto(false, "체스 게임이 시작 중 입니다."));
-             }
-             chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
-             return gson.toJson(new ResponseDto(true, "체스가 시작되었습니다."));
+        get("/startChessGame", (req, res) -> {
+            if (chessGame != null && !chessGame.isEnd()) {
+                return gson.toJson(new ResponseDto(false, "체스 게임이 시작 중 입니다."));
+            }
+            chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
+            return gson.toJson(new ResponseDto(true, "체스가 시작되었습니다."));
         });
 
-         get("/endChessGame", (req, res)  -> {
-             if (chessGame != null && !chessGame.isEnd()) {
-                 chessGame.finish();
-                 return gson.toJson(new ResponseDto(true, "체스 게임이 종료 되었습니다."));
-             }
-             return gson.toJson(new ResponseDto(false, "체스 게임이 실행 중이 아닙니다."));
-         });
+        get("/endChessGame", (req, res) -> {
+            if (chessGame != null && !chessGame.isEnd()) {
+                chessGame.finish();
+                return gson.toJson(new ResponseDto(true, "체스 게임이 종료 되었습니다."));
+            }
+            return gson.toJson(new ResponseDto(false, "체스 게임이 실행 중이 아닙니다."));
+        });
 
         get("/refreshChessBoard", (req, res) -> {
             final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
@@ -117,6 +119,7 @@ public class WebChessController {
         }
         return whitePrintFormat;
     }
+
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }

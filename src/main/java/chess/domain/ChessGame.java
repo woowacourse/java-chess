@@ -54,7 +54,6 @@ public class ChessGame {
     }
 
 
-
     private void killEnemyPiece(Position destination, Team enemy) {
         Piece piece = enemy.killPiece(destination);
         checkMate(piece);
