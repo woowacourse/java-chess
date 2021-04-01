@@ -1,8 +1,11 @@
 import * as piece from "./pieceview.js";
-const button = document.querySelector("input");
+
+const startButton = document.querySelector(".start");
+const saveButton = document.querySelector(".save");
 
 window.addEventListener('DOMContentLoaded', syncBoard)
-button.addEventListener('click', restartGame)
+startButton.addEventListener('click', restartGame)
+saveButton.addEventListener('click', saveGame)
 
 export function restartGame() {
     axios({
@@ -28,5 +31,12 @@ export function syncBoard() {
                 document.querySelector("#"+positions[i]).innerHTML = piece.pieceImage(pieces[i]);
             }
         })
+}
+
+function saveGame() {
+    axios({
+        method: 'put',
+        url: '/save'
+    })
 }
 

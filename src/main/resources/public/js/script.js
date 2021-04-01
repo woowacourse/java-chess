@@ -6,19 +6,6 @@ function movePieces(source, target) {
     document.querySelector("#" + source).innerText = "";
 }
 
-function checkGameStatus() {
-    axios({
-        method: 'get',
-        url: '/checkStatus'
-    })
-        .then(function (res) {
-            console.log(res);
-            if (!res.data) {
-                location.replace("/finish")
-            }
-        })
-}
-
 function move(source, target) {
     axios({
         method: 'post',
@@ -35,6 +22,19 @@ function move(source, target) {
                 return;
             }
             alert("잘못된 이동입니다.");
+        })
+}
+
+function checkGameStatus() {
+    axios({
+        method: 'get',
+        url: '/checkStatus'
+    })
+        .then(function (res) {
+            console.log(res);
+            if (!res.data) {
+                location.replace("/finish")
+            }
         })
 }
 

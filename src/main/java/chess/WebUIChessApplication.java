@@ -36,6 +36,16 @@ public class WebUIChessApplication {
             return gson.toJson(boardDto.getBoard());
         });
 
+        post("/move", (req, res) -> {
+            RequestDto dto = gson.fromJson(req.body(), RequestDto.class);
+            try {
+                game.move(new Position(dto.getSource()), new Position(dto.getTarget()));
+                return 200;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                return 401;
+            }
+        });
+
         get("/checkStatus", (req, res) -> game.isRunning());
 
         put("/restart", (req, res) -> {
@@ -51,15 +61,9 @@ public class WebUIChessApplication {
             return render(model, "test.html");
         });
 
-        post("/move", (req, res) -> {
-            RequestDto dto = gson.fromJson(req.body(), RequestDto.class);
-            try {
-                game.move(new Position(dto.getSource()), new Position(dto.getTarget()));
-                dao.updateGame(DEFAULT_GAME_ID, game);
-                return 200;
-            } catch (IllegalArgumentException | IllegalStateException e) {
-                return 401;
-            }
+        put("/save", (res, req) -> {
+            dao.updateGame(DEFAULT_GAME_ID, game);
+            return 200;
         });
     }
 
