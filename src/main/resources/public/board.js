@@ -1,6 +1,5 @@
 class Board {
   $board = document.querySelector('.board');
-  $score = document.querySelector('.score');
   #selectedItem;
   #roundStatus;
 
@@ -76,5 +75,9 @@ class Board {
 
   getScore() {
     return this.#roundStatus.score;
+  }
+
+  getColor() {
+    return this.#roundStatus.currentColor;
   }
 }
