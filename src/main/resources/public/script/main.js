@@ -7,6 +7,10 @@ window.onload = function(){
     })
 }
 
+let state = "stay"; // stay, show
+let source = "";
+let target = "";
+
 function printPosition(){
     return function(event){
         console.log(event.target.id);
@@ -14,28 +18,69 @@ function printPosition(){
 }
 
 function click(){
-    return function(event){
-        console.log(event.target.id);
+    return function (event){
+        if(state === "stay"){
+            show(event.target);
+            state = "show";
+            source = event.target.id;
+            console.log("clicked source : "+ source);
+            return;
+        }
 
-        const position = new Object();
-        position.position = event.target.id;
-        const jsonData = JSON.stringify(position);
-
-        $.ajax({
-            url:"/click",
-            type:"POST",
-            data:jsonData,
-            contentType: "application/json",
-            success: function(result) {
-                if (result) {
-                    alert(result);
-                } else {
-                    alert("잠시 후에 시도해주세요.");
-                }
-            },
-            error: function() {
-                alert("에러 발생");
-            }
-        })
+        if(state === "show"){
+            clickWhereToMove(event.target);
+            state = "stay";
+            source = "";
+            target = "";
+            return;
+        }
     }
+}
+
+function clickWhereToMove(eventTarget){
+    if(checkIsValidTarget(eventTarget)){
+        target = eventTarget.id;
+        console.log("move");
+        console.log("clicked source : "+ source);
+        console.log("clicked target : "+ target);
+    }
+
+    const piece = document.getElementsByClassName("piece");
+    for(let i=0; i<piece.length; i++){
+        piece[i].classList.remove("moveAble");
+        piece[i].style.backgroundColor = "";
+    }
+}
+
+function checkIsValidTarget(target){
+    if(target.classList.contains("moveAble")){
+        return true;
+    }
+    return false;
+}
+
+function show(target) {
+    const position = new Object();
+    position.position = target.id;
+    const jsonData = JSON.stringify(position);
+
+    $.ajax({
+        url: "/show",
+        type: "POST",
+        data: jsonData,
+        contentType: "application/json",
+        success: function (result) {
+            if (result !== null && result !== "[]") {
+                const positions = result.slice(1, -1).split(", ");
+                positions.forEach((el) => {
+                    const piece = document.getElementById(el);
+                    piece.classList.add("moveAble");
+                    piece.style.backgroundColor = "skyblue";
+                });
+            }
+        },
+        error: function () {
+            alert("에러 발생");
+        }
+    })
 }

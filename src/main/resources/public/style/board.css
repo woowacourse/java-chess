@@ -1,13 +1,14 @@
 .chessboard {
-    width: 640px;
-    height: 640px;
+    width: 576px;
+    height: 576px;
     margin: 20px;
     border: 25px solid #333;
 }
 .black {
+    border: solid 0.2px black;
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background-color: #999;
     font-size:50px;
     text-align:center;
@@ -15,12 +16,16 @@
     vertical-align:middle;
 }
 .white {
+    border: solid 0.2px black;
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background-color: #fff;
     font-size:50px;
     text-align:center;
     display: table-cell;
     vertical-align:middle;
+}
+.movable{
+    background-color : skyblue;
 }

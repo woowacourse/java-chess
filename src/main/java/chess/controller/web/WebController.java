@@ -1,6 +1,7 @@
 package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.PositionsDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
@@ -11,6 +12,9 @@ import chess.view.web.OutputView;
 import chess.view.web.PieceSymbolMapper;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static spark.Spark.*;
 
 public class WebController {
@@ -20,7 +24,7 @@ public class WebController {
     public void mapping(){
         staticFiles.location("/public");
         serviceRoot();
-        click();
+        show();
     }
 
     private void serviceRoot(){
@@ -35,12 +39,26 @@ public class WebController {
         });
     }
 
-    private void click(){
-        post("/click", (req, res) -> {
+    private void show(){
+        post("/show", (req, res) -> {
             JSONObject jsonData = new JSONObject(req.body());
             String position = jsonData.getString("position");
-            return position;
+            return reachablePositions(new Position(position));
         });
+    }
+
+    // XXX :: Service로 분리하기
+    private List<String> reachablePositions(Position source){
+        List<String> positions = new ArrayList<>();
+        for(Position position : chessGame.reachablePositions(source)){
+            positions.add(parsePositionAsString(position));
+        }
+        return positions;
+    }
+
+    // XXX :: Service로 분리하기
+    private String parsePositionAsString(Position position){
+        return position.vertical().name() + position.horizontal().getIndex();
     }
 
     // XXX :: Service로 분리하기
