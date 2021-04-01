@@ -45,8 +45,8 @@ class ChessDAOTest {
     @DisplayName("게임 가져오는 기능")
     @Order(3)
     void findGame() throws SQLException {
-        assertThat(chessDAO.findGameById(gameId).boardForDAO()).isEqualTo(new ChessGame().boardForDAO());
-        assertThat(chessDAO.findGameById(gameId).turnForDAO()).isEqualTo(game.turnForDAO());
+        assertThat(chessDAO.findGameById(gameId).stringifiedBoard()).isEqualTo(new ChessGame().stringifiedBoard());
+        assertThat(chessDAO.findGameById(gameId).stringifiedTurn()).isEqualTo(game.stringifiedTurn());
     }
 
     @Test
@@ -55,8 +55,8 @@ class ChessDAOTest {
     void updateGame() throws SQLException {
         game.move(new Position("b2"), new Position("b3"));
         chessDAO.updateGame(gameId, game);
-        assertThat(chessDAO.findGameById(gameId).boardForDAO()).isEqualTo(game.boardForDAO());
-        assertThat(chessDAO.findGameById(gameId).turnForDAO()).isEqualTo(game.turnForDAO());
+        assertThat(chessDAO.findGameById(gameId).stringifiedBoard()).isEqualTo(game.stringifiedBoard());
+        assertThat(chessDAO.findGameById(gameId).stringifiedTurn()).isEqualTo(game.stringifiedTurn());
     }
 
     @Test

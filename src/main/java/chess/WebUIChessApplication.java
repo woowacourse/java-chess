@@ -6,13 +6,13 @@ import chess.domain.chessgame.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.RequestDto;
+import chess.dto.StatusDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -27,13 +27,18 @@ public class WebUIChessApplication {
         final Gson gson = new Gson();
 
         get("/", (req, res) -> {
+            ChessResult result = new ChessResult(game.board());
             Map<String, Object> model = new HashMap<>();
+//            model.put("turn", game.turnForDAO());
+//            model.put("black_score", result.totalScore(Team.BLACK));
+//            model.put("white_score", result.totalScore(Team.WHITE));
+
             return render(model, "index.html");
         });
 
         get("/drawBoard", (req, res) -> {
             BoardDto boardDto = new BoardDto(game.board());
-            return gson.toJson(boardDto.getBoard());
+            return gson.toJson(boardDto.board());
         });
 
         post("/move", (req, res) -> {
@@ -44,6 +49,11 @@ public class WebUIChessApplication {
             } catch (IllegalArgumentException | IllegalStateException e) {
                 return 401;
             }
+        });
+
+        get("/status", (res,req) -> {
+            StatusDto statusDto = new StatusDto(new ChessResult(game.board()), game.stringifiedTurn());
+            return gson.toJson(statusDto.status());
         });
 
         get("/checkStatus", (req, res) -> game.isRunning());

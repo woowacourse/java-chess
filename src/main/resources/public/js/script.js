@@ -1,3 +1,5 @@
+import {updateStatus} from "./board.js";
+
 const $chessboard = document.querySelector(".chessboard");
 $chessboard.addEventListener("click", select);
 
@@ -19,6 +21,7 @@ function move(source, target) {
             if (response.data === 200) {
                 movePieces(source, target);
                 checkGameStatus();
+                updateStatus();
                 return;
             }
             alert("잘못된 이동입니다.");
@@ -31,7 +34,6 @@ function checkGameStatus() {
         url: '/checkStatus'
     })
         .then(function (res) {
-            console.log(res);
             if (!res.data) {
                 location.replace("/finish")
             }

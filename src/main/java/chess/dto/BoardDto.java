@@ -16,7 +16,7 @@ public class BoardDto {
         }
     }
 
-    public Map<String, String> getBoard() {
+    public Map<String, String> board() {
         return board;
     }
 }

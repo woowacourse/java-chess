@@ -6,7 +6,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class ChessGame {
@@ -63,14 +62,14 @@ public final class ChessGame {
         return board.unwrap();
     }
 
-    public String boardForDAO() {
+    public String stringifiedBoard() {
         return board.unwrap().values()
                 .stream()
         .map(Piece::name)
         .collect(Collectors.joining(","));
     }
 
-    public String turnForDAO() {
+    public String stringifiedTurn() {
         return turn.now().teamName();
     }
 }

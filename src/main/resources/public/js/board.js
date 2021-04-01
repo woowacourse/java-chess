@@ -31,6 +31,20 @@ export function syncBoard() {
                 document.querySelector("#"+positions[i]).innerHTML = piece.pieceImage(pieces[i]);
             }
         })
+    updateStatus();
+}
+
+export function updateStatus() {
+    axios({
+        method: 'get',
+        url: '/status'
+    })
+        .then(function (res) {
+            const status = res.data;
+            document.querySelector("#blackScore").querySelector("a").textContent = status[0];
+            document.querySelector("#whiteScore").querySelector("a").textContent = status[1];
+            document.querySelector("#turn").querySelector("a").textContent = status[2];
+        })
 }
 
 function saveGame() {

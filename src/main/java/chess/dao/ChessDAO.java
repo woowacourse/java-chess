@@ -47,8 +47,8 @@ public class ChessDAO {
         String query = "INSERT INTO games VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
-        pstmt.setString(2, game.boardForDAO());
-        pstmt.setString(3, game.turnForDAO());
+        pstmt.setString(2, game.stringifiedBoard());
+        pstmt.setString(3, game.stringifiedTurn());
         pstmt.executeUpdate();
     }
 
@@ -75,8 +75,8 @@ public class ChessDAO {
     public void updateGame(String gameId, ChessGame game) throws SQLException {
         String query = "UPDATE games SET pieces = ? , turn = ? WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, game.boardForDAO());
-        pstmt.setString(2, game.turnForDAO());
+        pstmt.setString(1, game.stringifiedBoard());
+        pstmt.setString(2, game.stringifiedTurn());
         pstmt.setString(3, gameId);
         pstmt.executeUpdate();
     }
