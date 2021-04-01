@@ -43,13 +43,18 @@ public class ChessService {
 
     public Response move(final MoveRequest moveRequest) {
         try {
-            chessGame.move(getPositionByCommands(moveRequest.source().split("")),
-                getPositionByCommands(moveRequest.target().split("")));
+            final Position source = getPositionByCommands(moveRequest.source().split(""));
+            final Position target = getPositionByCommands(moveRequest.target().split(""));
+            chessGame.move(source, target);
 
             if (chessGame.isKingDead()) {
                 chessGame.changeGameOver();
             }
-            pieceDao.save(chessGame.board().unwrap());
+
+            final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
+            pieceDao.savePiece(source, chessBoard.get(source));
+            pieceDao.savePiece(target, chessBoard.get(target));
+
             chessGame.nextTurn();
             boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), false));
             return new Response("200", "성공");

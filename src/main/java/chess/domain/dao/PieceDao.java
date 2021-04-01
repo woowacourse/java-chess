@@ -1,5 +1,6 @@
 package chess.domain.dao;
 
+import chess.domain.dto.request.MoveRequest;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;
@@ -72,7 +73,7 @@ public class PieceDao {
         }
     }
 
-    private void savePiece(final Position position, final Piece piece) throws SQLException {
+    public void savePiece(final Position position, final Piece piece) throws SQLException {
         String query = "INSERT INTO pieces VALUES (?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, position.horizontal().symbol() + position.vertical().symbol());
