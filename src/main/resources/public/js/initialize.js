@@ -16,11 +16,12 @@ export let gameResultWindow = document.getElementById("gameResult");
 export const whiteTeamCurrentTurn = document.getElementById("whiteTeamCurrentTurn");
 export const blackTeamCurrentTurn = document.getElementById("blackTeamCurrentTurn");
 
-initChessBoard();
-initCurrentTurn();
+import {updateScoreUI} from "./movement.js";
 
-function initChessBoard() {
-    gameResultWindow.style.display = "none";
+const rowArray = ["8", "7", "6", "5", "4", "3", "2", "1"];
+const columnArray = ["a", "b", "c", "d", "e", "f", "g", "h"];
+
+export function initChessBoard(data) {
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement('div');
         chessBoardRow.setAttribute("class", "chessRow");
@@ -32,23 +33,96 @@ function initChessBoard() {
             chessBoardColumn.style.backgroundColor = initChessBoardColor(i, j);
 
             let pieceImg = document.createElement('img');
-            let positionPiece = initPieceImage(i, j);
-            if (positionPiece === "") {
-                pieceImg.style.display = "none";
-            }
-            pieceImg.src = positionPiece;
-
+            pieceImg.src = "";
+            pieceImg.style.display = "none";
             chessBoardColumn.appendChild(pieceImg);
+
             chessBoardRow.appendChild(chessBoardColumn);
         }
         chessBoard.appendChild(chessBoardRow);
     }
+    drawPieceImage(data);
+    initCurrentTurn();
 }
 
 function getBoardInitial(row, column) {
-    const rowArray = ["8", "7", "6", "5", "4", "3", "2", "1"];
-    const columnArray = ["a", "b", "c", "d", "e", "f", "g", "h"];
     return columnArray[column] + rowArray[row];
+}
+
+export function drawPieceImage(data) {
+    emptyBoardImage();
+    appendWhitePieceImage(data.piecePositionByTeam.white);
+    appendBlackPieceImage(data.piecePositionByTeam.black);
+    updateScoreUI(data.whiteTeamScore, data.blackTeamScore);
+}
+
+function emptyBoardImage() {
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            let boardInitial = getBoardInitial(i, j);
+            let boardPosition = document.getElementById(boardInitial);
+            boardPosition.firstChild.src = "";
+            boardPosition.firstChild.style.display = "none";
+        }
+    }
+}
+
+function appendWhitePieceImage(whitePosition) {
+    let whitePositionMap = new Map(Object.entries(whitePosition));
+    let whitePositionArray = Array.from(whitePositionMap.keys());
+    for (let i = 0; i < whitePositionArray.length; i++) {
+        let boardPosition = document.getElementById(String(whitePositionArray[i]));
+        boardPosition.firstChild.src =  whitePieceImageSource(whitePositionMap.get(whitePositionArray[i]));
+        boardPosition.firstChild.style.display = "block";
+    }
+}
+
+function whitePieceImageSource(piece) {
+    if (piece === "Rook") {
+        return WRook;
+    }
+    if (piece === "Bishop") {
+        return WBishop;
+    }
+    if (piece === "King") {
+        return WKing;
+    }
+    if (piece === "Knight") {
+        return WKnight;
+    }
+    if (piece === "Queen") {
+        return WQueen;
+    }
+    return WPawn;
+}
+
+function appendBlackPieceImage(blackPosition) {
+    let blackPositionMap = new Map(Object.entries(blackPosition));
+    let blackPositionArray = Array.from(blackPositionMap.keys());
+    for (let i = 0; i < blackPositionArray.length; i++) {
+        let boardPosition = document.getElementById(String(blackPositionArray[i]));
+        boardPosition.firstChild.src =  blackPieceImageSource(blackPositionMap.get(blackPositionArray[i]));
+        boardPosition.firstChild.style.display = "block";
+    }
+}
+
+function blackPieceImageSource(piece) {
+    if (piece === "Rook") {
+        return BRook;
+    }
+    if (piece === "Bishop") {
+        return BBishop;
+    }
+    if (piece === "King") {
+        return BKing;
+    }
+    if (piece === "Knight") {
+        return BKnight;
+    }
+    if (piece === "Queen") {
+        return BQueen;
+    }
+    return BPawn;
 }
 
 function initChessBoardColor(row, column) {
@@ -56,46 +130,6 @@ function initChessBoardColor(row, column) {
         return "#522632";
     }
     return "#F3E4DF";
-}
-
-function initPieceImage(row, column) {
-    if (row === 0) {
-        if (column === 0 || column === 7) {
-            return BRook;
-        }
-        if (column === 1 || column === 6) {
-            return BKnight;
-        }
-        if (column === 2 || column === 5) {
-            return BBishop;
-        }
-        if (column === 4) {
-            return BKing;
-        }
-        return BQueen;
-    }
-    if (row === 1) {
-        return BPawn;
-    }
-    if (row === 6) {
-        return WPawn;
-    }
-    if (row === 7) {
-        if (column === 0 || column === 7) {
-            return WRook;
-        }
-        if (column === 1 || column === 6) {
-            return WKnight;
-        }
-        if (column === 2 || column === 5) {
-            return WBishop;
-        }
-        if (column === 4) {
-            return WKing;
-        }
-        return WQueen;
-    }
-    return "";
 }
 
 function initCurrentTurn() {
