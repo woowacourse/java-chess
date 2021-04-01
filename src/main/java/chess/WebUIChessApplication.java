@@ -19,28 +19,35 @@ public class WebUIChessApplication {
 //        Spark.port(8080);
 
         staticFileLocation("/static");
-        final ChessService webController = new ChessService();
+        final ChessService chessService = new ChessService();
         Gson gson = new Gson();
 
-        get("/room", (req, res) -> {
+        get("/room", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "room.html");
         });
 
-        get("/", (req, res) -> {
+        get("/chess", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
+            Object boardId = request.queryParams("boardId");
+            model.put("boardId", boardId);
             return render(model, "index.html");
         });
 
-        get("/start", (request, response) -> {
-            Map<String, String> boardInfo = webController.start();
+        post("/create", (request, response) -> {
+            Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class);
+
+            String whitePlayer = (String) requestBody.get("whitePlayer");
+            String blackPlayer = (String) requestBody.get("blackPlayer");
+            Map<String, Integer> boardInfo = chessService.start(whitePlayer, blackPlayer);
             return gson.toJson(boardInfo);
         });
 
         post("/join", (request, response) -> {
             Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class) ;
+            System.out.println("이동");
             int boardId = (int) (double) requestBody.get("boardId");
-            Map<String, String> boardInfo = webController.joinBoard(boardId);
+            Map<String, String> boardInfo = chessService.joinBoard(boardId);
             return gson.toJson(boardInfo);
         });
 
@@ -49,15 +56,21 @@ public class WebUIChessApplication {
             int boardId = (int) (double) requestBody.get("boardId");
             String source = (String) requestBody.get("source");
             String target = (String) requestBody.get("target");
-            Map<String, String> boardInfo = webController.movedPiece(boardId, source, target);
+            Map<String, String> boardInfo = chessService.movedPiece(boardId, source, target);
             return gson.toJson(boardInfo);
         });
 
         get("/movablePositions", (request, response) -> {
             String boardId = request.queryParams("boardId");
             String source = request.queryParams("source");
-            List<String> movablePositions = webController.movablePositions(Integer.parseInt(boardId), source);
+            List<String> movablePositions = chessService.movablePositions(Integer.parseInt(boardId), source);
             return gson.toJson(movablePositions);
+        });
+
+        get("/search", (request, response) -> {
+            String playerName = request.queryParams("playerName");
+            List<Map<String, Object>> boards = chessService.searchBoard(playerName);
+            return gson.toJson(boards);
         });
     }
 
