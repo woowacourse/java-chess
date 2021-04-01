@@ -45,39 +45,46 @@ public class ChessDAO {
 
     public void addGame(String gameId, ChessGame game) throws SQLException {
         String query = "INSERT INTO games VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, gameId);
         pstmt.setString(2, game.stringifiedBoard());
         pstmt.setString(3, game.stringifiedTurn());
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
     public ChessGame findGameById(String gameId) throws SQLException {
         String query = "SELECT * FROM games WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) return null;
 
-        return new ChessGame(
-                rs.getString("pieces"),
-                rs.getString("turn"));
+        ChessGame game =  new ChessGame(rs.getString("pieces"), rs.getString("turn"));
+        closeConnection(connection);
+        return game;
     }
 
     public void deleteGameById(String gameId) throws SQLException {
         String query = "DELETE FROM games WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, gameId);
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
     public void updateGame(String gameId, ChessGame game) throws SQLException {
         String query = "UPDATE games SET pieces = ? , turn = ? WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, game.stringifiedBoard());
         pstmt.setString(2, game.stringifiedTurn());
         pstmt.setString(3, gameId);
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 }
