@@ -6,8 +6,8 @@
     <link href="chess.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1>{{user.name}}님 환영합니다.</h1>
-<h2 id="notice">게임을 시작합니다!</h2>
+<h3>{{user.name}}님 환영합니다.</h3>
+<h4 id="notice">게임을 시작합니다! <button id="exit">나가기</button></h4>
 <table>
     <tr>
         <td class="black-box" id="a8"></td>
@@ -48,6 +48,9 @@
         <td class="black-box" id="f5"></td>
         <td class="white-box" id="g5"></td>
         <td class="black-box" id="h5"></td>
+        <td>
+            흑 <button class="black-score" id="BLACK">점수 보기</button>
+        </td>
     </tr>
     <tr>
         <td class="black-box" id="a4"></td>
@@ -58,6 +61,9 @@
         <td class="white-box" id="f4"></td>
         <td class="black-box" id="g4"></td>
         <td class="white-box" id="h4"></td>
+        <td>
+            백 <button class="white-score" id="WHITE">점수 보기</button>
+        </td>
     </tr>
     <tr>
         <td class="white-box" id="a3"></td>
@@ -90,18 +96,6 @@
         <td class="black-box" id="h1"></td>
     </tr>
 </table>
-<table>
-    <tr>
-        흑
-        <button class="black-score" id="BLACK">점수 보기</button>
-    </tr>
-    <tr>
-        백
-        <button class="white-score" id="WHITE">점수 보기</button>
-    </tr>
-</table>
-<button id="exit">나가기</button>
 </body>
-
 <script src="chess.js"></script>
 </html>
