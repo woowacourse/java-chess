@@ -13,17 +13,18 @@ public class ChessRepository {
 
     public List<History> findAllHistoriesByRoomId(int roomId) throws SQLException {
         String query = "SELECT * FROM HISTORY WHERE ROOM_ID = ?";
-        Connection connection = ConnectionManager.makeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, String.valueOf(roomId));
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<History> histories = new ArrayList<>();
-        while (resultSet.next()) {
-            History history = generateHistoryFrom(resultSet);
-            histories.add(history);
+        try (Connection connection = ConnectionManager.makeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, String.valueOf(roomId));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<History> histories = new ArrayList<>();
+            while (resultSet.next()) {
+                History history = generateHistoryFrom(resultSet);
+                histories.add(history);
+            }
+            resultSet.close();
+            return histories;
         }
-        connection.close();
-        return histories;
     }
 
     private History generateHistoryFrom(ResultSet resultSet) throws SQLException {
@@ -34,22 +35,22 @@ public class ChessRepository {
 
     public void insertHistory(String source, String destination, String teamType, int roomId) throws SQLException {
         String query = "INSERT INTO HISTORY (SOURCE, DESTINATION, TEAM_TYPE, ROOM_ID) VALUES (?, ?, ?, ?)";
-        Connection connection = ConnectionManager.makeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, source);
-        preparedStatement.setString(2, destination);
-        preparedStatement.setString(3, teamType);
-        preparedStatement.setString(4, String.valueOf(roomId));
-        preparedStatement.executeUpdate();
-        connection.close();
+        try (Connection connection = ConnectionManager.makeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, source);
+            preparedStatement.setString(2, destination);
+            preparedStatement.setString(3, teamType);
+            preparedStatement.setString(4, String.valueOf(roomId));
+            preparedStatement.executeUpdate();
+        }
     }
 
     public void deleteAllHistoriesByRoomId(int roomId) throws SQLException {
         String query = "DELETE FROM HISTORY WHERE ROOM_ID = ?";
-        Connection connection = ConnectionManager.makeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, String.valueOf(roomId));
-        preparedStatement.executeUpdate();
-        connection.close();
+        try (Connection connection = ConnectionManager.makeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, String.valueOf(roomId));
+            preparedStatement.executeUpdate();
+        }
     }
 }
