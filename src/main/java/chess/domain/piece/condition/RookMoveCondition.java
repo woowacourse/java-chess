@@ -13,6 +13,7 @@ public class RookMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovable(piece, target) &&
                 isNotExistObstacleOnCrossPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 
@@ -34,8 +35,8 @@ public class RookMoveCondition extends MoveCondition {
         int minRow = Math.min(piece.getRow(), target.getRow());
 
         return pieceOnBoard ->
-                (minRow <= pieceOnBoard.getRow()) && (pieceOnBoard.getRow() <= maxRow) &&
-                        (minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol);
+                (minRow < pieceOnBoard.getRow()) && (pieceOnBoard.getRow() < maxRow) &&
+                        (minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol);
     }
 
 }

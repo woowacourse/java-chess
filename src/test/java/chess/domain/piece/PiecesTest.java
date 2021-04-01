@@ -38,7 +38,7 @@ class PiecesTest {
         ));
 
         pieces.catchPiece(Color.WHITE);
-        assertThat(pieces.getPieces()).containsExactly(Piece.createPawn(Color.WHITE, 0, 0));
+        assertThat(pieces.getPieces()).containsOnly(Piece.createPawn(Color.WHITE, 0, 0));
     }
 
     @DisplayName("검은 팀의 총점 확인")

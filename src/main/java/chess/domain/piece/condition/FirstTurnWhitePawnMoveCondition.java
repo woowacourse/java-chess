@@ -13,6 +13,7 @@ public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isNotPieceExistOnPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 
@@ -28,8 +29,7 @@ public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
                 .noneMatch(
                         pieceOnBoard ->
                                 pieceOnBoard.getColumn() == piece.getColumn() &&
-                                target.getRow() <= pieceOnBoard.getRow() &&
-                                pieceOnBoard.getRow() <= piece.getRow()
+                                target.getRow() < pieceOnBoard.getRow() && pieceOnBoard.getRow() < piece.getRow()
                 );
     }
 

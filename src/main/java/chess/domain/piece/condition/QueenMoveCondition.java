@@ -13,6 +13,7 @@ public class QueenMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 
@@ -52,8 +53,8 @@ public class QueenMoveCondition extends MoveCondition {
                                                final int maxRow,
                                                final int minRow,
                                                final Piece pieceOnBoard) {
-        return (minRow <= pieceOnBoard.getRow()) && (pieceOnBoard.getRow() <= maxRow) &&
-                (minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol);
+        return (minRow < pieceOnBoard.getRow()) && (pieceOnBoard.getRow() < maxRow) &&
+                (minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol);
     }
 
     private boolean isNotExistObstacleOnXPath(Board board, Piece piece, Position target) {
@@ -70,8 +71,8 @@ public class QueenMoveCondition extends MoveCondition {
         int maxRow = Math.max(piece.getRow(), target.getRow());
         int minRow = Math.min(piece.getRow(), target.getRow());
 
-        return pieceOnBoard -> minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol &&
-                minRow <= pieceOnBoard.getRow() && pieceOnBoard.getRow() <= maxRow;
+        return pieceOnBoard -> minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol &&
+                minRow < pieceOnBoard.getRow() && pieceOnBoard.getRow() < maxRow;
     }
 
     private Predicate<Piece> hasSameGradientWithSourceAndTarget(final Piece piece, final Position target) {

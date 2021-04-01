@@ -12,6 +12,7 @@ public class CatchingPieceBlackPawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isEnemyExist(board, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 

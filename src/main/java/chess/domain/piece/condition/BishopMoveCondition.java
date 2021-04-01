@@ -14,8 +14,10 @@ public class BishopMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
+
 
     private boolean isRightMovePath(final Piece piece, final Position target) {
         return Math.abs(piece.getColumn() - target.getColumn())
@@ -43,10 +45,8 @@ public class BishopMoveCondition extends MoveCondition {
         int minRow = Math.min(piece.getRow(), target.getRow());
 
         return pieceOnBoard ->
-                minCol <= pieceOnBoard.getColumn() &&
-                        pieceOnBoard.getColumn() <= maxCol &&
-                        minRow <= pieceOnBoard.getRow() &&
-                        pieceOnBoard.getRow() <= maxRow;
+                minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol &&
+                        minRow < pieceOnBoard.getRow() && pieceOnBoard.getRow() < maxRow;
     }
 
 }
