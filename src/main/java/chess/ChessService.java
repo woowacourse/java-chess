@@ -2,6 +2,9 @@ package chess;
 
 import chess.domain.game.Game;
 import chess.domain.position.Position;
+import chess.dto.BoardDto;
+import chess.dto.RequestDto;
+import chess.dto.ResponseDto;
 
 import java.util.Map;
 

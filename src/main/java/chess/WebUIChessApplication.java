@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.game.Game;
+import chess.dto.RequestDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
