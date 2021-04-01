@@ -50,8 +50,7 @@ public class WebUIChessApplication {
                 chessLogDao.addLog(
                         moveRequestDto.getRoomId(), moveRequestDto.getTarget(), moveRequestDto.getDestination());
                 return objectMapper.writeValueAsString(boardDto);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return objectMapper.writeValueAsString(chessController.boardDto());
             }
         });

@@ -49,7 +49,7 @@ class BoardTest {
         Board board = BoardFactory.create();
         assertThatThrownBy(() ->
                 board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
-                    Position.of(Horizontal.A, Vertical.FIVE)))
+                        Position.of(Horizontal.A, Vertical.FIVE)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -67,7 +67,6 @@ async function findPath() {
     await postFetchPath("movable").then(data => {
         $path = data;
     });
-    console.log($path);
     showMovablePosition();
 }
 
@@ -82,7 +81,6 @@ async function findScore() {
     await postFetchPath("score").then(data => {
         $status = data;
     });
-    console.log($status + ", black = " + $status.blackScore + ", white = " + $status.whiteScore);
     showScore();
 }
 
@@ -166,8 +164,7 @@ function setDestination(e) {
         }
         $destination = e.target.id;
         move();
-    }
-    catch (e) {
+    } catch (e) {
         console.log("체스말을 선택해야합니다.");
     }
 }
@@ -181,14 +178,12 @@ function createMoveCommand(e) {
 }
 
 function move() {
-    console.log("이동! 타겟: " + $target + ", 목적지: " + $destination);
     moveBoard();
     $target = null;
     $destination = null;
 }
 
 function changeTurn(team) {
-    console.log(team)
     if (team == "BLACK") {
         $black.classList.remove("turn");
         $white.classList.add("turn");

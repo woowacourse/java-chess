@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PawnTest {
     Board board;
     Map<Position, Piece> testBoard = new LinkedHashMap<>();
+
     @BeforeEach
     void setUp() {
         for (Position position : Position.getPositions()) {

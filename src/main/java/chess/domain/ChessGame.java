@@ -63,6 +63,7 @@ public class ChessGame {
     public boolean isBeforeEnd() {
         return !board.isGameOver() && !end;
     }
+
     public boolean isBeforeStart() {
         return !start;
     }

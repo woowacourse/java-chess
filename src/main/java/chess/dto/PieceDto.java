@@ -7,7 +7,7 @@ public class PieceDto {
     private String team;
 
     public PieceDto(Piece piece) {
-        if(piece != null) {
+        if (piece != null) {
             this.name = piece.getName();
             this.team = piece.getTeam().name();
         }

@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    private BoardFactory(){}
+    private BoardFactory() {
+    }
 
     public static Board create() {
         return new Board(createBoard());
