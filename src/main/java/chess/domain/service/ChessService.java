@@ -32,11 +32,10 @@ public class ChessService {
         if (pieceDao.load() == null) {
             pieceDao.save(new Board().unwrap());
         }
-        if (boardDao.load() == null) {
-            final String name = chessGame.nowTurn().teamName();
-            boardDao.save(new BoardDto(name, chessGame.isGameOver()));
-        }
         final Map<Position, Piece> chessBoard = pieceDao.load();
+        if (boardDao.load() == null) {
+            boardDao.save(new BoardDto("White", false));
+        }
         final BoardDto boardDto = boardDao.load();
         chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
     }
