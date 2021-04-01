@@ -23,7 +23,7 @@ public class ChessController {
 
     private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
-        List<String> input = InputView.InputString();
+        List<String> input = InputView.inputString();
         validateStartCommand(chessGame, input);
     }
 
@@ -48,7 +48,7 @@ public class ChessController {
     private void start(ChessGame chessGame) {
         while (chessGame.isRunning()) {
             OutputView.printChessBoard(boardDto(chessGame));
-            List<String> input = InputView.InputString();
+            List<String> input = InputView.inputString();
             validateCommand(chessGame, input);
         }
         OutputView.printGameOverInfo(chessGame.winner());
