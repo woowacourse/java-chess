@@ -83,4 +83,8 @@ public abstract class Piece {
     public double getScore() {
         return score;
     }
+
+    public String getUnicode() {
+        return unicode;
+    }
 }

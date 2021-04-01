@@ -15,8 +15,8 @@ public enum Vertical {
     private final String value;
     private final int weight;
 
-    Vertical(final String verticalValue, final int weight) {
-        this.value = verticalValue;
+    Vertical(final String value, final int weight) {
+        this.value = value;
         this.weight = weight;
     }
 
@@ -36,5 +36,9 @@ public enum Vertical {
 
     public int getWeight() {
         return weight;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
