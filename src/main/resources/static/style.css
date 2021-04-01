@@ -18,15 +18,46 @@ body {
     margin-top: 100px;
 }
 
+#room {
+    position: relative;
+    left: 38%;
+    margin-top: 20px;
+    background-color: #c9f3ea;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: cursive;
+    text-align: center;
+    border-radius: 25px;
+    border: floralwhite solid 5px;
+}
+
 #start {
     position: absolute;
     left: 47%;
-    margin-top: 100px;
+    margin-top: 30px;
     background-color: #c9f3ea;
-    font-size: 40px;
+    font-size: 28px;
     font-weight: bold;
     font-family: cursive;
     border-radius: 25px;
+    border: floralwhite solid 5px;
+}
+
+.rooms {
+    margin-top: 120px;
+}
+
+#existingRoom {
+    width: 200px;
+    position: relative;
+    left: 600px;
+    /*top: 120px;*/
+    /*margin-top: 30px;*/
+    background-color: #cfecc0;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: cursive;
+    /*border-radius: 25px;*/
     border: floralwhite solid 5px;
 }
 
