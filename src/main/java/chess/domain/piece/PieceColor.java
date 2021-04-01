@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum PieceColor {
     BLACK("B", "흑"),
     WHITE("W", "백"),
@@ -11,6 +13,13 @@ public enum PieceColor {
     PieceColor(String name, String symbol) {
         this.name = name;
         this.symbol = symbol;
+    }
+
+    public static PieceColor pieceColorByName(String name) {
+        return Arrays.stream(PieceColor.values())
+            .filter(pieceColor -> pieceColor.name.equals(name))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public PieceColor oppositeColor() {
