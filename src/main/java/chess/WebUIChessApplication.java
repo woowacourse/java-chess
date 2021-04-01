@@ -1,5 +1,7 @@
 package chess;
 
+import chess.controller.WebUIChessController;
+
 import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
@@ -13,15 +15,5 @@ public class WebUIChessApplication {
         WebUIChessController webUIChessController = new WebUIChessController();
         webUIChessController.run();
 
-//        get("/", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "chess.html");
-//        });
-
     }
-
-
-//    private static String render(Map<String, Object> model, String templatePath) {
-//        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-//    }
 }

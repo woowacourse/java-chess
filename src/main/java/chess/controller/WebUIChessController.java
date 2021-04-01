@@ -1,10 +1,12 @@
-package chess;
+package chess.controller;
 
+import chess.ChessGame;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.PieceDTO;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.put;
 
 public class WebUIChessController {
     private ChessGame chessGame = new ChessGame();
@@ -23,6 +26,7 @@ public class WebUIChessController {
 
     public void run() {
         start();
+        move();
     }
 
     public void start() {
@@ -38,10 +42,9 @@ public class WebUIChessController {
 
         for (Piece piece : getEntirePieces()) {
             Position piecePosition = piece.getPosition();
-            PieceDTO pieceDTO = new PieceDTO(piece.getTeam(), piecePosition.getColumn() + String.valueOf(piecePosition.getRow()), piece.getInitial());
+            PieceDTO pieceDTO = new PieceDTO(piece.getTeam(), piecePosition.getRow() + String.valueOf(piecePosition.getColumn()), piece.getInitial());
             pieceDTOGroup.add(pieceDTO);
         }
-
         model.put("pieces", pieceDTOGroup);
     }
 
@@ -51,6 +54,31 @@ public class WebUIChessController {
         pieces.addAll(board.piecesByTeam(Team.WHITE).toList());
 
         return pieces;
+    }
+
+    public void move() {
+        Gson gson = new Gson();
+        put("/move", (req, res) -> {
+            Map<String, Object> requestBody = gson.fromJson(req.body(), HashMap.class);
+
+            Map<String, Object> model = new HashMap<>();
+            String startPoint = (String) requestBody.get("startPoint");
+            String endPoint = (String) requestBody.get("endPoint");
+
+            Position startPosition = position(startPoint);
+            Position endPosition = position(endPoint);
+            chessGame.move(startPosition, endPosition);
+
+            getPieces(model);
+            return render(model, "chess.html");
+        });
+    }
+
+    private Position position(final String point) {
+        return new Position(
+                Character.getNumericValue(point.charAt(0)),
+                Character.getNumericValue(point.charAt(1))
+        );
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
