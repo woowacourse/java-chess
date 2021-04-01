@@ -29,6 +29,7 @@ public class ChessGameDAOTest {
     void testDeleteMoveCommand() throws SQLException {
         chessGameDAO.deleteMoveCommand("move b2 b4");
         chessGameDAO.deleteMoveCommand("move b4 b6");
+        chessGameDAO.deleteMoveCommand("move c2 c4");
     }
 
     @Test
