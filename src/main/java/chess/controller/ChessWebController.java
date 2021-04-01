@@ -3,9 +3,9 @@ package chess.controller;
 import chess.domain.Game;
 import chess.domain.board.Position;
 import chess.domain.command.Command;
+import chess.domain.command.End;
 import chess.domain.command.Move;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
 import java.util.Map;
 
 public class ChessWebController {
@@ -34,6 +34,12 @@ public class ChessWebController {
         } catch (RuntimeException runtimeException) {
             return runtimeException.getMessage();
         }
+    }
+
+    public void end() {
+        String rawCommand = "";
+        End end = new End();
+        end.run(game, rawCommand);
     }
 
     public boolean isEnd() {

@@ -46,7 +46,6 @@ public class WebUIChessApplication {
             String moveRawCommand = (String) requestBody.get("move");
             String moveResult = webController.move(moveRawCommand);
             submitData.put("isSuccess", moveResult);
-            submitData.put("turn", webController.getTurn());
             if (webController.isEnd()) {
                 submitData.put("winner", webController.winnerColor());
             }
@@ -58,6 +57,12 @@ public class WebUIChessApplication {
             Map<String, Object> submitData = new HashMap<>();
             submitData.put("whiteScore", webController.whiteScore());
             submitData.put("blackScore", webController.blackScore());
+            return gson.toJson(submitData);
+        });
+
+        post("/end", (req, res) -> {
+            Map<String, Object> submitData = new HashMap<>();
+            webController.end();
             return gson.toJson(submitData);
         });
     }
