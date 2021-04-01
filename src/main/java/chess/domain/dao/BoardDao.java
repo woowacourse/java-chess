@@ -37,7 +37,7 @@ public final class BoardDao {
 
     public void deleteAll() throws SQLException {
         try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "DELETE FROM board";
+            final String query = "TRUNCATE TABLE board";
             final PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.executeUpdate();
         }
