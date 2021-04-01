@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Chess;
+import chess.domain.chess.Chess;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;

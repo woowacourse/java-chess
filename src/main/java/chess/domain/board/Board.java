@@ -1,7 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.Color;
-import chess.domain.Status;
+import chess.domain.chess.Color;
+import chess.domain.chess.Status;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;

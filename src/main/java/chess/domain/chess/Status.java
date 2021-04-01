@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chess;
 
 public enum Status {
     STOP, RUNNING, KING_DEAD, TERMINATED;

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import chess.domain.Chess;
+import chess.domain.chess.Chess;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 

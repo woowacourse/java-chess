@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chess;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;

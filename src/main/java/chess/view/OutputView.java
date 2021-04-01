@@ -1,8 +1,8 @@
 package chess.view;
 
 import chess.BoardSize;
-import chess.domain.Chess;
-import chess.domain.Color;
+import chess.domain.chess.Chess;
+import chess.domain.chess.Color;
 import chess.domain.board.SymbolBoardDTO;
 
 public class OutputView {

@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Chess;
+import chess.domain.chess.Chess;
 
 import java.util.Arrays;
 import java.util.function.UnaryOperator;

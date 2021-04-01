@@ -13,10 +13,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.Chess;
+import chess.domain.chess.Chess;
 import chess.domain.board.BoardDTO;
 import chess.domain.position.MovePosition;
 import chess.domain.position.MovePositionDTO;
+import chess.domain.user.User;
+import chess.domain.user.UserDAO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -36,8 +38,21 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        post("/users", (req, res) -> {
+            final String name = req.queryParams("name");
+            User user = new User(name);
+            new UserDAO().addUser(user);
+            return "OK";
+        });
+
+//        get("/users/:name", (req, res) -> {
+//
+//        })
+
         post("/new", (req, res) -> {
             Chess chess = Chess.createWithEmptyBoard().start();
+//            UserDAO userDAO = new UserDAO();
+//            userDAO.addUser(user);
             chessMap.put(0, chess);
             res.redirect("/rooms/0");
             return "OK";
