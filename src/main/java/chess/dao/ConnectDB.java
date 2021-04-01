@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDB {
-    public Connection getConnection() {
+    public static final Connection CONNECTION = getConnection();
+
+    private static Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
         String database = "chess";
@@ -31,7 +33,7 @@ public class ConnectDB {
         return con;
     }
 
-    public void closeConnection(Connection con) {
+    public void closeConnection(final Connection con) {
         try {
             if (con != null)
                 con.close();

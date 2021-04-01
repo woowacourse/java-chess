@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 class RoomDAOTest {
-    private final RoomDAO roomDAO = new RoomDAO(new ConnectDB());
+    private final RoomDAO roomDAO = new RoomDAO();
 
     @Test
     @DisplayName("방 생성 테스트")

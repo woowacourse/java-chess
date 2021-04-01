@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 class LogDAOTest {
-    private final LogDAO logDAO = new LogDAO(new ConnectDB());
+    private final LogDAO logDAO = new LogDAO();
 
     @Test
     @DisplayName("로그 저장")

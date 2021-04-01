@@ -6,32 +6,31 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.dao.ConnectDB.CONNECTION;
+
 public class LogDAO {
-    private final ConnectDB connectDB;
+    private static final String INSERT_QUERY = "INSERT INTO log (room_id, start_position, end_position) VALUES (?, ?, ?)";
+    private static final String DELETE_BY_ROOM_ID_QUERY = "DELETE FROM log WHERE room_id = ?";
+    private static final String SELECT_BY_ROOM_ID_QUERY = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
 
-    public LogDAO(ConnectDB connectDB) {
-        this.connectDB = connectDB;
-    }
-
-    public void createLog(String roomId, String startPoint, String endPoint) throws SQLException {
-        String query = "INSERT INTO log (room_id, start_position, end_position) VALUES (?, ?, ?)";
-        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+    public void createLog(final String roomId, final String startPoint, final String endPoint) throws SQLException {
+        PreparedStatement statement = CONNECTION.prepareStatement(INSERT_QUERY);
         statement.setString(1, roomId);
         statement.setString(2, startPoint);
         statement.setString(3, endPoint);
         statement.executeUpdate();
+        statement.close();
     }
 
-    public void deleteLogByRoomId(String roomId) throws SQLException {
-        String query = "DELETE FROM log WHERE room_id = ?";
-        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+    public void deleteLogByRoomId(final String roomId) throws SQLException {
+        PreparedStatement statement = CONNECTION.prepareStatement(DELETE_BY_ROOM_ID_QUERY);
         statement.setString(1, roomId);
         statement.executeUpdate();
+        statement.close();
     }
 
-    public List<String[]> allLogByRoomId(String roomId) throws SQLException {
-        String query = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
-        PreparedStatement statement = connectDB.getConnection().prepareStatement(query);
+    public List<String[]> allLogByRoomId(final String roomId) throws SQLException {
+        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_BY_ROOM_ID_QUERY);
         statement.setString(1, roomId);
         ResultSet resultSet = statement.executeQuery();
 
@@ -43,6 +42,7 @@ public class LogDAO {
             positions[1] = resultSet.getString("end_position");
             logs.add(positions);
         }
+        statement.close();
         return logs;
     }
 }
