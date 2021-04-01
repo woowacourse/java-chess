@@ -5,7 +5,7 @@ import chess.domain.piece.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PieceDBFormat {
+public class PieceToDAO {
     private static final Map<Piece, String> pieceFormat = new HashMap<>();
 
     static {
@@ -18,7 +18,7 @@ public class PieceDBFormat {
         pieceFormat.put(new King(), "King");
     }
 
-    private PieceDBFormat() {
+    private PieceToDAO() {
     }
 
     public static String convert(final Piece piece) {
