@@ -2,12 +2,12 @@ package chess.domain.DTO;
 
 import chess.domain.state.TeamColor;
 
-public class pieceOnBoardDTO {
+public class PieceOnBoardDTO {
 
     private final TeamColor teamColor;
     private final String pieceType;
 
-    public pieceOnBoardDTO(TeamColor teamColor, String pieceType) {
+    public PieceOnBoardDTO(TeamColor teamColor, String pieceType) {
         this.teamColor = teamColor;
         this.pieceType = pieceType;
     }

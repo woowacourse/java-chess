@@ -16,7 +16,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
 
 
-
     public static void main(String[] args) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = new Gson();
@@ -28,12 +27,17 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+        try {
+            post("/start", WebController::start);
+            post("/move", WebController::move);
+            post("/reset", WebController::reset);
+//            post("/save", WebController::save);
+            post("/load", WebController::load);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
-        post("/start", WebController::start);
-        post("/move", WebController::move);
-        post("/reset", WebController::reset);
-        post("/save", WebController::save);
-        post("/load", WebController::load);
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

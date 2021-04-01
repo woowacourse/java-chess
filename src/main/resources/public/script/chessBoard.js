@@ -149,23 +149,9 @@ async function reset() {
   }
   const defaultScore = 38;
   GAME_END = false;
+  alert("로그 정보가 초기화 되었습니다.");
   modifyScore(defaultScore, defaultScore);
   reflectBoard();
-}
-
-async function save() {
-  alert("run save!");
-  try {
-    await axios({
-      method: 'post',
-      url: '/save',
-      data: {
-        roomName: "room1"
-      }
-    });
-  } catch (e) {
-    console.log(e);
-  }
 }
 
 async function load() {
@@ -181,4 +167,5 @@ async function load() {
   } catch (e) {
     console.log(e);
   }
+  reflectBoard();
 }

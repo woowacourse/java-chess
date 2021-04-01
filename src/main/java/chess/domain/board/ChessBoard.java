@@ -7,10 +7,11 @@ import chess.domain.result.Pieces;
 import chess.domain.result.ResultDto;
 import chess.domain.result.Score;
 import chess.domain.state.TeamColor;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable {
 
     private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";

@@ -1,21 +1,15 @@
 package chess.DAO;
 
-
-import chess.domain.board.ChessBoard;
-import com.google.gson.Gson;
+import chess.domain.DTO.MoveRequestDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessBoardDAO {
-
-    private final Connection connection;
-
-    public ChessBoardDAO() {
-        this.connection = getConnection();
-    }
 
     private Connection getConnection() {
         Connection con = null;
@@ -47,26 +41,49 @@ public class ChessBoardDAO {
         return con;
     }
 
-    public void addRoomInformation(String roomName, ChessBoard chessboard, Gson gson)
-        throws SQLException {
-        String query = "INSERT INTO room VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, roomName);
-        pstmt.setString(2, gson.toJson(chessboard));
-        pstmt.executeUpdate();
-    }
-
-    public ChessBoard findChessBoardByRoom(String roomName, Gson gson) throws SQLException {
-        String query = "SELECT * FROM room WHERE name = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, roomName);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return null;
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
         }
-        ChessBoard chessboard = gson.fromJson(rs.getString("chess_board"), ChessBoard.class);
-        return chessboard;
     }
 
+
+    public void addLog(String source, String target) throws SQLException {
+        String query = "INSERT INTO log VALUES (?, ?)";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, source);
+        pstmt.setString(2, target);
+        pstmt.executeUpdate();
+
+        closeConnection(connection);
+    }
+
+    public void clearLog() throws SQLException {
+        String query = "DELETE FROM log";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.executeUpdate();
+
+        closeConnection(connection);
+    }
+
+    public List<MoveRequestDTO> getLog() throws SQLException {
+        String query = "SELECT * FROM log";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+        List<MoveRequestDTO> resultLog = new ArrayList<>();
+        while (rs.next()) {
+            String source = rs.getString("source");
+            String target = rs.getString("target");
+            resultLog.add(new MoveRequestDTO(source, target));
+        }
+        closeConnection(connection);
+        return resultLog;
+    }
 }
