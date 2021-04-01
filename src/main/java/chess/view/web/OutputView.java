@@ -13,7 +13,7 @@ import java.util.Queue;
 
 public class OutputView {
 
-    private OutputView(){
+    private OutputView() {
 
     }
 
@@ -29,11 +29,11 @@ public class OutputView {
         Map<String, Object> model = new HashMap<>();
 
         WinnerDto winnerDto = new WinnerDto();
-        if(winner.size() ==1 ){
+        if (winner.size() == 1) {
             winnerDto.setWinner(winner.peek().name());
         }
 
-        if(winner.size() != 1){
+        if (winner.size() != 1) {
             winnerDto.setWinner("무승부");
         }
         model.put("winner", winnerDto);

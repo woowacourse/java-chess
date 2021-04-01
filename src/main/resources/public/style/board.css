@@ -4,6 +4,7 @@
     margin: 20px;
     border: 25px solid #333;
 }
+
 .black {
     border: solid 0.2px black;
     float: left;
@@ -15,6 +16,11 @@
     display: table-cell;
     vertical-align:middle;
 }
+
+.black:hover {
+    background-color : lightyellow;
+}
+
 .white {
     border: solid 0.2px black;
     float: left;
@@ -26,6 +32,7 @@
     display: table-cell;
     vertical-align:middle;
 }
-.movable{
-    background-color : skyblue;
+
+.white:hover{
+    background-color : lightyellow;
 }

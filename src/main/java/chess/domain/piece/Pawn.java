@@ -66,10 +66,8 @@ public abstract class Pawn extends Piece {
         if (isEnemy(targetPiece)) {
             return distance.equals(DIAGONAL_DISTANCE_WHEN_EXIST_ENEMY);
         }
-
         return false;
     }
-
 
     @Override
     public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece) {
