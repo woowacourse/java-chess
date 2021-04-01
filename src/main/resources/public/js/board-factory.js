@@ -44,7 +44,16 @@ function onMove(event) {
                 if (!res.ok) {
                     throw new Error(res.status);
                 }
-                return movePiece(source, target);
+                return res.json();
+            })
+            .then(data => {
+                movePiece(source, target);
+                if (data === "king-dead") {
+                    alert("왕이 죽었습니다. 게임을 종료합니다.")
+                    window.location.replace("/");
+                    return;
+                }
+                return data;
             })
             .catch(() => alert("해당 위치로 이동할 수 없습니다."));
         revertSquareColor($position);

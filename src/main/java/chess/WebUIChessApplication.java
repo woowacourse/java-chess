@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.google.gson.Gson;
 
-import org.eclipse.jetty.http.MetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +18,6 @@ import chess.domain.board.BoardDTO;
 import chess.domain.position.MovePosition;
 import chess.domain.position.MovePositionDTO;
 import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
@@ -57,12 +53,17 @@ public class WebUIChessApplication {
         });
 
         post("/rooms/:roomId/move", (req, res) -> {
-            MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);
-            MovePosition movePosition = new MovePosition(movePositionDTO.getSource(), movePositionDTO.getTarget());
             int roomId = Integer.parseInt(req.params(":roomId"));
             Chess chess = chessMap.get(roomId);
+
+            MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);
+            MovePosition movePosition = new MovePosition(movePositionDTO.getSource(), movePositionDTO.getTarget());
             chess = chess.move(movePosition);
             chessMap.put(roomId, chess);
+
+            if (chess.isKindDead()) {
+                return GSON.toJson("king-dead");
+            }
             return GSON.toJson(movePosition);
         });
     }
