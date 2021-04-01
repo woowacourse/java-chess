@@ -25,8 +25,8 @@
 }
 
 #board {
-  width: 600px;
-  height: 600px;
+  min-width: 620px;
+  height: 620px;
   text-align: center;
   font-size: 0px;
   border: 10px solid gray;

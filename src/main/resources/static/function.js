@@ -51,20 +51,6 @@ function boardJoin() {
     });
 }
 
-function boardInit() {
-    fetch(API_URL + "start")
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error(" ");
-        }
-        return response.json();
-    })
-    .then(imageSetting)
-    .catch((error) => {
-        console.log(error);
-    });
-}
-
 function imageSetting(responseData) {
     boardInfo = responseData;
     const divs = BOARD.querySelectorAll("div");
@@ -81,7 +67,7 @@ function imageSetting(responseData) {
 
 function divClickEvent(event) {
     if (boardInfo["isFinish"] === "true") {
-        restartAsk();
+        exitAsk();
         return;
     }
     const targetPosition = event.target.getAttribute("id");
@@ -101,17 +87,29 @@ function divClickEvent(event) {
         source = event.target;
         source.style.backgroundColor = "yellow";
     } else {
+        if (source === event.target) {
+            isClicked = false;
+            source.style.backgroundColor = "";
+            source = null;
+            movablePositionSetting(false);
+            return;
+        }
+        const targetPosition = event.target.getAttribute("id");
+        const isWhite = boardInfo["turn"] === "WHITE";
+        if (boardInfo[targetPosition] !== "." && ((isWhite === true && boardInfo[targetPosition] === boardInfo[targetPosition].toLowerCase())
+        || (isWhite === false && boardInfo[targetPosition] === boardInfo[targetPosition].toUpperCase()))) {
+            source.style.backgroundColor = "";
+            source = event.target;
+            source.style.backgroundColor = "yellow";
+            movablePositionSetting(false);
+            getMovablePositions(targetPosition);
+            return;
+        }
         if (source !== event.target && !movablePosition.includes(targetPosition)) {
             alert("움직일 수 없는 위치입니다.");
             return;
         }
         movablePositionSetting(false);
-        if (source === event.target) {
-            isClicked = false;
-            source.style.backgroundColor = "";
-            source = null;
-            return;
-        }
         const sourcePosition = source.getAttribute("id");
         isClicked = false;
         source.style.backgroundColor = "";
@@ -150,9 +148,9 @@ function getOption(methodType, bodyData) {
     };
 }
 
-function restartAsk() {
-    if (confirm("게임이 끝났습니다. 시작하겠습니까?") === true) {
-        boardInit();
+function exitAsk() {
+    if (confirm("게임이 끝났습니다. 나가시겠습니까?") === true) {
+        exitButtonEvent();
     }
 }
 

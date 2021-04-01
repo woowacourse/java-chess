@@ -7,10 +7,21 @@ window.onload = () => {
 }
 
 function createButtonEvent(event) {
+  const whitePlayer = prompt("흰색을 움직일 플레이어를 입력해주세요(2글자 이상 12글자 이하)");
+  if (whitePlayer.length < 2 || whitePlayer > 12) {
+    alert("플레이어 이름은 2글자이상 12글자 이하입니다.");
+    return;
+  }
+  const blackPlayer = prompt("검정색을 움직일 플레이어를 입력해주세요(2글자 이상 12글자 이하)");
+  if (blackPlayer.length < 2 || blackPlayer > 12) {
+    alert("플레이어 이름은 2글자이상 12글자 이하입니다.");
+    return;
+  }
   const newData = {
-    "whitePlayer": "player1",
-    "blackPlayer": "player2"
-}
+    "whitePlayer": whitePlayer,
+    "blackPlayer": blackPlayer
+  }
+  console.log(newData);
   const option = getOption("POST", newData);
   fetch(API_URL + "create", option)
   .then((response) => {
