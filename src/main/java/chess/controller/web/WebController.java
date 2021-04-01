@@ -1,11 +1,13 @@
 package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.ScoreDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.manager.ChessGame;
+import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.view.web.OutputView;
 import chess.view.web.PieceSymbolMapper;
@@ -30,11 +32,7 @@ public class WebController {
         get("/", (req, res) -> {
             chessGame = new ChessGame();
             chessGame.initNewGame();
-
-            BoardDto boardDto = new BoardDto();
-            boardDto.setBoard(boardMapping(chessGame.board()));
-
-            return OutputView.printBoard("board", boardDto);
+            return printResult();
         });
     }
 
@@ -63,11 +61,21 @@ public class WebController {
             chessGame.move(source, target);
             chessGame.changeTurn();
 
-            BoardDto boardDto = new BoardDto();
-            boardDto.setBoard(boardMapping(chessGame.board()));
-
-            return OutputView.printBoard("board", boardDto);
+            return printResult();
         });
+    }
+
+    private String printResult() {
+        ScoreDto whiteScoreDto = new ScoreDto();
+        whiteScoreDto.setScore(chessGame.scores().get(Owner.WHITE).score());
+
+        ScoreDto blackScoreDto = new ScoreDto();
+        blackScoreDto.setScore(chessGame.scores().get(Owner.BLACK).score());
+
+        BoardDto boardDto = new BoardDto();
+        boardDto.setBoard(boardMapping(chessGame.board()));
+
+        return OutputView.printGame(boardDto, whiteScoreDto, blackScoreDto);
     }
 
     // XXX :: Service로 분리하기

@@ -1,6 +1,6 @@
 package chess.view.console;
 
-import chess.controller.dto.ScoreDto;
+import chess.controller.console.ScoreDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;

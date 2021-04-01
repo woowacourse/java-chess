@@ -11,19 +11,12 @@ let state = "stay"; // stay, show
 let source = "";
 let target = "";
 
-function printPosition(){
-    return function(event){
-        console.log(event.target.id);
-    }
-}
-
 function click(){
     return function (event){
         if(state === "stay"){
             show(event.target);
             state = "show";
             source = event.target.id;
-            console.log("clicked source : "+ source);
             return;
         }
 
@@ -78,10 +71,7 @@ function submitMove(src, tar){
 }
 
 function checkIsValidTarget(target){
-    if(target.classList.contains("moveAble")){
-        return true;
-    }
-    return false;
+    return target.classList.contains("moveAble");
 }
 
 function show(target) {

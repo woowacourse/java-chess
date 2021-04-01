@@ -1,6 +1,6 @@
 package chess.controller.console.command;
 
-import chess.controller.dto.ScoreDto;
+import chess.controller.console.ScoreDto;
 import chess.domain.board.position.Position;
 import chess.domain.manager.ChessGame;
 import chess.domain.piece.Score;
