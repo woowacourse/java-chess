@@ -19,7 +19,7 @@ public class WebUIChessApplication {
         get("/restart", ChessService::restartChess);
         post("/user", ChessService::login);
         post("/signup", ChessService::signUp);
-        get("/adduser", (req, res) -> render(new HashMap<>(), "form.html"));
+        get("/adduser", (req, res) -> render(new HashMap<>(), "signup.html"));
         post("/board", ChessService::matchBoardImageSouce);
         post("/addboard", ChessService::addBoard);
         post("/piece", ChessService::matchPieceName);

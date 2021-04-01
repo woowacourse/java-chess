@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.dto;
 
 public class RequestDto {
     private final String source;

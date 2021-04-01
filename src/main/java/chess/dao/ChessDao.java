@@ -1,4 +1,4 @@
-package chess;
+package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,13 +8,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.User;
+import chess.dto.BoardDto;
+import chess.dto.User;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Piece;
 
-public class ChessDAO {
+public class ChessDao {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소

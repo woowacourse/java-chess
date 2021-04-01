@@ -7,7 +7,7 @@ $blackScore.addEventListener('click', toggleScore);
 $whiteScore.addEventListener('click', toggleScore);
 $exit.addEventListener('click', toggleExit);
 
-async function hi() {
+async function boardSetting() {
     for (let j = 1; j <= 8; j++) {
         for (let i = 0; i < 8; i++) {
             let row = String.fromCharCode('a'.charCodeAt(0) + i);
@@ -26,7 +26,7 @@ function renderImage(input) {
     if (input === "") {
         return `<img className="piece">`;
     } else {
-        return `<img src=${input} class="piece">`;
+        return `<img src=/images/${input} class="piece">`;
     }
 }
 
@@ -189,4 +189,4 @@ function toggleExit() {
     makeBoardInfo();
 }
 
-hi();
+boardSetting();

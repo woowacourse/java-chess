@@ -6,10 +6,12 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
-import chess.domain.User;
+import chess.dao.ChessDao;
+import chess.dto.User;
+import chess.dto.BoardDto;
 
-class ChessDAOTest {
-    private final ChessDAO chessDAO = new ChessDAO();
+class ChessDaoTest {
+    private final ChessDao chessDAO = new ChessDao();
 
     @Test
     public void connection() {

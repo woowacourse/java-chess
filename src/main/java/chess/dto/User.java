@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.dto;
 
 import java.util.Objects;
 

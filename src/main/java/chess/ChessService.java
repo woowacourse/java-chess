@@ -8,18 +8,20 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import chess.dao.ChessDao;
 import chess.domain.ChessGame;
-import chess.domain.RequestDto;
-import chess.domain.User;
+import chess.dto.RequestDto;
+import chess.dto.User;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
+import chess.dto.BoardDto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessService {
-    private static final ChessDAO chessDAO = new ChessDAO();
+    private static final ChessDao chessDAO = new ChessDao();
     private static final Gson GSON = new Gson();
 
     private static ChessGame chessGame;

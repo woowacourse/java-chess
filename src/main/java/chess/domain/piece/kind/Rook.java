@@ -10,7 +10,7 @@ import chess.domain.piece.Direction;
 
 public final class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
-    private static final String ROOK_NAME = "r";
+    public static final String ROOK_NAME = "r";
 
     private static final List<Direction> rookDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
 
