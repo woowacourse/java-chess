@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
+import chess.domain.piece.Score;
 import chess.domain.player.Players;
 import chess.domain.player.Scores;
 import chess.domain.player.Turn;
@@ -64,6 +65,14 @@ public class ChessGame {
 
     public boolean isGameEnd() {
         return isGameEnd;
+    }
+
+    public double getWhiteScore(){
+        return scores().getValueOf(Owner.WHITE);
+    }
+
+    public double getBlackScore(){
+        return scores().getValueOf(Owner.BLACK);
     }
 
     public Queue<Owner> winner() {
