@@ -21,7 +21,5 @@ function onClickEvent(event) {
         let target = event.target.id;
         location.href = "/chess/move?source=" + source + "&target=" + target;
     }
-
 }
-
 

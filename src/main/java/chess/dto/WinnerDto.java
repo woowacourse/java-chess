@@ -8,6 +8,7 @@ public class WinnerDto {
     }
 
     public String getWinnerMsg() {
-        return "alert(\"" + winnerMsg+ "이 승리했습니다." + "\")";
+        return "alert(\"" + winnerMsg+ "이 승리했습니다." + "\")" +
+                "\nlocation.href = \"/\"";
     }
 }

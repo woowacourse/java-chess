@@ -17,18 +17,20 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    private static ChessGame chessGame;
+
     public static void main(String[] args) {
         staticFiles.location("/templates");
 
-        ChessGame chessGame = new ChessGame(new Board());
-        chessGame.start();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "init.html");
         });
 
-        post("/chess", (req, res) -> {
+        get("/chess", (req, res) -> {
+            chessGame = new ChessGame(new Board());
+            chessGame.start();
             WebBoardDto webBoardDto = new WebBoardDto(chessGame.board());
             Map<String, Object> model = webBoardDto.getBoardDto();
             model.put("whiteScore", new ScoreDto(chessGame.score(Team.WHITE)));
@@ -46,7 +48,6 @@ public class WebUIChessApplication {
                     model.put("winner", new WinnerDto(chessGame.winner()).getWinnerMsg());
                     return render(model, "main.html");
                 }
-
                 WebBoardDto movedBoardDto = new WebBoardDto(chessGame.board());
                 Map<String, Object> model = movedBoardDto.getBoardDto();
                 model.put("whiteScore", new ScoreDto(chessGame.score(Team.WHITE)));
@@ -58,11 +59,6 @@ public class WebUIChessApplication {
                 model.put("error", errorDto.getMsg());
                 return render(model, "main.html");
             }
-        });
-
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "init.html");
         });
     }
 
