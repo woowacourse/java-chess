@@ -1,7 +1,9 @@
 const BOARD = document.querySelector("#board");
+const CURRENT_PLAYER = document.querySelector("#current-player");
 const API_URL = "http://localhost:4567/";
 const DEFAULT_PATH = "./image/";
 const MOVABLE_CLASS_NAME = "movable";
+const BOARD_ID = parseInt(document.querySelector("#room-number").textContent, 10);
 const SYMBOL_TO_IMAGE_PATH = {
     "p": DEFAULT_PATH + "whitePawn.png",
     "P": DEFAULT_PATH + "blackPawn.png",
@@ -23,7 +25,8 @@ let source = null;
 
 window.onload = () => {
     const divs = BOARD.querySelectorAll("div");
-    // boardInit();
+    document.querySelector("#exit-button").addEventListener("click", exitButtonEvent);
+    // history.pushState(null, "우아한 체스", API_URL+"chess");
     boardJoin();
     for (const div of divs) {
         div.addEventListener("click", divClickEvent);
@@ -32,10 +35,9 @@ window.onload = () => {
 
 function boardJoin() {
     const newData = {
-        "boardId": 1,
+        "boardId": BOARD_ID,
     }
     const option = getOption("POST", newData);
-
     fetch(API_URL + "join", option)
     .then((response) => {
         if (!response.ok) {
@@ -74,11 +76,7 @@ function imageSetting(responseData) {
             div.style.backgroundImage = null;
         }
     }
-    // 끝났는지 체크 alter 띄우기
-    if (boardInfo["isFinish"] === "true") {
-        //게임이 끝났음
-        restartAsk();
-    }
+    dataSetting();
 }
 
 function divClickEvent(event) {
@@ -123,7 +121,7 @@ function divClickEvent(event) {
 
 function movedPieces(source, target) {
     const newData = {
-        "boardId": 1,
+        "boardId": BOARD_ID,
         "source": source,
         "target": target
     }
@@ -159,7 +157,7 @@ function restartAsk() {
 }
 
 function getMovablePositions(sourcePosition) {
-    fetch(API_URL + "movablePositions?source=" + sourcePosition + "&boardId=" + 1)
+    fetch(API_URL + "movablePositions?source=" + sourcePosition + "&boardId=" + BOARD_ID)
     .then((response) => {
         if (!response.ok) {
             throw new Error(" ");
@@ -184,4 +182,22 @@ function movablePositionSetting(isDisplay) {
             item.classList.remove(MOVABLE_CLASS_NAME);
         }
     }
+}
+
+function dataSetting() {
+    if (boardInfo["isFinish"] === "true") {
+        document.querySelector("#view-type").textContent = "승리자 :ㅤ";
+    }
+    const isWhite = boardInfo["turn"] === "WHITE";
+    let playerType = ""
+    if (isWhite === true) {
+        playerType = "whitePlayer";
+    } else {
+        playerType = "blackPlayer"
+    }
+    CURRENT_PLAYER.textContent = boardInfo[playerType];
+}
+
+function exitButtonEvent() {
+    location.href = API_URL + "room";
 }
