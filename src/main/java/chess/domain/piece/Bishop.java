@@ -26,7 +26,7 @@ public final class Bishop extends AbstractPiece {
     @Override
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
         validateMove(position, pieces);
-        return new Rook(color, position);
+        return new Bishop(color, position);
     }
 
     @Override
