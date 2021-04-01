@@ -6,6 +6,15 @@
   <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+{{#if winner}}
+<h3>승자: {{{winner}}}</h3>
+<h3>점수</h3>
+<div class="score">Black: {{{blackScore}}}</div>
+<div class="score">White: {{{whiteScore}}}</div>
+<a href="/chess/lobby">나가기</a>
+{{else}}
+<h3>현재 턴 : {{{currentTurn}}}</h3>
+{{/if}}
 <div id="board">
   <div class="square black {{{A8}}}" id="A8"></div>
   <div class="square white {{{B8}}}" id="B8"></div>
@@ -80,8 +89,11 @@
   <div class="square black {{{H1}}}" id="H1"></div>
 </div>
 </body>
+{{#if winner}}
+{{else}}
 <script type="module" src="/js/index.js"></script>
+{{/if}}
 {{#error}}
-  {{{error}}
+{{{error}}}
 {{/error}}
 </html>
