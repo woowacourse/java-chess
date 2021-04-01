@@ -78,3 +78,12 @@ body {
     width: 100%;
     height: auto;
 }
+
+#turn {
+    height :30%;
+    width : 100%;
+}
+
+.class {
+    width : 100%;
+}

@@ -45,7 +45,6 @@ public class Game {
         if (board.kingIsDead()) {
             gameState = GameState.END;
         }
-
         this.turnColor = turnColor.oppositeColor();
     }
 
@@ -63,5 +62,9 @@ public class Game {
 
     public PieceColor winnerColor() {
         return board.winnerColor();
+    }
+
+    public String turn() {
+        return this.turnColor.name();
     }
 }

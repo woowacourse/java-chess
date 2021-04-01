@@ -27,6 +27,7 @@ public class WebUIChessApplication {
         });
 
         post("/initial", (req, res) -> {
+            Map<String, Object> submitData = new HashMap<>();
             Map<String, Object> initialChessBoard = new HashMap<>();
             Map<Position, Piece> startedBoard= webController.startedBoard();
             for (Map.Entry<Position, Piece> elem : startedBoard.entrySet()) {
@@ -34,8 +35,22 @@ public class WebUIChessApplication {
                 Piece piece = elem.getValue();
                 initialChessBoard.put(position.symbol(), piece.symbol());
             }
+            submitData.put("chessBoard", initialChessBoard);
+            submitData.put("turn", webController.getTurn());
 
-            return gson.toJson(initialChessBoard);
+            return gson.toJson(submitData);
+        });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> submitData = new HashMap<>();
+            Map<String, Object> requestBody = gson.fromJson(req.body(), HashMap.class);
+            String moveRawCommand = (String) requestBody.get("move");
+            String moveResult = webController.move(moveRawCommand);
+            submitData.put("isSuccess", moveResult);
+            if (webController.isEnd()) {
+                submitData.put("winner", webController.winnerColor());
+            }
+            return gson.toJson(submitData);
         });
     }
 
