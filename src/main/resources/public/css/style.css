@@ -3,6 +3,11 @@ body {
     background-color: rgb(30, 30, 30);
 }
 
+h1 {
+    text-align: center;
+    text-decoration-color: white;
+}
+
 .chessboard {
     width: 640px;
     height: 640px;

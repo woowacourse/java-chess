@@ -52,7 +52,9 @@ function select(event) {
     if (event.target.textContent === "") {
         return;
     }
-    event.target.classList.add("select");
+    if (event.target.id !== "") {
+        event.target.classList.add("select");
+    }
 }
 
 
