@@ -10,7 +10,7 @@ btnStart.addEventListener('click', function (e) {
         .then(function (response) {
             let data = response.data;
             if (data.success) {
-                getChessBoardData(refreshChessBoard);
+                refreshChessBoard(data.data)
             } else {
                 alert(data.message)
             }
@@ -67,7 +67,7 @@ function movePiece(target) {
         .then(function (response) {
             let data = response.data;
             if (data.success) {
-                getChessBoardData();
+                refreshChessBoard(data.data);
             } else {
                 alert(data.message);
             }
@@ -86,19 +86,12 @@ function clearSelect() {
     }
 }
 
-function getChessBoardData() {
-    axios.get('/refreshChessBoard')
-        .then(function (response) {
-            refreshChessBoard(response);
-        })
-}
-
-function refreshChessBoard(response) {
-    console.log(response);
-    let isRunning = response.data.isRunning;
+function refreshChessBoard(data) {
+    let chessGame = JSON.parse(data);
+    let isRunning = chessGame.isRunning;
     clearChessBoard();
     if (isRunning) {
-        let pieces = response.data.piecesDto.pieceDtoList;
+        let pieces = chessGame.piecesDto.pieceDtoList;
         console.log(pieces);
         for (let i = 0; i < pieces.length; i++) {
             let piece = pieces[i]
@@ -107,19 +100,17 @@ function refreshChessBoard(response) {
             tile.classList.add(piece.piece);
             tile.innerHTML = piecesMap[piece.piece];
         }
-        let blackScore = response.data.blackTeam.score;
-        console.log('blackScore : ' + blackScore);
-        let whiteScore = response.data.whiteTeam.score;
-        console.log('whiteScore : ' + whiteScore);
+        let blackScore = chessGame.blackTeam.score;
+        let whiteScore = chessGame.whiteTeam.score;
         document.getElementById('score-white').innerHTML = whiteScore;
         document.getElementById('score-black').innerHTML = blackScore;
 
-        if (response.data.blackTeam.isTurn) {
-            document.getElementById('name-black').innerHTML = response.data.blackTeam.name + "♟";
-            document.getElementById('name-white').innerHTML = response.data.whiteTeam.name;
-        } else if (response.data.whiteTeam.isTurn) {
-            document.getElementById('name-black').innerHTML = response.data.blackTeam.name;
-            document.getElementById('name-white').innerHTML = response.data.whiteTeam.name + "&#9817;";
+        if (chessGame.blackTeam.isTurn) {
+            document.getElementById('name-black').innerHTML = chessGame.blackTeam.name + "♟";
+            document.getElementById('name-white').innerHTML = chessGame.whiteTeam.name;
+        } else if (chessGame.whiteTeam.isTurn) {
+            document.getElementById('name-black').innerHTML = chessGame.blackTeam.name;
+            document.getElementById('name-white').innerHTML = chessGame.whiteTeam.name + "&#9817;";
         }
 
     }

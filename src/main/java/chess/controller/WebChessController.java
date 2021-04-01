@@ -32,55 +32,33 @@ public class WebChessController {
 
         get("/startChessGame", (req, res) -> {
             if (chessGame != null && !chessGame.isEnd()) {
-                return gson.toJson(new ResponseDto(false, "체스 게임이 시작 중 입니다."));
+                return gson.toJson(new ResponseDto(false, "", "체스 게임이 시작 중 입니다."));
             }
             chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
-            return gson.toJson(new ResponseDto(true, "체스가 시작되었습니다."));
+            String jsonObj = gson.toJson(createChessGameDto(chessGame));
+            return gson.toJson(new ResponseDto(true, jsonObj, "체스가 시작되었습니다."));
         });
 
         get("/endChessGame", (req, res) -> {
             if (chessGame != null && !chessGame.isEnd()) {
                 chessGame.finish();
-                return gson.toJson(new ResponseDto(true, "체스 게임이 종료 되었습니다."));
+                String jsonObj = gson.toJson(createChessGameDto(chessGame));
+                return gson.toJson(new ResponseDto(true, jsonObj, "체스 게임이 종료 되었습니다."));
             }
-            return gson.toJson(new ResponseDto(false, "체스 게임이 실행 중이 아닙니다."));
+            return gson.toJson(new ResponseDto(false, "", "체스 게임이 실행 중이 아닙니다."));
         });
-
-        get("/refreshChessBoard", (req, res) -> {
-            final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
-            chessBoard.putAll(convertToWhitePrintName(chessGame));
-            List<PieceDto> pieceDtos = new ArrayList<>();
-            for (Map.Entry<Position, String> entry : chessBoard.entrySet()) {
-                pieceDtos.add(new PieceDto(entry.getKey().getKey(), entry.getValue()));
-            }
-
-            PiecesDto piecesDto = new PiecesDto(pieceDtos);
-
-            TeamDto blackTeamDto = new TeamDto(chessGame.getBlackTeam().getName(),
-                    String.valueOf(chessGame.getBlackTeam().calculateTotalScore()),
-                    chessGame.getBlackTeam().isCurrentTurn());
-
-            TeamDto whiteTeamDto = new TeamDto(chessGame.getWhiteTeam().getName(),
-                    String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()),
-                    chessGame.getWhiteTeam().isCurrentTurn());
-
-            ChessGameDto chessGameDto = new ChessGameDto(piecesDto, blackTeamDto, whiteTeamDto, !chessGame.isEnd());
-
-            String obj = gson.toJson(chessGameDto);
-            return obj;
-        });
-
+        
         get("/selectPiece", (req, res) -> {
             if (chessGame == null || chessGame.isEnd()) {
-                return gson.toJson(new ResponseDto(false, "체스 게임을 먼저 시작해주세요."));
+                return gson.toJson(new ResponseDto(false, "", "체스 게임을 먼저 시작해주세요."));
             }
             Position position = Position.of(req.queryParams("position"));
 
             if (chessGame.havePieceInCurrentTurn(position)) {
-                return gson.toJson(new ResponseDto(true, "기물을 선택 하셨습니다."));
+                return gson.toJson(new ResponseDto(true, "", "기물을 선택 하셨습니다."));
             }
 
-            return gson.toJson(new ResponseDto(false, "해당 위치에 기물이 없습니다."));
+            return gson.toJson(new ResponseDto(false, "", "잘못 선택 하셨습니다."));
         });
 
         get("/movePiece", (req, res) -> {
@@ -88,10 +66,11 @@ public class WebChessController {
             Position target = Position.of(req.queryParams("target"));
 
             if (chessGame == null || chessGame.isEnd()) {
-                return gson.toJson(new ResponseDto(false, "체스 게임을 먼저 시작해주세요."));
+                return gson.toJson(new ResponseDto(false, "", "체스 게임을 먼저 시작해주세요."));
             }
 
             boolean isSuccess = false;
+
             try {
                 isSuccess = chessGame.move(selected, target);
             } catch (IllegalArgumentException e) {
@@ -99,11 +78,34 @@ public class WebChessController {
             }
 
             if (isSuccess) {
-                return gson.toJson(new ResponseDto(true, "기물을 옮겼습니다."));
+                String jsonObj = gson.toJson(createChessGameDto(chessGame));
+                return gson.toJson(new ResponseDto(true, jsonObj, "기물을 옮겼습니다."));
             }
 
-            return gson.toJson(new ResponseDto(false, "기물을 옮기지 못했습니다."));
+            return gson.toJson(new ResponseDto(false, "", "기물을 옮기지 못했습니다."));
         });
+    }
+
+    private ChessGameDto createChessGameDto(ChessGame chessGame) {
+        final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
+        chessBoard.putAll(convertToWhitePrintName(chessGame));
+        List<PieceDto> pieceDtos = new ArrayList<>();
+        for (Map.Entry<Position, String> entry : chessBoard.entrySet()) {
+            pieceDtos.add(new PieceDto(entry.getKey().getKey(), entry.getValue()));
+        }
+
+        PiecesDto piecesDto = new PiecesDto(pieceDtos);
+
+        TeamDto blackTeamDto = new TeamDto(chessGame.getBlackTeam().getName(),
+                String.valueOf(chessGame.getBlackTeam().calculateTotalScore()),
+                chessGame.getBlackTeam().isCurrentTurn());
+
+        TeamDto whiteTeamDto = new TeamDto(chessGame.getWhiteTeam().getName(),
+                String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()),
+                chessGame.getWhiteTeam().isCurrentTurn());
+
+        ChessGameDto chessGameDto = new ChessGameDto(piecesDto, blackTeamDto, whiteTeamDto, !chessGame.isEnd());
+        return chessGameDto;
     }
 
     private static Map<Position, String> convertToBlackPrintName(final ChessGame chessGame) {

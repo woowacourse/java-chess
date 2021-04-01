@@ -2,10 +2,12 @@ package chess.dto;
 
 public class ResponseDto {
     private boolean success = false;
+    private String data;
     private String message = "";
 
-    public ResponseDto(boolean success, String message) {
+    public ResponseDto(boolean success, String data, String message) {
         this.success = success;
+        this.data = data;
         this.message = message;
     }
 
