@@ -6,13 +6,14 @@ function initiateRoomRegistrationEvent() {
         event.preventDefault();
         const xmlHttp = new XMLHttpRequest();
         const url = 'http://localhost:8080/room/add';
-        const roomName = document.getElementById('room-name').value;
-        const requestData = JSON.stringify({'name': roomName});
+        const roomNameNode = document.getElementById('room-name');
+        const requestData = JSON.stringify({'name': roomNameNode.value});
         xmlHttp.onreadystatechange = function () {
             if (isValidHttpResponse(this)) {
                 const responseData = JSON.parse(xmlHttp.responseText);
                 const roomNode = createRoomNode(responseData.id, responseData.name);
                 ROOM_LIST_NODE.appendChild(roomNode);
+                roomNameNode.value = '';
             }
         };
         xmlHttp.open('POST', url, true);
