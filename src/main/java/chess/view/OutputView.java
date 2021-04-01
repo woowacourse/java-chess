@@ -4,9 +4,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-import java.util.*;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
+import java.util.Collection;
+import java.util.Map;
 
 public class OutputView {
 

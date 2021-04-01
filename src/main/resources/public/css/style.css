@@ -15,25 +15,27 @@ h1 {
     margin: 0 auto;
     border: 25px solid #333;
 }
+
 .black {
     float: left;
     width: 80px;
     height: 80px;
     background-color: #999;
-    font-size:50px;
-    text-align:center;
+    font-size: 50px;
+    text-align: center;
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
 }
+
 .white {
     float: left;
     width: 80px;
     height: 80px;
     background-color: #fff;
-    font-size:50px;
-    text-align:center;
+    font-size: 50px;
+    text-align: center;
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 .select {
@@ -41,8 +43,8 @@ h1 {
     width: 80px;
     height: 80px;
     background-color: #808000;
-    font-size:50px;
-    text-align:center;
+    font-size: 50px;
+    text-align: center;
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
 }

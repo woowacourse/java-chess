@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ChessDAOTest {
-    private ChessDAO chessDAO;
     private final String gameId = "new_game";
     private final ChessGame game = new ChessGame(new Board(), new Turn(Team.WHITE), new GameState());
+    private ChessDAO chessDAO;
 
     @BeforeEach
     public void setup() {

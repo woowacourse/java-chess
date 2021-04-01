@@ -65,8 +65,8 @@ public final class ChessGame {
     public String stringifiedBoard() {
         return board.unwrap().values()
                 .stream()
-        .map(Piece::name)
-        .collect(Collectors.joining(","));
+                .map(Piece::name)
+                .collect(Collectors.joining(","));
     }
 
     public String stringifiedTurn() {

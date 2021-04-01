@@ -63,7 +63,7 @@ public class ChessDAO {
 
         if (!rs.next()) return null;
 
-        ChessGame game =  new ChessGame(rs.getString("pieces"), rs.getString("turn"));
+        ChessGame game = new ChessGame(rs.getString("pieces"), rs.getString("turn"));
         closeConnection(connection);
         return game;
     }

@@ -12,13 +12,13 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static final String DEFAULT_GAME_ID = "1";
-
 
     public static void main(String[] args) throws SQLException {
         staticFiles.location("/public");
@@ -27,11 +27,7 @@ public class WebUIChessApplication {
         final Gson gson = new Gson();
 
         get("/", (req, res) -> {
-            ChessResult result = new ChessResult(game.board());
             Map<String, Object> model = new HashMap<>();
-//            model.put("turn", game.turnForDAO());
-//            model.put("black_score", result.totalScore(Team.BLACK));
-//            model.put("white_score", result.totalScore(Team.WHITE));
 
             return render(model, "index.html");
         });
@@ -51,7 +47,7 @@ public class WebUIChessApplication {
             }
         });
 
-        get("/status", (res,req) -> {
+        get("/status", (res, req) -> {
             StatusDto statusDto = new StatusDto(new ChessResult(game.board()), game.stringifiedTurn());
             return gson.toJson(statusDto.status());
         });
@@ -68,7 +64,7 @@ public class WebUIChessApplication {
             ChessResult result = new ChessResult(game.board());
             model.put("team", result.winner().teamName());
 
-            return render(model, "test.html");
+            return render(model, "result.html");
         });
 
         put("/save", (res, req) -> {

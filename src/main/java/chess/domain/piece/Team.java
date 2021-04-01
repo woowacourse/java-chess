@@ -17,7 +17,7 @@ public enum Team {
         return Arrays.stream(values())
                 .filter(team -> team.teamName.equals(teamName))
                 .findFirst()
-                .orElseThrow(() ->  new IllegalArgumentException("일치하는 팀이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 팀이 없습니다."));
     }
 
     public Team anyTeamExcludingThis() {

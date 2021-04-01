@@ -28,7 +28,7 @@ export function syncBoard() {
             const pieces = Object.values(currentBoard);
 
             for (let i = 0; i < positions.length; i++) {
-                document.querySelector("#"+positions[i]).innerHTML = piece.pieceImage(pieces[i]);
+                document.querySelector("#" + positions[i]).innerHTML = piece.pieceImage(pieces[i]);
             }
         })
     updateStatus();
