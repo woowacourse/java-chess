@@ -23,6 +23,10 @@ public class MovePosition {
     
     private final Position sourcePosition;
     private final Position targetPosition;
+
+    public MovePosition(String source, String target) {
+        this(Position.from(source), Position.from(target));
+    }
     
     public MovePosition(Position sourcePosition, Position targetPosition) {
         this.sourcePosition = sourcePosition;

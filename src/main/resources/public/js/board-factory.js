@@ -4,23 +4,74 @@ const BLACK_SQUARE = "black-square";
 
 document.addEventListener("DOMContentLoaded", buildBoard);
 
+const movePosition = {
+    "source": "",
+    "target": "",
+}
+
+const option = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    "body": "",
+}
+
 function buildBoard() {
     let $board = document.getElementById("board");
     if ($board == null) {
         document.querySelector("body").insertAdjacentHTML("afterbegin", build());
         $board = document.getElementById("board");
     }
-    $board.addEventListener("click", onSelectSquareColor);
+    $board.addEventListener("click", onMove);
     $board.addEventListener("mouseover", onMouseOverSquare);
     $board.addEventListener("mouseout", onRevertSquareColor);
 }
 
-function onSelectSquareColor(event) {
+function onMove(event) {
+    const $position = document.getElementsByClassName("selected");
+    if (!$position.length) {
+        onChangeColorOfSquare(event);
+    } else {
+        const source = $position[0].id;
+        const target = event.target.closest("div").id;
+        movePosition["source"] = source;
+        movePosition["target"] = target;
+
+        option["body"] = JSON.stringify(movePosition);
+        fetch('/rooms/' +  0 + '/move', option)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(res.status);
+                }
+                return movePiece(source, target);
+            })
+            .catch(() => alert("해당 위치로 이동할 수 없습니다."));
+        revertSquareColor($position);
+    }
+}
+
+function movePiece(source, target) {
+    const $sourcePosition = document.getElementById(source);
+    const $targetPosition = document.getElementById(target);
+
+    $targetPosition.innerHTML = $sourcePosition.innerHTML;
+    $sourcePosition.innerHTML = "";
+}
+
+
+function onChangeColorOfSquare(event) {
     let squareClassList = event.target.closest("div").classList;
     if (squareClassList.contains("selected")) {
         squareClassList.remove("selected");
     } else {
         squareClassList.add("selected");
+    }
+}
+
+function revertSquareColor($position) {
+    for (const $positionElement of $position) {
+        $positionElement.classList.remove("selected");
     }
 }
 

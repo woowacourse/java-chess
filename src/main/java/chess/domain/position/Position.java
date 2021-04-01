@@ -15,6 +15,15 @@ public class Position {
     
     private final Point x;
     private final Point y;
+
+    public Position(String value) {
+        this(from(value));
+    }
+
+    private Position(Position position) {
+        this.x = position.x;
+        this.y = position.y;
+    }
     
     private Position(Point x, Point y) {
         this.x = x;
