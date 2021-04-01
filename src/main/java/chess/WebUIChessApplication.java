@@ -85,7 +85,7 @@ public class WebUIChessApplication {
         post("/save", (req, res) -> {
             try {
                 Chess chess = new Chess("1", chessGame.gridStringify(), chessGame.turn().name());
-                if(chessDAO.findByChessId("1") == null){
+                if (chessDAO.findByChessId("1") == null) {
                     chessDAO.addChess(chess);
                 }
                 chessDAO.updateChess(chess, chess.getChess(), chess.getTurn());
@@ -97,7 +97,7 @@ public class WebUIChessApplication {
 
         post("/load", (req, res) -> {
             try {
-                if(chessDAO.findByChessId("1") == null) {
+                if (chessDAO.findByChessId("1") == null) {
                     throw new SQLDataException("저장된 보드가 없습니다.");
                 }
                 Chess chess = chessDAO.findByChessId("1");

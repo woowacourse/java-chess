@@ -32,7 +32,7 @@ public final class Grid {
         return lines.piece(position);
     }
 
-    public final void assign(final Piece piece, final Position position){
+    public final void assign(final Piece piece, final Position position) {
         lines.assign(position, piece);
     }
 
@@ -66,7 +66,7 @@ public final class Grid {
                 .flatMap(line -> line
                         .pieces()
                         .stream()
-                        .map(piece -> Character.toString(piece.name()) + piece.position().positionToString()))
+                        .map(piece -> piece.name() + piece.position().positionToString()))
                 .collect(Collectors.joining());
     }
 }

@@ -38,7 +38,7 @@ function refresh() {
 async function loadGrid() {
     let response = await fetch('http://localhost:4567/pieces')
     response = await response.json()
-    for(let position in response){
+    for (let position in response) {
         document.getElementById(position).innerText = unicodeMap[response[position]]
     }
 }
