@@ -1,16 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.game.BoardFactory;
 import chess.domain.game.EmptyBoardMap;
 import chess.domain.location.Position;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
-    private Map<Position, Piece> maps = EmptyBoardMap.create();
+    private Map<Position, Piece> emptyBoard = EmptyBoardMap.create();
 
     @Test
     @DisplayName("폰이 잘 생성되는지 확인")
@@ -24,7 +27,7 @@ public class PawnTest {
     void possiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.movablePositions(from, maps)).contains(Position.from("a2"));
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(Position.from("a2"));
     }
 
 
@@ -33,7 +36,7 @@ public class PawnTest {
     void possiblePositionsAtStart() {
         Position from = Position.from("a7");
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.movablePositions(from, maps)).contains(
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
                 Position.from("a6"), Position.from("a5"));
     }
 
@@ -43,7 +46,7 @@ public class PawnTest {
     void whitePossiblePositions() {
         Position from = Position.from("a3");
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.movablePositions(from, maps)).contains(Position.from("a4"));
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(Position.from("a4"));
     }
 
 
@@ -52,7 +55,46 @@ public class PawnTest {
     void whitePossiblePositionsAtStart() {
         Position from = Position.from("a2");
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.movablePositions(from, maps)).contains(
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
                 Position.from("a3"), Position.from("a4"));
+    }
+
+
+    @Test
+    void whiteOnPositionTwoKillInit() {
+        Position from = Position.from("c2");
+        Pawn pawn = new Pawn(Color.WHITE);
+        emptyBoard.put(Position.from("b3"), new Pawn(Color.BLACK));
+        emptyBoard.put(Position.from("d3"), new Pawn(Color.BLACK));
+
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
+                Position.from("b3"),
+                Position.from("c3"),
+                Position.from("c4"),
+                Position.from("d3"));
+    }
+
+
+    @Test
+    void whiteOnPositionOneKillInit() {
+        Position from = Position.from("c2");
+        Pawn pawn = new Pawn(Color.WHITE);
+        emptyBoard.put(Position.from("b3"), new Pawn(Color.BLACK));
+
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
+                Position.from("b3"),
+                Position.from("c3"),
+                Position.from("c4"));
+    }
+
+    @Test
+    void whiteOnPositionOneKill() {
+        Position from = Position.from("d2");
+        Pawn pawn = new Pawn(Color.WHITE);
+        emptyBoard.put(Position.from("e3"), new Pawn(Color.BLACK));
+
+        assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
+                Position.from("e3"),
+                Position.from("d3"));
     }
 }
