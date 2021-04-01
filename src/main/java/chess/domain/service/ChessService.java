@@ -46,21 +46,23 @@ public class ChessService {
             final Position source = Position.from(moveRequest.source());
             final Position target = Position.from(moveRequest.target());
             chessGame.move(source, target);
-
-            if (chessGame.isKingDead()) {
-                chessGame.changeGameOver();
-            }
-
-            final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
-            pieceDao.savePiece(source, chessBoard.get(source));
-            pieceDao.savePiece(target, chessBoard.get(target));
-
-            chessGame.nextTurn();
-            boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), false));
+            changeStatusSaveData(source, target);
             return new Response("200", "성공");
         } catch (UnsupportedOperationException | IllegalArgumentException | SQLException e) {
             return new Response("401", e.getMessage());
         }
+    }
+
+    private void changeStatusSaveData(final Position source, final Position target) throws SQLException {
+        if (chessGame.isKingDead()) {
+            chessGame.changeGameOver();
+        }
+        chessGame.nextTurn();
+
+        final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
+        pieceDao.savePiece(source, chessBoard.get(source));
+        pieceDao.savePiece(target, chessBoard.get(target));
+        boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), false));
     }
 
     public Response end() throws SQLException {
