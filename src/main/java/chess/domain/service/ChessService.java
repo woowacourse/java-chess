@@ -9,6 +9,7 @@ import chess.domain.dto.PieceDto;
 import chess.domain.dto.request.MoveRequest;
 import chess.domain.dto.response.BoardAndPieceDto;
 import chess.domain.dto.response.Response;
+import chess.domain.dto.response.ResponseCode;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -47,9 +48,9 @@ public class ChessService {
             final Position target = Position.from(moveRequest.target());
             chessGame.move(source, target);
             changeStatusSaveData(source, target);
-            return new Response("200", "성공");
+            return new Response(ResponseCode.SUCCESS.code(), ResponseCode.SUCCESS.message());
         } catch (UnsupportedOperationException | IllegalArgumentException | SQLException e) {
-            return new Response("401", e.getMessage());
+            return new Response(ResponseCode.ERROR.code(), e.getMessage());
         }
     }
 
@@ -68,9 +69,9 @@ public class ChessService {
     public Response end() throws SQLException {
         if (chessGame.isGameOver()) {
             boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), true));
-            return new Response("212", "게임 종료");
+            return new Response(ResponseCode.GAME_OVER.code(), ResponseCode.GAME_OVER.message());
         }
-        return new Response("200", "게임 진행중");
+        return new Response(ResponseCode.RUN.code(), ResponseCode.RUN.message());
     }
 
     public ChessResult chessResult() {
@@ -91,7 +92,8 @@ public class ChessService {
             final String positionValue = position.horizontalSymbol() + position.verticalSymbol();
             pieceDtos.add(new PieceDto(positionValue, piece.imgFileName()));
         });
-        return new Response("200", "성공", new BoardAndPieceDto(boardDto, pieceDtos));
+        return new Response(ResponseCode.SUCCESS.code(), ResponseCode.SUCCESS.message(),
+            new BoardAndPieceDto(boardDto, pieceDtos));
     }
 
 }
