@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.Board;
 import chess.domain.location.Position;
 
 import java.util.List;
@@ -21,9 +22,8 @@ public abstract class Basis implements Piece {
 
     public abstract double score();
 
-    public abstract List<List<Position>> movablePositions(Position position);
+    public abstract List<Position> movablePositions(Position from, Board board);
 
-    public abstract List<List<Position>> killablePositions(Position position);
 
     @Override
     public String display() {

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.Board;
 import chess.domain.location.Position;
 import chess.domain.moveStrategy.MoveStrategy;
 
@@ -42,11 +43,8 @@ public abstract class Division extends Basis {
 
     public abstract double score();
 
-    public List<List<Position>> movablePositions(Position position) {
-        return moveStrategy.movablePositions(position);
+    public List<Position> movablePositions(Position from, Board board) {
+        return moveStrategy.movablePositions(from, board);
     }
 
-    public List<List<Position>> killablePositions(Position position) {
-        return killStrategy.movablePositions(position);
-    }
 }

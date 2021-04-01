@@ -1,28 +1,28 @@
 package chess.domain.moveStrategy;
 
+import chess.domain.game.Board;
 import chess.domain.location.Position;
 import chess.domain.location.Vector;
 import chess.domain.piece.Color;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public abstract class SingleMove implements MoveStrategy {
-    protected Color color;
+public class SingleMove implements MoveStrategy {
+    private final Color color;
+    private final List<Vector> directions;
 
-    public SingleMove(Color color) {
+    public SingleMove(Color color, List<Vector> directions) {
         this.color = color;
+        this.directions = directions;
     }
 
     @Override
-    public List<List<Position>> movablePositions(Position position) {
-        List<Position> positions = new ArrayList<>();
-        for (Vector direction : directions()) {
-            positions.add(position.move(direction));
-        }
-        return Collections.singletonList(positions);
+    public List<Position> movablePositions(Position from, Board board) {
+        return directions.stream()
+                         .map(from::move)
+                         .filter(position -> !board.at(position)
+                                                   .isSameColor(color))
+                         .collect(Collectors.toList());
     }
-
-    public abstract List<Vector> directions();
 }

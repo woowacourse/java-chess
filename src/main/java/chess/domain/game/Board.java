@@ -4,6 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.location.Position;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,25 +34,8 @@ public class Board {
     public void move(Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
-        List<Position> positions = new ArrayList<>();
-        List<List<Position>> routes;
 
-        if (toPiece.isEmpty()) {
-            routes = fromPiece.movablePositions(from);
-        } else {
-            routes = fromPiece.killablePositions(from);
-        }
-        for (List<Position> route : routes) {
-            for (Position position : route) {
-                positions.add(position);
-                if (!pieceByPosition.get(position)
-                                    .isEmpty()) {
-                    break;
-                }
-            }
-        }
-
-        if (positions.contains(to)) {
+        if (fromPiece.movablePositions(from, this).contains(to)){
             pieceByPosition.put(to, fromPiece);
             pieceByPosition.put(from, new Empty());
             if (toPiece.isKing()) {
@@ -66,6 +50,10 @@ public class Board {
 
     public boolean isKingDead() {
         return isKingDead;
+    }
+
+    public Piece at(Position position) {
+        return pieceByPosition.get(position);
     }
 
 

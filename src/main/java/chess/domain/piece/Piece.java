@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.Board;
 import chess.domain.location.Position;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface Piece {
 
     double score();
 
-    List<List<Position>> movablePositions(Position position);
 
-    List<List<Position>> killablePositions(Position position);
+    List<Position> movablePositions(Position from, Board board);
+
 }
