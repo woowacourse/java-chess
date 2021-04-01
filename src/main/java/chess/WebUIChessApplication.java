@@ -5,8 +5,11 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.WebUIChessGameController;
+import chess.dao.ChessDao;
+import chess.dto.ChessGameDto;
 import chess.dto.MovableRequestDto;
 import chess.dto.MoveRequestDto;
+import chess.dto.UserIdsDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +22,7 @@ public class WebUIChessApplication {
         Gson gson = new Gson();
         staticFiles.location("/public");
         WebUIChessGameController webUIChessGameController = new WebUIChessGameController();
-
+        ChessDao chessDao = new ChessDao();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "chess-game.html");
@@ -27,7 +30,10 @@ public class WebUIChessApplication {
 
         post("/init", (req, res) -> {
             webUIChessGameController.initStart();
-            return webUIChessGameController.board();
+            UserIdsDto userIdsDto = gson.fromJson(req.body(), UserIdsDto.class);
+            ChessGameDto chessGameDto = webUIChessGameController.board();
+            chessDao.createGame(chessGameDto, userIdsDto);
+            return chessGameDto;
         }, gson::toJson);
 
         post("/movable", (req, res) -> {

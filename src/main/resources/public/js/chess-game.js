@@ -1,13 +1,20 @@
 const $initBoard = document.querySelector("#initStart");
-$initBoard.addEventListener("click", onInitBoard);
+$initBoard.addEventListener("click", onInitStart);
 
 const $board = document.querySelector(".board");
 $board.addEventListener("click", onMovePiece);
 
-async function onInitBoard(event) {
+async function onInitStart(event) {
+    const whiteUserId = document.querySelector("#white-user-id").value;
+    const blackUserId = document.querySelector("#black-user-id").value;
+
     const response = await fetch("./init", {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "whiteUserId": whiteUserId,
+            "blackUserId": blackUserId
+        })
     });
 
     boardAndInfo(await response.json());

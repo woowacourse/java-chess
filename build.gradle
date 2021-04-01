@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    implementation("mysql:mysql-connector-java:8.0.16")
     compile "com.sparkjava:spark-core:2.9.3"
     compile 'com.sparkjava:spark-template-handlebars:2.7.1'
     compile 'com.google.code.gson:gson:2.8.5'
