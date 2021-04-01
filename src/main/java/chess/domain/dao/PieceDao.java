@@ -12,27 +12,25 @@ import java.util.TreeMap;
 
 public final class PieceDao {
 
-    private Connection conn;
-
     public Map<Position, Piece> load() throws SQLException {
-        conn = ConnectionSetup.getConnection();
-        final String query = "SELECT * FROM pieces";
-        final PreparedStatement pstmt = conn.prepareStatement(query);
-        final ResultSet rs = pstmt.executeQuery();
+        try (final Connection conn = ConnectionSetup.getConnection()) {
+            final String query = "SELECT * FROM pieces";
+            final PreparedStatement pstmt = conn.prepareStatement(query);
+            final ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) {
-            return null;
+            if (!rs.next()) {
+                return null;
+            }
+
+            final Map<Position, Piece> pieces = new TreeMap<>();
+            do {
+                final String positionValue = rs.getString("position");
+                final Position position = Position.from(positionValue);
+                final String name = rs.getString("name");
+                pieces.put(position, PieceFactory.correctPiece(name));
+            } while (rs.next());
+            return pieces;
         }
-
-        final Map<Position, Piece> pieces = new TreeMap<>();
-        do {
-            final String positionValue = rs.getString("position");
-            final Position position = Position.from(positionValue);
-            final String name = rs.getString("name");
-            pieces.put(position, PieceFactory.correctPiece(name));
-        } while (rs.next());
-        ConnectionSetup.closeConnection(conn);
-        return pieces;
     }
 
     public void save(final Map<Position, Piece> pieces) throws SQLException {
@@ -43,20 +41,20 @@ public final class PieceDao {
     }
 
     public void savePiece(final Position position, final Piece piece) throws SQLException {
-        conn = ConnectionSetup.getConnection();
-        final String query = "INSERT INTO pieces VALUES (?, ?)";
-        final PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
-        pstmt.setString(2, piece.name());
-        pstmt.executeUpdate();
-        ConnectionSetup.closeConnection(conn);
+        try (final Connection conn = ConnectionSetup.getConnection()) {
+            final String query = "INSERT INTO pieces VALUES (?, ?)";
+            final PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
+            pstmt.setString(2, piece.name());
+            pstmt.executeUpdate();
+        }
     }
 
     public void deleteAll() throws SQLException {
-        conn = ConnectionSetup.getConnection();
-        final String query = "DELETE FROM pieces";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.executeUpdate();
-        ConnectionSetup.closeConnection(conn);
+        try (final Connection conn = ConnectionSetup.getConnection()) {
+            final String query = "DELETE FROM pieces";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
     }
 }
