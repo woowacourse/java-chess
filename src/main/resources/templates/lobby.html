@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Joy 체스</title>
+  <link href="/css/lobby.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>입장할 방을 클릭</h1>
+<form action="/chess/new" method="post">
+  <input type="text" name="gameName" placeholder="생성할 게임 이름">
+  <input type="submit" value="새로운 게임 시작">
+</form>
+<div class="game-list">
+  {{#games}}
+  <a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a>
+  <br>
+  {{/games}}
+</div>
+</body>
+</html>
