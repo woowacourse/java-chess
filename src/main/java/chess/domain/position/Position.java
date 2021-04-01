@@ -115,4 +115,8 @@ public class Position {
     public Column column() {
         return column;
     }
+
+    public Row row() {
+        return row;
+    }
 }

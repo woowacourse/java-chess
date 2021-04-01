@@ -1,10 +1,10 @@
 package chess;
 
-public class Request {
+public class RequestDto {
     private final String from;
     private final String to;
 
-    public Request(String from, String to) {
+    public RequestDto(String from, String to) {
         this.from = from;
         this.to = to;
     }

@@ -1,20 +1,28 @@
 const BRook = "../img/BR.png";
 const BKnight = "../img/BN.png";
 const BBishop = "../img/BB.png";
-const BKing = "../img/BK.png";
 const BQueen = "../img/BQ.png";
+const BKing = "../img/BK.png";
 const BPawn = "../img/BP.png";
 const WPawn = "../img/WP.png";
 const WRook = "../img/WR.png";
 const WKnight = "../img/WN.png";
 const WBishop = "../img/WB.png";
-const WKing = "../img/WK.png";
 const WQueen = "../img/WQ.png";
+const WKing = "../img/WK.png";
 
 let $chessBoard = document.querySelector(".chessBoard");
+const button = document.querySelector("button");
+let gameFinished = false;
 
-initChessBoard();
+createChessBoard();
 $chessBoard.addEventListener("click", clickPosition);
+button.addEventListener("click", restart);
+
+function createChessBoard() {
+    initChessBoard();
+    syncBoard();
+}
 
 function initChessBoard() {
     const turnText = document.createElement("h2");
@@ -83,8 +91,8 @@ function initPieceImage(row, column) {
             0: BRook,
             1: BKnight,
             2: BBishop,
-            3: BKing,
-            4: BQueen,
+            3: BQueen,
+            4: BKing,
             5: BBishop,
             6: BKnight,
             7: BRook,
@@ -104,8 +112,8 @@ function initPieceImage(row, column) {
             0: WRook,
             1: WKnight,
             2: WBishop,
-            3: WKing,
-            4: WQueen,
+            3: WQueen,
+            4: WKing,
             5: WBishop,
             6: WKnight,
             7: WRook,
@@ -116,6 +124,9 @@ function initPieceImage(row, column) {
 }
 
 function clickPosition(event) {
+    if (gameFinished) {
+        return;
+    }
     const positions = document.querySelectorAll(".chessColumn");
     for (let i = 0; i < positions.length; i++) {
         if (positions[i].classList.contains("clicked")) {
@@ -129,6 +140,7 @@ function clickPosition(event) {
         return;
     }
     event.target.closest(".chessColumn").classList.toggle("clicked");
+
 }
 
 function move(from, to) {
@@ -136,7 +148,6 @@ function move(from, to) {
         from: from,
         to: to
     };
-
     console.log(JSON.stringify(data))
     fetch("/move", {
         method: 'POST',
@@ -155,6 +166,7 @@ function move(from, to) {
         changeTurnText();
         if (obj.code === "300") {
             alert(obj.turn + " 승리!");
+            gameFinished = true;
         }
     });
 }
@@ -175,4 +187,44 @@ function changeTurnText() {
         return;
     }
     document.getElementById("user-turn").innerText = 'WHITE';
+}
+
+function restart() {
+    fetch("/restart", {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function () {
+        syncBoard();
+    });
+}
+
+async function syncBoard() {
+    const board = await fetch("/board", {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    });
+
+    const positions = Object.keys(board);
+    const pieces = Object.values(board);
+
+    const cells = document.querySelectorAll(".chessColumn");
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i].getElementsByTagName("img")[0]) {
+            cells[i].getElementsByTagName("img")[0].remove();
+        }
+    }
+
+    for (let i = 0; i < positions.length; i++) {
+        const position = document.getElementById(positions[i]);
+        const piece = document.createElement("img");
+
+        piece.src = "img/" + pieces[i] + ".png";
+        position.appendChild(piece);
+    }
 }

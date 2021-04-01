@@ -15,8 +15,7 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
         final Gson GSON = new Gson();
         final JsonTransformer jsonTransformer = new JsonTransformer();
-        ChessService chessService = new ChessService();
-        final Game game = new Game();
+        final ChessService chessService = new ChessService();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -24,8 +23,17 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-           Request request = GSON.fromJson(req.body(), Request.class);
-           return chessService.move(request, game);
+           RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
+           return chessService.move(requestDto);
+        }, jsonTransformer);
+
+        post("/board", (req, res) -> {
+            return chessService.getCurrentBoard();
+        }, jsonTransformer);
+
+        post("/restart", (req, res) -> {
+            chessService.initChessBoard();
+            return "초기화 성공";
         }, jsonTransformer);
     }
 
