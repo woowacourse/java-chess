@@ -6,7 +6,7 @@ import chess.domain.command.*;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 public class Application {
 
@@ -15,11 +15,14 @@ public class Application {
         ChessGame chessGame = new ChessGame(board);
 
         Commands commands = new Commands(
-                Arrays.asList(
-                        new StartCommand(chessGame),
-                        new MoveCommand(chessGame),
-                        new EndCommand(chessGame),
-                        new StatusCommand(chessGame))
+                new HashMap<String, Command>() {
+                    {
+                        put("start", new StartCommand(chessGame));
+                        put("end", new EndCommand(chessGame));
+                        put("move", new MoveCommand(chessGame));
+                        put("status", new StatusCommand(chessGame));
+                    }
+                }
         );
 
         ChessController chessController = new ChessController(board, chessGame, commands);
