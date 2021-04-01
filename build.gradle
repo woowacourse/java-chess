@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    compile('com.fasterxml.jackson.core:jackson-databind:2.12.2')
     compile('com.sparkjava:spark-core:2.9.0')
     compile('com.sparkjava:spark-template-handlebars:2.7.1')
     compile('ch.qos.logback:logback-classic:1.2.3')

@@ -8,4 +8,12 @@ public class ColorDTO {
     public ColorDTO(Color color) {
         this.color = color.name();
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

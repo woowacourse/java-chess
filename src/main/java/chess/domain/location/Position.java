@@ -62,4 +62,8 @@ public class Position {
     public boolean hasRow(Row row) {
         return this.row.equals(row);
     }
+
+    public String toKey() {
+        return column.value() + row.value();
+    }
 }

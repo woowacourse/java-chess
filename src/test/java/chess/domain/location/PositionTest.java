@@ -1,5 +1,6 @@
 package chess.domain.location;
 
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -39,5 +40,11 @@ public class PositionTest {
         Position position1 = Position.from("a1");
         Position position2 = Position.of(Column.A, Row.ONE);
         assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    void toKey() {
+        assertThat(Position.from("c2").toKey()).isEqualTo("c2");
+
     }
 }
