@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.Position;
-import chess.dto.PositionDto;
 
 import java.util.Map;
 

@@ -2,12 +2,12 @@ package chess.dto;
 
 import chess.domain.piece.Piece;
 
-public class TeamDto {
+public class TeamDTO {
     private String name;
     private String score;
     private boolean isTurn;
 
-    public TeamDto(String name, String score, boolean isTurn) {
+    public TeamDTO(String name, String score, boolean isTurn) {
         this.name = name;
         this.score = score;
         this.isTurn = isTurn;

@@ -1,10 +1,10 @@
 package chess.dto;
 
-public class PieceDto {
+public class PieceDTO {
     private String position;
     private String piece;
 
-    public PieceDto(String position, String piece) {
+    public PieceDTO(String position, String piece) {
         this.position = position;
         this.piece = piece;
     }

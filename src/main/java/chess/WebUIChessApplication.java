@@ -1,22 +1,10 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.domain.ChessGame;
-import chess.domain.Position;
-import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
-import chess.dto.PieceDto;
-import chess.dto.PiecesDto;
-import chess.view.PieceNameConverter;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;

@@ -5,7 +5,6 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.WhiteTeam;
-import chess.dto.PositionDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceNameConverter;

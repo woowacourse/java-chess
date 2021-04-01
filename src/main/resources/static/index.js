@@ -25,6 +25,7 @@ btnEnd.addEventListener('click', function (e) {
             let data = response.data;
             if (data.success) {
                 clearChessBoard();
+                alert(data.message);
             } else {
                 alert(data.message);
             }
@@ -112,7 +113,8 @@ function refreshChessBoard(data) {
             document.getElementById('name-black').innerHTML = chessGame.blackTeam.name;
             document.getElementById('name-white').innerHTML = chessGame.whiteTeam.name + "&#9817;";
         }
-
+    } else {
+        alert('게임이 종료 되었습니다.')
     }
 }
 
