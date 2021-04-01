@@ -1,11 +1,14 @@
 package chess.controller;
 
+import chess.dao.BoardDao;
 import chess.domain.Game;
+import chess.domain.piece.PieceColor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,24 +24,34 @@ public class WebChessController {
 
         get("/", (req, res) ->
         {
+            BoardDao boardDao = new BoardDao();
             Map<String, Object> model = new HashMap<>();
+            model.put("names", boardDao.findRoomNames());
             return render(model, "index.html");
         });
 
-        post("/start", (req, res) ->
+        get("/start", (req, res) ->
         {
             Map<String, Object> model = new HashMap<>();
+            if (req.queryParams("newGame").equals("yes")) {
+                addRoomToDb(req.queryParams("roomName"));
+            }
             return render(model, "game.html");
-        });
-
-        post("/initialize", (req, res) -> {
-            init(game);
-            return "";
         });
 
         post("/game", (req, res) ->
         {
             game.init();
+            Map<String, Object> model = new HashMap<>();
+            model.put("squares", game.squareDtos());
+            model.put("turn", game.turnColor());
+            return GSON.toJson(model);
+        });
+
+        post("/continue", (req, res) ->
+        {
+            game.continueGame(req.queryParams("roomName"));
+
             Map<String, Object> model = new HashMap<>();
             model.put("squares", game.squareDtos());
             model.put("turn", game.turnColor());
@@ -51,6 +64,9 @@ public class WebChessController {
                 isStart(game);
                 WebChessController.move(game, req.queryParams("source"), req.queryParams("target"));
                 if (game.isEnd()) {
+                    BoardDao boardDao = new BoardDao();
+                    boardDao.deleteExistingBoard(req.queryParams("roomName"));
+                    boardDao.deleteRoom(req.queryParams("roomName"));
                     return req.queryParams("source") + " " + req.queryParams("target") + " " + game.winnerColor().getSymbol();
                 }
             } catch (RuntimeException e) {
@@ -76,13 +92,15 @@ public class WebChessController {
 
         post("/end", (req, res) ->
         {
+            game.saveBoard(req.queryParams("roomName"));
             game.end();
             return "";
         });
     }
 
-    private static void init(Game game) {
-        game.init();
+    private void addRoomToDb(String room) throws SQLException {
+        BoardDao boardDao = new BoardDao();
+        boardDao.addRoom(room, PieceColor.WHITE);
     }
 
     private static void isStart(Game game) {
