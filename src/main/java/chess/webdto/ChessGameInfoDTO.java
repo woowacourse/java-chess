@@ -3,7 +3,6 @@ package chess.webdto;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.webdao.PieceDBFormat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class ChessGameInfoDTO {
         for (Position position : piecePosition.keySet()) {
             final String positionInitial = position.getPositionInitial();
             final Piece chosenPiece = piecePosition.get(position);
-            final String pieceString = PieceDBFormat.convert(chosenPiece);
+            final String pieceString = PieceDTOFormat.convert(chosenPiece);
             jsonConvertedPiecePosition.put(positionInitial, pieceString);
         }
         return jsonConvertedPiecePosition;
