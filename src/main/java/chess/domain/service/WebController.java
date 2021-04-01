@@ -1,5 +1,6 @@
 package chess.domain.service;
 
+import chess.DAO.ChessBoardDAO;
 import chess.domain.DTO.MoveRequestDTO;
 import chess.domain.DTO.MoveResultDTO;
 import chess.domain.DTO.pieceOnBoardDTO;
@@ -8,6 +9,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.result.ResultDto;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,9 +21,10 @@ public class WebController {
 
     private static ChessBoard chessBoard;
     private static Gson gson;
+    private static ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
 
     public WebController(Gson gson) {
-        this.gson = gson;
+        WebController.gson = gson;
     }
 
     public static Object start(Request request, Response response) {
@@ -85,5 +89,24 @@ public class WebController {
 
     public void setChessBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
+    }
+
+    public static Object save(Request request, Response response) {
+        GsonBuilder builder = new GsonBuilder();
+        try {
+            chessBoardDAO.addRoomInformation("test3", chessBoard, gson);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static Object load(Request request, Response response) {
+        try {
+            chessBoard = chessBoardDAO.findChessBoardByRoom("test3", gson);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

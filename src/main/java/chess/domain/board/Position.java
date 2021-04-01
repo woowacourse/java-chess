@@ -163,13 +163,6 @@ public class Position {
     }
 
     @Override
-    public String toString() {
-        return "Position{" +
-            "boardPosition='" + alpha + ", " + number + '\'' +
-            '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

@@ -204,10 +204,4 @@ public abstract class PieceOnBoard implements Piece {
         }
         return pieceType.getName().toLowerCase();
     }
-
-    @Override
-    public String toString() {
-        return teamColor.name() + "" + pieceType + "\n";
-    }
-
 }

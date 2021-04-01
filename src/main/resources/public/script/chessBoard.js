@@ -2,153 +2,183 @@ const BLANK = ".";
 let GAME_END = false;
 
 async function reflectBoard() {
-    /**
-     * batch Piece on Board
-     */
-    let data;
-    try {
-        const res = await axios({
-            method: 'post',
-            url: '/start',
-        });
-        data = res.data;
-        console.log(data);
-    } catch (e) {
-        console.log(e);
-    }
+  /**
+   * batch Piece on Board
+   */
+  let data;
+  try {
+    const res = await axios({
+      method: 'post',
+      url: '/start',
+    });
+    data = res.data;
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+  }
 
-    resetBoard()
-    fillBoard()
+  resetBoard()
+  fillBoard()
 
-    eventList()
+  eventList()
 
-    function fillBoard() {
-        const table = document.getElementById("chessBoard");
-        for (let i = 0; i < 8; i++) {
-            const newTr = document.createElement("tr");
-            for (let j = 0; j < 8; j++) {
-                const newTd = document.createElement("td");
+  function fillBoard() {
+    const table = document.getElementById("chessBoard");
+    for (let i = 0; i < 8; i++) {
+      const newTr = document.createElement("tr");
+      for (let j = 0; j < 8; j++) {
+        const newTd = document.createElement("td");
 
-                const row = String(8 - i); // 열(12345678)
-                const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
-                const column = String.fromCharCode(asciiNum + j);
-                let position = column + row;
-                newTd.id = position;
-                const pieceName = data[position].teamColor
-                    + data[position].pieceType;
+        const row = String(8 - i); // 열(12345678)
+        const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
+        const column = String.fromCharCode(asciiNum + j);
+        let position = column + row;
+        newTd.id = position;
+        const pieceName = data[position].teamColor
+            + data[position].pieceType;
 
-                if (data[position].pieceType !== BLANK) {
-                    const piece = document.createElement("img");
-                    piece.src = "images/" + pieceName + ".png";
-                    newTd.appendChild(piece);
-                }
-
-                newTr.appendChild(newTd);
-            }
-            table.appendChild(newTr);
+        if (data[position].pieceType !== BLANK) {
+          const piece = document.createElement("img");
+          piece.src = "images/" + pieceName + ".png";
+          newTd.appendChild(piece);
         }
+
+        newTr.appendChild(newTd);
+      }
+      table.appendChild(newTr);
     }
+  }
 }
 
 function resetBoard() {
-    const chessBoard = document.getElementById("chessBoard");
-    chessBoard.innerHTML = '';
+  const chessBoard = document.getElementById("chessBoard");
+  chessBoard.innerHTML = '';
 }
 
 function eventList() {
-    const table = document.getElementById("chessBoard");
-    table.addEventListener("click", selectPiece);
+  const table = document.getElementById("chessBoard");
+  table.addEventListener("click", selectPiece);
 }
 
 function selectPiece(event) {
-    if (GAME_END) {
-        alert("게임이 이미 종료되었습니다.");
-        return;
-    }
-    const clickPiece = event.target.closest("td");
-    const clickedPiece = getClickedPiece();
+  if (GAME_END) {
+    alert("게임이 이미 종료되었습니다.");
+    return;
+  }
+  const clickPiece = event.target.closest("td");
+  const clickedPiece = getClickedPiece();
 
-    if (clickedPiece) {
-        clickedPiece.classList.toggle("clicked");
-        const sourcePosition = clickedPiece.id;
-        const targetPosition = clickPiece.id;
+  if (clickedPiece) {
+    clickedPiece.classList.toggle("clicked");
+    const sourcePosition = clickedPiece.id;
+    const targetPosition = clickPiece.id;
 
-        if (sourcePosition != targetPosition) {
-            move(sourcePosition, targetPosition);
-            return
-        }
-        if (sourcePosition == targetPosition) {
-            clickedPiece.classList.toggle("clicked");
-        }
+    if (sourcePosition != targetPosition) {
+      move(sourcePosition, targetPosition);
+      return
     }
-    clickPiece.classList.toggle("clicked");
+    if (sourcePosition == targetPosition) {
+      clickedPiece.classList.toggle("clicked");
+    }
+  }
+  clickPiece.classList.toggle("clicked");
 
 }
 
 function getClickedPiece() {
-    const tds = document.getElementsByTagName("td");
-    for (let i = 0; i < tds.length; i++) {
-        if (tds[i].classList.contains("clicked")) {
-            return tds[i];
-        }
+  const tds = document.getElementsByTagName("td");
+  for (let i = 0; i < tds.length; i++) {
+    if (tds[i].classList.contains("clicked")) {
+      return tds[i];
     }
-    return null;
+  }
+  return null;
 }
 
 function modifyScore(whiteScore, blackScore) {
-    document.getElementById("whitePoint").innerText = "white Point: "
-        + whiteScore;
-    document.getElementById("blackPoint").innerText = "black Point: "
-        + blackScore;
+  document.getElementById("whitePoint").innerText = "white Point: "
+      + whiteScore;
+  document.getElementById("blackPoint").innerText = "black Point: "
+      + blackScore;
 }
 
 async function move(source, target) {
-    /**
-     * run move
-     * source : String
-     * target : String
-     */
-    let data;
-    try {
-        const res = await axios({
-            method: 'post',
-            url: '/move',
-            data: {
-                source: source,
-                target: target
-            }
-        });
-        data = res.data;
-    } catch (e) {
-        console.log(e);
-    }
-    if (!data.runningGame) {
-        reflectBoard()
-        alert("게임이 종료되었습니다. 승자는 " + data.winner + "입니다.");
-        GAME_END = true;
-        return
-    }
-    if (!data.isMove) {
-        alert("올바른 위치를 입력하여 주세요");
-    }
-
-    console.log(data);
-
-    modifyScore(data.whiteScore, data.blackScore)
+  /**
+   * run move
+   * source : String
+   * target : String
+   */
+  let data;
+  try {
+    const res = await axios({
+      method: 'post',
+      url: '/move',
+      data: {
+        source: source,
+        target: target
+      }
+    });
+    data = res.data;
+  } catch (e) {
+    console.log(e);
+  }
+  if (!data.runningGame) {
     reflectBoard()
+    alert("게임이 종료되었습니다. 승자는 " + data.winner + "입니다.");
+    GAME_END = true;
+    return
+  }
+  if (!data.isMove) {
+    alert("올바른 위치를 입력하여 주세요");
+  }
+
+  console.log(data);
+
+  modifyScore(data.whiteScore, data.blackScore)
+  reflectBoard()
 }
 
 async function reset() {
-    try {
-        await axios({
-            method: 'post',
-            url: '/reset',
-        });
-    } catch (e) {
-        console.log(e);
-    }
-    const defaultScore = 38;
-    GAME_END = false;
-    modifyScore(defaultScore, defaultScore);
-    reflectBoard();
+  try {
+    await axios({
+      method: 'post',
+      url: '/reset',
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  const defaultScore = 38;
+  GAME_END = false;
+  modifyScore(defaultScore, defaultScore);
+  reflectBoard();
+}
+
+async function save() {
+  alert("run save!");
+  try {
+    await axios({
+      method: 'post',
+      url: '/save',
+      data: {
+        roomName: "room1"
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function load() {
+  alert("run load!");
+  try {
+    await axios({
+      method: 'post',
+      url: '/load',
+      data: {
+        roomName: "room1"
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
