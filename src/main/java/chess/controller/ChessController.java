@@ -51,7 +51,7 @@ public class ChessController {
         }
 
         if (STATUS_COMMAND.equals(movePositions.get(0))) {
-           showGameStatus(chessGame);
+            showGameStatus(chessGame);
         }
     }
 
