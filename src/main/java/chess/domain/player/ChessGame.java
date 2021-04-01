@@ -12,6 +12,7 @@ import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
 import chess.domain.state.StateFactory;
+import chess.service.dto.GameStatusRequestDto;
 import chess.service.dto.ScoreDto;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class ChessGame {
     private final Player whitePlayer;
     private final Player blackPlayer;
     private Command command;
+    private boolean isGameOver = false;
 
     public ChessGame(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
@@ -53,6 +55,10 @@ public class ChessGame {
 
     public boolean isEnd() {
         return command.isEnd();
+    }
+
+    public boolean isGameOver(){
+        return isGameOver;
     }
 
     public void move(final Queue<String> commands) {
@@ -109,6 +115,7 @@ public class ChessGame {
     private void checkPieces(final State state, final Target target) {
         if (state.isKing(target.getPosition())) {
             this.command = this.command.end();
+            this.isGameOver = true;
         }
         if (state.findPiece(target.getPosition()).isPresent()) {
             state.removePiece(target.getPosition());
@@ -133,5 +140,12 @@ public class ChessGame {
         List<Piece> allPieces = Stream.concat(whitePieces.stream(), blackPieces.stream())
                 .collect(Collectors.toList());
         return new Pieces(allPieces);
+    }
+
+    public void changeStatus(final GameStatusRequestDto requestDto) {
+        if (requestDto.isGameOver()) {
+            this.isGameOver = requestDto.isGameOver();
+            this.command = this.command.end();
+        }
     }
 }

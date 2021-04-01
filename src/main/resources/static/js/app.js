@@ -9,23 +9,30 @@ const blackCount = document.querySelector(`#blackScore strong`);
 let isEnd = true;
 
 start.addEventListener("click", () => {
-    isEnd = false;
     initializePieces();
 });
 
 end.addEventListener("click", () => {
     if (isEnd === true) {
-        alert("게임끝냤슈!");
+        alert("이미 게임끝냤슈!");
         return
     }
-    if (window.confirm("정말 끝내려려구?")) {
+    if (window.confirm("정말 끝내려구?")) {
         isEnd = true;
+        axios({
+            method: 'put',
+            url: 'http://localhost:4567/games',
+            data: {
+                isGameOver: isEnd
+            }
+        }).then(
+        ).catch(error => console.log(error));
         alert("이 게임 끝났습니다.");
     }
 });
 
 const initializePieces = () => {
-    axios.get('http://localhost:4567/start')
+    axios.get('http://localhost:4567/games')
         .then(responsePieces => {
             reRangeBoard(responsePieces);
         })
@@ -41,17 +48,6 @@ const getPieces = () => {
 };
 
 getPieces();
-
-const movePieces = (response) => {
-    let sourcePiece = document.getElementById(response.data.source);
-    let targetPiece = document.getElementById(response.data.target);
-
-    let sourceChildPiece = sourcePiece.querySelector('img');
-    let targetChildPiece = targetPiece.querySelector('img');
-
-    targetChildPiece.src = sourceChildPiece.src;
-    sourceChildPiece.src = "";
-};
 
 function reRangeBoard(responsePieces) {
     for (let idx = 0; idx < tiles.length; idx++) {
@@ -72,10 +68,11 @@ function reRangeBoard(responsePieces) {
                 img.src = "css/image/" + pieces[pieceIdx].pieceName + ".png";
                 tiles[idx].removeChild(tiles[idx].childNodes[0]);
                 tiles[idx].appendChild(img);
+                break;
             }
         }
     }
-
+    isEnd = responsePieces.data.isGameOver;
     whiteCount.innerText = responsePieces.data.scoreDto.whiteScore;
     blackCount.innerText = responsePieces.data.scoreDto.blackScore;
 }
@@ -102,8 +99,8 @@ function isEmpty(value) {
 
 function movePiece() {
     axios({
-        method: 'post',
-        url: 'http://localhost:4567/move',
+        method: 'put',
+        url: 'http://localhost:4567/pieces',
         data: {
             source: sourceKey.value,
             target: targetKey.value
@@ -113,6 +110,17 @@ function movePiece() {
         getPieces();
     }).catch(error => alert(error));
 }
+
+const movePieces = (response) => {
+    let sourcePiece = document.getElementById(response.data.source);
+    let targetPiece = document.getElementById(response.data.target);
+
+    let sourceChildPiece = sourcePiece.querySelector('img');
+    let targetChildPiece = targetPiece.querySelector('img');
+
+    targetChildPiece.src = sourceChildPiece.src;
+    sourceChildPiece.src = "";
+};
 
 function clearMoveSource() {
     sourceKey.value = "";

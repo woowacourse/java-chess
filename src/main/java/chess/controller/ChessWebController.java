@@ -1,10 +1,7 @@
 package chess.controller;
 
 import chess.service.ChessService;
-import chess.service.dto.MoveRequestDto;
-import chess.service.dto.MoveResponseDto;
-import chess.service.dto.PiecesStatusDto;
-import chess.service.dto.TilesDto;
+import chess.service.dto.*;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -12,8 +9,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class ChessWebController {
     private final ChessService chessService;
@@ -39,9 +35,15 @@ public class ChessWebController {
             return render(model, "board.html");
         });
 
-        get("/start", (request, response) -> {
+        get("/games", (request, response) -> {
             PiecesStatusDto piecesStatusDto = chessService.initializeGame();
             return toJson(piecesStatusDto);
+        });
+
+        put("/games", (request, response) -> {
+            GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
+            chessService.changeGameStatus(requestDto);
+            return toJson(requestDto);
         });
 
         get("/pieces", (request, response) -> {
@@ -49,7 +51,7 @@ public class ChessWebController {
             return toJson(piecesStatusDto);
         });
 
-        post("/move", (request, response) -> {
+        put("/pieces", (request, response) -> {
             MoveRequestDto requestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
             MoveResponseDto responseDto = chessService.movePiece(requestDto);
             return toJson(responseDto);

@@ -8,13 +8,15 @@ import java.util.stream.Collectors;
 public class PiecesStatusDto {
     private final List<PieceStatusDto> pieces;
     private final ScoreDto scoreDto;
+    private final boolean isGameOver;
 
-    public PiecesStatusDto(final Pieces pieces, ScoreDto scoreDto) {
+    public PiecesStatusDto(final Pieces pieces, final ScoreDto scoreDto, final boolean isGameOver) {
         this.pieces = pieces.getPieces()
                 .stream()
                 .map(PieceStatusDto::new)
                 .collect(Collectors.toList());
         this.scoreDto = scoreDto;
+        this.isGameOver = isGameOver;
     }
 
     public List<PieceStatusDto> getPieces() {
@@ -23,5 +25,9 @@ public class PiecesStatusDto {
 
     public ScoreDto getScoreDto() {
         return scoreDto;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
     }
 }
