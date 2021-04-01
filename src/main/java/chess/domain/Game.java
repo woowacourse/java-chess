@@ -1,12 +1,10 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.board.InitializedBoard;
-import chess.domain.board.Point;
-import chess.domain.board.Position;
+import chess.domain.board.*;
 import chess.domain.piece.PieceColor;
 import chess.dto.SquareDto;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Game {
@@ -25,11 +23,19 @@ public class Game {
     }
 
     public void init() {
-        InitializedBoard initializedBoard = new InitializedBoard();
-        this.board = new Board(initializedBoard.board());
+        InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
+        this.board = new Board(initializedBoardFromDb.initBoard());
         this.point = new Point(board);
         this.gameState = GameState.START;
         this.turnColor = PieceColor.WHITE;
+    }
+
+    public void continueGame(String roomName) throws SQLException {
+        InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
+        this.board = new Board(initializedBoardFromDb.continueBoard(roomName));
+        this.point = new Point(board);
+        this.gameState = GameState.START;
+        this.turnColor = initializedBoardFromDb.continueTurn(roomName);
     }
 
     public void end() {
@@ -77,5 +83,9 @@ public class Game {
 
     public List<SquareDto> squareDtos() {
         return board.squareDtos();
+    }
+
+    public void saveBoard(String roomName) throws SQLException {
+        board.saveBoard(roomName, turnColor);
     }
 }
