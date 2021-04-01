@@ -8,24 +8,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class RoomRepository {
     private static final String ID_COLUMN = "id";
     private static final String NAME_COLUMN = "name";
 
-    private final Connection connection;
-
-    public RoomRepository(Connection connection) {
-        this.connection = Objects.requireNonNull(connection, "DB에 연결되지 않았습니다.");
-    }
-
     public List<Room> findAllRooms() throws SQLException {
         String query = "SELECT * FROM ROOM";
+        Connection connection = ConnectionManager.makeConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
-        return generateRoomsFrom(resultSet);
+        List<Room> rooms = generateRoomsFrom(resultSet);
+        resultSet.close();
+        return rooms;
     }
 
     private List<Room> generateRoomsFrom(ResultSet resultSet) throws SQLException {
@@ -41,13 +37,16 @@ public class RoomRepository {
 
     public void insertRoom(String roomName) throws SQLException {
         String query = "INSERT INTO ROOM (NAME) VALUES (?)";
+        Connection connection = ConnectionManager.makeConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, roomName);
         preparedStatement.executeUpdate();
+        connection.close();
     }
 
     public Optional<Room> findLatestRoom() throws SQLException {
         String query = "SELECT * FROM ROOM ORDER BY ID DESC LIMIT 1";
+        Connection connection = ConnectionManager.makeConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (!resultSet.next()) {
@@ -56,6 +55,7 @@ public class RoomRepository {
         int id = Integer.parseInt(resultSet.getString(ID_COLUMN));
         String name = resultSet.getString(NAME_COLUMN);
         Room room = new Room(id, name);
+        connection.close();
         return Optional.of(room);
     }
 }
