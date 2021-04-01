@@ -7,11 +7,15 @@ import chess.domain.dao.CommandDatabase;
 import chess.domain.dao.HistoryDao;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
+import chess.domain.dto.HistoryDto;
 import chess.domain.utils.BoardInitializer;
+import chess.view.OutputView;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessService {
     private ChessGame chessGame;
@@ -24,12 +28,19 @@ public class ChessService {
         this.historyDao = historyDao;
     }
 
-    public void init() throws SQLException {
+    public void init(){
         chessGame.initBoard(BoardInitializer.init());
     }
 
-    public Map<String, Object> startResponse() {
+    public Map<String, Object> startResponse() throws SQLException {
         Map<String, Object> model = new HashMap<>();
+        final List<HistoryDto> history = historyDao.selectActive()
+                        .stream()
+                        .map(HistoryDto::new)
+                        .collect(Collectors.toList());
+        if (!history.isEmpty()) {
+            model.put("history", history);
+        }
         return model;
     }
 
@@ -63,9 +74,11 @@ public class ChessService {
         return model;
     }
 
-    public void continueLastGame(CommandDatabase commandDatabase) throws SQLException {
+    public void continueLastGame(CommandDatabase commandDatabase, String historyName) throws SQLException {
+        commandDatabase.init(commandDao.selectAllCommands(historyName));
         chessGame.makeBoardStateOf(commandDatabase);
-        play();
+        System.out.println("====================");
+        OutputView.printBoard(chessGame.boardDto());
     }
 
     public Map<String, Object> continueResponse() {
@@ -74,10 +87,6 @@ public class ChessService {
 
     public Map<String, Object> endResponse() {
         return new HashMap<>();
-    }
-
-    public void play() throws SQLException {
-        commandDao.clear();
     }
 
     public void flush(String name, CommandDatabase commandDatabase) throws SQLException {

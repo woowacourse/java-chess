@@ -21,7 +21,7 @@ public class WebUIChessApplication {
              final WebController webController =
                      new WebController(
                              new ChessService(commandDao, historyDao),
-                             new CommandDatabase(commandDao.selectAll())
+                             new CommandDatabase()
                      );
              webController.play();
         }

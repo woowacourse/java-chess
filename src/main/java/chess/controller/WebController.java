@@ -36,13 +36,10 @@ public class WebController {
         });
 
         get("/play/new", (req, res) -> {
-            chessService.play();
             return render(chessService.initResponse(), "chessGame.html");
         });
 
         post("/play/move", (req, res) -> {
-            String source = req.queryParams("source");
-            String target = req.queryParams("target");
             String command = makeMoveCmd(req.queryParams("source"), req.queryParams("target"));
             try {
                 chessService.move(command);
@@ -60,13 +57,25 @@ public class WebController {
         });
 
         get("/play/continue", (req, res) -> {
-            if (commandDatabase.isEmpty()) {
-                // 만약 historyDB가 연결되어있지 않다면 새로운 게임을 하도록 넘겨주어야함.
-                return render(chessService.initResponse(), "chessGame.html");
-            }
-            // historyDB가 연결되어있다면 이어하기를 가능하도록 해야함.
-            chessService.continueLastGame(commandDatabase);
+//            if (commandDatabase.isEmpty()) {
+//                // 만약 historyDB가 연결되어있지 않다면 새로운 게임을 하도록 넘겨주어야함.
+//                return render(chessService.initResponse(), "chessGame.html");
+//            }
+//            // historyDB가 연결되어있다면 이어하기를 가능하도록 해야함.
+////            chessService.continueLastGame(commandDatabase, historyName);
+//            return res.redirect();
+
+            String historyName = req.queryParams("name");
+            System.out.println("=======");
+            System.out.println(historyName);
+            chessService.continueLastGame(commandDatabase, historyName);
             return render(chessService.continueResponse(), "chessGame.html");
+        });
+
+        post("/play/continue", (req, res) -> {
+            String historyName = req.queryParams("name");
+            chessService.continueLastGame(commandDatabase, historyName);
+            return GSON.toJson(chessService.continueResponse());
         });
 
         post("/play/save", (req, res) -> {

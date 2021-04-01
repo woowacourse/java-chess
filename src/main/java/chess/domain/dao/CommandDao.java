@@ -45,11 +45,11 @@ public class CommandDao {
         }
     }
 
-    public void delete(CommandDto commandDto) throws SQLException {
+    public void delete(String historyId) throws SQLException {
         String query = "DELETE FROM Command WHERE HistoryId = ?";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, "1");
+            preparedStatement.setString(1, historyId);
             preparedStatement.executeUpdate();
             MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
@@ -57,15 +57,31 @@ public class CommandDao {
         }
     }
 
-    public List<CommandDto> selectAll() throws SQLException {
+    public List<CommandDto> selectAllCommands(String historyName) throws SQLException {
         List<CommandDto> commands = new ArrayList<>();
-        String query = "SELECT * FROM history";
+        String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.HistoryId WHERE H.name = ?";
+        try (Connection connection = MySQLConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, historyName);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                commands.add(new CommandDto(rs.getString("C.Data")));
+            }
+            MySQLConnector.closeConnection(connection);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return commands;
+    }
+
+    public List<String> selectAllHistoryId() throws SQLException {
+        List<String> commands = new ArrayList<>();
+        String query = "SELECT * FROM Command";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next())
-                commands.add(new CommandDto(
-                        rs.getString("Data")));
+                commands.add(rs.getString("HistoryId"));
 
             MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {

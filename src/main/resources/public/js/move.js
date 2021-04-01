@@ -61,7 +61,7 @@ function update(response) {
     if (winner != null) {
         message += winner + "팀이 이겼습니다.🤭";
         alert(message);
-        window.location = "http://localhost:4567/play/new";
+        window.location = "http://localhost:4567/play";
     }
 }
 

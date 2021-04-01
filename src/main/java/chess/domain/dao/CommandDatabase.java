@@ -16,6 +16,11 @@ public class CommandDatabase {
         this.commands = commands;
     }
 
+    public void init(List<CommandDto> commands) {
+        this.commands.clear();
+        this.commands.addAll(commands);
+    }
+
     public void insert(CommandDto commandDto) {
         commands.add(commandDto);
     }
