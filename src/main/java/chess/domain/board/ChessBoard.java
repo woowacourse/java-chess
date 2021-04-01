@@ -12,11 +12,14 @@ import chess.domain.piece.Rook;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
     private static final int BOARD_SIZE = 8;
     private static final int NUMBER_OF_KINGS = 2;
+    private static final int COLUMN_NEIGHBOR_PAWN = 2;
+    private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
     private static final String NOT_MOVABLE_POSITION = "[ERROR] 이동할 수 없는 위치입니다.";
     private static final String SAME_POSITION = "[ERROR] 같은 위치로 이동할 수 없습니다.";
 
@@ -115,5 +118,35 @@ public class ChessBoard {
             .filter(Piece::isKing)
             .count();
         return kingCount < NUMBER_OF_KINGS;
+    }
+
+    public double score(Color color) {
+        double score = normalScore(color);
+        Map<Column, Long> pawnCount = pawnCount(color);
+        double punishmentScore = pawnScore(pawnCount);
+        return score - punishmentScore;
+    }
+
+    private double normalScore(Color color) {
+        return chessBoard.values().stream()
+            .filter(piece -> piece.isSameColor(color))
+            .mapToDouble(Piece::score)
+            .sum();
+    }
+
+    private Map<Column, Long> pawnCount(Color color) {
+        return chessBoard.entrySet()
+            .stream()
+            .filter(piece -> piece.getValue().isPawn())
+            .filter(piece -> piece.getValue().isSameColor(color))
+            .collect(Collectors
+                .groupingBy(position -> position.getKey().getColumn(), Collectors.counting()));
+    }
+
+    private double pawnScore(Map<Column, Long> pawnCount) {
+        return pawnCount.values().stream()
+            .filter(count -> count >= COLUMN_NEIGHBOR_PAWN)
+            .mapToDouble(count -> count * PAWN_SCORE_PUNISHMENT_RATIO)
+            .sum();
     }
 }

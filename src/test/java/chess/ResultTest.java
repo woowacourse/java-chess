@@ -47,15 +47,19 @@ public class ResultTest {
     @Test
     @DisplayName("각 진영 별 점수 계산")
     void scoreTest() {
-        Result result = new Result(chessBoard.getChessBoard());
-        assertThat(result.score(Color.WHITE)).isEqualTo(19.5);
-        assertThat(result.score(Color.BLACK)).isEqualTo(20.0);
+        Result result = new Result();
+        result.add(Color.WHITE, chessBoard.score(Color.WHITE));
+        result.add(Color.BLACK, chessBoard.score(Color.BLACK));
+        assertThat(result.getScore(Color.WHITE)).isEqualTo(19.5);
+        assertThat(result.getScore(Color.BLACK)).isEqualTo(20.0);
     }
 
     @Test
     @DisplayName("각 진영 별 승패 판별")
     void winOrLose() {
-        Result result = new Result(chessBoard.getChessBoard());
+        Result result = new Result();
+        result.add(Color.WHITE, chessBoard.score(Color.WHITE));
+        result.add(Color.BLACK, chessBoard.score(Color.BLACK));
         assertThat(result.winOrLose(Color.WHITE)).isEqualTo("패");
         assertThat(result.winOrLose(Color.BLACK)).isEqualTo("승");
     }

@@ -44,11 +44,11 @@ public class OutputView {
     public static void printResult(Result result) {
         String blackResult = String.format(RESULT_FORMAT,
             Color.BLACK.name(),
-            result.score(Color.BLACK),
+            result.getScore(Color.BLACK),
             result.winOrLose(Color.BLACK));
         String whiteResult = String.format(RESULT_FORMAT,
             Color.WHITE.name(),
-            result.score(Color.WHITE),
+            result.getScore(Color.WHITE),
             result.winOrLose(Color.WHITE));
         System.out.println(blackResult);
         System.out.println(whiteResult);
