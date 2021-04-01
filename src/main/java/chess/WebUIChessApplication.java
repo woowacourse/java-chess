@@ -20,14 +20,14 @@ public class WebUIChessApplication {
     public static final Gson GSON = new Gson();
 
     public static Command command = CommandFactory.initialCommand("start");
-    public static final Round ROUND = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
+    public static Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
             StateFactory.initialization(PieceFactory.blackPieces()), command);
 
     public static void main(String[] args) {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
-            Map<Position, Piece> chessBoard = ROUND.getBoard();
+            Map<Position, Piece> chessBoard = round.getBoard();
 
             Map<String, String> filteredChessBoard = new HashMap<>();
             for (Map.Entry<Position, Piece> chessBoardStatus : chessBoard.entrySet()) {
@@ -38,8 +38,8 @@ public class WebUIChessApplication {
             
             String jsonFormatChessBoard = GSON.toJson(filteredChessBoard);
 
-            double whiteScore = ROUND.getWhitePlayer().calculateScore();
-            double blackScore = ROUND.getBlackPlayer().calculateScore();
+            double whiteScore = round.getWhitePlayer().calculateScore();
+            double blackScore = round.getBlackPlayer().calculateScore();
 
             Map<String, Object> model = new HashMap<>();
             model.put("jsonFormatChessBoard", jsonFormatChessBoard);
@@ -57,11 +57,20 @@ public class WebUIChessApplication {
             res.type("application/json");
 
             try {
-                ROUND.execute(commands);
+                round.execute(commands);
             } catch (RuntimeException runtimeException) {
                 return "{\"status\":\"500\", \"message\":\"" + runtimeException.getMessage() + "\"}";
             }
             return "{\"status\":\"200\", \"message\":\"성공\"}";
+        });
+
+        get("/reset", (req, res) -> {
+            round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
+                    StateFactory.initialization(PieceFactory.blackPieces()), command);
+
+            res.redirect("/");
+
+            return null;
         });
     }
 

@@ -4,17 +4,17 @@ const jsonFormatObject = JSON.parse(jsonFormatChessBoard.innerText);
 const file = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const rank = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
-const cell = [];
+const cells = [];
 for (let i = 0; i < file.length; i++) {
     for (let j = 0; j < rank.length; j++) {
-        cell.push(file[i] + rank[j]);
+        cells.push(file[i] + rank[j]);
     }
 }
 
-for (let i = 0; i < cell.length; i++) {
-    if (jsonFormatObject[cell[i]]) {
-        const divCell = document.getElementById(cell[i]);
-        let piece = jsonFormatObject[cell[i]];
+for (let i = 0; i < cells.length; i++) {
+    if (jsonFormatObject[cells[i]]) {
+        const divCell = document.getElementById(cells[i]);
+        let piece = jsonFormatObject[cells[i]];
 
         const img = document.createElement('img');
         img.style.width = '100%';
@@ -94,25 +94,37 @@ statusBtn.addEventListener('click', function() {
         '검정색 기물 점수는: ' + blackScore.textContent);
 });
 
+const resetBtn = document.getElementById('reset-btn');
+
+resetBtn.addEventListener('click', function() {
+    window.location.href = '/reset';
+})
+
 let is_start_position_clicked = false;
 let start_position = null;
 let destination = null;
+let first_click;
+let second_click;
+
 const pieceCells = document.getElementsByClassName('piece-cell');
 
 for (let i = 0; i < pieceCells.length; i++) {
     pieceCells[i].addEventListener('click', (event) => {
+        event.target.style.backgroundColor = 'gold';
         if (!is_start_position_clicked) {
             start_position = event.target.id;
             is_start_position_clicked = true;
+            first_click = event.target;
             return;
         }
         destination = event.target.id;
-        request_move_post();
+        second_click = event.target;
+        request_move_post(first_click, second_click);
     });
 }
 
-function request_move_post() {
-    if (!(cell.indexOf(start_position) && cell.indexOf(destination))) {
+function request_move_post(first_click, second_click) {
+    if (!(cells.indexOf(start_position) && cells.indexOf(destination))) {
         alert('클릭 오류입니다!');
         start_position = null;
         destination = null;
@@ -137,16 +149,10 @@ function request_move_post() {
         const move_response = xhr.response;
         if (move_response['status'] === '500') {
             alert(move_response['message']);
+            first_click.style.backgroundColor = '';
+            second_click.style.backgroundColor = '';
             return;
         }
         window.location.href = '/';
     };
 }
-
-// const is_king_dead = document.getElementById('is-king-dead');
-//
-// if (is_king_dead.innerText === "true") {
-//     const before_turn_team_name = document.getElementById('before-turn-team-name');
-//     alert(before_turn_team_name.innerText + ' 팀이 이겼습니다.');
-//     window.location.href = HOME + '/delete?id=' + game_id;
-// }

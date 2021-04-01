@@ -42,5 +42,9 @@ body {
 }
 #status-btn {
     margin-top: 10px;
-    width: 650px;
+    width: 325px;
+}
+#reset-btn {
+    margin-top: 10px;
+    width: 325px;
 }
