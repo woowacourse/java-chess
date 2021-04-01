@@ -20,7 +20,7 @@ public class RoomRepository {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Room> rooms = generateRoomsFrom(resultSet);
-        resultSet.close();
+        connection.close();
         return rooms;
     }
 
