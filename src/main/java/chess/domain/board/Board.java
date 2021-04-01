@@ -17,6 +17,10 @@ public final class Board {
         this(new Ready(), new Players("player1", "player2"));
     }
 
+    public Board(String whitePlayer, String blackPlayer) {
+        this(new Ready(), new Players(whitePlayer, blackPlayer));
+    }
+
     public Board(final State state, final Players players) {
         this.state = state;
         this.players = players;
