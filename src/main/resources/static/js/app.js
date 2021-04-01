@@ -1,32 +1,46 @@
 const start = document.getElementById("start");
+const end = document.getElementById("end");
 const chessBoard = document.querySelector(".chess-board");
 const sourceKey = document.getElementById("sourceKey");
 const targetKey = document.getElementById("targetKey");
 const tiles = document.getElementsByClassName("tile");
 const whiteCount = document.querySelector(`#whiteScore strong`);
 const blackCount = document.querySelector(`#blackScore strong`);
-
+let isEnd = true;
 
 start.addEventListener("click", () => {
-    getInitialBoard();
+    isEnd = false;
+    initializePieces();
 });
 
-const getInitialBoard = () =>{
-    axios({
-        method: 'get',
-        url: 'http://localhost:4567/',
-    }).then(() => {
-        getPieces();
-    }).catch(error => alert(error));
-}
+end.addEventListener("click", () => {
+    if (isEnd === true) {
+        alert("게임끝냤슈!");
+        return
+    }
+    if (window.confirm("정말 끝내려려구?")) {
+        isEnd = true;
+        alert("이 게임 끝났습니다.");
+    }
+});
 
-const getPieces = () => {
+const initializePieces = () => {
     axios.get('http://localhost:4567/start')
         .then(responsePieces => {
             reRangeBoard(responsePieces);
         })
         .catch(error => console.log(error));
 };
+
+const getPieces = () => {
+    axios.get('http://localhost:4567/pieces')
+        .then(responsePieces => {
+            reRangeBoard(responsePieces);
+        })
+        .catch(error => console.log(error));
+};
+
+getPieces();
 
 const movePieces = (response) => {
     let sourcePiece = document.getElementById(response.data.source);
@@ -67,6 +81,11 @@ function reRangeBoard(responsePieces) {
 }
 
 chessBoard.addEventListener("click", (source) => {
+    if (isEnd === true) {
+        alert("게임 끝났슈!");
+        return;
+    }
+
     if (isEmpty(sourceKey.value)) {
         sourceKey.value = source.target.parentElement.id;
         return;

@@ -3,12 +3,15 @@ package chess.domain.player;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
+import chess.domain.command.Ready;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
+import chess.domain.state.StateFactory;
 import chess.service.dto.ScoreDto;
 
 import java.util.List;
@@ -29,6 +32,11 @@ public class ChessGame {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.command = command;
+    }
+
+    public static ChessGame newGame() {
+        return new ChessGame(StateFactory.initialization(PieceFactory.whitePieces()),
+                StateFactory.initialization(PieceFactory.blackPieces()), new Ready());
     }
 
     public ChessBoard getBoard() {

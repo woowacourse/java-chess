@@ -9,7 +9,7 @@ import chess.service.dto.PiecesStatusDto;
 import chess.service.dto.TilesDto;
 
 public class ChessService {
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
 
     public ChessService(final ChessGame chessGame) {
         this.chessGame = chessGame;
@@ -20,11 +20,16 @@ public class ChessService {
     }
 
     public PiecesStatusDto initializeGame() {
-        return new PiecesStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb());
+        this.chessGame = ChessGame.newGame();
+        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb());
     }
 
     public MoveResponseDto movePiece(MoveRequestDto requestDto) {
         chessGame.moveByTurn(Position.find(requestDto.getSource()), Position.find(requestDto.getTarget()));
         return new MoveResponseDto(requestDto.getSource(), requestDto.getTarget(), chessGame.calculateScoreWeb());
+    }
+
+    public PiecesStatusDto pieces() {
+        return new PiecesStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb());
     }
 }

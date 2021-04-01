@@ -33,8 +33,10 @@ public class ChessWebController {
 
     public void run() {
         get("/", (request, response) -> {
+            TilesDto tilesDto = chessService.emptyBoard();
             Map<String, Object> model = new HashMap<>();
-            return render(model, "home.html");
+            model.put("tilesDto", tilesDto);
+            return render(model, "board.html");
         });
 
         get("/start", (request, response) -> {
@@ -42,11 +44,9 @@ public class ChessWebController {
             return toJson(piecesStatusDto);
         });
 
-        post("/start", (request, response) -> {
-            TilesDto tilesDto = chessService.emptyBoard();
-            Map<String, Object> model = new HashMap<>();
-            model.put("tilesDto", tilesDto);
-            return render(model, "board.html");
+        get("/pieces", (request, response) -> {
+            PiecesStatusDto piecesStatusDto = chessService.pieces();
+            return toJson(piecesStatusDto);
         });
 
         post("/move", (request, response) -> {
