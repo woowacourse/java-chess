@@ -1,16 +1,14 @@
 package chess;
 
-import chess.domain.board.Board;
-import chess.domain.command.*;
-import chess.domain.game.ChessGame;
-import chess.domain.piece.PieceFactory;
-import chess.view.dto.BoardDto;
-import chess.view.dto.ScoreDtos;
+import chess.dao.ChessGameDAO;
+import chess.dao.PieceDAO;
+import chess.domain.piece.Position;
+import chess.service.ChessGameService;
+import chess.view.dto.ChessGameDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,72 +17,36 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private static Board board;
-    private static ChessGame chessGame;
-    private static Commands commands;
-
     public static void main(String[] args) {
+        ChessGameService chessGameService = new ChessGameService(new ChessGameDAO(), new PieceDAO());
+
         port(8080);
         staticFileLocation("/static");
 
-        get("/", (req, res) -> render(Collections.EMPTY_MAP, "index.html"));
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            ChessGameDto latestGame = chessGameService.findLatestGame();
+            model.put("finished", latestGame.isFinished());
+            return render(model, "index.html");
+        });
 
         get("/pieces", (request, response) -> {
-            if (chessGame.isFinished()) {
-                throw new IllegalArgumentException("게임이 이미 종료되었습니다!");
-            }
-
-            String input = request.queryParams("command");
-            Command command = commands.getIfPresent(input);
-            command.handle(input);
-            return new BoardDto(chessGame.isFinished(), board);
+            Position source = Position.parseChessPosition(request.queryParams("source"));
+            Position target = Position.parseChessPosition(request.queryParams("target"));
+            return chessGameService.moveChessPiece(source, target);
         }, MAPPER::writeValueAsString);
 
-        post("/chessgames", (request, response) -> {
-            if (chessGame != null && !chessGame.isFinished()) {
-                throw new IllegalStateException("이미 게임이 진행중입니다.");
-            }
+        get("/chessgames", ((request, response) -> chessGameService.findLatestGame()),
+                MAPPER::writeValueAsString);
 
-            board = new Board(PieceFactory.createPieces());
-            chessGame = new ChessGame(board);
-            commands = initCommands(chessGame);
-            Command command = commands.getIfPresent("start");
-            command.handle("start");
+        post("/chessgames", (request, response) -> chessGameService.createNewChessGame(),
+                MAPPER::writeValueAsString);
 
-            return new BoardDto(chessGame.isFinished(), board);
-        }, MAPPER::writeValueAsString);
+        delete("/chessgames", (request, response) -> chessGameService.endGame(),
+                MAPPER::writeValueAsString);
 
-        delete("/chessgames", (request, response) -> {
-            if (chessGame.isFinished()) {
-                throw new IllegalArgumentException("게임이 이미 종료되었습니다!");
-            }
-
-            Command command = commands.getIfPresent("end");
-            command.handle("end");
-            return new BoardDto(chessGame.isFinished(), board);
-        }, MAPPER::writeValueAsString);
-
-        get("/scores", (request, response) -> {
-            if (chessGame.isFinished()) {
-                throw new IllegalArgumentException("게임이 이미 종료되었습니다!");
-            }
-
-            Command command = commands.getIfPresent("status");
-            command.handle("status");
-            StatusCommand statusCommand = (StatusCommand) command;
-            return new ScoreDtos(statusCommand);
-        }, MAPPER::writeValueAsString);
-    }
-
-    private static Commands initCommands(final ChessGame chessGame) {
-        Map<String, Command> commandGroup = new HashMap<>();
-        commandGroup.put("start", new StartCommand(chessGame));
-        commandGroup.put("move", new MoveCommand(chessGame));
-        commandGroup.put("end", new EndCommand(chessGame));
-        commandGroup.put("status", new StatusCommand(chessGame));
-        Commands commands = new Commands(commandGroup);
-
-        return commands;
+        get("/scores", (request, response) -> chessGameService.calculateScores(),
+                MAPPER::writeValueAsString);
     }
 
     private static String render(final Map<String, Object> model, final String templatePath) {

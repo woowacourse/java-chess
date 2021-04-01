@@ -2,8 +2,8 @@ package chess.domain.game;
 
 public abstract class Idle extends Started {
 
-    protected Idle(final ChessGame chessGame) {
-        super(chessGame);
+    public Idle(final ChessGame chessGame, final String value) {
+        super(chessGame, value);
     }
 
     @Override

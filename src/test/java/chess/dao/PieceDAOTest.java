@@ -83,7 +83,7 @@ class PieceDAOTest {
         pieceDAO.save(chessGameId, piece);
 
         //when
-        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 0, 0);
+        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 0, 0).get();
 
         //then
         assertThat(findPiece).isEqualTo(piece);
@@ -100,7 +100,7 @@ class PieceDAOTest {
         pieceDAO.update(chessGameId, 0, 0, 2, 1);
 
         //then
-        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 2, 1);
+        Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 2, 1).get();
         assertThat(findPiece).isEqualTo(Piece.createBishop(Color.BLACK, 2, 1));
     }
 

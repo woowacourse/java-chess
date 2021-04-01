@@ -23,7 +23,7 @@ class ChessGameDAOTest {
         chessGameDAO.create();
 
         //then
-        ChessGameEntity lastChessGame = chessGameDAO.findLatestOne();
+        ChessGameEntity lastChessGame = chessGameDAO.findLatestOne().get();
         assertThat(lastChessGame).isNotNull();
         chessGameDAO.deleteById(lastChessGame.getId());
     }

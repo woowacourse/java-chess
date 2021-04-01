@@ -9,6 +9,14 @@ public class Position {
         this.column = column;
     }
 
+    public static Position parseChessPosition(final String position) {
+        return ChessPositions.parseToPosition(position);
+    }
+
+//    public static Position parsePosition(final String position) { todo: 0,0 --> a1 으로 변경
+//
+//    }
+
     public double calculateGradient(Position position) {
         return (position.row - row) / (double) (position.column - column);
     }

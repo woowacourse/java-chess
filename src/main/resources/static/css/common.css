@@ -60,7 +60,7 @@ td:hover {
 
 .piece {
     width: 45%;
-    transform: skewX(50deg);
+    transform: skewX(33deg);
     z-index: 1;
 }
 

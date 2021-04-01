@@ -12,4 +12,6 @@ public interface State {
     boolean isFinished();
 
     State nextTurn();
+
+    String getValue();
 }

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PieceDAO {
 
@@ -31,7 +32,12 @@ public class PieceDAO {
             preparedStatement.setInt(5, piece.getColumn());
             preparedStatement.executeUpdate();
         }
+    }
 
+    public void saveAll(final Long chessGameId, final List<Piece> pieces) throws SQLException {
+        for (final Piece piece : pieces) {
+            save(chessGameId, piece);
+        }
     }
 
     public List<Piece> findAllPiecesByChessGameId(Long chessGameId) throws SQLException {
@@ -55,7 +61,7 @@ public class PieceDAO {
         }
     }
 
-    public Piece findOneByPosition(final Long chessGameId, final int row, final int col) throws SQLException {
+    public Optional<Piece> findOneByPosition(final Long chessGameId, final int row, final int col) throws SQLException {
         try (Connection con = factory.getConnection()) {
             String query = "SELECT * FROM pieces WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -65,15 +71,15 @@ public class PieceDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (!rs.next()) {
-                throw new NotFoundPieceException();
+                return Optional.empty();
             }
 
-            return PieceFactory.createPiece(
+            Piece piece = PieceFactory.createPiece(
                     rs.getString("shape"), rs.getString("color"),
                     rs.getInt("row"), rs.getInt("col")
             );
+            return Optional.of(piece);
         }
-
     }
 
     public void update(final Long chessGameId, final int sourceRow, final int sourceCol,
@@ -90,7 +96,7 @@ public class PieceDAO {
         }
     }
 
-    public void delete(final Long chessGameId, final int row, final int col) throws SQLException {
+    public void delete(final Long chessGameId, final int row, final int col){
         try (Connection con = factory.getConnection()) {
             String query = "DELETE FROM pieces WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -98,6 +104,8 @@ public class PieceDAO {
             preparedStatement.setInt(2, row);
             preparedStatement.setInt(3, col);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

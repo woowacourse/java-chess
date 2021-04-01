@@ -19,10 +19,14 @@
         <h1 class="game-title-header">우아한 체스게임</h1>
     </div>
 
-    <button class="button is-primary is-light chess-start-btn">게임 시작</button>
+    {{#finished}}
+    <button class="button is-primary is-light chess-btn start" value="start">게임 시작</button>
+    {{/finished}}
+    {{^finished}}
+    <button class="button is-primary is-light chess-btn continue" value="continue">이어하기</button>
+    {{/finished}}
     <button class="button is-warning is-light hidden chess-status-btn">점수 확인</button>
     <button class="button is-danger is-light hidden chess-end-btn">게임 종료</button>
-
 
     <div class="score-info">
         <span class="tag is-black score score-tag hidden">Black</span>
@@ -43,7 +47,7 @@
 
     <div class="container">
         <div class="turn-info text">누구 차례?</div>
-        <div class="notification is-black turn-info color">
+        <div class="notification turn-info color">
             <!--(is-white, is-black)   턴을 어떻게 알 수 있을까?-->
         </div>
     </div>
