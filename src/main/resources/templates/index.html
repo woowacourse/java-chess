@@ -2,9 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chessboard using Pure CSS and HTML</title>
+    <link href="css/boardStyle.css" rel="stylesheet">
 </head>
+
 <body>
-Hello World!!
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/board.js"></script>
+
+<h1>체스 게임</h1>
+<div>
+    <button id="start-btn">START</button>
+    <button id="end-btn" class="hidden" formmethod="post">END</button>
+    <button id="status-btn" class="hidden" formmethod="post">STATUS</button>
+</div>
+
+<div class="chessboard">
+    <!-- 1st -->
+    <div class="square white" id="a8"></div>
+    <div class="square black" id="b8"></div>
+    <div class="square white" id="c8"></div>
+    <div class="square black" id="d8"></div>
+    <div class="square white" id="e8"></div>
+    <div class="square black" id="f8"></div>
+    <div class="square white" id="g8"></div>
+    <div class="square black" id="h8"></div>
+    <!-- 2nd -->
+    <div class="square black" id="a7"></div>
+    <div class="square white" id="b7"></div>
+    <div class="square black" id="c7"></div>
+    <div class="square white" id="d7"></div>
+    <div class="square black" id="e7"></div>
+    <div class="square white" id="f7"></div>
+    <div class="square black" id="g7"></div>
+    <div class="square white" id="h7"></div>
+    <!-- 3th -->
+    <div class="square white" id="a6"></div>
+    <div class="square black" id="b6"></div>
+    <div class="square white" id="c6"></div>
+    <div class="square black" id="d6"></div>
+    <div class="square white" id="e6"></div>
+    <div class="square black" id="f6"></div>
+    <div class="square white" id="g6"></div>
+    <div class="square black" id="h6"></div>
+    <!-- 4st -->
+    <div class="square black" id="a5"></div>
+    <div class="square white" id="b5"></div>
+    <div class="square black" id="c5"></div>
+    <div class="square white" id="d5"></div>
+    <div class="square black" id="e5"></div>
+    <div class="square white" id="f5"></div>
+    <div class="square black" id="g5"></div>
+    <div class="square white" id="h5"></div>
+    <!-- 5th -->
+    <div class="square white" id="a4"></div>
+    <div class="square black" id="b4"></div>
+    <div class="square white" id="c4"></div>
+    <div class="square black" id="d4"></div>
+    <div class="square white" id="e4"></div>
+    <div class="square black" id="f4"></div>
+    <div class="square white" id="g4"></div>
+    <div class="square black" id="h4"></div>
+    <!-- 6th -->
+    <div class="square black" id="a3"></div>
+    <div class="square white" id="b3"></div>
+    <div class="square black" id="c3"></div>
+    <div class="square white" id="d3"></div>
+    <div class="square black" id="e3"></div>
+    <div class="square white" id="f3"></div>
+    <div class="square black" id="g3"></div>
+    <div class="square white" id="h3"></div>
+    <!-- 7th -->
+    <div class="square white" id="a2"></div>
+    <div class="square black" id="b2"></div>
+    <div class="square white" id="c2"></div>
+    <div class="square black" id="d2"></div>
+    <div class="square white" id="e2"></div>
+    <div class="square black" id="f2"></div>
+    <div class="square white" id="g2"></div>
+    <div class="square black" id="h2"></div>
+    <!-- 8th -->
+    <div class="square black" id="a1"></div>
+    <div class="square white" id="b1"></div>
+    <div class="square black" id="c1"></div>
+    <div class="square white" id="d1"></div>
+    <div class="square black" id="e1"></div>
+    <div class="square white" id="f1"></div>
+    <div class="square black" id="g1"></div>
+    <div class="square white" id="h1"></div>
+</div>
+
+<div id="status">
+</div>
 </body>
 </html>
