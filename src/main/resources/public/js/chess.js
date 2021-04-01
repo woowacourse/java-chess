@@ -19,9 +19,14 @@ unicodeMap = {
 function addClickListener(){
     document.getElementById("chessboard").addEventListener("click", selectPieces)
     document.getElementById("startButton").addEventListener("click", start)
-    document.getElementById("resetButton").addEventListener("click", reset)
     document.getElementById("saveButton").addEventListener("click", save)
     document.getElementById("loadButton").addEventListener("click", load)
+}
+
+function showAndHideButtons() {
+    document.getElementById("saveButton").style.display = null;
+    document.getElementById("loadButton").style.display = "none";
+    document.getElementById("startButton").innerText = "RESET";
 }
 
 function init(){
@@ -34,37 +39,13 @@ function init(){
         });
 }
 
-function start(){
-    let response = postData("/start")
-    response.then(function (result){
-        if(result == 200){
-            alert("게임을 시작합니다.")
-        }
-        if(result == 201){
-            alert("진행중 게임을 불러옵니다.")
-        }
-        init()
-        showTurn()
-        showWhiteScore()
-        showBlackScore()
-        showResetButton()
-        showSaveButtonHideLoadButton()
-    })
-}
-
-function showSaveButtonHideLoadButton() {
-    document.getElementById("saveButton").style.display = null;
-    document.getElementById("loadButton").style.display = "none";
-}
-
-function reset(){
-    let response = postData("/reset")
-    response.then(function (result){
-        if(result == 200){
-            alert("게임을 리셋합니다.")
-        }
-        start()
-    })
+async function start(){
+    await postData("/reset")
+    await postData("/start")
+    init()
+    showTurn()
+    showScores()
+    showAndHideButtons()
 }
 
 function save(){
@@ -86,10 +67,6 @@ function load(){
     })
 }
 
-function showResetButton() {
-    document.getElementById("resetButton").style.display = null;
-}
-
 async function move(source, target) {
     let response = postData("/move", {source:source.id, target:target.id})
     await response.then(function (result){
@@ -103,8 +80,7 @@ async function move(source, target) {
         }
     })
     showTurnReverse()
-    showWhiteScore()
-    showBlackScore()
+    showScores()
     checkGameOver()
 }
 
@@ -130,19 +106,16 @@ function showTurnReverse(){
         });
 }
 
-function showWhiteScore(){
-    fetch('http://localhost:4567/score/white')
-        .then(response => response.json())
-        .then(function (score){
-            document.getElementById("whiteScore").innerText = "WHITE SCORE: " + score;
-        });
-}
-
-function showBlackScore(){
+function showScores(){
     fetch('http://localhost:4567/score/black')
         .then(response => response.json())
         .then(function (score){
             document.getElementById("blackScore").innerText = "BLACK SCORE: " + score;
+        });
+    fetch('http://localhost:4567/score/white')
+        .then(response => response.json())
+        .then(function (score){
+            document.getElementById("whiteScore").innerText = "WHITE SCORE: " + score;
         });
 }
 
