@@ -3,13 +3,13 @@
 }
 
 .wrapper {
-    border: 35px solid black;
-    width: 800px;
+    border: 35px solid #404040;
+    width: 640px;
     margin: 0 auto;
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(8, 100px);
-    grid-template-rows: repeat(8, 100px);
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
     grid-auto-flow: row;
 }
 
@@ -27,4 +27,13 @@
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+#turn {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.board {
+
 }

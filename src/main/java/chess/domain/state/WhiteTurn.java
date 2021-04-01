@@ -14,6 +14,9 @@ public class WhiteTurn extends Running {
 
     @Override
     public State next() {
-        return new BlackTurn(pieces);
+        if (pieces.isAliveAllKings()) {
+            return new BlackTurn(pieces);
+        }
+        return new End(pieces, color());
     }
 }

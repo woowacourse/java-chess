@@ -1,6 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
@@ -11,7 +14,7 @@ public class ChessGame {
     private State state;
 
     public ChessGame() {
-        this.state = new Ready();
+        this.state = new Ready(new Pieces(PieceFactory.initialPieces()));
     }
 
     public List<Piece> getPiecesByAllPosition() {
@@ -19,7 +22,6 @@ public class ChessGame {
     }
 
     public void movePieceFromSourceToTarget(Position source, Position target) {
-        changeState(state.checkRunnable());
         state.movePieceFromSourceToTarget(source, target);
         changeState(state.next());
     }
@@ -29,7 +31,6 @@ public class ChessGame {
     }
 
     private void changeState(State state) {
-        System.out.println(state);
         this.state = state;
     }
 
@@ -47,5 +48,9 @@ public class ChessGame {
 
     public void end() {
         changeState(state.end());
+    }
+
+    public Color turn(){
+        return state.color();
     }
 }

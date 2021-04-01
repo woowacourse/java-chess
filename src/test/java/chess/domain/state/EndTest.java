@@ -1,5 +1,8 @@
 package chess.domain.state;
 
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.info.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,7 @@ public class EndTest {
 
     @BeforeEach
     void setUp() {
-        end = new End();
+        end = new End(new Pieces(PieceFactory.initialPieces()), Color.NONE);
     }
 
     @DisplayName("시작 전 상태인지 확인한다.")

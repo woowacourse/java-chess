@@ -8,8 +8,11 @@ function initializeChessBoard() {
         method: 'get',
         url: '/data',
     }).then(function (response) {
-        const pieces = JSON.parse(response.data.jsonData).pieces;
+        const jsonData = JSON.parse(response.data.jsonData);
+        const pieces = jsonData.pieces;
         addPieces(pieces);
+        setTurn(jsonData.turn);
+        setScoreByTeam(jsonData.totalScoreByColor);
     }).catch(function (error) {
         console.log(error);
     });
@@ -28,7 +31,6 @@ function getSourceTarget(e) {
     }
 }
 
-
 function moveFromSourceToTarget() {
     axios({
         method: 'post',
@@ -39,9 +41,9 @@ function moveFromSourceToTarget() {
         }
     }).then(function (response) {
         if (response.data.isSuccess) {
-            const pieces = JSON.parse(response.data.jsonData).pieces;
-            clearPieces(pieces);
-            addPieces(pieces);
+            const jsonData = JSON.parse(response.data.jsonData);
+            console.log(jsonData.isFinish)
+            updateBoard(jsonData);
         } else {
             alert(response.data.jsonData);
         }
@@ -69,3 +71,18 @@ async function clearPieces(pieces) {
     }
 }
 
+function setTurn(turn) {
+    document.getElementById("turn").innerText = turn + " TURN";
+}
+
+function updateBoard(jsonData) {
+    clearPieces(jsonData.pieces);
+    addPieces(jsonData.pieces);
+    setTurn(jsonData.turn);
+    setScoreByTeam(jsonData.totalScoreByColor);
+}
+
+function setScoreByTeam(totalScoreByColor) {
+    document.getElementById("WHITE").innerText = "WHITE " + totalScoreByColor.WHITE;
+    document.getElementById("BLACK").innerText = "BLACK " + totalScoreByColor.BLACK;
+}

@@ -35,7 +35,7 @@ public abstract class Running implements State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(pieces, color);
     }
 
     @Override
@@ -104,6 +104,6 @@ public abstract class Running implements State {
         if (pieces.isAliveAllKings()) {
             return this;
         }
-        return new End();
+        return new End(pieces ,color);
     }
 }

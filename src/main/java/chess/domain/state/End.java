@@ -2,12 +2,21 @@ package chess.domain.state;
 
 import chess.domain.ScoreStatus;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
 
 public class End implements State {
+    protected final Pieces pieces;
+    private final Color color;
+
+    public End(Pieces pieces, Color color) {
+        this.pieces = pieces;
+        this.color = color;
+    }
+
     @Override
     public boolean isReady() {
         return false;
@@ -35,12 +44,12 @@ public class End implements State {
 
     @Override
     public Color color() {
-        throw new IllegalArgumentException("[ERROR] 이미 게임이 끝났습니다.");
+        return color;
     }
 
     @Override
     public List<Piece> allPieces() {
-        throw new IllegalArgumentException("[ERROR] 이미 게임이 끝났습니다.");
+        return pieces.piecesByAllPosition();
     }
 
     @Override
@@ -50,7 +59,7 @@ public class End implements State {
 
     @Override
     public ScoreStatus scoreStatus() {
-        throw new IllegalArgumentException("[ERROR] 이미 게임이 끝났습니다.");
+        return ScoreStatus.generateByColor(pieces);
     }
 
     @Override

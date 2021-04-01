@@ -10,6 +10,12 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Ready implements State {
+    protected final Pieces pieces;
+
+    public Ready(Pieces pieces) {
+        this.pieces = pieces;
+    }
+
     @Override
     public boolean isReady() {
         return true;
@@ -22,12 +28,12 @@ public class Ready implements State {
 
     @Override
     public State start() {
-        return new WhiteTurn(new Pieces(PieceFactory.initialPieces()));
+        return new WhiteTurn(pieces);
     }
 
     @Override
     public State end() {
-        return new End();
+        return new End(pieces, Color.NONE);
     }
 
     @Override
