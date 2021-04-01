@@ -38,7 +38,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameOverInfo() {
+    public static void printGameOverInfo(String winner) {
         System.out.println(GAME_OVER_MSG);
+        System.out.println(winner);
     }
 }

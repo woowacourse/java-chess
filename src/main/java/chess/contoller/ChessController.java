@@ -51,8 +51,7 @@ public class ChessController {
             List<String> input = InputView.InputString();
             validateCommand(chessGame, input);
         }
-        OutputView.printGameOverInfo();
-        OutputView.printMessage(chessGame.winner());
+        OutputView.printGameOverInfo(chessGame.winner());
     }
 
     private void validateCommand(ChessGame chessGame, List<String> input) {

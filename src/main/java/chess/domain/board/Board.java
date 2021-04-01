@@ -5,10 +5,11 @@ import chess.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
 
-    public static final int RUNNING_NUMBER = 2;
+    private static final int RUNNING_NUMBER = 2;
 
     private final Map<Point, Square> squares = new HashMap<>();
     private final PieceMovement pieceMovement;
@@ -36,11 +37,17 @@ public class Board {
     }
 
     public boolean isRunning() {
+        long kingCount = kingCount();
+
+        return kingCount == RUNNING_NUMBER;
+    }
+
+    private long kingCount() {
         long kingCount = squares.values().stream()
                 .filter(Square::isKing)
                 .count();
 
-        return kingCount == RUNNING_NUMBER;
+        return kingCount;
     }
 
     public double score(Team team) {
@@ -56,10 +63,26 @@ public class Board {
     }
 
     public String winner() {
+        if (kingCount() == RUNNING_NUMBER) {
+            return Team.NONE.teamName();
+        }
         return squares.values().stream()
                 .filter(Square::isKing)
                 .map(Square::team)
                 .findFirst()
-                .orElseGet(() -> "무승부 입니다.");
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(squares, board.squares) && Objects.equals(pieceMovement, board.pieceMovement);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(squares, pieceMovement);
     }
 }

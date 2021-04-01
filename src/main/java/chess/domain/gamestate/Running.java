@@ -1,6 +1,10 @@
 package chess.domain.gamestate;
 
 import chess.domain.board.Board;
+import chess.domain.board.Point;
+import chess.domain.board.Team;
+
+import java.util.Objects;
 
 public class Running implements GameState {
 
@@ -21,7 +25,8 @@ public class Running implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState move(Point source, Point destination, Team turn) {
+        board.move(source, destination, turn);
         return this;
     }
 
@@ -37,6 +42,7 @@ public class Running implements GameState {
 
     @Override
     public boolean isRunning() {
+
         return board.isRunning();
     }
 

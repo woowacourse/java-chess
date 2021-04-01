@@ -9,6 +9,7 @@ import chess.domain.gamestate.Ready;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChessGame {
     private static final int SOURCE_INDEX = 1;
@@ -42,15 +43,10 @@ public class ChessGame {
 
         Point source = Point.of(arguments.get(SOURCE_INDEX));
         Point destination = Point.of(arguments.get(DESTINATION_INDEX));
-        move(source, destination, turn.now());
-        state = state.move();
+        state = state.move(source, destination, turn.now());
         turn.nextTurn();
 
         board = state.board();
-    }
-
-    private void move(Point source, Point destination, Team currentTeam) {
-        board.move(source, destination, currentTeam);
     }
 
     private void validateMoveArgument(List<String> arguments) {
@@ -77,5 +73,18 @@ public class ChessGame {
 
     public String winner() {
         return state.winner();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessGame chessGame = (ChessGame) o;
+        return Objects.equals(turn, chessGame.turn) && Objects.equals(board, chessGame.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(turn, board);
     }
 }
