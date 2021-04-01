@@ -5,9 +5,7 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.WhiteTeam;
-import chess.dto.PieceDto;
-import chess.dto.PiecesDto;
-import chess.dto.ResponseDto;
+import chess.dto.*;
 import chess.view.PieceNameConverter;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -38,6 +36,14 @@ public class WebChessController {
              return gson.toJson(new ResponseDto(true, "체스가 시작되었습니다."));
         });
 
+         get("/endChessGame", (req, res)  -> {
+             if (chessGame != null && !chessGame.isEnd()) {
+                 chessGame.finish();
+                 return gson.toJson(new ResponseDto(true, "체스 게임이 종료 되었습니다."));
+             }
+             return gson.toJson(new ResponseDto(false, "체스 게임이 실행 중이 아닙니다."));
+         });
+
         get("/refreshChessBoard", (req, res) -> {
             final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
             chessBoard.putAll(convertToWhitePrintName(chessGame));
@@ -47,8 +53,12 @@ public class WebChessController {
             }
 
             PiecesDto piecesDto = new PiecesDto(pieceDtos);
+            TeamDto blackTeamDto = new TeamDto(chessGame.getBlackTeam().getName(), String.valueOf(chessGame.getBlackTeam().calculateTotalScore()), chessGame.getBlackTeam().isCurrentTurn());
+            TeamDto whiteTeamDto = new TeamDto(chessGame.getWhiteTeam().getName(), String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()), chessGame.getWhiteTeam().isCurrentTurn());
 
-            String obj = gson.toJson(piecesDto);
+            ChessGameDto chessGameDto = new ChessGameDto(piecesDto, blackTeamDto, whiteTeamDto, !chessGame.isEnd());
+
+            String obj = gson.toJson(chessGameDto);
             return obj;
         });
 

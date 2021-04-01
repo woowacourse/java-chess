@@ -25,6 +25,7 @@ public class ChessGame {
         whiteTeam.setEnemy(blackTeam);
 
         this.currentTurn = this.whiteTeam;
+        this.currentTurn.startTurn();
         this.isEnd = false;
     }
 
@@ -65,7 +66,11 @@ public class ChessGame {
         }
     }
 
-    private void finish() {
+    public Team getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void finish() {
         isEnd = true;
     }
 
@@ -74,7 +79,9 @@ public class ChessGame {
     }
 
     private void changeTurn() {
+        currentTurn.endTurn();
         currentTurn = currentTurn.getEnemy();
+        currentTurn.startTurn();
     }
 
     public Map<Position, Piece> generateChessBoard() {

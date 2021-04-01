@@ -19,6 +19,8 @@ import static chess.domain.piece.Rook.SCORE_ROOK;
 public abstract class Team {
     private static final Map<Piece, Double> scoreByPiece = new HashMap<>();
     private Team enemy;
+    private String name;
+    private boolean isCurrentTurn;
 
     static {
         scoreByPiece.put(new King(), SCORE_KING);
@@ -32,7 +34,9 @@ public abstract class Team {
 
     protected final Map<Position, Piece> piecePosition;
 
-    public Team() {
+    public Team(String name) {
+        this.name = name;
+        this.isCurrentTurn = false;
         piecePosition = new HashMap<>();
     }
 
@@ -85,6 +89,23 @@ public abstract class Team {
 
     public Team getEnemy() {
         return enemy;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void startTurn() {
+        this.isCurrentTurn = true;
+    }
+
+    public void endTurn() {
+        this.isCurrentTurn = false;
+    }
+
+    public boolean isCurrentTurn() {
+        return isCurrentTurn;
     }
 
     public double calculateTotalScore() {

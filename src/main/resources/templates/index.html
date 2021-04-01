@@ -6,13 +6,13 @@
 
     <style type="text/css">
         body {
+            margin: 0 auto;
             background: #302E2B;
         }
         .chessboard {
             width: 640px;
             height: 640px;
             margin: 20px;
-            border: 25px solid #333;
             float: left;
         }
 
@@ -69,19 +69,60 @@
             color: #2ecc71;
         }
 
-        /* BUTTON 3 */
-        .btn-start::after {
+        .btn-start::after, .btn-end::after {
             height: 0;
             left: 50%;
             top: 50%;
             width: 0;
         }
 
-        .btn-start:hover:after {
+        .btn-start:hover:after,
+        .btn-end:hover:after{
             height: 100%;
             left: 0;
             top: 0;
             width: 100%;
+        }
+
+        .btn-start {
+            float: left;
+        }
+
+        .btn-end {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .status-white {
+            width: 475px;
+            height: 230px;
+            border-radius: 5px;
+            border: 3px solid #fff;
+            position: absolute;
+            top: 130px;
+            font-size: 3.0em;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        .status-black {
+            width: 475px;
+            height: 230px;
+            border-radius: 5px;
+            border: 3px solid #fff;
+            position: absolute;
+            top: 400px;
+            font-size: 3.0em;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        p{
+            margin-top: 10px;
         }
     </style>
 
@@ -167,6 +208,17 @@
 
     <div class="sidebar">
         <button class = "btn-start">시작하기</button>
+        <button class = "btn-end">종료하기</button>
+
+        <div class="status-white">
+            <p id ="name-white">WHITE</p>
+            <p id="score-white"></p>
+        </div>
+
+        <div class="status-black">
+            <p id="name-black">BLACK</p>
+            <p id="score-black"></p>
+        </div>
     </div>
 </div>
 
