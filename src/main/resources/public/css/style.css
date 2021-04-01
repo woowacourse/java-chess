@@ -51,3 +51,13 @@ html, body {
     background-image: url('/images/dark-square.jpg');
     background-size: 80px;
 }
+
+.control-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 480px;
+    height: 640px;
+    margin-left: 60px;
+    background-color: rgba(255, 255, 255, 0.3);
+}

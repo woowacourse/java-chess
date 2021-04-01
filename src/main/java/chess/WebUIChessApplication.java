@@ -14,7 +14,6 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("text", "hello, world!");
             return render(model, "index.html");
         });
     }
