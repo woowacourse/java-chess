@@ -26,14 +26,7 @@ function startNewGame() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            initChessBoard(data);
-            addChessBoardEvent();
-            startBtn.style.display = "none";
-            loadBtn.style.display = "none";
-            chessBoard.style.display = "flex";
-            player1.style.display = "flex";
-            player2.style.display = "flex";
+            initializeChessBoard(data);
         })
         .catch(error => {
             console.log(error)
@@ -42,7 +35,31 @@ function startNewGame() {
 }
 
 function loadPrevGame() {
-    console.log("load prev game");
+    fetch("/loadPrevGame")
+        .then(response => {
+            if(!response.ok) {
+                throw new Error(response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            initializeChessBoard(data);
+        })
+        .catch(error => {
+            console.log(error)
+            alert("서버와의 통신이 실패하였습니다.");
+        })
+}
+
+function initializeChessBoard(data) {
+    console.log(data);
+    initChessBoard(data);
+    addChessBoardEvent();
+    startBtn.style.display = "none";
+    loadBtn.style.display = "none";
+    chessBoard.style.display = "flex";
+    player1.style.display = "flex";
+    player2.style.display = "flex";
 }
 
 startBtn.addEventListener("click", startNewGame);

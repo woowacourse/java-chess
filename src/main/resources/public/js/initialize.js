@@ -42,7 +42,7 @@ export function initChessBoard(data) {
         chessBoard.appendChild(chessBoardRow);
     }
     drawPieceImage(data);
-    initCurrentTurn();
+    initCurrentTurn(data);
 }
 
 function getBoardInitial(row, column) {
@@ -132,7 +132,12 @@ function initChessBoardColor(row, column) {
     return "#F3E4DF";
 }
 
-function initCurrentTurn() {
-    whiteTeamCurrentTurn.innerText = "Current Turn";
-    blackTeamCurrentTurn.innerText = "";
+function initCurrentTurn(data) {
+    if (data.currentTurnTeam === "whiteTeam") {
+        whiteTeamCurrentTurn.innerText = "Current Turn";
+        blackTeamCurrentTurn.innerText = "";
+    } else {
+        whiteTeamCurrentTurn.innerText = "";
+        blackTeamCurrentTurn.innerText = "Current Turn";
+    }
 }
