@@ -175,6 +175,7 @@ function restart() {
             'Content-Type': 'application/json'
         }
     }).then(function () {
+        gameFinished = false;
         syncBoard();
     });
 }
