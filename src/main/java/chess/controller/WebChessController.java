@@ -55,9 +55,11 @@ public class WebChessController {
             }
 
             PiecesDto piecesDto = new PiecesDto(pieceDtos);
+
             TeamDto blackTeamDto = new TeamDto(chessGame.getBlackTeam().getName(),
                     String.valueOf(chessGame.getBlackTeam().calculateTotalScore()),
                     chessGame.getBlackTeam().isCurrentTurn());
+
             TeamDto whiteTeamDto = new TeamDto(chessGame.getWhiteTeam().getName(),
                     String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()),
                     chessGame.getWhiteTeam().isCurrentTurn());
