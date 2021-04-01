@@ -15,7 +15,6 @@ function loadGame(event) {
         if (http.readyState === XMLHttpRequest.DONE) {
             if (http.status === 200) {
                 alert("성공적으로 게임을 불러왔습니다.")
-                console.log(http.responseText);
                 window.history.pushState({"html" : http.responseText},"체스", "/game/load");
                 document.write(http.responseText);
             } else {
@@ -25,8 +24,3 @@ function loadGame(event) {
     };
     http.send(JSON.stringify(params));
 }
-
-// function render(dom) {
-//     let parser = new DOMParser();
-//     parser.parseFromString(dom, "text/html")
-// }

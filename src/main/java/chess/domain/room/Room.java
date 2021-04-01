@@ -6,15 +6,21 @@ import java.util.Objects;
 
 public class Room {
     private String roomId;
+    private String turn;
     private JsonObject state;
 
-    public Room(String roomId, JsonObject state) {
+    public Room(String roomId, String turn, JsonObject state) {
         this.roomId = roomId;
+        this.turn = turn;
         this.state = state;
     }
 
     public String getRoomId() {
         return roomId;
+    }
+
+    public String getTurn() {
+        return turn;
     }
 
     public JsonObject getState() {

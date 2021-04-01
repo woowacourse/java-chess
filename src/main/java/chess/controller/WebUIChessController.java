@@ -7,6 +7,7 @@ import chess.domain.feature.Type;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
 import chess.domain.gamestate.Ready;
+import chess.domain.gamestate.Running;
 import chess.domain.piece.Piece;
 import chess.domain.room.Room;
 import chess.domain.room.RoomDAO;
@@ -23,11 +24,24 @@ public class WebUIChessController {
     private final RoomDAO roomDAO = new RoomDAO();
     private ChessGame chessGame;
 
-    public Map<String, Object> chessBoard() {
-        if (chessGame == null) {
-            initializeChessBoard();
+    public Map<String, Object> chessBoard(String roomId) {
+        try {
+            Room room = roomDAO.findByRoomId(roomId);
+            validateDuplicateRoomId(room);
+            if (chessGame == null) {
+                initializeChessBoard();
+            }
+            return getRoomToRender(chessGame);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return getRoomToRender(chessGame);
+    }
+
+    public void validateDuplicateRoomId(Room room) {
+        if (room != null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public Map<String, Object> movePiece(List<String> input) {
@@ -38,26 +52,6 @@ public class WebUIChessController {
             System.out.println(e.getMessage());
             return null;
         }
-    }
-
-    private Map<String, Object> getRoomToRender(ChessGame chessGame) {
-        Map<String, Object> model = new HashMap<>();
-        Map<Position, Piece> chessBoard = chessGame.getChessBoardAsMap();
-        Color turn = chessGame.getTurn();
-
-        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
-            model.put(entry.getKey().getPosition(), entry.getValue());
-        }
-        model.put("turn", turn);
-
-        if (chessGame.isOngoing()) {
-            model.put("result", null);
-            return model;
-        }
-        Result result = chessGame.result();
-        model.put("result", result);
-        initializeChessBoard();
-        return model;
     }
 
     private void initializeChessBoard() {
@@ -81,8 +75,9 @@ public class WebUIChessController {
     private Room createRoomToSave(String request) {
         JsonObject roomJson = gson.fromJson(request, JsonObject.class);
         String id = roomJson.get("room_id").getAsString();
+        String turn = roomJson.get("turn").getAsString();
         JsonObject state = roomJson.get("state").getAsJsonObject();
-        return new Room(id, state);
+        return new Room(id, turn, state);
     }
 
     public Map<String, Object> loadRoom(String request) {
@@ -90,8 +85,9 @@ public class WebUIChessController {
             JsonObject roomJson = gson.fromJson(request, JsonObject.class);
             String id = roomJson.get("room_id").getAsString();
             Room room = roomDAO.findByRoomId(id);
-            verifyRoom(room);
-            return getSavedRoomToRender(room);
+            validateRoomExistence(room);
+            setChessGame(room);
+            return getRoomToRender(chessGame);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -99,25 +95,21 @@ public class WebUIChessController {
         }
     }
 
-    private void verifyRoom(Room room) {
+    private void validateRoomExistence(Room room) {
         if (room == null) {
             throw new IllegalArgumentException();
         }
     }
 
-    private Map<String, Object> getSavedRoomToRender(Room room) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("room_id", room.getRoomId());
+    private void setChessGame(Room room) {
+        ChessBoard chessBoard = new ChessBoard();
         JsonObject stateJson = room.getState();
+        Color turn = Color.convert(room.getTurn());
         for (String key : stateJson.keySet()) {
-            if ("turn".equals(key)) {
-                model.put(key, stateJson.get(key));
-                continue;
-            }
             Piece piece = getPiece(stateJson, key);
-            model.put(key, piece);
+            chessBoard.replace(Position.of(key), piece);
         }
-        return model;
+        chessGame = new ChessGame(chessBoard, turn, new Running());
     }
 
     private Piece getPiece(JsonObject stateJson, String key) {
@@ -129,6 +121,26 @@ public class WebUIChessController {
         return pieceType.createPiece(Position.of(key), Color.convert(color));
     }
 
+    private Map<String, Object> getRoomToRender(ChessGame chessGame) {
+        Map<String, Object> model = new HashMap<>();
+        Map<Position, Piece> chessBoard = chessGame.getChessBoardAsMap();
+        Color turn = chessGame.getTurn();
+
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            model.put(entry.getKey().getPosition(), entry.getValue());
+        }
+        model.put("turn", turn);
+
+        if (chessGame.isOngoing()) {
+            model.put("result", null);
+            return model;
+        }
+        Result result = chessGame.result();
+        model.put("result", result);
+        initializeChessBoard();
+        return model;
+    }
+
     public Map<String, Object> getSavedRooms() {
         try {
             Map<String, Object> model = new HashMap<>();
@@ -136,6 +148,12 @@ public class WebUIChessController {
             return model;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public void resetChessGame() {
+        if (chessGame != null) {
+            chessGame = null;
         }
     }
 }

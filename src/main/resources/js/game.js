@@ -54,6 +54,7 @@ function replaceComponents(dom, sourcePosition, targetPosition) {
 function saveGame() {
     const params = {
         room_id: document.querySelector('#room').className,
+        turn: document.querySelector('#turn').className,
         state: createStateJson(),
     };
     const http = new XMLHttpRequest();
@@ -75,9 +76,7 @@ function saveGame() {
 
 function createStateJson() {
     const status  = document.querySelectorAll('td')
-    let state = {
-        turn: document.querySelector('#turn').className,
-    };
+    let state = {};
     for (var i = 0; i < status.length; i++) {
         const position = status[i].id;
         const img = status[i].querySelector('img');

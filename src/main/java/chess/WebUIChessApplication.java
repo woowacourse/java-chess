@@ -17,21 +17,26 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("");
 
+        Map<String, WebUIChessController> games = new HashMap<>();
+
         WebUIChessController webUIChessController = new WebUIChessController();
 
         get("/", (req, res) -> {
+            webUIChessController.resetChessGame();
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        get("/save", (req, res) -> {
-            Map<String, Object> model = webUIChessController.getSavedRooms();
-            return render(model, "save.html");
-        });
-
         post("/game", (req, res) -> {
-            Map<String, Object> model = webUIChessController.chessBoard();
-            model.put("room_id", req.queryParams("room_id"));
+            String roomId = req.queryParams("room_id");
+            Map<String, Object> model = webUIChessController.chessBoard(roomId);
+            if (model == null) {
+                Map<String, Object> modelWithAlert = new HashMap<>();
+                modelWithAlert.put("room_id", roomId);
+                modelWithAlert.put("alert", "는 이미 존재하는 방입니다.");
+                return render(modelWithAlert, "index.html");
+            }
+            model.put("room_id", roomId);
             return render(model, "game.html");
         });
 
@@ -45,6 +50,11 @@ public class WebUIChessApplication {
             return render(model, "game.html");
         });
 
+        get("/save", (req, res) -> {
+            Map<String, Object> model = webUIChessController.getSavedRooms();
+            return render(model, "repository.html");
+        });
+
         post("/game/load", "application/json", (req, res) -> {
             Map<String, Object> model = webUIChessController.loadRoom(req.body());
             if (model == null) {
@@ -52,12 +62,6 @@ public class WebUIChessApplication {
             }
             return render(model, "game.html");
         });
-
-//        post("/game/load", (req, res) -> {
-//            Map<String, Object> model = webUIChessController.chessBoard();
-//            model.put("room_id", req.queryParams("room_id"));
-//            return render(model, "game.html");
-//        });
 
         post("/game/save", "application/json", (req, res) -> {
             boolean isRegistrationSuccessful = webUIChessController.saveRoom(req.body());
