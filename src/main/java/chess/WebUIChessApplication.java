@@ -36,7 +36,6 @@ public class WebUIChessApplication {
 
         post("/create", (request, response) -> {
             Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class);
-
             String whitePlayer = (String) requestBody.get("whitePlayer");
             String blackPlayer = (String) requestBody.get("blackPlayer");
             Map<String, Integer> boardInfo = chessService.start(whitePlayer, blackPlayer);
@@ -45,7 +44,6 @@ public class WebUIChessApplication {
 
         post("/join", (request, response) -> {
             Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class) ;
-            System.out.println("이동");
             int boardId = (int) (double) requestBody.get("boardId");
             Map<String, String> boardInfo = chessService.joinBoard(boardId);
             return gson.toJson(boardInfo);
