@@ -43,22 +43,20 @@ public class Position {
         return cache.values();
     }
 
-    public List<Position> positionsOf(Vector vector) {
-        List<Position> positions = new ArrayList<>();
-        Position temp = this;
-        while (temp.canMove(vector)) {
-            temp = temp.move(vector);
-            positions.add(temp);
-        }
-        return positions;
-    }
-
     public boolean canMove(Vector vector) {
         return column.canMove(vector.column()) && row.canMove(vector.row());
     }
 
+    public boolean canMove(int column, int row) {
+        return this.column.canMove(column) && this.row.canMove(row);
+    }
+
     public Position move(Vector vector) {
         return Position.of(column.move(vector.column()), row.move(vector.row()));
+    }
+
+    public Position move(int column, int row) {
+        return Position.of(this.column.move(column), this.row.move(row));
     }
 
     public boolean hasRow(Row row) {

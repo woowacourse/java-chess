@@ -89,12 +89,12 @@ public class PawnTest {
 
     @Test
     void whiteOnPositionOneKill() {
-        Position from = Position.from("d2");
+        Position from = Position.from("d3");
         Pawn pawn = new Pawn(Color.WHITE);
-        emptyBoard.put(Position.from("e3"), new Pawn(Color.BLACK));
+        emptyBoard.put(Position.from("e4"), new Pawn(Color.BLACK));
 
         assertThat(pawn.movablePositions(from, emptyBoard)).containsExactlyInAnyOrder(
-                Position.from("e3"),
-                Position.from("d3"));
+                Position.from("e4"),
+                Position.from("d4"));
     }
 }
