@@ -91,3 +91,7 @@ body {
 .R {
     background-image: url("../img/black-rook.png");
 }
+
+.score {
+    display: block;
+}
