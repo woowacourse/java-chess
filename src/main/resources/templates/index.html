@@ -11,6 +11,13 @@
 <header>
   <h2 class="title">Paper Chess</h2>
   <h2 class="exit">exit</h2>
+  <div class="stat">
+    {{#userInfo}}
+    <p><strong>BLACK</strong>  닉네임:{{blackName}} 승:{{blackWin}} 패:{{blackLose}}</p>
+    <p><strong>WHITE</strong>  닉네임:{{whiteName}} 승:{{whiteWin}} 패:{{whiteLose}}</p>
+    {{/userInfo}}
+  </div>
+
 </header>
 <section>
   <div class="board-container">

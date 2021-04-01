@@ -15,6 +15,7 @@ import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import chess.dto.PointDto;
 import chess.dto.RoomDto;
+import chess.dto.RoomUsersDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.sql.SQLException;
@@ -44,6 +45,8 @@ public class WebUIChessApplication {
         post("/room", "application/json", (req, res) -> {
             try {
                 RoomDto newRoom = GSON.fromJson(req.body(), RoomDto.class);
+                GAME_DAO.insertUser(newRoom.getWhite());
+                GAME_DAO.insertUser(newRoom.getBlack());
                 String roomId = GAME_DAO.insertRoom(newRoom);
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("result", "success");
@@ -59,9 +62,11 @@ public class WebUIChessApplication {
 
         get("/room/:id", (req, res) -> {
             BoardWebDto boardWebDto = GAME_DAO.latestBoard(req.params("id"));
+            RoomUsersDto roomUsersDto = GAME_DAO.roomUsers(req.params("id"));
             Map<String, Object> model = new HashMap<>();
             model.put("board", boardWebDto);
             model.put("roomId", req.params(":id"));
+            model.put("userInfo", roomUsersDto);
             return render(model, "index.html");
         });
 

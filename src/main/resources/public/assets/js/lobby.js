@@ -5,27 +5,7 @@ document.querySelector(".title").addEventListener("click", () => {
 });
 
 document.querySelector(".create").addEventListener("click", async () => {
-  const name = prompt("방 이름을 입력해주세요.");
-  if (name === null) {
-    return;
-  }
-  if (name.length < roomNameCountMin) {
-    alert(roomNameCountMin + "자 이상의 이름을 입력해주세요.");
-    return;
-  }
-  const response = await fetch("./room", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({name: name})
-  });
-  const result = await response.json();
-  if (result["result"] === "success") {
-    window.location.href = "./room/" + result["roomId"];
-    return;
-  }
-  alert(result["message"]);
+  document.querySelector(".modal").style.display = "block";
 })
 
 document.querySelector(".rooms").addEventListener("click", (event) => {
@@ -47,4 +27,50 @@ document.querySelector(".rooms").addEventListener("click", async (event) => {
     });
     window.location.reload();
   }
+});
+
+document.querySelector(".modal").addEventListener("click", (event) => {
+  if (event.target.classList.contains("modal")) {
+    event.target.style.display = "none";
+  }
+});
+
+document.querySelector(".close").addEventListener("click", (event) => {
+  document.querySelector(".modal").style.display = "none";
+});
+
+document.querySelector(".create-room").addEventListener("submit", async (event) => {
+  const roomName =  document.querySelector("#room_name");
+  const white = document.querySelector("#white");
+  const black = document.querySelector("#black");
+
+  if (isValueLengthIsLongerThan(roomName.value, 2)
+      && isValueLengthIsLongerThan(white.value, 2)
+      && isValueLengthIsLongerThan(black.value, 2)) {
+    const response = await fetch("./room", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: roomName.value,
+        white: white.value,
+        black: black.value
+      })
+    });
+    const result = await response.json();
+    if (result["result"] === "success") {
+      window.location.href = "./room/" + result["roomId"];
+      return;
+    }
+    alert("서버에 요청 중에 에러가 발생했습니다. (" + result["message"] + ")");
+    return;
+  } else {
+    alert("2자 이상의 이름을 입력해주세요.");
+  }
+
 })
+
+function isValueLengthIsLongerThan(value, length) {
+  return value && (value.length >= length);
+}

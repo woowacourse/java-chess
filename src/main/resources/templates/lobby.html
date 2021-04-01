@@ -6,18 +6,31 @@
   <link href="/assets/css/lobby.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <header>
-    <h2 class="title">Paper Chess</h2>
-    <h2 class="create">create</h2>
-  </header>
-  <section>
-    <div class="rooms">
-      {{#rooms}}
-        <div class="room" id="{{id}}"> {{name}} <div class="remove-room">X</div></div>
-        <hr width="90%" color="#eeeeee" />
-      {{/rooms}}
+<header>
+  <h2 class="title">Paper Chess</h2>
+  <h2 class="create">create</h2>
+</header>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">X</span>
+    <form action="./room" class="create-room" onsubmit="return false">
+      방 이름 : <input type="text" id="room_name" pattern=".{2,}" autofocus><br><br>
+      white 이름: <input type="text" id="white"><br><br>
+      black 이름: <input type="text" id="black"><br><br>
+      <input type="submit">
+    </form>
+  </div>
+</div>
+<section>
+  <div class="rooms">
+    {{#rooms}}
+    <div class="room" id="{{id}}"> {{name}}
+      <div class="remove-room">X</div>
     </div>
-  </section>
-  <script type="module" src="/assets/js/lobby.js"></script>
+    <hr width="90%" color="#eeeeee"/>
+    {{/rooms}}
+  </div>
+</section>
+<script type="module" src="/assets/js/lobby.js"></script>
 </body>
 </html>

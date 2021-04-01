@@ -7,6 +7,7 @@ import chess.domain.chessgame.Turn;
 import chess.dto.BoardWebDto;
 import chess.dto.GameStatusDto;
 import chess.dto.RoomDto;
+import chess.dto.RoomUsersDto;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,11 +20,27 @@ import java.util.List;
 
 public class GameDao {
 
-    private static final String INSERT_ROOM_QUERY = "INSERT INTO room (name, is_opened) VALUES(?, true)";
+    private static final String INSERT_ROOM_QUERY = "INSERT INTO room (name, is_opened, white, black) VALUES(?, true, ?, ?)";
     private static final String INSERT_BOARD_AND_STATUS_QUERY = "INSERT INTO play_log (board, game_status, room_id) VALUES (?, ?, ?)";
+    private static final String INSERT_USER_QUERY =
+        "INSERT INTO users (name) "
+            + "SELECT * FROM (SELECT ?) AS tmp "
+            + "WHERE NOT EXISTS (SELECT * FROM users WHERE name = ?);";
     private static final String SELECT_BOARD_QUERY = "SELECT board FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
+    private static final String SELECT_USER_INFO_QUERY = "SELECT\n"
+        + "    white_user.name as whiteName,\n"
+        + "    white_user.win as whiteWin,\n"
+        + "    white_user.lose as whiteLose,\n"
+        + "    black_user.name as blackName,\n"
+        + "    black_user.win as blackWin,\n"
+        + "    black_user.lose as blackLose\n"
+        + "FROM \n"
+        + "\troom AS r\n"
+        + "    INNER JOIN users AS black_user ON r.white = black_user.name\n"
+        + "    INNER JOIN users AS white_user ON r.black = white_user.name\n"
+        + "WHERE r.id = ?;";
     private static final String SELECT_STATUS_QUERY = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
-    private static final String SELECT_OPENED_ROOMS_QUERY = "SELECT id, name FROM room WHERE is_opened = true";
+    private static final String SELECT_OPENED_ROOMS_QUERY = "SELECT id, name, white, black FROM room WHERE is_opened = true";
     private static final String CLOSE_ROOM_QUERY = "UPDATE room SET is_opened = false WHERE id = (?)";
 
     private static final Gson GSON = new Gson();
@@ -71,12 +88,23 @@ public class GameDao {
         PreparedStatement pstmt = connection
             .prepareStatement(INSERT_ROOM_QUERY, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, roomDto.getName());
+        pstmt.setString(2, roomDto.getWhite());
+        pstmt.setString(3, roomDto.getBlack());
         pstmt.executeUpdate();
         ResultSet rs = pstmt.getGeneratedKeys();
         rs.next();
         String roomId = rs.getString(1);
         closeConnection(connection);
         return roomId;
+    }
+
+    public void insertUser(String userName) throws SQLException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(INSERT_USER_QUERY);
+        pstmt.setString(1, userName);
+        pstmt.setString(2, userName);
+        pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
     public void insertBoardAndStatusDto(BoardWebDto boardWebDto, GameStatusDto gameStatusDto,
@@ -97,6 +125,18 @@ public class GameDao {
         GameStatusDto gameStatusDto =
             new GameStatusDto(new ChessGame(board, new Turn(Team.WHITE)));
         insertBoardAndStatusDto(boardWebDto, gameStatusDto, roomId);
+    }
+
+    public RoomUsersDto roomUsers(String roomId) throws SQLException {
+        Connection connection = connection();
+        PreparedStatement pstmt = connection.prepareStatement(SELECT_USER_INFO_QUERY);
+        pstmt.setString(1, roomId);
+        ResultSet rs = pstmt.executeQuery();
+
+        rs.next();
+
+        return new RoomUsersDto(rs.getString(1), rs.getString(2), rs.getString(3),
+            rs.getString(4), rs.getString(5), rs.getString(6));
     }
 
     public BoardWebDto latestBoard(String roomId) throws SQLException {
@@ -136,7 +176,8 @@ public class GameDao {
         List<RoomDto> result = new ArrayList<>();
 
         while (rs.next()) {
-            result.add(new RoomDto(rs.getString(1), rs.getString(2)));
+            result.add(new RoomDto(rs.getString(1), rs.getString(2),
+                rs.getString(3), rs.getString(4)));
         }
         closeConnection(connection);
         return result;

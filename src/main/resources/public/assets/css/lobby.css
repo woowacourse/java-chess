@@ -75,6 +75,43 @@ header {
   margin: 0;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  box-shadow: 2px 2px 5px 0 black;
+  font-family: "pencil", sans-serif;
+  font-size: large;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  color: #D18063;
+}
+
+.close:hover,
+.close:focus {
+  color: #D18063;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 section {
   position: relative;
   margin: 0 auto 10px auto;

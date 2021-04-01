@@ -51,6 +51,25 @@ header {
     margin: 0;
 }
 
+.stat{
+    position: fixed;
+    cursor: pointer;
+    right: 15px;
+    top: 15px;
+    text-align: right;
+    margin: 0;
+    font-family: "pencil", sans-serif;
+    font-size: 2.5vw;
+}
+
+@media screen and (min-width: 600px) {
+    .stat {
+        font-size: 20px;
+    }
+}
+
+
+
 .movable {
     position: relative;
     margin: 0;
