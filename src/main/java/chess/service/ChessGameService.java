@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ChessGameService { //todo: Transaction 설정은 어떻게 할까...? (Connection을 여기로 가져와서... 어떻게 하면 되지않을까?
+public class ChessGameService {
     private final ChessGameDAO chessGameDAO;
     private final PieceDAO pieceDAO;
 

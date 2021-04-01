@@ -11,7 +11,7 @@ public class BoardDto {
     private final int row;
     private final int column;
     private final List<PieceDto> pieceDtos;
-    private final boolean isFinished; //todo: isFinished는 제거하고 ChessGameDto로 옮기면 될듯!
+    private final boolean isFinished;
 
     public BoardDto(final Board board) {
         this(false, board);
