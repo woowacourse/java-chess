@@ -1,0 +1,88 @@
+:root {
+    --chess-bg-color: #2ac0bb;
+    --chessman-color: #e34234;
+}
+
+body {
+    font-family: 'Yeon Sung', cursive;
+    text-align: center;
+}
+
+#chessTitle {
+    font-size: 6vw;
+}
+
+.grid {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(8, [col] 10vw);
+    grid-template-rows: repeat(8, [row] 10vw);
+    width: 80vw;
+    border: 3px solid #000;
+    box-shadow: 0 5px 8px #777;
+    justify-content: center;
+    align-content: center;
+    margin: 0 auto;
+
+}
+
+.grid img {
+    width: 100%;
+}
+
+.grid .onboard {
+    background-color: aquamarine;
+    opacity: 0.5;
+}
+
+.grid div {
+    font-size: calc(5vw);
+    text-align: center;
+}
+
+.grid div {
+    color: var(--chessman-color);
+}
+
+.grid div:nth-child(-n+8):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+8):nth-child(-n+16):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+17):nth-child(-n+24):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+25):nth-child(-n+32):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+33):nth-child(-n+40):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+41):nth-child(-n+48):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+49):nth-child(-n+56):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+@supports not ((background: var(--chess-bg-color)) or (display: grid)) {
+    .warning {
+        display: block !important;
+    }
+}
+
+.warning {
+    color: crimson;
+    display: none;
+}
