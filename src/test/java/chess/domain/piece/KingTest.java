@@ -23,7 +23,7 @@ class KingTest {
     void possiblePositions() {
         Position position = Position.from("c5");
         List<Position> positions = king.movablePositions(position, EmptyBoardMap.create());
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 Position.from("b6"),
                 Position.from("c6"),
                 Position.from("d6"),

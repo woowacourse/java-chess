@@ -24,7 +24,7 @@ class RookTest {
     void possiblePositions() {
         Position position = Position.from("c5");
         List<Position> positions = rook.movablePositions(position, EmptyBoardMap.create());
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 Position.from("b5"), Position.from("a5"),
                 Position.from("d5"), Position.from("e5"), Position.from("f5"), Position.from("g5"), Position.from("h5"),
                 Position.from("c4"), Position.from("c3"), Position.from("c2"), Position.from("c1"),

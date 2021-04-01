@@ -9,7 +9,9 @@ public interface Piece {
 
     String display();
 
-    boolean isSameColor(Color color);
+    boolean isSame(Color color);
+
+    boolean isOpposite(Color color);
 
     boolean isEmpty();
 

@@ -12,7 +12,9 @@ public abstract class Basis implements Piece {
         this.displayName = displayName;
     }
 
-    public abstract boolean isSameColor(Color color);
+    public abstract boolean isSame(Color color);
+
+    public abstract boolean isOpposite(Color color);
 
     public abstract boolean isEmpty();
 

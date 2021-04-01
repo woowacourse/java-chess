@@ -26,7 +26,7 @@ public class Calculator {
         return Position.all()
                        .stream()
                        .map(maps::get)
-                       .filter(piece -> piece.isSameColor(color))
+                       .filter(piece -> piece.isSame(color))
                        .mapToDouble(Piece::score)
                        .sum();
     }
@@ -42,7 +42,7 @@ public class Calculator {
     private long countPawnBy(Column column, Color color, Map<Position, Piece> maps) {
         return Arrays.stream(Row.values())
                      .filter(row -> maps.get(Position.of(column, row))
-                                        .isSameColor(color))
+                                        .isSame(color))
                      .filter(row -> maps.get(Position.of(column, row))
                                         .isPawn())
                      .count();

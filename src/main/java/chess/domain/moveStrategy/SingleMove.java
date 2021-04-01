@@ -23,7 +23,7 @@ public class SingleMove implements MoveStrategy {
         return directions.stream()
                          .map(from::move)
                          .filter(position -> !pieceByPosition.get(position)
-                                                             .isSameColor(color))
+                                                             .isSame(color))
                          .collect(Collectors.toList());
     }
 }

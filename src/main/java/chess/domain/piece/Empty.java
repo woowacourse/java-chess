@@ -11,7 +11,12 @@ public class Empty extends Basis {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
+    public boolean isSame(Color color) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpposite(Color color) {
         return false;
     }
 

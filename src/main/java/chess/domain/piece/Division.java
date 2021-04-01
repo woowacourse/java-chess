@@ -26,8 +26,13 @@ public abstract class Division extends Basis {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
+    public boolean isSame(Color color) {
         return this.color.equals(color);
+    }
+
+    @Override
+    public boolean isOpposite(Color color) {
+        return !isSame(color);
     }
 
     @Override

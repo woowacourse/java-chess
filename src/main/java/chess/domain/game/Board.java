@@ -4,11 +4,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.location.Position;
-import javafx.geometry.Pos;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -21,11 +18,11 @@ public class Board {
 
     public void action(Color color, Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
-        if (!fromPiece.isSameColor(color)) {
+        if (!fromPiece.isSame(color)) {
             throw new IllegalArgumentException("from 잘못 입력");
         }
         Piece toPiece = pieceByPosition.get(to);
-        if (toPiece.isSameColor(color)) {
+        if (toPiece.isSame(color)) {
             throw new IllegalArgumentException("같은 색깔의 말을 잡을 수 없습니다.");
         }
         move(from, to);

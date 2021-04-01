@@ -23,7 +23,7 @@ class BishopTest {
     void possiblePositions() {
         Position position = Position.from("c5");
         List<Position> positions = bishop.movablePositions(position, EmptyBoardMap.create());
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 Position.from("b4"), Position.from("a3"),
                 Position.from("d4"), Position.from("e3"), Position.from("f2"), Position.from("g1"),
                 Position.from("b6"), Position.from("a7"),

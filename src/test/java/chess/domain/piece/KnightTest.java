@@ -24,7 +24,7 @@ class KnightTest {
     void possiblePositions() {
         Position position = Position.from("c5");
         List<Position> positions = knight.movablePositions(position, EmptyBoardMap.create());
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 Position.from("b7"),
                 Position.from("d7"),
                 Position.from("e6"),
