@@ -4,10 +4,11 @@ import chess.domain.game.Board;
 import chess.domain.location.Position;
 import chess.domain.location.Vector;
 import chess.domain.piece.Color;
-import javafx.geometry.Pos;
+import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,21 +22,22 @@ public class MultipleMove implements MoveStrategy {
     }
 
     @Override
-    public List<Position> movablePositions(Position from, Board board) {
+    public List<Position> movablePositions(Position from, Map<Position, Piece> pieceByPosition) {
         return directions.stream()
-                  .flatMap(direction -> movablePositionsOf(direction, from, board))
-                  .collect(Collectors.toList());
+                         .flatMap(direction -> movablePositionsOf(direction, from, pieceByPosition))
+                         .collect(Collectors.toList());
     }
 
-    private Stream<Position> movablePositionsOf(Vector direction, Position from, Board board) {
+    private Stream<Position> movablePositionsOf(Vector direction, Position from, Map<Position, Piece> pieceByPosition) {
         List<Position> positions = new ArrayList<>();
         Position temp = from;
-        while (board.at(temp).isEmpty() && temp.canMove(direction)) {
+        while (pieceByPosition.get(temp)
+                              .isEmpty() && temp.canMove(direction)) {
             positions.add(temp);
             temp = temp.move(direction);
         }
-        if (!board.at(temp)
-                  .isSameColor(color)) {
+        if (!pieceByPosition.get(temp)
+                            .isSameColor(color)) {
             positions.add(temp);
         }
         return positions.stream();

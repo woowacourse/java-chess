@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.EmptyBoardMap;
 import chess.domain.location.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +22,7 @@ class KingTest {
     @DisplayName("킹 이동 가능한 위치 값 들 확인")
     void possiblePositions() {
         Position position = Position.from("c5");
-        List<Position> positions = king.movablePositions(position)
-                                       .get(0);
+        List<Position> positions = king.movablePositions(position, EmptyBoardMap.create());
         assertThat(positions).contains(
                 Position.from("b6"),
                 Position.from("c6"),

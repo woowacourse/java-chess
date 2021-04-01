@@ -1,11 +1,12 @@
 package chess.domain.moveStrategy;
 
-import chess.domain.game.Board;
 import chess.domain.location.Position;
 import chess.domain.location.Vector;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SingleMove implements MoveStrategy {
@@ -18,11 +19,11 @@ public class SingleMove implements MoveStrategy {
     }
 
     @Override
-    public List<Position> movablePositions(Position from, Board board) {
+    public List<Position> movablePositions(Position from, Map<Position, Piece> pieceByPosition) {
         return directions.stream()
                          .map(from::move)
-                         .filter(position -> !board.at(position)
-                                                   .isSameColor(color))
+                         .filter(position -> !pieceByPosition.get(position)
+                                                             .isSameColor(color))
                          .collect(Collectors.toList());
     }
 }

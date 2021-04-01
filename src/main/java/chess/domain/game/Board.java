@@ -35,7 +35,7 @@ public class Board {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
 
-        if (fromPiece.movablePositions(from, this).contains(to)){
+        if (fromPiece.movablePositions(from, Collections.unmodifiableMap(pieceByPosition)).contains(to)){
             pieceByPosition.put(to, fromPiece);
             pieceByPosition.put(from, new Empty());
             if (toPiece.isKing()) {

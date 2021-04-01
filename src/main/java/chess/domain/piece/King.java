@@ -21,7 +21,7 @@ public class King extends Division {
     );
 
     public King(Color color) {
-        super(color, "k", new SingleMove(color,DIRECTIONS), new SingleMove(color, DIRECTIONS));
+        super(color, "k", new SingleMove(color, DIRECTIONS));
     }
 
     @Override

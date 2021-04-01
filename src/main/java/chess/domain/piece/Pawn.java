@@ -7,7 +7,7 @@ public class Pawn extends Division {
     public static final int PAWN_SCORE = 1;
 
     public Pawn(Color color) {
-        super(color, "p", new PawnMove(color), new PawnMove(color));
+        super(color, "p", new PawnMove(color));
     }
 
     @Override

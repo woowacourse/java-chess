@@ -20,7 +20,7 @@ public class Queen extends Division {
     );
 
     public Queen(Color color) {
-        super(color, "q", new MultipleMove(color, DIRECTIONS), new MultipleMove(color, DIRECTIONS));
+        super(color, "q", new MultipleMove(color, DIRECTIONS));
     }
 
     @Override
