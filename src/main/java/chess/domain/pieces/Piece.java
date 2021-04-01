@@ -40,7 +40,7 @@ public abstract class Piece {
         this.position = endPoint;
     }
 
-    protected final Team getTeam() {
+    public final Team getTeam() {
         return team;
     }
 

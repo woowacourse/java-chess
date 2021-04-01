@@ -1,8 +1,8 @@
 const board = document.querySelector("#board");
 
-function initSetting(){
-    const divs = board.querySelector(".square");
-    // for(const div of divs){
-    //     div.style.backgroundImage =
-    // }
+function initSetting() {
+    const piece = document.getElementById("b2");
+    //piece.style.backgroundImage = "/image/black_b.png";
 }
+
+initSetting();
