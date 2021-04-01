@@ -64,7 +64,7 @@ public class WebController {
 
     private List<String> convertToStringList(List<Position> pathPositions) {
         return pathPositions.stream()
-                .map(position -> position.name())
+                .map(Position::name)
                 .collect(Collectors.toList());
     }
 }
