@@ -13,9 +13,7 @@ public class WhiteTurn extends Running {
     @Override
     public void move(final Position source, final Position target) {
         chessGame.getBoard()
-                .movePiece(COLOR, source, target);
-        chessGame.getBoard()
-                .catchPiece(COLOR);
+                .moveAndCatchPiece(COLOR, source, target);
 
         if(chessGame.isKingCatch()) {
             chessGame.changeState(new End(chessGame));
