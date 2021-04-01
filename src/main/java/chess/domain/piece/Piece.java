@@ -34,6 +34,16 @@ public abstract class Piece {
         return this.team;
     }
 
+    public String imgFileName() {
+        if (this.isBlank()) {
+            return "";
+        }
+        if (this.team() == Team.BLACK) {
+            return Team.BLACK.teamName().charAt(0) + this.name();
+        }
+        return Team.WHITE.teamName().charAt(0) + this.name().toUpperCase();
+    }
+
     public abstract boolean canMove(final Position source, final Position target,
         final Piece piece);
 

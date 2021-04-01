@@ -35,7 +35,7 @@ public class ChessService {
         }
         final Map<Position, Piece> chessBoard = pieceDao.load();
         if (boardDao.load() == null) {
-            boardDao.save(new BoardDto("White", false));
+            boardDao.save(new BoardDto(Team.WHITE.teamName(), false));
         }
         final BoardDto boardDto = boardDao.load();
         chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
@@ -90,20 +90,10 @@ public class ChessService {
         final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
         final List<PieceDto> pieceDtos = new ArrayList<>();
         chessBoard.forEach((position, piece) -> {
-            final String positionValue = position.horizontal().symbol() + position.vertical().symbol();
-            pieceDtos.add(new PieceDto(positionValue, imgFileName(piece)));
+            final String positionValue = position.horizontalSymbol() + position.verticalSymbol();
+            pieceDtos.add(new PieceDto(positionValue, piece.imgFileName()));
         });
         return new Response("200", "성공", new BoardAndPieceDto(boardDto, pieceDtos));
-    }
-
-    private String imgFileName(final Piece piece) {
-        if (piece.isBlank()) {
-            return "";
-        }
-        if (piece.team() == Team.BLACK) {
-            return "B" + piece.name();
-        }
-        return "W" + piece.name().toUpperCase();
     }
 
 }

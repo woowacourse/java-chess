@@ -70,8 +70,16 @@ public class Position implements Comparable<Position> {
         return horizontal;
     }
 
+    public String horizontalSymbol() {
+        return horizontal.symbol();
+    }
+
     public Vertical vertical() {
         return vertical;
+    }
+
+    public String verticalSymbol() {
+        return vertical.symbol();
     }
 
     @Override
