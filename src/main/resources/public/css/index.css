@@ -86,10 +86,14 @@ body {
     animation: turn-bg 2.5s linear;
     animation-iteration-count: infinite;
 }
+div#board-frame {
+    position: absolute;
+    left: 30%;
+}
 .board-container {
-    display: flex;
+    /*display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
 }
 .board {
     width: 640px;

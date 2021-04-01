@@ -9,6 +9,7 @@ const $black = document.getElementById("black");
 const $white = document.getElementById("white");
 const $blackScore = document.getElementById("black-score");
 const $whiteScore = document.getElementById("white-score");
+const $roomId = document.getElementById("room").value;
 
 createBoard();
 
@@ -24,6 +25,7 @@ function postFetchMove(url) {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
+            "roomId": $roomId,
             "target": $target,
             "destination": $destination
         })
@@ -108,7 +110,7 @@ function clearMovablePosition() {
 
 async function createBoard() {
     clearBoard();
-    await getFetch("create").then(data => {
+    await getFetch("create/" + $roomId).then(data => {
         $board = data;
     })
     refreshBoard();
@@ -124,7 +126,7 @@ function clearBoard() {
 function refreshBoard() {
     if ($board.end == "true") {
         confirm($board.turn + "(이)가 승리했습니다!!");
-        createBoard();
+        clearRoom();
         return;
     }
     changeTurn($board.turn);
@@ -194,6 +196,13 @@ function changeTurn(team) {
     }
     $black.classList.add("turn");
     $white.classList.remove("turn");
+}
+
+async function clearRoom() {
+    clearBoard();
+    await getFetch("clear/" + $roomId).then(data => {
+        window.location.href = data;
+    })
 }
 
 document.addEventListener("click", createMoveCommand);

@@ -43,9 +43,14 @@ public class ChessController {
         }
     }
 
-    public BoardDto start() {
+    public BoardDto start(List<String> commands) {
         chessGame = new ChessGame();
         chessGame.settingBoard();
+
+        for (String command : commands) {
+            chessGame.move(command);
+        }
+
         Board board = chessGame.getBoard();
         return new BoardDto(board, chessGame.nowTurn());
     }

@@ -1,8 +1,17 @@
 package chess.dto;
 
 public class MoveRequestDto {
+    private String roomId;
     private String target;
     private String destination;
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
 
     public String getTarget() {
         return target;

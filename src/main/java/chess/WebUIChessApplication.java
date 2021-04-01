@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.dao.ChessLogDao;
 import chess.dto.BoardDto;
 import chess.dto.MovablePositionDto;
 import chess.dto.MoveRequestDto;
@@ -10,6 +11,7 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
@@ -20,19 +22,23 @@ public class WebUIChessApplication {
         Spark.staticFileLocation("public");
         ChessController chessController = new ChessController();
         ObjectMapper objectMapper = new ObjectMapper();
+        ChessLogDao chessLogDao = new ChessLogDao();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "main.html");
         });
 
-        get("/start", (req, res) -> {
+        post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("roomId", req.queryParams("room"));
             return render(model, "index.html");
         });
 
-        get("/create", (req, res) -> {
-            BoardDto boardDto = chessController.start();
+        get("/create/:room", (req, res) -> {
+            String roomNumber = req.params(":room");
+            List<String> commands = chessLogDao.applyCommand(roomNumber);
+            BoardDto boardDto = chessController.start(commands);
             return objectMapper.writeValueAsString(boardDto);
         });
 
@@ -41,6 +47,8 @@ public class WebUIChessApplication {
                 MoveRequestDto moveRequestDto = objectMapper.readValue(req.body(), MoveRequestDto.class);
                 BoardDto boardDto =
                         chessController.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
+                chessLogDao.addLog(
+                        moveRequestDto.getRoomId(), moveRequestDto.getTarget(), moveRequestDto.getDestination());
                 return objectMapper.writeValueAsString(boardDto);
             }
             catch (Exception e) {
@@ -55,6 +63,12 @@ public class WebUIChessApplication {
 
         post("/score", (req, res) -> {
             return objectMapper.writeValueAsString(chessController.boardStatusDto());
+        });
+
+        get("/clear/:room", (req, res) -> {
+            String roomNumber = req.params(":room");
+            chessLogDao.deleteLog(roomNumber);
+            return objectMapper.writeValueAsString("http://localhost:4567/");
         });
     }
 
