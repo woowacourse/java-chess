@@ -60,6 +60,10 @@ public class WebController {
             chessGame.move(source, target);
             chessGame.changeTurn();
 
+            if(chessGame.isGameEnd()){
+                return OutputView.printResult(chessGame.winner());
+            }
+
             return printGame();
         });
     }

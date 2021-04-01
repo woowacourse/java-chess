@@ -2,8 +2,12 @@
 window.onload = function(){
     const pieces = document.getElementsByClassName('piece');
     Array.from(pieces).forEach((el)=>{
-        console.log(el.tagName);
         el.addEventListener('click', click());
+    })
+
+    const scores = document.getElementsByClassName("score");
+    Array.from(scores).forEach((el)=>{
+        el.addEventListener('change', checkIsEnd());
     })
 }
 
@@ -72,6 +76,12 @@ function submitMove(src, tar){
 
 function checkIsValidTarget(target){
     return target.classList.contains("moveAble");
+}
+
+function checkIsEnd(){
+    return function (event) {
+        console.log(event.target.text);
+    }
 }
 
 function show(target) {
