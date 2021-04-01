@@ -24,4 +24,9 @@ export default class ChessService {
         return response.json();
     }
 
+    async terminate() {
+        const response = await fetch(`${this.baseUrl}/chessboard/result`);
+        return response.json();
+    }
+
 }

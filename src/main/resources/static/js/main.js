@@ -3,8 +3,10 @@ import ChessService from "./ChessService.js";
 const apiService = new ChessService();
 
 const $chessTable = document.querySelector(".chessboard");
+const $results = document.querySelector(".results");
 const $resultBtn = document.querySelector(".result-btn");
 const $resultDisplay = document.querySelector(".result-display");
+const $isPlaying = document.querySelector(".isPlaying");
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 function drawTable(data) {
@@ -48,7 +50,17 @@ function drawTable(data) {
   $chessTable.innerHTML = innerValue;
 }
 
-apiService.getChessBoard().then(drawTable);
+function modifyBtns() {
+  if($isPlaying.innerText === "START"){
+    $isPlaying.innerText= 'END';
+    $results.classList.remove('hidden');
+    return;
+  }
+  apiService.terminate().then(showResult)
+}
+
+$isPlaying.addEventListener("click", ()=>apiService.getChessBoard().then(drawTable).then(modifyBtns));
+
 
 let sourcePosition;
 let targetPosition;

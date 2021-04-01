@@ -35,11 +35,13 @@ body{
     display: flex;
     flex-direction: row;
     width:100%;
+    justify-content: center;
 }
 
 .chessboard{
     display: flex;
     flex-direction: column;
+    padding-bottom: 5%;
 }
 .results{
     background-color: lightsteelblue;
@@ -90,4 +92,12 @@ body{
 
 .clicked{
     background-color:var(--piece-clicked);
+}
+
+.isPlaying{
+    margin-bottom: 5%;
+}
+
+.hidden{
+    visibility: hidden;
 }
