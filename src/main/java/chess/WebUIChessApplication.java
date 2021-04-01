@@ -1,5 +1,7 @@
 package chess;
 
+import chess.dao.Chess;
+import chess.dao.ChessDAO;
 import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
@@ -10,7 +12,10 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.*;
+import java.sql.SQLDataException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -20,31 +25,29 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/public");
         ChessGame chessGame = new ChessGame(new Grid(new NormalGridStrategy()));
+        ChessDAO chessDAO = new ChessDAO();
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(new HashMap<>(), "index.html");
         });
 
-        get("/pieces", (req,res)->{
-           Map<String, String> pieceMap = chessGame.pieceMap();
-           return pieceMap;
+        get("/pieces", (req, res) -> {
+            return chessGame.pieceMap();
         }, GSON::toJson);
 
-        get("/turn", (req,res)->{
-            Color turn = chessGame.turn();
-            return turn;
+        get("/turn", (req, res) -> {
+            return chessGame.turn();
         }, GSON::toJson);
 
-        get("/score/white", (req,res)->{
+        get("/score/white", (req, res) -> {
             return chessGame.score(Color.WHITE);
         }, GSON::toJson);
 
-        get("/score/black", (req,res)->{
+        get("/score/black", (req, res) -> {
             return chessGame.score(Color.BLACK);
         }, GSON::toJson);
 
-        get("/gameover", (req,res)->{
+        get("/gameover", (req, res) -> {
             return Arrays.asList(chessGame.isGameOver(), chessGame.getWinner());
         }, GSON::toJson);
 
@@ -52,33 +55,56 @@ public class WebUIChessApplication {
             PositionDTO positionDTO = GSON.fromJson(req.body(), PositionDTO.class);
             String sourcePosition = positionDTO.getSourcePosition();
             String targetPosition = positionDTO.getTargetPosition();
-            System.out.println(sourcePosition + targetPosition);
-            try{
+            try {
                 chessGame.move(chessGame.grid().piece(new Position(sourcePosition)),
                         chessGame.grid().piece(new Position(targetPosition)));
-                return "200";
-            }
-            catch (IllegalArgumentException error){
-                return "400";
+                return 200;
+            } catch (IllegalArgumentException error) {
+                return 400;
             }
         });
 
         post("/start", (req, res) -> {
-            try{
+            try {
                 chessGame.start();
                 return 200;
-            }
-            catch (IllegalArgumentException error){
+            } catch (IllegalArgumentException error) {
                 return 201;
             }
         });
 
         post("/reset", (req, res) -> {
-            try{
+            try {
                 chessGame.reset();
                 return 200;
+            } catch (IllegalArgumentException error) {
+                return 201;
             }
-            catch (IllegalArgumentException error){
+        });
+
+        post("/save", (req, res) -> {
+            try {
+                Chess chess = new Chess("1", chessGame.gridStringify(), chessGame.turn().name());
+                if(chessDAO.findByChessId("1") == null){
+                    chessDAO.addChess(chess);
+                }
+                chessDAO.updateChess(chess, chess.getChess(), chess.getTurn());
+                return 200;
+            } catch (IllegalArgumentException error) {
+                return 400;
+            }
+        });
+
+        post("/load", (req, res) -> {
+            try {
+                if(chessDAO.findByChessId("1") == null) {
+                    throw new SQLDataException("저장된 보드가 없습니다.");
+                }
+                Chess chess = chessDAO.findByChessId("1");
+                chessGame.load(chess);
+
+                return 200;
+            } catch (IllegalArgumentException error) {
                 return 201;
             }
         });

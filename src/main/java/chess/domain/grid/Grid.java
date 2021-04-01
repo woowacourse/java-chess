@@ -10,6 +10,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -29,6 +30,10 @@ public final class Grid {
 
     public final Piece piece(final Position position) {
         return lines.piece(position);
+    }
+
+    public final void assign(final Piece piece, final Position position){
+        lines.assign(position, piece);
     }
 
     public final double score(final Color color) {
@@ -52,5 +57,16 @@ public final class Grid {
                         .map(piece -> new SimpleEntry<>(piece.position().positionToString(),
                                 Character.toString(piece.name()))))
                 .collect(toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public String stringify() {
+        return lines
+                .lines()
+                .stream()
+                .flatMap(line -> line
+                        .pieces()
+                        .stream()
+                        .map(piece -> Character.toString(piece.name()) + piece.position().positionToString()))
+                .collect(Collectors.joining());
     }
 }

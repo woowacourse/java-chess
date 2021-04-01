@@ -10,7 +10,7 @@ public final class Position {
     private final Row row;
 
     public Position(final String position) {
-        this(position.charAt(0), position.charAt(1));
+        this(Column.column(position.charAt(0)), Row.row(position.charAt(1)));
     }
 
     public Position(final char x, final char y) {
@@ -48,7 +48,7 @@ public final class Position {
         return Column.isValid(nextColumn) && Row.isValid(nextRow);
     }
 
-    public String positionToString(){
+    public String positionToString() {
         return String.valueOf(this.column.getReference()) + String.valueOf(this.row.getReference());
     }
 

@@ -27,7 +27,7 @@ public final class WhiteTurn extends Playing {
         Piece targetPiece = game.grid().piece(targetPosition);
         validateSourcePieceIsEmpty(sourcePiece);
         validateIfWhite(sourcePiece);
-        if(isKingCaught(targetPiece)){
+        if (isKingCaught(targetPiece)) {
             game.winner(sourcePiece.color());
             return new End();
         }

@@ -20,6 +20,8 @@ function addClickListener(){
     document.getElementById("chessboard").addEventListener("click", selectPieces)
     document.getElementById("startButton").addEventListener("click", start)
     document.getElementById("resetButton").addEventListener("click", reset)
+    document.getElementById("saveButton").addEventListener("click", save)
+    document.getElementById("loadButton").addEventListener("click", load)
 }
 
 function init(){
@@ -46,7 +48,13 @@ function start(){
         showWhiteScore()
         showBlackScore()
         showResetButton()
+        showSaveButtonHideLoadButton()
     })
+}
+
+function showSaveButtonHideLoadButton() {
+    document.getElementById("saveButton").style.display = null;
+    document.getElementById("loadButton").style.display = "none";
 }
 
 function reset(){
@@ -54,6 +62,25 @@ function reset(){
     response.then(function (result){
         if(result == 200){
             alert("게임을 리셋합니다.")
+        }
+        start()
+    })
+}
+
+function save(){
+    let response = postData("/save")
+    response.then(function (result){
+        if(result == 200){
+            alert("게임을 저장합니다.")
+        }
+    })
+}
+
+function load(){
+    let response = postData("/load")
+    response.then(function (result){
+        if(result == 200){
+            alert("게임을 불러옵니다.")
         }
         start()
     })

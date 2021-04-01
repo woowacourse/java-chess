@@ -76,6 +76,7 @@ public class PawnTest {
         Pawn pawn = (Pawn) grid.piece(new Position("b2"));
         game.start();
         game.move(pawn, new Empty('b', '3'));
+
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '5'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 초기 자리에서만 두칸 이동 가능합니다.");
