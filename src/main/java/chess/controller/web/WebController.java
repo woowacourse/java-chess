@@ -1,7 +1,6 @@
 package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.dto.PositionsDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
@@ -12,8 +11,7 @@ import chess.view.web.OutputView;
 import chess.view.web.PieceSymbolMapper;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -25,6 +23,7 @@ public class WebController {
         staticFiles.location("/public");
         serviceRoot();
         show();
+        move();
     }
 
     private void serviceRoot(){
@@ -42,9 +41,46 @@ public class WebController {
     private void show(){
         post("/show", (req, res) -> {
             JSONObject jsonData = new JSONObject(req.body());
-            String position = jsonData.getString("position");
-            return reachablePositions(new Position(position));
+            Position source = new Position(jsonData.getString("position"));
+            try{
+                chessGame.validateTurn(source);
+                return reachablePositions(source);
+            } catch (Exception e){
+                return Collections.EMPTY_LIST;
+            }
         });
+    }
+
+    private void move(){
+        post("/move", (req, res) -> {
+
+            Map<String, String> reqPosition = parseSourceAndTarget(req.body());
+
+            Position source = new Position(reqPosition.get("source"));
+            Position target = new Position(reqPosition.get("target"));
+
+            chessGame.validateTurn(source);
+            chessGame.move(source, target);
+            chessGame.changeTurn();
+
+            BoardDto boardDto = new BoardDto();
+            boardDto.setBoard(boardMapping(chessGame.board()));
+
+            return OutputView.printBoard("board", boardDto);
+        });
+    }
+
+    // XXX :: Service로 분리하기
+    private Map<String, String> parseSourceAndTarget(String line){
+        Map<String, String> infoTable = new HashMap<>();
+
+        String[] positionInfos = line.split("&");
+        for(String positionInfo : positionInfos){
+            String[] info = positionInfo.split("=");
+            infoTable.put(info[0], info[1]);
+        }
+
+        return infoTable;
     }
 
     // XXX :: Service로 분리하기

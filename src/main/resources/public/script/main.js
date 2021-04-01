@@ -43,6 +43,8 @@ function clickWhereToMove(eventTarget){
         console.log("move");
         console.log("clicked source : "+ source);
         console.log("clicked target : "+ target);
+
+        submitMove(source, target);
     }
 
     const piece = document.getElementsByClassName("piece");
@@ -50,6 +52,29 @@ function clickWhereToMove(eventTarget){
         piece[i].classList.remove("moveAble");
         piece[i].style.backgroundColor = "";
     }
+}
+
+function submitMove(src, tar){
+    const form = document.createElement("form");
+
+    form.setAttribute("charset", "UTF-8");
+    form.setAttribute("method", "Post");
+    form.setAttribute("action", "/move");
+
+    const sourceField = document.createElement("input");
+    sourceField.setAttribute("type", "hidden");
+    sourceField.setAttribute("name", "source");
+    sourceField.setAttribute("value", src);
+    form.appendChild(sourceField);
+
+    const targetField = document.createElement("input");
+    targetField.setAttribute("type", "hidden");
+    targetField.setAttribute("name", "target");
+    targetField.setAttribute("value", tar);
+    form.appendChild(targetField);
+
+    document.body.appendChild(form);
+    form.submit();
 }
 
 function checkIsValidTarget(target){
@@ -84,3 +109,4 @@ function show(target) {
         }
     })
 }
+
