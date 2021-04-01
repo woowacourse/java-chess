@@ -1,10 +1,10 @@
 package chess.webdto;
 
-public class MoveRequest {
+public class MoveRequestDTO {
     private String start;
     private String destination;
 
-    public MoveRequest(String start, String destination) {
+    public MoveRequestDTO(String start, String destination) {
         this.start = start;
         this.destination = destination;
     }
