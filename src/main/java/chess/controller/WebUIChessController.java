@@ -30,9 +30,7 @@ public class WebUIChessController {
             return render(model, "index.html");
         });
 
-        get("/start", (req, res) -> {
-            return chessService.start();
-        }, JSON_TRANSFORMER);
+        get("/start", (req, res) -> chessService.start(), JSON_TRANSFORMER);
 
         post("/move", (req, res) -> {
             final String requests = req.body();
@@ -40,9 +38,7 @@ public class WebUIChessController {
             return chessService.move(moveRequest);
         }, JSON_TRANSFORMER);
 
-        get("/end", (req, res) -> {
-            return chessService.end();
-        }, JSON_TRANSFORMER);
+        get("/end", (req, res) -> chessService.end(), JSON_TRANSFORMER);
 
         get("/result", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
