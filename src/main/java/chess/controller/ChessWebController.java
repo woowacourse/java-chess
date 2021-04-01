@@ -1,13 +1,8 @@
 package chess.controller;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardFactory;
-import chess.domain.command.Ready;
-import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Pieces;
-import chess.domain.player.ChessGame;
-import chess.domain.state.StateFactory;
 import chess.service.ChessService;
+import chess.service.dto.MoveRequestDto;
+import chess.service.dto.MoveResponseDto;
 import chess.service.dto.PiecesStatusDto;
 import chess.service.dto.TilesDto;
 import com.google.gson.Gson;
@@ -38,15 +33,26 @@ public class ChessWebController {
 
     public void run() {
         get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "home.html");
+        });
+
+        get("/start", (request, response) -> {
+            PiecesStatusDto piecesStatusDto = chessService.initializeGame();
+            return toJson(piecesStatusDto);
+        });
+
+        post("/start", (request, response) -> {
             TilesDto tilesDto = chessService.emptyBoard();
             Map<String, Object> model = new HashMap<>();
             model.put("tilesDto", tilesDto);
             return render(model, "board.html");
         });
 
-        get("/start", (request, response) -> {
-            PiecesStatusDto piecesStatusDto = chessService.initializeGame();
-            return toJson(piecesStatusDto);
+        post("/move", (request, response) -> {
+            MoveRequestDto requestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
+            MoveResponseDto responseDto = chessService.movePiece(requestDto);
+            return toJson(responseDto);
         });
     }
 }

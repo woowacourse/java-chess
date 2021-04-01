@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
+import chess.service.dto.ScoreDto;
 
 import java.util.List;
 import java.util.Queue;
@@ -61,6 +62,10 @@ public class ChessGame {
         return score(currentPlayer.getState().pieces());
     }
 
+    public ScoreDto calculateScoreWeb() {
+        return new ScoreDto(score(whitePlayer.getState().pieces()), score(blackPlayer.getState().pieces()));
+    }
+
     public String currentPlayerName() {
         return currentPlayer().getName();
     }
@@ -77,7 +82,7 @@ public class ChessGame {
         return blackPlayer;
     }
 
-    private void moveByTurn(final Position sourcePosition, final Position targetPosition) {
+    public void moveByTurn(final Position sourcePosition, final Position targetPosition) {
         if (whitePlayer.isFinish()) {
             Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
             Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());

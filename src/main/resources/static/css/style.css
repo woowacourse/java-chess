@@ -10,7 +10,7 @@
 
 body {
     background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),
-            url("image/bemin.png");
+    url("image/bemin.png");
 }
 
 h1 span {
@@ -61,6 +61,10 @@ h1 span:nth-child(8) {
     display: flex;
 }
 
+.d-in-flex {
+    display: inline-flex;
+}
+
 .fd-column {
     flex-direction: column;
 }
@@ -100,6 +104,14 @@ h1 span:nth-child(8) {
     border-radius: 10px;
 }
 
+.score-setting {
+    background-color: white;
+    min-width: 180px;
+    width: 30%;
+    height: 50%;
+    border-radius: 15px;
+}
+
 #start:hover {
     cursor: pointer;
     background-color: #441a03;
@@ -120,11 +132,12 @@ h1 span:nth-child(8) {
 .tile {
     background-color: beige;
 }
+
 /*.tile {
     background-color: transparent !important;
 }*/
 
-.tile:hover{
+.tile:hover {
     cursor: pointer;
 }
 
@@ -140,8 +153,8 @@ h1 span:nth-child(8) {
 }
 
 img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
 }
 
 .dead-piece {

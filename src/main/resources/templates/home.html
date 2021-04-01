@@ -22,9 +22,6 @@
     </style>
 </head>
 <body>
-<input id="sourceKey" type="hidden" value="">
-<input id="targetKey" type="hidden" value="">
-
 <div class="header-wrapper d-flex">
     <header><h1>
         <span>우</span>
@@ -36,26 +33,12 @@
         <span>게</span>
         <span>임</span></h1></header>
 </div>
-<div class="chess-wrapper flex-wrap d-flex">
-
-    <div class="game-wrapper flex-wrap d-flex">
-        <div class="chess-board flex-wrap d-flex">
-            {{#tilesDto.tiles}}
-            <div class="tile d-flex" id="{{position}}"><img alt="" src="css/image/{{piece}}.png"></div>
-            {{/tilesDto.tiles}}
-        </div>
-    </div>
-</div>
 <div class="game-setting flex-wrap d-flex">
-    <input id="start" type="button" value="시작하기"/>
-    <input id="end" type="button" value="끝내기"/>
+    <form action="/start" method="post">
+        <input id="start" type="submit" value="시작하기"/>
+    </form>
 </div>
-
-<div class="score-setting flex-wrap d-in-flex">
-    <div id="whiteScore"> 화이트 점수 <strong>0</strong></div>
-    <div id="blackScore"> 블랙 점수 <strong>0</strong></div>
-</div>
+</body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/js/app.js" type="module"></script>
-</body>
 </html>
