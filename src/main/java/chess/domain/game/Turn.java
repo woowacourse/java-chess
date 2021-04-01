@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.piece.Team;
 
-public class Turn {
+public final class Turn {
 
     private Team team;
 

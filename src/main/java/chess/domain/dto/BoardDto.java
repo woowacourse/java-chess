@@ -2,7 +2,7 @@ package chess.domain.dto;
 
 import chess.domain.dto.response.ResponseDto;
 
-public class BoardDto implements ResponseDto {
+public final class BoardDto implements ResponseDto {
 
     private final String team;
     private final boolean isGameOver;

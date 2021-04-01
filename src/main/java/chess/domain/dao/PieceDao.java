@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PieceDao {
+public final class PieceDao {
 
     private final Connection conn;
 
@@ -46,15 +46,15 @@ public class PieceDao {
     }
 
     public void savePiece(final Position position, final Piece piece) throws SQLException {
-        String query = "INSERT INTO pieces VALUES (?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "INSERT INTO pieces VALUES (?, ?)";
+        final PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
         pstmt.setString(2, piece.name());
         pstmt.executeUpdate();
     }
 
     public void deleteAll() throws SQLException {
-        String query = "DELETE FROM pieces";
+        final String query = "DELETE FROM pieces";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.executeUpdate();
     }

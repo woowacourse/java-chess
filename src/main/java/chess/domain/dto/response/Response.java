@@ -1,6 +1,6 @@
 package chess.domain.dto.response;
 
-public class Response {
+public final class Response {
 
     private final String code;
     private final String message;

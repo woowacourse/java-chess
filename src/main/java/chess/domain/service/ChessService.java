@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ChessService {
+public final class ChessService {
 
     private final PieceDao pieceDao;
     private final BoardDao boardDao;

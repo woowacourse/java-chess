@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public class ChessGame {
+public final class ChessGame {
 
     private final Board board;
     private final Turn turn;

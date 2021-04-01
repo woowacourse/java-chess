@@ -6,8 +6,8 @@ public enum ResponseCode {
     RUN("204", "게임중"),
     ERROR("200", "");
 
-    private String code;
-    private String message;
+    private final String code;
+    private final String message;
 
     ResponseCode(final String code, final String message) {
         this.code = code;

@@ -15,7 +15,7 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebUIChessController {
+public final class WebUIChessController {
 
     public void runChess() {
         final Gson GSON = new Gson();
@@ -50,7 +50,7 @@ public class WebUIChessController {
         });
     }
 
-    private String render(Map<String, Object> model, String templatePath) {
+    private String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BoardDao {
+public final class BoardDao {
 
     private final Connection conn;
 
@@ -15,9 +15,9 @@ public class BoardDao {
     }
 
     public BoardDto load() throws SQLException {
-        String query = "SELECT * FROM board";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+        final String query = "SELECT * FROM board";
+        final PreparedStatement pstmt = conn.prepareStatement(query);
+        final ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
             return null;
@@ -27,16 +27,16 @@ public class BoardDao {
 
     public void save(final BoardDto boardDto) throws SQLException {
         deleteAll();
-        String query = "INSERT INTO board VALUES (?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "INSERT INTO board VALUES (?, ?)";
+        final PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, boardDto.team());
         pstmt.setBoolean(2, boardDto.isGameOver());
         pstmt.executeUpdate();
     }
 
     public void deleteAll() throws SQLException {
-        String query = "DELETE FROM board";
-        PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "DELETE FROM board";
+        final PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.executeUpdate();
     }
 }
