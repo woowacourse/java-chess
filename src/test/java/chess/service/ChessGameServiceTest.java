@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.dao.ChessGameDAO;
 import chess.dao.PieceDAO;
-import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessGameServiceTest {
 

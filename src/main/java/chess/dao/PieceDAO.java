@@ -1,9 +1,7 @@
 package chess.dao;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
-import chess.exception.NotFoundPieceException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,7 +94,7 @@ public class PieceDAO {
         }
     }
 
-    public void delete(final Long chessGameId, final int row, final int col){
+    public void delete(final Long chessGameId, final int row, final int col) {
         try (Connection con = factory.getConnection()) {
             String query = "DELETE FROM pieces WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);

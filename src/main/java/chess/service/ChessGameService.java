@@ -8,8 +8,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 import chess.exception.AlreadyPlayingChessGameException;
-import chess.view.dto.ChessGameDto;
 import chess.exception.NotFoundPlayingChessGameException;
+import chess.view.dto.ChessGameDto;
 import chess.view.dto.ScoreDtos;
 
 import java.sql.SQLException;
