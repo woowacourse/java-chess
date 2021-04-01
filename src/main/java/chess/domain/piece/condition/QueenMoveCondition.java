@@ -12,9 +12,13 @@ public class QueenMoveCondition extends MoveCondition {
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
-                isNotExistObstacleOnCrossPath(board, piece, target) &&
-                isNotExistObstacleOnXPath(board, piece, target) &&
+                isNotExistObstacleOnPath(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
+    }
+
+    private boolean isNotExistObstacleOnPath(Board board, Piece piece, Position target) {
+        return isNotExistObstacleOnCrossPath(board, piece, target) &&
+                isNotExistObstacleOnXPath(board, piece, target);
     }
 
     private boolean isMovablePath(final Piece piece, final Position target) {

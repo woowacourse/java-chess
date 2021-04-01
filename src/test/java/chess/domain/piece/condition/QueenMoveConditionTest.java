@@ -18,16 +18,21 @@ class QueenMoveConditionTest {
     @Test
     void isSatisfyBy() {
         QueenMoveCondition condition = new QueenMoveCondition();
-        Board board = new Board(Collections.singletonList(
-                Piece.createQueen(Color.WHITE, 4, 4)
+        Board board = new Board(Arrays.asList(
+                Piece.createQueen(Color.WHITE, 4, 4),
+                Piece.createPawn(Color.WHITE, 4, 5)
         ));
         boolean rightActual = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
                 new Position(7, 4));
+
+        boolean rightXActual = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 4, 4),
+                new Position(5,5));
 
         boolean falseActual = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
                 new Position(7, 5));
 
         assertThat(rightActual).isTrue();
+        assertThat(rightXActual).isTrue();
         assertThat(falseActual).isFalse();
     }
 
