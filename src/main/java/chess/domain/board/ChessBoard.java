@@ -9,6 +9,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public void move(String source, String target) {
