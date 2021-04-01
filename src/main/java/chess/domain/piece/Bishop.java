@@ -8,6 +8,10 @@ import java.util.Map;
 public final class Bishop extends Piece {
     private static final int BISHOP_HASHCODE_AS_UNICODE = 9815;
 
+    public Bishop(final boolean isFirstMove) {
+        super(isFirstMove);
+    }
+
     public Bishop() {
         super();
     }

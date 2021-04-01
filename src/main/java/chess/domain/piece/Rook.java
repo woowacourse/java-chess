@@ -8,6 +8,10 @@ import java.util.Map;
 public final class Rook extends Piece {
     private static final int ROOK_HASHCODE_AS_UNICODE = 9814;
 
+    public Rook(final boolean isFirstMove) {
+        super(isFirstMove);
+    }
+
     public Rook() {
     }
 

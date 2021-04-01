@@ -8,6 +8,10 @@ import java.util.Map;
 public final class Queen extends Piece {
     private static final int QUEEN_HASHCODE_AS_UNICODE = 9813;
 
+    public Queen(final boolean isFirstMove) {
+        super(isFirstMove);
+    }
+
     public Queen() {
     }
 
