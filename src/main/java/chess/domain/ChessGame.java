@@ -12,6 +12,13 @@ public final class ChessGame {
     private Team currentTurnTeam;
     private boolean isPlaying;
 
+    public ChessGame(final Team blackTeam, final Team whiteTeam, final Team currentTurnTeam, final boolean isPlaying) {
+        this.blackTeam = blackTeam;
+        this.whiteTeam = whiteTeam;
+        this.currentTurnTeam = currentTurnTeam;
+        this.isPlaying = isPlaying;
+    }
+
     public ChessGame(final Team blackTeam, final Team whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
@@ -129,5 +136,13 @@ public final class ChessGame {
 
     public Team getCurrentTurnTeam() {
         return currentTurnTeam;
+    }
+
+    public Team getBlackTeam() {
+        return blackTeam;
+    }
+
+    public Team getWhiteTeam() {
+        return whiteTeam;
     }
 }

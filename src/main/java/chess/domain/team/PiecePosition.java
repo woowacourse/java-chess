@@ -17,6 +17,10 @@ public final class PiecePosition {
 
     private final Map<Position, Piece> piecePosition;
 
+    public PiecePosition(final Map<Position, Piece> piecePosition) {
+        this.piecePosition = new HashMap<>(piecePosition);
+    }
+
     private PiecePosition(final int pawnColumn, final int pawnDirection, final int pieceColumn) {
         piecePosition = new HashMap<>();
         initializePawn(pawnColumn, pawnDirection);
