@@ -66,10 +66,10 @@ public class ChessDAO {
                 rs.getString("turn"));
     }
 
-//    public void deleteGameById(String gameId) throws SQLException {
-//        String query = "DELETE * FROM games WHERE game_id = ?";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, gameId);
-//        pstmt.executeUpdate();
-//    }
+    public void deleteGameById(String gameId) throws SQLException {
+        String query = "DELETE FROM games WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        pstmt.executeUpdate();
+    }
 }

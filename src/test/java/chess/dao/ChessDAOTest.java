@@ -44,4 +44,11 @@ class ChessDAOTest {
     void findGame() throws SQLException {
         assertThat(chessDAO.findGameById(gameId)).isEqualTo(game);
     }
+
+    @Test
+    @DisplayName("게임 삭제 기능")
+    void deleteGame() throws SQLException {
+        chessDAO.deleteGameById(gameId);
+        assertNull(chessDAO.findGameById(gameId));
+    }
 }
