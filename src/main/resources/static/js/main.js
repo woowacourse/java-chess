@@ -3,6 +3,8 @@ import ChessService from "./ChessService.js";
 const apiService = new ChessService();
 
 const $chessTable = document.querySelector(".chessboard");
+const $resultBtn = document.querySelector(".result-btn");
+const $resultDisplay = document.querySelector(".result-display");
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 function drawTable(data) {
@@ -73,4 +75,16 @@ function checkIfBoard(event) {
   }
 }
 
+
+function showResult(data) {
+  const result = data['result'];
+  const blackScore = result['BLACK']['score'];
+  const whiteScore = result['WHITE']['score'];
+  const winner = data['winner'];
+
+  $resultDisplay.innerHTML = `<span>블랙: ${blackScore} <br/><br/> 화이트: ${whiteScore} <br/><br/> 우승자 : ${winner} </span>`;
+
+}
+
 $chessTable.addEventListener("click", checkIfBoard)
+$resultBtn.addEventListener("click", () => apiService.getResult().then(showResult))

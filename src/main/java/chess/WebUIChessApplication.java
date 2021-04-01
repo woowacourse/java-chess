@@ -30,6 +30,11 @@ public class WebUIChessApplication {
             return chessBoard.getChessBoardDto();
         }, gson::toJson);
 
+        get("/chessboard/result", (req, res) -> {
+            res.type("application/json");
+            return chessBoard.result();
+        }, gson::toJson);
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");

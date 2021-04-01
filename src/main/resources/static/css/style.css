@@ -33,9 +33,29 @@ body{
 }
 .chessboard_section{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width:100%;
 }
 
+.chessboard{
+    display: flex;
+    flex-direction: column;
+}
+.results{
+    background-color: lightsteelblue;
+    display: flex;
+    flex-direction: column;
+    margin : 10%;
+    justify-content: space-around;
+}
+.result-display{
+    display: flex;
+    width:100px;
+    height:200px;
+    align-items: center;
+    background-color: lightgreen;
+    text-align: center;
+}
 .row{
     display: flex;
     flex-direction: row;
