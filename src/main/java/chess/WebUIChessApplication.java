@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dao.ChessDAO;
 import chess.domain.ChessResult;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.position.Position;
@@ -9,15 +10,20 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
+    private static final String DEFAULT_GAME_ID = "1";
+
+
+    public static void main(String[] args) throws SQLException {
         staticFiles.location("/public");
-        ChessGame game = new ChessGame();
+        ChessDAO dao = new ChessDAO();
+        ChessGame game = dao.findGameById(DEFAULT_GAME_ID);
         final Gson gson = new Gson();
 
         get("/", (req, res) -> {
@@ -49,6 +55,7 @@ public class WebUIChessApplication {
             RequestDto dto = gson.fromJson(req.body(), RequestDto.class);
             try {
                 game.move(new Position(dto.getSource()), new Position(dto.getTarget()));
+                dao.updateGame(DEFAULT_GAME_ID, game);
                 return 200;
             } catch (IllegalArgumentException | IllegalStateException e) {
                 return 401;

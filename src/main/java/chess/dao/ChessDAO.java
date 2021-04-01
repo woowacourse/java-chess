@@ -61,7 +61,6 @@ public class ChessDAO {
         if (!rs.next()) return null;
 
         return new ChessGame(
-                rs.getString("game_id"),
                 rs.getString("pieces"),
                 rs.getString("turn"));
     }
@@ -70,6 +69,15 @@ public class ChessDAO {
         String query = "DELETE FROM games WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
+        pstmt.executeUpdate();
+    }
+
+    public void updateGame(String gameId, ChessGame game) throws SQLException {
+        String query = "UPDATE games SET pieces = ? , turn = ? WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, game.boardForDAO());
+        pstmt.setString(2, game.turnForDAO());
+        pstmt.setString(3, gameId);
         pstmt.executeUpdate();
     }
 }
