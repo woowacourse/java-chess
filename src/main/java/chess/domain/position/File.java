@@ -19,13 +19,13 @@ public enum File {
 
     private static final Map<String, File> SEARCH_MAP;
 
-    private final String letter;
-    private final int coordinate;
-
     static {
         SEARCH_MAP = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
+
+    private final String letter;
+    private final int coordinate;
 
     File(String letter, int coordinate) {
         this.letter = letter;

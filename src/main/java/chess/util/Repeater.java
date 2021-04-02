@@ -2,7 +2,6 @@ package chess.util;
 
 import chess.view.OutputView;
 
-import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class Repeater {

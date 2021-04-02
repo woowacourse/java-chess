@@ -4,9 +4,11 @@ import chess.controller.web.dto.BasicResponseDto;
 import chess.controller.web.dto.ChessGameResponseDto;
 import chess.controller.web.dto.MoveRequestDto;
 import chess.controller.web.dto.MoveResponseDto;
+import chess.controller.web.dto.RunningGameResponseDto;
 import chess.controller.web.dto.SaveRequestDto;
 import chess.controller.web.dto.ScoreResponseDto;
 import chess.controller.web.dto.WebResponseDto;
+import chess.domain.manager.ChessGameManagerBundle;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -36,6 +38,12 @@ public class WebController {
 
     private static void gameRouting() {
         ChessService chessService = new ChessService();
+        get("/user", (request, response) -> {
+            response.type("application/json; charset=utf-8");
+            ChessGameManagerBundle runningGames = chessService.findRunningGames();
+            return BasicResponseDto.createSuccessResponseDto(new RunningGameResponseDto(runningGames.getIdAndNextTurn()));
+        }, gson::toJson);
+
 
         path("/game", () -> {
             get("/start", (request, response) -> {

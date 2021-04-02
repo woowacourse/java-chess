@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.dao.dto.ChessGame;
 import chess.domain.manager.ChessGameManager;
+import chess.domain.manager.ChessGameManagerBundle;
 import chess.domain.manager.ChessGameManagerFactory;
 import chess.domain.piece.attribute.Color;
 
@@ -77,7 +78,7 @@ public class MysqlChessDao {
         }
     }
 
-    public List<ChessGameManager> findAll() {
+    public ChessGameManagerBundle findAll() {
         String query =
                 "SELECT * " +
                         "FROM CHESSGAME";
@@ -90,10 +91,10 @@ public class MysqlChessDao {
         }
     }
 
-    public List<ChessGameManager> findAllOnRunning() {
+    public ChessGameManagerBundle findAllOnRunning() {
         String query =
                 "SELECT * " +
-                        "FROM CHESSGAME" +
+                        "FROM CHESSGAME " +
                         "WHERE running = ?";
 
         try (Connection connection = ChessConnection.getConnection();
@@ -115,7 +116,7 @@ public class MysqlChessDao {
         }
     }
 
-    private List<ChessGameManager> getChessGames(PreparedStatement preparedStatement) {
+    private ChessGameManagerBundle getChessGames(PreparedStatement preparedStatement) {
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             List<ChessGameManager> chessGameManagers = new ArrayList<>();
             while (resultSet.next()) {
@@ -125,7 +126,7 @@ public class MysqlChessDao {
                 Color nextTurn = Color.of(resultSet.getString("next_turn"));
                 chessGameManagers.add(ChessGameManagerFactory.loadingGame(isRunning, id, pieces, nextTurn));
             }
-            return chessGameManagers;
+            return new ChessGameManagerBundle(chessGameManagers);
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }

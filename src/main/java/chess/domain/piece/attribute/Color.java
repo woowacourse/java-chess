@@ -21,17 +21,6 @@ public enum Color {
         this.notationRule = notationRule;
     }
 
-    public String changeNotation(String notation) {
-        return notationRule.apply(notation);
-    }
-
-    public Color opposite() {
-        return USER_COLORS.stream()
-                .filter(color -> this != color)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("반대되는 색상이 없습니다."));
-    }
-
     public static List<Color> getUserColors() {
         return Collections.unmodifiableList(USER_COLORS);
     }
@@ -45,5 +34,16 @@ public enum Color {
 
     private static boolean isNotBlank(Color color) {
         return color != BLANK;
+    }
+
+    public String changeNotation(String notation) {
+        return notationRule.apply(notation);
+    }
+
+    public Color opposite() {
+        return USER_COLORS.stream()
+                .filter(color -> this != color)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("반대되는 색상이 없습니다."));
     }
 }

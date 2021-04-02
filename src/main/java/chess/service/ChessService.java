@@ -6,6 +6,7 @@ import chess.dao.MysqlChessDao;
 import chess.dao.dto.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.manager.ChessGameManager;
+import chess.domain.manager.ChessGameManagerBundle;
 import chess.domain.manager.ChessGameManagerFactory;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.attribute.Color;
@@ -24,6 +25,10 @@ public class ChessService {
 
     public void start() {
         chessGameManager = ChessGameManagerFactory.createRunningGame(TEMPORARY_ID);
+    }
+
+    public ChessGameManagerBundle findRunningGames() {
+        return dao.findAllOnRunning();
     }
 
     public void save(SaveRequestDto saveRequestDto) {

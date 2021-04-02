@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.piece.attribute.Color;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,7 +42,7 @@ public class ColoredPieces {
         pieces.remove(piece);
     }
 
-    public boolean isSameColor(Color color){
+    public boolean isSameColor(Color color) {
         return this.color == color;
     }
 
@@ -56,7 +58,7 @@ public class ColoredPieces {
         return pieces.size();
     }
 
-    public boolean contains(Piece piece){
+    public boolean contains(Piece piece) {
         return pieces.contains(piece);
     }
 

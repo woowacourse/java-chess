@@ -29,7 +29,7 @@ public abstract class Piece {
         return !this.equals(Blank.getInstance());
     }
 
-    public boolean isPawn(){
+    public boolean isPawn() {
         return this instanceof Pawn;
     }
 

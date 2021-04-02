@@ -24,13 +24,13 @@ public enum Rank {
     private static final int BLANK_LINE_ROW_PIVOT = 2;
     private static final int NUMBER_OF_BLANK_RANKS = 4;
 
-    private final String letter;
-    private final int coordinate;
-
     static {
         SEARCH_MAP = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
+
+    private final String letter;
+    private final int coordinate;
 
     Rank(String letter, int coordinate) {
         this.letter = letter;

@@ -7,9 +7,11 @@ const $saveBtn = document.querySelector('#saveBtn');
 const $loadBtn = document.querySelector('#loadBtn');
 const $blackScore = document.querySelector('#blackScore')
 const $whiteScore = document.querySelector('#whiteScore')
+const $games = document.querySelector('#games');
 
 let nextColor;
 let chessGameId = 0;
+findGames();
 
 $chessboard.addEventListener("click", onClickPiece);
 $startBtn.addEventListener("click", onClickStartBtn);
@@ -51,10 +53,18 @@ async function savePiece() {
         .map(position => getKeyByValue(pieceFonts, $chessboard.querySelector("#" + position).innerText))
         .join("");
     await postFetch("/game/save", {id: chessGameId, pieces: boardPieces});
+    findGames();
 }
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
+}
+
+async function findGames() {
+    const responseData = await getFetch("/user");
+    const games = responseData.runningGames;
+    $games.innerHTML = "";
+    Object.keys(games).forEach(ele => $games.insertAdjacentHTML("beforeend", `<li>ID:${ele} , 다음순서:${games[ele]}`));
 }
 
 async function calculateScore() {

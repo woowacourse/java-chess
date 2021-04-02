@@ -9,7 +9,7 @@ public class MoveResult {
         this.capturedPiece = capturedPiece;
     }
 
-    public boolean isCaptured(){
+    public boolean isCaptured() {
         return capturedPiece.isNotBlank();
     }
 

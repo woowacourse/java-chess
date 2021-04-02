@@ -1,13 +1,15 @@
-h1{
+h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
+
 .chessboard {
     width: 480px;
     height: 480px;
     margin: 0 auto;
     border: 25px solid #333;
 }
+
 .black {
     float: left;
     width: 60px;
@@ -18,6 +20,7 @@ h1{
     display: table-cell;
     vertical-align: middle;
 }
+
 .white {
     float: left;
     width: 60px;
@@ -28,19 +31,23 @@ h1{
     display: table-cell;
     vertical-align: middle;
 }
+
 .cell:hover {
     background-color: cornflowerblue;
 }
+
 .selected {
     box-shadow: inset 0px 0px 10px 3px chartreuse;
 }
-.center{
+
+.center {
     width: 640px;
     margin: 0 auto;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }
+
 .btn {
     box-sizing: border-box;
     -webkit-appearance: none;
@@ -65,10 +72,12 @@ h1{
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
+
 .btn:hover, .btn:focus {
     color: #fff;
     outline: 0;
 }
+
 .third {
     border-color: #333;
     color: #fff;
@@ -76,6 +85,11 @@ h1{
     -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
 }
+
 .third:hover {
     box-shadow: 0 0 10px 0 #333 inset, 0 0 10px 4px #333;
+}
+
+#games {
+    float: right;
 }

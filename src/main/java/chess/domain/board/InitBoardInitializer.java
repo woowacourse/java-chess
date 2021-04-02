@@ -33,11 +33,6 @@ public class InitBoardInitializer implements BoardInitializer {
         return boardInitializer.createBoard(initialize());
     }
 
-    @Override
-    public Board createBoard(List<Square> squares) {
-        return Board.of(squares);
-    }
-
     private static List<Square> initialize() {
         List<Square> board = createBlankSquare();
 
@@ -80,6 +75,11 @@ public class InitBoardInitializer implements BoardInitializer {
                 .map(file -> Position.of(file, rank))
                 .map(position -> new Square(position, new Pawn(color)))
                 .collect(toList());
+    }
+
+    @Override
+    public Board createBoard(List<Square> squares) {
+        return Board.of(squares);
     }
 }
 

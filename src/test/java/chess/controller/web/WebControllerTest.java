@@ -139,6 +139,9 @@ class WebControllerTest {
     void whenCallSaveApi() throws IOException {
         // given
         callStartRestApi();
+        MysqlChessDao dao = new MysqlChessDao();
+        dao.deleteAll();
+
         // when
         HttpPost request = new HttpPost("http://localhost:8081/game/save");
         request.setHeader("Content-Type", "application/json;charset=utf-8");
@@ -149,7 +152,6 @@ class WebControllerTest {
         request.setEntity(httpEntity);
         HttpClientBuilder.create().build().execute(request);
 
-        MysqlChessDao dao = new MysqlChessDao();
         ChessGameManager expectedGameManager = dao.findById(1L).get();
         // then
         assertThat(expectedGameManager.getId()).isEqualTo(1);
