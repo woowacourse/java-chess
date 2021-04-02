@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/chess.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/chess.css" rel="stylesheet" type="text/css"/>
     <title>Play Chess!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -14,9 +14,9 @@
         {{#squares}}
         <div id="{{position}}" class="square">
             {{#if piece}}
-            <img alt="position" class="squareImage" src="../images/{{piece}}.png"/>
+            <img alt="position" class="squareImage" src="/images/{{piece}}.png"/>
             {{else}}
-            <img alt="empty" src="../images/blank.png"/>
+            <img alt="empty" src="/images/blank.png"/>
             {{/if}}
         </div>
         {{/squares}}
@@ -33,13 +33,22 @@
         </div>
         <div id="btnInfoUI">
             <p> 🗣 종료 전 저장하기를 눌러야 게임을 이어할 수 있습니다.</p>
-            <button onclick="save()" class="btn">저장하기</button>
+<!--            <button onclick="save()" class="btn">저장하기</button>-->
             <form action="/play" method="get" class="btn">
-                <button>종료하기</button>
+                <button onclick="endMessage()">종료하기</button>
             </form>
         </div>
     </div>
+    {{#gameId}}
+    <div id={{gameId}} style="display: none"></div>
+    {{/gameId}}
 </div>
 </body>
-<script type="text/javascript" src="../js/move.js"></script>
+<script type="text/javascript" src="/js/move.js"></script>
+<script>
+    const endMessage = function () {
+        const gameId = document.getElementById("gameId").id;
+        alert(`${gameId}로 플레이를 저장했습니다!`);
+    }
+</script>
 </html>

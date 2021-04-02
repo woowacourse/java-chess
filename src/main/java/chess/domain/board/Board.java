@@ -70,6 +70,9 @@ public class Board {
     }
 
     public boolean isKingAt(Position target) {
+        if (pieceAt(target) == null) {
+            return false;
+        }
         return pieceAt(target).isKing();
     }
 

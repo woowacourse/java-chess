@@ -2,37 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/start.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/start.css" rel="stylesheet" type="text/css"/>
     <title>Play Chess!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
 <h1>Play Chess!</h1>
-<div id="container">
+<div class="container">
     <button onclick="playNewGame()">새 게임 시작하기</button>
-<!--    <button onclick="continueLastGame">지난 게임 이어하기</button>-->
-</div>
-<div>
-    {{#history}}
     <div>
-        <a class="{{name}}" href="/play/continue?name={{name}}">{{name}}</a>
+        <div class="gameList">완료되지 않은 게임 목록 👇🏻</div>
+        <div class="historyList">
+            {{#history}}
+            <div id="history">
+                <a class="{{name}}" href="/play/continue?name={{name}}">{{name}}</a>
+            </div>
+            {{/history}}
+        </div>
     </div>
-    {{/history}}
 </div>
 </body>
 <script>
     const playNewGame = function () {
-        window.location = "http://localhost:4567/play/new";
+        const name = prompt("게임 저장 시 이용할 이름을 입력해주세요!");
+        window.location = `/play/${name}/new`;
     }
 
-    // const continueLastGame = function () {
-    //     window.location = "http://localhost:4567/play/continue";
-    // }
-
-    // $("li").on("click", function() {
-    //     const name = $(this).text();
-    //     window.location = `http://localhost:4567/play/continue?name=${name}`;
-    // });
+    const gameHistory = document.getElementsByClassName("historyList");
+    if ($("#history").length === 0)
+        gameHistory.innerText = "비어있습니다 - 텅!";
 </script>
 </html>

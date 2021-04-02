@@ -10,6 +10,7 @@ import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.view.OutputView;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -36,6 +37,7 @@ public class ChessGame {
     }
 
     public PointDto pointDto() {
+        OutputView.printBoard(boardDto());
         return new PointDto(calculatePoint());
     }
 
@@ -115,9 +117,9 @@ public class ChessGame {
         return turn;
     }
 
-    public void makeBoardStateOf(CommandDatabase commandDatabase) {
-        final List<CommandDto> commands = commandDatabase.commands();
+    public void makeBoardStateOf(List<CommandDto> commands) {
         for (CommandDto commandInDB : commands) {
+            System.out.println(commandInDB.data());
             final Path path = new Path(new Commands(commandInDB.data()).path());
             movePiece(path);
         }

@@ -9,7 +9,6 @@ import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.dto.HistoryDto;
 import chess.domain.utils.BoardInitializer;
-import chess.view.OutputView;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -34,18 +33,25 @@ public class ChessService {
 
     public Map<String, Object> startResponse() throws SQLException {
         Map<String, Object> model = new HashMap<>();
-        final List<HistoryDto> history = historyDao.selectActive()
-                        .stream()
-                        .map(HistoryDto::new)
-                        .collect(Collectors.toList());
+        final List<HistoryDto> history = histories();
         if (!history.isEmpty()) {
             model.put("history", history);
         }
         return model;
     }
 
-    public Map<String, Object> initResponse() {
-        return makeCommonResponse();
+    private List<HistoryDto> histories() throws SQLException {
+        return historyDao.selectActive()
+                .stream()
+                .map(HistoryDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, Object> initResponse(String name) throws SQLException {
+        final String id = historyDao.insert(name);
+        final Map<String, Object> model = makeCommonResponse();
+        model.put("gameId", id);
+        return model;
     }
 
     public void end() {
@@ -54,16 +60,23 @@ public class ChessService {
 
     public void move(String command) throws SQLException {
         chessGame.move(new Commands(command));
-        commandDao.insert(new CommandDto(command) ,"1");
     }
 
-    public Map<String, Object> moveResponse() {
+    public Map<String, Object> moveResponse(String historyId) throws SQLException {
         final Map<String, Object> model = makeCommonResponse();
         if (chessGame.isEnd()) {
             model.put("winner", chessGame.winner());
+            if (historyId != null) {
+                updateDB(historyId);
+            }
         }
         return model;
     }
+
+    private void updateDB(String historyId) throws SQLException {
+        historyDao.updateEndState(historyId);
+    }
+
 
     private Map<String, Object> makeCommonResponse() {
         final GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
@@ -74,26 +87,22 @@ public class ChessService {
         return model;
     }
 
-    public void continueLastGame(CommandDatabase commandDatabase, String historyName) throws SQLException {
-        commandDatabase.init(commandDao.selectAllCommands(historyName));
-        chessGame.makeBoardStateOf(commandDatabase);
-        System.out.println("====================");
-        OutputView.printBoard(chessGame.boardDto());
+//    public void continueLastGame(CommandDatabase commandDatabase, String historyName) throws SQLException {
+//        commandDatabase.init(commandDao.selectAllCommands(historyName));
+//        chessGame.makeBoardStateOf(commandDatabase);
+//    }
+
+    public void continueLastGame(String historyName) throws SQLException {
+        chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
     }
 
     public Map<String, Object> continueResponse() {
         return makeCommonResponse();
     }
 
-    public Map<String, Object> endResponse() {
-        return new HashMap<>();
-    }
-
-    public void flush(String name, CommandDatabase commandDatabase) throws SQLException {
+    public void flushCommands(String command, String gameId) throws SQLException {
         try {
-            historyDao.insert(name);
-            final int id = historyDao.findIdByName(name);
-            commandDao.insertAll(commandDatabase, String.valueOf(id));
+            commandDao.insert(new CommandDto(command), gameId);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

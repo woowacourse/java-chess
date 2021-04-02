@@ -17,15 +17,6 @@ public class WebUIChessApplication {
 
         final CommandDao commandDao = new CommandDao();
         final HistoryDao historyDao = new HistoryDao();
-        if (MySQLConnector.getConnection() != null) {
-             final WebController webController =
-                     new WebController(
-                             new ChessService(commandDao, historyDao),
-                             new CommandDatabase()
-                     );
-             webController.play();
-        }
-
         final WebController webController = new WebController(new ChessService(commandDao, historyDao));
         webController.play();
     }

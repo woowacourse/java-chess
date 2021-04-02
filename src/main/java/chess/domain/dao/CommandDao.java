@@ -22,7 +22,7 @@ public class CommandDao {
     }
 
     public void insert(CommandDto commandDto, String historyId) throws SQLException {
-        String query = "INSERT INTO Command (Data, HistoryId) VALUES (?, ?)";
+        String query = "INSERT INTO Command (data, history_id) VALUES (?, ?)";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, commandDto.data());
@@ -46,7 +46,7 @@ public class CommandDao {
     }
 
     public void delete(String historyId) throws SQLException {
-        String query = "DELETE FROM Command WHERE HistoryId = ?";
+        String query = "DELETE FROM Command WHERE history_id = ?";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, historyId);
@@ -59,7 +59,7 @@ public class CommandDao {
 
     public List<CommandDto> selectAllCommands(String historyName) throws SQLException {
         List<CommandDto> commands = new ArrayList<>();
-        String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.HistoryId WHERE H.name = ?";
+        String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.history_id WHERE H.name = ? AND H.is_end = false";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, historyName);

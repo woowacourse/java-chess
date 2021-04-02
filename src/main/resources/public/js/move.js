@@ -9,13 +9,18 @@ for (let i = 0; i < squares.length; i++) {
     });
 }
 
+function gameId() {
+    return document.getElementById("gameId").id;
+}
+
 function move(source, target) {
     $.ajax({
         type: "POST",
-        url: "/play/move",
+        url: '/play/move',
         data: {
             "source": source.id,
             "target": target.id,
+            "gameId" : gameId(),
         },
         dataType: "json",
         success: update,
@@ -99,18 +104,21 @@ function mark(clickedLocation) {
     }
 }
 
-function save() {
-    const saveName = prompt("게임을 저장합니다 ✍🏻 게임을 무엇이라고 저장할까요?");
-    if (saveName != null) {
-        $.ajax({
-            type: "POST",
-            url: "/play/save",
-            data: {
-                "name" : saveName
-            },
-            dataType: "json",
-            success: alert("저장되었습니다."),
-            error: showError,
-        })
-    }
-}
+// function save() {
+//     if (name == null) {
+//         name = prompt("게임을 저장합니다 ✍🏻 게임을 무엇이라고 저장할까요?");
+//     }
+//
+//     if (name != null) {
+//         $.ajax({
+//             type: "POST",
+//             url: "/play/save",
+//             data: {
+//                 "name": name
+//             },
+//             dataType: "json",
+//             success: alert("저장되었습니다 👍"),
+//             error: showError,
+//         })
+//     }
+// }

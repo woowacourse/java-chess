@@ -5,25 +5,21 @@ h1 {
 div{
     margin: auto;
     text-align: center;
+    font-size: 15px;
+    padding-bottom: 10px;
 }
 
 button {
     padding: 5px;
     max-width: 300px;
-    font-size: 20px;
+    font-size: 15px;
+    margin-bottom: 30px;
 }
 
-ul {
-    list-style: none;
+a {
+    font-size: 15px;
+    text-decoration: none;
+    padding-bottom: 10px;
 }
-ul li::before {
-    content: "";
-    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fb-heart.gif);
-    background-size: contain;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    position: relative;
-    top: 0.1rem;
-    margin-right: 0.2rem;
-}
+a:link { text-decoration: none; text-shadow: 0 0 24px; }
+a:visited { text-decoration: none; text-shadow: 0 0 24px; }
