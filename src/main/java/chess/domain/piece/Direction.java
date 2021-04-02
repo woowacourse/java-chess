@@ -81,7 +81,7 @@ public enum Direction {
         return yDegree;
     }
 
-    public int getUnit() {
-        return (int) Math.sqrt(xDegree * xDegree + yDegree * yDegree);
+    public double getUnit() {
+        return Math.sqrt(xDegree * xDegree + yDegree * yDegree);
     }
 }
