@@ -79,8 +79,11 @@
 
 
 ## 4단계
-- [ ] ChessBoard에 대한 html파일을 만든다.
-- [ ] ChessBoard에 대한 css파일을 만든다.
-- [ ] ChessBoard에서 클릭하는 부분 자바스크립트 작성.
-- [ ] ChessBoard에서 클릭한 정보 백엔드로 전송
-- [ ] 백엔드에서 rest api 작성
+- [x] ChessBoard에 대한 html파일을 만든다.
+- [x] ChessBoard에 대한 css파일을 만든다.
+- [x] ChessBoard에서 클릭하는 부분 자바스크립트 작성.
+- [x] ChessBoard에서 클릭한 정보 백엔드로 전송
+- [x] 백엔드에서 rest api 작성
+
+## 5단계
+- [x] 진행중이던 게임을 불러오는 Db 구현.
