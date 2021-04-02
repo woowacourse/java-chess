@@ -114,4 +114,8 @@ public class ChessBoard {
         return Arrays.stream(Rank.values())
                 .map(rank -> Position.of(file, rank));
     }
+
+    public Map<Position, Piece> board() {
+        return Collections.unmodifiableMap(this.board);
+    }
 }
