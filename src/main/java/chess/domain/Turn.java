@@ -20,4 +20,9 @@ public class Turn {
     public Player player() {
         return player;
     }
+
+    public Player nextPlayer() {
+        next();
+        return player();
+    }
 }

@@ -3,6 +3,7 @@ const button = document.querySelector("button");
 let gameFinished = false;
 
 createChessBoard();
+
 $chessBoard.addEventListener("click", clickPosition);
 button.addEventListener("click", restart);
 
@@ -12,8 +13,7 @@ function createChessBoard() {
 }
 
 function initChessBoard() {
-    const turnText = document.createElement("h2");
-    turnText.innerHTML = "현재 턴 : <span id='user-turn'> WHITE</span>";
+    //const turnText = document.createElement("h2");
 
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement("div");
@@ -36,7 +36,8 @@ function initChessBoard() {
             chessBoardRow.appendChild(chessBoardColumn);
         }
         $chessBoard.appendChild(chessBoardRow);
-        $chessBoard.appendChild(turnText);
+        changeTurn();
+        //$chessBoard.appendChild(turnText);
     }
 }
 
@@ -142,7 +143,7 @@ function move(from, to) {
             return;
         }
         changeImg(from, to);
-        changeTurnText();
+        changeTurn();
         if (obj.code === "300") {
             alert(obj.turn + " 승리!");
             gameFinished = true;
@@ -160,13 +161,26 @@ function changeImg(fromPosition, toPosition) {
     to.appendChild(piece);
 }
 
-function changeTurnText() {
-    if (document.getElementById("user-turn").innerText === 'WHITE') {
-        document.getElementById("user-turn").innerText = 'BLACK';
-        return;
-    }
-    document.getElementById("user-turn").innerText = 'WHITE';
+async function changeTurn() {
+    const turn = await fetch("/turn", {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    });
+    const turnMessage = document.querySelector(".turn");
+    turnMessage.textContent = turn;
 }
+
+// function changeTurnText() {
+//     if (document.getElementById("user-turn").innerText === 'WHITE') {
+//         document.getElementById("user-turn").innerText = 'BLACK';
+//         return;
+//     }
+//     document.getElementById("user-turn").innerText = 'WHITE';
+// }
 
 function restart() {
     fetch("/restart", {
@@ -207,4 +221,6 @@ async function syncBoard() {
         piece.src = "img/" + pieces[i] + ".png";
         position.appendChild(piece);
     }
+
+    changeTurn();
 }

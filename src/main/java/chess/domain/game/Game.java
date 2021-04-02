@@ -38,6 +38,10 @@ public class Game {
         return turn.player();
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
     public Player winner() {
         turn.next();
         return turn.player();

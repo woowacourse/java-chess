@@ -18,7 +18,10 @@ public class WebUIChessApplication {
         final ChessService chessService = new ChessService();
 
         get("/", (req, res) -> {
+            System.out.println("어디에서ㅜㅜㅠㅠ?ㅠ???ㅠ?ㅠ?");
             Map<String, Object> model = new HashMap<>();
+            chessService.init();
+            System.out.println("에러가??????ㅠㅠ?ㅠ/ㅠ/ㅠ/ㅠ??????????");
             return render(model, "index.html");
         });
 
