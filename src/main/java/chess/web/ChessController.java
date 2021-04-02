@@ -22,31 +22,32 @@ public class ChessController {
     }
 
     public JsonElement showChessBoard(Request request, Response response) throws SQLException {
-        response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomId"));
+        int roomId = parseRoomId(request, response);
         BoardDTO boardDTO = chessService.findLatestBoardByRoomId(roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement move(Request request, Response response) throws SQLException {
-        response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomId"));
+        int roomId = parseRoomId(request, response);
         MoveRequestDTO moveRequestDTO = GSON.fromJson(request.body(), MoveRequestDTO.class);
         BoardDTO boardDTO = chessService.move(moveRequestDTO, roomId);
         return GSON.toJsonTree(boardDTO);
     }
 
     public JsonElement showResult(Request request, Response response) throws SQLException {
-        response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomId"));
+        int roomId = parseRoomId(request, response);
         ResultDTO resultDTO = chessService.calculateResult(roomId);
         return GSON.toJsonTree(resultDTO);
     }
 
     public JsonElement restart(Request request, Response response) throws SQLException {
-        response.type(RESPONSE_JSON);
-        int roomId = Integer.parseInt(request.params(":roomId"));
+        int roomId = parseRoomId(request, response);
         chessService.resetHistoriesByRoomId(roomId);
         return GSON.toJsonTree("/");
+    }
+
+    private int parseRoomId(Request request, Response response) {
+        response.type(RESPONSE_JSON);
+        return Integer.parseInt(request.params(":roomId"));
     }
 }
