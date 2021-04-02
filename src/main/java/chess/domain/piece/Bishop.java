@@ -17,8 +17,8 @@ public class Bishop extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('c', '1'),
             Position.of('f', '1'));
 
-    public Bishop(String name, Color color, Score score) {
-        super(name, color, score, new BishopMoveStrategy());
+    public Bishop(String name, Color color) {
+        super(name, color, SCORE, new BishopMoveStrategy());
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Bishop extends Piece {
 
     public static Map<Position, Bishop> generate() {
         Map<Position, Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .collect(Collectors.toMap(position -> position, position -> new Bishop("B", Color.BLACK, SCORE)));
+                .collect(Collectors.toMap(position -> position, position -> new Bishop("B", Color.BLACK)));
         Map<Position, Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .collect(Collectors.toMap(position -> position, position -> new Bishop("b", Color.WHITE, SCORE)));
+                .collect(Collectors.toMap(position -> position, position -> new Bishop("b", Color.WHITE)));
         blackBishops.putAll(whiteBishops);
         return blackBishops;
     }

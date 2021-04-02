@@ -1,22 +1,30 @@
-body {
-    margin: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+#title {
+    font-family: 'Jua', sans-serif;
+    font-size: 50px;
+    padding-left: 320px;
+    margin: 0;
+}
+
+#wrapper {
+    display: grid;
+    grid-template-columns: 60% 40%;
 }
 
 #board {
-    border: 48px solid #462921;
+    border: 20px solid #462921;
     width: 600px;
-    margin: 0 auto;
+    margin-left: 100px;
     display: grid;
-    grid-gap: 0;
     grid-template-columns: repeat(8, 75px);
     grid-template-rows: repeat(8, 75px);
-    grid-auto-flow: row;
 }
 
 .box {
-    padding: 20px;
+    padding: 14px;
     font-size: 150%;
-    background-color: #b5915f;
+    background-color: #f0d9b5;
     color: #000;
     text-align: center;
 }
@@ -29,7 +37,7 @@ body {
 .box:nth-child(40) ~ .box:nth-child(-2n+47),
 .box:nth-child(48) ~ .box:nth-child(-2n+56),
 .box:nth-child(56) ~ .box:nth-child(-2n+63) {
-    background-color: #441a03;
+    background-color: #b58863;
 }
 
 .suggest {
@@ -44,3 +52,23 @@ body {
 
     cursor: pointer;
 }
+
+.status {
+    margin-bottom: 70px;
+}
+
+.score {
+    font-family: 'Jua', sans-serif;
+    font-size: 35px;
+}
+
+.name {
+    font-family: 'Jua', sans-serif;
+    font-size: 20px;
+}
+
+.piece {
+    cursor: pointer;
+}
+
+
