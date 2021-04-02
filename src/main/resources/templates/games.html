@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게임 선택</title>
+</head>
+<body>
+<ul class="game_list">
+    {{#user}}
+    <form action="/logout" method="post">
+        <button type="submit"> {{user}}님 로그아웃</button>
+    </form>
+    {{/user}}
+    {{^user}}
+    <form action="/" method="get">
+        <button type="submit"> 로그인</button>
+    </form>
+    {{/user}}
+
+    {{#games}}
+    <form action="/games/{{gameId}}" method="get">
+        {{#end}}
+        {{#gameId}}
+        <button type="submit">이미 종료된 {{gameId}}번 게임</button>
+        {{/gameId}}
+        {{/end}}
+        {{^end}}
+        {{#gameId}}
+        <button type="submit">{{gameId}}번 게임 진행중</button>
+        {{/gameId}}
+        {{/end}}
+    </form>
+    {{/games}}
+    {{^games}}
+    <a>진행 중인 게임이 없습니다.</a>
+    {{/games}}
+</ul>
+<form action="/start" method="post">
+    <button>새로운 게임 시작</button>
+</form>
+</body>
+</html>
