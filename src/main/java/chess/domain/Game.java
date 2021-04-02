@@ -40,10 +40,10 @@ public class Game {
         }
         board.move(source, to);
         turn = turn.reversed();
-        RefreshState();
+        refreshState();
     }
 
-    private void RefreshState() {
+    private void refreshState() {
         if (board.kingDead()) {
             changeState(new End());
         }
