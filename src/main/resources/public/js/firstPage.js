@@ -7,6 +7,7 @@ import {initChessBoard} from "./initialize.js";
 import {player1} from "./movement.js";
 import {player2} from "./movement.js";
 import {addChessBoardEvent} from "./movement.js";
+import {checkIsPlaying} from "./movement.js";
 
 loadFirstPage();
 
@@ -44,6 +45,7 @@ function loadPrevGame() {
         })
         .then(data => {
             initializeChessBoard(data);
+            checkIsPlaying(data);
         })
         .catch(error => {
             console.log(error)

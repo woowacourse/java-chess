@@ -91,7 +91,7 @@ function updateTurn(currentTurnTeam) {
     }
 }
 
-function checkIsPlaying(data) {
+export function checkIsPlaying(data) {
     if (!data.isPlaying) {
         alert(data.currentTurnTeam + "팀의 왕이 잡혔습니다! 게임이 종료됩니다!");
         player1.style.display = "none";
@@ -99,4 +99,5 @@ function checkIsPlaying(data) {
         chessBoard.style.display = "none";
         finishGame(data);
     }
+    return data.isPlaying;
 }
