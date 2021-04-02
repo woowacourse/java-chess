@@ -51,6 +51,10 @@ public class Position {
         return this.rank == rank;
     }
 
+    public String getNotation() {
+        return this.file.getLetter() + rank.getLetter();
+    }
+
     @Override
     public String toString() {
         return file.getLetter() + rank.getLetter();
