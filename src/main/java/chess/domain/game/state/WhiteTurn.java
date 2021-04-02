@@ -44,6 +44,6 @@ public class WhiteTurn extends Running {
 
     @Override
     public String state() {
-        return "WhiteTurn";
+        return "백색 차례";
     }
 }

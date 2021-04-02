@@ -15,6 +15,6 @@ public class BlackWin extends Finished {
 
     @Override
     public String state() {
-        return "BlackWin";
+        return "흑색 승리";
     }
 }

@@ -91,6 +91,6 @@ class WhiteWinTest {
     @Test
     @DisplayName("백색 승리 상태에서 state 명령시 백색 승리 반환")
     void testState() {
-        assertThat(this.whiteWin.state()).isEqualTo("WhiteWin");
+        assertThat(this.whiteWin.state()).isEqualTo("백색 승리");
     }
 }

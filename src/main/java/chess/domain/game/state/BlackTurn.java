@@ -44,6 +44,6 @@ public class BlackTurn extends Running {
 
     @Override
     public String state() {
-        return "BlackTurn";
+        return "흑색 차례";
     }
 }

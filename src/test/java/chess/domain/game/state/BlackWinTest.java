@@ -91,6 +91,6 @@ class BlackWinTest {
     @Test
     @DisplayName("흑색 승리에서 state 명령시 흑색 승리 반환")
     void testState(){
-        assertThat(this.blackWin.state()).isEqualTo("BlackWin");
+        assertThat(this.blackWin.state()).isEqualTo("흑색 승리");
     }
 }

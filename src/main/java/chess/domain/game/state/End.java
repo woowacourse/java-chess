@@ -67,6 +67,6 @@ public class End extends Ended {
 
     @Override
     public String state() {
-        return "End";
+        return "종료";
     }
 }

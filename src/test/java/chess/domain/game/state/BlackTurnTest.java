@@ -118,6 +118,6 @@ class BlackTurnTest {
     @Test
     @DisplayName("흑색 차례에서 state 명령시 흑색 차례 반환")
     void testState(){
-        assertThat(this.blackTurn.state()).isEqualTo("BlackTurn");
+        assertThat(this.blackTurn.state()).isEqualTo("흑색 차례");
     }
 }

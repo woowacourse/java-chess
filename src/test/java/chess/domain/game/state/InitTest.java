@@ -38,9 +38,9 @@ public class InitTest {
     }
 
     @Test
-    @DisplayName("초기 상태에서 board 명령시 예외 반환")
-    void testBoardException() {
-        assertThatThrownBy(() -> this.init.board()).isInstanceOf(IllegalStateException.class);
+    @DisplayName("초기 상태에서 board 명령시 보드 반환")
+    void testBoard() {
+        assertThat(this.init.board()).isInstanceOf(Board.class);
     }
 
     @Test
@@ -89,6 +89,6 @@ public class InitTest {
     @Test
     @DisplayName("초기 상태에서 state 명령시 초기 상태 반환")
     void testState() {
-        assertThat(this.init.state()).isEqualTo("Init");
+        assertThat(this.init.state()).isEqualTo("게임 시작 전");
     }
 }
