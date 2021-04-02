@@ -133,7 +133,7 @@ function initChessBoardColor(row, column) {
 }
 
 function initCurrentTurn(data) {
-    if (data.currentTurnTeam === "whiteTeam") {
+    if (data.currentTurnTeam === "white") {
         whiteTeamCurrentTurn.innerText = "Current Turn";
         blackTeamCurrentTurn.innerText = "";
     } else {

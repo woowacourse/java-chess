@@ -82,7 +82,7 @@ export function updateScoreUI(whiteTeamScore, blackTeamScore) {
 }
 
 function updateTurn(currentTurnTeam) {
-    if (currentTurnTeam === "blackTeam") {
+    if (currentTurnTeam === "black") {
         whiteTeamCurrentTurn.innerText = "";
         blackTeamCurrentTurn.innerText = "Current Turn";
     } else {
@@ -93,7 +93,7 @@ function updateTurn(currentTurnTeam) {
 
 function checkIsPlaying(data) {
     if (!data.isPlaying) {
-        alert(data.currentTurnTeam + "의 왕이 잡혔습니다! 게임이 종료됩니다!");
+        alert(data.currentTurnTeam + "팀의 왕이 잡혔습니다! 게임이 종료됩니다!");
         player1.style.display = "none";
         player2.style.display = "none";
         chessBoard.style.display = "none";
