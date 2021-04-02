@@ -5,6 +5,7 @@ startButton.addEventListener("click", clickStart);
 function createChessBoard() {
     makeTable();
     syncBoard();
+    changeTurn();
     addEvent();
 }
 
@@ -76,11 +77,12 @@ async function move(from, to) {
 
     if(response.code === "200") {
         changeImage(from, to);
-        changeTurn(response.turn);
+        await changeTurn();
     }
     else if(response.code === "300") {
         changeImage(from, to);
-        changeTurn(response.turn);
+        const currentTurn = document.querySelector('.turn');
+        currentTurn.textContent = response.turn;
         alert(response.message + "가 승리했습니다!");
     }
     else if(response.code === "400") {
@@ -98,7 +100,15 @@ function changeImage(sourcePosition, targetPosition) {
     target.appendChild(piece);
 }
 
-function changeTurn(turn) {
+async function changeTurn() {
+    const turn = await fetch('/currentTurn',{
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    });
     const currentTurn = document.querySelector('.turn');
     currentTurn.textContent = turn;
 }
@@ -111,6 +121,7 @@ function clickStart() {
         }
     }).then(function () {
         syncBoard();
+        changeTurn();
     });
 }
 

@@ -36,6 +36,10 @@ public class WebUIChessApplication {
         post("/currentBoard", (req, res) -> {
             return chessService.getCurrentBoard();
         }, jsonTransformer);
+        post("/currentTurn", (req, res) -> {
+            return chessService.turn();
+        }, jsonTransformer);
+
 
     }
 

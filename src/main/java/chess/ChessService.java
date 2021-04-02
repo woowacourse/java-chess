@@ -61,6 +61,10 @@ public class ChessService {
         return boardDTO;
     }
 
+    public String turn() throws SQLException {
+        return currentTurn().name();
+    }
+
     private Side currentTurn() throws SQLException {
         return boardDAO.findTurn(GameNumber);
     }
