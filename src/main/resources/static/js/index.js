@@ -4,9 +4,9 @@ import pieceFonts from "./enum/chessPieceFont.js"
 const $chessboard = document.querySelector('#chessboard');
 const $startBtn = document.querySelector('#startBtn');
 const $resetBtn = document.querySelector('#resetBtn');
+const $blackScore = document.querySelector('#blackScore')
+const $whiteScore = document.querySelector('#whiteScore')
 
-const BLACK_PIECES = ["♜", "♝", "♚", "♞", "♟", "♛"];
-const WHITE_PIECES = ["♖", "♙", "♗", "♔", "♘", "♕"];
 let nextColor;
 
 $chessboard.addEventListener("click", onClickPiece);
@@ -15,6 +15,7 @@ $resetBtn.addEventListener("click", onClickStartBtn);
 
 async function start() {
     const piecesData = await getFetch("/game/start");
+    await calculateScore();
     setBoard(piecesData.piecesAndPositions);
     nextColor = piecesData.color;
 }
@@ -38,6 +39,13 @@ async function movePiece(from, to) {
     }
 }
 
+async function calculateScore() {
+    const scoreResponseData = await getFetch("/game/score");
+
+    $blackScore.innerText = scoreResponseData.colorsScore.BLACK;
+    $whiteScore.innerText = scoreResponseData.colorsScore.WHITE;
+}
+
 async function onClickPiece(e) {
     if (e.target && e.target.classList.contains("cell")) {
         if (!checkAnySelected() && !e.target.classList.contains(nextColor)) {
@@ -53,6 +61,7 @@ async function onClickPiece(e) {
         }
         if (checkAnySelected() && notEqualCell(e.target)) {
             await movePiece(getFirstSelected().id, e.target.id);
+            await calculateScore();
             removeSelectedClass();
             return;
         }
@@ -104,7 +113,7 @@ function removeSelectedClass() {
 function setBoard(positionsAndPieces) {
     $chessboard.querySelectorAll(".cell").forEach(e => {
         e.innerText = ""
-        e.classList.remove("WHITE","BLACK");
+        e.classList.remove("WHITE", "BLACK");
     });
     Object.keys(positionsAndPieces).forEach(e => {
         const coordinate = $chessboard.querySelector('#' + e)
