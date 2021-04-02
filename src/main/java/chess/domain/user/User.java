@@ -2,26 +2,18 @@ package chess.domain.user;
 
 public class User {
     private Long id;
-    private String nickname;
+    private String name;
 
-    public User(String nickname) {
-        this.nickname = nickname;
+    public User(String name) {
+        this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
