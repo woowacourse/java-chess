@@ -82,7 +82,6 @@ MainPage.prototype.putChessGame = function (isRestart, isPlaying) {
   .then(function (data) {
     mainPage.isPlaying = data.isPlaying;
     if (mainPage.isPlaying) {
-
       mainPage.templatePieces(data.pieces);
     } else {
       mainPage.deleteAllPieces();

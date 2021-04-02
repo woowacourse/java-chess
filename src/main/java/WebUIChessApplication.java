@@ -37,8 +37,7 @@ public class WebUIChessApplication {
     private static void putChessGame() {
         put("/api/chessGame", (request, response) -> {
             response.type("application/json");
-            ChessGameRequestDto chessGameRequestDto = GSON
-                .fromJson(request.body(), ChessGameRequestDto.class);
+            ChessGameRequestDto chessGameRequestDto = GSON.fromJson(request.body(), ChessGameRequestDto.class);
             return chessGameService.putChessGame(chessGameRequestDto);
         }, GSON::toJson);
     }
