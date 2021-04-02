@@ -69,44 +69,33 @@ public class WebUIChessApplication {
                 chessGame.start();
                 return 200;
             } catch (IllegalArgumentException error) {
+                System.out.println("@@@@@@@@@@@@@");
+                System.out.println(error.getMessage());
                 return 201;
             }
         });
 
         post("/reset", (req, res) -> {
-            try {
-                chessGame.reset();
-                return 200;
-            } catch (IllegalArgumentException error) {
-                return 201;
-            }
+            chessGame.reset();
+            return 200;
         });
 
         post("/save", (req, res) -> {
-            try {
-                Chess chess = new Chess("1", chessGame.gridStringify(), chessGame.turn().name());
-                if (chessDAO.findByChessId("1") == null) {
-                    chessDAO.addChess(chess);
-                }
-                chessDAO.updateChess(chess, chess.getChess(), chess.getTurn());
-                return 200;
-            } catch (IllegalArgumentException error) {
-                return 400;
+            Chess chess = new Chess("1", chessGame.gridStringify(), chessGame.turn().name());
+            if (chessDAO.findByChessId("1") == null) {
+                chessDAO.addChess(chess);
             }
+            chessDAO.updateChess(chess, chess.getChess(), chess.getTurn());
+            return 200;
         });
 
         post("/load", (req, res) -> {
-            try {
-                if (chessDAO.findByChessId("1") == null) {
-                    throw new SQLDataException("저장된 보드가 없습니다.");
-                }
-                Chess chess = chessDAO.findByChessId("1");
-                chessGame.load(chess);
-
-                return 200;
-            } catch (IllegalArgumentException error) {
-                return 201;
+            if (chessDAO.findByChessId("1") == null) {
+                throw new SQLDataException("저장된 보드가 없습니다.");
             }
+            Chess chess = chessDAO.findByChessId("1");
+            chessGame.load(chess);
+            return 200;
         });
     }
 
