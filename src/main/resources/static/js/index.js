@@ -3,7 +3,7 @@ import pieceFonts from "./enum/chessPieceFont.js"
 
 const $chessboard = document.querySelector('#chessboard');
 const $startBtn = document.querySelector('#startBtn');
-const $resetBtn = document.querySelector('#resetBtn');
+const $saveBtn = document.querySelector('#saveBtn');
 const $blackScore = document.querySelector('#blackScore')
 const $whiteScore = document.querySelector('#whiteScore')
 
@@ -11,7 +11,7 @@ let nextColor;
 
 $chessboard.addEventListener("click", onClickPiece);
 $startBtn.addEventListener("click", onClickStartBtn);
-$resetBtn.addEventListener("click", onClickStartBtn);
+$saveBtn.addEventListener("click", onClickSaveBtn);
 
 async function start() {
     const piecesData = await getFetch("/game/start");
@@ -37,6 +37,20 @@ async function movePiece(from, to) {
         $to.classList.add(color);
         nextColor = moveResult.nextColor;
     }
+}
+
+async function savePiece() {
+    const rank = [8,7,6,5,4,3,2,1];
+    const file = ["a","b","c","d","e","g","h"];
+
+    const boardPieces = rank.flatMap(rank => file.map(file => file + rank))
+        .map(position => getKeyByValue(pieceFonts, $chessboard.querySelector("#" + position).innerText))
+        .join("");
+    await postFetch("/game/save", {pieces: boardPieces});
+}
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
 }
 
 async function calculateScore() {
@@ -75,6 +89,12 @@ async function onClickPiece(e) {
 async function onClickStartBtn(e) {
     if (e.target && e.target.id === "startBtn") {
         await start();
+    }
+}
+
+function onClickSaveBtn(e) {
+    if (e.target && e.target.id === "saveBtn") {
+        savePiece();
     }
 }
 
