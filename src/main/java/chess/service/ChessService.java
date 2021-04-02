@@ -27,7 +27,16 @@ public class ChessService {
     }
 
     public void save(SaveRequestDto saveRequestDto) {
-        dao.save(new ChessGame(chessGameManager, saveRequestDto.getPieces()));
+        ChessGame chessGame = new ChessGame(chessGameManager, saveRequestDto.getPieces());
+        if (saveRequestDto.getId() == TEMPORARY_ID) {
+            dao.save(chessGame);
+            return;
+        }
+        update(chessGame);
+    }
+
+    private void update(ChessGame chessGame) {
+        dao.update(chessGame);
     }
 
     public void load(long id) {

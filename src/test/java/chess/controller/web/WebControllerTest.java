@@ -143,7 +143,7 @@ class WebControllerTest {
         HttpPost request = new HttpPost("http://localhost:8081/game/save");
         request.setHeader("Content-Type", "application/json;charset=utf-8");
 
-        SaveRequestDto saveRequestDto = new SaveRequestDto("RKBQKBKRPPPPPPPP........................p........ppppppprkbqkbkr");
+        SaveRequestDto saveRequestDto = new SaveRequestDto(0,"RKBQKBKRPPPPPPPP........................p........ppppppprkbqkbkr");
         String jsonValue = gson.toJson(saveRequestDto);
         HttpEntity httpEntity = new StringEntity(jsonValue, "utf-8");
         request.setEntity(httpEntity);

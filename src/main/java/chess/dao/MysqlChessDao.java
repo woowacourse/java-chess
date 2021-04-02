@@ -61,7 +61,7 @@ public class MysqlChessDao {
     public void update(ChessGame entity) {
         String query =
                 "UPDATE CHESSGAME " +
-                        "SET pieces = ?, running = ? , nextturn = ?" +
+                        "SET pieces = ?, running = ? , next_turn = ?" +
                         "WHERE id = ?";
 
         try (Connection connection = ChessConnection.getConnection();
