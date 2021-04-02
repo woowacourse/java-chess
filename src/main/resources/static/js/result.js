@@ -5,6 +5,11 @@ function showResult() {
         if (isValidHttpResponse(this)) {
             const resultDTO = JSON.parse(this.responseText);
             printResult(resultDTO);
+            return;
+        }
+        if (isGameNotFinished(this)) {
+            alert('게임이 아직 종료되지 않았습니다.');
+            window.location = getBaseUrl();
         }
     }
     xmlHttp.open('GET', url, true);
@@ -17,6 +22,10 @@ function getBaseUrl() {
 
 function isValidHttpResponse(xmlHttp) {
     return xmlHttp.readyState === 4 && xmlHttp.status === 200;
+}
+
+function isGameNotFinished(xmlHttp) {
+    return xmlHttp.readyState === 4 && xmlHttp.status === 500;
 }
 
 function printResult(resultDTO) {
