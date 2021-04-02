@@ -25,6 +25,10 @@ public class ChessGameStatistics {
         return Collections.unmodifiableMap(colorsScore);
     }
 
+    public MatchResult getMatchResult() {
+        return matchResult;
+    }
+
     public String getResultText() {
         return this.matchResult.getText();
     }

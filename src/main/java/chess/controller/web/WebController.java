@@ -3,8 +3,10 @@ package chess.controller.web;
 import chess.controller.web.dto.BasicResponseDto;
 import chess.controller.web.dto.MoveRequestDto;
 import chess.controller.web.dto.MoveResponseDto;
+import chess.controller.web.dto.ScoreResponseDto;
 import chess.controller.web.dto.StartResponseDto;
 import chess.controller.web.dto.WebResponseDto;
+import chess.domain.statistics.ChessGameStatistics;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,6 +42,13 @@ public class WebController {
                 chessService.start();
                 response.type("application/json; charset=utf-8");
                 return BasicResponseDto.createSuccessResponseDto(new StartResponseDto(chessService.nextColor(), chessService.getPieces()));
+            }, gson::toJson);
+
+            get("/score", (request, response) -> {
+                ChessGameStatistics statistics = chessService.getStatistics();
+                statistics.getColorsScore();
+                response.type("application/json; charset=utf-8");
+                return BasicResponseDto.createSuccessResponseDto(new ScoreResponseDto(chessService.getStatistics()));
             }, gson::toJson);
 
             post("/move", (request, response) -> {

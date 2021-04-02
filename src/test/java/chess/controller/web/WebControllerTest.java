@@ -2,7 +2,6 @@ package chess.controller.web;
 
 import chess.controller.web.dto.MoveRequestDto;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,10 +46,10 @@ class WebControllerTest {
         // Given
         // When
         JsonObject basicResponseDto = callStartRestApi();
-        JsonElement data = basicResponseDto.get("data");
-        JsonElement isStart = data.getAsJsonObject().get("isStart");
+        boolean isError = basicResponseDto.get("isError").getAsBoolean();
+
         // Then
-        assertThat(isStart.getAsBoolean()).isTrue();
+        assertThat(isError).isFalse();
     }
 
     private JsonObject callStartRestApi() throws IOException {
@@ -102,5 +101,29 @@ class WebControllerTest {
 
         // Then
         assertThat(errorJson.get("errorMsg").getAsString()).isEqualTo(expectedErrorMsg);
+    }
+
+    @DisplayName("/game/score API 요청 시 칼라별 점수를 알 수 있는지 확인")
+    @Test
+    void whenCallGetScoreApi() throws IOException {
+        // given
+        callStartRestApi();
+        // when
+        HttpGet request = new HttpGet("http://localhost:8081/game/score");
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+        String responseEntity = EntityUtils.toString(response.getEntity());
+        JsonObject responseJson = gson.fromJson(responseEntity, JsonObject.class);
+        JsonObject scoreResponseJson = responseJson.get("data").getAsJsonObject();
+
+        String matchResult = scoreResponseJson.get("matchResult").getAsString();
+        JsonObject colorsScore = scoreResponseJson.get("colorsScore").getAsJsonObject();
+
+        double blackScore = colorsScore.get("BLACK").getAsDouble();
+        double whiteScore = colorsScore.get("WHITE").getAsDouble();
+
+        // then
+        assertThat(matchResult).isEqualTo("무승부");
+        assertThat(blackScore).isEqualTo(38.0);
+        assertThat(whiteScore).isEqualTo(38.0);
     }
 }
