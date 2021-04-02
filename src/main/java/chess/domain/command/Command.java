@@ -13,7 +13,7 @@ public enum Command {
         chessGame.move(Point.of(arguments.get(0)), Point.of(arguments.get(1)))),
     STATUS("status", 0, (chessGame, arguments) -> chessGame.status());
 
-    public static final int ARGUMENT_START_INDEX = 1;
+    private static final int ARGUMENT_START_INDEX = 1;
     private static final int OPERATION_INDEX = 0;
     private static final String DELIMITER = " ";
 
