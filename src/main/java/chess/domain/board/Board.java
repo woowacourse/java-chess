@@ -49,7 +49,7 @@ public class Board {
         }
     }
 
-    public Path generateAvailablePath(Piece piece) {
+    private Path generateAvailablePath(Piece piece) {
         return piece.generatePaths(findPositionBy(piece), this);
     }
 
