@@ -30,6 +30,13 @@ public abstract class PieceOnBoard implements Piece {
         this.currentPosition = currentPosition;
     }
 
+    public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position currentPosition, State state){
+        this.teamColor = teamColor;
+        this.pieceType = pieceType;
+        this.currentPosition = currentPosition;
+        this.state = state;
+    }
+
     @Override
     public String getPieceName() {
         if (teamColor == TeamColor.BLACK) {

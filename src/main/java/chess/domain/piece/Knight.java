@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
+import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
@@ -16,6 +17,10 @@ public class Knight extends PieceOnBoard {
 
     public Knight(TeamColor teamColor, Position position) {
         super(teamColor, PieceInformation.KNIGHT, position);
+    }
+
+    public Knight(TeamColor teamColor, Position position, State state) {
+        super(teamColor, PieceInformation.KNIGHT, position, state);
     }
 
     @Override

@@ -16,7 +16,9 @@ import chess.domain.team.PieceSet;
 import chess.domain.team.WhiteSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     public static final int BLACK_NOT_PAWN_LINE = 7;
@@ -36,9 +38,24 @@ public class ChessBoard {
     }
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
-        this.whitePieces = new WhiteSet();
-        this.blackPieces = new BlackSet();
+        this.whitePieces = initWhiteSet(chessBoard);
+        this.blackPieces = initBlackSet(chessBoard);
         this.gameState = new Running(chessBoard, TeamColor.WHITE);
+    }
+
+    private PieceSet initBlackSet(Map<Position, Piece> chessBoard) {
+        List<Piece> blacks = chessBoard.values().stream()
+                .filter(piece -> piece.getColor() == TeamColor.BLACK)
+                .collect(Collectors.toList());
+        return new BlackSet(blacks);
+
+    }
+
+    private PieceSet initWhiteSet(Map<Position, Piece> chessBoard) {
+        List<Piece> whites = chessBoard.values().stream()
+                .filter(piece -> piece.getColor() == TeamColor.WHITE)
+                .collect(Collectors.toList());
+        return new WhiteSet(whites);
     }
 
     private Map<Position, Piece> initBoard() {

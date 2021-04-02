@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
+import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
@@ -18,6 +19,9 @@ public class King extends PieceOnBoard {
         super(teamColor, PieceInformation.KING, position);
     }
 
+    public King(TeamColor teamColor, Position position, State state){
+        super(teamColor, PieceInformation.KING, position, state);
+    }
     @Override
     public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();

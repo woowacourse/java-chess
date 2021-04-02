@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
+import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 import java.util.HashSet;
@@ -16,6 +17,10 @@ public class Queen extends PieceOnBoard {
 
     public Queen(TeamColor teamColor, Position position) {
         super(teamColor, PieceInformation.QUEEN, position);
+    }
+
+    public Queen(TeamColor teamColor, Position position, State state) {
+        super(teamColor, PieceInformation.QUEEN, position, state);
     }
 
     @Override

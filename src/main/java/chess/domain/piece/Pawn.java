@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
+import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 import java.util.HashSet;
@@ -15,6 +16,10 @@ public class Pawn extends PieceOnBoard {
 
     public Pawn(TeamColor teamColor, Position position) {
         super(teamColor, PieceInformation.PAWN, position);
+    }
+
+    public Pawn(TeamColor teamColor, Position position, State state) {
+        super(teamColor, PieceInformation.PAWN, position, state);
     }
 
     @Override

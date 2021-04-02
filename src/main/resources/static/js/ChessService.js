@@ -18,6 +18,10 @@ export default class ChessService {
         const response = await fetch(`${this.baseUrl}/chessboard`);
         return response.json();
     }
+    async getChessBoardSaved() {
+        const response = await fetch(`${this.baseUrl}/chessboard/saved`);
+        return response.json();
+    }
 
     async getResult() {
         const response = await fetch(`${this.baseUrl}/chessboard/result`);
@@ -33,6 +37,6 @@ export default class ChessService {
         return await fetch(`${this.baseUrl}/chessboard/save`, {
             method: "POST",
             headers: this.headers
-        });
+        }).then(response => response.json());
     }
 }

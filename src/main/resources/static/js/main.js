@@ -7,11 +7,14 @@ const $results = document.querySelector(".results");
 const $resultBtn = document.querySelector(".result-btn");
 const $resultDisplay = document.querySelector(".result-display");
 const $isPlaying = document.querySelector(".isPlaying");
+const $startSaved = document.querySelector(".startSaved");
 const $saving = document.querySelector(".saving");
+console.log($saving);
 
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 function drawTable(data) {
+  console.log(data)
   let innerValue = `<div class="row">
             <div class="position"></div>
             <div class="position">a</div>
@@ -62,20 +65,20 @@ function modifyBtns() {
   $chessTable.classList.add('hidden')
 }
 
-$isPlaying.addEventListener("click", ()=>apiService.getChessBoard().then(drawTable).then(modifyBtns));
+$isPlaying.addEventListener("click", ()=>apiService.getChessBoard().then(drawTable).then(() => modifyBtns()));
 
-function modifySaving() {
-  if($isPlaying.innerText === "START SAVED"){
-    $isPlaying.innerText= 'SAVE';
-    return;
-  }
-  apiService.saveBoard().then(showResult)
+function modifySavingBtns() {
   $chessTable.classList.add('hidden')
 }
 
 
+function modifyStartSavedBtn() {
+  $chessTable.classList.remove("hidden");
+  $results.classList.remove('hidden');
+}
 
-$saving.addEventListener("click", modifySaving)
+$startSaved.addEventListener("click", () => apiService.getChessBoardSaved().then(drawTable).then(modifyStartSavedBtn));
+$saving.addEventListener("click", () => apiService.saveBoard().then(showResult).then(modifySavingBtns))
 
 let sourcePosition;
 let targetPosition;
@@ -104,6 +107,7 @@ function checkIfBoard(event) {
 
 
 function showResult(data) {
+  console.log(data)
   const result = data['result'];
   const blackScore = result['BLACK']['score'];
   const whiteScore = result['WHITE']['score'];
