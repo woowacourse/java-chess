@@ -1,3 +1,10 @@
+const $searchPageButton = document.querySelector("#search-page");
+$searchPageButton.addEventListener("click", onSearchPage);
+
+async function onSearchPage(event) {
+    location.replace("/search/search-page");
+}
+
 const $createGame = document.querySelector("#createGame");
 $createGame.addEventListener("click", onCreateGame);
 

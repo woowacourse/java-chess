@@ -66,8 +66,6 @@ async function state(chessGame) {
     }
 
     if (messageTag1.innerText.includes(" 승리")) {
-        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
-
         const response = await fetch(gameName + "/score", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}

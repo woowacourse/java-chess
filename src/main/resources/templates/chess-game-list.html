@@ -12,8 +12,16 @@
 
   <div class="chess-game-room-list">
 
+    <br>
     <div class="col-md-3 col-sm-3 col-xs-6">
-      <a id="createGame" href="javascript:void(0)" class="btn btn-sm animated-button victoria-one create-game">새로운 게임 생성</a>
+      <a id="search-page" href="javascript:void(0)"
+         class="btn btn-sm animated-button victoria-one create-game">전적 검색 페이지</a>
+    </div>
+
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a id="createGame" href="javascript:void(0)"
+         class="btn btn-sm animated-button victoria-one create-game">새로운 게임 생성</a>
     </div>
     <br>
     <hr/>
@@ -21,7 +29,8 @@
 
     <div class="game-ids" align="center">
       {{#gameNames}}
-      <a align="center" href="javascript:void(0)" id="{{.}}" class="btn btn-sm animated-button victoria-one game-list">{{.}}</a>
+      <a align="center" href="javascript:void(0)" id="{{.}}"
+         class="btn btn-sm animated-button victoria-one game-list">{{.}}</a>
       {{/gameNames}}
     </div>
     <br>

@@ -3,6 +3,7 @@ package chess.dao;
 import chess.dto.PlayerIdsDto;
 import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
+import chess.dto.UserIdsDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -54,7 +55,7 @@ public class ChessDao {
         }
     }
 
-    public List<String> gameNames() throws SQLException {
+    public List<String> runningGameNames() throws SQLException {
         String query = "SELECT game_name FROM game ORDER BY game_id DESC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -125,5 +126,57 @@ public class ChessDao {
         }
 
         return new CommandsDto(commands);
+    }
+
+    public List<CommandsDto> findCommandsByUserIds(final String userId) throws SQLException {
+        List<CommandsDto> commandsDtos = new ArrayList<>();
+        for (String gameId : findGameIdByUserId(userId)) {
+            findCommandsByUserId(gameId, commandsDtos);
+        }
+        return commandsDtos;
+    }
+
+    private List<String> findGameIdByUserId(final String userId) throws SQLException {
+        String query = "SELECT game_id FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, userId);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<String> gameIds = new ArrayList<>();
+        while(rs.next()) {
+            gameIds.add(rs.getString("game_id"));
+        }
+
+        return gameIds;
+    }
+
+    private void findCommandsByUserId(String gameId, List<CommandsDto> commandsDtos) throws SQLException {
+        String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<String> commands = new ArrayList<>();
+        while(rs.next()) {
+            commands.add(rs.getString("command"));
+        }
+
+        commandsDtos.add(new CommandsDto(commands));
+    }
+
+    public List<UserIdsDto> findUserIdsByUserId(final String userId) throws SQLException {
+        String query = "SELECT white_user, black_user FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, userId);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<UserIdsDto> userIdsDtos = new ArrayList<>();
+        while(rs.next()) {
+            userIdsDtos.add(new UserIdsDto(rs.getString("white_user"), rs.getString("black_user")));
+        }
+
+        return userIdsDtos;
     }
 }

@@ -8,10 +8,12 @@ import chess.domain.game.Score;
 import chess.domain.piece.Piece;
 import chess.dto.ChessGameDto;
 import chess.dto.ScoreDto;
+import chess.dto.SearchResultDto;
 import chess.dto.SquareDto;
 import chess.dto.MovableResponseDto;
 import chess.dto.PositionDto;
 import chess.dto.RankDto;
+import chess.dto.UserIdsDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,5 +63,16 @@ public class DtoAssembler {
 
     public static ScoreDto scoreDto(final Score score) {
         return new ScoreDto(score.white(), score.black());
+    }
+
+    public static List<SearchResultDto> searchResultDto(final List<String> states, final List<UserIdsDto> userIdsDtos, final List<ScoreDto> scoreDtos) {
+        List<SearchResultDto> searchResultDtos = new ArrayList<>();
+
+        for (int i = 0; i < states.size(); i++) {
+            searchResultDtos
+                .add(new SearchResultDto(states.get(i), userIdsDtos.get(i), scoreDtos.get(i)));
+        }
+
+        return searchResultDtos;
     }
 }

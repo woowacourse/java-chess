@@ -192,3 +192,8 @@ a.animated-button.victoria-one:after {
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
   transform: translateX(-50%) translateY(-50%) rotate(-25deg);
 }
+
+.search-bar {
+  width: 90%;
+  text-align: center;
+}
