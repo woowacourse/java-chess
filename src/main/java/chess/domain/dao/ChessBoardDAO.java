@@ -1,7 +1,9 @@
 package chess.domain.dao;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ChessBoardDAO {
@@ -45,22 +47,26 @@ public class ChessBoardDAO {
 
     public void addPosition(ChessBoardDTOForDAO eachPosition) throws SQLException {
 
-            String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
+        String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
 
-            PreparedStatement pstmt = getConnection().prepareStatement(query);
-            pstmt.setString(1, eachPosition.getPosition());
-            pstmt.setString(2, eachPosition.getTeamColor());
-            pstmt.setString(3, eachPosition.getPieceType());
-            pstmt.setString(4, eachPosition.getAlive());
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, eachPosition.getPosition());
+        pstmt.setString(2, eachPosition.getTeamColor());
+        pstmt.setString(3, eachPosition.getPieceType());
+        pstmt.setString(4, eachPosition.getAlive());
 
-            pstmt.executeUpdate();
+        pstmt.executeUpdate();
 
+    }
+
+    public void addPositions(List<ChessBoardDTOForDAO> board) throws SQLException {
+        for (ChessBoardDTOForDAO eachPosition : board) {
+            addPosition(eachPosition);
         }
+    }
 
 
-
-        //Statement 생성 후 실행할 쿼리정보 등록 Statement stmt = conn.createStatement(); //결과를 담을 ResultSet 생성 후 결과 담기 ResultSet rs = stmt.executeQuery(sql); //결과를 담을 ArrayList생성 ArrayList<UserBean> list = new ArrayList<UserBean>(); //ResultSet에 담긴 결과를 ArrayList에 담기 while(rs.next()) { UserBean bean = new UserBean(); bean.setId(rs.getString("ID")); bean.setName(rs.getString("NAME")); bean.setEmail(rs.getString("EMAIL")); list.add(bean); } //결과물 출력 for(int i=0; i<list.size(); i++) { System.out.println("회원아이디:"+list.get(i).getId()); System.out.println("회원이름:"+list.get(i).getName()); System.out.println("회원이메일:"+list.get(i).getEmail()); }
-
+    //Statement 생성 후 실행할 쿼리정보 등록 Statement stmt = conn.createStatement(); //결과를 담을 ResultSet 생성 후 결과 담기 ResultSet rs = stmt.executeQuery(sql); //결과를 담을 ArrayList생성 ArrayList<UserBean> list = new ArrayList<UserBean>(); //ResultSet에 담긴 결과를 ArrayList에 담기 while(rs.next()) { UserBean bean = new UserBean(); bean.setId(rs.getString("ID")); bean.setName(rs.getString("NAME")); bean.setEmail(rs.getString("EMAIL")); list.add(bean); } //결과물 출력 for(int i=0; i<list.size(); i++) { System.out.println("회원아이디:"+list.get(i).getId()); System.out.println("회원이름:"+list.get(i).getName()); System.out.println("회원이메일:"+list.get(i).getEmail()); }
 
 
 //    public List<ChessBoardDTOForDAO> findByGameId(String userId) throws SQLException {

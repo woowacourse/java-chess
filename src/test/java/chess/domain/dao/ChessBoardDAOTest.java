@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -29,10 +31,21 @@ class ChessBoardDAOTest {
     }
 
     @Test
+    @DisplayName("위치 1개 추가")
     void addPosition() throws SQLException {
         ChessBoardDTOForDAO chessBoardDTOForDAO = new ChessBoardDTOForDAO("a8", "WHITE", "ROOK", "alive");
         System.out.println(chessBoardDTOForDAO.getPosition());
         chessBoardDAO.addPosition(chessBoardDTOForDAO);
+    }
+
+    @Test
+    @DisplayName("보드 추가")
+    void addPositions() throws SQLException {
+        List<ChessBoardDTOForDAO> board = new ArrayList<>();
+        board.add(new ChessBoardDTOForDAO("a1","WHITE", "ROOK", "true"));
+        board.add(new ChessBoardDTOForDAO("a2","WHITE", "KNIGHT", "true"));
+        board.add(new ChessBoardDTOForDAO("d2","BLACK", "KING", "true"));
+        chessBoardDAO.addPositions(board);
     }
 
     @Test
