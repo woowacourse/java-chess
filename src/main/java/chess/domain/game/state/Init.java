@@ -27,7 +27,7 @@ public class Init extends Preparing {
 
     @Override
     public Board board() {
-        return afterStartBoard();
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
     }
 
     @Override

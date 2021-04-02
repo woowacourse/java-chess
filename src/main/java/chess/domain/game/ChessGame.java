@@ -11,24 +11,20 @@ public class ChessGame {
     private State state;
 
     public ChessGame(final Board board) {
-        this(new Init(board));
-    }
-
-    public ChessGame(final State state) {
-        this.state = state;
+        state = new Init(board);
     }
 
     public void start() {
-        this.state = state.start();
+        state = state.start();
     }
 
-    public void move(Position source, Position target) {
-        this.state.moveIfValidColor(source, target);
-        this.state = state.passTurn();
+    public void move(final Position source, final Position target) {
+        state.moveIfValidColor(source, target);
+        state = state.passTurn();
     }
 
     public void end() {
-        this.state = state.end();
+        state = state.end();
     }
 
     public Board board() {
@@ -56,15 +52,15 @@ public class ChessGame {
     }
 
     public List<Position> movablePath(final Position position) {
-        return this.state.movablePath(position);
+        return state.movablePath(position);
     }
 
     public String state() {
-        return this.state.state();
+        return state.state();
     }
 
     public Score score() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(this.state.board());
+        ScoreCalculator scoreCalculator = new ScoreCalculator(state.board());
         return new Score(scoreCalculator.totalWhiteScore(), scoreCalculator.totalBlackScore());
     }
 }
