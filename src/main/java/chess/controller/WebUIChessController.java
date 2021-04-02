@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.PieceDTO;
+import chess.dto.StatusDTO;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -27,6 +28,27 @@ public class WebUIChessController {
     public void run() {
         start();
         move();
+        status();
+    }
+
+    public void status() {
+        Gson gson = new Gson();
+        get("/status", (req, res) -> {
+            StatusDTO statusDTO = new StatusDTO(
+                    String.valueOf(chessGame.getScoreByTeam(Team.WHITE)),
+                    String.valueOf(chessGame.getScoreByTeam(Team.BLACK)),
+                    getWinner(),
+                    chessGame.isKingDieEnd()
+            );
+            return gson.toJson(statusDTO);
+        });
+    }
+
+    private String getWinner() {
+        if (chessGame.isKingDieEnd()) {
+            return String.valueOf(chessGame.winner());
+        }
+        return "NoWinner";
     }
 
     public void start() {
@@ -70,7 +92,8 @@ public class WebUIChessController {
             chessGame.move(startPosition, endPosition);
 
             getPieces(model);
-            return render(model, "chess.html");
+            return gson.toJson(model.get("pieces"));
+            //return render(model, "chess.html");
         });
     }
 

@@ -2,11 +2,16 @@ const API_URL = "http://localhost:4567/";
 
 const board = document.querySelector("#board");
 const squares = document.querySelectorAll("#board .square")
+const scoreBoard = document.getElementById("score-board-container");
 
 let startPointSelected = false;
 let startPoint = null;
+let isKingDie = false;
 
 function pieceClick(event) {
+    if (isKingDie) {
+        return;
+    }
     console.log("move event!!")
     const clickedSection = event.target;
     console.log("you click" + clickedSection.id);
@@ -19,7 +24,6 @@ function pieceClick(event) {
         startPointSelected = true;
         startPoint = clickedSection;
         startPoint.style.backgroundColor = "yellow";
-
         return;
     }
 
@@ -31,8 +35,8 @@ function pieceClick(event) {
     startPoint = null;
 }
 
-function pieceMoveTry(startPoint, endPoint) {
 
+function pieceMoveTry(startPoint, endPoint) {
     console.log(startPoint, endPoint);
     const newData = {
         "startPoint": startPoint.id,
@@ -46,20 +50,58 @@ function pieceMoveTry(startPoint, endPoint) {
             if (!response.ok) {
                 throw new Error("움직일 수 없는 위치입니다.");
             }
-            return null;
-        }).then(() => {
-        location.reload();
-    })
+            return response.json();
+            //return null;
+        }).then((responseData) => {
+            pieceMove(responseData);
+            getStatus();
+        })
         .catch((error) => {
             console.log(error);
             alert(error);
         })
 }
 
+function pieceMove(pieces) {
+    boardReset();
+    for (const piece of pieces) {
+        console.log(piece);
+        const position = piece["position"];
+        const team = piece["team"];
+        const initial = piece["initial"];
+        document.getElementById(position).style.backgroundImage = `url("/image/${team}_${initial}.png")`
+    }
+}
 
-function pieceMove(startPoint, endPoint) {
-    endPoint.style.backgroundImage = startPoint.style.backgroundImage;
-    startPoint.style.backgroundImage = "";
+function boardReset() {
+    for (const square of squares) {
+        square.style.backgroundImage = "";
+    }
+}
+
+
+function getStatus() {
+    console.log("getStatus 가 호출됨");
+    fetch(API_URL + "status", {
+        method: 'GET'
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error("getStatus 실패");
+        }
+        return response.json();
+    }).then(applyStatus)
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function applyStatus(response) {
+    scoreBoard.querySelector("#black-score .score").textContent = response["blackScore"];
+    scoreBoard.querySelector("#white-score .score").textContent = response["whiteScore"];
+    if (response["isKingDie"] === true) {
+        alert("왕이 죽었습니다!");
+        isKingDie = true;
+    }
 }
 
 function getOption(methodType, bodyData) {

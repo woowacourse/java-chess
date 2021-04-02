@@ -3,13 +3,26 @@
     padding: 50px;
 }
 
+
+.score-board{
+    margin : 20px;
+}
+.score{
+    font-size: 20px;
+}
+
+#score-board-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .square {
     width: 75px;
     height: 75px;
     padding: 0px;
     margin: 0px;
     display: inline-block;
-    /*background-image: url("/image/black_b.png");*/
 }
 
 .square:hover {
