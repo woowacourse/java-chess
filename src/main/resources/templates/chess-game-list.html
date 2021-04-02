@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta char
+        set="UTF-8">
+  <link rel="stylesheet" href="css/chess-game.css">
+  <title>Chess 9ame</title>
+</head>
+<body>
+<h1 align="center">Chess 9ame</h1>
+<main>
+
+  <div class="chess-game-room-list">
+    <h2 align="center">9ame list</h2>
+    <hr/>
+    <div class="game-ids" align="center">
+      {{#gameNames}}
+      <a align="center" href="javascript:void(0)" id="{{.}}" class="btn btn-sm animated-button victoria-one game-list">{{.}}</a>
+      {{/gameNames}}
+    </div>
+    <br>
+    <hr/>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a id="createGame" href="javascript:void(0)" class="btn btn-sm animated-button victoria-one create-game">new chess-9ame</a>
+    </div>
+  </div>
+</main>
+<script type="module" src="js/chess-game-list.js"></script>
+</body>
+</html>
+
+

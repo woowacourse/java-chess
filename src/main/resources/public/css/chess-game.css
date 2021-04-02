@@ -18,13 +18,23 @@ main {
 }
 
 .chess-game {
-  width: 65%;
+  width: 51%;
+  margin-right: 15%;
 }
 
+.chess-game-room-list {
+  width: 50%;
+  margin-left: 0%;
+  color: white;
+  background-color: rgba(70, 70, 70, 0.5);
+  padding: 1em 1em 1em;
+  position: relative;
+  border-radius: 5px;
+}
 
 .chess-game-info {
-  width: 35%;
-  margin-left: 15%;
+  width: 17%;
+  margin-left: 1%;
   color: white;
   background-color: rgba(70, 70, 70, 0.5);
   padding: 1em 1em 1em;

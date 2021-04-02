@@ -10,8 +10,12 @@ public class ChessGame {
 
     private State state;
 
-    public ChessGame(Board board) {
-        this.state = new Init(board);
+    public ChessGame(final Board board) {
+        this(new Init(board));
+    }
+
+    public ChessGame(final State state) {
+        this.state = state;
     }
 
     public void start() {
