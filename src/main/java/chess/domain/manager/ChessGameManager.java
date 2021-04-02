@@ -25,5 +25,7 @@ public interface ChessGameManager {
 
     boolean isKingDead();
 
+    long getId();
+
     ChessGameStatistics getStatistics();
 }

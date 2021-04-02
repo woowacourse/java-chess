@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.board.Square;
 import chess.domain.board.TestBoardInitializer;
 import chess.domain.piece.Knight;
@@ -27,7 +27,7 @@ class KnightMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = DefaultBoardInitializer.getBoard();
+        board = InitBoardInitializer.getBoard();
     }
 
     private static Stream<Arguments> knightCanMoveTest() {
@@ -64,7 +64,7 @@ class KnightMoveStrategyTest {
         Square fromSquare = new Square(fromPosition, new Knight(color));
         Square toSquare = new Square(toPosition, new Pawn(color));
 
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(fromSquare, toSquare));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(fromSquare, toSquare));
 
         assertThatThrownBy(() -> testBoard.move(fromPosition, toPosition))
             .isInstanceOf(IllegalArgumentException.class)

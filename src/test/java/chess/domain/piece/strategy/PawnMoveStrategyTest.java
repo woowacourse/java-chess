@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.board.Square;
 import chess.domain.board.TestBoardInitializer;
 import chess.domain.order.MoveOrder;
@@ -23,7 +23,7 @@ class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = DefaultBoardInitializer.getBoard();
+        board = InitBoardInitializer.getBoard();
     }
 
     @DisplayName("행마에 대한 검증 - 직선")
@@ -46,7 +46,7 @@ class PawnMoveStrategyTest {
         Square fromSquare = new Square(fromPosition, new Pawn(color));
         Square toSquare = new Square(toPosition, oppositePawn);
 
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(fromSquare, toSquare));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(fromSquare, toSquare));
 
         assertThat(testBoard.move(fromPosition, toPosition).getCapturedPiece()).isEqualTo(oppositePawn);
     }
@@ -55,7 +55,7 @@ class PawnMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"c2, c4, WHITE", "g7, g5, BLACK"})
     void pawnMoveOverTwoSquaresAtFirstTurn(String from, String to, Color color) {
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
         assertThatCode(() -> testBoard.move(Position.of(from), Position.of(to)))
                 .doesNotThrowAnyException();
@@ -84,7 +84,7 @@ class PawnMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"c3, c5, WHITE", "g6, g4, BLACK"})
     void throwExceptionWhenMoveOverTwoSquaresNotFirstTurn(String from, String to, Color color) {
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
         assertThatThrownBy(() -> testBoard.move(Position.of(from), Position.of(to)))
                 .isInstanceOf(IllegalArgumentException.class)

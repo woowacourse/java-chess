@@ -2,7 +2,11 @@ package chess.domain.manager;
 
 import chess.domain.statistics.ChessGameStatistics;
 
-public class NotStartedChessGameManager extends NotRunningGameManager{
+public class NotStartedChessGameManager extends NotRunningGameManager {
+    public NotStartedChessGameManager(long id) {
+        super(id);
+    }
+
     @Override
     public boolean isNotEnd() {
         return true;

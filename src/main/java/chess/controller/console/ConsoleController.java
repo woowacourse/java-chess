@@ -11,7 +11,7 @@ import chess.view.OutputView;
 public class ConsoleController {
     public static void run() {
         OutputView.printInitialMessage();
-        ChessGameManager chessGameManager = ChessGameManagerFactory.createNotStartedGameManager();
+        ChessGameManager chessGameManager = ChessGameManagerFactory.createNotStartedGameManager(0);
 
         do {
             Command command = Repeater.repeatOnError(() -> CommandRouter.findByInputCommand(InputView.getCommand()));

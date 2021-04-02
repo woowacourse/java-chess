@@ -36,6 +36,13 @@ public enum Color {
         return Collections.unmodifiableList(USER_COLORS);
     }
 
+    public static Color of(String colorName) {
+        return USER_COLORS.stream()
+                .filter(color -> color.name().equalsIgnoreCase(colorName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 color가 없습니다."));
+    }
+
     private static boolean isNotBlank(Color color) {
         return color != BLANK;
     }

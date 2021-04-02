@@ -17,16 +17,19 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class Board {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
 
     private final List<Square> board;
 
-    protected Board(List<Square> board) {
+    private Board(List<Square> board) {
         this.board = board;
+    }
+
+    protected static Board of(List<Square> board) {
+        return new Board(board);
     }
 
     public Square findByPosition(Position position) {
@@ -73,6 +76,13 @@ public class Board {
     public Map<Color, Double> getScoreMap() {
         return Color.getUserColors().stream()
                 .collect(toMap(Function.identity(), this::getScore));
+    }
+
+    public Map<Color, List<Piece>> getColoredPieces() {
+        return board.stream()
+                .map(Square::getPiece)
+                .filter(Piece::isNotBlank)
+                .collect(groupingBy(Piece::getColor));
     }
 
     private double getScore(Color color) {

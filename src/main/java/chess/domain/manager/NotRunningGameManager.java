@@ -7,14 +7,20 @@ import chess.domain.position.Position;
 import chess.domain.statistics.ChessGameStatistics;
 
 public abstract class NotRunningGameManager implements ChessGameManager {
+    private final long id;
+
+    public NotRunningGameManager(long id) {
+        this.id = id;
+    }
+
     @Override
     public ChessGameManager start() {
-        return ChessGameManagerFactory.createRunningGame();
+        return ChessGameManagerFactory.createRunningGame(id);
     }
 
     @Override
     public ChessGameManager end() {
-        return ChessGameManagerFactory.createEndGame(ChessGameStatistics.createNotStartGameResult());
+        return ChessGameManagerFactory.createEndGame(id, ChessGameStatistics.createNotStartGameResult());
     }
 
     @Override
@@ -37,4 +43,8 @@ public abstract class NotRunningGameManager implements ChessGameManager {
         throw new UnsupportedOperationException("게임이 진행중이지 않아 실행할 수 없습니다.");
     }
 
+    @Override
+    public long getId() {
+        return id;
+    }
 }

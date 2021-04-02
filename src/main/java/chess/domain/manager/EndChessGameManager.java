@@ -5,7 +5,8 @@ import chess.domain.statistics.ChessGameStatistics;
 public class EndChessGameManager extends NotRunningGameManager {
     private final ChessGameStatistics chessGameStatistics;
 
-    public EndChessGameManager(ChessGameStatistics chessGameStatistics) {
+    public EndChessGameManager(long id, ChessGameStatistics chessGameStatistics) {
+        super(id);
         this.chessGameStatistics = chessGameStatistics;
     }
 

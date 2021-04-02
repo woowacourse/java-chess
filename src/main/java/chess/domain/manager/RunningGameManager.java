@@ -12,11 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RunningGameManager implements ChessGameManager {
+    private final long id;
     private final Board board;
     private final List<ColoredPieces> coloredPieces;
     private Color currentColor;
 
-    public RunningGameManager(Board board, List<ColoredPieces> coloredPieces, Color currentColor) {
+    public RunningGameManager(long id, Board board, List<ColoredPieces> coloredPieces, Color currentColor) {
+        this.id = id;
         this.board = board;
         this.coloredPieces = coloredPieces;
         this.currentColor = currentColor;
@@ -24,12 +26,12 @@ public class RunningGameManager implements ChessGameManager {
 
     @Override
     public ChessGameManager start() {
-        return ChessGameManagerFactory.createRunningGame();
+        return ChessGameManagerFactory.createRunningGame(id);
     }
 
     @Override
     public ChessGameManager end() {
-        return ChessGameManagerFactory.createEndGame(getStatistics());
+        return ChessGameManagerFactory.createEndGame(id, getStatistics());
     }
 
     @Override
@@ -61,6 +63,11 @@ public class RunningGameManager implements ChessGameManager {
     public boolean isKingDead() {
         return coloredPieces.stream()
                 .anyMatch(ColoredPieces::isKingDead);
+    }
+
+    @Override
+    public long getId() {
+        return id;
     }
 
     private Color kingAliveColor() {

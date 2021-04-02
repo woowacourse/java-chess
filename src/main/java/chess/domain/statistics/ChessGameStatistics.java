@@ -1,7 +1,7 @@
 package chess.domain.statistics;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.piece.attribute.Color;
 
 import java.util.Collections;
@@ -17,7 +17,7 @@ public class ChessGameStatistics {
     }
 
     public static ChessGameStatistics createNotStartGameResult() {
-        Board defaultBoard = DefaultBoardInitializer.getBoard();
+        Board defaultBoard = InitBoardInitializer.getBoard();
         return new ChessGameStatistics(defaultBoard.getScoreMap(), MatchResult.DRAW);
     }
 

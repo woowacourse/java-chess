@@ -21,22 +21,21 @@ import static spark.Spark.*;
 public class WebController {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final int HTTP_STATUS_OK = 200;
-    public static final String EMPTY_ERROR_MSG = "";
 
     public static void start() {
-        ChessService chessService = new ChessService();
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        gameRouting(chessService);
+        gameRouting();
 
         exceptionHandling();
     }
 
-    private static void gameRouting(ChessService chessService) {
+    private static void gameRouting() {
+        ChessService chessService = new ChessService();
+
         path("/game", () -> {
             get("/start", (request, response) -> {
                 chessService.start();
