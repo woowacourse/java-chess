@@ -10,10 +10,7 @@ import static spark.Spark.post;
 
 public class WebController {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
     private final ChessService chessService;
-//    private CommandDatabase commandDatabase;
-
 
     public WebController(ChessService chessService) {
         this.chessService = chessService;
@@ -56,5 +53,4 @@ public class WebController {
     private String makeMoveCmd(String source, String target) {
         return String.join(" ", "move", source, target);
     }
-
 }

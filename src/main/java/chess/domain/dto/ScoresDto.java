@@ -13,7 +13,6 @@ public class ScoresDto {
     private List<ScoreDto> convertTo(PointDto pointDto) {
         return pointDto.result().stream()
                 .map(entry -> new ScoreDto(entry.getKey(), entry.getValue()))
-//                .peek(System.out::println)
                 .collect(Collectors.toList());
     }
 

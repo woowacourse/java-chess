@@ -57,7 +57,6 @@ public class HistoryDao {
     public List<String> selectActive() throws SQLException {
         List<String> names = new ArrayList<>();
         String query = "SELECT * FROM History WHERE is_end = false";
-//        String query = "SELECT * FROM History H JOIN Command C ON H.history_id = C.history_id WHERE H.is_end = false";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -87,25 +86,5 @@ public class HistoryDao {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, historyId);
         preparedStatement.executeUpdate();
-    }
-
-    public int select(String name) throws SQLException {
-        Connection connection = MySQLConnector.getConnection();
-        String query = "SELECT history_id FROM History WHERE name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, name);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (!rs.next()) return -1;
-        return rs.getInt("history_id");
-    }
-
-    public boolean isEnd(String name) throws SQLException {
-        Connection connection = MySQLConnector.getConnection();
-        String query = "SELECT history_id FROM History WHERE name = ? AND is_end = true";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, name);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (!rs.next()) return false;
-        return true;
     }
 }
