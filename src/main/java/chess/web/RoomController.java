@@ -9,6 +9,7 @@ import spark.Response;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RoomController {
     private static final Gson GSON = new Gson();
@@ -22,7 +23,10 @@ public class RoomController {
 
     public JsonElement showRooms(Request request, Response response) throws SQLException {
         response.type(RESPONSE_JSON);
-        List<RoomDTO> roomDTOs = roomService.findAllRooms();
+        List<RoomDTO> roomDTOs = roomService.findAllRooms()
+                .stream()
+                .map(RoomDTO::from)
+                .collect(Collectors.toList());
         return GSON.toJsonTree(roomDTOs);
     }
 
@@ -31,7 +35,7 @@ public class RoomController {
         RoomDTO requestDTO = GSON.fromJson(request.body(), RoomDTO.class);
         String roomName = requestDTO.getName();
         roomService.insertRoom(roomName);
-        RoomDTO responseDTO = roomService.findLatestRoom();
+        RoomDTO responseDTO = RoomDTO.from(roomService.findLatestRoom());
         return GSON.toJsonTree(responseDTO);
     }
 }
