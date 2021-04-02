@@ -56,7 +56,7 @@ public class GameStatusDto {
         if (turn.equals(WHITE)) {
             return new Turn(Team.WHITE);
         }
-        return new Turn(Team.WHITE, Team.BLACK);
+        return new Turn(Team.BLACK);
     }
 
     public GameState toGameStateEntity(Board board) {

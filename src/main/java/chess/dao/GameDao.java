@@ -90,7 +90,7 @@ public class GameDao {
         Board board = new Board();
         BoardWebDto boardWebDto = new BoardWebDto(board);
         GameStatusDto gameStatusDto =
-            new GameStatusDto(new ChessGame(board, new Turn(Team.WHITE)));
+            new GameStatusDto(new ChessGame(board));
         insertBoardAndStatusDto(boardWebDto, gameStatusDto, roomId);
     }
 

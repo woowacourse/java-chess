@@ -16,7 +16,7 @@ public class ChessController {
 
     public void play() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
+        ChessGame chessGame = new ChessGame(board);
         OutputView.printStartInfo();
         proceed(chessGame, board);
         printGameResult(chessGame);

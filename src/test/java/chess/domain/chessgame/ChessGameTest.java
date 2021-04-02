@@ -14,6 +14,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChessGameTest {
 
@@ -24,7 +26,7 @@ public class ChessGameTest {
     @DisplayName("보드의 초기 설정")
     void setUp() {
         board = new Board();
-        chessGame = new ChessGame(board, new Turn(Team.WHITE));
+        chessGame = new ChessGame(board);
 
         chessGame.start();
     }
@@ -65,54 +67,33 @@ public class ChessGameTest {
             .withMessage("불가능한 이동입니다.");
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("킹을 유효한 위치로 이동 테스트")
-    void kingWithValidMove() {
+    @CsvSource(value = {"e3,f4", "f4,f5", "f5,e6", "e6,d6", "d6,c5", "c5,c4", "c4,d3", "d3,e3"})
+    void kingWithValidMove(String source, String destination) {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
-            @Override
-            public Team now() {
-                return Team.WHITE;
-            }
-        });
+        ChessGame chessGame = new ChessGame(board);
 
         chessGame.start();
-        board.move(Point.of("e2"), Point.of("f3"));
-        board.move(Point.of("e1"), Point.of("e3"));
+        board.move(Point.of("e1"), Point.of(source));
 
         assertThatCode(() -> {
-            chessGame.move(Point.of("e3"), Point.of("f4"));
-            chessGame.move(Point.of("f4"), Point.of("f5"));
-            chessGame.move(Point.of("f5"), Point.of("e6"));
-            chessGame.move(Point.of("e6"), Point.of("d6"));
-            chessGame.move(Point.of("d6"), Point.of("c5"));
-            chessGame.move(Point.of("c5"), Point.of("c4"));
-            chessGame.move(Point.of("c4"), Point.of("d3"));
-            chessGame.move(Point.of("d3"), Point.of("e3"));
+            chessGame.move(Point.of(source), Point.of(destination));
         }).doesNotThrowAnyException();
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("퀸을 유효한 위치로 이동 테스트")
-    void queenWithValidMove() {
+    @CsvSource(value = {"d3,d6", "d6,d3", "d3,g6", "g6,d3", "d3,a6", "a6,d3"})
+    void queenWithValidMove(String source, String destination) {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
-            @Override
-            public Team now() {
-                return Team.WHITE;
-            }
-        });
+        ChessGame chessGame = new ChessGame(board);
 
         chessGame.start();
-        board.move(Point.of("d1"), Point.of("d3"));
+        board.move(Point.of("d1"), Point.of(source));
 
         assertThatCode(() -> {
-            chessGame.move(Point.of("d3"), Point.of("d6"));
-            chessGame.move(Point.of("d6"), Point.of("d3"));
-            chessGame.move(Point.of("d3"), Point.of("g6"));
-            chessGame.move(Point.of("g6"), Point.of("d3"));
-            chessGame.move(Point.of("d3"), Point.of("a6"));
-            chessGame.move(Point.of("a6"), Point.of("d3"));
+            chessGame.move(Point.of(source), Point.of(destination));
         }).doesNotThrowAnyException();
     }
 
@@ -132,26 +113,18 @@ public class ChessGameTest {
         ).withMessage("불가능한 이동입니다.");
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("비숍을 유효한 위치로 이동 테스트")
-    void bishopWithValidMove() {
+    @CsvSource(value = {"d4,f6", "f6,d4", "e3,b6", "b6,e3"})
+    void bishopWithValidMove(String source, String destination) {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
-            @Override
-            public Team now() {
-                return Team.WHITE;
-            }
-        });
+        ChessGame chessGame = new ChessGame(board);
         chessGame.start();
 
-        board.move(Point.of("d2"), Point.of("d3"));
-        board.move(Point.of("b2"), Point.of("b3"));
+        board.move(Point.of("c1"), Point.of(source));
 
         assertThatCode(() -> {
-            chessGame.move(Point.of("c1"), Point.of("h6"));
-            chessGame.move(Point.of("h6"), Point.of("c1"));
-            chessGame.move(Point.of("c1"), Point.of("a3"));
-            chessGame.move(Point.of("a3"), Point.of("c1"));
+            chessGame.move(Point.of(source), Point.of(destination));
         }).doesNotThrowAnyException();
     }
 
@@ -163,25 +136,18 @@ public class ChessGameTest {
         ).withMessage("불가능한 이동입니다.");
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("룩을 유효한 위치로 이동 테스트")
-    void rookWithValidMove() {
+    @CsvSource(value = {"d3,d6", "d6,d3", "d3,h3", "h3,d3"})
+    void rookWithValidMove(String source, String destination) {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
-            @Override
-            public Team now() {
-                return Team.WHITE;
-            }
-        });
+        ChessGame chessGame = new ChessGame(board);
 
         chessGame.start();
-        board.move(Point.of("a2"), Point.of("a6"));
+        board.move(Point.of("a1"), Point.of(source));
 
         assertThatCode(() -> {
-            chessGame.move(Point.of("a1"), Point.of("a5"));
-            chessGame.move(Point.of("a5"), Point.of("h5"));
-            chessGame.move(Point.of("h5"), Point.of("a5"));
-            chessGame.move(Point.of("a5"), Point.of("a1"));
+            chessGame.move(Point.of(source), Point.of(destination));
         }).doesNotThrowAnyException();
     }
 
@@ -195,28 +161,19 @@ public class ChessGameTest {
         ).withMessage("불가능한 이동입니다.");
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("나이트을 유효한 위치로 이동 테스트")
-    void knightWithValidMove() {
+    @CsvSource(value = {"c3,d5", "c3,e4", "e4,c3", "c3,a4", "a4,c3", "c3,b5", "b5,c3", "c3,b1"})
+    void knightWithValidMove(String source, String destination) {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
-            @Override
-            public Team now() {
-                return Team.WHITE;
-            }
-        });
+        ChessGame chessGame = new ChessGame(board);
 
         chessGame.start();
 
+        board.move(Point.of("b1"), Point.of(source));
+
         assertThatCode(() -> {
-            chessGame.move(Point.of("b1"), Point.of("c3"));
-            chessGame.move(Point.of("c3"), Point.of("e4"));
-            chessGame.move(Point.of("e4"), Point.of("c3"));
-            chessGame.move(Point.of("c3"), Point.of("a4"));
-            chessGame.move(Point.of("a4"), Point.of("c3"));
-            chessGame.move(Point.of("c3"), Point.of("b5"));
-            chessGame.move(Point.of("b5"), Point.of("c3"));
-            chessGame.move(Point.of("c3"), Point.of("b1"));
+            chessGame.move(Point.of(source), Point.of(destination));
         }).doesNotThrowAnyException();
     }
 

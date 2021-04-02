@@ -13,10 +13,10 @@ public class ChessGame {
     private Turn turn;
     private GameState gameState;
 
-    public ChessGame(Board board, Turn turn) {
+    public ChessGame(Board board) {
         this.scoreBoard = new ScoreBoard(board);
         this.gameState = new Ready(board);
-        this.turn = turn;
+        this.turn = new Turn(Team.WHITE);
     }
 
     public ChessGame(Turn turn, ScoreBoard scoreBoard, GameState gameState) {
@@ -26,7 +26,7 @@ public class ChessGame {
     }
 
     public void start() {
-        turn.restart();
+        this.turn = new Turn(Team.WHITE);
         gameState = gameState.start();
     }
 
