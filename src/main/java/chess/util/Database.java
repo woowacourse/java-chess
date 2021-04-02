@@ -1,4 +1,4 @@
-package chess.domain.util;
+package chess.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,20 +8,17 @@ public class Database {
     private static Connection con;
 
     public static Connection getConnection() {
-        String server = "localhost:3306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
+        String server = "localhost:3306";
+        String database = "chess";
         String option = "?serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = ""; // MySQL 서버 비밀번호
-
+        String userName = "root";
+        String password = "";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
             e.printStackTrace();
         }
-
-        // 드라이버 연결
         try {
             con = DriverManager
                 .getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);

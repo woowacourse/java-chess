@@ -1,4 +1,4 @@
-package chess.domain.util;
+package chess.util;
 
 import chess.domain.position.File;
 import chess.domain.position.MovePath;

@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.dto;
 
+import chess.domain.Board;
 import chess.domain.piece.Team;
 
 public class PrintBoardDto {

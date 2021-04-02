@@ -1,4 +1,4 @@
-package chess.domain.util;
+package chess.util;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
