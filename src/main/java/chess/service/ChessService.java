@@ -3,7 +3,6 @@ package chess.service;
 import chess.domain.ChessGame;
 import chess.domain.command.Commands;
 import chess.domain.dao.CommandDao;
-import chess.domain.dao.CommandDatabase;
 import chess.domain.dao.HistoryDao;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
@@ -27,7 +26,7 @@ public class ChessService {
         this.historyDao = historyDao;
     }
 
-    public void init(){
+    public void init() {
         chessGame.initBoard(BoardInitializer.init());
     }
 
@@ -49,9 +48,7 @@ public class ChessService {
 
     public Map<String, Object> initResponse(String name) throws SQLException {
         final String id = historyDao.insert(name);
-        final Map<String, Object> model = makeCommonResponse();
-        model.put("gameId", id);
-        return model;
+        return makeCommonResponse(id);
     }
 
     public void end() {
@@ -63,7 +60,7 @@ public class ChessService {
     }
 
     public Map<String, Object> moveResponse(String historyId) throws SQLException {
-        final Map<String, Object> model = makeCommonResponse();
+        final Map<String, Object> model = makeCommonResponse(historyId);
         if (chessGame.isEnd()) {
             model.put("winner", chessGame.winner());
             if (historyId != null) {
@@ -78,12 +75,13 @@ public class ChessService {
     }
 
 
-    private Map<String, Object> makeCommonResponse() {
+    private Map<String, Object> makeCommonResponse(String id) {
         final GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
         Map<String, Object> model = new HashMap<>();
         model.put("squares", gameInfoDto.squares());
         model.put("turn", gameInfoDto.turn());
         model.put("scores", gameInfoDto.scores());
+        model.put("gameId", id);
         return model;
     }
 
@@ -96,15 +94,19 @@ public class ChessService {
         chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
     }
 
-    public Map<String, Object> continueResponse() {
-        return makeCommonResponse();
+    public Map<String, Object> continueResponse(String id) {
+        return makeCommonResponse(id);
     }
 
     public void flushCommands(String command, String gameId) throws SQLException {
         try {
-            commandDao.insert(new CommandDto(command), gameId);
+            commandDao.insert(new CommandDto(command), Integer.valueOf(gameId));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public String getIdByName(String name) throws SQLException {
+        return String.valueOf(historyDao.findIdByName(name));
     }
 }
