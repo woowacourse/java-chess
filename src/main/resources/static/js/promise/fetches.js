@@ -9,6 +9,7 @@ function getFetch(url) {
         }
         return data.json()
     }).then(responseJson => {
+        console.log(responseJson)
         if (responseJson.isError) {
             alert(responseJson.errorMsg);
         }
@@ -29,6 +30,7 @@ function postFetch(url, body = {}) {
         }
         return data.json()
     }).then(responseJson => {
+        console.log(responseJson)
         if (responseJson.isError) {
             alert(responseJson.errorMsg);
         }

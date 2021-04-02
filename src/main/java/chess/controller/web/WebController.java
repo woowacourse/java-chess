@@ -39,20 +39,20 @@ public class WebController {
             get("/start", (request, response) -> {
                 chessService.start();
                 response.type("application/json; charset=utf-8");
-                return BasicResponseDto.createSuccessResponseDto(new StartResponseDto(true, chessService.getPieces()));
+                return BasicResponseDto.createSuccessResponseDto(new StartResponseDto(chessService.nextColor(), chessService.getPieces()));
             }, gson::toJson);
 
             post("/move", (request, response) -> {
                 MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
                 chessService.move(moveRequestDto.getFromPosition(), moveRequestDto.getToPosition());
                 response.type("application/json; charset=utf-8");
-                return BasicResponseDto.createSuccessResponseDto(new MoveResponseDto(chessService.isEnd()));
+                return BasicResponseDto.createSuccessResponseDto(new MoveResponseDto(chessService.isEnd(), chessService.nextColor()));
             }, gson::toJson);
         });
     }
 
     private static void exceptionHandling() {
-        exception(IllegalArgumentException.class, (e, request, response) -> {
+        exception(RuntimeException.class, (e, request, response) -> {
             response.status(HTTP_STATUS_OK);
             response.type("application/json; charset=utf-8");
             response.body(gson.toJson(new BasicResponseDto(true, e.getMessage(), new WebResponseDto() {

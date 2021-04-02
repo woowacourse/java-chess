@@ -85,6 +85,11 @@ public class RunningGameManager implements ChessGameManager {
     }
 
     @Override
+    public Color nextColor() {
+        return currentColor;
+    }
+
+    @Override
     public boolean isNotEnd() {
         return true;
     }
