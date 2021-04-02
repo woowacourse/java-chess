@@ -30,7 +30,7 @@ public class ChessGameDAO {
     }
 
     public List<ChessGameDTO> findActiveGames() throws SQLException {
-        String query = "SELECT * FROM chess_game WHERE is_end = false";
+        String query = "SELECT * FROM chess_game WHERE is_end = false ORDER BY created_at";
         Connection con = getConnection();
         PreparedStatement pstmt = con.prepareStatement(query);
 

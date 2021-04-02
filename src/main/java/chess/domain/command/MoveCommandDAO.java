@@ -28,7 +28,7 @@ public class MoveCommandDAO {
     public List<Command> findCommandsByGameId(String gameId) throws SQLException {
         Connection con = getConnection();
 
-        String query = "SELECT * FROM chess_game game JOIN move_command cmd on game.id = cmd.game_id WHERE is_end=false AND game.id=(?)";
+        String query = "SELECT * FROM chess_game game JOIN move_command cmd on game.id = cmd.game_id WHERE is_end=false AND game.id=(?) ORDER BY cmd.created_at";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
