@@ -33,30 +33,34 @@ function onMove(event) {
     if (!$position.length) {
         onChangeColorOfSquare(event);
     } else {
-        const source = $position[0].id;
-        const target = event.target.closest("div").id;
-        movePosition["source"] = source;
-        movePosition["target"] = target;
+        if (event.target.closest("div").classList.contains("selected")) {
+            event.target.closest("div").classList.remove("selected");
+        } else {
+            const source = $position[0].id;
+            const target = event.target.closest("div").id;
+            movePosition["source"] = source;
+            movePosition["target"] = target;
 
-        option["body"] = JSON.stringify(movePosition);
-        fetch('/rooms/' +  0 + '/move', option)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(res.status);
-                }
-                return res.json();
-            })
-            .then(data => {
-                movePiece(source, target);
-                if (data === "king-dead") {
-                    alert("왕이 죽었습니다. 게임을 종료합니다.")
-                    window.location.replace("/");
-                    return;
-                }
-                return data;
-            })
-            .catch(() => alert("해당 위치로 이동할 수 없습니다."));
-        revertSquareColor($position);
+            option["body"] = JSON.stringify(movePosition);
+            fetch('/chess/move', option)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(res.status);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    movePiece(source, target);
+                    if (data === "king-dead") {
+                        alert("왕이 죽었습니다. 게임을 종료합니다.")
+                        window.location.replace("/");
+                        return;
+                    }
+                    return data;
+                })
+                .catch(() => alert("해당 위치로 이동할 수 없습니다."));
+            revertSquareColor($position);
+        }
     }
 }
 
