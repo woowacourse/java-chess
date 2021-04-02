@@ -1,3 +1,6 @@
+.body {
+    margin: 0 auto;
+}
 td {
     width: 60px;
     height: 75px;
@@ -19,18 +22,16 @@ img {
 .clickedTile {
     background-color: #F5D042;
 }
-
 .start-button {
-    text-align: center;
     width: 200px;
     height: 70px;
     font-size: 50px;
-    margin-left: 315px;
+    margin: auto;
 }
 
-.currentTurn {
-    margin-left: 315px;
-}
+/*.currentTurn {*/
+/*    margin-left: 315px;*/
+/*}*/
 
 .title {
     text-align: center;
@@ -44,4 +45,9 @@ img {
     margin: auto;
     width: 35vw;
     height: 35vw;
+}
+
+div {
+    text-align: center;
+    font-size: 50px;
 }
