@@ -30,11 +30,8 @@ public class WebUIChessApplication {
             Map<String, Object> submitData = new HashMap<>();
             Map<String, Object> initialChessBoard = new HashMap<>();
             Map<Position, Piece> startedBoard= webController.startedBoard();
-            for (Map.Entry<Position, Piece> elem : startedBoard.entrySet()) {
-                Position position = elem.getKey();
-                Piece piece = elem.getValue();
-                initialChessBoard.put(position.symbol(), piece.symbol());
-            }
+            insertInitialBoard(initialChessBoard, startedBoard);
+
             submitData.put("turn", webController.getTurn());
             submitData.put("chessBoard", initialChessBoard);
             return gson.toJson(submitData);
@@ -46,9 +43,8 @@ public class WebUIChessApplication {
             String moveRawCommand = (String) requestBody.get("move");
             String moveResult = webController.move(moveRawCommand);
             submitData.put("isSuccess", moveResult);
-            if (webController.isEnd()) {
-                submitData.put("winner", webController.winnerColor());
-            }
+
+            judgeEnd(webController, submitData);
             submitData.put("turn", webController.getTurn());
             return gson.toJson(submitData);
         });
@@ -65,6 +61,22 @@ public class WebUIChessApplication {
             webController.end();
             return gson.toJson(submitData);
         });
+    }
+
+    private static void judgeEnd(ChessWebController webController,
+        Map<String, Object> submitData) {
+        if (webController.isEnd()) {
+            submitData.put("winner", webController.winnerColor());
+        }
+    }
+
+    private static void insertInitialBoard(Map<String, Object> initialChessBoard,
+        Map<Position, Piece> startedBoard) {
+        for (Map.Entry<Position, Piece> elem : startedBoard.entrySet()) {
+            Position position = elem.getKey();
+            Piece piece = elem.getValue();
+            initialChessBoard.put(position.symbol(), piece.symbol());
+        }
     }
 
     public static String render(Map<String, Object> model, String templatePath) {
