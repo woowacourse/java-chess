@@ -12,21 +12,15 @@ import java.util.List;
 
 public class CommandDao {
 
-    public CommandDao() {}
-
-    public void insertAll(CommandDatabase commandDatabase, String historyId) throws SQLException {
-        final List<CommandDto> commands = commandDatabase.commands();
-        for (CommandDto command : commands) {
-            insert(command, historyId);
-        }
+    public CommandDao() {
     }
 
-    public void insert(CommandDto commandDto, String historyId) throws SQLException {
+    public void insert(CommandDto commandDto, Integer historyId) throws SQLException {
         String query = "INSERT INTO Command (data, history_id) VALUES (?, ?)";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, commandDto.data());
-            preparedStatement.setString(2, historyId);
+            preparedStatement.setInt(2, historyId);
             preparedStatement.executeUpdate();
             MySQLConnector.closeConnection(connection);
         } catch (SQLException e) {
@@ -57,12 +51,12 @@ public class CommandDao {
         }
     }
 
-    public List<CommandDto> selectAllCommands(String historyName) throws SQLException {
+    public List<CommandDto> selectAllCommands(String id) throws SQLException {
         List<CommandDto> commands = new ArrayList<>();
-        String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.history_id WHERE H.name = ? AND H.is_end = false";
+        String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.history_id WHERE H.history_id = ? AND H.is_end = false";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, historyName);
+            preparedStatement.setString(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 commands.add(new CommandDto(rs.getString("C.Data")));

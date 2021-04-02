@@ -1,12 +1,16 @@
 h1 {
- text-align: center;
+    text-align: center;
 }
 
-div{
+div {
     margin: auto;
     text-align: center;
     font-size: 15px;
     padding-bottom: 10px;
+}
+
+div .gameList {
+    text-decoration: underline wavy;
 }
 
 button {
@@ -21,5 +25,13 @@ a {
     text-decoration: none;
     padding-bottom: 10px;
 }
-a:link { text-decoration: none; text-shadow: 0 0 24px; }
-a:visited { text-decoration: none; text-shadow: 0 0 24px; }
+
+a:link {
+    text-decoration: none;
+    text-shadow: 0 0 24px;
+}
+
+a:visited {
+    text-decoration: none;
+    text-shadow: 0 0 24px;
+}

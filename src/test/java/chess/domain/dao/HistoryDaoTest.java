@@ -23,18 +23,18 @@ class HistoryDaoTest {
     }
 
     @Test
-    void name() throws SQLException{
+    void name() throws SQLException {
         final int id = historyDao.findIdByName("minjeong");
         System.out.println(id);
     }
 
     @Test
-    void delete() throws SQLException{
+    void delete() throws SQLException {
         historyDao.delete("minjeong");
     }
 
     @Test
-    void selectAll() throws SQLException{
+    void selectAll() throws SQLException {
         historyDao.insert("minjeong");
         historyDao.insert("joanne");
         final List<String> names = historyDao.selectActive();
@@ -49,7 +49,6 @@ class HistoryDaoTest {
 
     @Test
     void clearById() throws SQLException {
-        historyDao.clear(new CommandDao());
         final HistoryDto history = historyDao.findById("8");
         assertThat(history).isEqualTo(null);
     }

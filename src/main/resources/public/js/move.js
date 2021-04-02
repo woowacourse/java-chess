@@ -10,7 +10,7 @@ for (let i = 0; i < squares.length; i++) {
 }
 
 function gameId() {
-    return document.getElementById("gameId").id;
+    return document.getElementById("gameId").innerText;
 }
 
 function move(source, target) {
@@ -20,7 +20,7 @@ function move(source, target) {
         data: {
             "source": source.id,
             "target": target.id,
-            "gameId" : gameId(),
+            "gameId": gameId(),
         },
         dataType: "json",
         success: update,
@@ -40,9 +40,9 @@ function update(response) {
 
         if (board[i].piece) {
             let pieceImage = board[i].piece.name + "_" + board[i].piece.team.toLowerCase();
-            piece.firstElementChild.src = "../images/" + pieceImage + ".png";
+            piece.firstElementChild.src = "/images/" + pieceImage + ".png";
         } else {
-            piece.firstElementChild.src = "../images/blank.png";
+            piece.firstElementChild.src = "/images/blank.png";
         }
     }
 

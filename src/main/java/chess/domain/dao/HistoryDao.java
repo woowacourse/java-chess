@@ -16,7 +16,6 @@ public class HistoryDao {
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
 
-        // TODO insert 시 반환값 받아오기 --> 처음 초기 사용자 등록 후 이용
         ResultSet resultSet = preparedStatement.getGeneratedKeys();
         resultSet.next();
         final String id = resultSet.getString(1);
@@ -55,25 +54,10 @@ public class HistoryDao {
         }
     }
 
-//    public void deleteById(String id) throws SQLException {
-//        System.out.println("delete by id");
-//        System.out.println(id);
-//        String query = "DELETE FROM History WHERE HistoryId = ?";
-//        try (Connection connection = MySQLConnector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, id);
-//            preparedStatement.executeUpdate();
-//
-//            MySQLConnector.closeConnection(connection);
-//        } catch (SQLException e) {
-//            System.err.println(e.getMessage());
-//        }
-//    }
-
     public List<String> selectActive() throws SQLException {
         List<String> names = new ArrayList<>();
-//        String query = "SELECT * FROM History WHERE is_end = false";
-        String query = "SELECT * FROM History H JOIN Command C ON H.history_id = C.history_id WHERE H.is_end = false";
+        String query = "SELECT * FROM History WHERE is_end = false";
+//        String query = "SELECT * FROM History H JOIN Command C ON H.history_id = C.history_id WHERE H.is_end = false";
         try (Connection connection = MySQLConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -86,22 +70,6 @@ public class HistoryDao {
         }
         return names;
     }
-
-//    public void clear(CommandDao commandDao) throws SQLException {
-//        final List<String> historyIds = commandDao.selectAllHistoryId();
-//        for (int i = 0; i < historyIds.size(); i++) {
-//            System.out.println(historyIds.get(i));
-//        }
-//        for (String historyId : historyIds) {
-//            final HistoryDto history = findById(historyId);
-//            if (history == null) {
-//                deleteById(historyId);
-//            }
-//            if (history != null) {
-//                System.out.println(history.getName());
-//            }
-//        }
-//    }
 
     public HistoryDto findById(String id) throws SQLException {
         Connection connection = MySQLConnector.getConnection();

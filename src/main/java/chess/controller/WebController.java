@@ -47,21 +47,10 @@ public class WebController {
         });
 
         get("/play/continue", (req, res) -> {
-            String historyName = req.queryParams("name");
-            chessService.continueLastGame(historyName);
-            return RenderView.renderHtml(chessService.continueResponse(), "chessGame.html");
+            String id = chessService.getIdByName(req.queryParams("name"));
+            chessService.continueLastGame(id);
+            return RenderView.renderHtml(chessService.continueResponse(id), "chessGame.html");
         });
-
-//        post("/play/save", (req, res) -> {
-//            String name = req.queryParams("name");
-//            try {
-//                chessService.flushCommands(name);
-//                return GSON.toJson(chessService.continueResponse());
-//            } catch (IllegalArgumentException e) {
-//                res.status(400);
-//                return e.getMessage();
-//            }
-//        });
     }
 
     private String makeMoveCmd(String source, String target) {

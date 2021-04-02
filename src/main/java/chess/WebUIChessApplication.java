@@ -1,9 +1,7 @@
 package chess;
 
 import chess.controller.WebController;
-import chess.db.MySQLConnector;
 import chess.domain.dao.CommandDao;
-import chess.domain.dao.CommandDatabase;
 import chess.domain.dao.HistoryDao;
 import chess.service.ChessService;
 

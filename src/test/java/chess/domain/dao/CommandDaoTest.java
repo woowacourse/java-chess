@@ -8,19 +8,16 @@ import java.sql.SQLException;
 
 public class CommandDaoTest {
     private CommandDao commandDao;
-    private CommandDatabase history;
 
     @BeforeEach
     public void setup() throws SQLException {
         commandDao = new CommandDao();
-        history = new CommandDatabase();
     }
 
     @Test
     public void addUser() throws Exception {
         CommandDto commandDto = new CommandDto("start");
-        history.insert(commandDto);
-        commandDao.insert(commandDto, "1");
+        commandDao.insert(commandDto, 1);
     }
 }
 
