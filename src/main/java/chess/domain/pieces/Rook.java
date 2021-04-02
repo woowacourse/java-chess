@@ -57,6 +57,16 @@ public final class Rook extends NoKingPieces implements MultiMove {
     }
 
     @Override
+    protected void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection) {
+        int currentRow = getPosition().getRow();
+        int currentColumn = getPosition().getColumn();
+
+        while (isMoveAble(movablePositions, board, currentRow + rowDirection, currentColumn + colDirection)) {
+            movablePositions.add(new Position(currentRow += rowDirection, currentColumn += colDirection));
+        }
+    }
+
+    @Override
     public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextColumn) {
         return isMoveAbleDirection(movablePositions, board, nextRow, nextColumn, getTeam());
     }
