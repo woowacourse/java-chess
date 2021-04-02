@@ -1,11 +1,11 @@
 package chess.controller.web;
 
 import chess.controller.web.dto.BasicResponseDto;
+import chess.controller.web.dto.ChessGameResponseDto;
 import chess.controller.web.dto.MoveRequestDto;
 import chess.controller.web.dto.MoveResponseDto;
 import chess.controller.web.dto.SaveRequestDto;
 import chess.controller.web.dto.ScoreResponseDto;
-import chess.controller.web.dto.StartResponseDto;
 import chess.controller.web.dto.WebResponseDto;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.service.ChessService;
@@ -41,7 +41,7 @@ public class WebController {
             get("/start", (request, response) -> {
                 chessService.start();
                 response.type("application/json; charset=utf-8");
-                return BasicResponseDto.createSuccessResponseDto(new StartResponseDto(chessService.nextColor(), chessService.getPieces()));
+                return BasicResponseDto.createSuccessResponseDto(new ChessGameResponseDto(chessService.getId(), chessService.nextColor(), chessService.getPieces()));
             }, gson::toJson);
 
             get("/score", (request, response) -> {
@@ -57,6 +57,16 @@ public class WebController {
                 response.type("application/json; charset=utf-8");
                 return HTTP_STATUS_OK;
             });
+
+            get("/load/:id", (request, response) -> {
+                try {
+                    long id = Long.parseLong(request.params("id"));
+                    chessService.load(id);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("게임 id는 숫자값이어야 합니다.");
+                }
+                return BasicResponseDto.createSuccessResponseDto(new ChessGameResponseDto(chessService.getId(), chessService.nextColor(), chessService.getPieces()));
+            }, gson::toJson);
 
             post("/move", (request, response) -> {
                 MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);

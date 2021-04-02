@@ -66,4 +66,7 @@ public class ChessService {
         return chessGameManager.getStatistics();
     }
 
+    public long getId() {
+        return chessGameManager.getId();
+    }
 }

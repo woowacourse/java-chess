@@ -4,17 +4,21 @@ import pieceFonts from "./enum/chessPieceFont.js"
 const $chessboard = document.querySelector('#chessboard');
 const $startBtn = document.querySelector('#startBtn');
 const $saveBtn = document.querySelector('#saveBtn');
+const $loadBtn = document.querySelector('#loadBtn');
 const $blackScore = document.querySelector('#blackScore')
 const $whiteScore = document.querySelector('#whiteScore')
 
 let nextColor;
+let chessGameId = 0;
 
 $chessboard.addEventListener("click", onClickPiece);
 $startBtn.addEventListener("click", onClickStartBtn);
 $saveBtn.addEventListener("click", onClickSaveBtn);
+$loadBtn.addEventListener("click", onClickLoadBtn);
 
-async function start() {
-    const piecesData = await getFetch("/game/start");
+async function getPieces(url) {
+    const piecesData = await getFetch(url);
+    chessGameId = piecesData.id;
     await calculateScore();
     setBoard(piecesData.piecesAndPositions);
     nextColor = piecesData.color;
@@ -40,13 +44,13 @@ async function movePiece(from, to) {
 }
 
 async function savePiece() {
-    const rank = [8,7,6,5,4,3,2,1];
-    const file = ["a","b","c","d","e","g","h"];
+    const rank = [8, 7, 6, 5, 4, 3, 2, 1];
+    const file = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
     const boardPieces = rank.flatMap(rank => file.map(file => file + rank))
         .map(position => getKeyByValue(pieceFonts, $chessboard.querySelector("#" + position).innerText))
         .join("");
-    await postFetch("/game/save", {pieces: boardPieces});
+    await postFetch("/game/save", {id: chessGameId, pieces: boardPieces});
 }
 
 function getKeyByValue(object, value) {
@@ -86,15 +90,24 @@ async function onClickPiece(e) {
     }
 }
 
-async function onClickStartBtn(e) {
+function onClickStartBtn(e) {
     if (e.target && e.target.id === "startBtn") {
-        await start();
+        getPieces("/game/start");
     }
 }
 
 function onClickSaveBtn(e) {
     if (e.target && e.target.id === "saveBtn") {
         savePiece();
+    }
+}
+
+function onClickLoadBtn(e) {
+    if (e.target && e.target.id === "loadBtn") {
+        const loadGameId = prompt("로드할 게임 ID를 입력해주세요.");
+        if (loadGameId) {
+            getPieces("/game/load/" + loadGameId);
+        }
     }
 }
 
