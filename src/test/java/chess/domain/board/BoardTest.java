@@ -3,7 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Piece;
-import chess.dto.BoardDto;
+import chess.dto.console.BoardDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

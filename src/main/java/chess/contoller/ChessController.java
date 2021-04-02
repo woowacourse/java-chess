@@ -3,9 +3,8 @@ package chess.contoller;
 import chess.domain.board.Board;
 import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
-import chess.domain.chessgame.Turn;
 import chess.domain.command.Command;
-import chess.dto.BoardDto;
+import chess.dto.console.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 

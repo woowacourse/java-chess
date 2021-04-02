@@ -1,6 +1,6 @@
-package chess.dto;
+package chess.dto.web;
 
-public class RoomUsersDto {
+public class UsersInRoomDto {
 
     private String whiteName;
     private String whiteWin;
@@ -9,7 +9,7 @@ public class RoomUsersDto {
     private String blackWin;
     private String blackLose;
 
-    public RoomUsersDto(String whiteName, String whiteWin, String whiteLose, String blackName,
+    public UsersInRoomDto(String whiteName, String whiteWin, String whiteLose, String blackName,
         String blackWin, String blackLose) {
         this.whiteName = whiteName;
         this.whiteWin = whiteWin;

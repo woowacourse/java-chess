@@ -6,8 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.board.Team;
-import chess.dto.BoardDto;
+import chess.dto.console.BoardDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

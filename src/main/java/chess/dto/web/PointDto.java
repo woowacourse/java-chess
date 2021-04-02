@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.web;
 
 import chess.domain.board.Point;
 

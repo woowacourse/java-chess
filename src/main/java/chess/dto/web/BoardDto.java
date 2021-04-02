@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.web;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardWebDto {
+public class BoardDto {
 
     private final List<PieceDto> board;
 
-    public BoardWebDto(Board board) {
+    public BoardDto(Board board) {
         Map<Point, SquareState> squares = board.squares();
 
         this.board = squares.keySet().stream()
