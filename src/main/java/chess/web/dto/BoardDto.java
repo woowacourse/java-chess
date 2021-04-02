@@ -14,17 +14,22 @@ public class BoardDto {
     public BoardDto(ChessGame chessGame) {
         Board board = chessGame.board();
         Map<Position, Piece> pieceMap = board.asMap();
+
         for (Position position : pieceMap.keySet()) {
             Piece piece = pieceMap.get(position);
-
-            String initial = piece.getInitial();
-            if (initial.equals(".")) {
-                initial = "";
-            }
+            String initial = convertToInitial(piece);
 
             result.put(position.toString(), initial);
         }
         result.put("currentTurn", chessGame.currentTurn());
+    }
+
+    private String convertToInitial(Piece piece) {
+        String initial = piece.getInitial();
+        if (initial.equals(".")) {
+            initial = "";
+        }
+        return initial;
     }
 
     public Map<String, Object> getResult() {
