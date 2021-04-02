@@ -8,7 +8,7 @@ public class Bishop extends Piece {
 	private static final String INITIAL_CHARACTER = "B";
 
 	public Bishop(Team team) {
-		super(team, INITIAL_CHARACTER);
+		super(team);
 	}
 
 	@Override

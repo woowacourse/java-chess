@@ -16,7 +16,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.result.Result;
 
 class StartedTest {
 	private GameState state;
@@ -42,9 +41,7 @@ class StartedTest {
 	void start_initial_pieces_test() {
 		state = state.start();
 		Board board = state.getBoard();
-		Result result = Result.from(board);
-		Map<Team, Double> status = result.getStatus();
-		assertThat(status).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
+		assertThat(board.status()).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
 	}
 
 	@DisplayName("게임 중, 현재 차례의 말을 제대로 움직이는 경우 예외 없이 정상적으로 동작, Started 객체 반환")
@@ -67,7 +64,7 @@ class StartedTest {
 
 		state = new Started(board, turn);
 		state = state.move(Position.of("a2"), Position.of("a8"));
-		assertThat(state).isInstanceOf(KingCatchFinished.class);
+		assertThat(state).isInstanceOf(KingCatchFinish.class);
 	}
 
 	@DisplayName("게임 중, 현재 차례가 아닌 말을 움직이려 하 경우 IllegalArgument 예외 발생")
@@ -117,7 +114,7 @@ class StartedTest {
 	@Test
 	void endTest() {
 		assertThat(state.end())
-			.isInstanceOf(SuspendFinished.class);
+			.isInstanceOf(SuspendFinish.class);
 	}
 
 	@DisplayName("게임 시작전 객체에게 게임이 안끝났는지 물어볼때 true 반환")

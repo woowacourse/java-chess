@@ -1,61 +1,61 @@
 package chess.domain.state;
 
-import static chess.domain.piece.Team.*;
-import static chess.domain.state.StateType.*;
+import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.result.Result;
 
-public class Started extends GameState {
+public class Started implements GameState {
+	private final Board board;
+	private Team turn;
+
 	public Started(Board board) {
-		this(board, WHITE);
+		this.board = board;
+		this.turn = Team.WHITE;
 	}
 
 	public Started(Board board, Team turn) {
-		super(board, STARTED, turn);
+		this.board = board;
+		this.turn = turn;
 	}
 
 	@Override
 	public GameState start() {
 		board.start();
-		return new Started(board);
+		return this;
 	}
 
 	@Override
 	public GameState move(Position from, Position to) {
-		validateRightTurn(from);
-		board.move(from, to);
-		if (board.containsSingleKingWith(turn)) {
-			return new KingCatchFinished(board, turn);
-		}
-		switchTurn();
-		return this;
-	}
-
-	private void validateRightTurn(Position from) {
 		if (board.isNotSameTeamFromPosition(from, turn)) {
 			throw new IllegalArgumentException("움직일 수 없는 턴입니다.");
 		}
-	}
-
-	private void switchTurn() {
+		board.move(from, to);
+		if (board.containsSingleKingWith(turn)) {
+			return new KingCatchFinish(board, turn);
+		}
 		this.turn = turn.getOppositeTeam();
+		return this;
 	}
 
 	@Override
-	public Result status() {
-		return Result.from(board);
+	public Map<Team, Double> status() {
+		return board.status();
 	}
 
 	@Override
 	public GameState end() {
-		return new SuspendFinished(board, turn);
+		return new SuspendFinish(board, turn);
 	}
 
 	@Override
 	public boolean isNotFinished() {
 		return true;
+	}
+
+	@Override
+	public Board getBoard() {
+		return board;
 	}
 }

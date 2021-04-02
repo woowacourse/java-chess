@@ -3,16 +3,18 @@ package chess.domain.state;
 import static chess.domain.piece.Team.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.result.Result;
 
-class FinishedTest {
+class FinishTest {
 	private GameState state;
 	private Board board;
 	private Team turn;
@@ -22,7 +24,7 @@ class FinishedTest {
 		board = new Board();
 		board.start();
 		turn = BLACK;
-		state = new SuspendFinished(board, turn);
+		state = new SuspendFinish(board, turn);
 	}
 
 	@DisplayName("종료된 게임 상태 객체에서 start 실행시 게임중 상태 객체 반환 테스트")
@@ -36,8 +38,7 @@ class FinishedTest {
 	void start_initial_pieces_test() {
 		state = state.start();
 		Board board = state.getBoard();
-		Result status = Result.from(board);
-		assertThat(status.getStatus()).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
+		assertThat(board.status()).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
 	}
 
 	@DisplayName("종료상태의 객체에서 체스말 이동 시도시 USO 예외 발생")
@@ -52,7 +53,7 @@ class FinishedTest {
 	@DisplayName("게임 종료 상태 객체에서 status를 호출해도 예외가 발생하지 않는다.")
 	@Test
 	void statusTest() {
-		assertThatCode(() -> state.status()).doesNotThrowAnyException();
+		assertThatCode(() -> state.status()).doesNotThrowAnyException();;
 	}
 
 	@DisplayName("게임 종료 상태 객체에서 end 호출시 USO 예외 발생한다.")

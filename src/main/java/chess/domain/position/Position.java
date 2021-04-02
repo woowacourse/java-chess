@@ -1,13 +1,11 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
-
-import chess.domain.piece.Team;
 
 public class Position {
 	public static final int MINIMUM_POSITION_NUMBER = 1;
@@ -16,10 +14,6 @@ public class Position {
 	private static final Map<String, Position> CACHE = new HashMap<>();
 
 	static {
-		initPositionCache();
-	}
-
-	private static void initPositionCache() {
 		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
 			for (int row = MINIMUM_POSITION_NUMBER; row <= MAXIMUM_POSITION_NUMBER; row++) {
 				CACHE.put(getKey(col, row), new Position(new Cell(col), new Cell(row)));
@@ -31,8 +25,8 @@ public class Position {
 	private final Cell row;
 
 	private Position(Cell file, Cell rank) {
-		this.col = Objects.requireNonNull(file);
-		this.row = Objects.requireNonNull(rank);
+		this.col = file;
+		this.row = rank;
 	}
 
 	public static Position of(String key) {
@@ -76,15 +70,11 @@ public class Position {
 		throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
 	}
 
-	public boolean isInitialPawnPosition(Team team) {
-		return row.isInitialPawnRow(team);
-	}
-
 	public boolean isNotDiagonal(Position other) {
 		return !isDiagonal(other);
 	}
 
-	public boolean isDiagonal(Position other) {
+	private boolean isDiagonal(Position other) {
 		return col.calculateAbsolute(other.col) == row.calculateAbsolute(other.row);
 	}
 
@@ -109,6 +99,10 @@ public class Position {
 			!= KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
 	}
 
+	public static Collection<Position> values() {
+		return CACHE.values();
+	}
+
 	public Cell getFile() {
 		return col;
 	}
@@ -123,6 +117,9 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return String.valueOf((char)('a' + col.getNumber() - 1)) + row.getNumber();
+		return "Position{" +
+			"file=" + col +
+			", rank=" + row +
+			'}';
 	}
 }

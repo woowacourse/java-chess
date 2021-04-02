@@ -9,7 +9,7 @@ public class King extends Piece {
 	private static final String INITIAL_CHARACTER = "K";
 
 	public King(Team team) {
-		super(team, INITIAL_CHARACTER);
+		super(team);
 	}
 
 	@Override

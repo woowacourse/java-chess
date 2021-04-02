@@ -19,21 +19,10 @@
     border: solid 1px black;
 }
 
-.piece {
-    width: 40px;
-    height: 40px;
-    display: block;
-    margin: auto;
-}
-
 .black-cell {
     background-color: burlywood;
 }
 
 .white-cell {
     background-color: brown;
-}
-
-.clicked {
-    background-color: cornsilk;
 }

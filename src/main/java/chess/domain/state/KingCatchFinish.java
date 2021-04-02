@@ -1,13 +1,11 @@
 package chess.domain.state;
 
-import static chess.domain.state.StateType.*;
-
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 
-public class KingCatchFinished extends Finished {
-	public KingCatchFinished(Board board, Team turn) {
-		super(board, KING_CATCHED_FINISHED, turn);
+public class KingCatchFinish extends Finish {
+	public KingCatchFinish(Board board, Team turn) {
+		super(board, turn);
 		validCountOfKing(board);
 	}
 

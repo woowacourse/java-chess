@@ -9,7 +9,7 @@ public class Pawn extends Piece {
 	private static final String INITIAL_CHARACTER = "P";
 
 	public Pawn(Team team) {
-		super(team, INITIAL_CHARACTER);
+		super(team);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 	}
 
 	private boolean isAbleToMoveDoubleSquare(Position start, Position end) {
-		return start.isInitialPawnPosition(team) || (Math.abs(end.getRankNumber() - start.getRankNumber()) != 2);
+		return !hasMoved || (Math.abs(end.getRankNumber() - start.getRankNumber()) != 2);
 	}
 
 	private boolean isNotAbleToMoveDoubleSquare(Position start, Position end) {

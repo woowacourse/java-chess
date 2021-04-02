@@ -13,7 +13,6 @@ public class OutputView {
 	private static final String START_COMMAND_INFORMATION_MESSAGE = "> 게임 시작 : start";
 	private static final String END_COMMAND_INFORMATION_MESSAGE = "> 게임 종료 : end";
 	private static final String MOVE_COMMAND_INFORMATION_MESSAGE = "> 말 이동 : move source위치 target위치 - 예. move b2 b3";
-	private static final String NEW_LINE = System.lineSeparator();
 
 	private OutputView() {
 	}
@@ -26,24 +25,31 @@ public class OutputView {
 	}
 
 	public static void printBoard(Board board) {
+		Map<Position, Piece> pieces = board.getPieces();
+
 		StringBuilder builder = new StringBuilder();
 
 		for (int rank = 8; rank >= 1; rank--) {
 			for (int file = 1; file <= 8; file++) {
-				Piece piece = board.findPiece(Position.of(file, rank));
-				builder.append(findSymbol(piece));
+				if (pieces.containsKey(Position.of(file, rank))) {
+					Piece piece = pieces.get(Position.of(file, rank));
+					builder.append(findSymbol(piece));
+				} else {
+					builder.append(".");
+				}
 			}
-			builder.append(NEW_LINE);
+			builder.append("\n");
 		}
 		System.out.println(builder);
 	}
 
 	private static String findSymbol(Piece piece) {
 		return piece.getSymbol();
+
 	}
 
-	public static void printStatus(Map<Team, Double> status) {
-		System.out.println(status);
+	public static void printErrorMessage(String message) {
+		System.out.println(message);
 	}
 
 	public static void printWinner(Team winner) {
@@ -58,9 +64,5 @@ public class OutputView {
 			return "백팀";
 		}
 		return "없음";
-	}
-
-	public static void printExceptionMessage(String message) {
-		System.out.println(message);
 	}
 }

@@ -15,11 +15,11 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-class KingCatchFinishedTest {
+class KingCatchFinishTest {
 	@DisplayName("게임보드 위에 왕이 하나가 아닌 경우, Finish 객체 생성시 예외발생")
 	@Test
 	void constructException_without_any_king_Test() {
-		assertThatThrownBy(() -> new KingCatchFinished(new Board(), BLACK))
+		assertThatThrownBy(() -> new KingCatchFinish(new Board(), BLACK))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -28,7 +28,7 @@ class KingCatchFinishedTest {
 	void constructException_with_wrong_team_Test() {
 		Map<Position, Piece> map = new HashMap<>();
 		map.put(Position.of("a1"), new King(WHITE));
-		assertThatThrownBy(() -> new KingCatchFinished(new Board(map), BLACK))
+		assertThatThrownBy(() -> new KingCatchFinish(new Board(map), BLACK))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -37,7 +37,7 @@ class KingCatchFinishedTest {
 	void getWinnerTest() {
 		Map<Position, Piece> map = new HashMap<>();
 		map.put(Position.of("a1"), new King(BLACK));
-		GameState state = new KingCatchFinished(new Board(map), BLACK);
+		GameState state = new KingCatchFinish(new Board(map), BLACK);
 		Team actual = state.getWinner();
 		assertThat(actual).isEqualTo(BLACK);
 	}

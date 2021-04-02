@@ -1,24 +1,11 @@
 package chess.domain.position;
 
-import static chess.domain.piece.Team.*;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import chess.domain.piece.Team;
-
 public class Cell {
-	private static final Map<Team, Cell> PAWN_INITIAL_ROW;
 	private static final int MINIMUM_DISTANCE = 1;
-
-	static {
-		PAWN_INITIAL_ROW = new HashMap<>();
-		PAWN_INITIAL_ROW.put(BLACK, new Cell(7));
-		PAWN_INITIAL_ROW.put(WHITE, new Cell(2));
-	}
 
 	private final int number;
 
@@ -72,9 +59,5 @@ public class Cell {
 		return "Cell{" +
 			"number=" + number +
 			'}';
-	}
-
-	public boolean isInitialPawnRow(Team team) {
-		return this.equals(PAWN_INITIAL_ROW.get(team));
 	}
 }

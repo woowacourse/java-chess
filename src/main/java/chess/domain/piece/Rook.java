@@ -8,7 +8,7 @@ public class Rook extends Piece {
 	private static final String INITIAL_CHARACTER = "R";
 
 	public Rook(Team team) {
-		super(team, INITIAL_CHARACTER);
+		super(team);
 	}
 
 	@Override

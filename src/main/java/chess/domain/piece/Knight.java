@@ -10,7 +10,7 @@ public class Knight extends Piece {
 	private static final String INITIAL_CHARACTER = "N";
 
 	public Knight(Team team) {
-		super(team, INITIAL_CHARACTER);
+		super(team);
 	}
 
 	@Override

@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
-import chess.domain.state.SuspendFinished;
+import chess.domain.state.Ready;
+import chess.domain.state.SuspendFinish;
 
-class FinishedGameTest {
+class FinishGameTest {
 	private Game game;
 	private GameState state;
 	private Board board;
@@ -21,7 +22,7 @@ class FinishedGameTest {
 	void setUp() {
 		board = new Board();
 		board.start();
-		state = new SuspendFinished(board, WHITE);
+		state = new SuspendFinish(board, WHITE);
 		game = new Game(state);
 	}
 

@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import static chess.domain.piece.Team.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashMap;
@@ -12,12 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.result.Result;
 
 public class BoardTest {
 	private Board board;
@@ -27,7 +24,7 @@ public class BoardTest {
 	@BeforeEach
 	void setup() {
 		Map<Position, Piece> pieces = new HashMap<>();
-		rook = new Rook(WHITE);
+		rook = new Rook(Team.WHITE);
 		from = Position.of("a1");
 		pieces.put(from, rook);
 		board = new Board(pieces);
@@ -69,34 +66,7 @@ public class BoardTest {
 	@Test
 	void calculateScoreTest() {
 		board.start();
-		Result result = Result.from(board);
-		Map<Team, Double> status = result.getStatus();
-		assertThat(status).containsOnly(entry(Team.BLACK, 38.0), entry(WHITE, 38.0));
-	}
-
-	@DisplayName("문자열로 체스판 입력 받아 보드 객체 생성")
-	@Test
-	void constructWithStringTest() {
-		String boards =
-			"RNBQKBNR\n" +
-				"PPPPPPPP\n" +
-				"........\n" +
-				"........\n" +
-				"........\n" +
-				"........\n" +
-				"pppppppp\n" +
-				"rnbqkbnr\n";
-		Board board = new Board(boards);
-		Map<Position, Piece> pieces = board.getPieces();
-		assertThat(pieces).contains(
-			entry(Position.of("a2"), new Pawn(WHITE)),
-			entry(Position.of("b2"), new Pawn(WHITE)),
-			entry(Position.of("c2"), new Pawn(WHITE)),
-			entry(Position.of("d2"), new Pawn(WHITE)),
-			entry(Position.of("e2"), new Pawn(WHITE)),
-			entry(Position.of("f2"), new Pawn(WHITE)),
-			entry(Position.of("g2"), new Pawn(WHITE)),
-			entry(Position.of("h2"), new Pawn(WHITE))
-		);
+		Map<Team, Double> status = board.status();
+		assertThat(status).containsOnly(entry(Team.BLACK, 38.0), entry(Team.WHITE, 38.0));
 	}
 }

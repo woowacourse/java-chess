@@ -3,13 +3,14 @@ package chess.domain.board;
 import static chess.domain.piece.Empty.*;
 import static chess.domain.piece.Team.*;
 import static chess.domain.position.Position.*;
+import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import chess.domain.piece.Bishop;
@@ -17,7 +18,6 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
@@ -25,11 +25,6 @@ import chess.domain.position.Position;
 
 public class Board {
 	private static final int COUNT_OF_KING_TO_FINISH_GAME = 1;
-	private static final Pattern PIECES_PATTERN = Pattern.compile("([\\.pPbBrRkKnNqQ]{8}\\n){8}");
-	private static final String ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE = "문자열의 형태가 체스판의 형식이 아닙니다.";
-	private static final String ROW_SEPARATOR = "\n";
-	private static final String COLUMN_SEPARATOR = "";
-
 	private final Map<Position, Piece> pieces;
 
 	public Board() {
@@ -37,68 +32,52 @@ public class Board {
 	}
 
 	public Board(Map<Position, Piece> pieces) {
-		this.pieces = Objects.requireNonNull(pieces);
-	}
-
-	public Board(String boards) {
-		validateBoardRegex(Objects.requireNonNull(boards));
-		pieces = new HashMap<>();
-		parse(boards);
-	}
-
-	private void parse(String boards) {
-		String[] boardRow = boards.split(ROW_SEPARATOR);
-		for (int row = MINIMUM_POSITION_NUMBER; row <= MAXIMUM_POSITION_NUMBER; row++) {
-			parseRow(boardRow[row - 1], row);
-		}
-	}
-
-	private void parseRow(String boardRow, int row) {
-		String[] rowElements = boardRow.split(COLUMN_SEPARATOR);
-		for (int col = 1; col <= MAXIMUM_POSITION_NUMBER; col++) {
-			parseOneElement(Position.of(col, MAXIMUM_POSITION_NUMBER + 1 - row), rowElements[col - 1]);
-		}
-	}
-
-	private void parseOneElement(Position of, String rowElement) {
-		if (".".equals(rowElement)) {
-			return;
-		}
-		pieces.put(of, PieceFactory.of(rowElement));
-	}
-
-	private void validateBoardRegex(String boards) {
-		if (!PIECES_PATTERN.matcher(boards).matches()) {
-			throw new IllegalArgumentException(String.format(ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE + "%s", boards));
-		}
+		this.pieces = pieces;
 	}
 
 	public void start() {
 		pieces.clear();
+		initAllBoardEmpty();
 		initChessBoard(8, BLACK, 7);
 		initChessBoard(1, WHITE, 2);
 	}
 
-	private void initChessBoard(int othersRow, Team team, int pawnsRow) {
-		initOthers(othersRow, team);
-		initAllPawns(team, pawnsRow);
+	private void initAllBoardEmpty() {
+		Position.values().forEach(position -> pieces.put(position, EMPTY));
 	}
 
-	private void initOthers(int othersRow, Team team) {
-		pieces.put(Position.of("a" + othersRow), new Rook(team));
-		pieces.put(Position.of("b" + othersRow), new Knight(team));
-		pieces.put(Position.of("c" + othersRow), new Bishop(team));
-		pieces.put(Position.of("d" + othersRow), new Queen(team));
-		pieces.put(Position.of("e" + othersRow), new King(team));
-		pieces.put(Position.of("f" + othersRow), new Bishop(team));
-		pieces.put(Position.of("g" + othersRow), new Knight(team));
-		pieces.put(Position.of("h" + othersRow), new Rook(team));
-	}
+	private void initChessBoard(int othersRank, Team teamColor, int pawnRank) {
+		pieces.put(Position.of("a" + othersRank), new Rook(teamColor));
+		pieces.put(Position.of("b" + othersRank), new Knight(teamColor));
+		pieces.put(Position.of("c" + othersRank), new Bishop(teamColor));
+		pieces.put(Position.of("d" + othersRank), new Queen(teamColor));
+		pieces.put(Position.of("e" + othersRank), new King(teamColor));
+		pieces.put(Position.of("f" + othersRank), new Bishop(teamColor));
+		pieces.put(Position.of("g" + othersRank), new Knight(teamColor));
+		pieces.put(Position.of("h" + othersRank), new Rook(teamColor));
 
-	private void initAllPawns(Team team, int pawnsRow) {
 		for (int i = 0; i < MAXIMUM_POSITION_NUMBER; i++) {
-			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnsRow)), new Pawn(team));
+			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnRank)), new Pawn(teamColor));
 		}
+	}
+
+	public Map<Team, Double> status() {
+		HashMap<Team, Double> collect = pieces.values().stream()
+			.filter(Piece::isNotBlank)
+			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
+
+		for (int file = 1; file <= 8; file++) {
+			int finalFile = file;
+			Map<Team, Long> cnt = IntStream.rangeClosed(1, 8)
+				.mapToObj(rank -> findPiece(Position.of(finalFile, rank)))
+				.filter(Piece::isPawn)
+				.collect(groupingBy(Piece::getTeam, counting()));
+
+			cnt.keySet().stream()
+				.filter(team -> cnt.get(team) == 1)
+				.forEach(team -> collect.put(team, collect.get(team) + 0.5));
+		}
+		return collect;
 	}
 
 	public void move(Position from, Position to) {
@@ -106,6 +85,11 @@ public class Board {
 		Piece target = findPiece(to);
 		validateSourceMovingRoute(from, to, source, target);
 		updatePiecePosition(from, to, source);
+		source.updateHasMoved();
+	}
+
+	public Piece findPiece(Position position) {
+		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
 	}
 
 	private Piece requireNonEmpty(Piece piece) {
@@ -115,21 +99,13 @@ public class Board {
 		return piece;
 	}
 
-	public Piece findPiece(Position position) {
-		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
-	}
-
-	public String findSymbol(Position position) {
-		return findPiece(position).getSymbol();
-	}
-
 	private void validateSourceMovingRoute(Position from, Position to, Piece source, Piece target) {
 		BoardOccupyState occupyState = BoardOccupyState.of(source, target);
 		occupyState.checkMovable(this, source, from, to);
 	}
 
 	private void updatePiecePosition(Position from, Position to, Piece source) {
-		pieces.remove(from);
+		pieces.put(from, EMPTY);
 		pieces.put(to, source);
 	}
 
@@ -138,12 +114,12 @@ public class Board {
 			.anyMatch(trace -> findPiece(trace).isNotBlank());
 	}
 
-	public boolean isNotSameTeamFromPosition(Position position, Team team) {
-		return !findPiece(position).isRightTeam(team);
+	public Map<Position, Piece> getPieces() {
+		return Collections.unmodifiableMap(this.pieces);
 	}
 
-	public boolean containsNotSingleKingWith(Team team) {
-		return !containsSingleKingWith(team);
+	public boolean isNotSameTeamFromPosition(Position position, Team team) {
+		return !findPiece(position).isRightTeam(team);
 	}
 
 	public boolean containsSingleKingWith(Team team) {
@@ -151,36 +127,20 @@ public class Board {
 	}
 
 	private boolean containsSingleKing() {
-		long countOfKing = getPiecesStreamContainsOnlyKing().count();
+		long countOfKing = getPieceStream().count();
 		return countOfKing == COUNT_OF_KING_TO_FINISH_GAME;
 	}
 
 	private boolean matchAllKings(Team team) {
-		return getPiecesStreamContainsOnlyKing().allMatch(piece -> piece.isRightTeam(team));
+		return getPieceStream().allMatch(piece -> piece.isRightTeam(team));
 	}
 
-	private Stream<Piece> getPiecesStreamContainsOnlyKing() {
+	private Stream<Piece> getPieceStream() {
 		return pieces.values().stream()
 			.filter(Piece::isKing);
 	}
 
-	public Map<Position, Piece> getPieces() {
-		return Collections.unmodifiableMap(this.pieces);
-	}
-
-	public String getAsString() {
-		StringBuilder builder = new StringBuilder();
-		for (int row = MAXIMUM_POSITION_NUMBER; row >= MINIMUM_POSITION_NUMBER; row--) {
-			parseRowAsString(builder, row);
-		}
-		return builder.toString();
-	}
-
-	private void parseRowAsString(StringBuilder builder, int row) {
-		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
-			Piece piece = findPiece(Position.of(col, row));
-			builder.append(piece.getSymbol());
-		}
-		builder.append(ROW_SEPARATOR);
+	public boolean containsNotSingleKingWith(Team team) {
+		return !containsSingleKingWith(team);
 	}
 }

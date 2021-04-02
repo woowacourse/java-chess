@@ -39,7 +39,7 @@ public class PawnTest {
 	private static Stream<Arguments> blackStartDestinationTraceProvider() {
 		return Stream.of(
 			Arguments.of(Position.of("e5"), Position.of("e4"), Collections.emptyList()),
-			Arguments.of(Position.of("e7"), Position.of("e5"), singletonList(Position.of("e6")))
+			Arguments.of(Position.of("e5"), Position.of("e3"), singletonList(Position.of("e4")))
 		);
 	}
 
@@ -55,7 +55,7 @@ public class PawnTest {
 	private static Stream<Arguments> whiteStartDestinationTraceProvider() {
 		return Stream.of(
 			Arguments.of(Position.of("e5"), Position.of("e6"), Collections.emptyList()),
-			Arguments.of(Position.of("e2"), Position.of("e4"), singletonList(Position.of("e3")))
+			Arguments.of(Position.of("e5"), Position.of("e7"), singletonList(Position.of("e6")))
 		);
 	}
 

@@ -10,7 +10,7 @@ public class Empty extends Piece {
 	public static final Empty EMPTY = new Empty();
 
 	public Empty() {
-		super(NONE, ".");
+		super(NONE);
 	}
 
 	@Override
