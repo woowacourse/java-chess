@@ -77,13 +77,18 @@ public class ChessBoardDAO {
         Connection connection = getConnection();
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
+        List<MoveRequestDTO> resultLog = extractLog(rs);
+        closeConnection(connection);
+        return resultLog;
+    }
+
+    private List<MoveRequestDTO> extractLog(ResultSet rs) throws SQLException {
         List<MoveRequestDTO> resultLog = new ArrayList<>();
         while (rs.next()) {
             String source = rs.getString("source");
             String target = rs.getString("target");
             resultLog.add(new MoveRequestDTO(source, target));
         }
-        closeConnection(connection);
         return resultLog;
     }
 }

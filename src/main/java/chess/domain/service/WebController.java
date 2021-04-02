@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
@@ -93,11 +95,6 @@ public class WebController {
         this.chessBoard = chessBoard;
     }
 
-    public static Object save(Request request, Response response) {
-
-        return "";
-    }
-
     public static Object load(Request request, Response response) throws SQLException {
         ChessBoard chessBoard = new ChessBoard();
         List<MoveRequestDTO> moveRequestDTOs = chessBoardDAO.getLog();
@@ -106,5 +103,14 @@ public class WebController {
         }
         WebController.chessBoard = chessBoard;
         return "";
+    }
+
+    public static Object main(Request request, Response response) {
+        Map<String, Object> model = new HashMap<>();
+        return render(model, "index.html");
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
