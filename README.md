@@ -52,28 +52,21 @@
 <br>
 
 ### 프론트 기능 명세
-- [ ] 체스 보드 출력 기능 (서버에서 JSON으로 각 기물들의 정보를 보내준다)
+- [x] 체스 보드 출력 기능 (서버에서 JSON으로 각 기물들의 정보를 보내준다)
   - 위치값, 턴(화이트, 블랙), 기물 종류, 현재 점수
-- [ ] 버튼 이벤트 기능
-  - [ ] 시작, 종료 버튼 이벤트 (start, end)
-  - [ ] 체스 보드의 기물 선택시 클릭 이벤트 (해당 위치 말의 정보를 가져온다)
-    - [ ] 시작 기물임을 표시하는 기능
-    - [ ] 종료 기물일 경우 서버에 move 기능 요청
-  - [ ] start, end, move 버튼이 눌러지면 서버에 요청하고 처리 결과 출력하는 기능
-- [ ] 이미지와 CSS를 이용해서 체스 기물 출력 기능
+- [x] 버튼 이벤트 기능
+  - [x] 시작, 종료 버튼 이벤트 (start, end)
+  - [x] 체스 보드의 기물 선택시 클릭 이벤트 (해당 위치 말의 정보를 가져온다)
+    - [x] 시작 기물임을 표시하는 기능
+    - [x] 종료 기물일 경우 서버에 move 기능 요청
+  - [x] start, end, move 버튼이 눌러지면 서버에 요청하고 처리 결과 출력하는 기능
 
 <br>
 
 ### 서버 기능 명세
-- [ ] GET(`/start`): 새로운 게임 시작 요청
-  - ResponseDto: gamestatus, turn, pieces, score
-- [ ] GET('/end'): 게임 종료 및 결과 출력
-  - ResponseDto: gamestatus, pieces, score, result
-- [ ] GET('/move?source=xx&target=xx'): 기물 이동 및 제거
-  - ResponseDto: gamestatus, turn, pieces, score
-  
-> * gamestatus: 현재 게임 상태
-> * turn: 현재 턴
-> * pieces: 전체 기물의 정보 (location, team, type)
-> * score: 현재 점수 (black, white)
-> * result: 게임 결과 (승무패)
+- [x] GET('/createroom/{name}'): 새로운 방 생성 요청
+- [x] GET('/room/{name}'): 방 입장 (방에 대한 정보 반환)
+- [x] GET('/room/{name}/start'): 방 게임 시작 요청
+- [x] GET('/room/{name}/end'): 방 게임 종료 요청
+- [x] POST('/room/{name}/move'): 기물 이동 및 제거
+  - body: source, target
