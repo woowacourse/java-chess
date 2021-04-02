@@ -43,7 +43,6 @@ public class WebUIChessApplication {
 
         get("/room/:name", (req, res) -> {
             try {
-                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.findPiecesByRoomName(roomName);
                 res.type("application/json");
@@ -55,7 +54,6 @@ public class WebUIChessApplication {
 
         get("/room/:name/start", (req, res) -> {
             try {
-                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.start(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
@@ -66,7 +64,6 @@ public class WebUIChessApplication {
 
         get("/room/:name/end", (req, res) -> {
             try {
-                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.end(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
@@ -77,7 +74,6 @@ public class WebUIChessApplication {
 
         post("/room/:name/move", (req, res) -> {
             try {
-                // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
                 MoveResponseDto result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
