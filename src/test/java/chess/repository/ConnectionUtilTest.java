@@ -1,7 +1,6 @@
 package chess.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,10 +1,8 @@
 package chess.controller;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.dto.move.MoveResponseDto;
 import chess.serivce.chess.ChessService;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ChessController {
 

@@ -3,7 +3,6 @@ package chess.domain.gamestate.running;
 import chess.domain.board.Board;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
-import chess.domain.gamestate.finished.End;
 import chess.domain.team.Team;
 
 public class Start extends Running {

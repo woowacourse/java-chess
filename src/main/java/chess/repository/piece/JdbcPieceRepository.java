@@ -1,15 +1,7 @@
 package chess.repository.piece;
 
 import chess.domain.dto.PieceDto;
-import chess.domain.location.Location;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.team.Team;
 import chess.repository.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,6 +1,5 @@
 package chess.repository.room;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import chess.repository.ConnectionUtil;
@@ -10,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

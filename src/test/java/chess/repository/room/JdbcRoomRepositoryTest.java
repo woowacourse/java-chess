@@ -1,7 +1,5 @@
 package chess.repository.room;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.running.Ready;

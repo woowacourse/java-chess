@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;

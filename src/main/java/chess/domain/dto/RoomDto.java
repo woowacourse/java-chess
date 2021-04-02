@@ -1,7 +1,6 @@
 package chess.domain.dto;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class RoomDto {
 

@@ -3,11 +3,9 @@ package chess.serivce.chess;
 import chess.domain.board.Board;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.RoomDto;
-import chess.domain.dto.ScoreDto;
 import chess.domain.dto.move.MoveResponseDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.State;
-
 import chess.domain.gamestate.running.Ready;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
@@ -22,7 +20,6 @@ import chess.utils.StateUtil;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChessService {
 

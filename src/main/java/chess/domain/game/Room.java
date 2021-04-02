@@ -1,10 +1,8 @@
 package chess.domain.game;
 
-import chess.domain.board.Board;
 import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
-import chess.domain.gamestate.running.Ready;
 import chess.domain.team.Team;
 
 public class Room {
@@ -38,10 +36,6 @@ public class Room {
             nextState.processMove(input, currentTeam);
             currentTeam = currentTeam.reverse();
         }
-    }
-
-    public boolean isFinished() {
-        return state.isFinished();
     }
 
     public State state() {
