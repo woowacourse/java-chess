@@ -1,4 +1,4 @@
-:root{
+:root {
     --board-dark: #664585;
     --board-light: #7a699b;
     --piece-white: white;
@@ -6,7 +6,7 @@
     --piece-clicked: darkgrey;
 }
 
-*{
+* {
     box-sizing: inherit;
 }
 
@@ -14,11 +14,13 @@ html {
     width: 100vw;
     height: 100vh;
 }
-body{
+
+body {
     width: 100vw;
     height: 100vh;
     margin: 0;
 }
+
 .section {
     width: 100%;
     height: 100%;
@@ -28,52 +30,58 @@ body{
     align-items: center;
     background-color: burlywood;
 }
-.title{
+
+.title {
     font-size: 2.5em;
 }
-.chessboard_section{
+
+.chessboard_section {
     display: flex;
     flex-direction: row;
-    width:100%;
+    width: 100%;
     justify-content: center;
 }
 
-.chessboard{
+.chessboard {
     display: flex;
     flex-direction: column;
     padding-bottom: 5%;
 }
-.results{
-    background-color: lightsteelblue;
+
+.results {
     display: flex;
     flex-direction: column;
-    margin : 10%;
+    margin: 10%;
     justify-content: space-around;
 }
-.result-display{
+
+.result-display {
     display: flex;
-    width:100px;
-    height:200px;
+    width: 100px;
+    height: 200px;
     align-items: center;
-    background-color: lightgreen;
     text-align: center;
 }
-.row{
+
+.row {
     display: flex;
     flex-direction: row;
 }
-.cell{
-    width:60px;
-    height:60px;
+
+.cell {
+    width: 60px;
+    height: 60px;
     font-size: 2rem;
     text-align: center;
 }
+
 .position {
     width: 60px;
     height: 60px;
     font-size: 2rem;
     text-align: center;
 }
+
 .dark {
     background-color: var(--board-dark);
     border: 0.5px solid black;
@@ -83,24 +91,29 @@ body{
     background-color: var(--board-light);
     border: 0.5px solid black;
 }
-.black{
+
+.black {
     color: var(--piece-black);
 }
-.white{
+
+.white {
     color: var(--piece-white);
 }
 
-.clicked{
-    background-color:var(--piece-clicked);
+.clicked {
+    background-color: var(--piece-clicked);
 }
-.btns{
+
+.btns {
     display: flex;
     flex-direction: row;
     margin-bottom: 5%;
 }
-.isPlaying {
-margin-right:5%;
+
+.isPlaying, .startSaved, .saving {
+    margin-right: 5%;
 }
-.hidden{
+
+.hidden {
     visibility: hidden;
 }
