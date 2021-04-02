@@ -108,8 +108,10 @@ public class WebUIChessApplication {
 
         post("/search/search", (req, res) -> {
             UserIdsDto userIdsDto = gson.fromJson(req.body(), UserIdsDto.class);
-            List<CommandsDto> commandsByUserIds = chessDao.findCommandsByUserIds(userIdsDto.getWhiteUserId());
-            List<UserIdsDto> userIdsDtos = chessDao.findUserIdsByUserId(userIdsDto.getWhiteUserId());
+            List<CommandsDto> commandsByUserIds = chessDao
+                .findCommandsByUserIds(userIdsDto.getWhiteUserId());
+            List<UserIdsDto> userIdsDtos = chessDao
+                .findUserIdsByUserId(userIdsDto.getWhiteUserId());
             List<String> states = new ArrayList<>();
             List<ScoreDto> scoreDtos = new ArrayList<>();
 

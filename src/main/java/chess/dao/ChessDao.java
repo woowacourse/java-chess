@@ -1,8 +1,8 @@
 package chess.dao;
 
-import chess.dto.PlayerIdsDto;
 import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
+import chess.dto.PlayerIdsDto;
 import chess.dto.UserIdsDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -92,7 +92,8 @@ public class ChessDao {
         pstmt.executeUpdate();
     }
 
-    public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName) throws SQLException {
+    public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName)
+        throws SQLException {
         String query = "UPDATE game SET white_user=?, black_user=? WHERE game_id=?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, playerIdsDto.getWhiteUserId());
@@ -121,7 +122,7 @@ public class ChessDao {
         ResultSet rs = pstmt.executeQuery();
 
         List<String> commands = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             commands.add(rs.getString("command"));
         }
 
@@ -144,21 +145,22 @@ public class ChessDao {
         ResultSet rs = pstmt.executeQuery();
 
         List<String> gameIds = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             gameIds.add(rs.getString("game_id"));
         }
 
         return gameIds;
     }
 
-    private void findCommandsByUserId(String gameId, List<CommandsDto> commandsDtos) throws SQLException {
+    private void findCommandsByUserId(String gameId, List<CommandsDto> commandsDtos)
+        throws SQLException {
         String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
 
         List<String> commands = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             commands.add(rs.getString("command"));
         }
 
@@ -173,7 +175,7 @@ public class ChessDao {
         ResultSet rs = pstmt.executeQuery();
 
         List<UserIdsDto> userIdsDtos = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             userIdsDtos.add(new UserIdsDto(rs.getString("white_user"), rs.getString("black_user")));
         }
 

@@ -7,12 +7,12 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.domain.piece.Piece;
 import chess.dto.ChessGameDto;
-import chess.dto.ScoreDto;
-import chess.dto.SearchResultDto;
-import chess.dto.SquareDto;
 import chess.dto.MovableResponseDto;
 import chess.dto.PositionDto;
 import chess.dto.RankDto;
+import chess.dto.ScoreDto;
+import chess.dto.SearchResultDto;
+import chess.dto.SquareDto;
 import chess.dto.UserIdsDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +45,7 @@ public class DtoAssembler {
 
         return rankDtos;
     }
+
     private static List<String> ypointSymbols(Board board, Ypoint ypoint) {
         return board.piecesByYpoint(ypoint)
             .stream()
@@ -65,7 +66,8 @@ public class DtoAssembler {
         return new ScoreDto(score.white(), score.black());
     }
 
-    public static List<SearchResultDto> searchResultDto(final List<String> states, final List<UserIdsDto> userIdsDtos, final List<ScoreDto> scoreDtos) {
+    public static List<SearchResultDto> searchResultDto(final List<String> states,
+        final List<UserIdsDto> userIdsDtos, final List<ScoreDto> scoreDtos) {
         List<SearchResultDto> searchResultDtos = new ArrayList<>();
 
         for (int i = 0; i < states.size(); i++) {

@@ -51,7 +51,8 @@ async function state(chessGame) {
         message2 = "새로운 게임 진행을 원하면 시작 버튼을 눌러주세요.";
     }
 
-    if (messageTag1.innerText === "백색 차례" || messageTag1.innerText === "흑색 차례") {
+    if (messageTag1.innerText === "백색 차례" || messageTag1.innerText
+        === "흑색 차례") {
         startGameBlock.style.display = "none";
         whiteUserId.disabled = true;
         blackUserId.disabled = true;

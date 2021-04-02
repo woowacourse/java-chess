@@ -1,8 +1,5 @@
 package chess.dto;
 
-import chess.domain.board.position.Position;
-import chess.domain.piece.Piece;
-
 public class SquareDto {
 
     private final String position;

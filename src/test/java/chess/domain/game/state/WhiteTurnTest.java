@@ -117,7 +117,7 @@ class WhiteTurnTest {
 
     @Test
     @DisplayName("백색 차례에서 state 명령시 백색 차례 반환")
-    void testState(){
+    void testState() {
         assertThat(this.whiteTurn.state()).isEqualTo("백색 차례");
     }
 }

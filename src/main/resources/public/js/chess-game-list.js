@@ -19,7 +19,7 @@ async function onCreateGame(event) {
             body: JSON.stringify({"gameName": gameName})
         });
 
-        if(window.confirm("[" + gameName + "] 방에 입장하시겠습니까?")) {
+        if (window.confirm("[" + gameName + "] 방에 입장하시겠습니까?")) {
             location.replace(gameName);
         } else {
             location.reload();

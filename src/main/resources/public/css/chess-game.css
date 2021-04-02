@@ -127,7 +127,7 @@ a.animated-button:link, a.animated-button:visited {
   margin: 30px auto 0;
   padding: 14px 15px;
   color: #fff;
-  font-size:14px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -141,6 +141,7 @@ a.animated-button:link, a.animated-button:visited {
   -o-transition: all 1s ease;
   transition: all 1s ease;
 }
+
 a.animated-button:link:after, a.animated-button:visited:after {
   content: "";
   position: absolute;
@@ -154,20 +155,23 @@ a.animated-button:link:after, a.animated-button:visited:after {
   -o-transition: all 0.75s ease 0s;
   transition: all 0.75s ease 0s;
 }
+
 a.animated-button:link:hover, a.animated-button:visited:hover {
   color: #FFF;
   text-shadow: none;
 }
+
 a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
   height: 450%;
 }
+
 a.animated-button:link, a.animated-button:visited {
   position: relative;
   display: block;
   margin: 30px auto 0;
   padding: 14px 15px;
   color: #fff;
-  font-size:14px;
+  font-size: 14px;
   border-radius: 0;
   font-weight: bold;
   text-align: center;
@@ -185,6 +189,7 @@ a.animated-button:link, a.animated-button:visited {
 a.animated-button.victoria-one {
   border: 2px solid #ffffff;
 }
+
 a.animated-button.victoria-one:after {
   background: #ffffff;
   -moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
