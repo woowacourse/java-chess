@@ -1,21 +1,12 @@
 package chess.domain.team;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.AlphaColumns;
 import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WhiteSet implements PieceSet {
@@ -78,21 +69,21 @@ public class WhiteSet implements PieceSet {
 
     private Score subtractWhenOnSameLine(Map<Character, Integer> pawnCount) {
         return pawnCount.values().stream()
-            .filter(number -> number > 1)
-            .map(number -> new Score(MINUS_HALF_POINT * number))
-            .reduce(Score.ZERO, Score::add);
+                .filter(number -> number > 1)
+                .map(number -> new Score(MINUS_HALF_POINT * number))
+                .reduce(Score.ZERO, Score::add);
     }
 
     private List<Piece> alives() {
         return pieces.stream()
-            .filter(Piece::isAlive)
-            .collect(Collectors.toList());
+                .filter(Piece::isAlive)
+                .collect(Collectors.toList());
     }
 
     private void recordPawns(Map<Character, Integer> pawnCount, Piece piece) {
         if (piece.isPawn()) {
             pawnCount.put(piece.getColumn(),
-                pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
+                    pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
         }
     }
 

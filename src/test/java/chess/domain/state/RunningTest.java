@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RunningTest {
     private static final Map<Position, Piece> chessBoard = init();
@@ -26,7 +26,7 @@ class RunningTest {
     }
 
     @BeforeEach
-    void setup(){
+    void setup() {
         running = new Running(chessBoard, TeamColor.BLACK);
     }
 

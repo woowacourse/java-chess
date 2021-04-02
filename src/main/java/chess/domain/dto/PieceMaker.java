@@ -22,7 +22,7 @@ public enum PieceMaker {
         this.expression = expression;
     }
 
-    public static Piece getInstance(String pieceType, TeamColor teamColor, Position position, State state){
+    public static Piece getInstance(String pieceType, TeamColor teamColor, Position position, State state) {
         return Arrays.stream(PieceMaker.values())
                 .filter(piece -> piece.name().equals(pieceType))
                 .map(piece -> piece.expression.apply(teamColor, position, state))

@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
+
 import java.util.Arrays;
 
 public enum AlphaColumns {
@@ -29,9 +30,9 @@ public enum AlphaColumns {
 
     public static AlphaColumns getInstance(int value) {
         return Arrays.stream(AlphaColumns.values())
-            .filter(alpha -> alpha.asciNumber == value)
-            .findFirst()
-            .orElse(null);
+                .filter(alpha -> alpha.asciNumber == value)
+                .findFirst()
+                .orElse(null);
     }
 
     private static int validCharacter(String value) {

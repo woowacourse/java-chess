@@ -30,7 +30,7 @@ public abstract class PieceOnBoard implements Piece {
         this.currentPosition = currentPosition;
     }
 
-    public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position currentPosition, State state){
+    public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position currentPosition, State state) {
         this.teamColor = teamColor;
         this.pieceType = pieceType;
         this.currentPosition = currentPosition;
@@ -46,7 +46,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
-    public String getPieceType(){
+    public String getPieceType() {
         return pieceType.name();
     }
 

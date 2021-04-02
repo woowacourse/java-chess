@@ -1,18 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
+import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import chess.domain.ChessBoard;
-import chess.domain.pieceinformations.TeamColor;
-import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class RookTest {
 

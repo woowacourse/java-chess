@@ -64,15 +64,13 @@ public class ChessBoardDAO {
     }
 
 
-
-
     public List<ChessBoardDTOForDAO> findByGameId(String gameId) throws SQLException {
         String query = "SELECT * FROM chessTable WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
         List<ChessBoardDTOForDAO> chessboard = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             ChessBoardDTOForDAO chessboardDto = new ChessBoardDTOForDAO();
             chessboard.add(chessboardDto);
             chessboardDto.setPosition(rs.getString("position"));

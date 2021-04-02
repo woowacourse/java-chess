@@ -9,21 +9,20 @@ public class MovementDto {
         this.target = target;
     }
 
-    public void setSource(String source){
-        this.source = source;
-    }
-
-    public void setTarget(String target){
-        this.target = target;
-    }
-
-
     public String getSource() {
         return source;
     }
 
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public String getTarget() {
         return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
 }

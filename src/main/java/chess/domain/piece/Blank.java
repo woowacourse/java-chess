@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 import chess.domain.team.Score;
+
 import java.util.Map;
 
 public class Blank implements Piece {

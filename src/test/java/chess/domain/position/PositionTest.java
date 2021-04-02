@@ -1,14 +1,12 @@
 package chess.domain.position;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import chess.domain.pieceinformations.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PositionTest {
 
@@ -22,14 +20,14 @@ public class PositionTest {
     @DisplayName("잘못된 포지션 위치 - 벗어난 위치")
     void failChessBoardPosition() {
         assertThatThrownBy(() -> Position.valueOf("b9"))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("잘못된 포지션 위치 - 길이초과")
     void failChessBoardPosition1() {
         assertThatThrownBy(() -> Position.valueOf("b10"))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

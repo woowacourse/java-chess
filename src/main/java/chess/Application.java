@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 
 public class Application {

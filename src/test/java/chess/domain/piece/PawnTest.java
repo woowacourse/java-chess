@@ -1,18 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
+import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import chess.domain.ChessBoard;
-import chess.domain.pieceinformations.TeamColor;
-import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class PawnTest {
 
@@ -68,9 +69,9 @@ public class PawnTest {
         Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
 
         assertTrue(
-            pieceBlack.isMoveAble(Position.valueOf("b3"), board));
+                pieceBlack.isMoveAble(Position.valueOf("b3"), board));
         assertTrue(
-            pieceWhite.isMoveAble(Position.valueOf("c5"), board));
+                pieceWhite.isMoveAble(Position.valueOf("c5"), board));
     }
 
     @Test
@@ -80,9 +81,9 @@ public class PawnTest {
         Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
 
         assertFalse(
-            pieceBlack.isMoveAble(Position.valueOf("b5"), board));
+                pieceBlack.isMoveAble(Position.valueOf("b5"), board));
         assertFalse(
-            pieceWhite.isMoveAble(Position.valueOf("c3"), board));
+                pieceWhite.isMoveAble(Position.valueOf("c3"), board));
     }
 
     @Test

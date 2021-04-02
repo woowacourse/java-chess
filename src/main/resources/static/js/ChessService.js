@@ -18,6 +18,7 @@ export default class ChessService {
         const response = await fetch(`${this.baseUrl}/chessboard`);
         return response.json();
     }
+
     async getChessBoardSaved() {
         const response = await fetch(`${this.baseUrl}/chessboard/saved`);
         return response.json();

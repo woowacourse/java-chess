@@ -8,7 +8,7 @@ public class ChessBoardDTOForDAO {
     private String pieceType;
     private String alive;
 
-    public ChessBoardDTOForDAO(){
+    public ChessBoardDTOForDAO() {
 
     }
 
@@ -19,36 +19,36 @@ public class ChessBoardDTOForDAO {
         this.alive = alive;
     }
 
+    public String getPosition() {
+        return position;
+    }
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setTeamColor(String teamColor) {
-        this.teamColor = teamColor;
-    }
-
-    public void setPieceType(String pieceType) {
-        this.pieceType = pieceType;
-    }
-
-    public void setAlive(String alive) {
-        this.alive = alive;
-    }
-    public String getPosition() {
-        return position;
     }
 
     public String getTeamColor() {
         return teamColor;
     }
 
+    public void setTeamColor(String teamColor) {
+        this.teamColor = teamColor;
+    }
+
     public String getPieceType() {
         return pieceType;
     }
 
+    public void setPieceType(String pieceType) {
+        this.pieceType = pieceType;
+    }
+
     public String getAlive() {
         return alive;
+    }
+
+    public void setAlive(String alive) {
+        this.alive = alive;
     }
 
     @Override

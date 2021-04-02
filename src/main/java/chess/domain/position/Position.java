@@ -3,12 +3,13 @@ package chess.domain.position;
 import chess.domain.pieceinformations.TeamColor;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Position {
     private static final Table<AlphaColumns, NumberRows, Position> CACHED_TABLE
-        = HashBasedTable.create();
+            = HashBasedTable.create();
 
     static {
         for (NumberRows row : NumberRows.values()) {
@@ -89,8 +90,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-            "boardPosition='" + column + ", " + row + '\'' +
-            '}';
+                "boardPosition='" + column + ", " + row + '\'' +
+                '}';
     }
 
 }

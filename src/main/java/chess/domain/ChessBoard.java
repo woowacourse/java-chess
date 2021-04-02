@@ -14,6 +14,7 @@ import chess.domain.state.Running;
 import chess.domain.team.BlackSet;
 import chess.domain.team.PieceSet;
 import chess.domain.team.WhiteSet;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -94,7 +95,7 @@ public class ChessBoard {
         return gameState.getChessBoard();
     }
 
-    public void move(MovementDto movementDto){
+    public void move(MovementDto movementDto) {
         move(movementDto.getSource(), movementDto.getTarget());
     }
 

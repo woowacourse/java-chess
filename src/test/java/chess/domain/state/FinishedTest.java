@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class FinishedTest {
     private Finished finished;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
         for (Position position : Position.values()) {
             chessBoard.put(position, Blank.INSTANCE);
@@ -31,7 +31,7 @@ class FinishedTest {
     @Test
     @DisplayName("움직임 불가")
     void move() {
-        assertThatThrownBy(()-> finished.move(Position.valueOf("a4"), Position.valueOf("a5")))
+        assertThatThrownBy(() -> finished.move(Position.valueOf("a4"), Position.valueOf("a5")))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -39,7 +39,7 @@ class FinishedTest {
     @Test
     @DisplayName("종료 불가")
     void terminate() {
-        assertThatThrownBy(()-> finished.terminate())
+        assertThatThrownBy(() -> finished.terminate())
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 

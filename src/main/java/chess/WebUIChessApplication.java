@@ -20,8 +20,8 @@ import java.util.*;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static ChessBoard chessBoard = new ChessBoard();
     private static final ChessBoardDAO chessBoardDao = new ChessBoardDAO();
+    private static ChessBoard chessBoard = new ChessBoard();
 
     public static void main(String[] args) {
         staticFileLocation("/static");
@@ -62,7 +62,6 @@ public class WebUIChessApplication {
             return chessBoard.result();
         }, gson::toJson);
 
-        //todo: DB에서 가져온 데이터 넣어주기! (시작가능)
         get("/chessboard/saved", (req, res) -> {
             res.type("application/json");
             List<ChessBoardDTOForDAO> previousGame = chessBoardDao.findByGameId("1");
@@ -74,9 +73,9 @@ public class WebUIChessApplication {
                                 TeamColor.getInstance(eachInfo.getTeamColor()),
                                 Position.valueOf(eachInfo.getPosition()),
                                 State.getInstance(eachInfo.getAlive())
-                                ));
+                        ));
             }
-            if(boardFromDB.isEmpty()){
+            if (boardFromDB.isEmpty()) {
                 chessBoard = new ChessBoard();
                 return chessBoard.getChessBoardDto();
             }
