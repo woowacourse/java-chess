@@ -35,6 +35,8 @@ public class ChessGame {
         board.movePiece(convertStringToPosition(splitInput[TARGET_INDEX])
                 , convertStringToPosition(splitInput[DESTINATION_INDEX]));
         board.applyStatus();
+
+        end = board.isGameOver();
     }
 
     public void move(String target, String destination) {
@@ -60,8 +62,12 @@ public class ChessGame {
                 Vertical.find(input.substring(VERTICAL_INDEX, OPTION_FINISH)));
     }
 
+    public void changeEnd() {
+        end = !end;
+    }
+
     public boolean isBeforeEnd() {
-        return !board.isGameOver() && !end;
+        return !end;
     }
 
     public boolean isBeforeStart() {

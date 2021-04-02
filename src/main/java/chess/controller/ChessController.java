@@ -17,15 +17,13 @@ public class ChessController {
     private ChessGame chessGame;
 
     public void run(ChessGame chessGame) {
-        boolean isPlaying = true;
-
         OutputView.printManual();
-        while (isPlaying) {
-            isPlaying = playGame(chessGame);
+        while (chessGame.isBeforeEnd()) {
+            playGame(chessGame);
         }
     }
 
-    public boolean playGame(ChessGame chessGame) {
+    public void playGame(ChessGame chessGame) {
         try {
             String inputCommand = InputView.inputCommand();
             Command.findCommand(inputCommand).execute(chessGame, inputCommand);
@@ -34,7 +32,6 @@ public class ChessController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return chessGame.isBeforeEnd();
     }
 
     private void checkGameStart(ChessGame chessGame) {
@@ -52,15 +49,15 @@ public class ChessController {
         }
 
         Board board = chessGame.getBoard();
-        return new BoardDto(board, chessGame.nowTurn());
+        return new BoardDto(board, chessGame.turn());
     }
 
     public BoardDto move(String target, String destination) {
         chessGame.move(target, destination);
         if (chessGame.isBeforeEnd()) {
-            return new BoardDto(chessGame.getBoard(), chessGame.nowTurn());
+            return new BoardDto(chessGame.getBoard(), chessGame.turn());
         }
-        return new BoardDto(chessGame.getBoard(), chessGame.nowTurn().name(), END_TRUE);
+        return new BoardDto(chessGame.getBoard(), chessGame.turn().name(), END_TRUE);
     }
 
     public List<String> movablePosition(String target) {
@@ -68,7 +65,7 @@ public class ChessController {
     }
 
     public BoardDto boardDto() {
-        return new BoardDto(chessGame.getBoard(), chessGame.nowTurn());
+        return new BoardDto(chessGame.getBoard(), chessGame.turn());
     }
 
     public BoardStatusDto boardStatusDto() {
