@@ -2,8 +2,10 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.game.state.BlackTurn;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
+import chess.domain.game.state.WhiteTurn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
@@ -71,5 +73,17 @@ public class ChessGame {
 
     public State state() {
         return state;
+    }
+
+    public void setState(String turn) {
+        if (BlackTurn.BLACK_TURN.equals(turn)) {
+            state = new BlackTurn(new Board(board()));
+            return;
+        }
+        state = new WhiteTurn(new Board(board()));
+    }
+
+    public void load(ChessGame loadChessGame) {
+        state = loadChessGame.state;
     }
 }

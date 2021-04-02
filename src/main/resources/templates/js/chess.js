@@ -20,9 +20,45 @@ const gameInfo = {
 
 const $chessboard = document.querySelector(".chessboard");
 const $startButton = document.querySelector("#startButton");
+const $saveButton = document.querySelector("#saveButton");
+const $loadButton = document.querySelector("#loadButton");
 
 $chessboard.addEventListener("click", onSelect);
 $startButton.addEventListener("click", onStart);
+$saveButton.addEventListener("click", onSave);
+$loadButton.addEventListener("click", onLoad);
+
+function onLoad() {
+        fetch("load").then((response) => response.json())
+            .then(data => {
+                if (data.message == "no data") {
+                    alert("저장된 체스판이 없습니다.");
+                    return;
+                }
+                Object.keys(data).forEach(key => {
+                    if (key == "blackScore" || key == "whiteScore") {
+                        document.querySelector("#" + key).innerHTML = key + " : " + data[key];
+                        return;
+                    }
+                    document.querySelector("#" + key).innerHTML = gameInfo[data[key]]
+            })});
+         cleanBoard();
+         return;
+}
+
+function onSave() {
+    var message = document.querySelector("#message");
+    if (message.textContent === gameInfo["white turn"] || message.textContent === gameInfo["black turn"]) {
+        fetch("save").then((response) => {
+            if (!response.ok) {
+                console.log("not right");
+            }
+            console.log(response)});
+        alert("현재 체스판 저장 완료");
+        return;
+    }
+    alert("white turn이나 black turn일 때 저장할 수 있습니다.");
+}
 
 function onSelect(event) {
     if (!event.target.classList.contains("selected") && !event.target.classList.contains("possible")) {
@@ -32,22 +68,22 @@ function onSelect(event) {
         if (event.target.classList.contains("possible")) {
             var selectedSquare = document.getElementsByClassName("selected")[0];
             fetch("move", {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                            source: selectedSquare.id,
-                            target: event.target.id,
-                          }),
-                        }).then((response) => response.json())
-                        .then(data => Object.keys(data).forEach(key => {
-                            if (key == "blackScore" || key == "whiteScore") {
-                                document.querySelector("#" + key).innerHTML = key + " : " + data[key];
-                                return;
-                            }
-                            document.querySelector("#" + key).innerHTML = gameInfo[data[key]]
-                        }));
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    source: selectedSquare.id,
+                    target: event.target.id,
+                  }),
+                }).then((response) => response.json())
+                .then(data => Object.keys(data).forEach(key => {
+                    if (key == "blackScore" || key == "whiteScore") {
+                        document.querySelector("#" + key).innerHTML = key + " : " + data[key];
+                        return;
+                    }
+                    document.querySelector("#" + key).innerHTML = gameInfo[data[key]]
+                }));
              cleanBoard();
              return;
         }

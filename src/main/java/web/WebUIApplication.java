@@ -11,10 +11,12 @@ import chess.domain.game.state.BlackWin;
 import chess.domain.game.state.State;
 import chess.domain.game.state.WhiteWin;
 import chess.domain.piece.Piece;
+import database.ChessGameDao;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static spark.Spark.*;
 
@@ -24,6 +26,7 @@ public class WebUIApplication {
 
         ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
         Commands commands = Commands.initCommands(chessGame);
+        ChessGameDao chessGameDao = new ChessGameDao();
 
         get("/start", (req, res) -> {
             chessGame.reset(new Board((InitBoardGenerator.initLines())));
@@ -76,6 +79,29 @@ public class WebUIApplication {
                 jsonObject.put("blackScore", status.totalBlackScore());
             }
 
+            return jsonObject.toJSONString();
+        });
+
+        get("/save", (req, res) -> {
+            chessGameDao.addChessGame(chessGame);
+            return "success";
+        });
+
+        get("/load", (req, res) -> {
+            ChessGame loadChessGame = chessGameDao.findByGameId("1");
+            if (Objects.isNull(loadChessGame)) {
+                return "{\"message\":\"no data\"}";
+            }
+            chessGame.load(loadChessGame);
+
+            JSONObject jsonObject = new JSONObject();
+            Map<Position, Piece> board = chessGame.board();
+            for (Position position : board.keySet()) {
+                jsonObject.put(position.toString(), board.get(position).getSymbol());
+            }
+
+            State gameState = chessGame.state();
+            jsonObject.put("message", gameState.toString());
             return jsonObject.toJSONString();
         });
     }
