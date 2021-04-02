@@ -89,3 +89,50 @@
 
 ## 5단계 기능목록 정리
 - [ ] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
+
+### DB ERD
+![DB_ERD](https://user-images.githubusercontent.com/50176238/113257599-cc801e00-9305-11eb-8c8f-78df52784525.PNG)
+
+### DB SQL
+```sql
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`piece_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`piece_status` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `piece_name` VARCHAR(45) NOT NULL,
+  `piece_position` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`turn`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`turn` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `current_turn` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+```

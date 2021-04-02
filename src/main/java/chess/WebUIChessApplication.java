@@ -8,6 +8,7 @@ import chess.domain.player.Round;
 import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
 import chess.dto.MoveRequestDto;
+import chess.repository.ChessRepositoryImpl;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,6 +19,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static final Gson GSON = new Gson();
+    public static final ChessRepositoryImpl CHESS_REPOSITORY = new ChessRepositoryImpl();
 
     public static Command command = CommandFactory.initialCommand("start");
     public static Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
@@ -27,14 +29,18 @@ public class WebUIChessApplication {
         staticFileLocation("/static");
 
         get("/", (req, res) -> {
-            Map<Position, Piece> chessBoard = round.getBoard();
+            CHESS_REPOSITORY.removeAllPieces();
+            CHESS_REPOSITORY.removeTurn();
 
+            Map<Position, Piece> chessBoard = round.getBoard();
             Map<String, String> filteredChessBoard = new HashMap<>();
             for (Map.Entry<Position, Piece> chessBoardStatus : chessBoard.entrySet()) {
                 if (chessBoardStatus.getValue() != null) {
                     filteredChessBoard.put(chessBoardStatus.getKey().toString(), chessBoardStatus.getValue().getPiece());
                 }
             }
+            CHESS_REPOSITORY.initializePieceStatus(filteredChessBoard);
+            CHESS_REPOSITORY.initializeTurn();
             
             String jsonFormatChessBoard = GSON.toJson(filteredChessBoard);
 
@@ -45,7 +51,6 @@ public class WebUIChessApplication {
             model.put("jsonFormatChessBoard", jsonFormatChessBoard);
             model.put("whiteScore", whiteScore);
             model.put("blackScore", blackScore);
-
             return render(model, "chess.html");
         });
 
@@ -69,7 +74,6 @@ public class WebUIChessApplication {
                     StateFactory.initialization(PieceFactory.blackPieces()), command);
 
             res.redirect("/");
-
             return null;
         });
     }
