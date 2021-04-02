@@ -2,23 +2,18 @@ package domain.piece;
 
 public enum Color {
 
-    BLACK("흑", true),
-    WHITE("백", false),
-    NONE("무색", true);
+    BLACK("검은색"),
+    WHITE("흰색"),
+    NONE("무색");
 
     private final String name;
-    private final boolean isBlack;
 
-    Color(String name, boolean isBlack) {
+    Color(String name) {
         this.name = name;
-        this.isBlack = isBlack;
     }
 
     public boolean isBlack() {
-        return isBlack;
+        return "검은색".equals(name);
     }
 
-    public String getName() {
-        return name;
-    }
 }

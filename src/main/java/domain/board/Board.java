@@ -39,12 +39,6 @@ public class Board implements Serializable {
         put(target, piece);
     }
 
-    public boolean canMove(Position source, Position target) {
-        Piece sourcePiece = piece(source);
-        Piece targetPiece = piece(target);
-        return sourcePiece.isNotEmpty() && !sourcePiece.isSameColor(targetPiece);
-    }
-
     public void validateMove(Position source, Position target) {
         if (piece(source).isEmpty()) {
             throw new IllegalArgumentException("[Error] source 위치에 기물이 없습니다.");
