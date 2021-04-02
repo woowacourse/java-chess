@@ -2,10 +2,12 @@ package domain.command;
 
 import domain.chessgame.ChessGame;
 import domain.position.Position;
+import java.awt.event.WindowFocusListener;
 import java.util.List;
 
 public class MoveCommand implements Command {
 
+    public static final int MOVE_COMMAND_USER_INPUT_STRING_SIZE = 3;
     public static final String MOVE_COMMAND = "move";
 
     @Override
@@ -13,7 +15,7 @@ public class MoveCommand implements Command {
         if (!chessGame.isPlaying()) {
             throw new IllegalArgumentException("[Error] move는 잘못된 명령 입니다. 현재 게임이 시작되지 않은 상태 입니다.");
         }
-        if (inputs.size() != 3) {
+        if (inputs.size() != MOVE_COMMAND_USER_INPUT_STRING_SIZE) {
             throw new IllegalArgumentException("[Error] 잘못된 move 명령 입니다. ex) move a7 a6");
         }
         chessGame.move(new Position(inputs.get(1)), new Position(inputs.get(2)));
