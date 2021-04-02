@@ -68,8 +68,8 @@ public class ChessGame {
         return !start;
     }
 
-    public Team nowTurn() {
-        return board.nowTurn();
+    public Team turn() {
+        return board.turn();
     }
 
     public Board getBoard() {

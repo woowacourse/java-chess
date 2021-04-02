@@ -142,7 +142,7 @@ public class Board {
         return gameOver;
     }
 
-    public Team nowTurn() {
+    public Team turn() {
         return boardStatus.getLastTurn();
     }
 
