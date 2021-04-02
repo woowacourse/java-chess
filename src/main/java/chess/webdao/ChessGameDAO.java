@@ -42,27 +42,14 @@ public class ChessGameDAO {
         return con;
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
-    public void createChessGame(final ChessGame chessGame, final String currentTurnTeam) {
-        try {
-            createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM);
-            createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM);
-            String query = "INSERT INTO chess_game VALUES (?, ?)";
-            PreparedStatement pstmt = getConnection().prepareStatement(query);
-            pstmt.setString(1, currentTurnTeam);
-            pstmt.setBoolean(2, chessGame.isPlaying());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("DB 오류:" + e.getMessage());
-        }
+    public void createChessGame(final ChessGame chessGame, final String currentTurnTeam) throws SQLException {
+        createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM);
+        createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM);
+        String query = "INSERT INTO chess_game VALUES (?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, currentTurnTeam);
+        pstmt.setBoolean(2, chessGame.isPlaying());
+        pstmt.executeUpdate();
     }
 
     private void createPiecePosition(final Map<Position, Piece> piecePosition, final String team) throws SQLException {
@@ -78,17 +65,12 @@ public class ChessGameDAO {
         }
     }
 
-    public ChessGame readChessGame() {
-        try {
-            final String blackTeamQuery = "SELECT * FROM piece_position where team = 'black'";
-            Team blackTeam = readPiecePositionByTeam(blackTeamQuery);
-            final String whiteTeamQuery = "SELECT * FROM piece_position where team = 'white'";
-            Team whiteTeam = readPiecePositionByTeam(whiteTeamQuery);
-            return generateChessGame(blackTeam, whiteTeam);
-        } catch (SQLException e) {
-            System.err.println("DB 오류:" + e.getMessage());
-            return null;
-        }
+    public ChessGame readChessGame() throws SQLException {
+        final String blackTeamQuery = "SELECT * FROM piece_position where team = 'black'";
+        Team blackTeam = readPiecePositionByTeam(blackTeamQuery);
+        final String whiteTeamQuery = "SELECT * FROM piece_position where team = 'white'";
+        Team whiteTeam = readPiecePositionByTeam(whiteTeamQuery);
+        return generateChessGame(blackTeam, whiteTeam);
     }
 
     private Team readPiecePositionByTeam(String teamQuery) throws SQLException {
@@ -127,16 +109,12 @@ public class ChessGameDAO {
         return new ChessGame(blackTeam, whiteTeam, blackTeam, isPlaying);
     }
 
-    public void deleteChessGameDB() {
+    public void deleteChessGame() throws SQLException {
         final String deletePiecePositionQuery = "DELETE FROM piece_position";
         final String deleteChessGameQuery = "DELETE FROM chess_game";
-        try {
-            PreparedStatement pstmt = getConnection().prepareStatement(deletePiecePositionQuery);
-            pstmt.executeUpdate();
-            pstmt = getConnection().prepareStatement(deleteChessGameQuery);
-            pstmt.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        PreparedStatement pstmt = getConnection().prepareStatement(deletePiecePositionQuery);
+        pstmt.executeUpdate();
+        pstmt = getConnection().prepareStatement(deleteChessGameQuery);
+        pstmt.executeUpdate();
     }
 }
