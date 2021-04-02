@@ -20,4 +20,9 @@ public abstract class AbstractState implements State {
     public ScoreDto judgeResult() {
         return ScoreDto.of(board);
     }
+
+    @Override
+    public boolean isAnyKingDead() {
+        return board.isAnyKingDead();
+    }
 }

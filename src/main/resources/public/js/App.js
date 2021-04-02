@@ -34,16 +34,21 @@ const App = function() {
 
   }.bind(this);
 
-  this.renderScore = function(payload) {
+  this.renderMessage = function(payload) {
     const blackScore = payload.scoreDto.blackScore;
     const whiteScore = payload.scoreDto.whiteScore;
+    const currentTeam = payload.currentTeam;
+    const winner = payload.scoreDto.winner;
+
     this.$blackScore.innerHTML = `블랙 점수 : ${blackScore}`;
     this.$whiteScore.innerHTML = `화이트 점수 : ${whiteScore}`;
-  }.bind(this);
-
-  this.renderCurrentTurn = function(payload) {
-    const currentTeam = payload.currentTeam;
     this.$currentTurn.innerHTML = `현재 턴 : ${currentTeam}`;
+
+    if (blackScore == 0 || whiteScore == 0) {
+      alert(`축하합니다!! 승자 : ${winner}`);
+      this.$winner.innerHTML = `승자 : ${winner}`;
+    }
+
   }.bind(this);
 
   this.getClickedPiece = function() {
@@ -89,8 +94,7 @@ const App = function() {
         return;
       }
       this.renderBoard(result.payload.pieces);
-      this.renderScore(result.payload);
-      this.renderCurrentTurn(result.payload);
+      this.renderMessage(result.payload);
     })
     .catch(err => alert(err));
   }.bind(this);
@@ -107,8 +111,7 @@ const App = function() {
           return;
         }
         this.renderBoard(result.payload.pieces);
-        this.renderScore(result.payload);
-        this.renderCurrentTurn(result.payload);
+        this.renderMessage(result.payload);
       })
       .catch(err => alert(err));
   })
@@ -124,8 +127,7 @@ const App = function() {
           return;
         }
         this.renderBoard(result.payload.pieces);
-        this.renderScore(result.payload);
-        this.renderCurrentTurn(result.payload);
+        this.renderMessage(result.payload);
       })
       .catch(err => alert(err));
   })
@@ -157,8 +159,7 @@ const App = function() {
         }
         this.roomName = roomName;
         this.renderBoard(result.payload.pieces);
-        this.renderScore(result.payload);
-        this.renderCurrentTurn(result.payload);
+        this.renderMessage(result.payload);
       })
       .catch(err => alert(err));
   }.bind(this);

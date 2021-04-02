@@ -21,9 +21,14 @@ public class Room {
         CommandType command = CommandType.from(input);
         State nextState = state.changeCommand(command);
         commandMoveState(command, nextState, input);
+        if (state.isAnyKingDead()) {
+            state = state.changeCommand(CommandType.END);
+            return;
+        }
 
         if (state.isFinished()) {
             state = state.changeCommand(CommandType.END);
+            return;
         }
         state = nextState;
     }

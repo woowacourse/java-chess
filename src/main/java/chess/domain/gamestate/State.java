@@ -19,4 +19,6 @@ public interface State {
     String getValue();
 
     ScoreDto judgeResult();
+
+    boolean isAnyKingDead();
 }
