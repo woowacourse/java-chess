@@ -43,7 +43,7 @@ class KnightTest {
             .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
-    @DisplayName("나이트은 다른 편 기물이 있는 위치로 이동할 수 있다.")
+    @DisplayName("나이트는 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
     void testMoveEnemyPiecePlace() {
         Board board = new Board();
