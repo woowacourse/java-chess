@@ -1,15 +1,18 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.dto.ChessStatusDto;
+import chess.domain.dao.ChessDao;
+import chess.domain.dto.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +20,9 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static ChessBoard chessBoard = ChessBoard.generate();
+    private static ChessBoard chessBoard;
     private static ObjectMapper mapper = new ObjectMapper();
+    private static ChessDao chessDao = new ChessDao();
     public static void main(String[] args) {
 
         staticFileLocation("static");
@@ -27,12 +31,12 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/board", (req, res) -> {
-            ChessStatusDto chessStatusDto = new ChessStatusDto(chessBoard.getChessBoard(),
-                    Color.WHITE,
-                    chessBoard.sumScoreByColor(Color.BLACK),
-                    chessBoard.sumScoreByColor(Color.WHITE));
-            String jsonString = mapper.writeValueAsString(chessStatusDto);
+        get("/start", (req, res) -> {
+            chessBoard = ChessBoard.generate();
+            ChessBoardDto chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
+            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoardDto.getChessBoard(), Color.WHITE.name(),
+                    chessBoard.sumScoreByColor(Color.BLACK), chessBoard.sumScoreByColor(Color.WHITE));
+            String jsonString = mapper.writeValueAsString(chessRoomDto);
             return jsonString;
         });
 
@@ -52,11 +56,26 @@ public class WebUIChessApplication {
             Position source = Position.of(sourceValue.charAt(0), sourceValue.charAt(1));
             Position target = Position.of(targetValue.charAt(0), targetValue.charAt(1));
             chessBoard.movePiece(source, target);
-            ChessStatusDto chessStatusDto = new ChessStatusDto(chessBoard.getChessBoard(),
-                    Color.from(map.get("turn")).reverse(),
+            ChessBoardDto chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
+            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoardDto.getChessBoard(),
+                    Color.from(map.get("turn")).reverse().name(),
                     chessBoard.sumScoreByColor(Color.BLACK),
                     chessBoard.sumScoreByColor(Color.WHITE));
-            return mapper.writeValueAsString(chessStatusDto);
+            return mapper.writeValueAsString(chessRoomDto);
+        });
+
+        post("/save", (req, res) -> {
+            Map<String, Object> map = mapper.readValue(req.body(), new TypeReference<Map<String, Object>>() {});
+            List<Map> boards = (List) map.get("chessBoard");
+            Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
+            for (Map tmp : boards) {
+                chessBoard.put(new PositionDto((String) tmp.get("position")), new PieceDto((String)tmp.get("name"), (String) tmp.get("color")));
+            }
+            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoard,
+                    (String) map.get("turn"),
+                    Double.valueOf((String)map.get("blackScore")),
+                    Double.valueOf((String)map.get("whiteScore")));
+            return chessDao.addChessRoom(chessRoomDto);
         });
 
     }

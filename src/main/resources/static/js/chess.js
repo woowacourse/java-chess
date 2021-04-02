@@ -1,6 +1,7 @@
 
+fetchBoard();
 function fetchBoard() {
-    fetch('/board')
+    fetch('/start')
         .then(response => {
             return response.json()
         })
@@ -29,32 +30,11 @@ function initBoard(data) {
 }
 
 function makePiece(piece) {
-    let value = '';
     if (!piece) {
         return '';
     }
-    if (piece.name.toUpperCase() == 'P') {
-        value = "pawn";
-    }
-    if (piece.name.toUpperCase() == 'R') {
-        value = "rook";
-    }
-    if (piece.name.toUpperCase() == 'B') {
-        value = "bishop";
-    }
-    if (piece.name.toUpperCase() == 'Q') {
-        value = "queen";
-    }
-    if (piece.name.toUpperCase() == 'K') {
-        value = "king";
-    }
-    if (piece.name.toUpperCase() == 'N') {
-        value = "knight";
-    }
-    return `<i class="fas fa-chess-${value}" style="font-size: 45px; color: ${piece.color.toLowerCase()}"></i>`
+    return `<img src="img/${piece.color + piece.name}.png" class="piece" name="${piece.name}" color="${piece.color}" alt="" style="width:49px;height:49px;">`
 }
-
-fetchBoard();
 
 
 document.getElementById('board').addEventListener('click', movePiece);
@@ -63,10 +43,8 @@ let source = '';
 let target = '';
 
 function movePiece(event) {
-    if (event.target.closest('div') && event.target.tagName === 'I') {
-        console.log(event.target.style.color)
-        console.log(document.getElementById('turn').innerText)
-        if (event.target.style.color == document.getElementById('turn').innerText.toLowerCase() && source == '') {
+    if (event.target.closest('div') && event.target.tagName === 'IMG') {
+        if (event.target.getAttribute('color') == document.getElementById('turn').innerText && source == '') {
             source = event.target.closest('div').id;
             showRoute(source);
             return;
@@ -79,53 +57,45 @@ function movePiece(event) {
     }
 }
 
-function showRoute(source) {
+async function showRoute(source) {
     const position = {
         source: source
     }
-    fetch("/route", {
+    let route = await fetch("/route", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(position)
     })
-        .then(response => {
-            return response.json()
-        }).then(data => {
-        addNextRoute(data);
-    })
+    route = await route.json()
+    addNextRoute(route)
+
 }
 
 function addNextRoute(data) {
     for (let value of data) {
-        console.log(value.x)
-        console.log(value.y)
         document.getElementById((value.x + value.y)).classList.add('suggest');
     }
 }
 
-
-function selectTarget(event) {
+async function selectTarget(event) {
     target = event.target.closest('div').id;
     const position = {
         source: source,
         target: target,
         turn: document.getElementById('turn').innerText
     }
-    console.log(position)
-    fetch('/move', {
+    let piece = await fetch('/move', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(position)
-    }).then(response => {
-        return response.json()
-    }).then(data => {
-        console.log(data)
-        updateBoard(data)
     })
+    piece = await piece.json();
+    updateBoard(piece);
+
     source = ''
     target = ''
 }
@@ -142,5 +112,41 @@ function updateBoard(data) {
     document.getElementById('blackScore').innerText = data.blackScore;
     document.getElementById('whiteScore').innerText = data.whiteScore;
     document.getElementById('turn').innerText = data.turn;
+}
+
+const $saveButton = document.getElementById("save");
+$saveButton.addEventListener('click', saveBoard);
+
+function saveBoard() {
+    const chessBoard = [];
+    for (let i = 8; i >= 1; i--) {
+        for (let j = 0; j < 8; j++) {
+            const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
+            if (boxDiv.hasChildNodes()) {
+                chessBoard.push({position : boxDiv.id, name : boxDiv.children[0].name, color : boxDiv.children[0].getAttribute('color')});
+               //chessBoard.set({position : boxDiv.id}, {name : boxDiv.children[0].name, color : boxDiv.children[0].getAttribute('color')});
+            }
+        }
+    }
+    const roomInfo = {
+        blackScore : document.getElementById('blackScore').innerText,
+        whiteScore : document.getElementById('whiteScore').innerText,
+        turn : document.getElementById('turn').innerText,
+        chessBoard : chessBoard
+    }
+    console.log(JSON.stringify(roomInfo))
+    fetch('/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(roomInfo)
+    }).then(response => {
+        return response.json();
+    }).then(data => {
+        if (data === 1) {
+            alert('성공했습니다.');
+        }
+    })
 }
 
