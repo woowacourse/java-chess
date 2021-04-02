@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Path;
 import chess.domain.board.Team;
 import chess.domain.command.Commands;
-import chess.domain.dao.CommandDatabase;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
@@ -24,12 +23,12 @@ public class ChessGame {
 
     public ChessGame() {
         state = new Ready();
-        turn = Team.WHITE;
     }
 
     public void initBoard(Board board) {
         this.board = board;
         state = state.init();
+        turn = Team.WHITE;
     }
 
     public BoardDto boardDto() {
