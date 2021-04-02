@@ -7,7 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao extends ChessDao{
+public class UserDao extends ChessDao {
+
     public void insert(String userName) throws SQLException {
         String query = "INSERT INTO users (name) "
             + "SELECT * FROM (SELECT ?) AS tmp "

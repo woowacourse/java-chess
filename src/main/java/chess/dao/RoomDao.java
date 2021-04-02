@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao extends ChessDao{
+public class RoomDao extends ChessDao {
 
     public String insert(RoomDto roomDto) throws SQLException {
         String query = "INSERT INTO room (name, is_opened, white, black) VALUES(?, true, ?, ?)";
