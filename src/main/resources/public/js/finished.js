@@ -1,4 +1,4 @@
-import {restartGame as reset} from "./board.js";
+import {restartGame as reset, syncBoard} from "./board.js";
 
 const button = document.querySelector("input")
 
@@ -8,4 +8,5 @@ function restart() {
     location.replace("/");
     reset();
 }
+
 

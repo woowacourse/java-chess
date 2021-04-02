@@ -3,9 +3,15 @@ import * as piece from "./pieceview.js";
 const startButton = document.querySelector(".start");
 const saveButton = document.querySelector(".save");
 
-window.addEventListener('DOMContentLoaded', syncBoard)
-startButton.addEventListener('click', restartGame)
-saveButton.addEventListener('click', saveGame)
+if (isMainPage()) {
+    window.addEventListener('DOMContentLoaded', syncBoard)
+    startButton.addEventListener('click', restartGame)
+    saveButton.addEventListener('click', saveGame)
+}
+
+function isMainPage() {
+    return window.location.pathname === "/";
+}
 
 export function restartGame() {
     axios({
