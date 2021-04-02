@@ -5,7 +5,7 @@ import chess.domain.command.Command;
 import chess.domain.command.CommandRequest;
 import chess.domain.command.CommandTokens;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -58,8 +58,8 @@ public class ConsoleChessController {
             return;
         }
         if (command == Command.STATUS) {
-            Result result = command.execute(chessBoard, commandRequest);
-            OutputView.printScoreStatus(result);
+            Scores scores = command.execute(chessBoard, commandRequest);
+            OutputView.printScoreStatus(scores);
         }
     }
 }

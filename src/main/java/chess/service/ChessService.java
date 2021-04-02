@@ -4,7 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.history.Histories;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 
@@ -39,12 +39,10 @@ public class ChessService {
     }
 
     public ResultDTO calculateResult(int roomId) throws SQLException {
-        ChessBoard chessBoard = generateDefaultChessBoard();
-        Histories histories = new Histories(chessRepository.findAllHistoriesByRoomId(roomId));
-        histories.restoreChessBoardAsLatest(chessBoard);
-        Result result = chessBoard.calculateScores();
+        ChessBoard chessBoard = findLatestBoardByRoomId(roomId);
+        Scores scores = chessBoard.calculateScores();
         TeamType winnerTeamType = chessBoard.findWinnerTeam();
-        return ResultDTO.of(result, winnerTeamType);
+        return ResultDTO.of(scores, winnerTeamType);
     }
 
     public void deleteAllHistoriesByRoomId(int roomId) throws SQLException {

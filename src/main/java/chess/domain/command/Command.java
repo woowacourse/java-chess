@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
@@ -15,20 +15,20 @@ public enum Command {
         Coordinate destination = commandRequest.getDestinationCoordinate();
         TeamType teamType = commandRequest.getTeamType();
         chessBoard.move(current, destination, teamType);
-        return Result.getEmptyResult();
+        return Scores.getEmptyScores();
     })),
     STATUS("status", ((chessBoard, commandRequest) -> chessBoard.calculateScores())),
     END("end", unsupportedExecution());
 
     private final String signature;
-    private final BiFunction<ChessBoard, CommandRequest, Result> execution;
+    private final BiFunction<ChessBoard, CommandRequest, Scores> execution;
 
-    Command(String signature, BiFunction<ChessBoard, CommandRequest, Result> execution) {
+    Command(String signature, BiFunction<ChessBoard, CommandRequest, Scores> execution) {
         this.signature = signature;
         this.execution = execution;
     }
 
-    private static BiFunction<ChessBoard, CommandRequest, Result> unsupportedExecution() {
+    private static BiFunction<ChessBoard, CommandRequest, Scores> unsupportedExecution() {
         return ((chessBoard, commandRequest) -> {
             throw new UnsupportedOperationException();
         });
@@ -45,7 +45,7 @@ public enum Command {
         return this.signature.equals(value);
     }
 
-    public Result execute(ChessBoard chessBoard, CommandRequest commandRequest) {
+    public Scores execute(ChessBoard chessBoard, CommandRequest commandRequest) {
         return execution.apply(chessBoard, commandRequest);
     }
 }

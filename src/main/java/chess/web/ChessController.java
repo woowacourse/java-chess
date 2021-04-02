@@ -29,6 +29,11 @@ public class ChessController {
         return GSON.toJsonTree(boardDTO);
     }
 
+    private int parseRoomIdFromUrl(Request request, Response response) {
+        response.type(RESPONSE_JSON);
+        return Integer.parseInt(request.params(":roomId"));
+    }
+
     private BoardDTO findLatestBoardByRoomId(int roomId) throws SQLException {
         ChessBoard chessBoard = chessService.findLatestBoardByRoomId(roomId);
         TeamType teamType = chessService.findCurrentTeamTypeByRoomId(roomId);
@@ -56,10 +61,5 @@ public class ChessController {
         int roomId = parseRoomIdFromUrl(request, response);
         chessService.deleteAllHistoriesByRoomId(roomId);
         return GSON.toJsonTree("/");
-    }
-
-    private int parseRoomIdFromUrl(Request request, Response response) {
-        response.type(RESPONSE_JSON);
-        return Integer.parseInt(request.params(":roomId"));
     }
 }

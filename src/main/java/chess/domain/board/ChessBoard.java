@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,10 +40,10 @@ public class ChessBoard {
         currentCell.movePieceTo(targetCell);
     }
 
-    public Result calculateScores() {
+    public Scores calculateScores() {
         Map<Coordinate, Piece> blackTeamPieces = filterPiecesByTeam(TeamType.BLACK);
         Map<Coordinate, Piece> whiteTeamPieces = filterPiecesByTeam(TeamType.WHITE);
-        return Result.generateResult(blackTeamPieces, whiteTeamPieces);
+        return Scores.generateResult(blackTeamPieces, whiteTeamPieces);
     }
 
     private Map<Coordinate, Piece> filterPiecesByTeam(TeamType teamType) {

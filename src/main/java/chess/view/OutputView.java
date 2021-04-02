@@ -3,7 +3,7 @@ package chess.view;
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -43,9 +43,9 @@ public class OutputView {
         System.out.print(piece.getName());
     }
 
-    public static void printScoreStatus(Result result) {
-        double blackTeamScore = result.getBlackTeamScore();
-        double whiteTeamScore = result.getWhiteTeamScore();
+    public static void printScoreStatus(Scores scores) {
+        double blackTeamScore = scores.getBlackTeamScore();
+        double whiteTeamScore = scores.getWhiteTeamScore();
         System.out.printf("흑팀 점수 : %.1f, 백팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 

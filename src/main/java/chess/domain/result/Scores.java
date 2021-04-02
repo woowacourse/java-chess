@@ -5,23 +5,23 @@ import chess.domain.piece.Piece;
 
 import java.util.Map;
 
-public class Result {
-    private static final Result EMPTY_RESULT = new Result(new Score(0), new Score(0));
+public class Scores {
+    private static final Scores EMPTY_SCORES = new Scores(new Score(0), new Score(0));
 
     private final Score blackTeamScore;
     private final Score whiteTeamScore;
 
-    private Result(Score blackTeamScore, Score whiteTeamScore) {
+    private Scores(Score blackTeamScore, Score whiteTeamScore) {
         this.blackTeamScore = blackTeamScore;
         this.whiteTeamScore = whiteTeamScore;
     }
 
-    public static Result generateResult(Map<Coordinate, Piece> blackTeamPieces, Map<Coordinate, Piece> whiteTeamPieces) {
-        return new Result(Score.from(blackTeamPieces), Score.from(whiteTeamPieces));
+    public static Scores generateResult(Map<Coordinate, Piece> blackTeamPieces, Map<Coordinate, Piece> whiteTeamPieces) {
+        return new Scores(Score.from(blackTeamPieces), Score.from(whiteTeamPieces));
     }
 
-    public static Result getEmptyResult() {
-        return EMPTY_RESULT;
+    public static Scores getEmptyScores() {
+        return EMPTY_SCORES;
     }
 
     public double getBlackTeamScore() {
