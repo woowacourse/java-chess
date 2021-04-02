@@ -4,8 +4,8 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.domain.history.Histories;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.domain.result.Scores;
-import chess.dto.ResultDTO;
 import chess.repository.ChessRepository;
 
 import java.sql.SQLException;
@@ -38,11 +38,11 @@ public class ChessService {
         chessRepository.insertHistory(current, destination, teamType, roomId);
     }
 
-    public ResultDTO calculateResult(int roomId) throws SQLException {
+    public Result calculateResult(int roomId) throws SQLException {
         ChessBoard chessBoard = findLatestBoardByRoomId(roomId);
         Scores scores = chessBoard.calculateScores();
         TeamType winnerTeamType = chessBoard.findWinnerTeam();
-        return ResultDTO.of(scores, winnerTeamType);
+        return new Result(scores, winnerTeamType);
     }
 
     public void deleteAllHistoriesByRoomId(int roomId) throws SQLException {

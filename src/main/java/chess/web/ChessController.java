@@ -2,6 +2,7 @@ package chess.web;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.dto.MoveRequestDTO;
 import chess.dto.ResultDTO;
 import chess.dto.board.BoardDTO;
@@ -53,7 +54,8 @@ public class ChessController {
 
     public JsonElement showResult(Request request, Response response) throws SQLException {
         int roomId = parseRoomIdFromUrl(request, response);
-        ResultDTO resultDTO = chessService.calculateResult(roomId);
+        Result result = chessService.calculateResult(roomId);
+        ResultDTO resultDTO = ResultDTO.from(result);
         return GSON.toJsonTree(resultDTO);
     }
 

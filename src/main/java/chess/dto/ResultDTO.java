@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.domain.result.Scores;
 
 public class ResultDTO {
@@ -15,8 +16,9 @@ public class ResultDTO {
         this.winnerTeamType = winnerTeamType;
     }
 
-    public static ResultDTO of(Scores scores, TeamType winnerTeamType) {
-        return new ResultDTO(scores.getBlackTeamScore(), scores.getWhiteTeamScore(), winnerTeamType);
+    public static ResultDTO from(Result result) {
+        Scores scores = result.getScores();
+        return new ResultDTO(scores.getBlackTeamScore(), scores.getWhiteTeamScore(), result.getWinnerTeamType());
     }
 
     public double getBlackTeamScore() {
