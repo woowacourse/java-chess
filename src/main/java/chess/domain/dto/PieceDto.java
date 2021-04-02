@@ -2,18 +2,28 @@ package chess.domain.dto;
 
 import chess.domain.piece.Piece;
 public class PieceDto {
-    private final String teamColor;
-    private final String pieceType;
-    private boolean alive;
+    private String teamColor;
+    private String pieceType;
+    private String alive;
 
+    public PieceDto(){
+    }
     public PieceDto(Piece original){
         this.teamColor = original.getColor().name();
         this.pieceType = original.getPieceType();
-        this.alive = original.isAlive();
+        this.alive = String.valueOf(original.isAlive());
+    }
+
+    public void setTeamColor(String teamColor) {
+        this.teamColor = teamColor;
+    }
+
+    public void setPieceType(String pieceType) {
+        this.pieceType = pieceType;
     }
 
     public void setAlive(boolean alive) {
-        this.alive = alive;
+        this.alive = String.valueOf(alive);
     }
 
     public String getTeamColor() {
@@ -24,7 +34,7 @@ public class PieceDto {
         return pieceType;
     }
 
-    public boolean isAlive() {
+    public String getAlive() {
         return alive;
     }
 

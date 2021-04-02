@@ -93,11 +93,14 @@ body{
 .clicked{
     background-color:var(--piece-clicked);
 }
-
-.isPlaying{
+.btns{
+    display: flex;
+    flex-direction: row;
     margin-bottom: 5%;
 }
-
+.isPlaying {
+margin-right:5%;
+}
 .hidden{
     visibility: hidden;
 }

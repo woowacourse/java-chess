@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ChessBoardDAOTest {
     private ChessBoardDAO chessBoardDAO;
@@ -53,14 +54,22 @@ class ChessBoardDAOTest {
     @DisplayName("게임아이디로 모든 보드판 불러오기")
     void findByGameId() throws SQLException {
         List<ChessBoardDTOForDAO> results = chessBoardDAO.findByGameId("1");
-        assertThat(results).contains(
+        assertThat(results).isEmpty();
+                assertThat(results).contains(
                 new ChessBoardDTOForDAO("a1", "WHITE", "ROOK", "true"),
                 new ChessBoardDTOForDAO("a2", "WHITE", "KNIGHT", "true"),
                 new ChessBoardDTOForDAO("d2", "BLACK", "KING", "true")
         );
+    }@Test
+    @DisplayName("게임아이디가 비어있을 때, 모든 보드판 불러오기")
+    void findByGameId_removed() throws SQLException {
+        chessBoardDAO.removePositions();
+        List<ChessBoardDTOForDAO> results = chessBoardDAO.findByGameId("1");
+        assertThat(results).isEmpty();
     }
 
     @Test
+    @DisplayName("해당 보드의 모든 위치 삭제")
     void removePositions() throws SQLException {
         chessBoardDAO.removePositions();
     }

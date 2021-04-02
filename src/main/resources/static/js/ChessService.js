@@ -24,9 +24,15 @@ export default class ChessService {
         return response.json();
     }
 
-    async terminate() {
-        const response = await fetch(`${this.baseUrl}/chessboard/result`);
+    async terminateWithoutSaving() {
+        const response = await fetch(`${this.baseUrl}/chessboard/end`);
         return response.json();
     }
 
+    async saveBoard() {
+        return await fetch(`${this.baseUrl}/chessboard/save`, {
+            method: "POST",
+            headers: this.headers
+        });
+    }
 }
