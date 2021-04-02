@@ -19,12 +19,12 @@ public class MoveController {
     }
 
     public static String moveToGamePage(Request request, Response response) {
-        Map<String, Object> model = parseRoomIdToModel(request);
+        Map<String, Object> model = parseRoomIdFromUrlToModel(request);
         return render(model, "game.html");
     }
 
     public static String moveToResultPage(Request request, Response response) {
-        Map<String, Object> model = parseRoomIdToModel(request);
+        Map<String, Object> model = parseRoomIdFromUrlToModel(request);
         return render(model, "result.html");
     }
 
@@ -32,7 +32,7 @@ public class MoveController {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private static Map<String, Object> parseRoomIdToModel(Request request) {
+    private static Map<String, Object> parseRoomIdFromUrlToModel(Request request) {
         Map<String, Object> model = new HashMap<>();
         String roomId = request.params(":roomId");
         model.put("roomId", roomId);

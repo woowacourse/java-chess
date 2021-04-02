@@ -25,13 +25,9 @@ public class Histories {
         chessBoard.move(source, destination, teamType);
     }
 
-    public boolean isEmpty() {
-        return histories.isEmpty();
-    }
-
     public TeamType findNextTeamType() {
         if (histories.isEmpty()) {
-            throw new IllegalStateException("게임 히스토리가 비어있습니다.");
+            return TeamType.WHITE;
         }
         int historyCounts = histories.size();
         String teamTypeValue = histories.get(historyCounts - 1)

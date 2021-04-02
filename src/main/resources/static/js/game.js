@@ -5,7 +5,8 @@ function initiate() {
         if (isValidHttpResponse(this)) {
             const boardDTO = JSON.parse(this.responseText);
             if (boardDTO.isCheckmate === true) {
-                window.location.href = 'result/' + roomId;
+                window.location.href = 'http://localhost:8080/result/' + roomId;
+                return;
             }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
         }
@@ -104,6 +105,7 @@ function sendMoveRequest(current, destination, teamType) {
             const boardDTO = JSON.parse(this.responseText);
             if (boardDTO.isCheckmate === true) {
                 window.location.href = '/result/' + roomId;
+                return;
             }
             printChessBoard(boardDTO.rows, boardDTO.currentTeamType);
             return;

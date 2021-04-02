@@ -16,10 +16,6 @@ public class Result {
         this.whiteTeamScore = whiteTeamScore;
     }
 
-    public static Result generateResult(double blackTeamScore, double whiteTeamScore) {
-        return new Result(new Score(blackTeamScore), new Score(whiteTeamScore));
-    }
-
     public static Result generateResult(Map<Coordinate, Piece> blackTeamPieces, Map<Coordinate, Piece> whiteTeamPieces) {
         return new Result(Score.from(blackTeamPieces), Score.from(whiteTeamPieces));
     }
