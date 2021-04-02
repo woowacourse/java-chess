@@ -6,6 +6,7 @@ import chess.exception.InvalidCommandException;
 public final class Move implements Command {
 
     private static final String SPACE = " ";
+    private static final int COMMAND_ARRAY_MAX_LENGTH = 3;
 
     private String moveId;
     private String gameId;
@@ -19,7 +20,7 @@ public final class Move implements Command {
 
     private static String[] validatedLength(String command) {
         String[] splittedCommand = command.split(SPACE);
-        if (splittedCommand.length != 3) {
+        if (splittedCommand.length != COMMAND_ARRAY_MAX_LENGTH) {
             throw new InvalidCommandException();
         }
         return splittedCommand;
