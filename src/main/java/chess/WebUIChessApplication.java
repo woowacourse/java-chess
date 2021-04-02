@@ -7,6 +7,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.player.Round;
 import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
+import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import com.google.gson.Gson;
@@ -41,8 +42,14 @@ public class WebUIChessApplication {
             }
             CHESS_REPOSITORY.initializePieceStatus(filteredChessBoard);
             CHESS_REPOSITORY.initializeTurn();
-            
-            String jsonFormatChessBoard = GSON.toJson(filteredChessBoard);
+
+            Map<String, String> chessBoardFromDB = new HashMap<>();
+            List<ChessRequestDto> pieces = CHESS_REPOSITORY.showAllPieces();
+            for (ChessRequestDto piece : pieces) {
+                chessBoardFromDB.put(piece.getPiecePosition(), piece.getPieceName());
+            }
+
+            String jsonFormatChessBoard = GSON.toJson(chessBoardFromDB);
 
             double whiteScore = round.getWhitePlayer().calculateScore();
             double blackScore = round.getBlackPlayer().calculateScore();

@@ -7,7 +7,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.player.Round;
 import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
-import chess.dto.PieceRequestDto;
+import chess.dto.ChessRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ChessDaoTest {
@@ -61,5 +63,24 @@ class ChessDaoTest {
     @Test
     public void initializeTurn() throws Exception {
         chessDao.initializeTurn();
+    }
+
+    @DisplayName("piece_status 테이블에서 모든 레코드를 읽어온다.")
+    @Test
+    public void showAllPieces() throws Exception {
+        List<ChessRequestDto> pieces = chessDao.showAllPieces();
+        assertThat(pieces).hasSize(32);
+    }
+
+    @DisplayName("piece_status 테이블의 모든 레코드를 삭제한다.")
+    @Test
+    public void removeAllPieces() throws Exception {
+        chessDao.removeAllPieces();
+    }
+
+    @DisplayName("turn 테이블의 레코드를 삭제한다.")
+    @Test
+    public void removeTurn() throws Exception {
+        chessDao.removeTurn();
     }
 }

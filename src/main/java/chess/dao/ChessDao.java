@@ -1,11 +1,11 @@
 package chess.dao;
 
+import chess.dto.ChessRequestDto;
 import chess.dto.PieceRequestDto;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessDao {
     public Connection getConnection() {
@@ -60,6 +60,25 @@ public class ChessDao {
         PreparedStatement psmt = getConnection().prepareStatement(query);
         psmt.setString(1, "white");
         psmt.executeUpdate();
+    }
+
+    public List<ChessRequestDto> showAllPieces() throws SQLException {
+        List<ChessRequestDto> pieces = new ArrayList<>();
+        ResultSet rs = readPieceStatus();
+        while (rs.next()) {
+            pieces.add(new ChessRequestDto(
+                    rs.getLong("id"),
+                    rs.getString("piece_name"),
+                    rs.getString("piece_position")
+            ));
+        }
+        return pieces;
+    }
+
+    private ResultSet readPieceStatus() throws SQLException {
+        String query = "SELECT * FROM piece_status";
+        PreparedStatement psmt = getConnection().prepareStatement(query);
+        return psmt.executeQuery();
     }
 
     public void removeAllPieces() throws SQLException {

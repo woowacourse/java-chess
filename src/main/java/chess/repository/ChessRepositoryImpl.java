@@ -1,9 +1,11 @@
 package chess.repository;
 
 import chess.dao.ChessDao;
+import chess.dto.ChessRequestDto;
 import chess.dto.PieceRequestDto;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class ChessRepositoryImpl implements ChessRepository {
@@ -25,6 +27,11 @@ public class ChessRepositoryImpl implements ChessRepository {
     @Override
     public void initializeTurn() throws SQLException {
         chessDao.initializeTurn();
+    }
+
+    @Override
+    public List<ChessRequestDto> showAllPieces() throws SQLException {
+        return chessDao.showAllPieces();
     }
 
     @Override
