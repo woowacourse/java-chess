@@ -54,3 +54,25 @@
     - [x] 현재 잡은 기물을 보여준다
 - [x] 체스 게임이 종료가 된 후, 결과 출력 화면을 보여준다
     - [x] 체스 게임을 다시 할 수 있도록 버튼을 만든다
+    
+## DB 적용 사안
+- [x] ChessGame을 새롭게 시작하면,
+    - [x] DB에 저장되어 있던 ChessGame을 삭제한다.
+    - [x] 새로운 ChessGame을 생성해 그에 대한 정보를 저장한다
+- [x] 기존 ChessGame을 로딩하면, 
+    - [x] DB에 저장된 정보를 기반으로 ChessGame을 생성하여 플레이한다. 
+- [x] 저장 버튼을 누르면,
+    - [x] DB에 저장되어 있던 ChessGame을 삭제한다.
+    - [x] 현재 ChessGame의 정보를 저장한다.
+
+## DB 테이블 구조
+![table_structure](./img/table_structure.PNG)
+- __chess_game__
+    - current_turn_team : VARCHAR(5) NOT NULL,
+    - is_playing : boolean NOT NULL
+- __piece_position__
+    - team : VARCHAR(5) NOT NULL,     
+    - piece : VARCHAR(6) NOT NULL,     
+    - position : VARCHAR(2) NOT NULL,     
+    - is_first_move : boolean NOT NULL 
+        
