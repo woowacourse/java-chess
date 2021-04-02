@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
-    private Map<Position, Piece> emptyBoard = EmptyBoardMap.create();
+    private final Map<Position, Piece> emptyBoard = EmptyBoardMap.create();
 
     @Test
     @DisplayName("폰이 잘 생성되는지 확인")

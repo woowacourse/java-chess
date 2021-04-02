@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title></title>
     <meta charset="UTF-8">
@@ -152,11 +152,14 @@
     </tbody>
 </table>
 
-<h2>{{team.color}}</h2><br>
+<h2>{{team.color}} TURN </h2>
 <h2>{{error.message}}</h2>
 
 <form action="/chess" method="post">
-    <input type="text" name="command">
+    <label>
+        > 게임 이동 : move source 위치 target 위치 - 예. move b2 b3 <br>
+        <input type="text" name="command">
+    </label>
     <input type="submit" value="입력">
 </form>
 </body>

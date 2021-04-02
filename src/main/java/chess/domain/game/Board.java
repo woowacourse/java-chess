@@ -1,9 +1,9 @@
 package chess.domain.game;
 
+import chess.domain.location.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.location.Position;
 
 import java.util.Collections;
 import java.util.Map;
@@ -43,18 +43,10 @@ public class Board {
         }
     }
 
-    public boolean isNotEnd() {
-        return !isKingDead();
-    }
 
     public boolean isKingDead() {
         return isKingDead;
     }
-
-    public Piece at(Position position) {
-        return pieceByPosition.get(position);
-    }
-
 
     public Map<Position, Piece> allPieces() {
         return Collections.unmodifiableMap(pieceByPosition);

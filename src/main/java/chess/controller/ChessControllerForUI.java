@@ -8,13 +8,14 @@ import chess.domain.game.Game;
 public class ChessControllerForUI {
     Game game;
 
-    public void init () {
+    public void init() {
         Board board = BoardFactory.create();
         game = new Game(board);
     }
 
     public void action(String command) {
-        Command.from(command).action(game);
+        Command.from(command)
+               .action(game);
     }
 
     public ColorDTO currentPlayer() {

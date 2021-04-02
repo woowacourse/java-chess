@@ -8,8 +8,8 @@ public enum Unicode {
     KNIGHT('\u2658', '\u265E'),
     PAWN('\u2659', '\u265F');
 
-    private char whiteUnicode;
-    private char blackUnicode;
+    private final char whiteUnicode;
+    private final char blackUnicode;
 
     Unicode(char whiteUnicode, char blackUnicode) {
         this.whiteUnicode = whiteUnicode;

@@ -34,8 +34,8 @@ public enum Command {
     };
 
     public static final String SPACE_REGEX = "\\s+";
-    private int optionCount;
-    private List<String> options;
+    private final int optionCount;
+    private final List<String> options;
 
     Command(int optionCount) {
         this.optionCount = optionCount;

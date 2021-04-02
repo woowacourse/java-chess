@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MultipleMove implements MoveStrategy {
-    private Color color;
-    private List<Vector> directions;
+    private final Color color;
+    private final List<Vector> directions;
 
     public MultipleMove(Color color, List<Vector> directions) {
         this.color = color;
