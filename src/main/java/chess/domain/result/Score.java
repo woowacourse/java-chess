@@ -32,6 +32,10 @@ public class Score {
         return score > that.score;
     }
 
+    public double getScore() {
+        return score;
+    }
+
     @Override
     public String toString() {
         return Double.toString(score);
