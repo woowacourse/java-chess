@@ -18,6 +18,16 @@ public class ChessDAO {
         addChessAt(userId);
     }
 
+    private void removeMove(Long chessId) throws SQLException {
+        String moveQuery = "DELETE FROM move WHERE chess_id = (?)";
+        deleteById(moveQuery, chessId);
+    }
+
+    private void removeChess(Long userId) throws SQLException {
+        String chessQuery = "DELETE FROM chess WHERE user_id = (?)";
+        deleteById(chessQuery, userId);
+    }
+
     private Long findIdByUserId(Long userId) throws SQLException {
         String query = "SELECT chess_id FROM chess c JOIN user u on u.user_id = c.user_id WHERE u.user_id = (?)";
 
@@ -32,20 +42,10 @@ public class ChessDAO {
         }
     }
 
-    private void removeMove(Long chessId) throws SQLException {
-        String moveQuery = "DELETE FROM move WHERE chess_id = (?)";
-        deleteById(moveQuery, chessId);
-    }
-
-    private void removeChess(Long userId) throws SQLException {
-        String chessQuery = "DELETE FROM chess WHERE user_id = (?)";
-        deleteById(chessQuery, userId);
-    }
-
-    private void deleteById(String query, Long chessId) throws SQLException {
+    private void deleteById(String query, Long id) throws SQLException {
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, chessId);
+            pstmt.setLong(1, id);
             pstmt.executeUpdate();
         }
     }
@@ -70,8 +70,7 @@ public class ChessDAO {
                 "SELECT m.source, m.target " +
                         "FROM move m " +
                         "JOIN chess c ON m.chess_id = c.chess_id " +
-                        "JOIN user u ON u.user_id = c.user_id " +
-                        "WHERE u.user_id = (?)";
+                        "WHERE c.user_id = (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
