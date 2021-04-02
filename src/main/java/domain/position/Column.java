@@ -3,11 +3,12 @@ package domain.position;
 import static domain.position.Position.CHESS_BOARD_END_RANGE;
 import static domain.position.Position.CHESS_BOARD_START_RANGE;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Column {
+public class Column implements Serializable {
 
     private static final List<String> chessColumns = Arrays
         .asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -28,7 +29,7 @@ public class Column {
         }
     }
 
-    public String chessCoordinate(){
+    public String chessCoordinate() {
         return chessColumns.get(value);
     }
 

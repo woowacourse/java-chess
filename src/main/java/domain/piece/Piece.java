@@ -2,9 +2,10 @@ package domain.piece;
 
 import domain.board.Score;
 import domain.position.Position;
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
 
     private final String name;
     private final Color color;

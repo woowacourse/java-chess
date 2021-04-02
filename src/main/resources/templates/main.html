@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>체스 게임</title>
-  <link rel="stylesheet" href="/css/index.css">
+  <link href="/css/index.css" rel="stylesheet">
 </head>
 
 <body>
 
 <div class="chess-board">
-  <img src="/images/chess_board.jpg" class="chess-board-image">
+  <img class="chess-board-image" src="/images/chess_board.jpg">
   <div class="chess-board-cell">
     <div class="a8"></div>
     <div class="b8"></div>
@@ -88,17 +88,26 @@
     <input type="submit" value="게임 시작 🎮‍️">
   </div>
 
+  <div class="chess-game-restart-button">
+    <input type="submit" value="게임 재시작 🎳‍️">
+  </div>
+
   <div class="chess-game-score-button">
-    <input type="submit" value="게임 스코‍어 🎯️">
+    <input type="submit" value="게임 스코‍어 확인 🎯️">
   </div>
 
   <div class="chess-game-exit-button">
     <input type="submit" value="게임 종료 ❌‍️">
   </div>
 
+  <div class="chess-game-select-gameId-button">
+    게임 방 번호 <input class="gameId" name="gameId" type="text">
+    <button class="room-button">입장 ⭐‍</button>
+  </div>
+
   <div class="chess-game-move-button">
-    출발 좌표 <input type="text" name="source" class="source">
-    도착 좌표 <input type="text" name="target" class="target">
+    출발 좌표 <input class="source" name="source" type="text">
+    도착 좌표 <input class="target" name="target" type="text">
     <button class="move-button">이동 ⭐‍</button>
   </div>
 

@@ -5,11 +5,13 @@ import domain.board.Score;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
+import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
-public class ChessGame {
+public class ChessGame implements Serializable {
 
-    protected final Board board;
+    private final Board board;
     private boolean isPlaying;
     private boolean isBlackTurn;
 
@@ -18,16 +20,6 @@ public class ChessGame {
         board.initChessPieces();
         isPlaying = false;
         isBlackTurn = false;
-    }
-
-    public ChessGame of(boolean isPlaying) {
-        if (isPlaying) {
-            ChessGame chessGame = new ChessGame();
-            chessGame.start();
-            return chessGame;
-        }
-        this.exit();
-        return this;
     }
 
     public boolean isPlaying() {
@@ -79,4 +71,39 @@ public class ChessGame {
         return board.isKingAlive(color);
     }
 
+    public void operate(boolean isRestart, boolean isPlaying) {
+        if (isRestart) {
+            restart();
+            return;
+        }
+        if (isPlaying) {
+            this.isPlaying = true;
+            return;
+        }
+        this.isPlaying = false;
+    }
+
+    private void restart() {
+        board.initChessPieces();
+        isPlaying = true;
+        isBlackTurn = false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessGame chessGame = (ChessGame) o;
+        return isPlaying == chessGame.isPlaying && isBlackTurn == chessGame.isBlackTurn
+            && Objects.equals(board, chessGame.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, isPlaying, isBlackTurn);
+    }
 }

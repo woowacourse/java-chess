@@ -1,8 +1,9 @@
 package domain.board;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Score {
+public class Score implements Serializable {
 
     private final double value;
 

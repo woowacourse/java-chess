@@ -6,6 +6,7 @@ import static spark.Spark.staticFiles;
 import com.google.gson.Gson;
 import dto.request.ChessGameRequestDto;
 import dto.request.PiecesRequestDto;
+import dto.request.ScoreRequestDto;
 import java.util.HashMap;
 import java.util.Map;
 import service.ChessGameService;
@@ -54,7 +55,7 @@ public class WebUIChessApplication {
     private static void getScore() {
         get("/api/score", (request, response) -> {
             response.type("application/json");
-            return chessGameService.getScore();
+            return chessGameService.getScore(new ScoreRequestDto(request.queryString()));
         }, GSON::toJson);
     }
 

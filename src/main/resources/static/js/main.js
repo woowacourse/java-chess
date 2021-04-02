@@ -12,21 +12,35 @@ function MainPage() {
   this.putChessGameUrl = "http://localhost:8080/api/chessGame";
   this.imageUrl = "http://localhost:8080/images/";
   this.isPlaying = false;
+  this.gameId = -1;
 }
 
 MainPage.prototype.initMainPage = function () {
+  this.registerGameIdSetEvent();
   this.registerGameStartEvent();
   this.registerGameExitEvent();
   this.registerPieceMoveEvent();
   this.registerGetScoreEvent();
+  this.registerGameRestartEvent();
+}
+
+MainPage.prototype.registerGameIdSetEvent = function () {
+  document.querySelector(".room-button")
+  .addEventListener("click", function () {
+    mainPage.gameId = document.querySelector(
+        ".chess-game-select-gameId-button input").value;
+    alert(mainPage.gameId + "번 방에 입장 했습니다.");
+    mainPage.deleteAllPieces();
+    mainPage.putChessGame(false, true);
+  });
 }
 
 MainPage.prototype.registerGameStartEvent = function () {
   document.querySelector(".chess-game-start-button")
   .addEventListener("click", function () {
     mainPage.validateGameStarted();
-    alert("새로운 게임을 시작합니다.");
-    mainPage.putChessGame(true);
+    alert("게임을 진행합니다.");
+    mainPage.putChessGame(false, true);
   });
 }
 
@@ -34,13 +48,24 @@ MainPage.prototype.registerGameExitEvent = function () {
   document.querySelector(".chess-game-exit-button")
   .addEventListener("click", function () {
     mainPage.validateGameEnded();
-    mainPage.putChessGame(false);
+    alert("게임을 종료합니다.");
+    mainPage.putChessGame(false, false);
   });
 }
 
-MainPage.prototype.putChessGame = function (isPlaying) {
+MainPage.prototype.registerGameRestartEvent = function () {
+  document.querySelector(".chess-game-restart-button")
+  .addEventListener("click", function () {
+    mainPage.validateGameEnded();
+    mainPage.putChessGame(true, true);
+  });
+}
+
+MainPage.prototype.putChessGame = function (isRestart, isPlaying) {
 
   const request = {
+    gameId: mainPage.gameId,
+    isRestart: isRestart,
     isPlaying: isPlaying
   };
 
@@ -56,7 +81,12 @@ MainPage.prototype.putChessGame = function (isPlaying) {
   .then((response) => response.json())
   .then(function (data) {
     mainPage.isPlaying = data.isPlaying;
-    mainPage.templatePieces(data.pieces);
+    if (mainPage.isPlaying) {
+
+      mainPage.templatePieces(data.pieces);
+    } else {
+      mainPage.deleteAllPieces();
+    }
   })
 
 }
@@ -66,13 +96,6 @@ MainPage.prototype.validateGameStarted = function () {
     alert("이미 게임이 진행중 입니다.");
     throw new Error("이미 게임이 진행중 입니다.");
   }
-}
-
-MainPage.prototype.registerGameExitEvent = function () {
-  document.querySelector(".chess-game-exit-button")
-  .addEventListener("click", function () {
-    mainPage.exitGame();
-  });
 }
 
 MainPage.prototype.exitGame = function () {
@@ -106,7 +129,7 @@ MainPage.prototype.getScore = function () {
     alert("검은색 : " + scores.blackScore + "점, 흰색 : " + scores.whiteScore + "점");
   });
 
-  oReq.open("GET", this.getScoreUrl);
+  oReq.open("GET", this.getScoreUrl + "?" + mainPage.gameId);
   oReq.send();
 }
 
@@ -171,6 +194,7 @@ MainPage.prototype.putPieces = function () {
   document.querySelector('.chess-game-move-button .target').value = "";
 
   const moveData = {
+    gameId: mainPage.gameId,
     source: source,
     target: target
   };
@@ -193,7 +217,6 @@ MainPage.prototype.putPieces = function () {
     if (!data.isPlaying) {
       alert(data.winner);
     }
-
     mainPage.isPlaying = data.isPlaying;
     mainPage.templatePieces(data.pieces);
     mainPage.winner = data.winner;

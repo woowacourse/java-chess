@@ -22,7 +22,8 @@ public class BoardResult {
     public Map<Position, Piece> pieces(Color color) {
         return board.entrySet()
             .stream()
-            .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == color.isBlack())
+            .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == color
+                .isBlack())
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
@@ -58,7 +59,7 @@ public class BoardResult {
         return 0;
     }
 
-    public boolean isKingAlive(Color color){
+    public boolean isKingAlive(Color color) {
         return pieces(color).entrySet().stream()
             .anyMatch(entry -> entry.getValue().isKing());
     }

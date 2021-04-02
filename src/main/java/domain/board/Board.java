@@ -4,35 +4,37 @@ import domain.piece.Color;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import domain.position.Position;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
-public class Board {
+public class Board implements Serializable {
 
     public static final int CHESS_BOARD_SIZE = 8;
     public static final int PAWN_ALLY_COUNT_CONDITION = 2;
-    private final Map<Position, Piece> pieces;
+    private Map<Position, Piece> board;
 
     public Board() {
-        pieces = InitialBoard.emptyBoard();
+        board = InitialBoard.emptyBoard();
     }
 
     public void initChessPieces() {
-        InitialBoard.initChessPieces(pieces);
+        board = InitialBoard.emptyBoard();
+        InitialBoard.initChessPieces(board);
     }
 
     public Map<Position, Piece> getPieces() {
-        return pieces;
+        return board;
     }
 
     public Piece piece(Position position) {
-        return pieces.getOrDefault(position, new EmptyPiece());
+        return board.getOrDefault(position, new EmptyPiece());
     }
 
     public void move(Position source, Position target) {
         validateMove(source, target);
         Piece piece = piece(source);
-        piece.validateMove(Collections.unmodifiableMap(pieces), source, target);
+        piece.validateMove(Collections.unmodifiableMap(board), source, target);
         put(source, new EmptyPiece());
         put(target, piece);
     }
@@ -53,20 +55,20 @@ public class Board {
     }
 
     public void put(Position position, Piece piece) {
-        pieces.put(position, piece);
+        board.put(position, piece);
     }
 
     public Score piecesScore(Color color) {
-        BoardResult boardResult = new BoardResult(pieces);
+        BoardResult boardResult = new BoardResult(board);
         return boardResult.piecesScore(color);
     }
 
-    public boolean isKingAlive(Color color){
-        BoardResult boardResult = new BoardResult(pieces);
+    public boolean isKingAlive(Color color) {
+        BoardResult boardResult = new BoardResult(board);
         return boardResult.isKingAlive(color);
     }
 
     public Map<Position, Piece> getBoard() {
-        return pieces;
+        return board;
     }
 }

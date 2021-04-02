@@ -11,42 +11,54 @@
   top: 57px;
 }
 
-.chess-board-image{
+.chess-board-image {
   position: absolute;
   top: 33px;
   left: 523px;
 }
 
-.chess-piece{
+.chess-piece {
   width: 70px;
   margin-top: 6px;
   margin-left: -3px;
 }
 
-.chess-board-cell div{
-  //border: 5px solid red;
+.chess-board-cell div {
+/ / border: 5 px solid red;
 }
 
-.chess-game-move-button{
+.chess-game-move-button {
   position: absolute;
-  top: 765px;
+  top: 840px;
   left: 670px;
 }
 
-.chess-game-start-button{
-  position: absolute;
-  top: 729px;
-  left: 521px;
-}
-
-.chess-game-score-button{
+.chess-game-start-button {
   position: absolute;
   top: 765px;
   left: 521px;
 }
 
-.chess-game-exit-button{
+.chess-game-score-button {
   position: absolute;
-  top: 800px;
+  top: 803px;
   left: 521px;
+}
+
+.chess-game-exit-button {
+  position: absolute;
+  top: 840px;
+  left: 521px;
+}
+
+.chess-game-restart-button {
+  position: absolute;
+  top: 876px;
+  left: 521px;
+}
+
+.chess-game-select-gameId-button {
+  position: absolute;
+  top: 730px;
+  left: 520px;
 }

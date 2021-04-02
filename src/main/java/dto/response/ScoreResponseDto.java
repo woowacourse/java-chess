@@ -1,4 +1,4 @@
-package dto.request;
+package dto.response;
 
 import domain.board.Score;
 

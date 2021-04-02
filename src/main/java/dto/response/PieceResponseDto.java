@@ -2,7 +2,6 @@ package dto.response;
 
 import domain.piece.Piece;
 import domain.position.Position;
-import java.util.List;
 
 public class PieceResponseDto {
 

@@ -1,8 +1,9 @@
 package domain.position;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Serializable {
 
     public static final int CHESS_BOARD_START_RANGE = 0;
     public static final int CHESS_BOARD_END_RANGE = 8;
