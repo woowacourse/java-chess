@@ -5,10 +5,10 @@ import chess.domain.order.MoveRoute;
 import java.util.NoSuchElementException;
 
 public class Blank extends Piece {
-    private static final String BLANK_NOTATION = ".";
+    private static final String BLANK_NAME = ".";
 
     public Blank() {
-        super(BLANK_NOTATION);
+        super(BLANK_NAME);
     }
 
     @Override

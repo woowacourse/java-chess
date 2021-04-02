@@ -12,7 +12,7 @@ public class PieceDto {
     }
 
     public static PieceDto from(Piece piece){
-        return new PieceDto(piece.getNotation(), piece.getColor().name());
+        return new PieceDto(piece.getName(), piece.getColor().name());
     }
 
     @Override
