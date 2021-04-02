@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.util.BoardInitializer;
+import chess.util.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

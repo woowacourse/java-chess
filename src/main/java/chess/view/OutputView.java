@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
-import chess.domain.PrintBoardDto;
+import chess.domain.dto.PrintBoardDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.File;

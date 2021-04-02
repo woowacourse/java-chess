@@ -9,7 +9,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.domain.util.BoardInitializer;
+import chess.util.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

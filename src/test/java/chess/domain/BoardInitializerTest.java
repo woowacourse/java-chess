@@ -2,7 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import chess.domain.util.BoardInitializer;
+import chess.util.BoardInitializer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
