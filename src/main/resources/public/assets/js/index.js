@@ -34,7 +34,7 @@ const reloadUsers = async () => {
   document.querySelector(".stat").innerHTML = usersTemplate(result);
 }
 
-const restart = async() => {
+const restart = async () => {
   await start();
   await reloadUsers();
 }

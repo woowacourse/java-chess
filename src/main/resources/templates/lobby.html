@@ -10,13 +10,13 @@
   <h2 class="title">Paper Chess</h2>
   <h2 class="create">create</h2>
 </header>
-<div id="myModal" class="modal">
+<div class="modal" id="myModal">
   <div class="modal-content">
     <span class="close">X</span>
     <form action="./room" class="create-room" onsubmit="return false">
-      방 이름 : <input type="text" id="room_name" pattern=".{2,}" autofocus><br><br>
-      white 이름: <input type="text" id="white"><br><br>
-      black 이름: <input type="text" id="black"><br><br>
+      방 이름 : <input autofocus id="room_name" pattern=".{2,}" type="text"><br><br>
+      white 이름: <input id="white" type="text"><br><br>
+      black 이름: <input id="black" type="text"><br><br>
       <input type="submit">
     </form>
   </div>
@@ -27,10 +27,10 @@
     <div class="room" id="{{id}}"> {{name}}
       <div class="remove-room">X</div>
     </div>
-    <hr width="90%" color="#eeeeee"/>
+    <hr color="#eeeeee" width="90%"/>
     {{/rooms}}
   </div>
 </section>
-<script type="module" src="/assets/js/lobby.js"></script>
+<script src="/assets/js/lobby.js" type="module"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package chess.dto;
 import chess.domain.board.Point;
 
 public class PointDto {
+
     final private String x;
     final private String y;
 

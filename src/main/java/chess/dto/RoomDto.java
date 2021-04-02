@@ -1,6 +1,7 @@
 package chess.dto;
 
 public class RoomDto {
+
     private static final int NAME_COUNT_MIN = 2;
 
     private String id;

@@ -13,8 +13,8 @@
   <h2 class="exit">exit</h2>
   <div class="stat">
     {{#userInfo}}
-    <p><strong>BLACK</strong>  닉네임:{{blackName}} 승:{{blackWin}} 패:{{blackLose}}</p>
-    <p><strong>WHITE</strong>  닉네임:{{whiteName}} 승:{{whiteWin}} 패:{{whiteLose}}</p>
+    <p><strong>BLACK</strong> 닉네임:{{blackName}} 승:{{blackWin}} 패:{{blackLose}}</p>
+    <p><strong>WHITE</strong> 닉네임:{{whiteName}} 승:{{whiteWin}} 패:{{whiteLose}}</p>
     {{/userInfo}}
   </div>
 
@@ -25,7 +25,7 @@
     {{#board}}
     {{#board}}
     {{#.}} {{#.}}
-    <div id="{{x}}{{y}}" class="square {{piece}}{{team}}"></div>
+    <div class="square {{piece}}{{team}}" id="{{x}}{{y}}"></div>
     {{/.}} {{/.}}
     {{/board}}
     {{/board}}
@@ -33,6 +33,6 @@
     <img class="blackTurn" src="/assets/images/black_turn.png">
   </div>
 </section>
-<script type="module" src="/assets/js/index.js"></script>
+<script src="/assets/js/index.js" type="module"></script>
 </body>
 </html>

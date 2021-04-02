@@ -1,6 +1,5 @@
 package chess.domain.chessgame;
 
-import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
@@ -10,8 +9,8 @@ import java.util.List;
 
 public class ChessGame {
 
-    private Turn turn;
     private final ScoreBoard scoreBoard;
+    private Turn turn;
     private GameState gameState;
 
     public ChessGame(Board board, Turn turn) {

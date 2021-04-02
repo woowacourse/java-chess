@@ -1,6 +1,7 @@
 package chess.dto;
 
 public class RoomUsersDto {
+
     private String whiteName;
     private String whiteWin;
     private String whiteLose;
