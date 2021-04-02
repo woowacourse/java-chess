@@ -26,7 +26,7 @@ public class BoardDto {
 
     private String convertToInitial(Piece piece) {
         String initial = piece.getInitial();
-        if (initial.equals(".")) {
+        if (".".equals(initial)) {
             initial = "";
         }
         return initial;
