@@ -1,15 +1,15 @@
 package chess.dao;
 
-import chess.dto.ChessGameDto;
-import chess.dto.SquareDto;
-import chess.dto.UserIdsDto;
+import chess.dto.StartRequestDto;
+import chess.dto.CommandsDto;
+import chess.dto.CreateRequestDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChessDao {
 
@@ -54,59 +54,67 @@ public class ChessDao {
         }
     }
 
-    public void createGame(ChessGameDto chessGameDto, UserIdsDto userIdsDto) throws SQLException {
-        String query = "INSERT INTO game(`state`, white_user, black_user) VALUES (?, ?, ?)";
+    public List<String> gameNames() throws SQLException {
+        String query = "SELECT game_name FROM game ORDER BY game_id DESC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGameDto.getState());
-        pstmt.setString(2, userIdsDto.getWhiteUserId());
-        pstmt.setString(3, userIdsDto.getBlackUserId());
-        pstmt.executeUpdate();
+        ResultSet rs = pstmt.executeQuery();
 
-        String selectQuery = "SELECT game_id FROM game WHERE white_user=? AND black_user=? ORDER BY game_id DESC";
-        PreparedStatement selectPstmt = getConnection().prepareStatement(selectQuery);
-        selectPstmt.setString(1, userIdsDto.getWhiteUserId());
-        selectPstmt.setString(2, userIdsDto.getBlackUserId());
-        ResultSet rs = selectPstmt.executeQuery();
-
-        if(rs.next()) {
-            createBoard(chessGameDto, rs.getString("game_id"));
+        List<String> ids = new ArrayList<>();
+        while (rs.next()) {
+            ids.add(rs.getString("game_name"));
         }
+
+        return ids;
     }
 
-    public void createBoard(ChessGameDto chessGameDto, String game_id) throws SQLException {
-        String query = "INSERT INTO board("
-            + "a8, b8, c8, d8, e8, f8, g8, h8,"
-            + "a7, b7, c7, d7, e7, f7, g7, h7,"
-            + "a6, b6, c6, d6, e6, f6, g6, h6,"
-            + "a5, b5, c5, d5, e5, f5, g5, h5,"
-            + "a4, b4, c4, d4, e4, f4, g4, h4,"
-            + "a3, b3, c3, d3, e3, f3, g3, h3,"
-            + "a2, b2, c2, d2, e2, f2, g2, h2,"
-            + "a1, b1, c1, d1, e1, f1, g1, h1,"
-            + "game_id) VALUES ("
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, "
-            + "?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+    public void createGameByName(final CreateRequestDto createRequestDto) throws SQLException {
+        String query = "INSERT INTO game(game_name) VALUES(?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        List<String> pieces = pieces(chessGameDto);
-
-        for (int i = 0; i < 64; i++) {
-            pstmt.setString(i + 1, pieces.get(i));
-        }
-
-        pstmt.setString(65, game_id);
-
+        pstmt.setString(1, createRequestDto.getGameName());
         pstmt.executeUpdate();
     }
 
-    private List<String> pieces(ChessGameDto chessGameDto) {
-        return chessGameDto.getSquareDtos().stream().map(SquareDto::getPiece)
-            .collect(Collectors.toList());
+    public void insertStartCommand(final StartRequestDto startRequestDto) throws SQLException {
+        String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, findGameIdByName(startRequestDto.getGameName()));
+        pstmt.setString(2, "start");
+        pstmt.executeUpdate();
+    }
+
+    public void updatePlayerIds(final StartRequestDto startRequestDto) throws SQLException {
+        String query = "UPDATE game SET white_user=?, black_user=? WHERE game_id=?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, startRequestDto.getWhiteUser());
+        pstmt.setString(2, startRequestDto.getBlackUser());
+        pstmt.setString(3, findGameIdByName(startRequestDto.getGameName()));
+        pstmt.executeUpdate();
+    }
+
+    private String findGameIdByName(final String gameName) throws SQLException {
+        String query = "SELECT game_id FROM game WHERE game_name=?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameName);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) {
+            throw new SQLException();
+        }
+
+        return rs.getString("game_id");
+    }
+
+    public CommandsDto findCommandsByName(final String gameName) throws SQLException {
+        String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameName);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<String> commands = new ArrayList<>();
+        while(rs.next()) {
+            commands.add(rs.getString("command"));
+        }
+
+        return new CommandsDto(commands);
     }
 }

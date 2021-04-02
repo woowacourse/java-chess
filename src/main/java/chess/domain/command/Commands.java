@@ -8,7 +8,7 @@ public class Commands {
 
     private final List<Command> commands;
 
-    private Commands(List<Command> commands) {
+    public Commands(List<Command> commands) {
         this.commands = commands;
     }
 

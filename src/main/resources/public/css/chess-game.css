@@ -17,11 +17,6 @@ main {
   justify-content: center;
 }
 
-.chess-game {
-  width: 51%;
-  margin-right: 15%;
-}
-
 .chess-game-room-list {
   width: 50%;
   margin-left: 0%;
@@ -32,9 +27,14 @@ main {
   border-radius: 5px;
 }
 
+.chess-game {
+  width: 50%;
+  margin-right: 10%;
+}
+
 .chess-game-info {
-  width: 17%;
-  margin-left: 1%;
+  width: 20%;
+  margin-left: 20%;
   color: white;
   background-color: rgba(70, 70, 70, 0.5);
   padding: 1em 1em 1em;

@@ -1,5 +1,8 @@
 package chess.dto;
 
+import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
+
 public class SquareDto {
 
     private final String position;
@@ -11,10 +14,10 @@ public class SquareDto {
     }
 
     public String getPosition() {
-        return this.position;
+        return position;
     }
 
     public String getPiece() {
-        return this.piece;
+        return piece;
     }
 }

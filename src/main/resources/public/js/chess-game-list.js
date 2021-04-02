@@ -12,14 +12,12 @@ async function onCreateGame(event) {
             body: JSON.stringify({"gameName": gameName})
         });
 
-        const result = await responseOfTryCreateGame.json();
-
         if(window.confirm("[" + gameName + "] 방에 입장하시겠습니까?")) {
             location.replace(gameName);
-            // const responseOfCreateGame = await fetch("./" + gameName);
         } else {
             location.reload();
         }
+
     } catch (err) {
         alert("동일한 제목의 방이 이미 존재합니다.");
     }
