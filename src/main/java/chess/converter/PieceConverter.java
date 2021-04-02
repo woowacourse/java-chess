@@ -1,4 +1,4 @@
-package chess.mapper;
+package chess.converter;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
-public enum PieceMapper {
+public enum PieceConverter {
     BISHOP("b", Bishop::new),
     KING("k", King::new),
     PAWN("p", Pawn::new),
@@ -26,7 +26,7 @@ public enum PieceMapper {
     private final String name;
     private final Function<Color, Piece> builder;
 
-    PieceMapper(String name, Function<Color, Piece> builder) {
+    PieceConverter(String name, Function<Color, Piece> builder) {
         this.name = name;
         this.builder = builder;
     }
