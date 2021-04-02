@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
@@ -35,7 +34,7 @@ public class PiecesConverter {
 
     private static Map<Position, Piece> convertPositionMap(String pieces) {
         List<Piece> pieceList = parsePiecesString(pieces);
-        ArrayList<Position> positionList = Arrays.stream(Rank.values())
+        ArrayList<Position> positionList = Rank.asListInReverseOrder().stream()
                 .flatMap(rank ->
                         Arrays.stream(File.values())
                                 .map(file -> Position.of(file, rank))
@@ -50,8 +49,6 @@ public class PiecesConverter {
     private static List<Piece> parsePiecesString(String pieces) {
         return Arrays.stream(pieces.split(""))
                 .map(PieceConverter::of)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .collect(toList());
     }
 }

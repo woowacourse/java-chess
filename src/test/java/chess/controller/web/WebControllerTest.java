@@ -1,6 +1,12 @@
 package chess.controller.web;
 
 import chess.controller.web.dto.MoveRequestDto;
+import chess.controller.web.dto.SaveRequestDto;
+import chess.dao.MysqlChessDao;
+import chess.domain.board.Square;
+import chess.domain.manager.ChessGameManager;
+import chess.domain.piece.Pawn;
+import chess.domain.position.Position;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpEntity;
@@ -20,6 +26,7 @@ import spark.Spark;
 
 import java.io.IOException;
 
+import static chess.domain.piece.attribute.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
@@ -125,5 +132,30 @@ class WebControllerTest {
         assertThat(matchResult).isEqualTo("무승부");
         assertThat(blackScore).isEqualTo(38.0);
         assertThat(whiteScore).isEqualTo(38.0);
+    }
+
+    @DisplayName("/game/save API 요청 시 저장을 할 수 있는지 확인")
+    @Test
+    void whenCallSaveApi() throws IOException {
+        // given
+        callStartRestApi();
+        // when
+        HttpPost request = new HttpPost("http://localhost:8081/game/save");
+        request.setHeader("Content-Type", "application/json;charset=utf-8");
+
+        SaveRequestDto saveRequestDto = new SaveRequestDto("RKBQKBKRPPPPPPPP........................p........ppppppprkbqkbkr");
+        String jsonValue = gson.toJson(saveRequestDto);
+        HttpEntity httpEntity = new StringEntity(jsonValue, "utf-8");
+        request.setEntity(httpEntity);
+        HttpClientBuilder.create().build().execute(request);
+
+        MysqlChessDao dao = new MysqlChessDao();
+        ChessGameManager expectedGameManager = dao.findById(1L).get();
+        // then
+        assertThat(expectedGameManager.getId()).isEqualTo(1);
+
+        Square a3 = expectedGameManager.getBoard().findByPosition(Position.of("a3"));
+        assertThat(a3.getPiece().getClass()).isEqualTo(Pawn.class);
+        assertThat(a3.getPiece().getColor()).isEqualTo(WHITE);
     }
 }

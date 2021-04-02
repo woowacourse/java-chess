@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +21,12 @@ public class MysqlChessDao {
                         "VALUES (?, ?, ?)";
 
         try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getPieces());
             preparedStatement.setBoolean(2, entity.isRunning());
             preparedStatement.setString(3, entity.getNextTurn().name());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }

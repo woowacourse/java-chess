@@ -3,6 +3,7 @@ package chess.controller.web;
 import chess.controller.web.dto.BasicResponseDto;
 import chess.controller.web.dto.MoveRequestDto;
 import chess.controller.web.dto.MoveResponseDto;
+import chess.controller.web.dto.SaveRequestDto;
 import chess.controller.web.dto.ScoreResponseDto;
 import chess.controller.web.dto.StartResponseDto;
 import chess.controller.web.dto.WebResponseDto;
@@ -49,6 +50,13 @@ public class WebController {
                 response.type("application/json; charset=utf-8");
                 return BasicResponseDto.createSuccessResponseDto(new ScoreResponseDto(chessService.getStatistics()));
             }, gson::toJson);
+
+            post("/save", (request, response) -> {
+                SaveRequestDto saveRequestDto = gson.fromJson(request.body(), SaveRequestDto.class);
+                chessService.save(saveRequestDto);
+                response.type("application/json; charset=utf-8");
+                return HTTP_STATUS_OK;
+            });
 
             post("/move", (request, response) -> {
                 MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);

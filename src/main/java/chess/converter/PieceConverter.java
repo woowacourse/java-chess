@@ -11,7 +11,6 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Color;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.function.Function;
 
 public enum PieceConverter {
@@ -31,10 +30,15 @@ public enum PieceConverter {
         this.builder = builder;
     }
 
-    public static Optional<Piece> of(String name) {
-        return Arrays.stream(values())
+    public static Piece of(String name) {
+        Color color = Color.BLACK;
+        if (Character.isLowerCase(name.charAt(0))) {
+            color = Color.WHITE;
+        }
+        PieceConverter pieceConverter = Arrays.stream(values())
                 .filter(mapper -> mapper.name.equalsIgnoreCase(name))
                 .findAny()
-                .map(pieceMapper -> pieceMapper.builder.apply(Color.of(name)));
+                .orElseThrow(() -> new IllegalArgumentException("해당 문자의 piece는 없습니다."));
+        return pieceConverter.builder.apply(color);
     }
 }

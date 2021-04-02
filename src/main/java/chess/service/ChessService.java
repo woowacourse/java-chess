@@ -1,6 +1,9 @@
 package chess.service;
 
 import chess.controller.web.dto.PieceDto;
+import chess.controller.web.dto.SaveRequestDto;
+import chess.dao.MysqlChessDao;
+import chess.dao.dto.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.manager.ChessGameManager;
 import chess.domain.manager.ChessGameManagerFactory;
@@ -14,10 +17,22 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 public class ChessService {
-    private ChessGameManager chessGameManager = ChessGameManagerFactory.createNotStartedGameManager();
+    private static final long TEMPORARY_ID = 0;
+
+    private ChessGameManager chessGameManager = ChessGameManagerFactory.createNotStartedGameManager(TEMPORARY_ID);
+    private MysqlChessDao dao = new MysqlChessDao();
 
     public void start() {
-        chessGameManager = ChessGameManagerFactory.createRunningGame();
+        chessGameManager = ChessGameManagerFactory.createRunningGame(TEMPORARY_ID);
+    }
+
+    public void save(SaveRequestDto saveRequestDto) {
+        dao.save(new ChessGame(chessGameManager, saveRequestDto.getPieces()));
+    }
+
+    public void load(long id) {
+        chessGameManager = dao.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID가 없습니다."));
     }
 
     public MoveResult move(Position from, Position to) {
@@ -47,7 +62,8 @@ public class ChessService {
         }
     }
 
-    public ChessGameStatistics getStatistics(){
+    public ChessGameStatistics getStatistics() {
         return chessGameManager.getStatistics();
     }
+
 }
