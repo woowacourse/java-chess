@@ -3,6 +3,7 @@ import {whiteTeamCurrentTurn} from "./initialize.js";
 import {blackTeamCurrentTurn} from "./initialize.js";
 import {drawPieceImage} from "./initialize.js";
 import {finishGame} from "./finishGame.js";
+import {saveGameBtn} from "./firstPage.js";
 
 const whiteTeamScoreUI = document.getElementById("whiteTeamScore");
 const blackTeamScoreUI = document.getElementById("blackTeamScore");
@@ -100,4 +101,26 @@ export function checkIsPlaying(data) {
         finishGame(data);
     }
     return data.isPlaying;
+}
+
+export function enableSaveBtn() {
+    saveGameBtn.addEventListener('click', saveGame);
+}
+
+function saveGame() {
+    fetch("/save")
+        .then(response => {
+            if(!response.ok) {
+                throw new Error((response.status));
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            alert('DB에 저장이 완료되었습니다.')
+        })
+        .catch(error => {
+            console.log(error);
+            alert("DB에 저장을 실패하였습니다.")
+        });
 }

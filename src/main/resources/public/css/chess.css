@@ -16,6 +16,19 @@ body {
     margin-bottom: 50px;
 }
 
+#saveGameBtn {
+    margin-left: 20px;
+    width: 100px;
+    background-color: #522632;
+    color: #F3E4DF;
+    box-shadow: 3px 3px 3px 3px gray;
+    border-radius: 20px;
+}
+
+#saveGameBtn:hover {
+    cursor: pointer;;
+}
+
 .chessBoard {
     display: flex;
     flex-direction: column;
