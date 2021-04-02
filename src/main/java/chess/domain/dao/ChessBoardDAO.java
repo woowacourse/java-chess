@@ -1,9 +1,7 @@
 package chess.domain.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoardDAO {
@@ -66,21 +64,24 @@ public class ChessBoardDAO {
     }
 
 
-    //Statement 생성 후 실행할 쿼리정보 등록 Statement stmt = conn.createStatement(); //결과를 담을 ResultSet 생성 후 결과 담기 ResultSet rs = stmt.executeQuery(sql); //결과를 담을 ArrayList생성 ArrayList<UserBean> list = new ArrayList<UserBean>(); //ResultSet에 담긴 결과를 ArrayList에 담기 while(rs.next()) { UserBean bean = new UserBean(); bean.setId(rs.getString("ID")); bean.setName(rs.getString("NAME")); bean.setEmail(rs.getString("EMAIL")); list.add(bean); } //결과물 출력 for(int i=0; i<list.size(); i++) { System.out.println("회원아이디:"+list.get(i).getId()); System.out.println("회원이름:"+list.get(i).getName()); System.out.println("회원이메일:"+list.get(i).getEmail()); }
 
 
-//    public List<ChessBoardDTOForDAO> findByGameId(String userId) throws SQLException {
-//        String query = "SELECT * FROM user WHERE user_id = ?";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, userId);
-//        ResultSet rs = pstmt.executeQuery();
-//        List<ChessBoardDTOForDAO> chessboard = new ArrayList<>();
-//        if (!rs.next()) return null;
-//        new User(
-//                rs.getString("user_id"),
-//                rs.getString("name"));
-//        return chessboard;
-//    }
+    public List<ChessBoardDTOForDAO> findByGameId(String gameId) throws SQLException {
+        String query = "SELECT * FROM chessTable WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+        List<ChessBoardDTOForDAO> chessboard = new ArrayList<>();
+        while(rs.next()){
+            ChessBoardDTOForDAO chessboardDto = new ChessBoardDTOForDAO();
+            chessboard.add(chessboardDto);
+            chessboardDto.setPosition(rs.getString("position"));
+            chessboardDto.setTeamColor(rs.getString("teamColor"));
+            chessboardDto.setPieceType(rs.getString("pieceType"));
+            chessboardDto.setAlive(rs.getString("alive"));
+        }
+        return chessboard;
+    }
 
     public void removePositions() throws SQLException {
         String query = "DELETE FROM chessTable WHERE game_id=1";

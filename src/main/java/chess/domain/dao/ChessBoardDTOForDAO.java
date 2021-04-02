@@ -8,6 +8,10 @@ public class ChessBoardDTOForDAO {
     private String pieceType;
     private String alive;
 
+    public ChessBoardDTOForDAO(){
+
+    }
+
     public ChessBoardDTOForDAO(String position, String teamColor, String pieceType, String alive) {
         this.position = position;
         this.teamColor = teamColor;
