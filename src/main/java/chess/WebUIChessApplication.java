@@ -11,6 +11,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebUIChessApplication {
+
     public static void main(String[] args) {
         ChessControllerForUI chessController = new ChessControllerForUI();
 
@@ -19,31 +20,42 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        post("/", (req,res) -> {
+        post("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
-            if ("start".equals(req.queryParams("start"))) {
+            try {
                 chessController.init();
-                chessController.action("start");
-
-                model = makeBoardModel(chessController);
-                return render(model, "chessboard.html");
+                chessController.action(req.queryParams("start"));
+            } catch (IllegalArgumentException e) {
+                model.put("error", new ErrorDTO(e.getMessage()));
+                return render(model, "index.html");
             }
-            return render(model, "index.html");
+            if (chessController.isFinished()) {
+                return render(model, "end.html");
+            }
+            model = makeBoardModel(chessController);
+            return render(model, "chessboard.html");
         });
 
         post("/chess", (req, res) -> {
+            Map<String, Object> model;
             String command = req.queryParams("command");
-            chessController.action(command);
+            try {
+                chessController.action(command);
+            } catch (IllegalArgumentException e) {
+                model = makeBoardModel(chessController);
+                model.put("error", new ErrorDTO(e.getMessage()));
+                return render(model, "chessboard.html");
+            }
 
-            Map<String, Object> model = makeBoardModel(chessController);
+            model = makeBoardModel(chessController);
             return render(model, "chessboard.html");
         });
     }
 
     private static Map<String, Object> makeBoardModel(ChessControllerForUI chessController) {
         Map<String, Object> model = new HashMap<>();
-        Map<PositionDTO, PieceDTO> board = chessController.board().getBoard();
+        Map<PositionDTO, PieceDTO> board = chessController.board()
+                                                          .getBoard();
         ColorDTO currentPlayer = chessController.currentPlayer();
         for (PositionDTO positionDTO : board.keySet()) {
             model.put(positionDTO.getKey(), board.get(positionDTO));
@@ -55,5 +67,5 @@ public class WebUIChessApplication {
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
-    
+
 }

@@ -24,4 +24,8 @@ public class ChessControllerForUI {
     public BoardDTO board() {
         return new BoardDTO(game.allBoard());
     }
+
+    public boolean isFinished() {
+        return game.isFinished();
+    }
 }

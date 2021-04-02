@@ -32,12 +32,14 @@ public class Board {
         Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
 
-        if (fromPiece.movablePositions(from, Collections.unmodifiableMap(pieceByPosition)).contains(to)){
-            pieceByPosition.put(to, fromPiece);
-            pieceByPosition.put(from, new Empty());
-            if (toPiece.isKing()) {
-                isKingDead = true;
-            }
+        if (!fromPiece.movablePositions(from, Collections.unmodifiableMap(pieceByPosition))
+                      .contains(to)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치로의 이동입니다.");
+        }
+        pieceByPosition.put(to, fromPiece);
+        pieceByPosition.put(from, new Empty());
+        if (toPiece.isKing()) {
+            isKingDead = true;
         }
     }
 

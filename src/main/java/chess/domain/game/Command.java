@@ -44,7 +44,12 @@ public enum Command {
 
     public static Command from(String input) {
         String[] argv = input.split(SPACE_REGEX);
-        Command command = Command.valueOf(argv[0].toUpperCase());
+        Command command;
+        try {
+            command = Command.valueOf(argv[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("명령어가 존재하지 않습니다.");
+        }
         command.setOptions(argv);
         return command;
     }
