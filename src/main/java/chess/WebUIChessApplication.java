@@ -6,16 +6,15 @@ import java.util.Set;
 
 import com.google.gson.Gson;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.domain.chess.Chess;
 import chess.domain.board.BoardDTO;
+import chess.domain.chess.Chess;
+import chess.domain.chess.ChessDAO;
 import chess.domain.position.MovePosition;
+import chess.domain.position.MovePositionDAO;
 import chess.domain.position.MovePositionDTO;
 import chess.domain.user.User;
 import chess.domain.user.UserDAO;
@@ -24,58 +23,57 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebUIChessApplication.class);
-
     public static final Gson GSON = new Gson();
 
     public static void main(String[] args) {
         staticFiles.location("/public");
 
-        Map<Integer, Chess> chessMap = new HashMap<>();
+        UserDAO userDAO = new UserDAO();
+        ChessDAO chessDAO = new ChessDAO();
+        MovePositionDAO movePositionDAO = new MovePositionDAO();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/", (req, res) -> render(new HashMap<>(), "form.html"));
 
         post("/users", (req, res) -> {
             final String name = req.queryParams("name");
             User user = new User(name);
-            new UserDAO().addUser(user);
+            userDAO.addUser(user);
+            res.cookie("/", "name", name, 3600, false, true);
+            res.redirect("/main");
             return "OK";
         });
 
-//        get("/users/:name", (req, res) -> {
-//
-//        })
+        get("/main", (req, res) -> render(new HashMap<>(), "main.html"));
 
-        post("/new", (req, res) -> {
+        post("chess", (req, res) -> {
+            String name = req.cookie("name");
+            Long userId = userDAO.findIdByName(name);
+            chessDAO.addChess(userId);
+            res.redirect("/chess");
+            return "OK";
+        });
+
+        get("chess", (req, res) -> {
+            String name = req.cookie("name");
+            Long userId = userDAO.findIdByName(name);
             Chess chess = Chess.createWithEmptyBoard().start();
-//            UserDAO userDAO = new UserDAO();
-//            userDAO.addUser(user);
-            chessMap.put(0, chess);
-            res.redirect("/rooms/0");
-            return "OK";
-        });
-
-        get("/rooms/:roomId", (req, res) -> {
-            int roomId = Integer.parseInt(req.params(":roomId"));
-            Chess chess = chessMap.get(roomId);
+            chess = chessDAO.getChess(userId, chess);
             Set<Map.Entry<String, String>> board = BoardDTO.from(chess).getPieceDTOs();
             Map<String, Object> model = new HashMap<>();
             model.put("board", board);
             return render(model, "chess.html");
         });
 
-        post("/rooms/:roomId/move", (req, res) -> {
-            int roomId = Integer.parseInt(req.params(":roomId"));
-            Chess chess = chessMap.get(roomId);
-
+        post("/chess/move", (req, res) -> {
+            String name = req.cookie("name");
+            Long userId = userDAO.findIdByName(name);
             MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);
-            MovePosition movePosition = new MovePosition(movePositionDTO.getSource(), movePositionDTO.getTarget());
+            MovePosition movePosition =
+                    new MovePosition(movePositionDTO.getSource(), movePositionDTO.getTarget());
+            Chess chess = Chess.createWithEmptyBoard().start();
+            chess = chessDAO.getChess(userId, chess);
             chess = chess.move(movePosition);
-            chessMap.put(roomId, chess);
-
+            movePositionDAO.move(userId, movePositionDTO);
             if (chess.isKindDead()) {
                 return GSON.toJson("king-dead");
             }
