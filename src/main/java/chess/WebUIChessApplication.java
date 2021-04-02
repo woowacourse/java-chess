@@ -10,6 +10,7 @@ import chess.domain.dto.ErrorResponseDto;
 import chess.domain.dto.OkResponseDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.move.MoveRequestDto;
+import chess.domain.dto.move.MoveResponseDto;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,7 @@ public class WebUIChessApplication {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
-                List<PieceDto> result = controller.findPiecesByRoomName(roomName);
+                MoveResponseDto result = controller.findPiecesByRoomName(roomName);
                 res.type("application/json");
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
@@ -58,7 +59,7 @@ public class WebUIChessApplication {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
-                List<PieceDto> result = controller.start(roomName);
+                MoveResponseDto result = controller.start(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
@@ -69,7 +70,7 @@ public class WebUIChessApplication {
             try {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
-                List<PieceDto> result = controller.end(roomName);
+                MoveResponseDto result = controller.end(roomName);
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));
@@ -81,7 +82,7 @@ public class WebUIChessApplication {
                 // TODO 로그인 체크 (유저가 가지고 있는 방인지 체크)
                 String roomName = req.params(":name");
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
-                List<PieceDto> result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
+                MoveResponseDto result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
                 return gson.toJson(OkResponseDto.payload(result));
             } catch (Exception e) {
                 return gson.toJson(ErrorResponseDto.message(e.getMessage()));

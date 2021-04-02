@@ -1,6 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.board.Board;
+import chess.domain.dto.ScoreDto;
 import chess.domain.team.Team;
 
 public interface State {
@@ -16,4 +17,6 @@ public interface State {
     Board getBoard();
 
     String getValue();
+
+    ScoreDto judgeResult();
 }

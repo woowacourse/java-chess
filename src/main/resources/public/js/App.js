@@ -1,8 +1,11 @@
 const App = function() {
   this.$chessBoard = document.querySelector("#chess_board");
-  this.$commandInput = document.querySelector("#command");
   this.$startBtn = document.querySelector("#start");
   this.$endBtn = document.querySelector("#end");
+  this.$currentTurn = document.querySelector("#current_turn");
+  this.$blackScore = document.querySelector("#black_score");
+  this.$whiteScore = document.querySelector("#white_score");
+  this.$winner = document.querySelector("#winner");
   this.roomName = undefined;
 
   this.renderEmptyBoard = function() {
@@ -29,6 +32,18 @@ const App = function() {
       viewPiece.innerText = piece.team + piece.signature;
     })
 
+  }.bind(this);
+
+  this.renderScore = function(payload) {
+    const blackScore = payload.scoreDto.blackScore;
+    const whiteScore = payload.scoreDto.whiteScore;
+    this.$blackScore.innerHTML = `블랙 점수 : ${blackScore}`;
+    this.$whiteScore.innerHTML = `화이트 점수 : ${whiteScore}`;
+  }.bind(this);
+
+  this.renderCurrentTurn = function(payload) {
+    const currentTeam = payload.currentTeam;
+    this.$currentTurn.innerHTML = `현재 턴 : ${currentTeam}`;
   }.bind(this);
 
   this.getClickedPiece = function() {
@@ -73,7 +88,9 @@ const App = function() {
         alert(result.message);
         return;
       }
-      this.renderBoard(result.payload);
+      this.renderBoard(result.payload.pieces);
+      this.renderScore(result.payload);
+      this.renderCurrentTurn(result.payload);
     })
     .catch(err => alert(err));
   }.bind(this);
@@ -89,7 +106,9 @@ const App = function() {
           alert(result.message);
           return;
         }
-        this.renderBoard(result.payload);
+        this.renderBoard(result.payload.pieces);
+        this.renderScore(result.payload);
+        this.renderCurrentTurn(result.payload);
       })
       .catch(err => alert(err));
   })
@@ -104,7 +123,9 @@ const App = function() {
           alert(result.message);
           return;
         }
-        this.renderBoard(result.payload);
+        this.renderBoard(result.payload.pieces);
+        this.renderScore(result.payload);
+        this.renderCurrentTurn(result.payload);
       })
       .catch(err => alert(err));
   })
@@ -135,7 +156,9 @@ const App = function() {
           return;
         }
         this.roomName = roomName;
-        this.renderBoard(result.payload);
+        this.renderBoard(result.payload.pieces);
+        this.renderScore(result.payload);
+        this.renderCurrentTurn(result.payload);
       })
       .catch(err => alert(err));
   }.bind(this);

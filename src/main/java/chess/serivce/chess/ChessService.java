@@ -3,6 +3,8 @@ package chess.serivce.chess;
 import chess.domain.board.Board;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.RoomDto;
+import chess.domain.dto.ScoreDto;
+import chess.domain.dto.move.MoveResponseDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.State;
 
@@ -27,7 +29,7 @@ public class ChessService {
     private final RoomRepository roomRepository = new JdbcRoomRepository();
     private final PieceRepository pieceRepository = new JdbcPieceRepository();
 
-    public List<PieceDto> start(String roomName) throws SQLException {
+    public MoveResponseDto start(String roomName) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
 
         Room room = generateRoomDomainFromDB(roomDto, Collections.emptyList());
@@ -38,10 +40,15 @@ public class ChessService {
         for (Piece piece : board.getPieces()) {
             pieceRepository.insert(roomDto.getId(), piece);
         }
-        return pieceRepository.findPiecesByRoomId(roomDto.getId());
+
+        return new MoveResponseDto(
+            pieceRepository.findPiecesByRoomId(roomDto.getId()),
+            room.currentTeam().getValue(),
+            room.judgeResult()
+        );
     }
 
-    public List<PieceDto> end(String roomName) throws SQLException {
+    public MoveResponseDto end(String roomName) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
         List<PieceDto> pieces = pieceRepository.findPiecesByRoomId(roomDto.getId());
 
@@ -49,10 +56,14 @@ public class ChessService {
         room.play("end");
         roomRepository.update(roomDto.getId(), roomDto.getName(), room);
 
-        return pieces;
+        return new MoveResponseDto(
+            pieceRepository.findPiecesByRoomId(roomDto.getId()),
+            room.currentTeam().getValue(),
+            room.judgeResult()
+        );
     }
 
-    public List<PieceDto> move(String roomName, String source, String target) throws SQLException {
+    public MoveResponseDto move(String roomName, String source, String target) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
         List<PieceDto> piecesInDb = pieceRepository.findPiecesByRoomId(roomDto.getId());
 
@@ -74,13 +85,22 @@ public class ChessService {
             Piece pieceInTarget = board.find(Location.of(target));
             pieceRepository.update(pieceInDBAtSource.getId(), pieceInTarget);
             pieceRepository.deletePieceById(pieceInDBAtTarget.getId());
-            return pieceRepository.findPiecesByRoomId(roomDto.getId());
+            return new MoveResponseDto(
+                pieceRepository.findPiecesByRoomId(roomDto.getId()),
+                room.currentTeam().getValue(),
+                room.judgeResult()
+            );
         }
 
         for (int i = 0; i < pieces.size(); i++) {
             pieceRepository.update(piecesInDb.get(i).getId(), pieces.get(i));
         }
-        return pieceRepository.findPiecesByRoomId(roomDto.getId());
+
+        return new MoveResponseDto(
+            pieceRepository.findPiecesByRoomId(roomDto.getId()),
+            room.currentTeam().getValue(),
+            room.judgeResult()
+        );
     }
 
     private Room generateRoomDomainFromDB(RoomDto roomDto, List<PieceDto> pieceDtos) {
@@ -90,9 +110,17 @@ public class ChessService {
         return room;
     }
 
-    public List<PieceDto> findPiecesByRoomName(String roomName) throws SQLException {
+    public MoveResponseDto findPiecesByRoomName(String roomName) throws SQLException {
         RoomDto roomDto = roomRepository.findRoomByRoomName(roomName);
-        return pieceRepository.findPiecesByRoomId(roomDto.getId());
+        List<PieceDto> piecesInDb = pieceRepository.findPiecesByRoomId(roomDto.getId());
+
+        Room room = generateRoomDomainFromDB(roomDto, piecesInDb);
+
+        return new MoveResponseDto(
+            piecesInDb,
+            room.currentTeam().getValue(),
+            room.judgeResult()
+        );
     }
 
     public void createRoom(String roomName) throws SQLException {

@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.running.Ready;
@@ -44,5 +45,9 @@ public class Room {
 
     public Team currentTeam() {
         return currentTeam;
+    }
+
+    public ScoreDto judgeResult() {
+        return state.judgeResult();
     }
 }
