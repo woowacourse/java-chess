@@ -80,7 +80,7 @@ async function move(source, target) {
         document.getElementById(target.id).innerText = document.getElementById(source.id).textContent;
         document.getElementById(source.id).innerText = "";
     }
-    showTurnReverse()
+    showTurn()
     showScores()
     checkGameOver()
 }
@@ -88,17 +88,6 @@ async function move(source, target) {
 async function showTurn() {
     let turn = await fetch('http://localhost:4567/turn')
     turn = await turn.json()
-    document.getElementById("status").innerText = "TURN: " + turn;
-}
-
-async function showTurnReverse() {
-    let turn = await fetch('http://localhost:4567/turn')
-    turn = await turn.json()
-    if (turn === "BLACK") {
-        turn = "WHITE"
-    } else {
-        turn = "BLACK"
-    }
     document.getElementById("status").innerText = "TURN: " + turn;
 }
 

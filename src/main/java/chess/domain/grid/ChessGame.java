@@ -15,6 +15,7 @@ import java.util.Map;
 public final class ChessGame {
     private static final int POSITION_START_INDEX = 1;
     private static final int POSITION_END_INDEX = 3;
+    private static final String TURN_BLACK = "BLACK";
     private Grid grid;
     private GameState gameState;
     private boolean gameOver;
@@ -99,59 +100,17 @@ public final class ChessGame {
             char name = nameAndPosition.charAt(i);
             String position = nameAndPosition.substring(i + POSITION_START_INDEX, i + POSITION_END_INDEX);
             Position piecePosition = new Position(position);
-            distributePieces(grid, name, piecePosition);
+            grid.assign(PieceMapper.of(name, piecePosition), piecePosition);
         }
         assignTurn(turn);
 
     }
 
     private void assignTurn(String turn) {
-        if (turn.equals("BLACK")) {
+        if (turn.equals(TURN_BLACK)) {
             gameState = new BlackTurn();
             return;
         }
         gameState = new WhiteTurn();
-    }
-
-    private void distributePieces(final Grid grid, char name, Position piecePosition) {
-        if (name == 'b') {
-            grid.assign(new Bishop(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'B') {
-            grid.assign(new Bishop(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == 'k') {
-            grid.assign(new King(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'K') {
-            grid.assign(new King(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == 'p') {
-            grid.assign(new Pawn(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'P') {
-            grid.assign(new Pawn(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == 'q') {
-            grid.assign(new Queen(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'Q') {
-            grid.assign(new Queen(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == 'r') {
-            grid.assign(new Rook(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'R') {
-            grid.assign(new Rook(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == 'n') {
-            grid.assign(new Knight(Color.WHITE, piecePosition), piecePosition);
-        }
-        if (name == 'N') {
-            grid.assign(new Knight(Color.BLACK, piecePosition), piecePosition);
-        }
-        if (name == '.') {
-            grid.assign(new Empty(piecePosition), piecePosition);
-        }
     }
 }
