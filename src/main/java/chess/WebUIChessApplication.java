@@ -1,20 +1,22 @@
 package chess;
 
+import chess.dao.BoardDAO;
+import chess.domain.Board;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         port(8084);
         final Gson GSON = new Gson();
         ChessService chessService = new ChessService();
-
         JsonTransformer jsonTransformer = new JsonTransformer();
         staticFiles.location("/public");
         chessService.initChessGame();
