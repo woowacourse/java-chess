@@ -75,4 +75,5 @@
     - piece : VARCHAR(6) NOT NULL,     
     - position : VARCHAR(2) NOT NULL,     
     - is_first_move : boolean NOT NULL 
+    - primary key (position)
         
