@@ -1,6 +1,7 @@
 package chess.dto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessGameDto {
 
@@ -18,5 +19,11 @@ public class ChessGameDto {
 
     public String getState() {
         return state;
+    }
+
+    public List<String> getPieces() {
+        return squareDtos.stream()
+            .map(SquareDto::getPiece)
+            .collect(Collectors.toList());
     }
 }

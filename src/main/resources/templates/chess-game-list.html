@@ -11,8 +11,14 @@
 <main>
 
   <div class="chess-game-room-list">
-    <h2 align="center">9ame list</h2>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a id="createGame" href="javascript:void(0)" class="btn btn-sm animated-button victoria-one create-game">새로운 게임 생성</a>
+    </div>
+    <br>
     <hr/>
+    <h2 align="center">게임 목록</h2>
+
     <div class="game-ids" align="center">
       {{#gameNames}}
       <a align="center" href="javascript:void(0)" id="{{.}}" class="btn btn-sm animated-button victoria-one game-list">{{.}}</a>
@@ -20,9 +26,6 @@
     </div>
     <br>
     <hr/>
-    <div class="col-md-3 col-sm-3 col-xs-6">
-      <a id="createGame" href="javascript:void(0)" class="btn btn-sm animated-button victoria-one create-game">new chess-9ame</a>
-    </div>
   </div>
 </main>
 <script type="module" src="js/chess-game-list.js"></script>

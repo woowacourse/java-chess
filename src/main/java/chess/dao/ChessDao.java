@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.StartRequestDto;
+import chess.dto.PlayerIdsDto;
 import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
 import java.sql.Connection;
@@ -74,20 +74,29 @@ public class ChessDao {
         pstmt.executeUpdate();
     }
 
-    public void insertStartCommand(final StartRequestDto startRequestDto) throws SQLException {
+    public void insertStartCommand(final String gameName) throws SQLException {
         String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, findGameIdByName(startRequestDto.getGameName()));
+        pstmt.setString(1, findGameIdByName(gameName));
         pstmt.setString(2, "start");
         pstmt.executeUpdate();
     }
 
-    public void updatePlayerIds(final StartRequestDto startRequestDto) throws SQLException {
+    public void insertMoveCommand(final String source, final String target, final String gameName)
+        throws SQLException {
+        String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, findGameIdByName(gameName));
+        pstmt.setString(2, String.format("move %s %s", source, target));
+        pstmt.executeUpdate();
+    }
+
+    public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName) throws SQLException {
         String query = "UPDATE game SET white_user=?, black_user=? WHERE game_id=?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, startRequestDto.getWhiteUser());
-        pstmt.setString(2, startRequestDto.getBlackUser());
-        pstmt.setString(3, findGameIdByName(startRequestDto.getGameName()));
+        pstmt.setString(1, playerIdsDto.getWhiteUserId());
+        pstmt.setString(2, playerIdsDto.getBlackUserId());
+        pstmt.setString(3, findGameIdByName(gameName));
         pstmt.executeUpdate();
     }
 
@@ -107,7 +116,7 @@ public class ChessDao {
     public CommandsDto findCommandsByName(final String gameName) throws SQLException {
         String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameName);
+        pstmt.setString(1, findGameIdByName(gameName));
         ResultSet rs = pstmt.executeQuery();
 
         List<String> commands = new ArrayList<>();

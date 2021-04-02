@@ -6,16 +6,18 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.WebUIChessGameController;
 import chess.dao.ChessDao;
+import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 import chess.dto.ChessGameDto;
 import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
-import chess.dto.StartRequestDto;
-import chess.dto2.MovableRequestDto;
-import chess.dto2.MoveRequestDto;
+import chess.dto.PlayerIdsDto;
+import chess.dto.MovableRequestDto;
+import chess.dto.MoveRequestDto;
 import chess.utils.DtoAssembler;
 import com.google.gson.Gson;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -45,34 +47,55 @@ public class WebUIChessApplication {
             String gameName = req.params(":name");
             CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
             ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-
+            ChessGameDto chessGameDto = DtoAssembler.chessGameDto(chessGame);
             Map<String, Object> model = new HashMap<>();
             model.put("gameName", req.params(":name"));
-            model.put("gameState", chessGame.state());
+            model.put("state", chessGameDto.getState());
+            model.put("squares", chessGameDto.getPieces());
 
             return render(model, "chess-game.html");
         });
 
-        post("/start", (req, res) -> {
-            StartRequestDto startRequestDto = gson.fromJson(req.body(), StartRequestDto.class);
-            chessDao.insertStartCommand(startRequestDto);
-            chessDao.updatePlayerIds(startRequestDto);
-            CommandsDto commandsDto = chessDao.findCommandsByName(startRequestDto.getGameName());
+        post("/:name/load", (req, res) -> {
+            String gameName = req.params(":name");
+            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
             ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
             return DtoAssembler.chessGameDto(chessGame);
         }, gson::toJson);
 
-        post("/movable", (req, res) -> {
-            MovableRequestDto movableRequestDto = gson
-                .fromJson(req.body(), MovableRequestDto.class);
-            return webUIChessGameController.movablePath(movableRequestDto);
+        post("/:name/start", (req, res) -> {
+            String gameName = req.params(":name");
+            PlayerIdsDto playerIdsDto = gson.fromJson(req.body(), PlayerIdsDto.class);
+            chessDao.insertStartCommand(gameName);
+            chessDao.updatePlayerIds(playerIdsDto, gameName);
+            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
+            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
+            return DtoAssembler.chessGameDto(chessGame);
         }, gson::toJson);
 
-        post("/move", (req, res) -> {
-            MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
-            ChessGameDto chessGameDto = webUIChessGameController.move(moveRequestDto);
-            chessDao.updateBoard(chessGameDto);
-            return chessGameDto;
+        post("/:name/movable", (req, res) -> {
+            String gameName = req.params(":name");
+            MovableRequestDto movableDto = gson.fromJson(req.body(), MovableRequestDto.class);
+            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
+            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
+            List<Position> positions = chessGame.movablePath(movableDto.position());
+            return DtoAssembler.movableResponse(positions);
+        }, gson::toJson);
+
+        post("/:name/move", (req, res) -> {
+            String gameName = req.params(":name");
+            MoveRequestDto moveDto = gson.fromJson(req.body(), MoveRequestDto.class);
+            chessDao.insertMoveCommand(moveDto.getSource(), moveDto.getTarget(), gameName);
+            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
+            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
+            return DtoAssembler.chessGameDto(chessGame);
+        }, gson::toJson);
+
+        post("/:name/score", (req, res) -> {
+            String gameName = req.params(":name");
+            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
+            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
+            return DtoAssembler.scoreDto(chessGame.score());
         }, gson::toJson);
     }
 

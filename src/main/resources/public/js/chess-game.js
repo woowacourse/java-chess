@@ -1,14 +1,28 @@
-const $initBoard = document.querySelector("#initStart");
-$initBoard.addEventListener("click", onInitStart);
+const gameName = document.querySelector("#game-name").innerText;
+
+window.addEventListener('load', onloaded);
+
+async function onloaded() {
+
+    const response = await fetch(gameName + "/load", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+    });
+    boardAndInfo(await response.json());
+
+}
+
+const $startGame = document.querySelector("#start-game");
+$startGame.addEventListener("click", onStartGame);
 
 const $board = document.querySelector(".board");
 $board.addEventListener("click", onMovePiece);
 
-async function onInitStart(event) {
+async function onStartGame(event) {
     const whiteUserId = document.querySelector("#white-user-id").value;
     const blackUserId = document.querySelector("#black-user-id").value;
 
-    const response = await fetch("./init", {
+    const response = await fetch(gameName + "/start", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -20,37 +34,56 @@ async function onInitStart(event) {
     boardAndInfo(await response.json());
 }
 
-function state(chessGame) {
-    let message1 = "";
-    let message2 = "";
-    let score = "";
-
-    if (chessGame.state.includes("WhiteTurn")) {
-        message1 = "백색 차례 입니다.";
-    }
-    if (chessGame.state.includes("BlackTurn")) {
-        message1 = "흑색 차례 입니다.";
-    }
-    if (chessGame.state.includes("WhiteWin")) {
-        message1 = "🎉 백색의 승리입니다! 🎉";
-        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
-        score = "백색 " + chessGame.score.white + "점  /  ";
-        score += "흑색 " + chessGame.score.black + "점";
-
-    }
-    if (chessGame.state.includes("BlackWin")) {
-        message1 = "🎉 흑색의 승리입니다! 🎉";
-        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
-        score = "백색 " + chessGame.score.white + "점  /  ";
-        score += "흑색 " + chessGame.score.black + "점";
-    }
+async function state(chessGame) {
+    const whiteUserId = document.querySelector("#white-user-id");
+    const blackUserId = document.querySelector("#black-user-id");
+    const startGameBlock = document.querySelector("#start-game-block");
 
     const messageTag1 = document.querySelector(".current-chess-game-message1");
     const messageTag2 = document.querySelector(".current-chess-game-message2");
     const scoreTag = document.querySelector(".current-chess-game-score");
-    messageTag1.innerText = message1;
+
+    messageTag1.innerText = chessGame.state;
+    let message2 = "";
+    let scoreMessage = "";
+
+    if (messageTag1.innerText === "게임 시작 전") {
+        message2 = "새로운 게임 진행을 원하면 시작 버튼을 눌러주세요.";
+    }
+
+    if (messageTag1.innerText === "백색 차례" || messageTag1.innerText === "흑색 차례") {
+        startGameBlock.style.display = "none";
+        whiteUserId.disabled = true;
+        blackUserId.disabled = true;
+    }
+
+    if (messageTag1.innerText === "백색 승리") {
+        messageTag1.innerText = "🎉 백색의 승리입니다! 🎉";
+    }
+
+    if (messageTag1.innerText === "흑색 승리") {
+        messageTag1.innerText = "🎉 흑색의 승리입니다! 🎉";
+    }
+
+    if (messageTag1.innerText.includes(" 승리")) {
+        message2 = "새로운 게임 진행을 원하면 시작버튼을 눌러주세요."
+
+        const response = await fetch(gameName + "/score", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const score = await response.json();
+
+        scoreMessage = "백색 " + score.white + "점  /  ";
+        scoreMessage += "흑색 " + score.black + "점";
+        startGameBlock.style.display = "none";
+        whiteUserId.disabled = true;
+        blackUserId.disabled = true;
+    }
+
     messageTag2.innerText = message2;
-    scoreTag.innerText = score;
+    scoreTag.innerText = scoreMessage;
 }
 
 function boardAndInfo(chessGame) {
@@ -102,7 +135,7 @@ async function onMovePiece(event) {
 
         position.classList.add("selected");
 
-        const response = await fetch("./movable", {
+        const response = await fetch(gameName + "/movable", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"id": position.id})
@@ -121,7 +154,7 @@ async function onMovePiece(event) {
         const sourcePosition = $board.querySelector(".selected");
         const targetPosition = event.target.parentElement;
 
-        const response = await fetch("./move", {
+        const response = await fetch(gameName + "/move", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -141,7 +174,7 @@ async function onMovePiece(event) {
         const sourcePosition = $board.querySelector(".selected");
         const targetPosition = event.target;
 
-        const response = await fetch("./move", {
+        const response = await fetch(gameName + "/move", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

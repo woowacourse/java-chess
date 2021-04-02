@@ -7,11 +7,11 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.domain.piece.Piece;
 import chess.dto.ChessGameDto;
+import chess.dto.ScoreDto;
 import chess.dto.SquareDto;
-import chess.dto2.MovableResponseDto;
-import chess.dto2.PositionDto;
-import chess.dto2.RankDto;
-import chess.dto2.ScoreDto;
+import chess.dto.MovableResponseDto;
+import chess.dto.PositionDto;
+import chess.dto.RankDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,5 +57,9 @@ public class DtoAssembler {
                 .map(PositionDto::new)
                 .collect(Collectors.toList())
         );
+    }
+
+    public static ScoreDto scoreDto(final Score score) {
+        return new ScoreDto(score.white(), score.black());
     }
 }
