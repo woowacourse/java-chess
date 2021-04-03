@@ -10,9 +10,8 @@ public class ChessGameDto {
     private List<PieceDto> pieceDtos;
     private String state;
 
-    public ChessGameDto(final boolean isFinished) {
+    private ChessGameDto(final boolean isFinished) {
         this.isFinished = isFinished;
-        pieceDtos = null;
     }
 
     public ChessGameDto(final ChessGame chessGame) {
@@ -21,7 +20,10 @@ public class ChessGameDto {
                 .map(PieceDto::new)
                 .collect(Collectors.toList());
         state = chessGame.getState().getValue();
+    }
 
+    public static ChessGameDto createFinishedDto() {
+        return new ChessGameDto(true);
     }
 
     public String getState() {
