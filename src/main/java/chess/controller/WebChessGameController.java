@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Team;
+import chess.dto.PiecesDTO;
 import chess.dto.StatusDTO;
 import chess.dto.UsersDTO;
 import chess.service.LogService;
@@ -79,7 +81,7 @@ public class WebChessGameController {
             String roomId = req.queryParams("room-id");
             logService.initializeByRoomId(roomId);
             UsersDTO users = userService.usersParticipatedInGame(roomId);
-            roomService.gameInformation(chessGame, model, roomId, users);
+            gameInformation(chessGame, model, roomId, users);
             return render(model, "chess.html");
         });
     }
@@ -92,9 +94,21 @@ public class WebChessGameController {
             List<String[]> logs = logService.logByRoomId(roomId);
             logService.executeLog(logs, chessGame);
             UsersDTO users = userService.usersParticipatedInGame(roomId);
-            roomService.gameInformation(chessGame, model, roomId, users);
+            gameInformation(chessGame, model, roomId, users);
             return render(model, "chess.html");
         });
+    }
+
+    private void gameInformation(final ChessGame chessGame, final Map<String, Object> model,
+                                 final String roomId, final UsersDTO users) {
+        PiecesDTO piecesDTOs = PiecesDTO.create(chessGame.board());
+        model.put("pieces", piecesDTOs.toList());
+        model.put("button", "초기화");
+        model.put("isWhite", Team.WHITE.equals(chessGame.turn()));
+        model.put("black-score", chessGame.scoreByTeam(Team.BLACK));
+        model.put("white-score", chessGame.scoreByTeam(Team.WHITE));
+        model.put("number", roomId);
+        model.put("users", users);
     }
 
     private void checkCurrentTurn(final ChessGame chessGame) {
