@@ -24,33 +24,26 @@ public class WebUIChessController {
     private final RoomDAO roomDAO = new RoomDAO();
     private ChessGame chessGame;
 
-    public Map<String, Object> chessBoard(String roomId) {
+    public Response createRoom(String roomId) {
         try {
-            Room room = roomDAO.findByRoomId(roomId);
-            validateDuplicateRoomId(room);
-            if (chessGame == null) {
-                initializeChessBoard();
-            }
-            return getRoomToRender(chessGame);
+            roomDAO.validateRoomExistence(roomId);
+            initializeChessBoard();
+            return new Response(chessGame, roomId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            Response response = new Response(409);
+            response.add("alert", "는 이미 존재하는 방입니다.");
+            return response;
         }
     }
 
-    public void validateDuplicateRoomId(Room room) {
-        if (room != null) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public Map<String, Object> movePiece(List<String> input) {
+    public Response movePiece(List<String> input) {
         try {
             chessGame.play(input);
-            return getRoomToRender(chessGame);
+            return new Response(chessGame);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            return new Response(400);
         }
     }
 
@@ -60,15 +53,14 @@ public class WebUIChessController {
         chessGame.start(Collections.singletonList("start"));
     }
 
-    public boolean saveRoom(String request) {
+    public Response saveRoom(String request) {
         try {
             Room room = createRoomToSave(request);
             roomDAO.addRoom(room);
-            return true;
+            return new Response(200);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
-            return false;
+            return new Response(500);
         }
     }
 
@@ -80,24 +72,16 @@ public class WebUIChessController {
         return new Room(id, turn, state);
     }
 
-    public Map<String, Object> loadRoom(String request) {
+    public Response loadRoom(String request) {
         try {
             JsonObject roomJson = gson.fromJson(request, JsonObject.class);
-            String id = roomJson.get("room_id").getAsString();
-            Room room = roomDAO.findByRoomId(id);
-            validateRoomExistence(room);
+            String roomId = roomJson.get("room_id").getAsString();
+            Room room = roomDAO.findByRoomId(roomId);
             setChessGame(room);
-            return getRoomToRender(chessGame);
+            return new Response(chessGame, roomId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private void validateRoomExistence(Room room) {
-        if (room == null) {
-            throw new IllegalArgumentException();
+            return new Response(400);
         }
     }
 
@@ -121,39 +105,20 @@ public class WebUIChessController {
         return pieceType.createPiece(Position.of(key), Color.convert(color));
     }
 
-    private Map<String, Object> getRoomToRender(ChessGame chessGame) {
-        Map<String, Object> model = new HashMap<>();
-        Map<Position, Piece> chessBoard = chessGame.getChessBoardAsMap();
-        Color turn = chessGame.getTurn();
-
-        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
-            model.put(entry.getKey().getPosition(), entry.getValue());
-        }
-        model.put("turn", turn);
-
-        if (chessGame.isOngoing()) {
-            model.put("result", null);
-            return model;
-        }
-        Result result = chessGame.result();
-        model.put("result", result);
-        initializeChessBoard();
-        return model;
-    }
-
-    public Map<String, Object> getSavedRooms() {
+    public Response getSavedRooms() {
         try {
             Map<String, Object> model = new HashMap<>();
             model.put("rooms", roomDAO.getAllRoom());
-            return model;
+            Response response = new Response();
+            response.add("rooms", roomDAO.getAllRoom());
+            return response;
         } catch (Exception e) {
-            return null;
+            return new Response();
         }
     }
 
-    public void resetChessGame() {
-        if (chessGame != null) {
-            chessGame = null;
-        }
+    public Response resetGameState() {
+        initializeChessBoard();
+        return new Response();
     }
 }

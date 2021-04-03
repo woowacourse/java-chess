@@ -1,5 +1,6 @@
 package chess;
 
+import chess.controller.Response;
 import chess.controller.WebUIChessController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,53 +21,47 @@ public class WebUIChessApplication {
         WebUIChessController webUIChessController = new WebUIChessController();
 
         get("/", (req, res) -> {
-            webUIChessController.resetChessGame();
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            Response response = webUIChessController.resetGameState();
+            return render(response.getModel(), "index.html");
         });
 
         post("/game", (req, res) -> {
             String roomId = req.queryParams("room_id");
-            Map<String, Object> model = webUIChessController.chessBoard(roomId);
-            if (model == null) {
-                Map<String, Object> modelWithAlert = new HashMap<>();
-                modelWithAlert.put("room_id", roomId);
-                modelWithAlert.put("alert", "는 이미 존재하는 방입니다.");
-                return render(modelWithAlert, "index.html");
+            Response response = webUIChessController.createRoom(roomId);
+            if (response.isNotSuccessful()) {
+                res.status(response.getHttpStatus());
             }
-            model.put("room_id", roomId);
-            return render(model, "game.html");
+            return render(response.getModel(), "game.html");
         });
 
         post("/game/move", (req, res) -> {
             List<String> moveCommand = getMoveCommand(req);
-            Map<String, Object> model = webUIChessController.movePiece(moveCommand);
-            if (model == null) {
-                res.status(400);
-                return null;
+            Response response = webUIChessController.movePiece(moveCommand);
+            if (response.isNotSuccessful()) {
+                res.status(response.getHttpStatus());
             }
-            return render(model, "game.html");
+            return render(response.getModel(), "game.html");
         });
 
         get("/save", (req, res) -> {
-            Map<String, Object> model = webUIChessController.getSavedRooms();
-            return render(model, "repository.html");
+            Response response = webUIChessController.getSavedRooms();
+            return render(response.getModel(), "repository.html");
         });
 
         post("/game/load", "application/json", (req, res) -> {
-            Map<String, Object> model = webUIChessController.loadRoom(req.body());
-            if (model == null) {
-                res.status(400);
+            Response response = webUIChessController.loadRoom(req.body());
+            if (response.isNotSuccessful()) {
+                res.status(response.getHttpStatus());
             }
-            return render(model, "game.html");
+            return render(response.getModel(), "game.html");
         });
 
         post("/game/save", "application/json", (req, res) -> {
-            boolean isRegistrationSuccessful = webUIChessController.saveRoom(req.body());
-            if (!isRegistrationSuccessful) {
-                res.status(500);
+            Response response = webUIChessController.saveRoom(req.body());
+            if (response.isNotSuccessful()) {
+                res.status(response.getHttpStatus());
             }
-            return isRegistrationSuccessful;
+            return !response.isNotSuccessful();
         });
     }
 

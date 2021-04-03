@@ -82,6 +82,9 @@ public class ChessGame {
 	}
 
 	public Result result() {
+		if (isOngoing()) {
+			return null;
+		}
 		double blackScore = chessBoard.getScore(Color.BLACK);
 		double whiteScore = chessBoard.getScore(Color.WHITE);
 

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomDAO {
     private final Gson gson = new Gson();
@@ -63,7 +64,26 @@ public class RoomDAO {
         pstmt.setString(1, roomId);
         ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) return null;
+        return Optional.ofNullable(getRoom(rs))
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public void validateRoomExistence(String roomId) throws SQLException {
+        String query = "SELECT * FROM room WHERE room_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, roomId);
+        ResultSet rs = pstmt.executeQuery();
+
+        Optional.ofNullable(getRoom(rs))
+                .ifPresent(room -> {
+                    throw new IllegalArgumentException();
+                });
+    }
+
+    private Room getRoom(ResultSet rs) throws SQLException {
+        if (!rs.next()) {
+            return null;
+        }
 
         return new Room(
                 rs.getString("room_id"),
