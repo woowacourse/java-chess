@@ -39,4 +39,9 @@ public enum Column {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(name);
+    }
 }

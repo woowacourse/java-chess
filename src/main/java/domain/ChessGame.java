@@ -10,7 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
-    private State state = new Wait(new HashMap<>());
+    private State state;
+
+    public ChessGame() {
+        state = new Wait(new HashMap<>());
+    }
 
     public void start(Map<Position, Piece> pieces) {
         state = state.run(pieces);
@@ -22,7 +26,6 @@ public class ChessGame {
 
     public Map<Boolean, Score> piecesScore() {
         return state.pieceScore();
-
     }
 
     public Board getBoard() {
@@ -35,5 +38,9 @@ public class ChessGame {
 
     public boolean isRunning() {
         return state.isRunning();
+    }
+
+    public boolean getTurn() {
+        return state.getTurn();
     }
 }

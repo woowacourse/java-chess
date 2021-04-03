@@ -54,6 +54,11 @@ public class Position {
     }
 
     @Override
+    public String toString() {
+        return column.toString() + row.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

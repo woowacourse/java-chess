@@ -32,4 +32,9 @@ public abstract class Started implements State {
     public Board getBoard() {
         return board;
     }
+
+    @Override
+    public boolean getTurn() {
+        return turn;
+    }
 }

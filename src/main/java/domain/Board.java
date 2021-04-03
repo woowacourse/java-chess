@@ -20,6 +20,9 @@ import static domain.piece.Color.WHITE;
 public class Board {
     private Map<Position, Piece> board;
 
+    public Board() {
+    }
+
     public Board(Map<Position, Piece> pieces) {
         board = new HashMap<>(pieces);
     }

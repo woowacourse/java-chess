@@ -20,4 +20,6 @@ public interface State {
     Map<Boolean, Score> pieceScore();
 
     Board getBoard();
+
+    boolean getTurn();
 }
