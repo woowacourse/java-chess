@@ -22,9 +22,10 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    private static Board board;
+    private static ChessGame chessGame;
+
     public static void main(String[] args) {
-        Board board = new Board(PieceFactory.createPieces());
-        ChessGame chessGame = new ChessGame(board);
 
         Gson gson = new Gson();
 
@@ -35,8 +36,11 @@ public class WebUIChessApplication {
         });
 
         post("/start", (req, res) -> {
+            board = new Board(PieceFactory.createPieces());
+            chessGame = new ChessGame(board);
+
             if(!chessGame.isReady()){
-                return gson.toJson(new ChessBoardDto("false", new PiecesDto(board.getPieces()), "이미 게임이 실행되었습니다."));
+                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 실행되었습니다."));
            }
             chessGame.start();
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(board.getPieces()), ""));
@@ -54,6 +58,16 @@ public class WebUIChessApplication {
             }
 
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()),""));
+        });
+
+        post("/end", (req, res) -> {
+           if(chessGame.isFinished()){
+               return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 종료되었습니다."));
+           }
+           chessGame.end();
+           String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
+           return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result));
+
         });
 
     }

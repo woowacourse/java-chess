@@ -13,6 +13,7 @@ function gameStart() {
                 alert(data.message);
                 return;
             }
+
             getPieces(data.piecesDto);
     });
 }
@@ -59,4 +60,21 @@ function select(event) {
             document.getElementById(source).innerHTML = "";
             getPieces(data.piecesDto);
         });
+}
+
+document.getElementById("end-btn").addEventListener("click", endGame);
+
+function endGame() {
+    axios({
+        method: 'post',
+        url: '/end'
+    }).then((res) => {
+        const data = res.data;
+        if(data.isOk === "false"){
+            alert(data.message);
+            return;
+        }
+        alert(data.message);
+        location.reload();
+    })
 }
