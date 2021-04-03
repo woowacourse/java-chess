@@ -35,15 +35,6 @@ public enum PieceSymbolMapper {
         this.uniCode = uniCode;
     }
 
-    private static String parse(final Owner owner, final Symbol symbol) {
-        return Arrays.stream(values())
-                .filter(value -> value.owner.equals(owner))
-                .filter(value -> value.symbol.equals(symbol))
-                .map(uniCodeMapper -> uniCodeMapper.uniCode)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("심볼, 색상 매칭 오류"));
-    }
-
     public static String[][] parseBoardAsUnicode(final Board board) {
         final String[][] uniCodeBoard = new String[8][8];
         for (final Vertical v : Vertical.values()) {
@@ -54,5 +45,14 @@ public enum PieceSymbolMapper {
             }
         }
         return uniCodeBoard;
+    }
+
+    private static String parse(final Owner owner, final Symbol symbol) {
+        return Arrays.stream(values())
+                .filter(value -> value.owner.equals(owner))
+                .filter(value -> value.symbol.equals(symbol))
+                .map(uniCodeMapper -> uniCodeMapper.uniCode)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("심볼, 색상 매칭 오류"));
     }
 }

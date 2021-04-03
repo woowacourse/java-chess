@@ -2,17 +2,14 @@ package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.ScoreDto;
-import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
+import chess.domain.piece.Owner;
+import chess.service.ChessGame;
 import chess.service.PieceSymbolMapper;
 import chess.service.RequestHandler;
 import chess.view.web.OutputView;
-import org.json.JSONObject;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -25,7 +22,6 @@ public class WebController {
     }
 
     public void mapping() {
-
         init();
         show();
         move();
@@ -40,11 +36,10 @@ public class WebController {
 
     private void show() {
         post("/show", (req, res) -> {
-            final JSONObject jsonData = new JSONObject(req.body());
-            final Position source = new Position(jsonData.getString("position"));
+            final Map<String, String> request = RequestHandler.parse(req.body());
             try {
-                chessGame.validateTurn(source);
-                return reachablePositions(source);
+                chessGame.validateTurn(request);
+                return chessGame.reachablePositions(request);
             } catch (Exception e) {
                 return Collections.EMPTY_LIST;
             }
@@ -53,14 +48,7 @@ public class WebController {
 
     private void move() {
         post("/move", (req, res) -> {
-            final Map<String, String> reqPosition = RequestHandler.parseRequestQuery(req.body());
-
-            final Position source = new Position(reqPosition.get("source"));
-            final Position target = new Position(reqPosition.get("target"));
-
-            chessGame.validateTurn(source);
-            chessGame.move(source, target);
-            chessGame.changeTurn();
+            chessGame.move(RequestHandler.parse(req.body()));
 
             if (chessGame.isGameEnd()) {
                 return OutputView.printResult(chessGame.winner());
@@ -72,19 +60,13 @@ public class WebController {
 
     private String printGame() {
         final ScoreDto whiteScoreDto = new ScoreDto();
-        whiteScoreDto.setScore(chessGame.getWhiteScore());
-
         final ScoreDto blackScoreDto = new ScoreDto();
-        blackScoreDto.setScore(chessGame.getBlackScore());
-
         final BoardDto boardDto = new BoardDto();
-        boardDto.setBoard(PieceSymbolMapper.parseBoardAsUnicode(chessGame.board()));
-        return OutputView.printGame(boardDto, whiteScoreDto, blackScoreDto);
-    }
 
-    private List<String> reachablePositions(Position source) {
-        return chessGame.reachablePositions(source).stream()
-                .map(position -> position.parseAsString())
-                .collect(Collectors.toList());
+        whiteScoreDto.setScore(chessGame.score(Owner.WHITE));
+        blackScoreDto.setScore(chessGame.score(Owner.BLACK));
+        boardDto.setBoard(chessGame.unicodeBoard());
+
+        return OutputView.printGame(boardDto, whiteScoreDto, blackScoreDto);
     }
 }

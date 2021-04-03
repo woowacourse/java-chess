@@ -1,4 +1,4 @@
-package chess.domain.manager;
+package chess.service;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
@@ -10,7 +10,9 @@ import chess.domain.player.Turn;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class ChessGame {
     private final Players players;
@@ -34,17 +36,25 @@ public class ChessGame {
     }
 
     public void move(final Position source, final Position target) {
+        validateTurn(source);
         board.movePiece(source, target);
         players.move(source, target);
-        checkGameEnd();
+        isGameEnd = players.anyKingDead(board);
+        changeTurn();
+    }
+
+    public void move(final Map<String, String> request) {
+        final Position source = new Position(request.get("source"));
+        final Position target = new Position(request.get("target"));
+        move(source, target);
     }
 
     public void validateTurn(final Position source) {
         turn.validate(players.ownerOf(source));
     }
 
-    private void checkGameEnd() {
-        isGameEnd = players.anyKingDead(board);
+    public void validateTurn(final Map<String, String> request) {
+        validateTurn(new Position(request.get("source")));
     }
 
     public void changeTurn() {
@@ -55,12 +65,19 @@ public class ChessGame {
         return players.scores(board);
     }
 
-    public List<Position> reachablePositions(final Position source) {
-        return board.reachablePositions(source);
+    public List<String> reachablePositions(final Map<String, String> request) {
+        final Position source = new Position(request.get("source"));
+        return board.reachablePositions(source).stream()
+                .map(position -> position.parseAsString())
+                .collect(Collectors.toList());
     }
 
     public Board board() {
         return board;
+    }
+
+    public String[][] unicodeBoard() {
+        return PieceSymbolMapper.parseBoardAsUnicode(board);
     }
 
     public void setGameEnd() {
@@ -71,15 +88,11 @@ public class ChessGame {
         return isGameEnd;
     }
 
-    public double getWhiteScore() {
-        return scores().getValueOf(Owner.WHITE);
-    }
-
-    public double getBlackScore() {
-        return scores().getValueOf(Owner.BLACK);
-    }
-
     public Queue<Owner> winner() {
         return new LinkedList<>(scores().winner());
+    }
+
+    public double score(final Owner owner) {
+        return scores().getValueOf(owner);
     }
 }

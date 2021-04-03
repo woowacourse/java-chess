@@ -1,5 +1,6 @@
 package chess.domain.manager;
 
+import chess.service.ChessGame;
 import chess.domain.board.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -13,7 +13,7 @@ public class RequestHandler {
 
     }
 
-    public static Map<String, String> parseRequestQuery(final String requestQuery) {
+    public static Map<String, String> parse(final String requestQuery) {
         final Map<String, String> queryTable = new HashMap<>();
 
         for (final String parameter : requestQuery.split(SEPARATOR_OF_PARAMETERS)) {

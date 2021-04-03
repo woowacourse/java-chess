@@ -1,7 +1,7 @@
 package chess.controller.console.command;
 
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
+import chess.service.ChessGame;
 import chess.view.console.OutputView;
 
 public class Show extends Command {
@@ -38,9 +38,6 @@ public class Show extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-//        final List<Position> reachablePositions = chessManager.getReachablePositions(super.source());
-//        OutputView.printReachableBoard(chessManager.board(), reachablePositions);
-
         OutputView.printBoard(chessGame.board());
     }
 

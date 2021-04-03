@@ -85,15 +85,12 @@ function checkIsEnd(){
 }
 
 function show(target) {
-    const position = new Object();
-    position.position = target.id;
-    const jsonData = JSON.stringify(position);
+    const requestQuery = "source="+target.id;
 
     $.ajax({
         url: "/show",
         type: "POST",
-        data: jsonData,
-        contentType: "application/json",
+        data: requestQuery,
         success: function (result) {
             if (result !== null && result !== "[]") {
                 const positions = result.slice(1, -1).split(", ");
