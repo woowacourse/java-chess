@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.domain.ChessGameManager;
-import chess.dto.ChessBoardDto;
 import chess.dto.CommonDto;
+import chess.dto.GameStatusDto;
 import com.google.gson.Gson;
 
 import static spark.Spark.get;
@@ -18,9 +18,9 @@ public class WebController {
     public void run() {
         get("/newgame", (req, res) -> {
             chessGameManager.start();
-            return gson.toJson(new CommonDto<ChessBoardDto>(200,
+            return gson.toJson(new CommonDto<GameStatusDto>(200,
                     "New game has been created successfully",
-                    ChessBoardDto.from(chessGameManager.getBoard())));
+                    GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor())));
         });
     }
 }

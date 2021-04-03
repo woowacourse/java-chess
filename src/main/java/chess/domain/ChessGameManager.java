@@ -119,4 +119,8 @@ public class ChessGameManager {
     public boolean isEnd() {
         return this.state instanceof GameEnd || this.state instanceof EndWithoutGame;
     }
+
+    public Color getCurrentTurnColor() {
+        return this.currentTurnColor;
+    }
 }

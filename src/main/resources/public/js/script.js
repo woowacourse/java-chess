@@ -1,5 +1,6 @@
 const BLOCK_SIZE_PIXEL = 80;
 
+const $controlPanel = document.getElementById('control-panel');
 const $startButton = document.getElementById('start-button');
 addEventOnStartButton();
 
@@ -9,6 +10,7 @@ async function addEventOnStartButton() {
             fetch('/newgame')
                 .then(res => res.json())
                 .then(res => updateBoard(res.item.chessBoard));
+            $startButton.style.display = 'none';
         } catch (error) {
             console.error(error.messages);
         }
