@@ -28,6 +28,8 @@ public class ChessWebController {
 
 
     public void run() {
+        staticFiles.location("/static");
+
         get("/", (request, response) -> {
             TilesDto tilesDto = chessService.emptyBoard();
             Map<String, Object> model = new HashMap<>();

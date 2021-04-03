@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.entity;
 
 public class User {
     private String name;

@@ -1,15 +1,18 @@
 package chess.service;
 
 import chess.domain.board.ChessBoardFactory;
+import chess.domain.dao.ChessDao;
 import chess.domain.player.ChessGame;
 import chess.domain.position.Position;
 import chess.service.dto.*;
 
 public class ChessService {
+    private final ChessDao chessDao;
     private ChessGame chessGame;
 
-    public ChessService(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public ChessService(final ChessDao chessDao) {
+        this.chessDao = chessDao;
+        this.chessGame = ChessGame.newGame();
     }
 
     public TilesDto emptyBoard() {
