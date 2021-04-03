@@ -1,17 +1,30 @@
-const start = document.querySelector("#start");
+const mainStart = document.querySelector("#main-start");
+const mainLoad = document.querySelector("#main-load");
 const basePath = 'http://localhost:4567';
 
-start.addEventListener("click", () => {
+mainStart.addEventListener("click", () => {
     let result = window.prompt("게임 이름을 입력해주세요");
-
     axios({
         method: 'post',
         url: basePath + '/games',
         data: {
             name: result
         }
-    }).then(
-    ).catch(error => console.log(error));
+    }).then(() => {
+            localStorage.setItem("name", result),
+                window.location = basePath + "/games"
+        }
+    ).catch(error => alert(error));
+});
 
-    window.location = basePath + "/games";
-})
+mainLoad.addEventListener("click", () => {
+    let result = window.prompt("찾으려는 게임 이름을 입력해주세요");
+    axios({
+        method: 'get',
+        url: basePath + '/games/' + result
+    }).then(() => {
+            localStorage.setItem("name", result),
+                window.location = basePath + "/games"
+        }
+    ).catch(error => alert(error));
+});

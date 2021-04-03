@@ -39,9 +39,16 @@ public class ChessService {
     }
 
     public PiecesStatusDto startChess(final ChessSaveRequestDto request) {
-        this.chessGame = ChessGame.newGame();
         Chess chess = new Chess(request.getName());
         chessDao.save(chess);
+
+        this.chessGame = ChessGame.newGame();
+        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
+    }
+
+    public PiecesStatusDto loadChess(String name) {
+        this.chessGame = ChessGame.newGame();
+        Chess chess = chessDao.findByName(name).orElseThrow(() -> new IllegalArgumentException("없는 게임 이름입니다"));
         return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
     }
 }

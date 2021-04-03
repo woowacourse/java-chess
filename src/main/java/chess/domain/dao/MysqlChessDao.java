@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class MysqlChessDao implements ChessDao {
     public MysqlChessDao() {
@@ -36,7 +37,7 @@ public class MysqlChessDao implements ChessDao {
     public void save(final Chess chess) {
         String query = "INSERT INTO chess VALUES (?, ?, ?, ?)";
 
-        if (!Objects.isNull(findByName(chess.getName()))) {
+        if (!findByName(chess.getName()).equals(Optional.empty())) {
             throw new IllegalStateException("이미 존재하는 방입니당");
         }
 
@@ -53,20 +54,20 @@ public class MysqlChessDao implements ChessDao {
             System.err.println("chess 저장 오류" + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public Chess findByName(final String name) {
+    public Optional<Chess> findByName(final String name) {
         String query = "SELECT * FROM chess WHERE name = ?";
         Connection connection = ConnectionUtil.getConnection();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
-                return null;
+                return Optional.empty();
             }
             Chess chess = new Chess(
                     resultSet.getString("chess_id"),
@@ -77,11 +78,11 @@ public class MysqlChessDao implements ChessDao {
 
             closeResources(connection, preparedStatement);
             resultSet.close();
-            return chess;
+            return Optional.ofNullable(chess);
         } catch (SQLException e) {
             System.err.println("chess 저장 오류" + e.getMessage());
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
     }
 

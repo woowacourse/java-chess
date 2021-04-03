@@ -20,7 +20,7 @@ class MysqlChessDaoTest {
 
         //when
         mysqlChessDao.save(chess);
-        Chess findByName = mysqlChessDao.findByName(name);
+        Chess findByName = mysqlChessDao.findByName(name).get();
 
         //then
         assertThat(findByName.getName()).isEqualTo(chess.getName());
@@ -55,7 +55,7 @@ class MysqlChessDaoTest {
         //when
         mysqlChessDao.save(chess);
         mysqlChessDao.deleteByName(name);
-        Chess findByName = mysqlChessDao.findByName(name);
+        Chess findByName = mysqlChessDao.findByName(name).get();
 
         //then
         assertThat(findByName).isEqualTo(null);
