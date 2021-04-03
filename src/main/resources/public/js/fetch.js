@@ -16,16 +16,16 @@ export async function showPath(from) {
   return await data.json();
 }
 
-export async function move(from, to){
+export async function move(from, to) {
   const data = await fetch("http://localhost:8080/board/move", {
     method: "POST",
-    body:JSON.stringify({from, to}),
+    body: JSON.stringify({from, to}),
     headers: {'Content-Type': 'application/json'}
   });
   return await data.json();
 }
 
-export async function getTurn(){
+export async function getTurn() {
   const response = await fetch("http://localhost:8080/board/turn");
   return await response.json();
 }
@@ -35,7 +35,12 @@ export async function getStatus() {
   return await response.json();
 }
 
-export async function restart(){
+export async function restart() {
   const response = await fetch("http://localhost:8080/board/restart");
+  return await response.json();
+}
+
+export async function loadBoard() {
+  const response = await fetch("http://localhost:8080/load");
   return await response.json();
 }

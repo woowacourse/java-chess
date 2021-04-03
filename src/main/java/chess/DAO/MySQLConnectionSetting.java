@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class MySQLConnectionSetting implements ConnectionSetting {
     private static final String server = "localhost:13306";
-    private static final String database = "chess";
+    private static final String database = "chessGame";
     private static final String option = "?useSSL=false&serverTimezone=UTC";
     private static final String userName = "root";
     private static final String password = "root";

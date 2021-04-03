@@ -139,6 +139,10 @@ h1 {
 
 }
 
+.hidden {
+  display: none;
+}
+
 .horizontal-button {
   width: 100%;
   display: flex;

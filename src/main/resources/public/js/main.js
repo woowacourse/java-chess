@@ -1,4 +1,12 @@
-import {getBoard, getScores, getTurn, getStatus, move, restart} from "./fetch.js"
+import {
+  getBoard,
+  getScores,
+  getStatus,
+  getTurn,
+  loadBoard,
+  move,
+  restart
+} from "./fetch.js"
 import {PIECES, SCORE_TEMPLATE} from "./constant.js";
 
 window.onload = function () {
@@ -30,7 +38,7 @@ window.onload = function () {
   }
 
   async function checkGameOver() {
-    if(await getStatus()){
+    if (await getStatus()) {
       await endGame();
     }
   }
@@ -134,18 +142,37 @@ window.onload = function () {
     });
   }
 
-  async function checkTurn(){
+  async function checkTurn() {
     return `${await getTurn()}`;
   }
 
   async function init() {
     const $start_bt = document.querySelector(".start");
+    const $load_bt = document.querySelector(".load");
+    document.querySelector(".quit").addEventListener("click", () => {
+      if(confirm("게임을 종료하시겠습니까?")){
+        window.close();
+      }
+    })
+
     $start_bt.addEventListener("click", async () => {
       $start_bt.classList.remove("start");
       $start_bt.innerHTML = "RESTART";
+      $load_bt.classList.add("hidden");
       setMessage(await checkTurn());
       const data = await getBoard();
       return setBoard(data);
+    });
+
+    $load_bt.addEventListener("click", async () => {
+      if (confirm("게임을 불러오겠습니까?")) {
+        $start_bt.classList.remove("start");
+        $start_bt.innerHTML = "RESTART";
+        $load_bt.classList.add("hidden");
+        const data = await loadBoard();
+        setMessage(await checkTurn());
+        return setBoard(data);
+      }
     });
   }
 
