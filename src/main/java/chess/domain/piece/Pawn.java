@@ -73,35 +73,45 @@ public final class Pawn extends AbstractPiece {
         int able_length) {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
-            int dx = direction.getXDegree();
-            int dy = direction.getYDegree();
-            if (!position.isAdd(dx, dy)) {
-                continue;
-            }
-            Position movablePosition = position.addedPosition(dx, dy);
-            Piece targetPiece = pieces.get(movablePosition);
-            if (isForward(direction)) {
-                if (!Objects.isNull(targetPiece)) {
-                    continue;
-                }
-                positions.add(movablePosition);
-                if (!isFirst() || !position.isAdd(dx * 2, dy * 2)) {
-                    continue;
-                }
-                Position twoForwardMovePosition = position.addedPosition(dx * 2, dy * 2);
-                targetPiece = pieces.get(twoForwardMovePosition);
-                if (!Objects.isNull(targetPiece)) {
-                    continue;
-                }
-                positions.add(twoForwardMovePosition);
-                continue;
-            }
-            if (Objects.isNull(targetPiece) || targetPiece.isSameColor(color)) {
-                continue;
-            }
-            positions.add(movablePosition);
+            addMovableDirectionPositions(pieces, positions, direction);
         }
 
         return positions;
+    }
+
+    private void addMovableDirectionPositions(Map<Position, Piece> pieces, List<Position> positions,
+        Direction direction) {
+        int dx = direction.getXDegree();
+        int dy = direction.getYDegree();
+        if (!position.isAdd(dx, dy)) {
+            return;
+        }
+        Position movablePosition = position.addedPosition(dx, dy);
+        Piece targetPiece = pieces.get(movablePosition);
+        if (isForward(direction)) {
+            addOneTwoForwardPosition(pieces, positions, dx, dy, movablePosition, targetPiece);
+            return;
+        }
+        if (Objects.isNull(targetPiece) || targetPiece.isSameColor(color)) {
+            return;
+        }
+        positions.add(movablePosition);
+    }
+
+    private void addOneTwoForwardPosition(Map<Position, Piece> pieces, List<Position> positions, int dx, int dy,
+        Position movablePosition, Piece targetPiece) {
+        if (!Objects.isNull(targetPiece)) {
+            return;
+        }
+        positions.add(movablePosition);
+        if (!isFirst() || !position.isAdd(dx * 2, dy * 2)) {
+            return;
+        }
+        Position twoForwardMovePosition = position.addedPosition(dx * 2, dy * 2);
+        targetPiece = pieces.get(twoForwardMovePosition);
+        if (!Objects.isNull(targetPiece)) {
+            return;
+        }
+        positions.add(twoForwardMovePosition);
     }
 }
