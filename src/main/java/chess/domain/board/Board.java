@@ -74,7 +74,8 @@ public final class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("킹이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("킹이 없습니다."))
+                ;
     }
 
     public int pawnCount(final Column column, final Color color) {

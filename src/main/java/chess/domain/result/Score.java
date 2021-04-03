@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Score {
 
-    public static final Score MAX = new Score(38);
     public static final Score MIN = new Score(0);
 
     private final double score;
@@ -37,9 +36,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    public String is() {
-        return String.valueOf(score);
     }
 }

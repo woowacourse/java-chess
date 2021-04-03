@@ -10,6 +10,7 @@ public class EmptyPiece implements Piece {
 
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece();
     private static final String NAME = ".";
+    private static final String TYPE = "empty";
 
     private EmptyPiece() {
     }
@@ -66,5 +67,15 @@ public class EmptyPiece implements Piece {
     @Override
     public Score score() {
         return Score.MIN;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
+    }
+
+    @Override
+    public String colorName() {
+        return "none";
     }
 }

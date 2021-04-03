@@ -14,10 +14,6 @@ public final class CommandAsString {
         this.commandInputs = commandInputs;
     }
 
-    public Command command() {
-        return Command.valueOf(commandInputs[0].toUpperCase());
-    }
-
     public Position source() {
         return positionOfCommand(1);
     }

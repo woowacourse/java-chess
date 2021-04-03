@@ -7,7 +7,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
 import chess.view.OutputView;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

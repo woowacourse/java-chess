@@ -8,6 +8,7 @@ public final class QueenStrategy implements PieceStrategy {
 
     private static final String NAME = "q";
     private static final double VALUE = 9;
+    private static final String TYPE = "queen";
 
     @Override
     public List<Direction> directions() {
@@ -37,5 +38,10 @@ public final class QueenStrategy implements PieceStrategy {
     @Override
     public double value() {
         return VALUE;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
     }
 }
