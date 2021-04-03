@@ -8,14 +8,30 @@ function gameStart() {
         url: '/start'
     })
         .then((res) => {
-            const data = res.data;
+            const data = res.data
             if(data.isOk === "false"){
                 alert(data.message);
                 return;
             }
             showTurn(data.turn);
             getPieces(data.piecesDto);
+            saveButton();
     });
+}
+
+function saveButton(){
+    const save = document.getElementById("connect");
+
+    const loading_btn = document.createElement("button");
+    loading_btn.setAttribute("class", "loading button");
+    loading_btn.innerHTML = "LOADING";
+
+    const save_btn = document.createElement("button");
+    save_btn.setAttribute("class", "save button");
+    save_btn.innerHTML = "SAVE";
+
+    save.appendChild(loading_btn);
+    save.appendChild(save_btn);
 }
 
 function showTurn(turn) {

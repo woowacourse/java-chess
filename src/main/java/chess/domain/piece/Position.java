@@ -1,9 +1,14 @@
 package chess.domain.piece;
 
 public class Position {
+    private static final String[] columnStr = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
     private final int row;
     private final int column;
+
+    public Position(String[] stringPosition) {
+        this(8-Integer.parseInt(stringPosition[1]), stringPosition[0].toCharArray()[0] - 'a');
+    }
 
     public Position(final int row, final int column) {
         this.row = row;
@@ -22,11 +27,9 @@ public class Position {
         return column;
     }
 
-    public static Position changePosition(String[] stringPosition) {
-        int columnNum = stringPosition[0].toCharArray()[0] - 'a';
-        int rawNum = 8-Integer.parseInt(stringPosition[1]);
-
-        return new Position(rawNum, columnNum);
+    @Override
+    public String toString() {
+        return columnStr[column-1] + row;
     }
 
     @Override

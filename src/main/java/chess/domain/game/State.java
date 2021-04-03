@@ -9,5 +9,8 @@ public interface State {
 
     void end();
 
+    void ready();
+
     boolean isFinished();
+
 }

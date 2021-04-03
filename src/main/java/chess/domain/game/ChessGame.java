@@ -1,11 +1,12 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
 public class ChessGame {
 
-    private final Board board;
+    private Board board;
     private State state;
 
     public ChessGame(final Board board) {
@@ -27,6 +28,11 @@ public class ChessGame {
 
     public void start() {
         state.start();
+    }
+
+    public void ready() {
+        board = new Board(PieceFactory.createPieces());
+        state = new Ready(this);
     }
 
     public boolean isReady(){

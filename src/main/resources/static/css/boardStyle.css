@@ -30,13 +30,19 @@
 }
 .game-status {
     position: fixed;
-    top: 300px;
+    top: 400px;
     right: 180px;
 }
 .buttons {
     position: fixed;
     top: 250px;
     right: 200px;
+}
+
+.connect {
+    position: fixed;
+    top: 350px;
+    right: 250px;
 }
 .button {
     background-color: blue;
@@ -56,3 +62,4 @@
     top: 150px;
     right: 260px;
 }
+

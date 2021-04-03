@@ -23,4 +23,13 @@ public class Ready extends Idle {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
     }
 
+    @Override
+    public void ready() {
+        throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }
