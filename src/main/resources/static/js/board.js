@@ -59,6 +59,10 @@ function select(event) {
             }
             document.getElementById(source).innerHTML = "";
             getPieces(data.piecesDto);
+            if(data.isOk === "end"){
+                alert(data.message);
+                location.reload();
+            }
         });
 }
 

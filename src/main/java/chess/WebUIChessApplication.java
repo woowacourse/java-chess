@@ -56,6 +56,9 @@ public class WebUIChessApplication {
             }catch(Exception e){
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이동할 수 없습니다."));
             }
+            if(chessGame.isFinished()){
+                return gson.toJson(new ChessBoardDto("end", new PiecesDto(chessGame.getBoard().getPieces()), "왕을 잡아 게임이 종료됩니다."));
+            }
 
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()),""));
         });
