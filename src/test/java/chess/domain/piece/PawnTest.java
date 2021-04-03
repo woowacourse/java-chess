@@ -91,6 +91,13 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("2칸 이동하는 위치에 기물이 있는 경우 예외 발생")
+    void moveTwoTargetPositionObstacleException() {
+        pieces.put(Position.of("b4"), new Pawn(Color.BLACK, Position.of("b4")));
+        assertThatThrownBy(() -> whitePawn.move(Position.of("b4"), pieces)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("1칸 대각선에 있는 상대방 기물 잡기 테스트")
     void moveDiagonal() {
         pieces.put(Position.of("c3"), new Pawn(Color.BLACK ,Position.of("c3")));

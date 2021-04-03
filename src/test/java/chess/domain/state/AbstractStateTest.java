@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.PlayGame;
 import chess.domain.board.Pieces;
@@ -60,6 +61,4 @@ class AbstractStateTest {
         state = PlayGame.killKingOfWhite(state);
         assertThat(state.winner()).isEqualTo(Color.BLACK);
     }
-
-
 }

@@ -142,4 +142,11 @@ class PiecesTest {
         assertThatThrownBy(() -> pieces.movePiece(Position.of("b2"), Position.of("a3"), whiteState))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("빈공간을 이동하려 할때 테스트")
+    void name() {
+        assertThatThrownBy(() -> pieces.movablePositions(Position.of("b3")))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }

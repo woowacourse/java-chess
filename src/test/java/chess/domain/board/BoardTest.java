@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -152,5 +154,33 @@ public class BoardTest {
         board.movePiece("a2", "a4");
 
         assertThat(pieces).isNotEqualTo(board.pieces());
+    }
+
+    @Test
+    @DisplayName("이동가능한 경로 테스트")
+    void movablePosition() {
+        List<Position> positions = board.movablePositions("b1");
+        List<Position> targetPositions = Arrays.asList(Position.of("a3"), Position.of("c3"));
+        assertThat(positions).hasSize(2);
+        for (Position position : targetPositions) {
+            assertThat(positions).contains(position);
+        }
+    }
+
+    @Test
+    @DisplayName("플레이어 이름이 정상적으로 입력되는지 테스트")
+    void Players() {
+        Board board = new Board("white", "black");
+        Players players = board.players();
+        assertThat(players.getBlackPlayer()).isEqualTo("black");
+        assertThat(players.getWhitePlayer()).isEqualTo("white");
+    }
+
+    @Test
+    @DisplayName("턴을 확인하는 테스트")
+    void turn() {
+        assertThat(board.turn()).isEqualTo(Color.WHITE);
+        board.movePiece("b2", "b3");
+        assertThat(board.turn()).isEqualTo(Color.BLACK);
     }
 }

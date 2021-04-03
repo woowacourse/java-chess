@@ -95,4 +95,10 @@ class BishopTest {
             assertThat(positions).contains(position);
         }
     }
+
+    @Test
+    @DisplayName("위치 반환 테스트")
+    void position() {
+        assertThat(bishop.position()).isEqualTo(Position.of("e5"));
+    }
 }

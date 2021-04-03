@@ -18,6 +18,13 @@ class PositionTest {
     }
 
     @Test
+    @DisplayName("생성유효 테스트")
+    void validate() {
+        assertThatThrownBy(() -> Position.of("a")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Position.of("h888")).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("이동범위가 1칸일때 이동이 가능한지 테스트")
     void canMoveOneTest() {
         Position position = Position.of("b3");
@@ -105,5 +112,12 @@ class PositionTest {
         assertThat(Position.of("a3").equals(Point.from(1))).isFalse();
 
         assertThat(Position.of("a2").hashCode()).isEqualTo(Position.of(1, 0).hashCode());
+    }
+
+    @Test
+    @DisplayName("포지션위치를 문자로 반환하는 테스트")
+    void name() {
+        assertThat(Position.of("a1").positionToString()).isEqualTo("a1");
+        assertThat(Position.of("h8").positionToString()).isEqualTo("h8");
     }
 }
