@@ -19,20 +19,7 @@ function gameStart() {
     });
 }
 
-function saveButton(){
-    const save = document.getElementById("connect");
 
-    const loading_btn = document.createElement("button");
-    loading_btn.setAttribute("class", "loading button");
-    loading_btn.innerHTML = "LOADING";
-
-    const save_btn = document.createElement("button");
-    save_btn.setAttribute("class", "save button");
-    save_btn.innerHTML = "SAVE";
-
-    save.appendChild(loading_btn);
-    save.appendChild(save_btn);
-}
 
 function showTurn(turn) {
     const turnName = document.getElementById("turn");
@@ -121,4 +108,46 @@ function status() {
         const h1 = document.getElementById("status");
         h1.innerHTML = data.message;
     })
+}
+
+function saveButton(){
+    const save = document.getElementById("connect");
+
+    const loading_btn = document.createElement("button");
+    loading_btn.addEventListener("click", loadPieces);
+    loading_btn.setAttribute("class", "loading button");
+    loading_btn.innerHTML = "LOAD";
+
+    const save_btn = document.createElement("button");
+    save_btn.addEventListener("click", savePieces);
+    save_btn.setAttribute("class", "save button");
+    save_btn.setAttribute("id", "save-btn")
+
+    save_btn.innerHTML = "SAVE";
+
+    save.appendChild(loading_btn);
+    save.appendChild(save_btn);
+}
+
+function savePieces() {
+    axios({
+        method: 'post',
+        url: '/save'
+    }).then((res) => {
+        const data = res.data;
+        if(data.isOk === 'false'){
+            alert(data.message);
+            return;
+        }
+        alert(data.message);
+    })
+}
+
+function loadPieces() {
+    axios({
+        method: 'post',
+        url: '/load'
+    }).then((res) => {
+
+    });
 }

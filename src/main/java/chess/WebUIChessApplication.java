@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.board.Board;
 
+import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.PiecesDto;
 import chess.domain.game.ChessGame;
@@ -86,6 +87,15 @@ public class WebUIChessApplication {
             }
             String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result, chessGame.getStatus()));
+        });
+
+        post("/save", (req, res) -> {
+            if(PieceDAO.saveAll(chessGame.getBoard().getPieces())){
+                return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "게임이 저장되었습니다.", chessGame.getStatus()));
+            }
+            System.out.println("저장 성공");
+            return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장에 실패하였습니다. ", chessGame.getStatus()));
+
         });
 
     }
