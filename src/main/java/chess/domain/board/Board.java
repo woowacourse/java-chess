@@ -20,7 +20,7 @@ public final class Board {
         this.board = new HashMap<>(board);
     }
 
-    public final void move(final Position startPoint, final Position endPoint, final Team team) {
+    public void move(final Position startPoint, final Position endPoint, final Team team) {
         Pieces pieces = board.get(team);
         checkEnemyTurn(startPoint, team);
         Piece startPointPiece = pieces.pieceByPosition(startPoint);
@@ -35,25 +35,25 @@ public final class Board {
         }
     }
 
-    public boolean validatesPieceWithinBoardRange(final Position position) {
+    public boolean isWithinBoardRange(final Position position) {
         return !position.isOutOfRange();
     }
 
-    public final boolean isEnemyKingDead(final Team team) {
+    public boolean isEnemyKingDead(final Team team) {
         Pieces enemyPieces = board.get(Team.enemyTeam(team));
         return !enemyPieces.isKingAlive();
     }
 
-    public final double scoreByTeam(final Team team) {
+    public double scoreByTeam(final Team team) {
         Pieces pieces = board.get(team);
         return pieces.calculatedScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }
 
-    public final boolean existsPieceByTeam(final Team team, final Position nextPosition) {
+    public boolean existsPieceByTeam(final Team team, final Position nextPosition) {
         return piecesByTeam(team).containsPosition(nextPosition);
     }
 
-    public final Team teamByPiece(final Piece piece) {
+    public Team teamByPiece(final Piece piece) {
         if (board.get(Team.BLACK).findByPiece(piece)) {
             return Team.BLACK;
         }
@@ -63,11 +63,11 @@ public final class Board {
         throw new NotExistPieceException();
     }
 
-    public final Pieces piecesByTeam(final Team team) {
+    public Pieces piecesByTeam(final Team team) {
         return board.get(team);
     }
 
-    public final Map<Team, Pieces> toMap() {
+    public Map<Team, Pieces> toMap() {
         return new HashMap<>(board);
     }
 }
