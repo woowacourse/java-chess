@@ -1,4 +1,4 @@
-import {getBoard, getScores, getTurn, move, restart} from "./fetch.js"
+import {getBoard, getScores, getTurn, getStatus, move, restart} from "./fetch.js"
 import {PIECES, SCORE_TEMPLATE} from "./constant.js";
 
 window.onload = function () {
@@ -21,6 +21,20 @@ window.onload = function () {
         event.target.classList.contains(`${turn.toLowerCase()}`)
   }
 
+  async function endGame() {
+    document.querySelectorAll(".tile").forEach(tile => {
+      tile.classList.add("end");
+    })
+    const message = await checkTurn() + ` WIN!`;
+    setMessage(message)
+  }
+
+  async function checkGameOver() {
+    if(await getStatus()){
+      await endGame();
+    }
+  }
+
   async function movePiece() {
     const from = document.querySelector(".source");
     const to = document.querySelector(".target");
@@ -28,7 +42,8 @@ window.onload = function () {
     if (movable) {
       document.getElementById(to.id).firstChild ? attackMove(from, to)
           : basicMove(from, to);
-      setMessage(await getTurn());
+      setMessage(await checkTurn());
+      await checkGameOver();
     }
     if (!movable) {
       alert(`${from.id}에서 ${to.id}(으)로 이동할 수 없습니다.`);
@@ -59,10 +74,10 @@ window.onload = function () {
     .forEach(piece => piece.addEventListener("click", grabPiece));
   }
 
-  function setBoard(boardData) {
+  async function setBoard(boardData) {
     clearBoard();
-    fillBoard(boardData);
-    addMoveEventHandler();
+    await fillBoard(boardData);
+    await addMoveEventHandler();
     // 킹 죽음 여부로 게임 오버 체크
   }
 
@@ -80,7 +95,7 @@ window.onload = function () {
         .innerHTML = SCORE_TEMPLATE(score["WHITE"], score["BLACK"]);
   }
 
-  function fillBoard(board) {
+  async function fillBoard(board) {
     const realBoard = Object.values(board).pop();
     Object.keys(realBoard)
     .filter(tile =>
@@ -90,18 +105,21 @@ window.onload = function () {
       .insertAdjacentHTML("beforeend",
           PIECES[`${realBoard[tile]["pieceColor"]}_${realBoard[tile]["pieceType"]}`]);
     });
-    fillScore();
+    await fillScore();
   }
 
-  function setMessage(turn) {
+  function setMessage(text) {
     let message = document.querySelector(".turn");
-    message.innerText = `${turn}`;
+    message.innerText = text;
   }
 
   async function restartGame() {
-    setBoard(await restart());
-    fillScore();
-    setMessage(await getTurn());
+    await setBoard(await restart());
+    await fillScore();
+    setMessage(await checkTurn());
+    document.querySelectorAll(".tile").forEach(tile => {
+      tile.classList.remove("end");
+    })
   }
 
   function addRestartGameEventHandler() {
@@ -116,12 +134,16 @@ window.onload = function () {
     });
   }
 
+  async function checkTurn(){
+    return `${await getTurn()}`;
+  }
+
   async function init() {
     const $start_bt = document.querySelector(".start");
     $start_bt.addEventListener("click", async () => {
       $start_bt.classList.remove("start");
       $start_bt.innerHTML = "RESTART";
-      setMessage(await getTurn());
+      setMessage(await checkTurn());
       const data = await getBoard();
       return setBoard(data);
     });

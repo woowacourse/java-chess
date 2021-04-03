@@ -39,7 +39,6 @@ public class Game {
             throw new IllegalArgumentException(INVALID_SOURCE_ERROR_MESSAGE);
         }
         if (board.move(source, to)) {
-            turn = turn.reversed();
             refreshState();
         }
     }
@@ -47,7 +46,9 @@ public class Game {
     private void refreshState() {
         if (board.kingDead()) {
             changeState(new End());
+            return;
         }
+        turn = turn.reversed();
     }
 
     public void changeState(State state) {
