@@ -22,8 +22,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessController {
 
-    private final Game game;
-    private final Board board;
+    private Game game;
+    private Board board;
 
     public WebUIChessController() {
         this.game = new Game();
@@ -37,6 +37,7 @@ public class WebUIChessController {
         get("/board", this::getBoard, json());
 
         path("/board", () -> {
+        get("/restart", this::restartGame, json());
             get("/status", this::isEnd, json());
             get("/turn", this::isWhiteTurn, json());
             get("/score", this::getScore, json());
@@ -44,6 +45,13 @@ public class WebUIChessController {
             post("/movable", this::movablePath, json());
             post("/move", this::move, json());
         });
+
+    }
+
+    private BoardDto restartGame(final Request request, final Response response) {
+        game = new Game();
+        board = game.getBoard();
+        return new BoardDto(board);
     }
 
     private boolean movablePath(final Request request, final Response response) {
@@ -59,7 +67,7 @@ public class WebUIChessController {
     }
 
     private boolean isEnd(final Request request, final Response response) {
-        return false;
+        return game.isFinished();
     }
 
     private Map<PieceColor, Double> getScore(final Request request, final Response response) {

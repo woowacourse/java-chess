@@ -1,4 +1,4 @@
-import {getBoard, getScores, getTurn, move} from "./fetch.js"
+import {getBoard, getScores, getTurn, move, restart} from "./fetch.js"
 import {PIECES, SCORE_TEMPLATE} from "./constant.js";
 
 window.onload = function () {
@@ -15,8 +15,8 @@ window.onload = function () {
     document.getElementById(to.id).appendChild(source);
   }
 
-  async function isValidSource(event){
-    const turn = await checkTurn();
+  async function isValidSource(event) {
+    const turn = await getTurn();
     return event.target.closest("div").hasChildNodes() &&
         event.target.classList.contains(`${turn.toLowerCase()}`)
   }
@@ -25,26 +25,24 @@ window.onload = function () {
     let movePieces = document.querySelectorAll(".selected").length;
     const tile = event.target.closest("div").classList;
     if (movePieces === 0 && await isValidSource(event)) {
-      console.log("source selected!");
       tile.add("selected", "source");
       // await showPath(event.target.parentNode.id);
       return;
     }
     if (movePieces === 1 && tile.contains("source")) {
-      console.log("source unselected!");
       tile.remove("selected", "source");
       return;
     }
     if (movePieces === 1 && !tile.contains("source")) {
-      console.log("target selected!");
       tile.add("selected", "target");
 
       const from = document.querySelector(".source");
       const to = document.querySelector(".target");
       const movable = await move(from.id, to.id);
       if (movable) {
-        document.getElementById(to.id).firstChild ? attackMove(from,to) : basicMove(from, to);
-        setMessage(await checkTurn());
+        document.getElementById(to.id).firstChild ? attackMove(from, to)
+            : basicMove(from, to);
+        setMessage(await getTurn());
       }
       if (!movable) {
         alert(`${from.id}에서 ${to.id}(으)로 이동할 수 없습니다.`);
@@ -101,23 +99,37 @@ window.onload = function () {
     message.innerText = `${turn}`;
   }
 
-  async function checkTurn(){
-    return await getTurn();
-  }
-
   async function init() {
     const $start_bt = document.querySelector(".start");
-    console.log("start clicked");
     $start_bt.addEventListener("click", async () => {
       $start_bt.classList.remove("start");
-      $start_bt.classList.add("restart");
       $start_bt.innerHTML = "RESTART";
-      setMessage(await checkTurn());
+      setMessage(await getTurn());
       const data = await getBoard();
       return setBoard(data);
     });
   }
 
+  async function restartGame() {
+    console.log("game restarted");
+    setBoard(await restart());
+    fillScore();
+    setMessage(await getTurn());
+  }
+
+  function addRestartGameEventHandler() {
+    const $restart_bt = document.querySelector(".restart");
+    $restart_bt.addEventListener("click", () => {
+      if($restart_bt.classList.contains("start")){
+        return;
+      }
+      if (confirm("게임을 다시 시작하시겠습니까?")) {
+        restartGame();
+      }
+    });
+  }
+
+  addRestartGameEventHandler();
   init();
 }
 
