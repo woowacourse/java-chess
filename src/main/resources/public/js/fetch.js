@@ -29,3 +29,13 @@ export async function getTurn(){
   const response = await fetch("http://localhost:8080/board/turn");
   return await response.json();
 }
+
+export async function getStatus() {
+  const response = await fetch("http://localhost:8080/board/status");
+  return await response.json();
+}
+
+export async function restart(){
+  const response = await fetch("http://localhost:8080/board/restart");
+  return await response.json();
+}
