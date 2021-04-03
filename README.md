@@ -175,3 +175,7 @@ CREATE TABLE piece (
 ### 9. 게임이 끝난 후 진행하려 한다면
 
 ![image-20210404003933258](README.assets/image-20210404003933258.png)
+
+### 10. 백그라운드 이미지 추가
+
+![image-20210404021144534](README.assets/image-20210404021144534.png)
