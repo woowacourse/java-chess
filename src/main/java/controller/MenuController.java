@@ -8,6 +8,8 @@ import domain.menu.Menu;
 import view.OutputView;
 
 public class MenuController {
+    String errorMessage = "";
+
     public void run(String command, ChessGame game) {
         String menuButton = command.split(" ")[0];
         Menu menu = Menu.findMenu(menuButton);
@@ -18,9 +20,15 @@ public class MenuController {
         try {
             MenuDto menuDto = menu.execute(command, game);
             selectOutputView(menuDto);
+            errorMessage = "";
         } catch (RuntimeException e) {
+            errorMessage = e.getMessage();
             OutputView.printError(e.getMessage());
         }
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     private void selectOutputView(MenuDto menuDto) {
