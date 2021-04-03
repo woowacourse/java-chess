@@ -2,6 +2,7 @@ package chess.repository;
 
 import chess.dao.ChessDao;
 import chess.dto.ChessRequestDto;
+import chess.dto.MoveRequestDto;
 import chess.dto.PieceRequestDto;
 
 import java.sql.SQLException;
@@ -35,6 +36,11 @@ public class ChessRepositoryImpl implements ChessRepository {
     }
 
     @Override
+    public void movePiece(final MoveRequestDto moveRequestDto) throws SQLException {
+        chessDao.movePiece(moveRequestDto);
+    }
+
+    @Override
     public void removeAllPieces() throws SQLException {
         chessDao.removeAllPieces();
     }
@@ -42,5 +48,10 @@ public class ChessRepositoryImpl implements ChessRepository {
     @Override
     public void removeTurn() throws SQLException {
         chessDao.removeTurn();
+    }
+
+    @Override
+    public void removePiece(MoveRequestDto moveRequestDto) throws SQLException {
+        chessDao.removePiece(moveRequestDto);
     }
 }

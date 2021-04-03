@@ -37,7 +37,8 @@ public class WebUIChessApplication {
             Map<String, String> filteredChessBoard = new HashMap<>();
             for (Map.Entry<Position, Piece> chessBoardStatus : chessBoard.entrySet()) {
                 if (chessBoardStatus.getValue() != null) {
-                    filteredChessBoard.put(chessBoardStatus.getKey().toString(), chessBoardStatus.getValue().getPiece());
+                    filteredChessBoard.put(chessBoardStatus.getKey().toString(),
+                            chessBoardStatus.getValue().getPiece());
                 }
             }
             CHESS_REPOSITORY.initializePieceStatus(filteredChessBoard);
@@ -73,6 +74,8 @@ public class WebUIChessApplication {
             } catch (RuntimeException runtimeException) {
                 return "{\"status\":\"500\", \"message\":\"" + runtimeException.getMessage() + "\"}";
             }
+            CHESS_REPOSITORY.removePiece(moveRequestDto);
+            CHESS_REPOSITORY.movePiece(moveRequestDto);
             return "{\"status\":\"200\", \"message\":\"성공\"}";
         });
 

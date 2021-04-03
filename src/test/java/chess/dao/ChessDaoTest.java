@@ -8,6 +8,7 @@ import chess.domain.player.Round;
 import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
 import chess.dto.ChessRequestDto;
+import chess.dto.MoveRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,6 +73,19 @@ class ChessDaoTest {
         assertThat(pieces).hasSize(32);
     }
 
+    @DisplayName("turn 테이블에서 현재 턴을 읽어온다.")
+    @Test
+    public void showTurn() throws Exception {
+        System.out.println(round.currentPlayerName());
+    }
+
+    @DisplayName("source에서 target으로 기물을 이동한다.")
+    @Test
+    public void movePiece() throws Exception {
+        MoveRequestDto moveRequestDto = new MoveRequestDto("a2", "a4");
+        chessDao.movePiece(moveRequestDto);
+    }
+
     @DisplayName("piece_status 테이블의 모든 레코드를 삭제한다.")
     @Test
     public void removeAllPieces() throws Exception {
@@ -82,5 +96,12 @@ class ChessDaoTest {
     @Test
     public void removeTurn() throws Exception {
         chessDao.removeTurn();
+    }
+
+    @DisplayName("target 위치의 기물을 삭제한다.")
+    @Test
+    public void removePiece() throws Exception {
+        MoveRequestDto moveRequestDto = new MoveRequestDto("a6", "a7");
+        chessDao.removePiece(moveRequestDto);
     }
 }

@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.ChessRequestDto;
+import chess.dto.MoveRequestDto;
 import chess.dto.PieceRequestDto;
 
 import java.sql.*;
@@ -81,6 +82,14 @@ public class ChessDao {
         return psmt.executeQuery();
     }
 
+    public void movePiece(final MoveRequestDto moveRequestDto) throws SQLException {
+        String query = "UPDATE piece_status SET piece_position=? WHERE piece_position=?";
+        PreparedStatement psmt = getConnection().prepareStatement(query);
+        psmt.setString(1, moveRequestDto.getTarget());
+        psmt.setString(2, moveRequestDto.getSource());
+        psmt.executeUpdate();
+    }
+
     public void removeAllPieces() throws SQLException {
         String query = "DELETE FROM piece_status";
         PreparedStatement psmt = getConnection().prepareStatement(query);
@@ -91,5 +100,12 @@ public class ChessDao {
         String query = "DELETE FROM turn";
         PreparedStatement pstm = getConnection().prepareStatement(query);
         pstm.executeUpdate();
+    }
+
+    public void removePiece(final MoveRequestDto moveRequestDto) throws SQLException {
+        String query = "DELETE FROM piece_status WHERE piece_position=?";
+        PreparedStatement psmt = getConnection().prepareStatement(query);
+        psmt.setString(1, moveRequestDto.getTarget());
+        psmt.executeUpdate();
     }
 }
