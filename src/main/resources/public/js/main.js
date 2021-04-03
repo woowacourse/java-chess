@@ -158,7 +158,7 @@ window.onload = function () {
 
     $start_bt.addEventListener("click", async () => {
       $start_bt.classList.remove("start");
-      $start_bt.innerHTML = "RESTART";
+      $start_bt.innerHTML = "NEW GAME";
       $load_bt.classList.add("hidden");
       setMessage(await checkTurn());
       const data = await getBoard();
@@ -168,7 +168,7 @@ window.onload = function () {
     $load_bt.addEventListener("click", async () => {
       if (confirm("게임을 이어 갑니까?")) {
         $start_bt.classList.remove("start");
-        $start_bt.innerHTML = "RESTART";
+        $start_bt.innerHTML = "NEW GAME";
         $load_bt.innerHTML = "LOAD";
         $load_bt.classList.add("hidden");
         const data = await loadBoard();
