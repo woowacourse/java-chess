@@ -8,6 +8,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static spark.Spark.*;
 
@@ -31,13 +32,18 @@ public class ChessWebController {
         staticFiles.location("/static");
 
         get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "main.html");
+        });
+
+        get("/games", (request, response) -> {
             TilesDto tilesDto = chessService.emptyBoard();
             Map<String, Object> model = new HashMap<>();
             model.put("tilesDto", tilesDto);
             return render(model, "board.html");
         });
 
-        get("/games", (request, response) -> {
+        get("/games/start", (request, response) -> {
             PiecesStatusDto piecesStatusDto = chessService.initializeGame();
             return toJson(piecesStatusDto);
         });

@@ -90,6 +90,13 @@ h1 span:nth-child(8) {
 
 }
 
+.game-start {
+    width: 85%;
+    max-width: 720px;
+    min-width: 480px;
+    padding: 10px;
+}
+
 .chess-board {
     margin: 0 auto;
     width: 472px;

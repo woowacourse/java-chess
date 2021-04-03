@@ -32,7 +32,7 @@ end.addEventListener("click", () => {
 });
 
 const initializePieces = () => {
-    axios.get('http://localhost:4567/games')
+    axios.get('http://localhost:4567/games/start')
         .then(responsePieces => {
             reRangeBoard(responsePieces);
         })
