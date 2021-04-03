@@ -34,7 +34,7 @@ class ChessGameServiceTest {
         chessGameService.createNewChessGame();
 
         //then
-        ChessGameEntity findChessGame = chessGameDAO.findLatestOne().get();
+        ChessGameEntity findChessGame = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn().get();
         List<Piece> findPieces = pieceDAO.findAllPiecesByChessGameId(findChessGame.getId());
 
         assertAll(

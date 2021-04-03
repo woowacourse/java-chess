@@ -5,6 +5,7 @@ import chess.domain.piece.PieceFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class PieceDAO {
         factory = new ConnectionFactory();
     }
 
-    public Long save(Long chessGameId, Piece piece) throws SQLException {
+    public Long save(Long chessGameId, Piece piece) {
         try (Connection con = factory.getConnection()) {
             String query = "INSERT INTO piece(color, shape, chess_game_id, row, col) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -31,17 +32,19 @@ public class PieceDAO {
                 return rs.getLong(Statement.RETURN_GENERATED_KEYS);
             }
 
-            throw new IllegalArgumentException("Piece가 제대로 생성되지 않았습니다");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        throw new IllegalArgumentException("Piece가 제대로 생성되지 않았습니다");
     }
 
-    public void saveAll(final Long chessGameId, final List<Piece> pieces) throws SQLException {
+    public void saveAll(final Long chessGameId, final List<Piece> pieces) {
         for (final Piece piece : pieces) {
             save(chessGameId, piece);
         }
     }
 
-    public List<Piece> findAllPiecesByChessGameId(Long chessGameId) throws SQLException {
+    public List<Piece> findAllPiecesByChessGameId(Long chessGameId) {
         try (Connection con = factory.getConnection()) {
             String query = "SELECT * FROM piece WHERE chess_game_id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -60,12 +63,14 @@ public class PieceDAO {
                 piece.setId(id);
                 pieces.add(piece);
             }
-
             return pieces;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return Collections.EMPTY_LIST;
     }
 
-    public Optional<Piece> findOneByPosition(final Long chessGameId, final int row, final int col) throws SQLException {
+    public Optional<Piece> findOneByPosition(final Long chessGameId, final int row, final int col) {
         try (Connection con = factory.getConnection()) {
             String query = "SELECT * FROM piece WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -74,20 +79,22 @@ public class PieceDAO {
             preparedStatement.setLong(3, col);
             ResultSet rs = preparedStatement.executeQuery();
 
-            if (!rs.next()) {
-                return Optional.empty();
-            }
+            if (rs.next()) {
 
-            Piece piece = PieceFactory.createPiece(
-                    rs.getString("shape"), rs.getString("color"),
-                    rs.getInt("row"), rs.getInt("col")
-            );
-            piece.setId(rs.getLong("id"));
-            return Optional.of(piece);
+                Piece piece = PieceFactory.createPiece(
+                        rs.getString("shape"), rs.getString("color"),
+                        rs.getInt("row"), rs.getInt("col")
+                );
+                piece.setId(rs.getLong("id"));
+                return Optional.of(piece);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return Optional.empty();
     }
 
-    public void update(final Long chessGameId, Piece piece) throws SQLException {
+    public void update(final Long chessGameId, Piece piece) {
         try (Connection con = factory.getConnection()) {
             String query = "UPDATE piece SET row = ?, col = ? WHERE chess_game_id = ? AND id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -96,6 +103,8 @@ public class PieceDAO {
             preparedStatement.setLong(3, chessGameId);
             preparedStatement.setLong(4, piece.getId());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

@@ -13,7 +13,6 @@ import chess.exception.NotFoundPlayingChessGameException;
 import chess.view.dto.ChessGameDto;
 import chess.view.dto.ScoreDto;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +25,9 @@ public class ChessGameService {
         this.pieceDAO = pieceDAO;
     }
 
-    public ChessGameDto createNewChessGame() throws SQLException {
-        Optional<ChessGameEntity> latestChessGame = chessGameDAO.findLatestOne()
-                .filter(chessGameEntity -> chessGameEntity.isPlaying());
+    public ChessGameDto createNewChessGame() {
+        Optional<ChessGameEntity> latestChessGame = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn();
+
         if (latestChessGame.isPresent()) {
             throw new AlreadyPlayingChessGameException();
         }
@@ -41,7 +40,7 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    public ChessGameDto moveChessPiece(final Position source, final Position target) throws SQLException {
+    public ChessGameDto moveChessPiece(final Position source, final Position target) {
         ChessGameEntity chessGameEntity = findLatestPlayingGame();
         Long chessGameId = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
@@ -58,11 +57,9 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    public ChessGameDto findLatestGame() throws SQLException {
-        Optional<ChessGameEntity> chessGameEntityOptional = chessGameDAO.findLatestOne();
-        boolean isExistPlayingGame = chessGameEntityOptional
-                .filter(ChessGameEntity::isPlaying)
-                .isPresent();
+    public ChessGameDto findLatestGame() {
+        Optional<ChessGameEntity> chessGameEntityOptional = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn();
+        boolean isExistPlayingGame = chessGameEntityOptional.isPresent();
         if (!isExistPlayingGame) {
             return ChessGameDto.createFinishedDto();
         }
@@ -75,13 +72,13 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    private ChessGameEntity findLatestPlayingGame() throws SQLException {
-        return chessGameDAO.findLatestOne()
-                .filter(ChessGameEntity::isPlaying)
+    private ChessGameEntity findLatestPlayingGame() {
+        return chessGameDAO.findByStateIsBlackTurnOrWhiteTurn()
                 .orElseThrow(() -> new NotFoundPlayingChessGameException());
+
     }
 
-    public ChessGameDto endGame() throws SQLException {
+    public ChessGameDto endGame() {
         ChessGameEntity chessGameEntity = findLatestPlayingGame();
         Long chessGameId = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
@@ -91,7 +88,7 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    public ScoreDto calculateScores() throws SQLException {
+    public ScoreDto calculateScores() {
         ChessGameEntity chessGameEntity = findLatestPlayingGame();
         Long id = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, id);
@@ -99,7 +96,7 @@ public class ChessGameService {
         return new ScoreDto(chessGame);
     }
 
-    private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity, final Long chessGameId) throws SQLException {
+    private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity, final Long chessGameId) {
         List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
         Board board = new Board(pieces);
         ChessGame chessGame = new ChessGame(board);

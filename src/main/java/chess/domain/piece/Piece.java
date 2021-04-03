@@ -17,6 +17,7 @@ public class Piece {
     private final Shape shape;
     private final List<MoveCondition> moveConditions;
     private Position position;
+
     public Piece(Color color, Shape shape, Position position, List<MoveCondition> moveConditions) {
         this.color = color;
         this.shape = shape;

@@ -83,7 +83,7 @@ const index = {
                 alert("잘못된 명령입니다!");
             });
     },
-    end: async function () {
+    end: function () {
         const option = {
             method: "DELETE",
             headers: {
