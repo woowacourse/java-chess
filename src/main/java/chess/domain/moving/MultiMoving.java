@@ -32,7 +32,7 @@ public abstract class MultiMoving implements Moving {
     }
 
     private boolean canMove(final Board board, final Position nextPosition, final Team team) {
-        if (!board.validatesPieceWithinBoardRange(nextPosition)) {
+        if (!board.isWithinBoardRange(nextPosition)) {
             return false;
         }
         if (board.existsPieceByTeam(team, nextPosition)) {

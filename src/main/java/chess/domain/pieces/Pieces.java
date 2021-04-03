@@ -17,36 +17,36 @@ public final class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public final boolean containsPosition(final Position position) {
+    public boolean containsPosition(final Position position) {
         return pieces.stream()
                 .anyMatch(piece -> piece.isSamePosition(position));
     }
 
-    public final Piece pieceByPosition(final Position position) {
+    public Piece pieceByPosition(final Position position) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
                 .orElseThrow(WrongMoveCommandException::new);
     }
 
-    public final void removePieceByPosition(final Position position) {
+    public void removePieceByPosition(final Position position) {
         pieces.stream()
                 .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
                 .ifPresent(pieces::remove);
     }
 
-    public final boolean isKingAlive() {
+    public boolean isKingAlive() {
         return pieces.stream()
                 .anyMatch(Piece::isKing);
     }
 
-    public final boolean findByPiece(final Piece piece) {
+    public boolean findByPiece(final Piece piece) {
         return pieces.stream()
                 .anyMatch(p -> p.equals(piece));
     }
 
-    public final double calculatedScore(final int rangeMinPivot, final int rangeMaxPivot) {
+    public double calculatedScore(final int rangeMinPivot, final int rangeMaxPivot) {
         double simpleSumScore = calculatedSimpleSumScore();
         double decreasedScore = calculatedDecreasedScore(rangeMinPivot, rangeMaxPivot);
         return simpleSumScore - decreasedScore;
@@ -77,7 +77,7 @@ public final class Pieces {
         return DEFAULT_SCORE;
     }
 
-    public final List<Piece> toList() {
+    public List<Piece> toList() {
         return new ArrayList<>(pieces);
     }
 }

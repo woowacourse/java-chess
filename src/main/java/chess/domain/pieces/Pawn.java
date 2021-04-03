@@ -21,7 +21,7 @@ public final class Pawn extends NoKingPieces {
     }
 
     @Override
-    public final boolean isPawn() {
+    public boolean isPawn() {
         return true;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public final class ChessGameController {
 
-    public final void start(final ChessGame chessGame) {
+    public void start(final ChessGame chessGame) {
         OutputView.printStartMessage();
         checkInitialCommand(chessGame);
         play(chessGame);

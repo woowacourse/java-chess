@@ -24,7 +24,7 @@ public abstract class SingleMoving implements Moving {
     }
 
     private void addMovablePositions(final Board board, final Position nextPosition, final Team team) {
-        if (!board.validatesPieceWithinBoardRange(nextPosition)) {
+        if (!board.isWithinBoardRange(nextPosition)) {
             return;
         }
         if (board.existsPieceByTeam(team, nextPosition)) {

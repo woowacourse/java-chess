@@ -16,11 +16,11 @@ public final class Position {
         this.col = col;
     }
 
-    public final boolean isSameCol(final int col) {
+    public boolean isSameCol(final int col) {
         return this.col == col;
     }
 
-    public final boolean isSameInitPawnPositionByTeam(final Team team) {
+    public boolean isSameInitPawnPositionByTeam(final Team team) {
         if (Team.WHITE.equals(team)) {
             return row == Row.location("2");
         }
@@ -39,11 +39,11 @@ public final class Position {
         return Col.initial(this.col) + Row.initial(this.row);
     }
 
-    public final int row() {
+    public int row() {
         return row;
     }
 
-    public final int col() {
+    public int col() {
         return col;
     }
 

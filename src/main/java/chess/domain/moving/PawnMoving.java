@@ -48,7 +48,7 @@ public class PawnMoving implements Moving {
     }
 
     private void addAttackablePosition(final Board board, final Position position, final Team team) {
-        if (!board.validatesPieceWithinBoardRange(position)) {
+        if (!board.isWithinBoardRange(position)) {
             return;
         }
         if (board.existsPieceByTeam(Team.enemyTeam(team), position)) {
@@ -60,7 +60,7 @@ public class PawnMoving implements Moving {
         Position currentPosition = piece.position();
         Team team = board.teamByPiece(piece);
         Position nextPosition = currentPosition.next(straightRow(team, degree), 0);
-        if (!board.validatesPieceWithinBoardRange(nextPosition)) {
+        if (!board.isWithinBoardRange(nextPosition)) {
             return;
         }
 

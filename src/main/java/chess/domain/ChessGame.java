@@ -16,14 +16,14 @@ public final class ChessGame {
     private boolean isPlaying = true;
     private Team winner;
 
-    public final void initialize() {
+    public void initialize() {
         BoardFactory boardFactory = new BoardFactory();
         this.board = boardFactory.board();
         this.currentTurn = Team.WHITE;
         this.isPlaying = true;
     }
 
-    public final void move(final String startPoint, final String endPoint) {
+    public void move(final String startPoint, final String endPoint) {
         board.move(position(startPoint), position(endPoint), currentTurn);
         if (board.isEnemyKingDead(currentTurn)) {
             winner = currentTurn;
@@ -39,34 +39,34 @@ public final class ChessGame {
         );
     }
 
-    public final void finish() {
+    public void finish() {
         isPlaying = false;
     }
 
-    public final boolean isPlaying() {
+    public boolean isPlaying() {
         return isPlaying;
     }
 
-    public final double scoreByTeam(final Team team) {
+    public double scoreByTeam(final Team team) {
         return board.scoreByTeam(team);
     }
 
-    public final boolean checkRightTurn(final String clickedSection) {
+    public boolean checkRightTurn(final String clickedSection) {
         Pieces pieces = board.piecesByTeam(currentTurn);
         return pieces.containsPosition(position(clickedSection));
     }
 
-    public final List<String> movablePositionsByStartPoint(final String startPoint) {
+    public List<String> movablePositionsByStartPoint(final String startPoint) {
         Pieces pieces = board.piecesByTeam(currentTurn);
         Piece piece = pieces.pieceByPosition(position(startPoint));
         return piece.movablePositions(board);
     }
 
-    public final Board board() {
+    public Board board() {
         return board;
     }
 
-    public final Team winner() {
+    public Team winner() {
         return winner;
     }
 
