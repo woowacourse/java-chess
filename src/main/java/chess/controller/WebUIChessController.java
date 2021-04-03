@@ -5,14 +5,17 @@ import static spark.Spark.get;
 import static spark.Spark.path;
 import static spark.Spark.post;
 
+import chess.DAO.MoveDAO;
 import chess.DTO.BoardDto;
 import chess.DTO.MoveRequestDto;
 import chess.DTO.ScoreDto;
 import chess.domain.Game;
 import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
+import chess.domain.position.Position;
 import chess.domain.state.Running;
 import com.google.gson.Gson;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -22,8 +25,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessController {
 
+    private final MoveDAO moveDao = new MoveDAO();
+
     private Game game;
     private Board board;
+
 
     public WebUIChessController() {
         this.game = new Game();
@@ -35,6 +41,7 @@ public class WebUIChessController {
     public void run() {
         get("/", this::renderInitBoard);
         get("/board", this::getBoard, json());
+        get("/load", this::loadBoard, json());
 
         path("/board", () -> {
         get("/restart", this::restartGame, json());
@@ -48,9 +55,16 @@ public class WebUIChessController {
 
     }
 
-    private BoardDto restartGame(final Request request, final Response response) {
+    private BoardDto loadBoard(final Request request, final Response response) throws SQLException {
+        Map<Position, Position> moves = moveDao.getMoves();
+        moves.forEach((key, value) -> game.move(key, value));
+        return new BoardDto(board);
+    }
+
+    private BoardDto restartGame(final Request request, final Response response) throws SQLException {
         game = new Game();
         board = game.getBoard();
+        moveDao.reset();
         return new BoardDto(board);
     }
 
@@ -58,11 +72,12 @@ public class WebUIChessController {
         return false;
     }
 
-    private boolean move(final Request request, final Response response) {
+    private boolean move(final Request request, final Response response) throws SQLException {
         MoveRequestDto dto = new Gson().fromJson(request.body(), MoveRequestDto.class);
         boolean movable = board.isMovable(dto.getTo(), board.generateAvailablePath(
             board.findPieceBy(dto.getFrom())));
         game.move(dto.getFrom(), dto.getTo());
+        moveDao.addMove(dto.getFrom(), dto.getTo());
         return movable;
     }
 
