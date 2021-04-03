@@ -16,16 +16,17 @@ public final class Knight extends NoKingPieces {
     }
 
     public static Knight white(final int col) {
-        if (col != LEFT_SIDE_INIT_COL && col != RIGHT_SIDE_INIT_COL) {
-            throw new WrongInitPositionException();
-        }
-        return new Knight(new Position(Row.location(WHITE_TEAM_ROW), col));
+        return new Knight(new Position(Row.location(WHITE_TEAM_ROW), validatesInitCol(col)));
     }
 
     public static Knight black(final int col) {
+        return new Knight(new Position(Row.location(BLACK_TEAM_ROW), validatesInitCol(col)));
+    }
+
+    private static int validatesInitCol(final int col) {
         if (col != LEFT_SIDE_INIT_COL && col != RIGHT_SIDE_INIT_COL) {
             throw new WrongInitPositionException();
         }
-        return new Knight(new Position(Row.location(BLACK_TEAM_ROW), col));
+        return col;
     }
 }

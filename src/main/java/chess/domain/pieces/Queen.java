@@ -15,16 +15,17 @@ public final class Queen extends NoKingPieces {
     }
 
     public static Queen white(final int col) {
-        if (col != INIT_COL) {
-            throw new WrongInitPositionException();
-        }
-        return new Queen(new Position(Row.location(WHITE_TEAM_ROW), col));
+        return new Queen(new Position(Row.location(WHITE_TEAM_ROW), validatesInitCol(col)));
     }
 
     public static Queen black(final int col) {
+        return new Queen(new Position(Row.location(BLACK_TEAM_ROW), validatesInitCol(col)));
+    }
+
+    private static int validatesInitCol(final int col) {
         if (col != INIT_COL) {
             throw new WrongInitPositionException();
         }
-        return new Queen(new Position(Row.location(BLACK_TEAM_ROW), col));
+        return col;
     }
 }

@@ -15,17 +15,18 @@ public final class King extends Piece {
     }
 
     public static King white(final int col) {
-        if (col != INIT_COL) {
-            throw new WrongInitPositionException();
-        }
-        return new King(new Position(Row.location(WHITE_TEAM_ROW), col));
+        return new King(new Position(Row.location(WHITE_TEAM_ROW), validatesInitCol(col)));
     }
 
     public static King black(final int col) {
+        return new King(new Position(Row.location(BLACK_TEAM_ROW), validatesInitCol(col)));
+    }
+
+    private static int validatesInitCol(final int col) {
         if (col != INIT_COL) {
             throw new WrongInitPositionException();
         }
-        return new King(new Position(Row.location(BLACK_TEAM_ROW), col));
+        return col;
     }
 
     @Override
