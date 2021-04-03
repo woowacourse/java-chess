@@ -11,7 +11,7 @@ import chess.exception.AlreadyPlayingChessGameException;
 import chess.exception.NoSuchPermittedChessPieceException;
 import chess.exception.NotFoundPlayingChessGameException;
 import chess.view.dto.ChessGameDto;
-import chess.view.dto.ScoreDtos;
+import chess.view.dto.ScoreDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -91,12 +91,12 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    public ScoreDtos calculateScores() throws SQLException {
+    public ScoreDto calculateScores() throws SQLException {
         ChessGameEntity chessGameEntity = findLatestPlayingGame();
         Long id = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, id);
 
-        return new ScoreDtos(chessGame);
+        return new ScoreDto(chessGame);
     }
 
     private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity, final Long chessGameId) throws SQLException {

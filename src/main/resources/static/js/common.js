@@ -121,7 +121,8 @@ const index = {
             })
             .then(chessGameDto => {
                 placePieces(chessGameDto.pieceDtos);
-                toggleContinueAndEndButtons();
+                changeTurn(chessGameDto.state);
+                toggleContinueAndEndButtons(chessGameDto.finished);
             })
             .catch(error => {
                 alert("잘못된 명령입니다!");

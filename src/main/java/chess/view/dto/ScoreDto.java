@@ -3,17 +3,17 @@ package chess.view.dto;
 import chess.domain.command.StatusCommand;
 import chess.domain.game.ChessGame;
 
-public class ScoreDtos {
+public class ScoreDto {
 
     private final double whiteScore;
     private final double blackScore;
 
-    public ScoreDtos(final StatusCommand statusCommand) {
+    public ScoreDto(final StatusCommand statusCommand) {
         blackScore = statusCommand.getBlackScore();
         whiteScore = statusCommand.getWhiteScore();
     }
 
-    public ScoreDtos(final ChessGame chessGame) {
+    public ScoreDto(final ChessGame chessGame) {
         blackScore = chessGame.getBlackScore();
         whiteScore = chessGame.getWhiteScore();
     }
