@@ -3,20 +3,14 @@ package chess;
 import java.util.Objects;
 
 public class User {
-    private String id;
-    private int gameId;
+    private final String userId;
 
-    public User(String id, int gameId) {
-        this.id = id;
-        this.gameId = gameId;
+    public User(String userId) {
+        this.userId = userId;
     }
 
     public String getUserId() {
-        return id;
-    }
-
-    public int getGameId() {
-        return gameId;
+        return this.userId;
     }
 
     @Override
@@ -24,12 +18,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return gameId == user.gameId &&
-                Objects.equals(id, user.id);
+        return Objects.equals(userId, user.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gameId);
+        return Objects.hash(userId);
     }
 }

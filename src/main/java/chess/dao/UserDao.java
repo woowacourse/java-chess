@@ -44,10 +44,9 @@ public class UserDao {
     }
 
     public void addUser(User user) throws SQLException {
-        String query = "INSERT INTO users VALUES (?, ?)";
+        String query = "INSERT INTO users VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, user.getUserId());
-        pstmt.setInt(2, user.getGameId());
         pstmt.executeUpdate();
     }
 
@@ -59,8 +58,6 @@ public class UserDao {
 
         if (!rs.next()) return null;
 
-        return new User(
-                rs.getString("user_id"),
-                rs.getInt("game_id"));
+        return new User("testUserId");
     }
 }

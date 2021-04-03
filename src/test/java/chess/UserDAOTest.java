@@ -25,7 +25,7 @@ public class UserDAOTest {
 
     @Test
     public void addUser() throws Exception {
-        User user = new User("testUserId", 1);
+        User user = new User("testUserId");
         userDao.addUser(user);
     }
 
