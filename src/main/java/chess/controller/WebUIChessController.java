@@ -38,13 +38,17 @@ public class WebUIChessController {
         run();
     }
 
+    private static String render(Map<String, String> model) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
+    }
+
     public void run() {
         get("/", this::renderInitBoard);
         get("/board", this::getBoard, json());
         get("/load", this::loadBoard, json());
 
         path("/board", () -> {
-        get("/restart", this::restartGame, json());
+            get("/restart", this::restartGame, json());
             get("/status", this::isEnd, json());
             get("/turn", this::isWhiteTurn, json());
             get("/score", this::getScore, json());
@@ -61,7 +65,8 @@ public class WebUIChessController {
         return new BoardDto(board);
     }
 
-    private BoardDto restartGame(final Request request, final Response response) throws SQLException {
+    private BoardDto restartGame(final Request request, final Response response)
+        throws SQLException {
         game = new Game();
         board = game.getBoard();
         moveDao.reset();
@@ -100,9 +105,5 @@ public class WebUIChessController {
     private String renderInitBoard(Request request, Response response) {
         response.type("text/html");
         return render(new HashMap<>());
-    }
-
-    private static String render(Map<String, String> model) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
     }
 }

@@ -7,10 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ScoreDto {
+
     private final Result result;
     private final Map<PieceColor, Double> scores = new LinkedHashMap<>();
 
-    public ScoreDto(Board board){
+    public ScoreDto(Board board) {
         this.result = new Result(board);
         putScores();
     }
@@ -20,7 +21,7 @@ public class ScoreDto {
         scores.put(PieceColor.BLACK, result.calculateTotalScore(PieceColor.BLACK).getScore());
     }
 
-    public Map<PieceColor, Double> getScores(){
+    public Map<PieceColor, Double> getScores() {
         return scores;
     }
 

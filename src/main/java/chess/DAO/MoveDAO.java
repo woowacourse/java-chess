@@ -25,15 +25,15 @@ public class MoveDAO {
         }
     }
 
-    public Map<Position,Position> getMoves() throws SQLException {
+    public Map<Position, Position> getMoves() throws SQLException {
         String query = "select * from move";
-        try(PreparedStatement statement = connection.prepareStatement(query)){
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             Map<Position, Position> moves = new LinkedHashMap<>();
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 String from = resultSet.getString("start");
                 String to = resultSet.getString("end");
-                moves.put(Position.of(from),Position.of(to));
+                moves.put(Position.of(from), Position.of(to));
             }
             return moves;
         }

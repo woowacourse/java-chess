@@ -134,11 +134,6 @@ h1 {
   color: firebrick;
 }
 
-
-.buttons {
-
-}
-
 .hidden {
   display: none;
 }
@@ -157,7 +152,7 @@ h1 {
 }
 
 @keyframes rainbowLink {
-0% {
+  0% {
     color: #ff2a2a;
   }
   15% {
