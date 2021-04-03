@@ -29,16 +29,22 @@ window.onload = function () {
         event.target.classList.contains(`${turn.toLowerCase()}`)
   }
 
+  function startGame() {
+    document.querySelectorAll(".tile").forEach(tile => {
+      tile.classList.remove("end");
+    })
+  }
+
   async function endGame() {
     document.querySelectorAll(".tile").forEach(tile => {
       tile.classList.add("end");
-    })
-    const message = await checkTurn() + ` WIN!`;
-    setMessage(message)
+    });
   }
 
   async function checkGameOver() {
     if (await getStatus()) {
+      const message = await checkTurn() + ` WIN!`;
+      setMessage(message);
       await endGame();
     }
   }
@@ -130,6 +136,10 @@ window.onload = function () {
     })
   }
 
+  async function checkTurn() {
+    return `${await getTurn()}`;
+  }
+
   function addRestartGameEventHandler() {
     const $restart_bt = document.querySelector(".restart");
     $restart_bt.addEventListener("click", () => {
@@ -137,23 +147,14 @@ window.onload = function () {
         return;
       }
       if (confirm("게임을 다시 시작하시겠습니까?")) {
-        restartGame();
+        return restartGame();
       }
     });
-  }
-
-  async function checkTurn() {
-    return `${await getTurn()}`;
   }
 
   async function init() {
     const $start_bt = document.querySelector(".start");
     const $load_bt = document.querySelector(".load");
-    document.querySelector(".quit").addEventListener("click", () => {
-      if (confirm("게임을 종료하시겠습니까?")) {
-        window.close();
-      }
-    })
 
     $start_bt.addEventListener("click", async () => {
       $start_bt.classList.remove("start");
@@ -165,9 +166,10 @@ window.onload = function () {
     });
 
     $load_bt.addEventListener("click", async () => {
-      if (confirm("게임을 불러오겠습니까?")) {
+      if (confirm("게임을 이어 갑니까?")) {
         $start_bt.classList.remove("start");
         $start_bt.innerHTML = "RESTART";
+        $load_bt.innerHTML = "LOAD";
         $load_bt.classList.add("hidden");
         const data = await loadBoard();
         setMessage(await checkTurn());

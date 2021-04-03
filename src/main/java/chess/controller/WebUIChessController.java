@@ -44,11 +44,11 @@ public class WebUIChessController {
 
     public void run() {
         get("/", this::renderInitBoard);
-        get("/board", this::getBoard, json());
+        get("/board", this::getNewBoard, json());
         get("/load", this::loadBoard, json());
 
         path("/board", () -> {
-            get("/restart", this::restartGame, json());
+            get("/restart", this::getNewBoard, json());
             get("/status", this::isEnd, json());
             get("/turn", this::isWhiteTurn, json());
             get("/score", this::getScore, json());
@@ -56,21 +56,13 @@ public class WebUIChessController {
             post("/movable", this::movablePath, json());
             post("/move", this::move, json());
         });
-
     }
 
     private BoardDto loadBoard(final Request request, final Response response) throws SQLException {
+        Game newGame = new Game();
         Map<Position, Position> moves = moveDao.getMoves();
-        moves.forEach((key, value) -> game.move(key, value));
-        return new BoardDto(board);
-    }
-
-    private BoardDto restartGame(final Request request, final Response response)
-        throws SQLException {
-        game = new Game();
-        board = game.getBoard();
-        moveDao.reset();
-        return new BoardDto(board);
+        moves.forEach(newGame::move);
+        return new BoardDto(newGame.getBoard());
     }
 
     private boolean movablePath(final Request request, final Response response) {
@@ -98,7 +90,11 @@ public class WebUIChessController {
         return game.getTurn();
     }
 
-    private BoardDto getBoard(final Request request, final Response response) {
+    private BoardDto getNewBoard(final Request request, final Response response)
+        throws SQLException {
+        game = new Game();
+        board = game.getBoard();
+        moveDao.reset();
         return new BoardDto(board);
     }
 
