@@ -32,4 +32,8 @@ public class WhiteTurn extends Running {
         chessGame.changeState(new End(chessGame));
     }
 
+    @Override
+    public String toString() {
+        return "화이트팀 턴 입니다.";
+    }
 }

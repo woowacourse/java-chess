@@ -52,4 +52,8 @@ public class ChessGame {
     public double getBlackScore() {
         return board.getBlackScore();
     }
+
+    public String getStatus() {
+        return state.toString();
+    }
 }

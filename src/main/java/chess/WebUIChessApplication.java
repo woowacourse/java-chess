@@ -40,10 +40,10 @@ public class WebUIChessApplication {
             chessGame = new ChessGame(board);
 
             if(!chessGame.isReady()){
-                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 실행되었습니다."));
+                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 실행되었습니다.", chessGame.getStatus()));
            }
             chessGame.start();
-            return gson.toJson(new ChessBoardDto("true", new PiecesDto(board.getPieces()), ""));
+            return gson.toJson(new ChessBoardDto("true", new PiecesDto(board.getPieces()), "", chessGame.getStatus()));
         });
 
         post("/move", (req, res) -> {
@@ -54,31 +54,39 @@ public class WebUIChessApplication {
                 chessGame.move(Position.changePosition(jsonObject.get("source").getAsString().split("")),
                         Position.changePosition(jsonObject.get("target").getAsString().split("")));
             }catch(Exception e){
-                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이동할 수 없습니다."));
+                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이동할 수 없습니다.", chessGame.getStatus()));
             }
             if(chessGame.isFinished()){
-                return gson.toJson(new ChessBoardDto("end", new PiecesDto(chessGame.getBoard().getPieces()), "왕을 잡아 게임이 종료됩니다."));
+                return gson.toJson(new ChessBoardDto("end", new PiecesDto(chessGame.getBoard().getPieces()), "왕을 잡아 게임이 종료됩니다.", chessGame.getStatus()));
             }
 
-            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()),""));
+            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()),"", chessGame.getStatus()));
         });
 
         post("/end", (req, res) -> {
            if(chessGame.isFinished()){
-               return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 종료되었습니다."));
+               return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 종료되었습니다.", chessGame.getStatus()));
            }
            chessGame.end();
-           String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
-           return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result));
+           String resultTeam = "무승부 입니다.";
+           if(chessGame.getBlackScore() > chessGame.getWhiteScore()){
+               resultTeam = "블랙팀 승";
+           }
+           if(chessGame.getWhiteScore() > chessGame.getBlackScore()) {
+               resultTeam = "화이트팀 승";
+           }
+
+           String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore() +"\n";
+           return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result + resultTeam, chessGame.getStatus()));
 
         });
 
         post("/status", (req, res) -> {
             if(chessGame == null || chessGame.isReady() || chessGame.isFinished()) {
-                return gson.toJson(new ChessBoardDto("false", null,"게임을 실행시켜주세요."));
+                return gson.toJson(new ChessBoardDto("false", null,"게임을 실행시켜주세요.", chessGame.getStatus()));
             }
             String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
-            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result));
+            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result, chessGame.getStatus()));
         });
 
     }

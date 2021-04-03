@@ -34,7 +34,6 @@
     right: 180px;
 }
 .buttons {
-
     position: fixed;
     top: 250px;
     right: 200px;
@@ -50,4 +49,10 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.turn {
+    position: fixed;
+    top: 150px;
+    right: 260px;
 }

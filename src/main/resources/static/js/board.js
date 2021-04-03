@@ -13,9 +13,15 @@ function gameStart() {
                 alert(data.message);
                 return;
             }
-
+            showTurn(data.turn);
             getPieces(data.piecesDto);
     });
+}
+
+function showTurn(turn) {
+    const turnName = document.getElementById("turn");
+    turnName.innerHTML = turn;
+
 }
 
 function getPieces(piecesDto) {
@@ -59,6 +65,7 @@ function select(event) {
             }
             document.getElementById(source).innerHTML = "";
             getPieces(data.piecesDto);
+            showTurn(data.turn);
             if(data.isOk === "end"){
                 alert(data.message);
                 location.reload();
@@ -95,15 +102,7 @@ function status() {
             alert(data.message);
             return;
         }
-        const result = document.getElementById('status');
-        const div = document.createElement('div');
-        div.setAttribute('id', 'status-result');
-
-        const h1 = document.createElement("h1");
+        const h1 = document.getElementById("status");
         h1.innerHTML = data.message;
-        div.appendChild(h1);
-
-        result.appendChild(div);
-
     })
 }

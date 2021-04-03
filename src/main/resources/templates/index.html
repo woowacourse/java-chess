@@ -7,6 +7,9 @@
 </head>
 <body>
 <h1>체스 게임</h1>
+<div class="turn">
+    <h1 id="turn"></h1>
+</div>
 <div class="buttons">
     <button id="start-btn" class="start button">START</button>
     <button id="end-btn" class="end button" formmethod="post">END</button>
@@ -88,7 +91,8 @@
     <div class="square white" id="h1"></div>
 </div>
 
-<div id="status" class="game-status">
+<div class="game-status">
+    <h1 id="status"></h1>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/board.js"></script>

@@ -32,4 +32,8 @@ public class BlackTurn extends Running {
         chessGame.changeState(new End(chessGame));
     }
 
+    @Override
+    public String toString() {
+        return "블랙팀 턴 입니다.";
+    }
 }
