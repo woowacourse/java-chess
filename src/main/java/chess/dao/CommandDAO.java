@@ -54,7 +54,7 @@ public class CommandDAO {
         preparedStatement.close();
     }
 
-    public List<List<String>> findPointsByRoomId(final String roomId) throws SQLException {
+    public List<List<String>> getCommandsByRoomId(final String roomId) throws SQLException {
         List<List<String>> points = new ArrayList<>();
         String query = "SELECT start_point, end_point FROM command WHERE room_id = ? ORDER BY command_time";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);

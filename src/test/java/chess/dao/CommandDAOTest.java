@@ -47,7 +47,7 @@ class CommandDAOTest {
     }
 
     private void findPoint(final String testRoomId) throws SQLException {
-        List<List<String>> points = commandDAO.findPointsByRoomId(testRoomId);
+        List<List<String>> points = commandDAO.getCommandsByRoomId(testRoomId);
         assertThat(points).isEqualTo(commands);
     }
 

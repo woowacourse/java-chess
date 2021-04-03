@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.ChessGame;
+import chess.dao.CommandDAO;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
@@ -11,6 +12,7 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +23,12 @@ import static spark.Spark.put;
 
 public class WebUIChessController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
-    private ChessGame chessGame = new ChessGame();
+    private ChessGame chessGame = new ChessGame();  //상태필드에서 제거
+    private String roomId;  // 상태필드에서 제거
+    private CommandDAO commandDAO = new CommandDAO();
 
     public WebUIChessController() {
+        commandDAO.getConnection();
     }
 
     public void run() {
@@ -43,13 +48,24 @@ public class WebUIChessController {
     public void start() {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            System.out.println("입력받은 방 코드는 : " + req.queryParams("roomId"));
-
-            //
+            roomId = req.queryParams("roomId");
+            System.out.println("입력받은 방 코드는 : " + roomId);
+            chessGame = getChessGameByRoomId(roomId);
 
             model.put("pieces", getPieceDTOs());
             return render(model, "chess.html");
         });
+    }
+
+    private ChessGame getChessGameByRoomId(final String roomId) throws SQLException {
+        ChessGame chessGame = new ChessGame();
+        List<List<String>> commands = commandDAO.getCommandsByRoomId(roomId);
+        for (List<String> points : commands) {
+            String start_point = points.get(0);
+            String end_point = points.get(1);
+            chessGame.move(position(start_point), position(end_point));
+        }
+        return chessGame;
     }
 
     public void status() {
@@ -61,6 +77,10 @@ public class WebUIChessController {
                     getWinner(),
                     chessGame.isKingDieEnd()
             );
+            // 왕이 죽은경우 DB서 삭제
+            if (chessGame.isKingDieEnd()) {
+                commandDAO.deleteCommandsByRoomId(roomId);
+            }
             return gson.toJson(statusDTO);
         });
     }
@@ -99,6 +119,8 @@ public class WebUIChessController {
             String endPoint = (String) requestBody.get("endPoint");
             Position startPosition = position(startPoint);
             Position endPosition = position(endPoint);
+
+            commandDAO.addCommand(roomId, startPoint, endPoint);
             chessGame.move(startPosition, endPosition);
             return gson.toJson(getPieceDTOs());
         });
@@ -110,7 +132,6 @@ public class WebUIChessController {
                 Character.getNumericValue(point.charAt(1))
         );
     }
-
 
     private static String render(final Map<String, Object> model, final String templatePath) {
         return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
