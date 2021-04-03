@@ -35,6 +35,16 @@ body {
     font-size: 2.5em;
 }
 
+.btns {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5%;
+}
+
+.start-btn, .start-saved-btn, .save-btn {
+    margin-right: 5%;
+}
+
 .chessboard_section {
     display: flex;
     flex-direction: row;
@@ -102,16 +112,6 @@ body {
 
 .clicked {
     background-color: var(--piece-clicked);
-}
-
-.btns {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 5%;
-}
-
-.isPlaying, .startSaved, .saving {
-    margin-right: 5%;
 }
 
 .hidden {

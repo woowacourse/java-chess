@@ -6,9 +6,9 @@ const $chessTable = document.querySelector(".chessboard");
 const $results = document.querySelector(".results");
 const $resultBtn = document.querySelector(".result-btn");
 const $resultDisplay = document.querySelector(".result-display");
-const $isPlaying = document.querySelector(".isPlaying");
-const $startSaved = document.querySelector(".startSaved");
-const $saving = document.querySelector(".saving");
+const $start = document.querySelector(".start-btn");
+const $startSaved = document.querySelector(".start-saved-btn");
+const $saving = document.querySelector(".save-btn");
 console.log($saving);
 
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -56,8 +56,8 @@ function drawTable(data) {
 }
 
 function modifyBtns() {
-    if ($isPlaying.innerText === "START") {
-        $isPlaying.innerText = 'END';
+    if ($start.innerText === "START") {
+        $start.innerText = 'END';
         $results.classList.remove('hidden');
         return;
     }
@@ -65,7 +65,7 @@ function modifyBtns() {
     $chessTable.classList.add('hidden')
 }
 
-$isPlaying.addEventListener("click", () => apiService.getChessBoard().then(drawTable).then(() => modifyBtns()));
+$start.addEventListener("click", () => apiService.getChessBoard().then(drawTable).then(() => modifyBtns()));
 
 function modifySavingBtns() {
     $chessTable.classList.add('hidden')
