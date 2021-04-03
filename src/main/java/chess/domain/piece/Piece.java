@@ -27,4 +27,8 @@ public interface Piece {
     String getName();
 
     Score score();
+
+    String type();
+
+    String colorName();
 }

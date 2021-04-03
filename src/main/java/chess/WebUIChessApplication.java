@@ -52,6 +52,10 @@ public class WebUIChessApplication {
             List<String> movablePositions = webController.calculatePath(source);
             return gson.toJson(movablePositions);
         });
+
+        // save
+
+        // load
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

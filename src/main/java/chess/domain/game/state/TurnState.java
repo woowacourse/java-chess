@@ -61,4 +61,9 @@ public abstract class TurnState extends PlayingState {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public String currentState() {
+        return currentTurnColor.getName();
+    }
 }

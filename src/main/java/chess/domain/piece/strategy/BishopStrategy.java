@@ -8,6 +8,7 @@ public final class BishopStrategy implements PieceStrategy {
 
     private static final String NAME = "b";
     private static final double VALUE = 3;
+    private static final String TYPE = "bishop";
 
     @Override
     public List<Direction> directions() {
@@ -37,5 +38,10 @@ public final class BishopStrategy implements PieceStrategy {
     @Override
     public double value() {
         return VALUE;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
     }
 }

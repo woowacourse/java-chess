@@ -17,6 +17,7 @@ import chess.domain.piece.strategy.WhitePawnStrategy;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.dto.BoardDto;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -75,6 +76,16 @@ public final class InitialState implements GameState {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public String currentState() {
+        return "not started";
+    }
+
+    @Override
+    public BoardDto boardDto() {
+        return new BoardDto(initiateBoard());
     }
 
     private void placePawns(final Map<Position, Piece> coordinates) {

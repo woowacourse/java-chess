@@ -17,4 +17,6 @@ public interface PieceStrategy {
     String name();
 
     double value();
+
+    String type();
 }

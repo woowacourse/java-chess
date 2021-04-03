@@ -31,4 +31,8 @@ public final class Game {
     public boolean isNotFinished() {
         return !gameState.isFinished();
     }
+
+    public GameState getState() {
+        return gameState;
+    }
 }
