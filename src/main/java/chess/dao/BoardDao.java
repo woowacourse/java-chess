@@ -160,7 +160,6 @@ public class BoardDao {
         int positionId = findPositionId(con, position);
         int pieceId = findPieceId(con, playingBoard.get(position));
 
-        System.out.println(positionId + "!!!!!" + pieceId+ "!!!" + name);
         String query = "INSERT INTO backup_board VALUES (?, ?, ?)";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, name);
