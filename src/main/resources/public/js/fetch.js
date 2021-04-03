@@ -24,3 +24,8 @@ export async function move(from, to){
   });
   return await data.json();
 }
+
+export async function getTurn(){
+  const response = await fetch("http://localhost:8080/board/turn");
+  return await response.json();
+}
