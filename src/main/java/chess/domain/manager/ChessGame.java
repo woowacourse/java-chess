@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
-import chess.domain.piece.Score;
 import chess.domain.player.Players;
 import chess.domain.player.Scores;
 import chess.domain.player.Turn;
@@ -18,10 +17,15 @@ public class ChessGame {
     private final Board board;
 
     private boolean isGameEnd;
-    private Turn turn = Turn.WHITE;
+    private Turn turn;
 
     public ChessGame() {
-        this.board = BoardInitializer.initiateBoard();
+        this(BoardInitializer.initiateBoard(), Turn.WHITE);
+    }
+
+    public ChessGame(final Board board, Turn turn){
+        this.board = board;
+        this.turn = turn;
         this.players = new Players();
     }
 
@@ -67,11 +71,11 @@ public class ChessGame {
         return isGameEnd;
     }
 
-    public double getWhiteScore(){
+    public double getWhiteScore() {
         return scores().getValueOf(Owner.WHITE);
     }
 
-    public double getBlackScore(){
+    public double getBlackScore() {
         return scores().getValueOf(Owner.BLACK);
     }
 

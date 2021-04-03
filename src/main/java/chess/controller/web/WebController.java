@@ -2,65 +2,67 @@ package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.ScoreDto;
-import chess.domain.board.Board;
-import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Vertical;
 import chess.domain.manager.ChessGame;
-import chess.domain.piece.Piece;
+import chess.service.PieceSymbolMapper;
+import chess.service.RequestHandler;
 import chess.view.web.OutputView;
-import chess.view.web.PieceSymbolMapper;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
 public class WebController {
 
-    private ChessGame chessGame;
+    private final ChessGame chessGame;
 
-    public void mapping(){
-        staticFiles.location("/public");
-        serviceRoot();
+    public WebController() {
+        chessGame = new ChessGame();
+    }
+
+    public void mapping() {
+
+        init();
         show();
         move();
     }
 
-    private void serviceRoot(){
+    private void init() {
         get("/", (req, res) -> {
-            chessGame = new ChessGame();
             chessGame.initNewGame();
             return printGame();
         });
     }
 
-    private void show(){
+    private void show() {
         post("/show", (req, res) -> {
-            JSONObject jsonData = new JSONObject(req.body());
-            Position source = new Position(jsonData.getString("position"));
-            try{
+            final JSONObject jsonData = new JSONObject(req.body());
+            final Position source = new Position(jsonData.getString("position"));
+            try {
                 chessGame.validateTurn(source);
                 return reachablePositions(source);
-            } catch (Exception e){
+            } catch (Exception e) {
                 return Collections.EMPTY_LIST;
             }
         });
     }
 
-    private void move(){
+    private void move() {
         post("/move", (req, res) -> {
-            Map<String, String> reqPosition = parseSourceAndTarget(req.body());
+            final Map<String, String> reqPosition = RequestHandler.parseRequestQuery(req.body());
 
-            Position source = new Position(reqPosition.get("source"));
-            Position target = new Position(reqPosition.get("target"));
+            final Position source = new Position(reqPosition.get("source"));
+            final Position target = new Position(reqPosition.get("target"));
 
             chessGame.validateTurn(source);
             chessGame.move(source, target);
             chessGame.changeTurn();
 
-            if(chessGame.isGameEnd()){
+            if (chessGame.isGameEnd()) {
                 return OutputView.printResult(chessGame.winner());
             }
 
@@ -69,50 +71,20 @@ public class WebController {
     }
 
     private String printGame() {
-        ScoreDto whiteScoreDto = new ScoreDto();
+        final ScoreDto whiteScoreDto = new ScoreDto();
         whiteScoreDto.setScore(chessGame.getWhiteScore());
 
-        ScoreDto blackScoreDto =  new ScoreDto();
+        final ScoreDto blackScoreDto = new ScoreDto();
         blackScoreDto.setScore(chessGame.getBlackScore());
 
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoard(boardMapping(chessGame.board()));
+        final BoardDto boardDto = new BoardDto();
+        boardDto.setBoard(PieceSymbolMapper.parseBoardAsUnicode(chessGame.board()));
         return OutputView.printGame(boardDto, whiteScoreDto, blackScoreDto);
     }
 
-    // XXX :: Service로 분리하기
-    private Map<String, String> parseSourceAndTarget(String line){
-        Map<String, String> infoTable = new HashMap<>();
-        String[] positionInfos = line.split("&");
-        for(String positionInfo : positionInfos){
-            String[] info = positionInfo.split("=");
-            infoTable.put(info[0], info[1]);
-        }
-        return infoTable;
-    }
-
-    // XXX :: Service로 분리하기
-    private List<String> reachablePositions(Position source){
+    private List<String> reachablePositions(Position source) {
         return chessGame.reachablePositions(source).stream()
-                .map(position -> parsePositionAsString(position))
+                .map(position -> position.parseAsString())
                 .collect(Collectors.toList());
-    }
-
-    // XXX :: Service로 분리하기
-    private String parsePositionAsString(Position position){
-        return position.vertical().name() + position.horizontal().getIndex();
-    }
-
-    // XXX :: Service로 분리하기
-    private String[][] boardMapping(final Board board){
-        String[][] uniCodeBoard = new String[8][8];
-        for(Vertical v : Vertical.values()){
-            for(Horizontal h : Horizontal.values()){
-                Piece piece = board.of(new Position(v,h));
-                String uniCode = PieceSymbolMapper.parse(piece.owner(), piece.symbol());
-                uniCodeBoard[h.getIndex()-1][v.getIndex()-1] = uniCode;
-            }
-        }
-        return uniCodeBoard;
     }
 }

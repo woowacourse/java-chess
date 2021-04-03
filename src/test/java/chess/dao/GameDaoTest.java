@@ -3,11 +3,6 @@ package chess.dao;
 import chess.controller.dto.BoardDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.board.position.Horizontal;
-import chess.domain.board.position.Position;
-import chess.domain.board.position.Vertical;
-import chess.domain.piece.Piece;
-import chess.view.web.PieceSymbolMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameDaoTest {
 
     private GameDao dao;
-
+    private BoardParser boardParser = new BoardParser();
     @BeforeEach
     void init(){
         DBConfig dbConfig = new DBConfig();
@@ -35,7 +30,7 @@ class GameDaoTest {
     void testInsert(){
         Board board = BoardInitializer.initiateBoard();
         BoardDto boardDto = new BoardDto();
-        boardDto.setBoard(boardMapping(board));
+        boardDto.setBoard(boardParser.parseBoardAsUnicode(board));
         try{
             dao.addGameStatus(0,"black", boardDto);
         }catch (SQLException e){
@@ -55,18 +50,5 @@ class GameDaoTest {
             System.out.println(e.getMessage());
             fail();
         }
-    }
-
-    // XXX :: 서비스로 빼기
-    private String[][] boardMapping(final Board board){
-        String[][] uniCodeBoard = new String[8][8];
-        for(Vertical v : Vertical.values()){
-            for(Horizontal h : Horizontal.values()){
-                Piece piece = board.of(new Position(v,h));
-                String uniCode = PieceSymbolMapper.parse(piece.owner(), piece.symbol());
-                uniCodeBoard[h.getIndex()-1][v.getIndex()-1] = uniCode;
-            }
-        }
-        return uniCodeBoard;
     }
 }

@@ -3,7 +3,6 @@ package chess.domain.board.position;
 import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class Position {
@@ -23,7 +22,9 @@ public class Position {
         this(s.split(""));
     }
 
-    public Vertical vertical(){return vertical;}
+    public Vertical vertical() {
+        return vertical;
+    }
 
     public Horizontal horizontal() {
         return horizontal;
@@ -46,5 +47,7 @@ public class Position {
         return Objects.hash(vertical, horizontal);
     }
 
-
+    public String parseAsString() {
+        return vertical().name() + horizontal().getIndex();
+    }
 }
