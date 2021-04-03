@@ -43,6 +43,8 @@ public class ChessGame {
         board.movePiece(convertStringToPosition(target)
                 , convertStringToPosition(destination));
         board.applyStatus();
+
+        end = board.isGameOver();
     }
 
     public List<String> findMovablePosition(String target) {
