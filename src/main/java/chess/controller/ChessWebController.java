@@ -8,7 +8,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static spark.Spark.*;
 
@@ -43,12 +42,14 @@ public class ChessWebController {
             return render(model, "board.html");
         });
 
+
         get("/games/start", (request, response) -> {
             PiecesStatusDto piecesStatusDto = chessService.initializeGame();
             return toJson(piecesStatusDto);
         });
 
-        put("/games", (request, response) -> {
+
+        put("/games/status", (request, response) -> {
             GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
             chessService.changeGameStatus(requestDto);
             return toJson(requestDto);
@@ -62,6 +63,12 @@ public class ChessWebController {
         put("/pieces", (request, response) -> {
             MoveRequestDto requestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
             MoveResponseDto responseDto = chessService.movePiece(requestDto);
+            return toJson(responseDto);
+        });
+
+        post("/games", (request, response) -> {
+            ChessSaveRequestDto requestDto =  new Gson().fromJson(request.body(), ChessSaveRequestDto.class);
+            PiecesStatusDto responseDto = chessService.startChess(requestDto);
             return toJson(responseDto);
         });
     }

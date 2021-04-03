@@ -6,6 +6,7 @@ const targetKey = document.getElementById("targetKey");
 const tiles = document.getElementsByClassName("tile");
 const whiteCount = document.querySelector(`#whiteScore strong`);
 const blackCount = document.querySelector(`#blackScore strong`);
+const basePath = 'http://localhost:4567';
 let isEnd = true;
 
 start.addEventListener("click", () => {
@@ -21,7 +22,7 @@ end.addEventListener("click", () => {
         isEnd = true;
         axios({
             method: 'put',
-            url: 'http://localhost:4567/games',
+            url:  basePath + '/games/status',
             data: {
                 isGameOver: isEnd
             }
@@ -32,7 +33,7 @@ end.addEventListener("click", () => {
 });
 
 const initializePieces = () => {
-    axios.get('http://localhost:4567/games/start')
+    axios.get(basePath +  '/games/start')
         .then(responsePieces => {
             reRangeBoard(responsePieces);
         })
@@ -40,7 +41,7 @@ const initializePieces = () => {
 };
 
 const getPieces = () => {
-    axios.get('http://localhost:4567/pieces')
+    axios.get(basePath + '/pieces')
         .then(responsePieces => {
             reRangeBoard(responsePieces);
         })
@@ -111,7 +112,7 @@ function isEmpty(value) {
 function movePiece() {
     axios({
         method: 'put',
-        url: 'http://localhost:4567/pieces',
+        url: basePath + '/pieces',
         data: {
             source: sourceKey.value,
             target: targetKey.value

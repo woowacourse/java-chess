@@ -91,9 +91,9 @@ h1 span:nth-child(8) {
 }
 
 .game-start {
-    width: 85%;
-    max-width: 720px;
-    min-width: 480px;
+    width: 50%;
+    max-width:  100px;
+    min-width: 100px;
     padding: 10px;
 }
 

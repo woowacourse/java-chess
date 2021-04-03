@@ -9,7 +9,11 @@ public class Movement {
     private String targetPosition;
 
     public Movement(final String chessId, final String sourcePosition, final String targetPosition) {
-        this.id = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString(), chessId, sourcePosition, targetPosition);
+    }
+
+    public Movement(final String id, final String chessId, final String sourcePosition, final String targetPosition) {
+        this.id = id;
         this.chessId = chessId;
         this.sourcePosition = sourcePosition;
         this.targetPosition = targetPosition;

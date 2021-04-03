@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.dao.ChessDao;
+import chess.domain.entity.Chess;
 import chess.domain.player.ChessGame;
 import chess.domain.position.Position;
 import chess.service.dto.*;
@@ -33,7 +34,14 @@ public class ChessService {
         return new PiecesStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
     }
 
-    public void changeGameStatus(GameStatusRequestDto requestDto) {
+    public void changeGameStatus(final GameStatusRequestDto requestDto) {
         chessGame.changeStatus(requestDto);
+    }
+
+    public PiecesStatusDto startChess(final ChessSaveRequestDto request) {
+        this.chessGame = ChessGame.newGame();
+        Chess chess = new Chess(request.getName());
+        chessDao.save(chess);
+        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
     }
 }
