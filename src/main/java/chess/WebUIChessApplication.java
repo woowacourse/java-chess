@@ -24,7 +24,7 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
 
-        get("/chess/lobby", (req, res) -> {
+        get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ChessGameDAO chessGameDAO = new ChessGameDAO();
 
