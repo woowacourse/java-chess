@@ -17,7 +17,7 @@
 
 ### 게임 실행 데모 
 
-<iframe width="640" height="360" src="https://www.youtube.com/watch?v=lTuDw-Taow0" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+[데모 링크](https://www.youtube.com/watch?v=lTuDw-Taow0)
 
 ## Todo List
 
