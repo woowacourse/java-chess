@@ -53,7 +53,7 @@ function onMove(event) {
                     movePiece(source, target);
                     if (data === "king-dead") {
                         alert("왕이 죽었습니다. 게임을 종료합니다.")
-                        window.location.replace("/");
+                        window.location.replace("/main");
                         return;
                     }
                     return data;

@@ -4,18 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import chess.domain.ConnectionUtils;
 import chess.domain.position.MovePosition;
 
 public class ChessDAO {
-    public void addChess(Long userId) throws SQLException {
-        final Long chessId = findIdByUserId(userId);
-        if (chessId != null) {
-            removeMove(chessId);
-            removeChess(userId);
-        }
+    public void saveChess(Long userId) throws SQLException {
         addChessAt(userId);
+    }
+
+    public void deletePreviousChess(Long chessId) throws SQLException {
+        removeMove(chessId);
+        removeChess(chessId);
     }
 
     private void removeMove(Long chessId) throws SQLException {
@@ -23,12 +24,12 @@ public class ChessDAO {
         deleteById(moveQuery, chessId);
     }
 
-    private void removeChess(Long userId) throws SQLException {
-        String chessQuery = "DELETE FROM chess WHERE user_id = (?)";
-        deleteById(chessQuery, userId);
+    private void removeChess(Long chessId) throws SQLException {
+        String chessQuery = "DELETE FROM chess WHERE chess_id = (?)";
+        deleteById(chessQuery, chessId);
     }
 
-    private Long findIdByUserId(Long userId) throws SQLException {
+    public Optional<Long> findIdByUserId(Long userId) throws SQLException {
         String query = "SELECT chess_id FROM chess c JOIN user u on u.user_id = c.user_id WHERE u.user_id = (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
@@ -36,9 +37,9 @@ public class ChessDAO {
             pstmt.setLong(1, userId);
             ResultSet resultSet = pstmt.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getLong("chess_id");
+                return Optional.of(resultSet.getLong("chess_id"));
             }
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -52,11 +53,7 @@ public class ChessDAO {
 
     private void addChessAt(Long userId) throws SQLException {
         String query =
-                "INSERT INTO chess (user_id) " +
-                        "SELECT u.user_id " +
-                        "FROM chess c " +
-                        "RIGHT OUTER JOIN user u on c.user_id = u.user_id " +
-                        "WHERE u.user_id = (?);";
+                "INSERT INTO chess (user_id) VALUES (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -65,16 +62,16 @@ public class ChessDAO {
         }
     }
 
-    public Chess getChess(Long userId, Chess chess) throws SQLException {
+    public Chess getChess(Long chessId, Chess chess) throws SQLException {
         String query =
                 "SELECT m.source, m.target " +
                         "FROM move m " +
                         "JOIN chess c ON m.chess_id = c.chess_id " +
-                        "WHERE c.user_id = (?)";
+                        "WHERE c.chess_id = (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, userId);
+            pstmt.setLong(1, chessId);
             ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 String source = resultSet.getString("source");
