@@ -80,28 +80,32 @@ public class WebUIChessApplication {
         try {
             Command command = Command.from("move " + target + " " + source);
             chessGame.execute(command);
+            saveMoveCommand(chessGame, (Move) command);
 
-            BoardDto boardDto = new BoardDto(chessGame);
-
-            if (chessGame.isGameSet()) {
-                Map<String, Object> model = boardDto.getResult();
-                model.put("winner", chessGame.winner().toString());
-                Score score = chessGame.score();
-                model.put("blackScore", score.blackScore());
-                model.put("whiteScore", score.whiteScore());
-                return model;
-            }
-
-            Move move = (Move) command;
-            move.setGameId(chessGame.getId());
-            MoveCommandDAO moveCommandDAO = new MoveCommandDAO();
-            moveCommandDAO.addMoveCommand(move);
-
-            return boardDto.getResult();
+            return modelFromChessGame(chessGame);
         } catch (ChessException e) {
             Map<String, Object> model = new BoardDto(chessGame).getResult();
             model.put("error", String.format("<script>alert(\"%s\")</script>", e));
             return model;
         }
+    }
+
+    private static Map<String, Object> modelFromChessGame(ChessGame chessGame) {
+        Map<String, Object> model = new BoardDto(chessGame).getResult();
+
+        if (chessGame.isGameSet()) {
+            model.put("winner", chessGame.winner().toString());
+            Score score = chessGame.score();
+            model.put("blackScore", score.blackScore());
+            model.put("whiteScore", score.whiteScore());
+        }
+
+        return model;
+    }
+
+    private static void saveMoveCommand(ChessGame chessGame, Move command) throws SQLException {
+        command.setGameId(chessGame.getId());
+        MoveCommandDAO moveCommandDAO = new MoveCommandDAO();
+        moveCommandDAO.addMoveCommand(command);
     }
 }
