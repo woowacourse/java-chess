@@ -43,13 +43,17 @@ public class Board {
 
     public void move(Piece piece, Position target) {
         Path path = generateAvailablePath(piece);
-        if (path.isAble(target)) {
+        if (isMovable(target, path)) {
             coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
         }
     }
 
-    private Path generateAvailablePath(Piece piece) {
+    public boolean isMovable(Position target, Path path) {
+        return path.isAble(target);
+    }
+
+    public Path generateAvailablePath(Piece piece) {
         return piece.generatePaths(findPositionBy(piece), this);
     }
 
