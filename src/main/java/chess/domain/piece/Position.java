@@ -22,6 +22,13 @@ public class Position {
         return column;
     }
 
+    public static Position changePosition(String[] stringPosition) {
+        int columnNum = stringPosition[0].toCharArray()[0] - 'a';
+        int rawNum = 8-Integer.parseInt(stringPosition[1]);
+
+        return new Position(rawNum, columnNum);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

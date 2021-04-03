@@ -2,17 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chessboard using Pure CSS and HTML</title>
+    <title>체스 게임</title>
     <link href="css/boardStyle.css" rel="stylesheet">
 </head>
-
 <body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/board.js"></script>
-
 <h1>체스 게임</h1>
 <div>
-    <button id="start-btn">START</button>
+    <button id="start-btn" class="start-button">START</button>
     <button id="end-btn" class="hidden" formmethod="post">END</button>
     <button id="status-btn" class="hidden" formmethod="post">STATUS</button>
 </div>
@@ -94,5 +90,7 @@
 
 <div id="status">
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/board.js"></script>
 </body>
 </html>
