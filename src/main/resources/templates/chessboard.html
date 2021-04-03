@@ -152,7 +152,12 @@
     </tbody>
 </table>
 
-<h2>{{team.color}} TURN </h2>
+<h2>점수 판</h2>
+{{#scores}}
+{{color}} Score: {{value}}<br>
+{{/scores}}
+
+<h2>{{turn.color}} TURN </h2>
 <h2>{{error.message}}</h2>
 
 <form action="/chess" method="post">

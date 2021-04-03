@@ -60,6 +60,10 @@ public class Game {
         return calculator.scoreByColor(board.allPieces());
     }
 
+    public double score(Color color) {
+        return calculator.score(color, board.allPieces());
+    }
+
     public Map<Position, Piece> allBoard() {
         return board.allPieces();
     }

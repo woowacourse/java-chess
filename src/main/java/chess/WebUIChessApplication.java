@@ -55,12 +55,13 @@ public class WebUIChessApplication {
     private static Map<String, Object> makeBoardModel(ChessControllerForUI chessController) {
         Map<String, Object> model = new HashMap<>();
         Map<PositionDTO, PieceDTO> board = chessController.board()
-                                                          .getBoard();
+                                                          .getMaps();
         ColorDTO currentPlayer = chessController.currentPlayer();
         for (PositionDTO positionDTO : board.keySet()) {
             model.put(positionDTO.getKey(), board.get(positionDTO));
         }
-        model.put("team", currentPlayer);
+        model.put("scores", chessController.score());
+        model.put("turn", currentPlayer);
         return model;
     }
 
