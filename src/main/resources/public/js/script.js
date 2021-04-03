@@ -79,11 +79,11 @@ function updateBoard(piecesMap) {
         square.innerHTML = '';
     }
     for (const [position, piece] of Object.entries(piecesMap)) {
-        updateSqaure(position, piece);
+        updateSquare(position, piece);
     }
 }
 
-async function updateSqaure(position, piece) {
+async function updateSquare(position, piece) {
     const square = document.getElementById(position);
     square.appendChild(makeImage(piece.color + '-' + piece.notation));
 }
