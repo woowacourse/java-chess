@@ -5,7 +5,7 @@ import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
 import chess.exception.EnemyTurnException;
-import chess.exception.NotExistPieceException;
+import chess.exception.NoSuchPieceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +60,7 @@ public final class Board {
         if (board.get(Team.WHITE).containsPiece(piece)) {
             return Team.WHITE;
         }
-        throw new NotExistPieceException();
+        throw new NoSuchPieceException();
     }
 
     public Pieces piecesByTeam(final Team team) {
