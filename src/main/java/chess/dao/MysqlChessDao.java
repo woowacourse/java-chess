@@ -78,19 +78,6 @@ public class MysqlChessDao {
         }
     }
 
-    public ChessGameManagerBundle findAll() {
-        String query =
-                "SELECT * " +
-                        "FROM CHESSGAME";
-
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            return getChessGames(preparedStatement);
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-    }
-
     public ChessGameManagerBundle findAllOnRunning() {
         String query =
                 "SELECT * " +
