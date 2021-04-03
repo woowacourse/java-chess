@@ -1,54 +1,74 @@
 package chess.domain.piece.cache;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+import static chess.domain.piece.type.PieceType.BISHOP;
+import static chess.domain.piece.type.PieceType.KING;
+import static chess.domain.piece.type.PieceType.KNIGHT;
+import static chess.domain.piece.type.PieceType.PAWN;
+import static chess.domain.piece.type.PieceType.QUEEN;
+import static chess.domain.piece.type.PieceType.ROOK;
+
+import chess.dao.piece.PieceDAO;
+import chess.dao.piece.PieceRepository;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PiecesCache {
-    private static final List<Piece> pieces = new ArrayList<>();
+    private static final PieceRepository PIECE_DAO = new PieceDAO();
+    private static final List<Piece> PIECES = new ArrayList<>();
+    private static final String PIECE_NOT_FOUND_ERROR_MESSAGE = "존재하지 않는 기물입니다.";
 
     private PiecesCache() {
     }
 
     static {
-        cachePieces();
+        try {
+            cachePieces();
+        } catch (SQLException e) {
+            System.out.println("DB로부터 색깔별 기물 캐싱에 실패했습니다.");
+            e.printStackTrace();
+        }
     }
 
-    private static void cachePieces() {
+    private static void cachePieces() throws SQLException {
         for (TeamColor teamColor : TeamColor.values()) {
             cachePiecesWithColor(teamColor);
         }
     }
 
-    private static void cachePiecesWithColor(TeamColor teamColor) {
-        List<Piece> piecesWithColor = createPiecesWithColor(teamColor);
-        pieces.addAll(piecesWithColor);
+    private static void cachePiecesWithColor(TeamColor teamColor) throws SQLException {
+        PIECES.addAll(getPiecesWithColorFromDB(teamColor));
     }
 
-    private static List<Piece> createPiecesWithColor(TeamColor teamColor) {
+    private static List<Piece> getPiecesWithColorFromDB(TeamColor teamColor)
+        throws SQLException {
         return Arrays.asList(
-            new Pawn(teamColor),
-            new Rook(teamColor),
-            new Knight(teamColor),
-            new Bishop(teamColor),
-            new Queen(teamColor),
-            new King(teamColor)
-        );
+            PIECE_DAO.findByPieceTypeAndTeamColor(PAWN, teamColor),
+            PIECE_DAO.findByPieceTypeAndTeamColor(ROOK, teamColor),
+            PIECE_DAO.findByPieceTypeAndTeamColor(KNIGHT, teamColor),
+            PIECE_DAO.findByPieceTypeAndTeamColor(BISHOP, teamColor),
+            PIECE_DAO.findByPieceTypeAndTeamColor(QUEEN, teamColor),
+            PIECE_DAO.findByPieceTypeAndTeamColor(KING, teamColor));
     }
+
 
     public static Piece find(PieceType pieceType, TeamColor teamColor) {
-        return pieces.stream()
-            .filter(piece -> piece.type() == pieceType && piece.color() == teamColor)
+        return PIECES.stream()
+            .filter(piece ->
+                piece.getPieceType() == pieceType
+                    && piece.getTeamColor() == teamColor)
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_ERROR_MESSAGE));
+    }
+
+    public static Piece findById(Long pieceId) {
+        return PIECES.stream()
+            .filter(piece -> piece.getId().equals(pieceId))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(PIECE_NOT_FOUND_ERROR_MESSAGE));
     }
 }

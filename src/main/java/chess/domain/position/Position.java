@@ -15,10 +15,18 @@ public class Position {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
+    private final Long id;
     private final File file;
     private final Rank rank;
 
+    public Position(Long id, String fileValue, String rankValue) {
+        this.id = id;
+        file = File.of(fileValue);
+        rank = Rank.of(rankValue);
+    }
+
     public Position(File file, Rank rank) {
+        id = null;
         this.file = file;
         this.rank = rank;
     }
@@ -27,30 +35,30 @@ public class Position {
         return PositionsCache.find(file, rank);
     }
 
-    public static Position of(String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
-        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
-
-        return Position.of(File.of(fileInput), Rank.of(rankInput));
+    public static Position of(String position) {
+        String file = String.valueOf(position.charAt(FILE_INDEX));
+        String rank = String.valueOf(position.charAt(RANK_INDEX));
+        return Position.of(File.of(file), Rank.of(rank));
     }
 
-    public Direction calculateDirection(Position toPosition) {
-        File targetFile = toPosition.file();
-        Rank targetRank = toPosition.rank();
+    public static Position of(Long positionId) {
+        return PositionsCache.findById(positionId);
+    }
 
-        int fileDiff = targetFile.order() - file.order();
-        int rankDiff = targetRank.value() - rank.value();
-
+    public Direction calculateDirection(Position destination) {
+        File destinationFile = destination.getFile();
+        Rank destinationRank = destination.getRank();
+        int fileDiff = destinationFile.getOrder() - file.getOrder();
+        int rankDiff = destinationRank.getValue() - rank.getValue();
         return Direction.of(fileDiff, rankDiff);
     }
 
-    public Position move(Direction direction) {
-        return new Position(file.move(direction), rank.move(direction));
+    public Position moveTo(Direction direction) {
+        return Position.of(file.getMovedFile(direction), rank.getMovedRank(direction));
     }
 
     public boolean isRankForwardedBy(Position destination, int rankDiff) {
-        return rank.isDiff(destination.rank(), rankDiff)
-            && file.isSameAs(destination.file());
+        return rank.isDiff(destination.getRank(), rankDiff) && file.isSameAs(destination.getFile());
     }
 
     public boolean isFirstPawnPosition(TeamColor teamColor) {
@@ -60,11 +68,15 @@ public class Position {
         return rank == TWO;
     }
 
-    public File file() {
+    public Long getId() {
+        return id;
+    }
+
+    public File getFile() {
         return file;
     }
 
-    public Rank rank() {
+    public Rank getRank() {
         return rank;
     }
 
@@ -76,12 +88,12 @@ public class Position {
         if (!(o instanceof Position)) {
             return false;
         }
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
+        Position that = (Position) o;
+        return getFile() == that.getFile() && getRank() == that.getRank();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(getFile(), getRank());
     }
 }

@@ -22,21 +22,17 @@ public enum File {
     }
 
     public static File of(String fileInput) {
-        return findFileByValue(fileInput);
+        return File.valueOf(fileInput.toUpperCase());
     }
 
-    private static File findFileByValue(String value) {
-        return File.valueOf(value.toUpperCase());
-    }
-
-    public File move(Direction direction) {
+    public File getMovedFile(Direction direction) {
         int movedX = order + direction.getX();
         return findFileByOrder(movedX);
     }
 
     private static File findFileByOrder(int order) {
         return Arrays.stream(values())
-            .filter(file -> file.order() == order)
+            .filter(file -> file.getOrder() == order)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
     }
@@ -45,11 +41,11 @@ public enum File {
         return this == destinationFile;
     }
 
-    public String value() {
+    public String getValue() {
         return value;
     }
 
-    public int order() {
+    public int getOrder() {
         return order;
     }
 }

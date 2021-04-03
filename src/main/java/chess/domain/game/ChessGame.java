@@ -1,109 +1,85 @@
 package chess.domain.game;
 
-import static chess.domain.player.type.TeamColor.WHITE;
-
-import chess.controller.dto.request.CommandRequestDTO;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
-import chess.controller.dto.response.ScoresResponseDTO;
+import chess.controller.dto.response.ChessGameResponseDTO;
+import chess.controller.dto.response.GameStatusResponseDTO;
+import chess.dao.entity.ChessGameEntity;
+import chess.dao.entity.GameStatusEntity;
+import chess.dao.game.ChessGameDAO;
+import chess.dao.game.ChessGameRepository;
 import chess.domain.board.Board;
+import chess.domain.board.move.MoveRequest;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
-import chess.domain.piece.Piece;
-import chess.domain.piece.type.PieceWithColorType;
-import chess.domain.player.Players;
+import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
-import chess.domain.position.Position;
-import chess.domain.position.cache.PositionsCache;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
-    private final Players players;
+    private final ChessGameRepository chessGameRepository;
     private final Board board;
-    private boolean isStarted = false;
-    private TeamColor currentTurnTeamColor = WHITE;
 
-    public ChessGame(BoardSetting boardSetting) {
-        validate(boardSetting);
-        players = new Players();
+    public ChessGame() {
         board = new Board();
-        setPieces(boardSetting);
+        chessGameRepository = new ChessGameDAO();
+    }
+
+    public Long createNew(BoardSetting boardSetting, String title) throws SQLException {
+        validate(boardSetting);
+        ChessGameEntity chessGameEntity = chessGameRepository.save(new ChessGameEntity(title));
+        board.createAndSaveNewPlayersAndPiecesPositionsOfGame(chessGameEntity.getId(), boardSetting);
+        return chessGameEntity.getId();
     }
 
     private void validate(BoardSetting boardSetting) {
-        if (!(boardSetting instanceof BoardDefaultSetting
-            || boardSetting instanceof BoardCustomSetting)) {
+        if (!(boardSetting instanceof BoardDefaultSetting || boardSetting instanceof BoardCustomSetting)) {
             throw new IllegalArgumentException("유효하지 않은 보드 세팅 객체 타입 입니다.");
         }
     }
 
-    private void setPieces(BoardSetting boardSetting) {
-        List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
-        for (int index = 0; index < piecesSetting.size(); index++) {
-            Position position = PositionsCache.get(index);
-            PieceWithColorType pieceWithColorType = piecesSetting.get(index);
-            setPiece(pieceWithColorType, position);
+    public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
+        List<ChessGameResponseDTO> chessGameResponseDTOs = new ArrayList<>();
+        for (ChessGameEntity chessGameEntity : chessGameRepository.findAll()) {
+            chessGameResponseDTOs.add(new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
         }
+        return chessGameResponseDTOs;
     }
 
-    private void setPiece(PieceWithColorType pieceWithColorType, Position position) {
-        Piece piece = null;
-        if (pieceWithColorType != null) {
-            piece = Piece.of(pieceWithColorType);
-            players.add(piece, position);
-        }
-        board.setPiece(position, piece);
+    public void move(MoveRequestDTO moveRequestDTO) throws SQLException {
+        ChessGameEntity chessGameEntity = chessGameRepository.findById(moveRequestDTO.getGameId());
+        MoveRequest moveRequest = new MoveRequest(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
+        board.validateRoute(chessGameEntity.getId(), moveRequest);
+        board.move(chessGameEntity.getId(), moveRequest);
     }
 
-    public void start() {
-        isStarted = true;
+    public BoardStatusResponseDTO getBoardStatus(Long gameId) throws SQLException {
+        return board.getStatus(gameId);
     }
 
-    public void move(CommandRequestDTO commandRequestDTO) {
-        validateIsGameStarted();
-        MoveRoute moveRoute = new MoveRoute(commandRequestDTO);
-        board.validateRoute(moveRoute, currentTurnTeamColor);
-        updatePiecesOfPlayers(moveRoute);
-        board.move(moveRoute);
+    public GameStatusResponseDTO getGameStatus(Long gameId) throws SQLException {
+        GameStatusEntity gameStatusEntity = chessGameRepository.findStatusByGameId(gameId);
+        Scores scores = board.getScores(gameId);
+        return new GameStatusResponseDTO(
+            gameId,
+            gameStatusEntity.getTitle(),
+            gameStatusEntity.getCurrentTurnTeamColor(),
+            scores.getWhitePlayerScore(),
+            scores.getBlackPlayerScore());
     }
 
-    private void validateIsGameStarted() {
-        if (!isStarted) {
-            throw new IllegalStateException("게임을 먼저 시작해 주세요.");
-        }
+    public void changeToNextTurn(Long gameId) throws SQLException {
+        ChessGameEntity chessGameEntity = chessGameRepository.findById(gameId);
+        TeamColor currentTurnTeamColor = chessGameEntity.getCurrentTurnTeamColor();
+        chessGameEntity.setCurrentTurnTeamColor(currentTurnTeamColor.oppositeTeamColor());
+        chessGameRepository.updateCurrentTurnTeamColor(chessGameEntity);
     }
 
-    private void updatePiecesOfPlayers(MoveRoute moveRoute) {
-        Piece movingPiece = board.findPiece(moveRoute.startPosition());
-        players.remove(movingPiece, moveRoute.startPosition());
-        players.add(movingPiece, moveRoute.destination());
-        if (board.isAnyPieceExistsInCell(moveRoute.destination())) {
-            Piece deadPiece = board.findPiece(moveRoute.destination());
-            players.remove(deadPiece, moveRoute.destination());
-        }
-    }
-
-    public boolean isKingDead() {
-        return board.isKingDead();
-    }
-
-    public BoardStatusResponseDTO boardStatus() {
-        validateIsGameStarted();
-        return board.status();
-    }
-
-    public ScoresResponseDTO getScores() {
-        validateIsGameStarted();
-        return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
-    }
-
-    public String winnerTeamColorKoreanName() {
-        TeamColor teamColor = board.winnerTeamColor();
-        return teamColor.KoreanName();
-    }
-
-    public void changeCurrentTurnTeamColorToOpposite() {
-        currentTurnTeamColor = currentTurnTeamColor.oppositeTeamColor();
+    public void remove(Long gameId) throws SQLException {
+        board.removeAllPlayersAndPiecesPositionsOfGame(gameId);
+        chessGameRepository.remove(gameId);
     }
 }

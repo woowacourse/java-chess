@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous">
+    <title>인비의 체스게임</title>
+</head>
+<style>
+  .cell {
+      height: 80px;
+  }
+  .status {
+      height: 50px;
+  }
+  .content {
+      display: table-cell;
+      vertical-align: middle;
+  }
+  #current-turn-team-name {
+      margin-bottom: 40px;
+  }
+  .piece-cell {
+      cursor: pointer;
+  }
+  #exit_form {
+      text-align: center;
+      margin-top: 56px;
+      margin-bottom: 73px;
+  }
+  #exit_button {
+      width: 500px;
+  }
+</style>
+<body>
+
+<h1 style="text-align: center; margin-top: 77px; margin-bottom: 50px;">{{responseDTO.title}}</h1>
+
+<div id="chess-board" style="text-align: center; width: 720px; margin-left: auto; margin-right: auto">
+
+  {{#responseDTO}}
+  <div id="current-status">
+    <div id="current-scores" style="display: flex">
+      <div class="score status content" style="flex: 1">백 팀 : {{whitePlayerScore}}점</div>
+      <div class="score status content" style="flex: 1">흑 팀 : {{blackPlayerScore}}점</div>
+    </div>
+    <div id="current-turn-team-name">현재 차례 : {{currentTurnTeamName}} 팀</div>
+  </div>
+  {{/responseDTO}}
+  <div id="chess-board-out-line" style="background-image: url('/images/chess-board.jpg'); background-size: 720px 640px;">
+    <div class="rank" style="display: flex">
+      {{#rank8}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank8}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank7}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank7}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank6}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank6}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank5}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank5}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank4}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank4}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank3}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank3}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank2}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank2}}
+    </div>
+
+    <div class="rank" style="display: flex">
+      {{#rank1}}
+      <div class="cell piece-cell content" style="flex: 1">
+        {{.}}
+      </div>
+      {{/rank1}}
+    </div>
+  </div>
+</div>
+
+
+<form id="exit_form" action="/" onsubmit="return endConfirm();">
+  <input id="exit_button" type="submit" class="btn btn-outline-danger" value="방 나가기">
+</form>
+
+
+{{#responseDTO}}
+<div id="game-id" style="display: none">{{gameId}}</div>
+<div id="is-king-dead" style="display: none">{{isKingDead}}</div>
+<div id="before-turn-team-name" style="display: none">{{beforeTurnTeamName}}</div>
+{{/responseDTO}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/chess-board.js"></script>
+</body>
+</html>

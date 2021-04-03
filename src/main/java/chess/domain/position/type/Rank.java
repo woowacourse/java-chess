@@ -28,12 +28,12 @@ public enum Rank {
 
     private static Rank findRank(int value) {
         return Arrays.stream(values())
-            .filter(rank -> rank.value() == value)
+            .filter(rank -> rank.getValue() == value)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값 입니다."));
     }
 
-    public Rank move(Direction direction) {
+    public Rank getMovedRank(Direction direction) {
         int movedY = value + direction.getY();
         return findRank(movedY);
     }
@@ -45,10 +45,10 @@ public enum Rank {
     }
 
     public boolean isDiff(Rank destinationRank, int diff) {
-        return Math.abs(value - destinationRank.value()) == diff;
+        return Math.abs(value - destinationRank.getValue()) == diff;
     }
 
-    public int value() {
+    public int getValue() {
         return value;
     }
 }

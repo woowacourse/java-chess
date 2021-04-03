@@ -1,41 +1,19 @@
 package chess.controller.dto.response;
 
 public class ChessGameResponseDTO {
-    private BoardStatusResponseDTO boardStatusResponseDTO;
-    private MoveResultResponseDTO moveResultResponseDTO;
-    private ScoresResponseDTO scoresResponseDTO;
-    private boolean isGameEnd;
+    private final Long id;
+    private final String title;
 
-    public ChessGameResponseDTO(BoardStatusResponseDTO boardStatusResponseDTO) {
-        this.boardStatusResponseDTO = boardStatusResponseDTO;
+    public ChessGameResponseDTO(Long id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
-    public ChessGameResponseDTO(MoveResultResponseDTO moveResultResponseDTO) {
-        this.moveResultResponseDTO = moveResultResponseDTO;
-        isGameEnd = moveResultResponseDTO.isKingDead();
+    public Long getId() {
+        return id;
     }
 
-    public ChessGameResponseDTO(ScoresResponseDTO scoresResponseDTO) {
-        this.scoresResponseDTO = scoresResponseDTO;
-    }
-
-    public ChessGameResponseDTO(boolean isGameEnd) {
-        this.isGameEnd = isGameEnd;
-    }
-
-    public BoardStatusResponseDTO getBoardStatusResponseDTO() {
-        return boardStatusResponseDTO;
-    }
-
-    public MoveResultResponseDTO getMoveResultResponseDTO() {
-        return moveResultResponseDTO;
-    }
-
-    public ScoresResponseDTO getScoresResponseDTO() {
-        return scoresResponseDTO;
-    }
-
-    public boolean isGameEnd() {
-        return isGameEnd;
+    public String getTitle() {
+        return title;
     }
 }

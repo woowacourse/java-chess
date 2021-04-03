@@ -7,16 +7,16 @@ public enum TeamColor {
     BLACK("black", "흑");
 
     private final String value;
-    private final String koreanName;
+    private final String name;
 
-    TeamColor(String value, String koreanName) {
+    TeamColor(String value, String name) {
         this.value = value;
-        this.koreanName = koreanName;
+        this.name = name;
     }
 
-    public static TeamColor of(String teamColorInput) {
+    public static TeamColor of(String color) {
         return Arrays.stream(values())
-            .filter(teamColor -> teamColor.value.equals(teamColorInput))
+            .filter(teamColor -> teamColor.value.equals(color))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀 색깔 입니다."));
     }
@@ -28,7 +28,15 @@ public enum TeamColor {
         return WHITE;
     }
 
-    public String KoreanName() {
-        return koreanName;
+    public String getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String oppositeTeamColorName() {
+        return oppositeTeamColor().getName();
     }
 }

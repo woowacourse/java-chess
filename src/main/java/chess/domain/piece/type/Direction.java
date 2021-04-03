@@ -22,6 +22,8 @@ public enum Direction {
     RIGHT_UP_UP(1, 2),
     RIGHT_DOWN_DOWN(1, -2);
 
+    private static final String CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE = "이동할 수 없는 도착 위치 입니다.";
+
     private final int x;
     private final int y;
 
@@ -32,7 +34,7 @@ public enum Direction {
 
     public static Direction of(int fileDiff, int rankDiff) {
         if (fileDiff == 0 && rankDiff == 0) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE);
         }
         if (fileDiff == 0 || rankDiff == 0) {
             return verticalOrHorizontalDirection(fileDiff, rankDiff);
@@ -47,7 +49,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
             .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(CANNOT_MOVE_TO_DESTINATION_ERROR_MESSAGE));
     }
 
     private static Direction diagonalDirection(int fileDiff, int rankDiff) {
@@ -89,8 +91,7 @@ public enum Direction {
     }
 
     public boolean isDiagonal() {
-        List<Direction> diagonalDirections
-            = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+        List<Direction> diagonalDirections = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
         return diagonalDirections.contains(this);
     }
 
@@ -102,9 +103,9 @@ public enum Direction {
     }
 
     public static List<Direction> knightDirections() {
-        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
-            Direction.LEFT_DOWN_DOWN, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP,
-            Direction.RIGHT_RIGHT_UP, Direction.RIGHT_RIGHT_DOWN);
+        return Arrays.asList(
+            Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.RIGHT_RIGHT_DOWN, Direction.RIGHT_RIGHT_UP,
+            Direction.LEFT_DOWN_DOWN, Direction.LEFT_UP_UP, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP);
     }
 
 

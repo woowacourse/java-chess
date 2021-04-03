@@ -1,67 +1,82 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
+import chess.dao.entity.PieceEntity;
 import chess.domain.piece.cache.PiecesCache;
 import chess.domain.piece.type.Direction;
 import chess.domain.piece.type.PieceType;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
+import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+    private final Long id;
     private final PieceType pieceType;
     private final TeamColor teamColor;
     private final double score;
     private final List<Direction> directions;
 
-    protected Piece(PieceType pieceType, TeamColor teamColor, double score,
-        List<Direction> directions) {
+    public Piece(Long id, PieceType pieceType, TeamColor teamColor, double score, List<Direction> directions) {
+        this.id = id;
         this.pieceType = pieceType;
         this.teamColor = teamColor;
         this.score = score;
         this.directions = directions;
     }
 
+    public Piece(PieceType pieceType, TeamColor teamColor, double score, List<Direction> directions) {
+        this.id = null;
+        this.pieceType = pieceType;
+        this.teamColor = teamColor;
+        this.score = score;
+        this.directions = directions;
+    }
+
+    public static Piece of(PieceEntity pieceEntity) {
+        try {
+            String className = PieceType.getClassNameByPieceType(pieceEntity.getPieceType());
+            Class<Piece> pieceClass = (Class<Piece>) Class.forName(className);
+            Constructor<?> constructor = pieceClass.getConstructor(Long.class, TeamColor.class);
+            return (Piece) constructor.newInstance(pieceEntity.getId(), pieceEntity.getTeamColor());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Piece 구현 객체 생성에 실패했습니다.");
+        }
+    }
+
     public static Piece of(PieceWithColorType pieceWithColorType) {
-        return PiecesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+        if (pieceWithColorType == null) {
+            return null;
+        }
+        return PiecesCache.find(pieceWithColorType.getPieceType(), pieceWithColorType.getTeamColor());
     }
 
     public static Piece of(PieceType pieceType, TeamColor teamColor) {
         return PiecesCache.find(pieceType, teamColor);
     }
 
-    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
-        Direction moveDirection = moveRoute.direction();
-        if (isNotCorrectDirection(moveDirection)
-            || board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
-        }
-        if (board.isOwnPieceExistsInCell(moveRoute.destination(), teamColor)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
-        }
-        return true;
+    public static Piece of(Long pieceId) {
+        return PiecesCache.findById(pieceId);
     }
 
-    protected boolean isNotCorrectDirection(Direction moveCommandDirection) {
-        return !directions.contains(moveCommandDirection);
+    public Long getId() {
+        return id;
     }
 
-    public PieceType type() {
+    public PieceType getPieceType() {
         return pieceType;
     }
 
-    public TeamColor color() {
+    public TeamColor getTeamColor() {
         return teamColor;
     }
 
-    public double score() {
+    public double getScore() {
         return score;
     }
 
-    public String name() {
-        return pieceType.name(teamColor);
+    public String getName() {
+        return pieceType.getName(teamColor);
     }
 
     @Override
@@ -79,5 +94,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(pieceType, teamColor);
+    }
+
+    public boolean isCorrectMoveDirection(Direction moveRequestDirection) {
+        return directions.contains(moveRequestDirection);
     }
 }
