@@ -1,11 +1,7 @@
 package chess;
 
-import chess.controller.dto.BoardDto;
 import chess.controller.web.WebController;
-import chess.dao.BoardDao;
 import chess.dao.DBConfig;
-import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
 
 import java.sql.Connection;
 

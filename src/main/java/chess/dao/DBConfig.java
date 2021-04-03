@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConfig {
     private static final String server = "localhost:13306"; // MySQL 서버 주소
-    private static final String database = "java_chess"; // MySQL DATABASE 이름
+    private static final String database = "java_web_chess"; // MySQL DATABASE 이름
     private static final String option = "?useSSL=false&serverTimezone=UTC";
     private static final String userName = "root"; //  MySQL 서버 아이디
     private static final String password = "root"; // MySQL 서버 비밀번호

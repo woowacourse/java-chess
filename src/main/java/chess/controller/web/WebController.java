@@ -110,7 +110,7 @@ public class WebController {
             for(Horizontal h : Horizontal.values()){
                 Piece piece = board.of(new Position(v,h));
                 String uniCode = PieceSymbolMapper.parse(piece.owner(), piece.symbol());
-                uniCodeBoard[v.getIndex()-1][h.getIndex()-1] = uniCode;
+                uniCodeBoard[h.getIndex()-1][v.getIndex()-1] = uniCode;
             }
         }
         return uniCodeBoard;

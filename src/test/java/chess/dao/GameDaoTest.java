@@ -18,25 +18,25 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardDaoTest {
+class GameDaoTest {
 
-    private BoardDao dao;
+    private GameDao dao;
 
     @BeforeEach
     void init(){
         DBConfig dbConfig = new DBConfig();
         Connection connection = dbConfig.getConnection();
-        dao = new BoardDao(connection);
+        dao = new GameDao(connection);
     }
 
-    @DisplayName("Board의 현재 상태가 db에 저장되는지 확인한다.")
+    @DisplayName("Game의 현재 상태가 db에 저장되는지 확인한다.")
     @Test
     void testInsert(){
         Board board = BoardInitializer.initiateBoard();
         BoardDto boardDto = new BoardDto();
         boardDto.setBoard(boardMapping(board));
         try{
-            dao.insertBoard(boardDto);
+            dao.addGameStatus("white",boardDto);
         }catch (SQLException e){
             System.out.println(e.getMessage());
             fail();
@@ -50,7 +50,7 @@ class BoardDaoTest {
             for(Horizontal h : Horizontal.values()){
                 Piece piece = board.of(new Position(v,h));
                 String uniCode = PieceSymbolMapper.parse(piece.owner(), piece.symbol());
-                uniCodeBoard[v.getIndex()-1][h.getIndex()-1] = uniCode;
+                uniCodeBoard[h.getIndex()-1][v.getIndex()-1] = uniCode;
             }
         }
         return uniCodeBoard;
