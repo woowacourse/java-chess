@@ -74,7 +74,9 @@ public class WebUIChessController {
         boolean movable = board.isMovable(dto.getTo(), board.generateAvailablePath(
             board.findPieceBy(dto.getFrom())));
         game.move(dto.getFrom(), dto.getTo());
-        moveDao.addMove(dto.getFrom(), dto.getTo());
+        if (movable) {
+            moveDao.addMove(dto.getFrom(), dto.getTo());
+        }
         return movable;
     }
 
