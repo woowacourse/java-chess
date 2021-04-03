@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Knight extends PieceOnBoard {
-
     public Knight(TeamColor teamColor) {
         super(teamColor, PieceInformation.KNIGHT);
     }

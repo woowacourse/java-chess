@@ -14,6 +14,7 @@ public class WhiteSet implements PieceSet {
     public static final int INITIAL_CAPACITY = 16;
     public static final double MINUS_HALF_POINT = -0.5;
     private static final TeamColor WHITE = TeamColor.WHITE;
+
     private final List<Piece> pieces;
 
     public WhiteSet() {

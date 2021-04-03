@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Bishop extends PieceOnBoard {
-
     public Bishop(TeamColor teamColor) {
         super(teamColor, PieceInformation.BISHOP);
     }
@@ -27,6 +26,5 @@ public class Bishop extends PieceOnBoard {
         final Set<Position> candidates = moveDiagonalAsPossible(target, chessBoard);
         return candidates.contains(target);
     }
-
 
 }

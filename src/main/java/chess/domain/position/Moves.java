@@ -3,7 +3,6 @@ package chess.domain.position;
 import java.util.function.UnaryOperator;
 
 public enum Moves {
-
     UP(position -> position.move(0, 1)),
     DOWN(position -> position.move(0, -1)),
     RIGHT(position -> position.move(1, 0)),

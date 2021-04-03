@@ -7,7 +7,6 @@ import chess.domain.team.Score;
 import java.util.Map;
 
 public class Blank implements Piece {
-
     public static final Blank INSTANCE = new Blank();
 
     private Blank() {
@@ -57,7 +56,6 @@ public class Blank implements Piece {
     public Score getScore() {
         throw new UnsupportedOperationException("빈칸은 점수가 없어요~");
     }
-
 
     @Override
     public Character getColumn() {

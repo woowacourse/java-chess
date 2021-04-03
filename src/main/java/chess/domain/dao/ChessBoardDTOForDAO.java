@@ -9,7 +9,6 @@ public class ChessBoardDTOForDAO {
     private String alive;
 
     public ChessBoardDTOForDAO() {
-
     }
 
     public ChessBoardDTOForDAO(String position, String teamColor, String pieceType, String alive) {

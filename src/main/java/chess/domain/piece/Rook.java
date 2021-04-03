@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Rook extends PieceOnBoard {
-
     public Rook(TeamColor teamColor) {
         super(teamColor, PieceInformation.ROOK);
     }
@@ -27,6 +26,5 @@ public class Rook extends PieceOnBoard {
         Set<Position> candidates = moveCrossAsPossible(target, chessBoard);
         return candidates.contains(target);
     }
-
 
 }

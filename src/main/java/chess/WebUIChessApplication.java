@@ -21,6 +21,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static final ChessBoardDAO chessBoardDao = new ChessBoardDAO();
+
     private static ChessBoard chessBoard = new ChessBoard();
 
     public static void main(String[] args) {

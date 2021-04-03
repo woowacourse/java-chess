@@ -29,6 +29,7 @@ public class ChessBoard {
 
     private final PieceSet whitePieces;
     private final PieceSet blackPieces;
+
     private GameState gameState;
 
     public ChessBoard() {

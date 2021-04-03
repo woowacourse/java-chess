@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Pawn extends PieceOnBoard {
-
     public Pawn(TeamColor teamColor) {
         super(teamColor, PieceInformation.PAWN);
     }
@@ -35,4 +34,5 @@ public class Pawn extends PieceOnBoard {
     public boolean isPawn() {
         return true;
     }
+
 }

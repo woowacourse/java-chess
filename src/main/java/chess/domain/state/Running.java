@@ -71,5 +71,4 @@ public class Running extends Game {
         return true;
     }
 
-
 }

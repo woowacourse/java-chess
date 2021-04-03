@@ -10,11 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class Queen extends PieceOnBoard {
-
     public Queen(TeamColor teamColor) {
         super(teamColor, PieceInformation.QUEEN);
     }
-
 
     public Queen(TeamColor teamColor, Position position) {
         super(teamColor, PieceInformation.QUEEN, position);

@@ -33,5 +33,4 @@ public class Finished extends Game {
         return false;
     }
 
-
 }

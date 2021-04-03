@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public enum Commands {
-
     START("start", (chessBoard, list) -> {
         OutputView.printBoard(chessBoard.getChessBoard());
     }),

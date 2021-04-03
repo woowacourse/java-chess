@@ -14,6 +14,7 @@ import java.util.Set;
 public abstract class PieceOnBoard implements Piece {
     private final TeamColor teamColor;
     private final PieceInformation pieceType;
+
     private State state;
     private Position currentPosition;
 

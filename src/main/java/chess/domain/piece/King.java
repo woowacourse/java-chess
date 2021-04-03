@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class King extends PieceOnBoard {
-
     public King(TeamColor teamColor) {
         super(teamColor, PieceInformation.KING);
     }
@@ -42,4 +41,5 @@ public class King extends PieceOnBoard {
     public boolean isKing() {
         return true;
     }
+
 }
