@@ -107,8 +107,8 @@
 ```mysql
 CREATE TABLE board (
 	board_id INTEGER NOT NULL AUTO_INCREMENT,
-	white_player VARCHAR(12),
-	black_player VARCHAR(12),
+	white_player VARCHAR(12) NOT NULL,
+	black_player VARCHAR(12) NOT NULL,
 	turn_is_white BOOLEAN NOT NULL DEFAULT true,
 	is_finish BOOLEAN NOT NULL DEFAULT false, 
 	PRIMARY KEY (board_id)
