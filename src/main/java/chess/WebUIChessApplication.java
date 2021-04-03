@@ -70,6 +70,14 @@ public class WebUIChessApplication {
 
         });
 
+        post("/status", (req, res) -> {
+            if(chessGame == null || chessGame.isReady() || chessGame.isFinished()) {
+                return gson.toJson(new ChessBoardDto("false", null,"게임을 실행시켜주세요."));
+            }
+            String result = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
+            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), result));
+        });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

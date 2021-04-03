@@ -78,3 +78,28 @@ function endGame() {
         location.reload();
     })
 }
+
+document.getElementById("status-btn").addEventListener("click", status);
+
+function status() {
+    axios({
+        method: 'post',
+        url: '/status'
+    }).then((res) => {
+        const data = res.data;
+        if(data.isOk === "false"){
+            alert(data.message);
+            return;
+        }
+        const result = document.getElementById('status');
+        const div = document.createElement('div');
+        div.setAttribute('id', 'status-result');
+
+        const h1 = document.createElement("h1");
+        h1.innerHTML = data.message;
+        div.appendChild(h1);
+
+        result.appendChild(div);
+
+    })
+}
