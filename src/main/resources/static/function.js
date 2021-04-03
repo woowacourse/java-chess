@@ -26,7 +26,7 @@ let source = null;
 window.onload = () => {
     const divs = BOARD.querySelectorAll("div");
     document.querySelector("#exit-button").addEventListener("click", exitButtonEvent);
-    // history.pushState(null, "우아한 체스", API_URL+"chess");
+    history.pushState(null, "우아한 체스", API_URL+"chess");
     boardJoin();
     for (const div of divs) {
         div.addEventListener("click", divClickEvent);
@@ -41,13 +41,14 @@ function boardJoin() {
     fetch(API_URL + "join", option)
     .then((response) => {
         if (!response.ok) {
-            throw new Error(" ");
+            throw new Error("보드정보를 조회 할 수 없습니다.");
         }
         return response.json();
     })
     .then(imageSetting)
     .catch((error) => {
-        console.log(error);
+        alert(error);
+        exitButtonEvent();
     });
 }
 
@@ -128,13 +129,13 @@ function movedPieces(source, target) {
     fetch(API_URL + "move", option)
     .then((response) => {
         if (!response.ok) {
-            throw new Error(" ");
+            throw new Error("문제가 발생했습니다. 관리자에게 문의하세요.");
         }
         return response.json();
     })
     .then(imageSetting)
     .catch((error) => {
-        console.log(error);
+        alert(error);
     });
 }
 
@@ -158,7 +159,7 @@ function getMovablePositions(sourcePosition) {
     fetch(API_URL + "movablePositions?source=" + sourcePosition + "&boardId=" + BOARD_ID)
     .then((response) => {
         if (!response.ok) {
-            throw new Error(" ");
+            throw new Error("문제가 발생했습니다. 관리자에게 문의하세요.");
         }
         return response.json();
     })
@@ -167,7 +168,7 @@ function getMovablePositions(sourcePosition) {
         movablePositionSetting(true);
     })
     .catch((error) => {
-        console.log(error);
+        alert(error);
     });
 }
 
