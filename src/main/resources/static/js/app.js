@@ -87,11 +87,22 @@ chessBoard.addEventListener("click", (source) => {
         sourceKey.value = source.target.parentElement.id;
         return;
     }
+
     targetKey.value = source.target.parentElement.id;
+
+    if(isSamePosition()){
+        alert("같은 위치의 돌을 선택할 수 없습니다.");
+        clearMoveSource();
+        return;
+    }
 
     movePiece();
     clearMoveSource();
 })
+
+function isSamePosition() {
+    return sourceKey.value === targetKey.value;
+}
 
 function isEmpty(value) {
     return !value || value === "";
