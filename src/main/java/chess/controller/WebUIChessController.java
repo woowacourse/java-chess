@@ -10,7 +10,6 @@ import chess.DTO.MoveRequestDto;
 import chess.DTO.ScoreDto;
 import chess.domain.Game;
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.piece.PieceColor;
 import chess.domain.state.Running;
 import com.google.gson.Gson;
@@ -30,7 +29,6 @@ public class WebUIChessController {
         this.game = new Game();
         game.changeState(new Running());
         this.board = game.getBoard();
-//        board = BoardFactory.initializeBoard();
         run();
     }
 
@@ -68,8 +66,8 @@ public class WebUIChessController {
         return new ScoreDto(board).getScores();
     }
 
-    private Object isWhiteTurn(final Request request, final Response response) {
-        return null;
+    private PieceColor isWhiteTurn(final Request request, final Response response) {
+        return game.getTurn();
     }
 
     private BoardDto getBoard(final Request request, final Response response) {
