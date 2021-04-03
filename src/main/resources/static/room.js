@@ -94,6 +94,7 @@ function updateBoardInfo(responseData) {
       newTableRow.className += "table-secondary";
       tableDataFinish.innerText = "finish";
     } else {
+      newTableRow.className += "table-light";
       tableDataFinish.innerText = "play";
     }
     newTableRow.appendChild(tableDataBoardId);
