@@ -10,13 +10,12 @@ public abstract class AbstractDAO {
 
     public Connection connection() {
         Connection connection = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_name"; // MySQL DATABASE 이름
+        String server = "localhost:13306";
+        String database = "db_name";
         String option = "?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+        String userName = "root";
+        String password = "root";
 
-        // 드라이버 로딩
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -24,7 +23,6 @@ public abstract class AbstractDAO {
             e.printStackTrace();
         }
 
-        // 드라이버 연결
         try {
             connection = DriverManager
                 .getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
