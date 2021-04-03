@@ -59,23 +59,17 @@ public class ChessGameService {
 
     public ChessGameDto findLatestGame() {
         Optional<ChessGameEntity> chessGameEntityOptional = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn();
-        boolean isExistPlayingGame = chessGameEntityOptional.isPresent();
+        boolean isExistPlayingGame = chessGameEntityOptional
+                .isPresent();
         if (!isExistPlayingGame) {
             return ChessGameDto.createFinishedDto();
         }
 
         ChessGameEntity chessGameEntity = chessGameEntityOptional
-                .filter(ChessGameEntity::isPlaying)
                 .orElseThrow(NotFoundPlayingChessGameException::new);
         Long chessGameId = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
         return new ChessGameDto(chessGame);
-    }
-
-    private ChessGameEntity findLatestPlayingGame() {
-        return chessGameDAO.findByStateIsBlackTurnOrWhiteTurn()
-                .orElseThrow(() -> new NotFoundPlayingChessGameException());
-
     }
 
     public ChessGameDto endGame() {
@@ -94,6 +88,11 @@ public class ChessGameService {
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, id);
 
         return new ScoreDto(chessGame);
+    }
+
+    private ChessGameEntity findLatestPlayingGame() {
+        return chessGameDAO.findByStateIsBlackTurnOrWhiteTurn()
+                .orElseThrow(() -> new NotFoundPlayingChessGameException());
     }
 
     private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity, final Long chessGameId) {
