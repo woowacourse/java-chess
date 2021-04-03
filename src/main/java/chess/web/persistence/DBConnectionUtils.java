@@ -37,14 +37,4 @@ public class DBConnectionUtils {
 
         return con;
     }
-
-    public static void closeConnection(Connection con) {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
 }

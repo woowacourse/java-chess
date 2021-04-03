@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import static chess.web.persistence.DBConnectionUtils.closeConnection;
 import static chess.web.persistence.DBConnectionUtils.getConnection;
 
 import chess.web.dto.ChessGameDTO;
@@ -16,35 +15,39 @@ public class ChessGameDAO {
 
     public String addGame(ChessGame chessGame) throws SQLException {
         String query = "INSERT INTO chess_game (name) VALUES (?)";
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
+        final Connection con = getConnection();
+        final PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, chessGame.getName());
-
         pstmt.executeUpdate();
-        ResultSet rs = pstmt.getGeneratedKeys();
-        rs.next();
-        String gameId = rs.getString(1);
-        closeConnection(con);
-        return gameId;
+        final ResultSet rs = pstmt.getGeneratedKeys();
+
+        try (con; pstmt; rs) {
+            rs.next();
+            return rs.getString(1);
+        }
     }
 
     public List<ChessGameDTO> findActiveGames() throws SQLException {
         String query = "SELECT * FROM chess_game WHERE is_end = false ORDER BY created_at";
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
 
-        ResultSet rs = pstmt.executeQuery();
+        final Connection con = getConnection();
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        final ResultSet rs = pstmt.executeQuery();
 
-        List<ChessGameDTO> gameDTOS = new ArrayList<>();
+        try (con; pstmt; rs) {
+            return activeGamesFromResultSet(rs);
+        }
+    }
+
+    private List<ChessGameDTO> activeGamesFromResultSet(ResultSet rs) throws SQLException {
+        List<ChessGameDTO> gameDTOs = new ArrayList<>();
         while (rs.next()) {
             ChessGameDTO gameDTO = new ChessGameDTO(
                     rs.getString("id"),
                     rs.getString("name"));
-            gameDTOS.add(gameDTO);
+            gameDTOs.add(gameDTO);
         }
-
-        closeConnection(con);
-        return gameDTOS;
+        return gameDTOs;
     }
 }
