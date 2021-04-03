@@ -91,6 +91,10 @@ h1 {
   font-weight: bold;
 }
 
+.end {
+  pointer-events: none;
+}
+
 .menu-box {
   width: 20%;
   height: 420px;
