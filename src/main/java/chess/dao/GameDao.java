@@ -88,4 +88,12 @@ public final class GameDao {
         }
         return GameSerializer.deserialize(gameInfo);
     }
+
+    public void deleteGame(String gameId) throws SQLException {
+        String query = "DELETE FROM games WHERE game_id = ?";
+        Connection con = getConnection();
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, gameId);
+        pstmt.executeUpdate();
+    }
 }

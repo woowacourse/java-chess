@@ -52,4 +52,9 @@ class GameDaoTest {
         Result result = game.result(command);
         OutputView.print(result.infoAsString());
     }
+
+    @Test
+    void deleteGame() throws Exception {
+        gameDao.deleteGame("1");
+    }
 }
