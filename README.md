@@ -1,6 +1,26 @@
 # java-chess
 체스 게임 구현을 위한 저장소
 
+## 체스 게임 실행 정보
+
+### 새로운 게임 시작 
+
+![image](https://user-images.githubusercontent.com/63405904/113469674-7b4d6700-948a-11eb-93a8-e1bff7b954aa.png)
+
+### 기존 게임 이어하기
+
+### ![image](https://user-images.githubusercontent.com/63405904/113469744-1c3c2200-948b-11eb-9174-c90d40ef6c05.png) 
+
+### Database EER 다이아그램 
+
+<img src="https://user-images.githubusercontent.com/63405904/113469763-3c6be100-948b-11eb-97b0-485d21eaf66a.png" width="40%" /> 
+
+### 게임 실행 데모 
+
+<iframe width="640" height="360" src="https://www.youtube.com/watch?v=lTuDw-Taow0" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+
+## Todo List
+
 ## 1 단계 - 체스판 초기화 
 - [x] 말 색깔 정보 Enum 객체
     - [x] Enum 값 : B, W, void
