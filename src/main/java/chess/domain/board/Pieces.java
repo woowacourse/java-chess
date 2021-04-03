@@ -158,6 +158,9 @@ public final class Pieces {
 
     public List<Position> movablePositions(Position sourcePosition) {
         Piece piece = pieces.get(sourcePosition);
+        if (Objects.isNull(piece)) {
+            throw new IllegalArgumentException("빈 공간은 이동경로가 없습니다.");
+        }
         return piece.movablePositions(pieces());
     }
 }
