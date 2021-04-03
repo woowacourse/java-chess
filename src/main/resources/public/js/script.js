@@ -12,7 +12,9 @@ addEventOnStartButton();
 function processResponse(responseJsonBody, successScenarioFunction) {
     if (Math.floor(responseJsonBody.statusCode / 100) === 2) {
         successScenarioFunction();
+        return;
     }
+    console.log(responseJsonBody.message);
 }
 
 function SquareBuffer() {
