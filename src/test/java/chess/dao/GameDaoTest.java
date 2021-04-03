@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +37,20 @@ class GameDaoTest {
         BoardDto boardDto = new BoardDto();
         boardDto.setBoard(boardMapping(board));
         try{
-            dao.addGameStatus("white",boardDto);
+            dao.addGameStatus(0,"black", boardDto);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            fail();
+        }
+    }
+
+    @DisplayName("게임 Room id에 해당하는 가장 최신의 게임 정보를 가져온다.")
+    @Test
+    void testSelect() {
+        try{
+            ResultSet rs = dao.selectLastGameStatus(0);
+            rs.next();
+            assertThat(rs.getString("turn")).isEqualTo("black");
         }catch (SQLException e){
             System.out.println(e.getMessage());
             fail();

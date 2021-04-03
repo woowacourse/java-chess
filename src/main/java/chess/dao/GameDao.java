@@ -14,13 +14,21 @@ public class GameDao {
         this.conn = connection;
     }
 
-    public int addGameStatus(final String turn, final BoardDto board) throws SQLException {
-        final String query = "INSERT INTO game_status (turn, board) VALUES (?, ?)";
+    public int addGameStatus(final int roomId, final String turn, final BoardDto board) throws SQLException {
+        final String query = "INSERT INTO game_status (room, turn, board) VALUES (?, ?, ?)";
         PreparedStatement insertQuery = conn.prepareStatement(query);
-        insertQuery.setString(1, turn);
-        insertQuery.setString(2, boardData(board.getBoard()));
+        insertQuery.setString(1, String.valueOf(roomId));
+        insertQuery.setString(2, turn);
+        insertQuery.setString(3, boardData(board.getBoard()));
         insertQuery.executeUpdate();
         return getLastInsertId();
+    }
+
+    public ResultSet selectLastGameStatus(final int roomId) throws SQLException {
+        final String query = "SELECT * FROM game_status WHERE room = (?) ORDER BY id DESC limit 1";
+        PreparedStatement insertQuery = conn.prepareStatement(query);
+        insertQuery.setString(1, String.valueOf(roomId));
+        return insertQuery.executeQuery();
     }
 
     public int getLastInsertId() throws SQLException {
