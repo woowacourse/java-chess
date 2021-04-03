@@ -1,5 +1,6 @@
 package chess.domain.entity;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Movement {
@@ -33,5 +34,18 @@ public class Movement {
 
     public String getTargetPosition() {
         return targetPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movement movement = (Movement) o;
+        return Objects.equals(id, movement.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, chessId, sourcePosition, targetPosition);
     }
 }

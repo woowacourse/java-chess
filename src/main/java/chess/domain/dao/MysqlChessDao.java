@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MysqlChessDao implements ChessDao {
@@ -67,6 +66,8 @@ public class MysqlChessDao implements ChessDao {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
+                closeResources(connection, preparedStatement);
+                resultSet.close();
                 return Optional.empty();
             }
             Chess chess = new Chess(

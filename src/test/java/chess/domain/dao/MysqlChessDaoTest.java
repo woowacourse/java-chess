@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MysqlChessDaoTest {
-
     private final MysqlChessDao mysqlChessDao = new MysqlChessDao();
 
     @DisplayName("체스 저장 테스트")
