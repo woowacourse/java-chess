@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.exception.DomainException;
+
 public class GameEnd implements State {
     public GameEnd() {
         super();
@@ -12,7 +14,7 @@ public class GameEnd implements State {
 
     @Override
     public State end() {
-        throw new IllegalArgumentException("종료할 수 없습니다. - 실행중인 게임이 없습니다.");
+        throw new DomainException("종료할 수 없습니다. - 실행중인 게임이 없습니다.");
     }
 
     @Override
@@ -22,7 +24,7 @@ public class GameEnd implements State {
 
     @Override
     public State move(boolean isKingDead) {
-        throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 실행중인 게임이 없습니다.");
+        throw new DomainException("이동 명령을 수행할 수 없습니다. - 실행중인 게임이 없습니다.");
     }
 
     @Override

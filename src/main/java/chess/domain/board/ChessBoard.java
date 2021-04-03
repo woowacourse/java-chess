@@ -12,6 +12,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.statistics.ScoreTable;
+import chess.exception.DomainException;
 
 import java.util.*;
 import java.util.function.Function;
@@ -40,7 +41,7 @@ public class ChessBoard {
     public MoveResult move(MoveRoute moveRoute) {
         Position fromPosition = moveRoute.getFromPosition();
         if (!this.hasPiece(fromPosition)) {
-            throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
+            throw new DomainException("해당 위치에는 말이 없습니다.");
         }
 
         Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
@@ -53,7 +54,7 @@ public class ChessBoard {
             return new MoveResult(piece);
         }
 
-        throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
+        throw new DomainException("기물이 움직일 수 없는 상황입니다.");
     }
 
     public MoveRoute createMoveRoute(Position from, Position to) {

@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.domain.ChessGameManager;
 import chess.domain.position.Position;
+import chess.exception.CommandValidationException;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class Move implements Command {
 
     public Move(List<String> commands) {
         if (commands.size() != MOVE_COMMAND_PROPER_SIZE) {
-            throw new IllegalArgumentException("유효하지 않은 이동 명령입니다.");
+            throw new CommandValidationException("유효하지 않은 이동 명령입니다.");
         }
         from = Position.of(commands.get(FROM_POSITION_INDEX));
         to = Position.of(commands.get(TO_POSITION_INDEX));

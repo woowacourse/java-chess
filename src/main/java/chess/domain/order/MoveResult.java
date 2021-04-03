@@ -2,6 +2,7 @@ package chess.domain.order;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.RealPiece;
+import chess.exception.DomainException;
 
 public class MoveResult {
     private final Piece capturedPiece;
@@ -18,6 +19,6 @@ public class MoveResult {
         if (isCaptured()) {
             return (RealPiece) capturedPiece;
         }
-        throw new IllegalArgumentException("잡힌 말이 없습니다.");
+        throw new DomainException("잡힌 말이 없습니다.");
     }
 }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.exception.DomainException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,7 +35,7 @@ public class ColoredPieces {
 
     public void remove(RealPiece realPiece) {
         if (!realPiece.isSameColor(this.color)) {
-            throw new IllegalArgumentException("진영이 다른 피스를 제거할 수 없습니다");
+            throw new DomainException("진영이 다른 피스를 제거할 수 없습니다");
         }
         pieces.remove(realPiece);
     }

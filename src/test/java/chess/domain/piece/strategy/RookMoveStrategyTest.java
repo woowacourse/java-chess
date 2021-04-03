@@ -3,6 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import chess.exception.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class RookMoveStrategyTest {
     @CsvSource({"a1, b2", "a1, b8"})
     void throwExceptionWhenWrongDirection(String from, String to) {
         assertThatThrownBy(() -> whiteRook.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
 
@@ -53,7 +54,7 @@ class RookMoveStrategyTest {
     @Test
     void whenBlockedThrowTest() {
         assertThatThrownBy(() -> whiteRook.canMove(chessBoard.createMoveRoute(Position.of("a1"), Position.of("a3"))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
 

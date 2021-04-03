@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.ChessBoard;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
@@ -9,11 +9,11 @@ import chess.domain.position.Position;
 import chess.domain.state.*;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.domain.statistics.MatchResult;
+import chess.exception.DomainException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class ChessGameManager {
@@ -46,7 +46,7 @@ public class ChessGameManager {
     public void move(Position from, Position to) {
         validateProperPieceAtFromPosition(from);
         if (this.state.isNotRunning()) {
-            throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
+            throw new DomainException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
         }
 
         MoveResult moveResult = chessBoard.move(chessBoard.createMoveRoute(from, to));
@@ -65,13 +65,13 @@ public class ChessGameManager {
 
     private void validateHasPieceAtFromPosition(Position from) {
         if (!this.chessBoard.hasPiece(from)) {
-            throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
+            throw new DomainException("해당 위치에는 말이 없습니다.");
         }
     }
 
     private void validateTurn(Position from) {
         if (!chessBoard.getPieceByPosition(from).isSameColor(this.currentTurnColor)) {
-            throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
+            throw new DomainException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
         }
     }
 
@@ -79,7 +79,7 @@ public class ChessGameManager {
         return coloredPieces.stream()
                 .filter(pieces -> pieces.isSameColor(color))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("시스템 에러 - 진영을 찾을 수 없습니다."));
+                .orElseThrow(() -> new DomainException("시스템 에러 - 진영을 찾을 수 없습니다."));
     }
 
     private void turnOver() {

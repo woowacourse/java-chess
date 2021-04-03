@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.exception.DomainException;
+
 import java.util.Arrays;
 
 public enum Color {
@@ -10,6 +12,6 @@ public enum Color {
         return Arrays.stream(values())
                 .filter(color -> this != color)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("반대되는 색상이 없습니다."));
+                .orElseThrow(() -> new DomainException("반대되는 색상이 없습니다."));
     }
 }

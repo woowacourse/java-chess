@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.exception.DomainException;
+
 public class InitialState implements State {
     public InitialState() {
         super();
@@ -17,12 +19,12 @@ public class InitialState implements State {
 
     @Override
     public State status() {
-        throw new IllegalArgumentException("통계를 보여줄 수 없습니다. - 진행했거나 진행한 게임이 없습니다.");
+        throw new DomainException("통계를 보여줄 수 없습니다. - 진행했거나 진행한 게임이 없습니다.");
     }
 
     @Override
     public State move(boolean isKingDead) {
-        throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
+        throw new DomainException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
     }
 
     @Override

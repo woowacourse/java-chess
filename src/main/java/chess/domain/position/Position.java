@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.exception.DomainException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +29,7 @@ public class Position {
         List<String> splitPosition = Arrays.asList(position.split(""));
 
         if (splitPosition.size() != POSITION_FORMAT_LENGTH || !positionPattern.matcher(position).find()) {
-            throw new IllegalArgumentException("위치 형식에 맞는 입력이 아닙니다.");
+            throw new DomainException("위치 형식에 맞는 입력이 아닙니다.");
         }
         File file = File.from(splitPosition.get(FILE_INDEX));
         Rank rank = Rank.from(splitPosition.get(RANK_INDEX));

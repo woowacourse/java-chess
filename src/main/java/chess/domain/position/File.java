@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.exception.DomainException;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -40,7 +42,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == coordinate)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 좌표의 File이 없습니다."));
+                .orElseThrow(() -> new DomainException("해당하는 좌표의 File이 없습니다."));
     }
 
     public String getLetter() {
