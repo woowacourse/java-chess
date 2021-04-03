@@ -20,6 +20,7 @@ import static spark.Spark.get;
 import static spark.Spark.put;
 
 public class WebUIChessController {
+    private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
     private ChessGame chessGame = new ChessGame();
 
     public WebUIChessController() {
@@ -54,27 +55,26 @@ public class WebUIChessController {
     public void start() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            getPieces(model);
+            model.put("pieces", getPieceDTOs());
             return render(model, "chess.html");
         });
     }
 
-    private void getPieces(final Map<String, Object> model) {
+    private List<PieceDTO> getPieceDTOs() {
         List<PieceDTO> pieceDTOGroup = new ArrayList<>();
-
         for (Piece piece : getEntirePieces()) {
             Position piecePosition = piece.getPosition();
             PieceDTO pieceDTO = new PieceDTO(piece.getTeam(), piecePosition.getRow() + String.valueOf(piecePosition.getColumn()), piece.getInitial());
             pieceDTOGroup.add(pieceDTO);
         }
-        model.put("pieces", pieceDTOGroup);
+        return pieceDTOGroup;
     }
+
 
     private List<Piece> getEntirePieces() {
         Board board = chessGame.getBoard();
         List<Piece> pieces = board.piecesByTeam(Team.BLACK).toList();
         pieces.addAll(board.piecesByTeam(Team.WHITE).toList());
-
         return pieces;
     }
 
@@ -83,17 +83,12 @@ public class WebUIChessController {
         put("/move", (req, res) -> {
             Map<String, Object> requestBody = gson.fromJson(req.body(), HashMap.class);
 
-            Map<String, Object> model = new HashMap<>();
             String startPoint = (String) requestBody.get("startPoint");
             String endPoint = (String) requestBody.get("endPoint");
-
             Position startPosition = position(startPoint);
             Position endPosition = position(endPoint);
             chessGame.move(startPosition, endPosition);
-
-            getPieces(model);
-            return gson.toJson(model.get("pieces"));
-            //return render(model, "chess.html");
+            return gson.toJson(getPieceDTOs());
         });
     }
 
@@ -104,7 +99,8 @@ public class WebUIChessController {
         );
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+
+    private static String render(final Map<String, Object> model, final String templatePath) {
+        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 }

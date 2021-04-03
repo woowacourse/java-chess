@@ -53,9 +53,9 @@ function pieceMoveTry(startPoint, endPoint) {
             return response.json();
             //return null;
         }).then((responseData) => {
-            pieceMove(responseData);
-            getStatus();
-        })
+        pieceMove(responseData);
+        getStatus();
+    })
         .catch((error) => {
             console.log(error);
             alert(error);
@@ -65,7 +65,6 @@ function pieceMoveTry(startPoint, endPoint) {
 function pieceMove(pieces) {
     boardReset();
     for (const piece of pieces) {
-        console.log(piece);
         const position = piece["position"];
         const team = piece["team"];
         const initial = piece["initial"];
@@ -100,6 +99,7 @@ function applyStatus(response) {
     scoreBoard.querySelector("#white-score .score").textContent = response["whiteScore"];
     if (response["isKingDie"] === true) {
         alert("왕이 죽었습니다!");
+        alert("승자는! " + response["winner"]);
         isKingDie = true;
     }
 }
