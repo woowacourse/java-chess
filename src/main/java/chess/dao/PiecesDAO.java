@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.SymbolToPieceConvert;
 import chess.domain.board.Pieces;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.dto.WebPiecesDTO;
@@ -51,7 +51,7 @@ public final class PiecesDAO extends AbstractDAO {
             String piecePosition = resultSet.getString("piece_position");
             Position position = Position.of(piecePosition);
             String pieceSymbol = resultSet.getString("piece_symbol");
-            Piece piece = SymbolToPieceConvert.convert(pieceSymbol, position);
+            Piece piece = AbstractPiece.of(pieceSymbol, position);
             pieces.put(position, piece);
         }
         return pieces;
