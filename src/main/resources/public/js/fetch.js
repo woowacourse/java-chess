@@ -8,7 +8,7 @@ export async function getScores() {
   return await response.json();
 }
 
-export async function getMovablePath(from) {
+export async function showPath(from) {
   const data = await fetch("http://localhost:8080/board/movable", {
     method: "POST",
     body: JSON.stringify({from})
@@ -19,7 +19,8 @@ export async function getMovablePath(from) {
 export async function move(from, to){
   const data = await fetch("http://localhost:8080/board/move", {
     method: "POST",
-    body: JSON.stringify({from, to})
+    body:JSON.stringify({from, to}),
+    headers: {'Content-Type': 'application/json'}
   });
   return await data.json();
 }

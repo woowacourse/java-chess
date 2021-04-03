@@ -197,3 +197,7 @@ h1 {
 .d-flex > .selected, .d-flex > .start-pink > .selected, img > .selected {
   background-color: aquamarine;
 }
+
+.d-flex > .path, .d-flex > .start-pink > .path {
+  background-color: lawngreen;
+}
