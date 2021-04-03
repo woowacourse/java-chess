@@ -14,14 +14,14 @@ public enum Color {
     }
 
     public static Color of(boolean color) {
-        return Arrays.stream(values())
-                .filter(value -> value.color == color)
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException());
+        if (color) {
+            return BLACK;
+        }
+        return WHITE;
     }
 
     public static String findColorName(Boolean color) {
-        if (BLACK.getValue() == color) {
+        if (BLACK.color == color) {
             return BLACK.name();
         }
         return WHITE.name();

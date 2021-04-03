@@ -57,7 +57,6 @@ public class Pawn extends Piece {
             return true;
         }
 
-        // 2칸 이동이 가능하다면 true, 아니라면 false를 반환한다.
         return PAWNS.containsKey(start)
                 && (next.move(direction).notEmptyPosition() && next.move(direction).equals(end))
                 && !board.containsKey(end);

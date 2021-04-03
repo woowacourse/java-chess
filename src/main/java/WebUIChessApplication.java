@@ -26,7 +26,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         ChessGame game = new ChessGame();
         WebMenuController menuController = new WebMenuController();
         GameDao gameDao = new GameDao();
@@ -88,7 +88,6 @@ public class WebUIChessApplication {
         JsonObject jsonObject = (JsonObject) JsonParser.parseString(gameInfoJason);
         String response = jsonObject.get("response").getAsString();
         JsonElement pieces2 = ((JsonObject) JsonParser.parseString(response)).get("pieces");
-        System.out.println(pieces2);
         JsonArray asJsonArray = pieces2.getAsJsonArray();
         Map<Position, Piece> data = new HashMap<>();
         for (JsonElement jsonElement : asJsonArray) {

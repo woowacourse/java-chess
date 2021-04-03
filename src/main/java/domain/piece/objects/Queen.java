@@ -48,7 +48,6 @@ public class Queen extends Piece {
                 && (isEmptyPiecePosition(board, end) || !this.isSameColor(board.get(end)));
     }
 
-
     private boolean canMoveDiagonal(Map<Position, Piece> board, Position start, Position end) {
         if (!isDiagonal(start, end)) {
             return false;

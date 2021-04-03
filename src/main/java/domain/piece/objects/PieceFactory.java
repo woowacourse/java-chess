@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PieceFactory {
+    private PieceFactory() {
+
+    }
+
     public static Map<Position, Piece> createPieces() {
-        Map<Position, Piece> pieces = new HashMap<Position, Piece>();
+        Map<Position, Piece> pieces = new HashMap<>();
         pieces.putAll(Bishop.initialBishopPieces());
         pieces.putAll(King.initialKingPieces());
         pieces.putAll(Queen.initialQueenPieces());

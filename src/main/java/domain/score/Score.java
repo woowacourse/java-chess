@@ -5,8 +5,8 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 
 public class Score {
-    private final double value;
     private static final Map<Double, Score> CACHE = new WeakHashMap<>();
+    private final double value;
 
     public static final Score ZERO = Score.of(0);
 
@@ -26,7 +26,7 @@ public class Score {
         return new Score(value / 2);
     }
 
-    public double getScore() {
+    public double getValue() {
         return value;
     }
 

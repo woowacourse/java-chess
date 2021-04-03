@@ -6,13 +6,14 @@ import domain.score.Score;
 import java.util.Map;
 
 public final class Empty extends Piece {
+    private static final Empty CACHE = new Empty();
 
     public Empty() {
         super(".", Score.ZERO, true);
     }
 
     public static Piece create() {
-        return new Empty();
+        return CACHE;
     }
 
     @Override

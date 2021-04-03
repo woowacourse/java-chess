@@ -13,7 +13,7 @@ public class StatusDto implements MenuDto {
 
     public StatusDto(Map<Boolean, Score> pieces) {
         for (Boolean color : pieces.keySet()) {
-            result.put(Color.findColorName(color), pieces.get(color).getScore());
+            result.put(Color.findColorName(color), pieces.get(color).getValue());
         }
     }
 
