@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.domain.CommandAsString;
 import chess.domain.game.Game;
-import chess.domain.result.Result;
 import chess.domain.game.state.InitialState;
+import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 

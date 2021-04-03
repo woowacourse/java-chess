@@ -2,12 +2,12 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import chess.domain.result.PathResult;
 import chess.domain.result.Result;
 import chess.domain.result.StatusResult;
 import chess.domain.result.TurnResult;
-import chess.domain.piece.Color;
-import chess.domain.position.Position;
 
 public abstract class TurnState extends PlayingState {
 

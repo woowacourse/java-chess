@@ -1,8 +1,8 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
 

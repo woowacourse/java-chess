@@ -1,8 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import chess.domain.piece.RealPiece;
 import chess.domain.piece.strategy.MovedBlackPawnStrategy;
 import chess.domain.piece.strategy.MovedWhitePawnStrategy;
