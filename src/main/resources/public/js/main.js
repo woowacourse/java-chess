@@ -21,12 +21,27 @@ window.onload = function () {
         event.target.classList.contains(`${turn.toLowerCase()}`)
   }
 
+  async function movePiece() {
+    const from = document.querySelector(".source");
+    const to = document.querySelector(".target");
+    const movable = await move(from.id, to.id);
+    if (movable) {
+      document.getElementById(to.id).firstChild ? attackMove(from, to)
+          : basicMove(from, to);
+      setMessage(await getTurn());
+    }
+    if (!movable) {
+      alert(`${from.id}에서 ${to.id}(으)로 이동할 수 없습니다.`);
+    }
+    from.classList.remove("selected", "source");
+    to.classList.remove("selected", "target");
+  }
+
   async function grabPiece(event) {
     let movePieces = document.querySelectorAll(".selected").length;
     const tile = event.target.closest("div").classList;
     if (movePieces === 0 && await isValidSource(event)) {
       tile.add("selected", "source");
-      // await showPath(event.target.parentNode.id);
       return;
     }
     if (movePieces === 1 && tile.contains("source")) {
@@ -35,24 +50,11 @@ window.onload = function () {
     }
     if (movePieces === 1 && !tile.contains("source")) {
       tile.add("selected", "target");
-
-      const from = document.querySelector(".source");
-      const to = document.querySelector(".target");
-      const movable = await move(from.id, to.id);
-      if (movable) {
-        document.getElementById(to.id).firstChild ? attackMove(from, to)
-            : basicMove(from, to);
-        setMessage(await getTurn());
-      }
-      if (!movable) {
-        alert(`${from.id}에서 ${to.id}(으)로 이동할 수 없습니다.`);
-      }
-      from.classList.remove("selected", "source");
-      to.classList.remove("selected", "target");
+      await movePiece();
     }
   }
 
-  async function movePiece() {
+  async function addMoveEventHandler() {
     document.querySelectorAll(".tile")
     .forEach(piece => piece.addEventListener("click", grabPiece));
   }
@@ -60,7 +62,7 @@ window.onload = function () {
   function setBoard(boardData) {
     clearBoard();
     fillBoard(boardData);
-    movePiece();
+    addMoveEventHandler();
     // 킹 죽음 여부로 게임 오버 체크
   }
 
@@ -80,13 +82,10 @@ window.onload = function () {
 
   function fillBoard(board) {
     const realBoard = Object.values(board).pop();
-    //console.log("realBoard", Object.keys(realBoard));
     Object.keys(realBoard)
     .filter(tile =>
-        //console.log(realBoard[tile]["pieceType"]);
         realBoard[tile]["pieceType"] !== "EMPTY"
     ).forEach(tile => {
-      //console.log(realBoard[tile]["pieceType"])
       document.getElementById(tile)
       .insertAdjacentHTML("beforeend",
           PIECES[`${realBoard[tile]["pieceColor"]}_${realBoard[tile]["pieceType"]}`]);
@@ -99,19 +98,7 @@ window.onload = function () {
     message.innerText = `${turn}`;
   }
 
-  async function init() {
-    const $start_bt = document.querySelector(".start");
-    $start_bt.addEventListener("click", async () => {
-      $start_bt.classList.remove("start");
-      $start_bt.innerHTML = "RESTART";
-      setMessage(await getTurn());
-      const data = await getBoard();
-      return setBoard(data);
-    });
-  }
-
   async function restartGame() {
-    console.log("game restarted");
     setBoard(await restart());
     fillScore();
     setMessage(await getTurn());
@@ -120,12 +107,23 @@ window.onload = function () {
   function addRestartGameEventHandler() {
     const $restart_bt = document.querySelector(".restart");
     $restart_bt.addEventListener("click", () => {
-      if($restart_bt.classList.contains("start")){
+      if ($restart_bt.classList.contains("start")) {
         return;
       }
       if (confirm("게임을 다시 시작하시겠습니까?")) {
         restartGame();
       }
+    });
+  }
+
+  async function init() {
+    const $start_bt = document.querySelector(".start");
+    $start_bt.addEventListener("click", async () => {
+      $start_bt.classList.remove("start");
+      $start_bt.innerHTML = "RESTART";
+      setMessage(await getTurn());
+      const data = await getBoard();
+      return setBoard(data);
     });
   }
 

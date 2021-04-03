@@ -38,9 +38,10 @@ public class Game {
         if (!players.currentPlayer(turn).isOwnerOf(source)) {
             throw new IllegalArgumentException(INVALID_SOURCE_ERROR_MESSAGE);
         }
-        board.move(source, to);
-        turn = turn.reversed();
-        refreshState();
+        if (board.move(source, to)) {
+            turn = turn.reversed();
+            refreshState();
+        }
     }
 
     private void refreshState() {

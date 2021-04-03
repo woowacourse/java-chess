@@ -41,12 +41,14 @@ public class Board {
         return coordinates.get(piece);
     }
 
-    public void move(Piece piece, Position target) {
+    public boolean move(Piece piece, Position target) {
         Path path = generateAvailablePath(piece);
         if (isMovable(target, path)) {
             coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
+            return true;
         }
+        return false;
     }
 
     public boolean isMovable(Position target, Path path) {
