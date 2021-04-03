@@ -5,7 +5,7 @@ import chess.domain.ChessGame;
 import chess.domain.DTO.MoveInfoDTO;
 import chess.domain.DTO.ScoreDTO;
 import chess.domain.board.BoardFactory;
-import chess.service.BoardService;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,7 +18,11 @@ import static spark.Spark.post;
 
 public class ChessController {
     public static final BoardFactory boardFactory = new BoardFactory();
-    public final BoardService boardService = new BoardService();
+    public final ChessService chessService;
+
+    public ChessController() {
+        chessService = new ChessService();
+    }
 
     public void run() {
         ChessGame chessGame = new ChessGame();
@@ -27,8 +31,13 @@ public class ChessController {
             return render(new HashMap<>(), "chess.html");
         });
 
-        get("/initiateBoard", (req, res) -> {
-            BoardDTO boardDTO = boardService.initiateBoard(chessGame);
+        get("/loadSavedBoard", (req, res) -> {
+            BoardDTO savedBoardInfo = chessService.getSavedBoardInfo();
+            return new Gson().toJson(savedBoardInfo);
+        });
+
+        get("/resetBoard", (req, res) -> {
+            BoardDTO boardDTO = chessService.initiateBoard(chessGame);
             return new Gson().toJson(boardDTO);
         });
 

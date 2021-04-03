@@ -1,4 +1,4 @@
-package chess.exception;
+package chess.utils;
 
 public class NoSuchCommandException extends RuntimeException {
 

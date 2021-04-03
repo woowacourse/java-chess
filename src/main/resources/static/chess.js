@@ -3,7 +3,7 @@ applicationStart();
 let firstClickPosition = "";
 let secondClickPosition = "";
 
-function applicationStart() {
+async function applicationStart() {
     const chessBoard = document.querySelector(".chessboard");
     const idArr = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',
         'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',
@@ -25,10 +25,22 @@ function applicationStart() {
         eachDiv.addEventListener('click', clickDiv);
         chessBoard.appendChild(eachDiv);
     }
+
+    let savedBoardInformation = await loadSavedBoard();
+    console.log(savedBoardInformation);
+    console.log("123");
+    renewBoard(savedBoardInformation);
 }
 
-async function startGame() {
-    const boardInfo = await initiateBoard();
+async function loadSavedBoard() {
+    let savedBoardInformation = await fetch("/loadSavedBoard")
+    savedBoardInformation = await savedBoardInformation.json();
+    return savedBoardInformation.boardInfo;
+}
+
+async function reStartGame() {
+    console.log("restartGame method");
+    const boardInfo = await resetBoard();
     renewBoard(boardInfo);
 }
 
@@ -91,14 +103,16 @@ function getBoardColor(index, color) {
 }
 
 async function renewBoard(boardInfo) {
+    console.log(boardInfo);
+    console.log("456");
     Object.keys(boardInfo).forEach(function (value) {
         let eachDiv = document.querySelector("#" + value);
         eachDiv.innerHTML = boardInfo[value];
     });
 }
 
-async function initiateBoard() {
-    let initialBoardInformation = await fetch("/initiateBoard")
+async function resetBoard() {
+    let initialBoardInformation = await fetch("/resetBoard")
     initialBoardInformation = await initialBoardInformation.json();
     return initialBoardInformation.boardInfo;
 }

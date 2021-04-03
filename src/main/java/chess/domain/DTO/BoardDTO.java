@@ -27,6 +27,10 @@ public class BoardDTO {
         return new BoardDTO(boardInfo);
     }
 
+    public static BoardDTO of(Map<String, String> boardInfo) {
+        return new BoardDTO(boardInfo);
+    }
+
     public Map<String, String> getBoardInfo() {
         return boardInfo;
     }
