@@ -6,16 +6,18 @@
   <link href="/css/lobby.css" rel="stylesheet"/>
 </head>
 <body>
-<h1>입장할 방을 클릭</h1>
+<h1>Joyful Chess</h1>
+<h2>입장할 방을 클릭</h2>
 <form action="/chess/new" method="post">
   <input type="text" name="gameName" placeholder="생성할 게임 이름">
   <input type="submit" value="새로운 게임 시작">
 </form>
-<div class="game-list">
+<ul class="game-list">
   {{#games}}
-  <a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a>
-  <br>
+  <li>
+    <a href="/chess/game/{{id}}" class="game-item">{{id}} {{name}}</a>
+  </li>
   {{/games}}
-</div>
+</ul>
 </body>
 </html>
