@@ -7,10 +7,10 @@
 </head>
 <body>
 <h1>체스 게임</h1>
-<div>
-    <button id="start-btn" class="start-button">START</button>
-    <button id="end-btn" class="hidden" formmethod="post">END</button>
-    <button id="status-btn" class="hidden" formmethod="post">STATUS</button>
+<div class="buttons">
+    <button id="start-btn" class="start button">START</button>
+    <button id="end-btn" class="end button" formmethod="post">END</button>
+    <button id="status-btn" class="status button" formmethod="post">STATUS</button>
 </div>
 
 <div class="chessboard">
@@ -88,7 +88,7 @@
     <div class="square white" id="h1"></div>
 </div>
 
-<div id="status">
+<div id="status" class="game-status">
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/board.js"></script>
