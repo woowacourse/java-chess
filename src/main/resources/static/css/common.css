@@ -52,7 +52,7 @@ td:hover {
 .chess-board {
     position: relative;
     transform: skewX(-30deg);
-    left: 15%;
+    left: 25%;
     z-index: auto;
     opacity: 0.65;
     z-index: 99;

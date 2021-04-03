@@ -38,7 +38,7 @@ public class ChessGameDAO {
             }
         }
 
-        throw new IllegalArgumentException("데이터가 제대로 생성되지 않았습니다");
+        throw new IllegalArgumentException("ChessGame이 제대로 생성되지 않았습니다");
     }
 
     public void deleteById(Long id) throws SQLException {

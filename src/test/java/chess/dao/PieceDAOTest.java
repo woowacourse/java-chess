@@ -94,10 +94,13 @@ class PieceDAOTest {
     void update() throws SQLException {
         //given
         Piece piece = Piece.createBishop(Color.BLACK, 0, 0);
-        pieceDAO.save(chessGameId, piece);
+        Long id = pieceDAO.save(chessGameId, piece);
+
+        Piece updatedPiece = Piece.createBishop(Color.BLACK, 2, 1);
+        updatedPiece.setId(id);
 
         //when
-        pieceDAO.update(chessGameId, 0, 0, 2, 1);
+        pieceDAO.update(chessGameId, updatedPiece);
 
         //then
         Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 2, 1).get();

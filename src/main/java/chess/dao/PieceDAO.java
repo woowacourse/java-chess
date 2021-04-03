@@ -3,10 +3,7 @@ package chess.dao;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,16 +16,22 @@ public class PieceDAO {
         factory = new ConnectionFactory();
     }
 
-    public void save(Long chessGameId, Piece piece) throws SQLException {
+    public Long save(Long chessGameId, Piece piece) throws SQLException {
         try (Connection con = factory.getConnection()) {
             String query = "INSERT INTO pieces(color, shape, chess_game_id, row, col) VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
+            PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, piece.getColor().toString());
             preparedStatement.setString(2, piece.getShape().toString());
             preparedStatement.setLong(3, chessGameId);
             preparedStatement.setInt(4, piece.getRow());
             preparedStatement.setInt(5, piece.getColumn());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getLong(Statement.RETURN_GENERATED_KEYS);
+            }
+
+            throw new IllegalArgumentException("Piece가 제대로 생성되지 않았습니다");
         }
     }
 
@@ -47,12 +50,15 @@ public class PieceDAO {
 
             List<Piece> pieces = new ArrayList<>();
             while (rs.next()) {
+                long id = rs.getLong("id");
                 String color = rs.getString("color");
                 String shape = rs.getString("shape");
                 rs.getLong("chess_game_id");
                 int row = rs.getInt("row");
                 int col = rs.getInt("col");
-                pieces.add(PieceFactory.createPiece(shape, color, row, col));
+                Piece piece = PieceFactory.createPiece(shape, color, row, col);
+                piece.setId(id);
+                pieces.add(piece);
             }
 
             return pieces;
@@ -76,20 +82,19 @@ public class PieceDAO {
                     rs.getString("shape"), rs.getString("color"),
                     rs.getInt("row"), rs.getInt("col")
             );
+            piece.setId(rs.getLong("id"));
             return Optional.of(piece);
         }
     }
 
-    public void update(final Long chessGameId, final int sourceRow, final int sourceCol,
-                       final int targetRow, final int targetColumn) throws SQLException {
+    public void update(final Long chessGameId, Piece piece) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "UPDATE pieces SET row = ?, col = ? WHERE chess_game_id = ? AND row = ? AND col = ?";
+            String query = "UPDATE pieces SET row = ?, col = ? WHERE chess_game_id = ? AND id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, targetRow);
-            preparedStatement.setInt(2, targetColumn);
+            preparedStatement.setInt(1, piece.getRow());
+            preparedStatement.setInt(2, piece.getColumn());
             preparedStatement.setLong(3, chessGameId);
-            preparedStatement.setInt(4, sourceRow);
-            preparedStatement.setInt(5, sourceCol);
+            preparedStatement.setLong(4, piece.getId());
             preparedStatement.executeUpdate();
         }
     }

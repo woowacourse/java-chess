@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 import chess.exception.AlreadyPlayingChessGameException;
+import chess.exception.NoSuchPermittedChessPieceException;
 import chess.exception.NotFoundPlayingChessGameException;
 import chess.view.dto.ChessGameDto;
 import chess.view.dto.ScoreDtos;
@@ -44,12 +45,14 @@ public class ChessGameService {
         ChessGameEntity chessGameEntity = findLatestPlayingGame();
         Long chessGameId = chessGameEntity.getId();
         ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
-        chessGame.move(source, target);
-
+        Piece sourcePiece = pieceDAO.findOneByPosition(chessGameId, source.getRow(), source.getColumn())
+                .orElseThrow(NoSuchPermittedChessPieceException::new);
+        chessGame.move(sourcePiece.getPosition(), target);
         pieceDAO.findOneByPosition(chessGameId, target.getRow(), target.getColumn())
                 .ifPresent(piece -> pieceDAO.delete(chessGameId, target.getRow(), target.getColumn()));
 
-        pieceDAO.update(chessGameId, source.getRow(), source.getColumn(), target.getRow(), target.getColumn());
+        sourcePiece.setPosition(target);
+        pieceDAO.update(chessGameId, sourcePiece);
         chessGameDAO.updateState(chessGameId, chessGame.getState().getValue());
 
         return new ChessGameDto(chessGame);

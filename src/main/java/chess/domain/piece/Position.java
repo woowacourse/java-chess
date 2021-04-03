@@ -42,4 +42,5 @@ public class Position {
         result = 31 * result + column;
         return result;
     }
+
 }

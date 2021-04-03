@@ -46,13 +46,13 @@ const index = {
 
     },
 
-    move: async function (source, target) {
+    move: function (source, target) {
         fetch(`/pieces?source=${source}&target=${target}`)
             .then(data => {
-                clearBoard();
                 return data.json()
             })
             .then(chessGameDto => {
+                clearBoard();
                 placePieces(chessGameDto.pieceDtos);
                 winToggleButtons(chessGameDto.finished);
                 changeTurn(chessGameDto.state);
