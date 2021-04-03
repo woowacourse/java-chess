@@ -27,6 +27,10 @@ function addAndRequestMove(square) {
     if (this.buffer.length === 2) {
         const toSquare = this.buffer.pop();
         const fromSquare = this.buffer.pop();
+
+        toSquare.classList.toggle('opaque');
+        fromSquare.classList.toggle('opaque');
+
         console.log(`request [POST]/move, body: from: ${fromSquare.id}, \nto: ${toSquare.id}\n`);
 
         try {
@@ -53,6 +57,7 @@ async function addSelectionEventOnChessBoard() {
     $chessBoard.addEventListener('click', event => {
         const selectedSquare = event.target.closest('div');
         squareBuffer.add(selectedSquare);
+        selectedSquare.classList.toggle('opaque');
     })
 }
 

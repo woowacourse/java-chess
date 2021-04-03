@@ -38,8 +38,12 @@ html, body {
     grid-template-rows: repeat(8, 80px);
     width: 640px;
     height: 640px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(255, 255, 255);
     text-align: center;
+}
+
+.opaque {
+    opacity: 0.5;
 }
 
 .bright-square {
