@@ -8,7 +8,7 @@ async function addEventOnStartButton() {
         try {
             fetch('/newgame')
                 .then(res => res.json())
-                .then(mapObject => updateBoard(mapObject.chessBoard));
+                .then(res => updateBoard(res.item.chessBoard));
         } catch (error) {
             console.error(error.messages);
         }

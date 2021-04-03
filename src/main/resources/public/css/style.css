@@ -38,7 +38,7 @@ html, body {
     grid-template-rows: repeat(8, 80px);
     width: 640px;
     height: 640px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.5);
     text-align: center;
 }
 
@@ -46,10 +46,16 @@ html, body {
     background-image: url('/images/bright-square.jpg');
     background-size: 80px;
 }
+.bright-square:hover {
+    opacity: 0.8;
+}
 
 .dark-square {
     background-image: url('/images/dark-square.jpg');
     background-size: 80px;
+}
+.dark-square:hover {
+    opacity: 0.8;
 }
 
 .control-panel {
