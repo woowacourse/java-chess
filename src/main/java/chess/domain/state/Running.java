@@ -24,7 +24,7 @@ public class Running extends Game {
         if (startPiece.getColor() != turn) {
             throw new IllegalArgumentException("차례가 아닙니다.");
         }
-        if (chessBoard.get(source).isMoveAble(target, chessBoard)) {
+        if (chessBoard.get(source).isMovable(target, chessBoard)) {
             return moveBoard(source, target, startPiece, targetPiece);
         }
         throw new IllegalArgumentException("잘못된 이동입니다.");

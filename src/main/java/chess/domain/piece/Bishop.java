@@ -23,7 +23,7 @@ public class Bishop extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = moveDiagonalAsPossible(target, chessBoard);
         return candidates.contains(target);
     }

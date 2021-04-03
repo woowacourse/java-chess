@@ -47,9 +47,9 @@ public class KingTest {
     @DisplayName("킹 이 움직일 수 없는 경우")
     void moveKingFail() {
         Piece piece = board.get(Position.valueOf("e1"));
-        assertFalse(piece.isMoveAble(Position.valueOf("e2"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("d2"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("f2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("e2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("d2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("f2"), board));
     }
 
     @Test
@@ -57,14 +57,14 @@ public class KingTest {
     void move_king_all_direction() {
         Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a4"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b5"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a5"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c5"), board));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class KingTest {
     void king_over_move_fail() {
         Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b6"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b6"), board));
     }
 
 }

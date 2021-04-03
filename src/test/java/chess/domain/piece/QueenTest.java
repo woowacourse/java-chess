@@ -48,14 +48,14 @@ public class QueenTest {
     void movable() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a4"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b5"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a5"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c5"), board));
     }
 
     @Test
@@ -63,9 +63,9 @@ public class QueenTest {
     void movable_2blocks() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b6"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("d6"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("d4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("d6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("d4"), board));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class QueenTest {
     void movable_2blocks_fail() {
         Piece piece = new Queen(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("c6"), board));
+        assertFalse(piece.isMovable(Position.valueOf("c6"), board));
     }
 
 }

@@ -25,7 +25,7 @@ public class Queen extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         candidates.addAll(moveDiagonalAsPossible(target, chessBoard));
         candidates.addAll(moveCrossAsPossible(target, chessBoard));

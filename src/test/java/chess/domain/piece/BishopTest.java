@@ -49,8 +49,8 @@ public class BishopTest {
     void movable() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("c5"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("d6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("d6"), board));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class BishopTest {
     void fail_movable() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("e7"), board));
+        assertTrue(piece.isMovable(Position.valueOf("e7"), board));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class BishopTest {
     void fail_same_team() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("e7"), board));
+        assertFalse(piece.isMovable(Position.valueOf("e7"), board));
     }
 
     @Test
@@ -74,8 +74,8 @@ public class BishopTest {
     void fail_position() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b5"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("f8"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b5"), board));
+        assertFalse(piece.isMovable(Position.valueOf("f8"), board));
     }
 
 }

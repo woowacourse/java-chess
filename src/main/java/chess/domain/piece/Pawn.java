@@ -24,7 +24,7 @@ public class Pawn extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         candidates.addAll(checkFront(chessBoard));
         candidates.addAll(checkFrontDiagonal(target, chessBoard));

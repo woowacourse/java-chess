@@ -50,8 +50,8 @@ public class PawnTest {
     void start_move() {
         Piece piece = board.get(Position.valueOf("b2"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), board));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PawnTest {
     void move_3block() {
         Piece piece = board.get(Position.valueOf("b2"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b5"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b5"), board));
     }
 
     @Test
@@ -69,9 +69,9 @@ public class PawnTest {
         Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
 
         assertTrue(
-                pieceBlack.isMoveAble(Position.valueOf("b3"), board));
+                pieceBlack.isMovable(Position.valueOf("b3"), board));
         assertTrue(
-                pieceWhite.isMoveAble(Position.valueOf("c5"), board));
+                pieceWhite.isMovable(Position.valueOf("c5"), board));
     }
 
     @Test
@@ -81,9 +81,9 @@ public class PawnTest {
         Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
 
         assertFalse(
-                pieceBlack.isMoveAble(Position.valueOf("b5"), board));
+                pieceBlack.isMovable(Position.valueOf("b5"), board));
         assertFalse(
-                pieceWhite.isMoveAble(Position.valueOf("c3"), board));
+                pieceWhite.isMovable(Position.valueOf("c3"), board));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class PawnTest {
         Piece pieceQueen = new Queen(TeamColor.WHITE, Position.valueOf("b3"));
         board.put(Position.valueOf("b3"), pieceQueen);
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
     }
 
     @Test
@@ -105,9 +105,9 @@ public class PawnTest {
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
     }
 
     @Test
@@ -119,9 +119,9 @@ public class PawnTest {
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("a3"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("a3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("c3"), board));
     }
 
     @Test
@@ -132,10 +132,10 @@ public class PawnTest {
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("b3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
     }
 
 }

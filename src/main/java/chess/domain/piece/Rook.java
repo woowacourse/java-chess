@@ -23,7 +23,7 @@ public class Rook extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
         Set<Position> candidates = moveCrossAsPossible(target, chessBoard);
         return candidates.contains(target);
     }

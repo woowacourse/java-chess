@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface Piece {
 
-    boolean isMoveAble(Position target, Map<Position, Piece> chessBoard);
+    boolean isMovable(Position target, Map<Position, Piece> chessBoard);
 
     String getPieceName();
 

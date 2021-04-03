@@ -48,14 +48,14 @@ public class KnightTest {
     void movable() {
         Piece piece = new Knight(TeamColor.WHITE, Position.valueOf("d5"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("e7"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("f6"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("f4"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("e3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("b6"), board));
-        assertTrue(piece.isMoveAble(Position.valueOf("c7"), board));
+        assertTrue(piece.isMovable(Position.valueOf("e7"), board));
+        assertTrue(piece.isMovable(Position.valueOf("f6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("f4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("e3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("c7"), board));
     }
 
     @Test
@@ -63,11 +63,11 @@ public class KnightTest {
     void fail_same_team() {
         Piece piece = new Knight(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("d2"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("c3"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("b6"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("f6"), board));
-        assertFalse(piece.isMoveAble(Position.valueOf("e7"), board));
+        assertFalse(piece.isMovable(Position.valueOf("d2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("c3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b6"), board));
+        assertFalse(piece.isMovable(Position.valueOf("f6"), board));
+        assertFalse(piece.isMovable(Position.valueOf("e7"), board));
     }
 
 }

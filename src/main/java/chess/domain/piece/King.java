@@ -25,7 +25,7 @@ public class King extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
         candidates.add(moveOnce(Moves.UP, target, chessBoard));
         candidates.add(moveOnce(Moves.DOWN, target, chessBoard));
