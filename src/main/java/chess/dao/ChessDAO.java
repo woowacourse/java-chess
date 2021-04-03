@@ -35,53 +35,64 @@ public class ChessDAO {
     public void addChessGame(String gameId, String data) throws SQLException {
         String query = "INSERT INTO chess VALUES (?, ?)";
 
-        try (Connection conn = getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, data);
             pstmt.executeUpdate();
         }
-
     }
 
     public void updateChessGame(String gameId, String data) throws SQLException {
         String query = "UPDATE chess SET data=? WHERE game_id = ?";
 
-        try (Connection conn = getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, data);
             pstmt.setString(2, gameId);
             pstmt.execute();
         }
-
     }
 
     public String findChessGameByGameId(String gameId) throws SQLException {
         String query = "SELECT data FROM chess WHERE game_id = ?";
 
-        try (Connection conn = getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
             pstmt.setString(1, gameId);
-            ResultSet resultSet = pstmt.executeQuery();
+
+            return getChessGameFromDB(pstmt);
+        }
+    }
+
+    private String getChessGameFromDB(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet resultSet = pstmt.executeQuery()) {
             resultSet.next();
 
             return resultSet.getString("data");
         }
-
     }
 
-    public boolean isExistGameId(String gameId) throws SQLException {
+    public boolean isGameIdExisting(String gameId) throws SQLException {
         String query = "SELECT count(*) as count FROM chess WHERE game_id = ?";
 
         try (Connection conn = getConnection()) {
             PreparedStatement pstmt = conn.prepareStatement(query);
+
             pstmt.setString(1, gameId);
-            ResultSet resultSet = pstmt.executeQuery();
+
+            return isGameIdExistingInDB(pstmt);
+        }
+
+    }
+
+    private boolean isGameIdExistingInDB(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet resultSet = pstmt.executeQuery()) {
             resultSet.next();
 
             return resultSet.getInt("count") != 0;
         }
-
     }
 
 }

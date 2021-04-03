@@ -54,6 +54,6 @@ public class GameRepository {
     }
 
     public static boolean isGameIdExistingInDB(String gameId) throws SQLException {
-        return chessDAO.isExistGameId(gameId);
+        return chessDAO.isGameIdExisting(gameId);
     }
 }
