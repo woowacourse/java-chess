@@ -27,9 +27,29 @@ public class WebUIChessController {
     }
 
     public void run() {
+        mainPage();
         start();
         move();
         status();
+    }
+
+    private void mainPage() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+    }
+
+    public void start() {
+        get("/start", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            System.out.println("입력받은 방 코드는 : " + req.queryParams("roomId"));
+
+            //
+
+            model.put("pieces", getPieceDTOs());
+            return render(model, "chess.html");
+        });
     }
 
     public void status() {
@@ -50,14 +70,6 @@ public class WebUIChessController {
             return String.valueOf(chessGame.winner());
         }
         return "NoWinner";
-    }
-
-    public void start() {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("pieces", getPieceDTOs());
-            return render(model, "chess.html");
-        });
     }
 
     private List<PieceDTO> getPieceDTOs() {
