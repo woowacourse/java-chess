@@ -10,11 +10,11 @@ public class PieceDto {
         this.position = position;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPosition() {
-        return position;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public String getPosition() {
+//        return position;
+//    }
 }

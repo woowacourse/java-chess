@@ -10,8 +10,9 @@ h1 {
 .turnMessage {
     color:#333D79;
     font-size: 1.1em;
-    margin-left: 8px;
-    margin-top: 20px;
+    display: flex;
+    margin-left: 16vw;
+    margin-top: 0.5vw;
 }
 
 body {
@@ -29,8 +30,12 @@ button {
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
-    margin-top: 13px;
-    margin-left: 870px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: -2vw;
+    margin-left: 57vw;
 }
 
 button:hover{

@@ -4,16 +4,14 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
+    private static final String WRONG_CHESS_ERROR = "잘못된 체스 이름입니다.";
     private final List<Piece> pieces = new ArrayList<>();
 
     public Pieces(final Piece... pieces) {
@@ -77,5 +75,33 @@ public class Pieces {
 
     public List<Piece> getPieces() {
         return pieces;
+    }
+
+    public Piece findPieceByName(String name) {
+        if ("B".equals(name.substring(0,1))) {
+            return findPieceByColor(Color.BLACK, name.substring(1, 2));
+        } else {
+            return findPieceByColor(Color.WHITE, name.substring(1, 2));
+        }
+    }
+
+    private Piece findPieceByColor (Color color, String symbol) {
+        for (Piece piece : pieces) {
+            if (piece.isSameColor(color) && piece.getClass() == findPieceBySymbol(symbol)) {
+                return piece;
+            }
+        }
+        throw new IllegalArgumentException(WRONG_CHESS_ERROR);
+    }
+
+    private Object findPieceBySymbol(String key) {
+        Map<String, Object> symbolOfPieces = new HashMap<>();
+        symbolOfPieces.put("R", Rook.class);
+        symbolOfPieces.put("N", Knight.class);
+        symbolOfPieces.put("B", Bishop.class);
+        symbolOfPieces.put("Q", Queen.class);
+        symbolOfPieces.put("K", King.class);
+        symbolOfPieces.put("P", Pawn.class);
+        return symbolOfPieces.get(key);
     }
 }

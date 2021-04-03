@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -20,44 +21,44 @@ public class PieceDao {
         con = ConnectionSetup.getConnection();
     }
 
-//    public Map<Position, Piece> load() throws SQLException {
-//        final String query = "SELECT * FROM pieces";
-//        final PreparedStatement pstmt = con.prepareStatement(query);
-//        final ResultSet rs = pstmt.executeQuery();
-//
-//        if (!rs.next()) {
-//            return null;
-//        }
-//
-//        final Map<Position, Piece> newPieces = new TreeMap<>();
-//        do {
-//            final String positionValue = rs.getString("position");
-//            final Position position = Position.from(positionValue);
-//            final String name = rs.getString("name");
-//            newPieces.put(position, );
-//        } while (rs.next());
-//        return newPieces;
-//    }
+    public Map<Piece, Position> load(final Pieces pieces) throws SQLException {
+        final String query = "SELECT * FROM pieces";
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        final ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        final Map<Piece, Position> newPieces = new TreeMap<>();
+        do {
+            final String name = rs.getString("name");
+            final String positionValue = rs.getString("position");
+            final Position position = Position.from(positionValue);
+            newPieces.put(pieces.findPieceByName(name), position);
+        } while (rs.next());
+        return newPieces;
+    }
 
     public void clear(final Pieces pieces) throws SQLException {
         delete("pieces");
         for (final Piece piece : pieces.toList()) {
             String position = piece.getPosition().column().value() + piece.getPosition().row().value();
-            savePiece(position, piece);
+            savePiece(piece, position);
         }
         initTurn();
     }
 
-    public void savePiece (final String position, final Piece piece) throws SQLException {
+    public void savePiece (final Piece piece, final String position) throws SQLException {
         final String query = "INSERT INTO pieces VALUES (?, ?)";
         final PreparedStatement pstmt = con.prepareStatement(query);
         String displayName = piece.display().toUpperCase();
         if (piece.isSameColor(Color.BLACK)) {
-            pstmt.setString(1, position);
-            pstmt.setString(2, "B" + displayName);
+            pstmt.setString(1, "B" + displayName);
+            pstmt.setString(2, position);
         } else {
-            pstmt.setString(1, position);
-            pstmt.setString(2, "W" + displayName);
+            pstmt.setString(1, "W" + displayName);
+            pstmt.setString(2, position);
         }
         pstmt.executeUpdate();
     }
@@ -70,7 +71,7 @@ public class PieceDao {
         savePstmt.executeUpdate();
     }
 
-    private void delete(String tableName) throws SQLException {
+    public void delete(String tableName) throws SQLException {
         final String query = "TRUNCATE TABLE " + tableName;
         final PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.executeUpdate();
@@ -82,5 +83,34 @@ public class PieceDao {
         pstmt.setString(2, turn.player().getColor().name());
         pstmt.setString(1, turn.nextPlayer().getColor().name());
         pstmt.executeUpdate();
+    }
+
+    public String findTurn() throws SQLException {
+        String query = "SELECT * FROM game";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+        return rs.getString("turn");
+    }
+
+    public Map<Piece, Position> findPieces(Pieces pieces) throws SQLException {
+        String query = "SELECT * FROM pieces";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+        return daoToBoard(rs.getString("name"), rs.getString("position"), pieces);
+    }
+
+    private Map<Piece, Position> daoToBoard(String piece, String position, Pieces pieces){
+        Map<Piece, Position> board = new LinkedHashMap<>();
+        String[] splitPiece = piece.split(",");
+        String[] splitPosition = position.split(",");
+
+        for (int i = 0; i < splitPosition.length; i++) {
+            board.put(pieces.findPieceByName(splitPiece[i]), Position.from(splitPosition[i]));
+        }
+        return board;
     }
 }

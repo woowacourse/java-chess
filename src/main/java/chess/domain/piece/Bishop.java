@@ -48,4 +48,9 @@ public class Bishop extends Division {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

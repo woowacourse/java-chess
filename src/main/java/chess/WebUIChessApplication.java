@@ -11,17 +11,18 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+
     public static void main(String[] args) {
         staticFiles.location("/static");
+        port(8080);
+
         final Gson GSON = new Gson();
         final JsonTransformer jsonTransformer = new JsonTransformer();
         final ChessService chessService = new ChessService();
 
         get("/", (req, res) -> {
-            System.out.println("어디에서ㅜㅜㅠㅠ?ㅠ???ㅠ?ㅠ?");
             Map<String, Object> model = new HashMap<>();
             chessService.init();
-            System.out.println("에러가??????ㅠㅠ?ㅠ/ㅠ/ㅠ/ㅠ??????????");
             return render(model, "index.html");
         });
 
@@ -37,6 +38,10 @@ public class WebUIChessApplication {
         post("/restart", (req, res) -> {
             chessService.initChessBoard();
             return "초기화 성공";
+        }, jsonTransformer);
+
+        post("/turn", (req, res) -> {
+            return chessService.turn();
         }, jsonTransformer);
     }
 

@@ -10,11 +10,10 @@ button.addEventListener("click", restart);
 function createChessBoard() {
     initChessBoard();
     syncBoard();
+    changeTurn();
 }
 
 function initChessBoard() {
-    //const turnText = document.createElement("h2");
-
     for (let i = 0; i < 8; i++) {
         let chessBoardRow = document.createElement("div");
         chessBoardRow.setAttribute("class", "chessRow");
@@ -36,8 +35,6 @@ function initChessBoard() {
             chessBoardRow.appendChild(chessBoardColumn);
         }
         $chessBoard.appendChild(chessBoardRow);
-        changeTurn();
-        //$chessBoard.appendChild(turnText);
     }
 }
 
@@ -123,12 +120,11 @@ function clickPosition(event) {
 
 }
 
-function move(from, to) {
+async function move(from, to) {
     const data = {
         from: from,
         to: to
     };
-    console.log(JSON.stringify(data))
     fetch("/move", {
         method: 'POST',
         header: {
@@ -142,11 +138,16 @@ function move(from, to) {
             alert(obj.message);
             return;
         }
-        changeImg(from, to);
-        changeTurn();
         if (obj.code === "300") {
-            alert(obj.turn + " 승리!");
+            changeImg(from, to);
             gameFinished = true;
+            document.querySelector(".currentTurn").textContent = " 🎉 Winner :";
+            alert(obj.turn + " 승리!");
+            return;
+        }
+        if (obj.code === "200") {
+            changeImg(from, to);
+            changeTurn();
         }
     });
 }
@@ -174,14 +175,6 @@ async function changeTurn() {
     turnMessage.textContent = turn;
 }
 
-// function changeTurnText() {
-//     if (document.getElementById("user-turn").innerText === 'WHITE') {
-//         document.getElementById("user-turn").innerText = 'BLACK';
-//         return;
-//     }
-//     document.getElementById("user-turn").innerText = 'WHITE';
-// }
-
 function restart() {
     fetch("/restart", {
         method: 'POST',
@@ -190,7 +183,10 @@ function restart() {
         }
     }).then(function () {
         gameFinished = false;
+        const turnMessage = document.querySelector(".currentTurn");
+        turnMessage.textContent = " 💙 Current Turn :";
         syncBoard();
+        changeTurn();
     });
 }
 
@@ -221,6 +217,4 @@ async function syncBoard() {
         piece.src = "img/" + pieces[i] + ".png";
         position.appendChild(piece);
     }
-
-    changeTurn();
 }

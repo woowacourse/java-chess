@@ -2,6 +2,7 @@ package chess;
 
 import chess.dao.PieceDao;
 import chess.domain.game.Game;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -10,6 +11,7 @@ import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +25,14 @@ public class ChessService {
         this.pieceDao = new PieceDao();
     }
 
-    public void init() throws SQLException {
-//        if (pieceDao.load() == null) {
-//            Pieces pieces = new Pieces();
-//            pieces.init();
-//            pieceDao.clear(pieces);
-//        }
-//
-//        final Map<Position, Piece> board = pieceDao.load();
-        System.out.println("어디에서??????????\n");
-        pieceDao.clear(game.getPieces());
-        System.out.println("에러가???????????????");
+    public void init() throws SQLException{
+        if (pieceDao.load(game.getPieces()) == null) {
+            Pieces pieces = new Pieces();
+            pieces.init();
+            pieceDao.clear(pieces);
+        }
+        final Map<Piece, Position> board = pieceDao.load(game.getPieces());
+
     }
 
     public ResponseDto move(RequestDto requestDto) {
@@ -54,7 +53,11 @@ public class ChessService {
 
     private void changeStatusData(final String from, final String to) throws SQLException {
         final Pieces pieces = game.getPieces();
-        pieceDao.savePiece(from, pieces.getPieceOf(Position.from(to)));
+        pieceDao.savePiece(pieces.getPieceOf(Position.from(to)), from);
+    }
+
+    public String turn() throws SQLException {
+        return pieceDao.findTurn();
     }
 
     private void changeTurn() throws SQLException {
@@ -62,12 +65,28 @@ public class ChessService {
         game.getTurn().next();
     }
 
-    public Map<String, String> getCurrentBoard() {
-        BoardDto boardDto = new BoardDto(game.getPieces());
-        return boardDto.getBoard();
+    public Map<String, String> getCurrentBoard() throws SQLException {
+        Map<Piece, Position> board = pieceDao.findPieces(game.getPieces());
+        Map<String, String> result = new LinkedHashMap<>();
+
+        for(Piece piece : board.keySet()) {
+            Position position = board.get(piece);
+            String positionName = position.column().value() + position.row().value();
+            String pieceName;
+            if (piece.isSameColor(Color.BLACK)) {
+                pieceName = "B" + piece.display().toUpperCase();
+            } else {
+                pieceName = "W" + piece.display().toUpperCase();
+            }
+
+            result.put(positionName, pieceName);
+        }
+        return result;
     }
 
-    public void initChessBoard() {
+    public void initChessBoard() throws SQLException {
         game = new Game();
+        pieceDao.delete("pieces");
+        pieceDao.delete("turn");
     }
 }

@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
+import java.util.Objects;
+
 public abstract class Basis implements Piece {
     private final String displayName;
 
