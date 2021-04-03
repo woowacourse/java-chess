@@ -54,10 +54,10 @@ public final class Board {
     }
 
     public Team teamByPiece(final Piece piece) {
-        if (board.get(Team.BLACK).findByPiece(piece)) {
+        if (board.get(Team.BLACK).containsPiece(piece)) {
             return Team.BLACK;
         }
-        if (board.get(Team.WHITE).findByPiece(piece)) {
+        if (board.get(Team.WHITE).containsPiece(piece)) {
             return Team.WHITE;
         }
         throw new NotExistPieceException();
