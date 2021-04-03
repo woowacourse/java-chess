@@ -69,8 +69,6 @@ public class WebUIChessApplication {
                 chessGame.start();
                 return 200;
             } catch (IllegalArgumentException error) {
-                System.out.println("@@@@@@@@@@@@@");
-                System.out.println(error.getMessage());
                 return 201;
             }
         });
