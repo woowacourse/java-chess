@@ -15,7 +15,7 @@ public class ChessGameDAO {
 
     public Optional<ChessGameEntity> findLatestOne() throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "SELECT * FROM chess_games ORDER BY id DESC LIMIT 1";
+            String query = "SELECT * FROM chess_game ORDER BY id DESC LIMIT 1";
             PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
@@ -28,7 +28,7 @@ public class ChessGameDAO {
 
     public Long create() throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "INSERT INTO chess_games(state) VALUES(?)";
+            String query = "INSERT INTO chess_game(state) VALUES(?)";
             PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, "BlackTurn");
             preparedStatement.executeUpdate();
@@ -43,7 +43,7 @@ public class ChessGameDAO {
 
     public void deleteById(Long id) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "DELETE FROM chess_games WHERE id = ?";
+            String query = "DELETE FROM chess_game WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -52,7 +52,7 @@ public class ChessGameDAO {
 
     public void updateState(final Long id, final String state) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "UPDATE chess_games SET state = ? WHERE id = ?";
+            String query = "UPDATE chess_game SET state = ? WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, state);
             preparedStatement.setLong(2, id);

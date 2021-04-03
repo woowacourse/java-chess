@@ -18,7 +18,7 @@ public class PieceDAO {
 
     public Long save(Long chessGameId, Piece piece) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "INSERT INTO pieces(color, shape, chess_game_id, row, col) VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO piece(color, shape, chess_game_id, row, col) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, piece.getColor().toString());
             preparedStatement.setString(2, piece.getShape().toString());
@@ -43,7 +43,7 @@ public class PieceDAO {
 
     public List<Piece> findAllPiecesByChessGameId(Long chessGameId) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "SELECT * FROM pieces WHERE chess_game_id = ?";
+            String query = "SELECT * FROM piece WHERE chess_game_id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setLong(1, chessGameId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -67,7 +67,7 @@ public class PieceDAO {
 
     public Optional<Piece> findOneByPosition(final Long chessGameId, final int row, final int col) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "SELECT * FROM pieces WHERE chess_game_id = ? AND row = ? AND col = ?";
+            String query = "SELECT * FROM piece WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setLong(1, chessGameId);
             preparedStatement.setLong(2, row);
@@ -89,7 +89,7 @@ public class PieceDAO {
 
     public void update(final Long chessGameId, Piece piece) throws SQLException {
         try (Connection con = factory.getConnection()) {
-            String query = "UPDATE pieces SET row = ?, col = ? WHERE chess_game_id = ? AND id = ?";
+            String query = "UPDATE piece SET row = ?, col = ? WHERE chess_game_id = ? AND id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, piece.getRow());
             preparedStatement.setInt(2, piece.getColumn());
@@ -101,7 +101,7 @@ public class PieceDAO {
 
     public void delete(final Long chessGameId, final int row, final int col) {
         try (Connection con = factory.getConnection()) {
-            String query = "DELETE FROM pieces WHERE chess_game_id = ? AND row = ? AND col = ?";
+            String query = "DELETE FROM piece WHERE chess_game_id = ? AND row = ? AND col = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setLong(1, chessGameId);
             preparedStatement.setInt(2, row);
