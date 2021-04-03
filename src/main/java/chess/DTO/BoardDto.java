@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BoardDto {
+
     Map<Position, Piece> board;
 
     public BoardDto(final Board board) {

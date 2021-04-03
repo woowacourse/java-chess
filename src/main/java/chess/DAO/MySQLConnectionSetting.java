@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnectionSetting implements ConnectionSetting {
+
     private static final String server = "localhost:13306";
     private static final String database = "chessGame";
     private static final String option = "?useSSL=false&serverTimezone=UTC";
@@ -22,10 +23,11 @@ public class MySQLConnectionSetting implements ConnectionSetting {
 
     @Override
     public Connection getConnection() {
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return  DriverManager
-                .getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            return DriverManager
+                .getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
+                    password);
         } catch (ClassNotFoundException exception) {
             System.err.println("JDBC Driver load 오류: " + exception.getMessage());
             exception.printStackTrace();

@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import spark.ResponseTransformer;
 
 public class JsonParser {
-    private JsonParser(){}
 
-    public static String toJson(Object object){
+    private JsonParser() {
+    }
+
+    public static String toJson(Object object) {
         return new Gson().toJson(object);
     }
 

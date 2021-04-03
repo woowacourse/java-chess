@@ -86,7 +86,7 @@ window.onload = function () {
     clearBoard();
     await fillBoard(boardData);
     await addMoveEventHandler();
-    // 킹 죽음 여부로 게임 오버 체크
+    await checkGameOver();
   }
 
   function clearBoard() {
@@ -150,7 +150,7 @@ window.onload = function () {
     const $start_bt = document.querySelector(".start");
     const $load_bt = document.querySelector(".load");
     document.querySelector(".quit").addEventListener("click", () => {
-      if(confirm("게임을 종료하시겠습니까?")){
+      if (confirm("게임을 종료하시겠습니까?")) {
         window.close();
       }
     })
