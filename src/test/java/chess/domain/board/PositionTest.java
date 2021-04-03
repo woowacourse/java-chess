@@ -12,7 +12,7 @@ class PositionTest {
     @DisplayName("Position 객체 생성")
     @Test
     void create() {
-        final Position position = new Position(Vertical.A, Horizontal.FIVE);
+        final Position position = new Position(Vertical.a, Horizontal.FIVE);
         assertThat(position).isInstanceOf(Position.class);
     }
 }

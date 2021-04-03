@@ -5,6 +5,7 @@ import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private final Owner owner;

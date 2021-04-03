@@ -23,13 +23,13 @@ public class BoardTest {
     @DisplayName("올바른 보드 생성된다.")
     @Test
     void createTest() {
-        assertThat(board.of(Vertical.A, Horizontal.ONE)).isInstanceOf(Rook.class);
+        assertThat(board.of(Vertical.a, Horizontal.ONE)).isInstanceOf(Rook.class);
     }
 
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
     void of() {
-        final Piece piece = board.of(Vertical.B, Horizontal.TWO);
+        final Piece piece = board.of(Vertical.b, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
     }
@@ -37,8 +37,8 @@ public class BoardTest {
     @DisplayName("입력한 위치로 이동된다.")
     @Test
     void moveTest() {
-        final Position source = new Position(Vertical.B, Horizontal.TWO);
-        final Position target = new Position(Vertical.B, Horizontal.THREE);
+        final Position source = new Position(Vertical.b, Horizontal.TWO);
+        final Position target = new Position(Vertical.b, Horizontal.THREE);
 
         board.movePiece(source, target);
 
