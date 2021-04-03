@@ -58,7 +58,7 @@
 
 ## 5단계 - DB 연결
 - [x] DB 연결 도메인 추가
-- [ ] DB 구성 및 DTO DAO 기능 추가
+- [x] DB 구성 및 DTO DAO 기능 추가
 - [ ] Web Application에 수정사항 반영
 
 ## 고려 사항
