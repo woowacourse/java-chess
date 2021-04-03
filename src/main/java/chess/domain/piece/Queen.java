@@ -1,11 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.moveStrategy.BishopMovement;
-import chess.domain.piece.moveStrategy.RookMovement;
 import chess.domain.piece.moveStrategy.ToEndOfLineStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -18,13 +15,6 @@ public class Queen extends Piece {
 
     @Override
     public List<Position> searchMovablePositions(Position target) {
-        List<Position> movablePositions = new ArrayList<>();
-        RookMovement rookMovement = new RookMovement();
-        BishopMovement bishopMovement = new BishopMovement();
-
-        movablePositions.addAll(rookMovement.searchMovablePositions(target));
-        movablePositions.addAll(bishopMovement.searchMovablePositions(target));
-
-        return movablePositions;
+        return movablePositions(target, Direction.all());
     }
 }

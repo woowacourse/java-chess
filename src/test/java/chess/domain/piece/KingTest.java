@@ -39,11 +39,13 @@ class KingTest {
         List<Position> positions = king.searchMovablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
         assertThat(positions).containsExactly(
-                Position.of(Horizontal.B, Vertical.TWO),
                 Position.of(Horizontal.C, Vertical.TWO),
+                Position.of(Horizontal.A, Vertical.TWO),
+
+                Position.of(Horizontal.B, Vertical.TWO),
                 Position.of(Horizontal.C, Vertical.ONE),
-                Position.of(Horizontal.A, Vertical.ONE),
-                Position.of(Horizontal.A, Vertical.TWO)
+                Position.of(Horizontal.A, Vertical.ONE)
+
         );
     }
 

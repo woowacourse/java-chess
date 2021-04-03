@@ -42,9 +42,9 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
         List<Position> positions = pawn.searchMovablePositions(Position.of(Horizontal.A, Vertical.SEVEN));
         assertThat(positions).containsExactly(
-                Position.of(Horizontal.A, Vertical.FIVE),
                 Position.of(Horizontal.A, Vertical.SIX),
-                Position.of(Horizontal.B, Vertical.SIX)
+                Position.of(Horizontal.B, Vertical.SIX),
+                Position.of(Horizontal.A, Vertical.FIVE)
         );
     }
 
@@ -65,9 +65,9 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
         List<Position> positions = pawn.searchMovablePositions(Position.of(Horizontal.A, Vertical.TWO));
         assertThat(positions).containsExactly(
-                Position.of(Horizontal.A, Vertical.FOUR),
                 Position.of(Horizontal.A, Vertical.THREE),
-                Position.of(Horizontal.B, Vertical.THREE)
+                Position.of(Horizontal.B, Vertical.THREE),
+                Position.of(Horizontal.A, Vertical.FOUR)
         );
     }
 

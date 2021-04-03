@@ -43,8 +43,8 @@ class KnightTest {
         List<Position> positions = knight.searchMovablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
         assertThat(positions).containsExactly(
-                Position.of(Horizontal.D, Vertical.TWO),
                 Position.of(Horizontal.C, Vertical.THREE),
+                Position.of(Horizontal.D, Vertical.TWO),
                 Position.of(Horizontal.A, Vertical.THREE)
         );
     }

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
-import chess.domain.piece.moveStrategy.CanMoveStrategy;
+import chess.domain.piece.moveStrategy.MoveStrategy;
 
 import java.util.List;
 
@@ -13,19 +13,17 @@ public abstract class Piece {
     private final double score;
     private final boolean promotionChance;
     private final boolean boss;
+    private final MoveStrategy moveStrategy;
 
-    private final CanMoveStrategy canMoveStrategy;
-
-    public Piece(String name, Team team, double score, CanMoveStrategy canMoveStrategy, boolean promotionChance) {
-        this(name, team, score, canMoveStrategy, promotionChance, false);
+    public Piece(String name, Team team, double score, MoveStrategy moveStrategy, boolean promotionChance) {
+        this(name, team, score, moveStrategy, promotionChance, false);
     }
 
-    public Piece(String name, Team team, double score
-            , CanMoveStrategy canMoveStrategy, boolean promotionChance, boolean boss) {
+    public Piece(String name, Team team, double score, MoveStrategy moveStrategy, boolean promotionChance, boolean boss) {
         this.team = team;
         this.name = convertName(name, team);
         this.score = score;
-        this.canMoveStrategy = canMoveStrategy;
+        this.moveStrategy = moveStrategy;
         this.promotionChance = promotionChance;
         this.boss = boss;
     }
@@ -50,10 +48,14 @@ public abstract class Piece {
     }
 
     public boolean isMovable(Position target, Position destination, Board board) {
-        return canMoveStrategy.canMove(target, destination, board);
+        return moveStrategy.canMove(target, destination, board);
     }
 
     public abstract List<Position> searchMovablePositions(Position target);
+
+    public List<Position> movablePositions(Position target, List<Direction> directions) {
+        return moveStrategy.searchMovablePositions(target, directions);
+    }
 
     public boolean isDifferentTeam(Piece piece) {
         return !this.team.equals(piece.getTeam());

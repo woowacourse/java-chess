@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
-import chess.domain.piece.moveStrategy.PawnMovement;
 import chess.domain.piece.moveStrategy.PawnStrategy;
 
 import java.util.List;
@@ -17,15 +16,10 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> searchMovablePositions(Position target) {
-        PawnMovement pawnMovement = new PawnMovement();
-        return pawnMovement.searchMovablePositions(target, findDirection(), isFirstStep(target));
-    }
-
-    private Direction findDirection() {
         if (isBlack()) {
-            return Direction.BOTTOM;
+            return movablePositions(target, Direction.pawnBlack(isFirstStep(target)));
         }
-        return Direction.TOP;
+        return movablePositions(target, Direction.pawnWhite(isFirstStep(target)));
     }
 
     private boolean isFirstStep(Position position) {
