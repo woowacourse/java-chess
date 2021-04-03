@@ -30,22 +30,26 @@ public final class CommandAsString {
     }
 
     public boolean isStart() {
-        return "start".equalsIgnoreCase(commandInputs[0]);
+        return Command.START.name().equalsIgnoreCase(commandInputs[0]);
     }
 
     public boolean isEnd() {
-        return "end".equalsIgnoreCase(commandInputs[0]);
+        return Command.END.name().equalsIgnoreCase(commandInputs[0]);
     }
 
     public boolean isMove() {
-        return "move".equalsIgnoreCase(commandInputs[0]);
+        return Command.MOVE.name().equalsIgnoreCase(commandInputs[0]);
     }
 
     public boolean isStatus() {
-        return "status".equalsIgnoreCase(commandInputs[0]);
+        return Command.STATUS.name().equalsIgnoreCase(commandInputs[0]);
     }
 
     public boolean isShow() {
-        return "show".equalsIgnoreCase(commandInputs[0]);
+        return Command.SHOW.name().equalsIgnoreCase(commandInputs[0]);
+    }
+
+    public boolean isNothing() {
+        return Command.NOTHING.name().equalsIgnoreCase(commandInputs[0]);
     }
 }

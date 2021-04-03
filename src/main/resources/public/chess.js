@@ -1,4 +1,5 @@
 const BOARD = document.querySelector("#board");
+const BUTTONS = document.querySelector("#buttons");
 const POSITIONS = BOARD.querySelectorAll("div");
 const API_URL = "http://localhost:4567/";
 const PIECE_IMAGE_MAP = {
@@ -15,6 +16,11 @@ const PIECE_IMAGE_MAP = {
   "k": "./images/whiteKing.png",
   "K": "./images/blackKing.png",
 }
+
+const startButton = BUTTONS.querySelector(".start");
+const saveButton = BUTTONS.querySelector(".save");
+const loadButton = BUTTONS.querySelector(".load");
+
 let boardInfo = {};
 let availablePositions = [];
 const AVAILABLE_POSITION_CLASS = "available";
@@ -26,7 +32,31 @@ window.onload = () => {
   for (const position of POSITIONS) {
     position.addEventListener("click", selectPosition);
   }
+  saveButton.addEventListener("click", saveBoard);
+  loadButton.addEventListener("click", loadBoard);
 };
+
+function saveBoard() {
+  fetch(API_URL + "save")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(" ");
+    }
+  })
+  .catch(error => console.log(error));
+}
+
+function loadBoard() {
+  fetch(API_URL + "load")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(" ");
+    }
+    return response.json();
+  })
+  .then(placePieces)
+  .catch(error => console.log(error));
+}
 
 function initializeBoard() {
   fetch(API_URL + "new")

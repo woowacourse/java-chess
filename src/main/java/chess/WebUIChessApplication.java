@@ -5,6 +5,7 @@ import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
 import chess.controller.WebController;
+import chess.dao.GameDao;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
@@ -18,23 +19,14 @@ public class WebUIChessApplication {
 
         staticFileLocation("/public");
         WebController webController = new WebController();
+        GameDao gameDao = new GameDao();
         Gson gson = new Gson();
-//
-//        get("/", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "index.html");
-//        });
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "board.html");
         });
 
-//        get("/new", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "board.html");
-//        });
-//
         get("/new", (req, res) -> {
             Map<String, String> model = webController.startGame();
             return gson.toJson(model);
@@ -47,15 +39,21 @@ public class WebUIChessApplication {
         });
 
 
-        get("/availablePositions", (request, response) -> {
-            String source = request.queryParams("source");
+        get("/availablePositions", (req, res) -> {
+            String source = req.queryParams("source");
             List<String> movablePositions = webController.calculatePath(source);
             return gson.toJson(movablePositions);
         });
 
-        // save
+        get("/save", (req, res) -> {
+            webController.save(gameDao);
+            return gson.toJson(true);
+        });
 
-        // load
+        get("/load", (req, res) -> {
+            Map<String, String> model = webController.load(gameDao);
+            return gson.toJson(model);
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

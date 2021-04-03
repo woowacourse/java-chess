@@ -1,12 +1,15 @@
 package chess.controller;
 
+import chess.dao.GameDao;
 import chess.domain.CommandAsString;
 import chess.domain.game.Game;
 import chess.domain.game.state.InitialState;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
+import chess.dto.GameStateDto;
 import chess.view.OutputView;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,26 @@ public class WebController {
         }
         Result result = game.result(command);
         return convertToStringList(result.infoAsList());
+    }
+
+    public void save(GameDao gameDao) {
+        try {
+            gameDao.updateGame("1", new GameStateDto(game.getState()));
+        } catch (SQLException e) {
+            OutputView.printSqlError(e);
+        }
+
+    }
+
+    public Map<String, String> load(GameDao gameDao) {
+        CommandAsString command = new CommandAsString("nothing");
+        try {
+            game = gameDao.findGameByGameId("1");
+        } catch (SQLException e) {
+            OutputView.printSqlError(e);
+        }
+        Result result = game.result(command);
+        return convertToStringMap(result.infoAsMap());
     }
 
     private Map<String, String> convertToStringMap(Map<Position, Piece> coordinates) {

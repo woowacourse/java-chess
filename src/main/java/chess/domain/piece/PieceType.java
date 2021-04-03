@@ -1,6 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.*;
+import chess.domain.piece.strategy.BishopStrategy;
+import chess.domain.piece.strategy.BlackPawnStrategy;
+import chess.domain.piece.strategy.KingStrategy;
+import chess.domain.piece.strategy.KnightStrategy;
+import chess.domain.piece.strategy.MovedBlackPawnStrategy;
+import chess.domain.piece.strategy.MovedWhitePawnStrategy;
+import chess.domain.piece.strategy.QueenStrategy;
+import chess.domain.piece.strategy.RookStrategy;
+import chess.domain.piece.strategy.WhitePawnStrategy;
 import chess.dto.PieceDto;
 import java.util.Arrays;
 import java.util.function.Function;

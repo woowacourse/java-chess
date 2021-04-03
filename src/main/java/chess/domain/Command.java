@@ -7,5 +7,6 @@ public enum Command {
     MOVE,
     STATUS,
     SHOW,
+    NOTHING,
     HIDE;
 }

@@ -4,11 +4,8 @@ import chess.domain.CommandAsString;
 import chess.domain.game.Game;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.InitialState;
-import chess.domain.piece.Piece;
-import chess.domain.piece.strategy.PieceStrategy;
 import chess.dto.GameStateDto;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class Test {
 
