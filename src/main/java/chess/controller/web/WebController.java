@@ -4,6 +4,7 @@ import chess.controller.dto.BoardDto;
 import chess.controller.dto.GameDto;
 import chess.controller.dto.ScoreDto;
 import chess.dao.GameDao;
+import chess.dao.RoomDao;
 import chess.domain.piece.Owner;
 import chess.service.ChessGame;
 import chess.service.RequestHandler;
@@ -19,31 +20,41 @@ public class WebController {
 
     private ChessGame chessGame;
     private final GameDao gameDao;
+    private final RoomDao roomDao;
 
     public WebController(Connection connection) {
         this.gameDao = new GameDao(connection);
+        this.roomDao = new RoomDao(connection);
     }
 
     public void mapping() {
-        init();
-        newGame();
+        create();
+        load();
         show();
         move();
     }
 
-    private void init() {
-        get("/load", (req, res) -> {
-//            final int roomId = Integer.parseInt(req.params(":room"));
+    private void load() {
+        get("/load/:roomName", (req, res) -> {
+            final String roomName = req.params(":roomName");
+            System.out.println("room name : "+ roomName);
+
             final GameDto gameDto = gameDao.load(0);
             chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
             return printGame();
         });
     }
 
-    private void newGame(){
-        get("/new", (req, res) -> {
+    private void create(){
+        get("/create/:roomName", (req, res) -> {
+            final String roomName = req.params(":roomName");
             chessGame = ChessGame.initNew();
-            gameDao.save(0, chessGame.turn(), chessGame.board());
+
+            final long roomId = System.currentTimeMillis();
+            gameDao.save(roomId, chessGame.turn(), chessGame.board());
+            roomDao.save(roomName, roomId);
+
+            res.redirect("/load/"+roomName);
             return printGame();
         });
     }

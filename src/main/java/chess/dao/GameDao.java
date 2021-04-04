@@ -17,14 +17,24 @@ public class GameDao {
     }
 
     // XXX :: gameDTO를 이용해볼 생각
-    public void save(final int roomId, final Turn turn, final Board board) throws SQLException {
+    public int save(final long roomId, final Turn turn, final Board board) throws SQLException {
         final String query = "INSERT INTO game_status (room, turn, board) VALUES (?, ?, ?)";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
 
-        insertQuery.setInt(1, roomId);
+        insertQuery.setLong(1, roomId);
         insertQuery.setString(2, turn.name());
         insertQuery.setString(3, boardToText(board));
         insertQuery.executeUpdate();
+
+        return getLastInsertId();
+    }
+
+    public int getLastInsertId() throws SQLException {
+        final String query = "SELECT LAST_INSERT_ID()";
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
     }
 
     public GameDto load(final int roomId) throws SQLException {
