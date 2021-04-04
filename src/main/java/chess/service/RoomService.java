@@ -24,4 +24,8 @@ public class RoomService {
     public void changeStatus(final String roomId) throws SQLException {
         roomDAO.changeStatusEndByRoomId(roomId);
     }
+
+    public List<String> allRoomsId() throws SQLException {
+        return roomDAO.allRoomIds();
+    }
 }

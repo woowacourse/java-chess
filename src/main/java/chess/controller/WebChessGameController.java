@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Rooms;
 import chess.domain.Team;
 import chess.dto.PiecesDTO;
 import chess.dto.StatusDTO;
@@ -34,20 +35,22 @@ public class WebChessGameController {
         this.logService = logService;
     }
 
-    public void start(final ChessGame chessGame) {
-        goHome();
+    public void start(final Rooms rooms) {
+        goHome(rooms);
         createNewRoom();
         enterRoom();
-        startGame(chessGame);
-        continueGame(chessGame);
-        checkCurrentTurn(chessGame);
-        findMovablePosition(chessGame);
-        movePiece(chessGame);
+        startGame(rooms);
+        continueGame(rooms);
+        checkCurrentTurn(rooms);
+        findMovablePosition(rooms);
+        movePiece(rooms);
         initialize();
     }
 
-    private void goHome() {
+    private void goHome(final Rooms rooms) {
         get("/", (req, res) -> {
+            List<String> roomIds = roomService.allRoomsId();
+            roomIds.forEach(id -> rooms.addRoom(id, new ChessGame()));
             Map<String, Object> model = new HashMap<>();
             model.put("rooms", roomService.allRooms());
             model.put("results", resultService.allUserResult());
@@ -74,23 +77,26 @@ public class WebChessGameController {
         });
     }
 
-    private void startGame(final ChessGame chessGame) {
+    private void startGame(final Rooms rooms) {
         post("/start", (req, res) -> {
-            chessGame.initialize();
             Map<String, Object> model = new HashMap<>();
             String roomId = req.queryParams("room-id");
+            ChessGame chessGame = new ChessGame();
+            chessGame.initialize();
+            rooms.addRoom(roomId, chessGame);
             logService.initializeByRoomId(roomId);
             UsersDTO users = userService.usersParticipatedInGame(roomId);
-            gameInformation(chessGame, model, roomId, users);
+            gameInformation(rooms.loadGameByRoomId(roomId), model, roomId, users);
             return render(model, "chess.html");
         });
     }
 
-    private void continueGame(final ChessGame chessGame) {
+    private void continueGame(final Rooms rooms) {
         post("/continue", (req, res) -> {
-            chessGame.initialize();
             Map<String, Object> model = new HashMap<>();
             String roomId = req.queryParams("room-id");
+            ChessGame chessGame = rooms.loadGameByRoomId(roomId);
+            chessGame.initialize();
             List<String[]> logs = logService.logByRoomId(roomId);
             logService.executeLog(logs, chessGame);
             UsersDTO users = userService.usersParticipatedInGame(roomId);
@@ -111,25 +117,30 @@ public class WebChessGameController {
         model.put("users", users);
     }
 
-    private void checkCurrentTurn(final ChessGame chessGame) {
+    private void checkCurrentTurn(final Rooms rooms) {
         post("/myTurn", "application/json", (req, res) -> {
+            String roomId = req.queryParams("roomId");
             String clickedSection = req.queryParams("clickedSection");
+            ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             return chessGame.checkRightTurn(clickedSection);
         }, new JsonTransformer());
     }
 
-    private void findMovablePosition(final ChessGame chessGame) {
+    private void findMovablePosition(final Rooms rooms) {
         post("/movablePositions", (req, res) -> {
+            String roomId = req.queryParams("roomId");
             String startPoint = req.queryParams("clickedSection");
+            ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             return chessGame.movablePositionsByStartPoint(startPoint);
         }, new JsonTransformer());
     }
 
-    private void movePiece(final ChessGame chessGame) {
+    private void movePiece(final Rooms rooms) {
         post("/move", "application/json", (req, res) -> {
             String roomId = req.queryParams("roomId");
             String startPoint = req.queryParams("startPoint");
             String endPoint = req.queryParams("endPoint");
+            ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             chessGame.move(startPoint, endPoint);
             logService.createLog(roomId, startPoint, endPoint);
             UsersDTO users = userService.usersParticipatedInGame(roomId);

@@ -77,4 +77,25 @@ public class RoomDAO {
 
         }
     }
+
+    public List<String> allRoomIds() throws SQLException {
+        String query = "SELECT id FROM room";
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<String> ids = new ArrayList<>();
+
+        try (connection; statement; resultSet) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                ids.add(Integer.toString(id));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return ids;
+    }
+
 }

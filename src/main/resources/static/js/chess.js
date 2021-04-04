@@ -17,6 +17,7 @@ function turnCheck(clickedSection) {
     $.ajax({
         url: "/myTurn",
         data: {
+            roomId: roomId,
             clickedSection: clickedSection
         },
         method: "POST",
@@ -36,6 +37,7 @@ function getMovablePosition(clickedSection, turn) {
         $.ajax({
             url: "/movablePositions",
             data: {
+                roomId: roomId,
                 clickedSection: clickedSection
             },
             method: "POST",
