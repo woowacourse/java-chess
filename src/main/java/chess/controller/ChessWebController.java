@@ -42,18 +42,16 @@ public class ChessWebController {
             return render(model, "board.html");
         });
 
-
-/*        get("/games/start", (request, response) -> {
-            PiecesStatusDto piecesStatusDto = chessService.initializeGame();
-            return toJson(piecesStatusDto);
-        });*/
-
-
-
         post("/games", (request, response) -> {
             ChessSaveRequestDto requestDto =  new Gson().fromJson(request.body(), ChessSaveRequestDto.class);
             GameStatusDto responseDto = chessService.startChess(requestDto);
             return toJson(responseDto);
+        });
+
+        put("/games", (request, response) -> {
+            GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
+            chessService.changeGameStatus(requestDto);
+            return toJson(requestDto);
         });
 
         get("/games/:name", (request, response) -> {
@@ -61,12 +59,6 @@ public class ChessWebController {
             GameStatusDto responseDto = chessService.loadChess(name);
             return toJson(responseDto);
 
-        });
-
-        put("/games", (request, response) -> {
-            GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
-            chessService.changeGameStatus(requestDto);
-            return toJson(requestDto);
         });
 
         put("/pieces", (request, response) -> {

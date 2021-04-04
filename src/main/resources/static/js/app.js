@@ -1,4 +1,3 @@
-const start = document.getElementById("start");
 const end = document.getElementById("end");
 const exit = document.getElementById("exit");
 const chessBoard = document.querySelector(".chess-board");
@@ -9,10 +8,6 @@ const whiteCount = document.querySelector(`#whiteScore strong`);
 const blackCount = document.querySelector(`#blackScore strong`);
 const basePath = 'http://localhost:4567';
 let isEnd = true;
-
-/*start.addEventListener("click", () => {
-    initializePieces();
-});*/
 
 end.addEventListener("click", () => {
     if (isEnd === true) {
@@ -40,15 +35,7 @@ exit.addEventListener("click", () => {
     }
 })
 
-/*const initializePieces = () => {
-    axios.get(basePath + '/games/start')
-        .then(responsePieces => {
-            reRangeBoard(responsePieces)
-        })
-        .catch(error => console.log(error));
-};*/
-
-const getPieces = () => {
+const loadGame = () => {
     axios.get(basePath + '/games/' + localStorage.getItem("name"))
         .then(responsePieces => {
             reRangeBoard(responsePieces)
@@ -56,7 +43,7 @@ const getPieces = () => {
         .catch(error => alert(error));
 };
 
-getPieces();
+loadGame();
 
 function reRangeBoard(responsePieces) {
     for (let idx = 0; idx < tiles.length; idx++) {
@@ -126,23 +113,10 @@ function movePiece() {
             source: sourceKey.value,
             target: targetKey.value
         }
-    }).then((response) => {
-        getPieces()
+    }).then(() => {
+        loadGame()
     }).catch(error => alert(error));
 }
-
-/*
-const movePieces = (response) => {
-    let sourcePiece = document.getElementById(response.data.source);
-    let targetPiece = document.getElementById(response.data.target);
-
-    let sourceChildPiece = sourcePiece.querySelector('img');
-    let targetChildPiece = targetPiece.querySelector('img');
-
-    targetChildPiece.src = sourceChildPiece.src;
-    sourceChildPiece.src = "";
-};
-*/
 
 function clearMoveSource() {
     sourceKey.value = "";

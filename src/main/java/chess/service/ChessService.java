@@ -24,11 +24,6 @@ public class ChessService {
         return new TilesDto(ChessBoardFactory.initializeBoard());
     }
 
-    public GameStatusDto initializeGame() {
-        ChessGame chessGame = ChessGame.newGame();
-        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
-    }
-
     public MoveResponseDto movePiece(final MoveRequestDto requestDto) {
         ChessGame chessGame = ChessGame.newGame();
         List<Movement> movements = movementDao.findByChessName(requestDto.getChessName());
