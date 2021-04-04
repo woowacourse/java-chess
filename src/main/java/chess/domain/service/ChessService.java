@@ -90,10 +90,20 @@ public final class ChessService {
         final List<PieceDto> pieceDtos = new ArrayList<>();
         chessBoard.forEach((position, piece) -> {
             final String positionValue = position.horizontalSymbol() + position.verticalSymbol();
-            pieceDtos.add(new PieceDto(positionValue, piece.imgFileName()));
+            pieceDtos.add(new PieceDto(positionValue, imgFileName(piece)));
         });
         return new Response(ResponseCode.SUCCESS.code(), ResponseCode.SUCCESS.message(),
             new BoardAndPieceDto(boardDto, pieceDtos));
+    }
+
+    public String imgFileName(final Piece piece) {
+        if (piece.isBlank()) {
+            return "";
+        }
+        if (piece.team() == Team.BLACK) {
+            return Team.BLACK.teamName().charAt(0) + piece.name();
+        }
+        return Team.WHITE.teamName().charAt(0) + piece.name().toUpperCase();
     }
 
 }
