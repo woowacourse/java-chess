@@ -61,7 +61,7 @@ public class ChessService {
 
     public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) throws SQLException {
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-        chessGameDao.updateChessGameStateById(chessGameId, chessGameDto.getTurn().name(), chessGameDto.isFinish());
+        chessGameDao.updateChessGameStateById(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
         PieceDto sourcePieceDto = findPieceDtoByPosition(source, chessGameDto);
         PieceDto targetPieceDto = findPieceDtoByPosition(target, chessGameDto);
         pieceDao.updatePiecePositionByChessGameId(chessGameId, sourcePieceDto);
@@ -81,7 +81,7 @@ public class ChessService {
         ChessGame chessGame = generateNewChessGame();
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         chessGameDao.deleteChessGameById(chessGameId);
-        chessGameDao.insertChessGameById(chessGameId, chessGameDto.getTurn().name(), chessGameDto.isFinish());
+        chessGameDao.insertChessGameById(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
         pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
     }
 }

@@ -1,19 +1,17 @@
 package chess.dto;
 
-import chess.domain.piece.info.Color;
-
 public class PieceDto {
-    private final Color color;
+    private final String color;
     private final String name;
     private final String position;
 
-    public PieceDto(Color color, String name, String position) {
+    public PieceDto(String color, String name, String position) {
         this.color = color;
         this.name = name;
         this.position = position;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 

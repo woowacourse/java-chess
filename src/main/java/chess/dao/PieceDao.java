@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.piece.info.Color;
 import chess.dto.PieceDto;
 
 import java.sql.*;
@@ -50,7 +49,7 @@ public class PieceDao {
         String query = "INSERT INTO PIECE(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         for (PieceDto piece : pieces) {
-            pstmt.setString(1, piece.getColor().toString());
+            pstmt.setString(1, piece.getColor());
             pstmt.setString(2, piece.getName());
             pstmt.setString(3, piece.getPosition());
             pstmt.setInt(4, chessGameId);
@@ -67,7 +66,7 @@ public class PieceDao {
 
         List<PieceDto> pieces = new ArrayList<>();
         while (rs.next()) {
-            PieceDto pieceDto = new PieceDto(Color.valueOf(rs.getString("color")),
+            PieceDto pieceDto = new PieceDto(rs.getString("color"),
                     rs.getString("name"), rs.getString("position"));
             pieces.add(pieceDto);
         }
@@ -78,7 +77,7 @@ public class PieceDao {
     public void updatePiecePositionByChessGameId(int chessGameId, PieceDto pieceDto) throws SQLException {
         String query = "UPDATE PIECE SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, pieceDto.getColor().toString());
+        pstmt.setString(1, pieceDto.getColor());
         pstmt.setString(2, pieceDto.getName());
         pstmt.setString(3, pieceDto.getPosition());
         pstmt.setInt(4, chessGameId);
