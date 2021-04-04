@@ -55,6 +55,7 @@ function makePiece(piece) {
 async function loadChessRoom() {
     let load = await fetch('/load?roomNo=1');
     load = await load.json();
+    console.log(load)
     initBoard(load)
 }
 
@@ -62,12 +63,16 @@ async function exitChessRoom() {
     let exit = await fetch('/exit?roomNo=1');
     exit = await exit.json();
     if (exit === 1) {
-        resetBoard($board);
-        $roomNo.innerText = '';
-        $blackScore.innerText = '';
-        $whiteScore.innerText = '';
-        $turn.innerText = '';
+        resetStatus();
     }
+}
+
+function resetStatus() {
+    resetBoard($board);
+    $roomNo.innerText = '';
+    $blackScore.innerText = '';
+    $whiteScore.innerText = '';
+    $turn.innerText = '';
 }
 
 let source = '';
@@ -130,17 +135,22 @@ async function selectTarget(event) {
 }
 
 function updateBoard(data) {
+    if (data.isAliveAllKings == false) {
+        alert($turn.innerText + ' 승리!');
+        exitChessRoom();
+        return;
+    }
     for (let i = 8; i >= 1; i--) {
         for (let j = 0; j < 8; j++) {
             const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
-            const piece = data.chessBoard[boxDiv.id];
+            const piece = data.chessRoomInfo.chessBoard[boxDiv.id];
             boxDiv.classList.remove('suggest');
             boxDiv.innerHTML = makePiece(piece);
         }
     }
-    $blackScore.innerText = data.blackScore;
-    $whiteScore.innerText = data.whiteScore;
-    $turn.innerText = data.turn;
+    $blackScore.innerText = data.chessRoomInfo.blackScore;
+    $whiteScore.innerText = data.chessRoomInfo.whiteScore;
+    $turn.innerText = data.chessRoomInfo.turn;
 }
 
 

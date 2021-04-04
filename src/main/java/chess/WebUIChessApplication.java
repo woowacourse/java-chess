@@ -6,13 +6,11 @@ import chess.domain.dto.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,13 +58,17 @@ public class WebUIChessApplication {
             Position source = Position.of(sourceValue.charAt(0), sourceValue.charAt(1));
             Position target = Position.of(targetValue.charAt(0), targetValue.charAt(1));
             chessBoard.movePiece(source, target);
+            boolean isAliveAllKings = chessBoard.isAliveAllKings();
             ChessRoomDto chessRoomDto = new ChessRoomDto(Color.from(map.get("turn")).reverse().name(),
                     chessBoard.sumScoreByColor(Color.BLACK),
                     chessBoard.sumScoreByColor(Color.WHITE));
             Piece nowPiece = chessBoard.findByPosition(target);
             chessDao.updateChessRoom(chessRoomDto, new PieceDto(nowPiece.getName(), nowPiece.getColor().name()), new PositionDto(sourceValue), new PositionDto(targetValue));
             chessRoomDto = chessDao.findChessRoomByRoomNo(1);
-            return mapper.writeValueAsString(chessRoomDto);
+            Map<String, Object> model = new HashMap<>();
+            model.put("chessRoomInfo", chessRoomDto);
+            model.put("isAliveAllKings", isAliveAllKings);
+            return mapper.writeValueAsString(model);
         });
 
         get("/load", (req, res) -> {
