@@ -20,6 +20,11 @@ public class ChessGame {
         this.board = new Board(initializeBoard());
     }
 
+    public ChessGame(Map<Point, Piece> board, Color currentColor) {
+        this.board = new Board(board);
+        this.currentColor = currentColor;
+    }
+
     private Map<Point, Piece> initializeBoard() {
         Map<Point, Piece> initialBoard = new HashMap<>();
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -56,5 +61,9 @@ public class ChessGame {
 
     public Map<Point, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
     }
 }

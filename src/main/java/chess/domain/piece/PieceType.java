@@ -101,6 +101,46 @@ public enum PieceType {
 
     public abstract Piece create(int row, int column);
 
+    public static Piece createByPieceName(Character pieceName) {
+        if (pieceName == 'r') {
+            return new Rook(WHITE);
+        }
+        if (pieceName == 'R') {
+            return new Rook(BLACK);
+        }
+        if (pieceName == 'n') {
+            return new Knight(WHITE);
+        }
+        if (pieceName == 'N') {
+            return new Knight(BLACK);
+        }
+        if (pieceName == 'b') {
+            return new Bishop(WHITE);
+        }
+        if (pieceName == 'B') {
+            return new Bishop(BLACK);
+        }
+        if (pieceName == 'q') {
+            return new Queen(WHITE);
+        }
+        if (pieceName == 'Q') {
+            return new Queen(BLACK);
+        }
+        if (pieceName == 'k') {
+            return new King(WHITE);
+        }
+        if (pieceName == 'K') {
+            return new King(BLACK);
+        }
+        if (pieceName == 'p') {
+            return new Pawn(WHITE);
+        }
+        if (pieceName == 'P') {
+            return new Pawn(BLACK);
+        }
+        return new Empty(NOTHING);
+    }
+
     private static class Constants {
         public static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);
         public static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);

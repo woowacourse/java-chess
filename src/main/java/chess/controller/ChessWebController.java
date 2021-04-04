@@ -1,8 +1,5 @@
 package chess.controller;
 
-import chess.User;
-import com.google.gson.Gson;
-
 import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -14,6 +11,7 @@ import static spark.Spark.*;
 
 public class ChessWebController {
     ChessGameService chessGameService = new ChessGameService();
+
     public void route() {
         staticFiles.location("/static");
 
@@ -29,13 +27,20 @@ public class ChessWebController {
 
         post("/users", (req, res) -> {
             chessGameService.addUser(req.queryParams("userId"));
+            res.redirect("/");
             return 200;
         });
 
-//        post("/point", (req, res) -> chessGameService.getPiece(req.body()));
+        post("/login", (req, res) -> {
+            if (chessGameService.login(req.queryParams("userId"))) {
+                res.redirect("/chess");
+                return 200;
+            }
+            return 400;
+        });
+
         post("/point", (req, res) -> chessGameService.getPiece(req.body()));
         post("/move", (req, res) -> chessGameService.movePiece(req.body()));
-//        post("/load", (req, res) -> chessGameService.loadGame(req.body()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
