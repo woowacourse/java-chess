@@ -10,6 +10,11 @@ body {
     background-size: 100% 100%;
 }
 
+.Game {
+    position : relative;
+    left : 28%;
+}
+
 .GameSet {
     height : 50%;
     display : flex;

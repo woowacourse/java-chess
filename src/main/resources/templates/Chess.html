@@ -1,257 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhyB의 체스</title>
-    <link rel="stylesheet" href = "css/Chess.css">
+    <link rel="stylesheet" href="css/Chess.css">
 </head>
+
 <body>
-    <div class = "entire">
-    <div class = "headquarter">
-        <h1> WhyBe의 체스 </h1>
+    <div class="entire">
+        <div class = "Game">
+            <div class="headquarter">
+                <h1> WhyBe의 체스 </h1>
+            </div>
+            <div class="GameSet">
+                <div class="Situation">
+                    <div class="score">
+                        <div id="white-score">
+
+                        </div>
+                        <div id="black-score">
+
+                        </div>
+                    </div>
+                    <div class="턴">
+                        <p>지금은 순서는</p>
+                        <div id="turn">
+
+                        </div>
+                    </div>
+                    <div id="start-button" class="button">
+                        <p>Start</p>
+                    </div>
+                    <div id="load-button" class="button">
+                        <p>Load</p>
+                    </div>
+                    <div id="end-button" class="button">
+                        <p>End</p>
+                    </div>
+
+                </div>
+                <div class="GameBoard">
+                    <div id="row8" class="slot-row">
+                        <div id="a8" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="b8" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="c8" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="d8" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="e8" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="f8" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="g8" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="h8" class="one-slot brown-slot">
+
+                        </div>
+                    </div>
+                    <div id="row7" class="slot-row">
+                        <div id="a7" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="b7" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="c7" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="d7" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="e7" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="f7" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="g7" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="h7" class="one-slot yellow-slot">
+
+                        </div>
+                    </div>
+                    <div id="row6" class="slot-row">
+                        <div id="a6" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="b6" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="c6" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="d6" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="e6" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="f6" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="g6" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="h6" class="one-slot brown-slot">
+
+                        </div>
+                    </div>
+                    <div id="row5" class="slot-row">
+                        <div id="a5" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="b5" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="c5" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="d5" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="e5" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="f5" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="g5" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="h5" class="one-slot yellow-slot">
+
+                        </div>
+                    </div>
+                    <div id="row4" class="slot-row">
+                        <div id="a4" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="b4" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="c4" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="d4" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="e4" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="f4" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="g4" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="h4" class="one-slot brown-slot">
+
+                        </div>
+                    </div>
+                    <div id="row3" class="slot-row">
+                        <div id="a3" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="b3" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="c3" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="d3" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="e3" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="f3" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="g3" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="h3" class="one-slot yellow-slot">
+
+                        </div>
+                    </div>
+                    <div id="row2" class="slot-row">
+                        <div id="a2" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="b2" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="c2" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="d2" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="e2" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="f2" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="g2" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="h2" class="one-slot brown-slot">
+
+                        </div>
+                    </div>
+                    <div id="row1" class="slot-row">
+                        <div id="a1" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="b1" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="c1" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="d1" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="e1" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="f1" class="one-slot yellow-slot">
+
+                        </div>
+                        <div id="g1" class="one-slot brown-slot">
+
+                        </div>
+                        <div id="h1" class="one-slot yellow-slot">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
-    <div class = "GameSet">
-        <div class = "Situation">
-            <div class = "score">
-                <div id = "white-score">
-
-                </div>
-                <div id = "black-score">
-
-                </div>
-            </div>
-            <div class = "턴">
-                <p>지금은 순서는</p>
-                <div id = "turn">
-                
-                </div>
-            </div>
-            <div id = "start-button" class = "button">
-                <p>Start</p>
-            </div>
-            <div id = "load-button" class = "button">
-                <p>Load</p>
-            </div>
-            <div id = "end-button" class = "button">
-                <p>End</p>
-            </div>
-
-        </div>
-        <div class = "GameBoard">
-            <div id = "row8" class = "slot-row">
-                <div id = "a8" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "b8" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "c8" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "d8" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "e8" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "f8" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "g8" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "h8" class = "one-slot brown-slot">
-
-                </div>
-            </div>
-            <div id = "row7" class = "slot-row">
-                <div id = "a7" class = "one-slot brown-slot">
-                    
-                </div>
-                <div id = "b7" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "c7" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "d7" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "e7" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "f7" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "g7" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "h7" class = "one-slot yellow-slot">
-
-                </div>
-            </div>
-            <div id = "row6" class = "slot-row">
-                <div id = "a6" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "b6" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "c6" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "d6" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "e6" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "f6" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "g6" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "h6" class = "one-slot brown-slot">
-
-                </div>
-            </div>
-            <div id = "row5" class = "slot-row">
-                <div id = "a5" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "b5" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "c5" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "d5" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "e5" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "f5" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "g5" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "h5" class = "one-slot yellow-slot">
-
-                </div>
-            </div>
-            <div id = "row4" class = "slot-row">
-                <div id = "a4" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "b4" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "c4" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "d4" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "e4" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "f4" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "g4" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "h4" class = "one-slot brown-slot">
-
-                </div>
-            </div>
-            <div id = "row3" class = "slot-row">
-                <div id = "a3" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "b3" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "c3" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "d3" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "e3" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "f3" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "g3" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "h3" class = "one-slot yellow-slot">
-
-                </div>
-            </div>
-            <div id = "row2" class = "slot-row">
-                <div id = "a2" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "b2" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "c2" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "d2" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "e2" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "f2" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "g2" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "h2" class = "one-slot brown-slot">
-
-                </div>
-            </div>
-            <div id = "row1" class = "slot-row">
-                <div id = "a1" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "b1" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "c1" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "d1" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "e1" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "f1" class = "one-slot yellow-slot">
-
-                </div>
-                <div id = "g1" class = "one-slot brown-slot">
-
-                </div>
-                <div id = "h1" class = "one-slot yellow-slot">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <script src = "https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type = "module" src = "js/ChessModule.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="js/ChessModule.js"></script>
 </body>
+
 </html>
