@@ -22,16 +22,14 @@ public class WebChessController {
         Game game = new Game();
         game.init();
 
-        get("/", (req, res) ->
-        {
+        get("/", (req, res) -> {
             BoardDao boardDao = new BoardDao();
             Map<String, Object> model = new HashMap<>();
             model.put("names", boardDao.findRoomNames());
             return render(model, "index.html");
         });
 
-        get("/start", (req, res) ->
-        {
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             if (req.queryParams("newGame").equals("yes")) {
                 addRoomToDb(req.queryParams("roomName"));
@@ -39,8 +37,7 @@ public class WebChessController {
             return render(model, "game.html");
         });
 
-        post("/game", (req, res) ->
-        {
+        post("/game", (req, res) -> {
             game.init();
             Map<String, Object> model = new HashMap<>();
             model.put("squares", game.squareDtos());
@@ -48,8 +45,7 @@ public class WebChessController {
             return GSON.toJson(model);
         });
 
-        post("/continue", (req, res) ->
-        {
+        post("/continue", (req, res) -> {
             game.continueGame(req.queryParams("roomName"));
 
             Map<String, Object> model = new HashMap<>();
@@ -58,8 +54,7 @@ public class WebChessController {
             return GSON.toJson(model);
         });
 
-        post("/move", (req, res) ->
-        {
+        post("/move", (req, res) -> {
             try {
                 isStart(game);
                 WebChessController.move(game, req.queryParams("source"), req.queryParams("target"));
@@ -77,8 +72,7 @@ public class WebChessController {
             return req.queryParams("source") + " " + req.queryParams("target") + " " + game.turnColor().getName();
         });
 
-        post("/status", (req, res) ->
-        {
+        post("/status", (req, res) -> {
             String result;
             try {
                 result = game.computeWhitePoint() + " " + game.computeBlackPoint();
@@ -90,8 +84,7 @@ public class WebChessController {
             return result;
         });
 
-        post("/end", (req, res) ->
-        {
+        post("/end", (req, res) -> {
             game.saveBoard(req.queryParams("roomName"));
             game.end();
             return "";
