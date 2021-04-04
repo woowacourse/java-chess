@@ -21,8 +21,10 @@
         SCORE : <br>
     </label>
     <div class="game-menu">
-        <button class="game-option">다시하기</button>
-        <button class="game-option">나가기</button>
+        <form id="restart" action="/chess/new" method="post">
+            <button class="game-option">다시하기</button>
+        </form>
+        <button class="game-option" onclick="location.href='/'">나가기</button>
     </div>
 </div>
 <script src="/js/board-factory.js"></script>

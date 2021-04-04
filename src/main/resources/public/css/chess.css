@@ -164,6 +164,8 @@
 
 .game-menu {
     margin-top: 15px;
+    display: flex;
+    justify-content: center;
 }
 
 .game-option {
@@ -175,6 +177,7 @@
     background-color: white;
     color: black;
     font-size: 30px;
+    left: 500px
 }
 
 .game-option:hover {
