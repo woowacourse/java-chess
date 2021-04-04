@@ -1,16 +1,38 @@
-window.onload = setUpStartButton;
 let is_source_clicked = false;
 let source = "";
 let target = "";
 const chessGameId = getParameterByName("id");
+const startButton = document.getElementById("start");
+const resetButton = document.getElementById("reset");
 
-function setUpStartButton() {
-    document.getElementById("start").addEventListener("click", start);
-}
+
+startButton.addEventListener("click", start);
+resetButton.addEventListener("click",reset);
+
 
 function start() {
     initializeChessBoard();
     document.getElementById("start").disabled = 'disabled';
+}
+
+function reset() {
+    axios({
+        method: 'get',
+        url: '/reset',
+        params: {
+            id: chessGameId
+        }
+    }).then(function (response) {
+        if (response.data.isSuccess) {
+            const jsonData = JSON.parse(response.data.jsonData);
+            updateBoard(jsonData);
+        } else {
+            alert(response.data.jsonData);
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+
 }
 
 function initializeChessBoard() {
@@ -103,8 +125,8 @@ function updateBoard(jsonData) {
 }
 
 function setScoreByTeam(totalScoreByColor) {
-    document.getElementById("WHITE").innerText = "WHITE " + totalScoreByColor.WHITE;
-    document.getElementById("BLACK").innerText = "BLACK " + totalScoreByColor.BLACK;
+    document.getElementById("WHITE").innerHTML = `<h2>WHITE SCORE</h2><br><h1>${totalScoreByColor.WHITE}</h1>`;
+    document.getElementById("BLACK").innerHTML = `<h2>BLACK SCORE</h2><br><h1>${totalScoreByColor.BLACK}</h1>`;
 }
 
 function getParameterByName(name) {

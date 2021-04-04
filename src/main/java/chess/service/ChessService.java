@@ -29,14 +29,18 @@ public class ChessService {
     }
 
     public void generateChessGame() throws SQLException {
+        ChessGame chessGame = generateNewChessGame();
+        int chessGameId = chessGameDao.insertChessGameReturnId(chessGame);
+        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
+        chessGames.put(chessGameId, chessGame);
+    }
+
+    private ChessGame generateNewChessGame() {
         ChessGame chessGame = new ChessGame();
         Command startOnCommand = new StartOnCommand();
         String[] temp = new String[0];
         startOnCommand.execute(chessGame, temp);
-
-        int chessGameId = chessGameDao.insertChessGameReturnId(chessGame);
-        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
-        chessGames.put(chessGameId, chessGame);
+        return chessGame;
     }
 
     public List<Integer> getAllChessGameId() throws SQLException {
@@ -74,5 +78,12 @@ public class ChessService {
                         .equals(position))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 찾는 위치의 기물이 없습니다."));
+    }
+
+    public void resetChessGame(int chessGameId) throws SQLException {
+        ChessGame chessGame = generateNewChessGame();
+        chessGameDao.deleteChessGameById(chessGameId);
+        chessGameDao.insertChessGame(chessGameId, chessGame);
+        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 }

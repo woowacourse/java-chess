@@ -81,5 +81,14 @@ public class WebChessController {
             String chessGameListJson = gson.toJson(chessGameList);
             return gson.toJson(new ResponseDto(true, chessGameListJson));
         });
+
+        get("/reset", (req, res) -> {
+            int chessGameId = Integer.parseInt(req.queryParams("id"));
+            chessService.resetChessGame(chessGameId);
+            ChessGame chessGame = chessService.findChessGameById(chessGameId);
+            ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+            String chessGameDtoJson = gson.toJson(chessGameDto);
+            return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+        });
     }
 }

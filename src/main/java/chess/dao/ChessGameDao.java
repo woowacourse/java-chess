@@ -92,4 +92,20 @@ public class ChessGameDao {
         pstmt.setInt(3, chessGameId);
         pstmt.executeUpdate();
     }
+
+    public void deleteChessGameById(int chessGameId) throws SQLException {
+        String query = "DELETE FROM CHESS_GAME WHERE chessGameId = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, chessGameId);
+        pstmt.executeUpdate();
+    }
+
+    public void insertChessGame(int chessGameId, ChessGame chessGame) throws SQLException {
+        String query = "INSERT INTO CHESS_GAME VALUES (?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, chessGameId);
+        pstmt.setString(2, chessGame.turn().name());
+        pstmt.setBoolean(3, !chessGame.runnable());
+        pstmt.executeUpdate();
+    }
 }
