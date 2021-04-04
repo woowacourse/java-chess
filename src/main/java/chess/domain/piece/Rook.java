@@ -15,7 +15,7 @@ public class Rook extends Division {
             new Vector(0, -1));
 
     public Rook(Color color) {
-        super(color, "r", new MultipleMove(color, DIRECTIONS));
+        super(color, Unicode.ROOK.of(color), new MultipleMove(color, DIRECTIONS));
     }
 
     @Override

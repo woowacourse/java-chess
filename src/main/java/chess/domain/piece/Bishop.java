@@ -17,7 +17,7 @@ public class Bishop extends Division {
 
 
     public Bishop(Color color) {
-        super(color, "b", new MultipleMove(color, DIRECTIONS));
+        super(color, Unicode.BISHOP.of(color), new MultipleMove(color, DIRECTIONS));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class King extends Division {
     );
 
     public King(Color color) {
-        super(color, "k", new SingleMove(color, DIRECTIONS));
+        super(color, Unicode.KING.of(color), new SingleMove(color, DIRECTIONS));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Knight extends Division {
     );
 
     public Knight(Color color) {
-        super(color, "n", new SingleMove(color, DIRECTIONS));
+        super(color, Unicode.KNIGHT.of(color), new SingleMove(color, DIRECTIONS));
     }
 
     @Override

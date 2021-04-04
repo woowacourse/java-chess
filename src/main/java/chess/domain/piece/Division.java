@@ -10,7 +10,7 @@ public abstract class Division extends Basis {
     protected final Color color;
     private final MoveStrategy moveStrategy;
 
-    public Division(Color color, String displayName, MoveStrategy moveStrategy) {
+    public Division(Color color, char displayName, MoveStrategy moveStrategy) {
         super(displayName);
         this.color = color;
         this.moveStrategy = moveStrategy;
