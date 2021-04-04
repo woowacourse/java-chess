@@ -27,7 +27,7 @@ public class ChessService {
 
     public void init() throws SQLException {
         if (pieceDao.load() == null) {
-            Pieces pieces = new Pieces();
+            final Pieces pieces = new Pieces();
             pieces.init();
             pieceDao.clear(pieces);
         }
@@ -36,9 +36,9 @@ public class ChessService {
         game = new Game(new Pieces(pieces), new Turn(turn));
     }
 
-    public ResponseDto move(RequestDto requestDto) {
-        String from = requestDto.from();
-        String to = requestDto.to();
+    public ResponseDto move(final RequestDto requestDto) {
+        final String from = requestDto.from();
+        final String to = requestDto.to();
         try {
             game.move(Position.from(from), Position.from(to));
             changeStatusData(from, to);
@@ -67,18 +67,17 @@ public class ChessService {
     }
 
     public Map<String, String> getCurrentBoard() throws SQLException {
-        Map<Position, Piece> board = pieceDao.findPieces(game.getPieces());
-        Map<String, String> result = new LinkedHashMap<>();
+        final Map<Position, Piece> board = pieceDao.findPieces(game.getPieces());
+        final Map<String, String> result = new LinkedHashMap<>();
 
-        for (Position position : board.keySet()) {
-            String positionName = position.column().value() + position.row().value();
-            String pieceName;
+        for (final Position position : board.keySet()) {
+            final String positionName = position.column().value() + position.row().value();
+            final String pieceName;
             if (board.get(position).isSameColor(Color.BLACK)) {
                 pieceName = "B" + board.get(position).display().toUpperCase();
             } else {
                 pieceName = "W" + board.get(position).display().toUpperCase();
             }
-
             result.put(positionName, pieceName);
         }
         return result;

@@ -77,7 +77,7 @@ public class PieceDao {
     public void clear(final Pieces pieces) throws SQLException {
         delete("pieces");
         for (final Piece piece : pieces.toList()) {
-            String position = piece.getPosition().column().value() + piece.getPosition().row().value();
+            final String position = piece.getPosition().column().value() + piece.getPosition().row().value();
             savePiece(position, piece);
         }
         initTurn();
@@ -86,7 +86,7 @@ public class PieceDao {
     public void savePiece(final String position, final Piece piece) throws SQLException {
         final String query = "INSERT INTO pieces VALUES (?, ?)";
         final PreparedStatement pstmt = con.prepareStatement(query);
-        String displayName = piece.display().toUpperCase();
+        final String displayName = piece.display().toUpperCase();
         if (piece.isSameColor(Color.BLACK)) {
             pstmt.setString(1, position);
             pstmt.setString(2, "B" + displayName);
@@ -112,46 +112,46 @@ public class PieceDao {
         savePstmt.executeUpdate();
     }
 
-    public void delete(String tableName) throws SQLException {
+    public void delete(final String tableName) throws SQLException {
         final String query = "TRUNCATE TABLE " + tableName;
         final PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.executeUpdate();
     }
 
-    public void updateTurn(Turn turn) throws SQLException {
+    public void updateTurn(final Turn turn) throws SQLException {
         delete("game");
-        String query = "INSERT INTO game VALUES (?)";
-        PreparedStatement pstmt = con.prepareStatement(query);
+        final String query = "INSERT INTO game VALUES (?)";
+        final PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, turn.player().getColor().name());
         pstmt.executeUpdate();
     }
 
     public String findTurn() throws SQLException {
-        String query = "SELECT * FROM game";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+        final String query = "SELECT * FROM game";
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        final ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) return null;
         return rs.getString("turn");
     }
 
-    public Map<Position, Piece> findPieces(Pieces pieces) throws SQLException {
-        String query = "SELECT * FROM pieces";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+    public Map<Position, Piece> findPieces(final Pieces pieces) throws SQLException {
+        final String query = "SELECT * FROM pieces";
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        final ResultSet rs = pstmt.executeQuery();
 
-        Map<Position, Piece> result = new HashMap<>();
+        final Map<Position, Piece> result = new HashMap<>();
         while (rs.next()) {
-            Map<Position, Piece> eachCell = daoToBoard(rs.getString("position"), rs.getString("name"), pieces);
+            final Map<Position, Piece> eachCell = daoToBoard(rs.getString("position"), rs.getString("name"), pieces);
             eachCell.forEach(result::put);
         }
         return result;
     }
 
-    private Map<Position, Piece> daoToBoard(String position, String piece, Pieces pieces) {
-        Map<Position, Piece> board = new LinkedHashMap<>();
-        String[] splitPosition = position.split(",");
-        String[] splitPiece = piece.split(",");
+    private Map<Position, Piece> daoToBoard(final String position, final String piece, final Pieces pieces) {
+        final Map<Position, Piece> board = new LinkedHashMap<>();
+        final String[] splitPosition = position.split(",");
+        final String[] splitPiece = piece.split(",");
 
         for (int i = 0; i < splitPosition.length; i++) {
             board.put(Position.from(splitPosition[i]), pieces.findPieceByName(splitPiece[i]));

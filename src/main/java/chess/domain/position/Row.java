@@ -18,7 +18,7 @@ public enum Row {
     private static final Row[] rows = values();
     private final String value;
 
-    Row(String value) {
+    Row(final String value) {
         this.value = value;
     }
 

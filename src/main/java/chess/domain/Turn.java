@@ -10,7 +10,7 @@ public class Turn {
     public Turn() {
     }
 
-    public Turn(String text) {
+    public Turn(final String text) {
         if ("BLACK".equals(text)) {
             player = blackPlayer;
         }
@@ -28,17 +28,5 @@ public class Turn {
 
     public Player player() {
         return player;
-    }
-
-    public Player nextPlayer() {
-        next();
-        return player();
-    }
-
-    public void changeToTurn(String text) {
-        if ("WHITE".equals(text)) {
-            player = whitePlayer;
-        }
-
     }
 }

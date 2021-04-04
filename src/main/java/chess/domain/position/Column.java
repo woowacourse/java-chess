@@ -18,7 +18,7 @@ public enum Column {
     private static final Column[] columns = values();
     private final String value;
 
-    Column(String value) {
+    Column(final String value) {
         this.value = value;
     }
 

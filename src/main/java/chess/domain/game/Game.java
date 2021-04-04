@@ -16,7 +16,7 @@ public class Game {
         pieces.init();
     }
 
-    public Game(Pieces pieces, Turn turn) {
+    public Game(final Pieces pieces, final Turn turn) {
         this.pieces = pieces;
         this.turn = turn;
     }

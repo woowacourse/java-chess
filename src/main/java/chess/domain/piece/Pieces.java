@@ -79,7 +79,7 @@ public class Pieces {
         return pieces;
     }
 
-    public Piece findPieceByName(String name) {
+    public Piece findPieceByName(final String name) {
         if ("B".equals(name.substring(0, 1))) {
             return findPieceByColor(Color.BLACK, name.substring(1, 2));
         } else {
@@ -87,8 +87,8 @@ public class Pieces {
         }
     }
 
-    private Piece findPieceByColor(Color color, String symbol) {
-        for (Piece piece : pieces) {
+    private Piece findPieceByColor(final Color color, final String symbol) {
+        for (final Piece piece : pieces) {
             if (piece.isSameColor(color) && piece.getClass() == findPieceBySymbol(symbol)) {
                 return piece;
             }
@@ -96,8 +96,8 @@ public class Pieces {
         throw new IllegalArgumentException(WRONG_CHESS_ERROR);
     }
 
-    private Object findPieceBySymbol(String key) {
-        Map<String, Object> symbolOfPieces = new HashMap<>();
+    private Object findPieceBySymbol(final String key) {
+        final Map<String, Object> symbolOfPieces = new HashMap<>();
         symbolOfPieces.put("R", Rook.class);
         symbolOfPieces.put("N", Knight.class);
         symbolOfPieces.put("B", Bishop.class);
