@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChessGameDAOTest {
+public class ChessGameDbConnectionTest {
 
     private ChessGameDAO chessGameDAO;
     @BeforeEach

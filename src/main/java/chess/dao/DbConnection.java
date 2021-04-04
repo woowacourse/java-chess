@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAO {
+public class DbConnection {
     private static final String LOCAL_SERVER = "localhost:13306";
     private static final String SERVER_TIME = "?useSSL=false&serverTimezone=UTC";
     private static final String USER_NAME = "root";

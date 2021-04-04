@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.dao.DAO.closeConnection;
-import static chess.dao.DAO.getConnection;
+import static chess.dao.DbConnection.closeConnection;
+import static chess.dao.DbConnection.getConnection;
 
 public class ChessGameDAO {
 
