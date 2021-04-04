@@ -52,6 +52,11 @@ function refreshRoomList(data) {
 function enterGame(e) {
     let idx = e.target.dataset.idx
     let room = roomListData[idx];
-    location.href = '/enterRoom?id=' + room.id;
+    let pw = prompt("비밀번호를 입력해 주세요");
+    if (pw === room.pw) {
+        location.href = '/enterRoom?id=' + room.id;
+    } else {
+        alert('비밀번호가 틀렸습니다.')
+    }
 }
 
