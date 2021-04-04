@@ -7,7 +7,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class InitializedBoardFromDb {
 
@@ -15,26 +14,13 @@ public class InitializedBoardFromDb {
     }
 
     public HashMap<Position, Piece> initBoard() {
-        HashMap<Position, Piece> board = new HashMap<>();
         InitialBoardDao initialBoardDao = new InitialBoardDao();
-
-        Position.cachedPosition()
-            .keySet()
-            .forEach(position -> board.put(Position.from(position),
-                initialBoardDao.findInitialBoardPieceAtPosition(position)));
-
-        return board;
+        return initialBoardDao.findInitialBoard();
     }
 
-    public Map<Position, Piece> continueBoard(String roomName) {
-        HashMap<Position, Piece> board = new HashMap<>();
+    public HashMap<Position, Piece> continueBoard(String roomName) {
         BackupBoardDao backupBoardDao = new BackupBoardDao();
-
-        Position.cachedPosition()
-            .keySet()
-            .forEach(position -> board.put(Position.from(position),
-                backupBoardDao.findPlayingBoardByRoom(roomName, position)));
-        return board;
+        return backupBoardDao.findPlayingBoardByRoom(roomName);
     }
 
     public PieceColor continueTurn(String roomName) {

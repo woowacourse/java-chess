@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.board.Position;
 import chess.domain.exceptions.DatabaseException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
@@ -9,39 +10,35 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import static chess.dao.DbConnection.getConnection;
 
 public class InitialBoardDao {
 
-    public Piece findInitialBoardPieceAtPosition(String positionName) {
-        String query = "SELECT piece.piece_kind, piece.piece_color FROM ((initial_board " +
+    public HashMap<Position, Piece> findInitialBoard() {
+        String query = "SELECT position.address, piece.piece_kind, piece.piece_color FROM ((initial_board " +
             "INNER JOIN piece ON initial_board.piece_id = piece.pid) " +
-            "INNER JOIN position ON initial_board.position_id = position.pid)" +
-            "WHERE position.address = ?";
+            "INNER JOIN position ON initial_board.position_id = position.pid)";
 
         try (
             Connection con = getConnection();
-            PreparedStatement pstmt = createPreparedStatementWithOneParameter(
-                con.prepareStatement(query), positionName);
+            PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery()) {
-            if (!rs.next()) {
-                return null;
+            HashMap<Position, Piece> board = new HashMap<>();
+
+            while (rs.next()) {
+                Position position = Position.from(rs.getString("address"));
+                PieceKind pieceKind = PieceKind.pieceKindByName(rs.getString("piece_kind"));
+                PieceColor pieceColor = PieceColor.pieceColorByName(rs.getString("piece_color"));
+                Piece piece = new Piece(pieceKind, pieceColor);
+
+                board.put(position, piece);
             }
 
-            PieceKind pieceKind = PieceKind.pieceKindByName(rs.getString("piece_kind"));
-            PieceColor pieceColor = PieceColor.pieceColorByName(rs.getString("piece_color"));
-            return new Piece(pieceKind, pieceColor);
-
+            return board;
         } catch (SQLException e) {
             throw new DatabaseException();
         }
     }
-
-    private PreparedStatement createPreparedStatementWithOneParameter(
-        PreparedStatement ps, String param) throws SQLException {
-        ps.setString(1, param);
-        return ps;
-    }
-
 }

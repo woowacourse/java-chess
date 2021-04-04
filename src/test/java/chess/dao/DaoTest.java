@@ -39,16 +39,18 @@ class DaoTest {
     @Test
     void findInitialBoardPieceAtPosition() {
         InitialBoardDao initialBoardDao = new InitialBoardDao();
+        Map<Position, Piece> initialBoard = initialBoardDao.findInitialBoard();
+
         Piece expectedBlackRookPiece = new Piece(PieceKind.ROOK, PieceColor.BLACK);
-        Piece computedBlackRookPiece = initialBoardDao.findInitialBoardPieceAtPosition("a8");
+        Piece computedBlackRookPiece = initialBoard.get(Position.from("a8"));
         assertEquals(expectedBlackRookPiece, computedBlackRookPiece);
 
         Piece expectedWhitePawnPiece = new Piece(PieceKind.PAWN, PieceColor.WHITE);
-        Piece computedWhitePawnPiece = initialBoardDao.findInitialBoardPieceAtPosition("d2");
+        Piece computedWhitePawnPiece = initialBoard.get(Position.from("d2"));
         assertEquals(expectedWhitePawnPiece, computedWhitePawnPiece);
 
         Piece expectedBlackKingPiece = new Piece(PieceKind.KING, PieceColor.BLACK);
-        Piece computedBlackKingPiece = initialBoardDao.findInitialBoardPieceAtPosition("e8");
+        Piece computedBlackKingPiece = initialBoard.get(Position.from("e8"));
         assertEquals(expectedBlackKingPiece, computedBlackKingPiece);
     }
 
@@ -71,12 +73,11 @@ class DaoTest {
     void findPlayingBoardByRoom() {
         BackupBoardDao backupBoardDao = new BackupBoardDao();
         String name = "chess1";
-        String position = "a8";
-        Map<Position, Piece> board = playingBoard();
-        Piece expectedPieceA8 = board.get(Position.from(position));
-        Piece computedPieceA8 = backupBoardDao.findPlayingBoardByRoom(name, position);
 
-        assertEquals(expectedPieceA8, computedPieceA8);
+        Map<Position, Piece> board = playingBoard();
+        Map<Position, Piece> computedBoard = backupBoardDao.findPlayingBoardByRoom(name);
+
+        assertEquals(board, computedBoard);
     }
 
     @Test
