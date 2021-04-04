@@ -33,6 +33,4 @@ public class ChessDAOTest {
     public void addRoom() throws Exception {
         chessGameService.createRoom("{name: 수리, pw: 1234}");
     }
-
-
 }

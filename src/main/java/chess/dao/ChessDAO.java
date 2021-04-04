@@ -97,4 +97,19 @@ public class ChessDAO {
         }
         return new RoomsDTO(roomDTOs);
     }
+
+    public RoomDTO findRoomFromId(String id) throws SQLException {
+        String query = "SELECT * FROM room WHERE room_id = " + id;
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery(query);
+        RoomDTO roomDTO = null;
+        if (rs.next()) {
+            roomDTO = new RoomDTO(rs.getInt("room_id"),
+                    rs.getString("room_name"),
+                    rs.getString("room_pw"),
+                    rs.getString("game_id"));
+        }
+
+        return roomDTO;
+    }
 }

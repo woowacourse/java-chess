@@ -38,8 +38,9 @@ public class ChessGameService {
         return new ResponseDTO(true, "", "게임을 저장 하였습니다.");
     }
 
-    public ResponseDTO loadChessGame(String gameId) {
-        String chessData = chessRepository.loadChessGame(gameId);
+    public ResponseDTO loadChessGame(String roomId) {
+        RoomDTO roomDTO = chessRepository.findRoomFromId(roomId);
+        String chessData = chessRepository.loadChessGame(roomDTO.getGameId());
         return new ResponseDTO(true, chessData, "게임을 로드 하였습니다.");
     }
 
@@ -81,13 +82,10 @@ public class ChessGameService {
 
     public ResponseDTO createRoom(String data) {
         createChessGame();
-        System.out.println(data);
         RoomCreateRequestDTO roomCreateRequestDTO = gson.fromJson(data, RoomCreateRequestDTO.class);
-        System.out.println(roomCreateRequestDTO);
         RoomsDTO roomsDTO = chessRepository.createRoom(roomCreateRequestDTO.getName(), roomCreateRequestDTO.getPw());
         return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 생성하였습니다.");
     }
-
 
     private ChessGame createChessGame(ChessGameDTO chessGameDTO) {
         System.out.println("createChessGame() called.");

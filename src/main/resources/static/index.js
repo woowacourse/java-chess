@@ -1,10 +1,8 @@
+let roomListData = [];
 const btnCreate = document.getElementById('btn-game-create')
 btnCreate.addEventListener('click', function (e) {
     let name = prompt("사용자 이름을 입력해 주세요.");
     let pw = prompt("비밀번호를 입력해 주세요");
-
-    console.log(name);
-    console.log(pw);
     axios.post('/createRoom', {
         "name": name,
         "pw": pw
@@ -19,17 +17,29 @@ btnCreate.addEventListener('click', function (e) {
     })
 })
 
+const roomList = document.getElementById('list-chess-game')
+roomList.addEventListener('click', function (e) {
+    enterGame(e);
+})
+
 function refreshRoomList(data) {
-    let roomListData = JSON.parse(data);
-    let roomList = roomListData.roomDTOList;
+    console.log(data);
+    let rooms = JSON.parse(data);
+    roomListData = rooms.roomDTOList;
+    console.log(roomListData);
     let list = document.getElementById("list-chess-game");
     list.innerHTML = "";
-    for (let i = 0; i < roomList.length; i++) {
-        let room = roomList[i];
-        console.log(room);
-        list.innerHTML += " <div class=\"box-chess-game\">\n" +
-            "        <p class=\"box-chess-game-title\"> " + room.name + "</p>\n" +
-            "    </div>\n"
+    for (let i = 0; i < roomListData.length; i++) {
+        let room = roomListData[i];
+        list.innerHTML += "<div class = box-chess-game data-idx = " + i + ">\n" +
+            "<p class=box-chess-game-title> " + room.name + "</p>\n" +
+            "</div>\n"
     }
+}
+
+function enterGame(e) {
+    let idx = e.target.dataset.idx
+    let room = roomListData[idx];
+    location.href = '/enterRoom?id=' + room.id;
 }
 

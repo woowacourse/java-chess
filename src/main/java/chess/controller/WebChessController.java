@@ -32,7 +32,8 @@ public class WebChessController {
         });
 
         get("/loadChessGame", (req, res) -> {
-            return gson.toJson(chessGameService.loadChessGame("1"));
+            String id = req.queryParams("id");
+            return gson.toJson(chessGameService.loadChessGame(id));
         });
 
         get("/endChessGame", (req, res) -> {
@@ -52,6 +53,12 @@ public class WebChessController {
 
         post("/createRoom", (req, res) -> {
             return gson.toJson(chessGameService.createRoom(req.body()));
+        });
+
+        get("/enterRoom", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomIdx", req.queryParams("id"));
+            return render(model, "game.html");
         });
 
     }

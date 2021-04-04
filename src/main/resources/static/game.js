@@ -1,16 +1,32 @@
+const url = new URL(window.location.href);
+const serchParam = url.searchParams;
+const roomId = serchParam.get('id');
+
 const piecesMap = {
     "P": "♟", "R": "&#9820;", "N": "&#9822;", "B": "&#9821;", "Q": "&#9819;", "K": "&#9818;",
     "p": "&#9817;", "r": "&#9814;", "n": "&#9816;", "b": "&#9815;", "q": "&#9813;", "k": "&#9812;"
 }
 
+loadChessGame();
 
+function loadChessGame() {
+    axios.get('/loadChessGame?id='+roomId)
+        .then(function (response) {
+            let data = response.data;
+            if (data.success) {
+                console.log(data.data);
+                refreshChessBoard(data.data)
+            } else {
+                alert(data.message)
+            }
+        })
+}
 const btnStart = document.getElementsByClassName('btn-start')[0];
 btnStart.addEventListener('click', function (e) {
     axios.get('/startChessGame')
         .then(function (response) {
             let data = response.data;
             if (data.success) {
-                console.log(data.data);
                 refreshChessBoard(data.data)
             } else {
                 alert(data.message)
