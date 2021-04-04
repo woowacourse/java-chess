@@ -3,15 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>미니 체스 게임</title>
-    <link rel="stylesheet" type="text/css" href="/css/chess.css"/>
+    <link rel="stylesheet" type="text/css" href="../public/css/chess.css"/>
 </head>
-<body>
-    <script id="new-board" type="text/plain">
-        {{#board}}
-            {{key}}:{{value}},
-        {{/board}}
-    </script>
-<script src="/js/board-factory.js"></script>
-<script src="/js/piece-factory.js"></script>
+<body class="game">
+<div class="screen">
+    <label id="black-status" class="status">
+        <h1>BLACK TEAM</h1>
+        이름 : <br>
+        점수 : <br>
+        전적 : <br>
+    </label>
+    <div id="versus">
+        <div id="black-piece">
+            <img src="../public/img/queen_black.png" class="piece versus-piece">
+            <br>
+            <label>BLACK</label>
+        </div>
+        <h1>VS</h1>
+        <div id="white-piece">
+            <img src="../public/img/queen_white.png" class="piece versus-piece">
+            <br>
+            <label>WHITE</label>
+        </div>
+    </div>
+    <label id="white-status" class="status">
+        <h1>WHITE TEAM</h1>
+        이름 : <br>
+        점수 : <br>
+        전적 : <br>
+    </label>
+    <div class="game-menu">
+        <button class="game-option">다시하기</button>
+        <button class="game-option">나가기</button>
+    </div>
+</div>
+<script id="new-board" type="text/plain">
+    {{#board}}
+        {{key}}:{{value}},
+    {{/board}}
+
+
+</script>
+<script src="../public/js/board-factory.js"></script>
+<script src="../public/js/piece-factory.js"></script>
 </body>
 </html>

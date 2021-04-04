@@ -2,14 +2,19 @@
 <html lang="kr">
 <head>
     <meta charset="UTF-8">
-    <title>미니 체스 게임</title>
-    <link rel="stylesheet" type="text/css" href="/css/chess.css"/>
+    <title>WOOWA CHESS</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/chess.css"/>
 </head>
 <body>
-    <form action="/chess/new" method="post">
-        <button class="game-button" id="new-game">새 게임</button>
-    </form>
-    <button class="game-button" id="continue">이어하기</button>
+<div class="main">
+    <label class="title">♛ WOOWA CHESS ♛</label>
+    <div class="main-button">
+        <form action="/chess/new" method="post">
+            <button class="game-button" id="new-game">새 게임</button>
+        </form>
+        <button class="game-button" id="continue">이어하기</button>
+    </div>
+</div>
 <script src="/js/main.js"></script>
 </body>
 </html>
