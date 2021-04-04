@@ -78,16 +78,6 @@ public abstract class Piece {
         return movablePositions;
     }
 
-//    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection) {
-//        int currentRow = getPosition().getRow();
-//        int currentColumn = getPosition().getColumn();
-//
-//        // single move는 while이 아니고 if임!
-//        while (isMoveAble(movablePositions, board, currentRow + rowDirection, currentColumn + colDirection)) {
-//            movablePositions.add(new Position(currentRow += rowDirection, currentColumn += colDirection));
-//        }
-//    }
-
     protected abstract void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection);
 
     protected abstract boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol);

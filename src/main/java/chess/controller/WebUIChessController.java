@@ -120,17 +120,16 @@ public final class WebUIChessController {
             String endPoint = (String) requestBody.get("endPoint");
             Position startPosition = position(startPoint);
             Position endPosition = position(endPoint);
-
-            commandDAO.addCommand(roomId, startPoint, endPoint);
             chessGame.move(startPosition, endPosition);
+            commandDAO.addCommand(roomId, startPoint, endPoint);
             return gson.toJson(getPieceDTOs());
         });
     }
 
     private Position position(final String point) {
         return new Position(
-                Character.getNumericValue(point.charAt(0)),
-                Character.getNumericValue(point.charAt(1))
+                Character.getNumericValue(point.charAt(START_POINT_INDEX)),
+                Character.getNumericValue(point.charAt(END_POINT_INDEX))
         );
     }
 
