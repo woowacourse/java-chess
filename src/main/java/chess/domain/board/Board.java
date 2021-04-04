@@ -5,7 +5,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
-import chess.utils.KingIsDeadException;
 
 import java.util.*;
 

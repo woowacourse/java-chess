@@ -24,6 +24,10 @@ public class ChessController {
         chessService = new ChessService();
     }
 
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
     public void run() {
         ChessGame chessGame = new ChessGame();
 
@@ -51,9 +55,5 @@ public class ChessController {
             BoardDTO boardDTO = chessService.move(chessGame, moveInfoDTO);
             return new Gson().toJson(boardDTO);
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

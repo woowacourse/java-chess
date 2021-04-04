@@ -1,13 +1,12 @@
 package chess.service;
 
-import chess.domain.DTO.BoardDTO;
 import chess.domain.ChessGame;
+import chess.domain.DTO.BoardDTO;
 import chess.domain.DTO.MoveInfoDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.repository.ChessRepository;
-import com.google.gson.Gson;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +20,7 @@ public class ChessService {
         chessRepository = new ChessRepository();
     }
 
-    public BoardDTO initiateBoard(ChessGame chessGame) throws SQLException{
+    public BoardDTO initiateBoard(ChessGame chessGame) throws SQLException {
         chessRepository.resetTurnOwner(chessGame.getTurnOwner());
         chessGame.settingBoard();
         chessRepository.resetBoard(chessGame.getBoard());
@@ -37,7 +36,7 @@ public class ChessService {
         }
 
         ResultSet savedTurnOwner = chessRepository.getSavedTurnOwner();
-        String turnOwner= "";
+        String turnOwner = "";
         while (savedTurnOwner.next()) {
             turnOwner = savedTurnOwner.getString("turn_owner");
         }

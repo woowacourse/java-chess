@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class BoardDTO {
-    private Map<String, String> boardInfo = new HashMap<>();
     public String gameOverFlag = "false";
+    private Map<String, String> boardInfo = new HashMap<>();
 
     private BoardDTO(Map<String, String> boardInfo, String gameOverFlag) {
         this.boardInfo = boardInfo;

@@ -43,7 +43,7 @@ async function reStartGame() {
 }
 
 function clickDiv(e) {
-    if(e.target || e.target.classList.contains("piece")){
+    if (e.target || e.target.classList.contains("piece")) {
         if (firstClickPosition === "") {
             firstClickPosition = e.target.id;
             document.getElementById(firstClickPosition).style.backgroundColor = 'yellow';
@@ -77,8 +77,8 @@ function checkGameOver(gameOverFlag) {
 
 async function sendMoveInformation(targetPosition, destinationPosition) {
     const bodyValue = {
-        target : targetPosition,
-        destination : destinationPosition
+        target: targetPosition,
+        destination: destinationPosition
     }
 
     let boardInformation = await fetch("/move", {

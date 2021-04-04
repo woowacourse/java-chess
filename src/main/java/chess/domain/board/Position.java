@@ -38,6 +38,11 @@ public class Position {
         return Collections.unmodifiableList(CACHE);
     }
 
+    public static Position convertStringToPosition(String input) {
+        return Position.of(Horizontal.find(input.substring(0, 1)),
+                Vertical.find(input.substring(1, 2)));
+    }
+
     public boolean isSameVertical(Vertical vertical) {
         return this.vertical == vertical;
     }
@@ -77,11 +82,6 @@ public class Position {
 
     public String convertToString() {
         return horizontal.getValue() + vertical.getValue();
-    }
-
-    public static Position convertStringToPosition(String input) {
-        return Position.of(Horizontal.find(input.substring(0, 1)),
-                Vertical.find(input.substring(1, 2)));
     }
 
     @Override

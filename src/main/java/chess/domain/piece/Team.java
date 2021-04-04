@@ -10,6 +10,13 @@ public enum Team {
         this.teamString = teamString;
     }
 
+    public static Team convertStringToTeam(String team) {
+        if ("black".equals(team)) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
     public boolean isBlack() {
         return this.equals(Team.BLACK);
     }
@@ -23,13 +30,6 @@ public enum Team {
             return Team.WHITE;
         }
         return Team.BLACK;
-    }
-
-    public static Team convertStringToTeam(String team) {
-        if ("black".equals(team)) {
-            return Team.BLACK;
-        }
-        return Team.WHITE;
     }
 
     public String getTeamString() {
