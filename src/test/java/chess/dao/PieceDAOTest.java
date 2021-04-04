@@ -100,7 +100,7 @@ class PieceDAOTest {
         updatedPiece.setId(id);
 
         //when
-        pieceDAO.update(chessGameId, updatedPiece);
+        pieceDAO.update(updatedPiece);
 
         //then
         Piece findPiece = pieceDAO.findOneByPosition(chessGameId, 2, 1).get();

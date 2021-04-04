@@ -51,7 +51,7 @@ public class ChessGameService {
                 .ifPresent(piece -> pieceDAO.delete(chessGameId, target.getRow(), target.getColumn()));
 
         sourcePiece.setPosition(target);
-        pieceDAO.update(chessGameId, sourcePiece);
+        pieceDAO.update(sourcePiece);
         chessGameDAO.updateState(chessGameId, chessGame.getState().getValue());
 
         return new ChessGameDto(chessGame);

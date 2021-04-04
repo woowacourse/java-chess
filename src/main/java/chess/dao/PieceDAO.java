@@ -94,14 +94,13 @@ public class PieceDAO {
         return Optional.empty();
     }
 
-    public void update(final Long chessGameId, Piece piece) {
+    public void update(final Piece piece) {
         try (Connection con = factory.getConnection()) {
-            String query = "UPDATE piece SET row = ?, col = ? WHERE chess_game_id = ? AND id = ?";
+            String query = "UPDATE piece SET row = ?, col = ? WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, piece.getRow());
             preparedStatement.setInt(2, piece.getColumn());
-            preparedStatement.setLong(3, chessGameId);
-            preparedStatement.setLong(4, piece.getId());
+            preparedStatement.setLong(3, piece.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
