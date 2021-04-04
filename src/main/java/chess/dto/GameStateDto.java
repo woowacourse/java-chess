@@ -8,7 +8,7 @@ public final class GameStateDto {
     private BoardDto board;
 
     public GameStateDto(GameState gameState) {
-        this.currentState = gameState.nextState();
+        this.currentState = gameState.currentState();
         this.board = gameState.boardDto();
     }
 

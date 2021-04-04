@@ -40,4 +40,9 @@ public final class PathResult implements Result {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public Score infoAsScore(final Color color) {
+        throw new IllegalArgumentException("경로는 점수로 활용할 수 없습니다.");
+    }
 }

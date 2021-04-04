@@ -1,5 +1,6 @@
 package chess.domain.result;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
@@ -12,4 +13,6 @@ public interface Result {
     Map<Position, Piece> infoAsMap();
 
     List<Position> infoAsList();
+
+    Score infoAsScore(Color color);
 }

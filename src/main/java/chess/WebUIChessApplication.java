@@ -6,6 +6,7 @@ import static spark.Spark.staticFileLocation;
 
 import chess.controller.WebController;
 import chess.dao.GameDao;
+import chess.domain.piece.Color;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
+            webController.startGame();
             return render(model, "board.html");
         });
 
@@ -41,6 +43,8 @@ public class WebUIChessApplication {
         get("/currentState", (req, res) -> {
             final Map<String, String> model = new HashMap<>();
             model.put("turn", webController.showTurn());
+            model.put("whiteScore", webController.showScore(Color.WHITE));
+            model.put("blackScore", webController.showScore(Color.BLACK));
             return gson.toJson(model);
         });
 

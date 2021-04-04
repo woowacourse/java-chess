@@ -63,8 +63,7 @@ public abstract class TurnState extends PlayingState {
     }
 
     @Override
-    public String nextState() {
-        final Color nextColor = currentTurnColor.reversed();
-        return nextColor.getName();
+    public String currentState() {
+        return currentTurnColor.getName();
     }
 }

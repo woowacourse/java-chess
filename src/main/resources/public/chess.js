@@ -41,7 +41,7 @@ function saveBoard() {
   fetch(API_URL + "save")
   .then((response) => {
     if (!response.ok) {
-      throw new Error(" ");
+      throw new Error("보드 저장 에러");
     }
   })
   .catch(error => console.log(error));
@@ -51,26 +51,24 @@ function loadBoard() {
   fetch(API_URL + "load")
   .then((response) => {
     if (!response.ok) {
-      throw new Error(" ");
+      throw new Error("보드 불러오기 에러");
     }
     return response.json();
   })
   .then(placePieces)
   .catch(error => console.log(error));
-  checkState();
 }
 
 function initializeBoard() {
   fetch(API_URL + "new")
   .then((response) => {
     if (!response.ok) {
-      throw new Error(" ");
+      throw new Error("게임 새로 시작 에러");
     }
     return response.json();
   })
   .then(placePieces)
   .catch(error => console.log(error));
-  checkState();
 }
 
 function placePieces(responseData) {
@@ -124,7 +122,7 @@ function movePieceByPosition(source, target) {
   fetch(API_URL + "move", option)
   .then((response) => {
     if (!response.ok) {
-      throw new Error(" ");
+      throw new Error("기물 이동 에러");
     }
     return response.json();
   })
@@ -132,7 +130,6 @@ function movePieceByPosition(source, target) {
   .catch((error) => {
     console.log(error);
   });
-  checkState();
 }
 
 function getOption(methodType, bodyData) {
@@ -149,7 +146,7 @@ function getAvailablePositions(sourcePosition) {
   fetch(API_URL + "availablePositions?source=" + sourcePosition)
   .then((response) => {
     if (!response.ok) {
-      throw new Error(" ");
+      throw new Error("경로 불러오기 에");
     }
     return response.json();
   })
@@ -171,21 +168,4 @@ function visualizeAvailablePositions(visible) {
       item.classList.remove(AVAILABLE_POSITION_CLASS);
     }
   }
-}
-
-function checkState() {
-  fetch(API_URL + "currentState")
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(" ");
-    }
-    return response.json();
-  })
-  .then((responseData) => {
-    const turnName = document.querySelector(".state strong");
-    turnName.textContent = responseData["turn"];
-  })
-  .catch((error) => {
-    console.log(error);
-  });
 }
