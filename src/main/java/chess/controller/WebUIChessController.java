@@ -13,6 +13,7 @@ import chess.domain.piece.Piece;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,12 +28,14 @@ public class WebUIChessController {
             roomDAO.validateRoomExistence(roomId);
             initializeChessBoard();
             return new Response(chessGame, roomId);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
             Response response = new Response(409);
             response.add("alert", roomId + "는 이미 존재하는 방입니다.");
             return response;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new Response(500);
         }
     }
 
@@ -80,7 +83,7 @@ public class WebUIChessController {
             return new Response(chessGame, roomId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new Response(400);
+            return new Response(500);
         }
     }
 
@@ -110,7 +113,7 @@ public class WebUIChessController {
             response.add("rooms", roomDAO.getAllRoom());
             return response;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return new Response(502);
         }
     }
