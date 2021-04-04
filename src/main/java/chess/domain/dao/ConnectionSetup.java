@@ -30,15 +30,4 @@ public final class ConnectionSetup {
         }
         return con;
     }
-
-    // 드라이버 연결해제
-    public static void closeConnection(final Connection con) {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
