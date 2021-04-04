@@ -108,7 +108,7 @@
 
 .status {
     display: inline-block;
-    width: 500px;
+    width: 465px;
     height: 110px;
     font-size: 40px;
     border: 3px solid black;
@@ -169,7 +169,7 @@
 
 .game-option {
     margin: 10px;
-    width: 265px;
+    width: 245px;
     height: 80px;
     border: 3px solid #19181A;
     border-radius: 10px;

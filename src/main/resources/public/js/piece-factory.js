@@ -19,6 +19,13 @@ function buildPieces() {
     fetch("/chess")
         .then(res => res.json())
         .then(data => {
+            if (data.body.currentTurn === "BLACK") {
+                document.getElementById("black-versus").classList.add("currentTurn");
+                document.getElementById("white-versus").classList.remove("currentTurn");
+            } else {
+                document.getElementById("black-versus").classList.remove("currentTurn");
+                document.getElementById("white-versus").classList.add("currentTurn");
+            }
             Array.from(data.body.boardDTO.pieceDTOS)
                 .filter(piece => piece.name !== "BLANK")
                 .forEach(piece => {
