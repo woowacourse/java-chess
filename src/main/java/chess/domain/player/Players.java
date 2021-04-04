@@ -1,22 +1,39 @@
 package chess.domain.player;
 
 import chess.domain.board.Board;
+import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private List<Player> players;
 
     private Scores scores = new Scores();
 
-    public Players() {
+    private Players(final Board board) {
         this.players = Arrays.asList(
-                PlayerInitializer.initPlayer(Owner.BLACK),
-                PlayerInitializer.initPlayer(Owner.WHITE)
+                new Player(positions(board, Owner.BLACK), Owner.BLACK),
+                new Player(positions(board, Owner.WHITE), Owner.WHITE)
         );
+    }
+
+    public static Players init(final Board board) {
+        return new Players(board);
+    }
+
+    private static List<Position> positions(final Board board, final Owner owner){
+        return Arrays.stream(Vertical.values())
+                .flatMap(v -> Arrays.stream(Horizontal.values())
+                .filter(h -> board.of(v,h).isOwner(owner))
+                .map(h -> new Position(v,h)))
+                .collect(Collectors.toList());
     }
 
     public void move(final Position source, final Position target) {
@@ -48,7 +65,6 @@ public class Players {
     public Scores scores(final Board board) {
         players.stream()
                 .forEach(player -> scores = scores.update(player, player.score(board)));
-
         return scores;
     }
 

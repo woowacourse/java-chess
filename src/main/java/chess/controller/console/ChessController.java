@@ -9,7 +9,7 @@ import chess.view.console.OutputView;
 public class ChessController {
     private static final String COMMAND_TO_START = "start";
 
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGame chessGame = ChessGame.initNew();
     private Command command;
 
     public void run() {

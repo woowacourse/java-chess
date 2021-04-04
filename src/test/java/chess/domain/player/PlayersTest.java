@@ -18,9 +18,9 @@ class PlayersTest {
 
     @BeforeEach
     void initPlayersAndBoard() {
-        chessGame = new ChessGame();
+        chessGame = ChessGame.initNew();
         board = chessGame.board();
-        players = new Players();
+        players = Players.init(board);
     }
 
     @DisplayName("해당 위치의 기물이 어떤 진영의 것인지 확인한다.")

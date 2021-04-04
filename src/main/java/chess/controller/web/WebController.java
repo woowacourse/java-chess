@@ -6,7 +6,6 @@ import chess.controller.dto.ScoreDto;
 import chess.dao.GameDao;
 import chess.domain.piece.Owner;
 import chess.service.ChessGame;
-import chess.service.PieceSymbolMapper;
 import chess.service.RequestHandler;
 import chess.view.web.OutputView;
 
@@ -18,11 +17,11 @@ import static spark.Spark.*;
 
 public class WebController {
 
-    private final Connection connection;
     private ChessGame chessGame;
+    private final GameDao gameDao;
 
     public WebController(Connection connection) {
-        this.connection = connection;
+        this.gameDao = new GameDao(connection);
     }
 
     public void mapping() {
@@ -33,23 +32,17 @@ public class WebController {
     }
 
     private void init() {
-        get("/init", (req, res) -> {
+        get("/load", (req, res) -> {
 //            final int roomId = Integer.parseInt(req.params(":room"));
-            final GameDao gameDao = new GameDao(connection);
             final GameDto gameDto = gameDao.load(0);
-
-            chessGame = new ChessGame();
-            chessGame.load(gameDto.getBoard(), gameDto.getTurn());
+            chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
             return printGame();
         });
     }
 
     private void newGame(){
-        get("/newGame", (req, res) -> {
-            chessGame = new ChessGame();
-            chessGame.initNew();
-
-            final GameDao gameDao = new GameDao(connection);
+        get("/new", (req, res) -> {
+            chessGame = ChessGame.initNew();
             gameDao.save(0, chessGame.turn(), chessGame.board());
             return printGame();
         });
@@ -70,8 +63,6 @@ public class WebController {
     private void move() {
         post("/move", (req, res) -> {
             chessGame.move(RequestHandler.parse(req.body()));
-
-            final GameDao gameDao = new GameDao(connection);
             gameDao.save(0, chessGame.turn(), chessGame.board());
 
             if (chessGame.isGameEnd()) {
