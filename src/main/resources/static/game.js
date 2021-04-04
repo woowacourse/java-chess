@@ -8,7 +8,6 @@ const piecesMap = {
 }
 
 loadChessGame();
-
 function loadChessGame() {
     axios.get('/loadChessGame?id='+roomId)
         .then(function (response) {
@@ -23,41 +22,13 @@ function loadChessGame() {
 }
 const btnStart = document.getElementsByClassName('btn-start')[0];
 btnStart.addEventListener('click', function (e) {
-    axios.get('/startChessGame')
+    axios.get('/refreshChessGame?id=' + roomId)
         .then(function (response) {
             let data = response.data;
             if (data.success) {
                 refreshChessBoard(data.data)
             } else {
                 alert(data.message)
-            }
-        })
-})
-
-const btnLoad = document.getElementsByClassName('btn-load')[0];
-btnLoad.addEventListener('click', function (e) {
-    axios.get('/loadChessGame')
-        .then(function (response) {
-            let data = response.data;
-            if (data.success) {
-                console.log(data.data);
-                refreshChessBoard(data.data)
-            } else {
-                alert(data.message)
-            }
-        })
-})
-
-const btnEnd = document.getElementsByClassName('btn-end')[0]
-btnEnd.addEventListener('click', function (e) {
-    axios.get('/endChessGame')
-        .then(function (response) {
-            let data = response.data;
-            if (data.success) {
-                clearChessBoard();
-                alert(data.message);
-            } else {
-                alert(data.message);
             }
         })
 })

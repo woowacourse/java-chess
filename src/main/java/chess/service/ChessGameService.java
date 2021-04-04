@@ -32,10 +32,11 @@ public class ChessGameService {
         return new ResponseDTO(true, gson.toJson(chessGameDTO), "게임이 생성 되었습니다.");
     }
 
-    public ResponseDTO saveChessGame(String gameId, ChessGame chessGame) {
-        ChessGameDTO chessGameDTO = createChessGameDTO(chessGame);
-        chessRepository.saveChessGame(gameId, gson.toJson(chessGameDTO));
-        return new ResponseDTO(true, "", "게임을 저장 하였습니다.");
+    public ResponseDTO refreshChessGame(String roomId) {
+        RoomDTO roomDTO = chessRepository.findRoomFromId(roomId);
+        ChessGameDTO chessGameDTO = createChessGameDTO(new ChessGame(new BlackTeam(), new WhiteTeam()));
+        chessRepository.saveChessGame(roomDTO.getGameId(), gson.toJson(chessGameDTO));
+        return new ResponseDTO(true, gson.toJson(chessGameDTO), "게임이 재시작 되었습니다.");
     }
 
     public ResponseDTO loadChessGame(String roomId) {

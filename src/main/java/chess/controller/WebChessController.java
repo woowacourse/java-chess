@@ -27,17 +27,14 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-        get("/startChessGame", (req, res) -> {
-            return gson.toJson(chessGameService.createChessGame());
+        get("/refreshChessGame", (req, res) -> {
+            String id = req.queryParams("id");
+            return gson.toJson(chessGameService.refreshChessGame(id));
         });
 
         get("/loadChessGame", (req, res) -> {
             String id = req.queryParams("id");
             return gson.toJson(chessGameService.loadChessGame(id));
-        });
-
-        get("/endChessGame", (req, res) -> {
-            return gson.toJson(chessGameService.endChessGame("1"));
         });
 
         get("/selectPiece", (req, res) -> {
