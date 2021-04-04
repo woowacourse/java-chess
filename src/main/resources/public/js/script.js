@@ -14,6 +14,7 @@ addEventOnStartButton();
 function processResponse(responseJsonBody, successScenarioFunction) {
     if (Math.floor(responseJsonBody.statusCode / 100) === 2) {
         successScenarioFunction();
+        console.log(responseJsonBody.message);
         return;
     }
     console.log(responseJsonBody.message);
@@ -76,10 +77,10 @@ async function addEventOnStartButton() {
     });
 }
 
-function updateGameData(responseBody) {
-    updateBoard(responseBody.item.chessBoard);
-    updateMessage(responseBody.message);
-    updateScoreAndTurn(responseBody.item.chessGameStatistics, responseBody.item.currentTurnColor);
+function updateGameData(responseJsonBody) {
+    updateBoard(responseJsonBody.item.chessBoard);
+    updateMessage(responseJsonBody.message);
+    updateScoreAndTurn(responseJsonBody.item.chessGameStatistics, responseJsonBody.item.currentTurnColor);
 }
 
 function updateBoard(piecesMap) {
