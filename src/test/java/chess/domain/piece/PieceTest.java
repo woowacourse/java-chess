@@ -177,24 +177,46 @@ class PieceTest {
         int kingMaxDistance = whiteKing.maxDistance();
         int queenMaxDistance = queen.maxDistance();
         int rookMaxDistance = rook.maxDistance();
+        int bishopMaxDistance = bishop.maxDistance();
+        int knightMaxDistance = knight.maxDistance();
 
         assertThat(pawnMaxDistance).isEqualTo(2);
         assertThat(kingMaxDistance).isEqualTo(1);
         assertThat(queenMaxDistance).isEqualTo(7);
         assertThat(rookMaxDistance).isEqualTo(7);
+        assertThat(bishopMaxDistance).isEqualTo(7);
+        assertThat(knightMaxDistance).isEqualTo(1);
     }
 
     @Test
     @DisplayName("자신의 심볼을 반환한다.")
     void getSymbolTest() {
         //given
-        String whitePawnSymbol = whitePawn.getSymbol(); // "p"
-        String blackPawnSymbol = blackPawn.getSymbol(); // "P"
-        String whiteKingSymbol = whiteKing.getSymbol(); // "k"
+        String whitePawnSymbol = Pawn.getInstanceOf(Owner.WHITE).getSymbol(); // "p"
+        String blackPawnSymbol = Pawn.getInstanceOf(Owner.BLACK).getSymbol(); // "P"
+        String whiteKingSymbol = King.getInstanceOf(Owner.WHITE).getSymbol(); // "k"
+        String blackKingSymgol = King.getInstanceOf(Owner.BLACK).getSymbol();
+        String whiteBishopSymbol = Bishop.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackBishopSymbol = Bishop.getInstanceOf(Owner.BLACK).getSymbol();
+        String whiteKnightSymbol = Knight.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackKnightSymbol = Knight.getInstanceOf(Owner.BLACK).getSymbol();
+        String whiteQueenSymbol = Queen.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackQueenSymbol = Queen.getInstanceOf(Owner.BLACK).getSymbol();
+        String whiteRookSymbol = Rook.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackRookSymbol = Rook.getInstanceOf(Owner.BLACK).getSymbol();
 
         //then
         assertThat(whitePawnSymbol).isEqualTo("p");
         assertThat(blackPawnSymbol).isEqualTo("P");
         assertThat(whiteKingSymbol).isEqualTo("k");
+        assertThat(blackKingSymgol).isEqualTo("K");
+        assertThat(whiteBishopSymbol).isEqualTo("b");
+        assertThat(blackBishopSymbol).isEqualTo("B");
+        assertThat(whiteKnightSymbol).isEqualTo("n");
+        assertThat(blackKnightSymbol).isEqualTo("N");
+        assertThat(whiteQueenSymbol).isEqualTo("q");
+        assertThat(blackQueenSymbol).isEqualTo("Q");
+        assertThat(whiteRookSymbol).isEqualTo("r");
+        assertThat(blackRookSymbol).isEqualTo("R");
     }
 }

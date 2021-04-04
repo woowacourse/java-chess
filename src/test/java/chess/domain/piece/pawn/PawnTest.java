@@ -65,7 +65,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("첫 라인인지 판단한다.")
+    @DisplayName("흰색 폰의 첫라인은 7, 검은색 폰의 첫라인은 2이다.")
     void isFirstLineTest() {
         boolean isTrue = whitePawn.isFirstLine(Vertical.TWO);
         boolean isTrue2 = blackPawn.isFirstLine(Vertical.SEVEN);

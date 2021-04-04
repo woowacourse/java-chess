@@ -34,11 +34,11 @@ class EmptyPieceTest {
     }
 
     @Test
-    @DisplayName("EmptyPiece는 isReachable을 사용할 수 없다.")
+    @DisplayName("EmptyPiece는 isReachable 메서드를 사용할 수 없다.")
     void isReachableTest() {
         assertThatThrownBy(() -> {
             emptyPiece.isReachable(Position.of("a1"), Position.of("a2"), Pawn.getInstanceOf(Owner.WHITE));
-        });
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
