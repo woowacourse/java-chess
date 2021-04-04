@@ -6,13 +6,7 @@ import chess.repository.GameRepository;
 
 public class EndService {
 
-    private final String gameId;
-
-    public EndService(String gameId) {
-        this.gameId = gameId;
-    }
-
-    public Object end() {
+    public static Object end(String gameId) {
         ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
 
         try {

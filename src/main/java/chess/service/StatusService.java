@@ -7,13 +7,7 @@ import chess.repository.GameRepository;
 
 public class StatusService {
 
-    private final String gameId;
-
-    public StatusService(String gameId) {
-        this.gameId = gameId;
-    }
-
-    public Object getStatus() {
+    public static Object getStatus(String gameId) {
         ChessGame chessGame = null;
         try {
             chessGame = GameRepository.findByGameIdFromCache(gameId);

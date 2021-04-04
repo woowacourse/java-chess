@@ -12,15 +12,7 @@ import java.sql.SQLException;
 
 public class StartService {
 
-    private final String gameId;
-    private final Response response;
-
-    public StartService(String gameId, Response response) {
-        this.gameId = gameId;
-        this.response = response;
-    }
-
-    public Object startNewGame() {
+    public static Object startNewGame(String gameId, Response response) {
         ChessGame chessGame = null;
 
         try {
@@ -33,7 +25,7 @@ public class StartService {
         return new GameDto(chessGame);
     }
 
-    private ChessGame saveGameAndStart(String gameId) throws SQLException {
+    private static ChessGame saveGameAndStart(String gameId) throws SQLException {
         ChessGame chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         chessGame.start();
 

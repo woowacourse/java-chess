@@ -23,16 +23,14 @@ public class ChessController {
 
     public Object start(Request request, Response response) {
         String gameId = request.params(":gameId");
-        StartService startService = new StartService(gameId, response);
 
-        return startService.startNewGame();
+        return StartService.startNewGame(gameId, response);
     }
 
     public Object load(Request request, Response response) {
         String gameId = request.params(":gameId");
-        LoadService loadService = new LoadService(gameId, response);
 
-        return loadService.loadByGameId();
+        return LoadService.loadByGameId(gameId, response);
     }
 
     public Object move(Request request, Response response) {
@@ -42,30 +40,25 @@ public class ChessController {
         String source = moveDto.getSource();
         String target = moveDto.getTarget();
 
-        MoveService moveService = new MoveService(gameId, response);
-
-        return moveService.move(source, target);
+        return MoveService.move(gameId, response, source, target);
     }
 
     public Object save(Request request, Response response) {
         String gameId = request.params(":gameId");
-        SaveService saveService = new SaveService(gameId, response);
 
-        return saveService.save();
+        return SaveService.save(gameId, response);
     }
 
     public Object status(Request request, Response response) {
         String gameId = request.params(":gameId");
-        StatusService statusService = new StatusService(gameId);
 
-        return statusService.getStatus();
+        return StatusService.getStatus(gameId);
     }
 
     public Object end(Request request, Response response) {
         String gameId = request.params(":gameId");
-        EndService endService = new EndService(gameId);
 
-        return endService.end();
+        return EndService.end(gameId);
     }
 
 }

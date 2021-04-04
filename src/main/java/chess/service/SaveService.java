@@ -9,19 +9,10 @@ import java.sql.SQLException;
 
 public class SaveService {
 
-    private final String gameId;
-    private final Response response;
-
-    public SaveService(String gameId, Response response) {
-        this.gameId = gameId;
-        this.response = response;
-    }
-
-    public Object save() {
-
+    public static Object save(String gameId, Response response) {
         try {
             ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
-            saveGameToDB(chessGame);
+            saveGameToDB(gameId, chessGame);
         } catch (RuntimeException | SQLException e) {
             response.status(400);
             return new MessageDto(e.getMessage());
@@ -30,7 +21,7 @@ public class SaveService {
         return new MessageDto("저장 완료");
     }
 
-    private void saveGameToDB(ChessGame chessGame) throws SQLException {
+    private static void saveGameToDB(String gameId, ChessGame chessGame) throws SQLException {
         if(GameRepository.isGameIdExistingInDB(gameId)) {
             GameRepository.updateToDB(gameId, chessGame);
             return;
