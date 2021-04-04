@@ -86,6 +86,7 @@ class BoardInitializerTest {
     }
 
     @Test
+    @DisplayName("보드 리셋 시킬 수 있다.")
     void resetBoardTest() {
         board.getBoard().put(Position.of("a1"), EmptyPiece.getInstance());
 
