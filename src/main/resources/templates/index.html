@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -85,11 +85,31 @@
                 <div class="bright-square" id="h1"></div>
             </div>
         </div>
-        <div class="control-panel" id="control-panel">
-            <!-- Raised button with ripple -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="start-button">
-                게임 시작하기
-            </button>
+        <div class="panel" id="panel">
+            <div class="panel-item" id="upper-panel">
+                <span id="score-console" style="display: none; font-size: 1.5em; color: cornsilk;">
+                    여기에 점수가 나타납니다.
+                </span>
+            </div>
+            <div class="panel-item" id="middle-panel">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="margin: 20px;" id="start-button">
+                    새 게임
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="margin: 20px;" id="load-button">
+                    불러오기
+                </button>
+                <span id="message-console" style="display: none; font-size: 1.5em; color: cornsilk;">
+                    여기에 메세지가 나타납니다.
+                </span>
+            </div>
+            <div class="panel-item" id="bottom-panel">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="margin: 20px;display: none;" id="save-button">
+                    저장하기
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="margin: 20px;display: none;" id="end-button">
+                    종료하기
+                </button>
+            </div>
         </div>
     </div>
 </div>

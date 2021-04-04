@@ -5,6 +5,12 @@ html, body {
     padding: 0;
 }
 
+span {
+    display: inline;
+    width: 100%;
+    text-align: center;
+}
+
 .main {
     display: flex;
     height: 100%;
@@ -50,6 +56,7 @@ html, body {
     background-image: url('/images/bright-square.jpg');
     background-size: 80px;
 }
+
 .bright-square:hover {
     opacity: 0.8;
 }
@@ -58,16 +65,27 @@ html, body {
     background-image: url('/images/dark-square.jpg');
     background-size: 80px;
 }
+
 .dark-square:hover {
     opacity: 0.8;
 }
 
-.control-panel {
+.panel {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    display: grid;
+    grid-template-rows: 33.3%;
+    grid-template-columns: 100%;
+    line-height: 50px;
+    width: 480px;
+    height: 480px;
+    margin-left: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 480px;
-    height: 640px;
-    margin-left: 60px;
-    background-color: rgba(255, 255, 255, 0.1);
 }

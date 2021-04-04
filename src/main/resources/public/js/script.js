@@ -1,7 +1,7 @@
 const BLOCK_SIZE_PIXEL = 80;
 
 const $chessBoard = document.getElementById('chess-board');
-const $controlPanel = document.getElementById('control-panel');
+const $panel = document.getElementById('control-panel');
 const $startButton = document.getElementById('start-button');
 
 const squareBuffer = new SquareBuffer();
@@ -63,11 +63,13 @@ async function addSelectionEventOnChessBoard() {
 
 async function addEventOnStartButton() {
     await $startButton.addEventListener('click', event => {
+
+
         try {
             fetch('/newgame')
                 .then(res => res.json())
                 .then(res => processResponse(res, () => updateBoard(res.item.chessBoard)));
-            $startButton.style.display = 'none';
+            turnOnPanel();
         } catch (error) {
             console.error(error.messages);
         }
@@ -86,6 +88,16 @@ function updateBoard(piecesMap) {
 async function updateSquare(position, piece) {
     const square = document.getElementById(position);
     square.appendChild(makeImage(piece.color + '-' + piece.notation));
+}
+
+function turnOnPanel() {
+    for (const button of document.getElementById('middle-panel').querySelectorAll('button')) {
+        button.style.display = 'none';
+    }
+    document.getElementById('save-button').style.display = 'block';
+    document.getElementById('end-button').style.display = 'block';
+    document.getElementById('message-console').style.display = 'block';
+    document.getElementById('score-console').style.display = 'block';
 }
 
 function makeImage(imageName) {
