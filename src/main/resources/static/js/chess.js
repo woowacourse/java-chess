@@ -9,11 +9,14 @@ const $turn = document.getElementById('turn');
 $startButton.addEventListener('click', startBoard);
 $loadButton.addEventListener('click', loadChessRoom);
 $exitButton.addEventListener('click', exitChessRoom);
-$board.addEventListener('click', movePiece);
+$board.addEventListener('click', selectSource);
 
 async function startBoard() {
     let start = await fetch('/start');
     start = await start.json();
+    if (start === 0) {
+        alert('게임 시작하는 것을 실패했습니다.');
+    }
     initBoard(start);
 }
 
@@ -55,7 +58,10 @@ function makePiece(piece) {
 async function loadChessRoom() {
     let load = await fetch('/load?roomNo=1');
     load = await load.json();
-    console.log(load)
+    if (load.error) {
+        alert(load.error);
+        return;
+    }
     initBoard(load)
 }
 
@@ -75,18 +81,22 @@ function resetStatus() {
     $turn.innerText = '';
 }
 
-let source = '';
-let target = '';
+let select = {
+    source : '',
+    target : '',
+    routes : ''
+}
 
-function movePiece(event) {
+function selectSource(event) {
     if (event.target.closest('div') && event.target.tagName === 'IMG') {
-        if (event.target.getAttribute('color') == $turn.innerText && source == '') {
-            source = event.target.closest('div').id;
-            showRoute(source);
+        if (event.target.getAttribute('color') == $turn.innerText) {
+            emptySelect();
+            select.source = event.target.closest('div').id;
+            showRoute(select.source);
             return;
         }
     }
-    if (source != '') {
+    if (select.source != '') {
         if (event.target.closest('div')) {
             selectTarget(event)
         }
@@ -97,30 +107,37 @@ async function showRoute(source) {
     const position = {
         source: source
     }
-    let route = await fetch("/route", {
+    let routes = await fetch("/route", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(position)
     })
-    route = await route.json()
-    addNextRoute(route)
+    routes = await routes.json()
+    addNextRoute(routes)
 }
 
 function addNextRoute(data) {
+    const routes = [];
     for (let value of data) {
-        document.getElementById((value.x + value.y)).classList.add('suggest');
+        routes.push(value.position);
+        document.getElementById(value.position).classList.add('suggest');
     }
+    select.routes = routes;
 }
 
-async function selectTarget(event) {
-    target = event.target.closest('div').id;
+function selectTarget(event) {
+    select.target = event.target.closest('div').id;
     const position = {
-        source: source,
-        target: target,
+        source: select.source,
+        target: select.target,
         turn: $turn.innerText
     }
+    movePiece(position)
+}
+
+async function movePiece(position) {
     let piece = await fetch('/move', {
         method: 'POST',
         headers: {
@@ -129,9 +146,20 @@ async function selectTarget(event) {
         body: JSON.stringify(position)
     })
     piece = await piece.json();
+    emptySelect();
+    if (piece.error) {
+        alert(piece.error);
+        return;
+    }
     updateBoard(piece);
-    source = ''
-    target = ''
+}
+
+function emptySelect() {
+    select.source = '';
+    select.target = '';
+    for (let route of select.routes) {
+        document.getElementById(route).classList.remove('suggest');
+    }
 }
 
 function updateBoard(data) {
@@ -144,7 +172,6 @@ function updateBoard(data) {
         for (let j = 0; j < 8; j++) {
             const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
             const piece = data.chessRoomInfo.chessBoard[boxDiv.id];
-            boxDiv.classList.remove('suggest');
             boxDiv.innerHTML = makePiece(piece);
         }
     }
