@@ -99,7 +99,7 @@ public class PositionTest {
     void getColumn() {
         Position position = Position.valueOf("c4");
 
-        assertThat(position.getColumn()).isEqualTo('c');
+        assertThat(position.getColumn()).isEqualTo(AlphaColumns.C);
     }
 
 }

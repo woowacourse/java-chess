@@ -79,8 +79,8 @@ public class Position {
         return row == NumberRows.TWO;
     }
 
-    public Character getColumn() {
-        return column.alpha().charAt(0);
+    public AlphaColumns getColumn() {
+        return column;
     }
 
     public String position() {
