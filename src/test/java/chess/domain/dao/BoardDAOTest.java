@@ -10,9 +10,13 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class BoardDAOTest {
+
+    public static final String GameNumber = "1";
+
     private BoardDAO boardDAO;
     private Board board;
 
@@ -30,12 +34,18 @@ public class BoardDAOTest {
 
     @Test
     void addBoard() throws SQLException {
-        boardDAO.addBoard(board, "White");
+        boardDAO.initBoardTable();
+        boardDAO.addBoard(board, Side.WHITE.name());
+    }
+
+    @Test
+    void findTurn() throws SQLException {
+        assertThat(boardDAO.findTurn(GameNumber)).isEqualTo(Side.WHITE);
     }
 
     @Test
     void updateBoard() throws SQLException {
         board.move(Position.from("f2"), Position.from("f4"), Side.WHITE);
-        boardDAO.updateBoard(board, "White");
+        boardDAO.updateBoard(board, Side.WHITE.name());
     }
 }
