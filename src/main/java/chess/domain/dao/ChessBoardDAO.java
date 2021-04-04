@@ -43,7 +43,7 @@ public class ChessBoardDAO {
         }
     }
 
-    public void addPosition(ChessBoardDTOForDAO eachPosition) throws SQLException {
+    public void addPosition(ChessBoardVO eachPosition) throws SQLException {
 
         String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
 
@@ -57,21 +57,21 @@ public class ChessBoardDAO {
 
     }
 
-    public void addPositions(List<ChessBoardDTOForDAO> board) throws SQLException {
-        for (ChessBoardDTOForDAO eachPosition : board) {
+    public void addPositions(List<ChessBoardVO> board) throws SQLException {
+        for (ChessBoardVO eachPosition : board) {
             addPosition(eachPosition);
         }
     }
 
 
-    public List<ChessBoardDTOForDAO> findByGameId(String gameId) throws SQLException {
+    public List<ChessBoardVO> findByGameId(String gameId) throws SQLException {
         String query = "SELECT * FROM chessTable WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-        List<ChessBoardDTOForDAO> chessboard = new ArrayList<>();
+        List<ChessBoardVO> chessboard = new ArrayList<>();
         while (rs.next()) {
-            ChessBoardDTOForDAO chessboardDto = new ChessBoardDTOForDAO();
+            ChessBoardVO chessboardDto = new ChessBoardVO();
             chessboard.add(chessboardDto);
             chessboardDto.setPosition(rs.getString("position"));
             chessboardDto.setTeamColor(rs.getString("teamColor"));

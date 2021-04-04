@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.ChessBoard;
 import chess.domain.dao.ChessBoardDAO;
-import chess.domain.dao.ChessBoardDTOForDAO;
+import chess.domain.dao.ChessBoardVO;
 import chess.domain.dto.MovementDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.PieceMaker;
@@ -37,10 +37,10 @@ public class WebUIChessApplication {
         post("/chessboard/save", (req, res) -> {
             chessBoardDao.removePositions();
             Map<String, PieceDto> chessBoardDto = chessBoard.getChessBoardDto();
-            List<ChessBoardDTOForDAO> results = new ArrayList<>();
+            List<ChessBoardVO> results = new ArrayList<>();
             for (Map.Entry<String, PieceDto> eachInfo : chessBoardDto.entrySet()) {
                 PieceDto value = eachInfo.getValue();
-                results.add(new ChessBoardDTOForDAO(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
+                results.add(new ChessBoardVO(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
             }
             chessBoardDao.addPositions(results);
             return chessBoard.result();
@@ -65,10 +65,10 @@ public class WebUIChessApplication {
 
         get("/chessboard/saved", (req, res) -> {
             res.type("application/json");
-            List<ChessBoardDTOForDAO> previousGame = chessBoardDao.findByGameId("1");
+            List<ChessBoardVO> previousGame = chessBoardDao.findByGameId("1");
 
             Map<Position, Piece> boardFromDB = new LinkedHashMap<>();
-            for (ChessBoardDTOForDAO eachInfo : previousGame) {
+            for (ChessBoardVO eachInfo : previousGame) {
                 boardFromDB.put(Position.valueOf(eachInfo.getPosition()),
                         PieceMaker.getInstance(eachInfo.getPieceType(),
                                 TeamColor.getInstance(eachInfo.getTeamColor()),

@@ -2,16 +2,16 @@ package chess.domain.dao;
 
 import java.util.Objects;
 
-public class ChessBoardDTOForDAO {
+public class ChessBoardVO {
     private String position;
     private String teamColor;
     private String pieceType;
     private String alive;
 
-    public ChessBoardDTOForDAO() {
+    public ChessBoardVO() {
     }
 
-    public ChessBoardDTOForDAO(String position, String teamColor, String pieceType, String alive) {
+    public ChessBoardVO(String position, String teamColor, String pieceType, String alive) {
         this.position = position;
         this.teamColor = teamColor;
         this.pieceType = pieceType;
@@ -54,7 +54,7 @@ public class ChessBoardDTOForDAO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChessBoardDTOForDAO that = (ChessBoardDTOForDAO) o;
+        ChessBoardVO that = (ChessBoardVO) o;
         return Objects.equals(position, that.position) && Objects.equals(teamColor, that.teamColor) && Objects.equals(pieceType, that.pieceType) && Objects.equals(alive, that.alive);
     }
 
