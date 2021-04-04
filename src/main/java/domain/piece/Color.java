@@ -13,7 +13,7 @@ public enum Color {
     }
 
     public boolean isBlack() {
-        return "검은색".equals(name);
+        return Color.BLACK.equals(this);
     }
 
 }
