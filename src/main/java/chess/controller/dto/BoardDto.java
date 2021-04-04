@@ -1,5 +1,6 @@
 package chess.controller.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
@@ -7,11 +8,19 @@ public class BoardDto {
     private final List<PieceDto> pieces;
     private final int boardSize;
     private final String currentTeam;
+    private final boolean checked;
+    private final boolean isKingDead;
 
-    public BoardDto(List<PieceDto> pieces, int boardSize, String currentTeam) {
+    public BoardDto(int boardSize, String currentTeam, boolean checked, boolean isKingDead) {
+        this(new ArrayList<>(), boardSize, currentTeam, checked, isKingDead);
+    }
+
+    public BoardDto(List<PieceDto> pieces, int boardSize, String currentTeam, boolean checked, boolean isKingDead) {
         this.pieces = pieces;
         this.boardSize = boardSize;
         this.currentTeam = currentTeam;
+        this.checked = checked;
+        this.isKingDead = isKingDead;
     }
 
     public List<PieceDto> getPieces() {
@@ -24,5 +33,13 @@ public class BoardDto {
 
     public String getCurrentTeam() {
         return currentTeam;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public boolean isKingDead() {
+        return isKingDead;
     }
 }

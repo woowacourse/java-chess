@@ -6,6 +6,7 @@ import chess.domain.TeamColor;
 import chess.domain.piece.*;
 import chess.controller.dto.PieceDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -93,15 +94,15 @@ public class ChessGame {
         return new ChessResult(totalScoreByTeamColor(WHITE), totalScoreByTeamColor(BLACK));
     }
 
+    public int getBoardSize() {
+        return BOARD_SIZE;
+    }
+
     public List<PieceDto> getPieces() {
         return pieces.getPieces();
     }
 
     public String getCurrentColor() {
         return currentColor.toString();
-    }
-
-    public int getBoardSize() {
-        return BOARD_SIZE;
     }
 }

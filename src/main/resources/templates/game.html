@@ -18,10 +18,6 @@
             background-size: 1200px 1200px;
         }
 
-        .table_container > .chessboard:hover {
-            background-color: rebeccapurple;
-        }
-
         .chessboard {
             height: 150px;
             width: 150px;
@@ -34,7 +30,7 @@
     </style>
 </head>
 <body>
-<h1 text align="center">{{currentTeam}}팀 차례</h1>
+<h1 text align="center">{{board.currentTeam}}팀 차례</h1>
 <div>
     <div class="table_container">
         <div id="a8" class="chessboard"></div>
@@ -113,6 +109,7 @@
             <form name="moveForm" action="/move" method="post" onsubmit="return validateMove()">
                 <input type="text" name="source" placeholder="source" style="width:240px;height:60px;font-size:30px;">
                 <input type="text" name="target" placeholder="target" style="width:240px;height:60px;font-size:30px;">
+                <input type="hidden" name="board", >
                 <input type="submit" id="move" value="move" style="width:240px;height:60px;font-size:30px;" >
             </form>
             <form action="/end" onsubmit="return confirmExit()">

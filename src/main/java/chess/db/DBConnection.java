@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class DBConnection {
-    private static final String server = "localhost";
-    private static final String database = "chess";
-    private static final String userName = "chess";
+    private static final String server = "chess@localhost";
+    private static final String database = "chessDB";
+    private static final String userName = "root";
     private static final String password = "root";
 
     private static DBConnection instance;
@@ -31,7 +31,7 @@ public class DBConnection {
             e.printStackTrace();
         }
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?useSSL=false", userName, password);
+            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + "?allowPublicKeyRetrieval=true&serverTimezone=UTC", userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());

@@ -1,12 +1,12 @@
 package chess.controller;
 
+import chess.controller.dto.BoardDto;
 import chess.domain.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessResult;
 import chess.domain.game.ImpossibleMoveException;
 import chess.domain.game.PieceNotFoundException;
 import chess.util.MessagePositionConverter;
-import chess.controller.dto.BoardDto;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -28,7 +28,12 @@ public class ChessAction {
 
     public GameStatus start() {
         chessGame = new ChessGame();
-        OutputView.printBoard(new BoardDto(chessGame.getPieces(), chessGame.getBoardSize(), chessGame.getCurrentColor()));
+        OutputView.printBoard(new BoardDto(
+                chessGame.getPieces(),
+                chessGame.getBoardSize(),
+                chessGame.getCurrentColor(),
+                chessGame.checked(),
+                chessGame.isKingDead()));
         return GameStatus.RUN;
     }
 
@@ -42,7 +47,12 @@ public class ChessAction {
         Position targetPosition = positions.get(1);
         chessGame.move(currentPosition, targetPosition);
 
-        OutputView.printBoard(new BoardDto(chessGame.getPieces(), chessGame.getBoardSize(), chessGame.getCurrentColor()));
+        OutputView.printBoard(new BoardDto(
+                chessGame.getPieces(),
+                chessGame.getBoardSize(),
+                chessGame.getCurrentColor(),
+                chessGame.checked(),
+                chessGame.isKingDead()));
 
         return chessStatus();
     }
