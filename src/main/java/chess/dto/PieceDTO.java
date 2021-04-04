@@ -17,7 +17,6 @@ public class PieceDTO {
         this.initial = initial;
     }
 
-
     public String getTeam() {
         return team;
     }

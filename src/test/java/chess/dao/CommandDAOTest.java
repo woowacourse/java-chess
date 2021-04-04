@@ -13,9 +13,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandDAOTest {
-    private CommandDAO commandDAO = new CommandDAO();
-    private String testRoomId = "testId";
-    private List<List<String>> commands = new ArrayList<>();
+    private final CommandDAO commandDAO = new CommandDAO();
+    private final String testRoomId = "testId";
+    private final List<List<String>> commands = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -56,7 +56,6 @@ class CommandDAOTest {
             commandDAO.addCommand(roomId, command.get(0), command.get(1));
         }
     }
-
 
     @Test
     @DisplayName("roomId을 testId로 가진 것들을 삭제하면, 성공한다.")

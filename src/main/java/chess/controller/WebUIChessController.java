@@ -21,11 +21,13 @@ import java.util.Map;
 import static spark.Spark.get;
 import static spark.Spark.put;
 
-public class WebUIChessController {
+public final class WebUIChessController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
-    private ChessGame chessGame = new ChessGame();  //상태필드에서 제거
-    private String roomId;  // 상태필드에서 제거
-    private CommandDAO commandDAO = new CommandDAO();
+    public static final int START_POINT_INDEX = 0;
+    public static final int END_POINT_INDEX = 1;
+    private final CommandDAO commandDAO = new CommandDAO();
+    private ChessGame chessGame = new ChessGame();
+    private String roomId;
 
     public WebUIChessController() {
         commandDAO.getConnection();
@@ -61,8 +63,8 @@ public class WebUIChessController {
         ChessGame chessGame = new ChessGame();
         List<List<String>> commands = commandDAO.getCommandsByRoomId(roomId);
         for (List<String> points : commands) {
-            String start_point = points.get(0);
-            String end_point = points.get(1);
+            String start_point = points.get(START_POINT_INDEX);
+            String end_point = points.get(END_POINT_INDEX);
             chessGame.move(position(start_point), position(end_point));
         }
         return chessGame;
@@ -77,7 +79,6 @@ public class WebUIChessController {
                     getWinner(),
                     chessGame.isKingDieEnd()
             );
-            // 왕이 죽은경우 DB서 삭제
             if (chessGame.isKingDieEnd()) {
                 commandDAO.deleteCommandsByRoomId(roomId);
             }

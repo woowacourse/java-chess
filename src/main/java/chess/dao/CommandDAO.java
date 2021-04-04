@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandDAO {
+public final class CommandDAO {
     public Connection getConnection() {
         Connection connection = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -13,7 +13,6 @@ public class CommandDAO {
         String userName = "root"; //  MySQL 서버 아이디
         String password = "root"; // MySQL 서버 비밀번호
 
-        // 드라이버 로딩
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -21,7 +20,6 @@ public class CommandDAO {
             e.printStackTrace();
         }
 
-        // 드라이버 연결
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
@@ -33,7 +31,6 @@ public class CommandDAO {
         return connection;
     }
 
-    // 드라이버 연결해제
     public void closeConnection(Connection connection) {
         try {
             if (connection != null) {
@@ -55,18 +52,23 @@ public class CommandDAO {
     }
 
     public List<List<String>> getCommandsByRoomId(final String roomId) throws SQLException {
-        List<List<String>> points = new ArrayList<>();
         String query = "SELECT start_point, end_point FROM command WHERE room_id = ? ORDER BY command_time";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
         preparedStatement.setString(1, roomId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        List<List<String>> points = getPoints(resultSet);
+        preparedStatement.close();
+        return points;
+    }
+
+    private List<List<String>> getPoints(final ResultSet resultSet) throws SQLException {
+        List<List<String>> points = new ArrayList<>();
         while (resultSet.next()) {
             List<String> positions = new ArrayList<>();
             positions.add(resultSet.getString("start_point"));
             positions.add(resultSet.getString("end_point"));
             points.add(positions);
         }
-        preparedStatement.close();
         return points;
     }
 
