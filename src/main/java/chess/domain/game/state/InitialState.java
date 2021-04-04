@@ -69,7 +69,7 @@ public final class InitialState implements GameState {
     }
 
     @Override
-    public Result pathResult(Position source) {
+    public Result pathResult(final Position source) {
         throw new IllegalArgumentException("게임이 시작되기 전에는 체스말의 경로를 확인할 수 없습니다.");
     }
 
