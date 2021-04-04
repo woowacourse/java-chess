@@ -2,53 +2,86 @@ package chess.service;
 
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.dao.ChessDao;
+import chess.domain.dao.MovementDao;
 import chess.domain.entity.Chess;
+import chess.domain.entity.Movement;
 import chess.domain.player.ChessGame;
 import chess.domain.position.Position;
 import chess.service.dto.*;
 
+import java.util.List;
+
 public class ChessService {
     private final ChessDao chessDao;
-    private ChessGame chessGame;
+    private final MovementDao movementDao;
 
-    public ChessService(final ChessDao chessDao) {
+    public ChessService(final ChessDao chessDao, final MovementDao movementDao) {
         this.chessDao = chessDao;
-        this.chessGame = ChessGame.newGame();
+        this.movementDao = movementDao;
     }
 
     public TilesDto emptyBoard() {
         return new TilesDto(ChessBoardFactory.initializeBoard());
     }
 
-    public PiecesStatusDto initializeGame() {
-        this.chessGame = ChessGame.newGame();
-        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
+    public GameStatusDto initializeGame() {
+        ChessGame chessGame = ChessGame.newGame();
+        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
     }
 
-    public MoveResponseDto movePiece(MoveRequestDto requestDto) {
+    public MoveResponseDto movePiece(final MoveRequestDto requestDto) {
+        ChessGame chessGame = ChessGame.newGame();
+        List<Movement> movements = movementDao.findByChessName(requestDto.getChessName());
+
+        for (Movement movement : movements) {
+            chessGame.moveByTurn(Position.find(movement.getSourcePosition()), Position.find(movement.getTargetPosition()));
+        }
+
         chessGame.moveByTurn(Position.find(requestDto.getSource()), Position.find(requestDto.getTarget()));
-        return new MoveResponseDto(requestDto.getSource(), requestDto.getTarget(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
-    }
+        Chess chess = findChessByName(requestDto.getChessName());
+        movementDao.save(new Movement(chess.getId(), requestDto.getSource(), requestDto.getTarget()));
 
-    public PiecesStatusDto pieces() {
-        return new PiecesStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
+        if(chessGame.isGameOver()){
+            chess.changeRunning(!chessGame.isGameOver());
+            chess.changeWinnerColor(chessGame.findWinnerColor());
+            chessDao.update(chess);
+        }
+        return new MoveResponseDto(requestDto.getSource(), requestDto.getTarget(), chessGame.calculateScoreWeb(), !chess.isRunning());
     }
 
     public void changeGameStatus(final GameStatusRequestDto requestDto) {
-        chessGame.changeStatus(requestDto);
+        ChessGame chessGame = ChessGame.newGame();
+        Chess chess = findChessByName(requestDto.getChessName());
+        List<Movement> movements = movementDao.findByChessName(chess.getName());
+
+        for (Movement movement : movements) {
+            chessGame.moveByTurn(Position.find(movement.getSourcePosition()), Position.find(movement.getTargetPosition()));
+        }
+
+        chess.changeRunning(!requestDto.isGameOver());
+        chess.changeWinnerColor(chessGame.findWinnerColor());
+        chessDao.update(chess);
     }
 
-    public PiecesStatusDto startChess(final ChessSaveRequestDto request) {
+    public GameStatusDto startChess(final ChessSaveRequestDto request) {
+        ChessGame chessGame = ChessGame.newGame();
         Chess chess = new Chess(request.getName());
         chessDao.save(chess);
-
-        this.chessGame = ChessGame.newGame();
-        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
+        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
     }
 
-    public PiecesStatusDto loadChess(String name) {
-        this.chessGame = ChessGame.newGame();
-        Chess chess = chessDao.findByName(name).orElseThrow(() -> new IllegalArgumentException("없는 게임 이름입니다"));
-        return new PiecesStatusDto(chessGame.getAllPieces(), this.chessGame.calculateScoreWeb(), chessGame.isGameOver());
+    public GameStatusDto loadChess(final String chessName) {
+        ChessGame chessGame = ChessGame.newGame();
+        Chess chess = findChessByName(chessName);
+        List<Movement> movements = movementDao.findByChessName(chess.getName());
+
+        for (Movement movement : movements) {
+            chessGame.moveByTurn(Position.find(movement.getSourcePosition()), Position.find(movement.getTargetPosition()));
+        }
+        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), !chess.isRunning());
+    }
+
+    private Chess findChessByName(final String chessName) {
+        return chessDao.findByName(chessName).orElseThrow(() -> new IllegalArgumentException("없는 게임 이름입니다"));
     }
 }

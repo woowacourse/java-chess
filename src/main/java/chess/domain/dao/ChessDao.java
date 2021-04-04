@@ -9,5 +9,7 @@ public interface ChessDao {
 
     Optional<Chess> findByName(final String name);
 
+    void update(final Chess chess);
+
     void deleteByName(final String name);
 }

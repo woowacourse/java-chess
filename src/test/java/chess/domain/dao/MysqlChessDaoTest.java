@@ -1,8 +1,11 @@
 package chess.domain.dao;
 
 import chess.domain.entity.Chess;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,6 +47,28 @@ class MysqlChessDaoTest {
 
     }
 
+    @DisplayName("체스 업데이트 테스트")
+    @Test
+    void update() {
+        //given
+        String name = "3번방";
+        Chess chess = new Chess(name);
+
+        //when
+        mysqlChessDao.save(chess);
+        chess.changeWinnerColor(Color.BLACK);
+        chess.changeRunning(false);
+        mysqlChessDao.update(chess);
+
+         if(mysqlChessDao.findByName(name).isPresent()){
+             Chess findChess = mysqlChessDao.findByName(name).get();
+
+             assertThat(findChess.getWinnerColor()).isEqualTo(Color.BLACK);
+             assertThat(findChess.isRunning()).isEqualTo(false);
+         }
+        mysqlChessDao.deleteByName(name);
+    }
+
     @DisplayName("체스 삭제 테스트")
     @Test
     void delete() {
@@ -54,9 +79,9 @@ class MysqlChessDaoTest {
         //when
         mysqlChessDao.save(chess);
         mysqlChessDao.deleteByName(name);
-        Chess findByName = mysqlChessDao.findByName(name).get();
+        Optional<Chess> findByName = mysqlChessDao.findByName(name);
 
         //then
-        assertThat(findByName).isEqualTo(null);
+        assertThat(findByName).isEqualTo(Optional.empty());
     }
 }

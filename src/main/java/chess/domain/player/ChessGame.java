@@ -4,6 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
 import chess.domain.command.Ready;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
@@ -57,7 +58,7 @@ public class ChessGame {
         return command.isEnd();
     }
 
-    public boolean isGameOver(){
+    public boolean isGameOver() {
         return isGameOver;
     }
 
@@ -147,5 +148,20 @@ public class ChessGame {
             this.isGameOver = requestDto.isGameOver();
             this.command = this.command.end();
         }
+    }
+
+    public Color findWinnerColor() {
+        double whiteScore = score(whitePlayer.getState().pieces());
+        double blackScore = score(blackPlayer.getState().pieces());
+
+        if (whiteScore > blackScore) {
+            return Color.WHITE;
+        }
+
+        if (whiteScore < blackScore) {
+            return Color.BLACK;
+        }
+
+        return Color.BLANK;
     }
 }

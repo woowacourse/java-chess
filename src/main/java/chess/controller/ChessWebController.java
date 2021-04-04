@@ -43,39 +43,35 @@ public class ChessWebController {
         });
 
 
-        get("/games/start", (request, response) -> {
+/*        get("/games/start", (request, response) -> {
             PiecesStatusDto piecesStatusDto = chessService.initializeGame();
             return toJson(piecesStatusDto);
-        });
+        });*/
 
 
-        put("/games/status", (request, response) -> {
-            GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
-            chessService.changeGameStatus(requestDto);
-            return toJson(requestDto);
-        });
 
-        get("/pieces", (request, response) -> {
-            PiecesStatusDto piecesStatusDto = chessService.pieces();
-            return toJson(piecesStatusDto);
-        });
-
-        put("/pieces", (request, response) -> {
-            MoveRequestDto requestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
-            MoveResponseDto responseDto = chessService.movePiece(requestDto);
-            return toJson(responseDto);
-        });
-
-        ////----------------
         post("/games", (request, response) -> {
             ChessSaveRequestDto requestDto =  new Gson().fromJson(request.body(), ChessSaveRequestDto.class);
-            PiecesStatusDto responseDto = chessService.startChess(requestDto);
+            GameStatusDto responseDto = chessService.startChess(requestDto);
             return toJson(responseDto);
         });
 
         get("/games/:name", (request, response) -> {
             String name = request.params(":name");
-            PiecesStatusDto responseDto = chessService.loadChess(name);
+            GameStatusDto responseDto = chessService.loadChess(name);
+            return toJson(responseDto);
+
+        });
+
+        put("/games", (request, response) -> {
+            GameStatusRequestDto requestDto = new Gson().fromJson(request.body(), GameStatusRequestDto.class);
+            chessService.changeGameStatus(requestDto);
+            return toJson(requestDto);
+        });
+
+        put("/pieces", (request, response) -> {
+            MoveRequestDto requestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
+            MoveResponseDto responseDto = chessService.movePiece(requestDto);
             return toJson(responseDto);
         });
     }

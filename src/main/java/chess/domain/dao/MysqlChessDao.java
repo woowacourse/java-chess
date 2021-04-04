@@ -3,10 +3,7 @@ package chess.domain.dao;
 import chess.domain.entity.Chess;
 import chess.domain.piece.Color;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class MysqlChessDao implements ChessDao {
@@ -16,6 +13,7 @@ public class MysqlChessDao implements ChessDao {
                 "name VARCHAR(64) NOT NULL," +
                 "winner_color VARCHAR(64) NOT NULL," +
                 "is_running boolean not null default false ," +
+                "created_date TIMESTAMP," +
                 "PRIMARY KEY (chess_id)" +
                 ");";
 
@@ -34,9 +32,9 @@ public class MysqlChessDao implements ChessDao {
 
     @Override
     public void save(final Chess chess) {
-        String query = "INSERT INTO chess VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO chess VALUES (?, ?, ?, ?, ?)";
 
-        if (!findByName(chess.getName()).equals(Optional.empty())) {
+        if (findByName(chess.getName()).isPresent()) {
             throw new IllegalStateException("이미 존재하는 방입니당");
         }
 
@@ -47,6 +45,8 @@ public class MysqlChessDao implements ChessDao {
             preparedStatement.setString(2, chess.getName());
             preparedStatement.setString(3, chess.getWinnerColor().toString());
             preparedStatement.setBoolean(4, chess.isRunning());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(chess.getCreatedDate()));
+
             preparedStatement.executeUpdate();
             closeResources(connection, preparedStatement);
         } catch (SQLException e) {
@@ -57,7 +57,9 @@ public class MysqlChessDao implements ChessDao {
 
     @Override
     public Optional<Chess> findByName(final String name) {
-        String query = "SELECT * FROM chess WHERE name = ?";
+        String query = "SELECT * FROM chess" +
+                " WHERE name = ?" +
+                " ORDER BY created_date";
         Connection connection = ConnectionUtil.getConnection();
 
         try {
@@ -74,7 +76,8 @@ public class MysqlChessDao implements ChessDao {
                     resultSet.getString("chess_id"),
                     resultSet.getString("name"),
                     Color.findByValue(resultSet.getString("winner_color")),
-                    resultSet.getBoolean("is_running")
+                    resultSet.getBoolean("is_running"),
+                    resultSet.getTimestamp("created_date").toLocalDateTime()
             );
 
             closeResources(connection, preparedStatement);
@@ -85,6 +88,27 @@ public class MysqlChessDao implements ChessDao {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void update(final Chess chess) {
+        String query = "UPDATE chess" +
+                " SET winner_color = ?, is_running = ?" +
+                " WHERE chess_id = ?";
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, chess.getWinnerColor().toString());
+            preparedStatement.setBoolean(2, chess.isRunning());
+            preparedStatement.setString(3, chess.getId());
+            preparedStatement.executeUpdate();
+
+            closeResources(connection, preparedStatement);
+        } catch (SQLException e) {
+            System.err.println("chess 업데이트 오류" + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     @Override

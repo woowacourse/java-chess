@@ -5,12 +5,12 @@ import chess.domain.piece.Pieces;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PiecesStatusDto {
+public class GameStatusDto {
     private final List<PieceStatusDto> pieces;
     private final ScoreDto scoreDto;
     private final boolean isGameOver;
 
-    public PiecesStatusDto(final Pieces pieces, final ScoreDto scoreDto, final boolean isGameOver) {
+    public GameStatusDto(final Pieces pieces, final ScoreDto scoreDto, final boolean isGameOver) {
         this.pieces = pieces.getPieces()
                 .stream()
                 .map(PieceStatusDto::new)

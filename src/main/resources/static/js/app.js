@@ -1,5 +1,6 @@
 const start = document.getElementById("start");
 const end = document.getElementById("end");
+const exit = document.getElementById("exit");
 const chessBoard = document.querySelector(".chess-board");
 const sourceKey = document.getElementById("sourceKey");
 const targetKey = document.getElementById("targetKey");
@@ -9,9 +10,9 @@ const blackCount = document.querySelector(`#blackScore strong`);
 const basePath = 'http://localhost:4567';
 let isEnd = true;
 
-start.addEventListener("click", () => {
+/*start.addEventListener("click", () => {
     initializePieces();
-});
+});*/
 
 end.addEventListener("click", () => {
     if (isEnd === true) {
@@ -22,8 +23,9 @@ end.addEventListener("click", () => {
         isEnd = true;
         axios({
             method: 'put',
-            url:  basePath + '/games/status',
+            url: basePath + '/games',
             data: {
+                chessName: localStorage.getItem("name"),
                 isGameOver: isEnd
             }
         }).then(
@@ -32,20 +34,26 @@ end.addEventListener("click", () => {
     }
 });
 
-const initializePieces = () => {
-    axios.get(basePath +  '/games/start')
+exit.addEventListener("click", () => {
+    if (window.confirm("정말 나갈래요?")) {
+        window.location = basePath;
+    }
+})
+
+/*const initializePieces = () => {
+    axios.get(basePath + '/games/start')
         .then(responsePieces => {
-            reRangeBoard(responsePieces);
+            reRangeBoard(responsePieces)
         })
         .catch(error => console.log(error));
-};
+};*/
 
 const getPieces = () => {
-        axios.get(basePath + '/games/' + localStorage.getItem("name"))
+    axios.get(basePath + '/games/' + localStorage.getItem("name"))
         .then(responsePieces => {
-            reRangeBoard(responsePieces);
+            reRangeBoard(responsePieces)
         })
-        .catch(error => console.log(error));
+        .catch(error => alert(error));
 };
 
 getPieces();
@@ -91,7 +99,7 @@ chessBoard.addEventListener("click", (source) => {
 
     targetKey.value = source.target.parentElement.id;
 
-    if(isSamePosition()){
+    if (isSamePosition()) {
         alert("같은 위치의 돌을 선택할 수 없습니다.");
         clearMoveSource();
         return;
@@ -114,15 +122,16 @@ function movePiece() {
         method: 'put',
         url: basePath + '/pieces',
         data: {
+            chessName: localStorage.getItem("name"),
             source: sourceKey.value,
             target: targetKey.value
         }
     }).then((response) => {
-        movePieces(response);
-        getPieces();
+        getPieces()
     }).catch(error => alert(error));
 }
 
+/*
 const movePieces = (response) => {
     let sourcePiece = document.getElementById(response.data.source);
     let targetPiece = document.getElementById(response.data.target);
@@ -133,6 +142,7 @@ const movePieces = (response) => {
     targetChildPiece.src = sourceChildPiece.src;
     sourceChildPiece.src = "";
 };
+*/
 
 function clearMoveSource() {
     sourceKey.value = "";
