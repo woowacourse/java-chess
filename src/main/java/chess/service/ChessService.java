@@ -8,7 +8,7 @@ import chess.domain.command.Command;
 import chess.domain.command.StartOnCommand;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
-import chess.domain.state.State;
+import chess.dto.ChessGameDto;
 import chess.dto.ChessGameStatusDto;
 import chess.dto.PieceDto;
 
@@ -58,5 +58,21 @@ public class ChessService {
         return pieces;
     }
 
+    public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) throws SQLException {
+        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        chessGameDao.updateChessGameStateById(chessGameId, chessGameDto.getTurn().name(), chessGameDto.isFinish());
+        PieceDto sourcePieceDto = findPieceDtoByPosition(source, chessGameDto);
+        PieceDto targetPieceDto = findPieceDtoByPosition(target, chessGameDto);
+        pieceDao.updatePiecePositionByChessGameId(chessGameId, sourcePieceDto);
+        pieceDao.updatePiecePositionByChessGameId(chessGameId, targetPieceDto);
+    }
 
+    private PieceDto findPieceDtoByPosition(String position, ChessGameDto chessGameDto) {
+        return chessGameDto.getPieces()
+                .stream()
+                .filter(pieceDto -> pieceDto.getPosition()
+                        .equals(position))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 찾는 위치의 기물이 없습니다."));
+    }
 }

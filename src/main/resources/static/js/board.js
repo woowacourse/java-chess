@@ -2,6 +2,7 @@ window.onload = setUpStartButton;
 let is_source_clicked = false;
 let source = "";
 let target = "";
+const chessGameId = getParameterByName("id");
 
 function setUpStartButton() {
     document.getElementById("start").addEventListener("click", start);
@@ -13,7 +14,6 @@ function start() {
 }
 
 function initializeChessBoard() {
-    const chessGameId = getParameterByName("id");
     axios({
         method: 'get',
         url: '/data',
@@ -48,6 +48,9 @@ function moveFromSourceToTarget() {
     axios({
         method: 'post',
         url: '/move',
+        params: {
+            id: chessGameId
+        },
         data: {
             "source": source,
             "target": target
@@ -84,10 +87,10 @@ async function clearPieces(pieces) {
 }
 
 function setTurn(turn) {
-    if(turn === "WHITE") {
+    if (turn === "WHITE") {
         document.getElementById("turn").innerText = `🏳️ ${turn} TURN 🏳️`;
     }
-    if(turn === "BLACK") {
+    if (turn === "BLACK") {
         document.getElementById("turn").innerText = `🏴 ${turn} TURN 🏴`;
     }
 }

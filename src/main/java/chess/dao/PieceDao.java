@@ -75,4 +75,14 @@ public class PieceDao {
         closeConnection(getConnection());
         return pieces;
     }
+
+    public void updatePiecePositionByChessGameId(int chessGameId, PieceDto pieceDto) throws SQLException {
+        String query = "UPDATE PIECE SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, pieceDto.getColor().toString());
+        pstmt.setString(2, pieceDto.getName());
+        pstmt.setString(3, pieceDto.getPosition());
+        pstmt.setInt(4, chessGameId);
+        pstmt.executeUpdate();
+    }
 }

@@ -28,7 +28,7 @@ function addChessGameList(chessGameList) {
 
 function enterGame(chessGameList) {
     console.log(chessGameList);
-    location.href = "/start?id=" + 1;
+    location.href = "/start?id=" + chessGameList.id;
 }
 
 

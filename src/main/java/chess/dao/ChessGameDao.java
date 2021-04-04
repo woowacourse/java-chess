@@ -1,9 +1,7 @@
 package chess.dao;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.info.Color;
 import chess.dto.ChessGameStatusDto;
-import chess.dto.PieceDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,5 +82,14 @@ public class ChessGameDao {
         if (!rs.next()) return null;
 
         return new ChessGameStatusDto(rs.getString("turn"), rs.getBoolean("isFinish"));
+    }
+
+    public void updateChessGameStateById(int chessGameId, String turn, boolean isFinish) throws SQLException {
+        String query = "UPDATE CHESS_GAME SET turn = ?, isFinish = ? WHERE chessGameId = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, turn);
+        pstmt.setBoolean(2, isFinish);
+        pstmt.setInt(3, chessGameId);
+        pstmt.executeUpdate();
     }
 }
