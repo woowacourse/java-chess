@@ -63,7 +63,16 @@ function clickDiv(e) {
 
 async function movePiece(targetPosition, destinationPosition) {
     const boardInfo = await sendMoveInformation(targetPosition, destinationPosition);
-    renewBoard(boardInfo);
+    checkGameOver(boardInfo.gameOverFlag);
+    renewBoard(boardInfo.boardInfo);
+}
+
+function checkGameOver(gameOverFlag) {
+    if (gameOverFlag === "true") {
+        alert("게임이 종료되었습니다. 체스판을 초기화 합니다.");
+        reStartGame();
+        return '';
+    }
 }
 
 async function sendMoveInformation(targetPosition, destinationPosition) {
@@ -81,7 +90,7 @@ async function sendMoveInformation(targetPosition, destinationPosition) {
         body: JSON.stringify(bodyValue)
     })
     boardInformation = await boardInformation.json();
-    return boardInformation.boardInfo;
+    return boardInformation;
 }
 
 function getBoardColor(index, color) {

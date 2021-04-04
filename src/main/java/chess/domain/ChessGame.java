@@ -9,9 +9,6 @@ import java.util.Map;
 import static chess.controller.ChessController.boardFactory;
 
 public class ChessGame {
-    public static final String DELIMITER = " ";
-    private static final int TARGET_POSITION_INDEX = 1;
-    private static final int DESTINATION_POSITION_INDEX = 2;
     private Board board;
     private Team turnOwner;
 

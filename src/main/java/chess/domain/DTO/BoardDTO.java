@@ -10,9 +10,11 @@ import java.util.Objects;
 
 public class BoardDTO {
     private Map<String, String> boardInfo = new HashMap<>();
+    public String gameOverFlag = "false";
 
-    private BoardDTO(Map<String, String> boardInfo) {
+    private BoardDTO(Map<String, String> boardInfo, String gameOverFlag) {
         this.boardInfo = boardInfo;
+        this.gameOverFlag = gameOverFlag;
     }
 
     public static BoardDTO of(Board board) {
@@ -24,11 +26,19 @@ public class BoardDTO {
                 boardInfo.put(info.getKey().convertToString(), info.getValue().getUnicode());
             }
         }
-        return new BoardDTO(boardInfo);
+        String gameOverFlag = getGameOverFlag(board);
+        return new BoardDTO(boardInfo, gameOverFlag);
+    }
+
+    private static String getGameOverFlag(Board board) {
+        if (board.isAnyKingDead()) {
+            return "true";
+        }
+        return "false";
     }
 
     public static BoardDTO of(Map<String, String> boardInfo) {
-        return new BoardDTO(boardInfo);
+        return new BoardDTO(boardInfo, "true");
     }
 
     public Map<String, String> getBoardInfo() {

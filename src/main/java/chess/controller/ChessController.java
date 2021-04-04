@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.DTO.BoardDTO;
 import chess.domain.ChessGame;
+import chess.domain.DTO.BoardDTO;
 import chess.domain.DTO.MoveInfoDTO;
 import chess.domain.DTO.ScoreDTO;
 import chess.domain.board.BoardFactory;
