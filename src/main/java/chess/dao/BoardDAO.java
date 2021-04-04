@@ -1,10 +1,11 @@
 package chess.dao;
 
-import chess.domain.piece.PieceFactory;
-import chess.domain.board.Board;
 import chess.domain.Side;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BoardDAO {
+
+    private static final String GameNumber = "1";
 
     public Connection getConnection() {
         Connection con = null;
@@ -53,19 +56,19 @@ public class BoardDAO {
         }
     }
 
-    public void addBoard(Board board, String turn) throws SQLException {
-        String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, "1");
-        pstmt.setString(2, boardPositionSet(board.getBoard()));
-        pstmt.setString(3, boardPieceSet(board.getBoard()));
-        pstmt.setString(4, turn);
-        pstmt.executeUpdate();
-    }
-
     public void initBoardTable() throws SQLException {
         String query = "truncate table board";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.executeUpdate();
+    }
+
+    public void addBoard(Board board, String turn) throws SQLException {
+        String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, GameNumber);
+        pstmt.setString(2, boardPositionSet(board.getBoard()));
+        pstmt.setString(3, boardPieceSet(board.getBoard()));
+        pstmt.setString(4, turn);
         pstmt.executeUpdate();
     }
 
@@ -75,14 +78,14 @@ public class BoardDAO {
         pstmt.setString(1, boardPositionSet(board.getBoard()));
         pstmt.setString(2, boardPieceSet(board.getBoard()));
         pstmt.setString(3, turn);
-        pstmt.setString(4, "1");
+        pstmt.setString(4, GameNumber);
         pstmt.executeUpdate();
     }
 
-    public Map<Position, Piece> findBoard(String game) throws SQLException {
+    public Map<Position, Piece> findBoard(String gameNumber) throws SQLException {
         String query = "SELECT * FROM board WHERE number = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, game);
+        pstmt.setString(1, gameNumber);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) return null;
@@ -90,21 +93,15 @@ public class BoardDAO {
         return daoToBoard(rs.getString("position"), rs.getString("pieceName"));
     }
 
-    public Side findTurn(String game) throws SQLException {
+    public Side findTurn(String gameNumber) throws SQLException {
         String query = "SELECT * FROM board WHERE number = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, game);
+        pstmt.setString(1, gameNumber);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) return null;
 
-        if (rs.getString("turn").equals("WHITE")) {
-            return Side.WHITE;
-        }
-        if (rs.getString("turn").equals("BLACK")) {
-            return Side.BLACK;
-        }
-        return Side.NONE;
+        return Side.getTurnByName(rs.getString("turn"));
     }
 
     private String boardPositionSet(Map<Position, Piece> board) {
@@ -117,16 +114,20 @@ public class BoardDAO {
     private String boardPieceSet(Map<Position, Piece> board) {
         List<String> pieceNames = new ArrayList<>();
         for (Piece piece : board.values()) {
-            String pieceName = piece.getInitial();
-            if (piece.side() == Side.WHITE) {
-                pieceNames.add("W" + pieceName.toUpperCase());
-            } else if (piece.side() == Side.BLACK) {
-                pieceNames.add("B" + pieceName.toUpperCase());
-            } else {
-                pieceNames.add(pieceName.toUpperCase());
-            }
+            pieceNames.add(pieceToName(piece));
         }
         return String.join(",", pieceNames);
+    }
+
+    private String pieceToName(Piece piece) {
+        String pieceName = piece.getInitial();
+        if (piece.side() == Side.WHITE) {
+            return "W" + pieceName.toUpperCase();
+        }
+        if (piece.side() == Side.BLACK) {
+            return "B" + pieceName.toUpperCase();
+        }
+        return pieceName;
     }
 
     private Map<Position, Piece> daoToBoard(String positions, String pieces) {
