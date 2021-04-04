@@ -26,6 +26,7 @@ public class ChessGame {
     private final Player blackPlayer;
     private Command command;
     private boolean isGameOver = false;
+    private Color winner;
 
     public ChessGame(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
@@ -35,6 +36,7 @@ public class ChessGame {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.command = command;
+        this.winner = Color.BLANK;
     }
 
     public static ChessGame newGame() {
@@ -104,6 +106,9 @@ public class ChessGame {
             blackPlayer.move(source, target, whitePlayer.getState());
             whitePlayer.toRunningState(blackPlayer.getState());
             checkPieces(whitePlayer.getState(), target);
+            if(isGameOver){
+                winner = Color.BLACK;
+            }
             return;
         }
         Source source = Source.valueOf(sourcePosition, whitePlayer.getState());
@@ -111,6 +116,9 @@ public class ChessGame {
         whitePlayer.move(source, target, blackPlayer.getState());
         blackPlayer.toRunningState(whitePlayer.getState());
         checkPieces(blackPlayer.getState(), target);
+        if(isGameOver){
+            winner = Color.WHITE;
+        }
     }
 
     private void checkPieces(final State state, final Target target) {
@@ -143,14 +151,11 @@ public class ChessGame {
         return new Pieces(allPieces);
     }
 
-    public void changeStatus(final GameStatusRequestDto requestDto) {
-        if (requestDto.isGameOver()) {
-            this.isGameOver = requestDto.isGameOver();
-            this.command = this.command.end();
-        }
+    public Color findWinnerByMove() {
+        return winner;
     }
 
-    public Color findWinnerColor() {
+    public Color findWinnerByStopCommand() {
         double whiteScore = score(whitePlayer.getState().pieces());
         double blackScore = score(blackPlayer.getState().pieces());
 

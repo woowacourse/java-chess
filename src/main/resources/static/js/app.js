@@ -84,7 +84,7 @@ function reRangeBoard(responsePieces) {
     isEnd = responsePieces.data.isGameOver;
     whiteCount.innerText = responsePieces.data.scoreDto.whiteScore;
     blackCount.innerText = responsePieces.data.scoreDto.blackScore;
-};
+}
 
 chessBoard.addEventListener("click", (source) => {
     if (isEnd === true) {

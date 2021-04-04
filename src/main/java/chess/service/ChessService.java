@@ -38,7 +38,7 @@ public class ChessService {
 
         if(chessGame.isGameOver()){
             chess.changeRunning(!chessGame.isGameOver());
-            chess.changeWinnerColor(chessGame.findWinnerColor());
+            chess.changeWinnerColor(chessGame.findWinnerByMove());
             chessDao.update(chess);
         }
         return new MoveResponseDto(requestDto.getSource(), requestDto.getTarget(), chessGame.calculateScoreWeb(), !chess.isRunning());
@@ -54,7 +54,7 @@ public class ChessService {
         }
 
         chess.changeRunning(!requestDto.isGameOver());
-        chess.changeWinnerColor(chessGame.findWinnerColor());
+        chess.changeWinnerColor(chessGame.findWinnerByStopCommand());
         chessDao.update(chess);
     }
 
