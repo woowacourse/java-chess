@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.position.MovePosition;
@@ -14,6 +15,10 @@ public class DirectionGroup {
     public DirectionGroup(List<Direction> directionGroup, int movableLength) {
         this.directionGroup = directionGroup;
         this.movableLength = movableLength;
+    }
+
+    public static DirectionGroup empty() {
+        return new DirectionGroup(new ArrayList<>(), 0);
     }
 
     public Direction findDirection(MovePosition movePosition) {

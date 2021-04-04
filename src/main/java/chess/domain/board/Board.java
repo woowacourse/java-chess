@@ -9,8 +9,10 @@ import chess.domain.chess.Color;
 import chess.domain.chess.Status;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceDTO;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
+import javafx.geometry.Pos;
 
 public class Board {
 
@@ -25,6 +27,15 @@ public class Board {
 
     public Board(Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    public static Board from(BoardDTO boardDTO) {
+        for (PieceDTO pieceDTO : boardDTO.getPieceDTOS()) {
+            Color color = Color.valueOf(pieceDTO.getColor());
+            Position position = Position.from(pieceDTO.getPosition());
+//            Piece piece = Piece.from(color, pieceDTO.getName());
+        }
+        return null;
     }
 
     public Map<Position, Piece> getBoard() {

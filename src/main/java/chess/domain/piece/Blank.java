@@ -4,15 +4,24 @@ import chess.domain.board.Board;
 import chess.domain.chess.Color;
 import chess.domain.position.MovePosition;
 
-public class Blank implements Piece {
+public class Blank extends AbstractPiece {
 
-    public static final Blank INSTANCE = new Blank();
+    public static final Blank INSTANCE;
+
+    static {
+        final DirectionGroup DIRECTION_GROUP = DirectionGroup.empty();
+         INSTANCE = new Blank(Color.BLANK, DIRECTION_GROUP);
+    }
 
     private static final String SYMBOL = ".";
-    private static final String NAME = "BLANK";
+    private static final String NAME = "Blank";
     private static final double SCORE = 0;
 
     private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다.";
+
+    public Blank(Color color, DirectionGroup DIRECTION_GROUP) {
+        super(color, DIRECTION_GROUP);
+    }
 
     @Override
     public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
