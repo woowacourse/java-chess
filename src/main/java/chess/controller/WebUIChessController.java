@@ -5,7 +5,6 @@ import chess.domain.board.Position;
 import chess.domain.feature.Color;
 import chess.domain.feature.Type;
 import chess.domain.game.ChessGame;
-import chess.domain.game.Result;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Running;
 import chess.domain.piece.Piece;
@@ -20,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class WebUIChessController {
-    private final Gson gson = new Gson();
+    public static final Gson gson = new Gson();
+
     private final RoomDAO roomDAO = new RoomDAO();
     private ChessGame chessGame;
 

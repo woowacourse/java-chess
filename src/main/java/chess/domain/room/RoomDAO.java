@@ -1,6 +1,5 @@
 package chess.domain.room;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.sql.*;
@@ -8,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RoomDAO {
-    private final Gson gson = new Gson();
+import static chess.controller.WebUIChessController.gson;
 
+public class RoomDAO {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
