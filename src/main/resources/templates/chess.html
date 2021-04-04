@@ -3,34 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>미니 체스 게임</title>
-    <link rel="stylesheet" type="text/css" href="../public/css/chess.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/chess.css"/>
 </head>
 <body class="game">
 <div class="screen">
     <label id="black-status" class="status">
-        <h1>BLACK TEAM</h1>
-        이름 : <br>
-        점수 : <br>
-        전적 : <br>
+        <h2>BLACK TEAM</h2>
+        SCORE : <br>
     </label>
     <div id="versus">
-        <div id="black-piece">
-            <img src="../public/img/queen_black.png" class="piece versus-piece">
-            <br>
-            <label>BLACK</label>
-        </div>
-        <h1>VS</h1>
-        <div id="white-piece">
-            <img src="../public/img/queen_white.png" class="piece versus-piece">
-            <br>
-            <label>WHITE</label>
-        </div>
+        <img id="black-versus" src="/img/queen_black.png" class="versus-piece">
+        <label id="VS">VS</label>
+        <img id="white-versus" src="/img/queen_white.png" class="versus-piece">
     </div>
     <label id="white-status" class="status">
-        <h1>WHITE TEAM</h1>
-        이름 : <br>
-        점수 : <br>
-        전적 : <br>
+        <h2>WHITE TEAM</h2>
+        SCORE : <br>
     </label>
     <div class="game-menu">
         <button class="game-option">다시하기</button>
@@ -42,9 +30,8 @@
         {{key}}:{{value}},
     {{/board}}
 
-
 </script>
-<script src="../public/js/board-factory.js"></script>
-<script src="../public/js/piece-factory.js"></script>
+<script src="/js/board-factory.js"></script>
+<script src="/js/piece-factory.js"></script>
 </body>
 </html>
