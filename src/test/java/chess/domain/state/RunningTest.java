@@ -35,6 +35,7 @@ class RunningTest {
     void move() {
     }
 
+
     @Test
     void terminate() {
         assertThat(running.terminate()).isInstanceOf(Finished.class);

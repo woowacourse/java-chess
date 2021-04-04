@@ -58,8 +58,8 @@ public class ChessBoardTest {
     @Test
     @DisplayName("킹이 잡히는 경우 게임 종료")
     void game_end_die_king() {
-        Piece kingPiece = new King(TeamColor.BLACK, Position.valueOf("b4"));
-        Piece piece = new Queen(TeamColor.WHITE, Position.valueOf("b5"));
+        Piece kingPiece = new King(TeamColor.BLACK);
+        Piece piece = new Queen(TeamColor.WHITE);
         board.put(Position.valueOf("b4"), kingPiece);
         board.put(Position.valueOf("b5"), piece);
 

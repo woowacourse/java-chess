@@ -3,61 +3,28 @@ package chess.domain;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.MovementDto;
 import chess.domain.dto.PieceDto;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.AlphaColumns;
 import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.Running;
-import chess.domain.team.BlackSet;
-import chess.domain.team.PieceSet;
-import chess.domain.team.WhiteSet;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
-    public static final int BLACK_NOT_PAWN_LINE = 7;
-    public static final int BLACK_PAWN_LINE = 8;
-    public static final int WHITE_NOT_PAWN_LINE = 1;
-    public static final int WHITE_PAWN_LINE = 2;
-
-    private final PieceSet whitePieces;
-    private final PieceSet blackPieces;
 
     private GameState gameState;
 
     public ChessBoard() {
-        this.whitePieces = new WhiteSet();
-        this.blackPieces = new BlackSet();
         final Map<Position, Piece> chessBoard = initBoard();
         this.gameState = new Running(chessBoard, TeamColor.WHITE);
     }
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
-        this.whitePieces = initWhiteSet(chessBoard);
-        this.blackPieces = initBlackSet(chessBoard);
         this.gameState = new Running(chessBoard, TeamColor.WHITE);
-    }
-
-    private PieceSet initBlackSet(Map<Position, Piece> chessBoard) {
-        List<Piece> blacks = chessBoard.values().stream()
-                .filter(piece -> piece.getColor() == TeamColor.BLACK)
-                .collect(Collectors.toList());
-        return new BlackSet(blacks);
-
-    }
-
-    private PieceSet initWhiteSet(Map<Position, Piece> chessBoard) {
-        List<Piece> whites = chessBoard.values().stream()
-                .filter(piece -> piece.getColor() == TeamColor.WHITE)
-                .collect(Collectors.toList());
-        return new WhiteSet(whites);
     }
 
     private Map<Position, Piece> initBoard() {
@@ -75,20 +42,30 @@ public class ChessBoard {
     }
 
     private void setBlackPieces(Map<Position, Piece> chessBoard) {
-        Iterator<Piece> blacks = blackPieces.values();
-        for (int i = BLACK_PAWN_LINE; i >= BLACK_NOT_PAWN_LINE; i--) {
-            for (AlphaColumns alpha : AlphaColumns.values()) {
-                chessBoard.put(Position.valueOf(alpha, NumberRows.getInstance(i)), blacks.next());
-            }
+        chessBoard.put(Position.valueOf("a8"), new Rook(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("b8"), new Knight(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("c8"), new Bishop(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("d8"), new Queen(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("e8"), new King(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("f8"), new Bishop(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("g8"), new Knight(TeamColor.BLACK));
+        chessBoard.put(Position.valueOf("h8"), new Rook(TeamColor.BLACK));
+        for (AlphaColumns alpha : AlphaColumns.values()) {
+            chessBoard.put(Position.valueOf(alpha, NumberRows.SEVEN), new Pawn(TeamColor.BLACK));
         }
     }
 
     private void setWhitePieces(Map<Position, Piece> chessBoard) {
-        Iterator<Piece> whites = whitePieces.values();
-        for (int i = WHITE_NOT_PAWN_LINE; i <= WHITE_PAWN_LINE; i++) {
-            for (AlphaColumns alpha : AlphaColumns.values()) {
-                chessBoard.put(Position.valueOf(alpha, NumberRows.getInstance(i)), whites.next());
-            }
+        chessBoard.put(Position.valueOf("a1"), new Rook(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("b1"), new Knight(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("c1"), new Bishop(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("d1"), new Queen(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("e1"), new King(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("f1"), new Bishop(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("g1"), new Knight(TeamColor.WHITE));
+        chessBoard.put(Position.valueOf("h1"), new Rook(TeamColor.WHITE));
+        for (AlphaColumns alpha : AlphaColumns.values()) {
+            chessBoard.put(Position.valueOf(alpha, NumberRows.TWO), new Pawn(TeamColor.WHITE));
         }
     }
 
@@ -105,7 +82,7 @@ public class ChessBoard {
     }
 
     public Result result() {
-        return gameState.result(blackPieces, whitePieces);
+        return gameState.result();
     }
 
     public boolean isPlaying() {

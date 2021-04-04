@@ -13,17 +13,13 @@ public class Rook extends PieceOnBoard {
         super(teamColor, PieceInformation.ROOK);
     }
 
-    public Rook(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.ROOK, position);
-    }
-
-    public Rook(TeamColor teamColor, Position position, State state) {
-        super(teamColor, PieceInformation.BISHOP, position, state);
+    public Rook(TeamColor teamColor, State state) {
+        super(teamColor, PieceInformation.BISHOP, state);
     }
 
     @Override
-    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
-        Set<Position> candidates = moveCrossAsPossible(target, chessBoard);
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
+        Set<Position> candidates = moveCrossAsPossible(source, target, chessBoard);
         return candidates.contains(target);
     }
 

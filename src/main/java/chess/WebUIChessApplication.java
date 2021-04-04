@@ -72,7 +72,6 @@ public class WebUIChessApplication {
                 boardFromDB.put(Position.valueOf(eachInfo.getPosition()),
                         PieceMaker.getInstance(eachInfo.getPieceType(),
                                 TeamColor.getInstance(eachInfo.getTeamColor()),
-                                Position.valueOf(eachInfo.getPosition()),
                                 State.getInstance(eachInfo.getAlive())
                         ));
             }

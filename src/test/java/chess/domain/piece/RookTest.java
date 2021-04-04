@@ -48,44 +48,45 @@ public class RookTest {
     @Test
     @DisplayName("룩 움직임 테스트")
     void moveTest() {
-        Piece piece = board.get(Position.valueOf("a1"));
-        assertFalse(piece.isMovable(Position.valueOf("a2"), board));
+        Piece piece = new Rook(TeamColor.WHITE);
+        assertFalse(piece.isMovable(Position.valueOf("a1"), Position.valueOf("a2"), board));
     }
 
     @Test
     @DisplayName("장애물이 없을 경우")
     void moveTest2() {
-        Piece piece = board.get(Position.valueOf("a1"));
+        Piece piece = new Rook(TeamColor.WHITE);
         board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMovable(Position.valueOf("a2"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a1"), Position.valueOf("a2"), board));
 
     }
 
     @Test
     @DisplayName("장애물이 없을 경우")
     void moveTest82() {
-        Piece piece = board.get(Position.valueOf("a1"));
+        Piece piece = new Rook(TeamColor.WHITE);
         board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMovable(Position.valueOf("a6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a1"), Position.valueOf("a6"), board));
     }
 
     @Test
     @DisplayName("같은팀 있는 경우")
     void moveTest4() {
-        Piece piece = board.get(Position.valueOf("a1"));
+        Piece piece = new Rook(TeamColor.WHITE);
 
-        assertFalse(piece.isMovable(Position.valueOf("a2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("a1"), Position.valueOf("a2"), board));
     }
 
     @Test
     @DisplayName("장애물이 없고 target이 상대편인 경우")
     void moveTest3() {
-        Piece piece = board.get(Position.valueOf("a1"));
+
+        Piece piece = new Rook(TeamColor.WHITE);
         board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMovable(Position.valueOf("a7"), board));
+        assertTrue(piece.isMovable(Position.valueOf("a1"), Position.valueOf("a7"), board));
     }
 
     @Test

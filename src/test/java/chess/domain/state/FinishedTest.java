@@ -24,7 +24,7 @@ class FinishedTest {
         for (Position position : Position.values()) {
             chessBoard.put(position, Blank.INSTANCE);
         }
-        chessBoard.put(Position.valueOf("a4"), new Queen(TeamColor.BLACK, Position.valueOf("a4")));
+        chessBoard.put(Position.valueOf("a4"), new Queen(TeamColor.BLACK));
         finished = new Finished(chessBoard);
     }
 

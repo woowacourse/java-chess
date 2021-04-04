@@ -1,34 +1,24 @@
 package chess.domain.state;
 
-import chess.domain.Result;
-import chess.domain.pieceinformations.TeamColor;
-import chess.domain.team.PieceSet;
-import chess.domain.team.Score;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 public abstract class Game implements GameState {
 
+    private final Map<Position, Piece> chessBoard;
+
+    public Game(Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
+
     @Override
-    public Result result(PieceSet black, PieceSet white) {
-        Map<TeamColor, Score> result = teamScores(black, white);
-
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
-            return new Result(result, TeamColor.BLACK);
-        }
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
-            return new Result(result, TeamColor.WHITE);
-        }
-
-        return new Result(result, TeamColor.NONE);
+    public Map<Position, Piece> getChessBoard() {
+        return Collections.unmodifiableMap(chessBoard);
     }
 
 
-    private Map<TeamColor, Score> teamScores(PieceSet black, PieceSet white) {
-        Map<TeamColor, Score> result = new HashMap<>();
-        result.put(TeamColor.BLACK, black.calculateScore());
-        result.put(TeamColor.WHITE, white.calculateScore());
-        return result;
-    }
 }

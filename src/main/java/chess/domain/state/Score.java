@@ -1,4 +1,4 @@
-package chess.domain.team;
+package chess.domain.state;
 
 import java.util.Objects;
 

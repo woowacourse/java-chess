@@ -15,31 +15,27 @@ public class King extends PieceOnBoard {
         super(teamColor, PieceInformation.KING);
     }
 
-    public King(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.KING, position);
-    }
-
-    public King(TeamColor teamColor, Position position, State state) {
-        super(teamColor, PieceInformation.KING, position, state);
-    }
-
-    @Override
-    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
-        final Set<Position> candidates = new HashSet<>();
-        candidates.add(moveOnce(Moves.UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN, target, chessBoard));
-        return candidates.contains(target);
+    public King(TeamColor teamColor, State state) {
+        super(teamColor, PieceInformation.KING, state);
     }
 
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = new HashSet<>();
+        candidates.add(moveOnce(source, Moves.UP, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.DOWN, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_UP, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_DOWN, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_UP, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_DOWN, target, chessBoard));
+        return candidates.contains(target);
     }
 
 }

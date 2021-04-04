@@ -48,94 +48,95 @@ public class PawnTest {
     @Test
     @DisplayName("폰이 시작지점에 있는 경우")
     void start_move() {
-        Piece piece = board.get(Position.valueOf("b2"));
+        Piece piece = new Pawn(TeamColor.WHITE);
 
-        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("b4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b4"), board));
     }
 
     @Test
     @DisplayName("실패 - 폰이 3 칸 이상 이동하는 경우")
     void move_3block() {
-        Piece piece = board.get(Position.valueOf("b2"));
+        Piece piece = new Pawn(TeamColor.WHITE);
 
-        assertFalse(piece.isMovable(Position.valueOf("b5"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b5"), board));
     }
 
     @Test
     @DisplayName("폰이 앞으로 전진하는 경우")
     void move_front() {
-        Piece pieceBlack = new Pawn(TeamColor.BLACK, Position.valueOf("b4"));
-        Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
+        Piece pieceBlack = new Pawn(TeamColor.BLACK);
+        Piece pieceWhite = new Pawn(TeamColor.WHITE);
 
         assertTrue(
-                pieceBlack.isMovable(Position.valueOf("b3"), board));
+                pieceBlack.isMovable(Position.valueOf("b4"), Position.valueOf("b3"), board));
         assertTrue(
-                pieceWhite.isMovable(Position.valueOf("c5"), board));
+                pieceWhite.isMovable(Position.valueOf("c4"), Position.valueOf("c5"), board));
     }
 
     @Test
     @DisplayName("폰이 뒤로 가는 경우")
     void move_back() {
-        Piece pieceBlack = new Pawn(TeamColor.BLACK, Position.valueOf("b4"));
-        Piece pieceWhite = new Pawn(TeamColor.WHITE, Position.valueOf("c4"));
+        Piece pieceBlack = new Pawn(TeamColor.BLACK);
+        Piece pieceWhite = new Pawn(TeamColor.WHITE);
 
         assertFalse(
-                pieceBlack.isMovable(Position.valueOf("b5"), board));
+                pieceBlack.isMovable(Position.valueOf("b4"), Position.valueOf("b5"), board));
         assertFalse(
-                pieceWhite.isMovable(Position.valueOf("c3"), board));
+                pieceWhite.isMovable(Position.valueOf("c4"), Position.valueOf("c3"), board));
     }
 
     @Test
     @DisplayName("폰의 정면에 기물이 있는 경우")
     void move_obstacle() {
-        Piece piece = board.get(Position.valueOf("b2"));
-        Piece pieceQueen = new Queen(TeamColor.WHITE, Position.valueOf("b3"));
+        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece pieceQueen = new Queen(TeamColor.WHITE);
         board.put(Position.valueOf("b3"), pieceQueen);
 
-        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b3"), board));
     }
 
     @Test
     @DisplayName("폰의 정면에 기물이 있고 대각선에 적의 기물이 있는 경우")
     void move_enemy_catch() {
-        Piece piece = board.get(Position.valueOf("b2"));
-        Piece pieceQueen = new Queen(TeamColor.BLACK, Position.valueOf("b3"));
+        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece pieceQueen = new Queen(TeamColor.BLACK);
         board.put(Position.valueOf("b3"), pieceQueen);
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("c3"), board));
     }
 
     @Test
     @DisplayName("폰의 정면에 기물이 있고 대각선에 팀의 기물이 있는 경우")
     void move_teach_catch() {
-        Piece piece = board.get(Position.valueOf("b2"));
-        Piece pieceQueen = new Queen(TeamColor.WHITE, Position.valueOf("b3"));
+
+        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece pieceQueen = new Queen(TeamColor.WHITE);
         board.put(Position.valueOf("b3"), pieceQueen);
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertFalse(piece.isMovable(Position.valueOf("b3"), board));
-        assertFalse(piece.isMovable(Position.valueOf("a3"), board));
-        assertFalse(piece.isMovable(Position.valueOf("c3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("a3"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b2"), Position.valueOf("c3"), board));
     }
 
     @Test
     @DisplayName("폰의 정면에 기물이 없고 대각선에 적의 기물이 있는 경우")
     void move_free() {
-        Piece piece = board.get(Position.valueOf("b2"));
-        Piece pieceQueen = new Queen(TeamColor.BLACK, Position.valueOf("b3"));
+        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece pieceQueen = new Queen(TeamColor.BLACK);
         board.put(Position.valueOf("a3"), pieceQueen);
         board.put(Position.valueOf("c3"), pieceQueen);
 
-        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("b4"), board));
-        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("b4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("c3"), board));
     }
 
 }

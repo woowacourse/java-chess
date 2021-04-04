@@ -13,17 +13,13 @@ public class Bishop extends PieceOnBoard {
         super(teamColor, PieceInformation.BISHOP);
     }
 
-    public Bishop(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.BISHOP, position);
-    }
-
-    public Bishop(TeamColor teamColor, Position position, State state) {
-        super(teamColor, PieceInformation.BISHOP, position, state);
+    public Bishop(TeamColor teamColor, State state) {
+        super(teamColor, PieceInformation.BISHOP, state);
     }
 
     @Override
-    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
-        final Set<Position> candidates = moveDiagonalAsPossible(target, chessBoard);
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
+        final Set<Position> candidates = moveDiagonalAsPossible(source, target, chessBoard);
         return candidates.contains(target);
     }
 

@@ -46,33 +46,33 @@ public class KingTest {
     @Test
     @DisplayName("킹 이 움직일 수 없는 경우")
     void moveKingFail() {
-        Piece piece = board.get(Position.valueOf("e1"));
-        assertFalse(piece.isMovable(Position.valueOf("e2"), board));
-        assertFalse(piece.isMovable(Position.valueOf("d2"), board));
-        assertFalse(piece.isMovable(Position.valueOf("f2"), board));
+        Piece piece = new King(TeamColor.WHITE);
+        assertFalse(piece.isMovable(Position.valueOf("e1"), Position.valueOf("e2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("e1"), Position.valueOf("d2"), board));
+        assertFalse(piece.isMovable(Position.valueOf("e1"), Position.valueOf("f2"), board));
     }
 
     @Test
     @DisplayName("킹 이 8방향 모두 움직일 수 있는 경우")
     void move_king_all_direction() {
-        Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
+        Piece piece = new King(TeamColor.BLACK);
 
-        assertTrue(piece.isMovable(Position.valueOf("a4"), board));
-        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("b3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("b5"), board));
-        assertTrue(piece.isMovable(Position.valueOf("a3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("c3"), board));
-        assertTrue(piece.isMovable(Position.valueOf("a5"), board));
-        assertTrue(piece.isMovable(Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a4"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c3"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("a5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c5"), board));
     }
 
     @Test
     @DisplayName("킹이 2칸 이상 움직이는 경우")
     void king_over_move_fail() {
-        Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
+        Piece piece = new King(TeamColor.BLACK);
 
-        assertFalse(piece.isMovable(Position.valueOf("b6"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b6"), board));
     }
 
 }

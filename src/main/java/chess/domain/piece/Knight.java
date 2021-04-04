@@ -15,26 +15,22 @@ public class Knight extends PieceOnBoard {
         super(teamColor, PieceInformation.KNIGHT);
     }
 
-    public Knight(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.KNIGHT, position);
-    }
-
-    public Knight(TeamColor teamColor, Position position, State state) {
-        super(teamColor, PieceInformation.KNIGHT, position, state);
+    public Knight(TeamColor teamColor, State state) {
+        super(teamColor, PieceInformation.KNIGHT, state);
     }
 
     @Override
-    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
 
-        candidates.add(moveOnce(Moves.LEFT_DOWN_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP_LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_DOWN_LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN_RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP_RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP_UP, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_DOWN_DOWN, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_UP_LEFT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_DOWN_LEFT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.LEFT_UP_UP, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_DOWN_DOWN, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_DOWN_RIGHT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_UP_RIGHT, target, chessBoard));
+        candidates.add(moveOnce(source, Moves.RIGHT_UP_UP, target, chessBoard));
 
         return candidates.contains(target);
     }

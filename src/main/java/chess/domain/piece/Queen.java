@@ -14,19 +14,16 @@ public class Queen extends PieceOnBoard {
         super(teamColor, PieceInformation.QUEEN);
     }
 
-    public Queen(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.QUEEN, position);
+    public Queen(TeamColor teamColor, State state) {
+        super(teamColor, PieceInformation.QUEEN, state);
     }
 
-    public Queen(TeamColor teamColor, Position position, State state) {
-        super(teamColor, PieceInformation.QUEEN, position, state);
-    }
 
     @Override
-    public boolean isMovable(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
-        candidates.addAll(moveDiagonalAsPossible(target, chessBoard));
-        candidates.addAll(moveCrossAsPossible(target, chessBoard));
+        candidates.addAll(moveDiagonalAsPossible(source, target, chessBoard));
+        candidates.addAll(moveCrossAsPossible(source, target, chessBoard));
         return candidates.contains(target);
     }
 

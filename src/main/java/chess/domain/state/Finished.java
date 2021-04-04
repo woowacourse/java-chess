@@ -1,12 +1,17 @@
 package chess.domain.state;
 
+import chess.domain.Result;
 import chess.domain.piece.Piece;
+import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-public class Finished extends Game {
+public class Finished implements GameState {
+    public static final double MINUS_HALF_POINT = -0.5;
+
     private final Map<Position, Piece> chessBoard;
 
     public Finished(Map<Position, Piece> chessBoard) {
@@ -33,4 +38,52 @@ public class Finished extends Game {
         return false;
     }
 
+    @Override
+    public Result result() {
+        Map<TeamColor, Score> result = teamScores111(chessBoard);
+
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
+            return new Result(result, TeamColor.BLACK);
+        }
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
+            return new Result(result, TeamColor.WHITE);
+        }
+
+        return new Result(result, TeamColor.NONE);
+    }
+
+    private Map<TeamColor, Score> teamScores111(Map<Position, Piece> chessBoard) {
+        Map<TeamColor, Score> result = new HashMap<>();
+        result.put(TeamColor.BLACK, calculateScore(TeamColor.BLACK, chessBoard));
+        result.put(TeamColor.WHITE, calculateScore(TeamColor.WHITE, chessBoard));
+        return result;
+    }
+
+    private Score calculateScore(TeamColor teamColor, Map<Position, Piece> chessBoard) {
+        Score sum = Score.ZERO;
+        //todo: Character 수정
+        Map<Character, Integer> pawnCount = new HashMap<>();
+        for (Map.Entry<Position, Piece> item : chessBoard.entrySet()) {
+            if (item.getValue().getColor() == teamColor && item.getValue().isAlive()) {
+                sum = sum.add(item.getValue().getScore());
+                recordPawns(pawnCount, item);
+            }
+        }
+
+        return sum.add(subtractWhenOnSameLine(pawnCount));
+    }
+
+    private void recordPawns(Map<Character, Integer> pawnCount, Map.Entry<Position, Piece> item) {
+        if (item.getValue().isPawn()) {
+            pawnCount.put(item.getKey().getColumn(),
+                    pawnCount.getOrDefault(item.getKey().getColumn(), 0) + 1);
+        }
+    }
+
+    private Score subtractWhenOnSameLine(Map<Character, Integer> pawnCount) {
+        return pawnCount.values().stream()
+                .filter(number -> number > 1)
+                .map(number -> new Score(MINUS_HALF_POINT * number))
+                .reduce(Score.ZERO, Score::add);
+    }
 }

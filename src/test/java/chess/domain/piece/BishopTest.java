@@ -47,35 +47,44 @@ public class BishopTest {
     @Test
     @DisplayName("비숍이 이동이 가능한 경우")
     void movable() {
-        Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
+        Piece piece = new Bishop(TeamColor.BLACK);
 
-        assertTrue(piece.isMovable(Position.valueOf("c5"), board));
-        assertTrue(piece.isMovable(Position.valueOf("d6"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("d6"), board));
+    }
+
+    @Test
+    @DisplayName("비숍이 이동이 가능한 경우")
+    void movable111() {
+        Piece piece = new Bishop(TeamColor.BLACK);
+
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("c5"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("d6"), board));
     }
 
     @Test
     @DisplayName("비숍이 이동이 가능한 경우")
     void fail_movable() {
-        Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
+        Piece piece = new Bishop(TeamColor.WHITE);
 
-        assertTrue(piece.isMovable(Position.valueOf("e7"), board));
+        assertTrue(piece.isMovable(Position.valueOf("b4"), Position.valueOf("e7"), board));
     }
 
     @Test
     @DisplayName("실패 - 이동한 장소에 같은 팀의 말이 있는 경우")
     void fail_same_team() {
-        Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
+        Piece piece = new Bishop(TeamColor.BLACK);
 
-        assertFalse(piece.isMovable(Position.valueOf("e7"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("e7"), board));
     }
 
     @Test
     @DisplayName("실패 - 이동이 불가능한 위치에 있는 경우")
     void fail_position() {
-        Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
+        Piece piece = new Bishop(TeamColor.WHITE);
 
-        assertFalse(piece.isMovable(Position.valueOf("b5"), board));
-        assertFalse(piece.isMovable(Position.valueOf("f8"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("b5"), board));
+        assertFalse(piece.isMovable(Position.valueOf("b4"), Position.valueOf("f8"), board));
     }
 
 }
