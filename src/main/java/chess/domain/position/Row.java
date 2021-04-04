@@ -3,7 +3,6 @@ package chess.domain.position;
 import chess.domain.position.exception.InvalidRowException;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public enum Row {
     EIGHTH(8), SEVENTH(7), SIXTH(6), FIFTH(5),

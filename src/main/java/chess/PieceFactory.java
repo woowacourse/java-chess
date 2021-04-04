@@ -7,33 +7,32 @@ import chess.exception.ChessException;
 public class PieceFactory {
 
     public static Piece createPieceByName(String pieceName) {
-        if(pieceName.equals(".")) {
+        if (pieceName.equals(".")) {
             return new Blank();
         }
         String pieceType = String.valueOf(pieceName.charAt(1));
         Side side;
-        if(pieceName.charAt(0) == 'W') {
+        if (pieceName.charAt(0) == 'W') {
             side = Side.WHITE;
-        }
-        else {
+        } else {
             side = Side.BLACK;
         }
-        if(pieceType.equals("R")) {
+        if (pieceType.equals("R")) {
             return new Rook(side);
         }
-        if(pieceType.equals("B")) {
+        if (pieceType.equals("B")) {
             return new Bishop(side);
         }
-        if(pieceType.equals("N")) {
+        if (pieceType.equals("N")) {
             return new Knight(side);
         }
-        if(pieceType.equals("K")) {
+        if (pieceType.equals("K")) {
             return new King(side);
         }
-        if(pieceType.equals("Q")) {
+        if (pieceType.equals("Q")) {
             return new Queen(side);
         }
-        if(pieceType.equals("P")) {
+        if (pieceType.equals("P")) {
             return new Pawn(side);
         }
 

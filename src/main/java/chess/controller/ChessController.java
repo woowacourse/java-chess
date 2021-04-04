@@ -5,7 +5,6 @@ import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.position.Position;
 import chess.exception.ChessException;
-import chess.exception.InvalidCommandException;
 import chess.view.InputView;
 import chess.view.OutputView;
 

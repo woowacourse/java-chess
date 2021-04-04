@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.PieceFactory;
 import chess.domain.Board;
-import chess.domain.ChessGame;
 import chess.domain.Side;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -64,7 +63,7 @@ public class BoardDAO {
         pstmt.executeUpdate();
     }
 
-    public void initBoardTable() throws SQLException{
+    public void initBoardTable() throws SQLException {
         String query = "truncate table board";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();
@@ -99,7 +98,7 @@ public class BoardDAO {
 
         if (!rs.next()) return null;
 
-        if(rs.getString("turn").equals("WHITE")) {
+        if (rs.getString("turn").equals("WHITE")) {
             return Side.WHITE;
         }
         if (rs.getString("turn").equals("BLACK")) {

@@ -1,6 +1,7 @@
 .body {
     margin: 0 auto;
 }
+
 td {
     width: 60px;
     height: 75px;
@@ -22,6 +23,7 @@ img {
 .clickedTile {
     background-color: #F5D042;
 }
+
 .start-button {
     width: 200px;
     height: 70px;

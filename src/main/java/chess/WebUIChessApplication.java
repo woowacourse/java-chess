@@ -1,7 +1,5 @@
 package chess;
 
-import chess.dao.BoardDAO;
-import chess.domain.Board;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;

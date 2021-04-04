@@ -75,17 +75,15 @@ async function move(from, to) {
         return res.json();
     });
 
-    if(response.code === "200") {
+    if (response.code === "200") {
         changeImage(from, to);
         await changeTurn();
-    }
-    else if(response.code === "300") {
+    } else if (response.code === "300") {
         changeImage(from, to);
         const currentTurn = document.querySelector('.turn');
         currentTurn.textContent = response.turn;
         alert(response.message + "가 승리했습니다!");
-    }
-    else if(response.code === "400") {
+    } else if (response.code === "400") {
         alert(response.message);
     }
 }
@@ -101,7 +99,7 @@ function changeImage(sourcePosition, targetPosition) {
 }
 
 async function changeTurn() {
-    const turn = await fetch('/currentTurn',{
+    const turn = await fetch('/currentTurn', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -126,7 +124,7 @@ function clickStart() {
 }
 
 async function syncBoard() {
-    const board = await fetch('/currentBoard',{
+    const board = await fetch('/currentBoard', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -139,10 +137,10 @@ async function syncBoard() {
     const pieces = Object.values(board);
     for (let i = 0; i < positions.length; i++) {
         const position = document.getElementById(positions[i]);
-        if(position.getElementsByTagName("img")[0]){
+        if (position.getElementsByTagName("img")[0]) {
             position.getElementsByTagName("img")[0].remove();
         }
-        if(pieces[i] === "."){
+        if (pieces[i] === ".") {
             continue;
         }
         const piece = document.createElement("img");

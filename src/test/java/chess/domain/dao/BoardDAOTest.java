@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class BoardDAOTest {
     private BoardDAO boardDAO;
     private Board board;
+
     @BeforeEach
     void setUp() {
         boardDAO = new BoardDAO();

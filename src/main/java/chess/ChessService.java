@@ -29,12 +29,12 @@ public class ChessService {
         try {
             board.move(Position.from(from), Position.from(to), currentTurn());
             boardDAO.updateBoard(board, currentTurn().changeTurn().name());
-            if(board.isGameSet()) {
+            if (board.isGameSet()) {
                 Side side = board.winner();
-                return new Response("300", side.name(), "게임 종료(" + side.name() +" 승리)");
+                return new Response("300", side.name(), "게임 종료(" + side.name() + " 승리)");
             }
             return new Response("200", "Succeed", currentTurn().name());
-        }catch (ChessException e){
+        } catch (ChessException e) {
             return new Response("400", e.getMessage(), currentTurn().name());
         }
     }
@@ -43,17 +43,15 @@ public class ChessService {
         Map<Position, Piece> board = boardDAO.findBoard(GameNumber);
         Map<String, String> boardDTO = new LinkedHashMap<>();
 
-        for(Position position : board.keySet()) {
+        for (Position position : board.keySet()) {
             String positionDTO = position.stringPosition();
             String pieceDTO;
             Piece piece = board.get(position);
-            if(piece.side() == Side.BLACK) {
+            if (piece.side() == Side.BLACK) {
                 pieceDTO = "B" + piece.getInitial();
-            }
-            else if(piece.side() == Side.WHITE) {
+            } else if (piece.side() == Side.WHITE) {
                 pieceDTO = "W" + piece.getInitial().toUpperCase();
-            }
-            else {
+            } else {
                 pieceDTO = ".";
             }
             boardDTO.put(positionDTO, pieceDTO);

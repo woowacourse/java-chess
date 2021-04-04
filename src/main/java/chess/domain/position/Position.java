@@ -5,7 +5,6 @@ import chess.domain.position.exception.PositionException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class Position {
     private static final int POSITION_LENGTH = 2;
