@@ -9,6 +9,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -16,6 +17,12 @@ public class OutputView {
 
     private OutputView() {
 
+    }
+
+    public static String printRoomList(List<RoomStatusDto> roomStatusDtos) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("list", roomStatusDtos);
+        return render(model, "mainPage.html");
     }
 
     public static String printGame(RoomStatusDto roomStatusDto, BoardDto boardDto, ScoresDto scoresDto) {

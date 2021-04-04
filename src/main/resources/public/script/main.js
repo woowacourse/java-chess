@@ -16,6 +16,11 @@ let state = "stay"; // stay, show
 let source = "";
 let target = "";
 
+function enterNewGame(){
+    const gameName = document.getElementById("game-name-input").value;
+    location.href= "/create/"+gameName;
+}
+
 function click(){
     return function (event){
         if(state === "stay"){

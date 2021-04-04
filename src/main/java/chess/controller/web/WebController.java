@@ -15,6 +15,7 @@ import spark.Request;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -31,10 +32,16 @@ public class WebController {
     }
 
     public void mapping() {
+        list();
         create();
         load();
         show();
         move();
+    }
+
+    private void list(){
+        get("/mainPage", (req, res) ->
+                OutputView.printRoomList(roomDao.load()));
     }
 
     private void create(){

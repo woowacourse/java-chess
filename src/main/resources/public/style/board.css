@@ -1,6 +1,13 @@
+.container{
+    margin-left: 10%;
+    margin-top: 1%;
+    margin-right: 10%;
+    text-align: -webkit-center;
+}
+
 .chessboard {
-    width: 576px;
-    height: 576px;
+    width: 610px;
+    height: 610px;
     margin: 20px;
     border: 25px solid #333;
 }
@@ -35,4 +42,9 @@
 
 .white:hover{
     background-color : lightyellow;
+}
+
+.score{
+    text-align:left;
+    font-size: 17px;
 }

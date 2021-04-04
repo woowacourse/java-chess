@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Corgi - chess</title>
+    <link href="/style/mainPage.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <br>
+    <input id = "game-name-input" type="text" class="form-control" placeholder="Input new game" aria-label="new game"
+           aria-describedby="basic-addon1"
+           onKeypress="javascript:if(event.keyCode==13) {
+           enterNewGame();
+    }">
+    <br>
+    <br>
+    <table class="table table table-striped table-hover table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#list}}
+        <tr>
+            <th>{{id}}</th>
+            <th><a href ="/load/{{name}}">{{name}}</a></th>
+        </tr>
+        {{/list}}
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="/script/main.js"></script>
+</html>

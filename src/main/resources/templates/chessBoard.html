@@ -2,93 +2,98 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chessboard using Pure CSS and HTML</title>
+    <title>Corgi - chess</title>
     <link href="/style/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div>room : <span id="roomName"> {{room.name}} </span> </div>
-<div>turn : {{room.turn}} </div>
+<div class = "container">
+    <h3 id="roomName">{{room.name}}</h3>
 
-{{#board}}
-<div class="chessboard">
-    <div id="a8" class="piece white">{{{board.7.0}}}</div>
-    <div id="b8" class="piece black">{{{board.7.1}}}</div>
-    <div id="c8" class="piece white">{{{board.7.2}}}</div>
-    <div id="d8" class="piece black">{{{board.7.3}}}</div>
-    <div id="e8" class="piece white">{{{board.7.4}}}</div>
-    <div id="f8" class="piece black">{{{board.7.5}}}</div>
-    <div id="g8" class="piece white">{{{board.7.6}}}</div>
-    <div id="h8" class="piece black">{{{board.7.7}}}</div>
-    <!-- 2nd -->
-    <div id="a7" class="piece black">{{{board.6.0}}}</div>
-    <div id="b7" class="piece white">{{{board.6.1}}}</div>
-    <div id="c7" class="piece black">{{{board.6.2}}}</div>
-    <div id="d7" class="piece white">{{{board.6.3}}}</div>
-    <div id="e7" class="piece black">{{{board.6.4}}}</div>
-    <div id="f7" class="piece white">{{{board.6.5}}}</div>
-    <div id="g7" class="piece black">{{{board.6.6}}}</div>
-    <div id="h7" class="piece white">{{{board.6.7}}}</div>
-    <!-- 3th -->
-    <div id="a6" class="piece white">{{{board.5.0}}}</div>
-    <div id="b6" class="piece black">{{{board.5.1}}}</div>
-    <div id="c6" class="piece white">{{{board.5.2}}}</div>
-    <div id="d6" class="piece black">{{{board.5.3}}}</div>
-    <div id="e6" class="piece white">{{{board.5.4}}}</div>
-    <div id="f6" class="piece black">{{{board.5.5}}}</div>
-    <div id="g6" class="piece white">{{{board.5.6}}}</div>
-    <div id="h6" class="piece black">{{{board.5.7}}}</div>
-    <!-- 4st -->
-    <div id="a5" class="piece black">{{{board.4.0}}}</div>
-    <div id="b5" class="piece white">{{{board.4.1}}}</div>
-    <div id="c5" class="piece black">{{{board.4.2}}}</div>
-    <div id="d5" class="piece white">{{{board.4.3}}}</div>
-    <div id="e5" class="piece black">{{{board.4.4}}}</div>
-    <div id="f5" class="piece white">{{{board.4.5}}}</div>
-    <div id="g5" class="piece black">{{{board.4.6}}}</div>
-    <div id="h5" class="piece white">{{{board.4.7}}}</div>
-    <!-- 5th -->
-    <div id="a4" class="piece white">{{{board.3.0}}}</div>
-    <div id="b4" class="piece black">{{{board.3.1}}}</div>
-    <div id="c4" class="piece white">{{{board.3.2}}}</div>
-    <div id="d4" class="piece black">{{{board.3.3}}}</div>
-    <div id="e4" class="piece white">{{{board.3.4}}}</div>
-    <div id="f4" class="piece black">{{{board.3.5}}}</div>
-    <div id="g4" class="piece white">{{{board.3.6}}}</div>
-    <div id="h4" class="piece black">{{{board.3.7}}}</div>
-    <!-- 6th -->
-    <div id="a3" class="piece black">{{{board.2.0}}}</div>
-    <div id="b3" class="piece white">{{{board.2.1}}}</div>
-    <div id="c3" class="piece black">{{{board.2.2}}}</div>
-    <div id="d3" class="piece white">{{{board.2.3}}}</div>
-    <div id="e3" class="piece black">{{{board.2.4}}}</div>
-    <div id="f3" class="piece white">{{{board.2.5}}}</div>
-    <div id="g3" class="piece black">{{{board.2.6}}}</div>
-    <div id="h3" class="piece white">{{{board.2.7}}}</div>
-    <!-- 7th -->
-    <div id="a2" class="piece white">{{{board.1.0}}}</div>
-    <div id="b2" class="piece black">{{{board.1.1}}}</div>
-    <div id="c2" class="piece white">{{{board.1.2}}}</div>
-    <div id="d2" class="piece black">{{{board.1.3}}}</div>
-    <div id="e2" class="piece white">{{{board.1.4}}}</div>
-    <div id="f2" class="piece black">{{{board.1.5}}}</div>
-    <div id="g2" class="piece white">{{{board.1.6}}}</div>
-    <div id="h2" class="piece black">{{{board.1.7}}}</div>
-    <!-- 8th -->
-    <div id="a1" class="piece black">{{{board.0.0}}}</div>
-    <div id="b1" class="piece white">{{{board.0.1}}}</div>
-    <div id="c1" class="piece black">{{{board.0.2}}}</div>
-    <div id="d1" class="piece white">{{{board.0.3}}}</div>
-    <div id="e1" class="piece black">{{{board.0.4}}}</div>
-    <div id="f1" class="piece white">{{{board.0.5}}}</div>
-    <div id="g1" class="piece black">{{{board.0.6}}}</div>
-    <div id="h1" class="piece white">{{{board.0.7}}}</div>
+    {{#board}}
+    <div class="chessboard">
+        <div id="a8" class="piece white">{{{board.7.0}}}</div>
+        <div id="b8" class="piece black">{{{board.7.1}}}</div>
+        <div id="c8" class="piece white">{{{board.7.2}}}</div>
+        <div id="d8" class="piece black">{{{board.7.3}}}</div>
+        <div id="e8" class="piece white">{{{board.7.4}}}</div>
+        <div id="f8" class="piece black">{{{board.7.5}}}</div>
+        <div id="g8" class="piece white">{{{board.7.6}}}</div>
+        <div id="h8" class="piece black">{{{board.7.7}}}</div>
+        <!-- 2nd -->
+        <div id="a7" class="piece black">{{{board.6.0}}}</div>
+        <div id="b7" class="piece white">{{{board.6.1}}}</div>
+        <div id="c7" class="piece black">{{{board.6.2}}}</div>
+        <div id="d7" class="piece white">{{{board.6.3}}}</div>
+        <div id="e7" class="piece black">{{{board.6.4}}}</div>
+        <div id="f7" class="piece white">{{{board.6.5}}}</div>
+        <div id="g7" class="piece black">{{{board.6.6}}}</div>
+        <div id="h7" class="piece white">{{{board.6.7}}}</div>
+        <!-- 3th -->
+        <div id="a6" class="piece white">{{{board.5.0}}}</div>
+        <div id="b6" class="piece black">{{{board.5.1}}}</div>
+        <div id="c6" class="piece white">{{{board.5.2}}}</div>
+        <div id="d6" class="piece black">{{{board.5.3}}}</div>
+        <div id="e6" class="piece white">{{{board.5.4}}}</div>
+        <div id="f6" class="piece black">{{{board.5.5}}}</div>
+        <div id="g6" class="piece white">{{{board.5.6}}}</div>
+        <div id="h6" class="piece black">{{{board.5.7}}}</div>
+        <!-- 4st -->
+        <div id="a5" class="piece black">{{{board.4.0}}}</div>
+        <div id="b5" class="piece white">{{{board.4.1}}}</div>
+        <div id="c5" class="piece black">{{{board.4.2}}}</div>
+        <div id="d5" class="piece white">{{{board.4.3}}}</div>
+        <div id="e5" class="piece black">{{{board.4.4}}}</div>
+        <div id="f5" class="piece white">{{{board.4.5}}}</div>
+        <div id="g5" class="piece black">{{{board.4.6}}}</div>
+        <div id="h5" class="piece white">{{{board.4.7}}}</div>
+        <!-- 5th -->
+        <div id="a4" class="piece white">{{{board.3.0}}}</div>
+        <div id="b4" class="piece black">{{{board.3.1}}}</div>
+        <div id="c4" class="piece white">{{{board.3.2}}}</div>
+        <div id="d4" class="piece black">{{{board.3.3}}}</div>
+        <div id="e4" class="piece white">{{{board.3.4}}}</div>
+        <div id="f4" class="piece black">{{{board.3.5}}}</div>
+        <div id="g4" class="piece white">{{{board.3.6}}}</div>
+        <div id="h4" class="piece black">{{{board.3.7}}}</div>
+        <!-- 6th -->
+        <div id="a3" class="piece black">{{{board.2.0}}}</div>
+        <div id="b3" class="piece white">{{{board.2.1}}}</div>
+        <div id="c3" class="piece black">{{{board.2.2}}}</div>
+        <div id="d3" class="piece white">{{{board.2.3}}}</div>
+        <div id="e3" class="piece black">{{{board.2.4}}}</div>
+        <div id="f3" class="piece white">{{{board.2.5}}}</div>
+        <div id="g3" class="piece black">{{{board.2.6}}}</div>
+        <div id="h3" class="piece white">{{{board.2.7}}}</div>
+        <!-- 7th -->
+        <div id="a2" class="piece white">{{{board.1.0}}}</div>
+        <div id="b2" class="piece black">{{{board.1.1}}}</div>
+        <div id="c2" class="piece white">{{{board.1.2}}}</div>
+        <div id="d2" class="piece black">{{{board.1.3}}}</div>
+        <div id="e2" class="piece white">{{{board.1.4}}}</div>
+        <div id="f2" class="piece black">{{{board.1.5}}}</div>
+        <div id="g2" class="piece white">{{{board.1.6}}}</div>
+        <div id="h2" class="piece black">{{{board.1.7}}}</div>
+        <!-- 8th -->
+        <div id="a1" class="piece black">{{{board.0.0}}}</div>
+        <div id="b1" class="piece white">{{{board.0.1}}}</div>
+        <div id="c1" class="piece black">{{{board.0.2}}}</div>
+        <div id="d1" class="piece white">{{{board.0.3}}}</div>
+        <div id="e1" class="piece black">{{{board.0.4}}}</div>
+        <div id="f1" class="piece white">{{{board.0.5}}}</div>
+        <div id="g1" class="piece black">{{{board.0.6}}}</div>
+        <div id="h1" class="piece white">{{{board.0.7}}}</div>
+    </div>
+    {{/board}}
+
+    <div id ="white-score" class = "score">white score : {{scores.whiteScore}}</div>
+    <div id ="black-score" class = "score">black score : {{scores.blackScore}} </div>
+    <br>
 </div>
-{{/board}}
-
-<div id ="white-score" class = "score">white score : {{scores.whiteScore}}</div>
-<div id ="black-score" class = "score">black score : {{scores.blackScore}} </div>
-<br>
 </body>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/script/main.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </html>
