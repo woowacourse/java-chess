@@ -5,10 +5,10 @@ import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Symbol;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class ChessGameDao {
         return con;
     }
 
-    public void addChessGame(ChessGame chessGame) throws SQLException, IOException {
+    public void addChessGame(ChessGame chessGame) throws SQLException, ParseException {
         if (!Objects.isNull(findByGameId("1"))) {
             deleteChessGame("1");
         }
@@ -72,8 +72,8 @@ public class ChessGameDao {
         }
     }
 
-    public ChessGame findByGameId(String gameId) throws SQLException, IOException {
-        LinkedHashMap<String, String> jsonMap;
+    public ChessGame findByGameId(String gameId) throws SQLException, ParseException {
+        String boardInfo;
         String state;
 
         try (Connection con = getConnection()) {
@@ -86,9 +86,13 @@ public class ChessGameDao {
                 return null;
             }
 
-            jsonMap = new ObjectMapper().readValue(rs.getString("board_info"), LinkedHashMap.class);
+            boardInfo = rs.getString("board_info");
             state = rs.getString("turn");
         }
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(boardInfo);
+        Map<String, String> jsonMap = (Map<String, String>) obj;
 
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
 
