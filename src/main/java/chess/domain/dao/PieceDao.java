@@ -61,7 +61,7 @@ public final class PieceDao {
     public void deleteAll() throws SQLException {
         final String query = "TRUNCATE TABLE pieces";
         try (final Connection conn = ConnectionSetup.getConnection();
-            final PreparedStatement pstmt = conn.prepareStatement(query);) {
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.executeUpdate();
         }
     }

@@ -30,16 +30,20 @@ public final class ChessService {
         boardDao = new BoardDao();
     }
 
-    public void chessBoardInit() throws SQLException {
-        if (pieceDao.load() == null) {
-            pieceDao.save(new Board().unwrap());
+    public void chessBoardInit() {
+        try {
+            if (pieceDao.load() == null) {
+                pieceDao.save(new Board().unwrap());
+            }
+            final Map<Position, Piece> chessBoard = pieceDao.load();
+            if (boardDao.load() == null) {
+                boardDao.save(Team.WHITE.teamName(), false);
+            }
+            final BoardDto boardDto = boardDao.load();
+            chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        final Map<Position, Piece> chessBoard = pieceDao.load();
-        if (boardDao.load() == null) {
-            boardDao.save(Team.WHITE.teamName(), false);
-        }
-        final BoardDto boardDto = boardDao.load();
-        chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
     }
 
     public Response move(final MoveRequest moveRequest) {
@@ -66,9 +70,13 @@ public final class ChessService {
         boardDao.updateTeam(chessGame.nowTurn().teamName());
     }
 
-    public Response end() throws SQLException {
+    public Response end() {
         if (chessGame.isGameOver()) {
-            boardDao.updateIsGameOver();
+            try {
+                boardDao.updateIsGameOver();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return new Response(ResponseCode.GAME_OVER.code(), ResponseCode.GAME_OVER.message());
         }
         return new Response(ResponseCode.RUN.code(), ResponseCode.RUN.message());
@@ -78,10 +86,14 @@ public final class ChessService {
         return new ChessResult(chessGame.board());
     }
 
-    public void restart() throws SQLException {
+    public void restart() {
         chessGame = new ChessGame();
-        pieceDao.deleteAll();
-        boardDao.deleteAll();
+        try {
+            pieceDao.deleteAll();
+            boardDao.deleteAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Response start() {
