@@ -32,7 +32,7 @@ public class ChessController {
         });
 
         get("/loadSavedBoard", (req, res) -> {
-            BoardDTO savedBoardInfo = chessService.getSavedBoardInfo();
+            BoardDTO savedBoardInfo = chessService.getSavedBoardInfo(chessGame);
             return new Gson().toJson(savedBoardInfo);
         });
 
@@ -48,8 +48,7 @@ public class ChessController {
 
         post("/move", (req, res) -> {
             MoveInfoDTO moveInfoDTO = new Gson().fromJson(req.body(), MoveInfoDTO.class);
-            chessGame.move(moveInfoDTO.getTarget(), moveInfoDTO.getDestination());
-            BoardDTO boardDTO = BoardDTO.of(chessGame.getBoard());
+            BoardDTO boardDTO = chessService.move(chessGame, moveInfoDTO);
             return new Gson().toJson(boardDTO);
         });
     }

@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.board.Horizontal;
-import chess.domain.board.Position;
-import chess.domain.board.Vertical;
+import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
@@ -36,13 +33,8 @@ public class ChessGame {
         return "백 : " + whiteScore + "  흑 : " + blackScore;
     }
 
-    public void end() {
-        System.exit(0);
-    }
-
     private Position convertStringToPosition(String input) {
-        return Position.of(Horizontal.find(input.substring(0, 1)),
-                Vertical.find(input.substring(1, 2)));
+        return Position.convertStringToPosition(input);
     }
 
     private void boardInitializeCheck() {
@@ -51,7 +43,16 @@ public class ChessGame {
         }
     }
 
+    public void loadSavedBoardInfo(Map<String, String> boardInfo, String turnOwner) {
+        board = BoardFactory.loadSavedBoardInfo(boardInfo);
+        this.turnOwner = Team.convertStringToTeam(turnOwner);
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public Team getTurnOwner() {
+        return turnOwner;
     }
 }

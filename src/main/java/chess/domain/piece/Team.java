@@ -1,8 +1,14 @@
 package chess.domain.piece;
 
 public enum Team {
-    BLACK,
-    WHITE;
+    BLACK("black"),
+    WHITE("white");
+
+    private final String teamString;
+
+    Team(String teamString) {
+        this.teamString = teamString;
+    }
 
     public boolean isBlack() {
         return this.equals(Team.BLACK);
@@ -17,5 +23,16 @@ public enum Team {
             return Team.WHITE;
         }
         return Team.BLACK;
+    }
+
+    public static Team convertStringToTeam(String team) {
+        if ("black".equals(team)) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
+    public String getTeamString() {
+        return teamString;
     }
 }

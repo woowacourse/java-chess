@@ -52,4 +52,14 @@ public class BoardFactory {
             board.put(Position.of(horizontal, Vertical.TWO), new Pawn(Team.WHITE));
         }
     }
+
+    public static Board loadSavedBoardInfo(Map<String, String> boardInfo) {
+        Map<Position, Piece> board = new LinkedHashMap<>();
+        for (Map.Entry<String, String> entry : boardInfo.entrySet()) {
+            String position = entry.getKey();
+            String uniCode = entry.getValue();
+            board.put(Position.convertStringToPosition(position), PieceFactory.createPieceByUniCode(uniCode));
+        }
+        return new Board(board);
+    }
 }

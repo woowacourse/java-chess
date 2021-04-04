@@ -27,8 +27,6 @@ async function applicationStart() {
     }
 
     let savedBoardInformation = await loadSavedBoard();
-    console.log(savedBoardInformation);
-    console.log("123");
     renewBoard(savedBoardInformation);
 }
 
@@ -77,7 +75,8 @@ async function sendMoveInformation(targetPosition, destinationPosition) {
     let boardInformation = await fetch("/move", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
+            'Accept': 'application/json'
         },
         body: JSON.stringify(bodyValue)
     })
@@ -103,8 +102,6 @@ function getBoardColor(index, color) {
 }
 
 async function renewBoard(boardInfo) {
-    console.log(boardInfo);
-    console.log("456");
     Object.keys(boardInfo).forEach(function (value) {
         let eachDiv = document.querySelector("#" + value);
         eachDiv.innerHTML = boardInfo[value];
