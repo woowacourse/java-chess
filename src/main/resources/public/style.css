@@ -24,6 +24,24 @@
   background-color: aquamarine;
 }
 
+.button {
+  width: 150px;
+  height: 30px;
+  padding: 20px;
+  margin: 30px;
+  border: 10px solid saddlebrown;
+  text-align: center;
+  background-color: beige;
+}
+
+.button:hover {
+  background-color: burlywood;
+}
+
+.button:active {
+  background-color: #333333;
+}
+
 #board-container {
   display: flex;
   justify-content: center;
@@ -34,7 +52,7 @@
 
 #board {
   width: 600px;
-  border: 25px solid #333;
+  border: 25px solid #333333;
   text-align: center;
   font-size: 0px;
 }
