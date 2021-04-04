@@ -22,7 +22,7 @@ public class EndResult implements Result {
 
     @Override
     public Map<Position, Piece> infoAsMap() {
-        throw new IllegalArgumentException("게임이 종료된 상태입니다.");
+        return board.coordinates();
     }
 
     @Override
