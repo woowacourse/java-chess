@@ -45,7 +45,7 @@ function addAndRequestMove(square) {
                 }),
             })
                 .then(res => res.json())
-                .then(res => processResponse(res, () => updateBoard(res.item.chessBoard)));
+                .then(res => processResponse(res, () => updateGameData(res)));
         } catch
             (error) {
             console.error(error.messages);
@@ -63,17 +63,21 @@ async function addSelectionEventOnChessBoard() {
 
 async function addEventOnStartButton() {
     await $startButton.addEventListener('click', event => {
-
-
         try {
             fetch('/newgame')
                 .then(res => res.json())
-                .then(res => processResponse(res, () => updateBoard(res.item.chessBoard)));
+                .then(res => processResponse(res, () => updateGameData(res)));
             turnOnPanel();
         } catch (error) {
             console.error(error.messages);
         }
     });
+}
+
+function updateGameData(responseBody) {
+    updateBoard(responseBody.item.chessBoard);
+    updateMessage(responseBody.message);
+    updateScoreAndTurn(responseBody.item.chessGameStatistics, responseBody.item.currentTurnColor);
 }
 
 function updateBoard(piecesMap) {
@@ -90,6 +94,23 @@ async function updateSquare(position, piece) {
     square.appendChild(makeImage(piece.color + '-' + piece.notation));
 }
 
+function makeImage(imageName) {
+    const img = document.createElement('img');
+    img.setAttribute('src', '/images/' + imageName + '.png');
+    img.height = BLOCK_SIZE_PIXEL;
+    return img;
+}
+
+function updateMessage(message) {
+    document.getElementById('message-console').innerText = message;
+}
+
+function updateScoreAndTurn(chessGameStatistics, currentTurn) {
+    const blackScore = chessGameStatistics.colorsScore.BLACK;
+    const whiteScore = chessGameStatistics.colorsScore.WHITE;
+    document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n현재 순서: ${currentTurn}`;
+}
+
 function turnOnPanel() {
     for (const button of document.getElementById('middle-panel').querySelectorAll('button')) {
         button.style.display = 'none';
@@ -98,11 +119,4 @@ function turnOnPanel() {
     document.getElementById('end-button').style.display = 'block';
     document.getElementById('message-console').style.display = 'block';
     document.getElementById('score-console').style.display = 'block';
-}
-
-function makeImage(imageName) {
-    const img = document.createElement('img');
-    img.setAttribute('src', '/images/' + imageName + '.png');
-    img.height = BLOCK_SIZE_PIXEL;
-    return img;
 }
