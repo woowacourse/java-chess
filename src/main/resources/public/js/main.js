@@ -10,10 +10,10 @@ function onNewGame() {
             if (!res.ok) {
                 throw new Error(res.status);
             }
-            window.location.replace('/chess');
-            return res;
+            window.location.replace(res.url);
+            return res.json();
         })
-        .catch(() => alert("찾지 못한 서버 문제입니다. 서버가 죄송합니다.."));
+        .catch(() => alert("모르는 서버 문제입니다. 서버가 죄송합니다.."));
 }
 
 function onContinue() {

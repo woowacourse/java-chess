@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,15 +32,18 @@ public class WebUIChessApplication {
 
         post("/chess/new", (req, res) -> {
             chessDAO.deleteIfPreviousChessExists();
-            chessDAO.saveChess();
+            chessDAO.save();
             res.status(201);
-            return null;
+            res.redirect("/chess");
+            Response response = new Response(HttpStatus.Code.CREATED, "체스가 성공적으로 생성되었습니다.");
+            return GSON.toJson(response);
         });
 
-        get("/chess/continue", (req, res) -> {
+        get("/chess", (req, res) -> {
             chessDAO.findAnyChessId()
                     .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
-            return null;
+            Response response = new Response(HttpStatus.Code.OK, "OK");
+            return GSON.toJson(response);
         });
 
         //        get("/chess", (req, res) -> {
