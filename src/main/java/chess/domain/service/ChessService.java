@@ -36,7 +36,7 @@ public final class ChessService {
         }
         final Map<Position, Piece> chessBoard = pieceDao.load();
         if (boardDao.load() == null) {
-            boardDao.save(new BoardDto(Team.WHITE.teamName(), false));
+            boardDao.save(Team.WHITE.teamName(), false);
         }
         final BoardDto boardDto = boardDao.load();
         chessGame = new ChessGame(new Board(chessBoard), boardDto.team(), boardDto.isGameOver());
@@ -63,12 +63,12 @@ public final class ChessService {
         final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
         pieceDao.savePiece(source, chessBoard.get(source));
         pieceDao.savePiece(target, chessBoard.get(target));
-        boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), false));
+        boardDao.save(chessGame.nowTurn().teamName(), false);
     }
 
     public Response end() throws SQLException {
         if (chessGame.isGameOver()) {
-            boardDao.save(new BoardDto(chessGame.nowTurn().teamName(), true));
+            boardDao.save(chessGame.nowTurn().teamName(), true);
             return new Response(ResponseCode.GAME_OVER.code(), ResponseCode.GAME_OVER.message());
         }
         return new Response(ResponseCode.RUN.code(), ResponseCode.RUN.message());

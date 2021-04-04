@@ -24,12 +24,12 @@ public final class BoardDao {
         }
     }
 
-    public void save(final BoardDto boardDto) throws SQLException {
+    public void save(final String team, final boolean isGameOver) throws SQLException {
         try (final Connection conn = ConnectionSetup.getConnection()) {
             final String query = "INSERT INTO board VALUES (?, ?)";
             final PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, boardDto.team());
-            pstmt.setBoolean(2, boardDto.isGameOver());
+            pstmt.setString(1, team);
+            pstmt.setBoolean(2, isGameOver);
             pstmt.executeUpdate();
         }
     }
