@@ -41,11 +41,6 @@ function initChessImg() {
             if (cell.firstChild) {
                 cell.firstChild.remove();
             }
-            // if (pieceImg !== null) {
-            //     let imgSrc = "../img/" + String(initPieceImage(i, j)) + ".png";
-            //     console.log(imgSrc);
-            //     pieceImg.src = imgSrc;
-            // }
         }
     }
     syncBoard();
@@ -81,38 +76,6 @@ function initPiecePosition(row, column) {
     return columnTable[column]+rowTable[row];
 }
 
-// function initPieceImage(row, column) {
-//     const blackSymbol = "B";
-//     const whiteSymbol = "W";
-//     const generalColumn = {
-//         0: "R",
-//         1: "K",
-//         2: "B",
-//         3: "Q",
-//         4: "K",
-//         5: "B",
-//         6: "K",
-//         7: "R",
-//     };
-//     const pawnSymbol = "P";
-//
-//     if (row === 0) {
-//         return blackSymbol + generalColumn[column];
-//     }
-//
-//     if (row === 1) {
-//         return blackSymbol + pawnSymbol;
-//     }
-//     if (row === 6) {
-//         return whiteSymbol + pawnSymbol;
-//     }
-//
-//     if (row === 7) {
-//         return whiteSymbol + generalColumn[column];
-//     }
-//     return "";
-// }
-
 function clickPosition(event) {
     if (gameFinished) {
         return;
@@ -120,7 +83,6 @@ function clickPosition(event) {
     const positions = document.querySelectorAll(".chessColumn");
     for (let i = 0; i < positions.length; i++) {
         if (positions[i].classList.contains("clicked")) {
-            console.log(positions[i].id + ", " + event.target.closest("div").id);
             positions[i].classList.remove("clicked");
             move(positions[i].id, event.target.closest("div").id);
             return;
@@ -130,7 +92,6 @@ function clickPosition(event) {
         return;
     }
     event.target.closest(".chessColumn").classList.toggle("clicked");
-
 }
 
 async function move(from, to) {
@@ -160,7 +121,6 @@ async function move(from, to) {
         }
         if (obj.code === "200") {
             changeImg(from, to);
-            console.log(obj);
             changeTurn();
         }
     });
@@ -185,7 +145,6 @@ async function changeTurn() {
     }).then(res => {
         return res.json();
     });
-    console.log(turn);
     const turnMessage = document.querySelector(".turn");
     turnMessage.textContent = turn;
 }
@@ -214,13 +173,8 @@ async function syncBoard() {
     }).then(res => {
         return res.json();
     });
-    console.log(board);
     const positions = Object.keys(board);
     const pieces = Object.values(board);
-
-    // for (let i = 0; i < positions.length; i++) {
-    //     console.log(pieces[i])
-    // }
 
     const cells = document.querySelectorAll(".chessColumn");
     for (let i = 0; i < cells.length; i++) {
