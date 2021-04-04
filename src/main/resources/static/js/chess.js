@@ -1,17 +1,26 @@
+const $board = document.getElementById('board');
+const $startButton = document.getElementById('start');
+const $loadButton = document.getElementById('load');
+const $exitButton = document.getElementById('exit');
+const $roomNo = document.getElementById('roomNo');
+const $blackScore = document.getElementById('blackScore');
+const $whiteScore = document.getElementById('whiteScore');
+const $turn = document.getElementById('turn');
+$startButton.addEventListener('click', startBoard);
+$loadButton.addEventListener('click', loadChessRoom);
+$exitButton.addEventListener('click', exitChessRoom);
+$board.addEventListener('click', movePiece);
 
-fetchBoard();
-function fetchBoard() {
-    fetch('/start')
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            initBoard(data);
-        })
+async function startBoard() {
+    let start = await fetch('/start');
+    start = await start.json();
+    initBoard(start);
 }
 
 function initBoard(data) {
-    const boardDiv = document.getElementById('board');
+    if ($board.hasChildNodes()) {
+        resetBoard($board);
+    }
     for (let i = 8; i >= 1; i--) {
         for (let j = 0; j < 8; j++) {
             const newDiv = document.createElement('div');
@@ -19,14 +28,21 @@ function initBoard(data) {
             newDiv.classList.add('box');
             const piece = data.chessBoard[newDiv.id];
             if (piece) {
-                newDiv.innerHTML = makePiece(piece)
+                newDiv.innerHTML = makePiece(piece);
             }
-            boardDiv.appendChild(newDiv);
+            $board.appendChild(newDiv);
         }
     }
-    document.getElementById('blackScore').innerText = data.blackScore;
-    document.getElementById('whiteScore').innerText = data.whiteScore;
-    document.getElementById('turn').innerText = data.turn;
+    $roomNo.innerText = data.room_no;
+    $blackScore.innerText = data.blackScore;
+    $whiteScore.innerText = data.whiteScore;
+    $turn.innerText = data.turn;
+}
+
+function resetBoard($board) {
+    while ($board.hasChildNodes()) {
+        $board.removeChild($board.firstChild);
+    }
 }
 
 function makePiece(piece) {
@@ -36,15 +52,30 @@ function makePiece(piece) {
     return `<img src="img/${piece.color + piece.name}.png" class="piece" name="${piece.name}" color="${piece.color}" alt="" style="width:49px;height:49px;">`
 }
 
+async function loadChessRoom() {
+    let load = await fetch('/load?roomNo=1');
+    load = await load.json();
+    initBoard(load)
+}
 
-document.getElementById('board').addEventListener('click', movePiece);
+async function exitChessRoom() {
+    let exit = await fetch('/exit?roomNo=1');
+    exit = await exit.json();
+    if (exit === 1) {
+        resetBoard($board);
+        $roomNo.innerText = '';
+        $blackScore.innerText = '';
+        $whiteScore.innerText = '';
+        $turn.innerText = '';
+    }
+}
 
 let source = '';
 let target = '';
 
 function movePiece(event) {
     if (event.target.closest('div') && event.target.tagName === 'IMG') {
-        if (event.target.getAttribute('color') == document.getElementById('turn').innerText && source == '') {
+        if (event.target.getAttribute('color') == $turn.innerText && source == '') {
             source = event.target.closest('div').id;
             showRoute(source);
             return;
@@ -70,7 +101,6 @@ async function showRoute(source) {
     })
     route = await route.json()
     addNextRoute(route)
-
 }
 
 function addNextRoute(data) {
@@ -84,7 +114,7 @@ async function selectTarget(event) {
     const position = {
         source: source,
         target: target,
-        turn: document.getElementById('turn').innerText
+        turn: $turn.innerText
     }
     let piece = await fetch('/move', {
         method: 'POST',
@@ -95,7 +125,6 @@ async function selectTarget(event) {
     })
     piece = await piece.json();
     updateBoard(piece);
-
     source = ''
     target = ''
 }
@@ -109,44 +138,9 @@ function updateBoard(data) {
             boxDiv.innerHTML = makePiece(piece);
         }
     }
-    document.getElementById('blackScore').innerText = data.blackScore;
-    document.getElementById('whiteScore').innerText = data.whiteScore;
-    document.getElementById('turn').innerText = data.turn;
+    $blackScore.innerText = data.blackScore;
+    $whiteScore.innerText = data.whiteScore;
+    $turn.innerText = data.turn;
 }
 
-const $saveButton = document.getElementById("save");
-$saveButton.addEventListener('click', saveBoard);
-
-function saveBoard() {
-    const chessBoard = [];
-    for (let i = 8; i >= 1; i--) {
-        for (let j = 0; j < 8; j++) {
-            const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
-            if (boxDiv.hasChildNodes()) {
-                chessBoard.push({position : boxDiv.id, name : boxDiv.children[0].name, color : boxDiv.children[0].getAttribute('color')});
-               //chessBoard.set({position : boxDiv.id}, {name : boxDiv.children[0].name, color : boxDiv.children[0].getAttribute('color')});
-            }
-        }
-    }
-    const roomInfo = {
-        blackScore : document.getElementById('blackScore').innerText,
-        whiteScore : document.getElementById('whiteScore').innerText,
-        turn : document.getElementById('turn').innerText,
-        chessBoard : chessBoard
-    }
-    console.log(JSON.stringify(roomInfo))
-    fetch('/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(roomInfo)
-    }).then(response => {
-        return response.json();
-    }).then(data => {
-        if (data === 1) {
-            alert('성공했습니다.');
-        }
-    })
-}
 

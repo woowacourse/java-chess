@@ -3,6 +3,7 @@ package chess.domain.dao;
 import chess.domain.dto.ChessRoomDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.PositionDto;
+import chess.domain.piece.info.Position;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -47,56 +48,25 @@ public class ChessDao {
         }
     }
 
-//    public void addChessRoom(ChessStatusDto chessStatusDto) throws SQLException {
-//        Connection con = null;
-//        try {
-//            con = getConnection();
-//            con.setAutoCommit(false);
-//            String query1 = "INSERT INTO chess_room (black_score, white_score, turn) VALUES (?, ?, ?)";
-//            PreparedStatement pstmt1 = con.prepareStatement(query1);
-//            pstmt1.setDouble(1, chessStatusDto.getBlackScore());
-//            pstmt1.setDouble(2, chessStatusDto.getWhiteScore());
-//            pstmt1.setString(3, chessStatusDto.getTurn().name());
-//            pstmt1.executeUpdate();
-//
-//            String query2 = "INSERT INTO chess_board VALUES (?, ?, ?, ?, LAST_INSERT_ID())";
-//            PreparedStatement pstmt2 = con.prepareStatement(query2);
-//            Map<Position, Piece> chessBoard = chessStatusDto.getChessBoard();
-//            for (Position position : chessBoard.keySet()) {
-//                pstmt2.setString(1, String.valueOf(position.getX()));
-//                pstmt2.setString(2, String.valueOf(position.getY()));
-//                pstmt2.setString(3, chessBoard.get(position).getName());
-//                pstmt2.setString(4, chessBoard.get(position).getColor().name());
-//                pstmt2.addBatch();
-//                pstmt2.clearParameters();
-//            }
-//            pstmt2.executeBatch();
-//            con.commit();
-//        }catch (Exception e) {
-//            con.rollback();
-//        }
-//    }
-
     public int addChessRoom(ChessRoomDto chessRoomDto) throws SQLException {
         Connection con = null;
         try {
             con = getConnection();
             con.setAutoCommit(false);
-            String query1 = "INSERT INTO chess_room (black_score, white_score, turn) VALUES (?, ?, ?)";
+            String query1 = "INSERT INTO chess_room VALUES (1, ?, ?, ?)";
             PreparedStatement pstmt1 = con.prepareStatement(query1);
             pstmt1.setDouble(1, chessRoomDto.getBlackScore());
             pstmt1.setDouble(2, chessRoomDto.getWhiteScore());
             pstmt1.setString(3, chessRoomDto.getTurn());
             pstmt1.executeUpdate();
 
-            String query2 = "INSERT INTO chess_board VALUES (?, ?, ?, ?, LAST_INSERT_ID())";
+            String query2 = "INSERT INTO chess_piece VALUES (?, ?, ?, 1)";
             PreparedStatement pstmt2 = con.prepareStatement(query2);
             Map<PositionDto, PieceDto> chessBoard = chessRoomDto.getChessBoard();
             for (PositionDto positionDto : chessBoard.keySet()) {
-                pstmt2.setString(1, String.valueOf(positionDto.getPosition().charAt(0)));
-                pstmt2.setString(2, String.valueOf(positionDto.getPosition().charAt(1)));
-                pstmt2.setString(3, chessBoard.get(positionDto).getName());
-                pstmt2.setString(4, chessBoard.get(positionDto).getColor());
+                pstmt2.setString(1, positionDto.getPosition());
+                pstmt2.setString(2, chessBoard.get(positionDto).getName());
+                pstmt2.setString(3, chessBoard.get(positionDto).getColor());
                 pstmt2.addBatch();
                 pstmt2.clearParameters();
             }
@@ -106,29 +76,90 @@ public class ChessDao {
         }catch (Exception e) {
             con.rollback();
             return 0;
+        }finally {
+            closeConnection(con);
         }
     }
 
-    public ChessRoomDto findChessRoomById(int roomNo) throws SQLException {
-        String query = "SELECT * FROM chess_room r JOIN chess_board b ON r.room_no = b.room_no WHERE r.room_no = ?;";
+    public ChessRoomDto findChessRoomByRoomNo(int roomNo) throws SQLException {
+        String query = "SELECT * FROM chess_room r JOIN chess_piece b ON r.room_no = b.room_no WHERE r.room_no = ?;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, roomNo);
         ResultSet rs = pstmt.executeQuery();
         ChessRoomDto chessRoomDto = new ChessRoomDto();
-        if (rs.next()) {
+        Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
+        while (rs.next()) {
+            PositionDto positionDto = new PositionDto(rs.getString("coordinate"));
+            PieceDto pieceDto = new PieceDto(rs.getString("piece_name"), rs.getString("piece_color"));
+            chessBoard.put(positionDto, pieceDto);
             chessRoomDto.setRoom_no(rs.getInt("room_no"));
             chessRoomDto.setBlackScore(rs.getDouble("black_score"));
             chessRoomDto.setWhiteScore(rs.getDouble("white_score"));
             chessRoomDto.setTurn(rs.getString("turn"));
         }
-        Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
-        while (rs.next()) {
-            PositionDto positionDto = new PositionDto(rs.getString("x_coordinate")
-                    + rs.getString("y_coordinate"));
-            PieceDto pieceDto = new PieceDto(rs.getString("chess_name"), rs.getString("chess_color"));
-            chessBoard.put(positionDto, pieceDto);
-        }
         chessRoomDto.setChessBoard(chessBoard);
         return chessRoomDto;
+    }
+
+    public int updateChessRoom(ChessRoomDto chessRoomDto, PieceDto targetPiece, PositionDto source, PositionDto target) throws SQLException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            String query1 = "UPDATE chess_room SET black_score = ?, white_score = ?, turn = ? where room_no = 1";
+            PreparedStatement pstmt1 = con.prepareStatement(query1);
+            pstmt1.setDouble(1, chessRoomDto.getBlackScore());
+            pstmt1.setDouble(2, chessRoomDto.getWhiteScore());
+            pstmt1.setString(3, chessRoomDto.getTurn());
+            pstmt1.executeUpdate();
+            updateChessPiece(targetPiece, source, target, con);
+            con.commit();
+            return 1;
+        }catch (Exception e) {
+            con.rollback();
+            return 0;
+        }finally {
+            closeConnection(con);
+        }
+    }
+
+    private void updateChessPiece(PieceDto pieceDto, PositionDto source, PositionDto target, Connection con) throws SQLException {
+        deleteChessPiece(target.getPosition(), con);
+        String query = "UPDATE chess_piece SET coordinate = ?, piece_name = ?, piece_color = ? where room_no = 1 and coordinate = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, target.getPosition());
+        pstmt.setString(2, pieceDto.getName());
+        pstmt.setString(3, pieceDto.getColor());
+        pstmt.setString(4, source.getPosition());
+        pstmt.executeUpdate();
+    }
+
+    private void deleteChessPiece(String position, Connection con) throws SQLException {
+        String query = "DELETE FROM chess_piece where room_no = 1 && coordinate = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, position);
+        pstmt.executeUpdate();
+    }
+
+    public int deleteChessRoomByRoomNo(int roomNo) throws SQLException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+            String query1 = "DELETE FROM chess_piece where room_no = ?";
+            PreparedStatement pstmt1 = con.prepareStatement(query1);
+            pstmt1.setInt(1, roomNo);
+            pstmt1.executeUpdate();
+
+            String query2 = "DELETE FROM chess_room where room_no = ?";
+            PreparedStatement pstmt2 = con.prepareStatement(query2);
+            pstmt2.setInt(1, roomNo);
+            pstmt2.executeUpdate();
+            con.commit();
+            return 1;
+        }catch (Exception e) {
+            con.rollback();
+            return 0;
+        }
     }
 }

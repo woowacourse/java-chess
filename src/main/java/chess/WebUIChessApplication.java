@@ -32,10 +32,14 @@ public class WebUIChessApplication {
         });
 
         get("/start", (req, res) -> {
+            chessDao.deleteChessRoomByRoomNo(1);
             chessBoard = ChessBoard.generate();
             ChessBoardDto chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
-            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoardDto.getChessBoard(), Color.WHITE.name(),
+            ChessRoomDto chessRoomDto = new ChessRoomDto(
+                    chessBoardDto.getChessBoard(), Color.WHITE.name(),
                     chessBoard.sumScoreByColor(Color.BLACK), chessBoard.sumScoreByColor(Color.WHITE));
+            chessDao.addChessRoom(chessRoomDto);
+            chessRoomDto = chessDao.findChessRoomByRoomNo(1);
             String jsonString = mapper.writeValueAsString(chessRoomDto);
             return jsonString;
         });
@@ -56,26 +60,23 @@ public class WebUIChessApplication {
             Position source = Position.of(sourceValue.charAt(0), sourceValue.charAt(1));
             Position target = Position.of(targetValue.charAt(0), targetValue.charAt(1));
             chessBoard.movePiece(source, target);
-            ChessBoardDto chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
-            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoardDto.getChessBoard(),
-                    Color.from(map.get("turn")).reverse().name(),
+            ChessRoomDto chessRoomDto = new ChessRoomDto(Color.from(map.get("turn")).reverse().name(),
                     chessBoard.sumScoreByColor(Color.BLACK),
                     chessBoard.sumScoreByColor(Color.WHITE));
+            Piece nowPiece = chessBoard.findByPosition(target);
+            chessDao.updateChessRoom(chessRoomDto, new PieceDto(nowPiece.getName(), nowPiece.getColor().name()), new PositionDto(sourceValue), new PositionDto(targetValue));
+            chessRoomDto = chessDao.findChessRoomByRoomNo(1);
             return mapper.writeValueAsString(chessRoomDto);
         });
 
-        post("/save", (req, res) -> {
-            Map<String, Object> map = mapper.readValue(req.body(), new TypeReference<Map<String, Object>>() {});
-            List<Map> boards = (List) map.get("chessBoard");
-            Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
-            for (Map tmp : boards) {
-                chessBoard.put(new PositionDto((String) tmp.get("position")), new PieceDto((String)tmp.get("name"), (String) tmp.get("color")));
-            }
-            ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoard,
-                    (String) map.get("turn"),
-                    Double.valueOf((String)map.get("blackScore")),
-                    Double.valueOf((String)map.get("whiteScore")));
-            return chessDao.addChessRoom(chessRoomDto);
+        get("/load", (req, res) -> {
+            ChessRoomDto chessRoomDto = chessDao.findChessRoomByRoomNo(Integer.valueOf(req.queryParams("roomNo")));
+            return mapper.writeValueAsString(chessRoomDto);
+        });
+
+        get("/exit", (req, res) -> {
+            int roomNo = Integer.parseInt(req.queryParams("roomNo"));
+            return chessDao.deleteChessRoomByRoomNo(roomNo);
         });
 
     }
