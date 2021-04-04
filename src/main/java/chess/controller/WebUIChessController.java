@@ -8,8 +8,8 @@ import chess.domain.game.ChessGame;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Running;
 import chess.domain.piece.Piece;
-import chess.domain.room.Room;
-import chess.domain.room.RoomDAO;
+import chess.database.room.Room;
+import chess.database.room.RoomDAO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
