@@ -1,12 +1,12 @@
 package chess.dao;
 
-import chess.dto.UserDto;
 import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Piece;
 import chess.dto.ChessGameDto;
+import chess.dto.UserDto;
 
 import java.sql.*;
 import java.util.HashMap;

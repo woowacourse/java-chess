@@ -99,8 +99,6 @@ public enum PieceType {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public abstract Piece create(int row, int column);
-
     public static Piece createByPieceName(Character pieceName) {
         if (pieceName == 'r') {
             return new Rook(WHITE);
@@ -140,6 +138,8 @@ public enum PieceType {
         }
         return new Empty(NOTHING);
     }
+
+    public abstract Piece create(int row, int column);
 
     private static class Constants {
         public static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);

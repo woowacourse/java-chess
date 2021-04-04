@@ -8,12 +8,17 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessWebController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
 
     private final ChessGameService chessGameService = new ChessGameService();
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
+    }
 
     public void route() {
         get("/", (req, res) -> {
@@ -44,9 +49,5 @@ public class ChessWebController {
 
         post("/point", (req, res) -> chessGameService.getPiece(req.body()));
         post("/move", (req, res) -> chessGameService.movePiece(req.body()));
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 }

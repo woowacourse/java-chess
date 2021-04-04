@@ -31,8 +31,7 @@ async function updatePoint(id) {
         const response = await move(movePoint);
         if (response === 0) {
             alert('왕 죽음')
-        }
-        else if (response === 200) {
+        } else if (response === 200) {
             updateBoard(movePoint);
             movePoint.sourcePoint = null;
             movePoint.targetPoint = null;

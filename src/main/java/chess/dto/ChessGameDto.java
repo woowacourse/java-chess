@@ -10,19 +10,19 @@ public class ChessGameDto {
     private Map<Point, Piece> board;
     private Color color;
 
-    public void setBoard(Map<Point, Piece> board) {
-        this.board = board;
-    }
-
-    public void setCurrentColor(Color color) {
-        this.color = color;
-    }
-
     public Map<Point, Piece> getBoard() {
         return this.board;
     }
 
+    public void setBoard(Map<Point, Piece> board) {
+        this.board = board;
+    }
+
     public Color getCurrentColor() {
         return this.color;
+    }
+
+    public void setCurrentColor(Color color) {
+        this.color = color;
     }
 }

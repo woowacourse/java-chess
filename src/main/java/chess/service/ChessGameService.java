@@ -1,11 +1,11 @@
 package chess.service;
 
-import chess.dto.UserDto;
 import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.dto.ChessGameDto;
 import chess.dto.RequestDto;
+import chess.dto.UserDto;
 import com.google.gson.Gson;
 
 import java.sql.SQLException;
