@@ -11,7 +11,7 @@ public class Turn {
     }
 
     public Turn(final String text) {
-        if ("BLACK".equals(text)) {
+        if (Color.BLACK.name().equals(text)) {
             player = blackPlayer;
         }
     }
