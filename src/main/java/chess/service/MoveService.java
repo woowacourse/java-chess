@@ -1,12 +1,12 @@
 package chess.service;
 
-import chess.web.dto.GameDto;
-import chess.web.dto.MessageDto;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Position;
 import chess.exception.CommandFormatException;
 import chess.repository.GameRepository;
+import chess.web.dto.GameDto;
+import chess.web.dto.MessageDto;
 import spark.Response;
 
 public class MoveService {

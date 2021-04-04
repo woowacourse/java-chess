@@ -1,14 +1,14 @@
 package chess.service;
 
-import chess.web.dto.MessageDto;
-import chess.web.dto.StatusDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
+import chess.web.dto.MessageDto;
+import chess.web.dto.StatusDto;
 
 public class StatusService {
 
     public static Object getStatus(String gameId) {
-        ChessGame chessGame = null;
+        ChessGame chessGame;
         try {
             chessGame = GameRepository.findByGameIdFromCache(gameId);
         } catch (RuntimeException e) {

@@ -1,8 +1,8 @@
 package chess.service;
 
-import chess.web.dto.MessageDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
+import chess.web.dto.MessageDto;
 import spark.Response;
 
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ public class SaveService {
     }
 
     private static void saveGameToDB(String gameId, ChessGame chessGame) throws SQLException {
-        if(GameRepository.isGameIdExistingInDB(gameId)) {
+        if (GameRepository.isGameIdExistingInDB(gameId)) {
             GameRepository.updateToDB(gameId, chessGame);
             return;
         }

@@ -1,11 +1,11 @@
 package chess.service;
 
-import chess.web.dto.GameDto;
-import chess.web.dto.MessageDto;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
 import chess.repository.GameRepository;
+import chess.web.dto.GameDto;
+import chess.web.dto.MessageDto;
 import spark.Response;
 
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class StartService {
 
     public static Object startNewGame(String gameId, Response response) {
-        ChessGame chessGame = null;
+        ChessGame chessGame;
 
         try {
             chessGame = saveGameAndStart(gameId);

@@ -1,8 +1,8 @@
 package chess.service;
 
-import chess.web.dto.MessageDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
+import chess.web.dto.MessageDto;
 
 public class EndService {
 

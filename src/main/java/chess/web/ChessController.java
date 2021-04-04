@@ -1,7 +1,7 @@
 package chess.web;
 
-import chess.web.dto.MoveDto;
 import chess.service.*;
+import chess.web.dto.MoveDto;
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
