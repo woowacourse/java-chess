@@ -70,6 +70,7 @@ public class ChessGameDao {
         while (rs.next()) {
             chessGameIds.add(rs.getInt("chessGameId"));
         }
+        closeConnection(getConnection());
         return chessGameIds;
     }
 
@@ -78,6 +79,7 @@ public class ChessGameDao {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, chessGameId);
         ResultSet rs = pstmt.executeQuery();
+        closeConnection(getConnection());
 
         if (!rs.next()) return null;
 
@@ -91,6 +93,7 @@ public class ChessGameDao {
         pstmt.setBoolean(2, isFinish);
         pstmt.setInt(3, chessGameId);
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 
     public void deleteChessGameById(int chessGameId) throws SQLException {
@@ -98,14 +101,16 @@ public class ChessGameDao {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, chessGameId);
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 
-    public void insertChessGame(int chessGameId, ChessGame chessGame) throws SQLException {
+    public void insertChessGameById(int chessGameId, String turn, boolean isFinish) throws SQLException {
         String query = "INSERT INTO CHESS_GAME VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, chessGameId);
-        pstmt.setString(2, chessGame.turn().name());
-        pstmt.setBoolean(3, !chessGame.runnable());
+        pstmt.setString(2, turn);
+        pstmt.setBoolean(3, isFinish);
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 }

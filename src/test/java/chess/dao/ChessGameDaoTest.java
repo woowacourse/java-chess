@@ -12,7 +12,7 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ChessGameDaoTest {
-    private ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao();
     private ChessGame chessGame;
 
     @BeforeEach
@@ -33,5 +33,11 @@ public class ChessGameDaoTest {
     @Test
     void addChessGame() throws Exception {
         chessGameDao.insertChessGameReturnId(chessGame);
+    }
+
+    @DisplayName("체스 게임 id들을 반환받는다.")
+    @Test
+    void selectAllChessGameId() throws Exception {
+        System.out.println(chessGameDao.selectAllChessGameId());
     }
 }

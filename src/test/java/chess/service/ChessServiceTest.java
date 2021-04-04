@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class ChessServiceTest {
-    private ChessService chessService = new ChessService();
+    private final ChessService chessService = new ChessService();
 
     @DisplayName("새로운 체스 게임을 만든다.")
     @Test

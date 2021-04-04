@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.ScoreStatus;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;

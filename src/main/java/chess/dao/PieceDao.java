@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.info.Color;
 import chess.dto.PieceDto;
 
@@ -47,13 +46,13 @@ public class PieceDao {
         }
     }
 
-    public void addPieces(List<Piece> pieces, int chessGameId) throws SQLException {
+    public void addPieces(List<PieceDto> pieces, int chessGameId) throws SQLException {
         String query = "INSERT INTO PIECE(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        for (Piece piece : pieces) {
-            pstmt.setString(1, piece.color().name());
-            pstmt.setString(2, piece.name());
-            pstmt.setString(3, piece.position().key());
+        for (PieceDto piece : pieces) {
+            pstmt.setString(1, piece.getColor().toString());
+            pstmt.setString(2, piece.getName());
+            pstmt.setString(3, piece.getPosition());
             pstmt.setInt(4, chessGameId);
             pstmt.executeUpdate();
         }
@@ -84,5 +83,6 @@ public class PieceDao {
         pstmt.setString(3, pieceDto.getPosition());
         pstmt.setInt(4, chessGameId);
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 }

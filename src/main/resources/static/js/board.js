@@ -7,7 +7,7 @@ const resetButton = document.getElementById("reset");
 
 
 startButton.addEventListener("click", start);
-resetButton.addEventListener("click",reset);
+resetButton.addEventListener("click", reset);
 
 
 function start() {

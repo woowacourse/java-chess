@@ -1,10 +1,12 @@
 package chess.domain.command;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
-import chess.domain.state.Running;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +57,7 @@ public class MoveOnCommandTest {
         boolean result = chessGame.getPiecesByAllPosition()
                 .stream()
                 .anyMatch(piece -> piece.position()
-                                .equals(Position.of("a2")) && piece.isEmpty());
+                        .equals(Position.of("a2")) && piece.isEmpty());
 
         assertThat(result).isTrue();
     }

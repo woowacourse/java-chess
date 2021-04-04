@@ -104,6 +104,6 @@ public abstract class Running implements State {
         if (pieces.isAliveAllKings()) {
             return this;
         }
-        return new End(pieces ,color);
+        return new End(pieces, color);
     }
 }

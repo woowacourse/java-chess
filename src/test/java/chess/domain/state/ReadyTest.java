@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
-import chess.domain.piece.info.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

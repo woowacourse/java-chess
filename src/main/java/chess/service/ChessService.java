@@ -14,14 +14,11 @@ import chess.dto.PieceDto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChessService {
     private final ChessGameDao chessGameDao;
     private final PieceDao pieceDao;
-    private final Map<Integer, ChessGame> chessGames = new HashMap<>();
 
     public ChessService() {
         this.chessGameDao = new ChessGameDao();
@@ -31,8 +28,8 @@ public class ChessService {
     public void generateChessGame() throws SQLException {
         ChessGame chessGame = generateNewChessGame();
         int chessGameId = chessGameDao.insertChessGameReturnId(chessGame);
-        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
-        chessGames.put(chessGameId, chessGame);
+        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
     }
 
     private ChessGame generateNewChessGame() {
@@ -82,8 +79,9 @@ public class ChessService {
 
     public void resetChessGame(int chessGameId) throws SQLException {
         ChessGame chessGame = generateNewChessGame();
+        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         chessGameDao.deleteChessGameById(chessGameId);
-        chessGameDao.insertChessGame(chessGameId, chessGame);
-        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
+        chessGameDao.insertChessGameById(chessGameId, chessGameDto.getTurn().name(), chessGameDto.isFinish());
+        pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
     }
 }
