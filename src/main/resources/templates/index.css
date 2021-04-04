@@ -1,0 +1,48 @@
+/* black #34495E
+white #CCCCCC
+more black #263238
+more white #95A5A6
+gold #FFCA28
+*/
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.chessBoard {
+  display: grid;
+  grid-template-rows: repeat(8, 5rem);
+  grid-template-columns: repeat(8, 5rem);
+  border: 5px solid #e8a32d;
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+}
+
+.square.black {
+  background-color: #FFF3E0;
+}
+
+.square.white {
+  background-color: #a08074;
+}
+
+.square img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+}
