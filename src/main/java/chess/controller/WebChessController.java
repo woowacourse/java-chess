@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.dao.BoardDao;
+import chess.dao.BackupBoardDao;
+import chess.dao.RoomDao;
 import chess.domain.Game;
 import chess.domain.piece.PieceColor;
 import com.google.gson.Gson;
@@ -8,7 +9,6 @@ import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,15 +18,17 @@ public class WebChessController {
     private final static HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
     private final static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    private final RoomDao roomDao = new RoomDao();
+    private final BackupBoardDao backupBoardDao = new BackupBoardDao();
+
     public void run() {
         staticFiles.location("/static");
         Game game = new Game();
         game.init();
 
         get("/", (req, res) -> {
-            BoardDao boardDao = new BoardDao();
             Map<String, Object> model = new HashMap<>();
-            model.put("names", boardDao.findRoomNames());
+            model.put("names", roomDao.findRoomNames());
             return render(model, "index.html");
         });
 
@@ -58,11 +60,10 @@ public class WebChessController {
         post("/move", (req, res) -> {
             try {
                 isStart(game);
-                WebChessController.move(game, req.queryParams("source"), req.queryParams("target"));
+                game.move(req.queryParams("source"), req.queryParams("target"));
                 if (game.isEnd()) {
-                    BoardDao boardDao = new BoardDao();
-                    boardDao.deleteExistingBoard(req.queryParams("roomName"));
-                    boardDao.deleteRoom(req.queryParams("roomName"));
+                    backupBoardDao.deleteExistingBoard(req.queryParams("roomName"));
+                    roomDao.deleteRoom(req.queryParams("roomName"));
                     return req.queryParams("source") + " " + req.queryParams("target") + " " + game.winnerColor().getSymbol();
                 }
             } catch (RuntimeException e) {
@@ -92,19 +93,14 @@ public class WebChessController {
         });
     }
 
-    private void addRoomToDb(String room) throws SQLException {
-        BoardDao boardDao = new BoardDao();
-        boardDao.addRoom(room, PieceColor.WHITE);
+    private void addRoomToDb(String room) {
+        roomDao.addRoom(room, PieceColor.WHITE);
     }
 
     private static void isStart(Game game) {
         if (!game.isStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-    }
-
-    public static void move(Game game, String source, String target) {
-        game.move(source, target);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
