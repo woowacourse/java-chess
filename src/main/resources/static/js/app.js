@@ -6,6 +6,7 @@ const targetKey = document.getElementById("targetKey");
 const tiles = document.getElementsByClassName("tile");
 const whiteCount = document.querySelector(`#whiteScore strong`);
 const blackCount = document.querySelector(`#blackScore strong`);
+const winner = document.querySelector(`#winner`);
 const basePath = 'http://localhost:4567';
 let isEnd = true;
 
@@ -23,8 +24,9 @@ end.addEventListener("click", () => {
                 chessName: localStorage.getItem("name"),
                 isGameOver: isEnd
             }
-        }).then(
-        ).catch(error => console.log(error));
+        }).then(() => {
+            loadGame()
+        }).catch(error => console.log(error));
         alert("이 게임 끝났습니다.");
     }
 });
@@ -39,6 +41,17 @@ const loadGame = () => {
     axios.get(basePath + '/games/' + localStorage.getItem("name"))
         .then(responsePieces => {
             reRangeBoard(responsePieces)
+            if (responsePieces.data.isGameOver) {
+                let winnerNode = winner.querySelector("strong");
+                if (responsePieces.data.winner === "BLANK") {
+                    winnerNode.innerText = "무승부";
+                    alert("무승부!");
+                } else {
+                    winnerNode.innerText = responsePieces.data.winner;
+                    alert("승리자는" + responsePieces.data.winner);
+                }
+                winner.style.visibility = "visible";
+            }
         })
         .catch(error => alert(error));
 };

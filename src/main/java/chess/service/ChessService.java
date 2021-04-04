@@ -62,7 +62,7 @@ public class ChessService {
         ChessGame chessGame = ChessGame.newGame();
         Chess chess = new Chess(request.getName());
         chessDao.save(chess);
-        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver());
+        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), chessGame.isGameOver(), chess.getWinnerColor());
     }
 
     public GameStatusDto loadChess(final String chessName) {
@@ -73,7 +73,7 @@ public class ChessService {
         for (Movement movement : movements) {
             chessGame.moveByTurn(Position.find(movement.getSourcePosition()), Position.find(movement.getTargetPosition()));
         }
-        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), !chess.isRunning());
+        return new GameStatusDto(chessGame.getAllPieces(), chessGame.calculateScoreWeb(), !chess.isRunning(), chess.getWinnerColor());
     }
 
     private Chess findChessByName(final String chessName) {
