@@ -15,7 +15,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebChessController {
-    private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private final static HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+    private final static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public void run() {
         staticFiles.location("/static");
@@ -107,6 +108,6 @@ public class WebChessController {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 }
