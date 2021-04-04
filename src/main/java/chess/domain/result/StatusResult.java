@@ -46,7 +46,7 @@ public final class StatusResult implements Result {
     }
 
     private String scoreMessage(final Color color, final Score totalScore) {
-        return color.getName() + "의 점수는 " + totalScore + "입니다.\n";
+        return String.format("%s 의 점수는 %s입니다\n", color.getName(), totalScore.toString());
     }
 
     private Score totalScore(final Color color) {
