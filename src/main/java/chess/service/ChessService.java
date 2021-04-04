@@ -86,6 +86,10 @@ public final class ChessService {
         return new ChessResult(chessGame.board());
     }
 
+    public boolean isGameOver() {
+        return chessGame.isGameOver();
+    }
+
     public void restart() {
         chessGame = new ChessGame();
         try {

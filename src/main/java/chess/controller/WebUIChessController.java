@@ -42,6 +42,10 @@ public final class WebUIChessController {
 
         get("/result", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
+
+            if (!chessService.isGameOver()) {
+                return render(model, "index.html");
+            }
             final ChessResult chessResult = chessService.chessResult();
             model.put("opposite", chessResult.winner().oppositeTeamName());
             model.put("winner", chessResult.winner().teamName());
