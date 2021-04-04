@@ -46,8 +46,6 @@ public class GameDao {
 
     public void updateGame(String jsonData, int roomNumber) throws SQLException {
         String query = "UPDATE game SET jsondata = ? WHERE gameid=?";
-        System.out.println("업데이트 쿼리문 !!! : " + query);
-        System.out.println("업데이트 데이터 : " + jsonData);
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, jsonData);
         pstmt.setInt(2, roomNumber);
@@ -94,7 +92,6 @@ public class GameDao {
         String query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name ='game' AND table_schema = DATABASE()";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
-
         if (!rs.next()) throw new SQLException();
         return rs.getInt(1) - 1;
     }
