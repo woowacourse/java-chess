@@ -85,6 +85,10 @@ public abstract class Piece {
 		return color.getColor();
 	}
 
+	public String getPosition() {
+		return position.getPosition();
+	}
+
 	public abstract boolean isMovable(ChessBoard chessBoard, Direction direction, Position targetPosition);
 
 	public abstract List<Direction> directions();

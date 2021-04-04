@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.database.room.Room;
+import chess.database.room.RoomDAO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.feature.Color;
@@ -8,15 +10,11 @@ import chess.domain.game.ChessGame;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.Running;
 import chess.domain.piece.Piece;
-import chess.database.room.Room;
-import chess.database.room.RoomDAO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WebUIChessController {
     public static final Gson gson = new Gson();
@@ -31,8 +29,9 @@ public class WebUIChessController {
             return new Response(chessGame, roomId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
             Response response = new Response(409);
-            response.add("alert", "는 이미 존재하는 방입니다.");
+            response.add("alert", roomId + "는 이미 존재하는 방입니다.");
             return response;
         }
     }
@@ -68,7 +67,7 @@ public class WebUIChessController {
         JsonObject roomJson = gson.fromJson(request, JsonObject.class);
         String id = roomJson.get("room_id").getAsString();
         String turn = roomJson.get("turn").getAsString();
-        JsonObject state = roomJson.get("state").getAsJsonObject();
+        String state = roomJson.get("state").getAsString();
         return new Room(id, turn, state);
     }
 
@@ -87,37 +86,36 @@ public class WebUIChessController {
 
     private void setChessGame(Room room) {
         ChessBoard chessBoard = new ChessBoard();
-        JsonObject stateJson = room.getState();
         Color turn = Color.convert(room.getTurn());
-        for (String key : stateJson.keySet()) {
-            Piece piece = getPiece(stateJson, key);
-            chessBoard.replace(Position.of(key), piece);
+        String state = room.getState();
+        JsonObject stateJson = gson.fromJson(state, JsonObject.class);
+        for (String position : stateJson.keySet()) {
+            Piece piece = getPiece(stateJson, position);
+            chessBoard.replace(Position.of(position), piece);
         }
         chessGame = new ChessGame(chessBoard, turn, new Running());
     }
 
-    private Piece getPiece(JsonObject stateJson, String key) {
-        JsonObject pieceJson = gson.fromJson(stateJson.get(key), JsonObject.class);
+    private Piece getPiece(JsonObject stateJson, String position) {
+        JsonObject pieceJson = gson.fromJson(stateJson.get(position), JsonObject.class);
         String type = pieceJson.get("type").getAsString();
         String color = pieceJson.get("color").getAsString();
 
         Type pieceType = Type.convert(type);
-        return pieceType.createPiece(Position.of(key), Color.convert(color));
+        return pieceType.createPiece(Position.of(position), Color.convert(color));
     }
 
-    public Response getSavedRooms() {
+    public Response getAllSavedRooms() {
         try {
-            Map<String, Object> model = new HashMap<>();
-            model.put("rooms", roomDAO.getAllRoom());
             Response response = new Response();
             response.add("rooms", roomDAO.getAllRoom());
             return response;
         } catch (Exception e) {
-            return new Response();
+            return new Response(502);
         }
     }
 
-    public Response resetGameState() {
+    public Response resetGameAsReadyState() {
         initializeChessBoard();
         return new Response();
     }

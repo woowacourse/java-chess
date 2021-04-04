@@ -6,7 +6,6 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class WebUIChessApplication {
         WebUIChessController webUIChessController = new WebUIChessController();
 
         get("/", (req, res) -> {
-            Response response = webUIChessController.resetGameState();
+            Response response = webUIChessController.resetGameAsReadyState();
             return render(response.getModel(), "index.html");
         });
 
@@ -30,6 +29,7 @@ public class WebUIChessApplication {
             Response response = webUIChessController.createRoom(roomId);
             if (response.isNotSuccessful()) {
                 res.status(response.getHttpStatus());
+                return render(response.getModel(), "index.html");
             }
             return render(response.getModel(), "game.html");
         });
@@ -44,7 +44,10 @@ public class WebUIChessApplication {
         });
 
         get("/save", (req, res) -> {
-            Response response = webUIChessController.getSavedRooms();
+            Response response = webUIChessController.getAllSavedRooms();
+            if (response.isNotSuccessful()) {
+                res.status(response.getHttpStatus());
+            }
             return render(response.getModel(), "repository.html");
         });
 

@@ -5,11 +5,11 @@ import com.google.gson.JsonObject;
 import java.util.Objects;
 
 public class Room {
-    private String roomId;
-    private String turn;
-    private JsonObject state;
+    private final String roomId;
+    private final String turn;
+    private final String state;
 
-    public Room(String roomId, String turn, JsonObject state) {
+    public Room(String roomId, String turn, String state) {
         this.roomId = roomId;
         this.turn = turn;
         this.state = state;
@@ -23,7 +23,7 @@ public class Room {
         return turn;
     }
 
-    public JsonObject getState() {
+    public String getState() {
         return state;
     }
 

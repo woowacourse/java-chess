@@ -5,9 +5,14 @@ import chess.domain.feature.Color;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
 import chess.domain.piece.Piece;
+import chess.dto.PieceDTO;
+import chess.dto.ResultDTO;
+import chess.dto.TurnDTO;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class Response {
     private static final int HTTP_STATUS_SUCCESSFUL = 200;
@@ -43,15 +48,15 @@ public class Response {
     private Map<String, Object> pieceMoveModelToRender(ChessGame chessGame) {
         Map<String, Object> model = new HashMap<>();
         Color turn = chessGame.getTurn();
-        model.put("turn", turn);
+        model.put("turn", new TurnDTO(turn));
 
         Map<Position, Piece> chessBoard = chessGame.getChessBoardAsMap();
         for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
-            model.put(entry.getKey().getPosition(), entry.getValue());
+            model.put(entry.getKey().getPosition(), new PieceDTO(entry.getValue()));
         }
 
         Result result = chessGame.result();
-        model.put("result", result);
+        model.put("result", new ResultDTO(result));
         return model;
     }
 

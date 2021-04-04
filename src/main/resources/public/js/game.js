@@ -9,7 +9,6 @@ for (let i = 0; i < $squares.length; i++) {
 }
 
 function dragstart_handler(event) {
-    console.log(event.target.parentNode.id)
     event.dataTransfer.setData("text/plain", event.target.parentNode.id);
     event.dataTransfer.dropEffect = "move";
 }
@@ -25,7 +24,6 @@ function drop_handler(event) {
     const target = event.target.parentNode.id;
 
     const moveCommand = "move " + source + " " + target;
-    console.log(moveCommand)
     sendMoveRequest(moveCommand)
 }
 
@@ -94,7 +92,6 @@ function saveGame() {
         turn: document.querySelector('#turn').firstElementChild.className,
         state: createStateJson(),
     };
-    console.log(params)
     const http = new XMLHttpRequest();
     const url = '/game/save';
 
