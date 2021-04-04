@@ -9,7 +9,6 @@ async function getBoard() {
 async function init() {
   const $chessBoard = document.querySelector('.chessBoard')
   const chessBoard = await getBoard();
-  console.log(chessBoard)
   chessBoard.map((board) => {
     $chessBoard.insertAdjacentHTML('beforeend', boardTemplate(board.position, board.piece))
   })
