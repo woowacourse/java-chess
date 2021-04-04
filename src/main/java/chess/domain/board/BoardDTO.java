@@ -1,36 +1,36 @@
 package chess.domain.board;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import chess.domain.chess.Chess;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceDTO;
 import chess.domain.position.Position;
 
 public class BoardDTO {
 
-    public static final String DELIMITER = "_";
     private static final char START_FILE_CHARACTER = 'a';
 
-    private final Map<String, String> pieceDTOs;
+    private final List<PieceDTO> pieceDTOS;
 
-    public BoardDTO(Map<String, String> pieceDTOs) {
-        this.pieceDTOs = pieceDTOs;
+    public BoardDTO(List<PieceDTO> pieceDTOS) {
+        this.pieceDTOS = pieceDTOS;
     }
 
     public static BoardDTO from(Chess chess) {
-        final Map<String, String> pieceDTOs = new HashMap<>();
-        Map<Position, Piece> board = chess.getBoard()
+        final List<PieceDTO> pieceDTOS = new ArrayList<>();
+        final Map<Position, Piece> board = chess.getBoard()
                                           .getBoard();
         for (Map.Entry<Position, Piece> entry : board.entrySet()) {
             String position = getPosition(entry);
-            String piece = entry.getValue()
-                                .getColor() + DELIMITER + entry.getValue()
-                                                               .getName();
-            pieceDTOs.put(position, piece);
+            String color = entry.getValue().getColor().color();
+            String name = entry.getValue().getName();
+            pieceDTOS.add(new PieceDTO(position, color, name));
         }
-        return new BoardDTO(pieceDTOs);
+        return new BoardDTO(pieceDTOS);
     }
 
     private static String getPosition(Map.Entry<Position, Piece> entry) {
@@ -41,7 +41,7 @@ public class BoardDTO {
         return Character.toString(file) + rank;
     }
 
-    public Set<Map.Entry<String, String>> getPieceDTOs() {
-        return pieceDTOs.entrySet();
+    public List<PieceDTO> getPieceDTOS() {
+        return pieceDTOS;
     }
 }

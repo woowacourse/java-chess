@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.stream.Collectors.counting;
@@ -10,9 +11,9 @@ import chess.domain.chess.Status;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceDTO;
+import chess.domain.piece.PieceFactory;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
-import javafx.geometry.Pos;
 
 public class Board {
 
@@ -30,12 +31,14 @@ public class Board {
     }
 
     public static Board from(BoardDTO boardDTO) {
+        final Map<Position, Piece> board = new HashMap<>();
         for (PieceDTO pieceDTO : boardDTO.getPieceDTOS()) {
             Color color = Color.valueOf(pieceDTO.getColor());
             Position position = Position.from(pieceDTO.getPosition());
-//            Piece piece = Piece.from(color, pieceDTO.getName());
+            Piece piece = PieceFactory.create(pieceDTO.getName(), color);
+            board.put(position, piece);
         }
-        return null;
+        return new Board(board);
     }
 
     public Map<Position, Piece> getBoard() {
