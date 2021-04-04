@@ -56,9 +56,7 @@ public class ChessGameService {
 
     public ScoreResponseDto getScore(ScoreRequestDto scoreRequestDto)
         throws IOException, SQLException {
-        System.out.println(scoreRequestDto.getGameId());
         ChessGame chessGame = chessGameDao.selectByGameId(scoreRequestDto.getGameId());
-        System.out.println();
         return new ScoreResponseDto(chessGame.score(Color.BLACK), chessGame.score(Color.WHITE));
     }
 

@@ -23,10 +23,6 @@
   margin-left: -3px;
 }
 
-.chess-board-cell div {
-/ / border: 5 px solid red;
-}
-
 .chess-game-move-button {
   position: absolute;
   top: 840px;
