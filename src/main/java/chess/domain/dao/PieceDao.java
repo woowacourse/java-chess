@@ -34,7 +34,6 @@ public final class PieceDao {
     }
 
     public void save(final Map<Position, Piece> pieces) throws SQLException {
-        deleteAll();
         for (final Position position : pieces.keySet()) {
             savePiece(position, pieces.get(position));
         }

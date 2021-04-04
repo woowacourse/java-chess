@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class PieceFactory {
 
     private static final Map<String, Piece> PIECES = new HashMap<>();

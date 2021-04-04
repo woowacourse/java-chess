@@ -25,7 +25,6 @@ public final class BoardDao {
     }
 
     public void save(final BoardDto boardDto) throws SQLException {
-        deleteAll();
         try (final Connection conn = ConnectionSetup.getConnection()) {
             final String query = "INSERT INTO board VALUES (?, ?)";
             final PreparedStatement pstmt = conn.prepareStatement(query);
