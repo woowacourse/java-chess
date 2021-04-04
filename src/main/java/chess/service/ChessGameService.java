@@ -53,9 +53,11 @@ public class ChessGameService {
         return new ResponseDTO(true, gson.toJson(movedChessGameDTO), "게임을 종료 했습니다.");
     }
 
-    public ResponseDTO selectPiece(String gameId, String selected) {
+    public ResponseDTO selectPiece(String roomId, String selected) {
         Position selectedPosition = Position.of(selected);
-        ChessGameDTO chessGameDTO = gson.fromJson(chessRepository.loadChessGame(gameId), ChessGameDTO.class);
+        RoomDTO roomDTO = chessRepository.findRoomFromId(roomId);
+        String chessGameData = chessRepository.loadChessGame(roomDTO.getGameId());
+        ChessGameDTO chessGameDTO = gson.fromJson(chessGameData, ChessGameDTO.class);
         ChessGame chessGame = createChessGame(chessGameDTO);
         boolean havePiece = chessGame.havePieceInCurrentTurn(selectedPosition);
 
@@ -65,16 +67,19 @@ public class ChessGameService {
         return new ResponseDTO(false, "", "잘못 선택 하셨습니다.");
     }
 
-    public ResponseDTO moveChessGame(String gameId, String selected, String target) {
+    public ResponseDTO moveChessGame(String roomId, String selected, String target) {
         Position selectedPosition = Position.of(selected);
         Position targetPosition = Position.of(target);
 
-        ChessGameDTO chessGameDTO = gson.fromJson(chessRepository.loadChessGame(gameId), ChessGameDTO.class);
+        RoomDTO roomDTO = chessRepository.findRoomFromId(roomId);
+        System.out.println(roomDTO);
+        String chessGameData = chessRepository.loadChessGame(roomDTO.getGameId());
+        ChessGameDTO chessGameDTO = gson.fromJson(chessGameData, ChessGameDTO.class);
         ChessGame chessGame = createChessGame(chessGameDTO);
         boolean isSuccess = chessGame.move(selectedPosition, targetPosition);
         if (isSuccess) {
             ChessGameDTO movedChessGameDTO = createChessGameDTO(chessGame);
-            chessRepository.saveChessGame(gameId, gson.toJson(movedChessGameDTO));
+            chessRepository.saveChessGame(roomDTO.getGameId(), gson.toJson(movedChessGameDTO));
             return new ResponseDTO(true, gson.toJson(movedChessGameDTO), "움직였습니다.");
         }
         return new ResponseDTO(false, "", "움직일 수 없습니다.");

@@ -34,4 +34,14 @@ public class RoomDTO {
     public String getGameId() {
         return gameId;
     }
+
+    @Override
+    public String toString() {
+        return "RoomDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pw='" + pw + '\'' +
+                ", gameId='" + gameId + '\'' +
+                '}';
+    }
 }

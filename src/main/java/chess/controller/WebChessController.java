@@ -41,14 +41,16 @@ public class WebChessController {
         });
 
         get("/selectPiece", (req, res) -> {
+            String id = req.queryParams("id");
             String selected = req.queryParams("position");
-            return gson.toJson(chessGameService.selectPiece("1", selected));
+            return gson.toJson(chessGameService.selectPiece(id, selected));
         });
 
         get("/movePiece", (req, res) -> {
+            String id = req.queryParams("id");
             String selected = req.queryParams("selected");
             String target = req.queryParams("target");
-            return gson.toJson(chessGameService.moveChessGame("1", selected, target));
+            return gson.toJson(chessGameService.moveChessGame(id, selected, target));
         });
 
         post("/createRoom", (req, res) -> {

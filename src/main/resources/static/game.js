@@ -77,7 +77,7 @@ for (let i = 0; i < tiles.length; i++) {
 
 function selectPiece(target) {
     let position = target.getAttribute('id');
-    axios.get('/selectPiece?position=' + position)
+    axios.get('/selectPiece?id=' + roomId + '&position=' + position)
         .then(function (response) {
             console.log(response);
             let data = response.data;
@@ -94,7 +94,7 @@ function selectPiece(target) {
 function movePiece(target) {
     console.log('movePiece() called');
     let selectedPiece = document.getElementsByClassName('selected-piece')[0];
-    axios.get('/movePiece?selected=' + selectedPiece.id + '&target=' + target.id)
+    axios.get('/movePiece?id=' + roomId + '&selected=' + selectedPiece.id + '&target=' + target.id)
         .then(function (response) {
             let data = response.data;
             if (data.success) {
