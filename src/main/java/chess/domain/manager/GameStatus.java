@@ -1,4 +1,4 @@
-package chess.manager;
+package chess.domain.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
@@ -63,11 +63,11 @@ public class GameStatus {
 
     public Owner judgeWinner() {
         if (whiteScore.isHigherThan(blackScore)) {
-            return Owner.BLACK;
+            return Owner.WHITE;
         }
 
         if (blackScore.isHigherThan(whiteScore)) {
-            return Owner.WHITE;
+            return Owner.BLACK;
         }
         return Owner.NONE;
     }

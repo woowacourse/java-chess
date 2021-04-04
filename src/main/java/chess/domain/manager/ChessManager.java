@@ -1,4 +1,4 @@
-package chess.manager;
+package chess.domain.manager;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
