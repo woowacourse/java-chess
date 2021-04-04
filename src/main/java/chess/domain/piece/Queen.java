@@ -8,13 +8,13 @@ import chess.domain.feature.Type;
 import java.util.List;
 
 public class Queen extends FlexibleDistancePiece {
-	public Queen(Color color, Position position) {
-		super(color, position);
-		this.type = Type.QUEEN;
-	}
+    public Queen(Color color, Position position) {
+        super(color, position);
+        this.type = Type.QUEEN;
+    }
 
-	@Override
-	public List<Direction> directions() {
-		return Direction.everyDirection();
-	}
+    @Override
+    public List<Direction> directions() {
+        return Direction.everyDirection();
+    }
 }

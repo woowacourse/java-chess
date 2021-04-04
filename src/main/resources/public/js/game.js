@@ -110,7 +110,7 @@ function saveGame() {
 }
 
 function createStateJson() {
-    const status  = document.querySelectorAll('td')
+    const status = document.querySelectorAll('td')
     let state = {};
     for (let i = 0; i < status.length; i++) {
         const position = status[i].id;

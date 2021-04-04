@@ -8,13 +8,13 @@ import chess.domain.feature.Type;
 import java.util.List;
 
 public class Bishop extends FlexibleDistancePiece {
-	public Bishop(Color color, Position position) {
-		super(color, position);
-		this.type = Type.BISHOP;
-	}
+    public Bishop(Color color, Position position) {
+        super(color, position);
+        this.type = Type.BISHOP;
+    }
 
-	@Override
-	public List<Direction> directions() {
-		return Direction.diagonalDirection();
-	}
+    @Override
+    public List<Direction> directions() {
+        return Direction.diagonalDirection();
+    }
 }

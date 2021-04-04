@@ -11,8 +11,6 @@ import chess.dto.TurnDTO;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 public class Response {
     private static final int HTTP_STATUS_SUCCESSFUL = 200;
