@@ -36,7 +36,7 @@ public abstract class Pawn extends Piece {
         );
     }
 
-    public static Pawn getInstanceOf(final Owner owner) {
+    public static Pawn of(final Owner owner) {
         if (owner.isBlack()) {
             return BLACK_PAWN;
         }

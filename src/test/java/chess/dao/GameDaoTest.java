@@ -3,12 +3,13 @@ package chess.dao;
 import chess.controller.dto.BoardDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.player.Turn;
+import chess.service.PieceSymbolMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameDaoTest {
 
     private GameDao dao;
-    private BoardParser boardParser = new BoardParser();
     @BeforeEach
     void init(){
         DBConfig dbConfig = new DBConfig();
@@ -29,23 +29,8 @@ class GameDaoTest {
     @Test
     void testInsert(){
         Board board = BoardInitializer.initiateBoard();
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoard(boardParser.parseBoardAsUnicode(board));
         try{
-            dao.addGameStatus(0,"black", boardDto);
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-            fail();
-        }
-    }
-
-    @DisplayName("게임 Room id에 해당하는 가장 최신의 게임 정보를 가져온다.")
-    @Test
-    void testSelect() {
-        try{
-            ResultSet rs = dao.selectLastGameStatus(0);
-            rs.next();
-            assertThat(rs.getString("turn")).isEqualTo("black");
+            dao.save(0, Turn.BLACK, board);
         }catch (SQLException e){
             System.out.println(e.getMessage());
             fail();

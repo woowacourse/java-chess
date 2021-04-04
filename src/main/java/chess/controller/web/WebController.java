@@ -1,13 +1,16 @@
 package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
+import chess.controller.dto.GameDto;
 import chess.controller.dto.ScoreDto;
+import chess.dao.GameDao;
 import chess.domain.piece.Owner;
 import chess.service.ChessGame;
 import chess.service.PieceSymbolMapper;
 import chess.service.RequestHandler;
 import chess.view.web.OutputView;
 
+import java.sql.Connection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -15,21 +18,39 @@ import static spark.Spark.*;
 
 public class WebController {
 
-    private final ChessGame chessGame;
+    private final Connection connection;
+    private ChessGame chessGame;
 
-    public WebController() {
-        chessGame = new ChessGame();
+    public WebController(Connection connection) {
+        this.connection = connection;
     }
 
     public void mapping() {
         init();
+        newGame();
         show();
         move();
     }
 
     private void init() {
-        get("/", (req, res) -> {
-            chessGame.initNewGame();
+        get("/init", (req, res) -> {
+//            final int roomId = Integer.parseInt(req.params(":room"));
+            final GameDao gameDao = new GameDao(connection);
+            final GameDto gameDto = gameDao.load(0);
+
+            chessGame = new ChessGame();
+            chessGame.load(gameDto.getBoard(), gameDto.getTurn());
+            return printGame();
+        });
+    }
+
+    private void newGame(){
+        get("/newGame", (req, res) -> {
+            chessGame = new ChessGame();
+            chessGame.initNew();
+
+            final GameDao gameDao = new GameDao(connection);
+            gameDao.save(0, chessGame.turn(), chessGame.board());
             return printGame();
         });
     }
@@ -50,10 +71,12 @@ public class WebController {
         post("/move", (req, res) -> {
             chessGame.move(RequestHandler.parse(req.body()));
 
+            final GameDao gameDao = new GameDao(connection);
+            gameDao.save(0, chessGame.turn(), chessGame.board());
+
             if (chessGame.isGameEnd()) {
                 return OutputView.printResult(chessGame.winner());
             }
-
             return printGame();
         });
     }

@@ -17,7 +17,7 @@ public class Bishop extends Piece {
         );
     }
 
-    public static Bishop getInstanceOf(final Owner owner) {
+    public static Bishop of(final Owner owner) {
         if (owner.isBlack()) {
             return BLACK_BISHOP;
         }

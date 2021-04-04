@@ -35,7 +35,7 @@ public class Board {
     public void movePiece(final Position source, final Position target) {
         if (reachablePositions(source).contains(target)) {
             board.put(target, board.get(source));
-            board.put(source, Empty.getInstance());
+            board.put(source, Empty.of());
             return;
         }
         throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");

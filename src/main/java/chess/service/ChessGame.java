@@ -16,23 +16,23 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
     private final Players players;
-    private final Board board;
 
-    private boolean isGameEnd;
+    private boolean isGameEnd = false;
+    private Board board;
     private Turn turn;
 
     public ChessGame() {
-        this(BoardInitializer.initiateBoard(), Turn.WHITE);
-    }
-
-    public ChessGame(final Board board, Turn turn){
-        this.board = board;
-        this.turn = turn;
         this.players = new Players();
     }
 
-    public void initNewGame() {
-        isGameEnd = false;
+    public void initNew() {
+        this.board = BoardInitializer.initiateBoard();
+        this.turn = Turn.WHITE;
+    }
+
+    public void load(final Board board, final Turn turn){
+        this.board = board;
+        this.turn = turn;
     }
 
     public void move(final Position source, final Position target) {
@@ -55,6 +55,10 @@ public class ChessGame {
 
     public void validateTurn(final Map<String, String> request) {
         validateTurn(new Position(request.get("source")));
+    }
+
+    public Turn turn(){
+        return turn;
     }
 
     public void changeTurn() {

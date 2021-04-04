@@ -17,7 +17,7 @@ public class Rook extends Piece {
         );
     }
 
-    public static Rook getInstanceOf(final Owner owner) {
+    public static Rook of(final Owner owner) {
         if (owner.isBlack()) {
             return BLACK_ROOK;
         }

@@ -17,7 +17,7 @@ public class Queen extends Piece {
         );
     }
 
-    public static Queen getInstanceOf(final Owner owner) {
+    public static Queen of(final Owner owner) {
         if (owner.isBlack()) {
             return BLACK_QUEEN;
         }

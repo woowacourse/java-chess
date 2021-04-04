@@ -12,8 +12,7 @@ public class WebApplication {
         staticFiles.location("/public");
         DBConfig dbConfig = new DBConfig();
         Connection connection = dbConfig.getConnection();
-
-        WebController webController = new WebController();
+        WebController webController = new WebController(connection);
         webController.mapping();
     }
 }

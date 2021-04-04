@@ -38,7 +38,7 @@ public class Start extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        chessGame.initNewGame();
+        chessGame.initNew();
         OutputView.printBoard(chessGame.board());
     }
 

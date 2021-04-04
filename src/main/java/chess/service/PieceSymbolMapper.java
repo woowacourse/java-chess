@@ -4,35 +4,33 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Owner;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Symbol;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum PieceSymbolMapper {
-    WHITE_KING(Owner.WHITE, Symbol.KING, "&#9812;"),
-    WHITE_QUEEN(Owner.WHITE, Symbol.QUEEN, "&#9813;"),
-    WHITE_ROOK(Owner.WHITE, Symbol.ROOK, "&#9814;"),
-    WHITE_BISHOP(Owner.WHITE, Symbol.BISHOP, "&#9815;"),
-    WHITE_KNIGHT(Owner.WHITE, Symbol.KNIGHT, "&#9816;"),
-    WHITE_PAWN(Owner.WHITE, Symbol.PAWN, "&#9817;"),
-    BLACK_KING(Owner.BLACK, Symbol.KING, "&#9818;"),
-    BLACK_QUEEN(Owner.BLACK, Symbol.QUEEN, "&#9819;"),
-    BLACK_ROOK(Owner.BLACK, Symbol.ROOK, "&#9820;"),
-    BLACK_BISHOP(Owner.BLACK, Symbol.BISHOP, "&#9821;"),
-    BLACK_KNIGHT(Owner.BLACK, Symbol.KNIGHT, "&#9822;"),
-    BLACK_PAWN(Owner.BLACK, Symbol.PAWN, "&#9823;"),
-    EMPTY(Owner.NONE, Symbol.EMPTY, "");
+    WHITE_KING(King.of(Owner.WHITE), "&#9812;"),
+    WHITE_QUEEN(Queen.of(Owner.WHITE), "&#9813;"),
+    WHITE_ROOK(Rook.of(Owner.WHITE), "&#9814;"),
+    WHITE_BISHOP(Bishop.of(Owner.WHITE), "&#9815;"),
+    WHITE_KNIGHT(Knight.of(Owner.WHITE), "&#9816;"),
+    WHITE_PAWN(Pawn.of(Owner.WHITE), "&#9817;"),
+    BLACK_KING(King.of(Owner.BLACK), "&#9818;"),
+    BLACK_QUEEN(Queen.of(Owner.BLACK), "&#9819;"),
+    BLACK_ROOK(Rook.of(Owner.BLACK), "&#9820;"),
+    BLACK_BISHOP(Bishop.of(Owner.BLACK), "&#9821;"),
+    BLACK_KNIGHT(Knight.of(Owner.BLACK), "&#9822;"),
+    BLACK_PAWN(Pawn.of(Owner.BLACK), "&#9823;"),
+    EMPTY(Empty.of(), "");
 
-    private final Owner owner;
-    private final Symbol symbol;
     private final String uniCode;
+    private final Piece piece;
 
-    PieceSymbolMapper(final Owner owner, final Symbol symbol, final String uniCode) {
-        this.owner = owner;
-        this.symbol = symbol;
+    PieceSymbolMapper(final Piece piece, final String uniCode ) {
         this.uniCode = uniCode;
+        this.piece = piece;
     }
 
     public static String[][] parseBoardAsUnicode(final Board board) {
@@ -40,18 +38,39 @@ public enum PieceSymbolMapper {
         for (final Vertical v : Vertical.values()) {
             for (final Horizontal h : Horizontal.values()) {
                 final Piece piece = board.of(new Position(v, h));
-                final String uniCode = parse(piece.owner(), piece.symbol());
+                final String uniCode = parseToUnicode(piece);
                 uniCodeBoard[h.getIndex() - 1][v.getIndex() - 1] = uniCode;
             }
         }
         return uniCodeBoard;
     }
 
-    private static String parse(final Owner owner, final Symbol symbol) {
+    private static String parseToUnicode(final Piece piece) {
         return Arrays.stream(values())
-                .filter(value -> value.owner.equals(owner))
-                .filter(value -> value.symbol.equals(symbol))
-                .map(uniCodeMapper -> uniCodeMapper.uniCode)
+                .filter(value -> value.piece.equals(piece))
+                .map(value -> value.uniCode)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("심볼, 색상 매칭 오류" + piece));
+    }
+
+    public static Board parseToBoard(final String dataLine) {
+        final Map<Position, Piece> board = new HashMap<>();
+
+        final String[] pieces = dataLine.split(",");
+        int index =0;
+        for (final Horizontal h : Horizontal.values()) {
+            for (final Vertical v : Vertical.values()) {
+                board.put(new Position(v,h), parseToPiece(pieces[index]));
+                index++;
+            }
+        }
+        return new Board(board);
+    }
+
+    private static Piece parseToPiece(final String uniCode) {
+        return Arrays.stream(values())
+                .filter(value -> value.uniCode.equals(uniCode))
+                .map(value -> value.piece)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("심볼, 색상 매칭 오류"));
     }
