@@ -8,7 +8,7 @@ import static spark.Spark.staticFiles;
 import chess.domain.ChessResult;
 import chess.domain.JsonTransformer;
 import chess.domain.dto.request.MoveRequest;
-import chess.domain.service.ChessService;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
