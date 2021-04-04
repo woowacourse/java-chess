@@ -16,6 +16,7 @@ function processResponse(responseJsonBody, successScenarioFunction) {
         console.log(responseJsonBody.message);
         return;
     }
+    updateMessage(responseJsonBody.message);
     console.log(responseJsonBody.message);
 }
 
