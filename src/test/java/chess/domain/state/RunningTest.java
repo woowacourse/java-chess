@@ -30,7 +30,6 @@ class RunningTest {
         running = new Running(chessBoard, TeamColor.BLACK);
     }
 
-    //todo: move 테스트코드 작성, result 테스트코드 작성
     @Test
     void move() {
     }

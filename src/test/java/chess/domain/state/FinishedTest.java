@@ -44,8 +44,14 @@ class FinishedTest {
     }
 
     @Test
+    @DisplayName("실행중인지 확인")
     void isRunning() {
         assertFalse(finished.isRunning());
+    }
+
+    @Test
+    @DisplayName("결과 테스트 진행")
+    void result() {
     }
 
     // todo: result 테스트코드 작성하기

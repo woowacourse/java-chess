@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Finished implements GameState {
-    public static final double MINUS_HALF_POINT = -0.5;
 
     private final Map<Position, Piece> chessBoard;
 
@@ -64,13 +63,18 @@ public class Finished implements GameState {
         Score sum = Score.ZERO;
         Map<AlphaColumns, Integer> pawnCount = new HashMap<>();
         for (Map.Entry<Position, Piece> item : chessBoard.entrySet()) {
-            if (item.getValue().getColor() == teamColor && item.getValue().isAlive()) {
-                sum = sum.add(item.getValue().getScore());
-                recordPawns(pawnCount, item);
-            }
+            sum = getScoreWithoutPawnOnLine(teamColor, sum, pawnCount, item);
         }
 
         return sum.add(subtractWhenOnSameLine(pawnCount));
+    }
+
+    private Score getScoreWithoutPawnOnLine(TeamColor teamColor, Score sum, Map<AlphaColumns, Integer> pawnCount, Map.Entry<Position, Piece> item) {
+        if (item.getValue().getColor() == teamColor && item.getValue().isAlive()) {
+            sum = sum.add(item.getValue().getScore());
+            recordPawns(pawnCount, item);
+        }
+        return sum;
     }
 
     private void recordPawns(Map<AlphaColumns, Integer> pawnCount, Map.Entry<Position, Piece> item) {
