@@ -30,7 +30,7 @@ public final class ChessService {
         boardDao = new BoardDao();
     }
 
-    public void init() throws SQLException {
+    public void chessBoardInit() throws SQLException {
         if (pieceDao.load() == null) {
             pieceDao.save(new Board().unwrap());
         }
