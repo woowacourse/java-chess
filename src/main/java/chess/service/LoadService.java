@@ -8,7 +8,7 @@ import spark.Response;
 
 public class LoadService {
 
-    public static Object loadByGameId(String gameId, Response response) {
+    public Object loadByGameId(String gameId, Response response) {
         ChessGame chessGame;
 
         try {

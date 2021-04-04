@@ -6,7 +6,7 @@ import chess.web.dto.MessageDto;
 
 public class EndService {
 
-    public static Object end(String gameId) {
+    public Object end(String gameId) {
         ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
 
         try {

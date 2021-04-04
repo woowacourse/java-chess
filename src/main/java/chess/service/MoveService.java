@@ -12,7 +12,7 @@ import spark.Response;
 public class MoveService {
     private static final String POSITION_FORMAT = "[a-h][1-8]";
 
-    public static Object move(String gameId, Response response, String source, String target) {
+    public Object move(String gameId, Response response, String source, String target) {
         ChessGame chessGame = GameRepository.findByGameIdFromCache(gameId);
 
         validateRightInputs(source, target);
@@ -22,7 +22,7 @@ public class MoveService {
         return executeMove(sourcePosition, targetPosition, chessGame, response);
     }
 
-    private static Object executeMove(Position sourcePosition, Position targetPosition, ChessGame chessGame, Response response) {
+    private Object executeMove(Position sourcePosition, Position targetPosition, ChessGame chessGame, Response response) {
         try {
             chessGame.move(sourcePosition, targetPosition);
         } catch (RuntimeException e) {
@@ -33,7 +33,7 @@ public class MoveService {
         return new GameDto(chessGame);
     }
 
-    private static void validateRightInputs(String source, String target) {
+    private void validateRightInputs(String source, String target) {
         if (isRightPositionFormat(source) && isRightPositionFormat(target)) {
             return;
         }
@@ -41,7 +41,7 @@ public class MoveService {
         throw new CommandFormatException();
     }
 
-    private static Position getPositionFromInput(String input) {
+    private Position getPositionFromInput(String input) {
         String[] inputs = input.split("");
 
         int column = inputs[0].charAt(0) - 'a';
@@ -50,7 +50,7 @@ public class MoveService {
         return new Position(row, column);
     }
 
-    private static boolean isRightPositionFormat(String inputs) {
+    private boolean isRightPositionFormat(String inputs) {
         return inputs.matches(POSITION_FORMAT);
     }
 

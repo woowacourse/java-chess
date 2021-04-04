@@ -7,7 +7,7 @@ import chess.web.dto.StatusDto;
 
 public class StatusService {
 
-    public static Object getStatus(String gameId) {
+    public Object getStatus(String gameId) {
         ChessGame chessGame;
         try {
             chessGame = GameRepository.findByGameIdFromCache(gameId);
