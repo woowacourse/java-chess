@@ -5,10 +5,9 @@
   (이 경우 막혔을 때 예외를 날리면 안 된다고 생각)
 - [x] isKing, isPawn 오버라이드 방식으로 메소드 수정
 - [x] Position isPawnLine -> NumberRows로 비교
-- [ ] TDD, 단위테스트, 통합테스트 학습하고 최대한 꼼꼼하게 작성하기
-- [ ] Position의 유무 다시 체크해보기
-  -> Test code 작성이 어려움..ㅠㅠ 만약 Position을 가지고 있지 않다면 각 말의 이동은 어떻게 체크할 수 있을까?
-
+- [x] TDD, 단위테스트, 통합테스트 학습하고 최대한 꼼꼼하게 작성하기
+- [x] Position의 유무 다시 체크해보기
+  
 # step2
 
 - [x] 웹 UI적용
