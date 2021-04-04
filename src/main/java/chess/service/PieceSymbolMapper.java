@@ -33,11 +33,11 @@ public enum PieceSymbolMapper {
         this.piece = piece;
     }
 
-    public static String[][] parseBoardAsUnicode(final Board board) {
+    public static String[][] parseBoardAsUnicode(final Map<Position, Piece> board) {
         final String[][] uniCodeBoard = new String[8][8];
         for (final Vertical v : Vertical.values()) {
             for (final Horizontal h : Horizontal.values()) {
-                final Piece piece = board.of(new Position(v, h));
+                final Piece piece = board.get(new Position(v, h));
                 final String uniCode = parseToUnicode(piece);
                 uniCodeBoard[h.getIndex() - 1][v.getIndex() - 1] = uniCode;
             }

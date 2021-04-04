@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.controller.dto.RoomStatusDto;
+import chess.controller.dto.RoomDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,16 +24,16 @@ public class RoomDao {
         insertQuery.executeUpdate();
     }
 
-    public List<RoomStatusDto> load() throws SQLException {
+    public List<RoomDto> load() throws SQLException {
         final Statement selectQuery = conn.createStatement();
         final ResultSet rs = selectQuery.executeQuery("SELECT * FROM room_status");
 
-        final List<RoomStatusDto> list = new ArrayList<>();
+        final List<RoomDto> list = new ArrayList<>();
         while(rs.next()){
-            RoomStatusDto roomStatusDto = new RoomStatusDto();
-            roomStatusDto.setName(rs.getString(2));
-            roomStatusDto.setId(rs.getLong(3));
-            list.add(roomStatusDto);
+            RoomDto roomDto = new RoomDto();
+            roomDto.setName(rs.getString(2));
+            roomDto.setId(rs.getLong(3));
+            list.add(roomDto);
         }
         Collections.reverse(list);
         return list;

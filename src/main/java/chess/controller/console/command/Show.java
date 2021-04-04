@@ -1,7 +1,7 @@
 package chess.controller.console.command;
 
 import chess.domain.board.position.Position;
-import chess.service.ChessGame;
+import chess.domain.ChessGame;
 import chess.view.console.OutputView;
 
 public class Show extends Command {

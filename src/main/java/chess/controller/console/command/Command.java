@@ -1,7 +1,7 @@
 package chess.controller.console.command;
 
 import chess.domain.board.position.Position;
-import chess.service.ChessGame;
+import chess.domain.ChessGame;
 
 public abstract class Command {
     private static final String SEPARATOR_OF_PARAMETERS = " ";

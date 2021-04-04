@@ -2,7 +2,7 @@ package chess.controller.console.command;
 
 import chess.controller.console.ScoreDto;
 import chess.domain.board.position.Position;
-import chess.service.ChessGame;
+import chess.domain.ChessGame;
 import chess.domain.piece.Score;
 import chess.domain.player.Player;
 import chess.domain.player.Scores;

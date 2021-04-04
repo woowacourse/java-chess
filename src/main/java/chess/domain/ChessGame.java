@@ -1,4 +1,4 @@
-package chess.service;
+package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
@@ -8,10 +8,7 @@ import chess.domain.player.Players;
 import chess.domain.player.Scores;
 import chess.domain.player.Turn;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessGame {
@@ -53,10 +50,6 @@ public class ChessGame {
         turn.validate(players.ownerOf(source));
     }
 
-    public void validateTurn(final Map<String, String> request) {
-        validateTurn(new Position(request.get("source")));
-    }
-
     public void changeTurn() {
         turn = turn.change();
     }
@@ -65,11 +58,15 @@ public class ChessGame {
         return players.scores(board);
     }
 
-    public List<String> reachablePositions(final Map<String, String> request) {
-        final Position source = new Position(request.get("source"));
-        return board.reachablePositions(source).stream()
-                .map(position -> position.parseAsString())
-                .collect(Collectors.toList());
+    public List<String> reachablePositions(final Position source) {
+        try{
+            validateTurn(source);
+            return board.reachablePositions(source).stream()
+                    .map(position -> position.parseAsString())
+                    .collect(Collectors.toList());
+        }catch (Exception e){
+            return Collections.EMPTY_LIST;
+        }
     }
 
     public Board board() {
@@ -77,7 +74,7 @@ public class ChessGame {
     }
 
     public String[][] unicodeBoard() {
-        return PieceSymbolMapper.parseBoardAsUnicode(board);
+        return board.parseUnicodeBoard();
     }
 
     public void setGameEnd() {

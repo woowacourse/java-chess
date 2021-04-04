@@ -1,5 +1,7 @@
 package chess.service;
 
+import spark.Request;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +15,11 @@ public class RequestHandler {
 
     }
 
-    public static Map<String, String> parse(final String requestQuery) {
+    public static Map<String, String> parse(final Request request) {
         final Map<String, String> queryTable = new HashMap<>();
 
-        for (final String parameter : requestQuery.split(SEPARATOR_OF_PARAMETERS)) {
+        final String requestBody = request.body();
+        for (final String parameter : requestBody.split(SEPARATOR_OF_PARAMETERS)) {
             final String[] info = parameter.split(SEPARATOR_OF_NAME_AND_VALUE);
             final String name = info[INDEX_OF_PARAMETER_NAME];
             final String value = info[INDEX_OF_PARAMETER_VALUE];

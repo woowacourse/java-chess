@@ -45,7 +45,7 @@ public class GameDao {
     // XXX :: Service로 분리하기
     public String boardToText(final Board board) {
         final String separator = ",";
-        final String[][] boardAsUnicode = PieceSymbolMapper.parseBoardAsUnicode(board);
+        final String[][] boardAsUnicode = board.parseUnicodeBoard();
         return Arrays.stream(boardAsUnicode)
                 .flatMap(strings -> Arrays.stream(strings))
                 .collect(Collectors.joining(separator));

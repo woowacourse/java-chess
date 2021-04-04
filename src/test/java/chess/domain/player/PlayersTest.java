@@ -2,7 +2,7 @@ package chess.domain.player;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
-import chess.service.ChessGame;
+import chess.domain.ChessGame;
 import chess.domain.piece.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

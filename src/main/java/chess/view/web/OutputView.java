@@ -1,7 +1,7 @@
 package chess.view.web;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.dto.RoomStatusDto;
+import chess.controller.dto.RoomDto;
 import chess.controller.dto.ScoresDto;
 import chess.controller.dto.WinnerDto;
 import chess.domain.piece.Owner;
@@ -19,15 +19,15 @@ public class OutputView {
 
     }
 
-    public static String printRoomList(List<RoomStatusDto> roomStatusDtos) {
+    public static String printRoomList(List<RoomDto> roomDtos) {
         Map<String, Object> model = new HashMap<>();
-        model.put("list", roomStatusDtos);
+        model.put("list", roomDtos);
         return render(model, "mainPage.html");
     }
 
-    public static String printGame(RoomStatusDto roomStatusDto, BoardDto boardDto, ScoresDto scoresDto) {
+    public static String printGame(RoomDto roomDto, BoardDto boardDto, ScoresDto scoresDto) {
         Map<String, Object> model = new HashMap<>();
-        model.put("room", roomStatusDto);
+        model.put("room", roomDto);
         model.put("board", boardDto);
         model.put("scores", scoresDto);
         return render(model, "chessBoard.html");
