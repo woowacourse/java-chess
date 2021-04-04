@@ -30,15 +30,15 @@ public final class WebUIChessController {
             return render(model, "index.html");
         });
 
-        get("/start", (req, res) -> chessService.start(), jsonTransformer);
+        get("/api/start", (req, res) -> chessService.start(), jsonTransformer);
 
-        post("/move", (req, res) -> {
+        post("/api/move", (req, res) -> {
             final String requests = req.body();
             final MoveRequest moveRequest = gson.fromJson(requests, MoveRequest.class);
             return chessService.move(moveRequest);
         }, jsonTransformer);
 
-        get("/end", (req, res) -> chessService.end(), jsonTransformer);
+        get("/api/end", (req, res) -> chessService.end(), jsonTransformer);
 
         get("/result", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();

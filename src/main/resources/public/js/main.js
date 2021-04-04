@@ -3,7 +3,7 @@ startButton.addEventListener("click", createChessBoard);
 
 async function createChessBoard() {
     startButton.setAttribute("style", "display: none");
-    const response = await fetch("/start")
+    const response = await fetch("/api/start")
     .then(res => res.json())
 
     const responseDto = response.responseDto;
@@ -118,7 +118,7 @@ async function move(sourcePosition, targetPosition) {
         body: JSON.stringify(data)
     };
 
-    const response = await fetch("/move", option)
+    const response = await fetch("/api/move", option)
     .then(res => res.json());
     if (response.code === 400) {
         alert(response.message);
@@ -147,7 +147,7 @@ function changeTurnText() {
 }
 
 async function checkEndGame() {
-    const response = await fetch("/end")
+    const response = await fetch("/api/end")
     .then(res => res.json());
     if (response.code === 212) {
         alert(response.message);
