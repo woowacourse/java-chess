@@ -5,20 +5,22 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
     private static final String WRONG_CHESS_ERROR = "잘못된 체스 이름입니다.";
-    private final List<Piece> pieces = new ArrayList<>();
+    private final List<Piece> pieces;
 
     public Pieces(final Piece... pieces) {
+        this.pieces = new ArrayList<>();
         this.pieces.addAll(Arrays.asList(pieces));
     }
 
+    public Pieces(final List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
     public Pieces() {
+        this.pieces = new ArrayList<>();
     }
 
     public void init() {
@@ -55,14 +57,14 @@ public class Pieces {
 
     public Piece getPieceOf(final Position position) {
         return pieces.stream()
-                     .filter(piece -> piece.hasPosition(position))
-                     .findFirst()
-                     .orElse(new Empty());
+                .filter(piece -> piece.hasPosition(position))
+                .findFirst()
+                .orElse(new Empty());
     }
 
     public boolean hasPieceOf(final Position position) {
         return pieces.stream()
-                     .anyMatch(piece -> piece.hasPosition(position));
+                .anyMatch(piece -> piece.hasPosition(position));
     }
 
     public List<Piece> toList() {
@@ -78,14 +80,14 @@ public class Pieces {
     }
 
     public Piece findPieceByName(String name) {
-        if ("B".equals(name.substring(0,1))) {
+        if ("B".equals(name.substring(0, 1))) {
             return findPieceByColor(Color.BLACK, name.substring(1, 2));
         } else {
             return findPieceByColor(Color.WHITE, name.substring(1, 2));
         }
     }
 
-    private Piece findPieceByColor (Color color, String symbol) {
+    private Piece findPieceByColor(Color color, String symbol) {
         for (Piece piece : pieces) {
             if (piece.isSameColor(color) && piece.getClass() == findPieceBySymbol(symbol)) {
                 return piece;

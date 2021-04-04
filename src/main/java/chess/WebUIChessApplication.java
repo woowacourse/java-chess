@@ -27,8 +27,8 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-           RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
-           return chessService.move(requestDto);
+            RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
+            return chessService.move(requestDto);
         }, jsonTransformer);
 
         post("/board", (req, res) -> {

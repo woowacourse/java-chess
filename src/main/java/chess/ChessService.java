@@ -1,12 +1,12 @@
 package chess;
 
 import chess.dao.PieceDao;
+import chess.domain.Turn;
 import chess.domain.game.Game;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
 import chess.dto.RequestDto;
 import chess.dto.ResponseDto;
 
@@ -17,32 +17,33 @@ import java.util.Map;
 
 public class ChessService {
 
-    private Game game;
     private final PieceDao pieceDao;
+    private Game game;
 
     public ChessService() {
         this.game = new Game();
         this.pieceDao = new PieceDao();
     }
 
-    public void init() throws SQLException{
-        if (pieceDao.load(game.getPieces()) == null) {
+    public void init() throws SQLException {
+        if (pieceDao.load() == null) {
             Pieces pieces = new Pieces();
             pieces.init();
             pieceDao.clear(pieces);
         }
-        final Map<Piece, Position> board = pieceDao.load(game.getPieces());
-
+        final List<Piece> pieces = pieceDao.load();
+        final String turn = pieceDao.findTurn();
+        game = new Game(new Pieces(pieces), new Turn(turn));
     }
 
     public ResponseDto move(RequestDto requestDto) {
-        String from = requestDto.from();;
+        String from = requestDto.from();
         String to = requestDto.to();
         try {
             game.move(Position.from(from), Position.from(to));
             changeStatusData(from, to);
             changeTurn();
-            if(!game.isNotEnd()) {
+            if (!game.isNotEnd()) {
                 return new ResponseDto("300", "끝", game.winner().getColor().name());
             }
             return new ResponseDto("200", "성공", game.currentPlayer().toString());
@@ -53,7 +54,8 @@ public class ChessService {
 
     private void changeStatusData(final String from, final String to) throws SQLException {
         final Pieces pieces = game.getPieces();
-        pieceDao.savePiece(pieces.getPieceOf(Position.from(to)), from);
+        pieceDao.savePiece(to, pieces.getPieceOf(Position.from(to)));
+        pieceDao.deletePiece(from);
     }
 
     public String turn() throws SQLException {
@@ -62,21 +64,19 @@ public class ChessService {
 
     private void changeTurn() throws SQLException {
         pieceDao.updateTurn(game.getTurn());
-        game.getTurn().next();
     }
 
     public Map<String, String> getCurrentBoard() throws SQLException {
-        Map<Piece, Position> board = pieceDao.findPieces(game.getPieces());
+        Map<Position, Piece> board = pieceDao.findPieces(game.getPieces());
         Map<String, String> result = new LinkedHashMap<>();
 
-        for(Piece piece : board.keySet()) {
-            Position position = board.get(piece);
+        for (Position position : board.keySet()) {
             String positionName = position.column().value() + position.row().value();
             String pieceName;
-            if (piece.isSameColor(Color.BLACK)) {
-                pieceName = "B" + piece.display().toUpperCase();
+            if (board.get(position).isSameColor(Color.BLACK)) {
+                pieceName = "B" + board.get(position).display().toUpperCase();
             } else {
-                pieceName = "W" + piece.display().toUpperCase();
+                pieceName = "W" + board.get(position).display().toUpperCase();
             }
 
             result.put(positionName, pieceName);
@@ -86,7 +86,6 @@ public class ChessService {
 
     public void initChessBoard() throws SQLException {
         game = new Game();
-        pieceDao.delete("pieces");
-        pieceDao.delete("turn");
+        pieceDao.clear(game.getPieces());
     }
 }

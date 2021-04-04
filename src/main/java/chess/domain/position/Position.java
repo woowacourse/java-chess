@@ -7,16 +7,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Position {
-    private static final Map<String, Position> CACHE = new HashMap<>();
     public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
-    private final Column column;
-    private final Row row;
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
     static {
         for (final Column x : Column.values()) {
             cacheByColumn(x);
         }
     }
+
+    private final Column column;
+    private final Row row;
 
     private Position(final Column column, final Row row) {
         this.column = column;
@@ -80,16 +81,16 @@ public class Position {
 
     private List<Position> betweenPositionsHasSameColumn(final Position to) {
         return row.getBetween(to.row)
-                  .stream()
-                  .map(row -> Position.of(column, row))
-                  .collect(Collectors.toList());
+                .stream()
+                .map(row -> Position.of(column, row))
+                .collect(Collectors.toList());
     }
 
     private List<Position> betweenPositionsHasSameRow(final Position to) {
         return column.getBetween(to.column)
-                     .stream()
-                     .map(column -> Position.of(column, row))
-                     .collect(Collectors.toList());
+                .stream()
+                .map(column -> Position.of(column, row))
+                .collect(Collectors.toList());
     }
 
     private List<Position> betweenPositionsByDiagonal(final Position to) {

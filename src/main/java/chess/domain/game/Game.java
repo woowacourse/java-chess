@@ -2,14 +2,9 @@ package chess.domain.game;
 
 import chess.domain.Player;
 import chess.domain.Turn;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
-import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
-
-import java.util.*;
 
 public class Game {
     private final Pieces pieces;
@@ -21,6 +16,11 @@ public class Game {
         pieces.init();
     }
 
+    public Game(Pieces pieces, Turn turn) {
+        this.pieces = pieces;
+        this.turn = turn;
+    }
+
     public void move(final Position from, final Position to) {
         final Player player = turn.player();
         player.move(from, to, pieces);
@@ -29,9 +29,9 @@ public class Game {
 
     public boolean isNotEnd() {
         return pieces.toList()
-                     .stream()
-                     .filter(Piece::isKing)
-                     .count() == 2;
+                .stream()
+                .filter(Piece::isKing)
+                .count() == 2;
     }
 
     public Player currentPlayer() {

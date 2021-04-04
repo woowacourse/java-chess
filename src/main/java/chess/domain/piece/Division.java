@@ -31,7 +31,7 @@ public abstract class Division extends Basis {
     public String display() {
         if (Color.BLACK.equals(color)) {
             return super.display()
-                        .toUpperCase();
+                    .toUpperCase();
         }
         return super.display();
     }

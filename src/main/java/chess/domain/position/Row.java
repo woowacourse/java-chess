@@ -15,8 +15,8 @@ public enum Row {
     EIGHT("8");
 
     public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
+    private static final Row[] rows = values();
     private final String value;
-    private static Row[] rows = values();
 
     Row(String value) {
         this.value = value;
@@ -38,7 +38,7 @@ public enum Row {
         final int end = Math.max(this.ordinal(), to.ordinal());
         final List<Row> betweenRows = new ArrayList<>();
         IntStream.range(start + 1, end)
-                 .forEach(x -> betweenRows.add(rows[x]));
+                .forEach(x -> betweenRows.add(rows[x]));
         return betweenRows;
     }
 
