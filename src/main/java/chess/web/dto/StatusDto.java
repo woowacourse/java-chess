@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.web.dto;
 
 public class StatusDto {
 

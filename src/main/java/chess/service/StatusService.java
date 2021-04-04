@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.controller.dto.MessageDto;
-import chess.controller.dto.StatusDto;
+import chess.web.dto.MessageDto;
+import chess.web.dto.StatusDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
 

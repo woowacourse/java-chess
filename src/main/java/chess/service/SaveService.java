@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.controller.dto.MessageDto;
+import chess.web.dto.MessageDto;
 import chess.domain.game.ChessGame;
 import chess.repository.GameRepository;
 import spark.Response;

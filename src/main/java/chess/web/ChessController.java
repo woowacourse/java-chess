@@ -1,6 +1,6 @@
-package chess.controller;
+package chess.web;
 
-import chess.controller.dto.MoveDto;
+import chess.web.dto.MoveDto;
 import chess.service.*;
 import com.google.gson.Gson;
 import spark.Request;
