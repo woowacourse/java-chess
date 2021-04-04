@@ -56,8 +56,11 @@ public class WebChessController {
 
         get("/enterRoom", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("roomIdx", req.queryParams("id"));
             return render(model, "game.html");
+        });
+
+        get("/getTotalRoom", (req, res) -> {
+            return gson.toJson(chessGameService.getTotalRoom());
         });
 
     }

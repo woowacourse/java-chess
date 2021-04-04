@@ -88,13 +88,19 @@ public class ChessDAO {
         pstmt.setInt(3, gameID);
         pstmt.executeUpdate();
 
-        query = "SELECT * FROM room";
-        rs = pstmt.executeQuery(query);
+        return getTotalRoom();
+    }
+
+    public RoomsDTO getTotalRoom() throws SQLException {
+        String query = "SELECT * FROM room";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery(query);
         ArrayList<RoomDTO> roomDTOs = new ArrayList<>();
 
         while (rs.next()) {
             roomDTOs.add(new RoomDTO(rs.getInt("room_id"), rs.getString("room_name"), rs.getString("room_pw")));
         }
+
         return new RoomsDTO(roomDTOs);
     }
 

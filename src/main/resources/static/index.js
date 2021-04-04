@@ -1,5 +1,19 @@
 let roomListData = [];
 const btnCreate = document.getElementById('btn-game-create')
+
+getTotalRoom();
+function getTotalRoom() {
+    axios.get('/getTotalRoom')
+        .then(function (response) {
+            let data = response.data;
+            if (data.success) {
+                refreshRoomList(data.data)
+            } else {
+                alert(data.message)
+            }
+        })
+}
+
 btnCreate.addEventListener('click', function (e) {
     let name = prompt("사용자 이름을 입력해 주세요.");
     let pw = prompt("비밀번호를 입력해 주세요");
@@ -23,10 +37,8 @@ roomList.addEventListener('click', function (e) {
 })
 
 function refreshRoomList(data) {
-    console.log(data);
     let rooms = JSON.parse(data);
     roomListData = rooms.roomDTOList;
-    console.log(roomListData);
     let list = document.getElementById("list-chess-game");
     list.innerHTML = "";
     for (let i = 0; i < roomListData.length; i++) {

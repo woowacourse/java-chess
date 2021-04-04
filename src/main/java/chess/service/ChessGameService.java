@@ -93,6 +93,11 @@ public class ChessGameService {
         return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 생성하였습니다.");
     }
 
+    public ResponseDTO getTotalRoom() {
+        RoomsDTO roomsDTO = chessRepository.getTotalRoom();
+        return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 가져왔습니다.");
+    }
+
     private ChessGame createChessGame(ChessGameDTO chessGameDTO) {
         System.out.println("createChessGame() called.");
         System.out.println(gson.toJson(chessGameDTO));

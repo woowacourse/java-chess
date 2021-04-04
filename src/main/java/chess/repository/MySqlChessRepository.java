@@ -54,6 +54,17 @@ public class MySqlChessRepository implements ChessRepository {
     }
 
     @Override
+    public RoomsDTO getTotalRoom() {
+        try {
+            return chessDAO.getTotalRoom();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
     public RoomDTO findRoomFromId(final String roomId) {
         try {
             return chessDAO.findRoomFromId(roomId);
