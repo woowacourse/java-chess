@@ -78,13 +78,18 @@ async function move(from, to) {
     if (response.code === "200") {
         changeImage(from, to);
         await changeTurn();
-    } else if (response.code === "300") {
+        return;
+    }
+    if (response.code === "300") {
         changeImage(from, to);
         const currentTurn = document.querySelector('.turn');
         currentTurn.textContent = response.turn;
         alert(response.message + "가 승리했습니다!");
-    } else if (response.code === "400") {
+        return;
+    }
+    if (response.code === "400") {
         alert(response.message);
+        return;
     }
 }
 
