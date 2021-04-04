@@ -1,4 +1,3 @@
-// window.onload = initializeChessBoard;
 window.onload = setUpStartButton;
 let is_source_clicked = false;
 let source = "";
@@ -14,9 +13,13 @@ function start() {
 }
 
 function initializeChessBoard() {
+    const chessGameId = getParameterByName("id");
     axios({
         method: 'get',
         url: '/data',
+        params: {
+            id: chessGameId
+        }
     }).then(function (response) {
         const jsonData = JSON.parse(response.data.jsonData);
         const pieces = jsonData.pieces;
@@ -99,4 +102,11 @@ function updateBoard(jsonData) {
 function setScoreByTeam(totalScoreByColor) {
     document.getElementById("WHITE").innerText = "WHITE " + totalScoreByColor.WHITE;
     document.getElementById("BLACK").innerText = "BLACK " + totalScoreByColor.BLACK;
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

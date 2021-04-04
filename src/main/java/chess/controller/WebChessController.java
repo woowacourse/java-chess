@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.ChessGameFactory;
 import chess.domain.command.Command;
 import chess.domain.command.MoveOnCommand;
 import chess.domain.command.StartOnCommand;
@@ -50,6 +51,10 @@ public class WebChessController {
         });
 
         get("/data", (req, res) -> {
+            int chessGameId = Integer.parseInt(req.queryParams("id"));
+            System.out.println("+++++++++++++++++++++++--");
+            System.out.println(chessGameId);
+            ChessGame chessGame = chessService.findChessGameById(chessGameId);
             ChessGameDto chessGameDto = new ChessGameDto(chessGame);
             String chessGameDtoJson = gson.toJson(chessGameDto);
             return gson.toJson(new ResponseDto(true, chessGameDtoJson));
@@ -69,9 +74,10 @@ public class WebChessController {
             }
         });
 
-        post("/new-game", (req, res) -> {
+        post("/generate", (req, res) -> {
             chessService.generateChessGame();
-            return null;
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
         });
 
         get("/chess-game-list", (req, res) -> {
@@ -79,5 +85,18 @@ public class WebChessController {
             String chessGameListJson = gson.toJson(chessGameList);
             return gson.toJson(new ResponseDto(true, chessGameListJson));
         });
+//
+//        get("/start/:id", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            return render(model, "board.html");
+//        });
+//
+//        get("/data/:id", (req, res) -> {
+//            int chessGameId = Integer.parseInt(req.params(":id"));
+//            ChessGame chessGame = chessService.findChessGameById(chessGameId);
+//            ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+//            String chessGameDtoJson = gson.toJson(chessGameDto);
+//            return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+//        });
     }
 }
