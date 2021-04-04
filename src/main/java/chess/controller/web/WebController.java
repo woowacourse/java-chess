@@ -10,8 +10,10 @@ import chess.domain.piece.Owner;
 import chess.service.ChessGame;
 import chess.service.RequestHandler;
 import chess.view.web.OutputView;
+import spark.Request;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -37,12 +39,12 @@ public class WebController {
 
     private void create(){
         get("/create/:roomName", (req, res) -> {
-            final String roomName = req.params(":roomName");
-            chessGame = ChessGame.initNew();
-
+            final String roomName = roomName(req);
             final long roomId = System.currentTimeMillis();
-            gameDao.save(roomId, chessGame.turn(), chessGame.board());
             roomDao.save(roomName, roomId);
+
+            chessGame = ChessGame.initNew();
+            gameDao.save(roomId, chessGame.turn(), chessGame.board());
 
             res.redirect("/load/"+roomName);
             return printGame(roomName);
@@ -51,22 +53,18 @@ public class WebController {
 
     private void load() {
         get("/load/:roomName", (req, res) -> {
-            final String roomName = req.params(":roomName");
-            final long roomId = roomDao.roomId(roomName);
-
-            final GameDto gameDto = gameDao.load(roomId);
-            chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
-
-            return printGame(roomName);
+            chessGame = loadChessGame(req);
+            return printGame(roomName(req));
         });
     }
 
     private void show() {
-        post("/show", (req, res) -> {
-            final Map<String, String> request = RequestHandler.parse(req.body());
+        post("/show/:roomName", (req, res) -> {
+            chessGame = loadChessGame(req);
+            final Map<String, String> requestParams = RequestHandler.parse(req.body());
             try {
-                chessGame.validateTurn(request);
-                return chessGame.reachablePositions(request);
+                chessGame.validateTurn(requestParams);
+                return chessGame.reachablePositions(requestParams);
             } catch (Exception e) {
                 return Collections.EMPTY_LIST;
             }
@@ -75,9 +73,10 @@ public class WebController {
 
     private void move() {
         post("/move/:roomName", (req, res) -> {
-            final String roomName = req.params(":roomName");
-            final long roomId = roomDao.roomId(roomName);
+            final String roomName = roomName(req);
+            final long roomId = roomDao.id(roomName);
 
+            chessGame = loadChessGame(req);
             chessGame.move(RequestHandler.parse(req.body()));
             gameDao.save(roomId, chessGame.turn(), chessGame.board());
 
@@ -100,5 +99,15 @@ public class WebController {
         roomStatusDto.setTurn(chessGame.turn().name());
 
         return OutputView.printGame(roomStatusDto,boardDto,scoresDto);
+    }
+
+    private ChessGame loadChessGame(final Request req) throws SQLException {
+        final long roomId = roomDao.id(roomName(req));
+        final GameDto gameDto = gameDao.load(roomId);
+        return ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
+    }
+
+    private String roomName(final Request req){
+        return req.params(":roomName");
     }
 }

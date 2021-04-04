@@ -83,10 +83,11 @@ function checkIsEnd(){
 }
 
 function show(target) {
+    const roomName = document.getElementById("roomName").innerText;
     const requestQuery = "source="+target.id;
 
     $.ajax({
-        url: "/show",
+        url: "/show/"+roomName,
         type: "POST",
         data: requestQuery,
         success: function (result) {
