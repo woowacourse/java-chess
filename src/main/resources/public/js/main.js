@@ -17,7 +17,7 @@ function onNewGame() {
 }
 
 function onContinue() {
-    fetch('/chess/continue')
+    fetch('/chess')
         .then(res => {
             if (!res.ok) {
                 throw new Error(res.status);

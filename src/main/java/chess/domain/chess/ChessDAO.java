@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import chess.domain.ConnectionUtils;
-import chess.domain.position.MovePosition;
 
 public class ChessDAO {
+
     public void deleteIfPreviousChessExists() throws SQLException {
         Optional<Long> chessId = findAnyChessId();
         if (chessId.isPresent()) {
+            deletePreviousPiece(chessId.get());
             deletePreviousChess(chessId.get());
         }
     }
@@ -30,11 +31,12 @@ public class ChessDAO {
         return Optional.empty();
     }
 
-    public void deletePreviousChess(Long chessId) throws SQLException {
-        removeChess(chessId);
+    private void deletePreviousPiece(Long chessId) throws SQLException {
+        String chessQuery = "DELETE FROM piece WHERE chess_id = (?)";
+        deleteById(chessQuery, chessId);
     }
 
-    private void removeChess(Long chessId) throws SQLException {
+    public void deletePreviousChess(Long chessId) throws SQLException {
         String chessQuery = "DELETE FROM chess WHERE chess_id = (?)";
         deleteById(chessQuery, chessId);
     }
@@ -47,32 +49,25 @@ public class ChessDAO {
         }
     }
 
-    public void saveChess() throws SQLException {
-        String query = "INSERT INTO chess VALUES ()";
+    public void save() throws SQLException {
+        String query = "INSERT INTO chess (turn) VALUES ('WHITE')";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.executeUpdate();
         }
     }
 
-    public Chess getChess(Long chessId, Chess chess) throws SQLException {
-        String query =
-                "SELECT m.source, m.target " +
-                        "FROM move m " +
-                        "JOIN chess c ON m.chess_id = c.chess_id " +
-                        "WHERE c.chess_id = (?)";
+    public String findTurnByChessId() throws SQLException {
+        Optional<String> turn = Optional.empty();
+        String query = "SELECT turn FROM chess c";
 
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, chessId);
             ResultSet resultSet = pstmt.executeQuery();
-            while (resultSet.next()) {
-                String source = resultSet.getString("source");
-                String target = resultSet.getString("target");
-                MovePosition movePosition = new MovePosition(source, target);
-                chess = chess.move(movePosition);
+            if (resultSet.next()) {
+                turn = Optional.of(resultSet.getString("turn"));
             }
         }
-        return chess;
+        return turn.orElseThrow(() -> new IllegalStateException("진행 중인 체스 게임이 없습니다."));
     }
 }
