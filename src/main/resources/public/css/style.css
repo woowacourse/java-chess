@@ -89,3 +89,9 @@ span {
     align-items: center;
     justify-content: center;
 }
+
+.button-profile {
+    margin: 20px;
+    font-size: 1.0em;
+    color: cornsilk;
+}
