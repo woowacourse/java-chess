@@ -31,7 +31,7 @@ public class WebController {
                 chessGameManager.start();
                 return gson.toJson(new CommonDto<GameStatusDto>(
                         StatusCode.OK,
-                        "New game has been created successfully",
+                        "새로운 게임을 시작합니다.",
                         GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor(), chessGameManager.getStatistics())
                 ));
             } catch (DomainException e) {
@@ -54,7 +54,7 @@ public class WebController {
                 chessGameManager.move(Position.of(from), Position.of(to));
                 return gson.toJson(new CommonDto<GameStatusDto>(
                         StatusCode.OK,
-                        "A piece has been moved successfully",
+                        "기물을 이동했습니다.",
                         GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor(), chessGameManager.getStatistics())
                 ));
             } catch (DomainException e) {
