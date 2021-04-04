@@ -1,9 +1,9 @@
 package controller;
 
 import domain.ChessGame;
-import domain.dto.BoardDto;
-import domain.dto.MenuDto;
-import domain.dto.StatusDto;
+import dto.BoardDto;
+import dto.MenuDto;
+import dto.StatusDto;
 import domain.menu.Menu;
 import view.OutputView;
 

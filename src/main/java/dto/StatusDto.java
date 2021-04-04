@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.piece.Color;
 import domain.score.Score;

@@ -1,8 +1,8 @@
 package domain.menu;
 
 import domain.ChessGame;
-import domain.dto.MenuDto;
-import domain.dto.StatusDto;
+import dto.MenuDto;
+import dto.StatusDto;
 
 public class End implements Command {
     @Override

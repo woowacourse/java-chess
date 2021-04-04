@@ -2,7 +2,7 @@ package dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import domain.dto.ResultDto;
+import dto.ResultDto;
 
 import java.sql.*;
 import java.util.ArrayList;

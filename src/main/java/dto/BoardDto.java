@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.Board;
 import domain.piece.position.Position;

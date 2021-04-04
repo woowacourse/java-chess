@@ -1,8 +1,8 @@
 package domain.menu;
 
 import domain.ChessGame;
-import domain.dto.BoardDto;
-import domain.dto.MenuDto;
+import dto.BoardDto;
+import dto.MenuDto;
 import domain.exception.InvalidMoveCommandException;
 import domain.piece.position.Position;
 

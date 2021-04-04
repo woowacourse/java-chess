@@ -1,7 +1,7 @@
 package domain.menu;
 
 import domain.ChessGame;
-import domain.dto.MenuDto;
+import dto.MenuDto;
 
 public interface Command {
     MenuDto execute(String command, ChessGame game);

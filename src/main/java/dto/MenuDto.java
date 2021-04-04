@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 public interface MenuDto {
     boolean isBoardDto();

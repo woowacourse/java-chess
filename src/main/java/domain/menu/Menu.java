@@ -1,7 +1,7 @@
 package domain.menu;
 
 import domain.ChessGame;
-import domain.dto.MenuDto;
+import dto.MenuDto;
 import domain.exception.InvalidMenuException;
 
 import java.util.Arrays;

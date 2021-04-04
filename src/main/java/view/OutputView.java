@@ -1,7 +1,7 @@
 package view;
 
-import domain.dto.BoardDto;
-import domain.dto.StatusDto;
+import dto.BoardDto;
+import dto.StatusDto;
 
 public class OutputView {
 

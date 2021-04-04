@@ -1,7 +1,7 @@
 package controller;
 
 import domain.ChessGame;
-import domain.dto.MenuDto;
+import dto.MenuDto;
 import domain.menu.Menu;
 
 public class WebMenuController {
