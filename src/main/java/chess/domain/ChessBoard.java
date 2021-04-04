@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
     private static final String OBSTACLE_ERROR = "[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.";
     private static final String SAME_COLOR_ERROR = "[ERROR] taget에 같은 편 말이 있습니다.";
+    private static final String NOT_MOVE_ERROR = "[ERROR] 올바른 이동이 아닙니다.";
     private static final String EMPTY_ERROR = "[ERROR] 체스말이 없습니다.";
     private Map<Position, Piece> chessBoard;
 
@@ -77,7 +78,7 @@ public class ChessBoard {
 
     private void validateMovable(Piece sourcePiece, Position source, Position target) {
         if (!sourcePiece.canMove(source, target)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(NOT_MOVE_ERROR);
         }
         validatePieceRoute(sourcePiece, source, target);
     }

@@ -76,8 +76,6 @@ public class ChessDao {
         }catch (Exception e) {
             con.rollback();
             return 0;
-        }finally {
-            closeConnection(con);
         }
     }
 
@@ -86,6 +84,9 @@ public class ChessDao {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, roomNo);
         ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) {
+            throw new IllegalArgumentException("[ERROR] 불러올 방이 없습니다.");
+        }
         ChessRoomDto chessRoomDto = new ChessRoomDto();
         Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
         while (rs.next()) {
