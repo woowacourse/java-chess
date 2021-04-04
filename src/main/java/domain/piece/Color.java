@@ -1,8 +1,5 @@
 package domain.piece;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
 public enum Color {
     BLACK(true),
     WHITE(false);

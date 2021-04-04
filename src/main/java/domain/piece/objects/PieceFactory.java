@@ -35,11 +35,11 @@ public class PieceFactory {
         }
 
         if (pieceName.equals("N") || pieceName.equals("n")) {
-            return Pawn.of(pieceName, Character.isUpperCase(pieceName.charAt(0)));
+            return Knight.of(pieceName, Character.isUpperCase(pieceName.charAt(0)));
         }
 
         if (pieceName.equals("Q") || pieceName.equals("q")) {
-            return Pawn.of(pieceName, Character.isUpperCase(pieceName.charAt(0)));
+            return Queen.of(pieceName, Character.isUpperCase(pieceName.charAt(0)));
         }
 
         return Rook.of(pieceName, Character.isUpperCase(pieceName.charAt(0)));

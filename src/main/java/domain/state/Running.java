@@ -12,6 +12,10 @@ public class Running extends Started {
         super(pieces);
     }
 
+    public Running(Map<Position, Piece> pieces, boolean turn) {
+        super(pieces, turn);
+    }
+
     private State gameStateByKing(Piece endPiece) {
         if (board.isKingDead(endPiece)) {
             return new Finished(board.getBoard());

@@ -17,6 +17,11 @@ public abstract class Started implements State {
         this.board = new Board(pieces);
     }
 
+    public Started(Map<Position, Piece> pieces, boolean turn) {
+        this(pieces);
+        this.turn = turn;
+    }
+
     public boolean isRunning() {
         return true;
     }

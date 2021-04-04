@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 import controller.WebMenuController;
 import dao.GameDao;
 import domain.ChessGame;
-import domain.dto.BoardDto;
 import domain.dto.StatusDto;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
@@ -16,9 +15,7 @@ import json.PiecesDto;
 import json.ResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import view.OutputView;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +23,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    static int gameID;
+
     public static void main(String[] args) {
         ChessGame game = new ChessGame();
         WebMenuController menuController = new WebMenuController();
@@ -37,44 +36,46 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        get("/roomNumber", (req, res) -> gameDao.findGames());
+
         get("/startClick", (req, res) -> {
-            if (gameDao.selectGameCount() == 1) {
-                String gameInfoJason = gameDao.getGameInfo();
-                System.out.println(gameInfoJason);
-                Map<Position, Piece> data = convertJsonToPieces(gameInfoJason);
-                game.start(data);
-                return render(new HashMap<>(), "start.html");
+            String roomNumber = req.queryParams("roomNumber");
+            if (roomNumber.equals("new")) {
+                menuController.run("start", game);
+                ResultDto resultDto = getResultDto(game, menuController);
+                gameDao.insertNewGameInfo(resultDto);
+                Map<String, Object> map = new HashMap<>();
+                gameID = gameDao.lastGameID();
+                map.put("roomNumber", gameID);
+                return render(map, "start.html");
             }
-            menuController.run("start", game);
-            gameDao.insertGameInfo(getResultDto(game, menuController));
+            JsonObject responseObject = getJsonObject(gameDao, roomNumber);
+            JsonElement pieces = responseObject.get("pieces");
+            Map<Position, Piece> data = convertJsonToPieces(pieces.getAsJsonArray());
+            game.load(data, responseObject.get("turn").getAsBoolean());
+            gameID = Integer.parseInt(roomNumber);
             return render(new HashMap<>(), "start.html");
         });
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/data", (req, res) -> {
+        get("/showData", (req, res) -> {
             ResultDto resultDto = getResultDto(game, menuController);
-            String jsonData = new ObjectMapper().writeValueAsString(resultDto);
-            OutputView.showBoard(new BoardDto(game.getBoard()));
-            if (game.isRunning()) {
-                gameDao.updateGame(jsonData);
-                return new ObjectMapper().writeValueAsString(resultDto);
-            }
-            gameDao.deleteGame();
             return new ObjectMapper().writeValueAsString(resultDto);
         });
 
         post("/movedata", (req, res) -> {
             JsonObject jsonObject = (JsonObject) JsonParser.parseString(req.body());
-            String command = "move " + jsonObject.get("source").getAsString() + " " + Position.of(jsonObject.get("target").getAsString());
+            String command = "move " + jsonObject.get("source").getAsString() + " "
+                    + Position.of(jsonObject.get("target").getAsString());
             menuController.run(command, game);
             ResultDto resultDto = getResultDto(game, menuController);
             String jsonData = new ObjectMapper().writeValueAsString(resultDto);
             if (game.isRunning()) {
-                gameDao.updateGame(jsonData);
+                gameDao.updateGame(jsonData, gameID);
                 return new ObjectMapper().writeValueAsString(resultDto);
             }
-            gameDao.deleteGame();
+            gameDao.deleteGame(gameID);
             return jsonData;
         });
 
@@ -84,13 +85,17 @@ public class WebUIChessApplication {
         });
     }
 
-    private static Map<Position, Piece> convertJsonToPieces(String gameInfoJason) throws IOException {
+    private static JsonObject getJsonObject(GameDao gameDao, String roomNumber) throws SQLException {
+        String gameInfoJason = gameDao.selectGameInfo(roomNumber);
         JsonObject jsonObject = (JsonObject) JsonParser.parseString(gameInfoJason);
         String response = jsonObject.get("response").getAsString();
-        JsonElement pieces2 = ((JsonObject) JsonParser.parseString(response)).get("pieces");
-        JsonArray asJsonArray = pieces2.getAsJsonArray();
+        JsonObject responseObject = (JsonObject) JsonParser.parseString(response);
+        return responseObject;
+    }
+
+    private static Map<Position, Piece> convertJsonToPieces(JsonArray gameInfoJason) {
         Map<Position, Piece> data = new HashMap<>();
-        for (JsonElement jsonElement : asJsonArray) {
+        for (JsonElement jsonElement : gameInfoJason) {
             JsonObject element = jsonElement.getAsJsonObject();
             data.put(Position.of(element.get("position").getAsString()),
                     PieceFactory.findPiece(element.get("pieceName").getAsString()));

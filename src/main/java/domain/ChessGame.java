@@ -3,6 +3,7 @@ package domain;
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 import domain.score.Score;
+import domain.state.Running;
 import domain.state.State;
 import domain.state.Wait;
 
@@ -14,6 +15,10 @@ public class ChessGame {
 
     public ChessGame() {
         state = new Wait(new HashMap<>());
+    }
+
+    public void load(Map<Position, Piece> pieces, boolean turn) {
+        state = new Running(pieces, turn);
     }
 
     public void start(Map<Position, Piece> pieces) {

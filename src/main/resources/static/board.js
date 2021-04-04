@@ -9,7 +9,7 @@ let fromTarget;
 function getPieces() {
     axios({
         method: 'get',
-        url: '/data'
+        url: '/showData',
     }).then(function (result) {
         let datas = result.data.response;
         let json = JSON.parse(datas);
