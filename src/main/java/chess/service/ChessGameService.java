@@ -87,8 +87,8 @@ public class ChessGameService {
 
     public ResponseDTO createRoom(String data) {
         createChessGame();
-        RoomCreateRequestDTO roomCreateRequestDTO = gson.fromJson(data, RoomCreateRequestDTO.class);
-        RoomsDTO roomsDTO = chessRepository.createRoom(roomCreateRequestDTO.getName(), roomCreateRequestDTO.getPw());
+        RoomDTO roomDTO = gson.fromJson(data, RoomDTO.class);
+        RoomsDTO roomsDTO = chessRepository.createRoom(roomDTO.getName(), roomDTO.getPw());
         return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 생성하였습니다.");
     }
 

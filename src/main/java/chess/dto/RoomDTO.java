@@ -6,6 +6,11 @@ public class RoomDTO {
     private String pw;
     private String gameId;
 
+    public RoomDTO(String name, String pw) {
+        this.name = name;
+        this.pw = pw;
+    }
+
     public RoomDTO(int id, String name, String pw) {
         this.id = id;
         this.name = name;
