@@ -1,4 +1,4 @@
-package json;
+package domain.dto;
 
 public class PieceDto {
     private String position;

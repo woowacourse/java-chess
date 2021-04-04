@@ -7,12 +7,12 @@ import com.google.gson.JsonParser;
 import controller.WebMenuController;
 import dao.GameDao;
 import domain.ChessGame;
+import domain.dto.PiecesDto;
+import domain.dto.ResultDto;
 import domain.dto.StatusDto;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
 import domain.piece.position.Position;
-import json.PiecesDto;
-import json.ResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -44,10 +44,8 @@ public class WebUIChessApplication {
                 menuController.run("start", game);
                 ResultDto resultDto = getResultDto(game, menuController);
                 gameDao.insertNewGameInfo(resultDto);
-                Map<String, Object> map = new HashMap<>();
                 gameID = gameDao.lastGameID();
-                map.put("roomNumber", gameID);
-                return render(map, "start.html");
+                return render(new HashMap<String, Object>(){{put("roomNumber", gameID);}}, "start.html");
             }
             JsonObject responseObject = getJsonObject(gameDao, roomNumber);
             JsonElement pieces = responseObject.get("pieces");

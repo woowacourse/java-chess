@@ -1,6 +1,5 @@
-package json;
+package domain.dto;
 
-import domain.dto.StatusDto;
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 
