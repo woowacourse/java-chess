@@ -9,12 +9,10 @@ import java.util.List;
 import static chess.dao.ConnectDB.CONNECTION;
 
 public class LogDAO {
-    private static final String INSERT_QUERY = "INSERT INTO log (room_id, start_position, end_position) VALUES (?, ?, ?)";
-    private static final String DELETE_BY_ROOM_ID_QUERY = "DELETE FROM log WHERE room_id = ?";
-    private static final String SELECT_BY_ROOM_ID_QUERY = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
 
     public void createLog(final String roomId, final String startPoint, final String endPoint) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(INSERT_QUERY);
+        String query = "INSERT INTO log (room_id, start_position, end_position) VALUES (?, ?, ?)";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, roomId);
         statement.setString(2, startPoint);
         statement.setString(3, endPoint);
@@ -23,14 +21,16 @@ public class LogDAO {
     }
 
     public void deleteLogByRoomId(final String roomId) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(DELETE_BY_ROOM_ID_QUERY);
+        String query = "DELETE FROM log WHERE room_id = ?";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, roomId);
         statement.executeUpdate();
         statement.close();
     }
 
     public List<String[]> allLogByRoomId(final String roomId) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_BY_ROOM_ID_QUERY);
+        String query = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, roomId);
         ResultSet resultSet = statement.executeQuery();
 

@@ -7,12 +7,10 @@ import java.sql.SQLException;
 import static chess.dao.ConnectDB.CONNECTION;
 
 public class ResultDAO {
-    private static final String INSERT_QUERY = "INSERT INTO result (game_id, winner, loser) VALUES (?, ?, ?)";
-    private static final String SELECT_WIN_COUNT_BY_USER_ID_QUERY = "SELECT COUNT(*) FROM result WHERE winner = ?";
-    private static final String SELECT_LOSE_COUNT_BY_USER_ID_QUERY = "SELECT COUNT(*) FROM result WHERE loser = ?";
 
     public void saveGameResult(final String roomId, final int winnerId, final int loserId) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(INSERT_QUERY);
+        String query = "INSERT INTO result (game_id, winner, loser) VALUES (?, ?, ?)";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, roomId);
         statement.setInt(2, winnerId);
         statement.setInt(3, loserId);
@@ -21,11 +19,13 @@ public class ResultDAO {
     }
 
     public int winCountByUserId(final int id) throws SQLException {
-        return countByUserId(id, SELECT_WIN_COUNT_BY_USER_ID_QUERY);
+        String query = "SELECT COUNT(*) FROM result WHERE winner = ?";
+        return countByUserId(id, query);
     }
 
     public int loseCountByUserId(final int id) throws SQLException {
-        return countByUserId(id, SELECT_LOSE_COUNT_BY_USER_ID_QUERY);
+        String query = "SELECT COUNT(*) FROM result WHERE loser = ?";
+        return countByUserId(id, query);
     }
 
     private int countByUserId(final int id, final String query) throws SQLException {

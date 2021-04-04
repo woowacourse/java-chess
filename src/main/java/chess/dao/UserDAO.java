@@ -12,17 +12,13 @@ import java.util.List;
 import static chess.dao.ConnectDB.CONNECTION;
 
 public class UserDAO {
-    private static final String SELECT_USERS_BY_ROOM_ID_QUERY =
-            "SELECT black.nickname AS black_user, white.nickname AS white_user " +
-                    "FROM room JOIN user as black on black.id = room.black_user " +
-                    "JOIN user as white on white.id = room.white_user " +
-                    "WHERE room.id = ?";
-    private static final String SELECT_ID_BY_NICKNAME_QUERY = "SELECT id FROM user WHERE nickname = ?";
-    private static final String SELECT_ALL_QUERY = "SELECT * from user";
-    private static final String SELECT_NICKNAME_BY_ID_QUERY = "SELECT nickname FROM user WHERE id = ?";
 
     public UsersDTO findByRoomId(final String roomId) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_USERS_BY_ROOM_ID_QUERY);
+        String query = "SELECT black.nickname AS black_user, white.nickname AS white_user " +
+                "FROM room JOIN user as black on black.id = room.black_user " +
+                "JOIN user as white on white.id = room.white_user " +
+                "WHERE room.id = ?";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, roomId);
         ResultSet resultSet = statement.executeQuery();
 
@@ -38,7 +34,8 @@ public class UserDAO {
     }
 
     public int findUserIdByNickname(final String nickname) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_ID_BY_NICKNAME_QUERY);
+        String query = "SELECT id FROM user WHERE nickname = ?";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setString(1, nickname);
         ResultSet resultSet = statement.executeQuery();
 
@@ -52,7 +49,8 @@ public class UserDAO {
     }
 
     public List<UserDTO> findAll() throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_ALL_QUERY);
+        String query = "SELECT * from user";
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 
         List<UserDTO> users = new ArrayList<>();
@@ -67,7 +65,9 @@ public class UserDAO {
     }
 
     public String findNicknameById(final int id) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(SELECT_NICKNAME_BY_ID_QUERY);
+        String query = "SELECT nickname FROM user WHERE id = ?";
+        ;
+        PreparedStatement statement = CONNECTION.prepareStatement(query);
         statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
 
