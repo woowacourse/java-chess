@@ -3,7 +3,8 @@ package chess.domain.piece;
 public enum Color {
 
     WHITE("white"),
-    BLACK("black");
+    BLACK("black"),
+    NOTHING("nothing");
 
     private final String name;
 
@@ -19,8 +20,11 @@ public enum Color {
     }
 
     public Color reversed() {
-        if(WHITE.equals(this)) {
+        if (WHITE.equals(this)) {
             return BLACK;
+        }
+        if (NOTHING.equals(this)) {
+            return this;
         }
         return WHITE;
     }

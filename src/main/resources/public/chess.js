@@ -57,6 +57,7 @@ function loadBoard() {
   })
   .then(placePieces)
   .catch(error => console.log(error));
+  checkState();
 }
 
 function initializeBoard() {
@@ -69,6 +70,7 @@ function initializeBoard() {
   })
   .then(placePieces)
   .catch(error => console.log(error));
+  checkState();
 }
 
 function placePieces(responseData) {
@@ -130,6 +132,7 @@ function movePieceByPosition(source, target) {
   .catch((error) => {
     console.log(error);
   });
+  checkState();
 }
 
 function getOption(methodType, bodyData) {
@@ -168,4 +171,21 @@ function visualizeAvailablePositions(visible) {
       item.classList.remove(AVAILABLE_POSITION_CLASS);
     }
   }
+}
+
+function checkState() {
+  fetch(API_URL + "currentState")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(" ");
+    }
+    return response.json();
+  })
+  .then((responseData) => {
+    const turnName = document.querySelector(".state strong");
+    turnName.textContent = responseData["turn"];
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 }

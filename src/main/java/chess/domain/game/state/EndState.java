@@ -2,8 +2,10 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.result.EndResult;
+import chess.domain.result.PathResult;
 import chess.domain.result.Result;
 import chess.domain.result.StatusResult;
 
@@ -30,7 +32,7 @@ public final class EndState extends PlayingState {
 
     @Override
     public Result pathResult(Position source) {
-        throw new IllegalArgumentException("게임이 종료된 후에는 경로를 확인할 수 없습니다.");
+        return new PathResult(currentBoard(), source, Color.NOTHING);
     }
 
     @Override

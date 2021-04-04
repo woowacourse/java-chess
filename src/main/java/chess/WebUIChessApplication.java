@@ -39,7 +39,8 @@ public class WebUIChessApplication {
         });
 
         get("/currentState", (req, res) -> {
-            final String model = webController.showTurn();
+            final Map<String, String> model = new HashMap<>();
+            model.put("turn", webController.showTurn());
             return gson.toJson(model);
         });
 
