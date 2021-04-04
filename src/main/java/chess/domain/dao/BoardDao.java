@@ -34,6 +34,23 @@ public final class BoardDao {
         }
     }
 
+    public void updateTeam(final String team) throws SQLException {
+        final String query = "UPDATE board SET team = ? WHERE isGameOver = false";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, team);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateIsGameOver() throws SQLException {
+        final String query = "UPDATE board SET isGameOver = true";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        }
+    }
+
     public void deleteAll() throws SQLException {
         final String query = "TRUNCATE TABLE board";
         try (final Connection conn = ConnectionSetup.getConnection();

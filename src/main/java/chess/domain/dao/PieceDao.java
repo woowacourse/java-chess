@@ -48,6 +48,16 @@ public final class PieceDao {
         }
     }
 
+    public void updatePiece(final Position position, final String name) throws SQLException {
+        final String query = "UPDATE pieces SET name = ? WHERE position = ?";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, position.horizontalSymbol() + position.verticalSymbol());
+            pstmt.executeUpdate();
+        }
+    }
+
     public void deleteAll() throws SQLException {
         final String query = "TRUNCATE TABLE pieces";
         try (final Connection conn = ConnectionSetup.getConnection();

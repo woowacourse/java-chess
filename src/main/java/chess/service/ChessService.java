@@ -61,14 +61,14 @@ public final class ChessService {
         chessGame.nextTurn();
 
         final Map<Position, Piece> chessBoard = chessGame.board().unwrap();
-        pieceDao.savePiece(source, chessBoard.get(source));
-        pieceDao.savePiece(target, chessBoard.get(target));
-        boardDao.save(chessGame.nowTurn().teamName(), false);
+        pieceDao.updatePiece(source, ".");
+        pieceDao.updatePiece(target, chessBoard.get(target).name());
+        boardDao.updateTeam(chessGame.nowTurn().teamName());
     }
 
     public Response end() throws SQLException {
         if (chessGame.isGameOver()) {
-            boardDao.save(chessGame.nowTurn().teamName(), true);
+            boardDao.updateIsGameOver();
             return new Response(ResponseCode.GAME_OVER.code(), ResponseCode.GAME_OVER.message());
         }
         return new Response(ResponseCode.RUN.code(), ResponseCode.RUN.message());
