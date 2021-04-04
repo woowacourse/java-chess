@@ -57,7 +57,7 @@ public class WebController {
 
     public String showTurn() {
         final GameState currentState = game.getState();
-        return currentState.currentState();
+        return currentState.nextState();
     }
 
     public void save(GameDao gameDao) {

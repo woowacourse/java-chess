@@ -41,7 +41,7 @@ public final class EndState extends PlayingState {
     }
 
     @Override
-    public String currentState() {
+    public String nextState() {
         return "finished";
     }
 }
