@@ -18,8 +18,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public final class WebUIChessController {
 
     public void runChess() {
-        final Gson GSON = new Gson();
-        final JsonTransformer JSON_TRANSFORMER = new JsonTransformer();
+        final Gson gson = new Gson();
+        final JsonTransformer jsonTransformer = new JsonTransformer();
         staticFiles.location("/public");
         port(8080);
 
@@ -30,15 +30,15 @@ public final class WebUIChessController {
             return render(model, "index.html");
         });
 
-        get("/start", (req, res) -> chessService.start(), JSON_TRANSFORMER);
+        get("/start", (req, res) -> chessService.start(), jsonTransformer);
 
         post("/move", (req, res) -> {
             final String requests = req.body();
-            final MoveRequest moveRequest = GSON.fromJson(requests, MoveRequest.class);
+            final MoveRequest moveRequest = gson.fromJson(requests, MoveRequest.class);
             return chessService.move(moveRequest);
-        }, JSON_TRANSFORMER);
+        }, jsonTransformer);
 
-        get("/end", (req, res) -> chessService.end(), JSON_TRANSFORMER);
+        get("/end", (req, res) -> chessService.end(), jsonTransformer);
 
         get("/result", (req, res) -> {
             final Map<String, Object> model = new HashMap<>();
