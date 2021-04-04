@@ -5,7 +5,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
-import chess.exception.ChessException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -107,7 +106,7 @@ public class BoardDAO {
     private String boardPositionSet(Map<Position, Piece> board) {
         return board.keySet()
                 .stream()
-                .map(Position::stringPosition)
+                .map(Position::positionName)
                 .collect(Collectors.joining(","));
     }
 

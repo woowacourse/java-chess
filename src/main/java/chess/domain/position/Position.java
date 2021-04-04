@@ -165,7 +165,7 @@ public class Position {
         return result;
     }
 
-    public String stringPosition() {
+    public String positionName() {
         return this.column.column() + this.row.row();
     }
 }
