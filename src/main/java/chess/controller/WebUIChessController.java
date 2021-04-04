@@ -67,7 +67,7 @@ public class WebUIChessController {
         JsonObject roomJson = gson.fromJson(request, JsonObject.class);
         String id = roomJson.get("room_id").getAsString();
         String turn = roomJson.get("turn").getAsString();
-        String state = roomJson.get("state").getAsString();
+        JsonObject state = roomJson.get("state").getAsJsonObject();
         return new Room(id, turn, state);
     }
 
@@ -87,8 +87,7 @@ public class WebUIChessController {
     private void setChessGame(Room room) {
         ChessBoard chessBoard = new ChessBoard();
         Color turn = Color.convert(room.getTurn());
-        String state = room.getState();
-        JsonObject stateJson = gson.fromJson(state, JsonObject.class);
+        JsonObject stateJson = room.getState();
         for (String position : stateJson.keySet()) {
             Piece piece = getPiece(stateJson, position);
             chessBoard.replace(Position.of(position), piece);
@@ -111,6 +110,7 @@ public class WebUIChessController {
             response.add("rooms", roomDAO.getAllRoom());
             return response;
         } catch (Exception e) {
+            e.printStackTrace();
             return new Response(502);
         }
     }

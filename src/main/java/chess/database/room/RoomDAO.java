@@ -1,5 +1,7 @@
 package chess.database.room;
 
+import com.google.gson.JsonObject;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static chess.controller.WebUIChessController.gson;
 import static chess.database.DatabaseTransaction.closeConnection;
 import static chess.database.DatabaseTransaction.getConnection;
 
@@ -18,7 +21,7 @@ public class RoomDAO {
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, room.getRoomId());
         pstmt.setString(2, room.getTurn());
-        pstmt.setString(3, room.getState());
+        pstmt.setString(3, room.getState().toString());
         pstmt.executeUpdate();
         closeConnection(con);
     }
@@ -44,7 +47,7 @@ public class RoomDAO {
         return new Room(
                 rs.getString("room_id"),
                 rs.getString("turn"),
-                rs.getString("state"));
+                gson.fromJson(rs.getString("state"), JsonObject.class));
     }
 
     public void validateRoomExistence(String roomId) throws SQLException {
