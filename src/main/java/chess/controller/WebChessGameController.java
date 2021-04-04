@@ -14,14 +14,16 @@ import chess.util.JsonTransformer;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebChessGameController {
+    private static final HandlebarsTemplateEngine TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+
     private final RoomService roomService;
     private final ResultService resultService;
     private final UserService userService;
@@ -45,62 +47,80 @@ public class WebChessGameController {
         findMovablePosition(rooms);
         movePiece(rooms);
         initialize();
+        exceptionHandler();
+        errorPage();
     }
 
     private void goHome(final Rooms rooms) {
-        get("/", (req, res) -> {
-            List<String> roomIds = roomService.allRoomsId();
-            roomIds.forEach(id -> rooms.addRoom(id, new ChessGame()));
+        get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("rooms", roomService.allRooms());
-            model.put("results", resultService.allUserResult());
+            try {
+                List<String> roomIds = roomService.allRoomsId();
+                roomIds.forEach(id -> rooms.addRoom(id, new ChessGame()));
+                model.put("rooms", roomService.allRooms());
+                model.put("results", resultService.allUserResult());
+            } catch (Exception e) {
+                model.put("error", e.getMessage());
+            }
             return render(model, "index.html");
         });
     }
 
     private void createNewRoom() {
-        post("/createNewGame", (req, res) -> {
-            roomService.createRoom(req.queryParams("name"));
+        post("/createNewGame", (request, response) -> {
+            roomService.createRoom(request.queryParams("name"));
             return true;
         });
     }
 
     private void enterRoom() {
-        get("/enter", (req, res) -> {
+        get("/enter", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomId = req.queryParams("id");
-            model.put("number", roomId);
-            model.put("button", "새로운게임");
-            model.put("isWhite", true);
-            model.put("users", userService.usersParticipatedInGame(roomId));
+            try {
+                String roomId = request.queryParams("id");
+                model.put("number", roomId);
+                model.put("button", "새로운게임");
+                model.put("isWhite", true);
+                model.put("users", userService.usersParticipatedInGame(roomId));
+            } catch (Exception e) {
+                model.put("error", e.getMessage());
+            }
             return render(model, "chess.html");
         });
     }
 
     private void startGame(final Rooms rooms) {
-        post("/start", (req, res) -> {
+        post("/start", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomId = req.queryParams("room-id");
-            ChessGame chessGame = new ChessGame();
-            chessGame.initialize();
-            rooms.addRoom(roomId, chessGame);
-            logService.initializeByRoomId(roomId);
-            UsersDTO users = userService.usersParticipatedInGame(roomId);
-            gameInformation(rooms.loadGameByRoomId(roomId), model, roomId, users);
+            try {
+                String roomId = request.queryParams("room-id");
+                ChessGame chessGame = new ChessGame();
+                chessGame.initialize();
+                rooms.addRoom(roomId, chessGame);
+                logService.initializeByRoomId(roomId);
+                UsersDTO users = userService.usersParticipatedInGame(roomId);
+                gameInformation(rooms.loadGameByRoomId(roomId), model, roomId, users);
+            } catch (Exception e) {
+                model.put("error", e.getMessage());
+            }
             return render(model, "chess.html");
         });
     }
 
     private void continueGame(final Rooms rooms) {
-        post("/continue", (req, res) -> {
+        post("/continue", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            String roomId = req.queryParams("room-id");
-            ChessGame chessGame = rooms.loadGameByRoomId(roomId);
-            chessGame.initialize();
-            List<String[]> logs = logService.logByRoomId(roomId);
-            logService.executeLog(logs, chessGame);
-            UsersDTO users = userService.usersParticipatedInGame(roomId);
-            gameInformation(chessGame, model, roomId, users);
+            try {
+                String roomId = request.queryParams("room-id");
+                ChessGame chessGame = rooms.loadGameByRoomId(roomId);
+                chessGame.initialize();
+                List<String[]> logs = logService.logByRoomId(roomId);
+                logService.executeLog(logs, chessGame);
+                UsersDTO users = userService.usersParticipatedInGame(roomId);
+                gameInformation(chessGame, model, roomId, users);
+            } catch (Exception e) {
+                model.put("error", e.getMessage());
+            }
             return render(model, "chess.html");
         });
     }
@@ -118,28 +138,28 @@ public class WebChessGameController {
     }
 
     private void checkCurrentTurn(final Rooms rooms) {
-        post("/myTurn", "application/json", (req, res) -> {
-            String roomId = req.queryParams("roomId");
-            String clickedSection = req.queryParams("clickedSection");
+        post("/myTurn", "application/json", (request, response) -> {
+            String roomId = request.queryParams("roomId");
+            String clickedSection = request.queryParams("clickedSection");
             ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             return chessGame.checkRightTurn(clickedSection);
         }, new JsonTransformer());
     }
 
     private void findMovablePosition(final Rooms rooms) {
-        post("/movablePositions", (req, res) -> {
-            String roomId = req.queryParams("roomId");
-            String startPoint = req.queryParams("clickedSection");
+        post("/movablePositions", (request, response) -> {
+            String roomId = request.queryParams("roomId");
+            String startPoint = request.queryParams("clickedSection");
             ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             return chessGame.movablePositionsByStartPoint(startPoint);
         }, new JsonTransformer());
     }
 
     private void movePiece(final Rooms rooms) {
-        post("/move", "application/json", (req, res) -> {
-            String roomId = req.queryParams("roomId");
-            String startPoint = req.queryParams("startPoint");
-            String endPoint = req.queryParams("endPoint");
+        post("/move", "application/json", (request, response) -> {
+            String roomId = request.queryParams("roomId");
+            String startPoint = request.queryParams("startPoint");
+            String endPoint = request.queryParams("endPoint");
             ChessGame chessGame = rooms.loadGameByRoomId(roomId);
             chessGame.move(startPoint, endPoint);
             logService.createLog(roomId, startPoint, endPoint);
@@ -149,10 +169,10 @@ public class WebChessGameController {
     }
 
     private void initialize() {
-        post("/initialize", "application/json", (req, res) -> {
-            String roomId = req.queryParams("roomId");
-            String winner = req.queryParams("winner");
-            String loser = req.queryParams("loser");
+        post("/initialize", "application/json", (request, response) -> {
+            String roomId = request.queryParams("roomId");
+            String winner = request.queryParams("winner");
+            String loser = request.queryParams("loser");
             roomService.changeStatus(roomId);
             int winnerId = userService.userIdByNickname(winner);
             int loserId = userService.userIdByNickname(loser);
@@ -161,7 +181,29 @@ public class WebChessGameController {
         }, new JsonTransformer());
     }
 
+    private void exceptionHandler() {
+        exception(ClassNotFoundException.class, (exception, request, response) -> {
+            response.status(404);
+            response.type("application/json");
+            response.body("!! JDBC Driver load 오류");
+        });
+
+        exception(SQLException.class, (exception, request, response) -> {
+            response.status(500);
+            response.type("application/json");
+            response.body(exception.getMessage());
+        });
+    }
+
+    private void errorPage() {
+        get("/error", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("error", request.queryParams("error"));
+            return render(model, "error.html");
+        });
+    }
+
     private static String render(final Map<String, Object> model, final String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 }

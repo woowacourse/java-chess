@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogDAO {
+public final class LogDAO {
 
-    public void createLog(final String roomId, final String startPoint, final String endPoint) throws SQLException {
+    public void createLog(final String roomId, final String startPoint, final String endPoint) throws Exception {
         String query = "INSERT INTO log (room_id, start_position, end_position) VALUES (?, ?, ?)";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -20,11 +20,11 @@ public class LogDAO {
             statement.setString(3, endPoint);
             statement.executeUpdate();
         } catch (Exception e) {
-
+            throw new SQLException("log 생성이 실패했습니다!");
         }
     }
 
-    public void deleteLogByRoomId(final String roomId) throws SQLException {
+    public void deleteLogByRoomId(final String roomId) throws Exception {
         String query = "DELETE FROM log WHERE room_id = ?";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -33,11 +33,11 @@ public class LogDAO {
             statement.setString(1, roomId);
             statement.executeUpdate();
         } catch (Exception e) {
-
+            throw new SQLException("log 삭제를 실패했습니다!");
         }
     }
 
-    public List<String[]> allLogByRoomId(final String roomId) throws SQLException {
+    public List<String[]> allLogByRoomId(final String roomId) throws Exception {
         String query = "SELECT start_position, end_position FROM log WHERE room_id = ? ORDER BY register_date";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -54,7 +54,7 @@ public class LogDAO {
                 logs.add(positions);
             }
         } catch (Exception e) {
-
+            throw new SQLException("log load를 실패했습니다!");
         }
 
         return logs;

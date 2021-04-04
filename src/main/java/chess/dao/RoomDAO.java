@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAO {
+public final class RoomDAO {
 
-    public void createRoom(final String name) throws SQLException {
+    public void createRoom(final String name) throws Exception {
         String query = "INSERT INTO room (title, black_user, white_user, status) VALUES (?, ?, ?, ?)";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -23,11 +23,11 @@ public class RoomDAO {
             statement.setInt(4, 1); // 상태(진행중: 1 / 종료됨: 0)
             statement.executeUpdate();
         } catch (Exception e) {
-
+            throw new SQLException("새로운 방 생성이 실패했습니다.");
         }
     }
 
-    public List<RoomDTO> allRooms() throws SQLException {
+    public List<RoomDTO> allRooms() throws Exception {
         String query = "SELECT room.id, room.title, black.nickname AS black_user, white.nickname AS white_user, room.status " +
                 "FROM room JOIN user as black on black.id = room.black_user " +
                 "JOIN user as white on white.id = room.white_user ORDER BY room.status DESC, room.id DESC";
@@ -40,13 +40,13 @@ public class RoomDAO {
         try (connection; statement; resultSet) {
             getRoomInformation(resultSet, rooms);
         } catch (Exception e) {
-
+            throw new SQLException("방 목록 불러오기를 실패했습니다.");
         }
 
         return rooms;
     }
 
-    private void getRoomInformation(ResultSet resultSet, List<RoomDTO> rooms) throws SQLException {
+    private void getRoomInformation(ResultSet resultSet, List<RoomDTO> rooms) throws Exception {
         while (resultSet.next()) {
             boolean playing = false;
             int status = resultSet.getInt("status");
@@ -65,7 +65,7 @@ public class RoomDAO {
         }
     }
 
-    public void changeStatusEndByRoomId(final String roomId) throws SQLException {
+    public void changeStatusEndByRoomId(final String roomId) throws Exception {
         String query = "UPDATE room SET status = 0 WHERE id = ?";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -74,11 +74,11 @@ public class RoomDAO {
             statement.setString(1, roomId);
             statement.executeUpdate();
         } catch (Exception e) {
-
+            throw new SQLException("방의 게임 상태 변경을 실패했습니다.");
         }
     }
 
-    public List<String> allRoomIds() throws SQLException {
+    public List<String> allRoomIds() throws Exception {
         String query = "SELECT id FROM room";
         Connection connection = ConnectDB.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -92,7 +92,7 @@ public class RoomDAO {
                 ids.add(Integer.toString(id));
             }
         } catch (Exception e) {
-
+            throw new SQLException("방 목록 불러오기를 실패했습니다.");
         }
 
         return ids;

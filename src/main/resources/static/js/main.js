@@ -30,5 +30,8 @@ function newGame(name) {
         if (success) {
             location.reload();
         }
+    }).error(function (response) {
+        const errorMessage = response.responseText;
+        location.href = "/error?error=" + errorMessage;
     });
 }

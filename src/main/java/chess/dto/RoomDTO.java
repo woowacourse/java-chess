@@ -1,12 +1,12 @@
 package chess.dto;
 
-public class RoomDTO {
-    private int id;
-    private String title;
-    private String blackUser;
-    private String whiteUser;
-    private String status;
-    private boolean playing;
+public final class RoomDTO {
+    private final int id;
+    private final String title;
+    private final String blackUser;
+    private final String whiteUser;
+    private final String status;
+    private final boolean playing;
 
     public RoomDTO(int id, String title, String blackUser, String whiteUser, int status, boolean playing) {
         this.id = id;

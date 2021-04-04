@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Rooms {
+public final class Rooms {
     private final Map<String, ChessGame> rooms;
 
     public Rooms() {

@@ -1,8 +1,8 @@
 package chess.dto;
 
-public class UserDTO {
-    private int id;
-    private String nickname;
+public final class UserDTO {
+    private final int id;
+    private final String nickname;
 
     public UserDTO(int id, String nickname) {
         this.id = id;

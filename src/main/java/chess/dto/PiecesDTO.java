@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PiecesDTO {
+public final class PiecesDTO {
     private final List<PieceDTO> pieceDTOs;
 
     private PiecesDTO(final List<PieceDTO> pieceDTOs) {

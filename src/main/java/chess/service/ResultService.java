@@ -5,12 +5,11 @@ import chess.dao.UserDAO;
 import chess.dto.ResultDTO;
 import chess.dto.UserDTO;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ResultService {
+public final class ResultService {
     private final ResultDAO resultDAO;
     private final UserDAO userDAO;
 
@@ -19,7 +18,7 @@ public class ResultService {
         this.userDAO = userDAO;
     }
 
-    public List<ResultDTO> allUserResult() throws SQLException {
+    public List<ResultDTO> allUserResult() throws Exception {
         List<ResultDTO> results = new ArrayList<>();
         List<UserDTO> users = userDAO.findAll();
         for (UserDTO user : users) {
@@ -32,7 +31,7 @@ public class ResultService {
         return results;
     }
 
-    public void saveGameResult(final String roomId, final int winnerId, final int loserId) throws SQLException {
+    public void saveGameResult(final String roomId, final int winnerId, final int loserId) throws Exception {
         resultDAO.saveGameResult(roomId, winnerId, loserId);
     }
 }

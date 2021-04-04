@@ -3,7 +3,7 @@ package chess.dto;
 import chess.domain.ChessGame;
 import chess.domain.Team;
 
-public class StatusDTO {
+public final class StatusDTO {
     private final String turn;
     private final Double blackScore;
     private final Double whiteScore;
