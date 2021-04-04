@@ -34,6 +34,6 @@ public class WhiteTurn extends Running {
 
     @Override
     public String toString() {
-        return "화이트팀 턴 입니다.";
+        return "White Turn";
     }
 }

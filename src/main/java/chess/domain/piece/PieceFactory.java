@@ -8,6 +8,10 @@ public class PieceFactory {
     private PieceFactory() {
     }
 
+    public static Piece createPiece(String color, String shape, Position position) {
+        return new Piece(Color.valueOf(color), Shape.valueOf(shape.toUpperCase()), position, Move.valueOf(shape).getMoveCondition());
+    }
+
     public static List<Piece> createPieces() {
         return Arrays.asList(
                 Piece.createRook(Color.BLACK, 0, 0),

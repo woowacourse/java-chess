@@ -6,6 +6,7 @@ import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.PiecesDto;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
@@ -21,12 +22,11 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static Board board;
+
     private static ChessGame chessGame;
 
     public static void main(String[] args) {
-        board = new Board(PieceFactory.createPieces());
-        chessGame = new ChessGame(board);
+        chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         Gson gson = new Gson();
 
         staticFiles.location("/static");
@@ -47,6 +47,9 @@ public class WebUIChessApplication {
         post("/move", (req, res) -> {
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = (JsonObject) jsonParser.parse(req.body());
+
+            System.out.println(jsonObject.get("source").getAsString()); //b7
+            System.out.println(jsonObject.get("target").getAsString()); //b5
 
             try {
                 chessGame.move(new Position(jsonObject.get("source").getAsString().split("")),
@@ -90,12 +93,21 @@ public class WebUIChessApplication {
         });
 
         post("/save", (req, res) -> {
-            if(PieceDAO.saveAll(chessGame.getBoard().getPieces())){
+            if(PieceDAO.saveAll(chessGame.getBoard().getPieces()) && PieceDAO.saveTurn(chessGame.getStatus())){
                 return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "게임이 저장되었습니다.", chessGame.getStatus()));
             }
-            System.out.println("저장 성공");
             return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장에 실패하였습니다. ", chessGame.getStatus()));
 
+        });
+
+        post("/load", (req, res) -> {
+            if(PieceDAO.loadPieces() == null) {
+                return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장된 게임이 없습니다. ", chessGame.getStatus()));
+            }
+            chessGame = new ChessGame(PieceDAO.loadPieces());
+            chessGame.changeState(PieceDAO.loadTurn(chessGame));
+
+            return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "저장된 게임을 불러왔습니다.", chessGame.getStatus()));
         });
 
     }

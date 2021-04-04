@@ -148,6 +148,24 @@ function loadPieces() {
         method: 'post',
         url: '/load'
     }).then((res) => {
-
+        const data = res.data;
+        if(data.isOk === 'false'){
+            alert(data.message);
+        }
+        alert(data.message);
+        deletePieces()
+        getPieces(data.piecesDto);
+        showTurn(data.turn);
     });
+}
+
+function deletePieces() {
+    const row = ["a","b","c","d","e","f","g","h"];
+
+    for( let i = 0 ;i < row.length; i++) {
+        for(let j=1;j <= 8;j++){
+            const cell = document.getElementById(row[i]+j);
+            cell.innerHTML = "";
+        }
+    }
 }

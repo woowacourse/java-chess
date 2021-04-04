@@ -1,11 +1,18 @@
 package chess.domain.dao;
 
+import chess.domain.board.Board;
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.PiecesDto;
+import chess.domain.game.BlackTurn;
+import chess.domain.game.ChessGame;
+import chess.domain.game.State;
+import chess.domain.game.WhiteTurn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Position;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDAO {
@@ -48,11 +55,17 @@ public class PieceDAO {
     }
 
     public static boolean save(final Piece piece) {
+        String color = piece.getColor().toString();
+        String shape = piece.getShape().toString();
+        if("WHITE".equals(color)){
+            shape = shape.toLowerCase();
+        }
         try{
-            String query = "INSERT INTO pieces(notation, position) VALUES(?,?)";
+            String query = "INSERT INTO pieces(color, shape, position) VALUES(?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, piece.getNotation());
-            preparedStatement.setString(2, piece.getPosition().toString());
+            preparedStatement.setString(1, color);
+            preparedStatement.setString(2, shape);
+            preparedStatement.setString(3, piece.getPosition().toString());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -77,6 +90,72 @@ public class PieceDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
+        }
+    }
+
+    public static Board loadPieces() {
+        try{
+            String query = "SELECT * FROM pieces";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            List<Piece> pieces = new ArrayList<>();
+
+            while(rs.next()) {
+                String color = rs.getString("color");
+                String shape = rs.getString("shape");
+                String position = rs.getString("position");
+                System.out.println("color : " + color + " shape : " + shape + " position : " + position);
+
+                pieces.add(PieceFactory.createPiece(color, shape, new Position(position)));
+            }
+            return new Board(pieces);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
+    public static State loadTurn(ChessGame chessGame) {
+        try{
+            String query = "SELECT * FROM turn";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            String turn = "";
+            while(rs.next()) {
+                turn = rs.getString("turn");
+            }
+            if("black".equals(turn)){
+                return new BlackTurn(chessGame);
+            }
+            return new WhiteTurn(chessGame);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean saveTurn(String status) {
+        deleteTurn();
+        try {
+            String query = "INSERT INTO turn(turn) values (?)";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, status);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    private static void deleteTurn() {
+        try{
+            String query = "DELETE FROM turn";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

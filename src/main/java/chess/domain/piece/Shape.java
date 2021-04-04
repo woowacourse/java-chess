@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
 public enum Shape {
-    ROOK("R", 5),
-    KNIGHT("N", 2.5),
-    BISHOP("B", 3),
-    QUEEN("Q", 9),
-    KING("K", 0),
-    PAWN("P", 1);
+    R("R", 5),
+    N("N", 2.5),
+    B("B", 3),
+    Q("Q", 9),
+    K("K", 0),
+    P("P", 1);
 
     private final String notation;
     private final double score;
@@ -28,4 +28,8 @@ public enum Shape {
         return score;
     }
 
+    @Override
+    public String toString() {
+        return notation;
+    }
 }

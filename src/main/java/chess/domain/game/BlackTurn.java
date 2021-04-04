@@ -34,6 +34,6 @@ public class BlackTurn extends Running {
 
     @Override
     public String toString() {
-        return "블랙팀 턴 입니다.";
+        return "Black Turn";
     }
 }

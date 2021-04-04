@@ -24,32 +24,32 @@ public class Piece {
 
     public static Piece createPawn(Color color, int row, int col) {
         if (color == Color.BLACK) {
-            return new Piece(Color.BLACK, Shape.PAWN, new Position(row, col), Arrays.asList(new FirstTurnBlackPawnMoveCondition(),
+            return new Piece(Color.BLACK, Shape.P, new Position(row, col), Arrays.asList(new FirstTurnBlackPawnMoveCondition(),
                     new NormalBlackPawnMoveCondition(), new CatchingPieceBlackPawnMoveCondition()));
         }
 
-        return new Piece(Color.WHITE, Shape.PAWN, new Position(row, col), Arrays.asList(new FirstTurnWhitePawnMoveCondition(),
+        return new Piece(Color.WHITE, Shape.P, new Position(row, col), Arrays.asList(new FirstTurnWhitePawnMoveCondition(),
                 new NormalWhitePawnMoveCondition(), new CatchingPieceWhitePawnMoveCondition()));
     }
 
     public static Piece createKing(Color color, int row, int col) {
-        return new Piece(color, Shape.KING, new Position(row, col), Collections.singletonList(new KingMoveCondition()));
+        return new Piece(color, Shape.K, new Position(row, col), Collections.singletonList(new KingMoveCondition()));
     }
 
     public static Piece createQueen(Color color, int row, int col) {
-        return new Piece(color, Shape.QUEEN, new Position(row, col), Collections.singletonList(new QueenMoveCondition()));
+        return new Piece(color, Shape.Q, new Position(row, col), Collections.singletonList(new QueenMoveCondition()));
     }
 
     public static Piece createRook(Color color, int row, int col) {
-        return new Piece(color, Shape.ROOK, new Position(row, col), Collections.singletonList(new RookMoveCondition()));
+        return new Piece(color, Shape.R, new Position(row, col), Collections.singletonList(new RookMoveCondition()));
     }
 
     public static Piece createKnight(Color color, int row, int col) {
-        return new Piece(color, Shape.KNIGHT, new Position(row, col), Collections.singletonList(new KnightMoveCondition()));
+        return new Piece(color, Shape.N, new Position(row, col), Collections.singletonList(new KnightMoveCondition()));
     }
 
     public static Piece createBishop(Color color, int row, int col) {
-        return new Piece(color, Shape.BISHOP, new Position(row, col), Collections.singletonList(new BishopMoveCondition()));
+        return new Piece(color, Shape.B, new Position(row, col), Collections.singletonList(new BishopMoveCondition()));
     }
 
     public boolean isSameColor(Color color) {
@@ -57,7 +57,7 @@ public class Piece {
     }
 
     public boolean isKing() {
-        return this.shape == Shape.KING;
+        return this.shape == Shape.K;
     }
 
     public String getNotation() {
@@ -91,6 +91,10 @@ public class Piece {
         return color;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
     public double getScore() {
         return shape.getScore();
     }
@@ -112,7 +116,7 @@ public class Piece {
     }
 
     public boolean isPawn() {
-        return shape == Shape.PAWN;
+        return shape == Shape.P;
     }
 
     @Override

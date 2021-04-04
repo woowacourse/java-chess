@@ -6,8 +6,14 @@ public class Position {
     private final int row;
     private final int column;
 
-    public Position(String[] stringPosition) {
+    public Position(String str) {
+        this(makeRow(str), makeColumn(str));
+    }
+
+
+    public Position(String[] stringPosition) {// b7 b5
         this(8-Integer.parseInt(stringPosition[1]), stringPosition[0].toCharArray()[0] - 'a');
+        System.out.println(stringPosition[0] + stringPosition[1]);
     }
 
     public Position(final int row, final int column) {
@@ -17,6 +23,14 @@ public class Position {
 
     public double calculateGradient(Position position) {
         return (position.row - row) / (double) (position.column - column);
+    }
+
+    private static int makeColumn(String str) {
+        return str.split("")[0].toCharArray()[0] - 'a';
+    }
+
+    private static int makeRow(String str) {
+        return Integer.parseInt(str.split("")[1])-1;
     }
 
     public int getRow() {
