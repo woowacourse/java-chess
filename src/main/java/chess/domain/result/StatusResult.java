@@ -34,9 +34,14 @@ public final class StatusResult implements Result {
         throw new IllegalArgumentException("점수는 리스트로 활용할 수 없습니다.");
     }
 
+    @Override
+    public Score infoAsScore(final Color color) {
+        return totalScore(color);
+    }
+
     private String renderScore(final Board board) {
-        final String whiteScoreVisual = scoreMessage(Color.WHITE, totalScore(Color.WHITE, board));
-        final String blackScoreVisual = scoreMessage(Color.BLACK, totalScore(Color.BLACK, board));
+        final String whiteScoreVisual = scoreMessage(Color.WHITE, totalScore(Color.WHITE));
+        final String blackScoreVisual = scoreMessage(Color.BLACK, totalScore(Color.BLACK));
         return whiteScoreVisual + "\n" + blackScoreVisual;
     }
 
@@ -44,7 +49,7 @@ public final class StatusResult implements Result {
         return color.getName() + "의 점수는 " + totalScore + "입니다.\n";
     }
 
-    private Score totalScore(final Color color, final Board board) {
+    private Score totalScore(final Color color) {
         final Score specialScore = specialScore(color, board);
         final Score pawnScore = pawnScore(color, board);
 

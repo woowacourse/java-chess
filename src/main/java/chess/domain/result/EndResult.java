@@ -30,6 +30,11 @@ public class EndResult implements Result {
         throw new IllegalArgumentException("게임이 종료된 상태입니다.");
     }
 
+    @Override
+    public Score infoAsScore(final Color color) {
+        throw new IllegalArgumentException("게임이 종료된 상태입니다.");
+    }
+
     private String renderEnding(Board board) {
         if (board.kingCount() == 2) {
             return "승자가 결정되지 않았습니다.";

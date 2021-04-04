@@ -5,9 +5,11 @@ import chess.domain.CommandAsString;
 import chess.domain.game.Game;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.InitialState;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
+import chess.domain.result.Score;
 import chess.dto.GameStateDto;
 import chess.view.OutputView;
 import java.sql.SQLException;
@@ -57,7 +59,7 @@ public class WebController {
 
     public String showTurn() {
         final GameState currentState = game.getState();
-        return currentState.nextState();
+        return currentState.currentState();
     }
 
     public void save(GameDao gameDao) {
@@ -78,6 +80,13 @@ public class WebController {
         }
         Result result = game.result(command);
         return convertToStringMap(result.infoAsMap());
+    }
+
+    public String showScore(final Color color) {
+        CommandAsString command = new CommandAsString("status");
+        Result result = game.result(command);
+        Score score = result.infoAsScore(color);
+        return score.toString();
     }
 
     private Map<String, String> convertToStringMap(Map<Position, Piece> coordinates) {

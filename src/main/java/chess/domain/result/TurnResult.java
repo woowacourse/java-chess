@@ -1,6 +1,7 @@
 package chess.domain.result;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -34,6 +35,11 @@ public final class TurnResult implements Result {
     @Override
     public List<Position> infoAsList() {
         throw new IllegalArgumentException("보드는 경로 정보로 활용될 수 없습니다.");
+    }
+
+    @Override
+    public Score infoAsScore(final Color color) {
+        throw new IllegalArgumentException("보드는 점수로 활용될 수 없습니다.");
     }
 
     private String renderBoard(final Board board) {
