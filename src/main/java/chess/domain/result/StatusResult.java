@@ -21,7 +21,7 @@ public final class StatusResult implements Result {
 
     @Override
     public String infoAsString() {
-        return renderScore(board);
+        return renderScore();
     }
 
     @Override
@@ -39,7 +39,7 @@ public final class StatusResult implements Result {
         return totalScore(color);
     }
 
-    private String renderScore(final Board board) {
+    private String renderScore() {
         final String whiteScoreVisual = scoreMessage(Color.WHITE, totalScore(Color.WHITE));
         final String blackScoreVisual = scoreMessage(Color.BLACK, totalScore(Color.BLACK));
         return whiteScoreVisual + "\n" + blackScoreVisual;
