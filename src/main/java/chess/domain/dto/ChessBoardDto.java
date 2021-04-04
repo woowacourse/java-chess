@@ -1,6 +1,5 @@
 package chess.domain.dto;
 
-
 import chess.domain.piece.Piece;
 import chess.domain.piece.info.Position;
 

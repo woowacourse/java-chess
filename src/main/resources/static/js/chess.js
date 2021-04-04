@@ -15,7 +15,7 @@ async function startBoard() {
     let start = await fetch('/start');
     start = await start.json();
     if (start === 0) {
-        alert('게임 시작하는 것을 실패했습니다.');
+        alert('[ERROR] 게임 시작하는 것을 실패했습니다.');
     }
     initBoard(start);
 }

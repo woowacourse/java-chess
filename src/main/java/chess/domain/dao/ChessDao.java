@@ -3,23 +3,20 @@ package chess.domain.dao;
 import chess.domain.dto.ChessRoomDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.PositionDto;
-import chess.domain.piece.info.Position;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessDao {
-//    private Connection con;
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:3306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
+        String server = "localhost:3306";
+        String database = "chess";
         String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "1004"; // MySQL 서버 비밀번호
+        String userName = "root";
+        String password = "1004";
 
-        // 드라이버 로딩
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -27,7 +24,6 @@ public class ChessDao {
             e.printStackTrace();
         }
 
-        // 드라이버 연결
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
@@ -35,7 +31,6 @@ public class ChessDao {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
         return con;
     }
 
@@ -76,6 +71,8 @@ public class ChessDao {
         }catch (Exception e) {
             con.rollback();
             return 0;
+        }finally {
+            closeConnection(con);
         }
     }
 
@@ -84,9 +81,8 @@ public class ChessDao {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, roomNo);
         ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            throw new IllegalArgumentException("[ERROR] 불러올 방이 없습니다.");
-        }
+        validateRoomEmpty(rs);
+        rs.previous();
         ChessRoomDto chessRoomDto = new ChessRoomDto();
         Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
         while (rs.next()) {
@@ -100,6 +96,12 @@ public class ChessDao {
         }
         chessRoomDto.setChessBoard(chessBoard);
         return chessRoomDto;
+    }
+
+    private void validateRoomEmpty(ResultSet rs) throws SQLException {
+        if (!rs.next()) {
+            throw new IllegalArgumentException("[ERROR] 불러올 방이 없습니다.");
+        }
     }
 
     public int updateChessRoom(ChessRoomDto chessRoomDto, PieceDto targetPiece, PositionDto source, PositionDto target) throws SQLException {
@@ -161,6 +163,8 @@ public class ChessDao {
         }catch (Exception e) {
             con.rollback();
             return 0;
+        }finally {
+            closeConnection(con);
         }
     }
 }
