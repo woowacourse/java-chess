@@ -68,6 +68,10 @@ public abstract class Piece implements Serializable {
         return false;
     }
 
+    public boolean isAlly(Color color){
+        return this.color.equals(color);
+    }
+
     protected abstract boolean canMove(Map<Position, Piece> board, Position source,
         Position target);
 
