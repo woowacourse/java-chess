@@ -43,13 +43,17 @@ public class ChessService {
             game.move(Position.from(from), Position.from(to));
             changeStatusData(from, to);
             changeTurn();
-            if (!game.isNotEnd()) {
-                return new ResponseDto("300", "끝", game.winner().getColor().name());
-            }
-            return new ResponseDto("200", "성공", game.currentPlayer().toString());
+            return checkFinished(game);
         } catch (Exception e) {
             return new ResponseDto("400", e.getMessage(), game.currentPlayer().toString());
         }
+    }
+
+    private ResponseDto checkFinished(final Game game) {
+        if (!game.isNotEnd()) {
+            return new ResponseDto("300", "끝", game.winner().getColor().name());
+        }
+        return new ResponseDto("200", "성공", game.currentPlayer().toString());
     }
 
     private void changeStatusData(final String from, final String to) throws SQLException {
@@ -72,15 +76,17 @@ public class ChessService {
 
         for (final Position position : board.keySet()) {
             final String positionName = position.column().value() + position.row().value();
-            final String pieceName;
-            if (board.get(position).isSameColor(Color.BLACK)) {
-                pieceName = "B" + board.get(position).display().toUpperCase();
-            } else {
-                pieceName = "W" + board.get(position).display().toUpperCase();
-            }
+            final String pieceName = makePieceName(position, board);
             result.put(positionName, pieceName);
         }
         return result;
+    }
+
+    private String makePieceName(final Position position, final Map<Position, Piece> board) {
+        if (board.get(position).isSameColor(Color.BLACK)) {
+            return "B" + board.get(position).display().toUpperCase();
+        }
+        return "W" + board.get(position).display().toUpperCase();
     }
 
     public void initChessBoard() throws SQLException {
