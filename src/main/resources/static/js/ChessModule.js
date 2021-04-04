@@ -1,5 +1,6 @@
 import {serveInitialBoard} from "./ServeInitialBoard.js";
 import {activatePiece} from "./MovePiece.js";
+import {serveBoard} from "./LoadBoard.js";
 import {endGame} from "./EndGame.js";
 
 window.onload = function() {
@@ -7,5 +8,6 @@ window.onload = function() {
   localStorage.activateSecondPiece = false;
   serveInitialBoard();
   activatePiece();
+  serveBoard();
   endGame();
 }

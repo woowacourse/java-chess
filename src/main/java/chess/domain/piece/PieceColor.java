@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+
 public enum PieceColor {
     BLACK("흑"),
     WHITE("백"),
@@ -19,6 +20,13 @@ public enum PieceColor {
             return BLACK;
         }
         return VOID;
+    }
+
+    public static PieceColor translateTurnColor(String rawColor) {
+        if (rawColor.equals("white")){
+            return WHITE;
+        }
+        return BLACK;
     }
 
     public String getName() {

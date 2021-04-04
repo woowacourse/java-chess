@@ -9,6 +9,7 @@ import chess.domain.board.Position;
 import chess.domain.dao.ChessDAO;
 import chess.domain.dto.PieceDTO;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import com.google.gson.Gson;
 import java.sql.SQLException;
@@ -31,14 +32,28 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "Chess.html");
+            Map<String, Object> submitData = new HashMap<>();
+
+            return render(submitData, "Chess.html");
+        });
+
+        post("/load", (req,res) -> {
+            Map<String, Object> submitData = new HashMap<>();
+            Map<String, Object> loadedSubmitBoard = new HashMap<>();
+            webController.loadGame(chessDAO);
+            Map<Position, Piece> loadedBoard = webController.getBoard();
+            translateBoard(loadedSubmitBoard, loadedBoard);
+
+            submitData.put("turn", webController.getTurn());
+            submitData.put("chessBoard", loadedSubmitBoard);
+            return gson.toJson(submitData);
         });
 
         post("/initial", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
             Map<String, Object> initialChessBoard = new HashMap<>();
             Map<Position, Piece> startedBoard= webController.startedBoard();
+            chessDAO.initTurn();
             insertInitialBoard(initialChessBoard, startedBoard, chessDAO);
 
             submitData.put("turn", webController.getTurn());
@@ -55,6 +70,7 @@ public class WebUIChessApplication {
 
             if (moveResult.equals("true")) {
                 moveOnDB(chessDAO, moveRawCommand);
+                chessDAO.updateTurn(webController.getTurn());
             }
 
             judgeEnd(webController, submitData);
@@ -97,6 +113,16 @@ public class WebUIChessApplication {
         }
     }
 
+    public static void translateBoard(Map<String, Object> loadedSubmitBoard,
+        Map<Position, Piece> loadedBoard) {
+        for (Map.Entry<Position, Piece> elem : loadedBoard.entrySet()) {
+            Position position = elem.getKey();
+            Piece piece = elem.getValue();
+
+            loadedSubmitBoard.put(position.symbol(), piece.symbol());
+        }
+    }
+
     public static PieceDTO processedPieceDTO(Position position, Piece piece) {
         return new PieceDTO(position.symbol(), piece.symbol());
     }
@@ -104,8 +130,11 @@ public class WebUIChessApplication {
     public static void moveOnDB(ChessDAO chessDAO, String rawMoveCommand) throws SQLException {
         List<String> moveSourceTarget = Arrays.asList(rawMoveCommand.split(" "));
         PieceDTO pieceDTO = chessDAO.pieceOnLocation(moveSourceTarget.get(1),1);
-        PieceDTO voidPiece = new PieceDTO(moveSourceTarget.get(1), PieceKind.VOID.name());
+        pieceDTO.setLocation(moveSourceTarget.get(2));
+        PieceDTO voidPiece = new PieceDTO(moveSourceTarget.get(1), ".");
+        System.out.println("hihi");
         chessDAO.deletePiece(moveSourceTarget.get(1),1);
+        chessDAO.deletePiece(moveSourceTarget.get(2),1);
         chessDAO.addPiece(pieceDTO);
         chessDAO.addPiece(voidPiece);
     }

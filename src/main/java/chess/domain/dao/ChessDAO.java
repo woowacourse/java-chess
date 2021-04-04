@@ -1,6 +1,7 @@
 package chess.domain.dao;
 
 import chess.domain.dto.PieceDTO;
+import chess.domain.dto.TurnDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 
 public class ChessDAO {
 
+    public static final String INITIAL_TURN_COLOR = "white";
     private final int SINGLE_BOARD_NUMBER  = 1;
 
     public Connection getConnection() {
@@ -46,6 +48,25 @@ public class ChessDAO {
         }
     }
 
+    public void initTurn() throws SQLException {
+        String query = "INSERT INTO turn(board_id, turn_color) VALUES(?, WHITE)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        try {
+            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.executeUpdate();
+        } catch (SQLException existedBoardException) {
+            updateTurn(INITIAL_TURN_COLOR);
+        }
+    }
+
+    public void updateTurn(String color) throws SQLException {
+        String query = "UPDATE turn SET turn_color = ? WHERE board_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, color);
+        pstmt.setInt(2, SINGLE_BOARD_NUMBER);
+        pstmt.executeUpdate();
+    }
+
     public void addPiece(PieceDTO pieceDTO) throws SQLException {
         String query = "INSERT INTO piece(board_id, piece_kind, piece_location) VALUES(?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -78,12 +99,22 @@ public class ChessDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, SINGLE_BOARD_NUMBER);
         pstmt.setString(2, location);
-
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) return null;
-
         return new PieceDTO(
             rs.getString("piece_location"),
-            rs.getString("piece_kind"));
+            rs.getString("piece_kind")
+        );
+    }
+
+    public TurnDTO loadTurnDTO(int boardNumber) throws SQLException {
+        String query = "SELECT * FROM turn WHERE (board_id = ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+        ResultSet rs = pstmt.executeQuery();
+        if (!rs.next()) return null;
+        return new TurnDTO(
+            rs.getString("turn_color")
+        );
     }
 }

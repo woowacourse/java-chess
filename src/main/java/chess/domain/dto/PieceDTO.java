@@ -2,13 +2,13 @@ package chess.domain.dto;
 
 public class PieceDTO {
 
+    private String location;
+    private String pieceKind;
+
     public PieceDTO(String location, String pieceKind) {
         this.location = location;
         this.pieceKind = pieceKind;
     }
-
-    private String location;
-    private String pieceKind;
 
     public void setLocation(String location) {
         this.location = location;

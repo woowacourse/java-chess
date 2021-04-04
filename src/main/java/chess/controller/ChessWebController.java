@@ -2,10 +2,16 @@ package chess.controller;
 
 import chess.domain.Game;
 import chess.domain.board.Position;
+import chess.domain.board.XPosition;
+import chess.domain.board.YPosition;
 import chess.domain.command.Command;
 import chess.domain.command.End;
 import chess.domain.command.Move;
+import chess.domain.dao.ChessDAO;
+import chess.domain.dto.PieceDTO;
 import chess.domain.piece.Piece;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessWebController {
@@ -18,8 +24,33 @@ public class ChessWebController {
 
     public Map<Position, Piece> startedBoard() {
         game.init();
+        return getBoard();
+    }
+
+    public Map<Position, Piece> getBoard() {
         return game.getBoard()
             .recentBoard();
+    }
+
+    public void loadGame(ChessDAO chessDAO) throws SQLException {
+        game.loadGame(loadBoard(chessDAO), chessDAO.loadTurnDTO(1));
+    }
+
+    public Map<Position, PieceDTO> loadBoard(ChessDAO chessDAO) throws SQLException {
+        Map<Position, PieceDTO> loadBoard = new HashMap<>();
+        for (XPosition xPosition : XPosition.values()) {
+            putPieceOnXPosition(chessDAO, loadBoard, xPosition);
+        }
+        return loadBoard;
+    }
+
+    private void putPieceOnXPosition(ChessDAO chessDAO, Map<Position, PieceDTO> loadBoard,
+        XPosition xPosition) throws SQLException {
+        for (YPosition yPosition : YPosition.values()) {
+            Position position = Position.of(xPosition, yPosition);
+            PieceDTO pieceDTO = chessDAO.pieceOnLocation(position.symbol(), 1);
+            loadBoard.put(position, pieceDTO);
+        }
     }
 
     public String getTurn() {
