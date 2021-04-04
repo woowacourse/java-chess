@@ -90,13 +90,13 @@ public final class Board {
 
     public Path pathsOf(final Position sourcePosition) {
         final Piece piece = coordinates.get(sourcePosition);
-        return new Path(
-                piece.directions()
+        final List<Position> positions = piece.directions()
                 .stream()
                 .map(direction -> piece.pathFrom(direction, sourcePosition))
                 .map(path -> path.removeObstacleInPath(sourcePosition, this))
                 .flatMap(List::stream)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        return new Path(positions);
     }
 
     public Map<Position, Piece> coordinates() {
