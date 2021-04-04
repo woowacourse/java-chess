@@ -1,10 +1,10 @@
-package chess;
+package chess.dto;
 
-public class RequestPosition {
+public class PositionDTO {
     private final String from;
     private final String to;
 
-    public RequestPosition(String from, String to) {
+    public PositionDTO(String from, String to) {
         this.from = from;
         this.to = to;
     }

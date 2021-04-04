@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Side;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;

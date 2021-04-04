@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.piece.*;

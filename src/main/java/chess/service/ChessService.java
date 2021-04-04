@@ -1,7 +1,9 @@
-package chess;
+package chess.service;
 
 import chess.dao.BoardDAO;
-import chess.domain.Board;
+import chess.dto.PositionDTO;
+import chess.dto.ResponseDTO;
+import chess.domain.board.Board;
 import chess.domain.Side;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -22,20 +24,20 @@ public class ChessService {
         boardDAO.addBoard(Board.getGamingBoard(), Side.WHITE.name());
     }
 
-    public Response move(RequestPosition requestPosition) throws SQLException {
-        String from = requestPosition.from();
-        String to = requestPosition.to();
+    public ResponseDTO move(PositionDTO positionDTO) throws SQLException {
+        String from = positionDTO.from();
+        String to = positionDTO.to();
         Board board = new Board(boardDAO.findBoard(GameNumber));
         try {
             board.move(Position.from(from), Position.from(to), currentTurn());
             boardDAO.updateBoard(board, currentTurn().changeTurn().name());
             if (board.isGameSet()) {
                 Side side = board.winner();
-                return new Response("300", side.name(), "게임 종료(" + side.name() + " 승리)");
+                return new ResponseDTO("300", side.name(), "게임 종료(" + side.name() + " 승리)");
             }
-            return new Response("200", "Succeed", currentTurn().name());
+            return new ResponseDTO("200", "Succeed", currentTurn().name());
         } catch (ChessException e) {
-            return new Response("400", e.getMessage(), currentTurn().name());
+            return new ResponseDTO("400", e.getMessage(), currentTurn().name());
         }
     }
 
@@ -59,7 +61,7 @@ public class ChessService {
         return boardDTO;
     }
 
-    public String turn() throws SQLException {
+    public String turnName() throws SQLException {
         return currentTurn().name();
     }
 

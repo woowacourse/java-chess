@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.PieceFactory;
-import chess.domain.Board;
+import chess.domain.piece.PieceFactory;
+import chess.domain.board.Board;
 import chess.domain.Side;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
