@@ -37,7 +37,6 @@ public class ChessDAO {
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
             pstmt.setString(1, gameId);
             pstmt.setString(2, data);
             pstmt.executeUpdate();
@@ -49,7 +48,6 @@ public class ChessDAO {
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
             pstmt.setString(1, data);
             pstmt.setString(2, gameId);
             pstmt.execute();
@@ -61,7 +59,6 @@ public class ChessDAO {
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
             pstmt.setString(1, gameId);
 
             return getChessGameFromDB(pstmt);
