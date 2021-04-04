@@ -120,7 +120,7 @@ async function move(sourcePosition, targetPosition) {
 
     const response = await fetch("/move", option)
     .then(res => res.json());
-    if (response.code === "401") {
+    if (response.code === "400") {
         alert(response.message);
         return;
     }

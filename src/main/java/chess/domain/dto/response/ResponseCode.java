@@ -4,7 +4,7 @@ public enum ResponseCode {
     SUCCESS("200", "응답 성공"),
     GAME_OVER("212", "게임 종료"),
     RUN("204", "게임중"),
-    ERROR("401", "");
+    ERROR("400", "");
 
     private final String code;
     private final String message;
