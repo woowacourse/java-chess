@@ -1,6 +1,10 @@
 package chess.dao;
 
+import chess.dto.RoomDTO;
+import chess.dto.RoomsDTO;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ChessDAO {
     public Connection getConnection() {
@@ -43,10 +47,9 @@ public class ChessDAO {
     }
 
     public void createChessGame(String chessGameData) throws SQLException {
-        String query = "INSERT INTO game(game_id,data) VALUES (?,?)";
+        String query = "INSERT INTO game(data) VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, "1");
-        pstmt.setString(2, chessGameData);
+        pstmt.setString(1, chessGameData);
         pstmt.executeUpdate();
     }
 
@@ -69,12 +72,29 @@ public class ChessDAO {
         return rs.getString("data");
     }
 
-    public boolean haveGame(String gameId) {
-        String query = "SELECT * FROM game WHERE game_id = ?";
-        if (query == null) {
-            return false;
+    public RoomsDTO createRoom(String name, String pw) throws SQLException {
+        String query = "SELECT * FROM game ORDER BY game_id DESC LIMIT 1";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery(query);
+        int gameID = -1;
+        if (rs.next()) {
+            gameID = rs.getInt("game_id");
         }
 
-        return true;
+        query = "INSERT INTO room(room_name,room_pw,game_id) VALUES (?,?,?)";
+        pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, name);
+        pstmt.setString(2, pw);
+        pstmt.setInt(3, gameID);
+        pstmt.executeUpdate();
+
+        query = "SELECT * FROM room";
+        rs = pstmt.executeQuery(query);
+        ArrayList<RoomDTO> roomDTOs = new ArrayList<>();
+
+        while (rs.next()) {
+            roomDTOs.add(new RoomDTO(rs.getInt("room_id"), rs.getString("room_name"), rs.getString("room_pw")));
+        }
+        return new RoomsDTO(roomDTOs);
     }
 }

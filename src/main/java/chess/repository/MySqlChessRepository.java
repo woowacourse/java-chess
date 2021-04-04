@@ -1,6 +1,7 @@
 package chess.repository;
 
 import chess.dao.ChessDAO;
+import chess.dto.RoomsDTO;
 
 import java.sql.SQLException;
 
@@ -38,5 +39,16 @@ public class MySqlChessRepository implements ChessRepository {
             throwables.printStackTrace();
         }
         return gameData;
+    }
+
+    @Override
+    public RoomsDTO createRoom(final String name, final String pw) {
+        try {
+            return chessDAO.createRoom(name, pw);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
     }
 }

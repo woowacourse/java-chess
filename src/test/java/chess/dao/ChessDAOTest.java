@@ -29,8 +29,10 @@ public class ChessDAOTest {
         chessGameService.createChessGame();
     }
 
-    @Test void test() throws Exception {
-        String chessGame = chessDAO.loadGame("2");
-        System.out.println(chessGame);
+    @Test
+    public void addRoom() throws Exception {
+        chessGameService.createRoom("{name: 수리, pw: 1234}");
     }
+
+
 }

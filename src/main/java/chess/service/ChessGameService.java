@@ -79,6 +79,15 @@ public class ChessGameService {
         return new ResponseDTO(false, "", "움직일 수 없습니다.");
     }
 
+    public ResponseDTO createRoom(String data) {
+        createChessGame();
+        System.out.println(data);
+        RoomCreateRequestDTO roomCreateRequestDTO = gson.fromJson(data, RoomCreateRequestDTO.class);
+        System.out.println(roomCreateRequestDTO);
+        RoomsDTO roomsDTO = chessRepository.createRoom(roomCreateRequestDTO.getName(), roomCreateRequestDTO.getPw());
+        return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 생성하였습니다.");
+    }
+
 
     private ChessGame createChessGame(ChessGameDTO chessGameDTO) {
         System.out.println("createChessGame() called.");

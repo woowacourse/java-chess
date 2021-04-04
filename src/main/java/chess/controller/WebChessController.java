@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebChessController {
     private Gson gson = null;
@@ -48,6 +49,11 @@ public class WebChessController {
             String target = req.queryParams("target");
             return gson.toJson(chessGameService.moveChessGame("1", selected, target));
         });
+
+        post("/createRoom", (req, res) -> {
+            return gson.toJson(chessGameService.createRoom(req.body()));
+        });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
