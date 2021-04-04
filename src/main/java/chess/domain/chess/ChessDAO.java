@@ -30,7 +30,8 @@ public class ChessDAO {
     }
 
     public Optional<Long> findIdByUserId(Long userId) throws SQLException {
-        String query = "SELECT chess_id FROM chess c JOIN user u on u.user_id = c.user_id WHERE u.user_id = (?)";
+        String query =
+                "SELECT chess_id FROM chess c JOIN user u on u.user_id = c.user_id WHERE u.user_id = (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {

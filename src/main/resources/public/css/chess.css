@@ -140,7 +140,8 @@
 }
 
 #black-versus {
-    position: absolute; left: 120px;
+    position: absolute;
+    left: 120px;
 
 }
 
@@ -150,11 +151,14 @@
 }
 
 #white-versus {
-    position: absolute; left: 480px;
+    position: absolute;
+    left: 480px;
 }
 
 #VS {
-    position: absolute; left: 340px; top: 230px;
+    position: absolute;
+    left: 340px;
+    top: 230px;
     font-size: 100px;
     font-weight: bold;
 }

@@ -20,8 +20,6 @@ import chess.domain.chess.ChessDAO;
 import chess.domain.position.MovePosition;
 import chess.domain.position.MovePositionDAO;
 import chess.domain.position.MovePositionDTO;
-import chess.domain.user.User;
-import chess.domain.user.UserDAO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -34,26 +32,13 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/public");
 
-        UserDAO userDAO = new UserDAO();
         ChessDAO chessDAO = new ChessDAO();
         MovePositionDAO movePositionDAO = new MovePositionDAO();
 
-        get("/", (req, res) -> render(new HashMap<>(), "form.html"));
-
-        post("/users", (req, res) -> {
-            final String name = req.queryParams("name");
-            User user = new User(name);
-            userDAO.addUser(user);
-            res.cookie("/chess", "name", name, 3600, false, true);
-            res.redirect("/main");
-            return "OK";
-        });
-
-        get("/main", (req, res) -> render(new HashMap<>(), "main.html"));
+        get("/", (req, res) -> render(new HashMap<>(), "main.html"));
 
         post("/chess/new", (req, res) -> {
             String name = req.cookie("name");
-            Long userId = userDAO.findIdByName(name);
             Optional<Long> chessId = chessDAO.findIdByUserId(userId);
             if (chessId.isPresent()) {
                 chessDAO.deletePreviousChess(chessId.get());
@@ -65,7 +50,6 @@ public class WebUIChessApplication {
 
         get("/chess/continue", (req, res) -> {
             String name = req.cookie("name");
-            Long userId = userDAO.findIdByName(name);
             Long chessId = chessDAO.findIdByUserId(userId)
                                    .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
             return "OK";
@@ -73,12 +57,13 @@ public class WebUIChessApplication {
 
         get("/chess", (req, res) -> {
             String name = req.cookie("name");
-            Long userId = userDAO.findIdByName(name);
-            Chess chess = Chess.createWithEmptyBoard().start();
+            Chess chess = Chess.createWithEmptyBoard()
+                               .start();
             Long chessId = chessDAO.findIdByUserId(userId)
                                    .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
             chess = chessDAO.getChess(chessId, chess);
-            Set<Map.Entry<String, String>> board = BoardDTO.from(chess).getPieceDTOs();
+            Set<Map.Entry<String, String>> board = BoardDTO.from(chess)
+                                                           .getPieceDTOs();
             Map<String, Object> model = new HashMap<>();
             model.put("board", board);
             return render(model, "chess.html");
@@ -86,7 +71,6 @@ public class WebUIChessApplication {
 
         post("/chess/move", (req, res) -> {
             String name = req.cookie("name");
-            Long userId = userDAO.findIdByName(name);
             MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);
             MovePosition movePosition =
                     new MovePosition(movePositionDTO.getSource(), movePositionDTO.getTarget());

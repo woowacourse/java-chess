@@ -6,7 +6,8 @@ import java.sql.SQLException;
 
 public class ConnectionUtils {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/chess?serverTimezone=UTC&characterEncoding=UTF-8";
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/chess?serverTimezone=UTC&characterEncoding=UTF-8";
     private static final String USER_NAME = "seed";
     private static final String PASSWORD = "asdqwe1!";
 
