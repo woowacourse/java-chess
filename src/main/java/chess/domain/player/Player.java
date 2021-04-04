@@ -28,6 +28,10 @@ public abstract class Player {
         this.state = this.state.toRunningTurn(anotherState);
     }
 
+    public final void changeState(final State nextState) {
+        this.state = nextState;
+    }
+
     public final State getState() {
         return state;
     }

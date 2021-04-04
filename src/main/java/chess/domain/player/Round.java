@@ -19,6 +19,8 @@ public class Round {
     private Command command;
     private boolean isEnd = false;
 
+    private static Map<Position, Piece> board;
+
     public Round(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
     }
@@ -59,13 +61,18 @@ public class Round {
     }
 
     public Map<Position, Piece> getBoard() {
-        Map<Position, Piece> board = ChessBoardFactory.initializeBoard();
+        board = ChessBoardFactory.initializeBoard();
         Pieces whitePieces = whitePlayer.getPieces();
         Pieces blackPieces = blackPlayer.getPieces();
 
         whitePieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
         blackPieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
 
+        return board;
+    }
+
+    public Map<Position, Piece> getBoard(final Map<Position, Piece> loadBoard) {
+        board = loadBoard;
         return board;
     }
 

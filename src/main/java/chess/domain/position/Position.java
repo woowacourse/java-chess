@@ -139,6 +139,12 @@ public class Position {
         return reversedSource;
     }
 
+    public static Position findByString(final String positionString) {
+        return Position.valueOf(
+                Rank.findByRank(positionString.substring(1, 2)),
+                File.findByFile(positionString.substring(0, 1)));
+    }
+
     public File getFile() {
         return file;
     }

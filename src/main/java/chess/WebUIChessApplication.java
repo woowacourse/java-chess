@@ -1,11 +1,15 @@
 package chess;
 
+import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
 import chess.domain.command.CommandFactory;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.PiecesFactory;
+import chess.domain.player.Player;
 import chess.domain.player.Round;
 import chess.domain.position.Position;
+import chess.domain.state.State;
 import chess.domain.state.StateFactory;
 import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
@@ -27,8 +31,8 @@ public class WebUIChessApplication {
     public static final ChessRepositoryImpl CHESS_REPOSITORY = new ChessRepositoryImpl();
     public static final List<String> TURNS = Arrays.asList("white", "black");
 
-    private static Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
-            StateFactory.initialization(PieceFactory.blackPieces()), START);
+    private static Round round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
+            StateFactory.initialization(PiecesFactory.blackPieces()), START);
 
     public static void main(String[] args) {
         staticFileLocation("/static");
@@ -39,12 +43,53 @@ public class WebUIChessApplication {
             for (ChessRequestDto piece : pieces) {
                 chessBoardFromDB.put(piece.getPiecePosition(), piece.getPieceName());
             }
-            String jsonFormatChessBoard = GSON.toJson(chessBoardFromDB);
+
+            CHESS_REPOSITORY.removeAllPieces();
+
+            Map<Position, Piece> chessBoard = round.getBoard(ChessBoardFactory.loadBoard(chessBoardFromDB));
+            Map<String, String> stringChessBoard = new LinkedHashMap<>();
+            for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
+                stringChessBoard.put(chessBoardEntry.getKey().toString(), chessBoardEntry.getValue().getPiece());
+            }
+
+            List<Piece> whitePieces = new ArrayList<>();
+            List<Piece> blackPieces = new ArrayList<>();
+            for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
+                if (chessBoardEntry.getValue().isBlack()) {
+                    blackPieces.add(chessBoardEntry.getValue());
+                    continue;
+                }
+                whitePieces.add(chessBoardEntry.getValue());
+            }
+
+            CHESS_REPOSITORY.initializePieceStatus(stringChessBoard);
+
+            String jsonFormatChessBoard = GSON.toJson(stringChessBoard);
+
+            round = new Round(StateFactory.initialization(new Pieces(whitePieces)),
+                    StateFactory.initialization(new Pieces(blackPieces)), START);
 
             List<TurnRequestDto> turns = CHESS_REPOSITORY.showCurrentTurn();
             String currentTurn = turns.stream()
                     .map(TurnRequestDto::getCurrentTurn)
                     .collect(Collectors.joining());
+
+            if ("white".equals(currentTurn)) {
+                Player white = round.getWhitePlayer();
+                Player black = round.getBlackPlayer();
+                State nextWhiteTurn = white.getState().toRunningTurn();
+                State nextBlackTurn = black.getState().toFinishedTurn();
+                white.changeState(nextWhiteTurn);
+                black.changeState(nextBlackTurn);
+            }
+            if ("black".equals(currentTurn)) {
+                Player white = round.getWhitePlayer();
+                Player black = round.getBlackPlayer();
+                State nextWhiteTurn = white.getState().toFinishedTurn();
+                State nextBlackTurn = black.getState().toRunningTurn();
+                white.changeState(nextWhiteTurn);
+                black.changeState(nextBlackTurn);
+            }
 
             double whiteScore = round.getWhitePlayer().calculateScore();
             double blackScore = round.getBlackPlayer().calculateScore();
@@ -81,6 +126,7 @@ public class WebUIChessApplication {
             String nextTurn = TURNS.stream()
                     .filter(t -> !t.equals(currentTurn))
                     .collect(Collectors.joining());
+
             CHESS_REPOSITORY.changeTurn(new TurnChangeRequestDto(currentTurn, nextTurn));
 
             return "{\"status\":\"200\", \"message\":\"성공\"}";
@@ -90,15 +136,15 @@ public class WebUIChessApplication {
             CHESS_REPOSITORY.removeAllPieces();
             CHESS_REPOSITORY.removeTurn();
 
-            round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
-                    StateFactory.initialization(PieceFactory.blackPieces()), START);
+            round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
+                    StateFactory.initialization(PiecesFactory.blackPieces()), START);
 
             Map<Position, Piece> chessBoard = round.getBoard();
             Map<String, String> filteredChessBoard = new LinkedHashMap<>();
-            for (Map.Entry<Position, Piece> chessBoardStatus : chessBoard.entrySet()) {
-                if (chessBoardStatus.getValue() != null) {
-                    filteredChessBoard.put(chessBoardStatus.getKey().toString(),
-                            chessBoardStatus.getValue().getPiece());
+            for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
+                if (chessBoardEntry.getValue() != null) {
+                    filteredChessBoard.put(chessBoardEntry.getKey().toString(),
+                            chessBoardEntry.getValue().getPiece());
                 }
             }
 
@@ -111,7 +157,7 @@ public class WebUIChessApplication {
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private static String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

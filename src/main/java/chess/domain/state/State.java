@@ -24,4 +24,8 @@ public interface State {
     boolean isKing(final Position position);
 
     double calculateScore();
+
+    State toRunningTurn();
+
+    State toFinishedTurn();
 }

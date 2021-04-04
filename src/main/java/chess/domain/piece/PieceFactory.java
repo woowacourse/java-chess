@@ -2,51 +2,53 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.function.BiFunction;
 
-public class PieceFactory {
-    private static final String KING = "k";
-    private static final String QUEEN = "q";
-    private static final String BISHOP = "b";
-    private static final String KNIGHT = "n";
-    private static final String ROOK = "r";
-    private static final String PAWN = "p";
-    private static final int PAWN_SIZE = 8;
+public enum PieceFactory {
+    BLACK_BISHOP("B", Position::valueOf, Bishop::from),
+    BLACK_KING("K", Position::valueOf, King::from),
+    BLACK_KNIGHT("N", Position::valueOf, Knight::from),
+    BLACK_PAWN("P", Position::valueOf, Pawn::from),
+    BLACK_QUEEN("Q", Position::valueOf, Queen::from),
+    BLACK_ROOK("R", Position::valueOf, Rook::from),
+    WHITE_BISHOP("b", Position::valueOf, Bishop::from),
+    WHITE_KING("k", Position::valueOf, King::from),
+    WHITE_KNIGHT("n", Position::valueOf, Knight::from),
+    WHITE_PAWN("p", Position::valueOf, Pawn::from),
+    WHITE_QUEEN("q", Position::valueOf, Queen::from),
+    WHITE_ROOK("r", Position::valueOf, Rook::from);
 
-    public static Pieces whitePieces() {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.add(Rook.from(ROOK, Position.valueOf("1", "a")));
-        pieces.add(Knight.from(KNIGHT, Position.valueOf("1", "b")));
-        pieces.add(Bishop.from(BISHOP, Position.valueOf("1", "c")));
-        pieces.add(Queen.from(QUEEN, Position.valueOf("1", "d")));
-        pieces.add(King.from(KING, Position.valueOf("1", "e")));
-        pieces.add(Bishop.from(BISHOP, Position.valueOf("1", "f")));
-        pieces.add(Knight.from(KNIGHT, Position.valueOf("1", "g")));
-        pieces.add(Rook.from(ROOK, Position.valueOf("1", "h")));
+    private final String pieceName;
+    private final BiFunction<String, String, Position> positionBiFunction;
+    private final BiFunction<String, Position, Piece> pieceBiFunction;
 
-        for (int idx = 0; idx < PAWN_SIZE; idx++) {
-            pieces.add(Pawn.from(PAWN, Position.valueOf("2", Character.toString((char) ('a' + idx)))));
-        }
-
-        return new Pieces(pieces);
+    PieceFactory(final String pieceName, final BiFunction<String, String, Position> positionBiFunction,
+                 final BiFunction<String, Position, Piece> pieceBiFunction) {
+        this.pieceName = pieceName;
+        this.positionBiFunction = positionBiFunction;
+        this.pieceBiFunction = pieceBiFunction;
     }
 
-    public static Pieces blackPieces() {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.add(Rook.from(ROOK.toUpperCase(), Position.valueOf("8", "a")));
-        pieces.add(Knight.from(KNIGHT.toUpperCase(), Position.valueOf("8", "b")));
-        pieces.add(Bishop.from(BISHOP.toUpperCase(), Position.valueOf("8", "c")));
-        pieces.add(Queen.from(QUEEN.toUpperCase(), Position.valueOf("8", "d")));
-        pieces.add(King.from(KING.toUpperCase(), Position.valueOf("8", "e")));
-        pieces.add(Bishop.from(BISHOP.toUpperCase(), Position.valueOf("8", "f")));
-        pieces.add(Knight.from(KNIGHT.toUpperCase(), Position.valueOf("8", "g")));
-        pieces.add(Rook.from(ROOK.toUpperCase(), Position.valueOf("8", "h")));
+    public static Piece createByString(final String pieceString, final String positionString) {
+        PieceFactory pieceFactory = Arrays.stream(PieceFactory.values())
+                .filter(value -> value.getPieceName().equals(pieceString))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+        Position position = pieceFactory.getPositionBiFunction()
+                .apply(positionString.substring(1, 2), positionString.substring(0, 1));
+        return pieceFactory.getPieceBiFunction().apply(pieceString, position);
+    }
 
-        for (int idx = 0; idx < PAWN_SIZE; idx++) {
-            pieces.add(Pawn.from(PAWN.toUpperCase(), Position.valueOf("7", Character.toString((char) ('a' + idx)))));
-        }
+    public String getPieceName() {
+        return pieceName;
+    }
 
-        return new Pieces(pieces);
+    public BiFunction<String, String, Position> getPositionBiFunction() {
+        return positionBiFunction;
+    }
+
+    public BiFunction<String, Position, Piece> getPieceBiFunction() {
+        return pieceBiFunction;
     }
 }

@@ -88,7 +88,7 @@
 <br/>
 
 ## 5단계 기능목록 정리
-- [ ] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
+- [x] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
 
 ### DB ERD
 <p align="center"><img src="https://user-images.githubusercontent.com/50176238/113257599-cc801e00-9305-11eb-8c8f-78df52784525.PNG"></p>
