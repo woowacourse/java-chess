@@ -13,11 +13,10 @@ import java.util.TreeMap;
 public final class PieceDao {
 
     public Map<Position, Piece> load() throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "SELECT * FROM pieces";
+        final String query = "SELECT * FROM pieces";
+        try (final Connection conn = ConnectionSetup.getConnection();
             final PreparedStatement pstmt = conn.prepareStatement(query);
-            final ResultSet rs = pstmt.executeQuery();
-
+            final ResultSet rs = pstmt.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }
@@ -40,9 +39,9 @@ public final class PieceDao {
     }
 
     public void savePiece(final Position position, final Piece piece) throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "INSERT INTO pieces VALUES (?, ?)";
-            final PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "INSERT INTO pieces VALUES (?, ?)";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, position.horizontalSymbol() + position.verticalSymbol());
             pstmt.setString(2, piece.name());
             pstmt.executeUpdate();
@@ -50,9 +49,9 @@ public final class PieceDao {
     }
 
     public void deleteAll() throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "TRUNCATE TABLE pieces";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "TRUNCATE TABLE pieces";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query);) {
             pstmt.executeUpdate();
         }
     }

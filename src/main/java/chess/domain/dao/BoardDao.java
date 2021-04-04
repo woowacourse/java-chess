@@ -9,11 +9,11 @@ import java.sql.SQLException;
 public final class BoardDao {
 
     public BoardDto load() throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "SELECT * FROM board";
-            final PreparedStatement pstmt = conn.prepareStatement(query);
-            final ResultSet rs = pstmt.executeQuery();
+        final String query = "SELECT * FROM board";
 
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query);
+            final ResultSet rs = pstmt.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }
@@ -25,9 +25,9 @@ public final class BoardDao {
     }
 
     public void save(final String team, final boolean isGameOver) throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "INSERT INTO board VALUES (?, ?)";
-            final PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "INSERT INTO board VALUES (?, ?)";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, team);
             pstmt.setBoolean(2, isGameOver);
             pstmt.executeUpdate();
@@ -35,9 +35,9 @@ public final class BoardDao {
     }
 
     public void deleteAll() throws SQLException {
-        try (final Connection conn = ConnectionSetup.getConnection()) {
-            final String query = "TRUNCATE TABLE board";
-            final PreparedStatement pstmt = conn.prepareStatement(query);
+        final String query = "TRUNCATE TABLE board";
+        try (final Connection conn = ConnectionSetup.getConnection();
+            final PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.executeUpdate();
         }
     }
