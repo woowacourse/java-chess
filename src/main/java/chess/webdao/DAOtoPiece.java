@@ -2,6 +2,8 @@ package chess.webdao;
 
 import chess.domain.piece.*;
 
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -29,12 +31,16 @@ public enum DAOtoPiece {
         this.pieceFunction = pieceFunction;
     }
 
-    public static Piece generatePiece(final String team, final String pieceAsString, final boolean isFirstMove) {
+    public static Piece generatePiece(final String team, final String pieceAsString, final boolean isFirstMove)
+            throws SQLException {
         final DAOtoPiece request = Stream.of(values())
                 .filter(piece -> piece.team.equals(team))
                 .filter(piece -> piece.pieceAsString.equals(pieceAsString))
                 .findAny()
                 .orElse(null);
+        if (Objects.isNull(request)) {
+            throw new SQLException("기물 정보가 DB에 잘못 저장되어 있습니다.");
+        }
         return request.pieceFunction.apply(isFirstMove);
     }
 }
