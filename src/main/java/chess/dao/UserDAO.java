@@ -3,13 +3,12 @@ package chess.dao;
 import chess.dto.UserDTO;
 import chess.dto.UsersDTO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static chess.dao.ConnectDB.CONNECTION;
 
 public class UserDAO {
 
@@ -18,65 +17,89 @@ public class UserDAO {
                 "FROM room JOIN user as black on black.id = room.black_user " +
                 "JOIN user as white on white.id = room.white_user " +
                 "WHERE room.id = ?";
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, roomId);
         ResultSet resultSet = statement.executeQuery();
 
-        if (!resultSet.next()) {
-            return null;
+        UsersDTO usersDTO = null;
+        try (connection; statement; resultSet) {
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            usersDTO = new UsersDTO(
+                    resultSet.getString("black_user"),
+                    resultSet.getString("white_user")
+            );
+        } catch (Exception e) {
+
         }
-        UsersDTO usersDTO = new UsersDTO(
-                resultSet.getString("black_user"),
-                resultSet.getString("white_user")
-        );
-        statement.close();
+
         return usersDTO;
     }
 
     public int findUserIdByNickname(final String nickname) throws SQLException {
         String query = "SELECT id FROM user WHERE nickname = ?";
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, nickname);
         ResultSet resultSet = statement.executeQuery();
 
-        if (!resultSet.next()) {
-            return 0;
+        int id = 0;
+        try (connection; statement; resultSet) {
+            if (!resultSet.next()) {
+                return 0;
+            }
+
+            id = resultSet.getInt("id");
+        } catch (Exception e) {
+
         }
 
-        int id = resultSet.getInt("id");
-        statement.close();
         return id;
     }
 
     public List<UserDTO> findAll() throws SQLException {
         String query = "SELECT * from user";
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 
         List<UserDTO> users = new ArrayList<>();
-        while (resultSet.next()) {
-            users.add(new UserDTO(
-                    resultSet.getInt("id"),
-                    resultSet.getString("nickname")
-            ));
+
+        try (connection; statement; resultSet) {
+            while (resultSet.next()) {
+                users.add(new UserDTO(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nickname")
+                ));
+            }
+        } catch (Exception e) {
+
         }
-        statement.close();
+
         return users;
     }
 
     public String findNicknameById(final int id) throws SQLException {
         String query = "SELECT nickname FROM user WHERE id = ?";
-        ;
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
 
-        if (!resultSet.next()) {
-            return null;
+        String nickname = "";
+        try (connection; statement; resultSet) {
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            nickname = resultSet.getString("nickname");
+        } catch (Exception e) {
+
         }
 
-        String nickname = resultSet.getString("nickname");
-        statement.close();
         return nickname;
     }
 }

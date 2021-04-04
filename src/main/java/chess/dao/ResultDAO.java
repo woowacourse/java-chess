@@ -1,21 +1,25 @@
 package chess.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import static chess.dao.ConnectDB.CONNECTION;
 
 public class ResultDAO {
 
     public void saveGameResult(final String roomId, final int winnerId, final int loserId) throws SQLException {
         String query = "INSERT INTO result (game_id, winner, loser) VALUES (?, ?, ?)";
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
-        statement.setString(1, roomId);
-        statement.setInt(2, winnerId);
-        statement.setInt(3, loserId);
-        statement.executeUpdate();
-        statement.close();
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        try (connection; statement) {
+            statement.setString(1, roomId);
+            statement.setInt(2, winnerId);
+            statement.setInt(3, loserId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+
+        }
     }
 
     public int winCountByUserId(final int id) throws SQLException {
@@ -29,16 +33,21 @@ public class ResultDAO {
     }
 
     private int countByUserId(final int id, final String query) throws SQLException {
-        PreparedStatement statement = CONNECTION.prepareStatement(query);
+        Connection connection = ConnectDB.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
 
-        if (!resultSet.next()) {
-            return 0;
+        int count = 0;
+        try (connection; statement; resultSet) {
+            if (!resultSet.next()) {
+                return 0;
+            }
+            count = resultSet.getInt(1);
+        } catch (Exception e) {
+
         }
 
-        int count = resultSet.getInt(1);
-        statement.close();
         return count;
     }
 }

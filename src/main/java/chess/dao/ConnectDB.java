@@ -5,9 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDB {
-    public static final Connection CONNECTION = getConnection();
 
-    private static Connection getConnection() {
+    public static Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
         String database = "chess";
@@ -31,14 +30,5 @@ public class ConnectDB {
         }
 
         return con;
-    }
-
-    public void closeConnection(final Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 }
