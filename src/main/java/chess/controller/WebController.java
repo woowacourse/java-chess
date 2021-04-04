@@ -32,7 +32,7 @@ public class WebController {
                 return gson.toJson(new CommonDto<GameStatusDto>(
                         StatusCode.OK,
                         "New game has been created successfully",
-                        GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor())
+                        GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor(), chessGameManager.getStatistics())
                 ));
             } catch (DomainException e) {
                 return gson.toJson(new CommonDto<ErrorResponse>(
@@ -55,7 +55,7 @@ public class WebController {
                 return gson.toJson(new CommonDto<GameStatusDto>(
                         StatusCode.OK,
                         "A piece has been moved successfully",
-                        GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor())
+                        GameStatusDto.from(chessGameManager.getBoard(), chessGameManager.getCurrentTurnColor(), chessGameManager.getStatistics())
                 ));
             } catch (DomainException e) {
                 return gson.toJson(new CommonDto<ErrorResponse>(
