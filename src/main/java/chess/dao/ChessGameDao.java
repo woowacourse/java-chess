@@ -87,9 +87,7 @@ public class ChessGameDao {
         Map<Point, Piece> board = new HashMap<>();
 
         for (int column = 0; column <= 7; column++) {
-            for (int row = 7; row >= 0; row--) {
-                board.put(Point.of(row, column), PieceType.createByPieceName(pieceNames[(7 - row) + column * 8].charAt(0)));
-            }
+            makeRow(pieceNames, board, column);
         }
 
         ChessGameDto chessGameDto = new ChessGameDto();
@@ -99,18 +97,20 @@ public class ChessGameDao {
         return chessGameDto;
     }
 
+    private void makeRow(String[] pieceNames, Map<Point, Piece> board, int column) {
+        for (int row = 7; row >= 0; row--) {
+            board.put(Point.of(row, column), PieceType.createByPieceName(pieceNames[(7 - row) + column * 8].charAt(0)));
+        }
+    }
+
     public void updateGame(String userId, ChessGame chessGame) throws SQLException {
         Map<Point, Piece> board = chessGame.getBoard();
         Color currentColor = chessGame.getCurrentColor();
 
         StringBuilder sb = new StringBuilder();
         for (char letter = 'a'; letter <= 'h'; letter++) {
-            for (int i = 1; i <= 8; i++) {
-                String s = Character.toString(letter) + Integer.toString(i);
-                sb.append(board.get(Point.of(s)).getName());
-            }
+            makeBoard(board, sb, letter);
         }
-
         String query = "UPDATE game SET pieces = ?, current_color = ? WHERE user_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, sb.toString());
@@ -119,13 +119,17 @@ public class ChessGameDao {
         pstmt.executeUpdate();
     }
 
+    private void makeBoard(Map<Point, Piece> board, StringBuilder sb, char letter) {
+        for (int i = 1; i <= 8; i++) {
+            String s = Character.toString(letter) + Integer.toString(i);
+            sb.append(board.get(Point.of(s)).getName());
+        }
+    }
+
     public void createNewGame(UserDto userDto, Map<Point, Piece> board) throws SQLException {
         StringBuilder sb2 = new StringBuilder();
         for (char letter = 'a'; letter <= 'h'; letter++) {
-            for (int i = 1; i <= 8; i++) {
-                String s = Character.toString(letter) + Integer.toString(i);
-                sb2.append(board.get(Point.of(s)).getName());
-            }
+            makeBoard(board, sb2, letter);
         }
         String query = "INSERT INTO game(user_id, current_color, pieces) VALUES(?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
