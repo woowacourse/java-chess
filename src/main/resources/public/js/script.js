@@ -1,7 +1,6 @@
 const BLOCK_SIZE_PIXEL = 80;
 
 const $chessBoard = document.getElementById('chess-board');
-const $panel = document.getElementById('control-panel');
 const $startButton = document.getElementById('start-button');
 
 const colorTranslationTable = {BLACK: '흑', WHITE:'백'};
