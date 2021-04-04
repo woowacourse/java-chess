@@ -1,7 +1,17 @@
-window.onload = initializeChessBoard;
+// window.onload = initializeChessBoard;
+window.onload = setUpStartButton;
 let is_source_clicked = false;
 let source = "";
 let target = "";
+
+function setUpStartButton() {
+    document.getElementById("start").addEventListener("click", start);
+}
+
+function start() {
+    initializeChessBoard();
+    document.getElementById("start").disabled = 'disabled';
+}
 
 function initializeChessBoard() {
     axios({
@@ -42,7 +52,6 @@ function moveFromSourceToTarget() {
     }).then(function (response) {
         if (response.data.isSuccess) {
             const jsonData = JSON.parse(response.data.jsonData);
-            console.log(jsonData.isFinish)
             updateBoard(jsonData);
         } else {
             alert(response.data.jsonData);
@@ -72,7 +81,12 @@ async function clearPieces(pieces) {
 }
 
 function setTurn(turn) {
-    document.getElementById("turn").innerText = turn + " TURN";
+    if(turn === "WHITE") {
+        document.getElementById("turn").innerText = `🏳️ ${turn} TURN 🏳️`;
+    }
+    if(turn === "BLACK") {
+        document.getElementById("turn").innerText = `🏴 ${turn} TURN 🏴`;
+    }
 }
 
 function updateBoard(jsonData) {

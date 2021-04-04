@@ -1,5 +1,7 @@
 package chess.domain.piece.info;
 
+import java.util.Arrays;
+
 public enum Name {
     BISHOP("B"),
     KING("K"),
@@ -20,5 +22,13 @@ public enum Name {
             return name.toLowerCase();
         }
         return name;
+    }
+
+    public static Name findPieceTypeByName(String name) {
+        String upperName = name.toUpperCase();
+        return Arrays.stream(values())
+                .filter(nameType -> nameType.name.equals(upperName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 매칭되는 이름이 없습니다."));
     }
 }

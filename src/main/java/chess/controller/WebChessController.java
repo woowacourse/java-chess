@@ -4,23 +4,27 @@ import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveOnCommand;
 import chess.domain.command.StartOnCommand;
-import chess.domain.dto.ChessGameDto;
-import chess.domain.dto.requestDto.MoveRequestDto;
-import chess.domain.dto.responseDto.ResponseDto;
+import chess.dto.ChessGameDto;
+import chess.dto.requestDto.MoveRequestDto;
+import chess.dto.responseDto.ResponseDto;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class WebChessController {
-    private final ChessGame chessGame;
+    private final ChessService chessService;
+    private ChessGame chessGame;
 
     public WebChessController() {
+        this.chessService = new ChessService();
         this.chessGame = new ChessGame();
     }
 
@@ -63,6 +67,17 @@ public class WebChessController {
             } catch (Exception e) {
                 return gson.toJson(new ResponseDto(false, e.getMessage()));
             }
+        });
+
+        post("/new-game", (req, res) -> {
+            chessService.generateChessGame();
+            return null;
+        });
+
+        get("/chess-game-list", (req, res) -> {
+            List<Integer> chessGameList = chessService.getAllChessGameId();
+            String chessGameListJson = gson.toJson(chessGameList);
+            return gson.toJson(new ResponseDto(true, chessGameListJson));
         });
     }
 }

@@ -1,0 +1,78 @@
+package chess.dao;
+
+import chess.domain.piece.Piece;
+import chess.domain.piece.info.Color;
+import chess.dto.PieceDto;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PieceDao {
+    public Connection getConnection() {
+        Connection con = null;
+        String server = "localhost:13306"; // MySQL 서버 주소
+        String database = "woowa"; // MySQL DATABASE 이름
+        String option = "?useSSL=false&serverTimezone=UTC";
+        String userName = "root"; //  MySQL 서버 아이디
+        String password = "root"; // MySQL 서버 비밀번호
+
+        // 드라이버 로딩
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // 드라이버 연결
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            System.out.println("정상적으로 연결되었습니다.");
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return con;
+    }
+
+    // 드라이버 연결해제
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
+    public void addPieces(List<Piece> pieces, int chessGameId) throws SQLException {
+        String query = "INSERT INTO PIECE(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        for (Piece piece : pieces) {
+            pstmt.setString(1, piece.color().name());
+            pstmt.setString(2, piece.name());
+            pstmt.setString(3, piece.position().key());
+            pstmt.setInt(4, chessGameId);
+            pstmt.executeUpdate();
+        }
+        closeConnection(getConnection());
+    }
+
+    public List<PieceDto> findAllPiecesByChessGameId(int chessGameId) throws SQLException {
+        String query = "SELECT color, name, position FROM PIECE WHERE chessGameId = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, chessGameId);
+        ResultSet rs = pstmt.executeQuery();
+
+        List<PieceDto> pieces = new ArrayList<>();
+        while (rs.next()) {
+            PieceDto pieceDto = new PieceDto(Color.valueOf(rs.getString("color")),
+                    rs.getString("name"), rs.getString("position"));
+            pieces.add(pieceDto);
+        }
+        closeConnection(getConnection());
+        return pieces;
+    }
+}

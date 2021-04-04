@@ -1,4 +1,4 @@
-package chess.domain.dto.responseDto;
+package chess.dto.responseDto;
 
 public class ResponseDto {
     private final boolean isSuccess;

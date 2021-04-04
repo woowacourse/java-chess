@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Name;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -102,5 +103,28 @@ public class PieceFactory {
                 .collect(Collectors.toList());
         blackRooks.addAll(whiteRooks);
         return blackRooks;
+    }
+
+    public static Piece findByInfo(Color color, String name, String position) {
+        Name pieceType = Name.findPieceTypeByName(name);
+        if (pieceType == Name.BISHOP) {
+            return new Bishop(color, Position.of(position));
+        }
+        if (pieceType == Name.KING) {
+            return new King(color, Position.of(position));
+        }
+        if (pieceType == Name.KNIGHT) {
+            return new Knight(color, Position.of(position));
+        }
+        if (pieceType == Name.PAWN) {
+            return new Pawn(color, Position.of(position));
+        }
+        if (pieceType == Name.QUEEN) {
+            return new Queen(color, Position.of(position));
+        }
+        if (pieceType == Name.ROOK) {
+            return new Rook(color, Position.of(position));
+        }
+        return new Empty(Position.of(position));
     }
 }

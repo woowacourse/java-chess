@@ -17,6 +17,10 @@ public class ChessGame {
         this.state = new Ready(new Pieces(PieceFactory.initialPieces()));
     }
 
+    public ChessGame(State state) {
+        this.state = state;
+    }
+
     public List<Piece> getPiecesByAllPosition() {
         return state.allPieces();
     }
@@ -50,7 +54,7 @@ public class ChessGame {
         changeState(state.end());
     }
 
-    public Color turn(){
+    public Color turn() {
         return state.color();
     }
 }

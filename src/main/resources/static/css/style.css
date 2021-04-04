@@ -1,16 +1,97 @@
+.main {
+    content: "";
+    display: flex;
+    clear: both;
+}
+
+.child {
+    flex: 1;
+}
+
 .chess_board {
     border: 1px solid black;
 }
 
+.buttons {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.snip1535 {
+    background-color: #404040;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 1em;
+    font-size: 20px;
+    line-height: 1em;
+    outline: none;
+    padding: 10px 40px 10px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.snip1535:before,
+.snip1535:after {
+    border-color: transparent;
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
+    border-style: solid;
+    border-width: 0;
+    content: "";
+    height: 20px;
+    position: absolute;
+    width: 20px;
+}
+
+.snip1535:before {
+    border-color: #404040;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    right: -5px;
+    top: -5px;
+}
+
+.snip1535:after {
+    border-bottom-width: 2px;
+    border-color: #404040;
+    border-left-width: 2px;
+    bottom: -5px;
+    left: -5px;
+}
+
+.snip1535:hover,
+.snip1535.hover {
+    background-color: #404040;
+}
+
+.snip1535:hover:before,
+.snip1535.hover:before,
+.snip1535:hover:after,
+.snip1535.hover:after {
+    height: 100%;
+    width: 100%;
+}
+
 .wrapper {
+    display: inline-block;
+    vertical-align: middle;
     border: 35px solid #404040;
-    width: 640px;
+    width: 560px;
     margin: 0 auto;
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(8, 80px);
-    grid-template-rows: repeat(8, 80px);
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
     grid-auto-flow: row;
+}
+
+.child {
+    float: left;
 }
 
 .white {
@@ -30,10 +111,43 @@
 }
 
 #turn {
+    font-family: 'Merriweather', serif;
     margin: 0 auto;
     text-align: center;
 }
 
 .board {
+    font-family: 'Merriweather', serif;
+    margin: 0 10px auto;
+    text-align: center;
+    border: 1px solid black;
+    width: 80px;
+    height: 500px;
+}
 
+.container {
+    margin-top: 50px;
+}
+
+
+.row .col-12 h3 {
+    text-align: center;
+    font-family: 'Source Serif Pro', serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.generator-container {
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.list-group-item {
+    font-family: 'Merriweather', serif;
+    font-weight: bolder;
+    text-align: center;
+    margin: 0 auto;
+    width: 80%;
 }
