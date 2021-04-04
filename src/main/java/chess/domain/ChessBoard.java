@@ -165,7 +165,6 @@ public class ChessBoard {
     public void sync(Map<PositionDto, PieceDto> chessBoard) {
         this.chessBoard.clear();
         for (PositionDto positionDto : chessBoard.keySet()) {
-            System.out.println(positionDto.getPosition());
             Position position = Position.of(positionDto.getPosition().charAt(0), positionDto.getPosition().charAt(1));
             String pieceName = chessBoard.get(positionDto).getName();
             String pieceColor = chessBoard.get(positionDto).getColor();
