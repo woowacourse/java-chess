@@ -79,7 +79,7 @@ public final class InitialState implements GameState {
     }
 
     @Override
-    public String currentState() {
+    public String nextState() {
         return "not started";
     }
 

@@ -17,7 +17,7 @@ public interface GameState {
 
     boolean isFinished();
 
-    String currentState();
+    String nextState();
 
     BoardDto boardDto();
 }
