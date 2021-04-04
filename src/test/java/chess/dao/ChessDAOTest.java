@@ -1,8 +1,7 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.repository.MySqlChessRepository;
+import chess.service.ChessGameService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ChessDAOTest {
     private static ChessDAO chessDAO;
-
+    private static ChessGameService chessGameService;
     @BeforeAll
     public static void setup() {
         chessDAO = new ChessDAO();
+        chessGameService = new ChessGameService(new MySqlChessRepository());
     }
 
     @Test
@@ -25,8 +25,12 @@ public class ChessDAOTest {
     }
 
     @Test
-    public void addUser() throws Exception {
-        ChessGame game = new ChessGame(new BlackTeam(), new WhiteTeam());
-        chessDAO.saveGame(game);
+    public void addChessGame() throws Exception {
+        chessGameService.createChessGame();
+    }
+
+    @Test void test() throws Exception {
+        String chessGame = chessDAO.loadGame("2");
+        System.out.println(chessGame);
     }
 }

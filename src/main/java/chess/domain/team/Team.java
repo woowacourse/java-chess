@@ -3,7 +3,6 @@ package chess.domain.team;
 import chess.domain.Position;
 import chess.domain.piece.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,13 @@ public abstract class Team {
     public Team(String name) {
         this.name = name;
         this.isCurrentTurn = false;
-        piecePosition = new HashMap<>();
+        this.piecePosition = new HashMap<>();
+    }
+
+    public Team(String name, boolean isCurrentTurn, Map<Position, Piece> piecePosition) {
+        this.name = name;
+        this.isCurrentTurn = isCurrentTurn;
+        this.piecePosition = new HashMap<>(piecePosition);
     }
 
     protected void initializePawn(final int pawnColumn, final int pawnDirection) {
@@ -82,7 +87,6 @@ public abstract class Team {
         return new HashMap<>(piecePosition);
     }
 
-
     final public void setEnemy(Team enemy) {
         this.enemy = enemy;
     }
@@ -94,7 +98,6 @@ public abstract class Team {
     public String getName() {
         return name;
     }
-
 
     public void startTurn() {
         this.isCurrentTurn = true;

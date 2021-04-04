@@ -29,13 +29,24 @@ public class ChessGame {
         this.isEnd = false;
     }
 
+    public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam, Team currentTurn, boolean isEnd) {
+        this.blackTeam = blackTeam;
+        this.whiteTeam = whiteTeam;
+        this.currentTurn = currentTurn;
+        this.isEnd = isEnd;
+    }
+
     public boolean havePieceInCurrentTurn(final Position position) {
         return currentTurn.havePiece(position);
     }
 
     public boolean move(final Position current, final Position destination) {
+        System.out.println("move() called current : " + current + " destination : " + destination);
         final Piece chosenPiece = currentTurn.choosePiece(current);
-        validateMovable(current, destination, chosenPiece);
+        System.out.println("move() called chosenPiece : " + chosenPiece);
+        if (!validateMovable(current, destination, chosenPiece)) {
+            return false;
+        }
 
         Team enemy = currentTurn.getEnemy();
         if (enemy.havePiece(destination)) {
@@ -44,13 +55,15 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         changeTurn();
+        System.out.println("move() called current 123 : " + current + " destination : " + destination);
         return true;
     }
 
-    private void validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
+    private boolean validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
         if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
-            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+            return false;
         }
+        return true;
     }
 
 

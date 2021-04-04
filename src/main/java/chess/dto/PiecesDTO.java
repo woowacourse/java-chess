@@ -12,8 +12,4 @@ public class PiecesDTO {
     public List<PieceDTO> getPieceDtoList() {
         return pieceDtoList;
     }
-
-    public void setPieceDtoList(List<PieceDTO> pieceDtoList) {
-        this.pieceDtoList = pieceDtoList;
-    }
 }

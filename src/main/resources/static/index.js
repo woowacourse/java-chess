@@ -10,6 +10,7 @@ btnStart.addEventListener('click', function (e) {
         .then(function (response) {
             let data = response.data;
             if (data.success) {
+                console.log(data.data);
                 refreshChessBoard(data.data)
             } else {
                 alert(data.message)
@@ -17,6 +18,19 @@ btnStart.addEventListener('click', function (e) {
         })
 })
 
+const btnLoad = document.getElementsByClassName('btn-load')[0];
+btnLoad.addEventListener('click', function (e) {
+    axios.get('/loadChessGame')
+        .then(function (response) {
+            let data = response.data;
+            if (data.success) {
+                console.log(data.data);
+                refreshChessBoard(data.data)
+            } else {
+                alert(data.message)
+            }
+        })
+})
 
 const btnEnd = document.getElementsByClassName('btn-end')[0]
 btnEnd.addEventListener('click', function (e) {
@@ -90,17 +104,31 @@ function clearSelect() {
 function refreshChessBoard(data) {
     let chessGame = JSON.parse(data);
     let isRunning = chessGame.isRunning;
+    console.log(chessGame);
     clearChessBoard();
     if (isRunning) {
-        let pieces = chessGame.piecesDto.pieceDtoList;
-        console.log(pieces);
-        for (let i = 0; i < pieces.length; i++) {
-            let piece = pieces[i]
+        let blackPieces = chessGame.blackTeam.piecesDto.pieceDtoList;
+        console.log(blackPieces);
+        for (let i = 0; i < blackPieces.length; i++) {
+            let piece = blackPieces[i]
+            let tile = document.getElementById(piece.position);
+            console.log(piece.position);
+            tile.classList.add('piece');
+            tile.classList.add(piece.piece);
+            tile.innerHTML = piecesMap[piece.piece];
+        }
+
+        let whitePieces = chessGame.whiteTeam.piecesDto.pieceDtoList;
+        console.log(whitePieces);
+        for (let i = 0; i < whitePieces.length; i++) {
+            let piece = whitePieces[i];
+            console.log(piece.position);
             let tile = document.getElementById(piece.position);
             tile.classList.add('piece');
             tile.classList.add(piece.piece);
             tile.innerHTML = piecesMap[piece.piece];
         }
+
         let blackScore = chessGame.blackTeam.score;
         let whiteScore = chessGame.whiteTeam.score;
         document.getElementById('score-white').innerHTML = whiteScore;

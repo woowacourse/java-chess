@@ -7,7 +7,7 @@ import chess.domain.team.BlackTeam;
 import chess.domain.team.WhiteTeam;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PieceNameConverter;
+import chess.view.PieceConverter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +65,7 @@ public class ChessController {
         final Map<Position, String> blackPrintFormat = new HashMap<>();
         for (Position position : blackPosition.keySet()) {
             final Piece piece = blackPosition.get(position);
-            blackPrintFormat.put(position, PieceNameConverter.convert(piece).toUpperCase());
+            blackPrintFormat.put(position, PieceConverter.convertToPieceName(piece).toUpperCase());
         }
         return blackPrintFormat;
     }
@@ -75,7 +75,7 @@ public class ChessController {
         final Map<Position, String> whitePrintFormat = new HashMap<>();
         for (Position position : whitePosition.keySet()) {
             final Piece piece = whitePosition.get(position);
-            whitePrintFormat.put(position, PieceNameConverter.convert(piece).toLowerCase());
+            whitePrintFormat.put(position, PieceConverter.convertToPieceName(piece).toLowerCase());
         }
         return whitePrintFormat;
     }

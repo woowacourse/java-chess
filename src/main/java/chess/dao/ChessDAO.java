@@ -1,27 +1,8 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
-import chess.domain.Position;
-import chess.domain.piece.Piece;
-import chess.dto.ChessGameDTO;
-import chess.dto.PieceDTO;
-import chess.dto.PiecesDTO;
-import chess.dto.TeamDTO;
-import chess.view.PieceNameConverter;
-import com.google.gson.Gson;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
 
 public class ChessDAO {
-    private Gson gson = new Gson();
-
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -61,52 +42,39 @@ public class ChessDAO {
         }
     }
 
-    public void saveGame(ChessGame chessGame) throws SQLException {
-        String query = "INSERT INTO game(data) VALUES (?)";
+    public void createChessGame(String chessGameData) throws SQLException {
+        String query = "INSERT INTO game(game_id,data) VALUES (?,?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gson.toJson(createChessGameDto(chessGame)));
+        pstmt.setString(1, "1");
+        pstmt.setString(2, chessGameData);
         pstmt.executeUpdate();
     }
 
-    private ChessGameDTO createChessGameDto(ChessGame chessGame) {
-        final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
-        chessBoard.putAll(convertToWhitePrintName(chessGame));
-        List<PieceDTO> pieceDtos = new ArrayList<>();
-        for (Map.Entry<Position, String> entry : chessBoard.entrySet()) {
-            pieceDtos.add(new PieceDTO(entry.getKey().getKey(), entry.getValue()));
-        }
-
-        PiecesDTO piecesDto = new PiecesDTO(pieceDtos);
-
-        TeamDTO blackTeamDTO = new TeamDTO(chessGame.getBlackTeam().getName(),
-                String.valueOf(chessGame.getBlackTeam().calculateTotalScore()),
-                chessGame.getBlackTeam().isCurrentTurn());
-
-        TeamDTO whiteTeamDTO = new TeamDTO(chessGame.getWhiteTeam().getName(),
-                String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()),
-                chessGame.getWhiteTeam().isCurrentTurn());
-
-        ChessGameDTO chessGameDto = new ChessGameDTO(piecesDto, blackTeamDTO, whiteTeamDTO, !chessGame.isEnd());
-        return chessGameDto;
+    public void saveChessGame(String gameId, String chessGameData) throws SQLException {
+        String query = "UPDATE game SET data = ? WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, chessGameData);
+        pstmt.setString(2, gameId);
+        pstmt.executeUpdate();
     }
 
-    private static Map<Position, String> convertToBlackPrintName(final ChessGame chessGame) {
-        final Map<Position, Piece> blackPosition = chessGame.getBlackTeam().getPiecePosition();
-        final Map<Position, String> blackPrintFormat = new HashMap<>();
-        for (Position position : blackPosition.keySet()) {
-            final Piece piece = blackPosition.get(position);
-            blackPrintFormat.put(position, PieceNameConverter.convert(piece).toUpperCase());
-        }
-        return blackPrintFormat;
+    public String loadChessGame(String gameId) throws SQLException {
+        String query = "SELECT * FROM game WHERE game_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+
+        return rs.getString("data");
     }
 
-    private static Map<Position, String> convertToWhitePrintName(final ChessGame chessGame) {
-        final Map<Position, Piece> whitePosition = chessGame.getWhiteTeam().getPiecePosition();
-        final Map<Position, String> whitePrintFormat = new HashMap<>();
-        for (Position position : whitePosition.keySet()) {
-            final Piece piece = whitePosition.get(position);
-            whitePrintFormat.put(position, PieceNameConverter.convert(piece).toLowerCase());
+    public boolean haveGame(String gameId) {
+        String query = "SELECT * FROM game WHERE game_id = ?";
+        if (query == null) {
+            return false;
         }
-        return whitePrintFormat;
+
+        return true;
     }
 }
