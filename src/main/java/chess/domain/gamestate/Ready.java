@@ -29,6 +29,6 @@ public class Ready implements State {
 
     @Override
     public Result result(ChessGame chessGame) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 }

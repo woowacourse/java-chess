@@ -29,6 +29,7 @@ public class WebUIChessController {
             return new Response(chessGame, roomId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
             Response response = new Response(409);
             response.add("alert", roomId + "는 이미 존재하는 방입니다.");
             return response;

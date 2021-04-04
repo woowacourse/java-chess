@@ -53,7 +53,7 @@ public class Response {
             model.put(entry.getKey().getPosition(), new PieceDTO(entry.getValue()));
         }
 
-        Result result = chessGame.result();
+        Result result = chessGame.calculateResult();
         model.put("result", new ResultDTO(result));
         return model;
     }

@@ -18,6 +18,7 @@ public class Status implements State {
 
     @Override
     public Result result(ChessGame chessGame) {
+        chessGame.changeState(new End());
         return chessGame.result();
     }
 }

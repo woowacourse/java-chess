@@ -25,6 +25,6 @@ public class Running implements State {
 
     @Override
     public Result result(ChessGame chessGame) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 }
