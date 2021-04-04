@@ -1,7 +1,6 @@
 const BLOCK_SIZE_PIXEL = 80;
 
 const $chessBoard = document.getElementById('chess-board');
-const $startButton = document.getElementById('start-button');
 
 const colorTranslationTable = {BLACK: '흑', WHITE:'백'};
 const matchResultTranslationTable = {DRAW: '무승부', WHITE_WIN: '백 승리', BLACK_WIN: '흑 승리'};
@@ -10,6 +9,7 @@ const squareBuffer = new SquareBuffer();
 
 addSelectionEventOnChessBoard();
 addEventOnStartButton();
+addEventOnRegameButton();
 
 function processResponse(responseJsonBody, successScenarioFunction) {
     if (Math.floor(responseJsonBody.statusCode / 100) === 2) {
@@ -66,12 +66,24 @@ async function addSelectionEventOnChessBoard() {
 }
 
 async function addEventOnStartButton() {
-    await $startButton.addEventListener('click', event => {
+    await document.getElementById('start-button').addEventListener('click', event => {
         try {
             fetch('/newgame')
                 .then(res => res.json())
                 .then(res => processResponse(res, () => updateGameData(res)));
             turnOnPanel();
+        } catch (error) {
+            console.error(error.messages);
+        }
+    });
+}
+
+async function addEventOnRegameButton() {
+    await document.getElementById('regame-button').addEventListener('click', event => {
+        try {
+            fetch('/newgame')
+                .then(res => res.json())
+                .then(res => processResponse(res, () => updateGameData(res)));
         } catch (error) {
             console.error(error.messages);
         }
@@ -133,12 +145,11 @@ function turnOnPanel() {
         button.style.display = 'none';
     }
     document.getElementById('save-button').style.display = 'block';
-    document.getElementById('end-button').style.display = 'block';
+    document.getElementById('regame-button').style.display = 'block';
     document.getElementById('message-console').style.display = 'block';
     document.getElementById('score-console').style.display = 'block';
 }
 
 function turnOffPanel() {
     document.getElementById('save-button').style.display = 'none';
-    document.getElementById('end-button').style.display = 'none';
 }
