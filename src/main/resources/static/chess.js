@@ -85,6 +85,10 @@ for (let i = 0; i < cells.length; i++) {
     }
 }
 
+const currentTurn = document.getElementById('currentTurn');
+const currentTurnP = document.getElementById('current-turn');
+currentTurnP.textContent = currentTurn.innerText;
+
 const statusBtn = document.getElementById('status-btn');
 
 statusBtn.addEventListener('click', function() {

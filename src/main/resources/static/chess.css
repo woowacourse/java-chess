@@ -9,7 +9,7 @@ body {
 }
 #chess-game {
     margin-bottom: 5px;
-    font-size: 38px;
+    font-size: 32px;
 }
 .chessboard {
     width: 650px;

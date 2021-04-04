@@ -2,6 +2,8 @@ package chess.repository;
 
 import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
+import chess.dto.TurnChangeRequestDto;
+import chess.dto.TurnRequestDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +16,11 @@ public interface ChessRepository {
 
     List<ChessRequestDto> showAllPieces() throws SQLException;
 
+    List<TurnRequestDto> showCurrentTurn() throws SQLException;
+
     void movePiece(final MoveRequestDto moveRequestDto) throws SQLException;
+
+    void changeTurn(final TurnChangeRequestDto turnChangeRequestDto) throws SQLException;
 
     void removeAllPieces() throws SQLException;
 

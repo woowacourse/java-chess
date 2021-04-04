@@ -9,6 +9,8 @@ import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
 import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
+import chess.dto.TurnChangeRequestDto;
+import chess.dto.TurnRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -73,6 +75,13 @@ class ChessDaoTest {
         assertThat(pieces).hasSize(32);
     }
 
+    @DisplayName("turn 테이블에서 모든 레코드를 읽어온다.")
+    @Test
+    public void showCurrentTurn() throws Exception {
+        List<TurnRequestDto> turns = chessDao.showCurrentTurn();
+        assertThat(turns).hasSize(1);
+    }
+
     @DisplayName("turn 테이블에서 현재 턴을 읽어온다.")
     @Test
     public void showTurn() throws Exception {
@@ -84,6 +93,20 @@ class ChessDaoTest {
     public void movePiece() throws Exception {
         MoveRequestDto moveRequestDto = new MoveRequestDto("a2", "a4");
         chessDao.movePiece(moveRequestDto);
+    }
+
+    @DisplayName("white 턴에서 black 턴으로 변경한다.")
+    @Test
+    public void changeTurnWhite() throws Exception {
+        TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("white", "black");
+        chessDao.changeTurn(turnChangeRequestDto);
+    }
+
+    @DisplayName("black 턴에서 white 턴으로 변경한다.")
+    @Test
+    public void changeTurnBlack() throws Exception {
+        TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("black", "white");
+        chessDao.changeTurn(turnChangeRequestDto);
     }
 
     @DisplayName("piece_status 테이블의 모든 레코드를 삭제한다.")

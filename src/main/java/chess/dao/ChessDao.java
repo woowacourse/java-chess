@@ -1,8 +1,6 @@
 package chess.dao;
 
-import chess.dto.ChessRequestDto;
-import chess.dto.MoveRequestDto;
-import chess.dto.PieceRequestDto;
+import chess.dto.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -82,11 +80,37 @@ public class ChessDao {
         return psmt.executeQuery();
     }
 
+    public List<TurnRequestDto> showCurrentTurn() throws SQLException {
+        List<TurnRequestDto> turn = new ArrayList<>();
+        ResultSet rs = readCurrentTurn();
+        while (rs.next()) {
+            turn.add(new TurnRequestDto(
+                    rs.getLong("id"),
+                    rs.getString("current_turn")
+            ));
+        }
+        return turn;
+    }
+
+    private ResultSet readCurrentTurn() throws SQLException {
+        String query = "SELECT * FROM turn";
+        PreparedStatement psmt = getConnection().prepareStatement(query);
+        return psmt.executeQuery();
+    }
+
     public void movePiece(final MoveRequestDto moveRequestDto) throws SQLException {
         String query = "UPDATE piece_status SET piece_position=? WHERE piece_position=?";
         PreparedStatement psmt = getConnection().prepareStatement(query);
         psmt.setString(1, moveRequestDto.getTarget());
         psmt.setString(2, moveRequestDto.getSource());
+        psmt.executeUpdate();
+    }
+
+    public void changeTurn(final TurnChangeRequestDto turnChangeRequestDto) throws SQLException {
+        String query = "UPDATE turn SET current_turn=? WHERE current_turn=?";
+        PreparedStatement psmt = getConnection().prepareStatement(query);
+        psmt.setString(1, turnChangeRequestDto.getNextTurn());
+        psmt.setString(2, turnChangeRequestDto.getCurrentTurn());
         psmt.executeUpdate();
     }
 
