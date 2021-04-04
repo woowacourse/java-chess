@@ -1,7 +1,8 @@
 package chess.view.web;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.dto.ScoreDto;
+import chess.controller.dto.RoomStatusDto;
+import chess.controller.dto.ScoresDto;
 import chess.controller.dto.WinnerDto;
 import chess.domain.piece.Owner;
 import spark.ModelAndView;
@@ -17,11 +18,11 @@ public class OutputView {
 
     }
 
-    public static String printGame(BoardDto boardDto, ScoreDto whiteScoreDto, ScoreDto blackScoreDto) {
+    public static String printGame(RoomStatusDto roomStatusDto, BoardDto boardDto, ScoresDto scoresDto) {
         Map<String, Object> model = new HashMap<>();
+        model.put("room", roomStatusDto);
         model.put("board", boardDto);
-        model.put("whiteScore", whiteScoreDto);
-        model.put("blackScore", blackScoreDto);
+        model.put("scores", scoresDto);
         return render(model, "chessBoard.html");
     }
 

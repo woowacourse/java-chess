@@ -6,6 +6,9 @@
     <link href="/style/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<div>room : <span id="roomName"> {{room.name}} </span> </div>
+<div>turn : {{room.turn}} </div>
+
 {{#board}}
 <div class="chessboard">
     <div id="a8" class="piece white">{{{board.7.0}}}</div>
@@ -82,9 +85,8 @@
 </div>
 {{/board}}
 
-<div id ="white-score" class = "score">white score : {{whiteScore.score}}</div>
-</br>
-<div id ="black-score" class = "score">black score : {{blackScore.score}} </div>
+<div id ="white-score" class = "score">white score : {{scores.whiteScore}}</div>
+<div id ="black-score" class = "score">black score : {{scores.blackScore}} </div>
 <br>
 </body>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>

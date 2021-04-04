@@ -2,7 +2,8 @@ package chess.controller.web;
 
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.GameDto;
-import chess.controller.dto.ScoreDto;
+import chess.controller.dto.RoomStatusDto;
+import chess.controller.dto.ScoresDto;
 import chess.dao.GameDao;
 import chess.dao.RoomDao;
 import chess.domain.piece.Owner;
@@ -34,18 +35,6 @@ public class WebController {
         move();
     }
 
-    private void load() {
-        get("/load/:roomName", (req, res) -> {
-            final String roomName = req.params(":roomName");
-            final long roomId = roomDao.roomId(roomName);
-
-            final GameDto gameDto = gameDao.load(roomId);
-            chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
-
-            return printGame();
-        });
-    }
-
     private void create(){
         get("/create/:roomName", (req, res) -> {
             final String roomName = req.params(":roomName");
@@ -56,7 +45,19 @@ public class WebController {
             roomDao.save(roomName, roomId);
 
             res.redirect("/load/"+roomName);
-            return printGame();
+            return printGame(roomName);
+        });
+    }
+
+    private void load() {
+        get("/load/:roomName", (req, res) -> {
+            final String roomName = req.params(":roomName");
+            final long roomId = roomDao.roomId(roomName);
+
+            final GameDto gameDto = gameDao.load(roomId);
+            chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
+
+            return printGame(roomName);
         });
     }
 
@@ -73,26 +74,31 @@ public class WebController {
     }
 
     private void move() {
-        post("/move", (req, res) -> {
+        post("/move/:roomName", (req, res) -> {
+            final String roomName = req.params(":roomName");
+            final long roomId = roomDao.roomId(roomName);
+
             chessGame.move(RequestHandler.parse(req.body()));
-            gameDao.save(0, chessGame.turn(), chessGame.board());
+            gameDao.save(roomId, chessGame.turn(), chessGame.board());
 
             if (chessGame.isGameEnd()) {
                 return OutputView.printResult(chessGame.winner());
             }
-            return printGame();
+            return printGame(roomName);
         });
     }
 
-    private String printGame() {
-        final ScoreDto whiteScoreDto = new ScoreDto();
-        final ScoreDto blackScoreDto = new ScoreDto();
+    private String printGame(final String roomName) {
+        final ScoresDto scoresDto = new ScoresDto();
         final BoardDto boardDto = new BoardDto();
+        final RoomStatusDto roomStatusDto = new RoomStatusDto();
 
-        whiteScoreDto.setScore(chessGame.score(Owner.WHITE));
-        blackScoreDto.setScore(chessGame.score(Owner.BLACK));
+        scoresDto.setWhiteScore(chessGame.score(Owner.WHITE));
+        scoresDto.setBlackScore(chessGame.score(Owner.BLACK));
         boardDto.setBoard(chessGame.unicodeBoard());
+        roomStatusDto.setName(roomName);
+        roomStatusDto.setTurn(chessGame.turn().name());
 
-        return OutputView.printGame(boardDto, whiteScoreDto, blackScoreDto);
+        return OutputView.printGame(roomStatusDto,boardDto,scoresDto);
     }
 }

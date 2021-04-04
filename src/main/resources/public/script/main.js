@@ -11,6 +11,7 @@ window.onload = function(){
     })
 }
 
+
 let state = "stay"; // stay, show
 let source = "";
 let target = "";
@@ -29,7 +30,7 @@ function click(){
             state = "stay";
             source = "";
             target = "";
-            return;
+            return  ;
         }
     }
 }
@@ -37,10 +38,6 @@ function click(){
 function clickWhereToMove(eventTarget){
     if(checkIsValidTarget(eventTarget)){
         target = eventTarget.id;
-        console.log("move");
-        console.log("clicked source : "+ source);
-        console.log("clicked target : "+ target);
-
         submitMove(source, target);
     }
 
@@ -52,11 +49,12 @@ function clickWhereToMove(eventTarget){
 }
 
 function submitMove(src, tar){
-    const form = document.createElement("form");
+    const roomName = document.getElementById("roomName").innerText;
 
+    const form = document.createElement("form");
     form.setAttribute("charset", "UTF-8");
     form.setAttribute("method", "Post");
-    form.setAttribute("action", "/move");
+    form.setAttribute("action", "/move/"+roomName);
 
     const sourceField = document.createElement("input");
     sourceField.setAttribute("type", "hidden");
@@ -106,4 +104,3 @@ function show(target) {
         }
     })
 }
-
