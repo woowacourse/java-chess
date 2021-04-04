@@ -120,7 +120,7 @@ async function move(sourcePosition, targetPosition) {
 
     const response = await fetch("/move", option)
     .then(res => res.json());
-    if (response.code === "400") {
+    if (response.code === 400) {
         alert(response.message);
         return;
     }
@@ -149,7 +149,7 @@ function changeTurnText() {
 async function checkEndGame() {
     const response = await fetch("/end")
     .then(res => res.json());
-    if (response.code === "212") {
+    if (response.code === 212) {
         alert(response.message);
         location.replace('/result');
     }
