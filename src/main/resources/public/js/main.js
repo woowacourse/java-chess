@@ -11,9 +11,9 @@ function onNewGame() {
                 throw new Error(res.status);
             }
             window.location.replace(res.url);
-            return res.json();
+            return res;
         })
-        .catch(() => alert("모르는 서버 문제입니다. 서버가 죄송합니다.."));
+        .catch(() => alert("서버가 죄송합니다..ㅠㅜ"));
 }
 
 function onContinue() {

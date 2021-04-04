@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -13,7 +14,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.domain.board.BoardDTO;
+import chess.domain.chess.Chess;
 import chess.domain.chess.ChessDAO;
+import chess.domain.chess.ChessDTO;
+import chess.domain.piece.PieceDAO;
+import chess.domain.piece.PieceDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -27,36 +33,41 @@ public class WebUIChessApplication {
         staticFiles.location("/public");
 
         ChessDAO chessDAO = new ChessDAO();
+        PieceDAO pieceDAO = new PieceDAO();
 
         get("/", (req, res) -> render(new HashMap<>(), "main.html"));
 
         post("/chess/new", (req, res) -> {
             chessDAO.deleteIfPreviousChessExists();
-            chessDAO.save();
+            chessDAO.insert();
+
+            Chess chess = Chess.createWithEmptyBoard()
+                               .start();
+            final Long chessId = chessDAO.findChessId()
+                                         .orElseThrow(() -> new IllegalStateException(
+                                                 "진행 중인 게임이 없습니다."));
+            BoardDTO boardDTO = BoardDTO.from(chess);
+            pieceDAO.save(chessId, boardDTO);
             res.status(201);
-            res.redirect("/chess");
+            res.redirect("/chess/view");
             Response response = new Response(HttpStatus.Code.CREATED, "체스가 성공적으로 생성되었습니다.");
             return GSON.toJson(response);
         });
 
+        get("/chess/view", (req, res) -> render(new HashMap<>(), "chess.html"));
+
         get("/chess", (req, res) -> {
-            chessDAO.findAnyChessId()
-                    .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
-            Response response = new Response(HttpStatus.Code.OK, "OK");
+            final Long chessId = chessDAO.findChessId()
+                                         .orElseThrow(() -> new IllegalStateException(
+                                                 "진행 중인 게임이 없습니다."));
+            List<PieceDTO> pieceDTOS = pieceDAO.findPiecesByChessId(chessId);
+            BoardDTO boardDTO = new BoardDTO(pieceDTOS);
+            String lastTurn = chessDAO.findTurnByChessId();
+            ChessDTO chessDTO = new ChessDTO(lastTurn, boardDTO);
+            Response response = new Response(HttpStatus.Code.OK, chessDTO);
             return GSON.toJson(response);
         });
 
-        //        get("/chess", (req, res) -> {
-        //            Chess chess = Chess.createWithEmptyBoard().start();
-        //            Long chessId = chessDAO.findAnyChessId()
-        //                                   .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
-        //            chess = chessDAO.getChess(chessId, chess);
-        //            Set<Map.Entry<String, String>> board = BoardDTO.from(chess).getPieceDTOs();
-        //            Map<String, Object> model = new HashMap<>();
-        //            model.put("board", board);
-        //            return render(model, "chess.html");
-        //        });
-        //
         //        post("/chess/move", (req, res) -> {
         //            String name = req.cookie("name");
         //            MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);

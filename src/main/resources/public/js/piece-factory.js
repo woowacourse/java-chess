@@ -15,20 +15,16 @@ const PIECES = {
 
 document.addEventListener("DOMContentLoaded", buildPieces);
 
-const $newBoard = document.getElementById("new-board");
-
 function buildPieces() {
-    const pieces = $newBoard.textContent.split(",");
-    Array.from(pieces)
-        .map(piece => piece.trim().replace("\n", ""))
-        .filter(piece => Boolean(piece))
-        .forEach(piece => {
-            const pieceToken = piece.split(":");
-            const position = pieceToken[0];
-            const pieceName = pieceToken[1];
-            if (!pieceName.includes("BLANK")) {
-                document.getElementById(position).innerHTML = PIECES[pieceName];
-            }
+    fetch("/chess")
+        .then(res => res.json())
+        .then(data => {
+            Array.from(data.body.boardDTO.pieceDTOS)
+                .filter(piece => piece.name !== "BLANK")
+                .forEach(piece => {
+                    const position = piece.position;
+                    const pieceName = piece.color + "_" + piece.name;
+                    document.getElementById(position).innerHTML = PIECES[pieceName];
+                })
         })
-    $newBoard.remove();
 }

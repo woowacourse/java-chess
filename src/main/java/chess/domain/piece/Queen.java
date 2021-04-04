@@ -11,7 +11,7 @@ public class Queen extends AbstractPiece {
 
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "q";
-    private static final String NAME = "Queen";
+    private static final String NAME = "QUEEN";
     private static final double SCORE = 9;
 
     static {

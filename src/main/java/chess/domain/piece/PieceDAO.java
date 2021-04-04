@@ -40,7 +40,7 @@ public class PieceDAO {
                 final String name = resultSet.getString("name");
                 final String color = resultSet.getString("color");
                 final String position = resultSet.getString("position");
-                pieceDTOS.add(new PieceDTO(name, color, position));
+                pieceDTOS.add(new PieceDTO(position, color, name));
             }
         }
         return pieceDTOS;

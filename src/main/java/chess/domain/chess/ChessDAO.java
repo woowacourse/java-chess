@@ -11,14 +11,14 @@ import chess.domain.ConnectionUtils;
 public class ChessDAO {
 
     public void deleteIfPreviousChessExists() throws SQLException {
-        Optional<Long> chessId = findAnyChessId();
+        Optional<Long> chessId = findChessId();
         if (chessId.isPresent()) {
             deletePreviousPiece(chessId.get());
             deletePreviousChess(chessId.get());
         }
     }
 
-    public Optional<Long> findAnyChessId() throws SQLException {
+    public Optional<Long> findChessId() throws SQLException {
         String query = "SELECT chess_id FROM chess c";
 
         try (Connection connection = ConnectionUtils.getConnection();
@@ -49,10 +49,19 @@ public class ChessDAO {
         }
     }
 
-    public void save() throws SQLException {
+    public void insert() throws SQLException {
         String query = "INSERT INTO chess (turn) VALUES ('WHITE')";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void update(Long chessId) throws SQLException {
+        String query = "INSERT INTO chess (turn) VALUES ('WHITE')";
+        try (Connection connection = ConnectionUtils.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setLong(1, chessId);
             pstmt.executeUpdate();
         }
     }

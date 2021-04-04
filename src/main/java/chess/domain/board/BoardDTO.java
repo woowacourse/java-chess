@@ -3,7 +3,6 @@ package chess.domain.board;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import chess.domain.chess.Chess;
 import chess.domain.piece.Piece;
@@ -23,11 +22,14 @@ public class BoardDTO {
     public static BoardDTO from(Chess chess) {
         final List<PieceDTO> pieceDTOS = new ArrayList<>();
         final Map<Position, Piece> board = chess.getBoard()
-                                          .getBoard();
+                                                .getBoard();
         for (Map.Entry<Position, Piece> entry : board.entrySet()) {
             String position = getPosition(entry);
-            String color = entry.getValue().getColor().color();
-            String name = entry.getValue().getName();
+            String color = entry.getValue()
+                                .getColor()
+                                .color();
+            String name = entry.getValue()
+                               .getName();
             pieceDTOS.add(new PieceDTO(position, color, name));
         }
         return new BoardDTO(pieceDTOS);

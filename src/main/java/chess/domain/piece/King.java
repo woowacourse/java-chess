@@ -11,7 +11,7 @@ public class King extends AbstractPiece {
 
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "k";
-    private static final String NAME = "King";
+    private static final String NAME = "KING";
     private static final double SCORE = 0;
 
     static {

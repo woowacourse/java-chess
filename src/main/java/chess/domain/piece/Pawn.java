@@ -10,7 +10,7 @@ public class Pawn extends AbstractPiece {
     public static final Pawn WHITE_INSTANCE;
 
     private static final String SYMBOL = "p";
-    private static final String NAME = "Pawn";
+    private static final String NAME = "PAWN";
     private static final double SCORE = 1;
 
     private static final String ERROR_PIECE_EXIST_AT_FORWARD_TARGET = "폰이 전진하는 위치에 기물이 있으면 안됩니다.";

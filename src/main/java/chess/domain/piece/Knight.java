@@ -11,7 +11,7 @@ public class Knight extends AbstractPiece {
 
     private static final DirectionGroup DIRECTION_GROUP;
     private static final String SYMBOL = "n";
-    private static final String NAME = "Knight";
+    private static final String NAME = "KNIGHT";
     private static final double SCORE = 2.5;
 
     static {

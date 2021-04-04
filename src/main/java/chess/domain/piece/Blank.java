@@ -14,7 +14,7 @@ public class Blank extends AbstractPiece {
     }
 
     private static final String SYMBOL = ".";
-    private static final String NAME = "Blank";
+    private static final String NAME = "BLANK";
     private static final double SCORE = 0;
 
     private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다.";
