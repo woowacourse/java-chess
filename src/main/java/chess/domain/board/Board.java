@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.dao.BoardDao;
+import chess.dao.BackupBoardDao;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.exceptions.SameTeamException;
 import chess.domain.exceptions.UnableCrossException;
@@ -11,7 +11,6 @@ import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
 import chess.dto.SquareDto;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -158,8 +157,8 @@ public class Board {
         return squareDtos;
     }
 
-    public void saveBoard(String roomName, PieceColor turnColor) throws SQLException {
-        BoardDao boardDao = new BoardDao();
-        boardDao.savePlayingBoard(roomName, this.board, turnColor);
+    public void saveBoard(String roomName, PieceColor turnColor) {
+        BackupBoardDao backupBoardDao = new BackupBoardDao();
+        backupBoardDao.savePlayingBoard(roomName, this.board, turnColor);
     }
 }

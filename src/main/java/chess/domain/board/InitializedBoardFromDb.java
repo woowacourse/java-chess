@@ -1,10 +1,11 @@
 package chess.domain.board;
 
-import chess.dao.BoardDao;
+import chess.dao.BackupBoardDao;
+import chess.dao.InitialBoardDao;
+import chess.dao.RoomDao;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,42 +16,29 @@ public class InitializedBoardFromDb {
 
     public HashMap<Position, Piece> initBoard() {
         HashMap<Position, Piece> board = new HashMap<>();
-        BoardDao boardDao = new BoardDao();
+        InitialBoardDao initialBoardDao = new InitialBoardDao();
 
         Position.cachedPosition()
             .keySet()
-            .stream()
-            .forEach(position -> {
-                try {
-                    board.put(Position.from(position), boardDao.findInitialBoardPieceAtPosition(position));
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            });
+            .forEach(position -> board.put(Position.from(position),
+                initialBoardDao.findInitialBoardPieceAtPosition(position)));
 
         return board;
     }
 
     public Map<Position, Piece> continueBoard(String roomName) {
         HashMap<Position, Piece> board = new HashMap<>();
-        BoardDao boardDao = new BoardDao();
+        BackupBoardDao backupBoardDao = new BackupBoardDao();
 
         Position.cachedPosition()
             .keySet()
-            .stream()
-            .forEach(position -> {
-                try {
-                    board.put(Position.from(position), boardDao.findPlayingBoardByRoom(roomName, position));
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            });
-
+            .forEach(position -> board.put(Position.from(position),
+                backupBoardDao.findPlayingBoardByRoom(roomName, position)));
         return board;
     }
 
-    public PieceColor continueTurn(String roomName) throws SQLException {
-        BoardDao boardDao = new BoardDao();
+    public PieceColor continueTurn(String roomName) {
+        RoomDao boardDao = new RoomDao();
         return PieceColor.pieceColorByName(boardDao.findRoomTurnColor(roomName));
     }
 }

@@ -5,92 +5,92 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.dto.RoomNamesDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static chess.dao.DbConnection.getConnection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class BoardDaoTest {
-
-    private BoardDao boardDao;
-
-    @BeforeEach
-    public void setup() {
-        boardDao = new BoardDao();
-    }
+class DaoTest {
 
     @Test
     public void connection() {
-        Connection con = boardDao.getConnection();
+        Connection con = getConnection();
         assertNotNull(con);
     }
 
     @Test
-    void findRoomNames() throws SQLException {
+    void findRoomNames() {
+        RoomDao roomDao = new RoomDao();
         List<RoomNamesDto> expectedNames = Arrays.asList(new RoomNamesDto("a"),
             new RoomNamesDto("Hello"),
             new RoomNamesDto("HI"));
-        List<RoomNamesDto> computedNames = boardDao.findRoomNames();
+        List<RoomNamesDto> computedNames = roomDao.findRoomNames();
 
         assertEquals(expectedNames, computedNames);
     }
 
     @Test
-    void findInitialBoardPieceAtPosition() throws Exception {
+    void findInitialBoardPieceAtPosition() {
+        InitialBoardDao initialBoardDao = new InitialBoardDao();
         Piece expectedBlackRookPiece = new Piece(PieceKind.ROOK, PieceColor.BLACK);
-        Piece computedBlackRookPiece = boardDao.findInitialBoardPieceAtPosition("a8");
+        Piece computedBlackRookPiece = initialBoardDao.findInitialBoardPieceAtPosition("a8");
         assertEquals(expectedBlackRookPiece, computedBlackRookPiece);
 
         Piece expectedWhitePawnPiece = new Piece(PieceKind.PAWN, PieceColor.WHITE);
-        Piece computedWhitePawnPiece = boardDao.findInitialBoardPieceAtPosition("d2");
+        Piece computedWhitePawnPiece = initialBoardDao.findInitialBoardPieceAtPosition("d2");
         assertEquals(expectedWhitePawnPiece, computedWhitePawnPiece);
 
         Piece expectedBlackKingPiece = new Piece(PieceKind.KING, PieceColor.BLACK);
-        Piece computedBlackKingPiece = boardDao.findInitialBoardPieceAtPosition("e8");
+        Piece computedBlackKingPiece = initialBoardDao.findInitialBoardPieceAtPosition("e8");
         assertEquals(expectedBlackKingPiece, computedBlackKingPiece);
     }
 
     @Test
-    void addRoom() throws SQLException {
+    void addRoom() {
+        RoomDao roomDao = new RoomDao();
         String name = "chess1";
-        boardDao.addRoom(name, PieceColor.WHITE);
+        roomDao.addRoom(name, PieceColor.WHITE);
     }
 
     @Test
-    void savePlayingBoard() throws SQLException {
+    void savePlayingBoard() {
+        BackupBoardDao backupBoardDao = new BackupBoardDao();
         String name = "chess1";
         Map<Position, Piece> board = playingBoard();
-        boardDao.savePlayingBoard(name, board, PieceColor.WHITE);
+        backupBoardDao.savePlayingBoard(name, board, PieceColor.WHITE);
     }
 
     @Test
-    void findPlayingBoardByRoom() throws SQLException {
+    void findPlayingBoardByRoom() {
+        BackupBoardDao backupBoardDao = new BackupBoardDao();
         String name = "chess1";
         String position = "a8";
         Map<Position, Piece> board = playingBoard();
         Piece expectedPieceA8 = board.get(Position.from(position));
-        Piece computedPieceA8 = boardDao.findPlayingBoardByRoom(name, position);
+        Piece computedPieceA8 = backupBoardDao.findPlayingBoardByRoom(name, position);
 
         assertEquals(expectedPieceA8, computedPieceA8);
     }
 
     @Test
-    void deleteExistingBoard() throws SQLException {
+    void deleteExistingBoard() {
+        BackupBoardDao backupBoardDao = new BackupBoardDao();
         String name = "chess1";
-        boardDao.deleteExistingBoard(name);
+        backupBoardDao.deleteExistingBoard(name);
     }
 
     @Test
-    void deleteRoom() throws SQLException {
+    void deleteRoom() {
+        RoomDao roomDao = new RoomDao();
         String name = "chess1";
-        boardDao.deleteRoom(name);
+        roomDao.deleteRoom(name);
     }
 
     private Map<Position, Piece> playingBoard() {
