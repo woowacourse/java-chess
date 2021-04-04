@@ -38,8 +38,6 @@ public class WebChessAction {
         BoardDto board = chessGameService.move(req.queryParams("source"), req.queryParams("target"));
 
         model.put("board", board);
-        model.put("checked", board.isChecked());
-        model.put("isKingDead", board.isKingDead());
         return render(model, "game.html");
     }
 
@@ -53,8 +51,6 @@ public class WebChessAction {
         BoardDto board = chessGameService.continueGame();
 
         model.put("board", board);
-        model.put("checked", board.isChecked());
-        model.put("isKingDead", board.isKingDead());
         return render(model, "game.html");
     }
 

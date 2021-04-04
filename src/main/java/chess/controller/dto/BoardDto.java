@@ -35,11 +35,11 @@ public class BoardDto {
         return currentTeam;
     }
 
-    public boolean isChecked() {
+    public boolean getChecked() {
         return checked;
     }
 
-    public boolean isKingDead() {
+    public boolean getKingDead() {
         return isKingDead;
     }
 }

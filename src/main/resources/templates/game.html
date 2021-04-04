@@ -147,12 +147,20 @@
         let winner = "{{winner}}";
         let move = document.getElementById("move");
         let status = document.getElementById("status");
+        let checked = "{{board.checked}}";
+        let kingDead = "{{board.kindDead}}";
         if(!winner){
             move.disabled = false;
             status.disabled = false;
         } else{
             move.disabled = true;
             status.disabled = true;
+        }
+        if(checked == true){
+            alert("체크!");
+        }
+        if(kingDead == true){
+            alert("왕이 죽었습니다!");
         }
     }
 
