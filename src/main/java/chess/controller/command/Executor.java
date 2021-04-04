@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.manager.ChessManager;
+import chess.domain.manager.ChessManager;
 
 public abstract class Executor implements Command {
 

@@ -1,7 +1,7 @@
 package chess.controller.dto;
 
 import chess.domain.piece.Owner;
-import chess.manager.GameStatus;
+import chess.domain.manager.GameStatus;
 
 public class GameResultDto {
 

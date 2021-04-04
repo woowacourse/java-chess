@@ -1,7 +1,7 @@
 package chess.controller.command;
 
-import chess.manager.ChessManager;
-import chess.manager.GameStatus;
+import chess.domain.manager.ChessManager;
+import chess.domain.manager.GameStatus;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import chess.controller.dto.BoardResponseDto;
 import chess.controller.dto.GameResultDto;
 import chess.controller.dto.ShowPathResponseDto;
 import chess.controller.dto.StatusResponseDto;
-import chess.manager.ChessManager;
+import chess.domain.manager.ChessManager;
 import chess.view.InputView;
 import chess.view.OutputView;
 

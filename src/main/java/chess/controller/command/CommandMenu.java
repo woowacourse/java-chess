@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.manager.ChessManager;
+import chess.domain.manager.ChessManager;
 
 import java.util.Arrays;
 import java.util.List;

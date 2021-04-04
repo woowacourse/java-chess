@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.manager.GameStatus;
+import chess.domain.manager.GameStatus;
 
 public class StatusResponseDto {
 

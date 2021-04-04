@@ -2,7 +2,7 @@ package chess.controller.command;
 
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
-import chess.manager.ChessManager;
+import chess.domain.manager.ChessManager;
 
 import java.util.List;
 
