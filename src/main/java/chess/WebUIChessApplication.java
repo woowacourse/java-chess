@@ -18,30 +18,34 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
 
         staticFileLocation("/public");
-        WebController webController = new WebController();
-        GameDao gameDao = new GameDao();
-        Gson gson = new Gson();
+        final WebController webController = new WebController();
+        final GameDao gameDao = new GameDao();
+        final Gson gson = new Gson();
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
+            final Map<String, Object> model = new HashMap<>();
             return render(model, "board.html");
         });
 
         get("/new", (req, res) -> {
-            Map<String, String> model = webController.startGame();
+            final Map<String, String> model = webController.startGame();
             return gson.toJson(model);
         });
 
         put("/move", (req, res) -> {
-            Map<String, String> requestBody = gson.fromJson(req.body(), HashMap.class);
-            Map<String, String> model = webController.move(requestBody.get("source"), requestBody.get("target"));
+            final Map<String, String> requestBody = gson.fromJson(req.body(), HashMap.class);
+            final Map<String, String> model = webController.move(requestBody.get("source"), requestBody.get("target"));
             return gson.toJson(model);
         });
 
+        get("/currentState", (req, res) -> {
+            final String model = webController.showTurn();
+            return gson.toJson(model);
+        });
 
         get("/availablePositions", (req, res) -> {
-            String source = req.queryParams("source");
-            List<String> movablePositions = webController.calculatePath(source);
+            final String source = req.queryParams("source");
+            final List<String> movablePositions = webController.calculatePath(source);
             return gson.toJson(movablePositions);
         });
 
@@ -51,7 +55,7 @@ public class WebUIChessApplication {
         });
 
         get("/load", (req, res) -> {
-            Map<String, String> model = webController.load(gameDao);
+            final Map<String, String> model = webController.load(gameDao);
             return gson.toJson(model);
         });
     }

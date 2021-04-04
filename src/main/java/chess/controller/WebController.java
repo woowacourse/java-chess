@@ -3,6 +3,7 @@ package chess.controller;
 import chess.dao.GameDao;
 import chess.domain.CommandAsString;
 import chess.domain.game.Game;
+import chess.domain.game.state.GameState;
 import chess.domain.game.state.InitialState;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -52,6 +53,11 @@ public class WebController {
         }
         Result result = game.result(command);
         return convertToStringList(result.infoAsList());
+    }
+
+    public String showTurn() {
+        final GameState currentState = game.getState();
+        return currentState.currentState();
     }
 
     public void save(GameDao gameDao) {

@@ -32,6 +32,7 @@ window.onload = () => {
   for (const position of POSITIONS) {
     position.addEventListener("click", selectPosition);
   }
+  startButton.addEventListener("click", initializeBoard);
   saveButton.addEventListener("click", saveBoard);
   loadButton.addEventListener("click", loadBoard);
 };
