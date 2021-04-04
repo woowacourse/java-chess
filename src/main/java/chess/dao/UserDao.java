@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.User;
+import chess.dto.UserDto;
 
 import java.sql.*;
 
@@ -43,21 +43,22 @@ public class UserDao {
         }
     }
 
-    public void addUser(User user) throws SQLException {
+    public void addUser(UserDto userDto) throws SQLException {
         String query = "INSERT INTO users VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, user.getUserId());
+        pstmt.setString(1, userDto.getUserId());
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 
-    public User findByUserId(String userId) throws SQLException {
+    public UserDto findByUserId(String userId) throws SQLException {
         String query = "SELECT * FROM users WHERE user_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, userId);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) return null;
-
-        return new User("testUserId");
+        closeConnection(getConnection());
+        return new UserDto("testUserId");
     }
 }

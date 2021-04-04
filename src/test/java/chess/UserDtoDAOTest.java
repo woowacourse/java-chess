@@ -1,6 +1,7 @@
 package chess;
 
 import chess.dao.UserDao;
+import chess.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class UserDAOTest {
+public class UserDtoDAOTest {
     private UserDao userDao;
 
     @BeforeEach
@@ -25,13 +26,13 @@ public class UserDAOTest {
 
     @Test
     public void addUser() throws Exception {
-        User user = new User("testUserId");
-        userDao.addUser(user);
+        UserDto userDto = new UserDto("testUserId");
+        userDao.addUser(userDto);
     }
 
     @Test
     public void findByUserId() throws Exception {
-        User user = userDao.findByUserId("testUserId");
-        assertEquals("testUserId", user.getUserId());
+        UserDto userDto = userDao.findByUserId("testUserId");
+        assertEquals("testUserId", userDto.getUserId());
     }
 }

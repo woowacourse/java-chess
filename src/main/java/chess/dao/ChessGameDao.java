@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.User;
+import chess.dto.UserDto;
 import chess.domain.ChessGame;
 import chess.domain.Point;
 import chess.domain.piece.Color;
@@ -51,29 +51,31 @@ public class ChessGameDao {
         }
     }
 
-    public void addUser(String userId) throws SQLException {
+    public void addUser(UserDto userDto) throws SQLException {
         String query = "INSERT INTO user(user_id) VALUES(?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
+        pstmt.setString(1, userDto.getUserId());
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 
-    public User findUserById(String userId) throws SQLException {
+    public UserDto findUser(UserDto userDto) throws SQLException {
         String query = "SELECT user_id FROM user WHERE user_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
+        pstmt.setString(1, userDto.getUserId());
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
             return null;
         }
-        return new User(rs.getString("user_id"));
+        closeConnection(getConnection());
+        return new UserDto(rs.getString("user_id"));
     }
 
-    public ChessGameDto findGameByUserId(String userId) throws SQLException {
+    public ChessGameDto findGameByUserId(UserDto userDto) throws SQLException {
         String query = "SELECT * FROM game WHERE user_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
+        pstmt.setString(1, userDto.getUserId());
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
@@ -84,16 +86,16 @@ public class ChessGameDao {
         String[] pieceNames = rs.getString("pieces").split("");
         Map<Point, Piece> board = new HashMap<>();
 
-        for (int j = 0; j <= 7; j++) {
-            for (int i = 7; i >= 0; i--) {
-                board.put(Point.of(i, j), PieceType.createByPieceName(pieceNames[(7 - i) + j * 8].charAt(0)));
+        for (int column = 0; column <= 7; column++) {
+            for (int row = 7; row >= 0; row--) {
+                board.put(Point.of(row, column), PieceType.createByPieceName(pieceNames[(7 - row) + column * 8].charAt(0)));
             }
         }
-
 
         ChessGameDto chessGameDto = new ChessGameDto();
         chessGameDto.setBoard(board);
         chessGameDto.setCurrentColor(Color.parseColor(currentColor));
+        closeConnection(getConnection());
         return chessGameDto;
     }
 
@@ -117,7 +119,7 @@ public class ChessGameDao {
         pstmt.executeUpdate();
     }
 
-    public void createNewGame(String userId, Map<Point, Piece> board) throws SQLException {
+    public void createNewGame(UserDto userDto, Map<Point, Piece> board) throws SQLException {
         StringBuilder sb2 = new StringBuilder();
         for (char letter = 'a'; letter <= 'h'; letter++) {
             for (int i = 1; i <= 8; i++) {
@@ -127,7 +129,7 @@ public class ChessGameDao {
         }
         String query = "INSERT INTO game(user_id, current_color, pieces) VALUES(?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
+        pstmt.setString(1, userDto.getUserId());
         pstmt.setString(2, "white");
         pstmt.setString(3, sb2.toString());
         pstmt.executeUpdate();

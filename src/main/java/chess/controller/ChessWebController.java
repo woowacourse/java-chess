@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dto.UserDto;
 import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -10,11 +11,11 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class ChessWebController {
-    ChessGameService chessGameService = new ChessGameService();
+    private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+
+    private final ChessGameService chessGameService = new ChessGameService();
 
     public void route() {
-        staticFiles.location("/static");
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "/index.html");
@@ -26,13 +27,15 @@ public class ChessWebController {
         });
 
         post("/users", (req, res) -> {
-            chessGameService.addUser(req.queryParams("userId"));
+            UserDto userDto = new UserDto(req.queryParams("userId"));
+            chessGameService.addUser(userDto);
             res.redirect("/");
             return 200;
         });
 
         post("/login", (req, res) -> {
-            if (chessGameService.login(req.queryParams("userId"))) {
+            UserDto userDto = new UserDto(req.queryParams("userId"));
+            if (chessGameService.login(userDto)) {
                 res.redirect("/chess");
                 return 200;
             }
@@ -44,6 +47,6 @@ public class ChessWebController {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 }

@@ -1,11 +1,11 @@
-package chess;
+package chess.dto;
 
 import java.util.Objects;
 
-public class User {
+public class UserDto {
     private final String userId;
 
-    public User(String userId) {
+    public UserDto(String userId) {
         this.userId = userId;
     }
 
@@ -17,8 +17,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(userId, user.userId);
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(userId, userDto.userId);
     }
 
     @Override
