@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.PositionDto;
 import chess.domain.piece.*;
 import chess.domain.piece.info.*;
 
@@ -160,5 +162,34 @@ public class ChessBoard {
         return routes;
     }
 
+    public void sync(Map<PositionDto, PieceDto> chessBoard) {
+        this.chessBoard.clear();
+        for (PositionDto positionDto : chessBoard.keySet()) {
+            System.out.println(positionDto.getPosition());
+            Position position = Position.of(positionDto.getPosition().charAt(0), positionDto.getPosition().charAt(1));
+            String pieceName = chessBoard.get(positionDto).getName();
+            String pieceColor = chessBoard.get(positionDto).getColor();
+            Piece piece = piece(pieceName, pieceColor);
+            this.chessBoard.put(position, piece);
+        }
+    }
 
+    private Piece piece(String pieceName, String pieceColor) {
+        if (pieceName.equalsIgnoreCase("K")) {
+            return new King(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("Q")) {
+            return new Queen(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("N")) {
+            return new Knight(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("B")) {
+            return new Bishop(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("R")) {
+            return new Rook(pieceName, Color.from(pieceColor));
+        }
+        return new Pawn(pieceName, Color.from(pieceColor));
+    }
 }

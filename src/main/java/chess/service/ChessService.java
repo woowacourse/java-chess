@@ -20,6 +20,7 @@ public class ChessService {
     private final ChessDao chessDao;
 
     public ChessService() {
+        chessBoard = ChessBoard.generate();
         this.chessDao = new ChessDao();
     }
 
@@ -56,7 +57,9 @@ public class ChessService {
     }
 
     public ChessRoomDto loadChess(int roomNo) throws SQLException {
-        return chessDao.findChessRoomByRoomNo(roomNo);
+        ChessRoomDto chessRoomDto = chessDao.findChessRoomByRoomNo(roomNo);
+        chessBoard.sync(chessRoomDto.getChessBoard());
+        return chessRoomDto;
     }
 
     public int exitChess(int roomNo) throws SQLException {

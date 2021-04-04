@@ -74,6 +74,8 @@ public class WebChessController {
         get("/load", (req, res) -> {
             try {
                 ChessRoomDto chessRoomDto = chessService.loadChess(Integer.valueOf(req.queryParams("roomNo")));
+                System.out.println("하이");
+                System.out.println(chessRoomDto.getChessBoard().toString());
                 return mapper.writeValueAsString(chessRoomDto);
             }catch (Exception e) {
                 Map<String, Object> model = new HashMap<>();
