@@ -47,10 +47,6 @@ public class ChessGameManager {
         return chessGame.board();
     }
 
-    public Map<Position, Piece> pieces() {
-        return chessGame.pieces();
-    }
-
     public boolean isBlackKingAlive() {
         return chessGame.isKingAlive(Color.BLACK);
     }

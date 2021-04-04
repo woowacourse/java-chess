@@ -24,7 +24,7 @@ public class Board implements Serializable {
     }
 
     public Map<Position, Piece> getPieces() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 
     public Piece piece(Position position) {
@@ -60,9 +60,5 @@ public class Board implements Serializable {
     public boolean isKingAlive(Color color) {
         BoardResult boardResult = new BoardResult(board);
         return boardResult.isKingAlive(color);
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
     }
 }

@@ -21,7 +21,7 @@ public class OutputView {
 
     public static void printBoard(ChessGameManager chessGameManager) {
         System.out.println();
-        Map<Position, Piece> chessBoard = chessGameManager.board().getBoard();
+        Map<Position, Piece> chessBoard = chessGameManager.board().getPieces();
         for (int row = 0; row < 8; row++) {
             printPieces(chessBoard, row);
         }

@@ -23,7 +23,7 @@ class RookTest {
 
         board.put(sourcePosition, blackRook);
 
-        assertThat(blackRook.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
+        assertThat(blackRook.canMove(board.getPieces(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("룩은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
@@ -54,7 +54,7 @@ class RookTest {
         board.put(sourcePosition, blackRook);
         board.put(targetPosition, whiteKing);
 
-        assertThat(blackRook.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
+        assertThat(blackRook.canMove(board.getPieces(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("룩은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
