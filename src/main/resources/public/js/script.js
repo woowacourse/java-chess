@@ -4,6 +4,7 @@ const $chessBoard = document.getElementById('chess-board');
 const $startButton = document.getElementById('start-button');
 
 const colorTranslationTable = {BLACK: '흑', WHITE:'백'};
+const matchResultTranslationTable = {DRAW: '무승부', WHITE_WIN: '백 승리', BLACK_WIN: '흑 승리'};
 
 const squareBuffer = new SquareBuffer();
 
@@ -80,6 +81,12 @@ async function addEventOnStartButton() {
 function updateGameData(responseJsonBody) {
     updateBoard(responseJsonBody.item.chessBoard);
     updateMessage(responseJsonBody.message);
+    if (responseJsonBody.item.isEnd) {
+        updateWinner(responseJsonBody.item.chessGameStatistics);
+        updateMessage('게임이 끝났습니다.');
+        turnOffPanel();
+        return;
+    }
     updateScoreAndTurn(responseJsonBody.item.chessGameStatistics, responseJsonBody.item.currentTurnColor);
 }
 
@@ -104,14 +111,21 @@ function makeImage(imageName) {
     return img;
 }
 
-function updateMessage(message) {
-    document.getElementById('message-console').innerText = message;
-}
-
 function updateScoreAndTurn(chessGameStatistics, currentTurn) {
     const blackScore = chessGameStatistics.colorsScore.BLACK;
     const whiteScore = chessGameStatistics.colorsScore.WHITE;
     document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n현재 순서: ${colorTranslationTable[currentTurn]}`;
+}
+
+function updateWinner(chessGameStatistics) {
+    const blackScore = chessGameStatistics.colorsScore.BLACK;
+    const whiteScore = chessGameStatistics.colorsScore.WHITE;
+    const winner = chessGameStatistics.matchResult;
+    document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n승: ${matchResultTranslationTable[winner]}`;
+}
+
+function updateMessage(message) {
+    document.getElementById('message-console').innerText = message;
 }
 
 function turnOnPanel() {
@@ -122,4 +136,9 @@ function turnOnPanel() {
     document.getElementById('end-button').style.display = 'block';
     document.getElementById('message-console').style.display = 'block';
     document.getElementById('score-console').style.display = 'block';
+}
+
+function turnOffPanel() {
+    document.getElementById('save-button').style.display = 'none';
+    document.getElementById('end-button').style.display = 'none';
 }
