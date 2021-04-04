@@ -25,7 +25,7 @@ public class CatchingPieceWhitePawnMoveCondition extends MoveCondition {
         return board.getPieces().stream()
                 .anyMatch(
                         piece -> piece.isSamePosition(target) &&
-                        piece.isSameColor(Color.BLACK)
+                                piece.isSameColor(Color.BLACK)
                 );
     }
 

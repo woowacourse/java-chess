@@ -35,7 +35,7 @@ public class ChessGame {
         state = new Ready(this);
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return state instanceof Ready;
     }
 

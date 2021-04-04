@@ -10,7 +10,7 @@ public class PiecesDto {
     private List<PieceDto> pieces = new ArrayList<>();
 
     public PiecesDto(List<Piece> pieces) {
-        for(Piece piece : pieces) {
+        for (Piece piece : pieces) {
             this.pieces.add(new PieceDto(piece));
         }
 

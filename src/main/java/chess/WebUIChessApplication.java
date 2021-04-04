@@ -93,7 +93,7 @@ public class WebUIChessApplication {
         });
 
         post("/save", (req, res) -> {
-            if(PieceDAO.saveAll(chessGame.getBoard().getPieces()) && PieceDAO.saveTurn(chessGame.getStatus())){
+            if (PieceDAO.saveAll(chessGame.getBoard().getPieces()) && PieceDAO.saveTurn(chessGame.getStatus())) {
                 return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "게임이 저장되었습니다.", chessGame.getStatus()));
             }
             return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장에 실패하였습니다. ", chessGame.getStatus()));
@@ -101,7 +101,7 @@ public class WebUIChessApplication {
         });
 
         post("/load", (req, res) -> {
-            if(PieceDAO.loadPieces() == null) {
+            if (PieceDAO.loadPieces() == null) {
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장된 게임이 없습니다. ", chessGame.getStatus()));
             }
             chessGame = new ChessGame(PieceDAO.loadPieces());

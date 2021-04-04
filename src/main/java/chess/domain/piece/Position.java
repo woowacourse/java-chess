@@ -12,7 +12,7 @@ public class Position {
 
 
     public Position(String[] stringPosition) {// b7 b5
-        this(8-Integer.parseInt(stringPosition[1]), stringPosition[0].toCharArray()[0] - 'a');
+        this(8 - Integer.parseInt(stringPosition[1]), stringPosition[0].toCharArray()[0] - 'a');
         System.out.println(stringPosition[0] + stringPosition[1]);
     }
 
@@ -30,7 +30,7 @@ public class Position {
     }
 
     private static int makeRow(String str) {
-        return Integer.parseInt(str.split("")[1])-1;
+        return Integer.parseInt(str.split("")[1]) - 1;
     }
 
     public int getRow() {
@@ -43,7 +43,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return columnStr[column] + (row+1);
+        return columnStr[column] + (row + 1);
     }
 
     @Override

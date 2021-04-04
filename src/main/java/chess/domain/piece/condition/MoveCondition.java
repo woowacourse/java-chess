@@ -17,7 +17,7 @@ public abstract class MoveCondition {
         return board.getPieces().stream()
                 .noneMatch(pieceOnBoard ->
                         pieceOnBoard.isSamePosition(target) &&
-                        pieceOnBoard.isSameColor(source.getColor())
+                                pieceOnBoard.isSameColor(source.getColor())
                 );
     }
 }

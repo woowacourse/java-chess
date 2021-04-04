@@ -1,7 +1,10 @@
-const pieceMap = {'R':'♜', 'N':'♞', 'B':'♝', 'Q':'♛', 'K':'♚', 'P':'♟',
-    'r':'♖', 'n':'♘', 'b':'♗', 'q':'♕', 'k':'♔', 'p':'♙'}
+const pieceMap = {
+    'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟',
+    'r': '♖', 'n': '♘', 'b': '♗', 'q': '♕', 'k': '♔', 'p': '♙'
+}
 
 document.getElementById("start-btn").addEventListener("click", gameStart);
+
 function gameStart() {
     axios({
         method: 'post',
@@ -9,17 +12,15 @@ function gameStart() {
     })
         .then((res) => {
             const data = res.data
-            if(data.isOk === "false"){
+            if (data.isOk === "false") {
                 alert(data.message);
                 return;
             }
             showTurn(data.turn);
             getPieces(data.piecesDto);
             saveButton();
-    });
+        });
 }
-
-
 
 function showTurn(turn) {
     const turnName = document.getElementById("turn");
@@ -29,7 +30,7 @@ function showTurn(turn) {
 
 function getPieces(piecesDto) {
     const pieces = piecesDto.pieces;
-    for (let i = 0; i < pieces.length; i++){
+    for (let i = 0; i < pieces.length; i++) {
         const piece = document.getElementById(pieces[i].position);
         piece.innerHTML = pieceMap[pieces[i].notation];
     }
@@ -37,7 +38,7 @@ function getPieces(piecesDto) {
 
 
 const table = document.getElementsByClassName("square")
-for(let i=0;i<table.length;i++){
+for (let i = 0; i < table.length; i++) {
     table[i].addEventListener("click", select);
 }
 
@@ -62,14 +63,14 @@ function select(event) {
     })
         .then((res) => {
             const data = res.data;
-            if(data.isOk === "false"){
+            if (data.isOk === "false") {
                 alert(data.message);
                 return;
             }
             document.getElementById(source).innerHTML = "";
             getPieces(data.piecesDto);
             showTurn(data.turn);
-            if(data.isOk === "end"){
+            if (data.isOk === "end") {
                 alert(data.message);
                 location.reload();
             }
@@ -84,7 +85,7 @@ function endGame() {
         url: '/end'
     }).then((res) => {
         const data = res.data;
-        if(data.isOk === "false"){
+        if (data.isOk === "false") {
             alert(data.message);
             return;
         }
@@ -101,7 +102,7 @@ function status() {
         url: '/status'
     }).then((res) => {
         const data = res.data;
-        if(data.isOk === "false"){
+        if (data.isOk === "false") {
             alert(data.message);
             return;
         }
@@ -110,7 +111,7 @@ function status() {
     })
 }
 
-function saveButton(){
+function saveButton() {
     const save = document.getElementById("connect");
 
     const loading_btn = document.createElement("button");
@@ -135,7 +136,7 @@ function savePieces() {
         url: '/save'
     }).then((res) => {
         const data = res.data;
-        if(data.isOk === 'false'){
+        if (data.isOk === 'false') {
             alert(data.message);
             return;
         }
@@ -149,7 +150,7 @@ function loadPieces() {
         url: '/load'
     }).then((res) => {
         const data = res.data;
-        if(data.isOk === 'false'){
+        if (data.isOk === 'false') {
             alert(data.message);
         }
         alert(data.message);
@@ -160,11 +161,11 @@ function loadPieces() {
 }
 
 function deletePieces() {
-    const row = ["a","b","c","d","e","f","g","h"];
+    const row = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-    for( let i = 0 ;i < row.length; i++) {
-        for(let j=1;j <= 8;j++){
-            const cell = document.getElementById(row[i]+j);
+    for (let i = 0; i < row.length; i++) {
+        for (let j = 1; j <= 8; j++) {
+            const cell = document.getElementById(row[i] + j);
             cell.innerHTML = "";
         }
     }
