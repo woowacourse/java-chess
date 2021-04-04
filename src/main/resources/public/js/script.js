@@ -4,6 +4,8 @@ const $chessBoard = document.getElementById('chess-board');
 const $panel = document.getElementById('control-panel');
 const $startButton = document.getElementById('start-button');
 
+const colorTranslationTable = {BLACK: '흑', WHITE:'백'};
+
 const squareBuffer = new SquareBuffer();
 
 addSelectionEventOnChessBoard();
@@ -108,7 +110,7 @@ function updateMessage(message) {
 function updateScoreAndTurn(chessGameStatistics, currentTurn) {
     const blackScore = chessGameStatistics.colorsScore.BLACK;
     const whiteScore = chessGameStatistics.colorsScore.WHITE;
-    document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n현재 순서: ${currentTurn}`;
+    document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n현재 순서: ${colorTranslationTable[currentTurn]}`;
 }
 
 function turnOnPanel() {
