@@ -6,12 +6,12 @@ import java.util.function.Function;
 import chess.domain.chess.Color;
 
 public enum PieceFactory {
-    BISHOP("Bishop",
-            Bishop::from), BLANK("Blank", (Color color) -> Blank.INSTANCE), KING("King",
-            King::from), KNIGHT("Knight",
-            Knight::from), PAWN("Pawn",
+    BISHOP("BISHOP",
+            Bishop::from), BLANK("BLANK", (Color color) -> Blank.INSTANCE), KING("KING",
+            King::from), KNIGHT("KNIGHT",
+            Knight::from), PAWN("PAWN",
             Pawn::from),
-    QUEEN("Queen", Queen::from), ROOK("Rook", Rook::from);
+    QUEEN("QUEEN", Queen::from), ROOK("ROOK", Rook::from);
 
     private final String name;
     private final Function<Color, Piece> pieceFunction;

@@ -16,6 +16,10 @@ public class Chess {
         this(board, Status.RUNNING, Color.WHITE);
     }
 
+    public Chess(Board board, String turn) {
+        this(board, Status.RUNNING, Color.valueOf(turn));
+    }
+
     public Chess(Board board, Status status, Color turn) {
         this.board = board;
         this.status = status;

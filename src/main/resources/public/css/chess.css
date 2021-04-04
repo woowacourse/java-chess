@@ -97,18 +97,18 @@
 }
 
 .screen {
-    width: 800px;
-    height: 806px;
+    width: 600px;
+    height: 606px;
 
     text-align: center;
     position: absolute;
     top: 8%;
-    left: 47%;
+    left: 54%;
 }
 
 .status {
     display: inline-block;
-    width: 465px;
+    width: 480px;
     height: 110px;
     font-size: 40px;
     border: 3px solid black;
@@ -141,8 +141,7 @@
 
 #black-versus {
     position: absolute;
-    left: 120px;
-
+    left: 20px;
 }
 
 .currentTurn {
@@ -152,12 +151,12 @@
 
 #white-versus {
     position: absolute;
-    left: 480px;
+    left: 380px;
 }
 
 #VS {
     position: absolute;
-    left: 340px;
+    left: 240px;
     top: 230px;
     font-size: 100px;
     font-weight: bold;
@@ -169,7 +168,7 @@
 
 .game-option {
     margin: 10px;
-    width: 245px;
+    width: 260px;
     height: 80px;
     border: 3px solid #19181A;
     border-radius: 10px;

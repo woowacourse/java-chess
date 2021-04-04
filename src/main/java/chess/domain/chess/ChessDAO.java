@@ -36,7 +36,7 @@ public class ChessDAO {
         deleteById(chessQuery, chessId);
     }
 
-    public void deletePreviousChess(Long chessId) throws SQLException {
+    private void deletePreviousChess(Long chessId) throws SQLException {
         String chessQuery = "DELETE FROM chess WHERE chess_id = (?)";
         deleteById(chessQuery, chessId);
     }
@@ -57,8 +57,8 @@ public class ChessDAO {
         }
     }
 
-    public void update(Long chessId) throws SQLException {
-        String query = "INSERT INTO chess (turn) VALUES ('WHITE')";
+    public void updateTurn(Long chessId) throws SQLException {
+        String query = "UPDATE chess SET turn = IF(turn = 'WHITE', 'BLACK', 'WHITE') WHERE chess_id = (?);";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, chessId);
