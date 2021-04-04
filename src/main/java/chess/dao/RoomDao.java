@@ -18,4 +18,15 @@ public class RoomDao {
         insertQuery.setLong(2, roomId);
         insertQuery.executeUpdate();
     }
+
+    public long roomId(final String roomName) throws SQLException {
+        final String query = "SELECT room_id FROM room_status WHERE room_name = ?";
+        final PreparedStatement insertQuery = conn.prepareStatement(query);
+
+        insertQuery.setString(1, roomName);
+        ResultSet rs = insertQuery.executeQuery();
+        rs.next();
+
+        return rs.getLong(1);
+    }
 }

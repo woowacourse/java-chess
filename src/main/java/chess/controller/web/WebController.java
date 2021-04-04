@@ -37,10 +37,11 @@ public class WebController {
     private void load() {
         get("/load/:roomName", (req, res) -> {
             final String roomName = req.params(":roomName");
-            System.out.println("room name : "+ roomName);
+            final long roomId = roomDao.roomId(roomName);
 
-            final GameDto gameDto = gameDao.load(0);
+            final GameDto gameDto = gameDao.load(roomId);
             chessGame = ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
+
             return printGame();
         });
     }
