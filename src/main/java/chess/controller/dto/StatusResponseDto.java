@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.manager.Status;
+import chess.manager.GameStatus;
 
 public class StatusResponseDto {
 
@@ -12,8 +12,8 @@ public class StatusResponseDto {
         this.blackScore = blackScore;
     }
 
-    public static StatusResponseDto toStatus(Status status) {
-        return new StatusResponseDto(status.whiteScore(), status.blackScore());
+    public static StatusResponseDto toStatus(GameStatus gameStatus) {
+        return new StatusResponseDto(gameStatus.whiteScore(), gameStatus.blackScore());
     }
 
     public double getWhiteScore() {

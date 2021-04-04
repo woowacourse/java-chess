@@ -8,27 +8,27 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StatusTest {
+class GameStatusTest {
 
-    private Status status;
+    private GameStatus gameStatus;
 
     @BeforeEach
     void setUp() {
-        status = Status.statusOfBoard(BoardInitializer.initiateBoard());
+        gameStatus = GameStatus.statusOfBoard(BoardInitializer.initiateBoard());
     }
 
     @Test
     @DisplayName("객체 잘 생성된다.")
     void createStatusTest() {
-        assertThat(status).isInstanceOf(Status.class);
-        assertThat(status.blackScore()).isEqualTo(38.0d);
-        assertThat(status.whiteScore()).isEqualTo(38.0d);
+        assertThat(gameStatus).isInstanceOf(GameStatus.class);
+        assertThat(gameStatus.blackScore()).isEqualTo(38.0d);
+        assertThat(gameStatus.whiteScore()).isEqualTo(38.0d);
     }
 
     @Test
     @DisplayName("승자 판단해준다.")
     void judgeWinnerTest() {
-        Owner owner = status.judgeWinner();
+        Owner owner = gameStatus.judgeWinner();
 
         assertThat(owner).isEqualTo(Owner.NONE);
     }

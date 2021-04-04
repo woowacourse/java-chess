@@ -67,6 +67,7 @@ public class OutputView {
     }
 
     public static void printGameResult(final GameResultDto gameResultDto) {
+        printEndGame();
         System.out.println("White score : " + gameResultDto.getWhiteScore());
         System.out.println("Black score : " + gameResultDto.getBlackScore());
 

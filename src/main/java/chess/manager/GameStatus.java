@@ -9,18 +9,18 @@ import chess.domain.piece.Score;
 
 import java.util.Arrays;
 
-public class Status {
+public class GameStatus {
 
     private final Score whiteScore;
     private final Score blackScore;
 
-    private Status(final Score whiteScore, final Score blackScore) {
+    private GameStatus(final Score whiteScore, final Score blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
-    public static Status statusOfBoard(final Board board) {
-        return new Status(ownerScore(board, Owner.WHITE), ownerScore(board, Owner.BLACK));
+    public static GameStatus statusOfBoard(final Board board) {
+        return new GameStatus(ownerScore(board, Owner.WHITE), ownerScore(board, Owner.BLACK));
     }
 
     private static Score ownerScore(final Board board, final Owner owner) {

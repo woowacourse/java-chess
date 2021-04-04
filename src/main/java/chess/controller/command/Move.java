@@ -1,11 +1,11 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
 import chess.domain.board.position.Position;
+import chess.manager.ChessManager;
 
 import java.util.List;
 
-public class Move extends Executer {
+public class Move extends Executor {
 
     private static final int MENU_COMMAND_PARAMETER_COUNT = 3;
     private static final int SOURCE_INDEX = 1;
@@ -14,19 +14,19 @@ public class Move extends Executer {
     private final Position source;
     private final Position target;
 
-    private Move(final ChessController chessController, final Position source, final Position target) {
-        super(chessController);
+    private Move(final ChessManager chessManager, final Position source, final Position target) {
+        super(chessManager);
         this.source = source;
         this.target = target;
     }
 
-    public static Move of(final ChessController chessController, final String source, final String target) {
-        return new Move(chessController, Position.of(source), Position.of(target));
+    public static Move of(final ChessManager chessManager, final String source, final String target) {
+        return new Move(chessManager, Position.of(source), Position.of(target));
     }
 
-    public static Move of(final ChessController chessController, final List<String> inputCommand) {
+    public static Move of(final ChessManager chessManager, final List<String> inputCommand) {
         validateMoveCommand(inputCommand);
-        return Move.of(chessController, inputCommand.get(SOURCE_INDEX), inputCommand.get(TARGET_INDEX));
+        return Move.of(chessManager, inputCommand.get(SOURCE_INDEX), inputCommand.get(TARGET_INDEX));
     }
 
     private static void validateMoveCommand(final List<String> inputCommand) {
@@ -37,6 +37,11 @@ public class Move extends Executer {
 
     @Override
     public void execute() {
-        chessController.move(source, target);
+        chessManager.move(source, target);
+    }
+
+    @Override
+    public boolean isMove() {
+        return true;
     }
 }

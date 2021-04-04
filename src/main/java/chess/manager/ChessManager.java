@@ -11,6 +11,7 @@ public class ChessManager {
 
     private final Board board;
     private Owner turn = FIRST_TURN;
+    private boolean isPlaying = true;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
@@ -20,6 +21,8 @@ public class ChessManager {
         validateSourcePiece(source);
         validateTurn(source);
         board.move(source, target);
+        changeTurn();
+        checkCaughtKing();
     }
 
     private void validateSourcePiece(final Position source) {
@@ -38,8 +41,22 @@ public class ChessManager {
         turn = turn.reverse();
     }
 
-    public boolean isDiedKing() {
+    private void checkCaughtKing() {
+        if (isKingDead()) {
+            endGame();
+        }
+    }
+
+    private boolean isKingDead() {
         return !board.isKingAlive(this.turn);
+    }
+
+    public void endGame() {
+        isPlaying = false;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     public void resetBoard() {
@@ -52,8 +69,8 @@ public class ChessManager {
         return board.movablePath(source);
     }
 
-    public Status getStatus() {
-        return Status.statusOfBoard(board);
+    public GameStatus gameStatus() {
+        return GameStatus.statusOfBoard(board);
     }
 
     public Board getBoard() {

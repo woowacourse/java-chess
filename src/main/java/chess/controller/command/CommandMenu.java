@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.manager.ChessManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,18 +17,29 @@ public enum CommandMenu {
     private static final int COMMAND_INDEX = 0;
 
     private final String command;
-    private final BiFunction<ChessController, List<String>, Command> biFunction;
+    private final BiFunction<ChessManager, List<String>, Command> biFunction;
 
-    CommandMenu(final String command, final BiFunction<ChessController, List<String>, Command> biFunction) {
+    CommandMenu(final String command, final BiFunction<ChessManager, List<String>, Command> biFunction) {
         this.command = command;
         this.biFunction = biFunction;
     }
 
-    public static Command findCommandByInputCommand(final ChessController chessController, final List<String> inputCommand) {
+    public static Command findRunningCommandByInput(final ChessManager chessManager, final List<String> input) {
         return Arrays.stream(values())
-                .filter(commandMenu -> commandMenu.command.equalsIgnoreCase(inputCommand.get(COMMAND_INDEX)))
-                .map(commandMenu -> commandMenu.biFunction.apply(chessController, inputCommand))
+                .filter(commandMenu -> commandMenu.command.equalsIgnoreCase(input.get(COMMAND_INDEX)))
+                .filter(commandMenu -> !START.command.equalsIgnoreCase(input.get(COMMAND_INDEX)))
+                .map(commandMenu -> commandMenu.biFunction.apply(chessManager, input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어입니다."));
+    }
+
+    public static Command findFirstCommandByInput(
+            final ChessManager chessManager, final List<String> input) {
+        final String command = input.get(COMMAND_INDEX);
+        return Arrays.stream(values())
+                .filter(commandMenu -> END.command.equalsIgnoreCase(command) || START.command.equalsIgnoreCase(command))
+                .map(commandMenu -> commandMenu.biFunction.apply(chessManager, input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("게임 시작 전에는 start(게임시작) 또는 end(게임 끝)만 가능합니다."));
     }
 }

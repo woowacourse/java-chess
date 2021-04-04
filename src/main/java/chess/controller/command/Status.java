@@ -1,20 +1,23 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.manager.ChessManager;
+import chess.manager.GameStatus;
 
 import java.util.List;
 
-public class Status extends Executer {
+public class Status extends Executor {
 
     private static final int STATUS_COMMAND_PARAMETER_COUNT = 1;
 
-    public Status(final ChessController chessController) {
-        super(chessController);
+    private GameStatus gameStatus;
+
+    public Status(ChessManager chessManager) {
+        super(chessManager);
     }
 
-    public static Status of(final ChessController chessController, final List<String> inputCommand) {
+    public static Status of(final ChessManager chessManager, final List<String> inputCommand) {
         validateStatusCommand(inputCommand);
-        return new Status(chessController);
+        return new Status(chessManager);
     }
 
     private static void validateStatusCommand(final List<String> inputCommand) {
@@ -23,8 +26,17 @@ public class Status extends Executer {
         }
     }
 
+    public GameStatus gameStatus() {
+        return this.gameStatus;
+    }
+
     @Override
     public void execute() {
-        chessController.status();
+        this.gameStatus = chessManager.gameStatus();
+    }
+
+    @Override
+    public boolean isStatus() {
+        return true;
     }
 }

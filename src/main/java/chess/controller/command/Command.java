@@ -6,5 +6,11 @@ public interface Command {
 
     boolean isEnd();
 
-    boolean isStart();
+    boolean isMove();
+
+    boolean isStatus();
+
+    boolean isShow();
+
+    boolean isRestart();
 }

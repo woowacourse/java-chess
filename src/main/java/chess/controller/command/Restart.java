@@ -1,20 +1,20 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.manager.ChessManager;
 
 import java.util.List;
 
-public class Restart extends Executer {
+public class Restart extends Executor {
 
     private static final int RESTART_COMMAND_PARAMETER_COUNT = 1;
 
-    public Restart(final ChessController chessController) {
-        super(chessController);
+    public Restart(ChessManager chessManager) {
+        super(chessManager);
     }
 
-    public static Restart of(final ChessController chessController, final List<String> inputCommand) {
+    public static Restart of(final ChessManager chessManager, final List<String> inputCommand) {
         validateStartCommand(inputCommand);
-        return new Restart(chessController);
+        return new Restart(chessManager);
     }
 
     private static void validateStartCommand(final List<String> inputCommand) {
@@ -25,6 +25,11 @@ public class Restart extends Executer {
 
     @Override
     public void execute() {
-        chessController.restart();
+        chessManager.resetBoard();
+    }
+
+    @Override
+    public boolean isRestart() {
+        return true;
     }
 }

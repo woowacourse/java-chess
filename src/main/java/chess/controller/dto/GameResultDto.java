@@ -1,7 +1,7 @@
 package chess.controller.dto;
 
 import chess.domain.piece.Owner;
-import chess.manager.Status;
+import chess.manager.GameStatus;
 
 public class GameResultDto {
 
@@ -15,8 +15,8 @@ public class GameResultDto {
         this.winner = winner;
     }
 
-    public static GameResultDto toStatus(final Status status) {
-        return new GameResultDto(status.whiteScore(), status.blackScore(), status.judgeWinner());
+    public static GameResultDto toStatus(final GameStatus gameStatus) {
+        return new GameResultDto(gameStatus.whiteScore(), gameStatus.blackScore(), gameStatus.judgeWinner());
     }
 
     public double getWhiteScore() {

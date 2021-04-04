@@ -1,20 +1,20 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.manager.ChessManager;
 
 import java.util.List;
 
-public class Start extends Executer {
+public class Start extends Executor {
 
     private static final int START_COMMAND_PARAMETER_COUNT = 1;
 
-    public Start(final ChessController chessController) {
-        super(chessController);
+    public Start(ChessManager chessManager) {
+        super(chessManager);
     }
 
-    public static Start of(final ChessController chessController, final List<String> inputCommand) {
+    public static Start of(final ChessManager chessManager, final List<String> inputCommand) {
         validateStartCommand(inputCommand);
-        return new Start(chessController);
+        return new Start(chessManager);
     }
 
     private static void validateStartCommand(final List<String> inputCommand) {
@@ -24,12 +24,6 @@ public class Start extends Executer {
     }
 
     @Override
-    public boolean isStart() {
-        return true;
-    }
-
-    @Override
     public void execute() {
-        chessController.startGame();
     }
 }

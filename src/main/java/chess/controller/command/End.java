@@ -1,20 +1,20 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.manager.ChessManager;
 
 import java.util.List;
 
-public class End extends Executer {
+public class End extends Executor {
 
     private static final int END_COMMAND_PARAMETER_COUNT = 1;
 
-    public End(final ChessController chessController) {
-        super(chessController);
+    public End(ChessManager chessManager) {
+        super(chessManager);
     }
 
-    public static End of(final ChessController chessController, final List<String> inputCommand) {
+    public static End of(final ChessManager chessManager, final List<String> inputCommand) {
         validateEndCommand(inputCommand);
-        return new End(chessController);
+        return new End(chessManager);
     }
 
     private static void validateEndCommand(final List<String> inputCommand) {
@@ -25,7 +25,7 @@ public class End extends Executer {
 
     @Override
     public void execute() {
-        chessController.end();
+        chessManager.endGame();
     }
 
     @Override
