@@ -1,7 +1,7 @@
-package chess.view;
+package chess.console.view;
 
-import chess.view.dto.BoardDto;
-import chess.view.dto.PieceDto;
+import chess.console.view.dto.BoardDto;
+import chess.console.view.dto.PieceDto;
 
 import java.util.Arrays;
 

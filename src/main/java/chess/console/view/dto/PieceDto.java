@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.console.view.dto;
 
 import chess.domain.piece.ChessPiece;
 
