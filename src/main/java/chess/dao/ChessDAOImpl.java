@@ -35,8 +35,15 @@ public class ChessDAOImpl implements ChessDAO {
                 .addParameter("color", chessGame.currentColor())
                 .executeUpdate();
 
-            Query query = connection.createQuery(
-                "insert into game(gameid, name, color, position) values(:gameid, :name, :color,:position)");
+            pieceBulkUpdate(chessGame, gameId, connection);
+            connection.commit();
+            return gameId;
+        }
+    }
+
+    private void pieceBulkUpdate(ChessGame chessGame, Long gameId, Connection connection) {
+        try (Query query = connection.createQuery(
+            "insert into game(gameid, name, color, position) values(:gameid, :name, :color,:position)")) {
             chessGame.pieces().asList().forEach(piece -> {
                 query.addParameter("gameid", gameId)
                     .addParameter("name", piece.name())
@@ -45,8 +52,6 @@ public class ChessDAOImpl implements ChessDAO {
                     .addToBatch();
             });
             query.executeBatch();
-            connection.commit();
-            return gameId;
         }
     }
 
