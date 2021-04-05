@@ -23,13 +23,15 @@
         <tr>
             <th scope="col">id</th>
             <th scope="col">name</th>
+            <th scope="col">delete</th>
         </tr>
         </thead>
         <tbody>
         {{#list}}
         <tr>
             <th>{{id}}</th>
-            <th><a href="/load/{{name}}">{{name}}</a></th>
+            <th><a href="/game/load/{{id}}">{{name}}</a></th>
+            <th><a class = "delete-btn" id = "{{id}}" >delete</a></th>
         </tr>
         {{/list}}
         </tbody>

@@ -6,8 +6,7 @@ import chess.view.web.OutputView;
 
 import java.sql.Connection;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class RoomController {
     private final RoomService roomService;
@@ -38,9 +37,8 @@ public class RoomController {
     }
 
     private void deleteRoom() {
-        post("/room/delete/:roomId", (req, res) -> {
-            final String roomName = RequestHandler.roomName(req);
-            final Long roomId = roomService.roomId(roomName);
+        delete("/room/delete/:roomId", (req, res) -> {
+            final Long roomId = RequestHandler.roomId(req);
             roomService.delete(roomId);
             res.redirect("/game/delete/"+roomId);
             return null;

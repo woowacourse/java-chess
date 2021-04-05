@@ -29,10 +29,6 @@ public class RoomService {
         return roomDao.load();
     }
 
-    public Long roomId(final String roomName) throws SQLException {
-        return roomDao.id(roomName);
-    }
-
     public RoomDto room(final Long roomId) throws SQLException {
         final RoomDto roomDto = new RoomDto();
         roomDto.setId(roomId);
