@@ -91,33 +91,13 @@ function checkIsEnd() {
     }
 }
 
-function deleteRequest() {
-    return function (event) {
-        const roomId = event.target.id;
-
-        const form = document.createElement("form");
-        form.setAttribute("charset", "UTF-8");
-        form.setAttribute("method", "Delete");
-        form.setAttribute("action", "/room/delete/" + roomId);
-
-        const targetId = document.createElement("input");
-        targetId.setAttribute("type", "hidden");
-        targetId.setAttribute("name", "id");
-        targetId.setAttribute("value",roomId);
-        form.appendChild(targetId);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
-}
-
 function show(target) {
     const roomId = document.getElementById("roomId").innerText;
     const requestQuery = "source=" + target.id;
 
     $.ajax({
         url: "/game/show/" + roomId,
-        type: "GET",
+        type: "POST",
         data: requestQuery,
         success: function (result) {
             if (result !== null && result !== "[]") {

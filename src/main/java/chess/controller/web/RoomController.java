@@ -37,7 +37,7 @@ public class RoomController {
     }
 
     private void deleteRoom() {
-        delete("/room/delete/:roomId", (req, res) -> {
+        get("/room/delete/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
             roomService.delete(roomId);
             res.redirect("/game/delete/"+roomId);

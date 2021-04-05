@@ -46,7 +46,6 @@ public class GameController {
 
     private void deleteGame() {
         get("/game/delete/:roomId", (req, res) -> {
-            System.out.println("aaaaa");
             final Long roomId = RequestHandler.roomId(req);
             gameService.delete(roomId);
             res.redirect("/main");
@@ -62,7 +61,7 @@ public class GameController {
     }
 
     private void show() {
-        get("/game/show/:roomId", (req, res) -> {
+        post("/game/show/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
             final Position source = RequestHandler.source(req);
             return gameService.show(roomId, source);
