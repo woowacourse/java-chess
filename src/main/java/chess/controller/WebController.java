@@ -9,6 +9,8 @@ import chess.dto.StatusCode;
 import chess.exception.DomainException;
 import com.google.gson.Gson;
 import org.json.JSONObject;
+import spark.Request;
+import spark.Response;
 
 import static spark.Spark.*;
 
@@ -21,49 +23,41 @@ public class WebController {
     }
 
     public void run() {
-        receiveNewGameRequest();
-        receiveMoveRequest();
+        get("/newgame", this::receiveNewGameRequest, gson::toJson);
+        post("/move", this::receiveMoveRequest, gson::toJson);
     }
 
-    private void receiveNewGameRequest() {
-        get("/newgame", (req, res) -> {
-            try {
-                chessGameManager.start();
-                return gson.toJson(new CommonDto<GameStatusDto>(
-                        StatusCode.OK,
-                        "새로운 게임을 시작합니다.",
-                        GameStatusDto.from(chessGameManager)
-                ));
-            } catch (DomainException e) {
-                return gson.toJson(new CommonDto<ErrorResponse>(
-                        StatusCode.BAD_REQUEST,
-                        e.getMessage(),
-                        new ErrorResponse()
-                ));
-            }
-        });
+    private CommonDto<?> receiveNewGameRequest(Request request, Response response) {
+        try {
+            chessGameManager.start();
+            return new CommonDto<GameStatusDto>(
+                    StatusCode.OK,
+                    "새로운 게임을 시작합니다.",
+                    GameStatusDto.from(chessGameManager));
+        } catch (DomainException e) {
+            return new CommonDto<ErrorResponse>(
+                    StatusCode.BAD_REQUEST,
+                    e.getMessage(),
+                    new ErrorResponse());
+        }
     }
 
-    private void receiveMoveRequest() {
-        post("/move", "application/json", (req, res) -> {
-            try {
-                JSONObject jsonObject = new JSONObject(req.body());
-                String from = jsonObject.getString("from");
-                String to = jsonObject.getString("to");
+    private CommonDto<?> receiveMoveRequest(Request request, Response response) {
+        try {
+            JSONObject jsonObject = new JSONObject(request.body());
+            String from = jsonObject.getString("from");
+            String to = jsonObject.getString("to");
 
-                chessGameManager.move(Position.of(from), Position.of(to));
-                return gson.toJson(new CommonDto<GameStatusDto>(
-                        StatusCode.OK,
-                        "기물을 이동했습니다.",
-                        GameStatusDto.from(chessGameManager)
-                ));
-            } catch (DomainException e) {
-                return gson.toJson(new CommonDto<ErrorResponse>(
-                        StatusCode.BAD_REQUEST,
-                        e.getMessage(),
-                        new ErrorResponse()
-                ));
-            }
-        });
+            chessGameManager.move(Position.of(from), Position.of(to));
+            return new CommonDto<GameStatusDto>(
+                    StatusCode.OK,
+                    "기물을 이동했습니다.",
+                    GameStatusDto.from(chessGameManager));
+        } catch (DomainException e) {
+            return new CommonDto<ErrorResponse>(
+                    StatusCode.BAD_REQUEST,
+                    e.getMessage(),
+                    new ErrorResponse());
+        }
     }
 }
