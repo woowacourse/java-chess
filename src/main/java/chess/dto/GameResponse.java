@@ -6,21 +6,21 @@ import chess.domain.statistics.ChessGameStatistics;
 
 import java.util.Map;
 
-public class GameStatusDto {
+public class GameResponse {
     private final Map<String, PieceDto> chessBoard;
     private final Color currentTurnColor;
     private final ChessGameStatistics chessGameStatistics;
     private final boolean isEnd;
 
-    public GameStatusDto(Map<String, PieceDto> chessBoard, Color currentTurnColor, ChessGameStatistics chessGameStatistics, boolean isEnd) {
+    public GameResponse(Map<String, PieceDto> chessBoard, Color currentTurnColor, ChessGameStatistics chessGameStatistics, boolean isEnd) {
         this.chessBoard = chessBoard;
         this.currentTurnColor = currentTurnColor;
         this.chessGameStatistics = chessGameStatistics;
         this.isEnd = isEnd;
     }
 
-    public static GameStatusDto from(ChessGameManager chessGameManager) {
-        return new GameStatusDto(
+    public static GameResponse from(ChessGameManager chessGameManager) {
+        return new GameResponse(
                 ChessBoardDto.from(chessGameManager.getBoard()).board(),
                 chessGameManager.getCurrentTurnColor(),
                 chessGameManager.getStatistics(),

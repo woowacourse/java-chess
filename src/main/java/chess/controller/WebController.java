@@ -47,10 +47,10 @@ public class WebController {
     private CommonDto<?> createNewGame(Request request, Response response) {
         try {
             chessGameManager.start();
-            return new CommonDto<GameStatusDto>(
+            return new CommonDto<GameResponse>(
                     StatusCode.OK,
                     "새로운 게임을 시작합니다.",
-                    GameStatusDto.from(chessGameManager));
+                    GameResponse.from(chessGameManager));
         } catch (DomainException e) {
             return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
@@ -67,10 +67,10 @@ public class WebController {
 
             chessGameManager.move(Position.of(from), Position.of(to));
 
-            return new CommonDto<GameStatusDto>(
+            return new CommonDto<GameResponse>(
                     StatusCode.OK,
                     "기물을 이동했습니다.",
-                    GameStatusDto.from(chessGameManager));
+                    GameResponse.from(chessGameManager));
         } catch (DomainException e) {
             return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
