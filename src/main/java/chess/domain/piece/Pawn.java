@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class Pawn extends Piece {
-    public static final char NAME_WHEN_BLACK = 'P';
-    public static final char NAME_WHEN_WHITE = 'p';
+    private static final char NAME_WHEN_BLACK = 'P';
+    private static final char NAME_WHEN_WHITE = 'p';
     private static final int STEP_RANGE = 1;
     private static final int TWO_STEP_RANGE = 2;
     private static final int SCORE = 1;
@@ -30,6 +30,11 @@ public final class Pawn extends Piece {
 
     public Pawn(final Color color, final char x, final char y) {
         super(color, x, y);
+    }
+
+    @Override
+    public Piece create(Color color, char x, char y) {
+        return new Pawn(color, x, y);
     }
 
     public boolean hasMoved() {
@@ -114,5 +119,10 @@ public final class Pawn extends Piece {
             return NAME_WHEN_BLACK;
         }
         return NAME_WHEN_WHITE;
+    }
+
+    @Override
+    public boolean match(char pieceName) {
+        return pieceName == NAME_WHEN_BLACK || pieceName == NAME_WHEN_WHITE;
     }
 }

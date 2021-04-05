@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece {
+public abstract class Piece implements Condition, Constructor {
     private static final int DECIMAL = 10;
 
     private final Color color;
