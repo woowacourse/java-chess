@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.WebChessController;
+import chess.controller.dto.MoveRequestDto;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -26,17 +27,20 @@ public class WebUIChessApplication {
             return render(model, "board.html");
         });
 
+        get("/game/status", (request, response) -> {
+            return webChessController.gameStatus();
+        }, gson::toJson);
+
         get("/game/path", (request, response) -> {
            String source = request.queryParams("source");
             return webChessController.movablePath(source).getPath();
         }, gson::toJson);
 
         post("/game/move", (request, response) -> {
-            String source = request.queryParams("source");
-            String target = request.queryParams("target");
-            webChessController.move(source, target);
-            return "/board.html";
-        });
+            MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
+            webChessController.move(moveRequestDto);
+            return "";
+        }, gson::toJson);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

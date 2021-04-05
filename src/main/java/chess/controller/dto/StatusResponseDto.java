@@ -12,7 +12,7 @@ public class StatusResponseDto {
         this.blackScore = blackScore;
     }
 
-    public static StatusResponseDto toStatus(GameStatus gameStatus) {
+    public static StatusResponseDto toGameStatus(GameStatus gameStatus) {
         return new StatusResponseDto(gameStatus.whiteScore(), gameStatus.blackScore());
     }
 

@@ -1,8 +1,9 @@
 const $board = document.querySelector("#main");
+const $sidebar = document.querySelector("#menu-container");
 
 $board.addEventListener("mouseover", onSquare);
 $board.addEventListener("mouseout", outSquare);
-$board.addEventListener("click", clickSquareShowMovablePath);
+$board.addEventListener("click", showMovablePath);
 
 function onSquare(event) {
     event.target.classList.add("onboard");
@@ -12,15 +13,60 @@ function outSquare(event) {
     event.target.classList.remove("onboard");
 }
 
-function clickSquareShowMovablePath(event) {
+function showMovablePath(event) {
     let $source;
     if (event.target.tagName === 'IMG') {
         $source = event.target.closest('div').id;
     } else {
         $source = event.target.id;
     }
-    if ($board.querySelector("#" + $source).classList.contains("selected")) {
+    const $selectSquare = $board.querySelector("#" + $source);
+
+    if ($selectSquare.classList.contains("selected")) {
         removeMovablePath();
+    } else if ($selectSquare.classList.contains("movable")) {
+
+        const $source = $board.querySelector(".selected").id;
+        const $target = event.target.closest("div").id;
+
+        const $movePosition = {
+            source: $source,
+            target: $target
+        }
+
+        const $option = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify($movePosition)
+        }
+
+        fetch('http://localhost:4567/game/move', $option)
+            .then(data => {
+                if (!data.ok) {
+                    throw new Error(data.status);
+                }
+                return data.json();
+            })
+            .then(post => {
+                const $sourceImg = $board.querySelector("#"+$source).querySelector(".piece");
+                const $targetImg = $board.querySelector("#"+$target).querySelector(".piece");
+                if ($targetImg) {
+                    console.log("타켓에 체스말 있을 때");
+                    $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
+                    $board.querySelector("#"+$source).removeChild($sourceImg);
+                } else {
+                    console.log("타켓에 체스말 없을 때")
+                    $board.querySelector("#"+$target).appendChild($sourceImg);
+                }
+                removeMovablePath();
+                refreshScore();
+            })
+            .catch(error => {
+                alert(error);
+            })
+
     } else {
         fetch('http://localhost:4567/game/path?source=' + $source)
             .then(data => {
@@ -28,30 +74,35 @@ function clickSquareShowMovablePath(event) {
                     throw new Error(data.status)
                 }
                 return data.json()
-            }).then(path => {
-            removeMovablePath();
-            $board.querySelector("#" + $source).classList.add("selected");
-            $board.querySelector("#" + $source).querySelector('.highlight').setAttribute("src", "./images/green-select.png");
+            })
+            .then(path => {
+                removeMovablePath();
+                $selectSquare.classList.add("selected");
+                $selectSquare.querySelector('.highlight').setAttribute("src", "./images/green-select.png");
 
-            let $isCatchableEnemy;
-            for (const dto of path) {
-                $board.querySelector("#" + dto).classList.add("movable")
-                if ($board.querySelector("#" + dto).querySelector(".piece")) {
-                    $isCatchableEnemy = true;
+                let $isCatchableEnemy;
+                for (const dto of path) {
+                    $board.querySelector("#" + dto).classList.add("movable")
+                    if ($board.querySelector("#" + dto).querySelector(".piece")) {
+                        $isCatchableEnemy = true;
+                    }
                 }
-            }
 
-            let $movableSquare = "./images/green.png"
-            if ($isCatchableEnemy) {
-                $movableSquare = "./images/green-take.png"
-            }
-            for (const dto of path) {
-                $board.querySelector("#" + dto).querySelector('.highlight').setAttribute("src", $movableSquare);
-            }
-        }).catch(error => {
-            $board.querySelector("#" + $source).querySelector('.highlight').setAttribute("src", "./images/red.png");
-            setTimeout(invalidSquare, 1000, $source);
-        })
+                let $movableSquare = "./images/green.png"
+                if ($isCatchableEnemy) {
+                    $movableSquare = "./images/green-take.png"
+                }
+                for (const dto of path) {
+                    $board.querySelector("#" + dto).querySelector('.highlight').setAttribute("src", $movableSquare);
+                }
+            })
+            .catch(error => {
+                if ($selectSquare.classList.contains("movable")) {
+                    return;
+                }
+                $selectSquare.querySelector('.highlight').setAttribute("src", "./images/red.png");
+                setTimeout(invalidSquare, 1000, $source);
+            })
     }
 }
 
@@ -72,4 +123,23 @@ function removeMovablePath() {
 
 function invalidSquare(id) {
     $board.querySelector("#" + id).querySelector('.highlight').setAttribute("src", "./images/null.png");
+}
+
+function refreshScore() {
+    fetch("http://localhost:4567/game/status")
+        .then(data => {
+            if (!data.ok) {
+                throw new Error(data.status);
+            }
+            return data.json();
+        })
+        .then(status => {
+            const $whiteScoreText = "White Score : " + status.whiteScore;
+            const $blackScoreText = "Black Score : " + status.blackScore;
+            $sidebar.querySelector("#white-score").innerHTML = $whiteScoreText;
+            $sidebar.querySelector("#black-score").innerHTML = $blackScoreText;
+        })
+        .catch(error => {
+            alert(error);
+        })
 }

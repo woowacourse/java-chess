@@ -73,7 +73,7 @@ public class ChessController {
 
         if (command.isStatus()) {
             Status status = (Status) command;
-            OutputView.printStatus(StatusResponseDto.toStatus(status.gameStatus()));
+            OutputView.printStatus(StatusResponseDto.toGameStatus(status.gameStatus()));
         }
 
         if (command.isRestart()) {
