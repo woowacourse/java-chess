@@ -31,14 +31,4 @@ public class ConnectionSetup {
         }
         return con;
     }
-
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
 }
