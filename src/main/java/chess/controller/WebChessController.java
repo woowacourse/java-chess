@@ -20,8 +20,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebChessController {
-    private static final String WHITE = "white";
-    private static final String BLACK = "black";
+    private static final String WHITE_TEAM_FORMAT = "white";
+    private static final String BLACK_TEAM_FORMAT = "black";
 
     private ChessGame chessGame;
     private Team whiteTeam;
@@ -114,8 +114,8 @@ public class WebChessController {
 
     private Map<String, Map<String, String>> generatePiecePositionToString() {
         final Map<String, Map<String, String>> piecePosition = new HashMap<>();
-        piecePosition.put(WHITE, generatePiecePositionByTeamToString(chessGame.currentWhitePiecePosition()));
-        piecePosition.put(BLACK, generatePiecePositionByTeamToString(chessGame.currentBlackPiecePosition()));
+        piecePosition.put(WHITE_TEAM_FORMAT, generatePiecePositionByTeamToString(chessGame.currentWhitePiecePosition()));
+        piecePosition.put(BLACK_TEAM_FORMAT, generatePiecePositionByTeamToString(chessGame.currentBlackPiecePosition()));
         return piecePosition;
     }
 
@@ -133,8 +133,8 @@ public class WebChessController {
     private String currentTurnTeamToString() {
         final Team currentTurnTeam = chessGame.getCurrentTurnTeam();
         if (currentTurnTeam.equals(whiteTeam)) {
-            return WHITE;
+            return WHITE_TEAM_FORMAT;
         }
-        return BLACK;
+        return BLACK_TEAM_FORMAT;
     }
 }
