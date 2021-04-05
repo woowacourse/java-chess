@@ -12,11 +12,15 @@ import chess.domain.game.state.State;
 import chess.domain.game.state.WhiteWin;
 import chess.domain.piece.Piece;
 import database.ChessGameDao;
+import database.RoomDao;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static spark.Spark.*;
 
@@ -27,14 +31,17 @@ public class WebUIApplication {
         ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
         Commands commands = Commands.initCommands(chessGame);
         ChessGameDao chessGameDao = new ChessGameDao();
+        RoomDao roomDao = new RoomDao();
+        JSONParser jsonParser = new JSONParser();
 
-        get("/start", (req, res) -> {
-            chessGame.reset(new Board((InitBoardGenerator.initLines())));
-            Command command = commands.matchedCommand("start");
-            command.execution("start");
+        post("/start", "application/json", (req, res) -> {
+            JSONObject jsonObj = (JSONObject) jsonParser.parse(req.body());
+            int roomId = Integer.parseInt((String) jsonObj.get("roomId"));
+            ChessGame loadChessGame = chessGameDao.findByRoomId(roomId);
+            chessGame.load(loadChessGame);
+
             JSONObject jsonObject = new JSONObject();
             Map<Position, Piece> board = chessGame.board();
-
             for (Position position : board.keySet()) {
                 jsonObject.put(position.toString(), board.get(position).getSymbol());
             }
@@ -44,7 +51,6 @@ public class WebUIApplication {
         });
 
         post("/select", "application/json", (req, res) -> {
-            JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(req.body());
             Position position = Position.of((String) jsonObj.get("position"));
             JSONObject jsonObject = new JSONObject();
@@ -57,11 +63,12 @@ public class WebUIApplication {
         });
 
         post("/move", "application/json", (req, res) -> {
-            JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(req.body());
-            Position source = Position.of((String) jsonObj.get("source"));
-            Position target = Position.of((String) jsonObj.get("target"));
-            chessGame.move(source, target);
+            int roomId = Integer.parseInt((String) jsonObj.get("roomId"));
+            String webCommand = (String) jsonObj.get("command");
+            Command command = commands.matchedCommand(webCommand);
+            command.execution(webCommand);
+            chessGameDao.addCommand(webCommand, roomId);
 
             JSONObject jsonObject = new JSONObject();
             Map<Position, Piece> board = chessGame.board();
@@ -73,7 +80,7 @@ public class WebUIApplication {
             jsonObject.put("message", gameState.toString());
 
             if (gameState instanceof WhiteWin || gameState instanceof BlackWin) {
-                Command command = commands.matchedCommand("status");
+                command = commands.matchedCommand("status");
                 Status status = (Status) command;
                 jsonObject.put("whiteScore", status.totalWhiteScore());
                 jsonObject.put("blackScore", status.totalBlackScore());
@@ -82,27 +89,35 @@ public class WebUIApplication {
             return jsonObject.toJSONString();
         });
 
-        get("/save", (req, res) -> {
-            chessGameDao.addChessGame(chessGame);
-            return "success";
-        });
-
-        get("/load", (req, res) -> {
-            ChessGame loadChessGame = chessGameDao.findByGameId("1");
-            if (Objects.isNull(loadChessGame)) {
-                return "{\"message\":\"no data\"}";
+        get("/rooms", (req, res) -> {
+            List<Integer> roomIds = roomDao.findRoomIds();
+            if (roomIds.isEmpty()) {
+                throw new IllegalStateException();
             }
-            chessGame.load(loadChessGame);
 
             JSONObject jsonObject = new JSONObject();
-            Map<Position, Piece> board = chessGame.board();
-            for (Position position : board.keySet()) {
-                jsonObject.put(position.toString(), board.get(position).getSymbol());
+            for (Integer roomId : roomIds) {
+                jsonObject.put("room" + roomId, roomId);
             }
 
-            State gameState = chessGame.state();
-            jsonObject.put("message", gameState.toString());
             return jsonObject.toJSONString();
         });
+
+        get("/chessRoom", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", req.queryParams("roomId"));
+            return render(model, "chess.html");
+        });
+
+        get("/newRoomId", (req, res) -> {
+            int roomId = roomDao.newRoomId();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("roomId", roomId);
+            return jsonObject.toJSONString();
+        });
+    }
+
+    public static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

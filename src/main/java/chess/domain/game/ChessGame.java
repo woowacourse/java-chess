@@ -67,10 +67,6 @@ public class ChessGame {
         return state.isInit();
     }
 
-    public void reset(Board board) {
-        this.state = new Init(board);
-    }
-
     public State state() {
         return state;
     }

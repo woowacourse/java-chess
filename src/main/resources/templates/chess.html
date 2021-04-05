@@ -30,7 +30,7 @@
             display: table-cell;
             vertical-align:middle;
         }
-        .chessboard > div {
+        . {
             cursor: pointer;
         }
         .chessboard > div:hover {
@@ -42,10 +42,10 @@
         .possible {
             background-color: green;
         }
-
     </style>
 </head>
 <body>
+<h1 class="roomId" id="{{roomId}}">Room ID {{roomId}}</h1>
 <div class="chessboard">
     <!-- row 8 -->
     <div class="white" id="a8"></div>
@@ -120,12 +120,10 @@
     <div class="black" id="g1"></div>
     <div class="white" id="h1"></div>
 </div>
-<button id="startButton" type="button">체스판 초기화</button>
-<button id="saveButton" type="button">체스판 저장</button>
-<button id="loadButton" type="button">체스판 불러오기</button>
 <p id="message"></p>
 <p id="blackScore"></p>
 <p id="whiteScore"></p>
+<a href="index.html">로비로 돌아가기</a>
 <script src="js/chess.js"></script>
 </body>
 </html>
