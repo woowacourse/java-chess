@@ -9,12 +9,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao extends ChessDao {
+public class RoomDataSource {
+
+    private final ChessDataSource chessDataSource;
+
+    public RoomDataSource(ChessDataSource chessDataSource) {
+        this.chessDataSource = chessDataSource;
+    }
 
     public String insert(RoomDto roomDto) throws SQLException {
         String query = "INSERT INTO room (name, is_opened, white, black) VALUES(?, true, ?, ?)";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
             pstmt.setString(1, roomDto.getName());
@@ -32,7 +38,7 @@ public class RoomDao extends ChessDao {
     public List<RoomDto> openedRooms() throws SQLException {
         String query = "SELECT id, name, white, black FROM room WHERE is_opened = true";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();) {
             List<RoomDto> result = new ArrayList<>();
@@ -48,7 +54,7 @@ public class RoomDao extends ChessDao {
     public void close(String roomId) throws SQLException {
         String query = "UPDATE room SET is_opened = false WHERE id = (?)";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, roomId);
             pstmt.executeUpdate();

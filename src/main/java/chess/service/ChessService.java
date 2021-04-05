@@ -1,8 +1,9 @@
 package chess.service;
 
-import chess.dao.PlayLogDao;
-import chess.dao.RoomDao;
-import chess.dao.UserDao;
+import chess.dao.ChessDataSource;
+import chess.dao.PlayLogDataSource;
+import chess.dao.RoomDataSource;
+import chess.dao.UserDataSource;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
@@ -21,9 +22,10 @@ import java.util.stream.Collectors;
 
 public class ChessService {
 
-    private static final RoomDao ROOM_DAO = new RoomDao();
-    private static final UserDao USER_DAO = new UserDao();
-    private static final PlayLogDao PLAY_LOG_DAO = new PlayLogDao();
+    private static final ChessDataSource CHESS_DATA_SOURCE = new ChessDataSource();
+    private static final RoomDataSource ROOM_DAO = new RoomDataSource(CHESS_DATA_SOURCE);
+    private static final UserDataSource USER_DAO = new UserDataSource(CHESS_DATA_SOURCE);
+    private static final PlayLogDataSource PLAY_LOG_DAO = new PlayLogDataSource(CHESS_DATA_SOURCE);
 
     private Board boardFromDb(String roomId) throws SQLException {
         return PLAY_LOG_DAO.latestBoard(roomId).toEntity();

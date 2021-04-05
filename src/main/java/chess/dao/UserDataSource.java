@@ -7,14 +7,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao extends ChessDao {
+public class UserDataSource {
+
+    private final ChessDataSource chessDataSource;
+
+    public UserDataSource(ChessDataSource chessDataSource) {
+        this.chessDataSource = chessDataSource;
+    }
 
     public void insert(String userName) throws SQLException {
         String query = "INSERT INTO users (name) "
             + "SELECT * FROM (SELECT ?) AS tmp "
             + "WHERE NOT EXISTS (SELECT * FROM users WHERE name = ?);";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, userName);
             pstmt.setString(2, userName);
@@ -36,7 +42,7 @@ public class UserDao extends ChessDao {
             + " INNER JOIN users AS white_user ON r.white = white_user.name "
             + "WHERE r.id = ?;";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, roomId);
             try (ResultSet rs = pstmt.executeQuery();) {
@@ -67,7 +73,7 @@ public class UserDao extends ChessDao {
             + "SET users.win = users.win + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection
                 .prepareStatement(String.format(updateWinnerQueryForm, winner));) {
             pstmt.setString(1, roomId);
@@ -80,7 +86,7 @@ public class UserDao extends ChessDao {
             + "SET users.lose = users.lose + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
 
-        try (Connection connection = connection();
+        try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection
                 .prepareStatement(String.format(updateLoserQuery, loser));) {
             pstmt.setString(1, roomId);

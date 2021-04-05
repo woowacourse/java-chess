@@ -1,5 +1,6 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
@@ -8,6 +9,7 @@ import chess.dto.web.RoomDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -82,6 +84,11 @@ public class WebUIChessApplication {
 
         get("/room/:id/movablePoints/:point", "application/json", (req, res) ->
             GSON.toJson(CHESS_SERVICE.movablePoints(req.params("id"), req.params("point"))));
+
+        exception(SQLException.class, (e, req, res) -> {
+            res.status(500);
+            res.body(e.getMessage());
+        });
     }
 
     private static String render(Map<String, Object> model, String viewName) {
