@@ -7,7 +7,7 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Piece;
 import chess.domain.player.Turn;
-import chess.service.PieceSymbolMapper;
+import chess.view.web.PieceSymbolMapper;
 
 import java.sql.*;
 import java.util.Arrays;
