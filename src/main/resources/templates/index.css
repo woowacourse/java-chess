@@ -7,11 +7,22 @@ pink #ef9eba
 more pink #d2849e
 */
 
-.wrapper {
+body {
+  background-color: #7A9E7E;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70rem;
 }
 
 .title {
@@ -20,6 +31,36 @@ more pink #d2849e
   align-items: center;
   padding: 3rem;
 }
+
+.title span {
+  font-size: 5rem;
+  font-family: 'Song Myung', serif;
+  -wwebkit-text-stroke: px #DF59F6;
+  color: #95d2d7;
+  font-style: italic;
+  text-shadow: 7px 7px 0 #DF59F6,
+  -1px -1px 0 #DF59F6,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  animation: title 5s infinite;
+}
+
+@keyframes title {
+  0% {
+    color: #00ecff;
+  }
+  35% {
+    color: #f3db53;
+  }
+  70% {
+    color: #e1ff36;
+  }
+  100% {
+    color: #00ecff;
+  }
+}
+
 
 .chessBoard {
   display: grid;
@@ -47,4 +88,23 @@ more pink #d2849e
   width: 5rem;
   height: 5rem;
   object-fit: cover;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 20rem;
+  height: 40rem;
+  background-color: #FFF3E0;
+  border: 5px solid #e8a32d;
+}
+
+.turn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
