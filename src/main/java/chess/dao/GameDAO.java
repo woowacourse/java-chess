@@ -56,7 +56,7 @@ public class GameDAO {
         String query = "INSERT INTO game VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, UNIQUE_GAME_ID);    // 하나의 row만을 이용합니다.
-        pstmt.setString(2, gson.toJson(chessBoardDto.board()));
+        pstmt.setString(2, gson.toJson(chessBoardDto));
         pstmt.setString(3, currentTurnColor.name());
         pstmt.executeUpdate();
     }
