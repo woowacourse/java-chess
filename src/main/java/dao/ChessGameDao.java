@@ -58,7 +58,7 @@ public class ChessGameDao {
 
     public ChessGame updateChessGameByGameId(int gameId, ChessGame chessGame)
         throws SQLException, IOException {
-        String query = "INSERT INTO chessGame VALUES (?, ?) ON DUPLICATE KEY UPDATE serialized_base64_chess_game = ?";
+        String query = "INSERT INTO chessGame (game_id, serialized_base64_chess_game) VALUES (?, ?) ON DUPLICATE KEY UPDATE serialized_base64_chess_game = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, String.valueOf(gameId));
         pstmt.setString(2, serializedChessGame(chessGame));
