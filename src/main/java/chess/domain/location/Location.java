@@ -9,6 +9,7 @@ public class Location {
     private static final int NUM_OF_COORDINATES = 2;
     private static final int X_POS_INDEX = 0;
     private static final int Y_POS_INDEX = 1;
+    private static final int DECIMAL_NUMBER = 10;
 
     private final int x;
     private final int y;
@@ -28,13 +29,13 @@ public class Location {
             throw new IllegalArgumentException("[ERROR] 좌표는 x와 y값 두개로 이루어져야 합니다.");
         }
         if (Character.isDigit(location.charAt(X_POS_INDEX))) {
-            int xPos = Character.digit(location.charAt(X_POS_INDEX), 10);
-            int yPos = Character.digit(location.charAt(Y_POS_INDEX), 10);
+            int xPos = Character.digit(location.charAt(X_POS_INDEX), DECIMAL_NUMBER);
+            int yPos = Character.digit(location.charAt(Y_POS_INDEX), DECIMAL_NUMBER);
             validateRange(xPos, yPos);
             return new Location(xPos, yPos);
         }
         int xPos = location.charAt(X_POS_INDEX) - 'a' + 1;
-        int yPos = Character.digit(location.charAt(Y_POS_INDEX), 10);
+        int yPos = Character.digit(location.charAt(Y_POS_INDEX), DECIMAL_NUMBER);
         validateRange(xPos, yPos);
         return new Location(xPos, yPos);
     }
