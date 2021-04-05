@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class PieceDao {
+    private static final String WRONG_DB_ERROR = "기물 정보가 DB에 잘못 저장되어 있습니다.";
     private final Connection con;
 
     public PieceDao() {
@@ -31,45 +32,7 @@ public class PieceDao {
             final String name = rs.getString("name");
             final String positionValue = rs.getString("position");
             final Position position = Position.from(positionValue);
-            if ("B".equals(name.substring(0, 1))) {
-                if ("R".equals(name.substring(1, 2))) {
-                    newPiece.add(new Rook(Color.BLACK, position));
-                }
-                if ("N".equals(name.substring(1, 2))) {
-                    newPiece.add(new Knight(Color.BLACK, position));
-                }
-                if ("B".equals(name.substring(1, 2))) {
-                    newPiece.add(new Bishop(Color.BLACK, position));
-                }
-                if ("Q".equals(name.substring(1, 2))) {
-                    newPiece.add(new Queen(Color.BLACK, position));
-                }
-                if ("K".equals(name.substring(1, 2))) {
-                    newPiece.add(new King(Color.BLACK, position));
-                }
-                if ("P".equals(name.substring(1, 2))) {
-                    newPiece.add(new Pawn(Color.BLACK, position));
-                }
-            } else {
-                if ("R".equals(name.substring(1, 2))) {
-                    newPiece.add(new Rook(Color.WHITE, position));
-                }
-                if ("N".equals(name.substring(1, 2))) {
-                    newPiece.add(new Knight(Color.WHITE, position));
-                }
-                if ("B".equals(name.substring(1, 2))) {
-                    newPiece.add(new Bishop(Color.WHITE, position));
-                }
-                if ("Q".equals(name.substring(1, 2))) {
-                    newPiece.add(new Queen(Color.WHITE, position));
-                }
-                if ("K".equals(name.substring(1, 2))) {
-                    newPiece.add(new King(Color.WHITE, position));
-                }
-                if ("P".equals(name.substring(1, 2))) {
-                    newPiece.add(new Pawn(Color.WHITE, position));
-                }
-            }
+            newPiece.add(daoToPiece(name, position));
         }
         return newPiece;
     }
@@ -146,6 +109,32 @@ public class PieceDao {
             eachCell.forEach(result::put);
         }
         return result;
+    }
+
+    private Piece daoToPiece(final String name, final Position position) {
+        Color color = Color.WHITE;
+        if ("B".equals(name.substring(0, 1))) {
+            color = Color.BLACK;
+        }
+        if ("R".equals(name.substring(1, 2))) {
+            return new Rook(color, position);
+        }
+        if ("N".equals(name.substring(1, 2))) {
+            return new Knight(color, position);
+        }
+        if ("B".equals(name.substring(1, 2))) {
+            return new Bishop(color, position);
+        }
+        if ("Q".equals(name.substring(1, 2))) {
+            return new Queen(color, position);
+        }
+        if ("K".equals(name.substring(1, 2))) {
+            return new King(color, position);
+        }
+        if ("P".equals(name.substring(1, 2))) {
+            return new Pawn(color, position);
+        }
+        throw new IllegalArgumentException(WRONG_DB_ERROR);
     }
 
     private Map<Position, Piece> daoToBoard(final String position, final String piece, final Pieces pieces) {

@@ -59,7 +59,7 @@ public class ChessController {
 
     private void printScoreIfWanted(final Game game) {
         if (willWatchScore()) {
-            GameResult gameResult = new GameResult(game.getPieces());
+            final GameResult gameResult = new GameResult(game.getPieces());
             OutputView.printScore(gameResult.getScore());
         }
     }
