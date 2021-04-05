@@ -42,28 +42,24 @@ public class GameDAO {
         return con;
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
     public void saveGame(ChessBoardDto chessBoardDto, Color currentTurnColor) throws SQLException {
         deleteAllGame();    // 하나의 row만을 이용하기 위해 삭제합니다.
         String query = "INSERT INTO game VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, UNIQUE_GAME_ID);    // 하나의 row만을 이용합니다.
-        pstmt.setString(2, gson.toJson(chessBoardDto));
-        pstmt.setString(3, currentTurnColor.name());
-        pstmt.executeUpdate();
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, UNIQUE_GAME_ID);    // 하나의 row만을 이용합니다.
+            pstmt.setString(2, gson.toJson(chessBoardDto));
+            pstmt.setString(3, currentTurnColor.name());
+            pstmt.executeUpdate();
+        }
     }
 
     public void deleteAllGame() throws SQLException {
         String query = "DELETE FROM game";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate();
+        }
     }
 }
