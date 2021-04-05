@@ -50,14 +50,29 @@ function moveHandler() {
     e.preventDefault();
     e.target.style.background = "";
     target = e.target.closest('div')
-    move(source, target)
-    console.log(source, target)
+    if (movable(source, target)) {
+      move(source, target)
+    }
   }, false);
 }
 
-async function move(source, target) {
+function move(source, target) {
+  const sourcePiece = {
+    type: source.classList[3],
+    color: source.classList[2]
+  }
+  const blankPiece = {
+    type: 'blank',
+    color: 'none'
+  }
+  target.innerHTML = boardTemplate(target.id, sourcePiece)
+  source.innerHTML = boardTemplate(source.id, blankPiece)
+}
+
+async function movable(source, target) {
   const sourcePosition = source.id
   const targetPosition = target.id
+  let movable = true;
 
   await fetch(
     `http://localhost:3000/chessboard/${sourcePosition}`,
@@ -73,7 +88,7 @@ async function move(source, target) {
         'Content-type': 'application/json; charset=UTF-8'
       }
     }
-  ).then(res => res.json()).then(data => console.log(data))
+  ).then(res => res.json()).then(data => data).catch(() => movable = false)
 
   await fetch(
     `http://localhost:3000/chessboard/${targetPosition}`,
@@ -89,9 +104,9 @@ async function move(source, target) {
         'Content-type': 'application/json; charset=UTF-8'
       }
     }
-  ).then(res => res.json()).then(data => console.log(data))
+  ).then(res => res.json()).then(data => data).catch(() => movable = false)
 
-  await setBoard()
+  return movable
 }
 
 function boardTemplate(position, piece) {
