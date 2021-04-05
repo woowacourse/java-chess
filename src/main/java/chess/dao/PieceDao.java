@@ -20,21 +20,22 @@ public class PieceDao {
 
     public List<Piece> load() throws SQLException {
         final String query = "SELECT * FROM pieces";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        final ResultSet rs = pstmt.executeQuery();
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query);
+             final ResultSet rs = pstmt.executeQuery()) {
+            if (!rs.next()) {
+                return null;
+            }
 
-        if (!rs.next()) {
-            return null;
+            final List<Piece> newPiece = new ArrayList<>();
+            while (rs.next()) {
+                final String name = rs.getString("name");
+                final String positionValue = rs.getString("position");
+                final Position position = Position.from(positionValue);
+                newPiece.add(daoToPiece(name, position));
+            }
+            return newPiece;
         }
-
-        final List<Piece> newPiece = new ArrayList<>();
-        while (rs.next()) {
-            final String name = rs.getString("name");
-            final String positionValue = rs.getString("position");
-            final Position position = Position.from(positionValue);
-            newPiece.add(daoToPiece(name, position));
-        }
-        return newPiece;
     }
 
     public void clear(final Pieces pieces) throws SQLException {
@@ -48,67 +49,79 @@ public class PieceDao {
 
     public void savePiece(final String position, final Piece piece) throws SQLException {
         final String query = "INSERT INTO pieces VALUES (?, ?)";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        final String displayName = piece.display().toUpperCase();
-        if (piece.isSameColor(Color.BLACK)) {
-            pstmt.setString(1, position);
-            pstmt.setString(2, "B" + displayName);
-        } else {
-            pstmt.setString(1, position);
-            pstmt.setString(2, "W" + displayName);
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query)) {
+            final String displayName = piece.display().toUpperCase();
+            if (piece.isSameColor(Color.BLACK)) {
+                pstmt.setString(1, position);
+                pstmt.setString(2, "B" + displayName);
+            } else {
+                pstmt.setString(1, position);
+                pstmt.setString(2, "W" + displayName);
+            }
+            pstmt.executeUpdate();
         }
-        pstmt.executeUpdate();
     }
 
     public void deletePiece(final String position) throws SQLException {
         final String query = "DELETE FROM pieces WHERE position = ?";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, position);
-        pstmt.executeUpdate();
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, position);
+            pstmt.executeUpdate();
+        }
     }
 
     public void initTurn() throws SQLException {
         delete("game");
-        final String saveQuery = "INSERT INTO game VALUES (?)";
-        final PreparedStatement savePstmt = con.prepareStatement(saveQuery);
-        savePstmt.setString(1, Color.WHITE.name());
-        savePstmt.executeUpdate();
+        final String query = "INSERT INTO game VALUES (?)";
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, Color.WHITE.name());
+            pstmt.executeUpdate();
+        }
     }
 
     public void delete(final String tableName) throws SQLException {
         final String query = "TRUNCATE TABLE " + tableName;
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.executeUpdate();
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        }
     }
 
     public void updateTurn(final Turn turn) throws SQLException {
         delete("game");
         final String query = "INSERT INTO game VALUES (?)";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, turn.player().getColor().name());
-        pstmt.executeUpdate();
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, turn.player().getColor().name());
+            pstmt.executeUpdate();
+        }
     }
 
     public String findTurn() throws SQLException {
         final String query = "SELECT * FROM game";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        final ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) return null;
-        return rs.getString("turn");
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query);
+             final ResultSet rs = pstmt.executeQuery()) {
+            if (!rs.next()) return null;
+            return rs.getString("turn");
+        }
     }
 
     public Map<Position, Piece> findPieces(final Pieces pieces) throws SQLException {
         final String query = "SELECT * FROM pieces";
-        final PreparedStatement pstmt = con.prepareStatement(query);
-        final ResultSet rs = pstmt.executeQuery();
-
-        final Map<Position, Piece> result = new HashMap<>();
-        while (rs.next()) {
-            final Map<Position, Piece> eachCell = daoToBoard(rs.getString("position"), rs.getString("name"), pieces);
-            eachCell.forEach(result::put);
+        try (final Connection con = ConnectionSetup.getConnection();
+             final PreparedStatement pstmt = con.prepareStatement(query);
+             final ResultSet rs = pstmt.executeQuery()) {
+            final Map<Position, Piece> result = new HashMap<>();
+            while (rs.next()) {
+                final Map<Position, Piece> eachCell = daoToBoard(rs.getString("position"), rs.getString("name"), pieces);
+                eachCell.forEach(result::put);
+            }
+            return result;
         }
-        return result;
     }
 
     private Piece daoToPiece(final String name, final Position position) {
