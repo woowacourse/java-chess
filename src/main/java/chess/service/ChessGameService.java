@@ -11,6 +11,7 @@ import chess.exception.AlreadyPlayingChessGameException;
 import chess.exception.NoSuchPermittedChessPieceException;
 import chess.exception.NotFoundPlayingChessGameException;
 import chess.view.dto.ChessGameDto;
+import chess.view.dto.ChessGameStatusDto;
 import chess.view.dto.ScoreDto;
 
 import java.util.List;
@@ -27,7 +28,6 @@ public class ChessGameService {
 
     public ChessGameDto createNewChessGame() {
         Optional<ChessGameEntity> latestChessGame = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn();
-
         if (latestChessGame.isPresent()) {
             throw new AlreadyPlayingChessGameException();
         }
@@ -41,9 +41,9 @@ public class ChessGameService {
     }
 
     public ChessGameDto moveChessPiece(final Position source, final Position target) {
-        ChessGameEntity chessGameEntity = findLatestPlayingGame();
+        ChessGameEntity chessGameEntity = findStateIsBlackAndWhiteTurnGame();
         Long chessGameId = chessGameEntity.getId();
-        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
+        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity);
         Piece sourcePiece = pieceDAO.findOneByPosition(chessGameId, source.getRow(), source.getColumn())
                 .orElseThrow(NoSuchPermittedChessPieceException::new);
         chessGame.move(sourcePiece.getPosition(), target);
@@ -57,46 +57,39 @@ public class ChessGameService {
         return new ChessGameDto(chessGame);
     }
 
-    public ChessGameDto findLatestGame() {
-        Optional<ChessGameEntity> chessGameEntityOptional = chessGameDAO.findByStateIsBlackTurnOrWhiteTurn();
-        boolean isExistPlayingGame = chessGameEntityOptional
-                .isPresent();
-        if (!isExistPlayingGame) {
-            return ChessGameDto.createFinishedDto();
-        }
+    public ChessGameStatusDto findLatestChessGameStatus() {
+        return chessGameDAO.findIsExistPlayingChessGameStatus();
+    }
 
-        ChessGameEntity chessGameEntity = chessGameEntityOptional
-                .orElseThrow(NotFoundPlayingChessGameException::new);
-        Long chessGameId = chessGameEntity.getId();
-        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
+    public ChessGameDto findLatestPlayingGame() {
+        ChessGameEntity chessGameEntity = findStateIsBlackAndWhiteTurnGame();
+        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity);
         return new ChessGameDto(chessGame);
     }
 
     public ChessGameDto endGame() {
-        ChessGameEntity chessGameEntity = findLatestPlayingGame();
-        Long chessGameId = chessGameEntity.getId();
-        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, chessGameId);
+        ChessGameEntity chessGameEntity = findStateIsBlackAndWhiteTurnGame();
+        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity);
         chessGame.end();
-        chessGameDAO.updateState(chessGameId, chessGame.getState().getValue());
+        chessGameDAO.updateState(chessGameEntity.getId(), chessGame.getState().getValue());
 
         return new ChessGameDto(chessGame);
     }
 
     public ScoreDto calculateScores() {
-        ChessGameEntity chessGameEntity = findLatestPlayingGame();
-        Long id = chessGameEntity.getId();
-        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity, id);
+        ChessGameEntity chessGameEntity = findStateIsBlackAndWhiteTurnGame();
+        ChessGame chessGame = findChessGameByChessGameId(chessGameEntity);
 
         return new ScoreDto(chessGame);
     }
 
-    private ChessGameEntity findLatestPlayingGame() {
+    private ChessGameEntity findStateIsBlackAndWhiteTurnGame() {
         return chessGameDAO.findByStateIsBlackTurnOrWhiteTurn()
                 .orElseThrow(() -> new NotFoundPlayingChessGameException());
     }
 
-    private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity, final Long chessGameId) {
-        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameId);
+    private ChessGame findChessGameByChessGameId(final ChessGameEntity chessGameEntity) {
+        List<Piece> pieces = pieceDAO.findAllPiecesByChessGameId(chessGameEntity.getId());
         Board board = new Board(pieces);
         ChessGame chessGame = new ChessGame(board);
         State currentState = StateFactory.valueOf(chessGameEntity.getState(), chessGame);

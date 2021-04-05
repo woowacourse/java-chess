@@ -4,7 +4,7 @@ import chess.dao.ChessGameDAO;
 import chess.dao.PieceDAO;
 import chess.domain.piece.Position;
 import chess.service.ChessGameService;
-import chess.view.dto.ChessGameDto;
+import chess.view.dto.ChessGameStatusDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -25,8 +25,8 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGameDto latestGame = chessGameService.findLatestGame();
-            model.put("finished", latestGame.isFinished());
+            ChessGameStatusDto latestGameStatus = chessGameService.findLatestChessGameStatus();
+            model.put("status", latestGameStatus);
             return render(model, "index.html");
         });
 
@@ -36,7 +36,7 @@ public class WebUIChessApplication {
             return chessGameService.moveChessPiece(source, target);
         }, MAPPER::writeValueAsString);
 
-        get("/chessgames", ((request, response) -> chessGameService.findLatestGame()),
+        get("/chessgames", ((request, response) -> chessGameService.findLatestPlayingGame()),
                 MAPPER::writeValueAsString);
 
         post("/chessgames", (request, response) -> chessGameService.createNewChessGame(),

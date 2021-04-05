@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.game.ChessGameEntity;
+import chess.view.dto.ChessGameStatusDto;
 
 import java.sql.*;
 import java.util.Optional;
@@ -67,6 +68,23 @@ public class ChessGameDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ChessGameStatusDto findIsExistPlayingChessGameStatus() {
+        try (Connection con = factory.getConnection()) {
+            String query = "SELECT * FROM chess_game WHERE state in(?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, "BlackTurn");
+            pstmt.setString(2, "WhiteTurn");
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return ChessGameStatusDto.exist();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ChessGameStatusDto.isNotExist();
     }
 
 }

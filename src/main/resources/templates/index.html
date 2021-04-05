@@ -19,12 +19,14 @@
         <h1 class="game-title-header">우아한 체스게임</h1>
     </div>
 
-    {{#finished}}
+    {{#status}}
+    {{^exist}}
     <button class="button is-primary is-light chess-btn start" value="start">게임 시작</button>
-    {{/finished}}
-    {{^finished}}
+    {{/exist}}
+    {{#exist}}
     <button class="button is-primary is-light chess-btn continue" value="continue">이어하기</button>
-    {{/finished}}
+    {{/exist}}
+    {{/status}}
     <button class="button is-warning is-light hidden chess-status-btn">점수 확인</button>
     <button class="button is-danger is-light hidden chess-end-btn">게임 종료</button>
 
