@@ -78,9 +78,7 @@ public class ChessService {
         Board board = boardFromDb(id);
         ChessGame chessGame = chessGameFromDb(board, id);
 
-        Point source = Point.of(sourceName);
-        Point destination = Point.of(destinationName);
-        chessGame.move(source, destination);
+        chessGame.move(Point.of(sourceName), Point.of(destinationName));
         PLAY_LOG_DAO.insert(new BoardDto(board), new GameStatusDto(chessGame), id);
         if (!chessGame.isOngoing() && chessGame.winner() != Team.NONE) {
             USER_DAO.updateStatistics(id, chessGame.winner());

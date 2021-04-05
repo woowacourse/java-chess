@@ -4,8 +4,8 @@ import chess.domain.board.Point;
 
 public class PointDto {
 
-    final private String x;
-    final private String y;
+    private final String x;
+    private final String y;
 
     public PointDto(Point point) {
         this.x = point.xCoordinate();

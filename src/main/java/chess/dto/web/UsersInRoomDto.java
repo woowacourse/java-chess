@@ -2,12 +2,12 @@ package chess.dto.web;
 
 public class UsersInRoomDto {
 
-    private String whiteName;
-    private String whiteWin;
-    private String whiteLose;
-    private String blackName;
-    private String blackWin;
-    private String blackLose;
+    private final String whiteName;
+    private final String whiteWin;
+    private final String whiteLose;
+    private final String blackName;
+    private final String blackWin;
+    private final String blackLose;
 
     public UsersInRoomDto(String whiteName, String whiteWin, String whiteLose, String blackName,
         String blackWin, String blackLose) {
