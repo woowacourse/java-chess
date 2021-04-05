@@ -46,10 +46,13 @@ public class ChessGameDAO {
         createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM.asDAOFormat());
         createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM.asDAOFormat());
         final String query = "INSERT INTO chess_game VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        final Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, currentTurnTeam);
         pstmt.setBoolean(2, chessGame.isPlaying());
         pstmt.executeUpdate();
+        pstmt.close();
+        connection.close();
     }
 
     private void createPiecePosition(final Map<Position, Piece> piecePosition, final String team) throws SQLException {
@@ -62,6 +65,7 @@ public class ChessGameDAO {
             pstmt.setString(3, position.getPositionInitial());
             pstmt.setBoolean(4, pieceToSave.isFirstMove());
             pstmt.executeUpdate();
+            pstmt.close();
         }
     }
 
@@ -73,10 +77,14 @@ public class ChessGameDAO {
 
     private Team readPiecePositionByTeam(final String teamAsString) throws SQLException {
         final String teamQuery = "SELECT * FROM piece_position where team = (?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(teamQuery);
+        final Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(teamQuery);
         pstmt.setString(1, teamAsString);
         ResultSet ResultSet = pstmt.executeQuery();
-        return generateTeam(ResultSet);
+        final Team team = generateTeam(ResultSet);
+        pstmt.close();
+        connection.close();
+        return team;
     }
 
     private Team generateTeam(final ResultSet resultSet) throws SQLException {
@@ -94,7 +102,8 @@ public class ChessGameDAO {
 
     private ChessGame generateChessGame(final Team blackTeam, final Team whiteTeam) throws SQLException {
         final String chessGameQuery = "SELECT * FROM chess_game";
-        PreparedStatement pstmt = getConnection().prepareStatement(chessGameQuery);
+        final Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(chessGameQuery);
         ResultSet ResultSet = pstmt.executeQuery();
         String currentTurnTeam = "";
         boolean isPlaying = true;
@@ -102,6 +111,8 @@ public class ChessGameDAO {
             currentTurnTeam = ResultSet.getString(1);
             isPlaying = ResultSet.getBoolean(2);
         }
+        pstmt.close();
+        connection.close();
         return generateChessGameAccordingToDB(blackTeam, whiteTeam, currentTurnTeam, isPlaying);
     }
 
@@ -116,9 +127,12 @@ public class ChessGameDAO {
     public void deleteChessGame() throws SQLException {
         final String deletePiecePositionQuery = "DELETE FROM piece_position";
         final String deleteChessGameQuery = "DELETE FROM chess_game";
-        PreparedStatement pstmt = getConnection().prepareStatement(deletePiecePositionQuery);
+        final Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(deletePiecePositionQuery);
         pstmt.executeUpdate();
-        pstmt = getConnection().prepareStatement(deleteChessGameQuery);
+        pstmt = connection.prepareStatement(deleteChessGameQuery);
         pstmt.executeUpdate();
+        pstmt.close();
+        connection.close();
     }
 }
