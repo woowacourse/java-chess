@@ -10,15 +10,15 @@ const squareBuffer = new SquareBuffer();
 addSelectionEventOnChessBoard();
 addEventOnStartButton();
 addEventOnRegameButton();
+addEventOnSaveGameButton();
 
 function processResponse(responseJsonBody, successScenarioFunction) {
+    updateMessage(responseJsonBody.message);
+    console.log(responseJsonBody.message);
     if (Math.floor(responseJsonBody.statusCode / 100) === 2) {
         successScenarioFunction();
         console.log(responseJsonBody.message);
-        return;
     }
-    updateMessage(responseJsonBody.message);
-    console.log(responseJsonBody.message);
 }
 
 function SquareBuffer() {
@@ -90,9 +90,21 @@ async function addEventOnRegameButton() {
     });
 }
 
+function addEventOnSaveGameButton() {
+    document.getElementById('save-button').addEventListener('click', event => {
+        try {
+            fetch('/save')
+                .then(res => res.json())
+                .then(res => processResponse(res, () => {}));
+            turnOnPanel();
+        } catch (error) {
+            console.error(error.messages);
+        }
+    })
+}
+
 function updateGameData(responseJsonBody) {
     updateBoard(responseJsonBody.item.chessBoard);
-    updateMessage(responseJsonBody.message);
     if (responseJsonBody.item.isEnd) {
         updateWinner(responseJsonBody.item.chessGameStatistics);
         updateMessage('게임이 끝났습니다.');
