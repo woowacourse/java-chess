@@ -25,11 +25,11 @@ public class ChessService {
     private static final UserDao USER_DAO = new UserDao();
     private static final PlayLogDao PLAY_LOG_DAO = new PlayLogDao();
 
-    private static Board boardFromDb(String roomId) throws SQLException {
+    private Board boardFromDb(String roomId) throws SQLException {
         return PLAY_LOG_DAO.latestBoard(roomId).toEntity();
     }
 
-    private static ChessGame chessGameFromDb(Board board, String roomId)
+    private ChessGame chessGameFromDb(Board board, String roomId)
         throws SQLException {
         GameStatusDto gameStatusDto = PLAY_LOG_DAO.latestGameStatus(roomId);
         Turn turn = gameStatusDto.toTurnEntity();
