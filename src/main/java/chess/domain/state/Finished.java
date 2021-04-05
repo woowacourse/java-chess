@@ -2,26 +2,28 @@ package chess.domain.state;
 
 import chess.domain.grid.Grid;
 import chess.domain.position.Position;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 public class Finished implements GameState {
     @Override
     public GameState start() {
-        throw new IllegalArgumentException("이미 게임이 끝났습니다.");
+        throw new ChessException(ResponseCode.GAME_OVER);
     }
 
     @Override
     public GameState end() {
-        throw new IllegalArgumentException("이미 게임이 끝났습니다.");
+        throw new ChessException(ResponseCode.GAME_OVER);
     }
 
     @Override
     public GameState move(Grid grid, Position source, Position target) {
-        throw new IllegalArgumentException("이미 게임이 끝났습니다.");
+        throw new ChessException(ResponseCode.GAME_OVER);
     }
 
     @Override
     public GameState status() {
-        throw new IllegalArgumentException("이미 게임이 끝났습니다.");
+        throw new ChessException(ResponseCode.GAME_OVER);
     }
 
     @Override

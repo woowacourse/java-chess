@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
+
 import java.util.Arrays;
 
 public enum PieceName {
@@ -30,6 +33,6 @@ public enum PieceName {
                 .filter(piece -> (pieceName == piece.nameWhenBlack || pieceName == piece.nameWhenWhite))
                 .findFirst()
                 .map(piece -> piece.className)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 체스 말의 이름입니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_PIECE));
     }
 }

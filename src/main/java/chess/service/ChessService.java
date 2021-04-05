@@ -18,7 +18,7 @@ import chess.dto.requestdto.StartRequestDto;
 import chess.dto.response.Response;
 import chess.dto.response.ResponseCode;
 import chess.dto.responsedto.GridAndPiecesResponseDto;
-import chess.exception.NotExistsPieceException;
+import chess.exception.ChessException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -67,13 +67,13 @@ public class ChessService {
                     return pieceDto.getPosition().equals(requestDto.getSourcePosition());
                 })
                 .findFirst()
-                .orElseThrow(() -> new NotExistsPieceException("존재하지 않는 체스말입니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_PIECE));
         PieceDto targetPieceDto = requestDto.getPiecesDto().stream()
                 .filter(pieceDto -> {
                     return pieceDto.getPosition().equals(requestDto.getTargetPosition());
                 })
                 .findFirst()
-                .orElseThrow(() -> new NotExistsPieceException("존재하지 않는 체스말입니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_PIECE));
         pieceDAO.updatePiece(sourcePieceDto.getPieceId(), sourcePieceDto.isBlack(), EMPTY_PIECE_NAME);
         pieceDAO.updatePiece(targetPieceDto.getPieceId(), sourcePieceDto.isBlack(), sourcePieceDto.getName().charAt(0));
         return new Response(ResponseCode.NO_CONTENT);

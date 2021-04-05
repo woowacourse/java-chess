@@ -4,6 +4,8 @@ import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
 import chess.dto.GridDto;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +47,7 @@ public class GridDAO {
             if (rs.next()) {
                 return rs.getLong(FIRST_COLUMN);
             }
-            throw new IllegalArgumentException("값을 잘못 입력하여 아무 값도 삽입되지 않았습니다.");
+            throw new ChessException(ResponseCode.WRONG_ARGUMENTS_INSERT_ERROR);
         }
     }
 

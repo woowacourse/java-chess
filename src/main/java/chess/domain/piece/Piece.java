@@ -5,6 +5,8 @@ import chess.domain.grid.Lines;
 import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +81,7 @@ public abstract class Piece implements Condition, Constructor {
 
     private void validateSourcePieceEmpty() {
         if (isEmpty()) {
-            throw new IllegalArgumentException("빈 공간을 옮길 수 없습니다.");
+            throw new ChessException(ResponseCode.EMPTY_CANNOT_MOVE);
         }
     }
 
@@ -87,13 +89,13 @@ public abstract class Piece implements Condition, Constructor {
         Position source = this.position();
         Position target = targetPiece.position();
         if (!source.isInValidRange() || !target.isInValidRange()) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new ChessException(ResponseCode.CANNOT_MOVE_POSITION);
         }
     }
 
     private void validateTargetPiece(final Piece targetPiece) {
         if (!targetPiece.isEmpty() && isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new ChessException(ResponseCode.CANNOT_MOVE_POSITION);
         }
     }
 
@@ -107,7 +109,7 @@ public abstract class Piece implements Condition, Constructor {
 
     public final void validateTargetInMovablePositions(final List<Position> movablePositions) {
         if (!movablePositions.contains(this.position())) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new ChessException(ResponseCode.CANNOT_MOVE_POSITION);
         }
     }
 

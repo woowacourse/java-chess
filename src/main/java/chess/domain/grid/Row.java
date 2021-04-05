@@ -1,5 +1,8 @@
 package chess.domain.grid;
 
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
+
 import java.util.Arrays;
 
 public enum Row {
@@ -24,14 +27,14 @@ public enum Row {
         return Arrays.stream(Row.values())
                 .filter(row -> row.name == inputName)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 Row가 존재하지 않습니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_ROW));
     }
 
     public static Row row(int index) {
         return Arrays.stream(Row.values())
                 .filter(row -> row.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 인덱스의 Row가 존재하지 않습니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_ROW));
     }
 
     public char getName() {

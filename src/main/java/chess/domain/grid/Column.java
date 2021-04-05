@@ -1,5 +1,8 @@
 package chess.domain.grid;
 
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
+
 import java.util.Arrays;
 
 public enum Column {
@@ -24,7 +27,7 @@ public enum Column {
         return Arrays.stream(Column.values())
                 .filter(column -> column.name == inputName)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 이름의 Row가 존재하지 않습니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_ROW));
     }
 
     public char getName() {

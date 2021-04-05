@@ -5,6 +5,8 @@ import chess.domain.grid.Lines;
 import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,21 +79,21 @@ public final class Pawn extends Piece {
 
     private void validateTwoSteps(final Piece targetPiece) {
         if (hasMoved() && Math.abs(targetPiece.position().y() - position().y()) == TWO_STEP) {
-            throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
+            throw new ChessException(ResponseCode.PAWN_TWO_STEP_MOVE);
         }
     }
 
     private void validateDiagonalMove(final Piece targetPiece) {
         if (Math.abs(targetPiece.position().y() - position().y()) == 1 &&
                 Math.abs(targetPiece.position().x() - position().x()) == 1 && targetPiece.isEmpty()) {
-            throw new IllegalArgumentException("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
+            throw new ChessException(ResponseCode.PAWN_DIAGONAL_MOVE);
         }
     }
 
     private void validateObstacleAhead(final Piece targetPiece) {
         if (Math.abs(targetPiece.position().y() - position().y()) == 1 &&
                 Math.abs(targetPiece.position().x() - position().x()) == 0 && !targetPiece.isEmpty()) {
-            throw new IllegalArgumentException("폰은 한칸 앞 말이 있으면 가지 못합니다.");
+            throw new ChessException(ResponseCode.PAWN_FORWARD_MOVE);
         }
     }
 

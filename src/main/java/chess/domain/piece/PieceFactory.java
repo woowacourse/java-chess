@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +24,6 @@ public class PieceFactory {
                 .map(Map.Entry::getValue)
                 .map(constructor -> constructor.create(color, x, y))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("입력 값에 해당하는 말이 없습니다."));
+                .orElseThrow(() -> new ChessException(ResponseCode.NOT_EXISTING_PIECE));
     }
 }

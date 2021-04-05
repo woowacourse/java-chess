@@ -2,6 +2,8 @@ package chess.dao;
 
 import chess.domain.piece.Piece;
 import chess.dto.PieceDto;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +46,7 @@ public class PieceDAO {
             if (rs.next()) {
                 return rs.getLong(FIRST_COLUMN);
             }
-            throw new IllegalArgumentException("아무 값도 삽입되지 않았습니다.");
+            throw new ChessException(ResponseCode.WRONG_ARGUMENTS_INSERT_ERROR);
         }
     }
 
