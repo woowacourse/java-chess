@@ -9,10 +9,16 @@ import chess.dto.StatusCode;
 import chess.exception.DomainException;
 import com.google.gson.Gson;
 import org.json.JSONObject;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import static spark.Spark.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebController {
     private final Gson gson = new Gson();
@@ -23,11 +29,21 @@ public class WebController {
     }
 
     public void run() {
-        get("/newgame", this::receiveNewGameRequest, gson::toJson);
-        post("/move", this::receiveMoveRequest, gson::toJson);
+        get("/", this::responseHomePage);
+        get("/newgame", this::createNewGame, gson::toJson);
+        post("/move", this::move, gson::toJson);
     }
 
-    private CommonDto<?> receiveNewGameRequest(Request request, Response response) {
+    private String responseHomePage(Request request, Response response) {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    private CommonDto<?> createNewGame(Request request, Response response) {
         try {
             chessGameManager.start();
             return new CommonDto<GameStatusDto>(
@@ -42,13 +58,14 @@ public class WebController {
         }
     }
 
-    private CommonDto<?> receiveMoveRequest(Request request, Response response) {
+    private CommonDto<?> move(Request request, Response response) {
         try {
             JSONObject jsonObject = new JSONObject(request.body());
             String from = jsonObject.getString("from");
             String to = jsonObject.getString("to");
 
             chessGameManager.move(Position.of(from), Position.of(to));
+
             return new CommonDto<GameStatusDto>(
                     StatusCode.OK,
                     "기물을 이동했습니다.",
