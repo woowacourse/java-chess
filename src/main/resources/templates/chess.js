@@ -42,6 +42,14 @@ function movePiece(sourcePoint, targetPoint) {
     toggleClicked(sourcePoint, targetPoint);
 }
 
+async function gameFinishedAlert(targetPoint) {
+    await fetch('/color', colorData(targetPoint)).then(function (repsponse) {
+        repsponse.text().then(function (text) {
+            alert(text + '팀이 승리하였습니다.');
+        })
+    });
+}
+
 function colorData(point) {
     return {
         method: 'POST',
@@ -50,14 +58,6 @@ function colorData(point) {
             'Content-Type': 'application/json'
         }
     };
-}
-
-async function gameFinishedAlert(targetPoint) {
-    await fetch('/color', colorData(targetPoint)).then(function (repsponse) {
-        repsponse.text().then(function (text) {
-            alert(text + '팀이 승리하였습니다.');
-        })
-    });
 }
 
 async function colorText(targetPoint) {
@@ -75,7 +75,7 @@ async function move(sourcePoint, targetPoint) {
     }
 
     const response = await fetch('/move', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
@@ -85,13 +85,13 @@ async function move(sourcePoint, targetPoint) {
     if (response === 333) {
         movePiece(sourcePoint, targetPoint);
         document.getElementById("notice").innerText = "게임 끝!";
-        if (confirm('킹이 죽어 게임이 끝났습니다.\n다시 게임하시겠습니까?')) {
+        if (!confirm('킹이 죽어 게임이 끝났습니다.\n다시 게임하시겠습니까?')) {
             await gameFinishedAlert(targetPoint);
-            fetch('/restart')
-                .then(location.replace("/chess"));
+            fetch('/restart').then(location.replace('/'));
+
         } else {
             await gameFinishedAlert(targetPoint);
-            makeBoardInfo();
+            fetch('/restart').then(location.replace('/chess'));
         }
     }
     if (response === 200) {
@@ -159,21 +159,8 @@ async function score(color) {
     renderScore(colorName, score);
 }
 
-async function makeBoardInfo() {
-    let boardInfo = "";
-    for (let j = 8; j >= 1; j--) {
-        for (let i = 0; i < 8; i++) {
-            let row = String.fromCharCode('a'.charCodeAt(0) + i);
-            let point = row + j;
-            await fetch('/piece', {
-                method: 'POST',
-                body: point,
-            }).then(res => res.json()).then(data => {
-                boardInfo += data;
-            });
-        }
-    }
-    await fetch('/addboard', {
+async function save(boardInfo) {
+    await fetch('/save', {
         method: 'POST',
         body: boardInfo,
         headers: {
@@ -183,6 +170,23 @@ async function makeBoardInfo() {
         alert('게임 나가기!');
         location.replace('/');
     });
+}
+
+async function makeBoardInfo() {
+    let boardInfo = "";
+    for (let j = 8; j >= 1; j--) {
+        for (let i = 0; i < 8; i++) {
+            let row = String.fromCharCode('a'.charCodeAt(0) + i);
+            let point = row + j;
+            await fetch('/piece', {
+                method: 'PUT',
+                body: point,
+            }).then(res => res.json()).then(data => {
+                boardInfo += data;
+            });
+        }
+    }
+    await save(boardInfo);
 }
 
 function toggleExit() {

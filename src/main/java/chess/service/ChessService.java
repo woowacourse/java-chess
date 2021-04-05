@@ -23,8 +23,12 @@ public class ChessService {
     }
 
     public ChessGame restartChess(UserDto userDto) throws SQLException {
-        chessDAO.deleteBoard(chessDAO.findUserIdByUser(userDto));
-        return new ChessGame();
+        String userId = chessDAO.findUserIdByUser(userDto);
+        System.out.println(userId);
+        chessDAO.deleteBoard(userId);
+        ChessGame chessGame = new ChessGame();
+        // addBoard(chessGame, userDto, "WHITE");
+        return chessGame;
     }
 
     public ChessGame matchBoard(UserDto userDto) throws SQLException {
