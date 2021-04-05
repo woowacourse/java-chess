@@ -4,17 +4,17 @@ const BLACK_SQUARE = "black-square";
 
 document.addEventListener("DOMContentLoaded", buildBoard);
 
-const movePosition = {
-    "source": "",
-    "target": "",
-}
-
-const option = {
+const OPTION = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
     "body": "",
+}
+
+const CHESS_DTO = {
+    "turn": '',
+    "boardDTO": ''
 }
 
 function buildBoard() {
@@ -28,40 +28,62 @@ function buildBoard() {
     $board.addEventListener("mouseout", onRevertSquareColor);
 }
 
-function onMove(event) {
+async function chessBoard(chessId) {
+    const response = await fetch('/chess/' + chessId + '/pieces');
+    const data = await response.json();
+    return JSON.parse(data.content);
+}
+
+function getCookie(name) {
+    return document.cookie.split("; ").find(row => row.startsWith(name)).split("=")[1];
+}
+
+async function chessTurn(chessId) {
+    const response = await fetch('/chess/' + chessId + '/turn');
+    const data = await response.json();
+    return data.content;
+}
+
+async function onMove(event) {
     const $position = document.getElementsByClassName("selected");
     if (!$position.length) {
         onChangeColorOfSquare(event);
-    } else {
-        if (event.target.closest("div").classList.contains("selected")) {
-            event.target.closest("div").classList.remove("selected");
-        } else {
-            const source = $position[0].id;
-            const target = event.target.closest("div").id;
-            movePosition["source"] = source;
-            movePosition["target"] = target;
-
-            option["body"] = JSON.stringify(movePosition);
-            fetch('/chess/move', option)
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(res.status);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    movePiece(source, target);
-                    if (data === "king-dead") {
-                        alert("왕이 죽었습니다. 게임을 종료합니다.")
-                        window.location.replace("/");
-                        return;
-                    }
-                    return data;
-                })
-                .catch(() => alert("해당 위치로 이동할 수 없습니다."));
-            revertSquareColor($position);
-        }
+        return;
     }
+
+    if (event.target.closest("div").classList.contains("selected")) {
+        event.target.closest("div").classList.remove("selected");
+        return;
+    }
+
+    const source = $position[0].id;
+    const target = event.target.closest("div").id;
+
+    const chessId = getCookie('chessId');
+    const turn = await chessTurn(chessId);
+    const data = await chessBoard(chessId);
+    CHESS_DTO.turn = turn;
+    CHESS_DTO.boardDTO = data;
+    OPTION["body"] = JSON.stringify(CHESS_DTO);
+
+    fetch('/chess/' + chessId + '/pieces/move?source=' + source + '&target=' + target, OPTION)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(res.status);
+            }
+            return res.json();
+        })
+        .then(data => {
+            movePiece(source, target);
+            if (data.content === "왕이 죽었습니다.") {
+                alert("왕이 죽었습니다. 게임을 종료합니다.")
+                window.location.replace(data.url);
+                return data;
+            }
+            return data;
+        })
+        .catch(() => alert("해당 위치로 이동할 수 없습니다."));
+    revertSquareColor($position);
 }
 
 function movePiece(source, target) {

@@ -9,7 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import chess.ChessResponse;
+import chess.domain.chess.Chess;
+import chess.domain.chess.ChessDTO;
 import chess.domain.piece.PieceDTO;
+import chess.domain.position.MovePosition;
 import chess.domain.position.MovePositionDTO;
 import chess.domain.service.PieceService;
 import spark.Request;
@@ -44,12 +47,20 @@ public class PieceController {
     }
 
     public String move(Request req, Response res) throws SQLException {
-        log.warn("piece move");
+        String source = req.queryParams("source");
+        String target = req.queryParams("target");
+        MovePositionDTO movePositionDTO = new MovePositionDTO(source, target);
+        ChessDTO chessDTO = GSON.fromJson(req.body(), ChessDTO.class);
+        Chess chess = new Chess(chessDTO).move(new MovePosition(movePositionDTO));
+
         Long chessId = Long.valueOf(req.params(":chessId"));
-        MovePositionDTO movePositionDTO = GSON.fromJson(req.body(), MovePositionDTO.class);
         pieceService.move(chessId, movePositionDTO);
-        ChessResponse chessResponse = new ChessResponse.Ok("기물이 이동했습니다.");
-        return GSON.toJson(chessResponse);
+
+        if (chess.isKindDead()) {
+            res.redirect("/");
+            return GSON.toJson(new ChessResponse.Ok("왕이 죽었습니다."));
+        }
+        return GSON.toJson(new ChessResponse.Ok("기물이 이동했습니다."));
     }
 
     public String delete(Request req, Response res) throws SQLException {

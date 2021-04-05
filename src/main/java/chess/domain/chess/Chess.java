@@ -16,8 +16,8 @@ public class Chess {
         this(board, Status.RUNNING, Color.WHITE);
     }
 
-    public Chess(Board board, String turn) {
-        this(board, Status.RUNNING, Color.valueOf(turn));
+    public Chess(ChessDTO chessDTO) {
+        this(chessDTO.makeBoard(), Status.RUNNING, Color.valueOf(chessDTO.getTurn()));
     }
 
     public Chess(Board board, Status status, Color turn) {

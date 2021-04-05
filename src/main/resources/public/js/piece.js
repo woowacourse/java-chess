@@ -33,7 +33,7 @@ async function inputImageAtBoard(chessId) {
 async function borderTurn(chessId) {
     const response = await fetch('/chess/' + chessId + '/turn');
     const data = await response.json();
-    if (data["body"] === "BLACK") {
+    if (data.content === "BLACK") {
         document.getElementById("black-versus").classList.add("currentTurn");
         document.getElementById("white-versus").classList.remove("currentTurn");
     } else {
@@ -46,24 +46,6 @@ async function buildPieces() {
     const chessId = getCookie("chessId");
     await borderTurn(chessId);
     await inputImageAtBoard(chessId);
-    // fetch("/chess")
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         if (data.body.turn === "BLACK") {
-    //             document.getElementById("black-versus").classList.add("currentTurn");
-    //             document.getElementById("white-versus").classList.remove("currentTurn");
-    //         } else {
-    //             document.getElementById("black-versus").classList.remove("currentTurn");
-    //             document.getElementById("white-versus").classList.add("currentTurn");
-    //         }
-    //         Array.from(data.body.boardDTO.pieceDTOS)
-    //             .filter(piece => piece.name !== "BLANK")
-    //             .forEach(piece => {
-    //                 const position = piece.position;
-    //                 const pieceName = piece.color + "_" + piece.name;
-    //                 document.getElementById(position).innerHTML = PIECES[pieceName];
-    //             })
-    //     })
 }
 
 function getCookie(name) {
