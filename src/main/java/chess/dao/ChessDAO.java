@@ -1,36 +1,39 @@
 package chess.dao;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.ChessGame;
+import chess.domain.CurrentGameRoom;
+import java.util.Optional;
 
 public interface ChessDAO {
 
-    Long saveGame(List<Piece> pieces, Long gameId);
+    Long saveGame(ChessGame chessGame, Long gameId);
 
-    List<Piece> loadGame(Long gameId);
+    Optional<ChessGame> loadGame(Long gameId);
 
     void removeGame(Long gameId);
 
     class Fake implements ChessDAO {
 
-        private List<Piece> pieces = PieceFactory.initialPieces(8, 0, 7);
+        private CurrentGameRoom currentGameRoom;
+
+        public Fake() {
+            this.currentGameRoom = new CurrentGameRoom();
+        }
 
         @Override
-        public Long saveGame(List<Piece> pieces, Long gameId) {
-            this.pieces = pieces;
+        public Long saveGame(ChessGame chessGame, Long gameId) {
+            currentGameRoom.save(gameId, chessGame);
             return gameId;
         }
 
         @Override
-        public List<Piece> loadGame(Long gameId) {
-            return pieces;
+        public Optional<ChessGame> loadGame(Long gameId) {
+            return currentGameRoom.loadGame(gameId);
         }
 
         @Override
         public void removeGame(Long gameId) {
-            pieces = new ArrayList<>();
+            currentGameRoom.remove(gameId);
         }
     }
 }

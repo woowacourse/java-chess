@@ -5,7 +5,7 @@ import chess.controller.dto.PieceDTO;
 import chess.controller.dto.RoundStatusDTO;
 import chess.dao.ChessDAOImpl;
 import chess.domain.TeamColor;
-import chess.repository.ChessRepositoryImpl;
+import chess.service.ChessServiceImpl;
 import chess.websocket.ResponseForm;
 import chess.websocket.ResponseForm.Form;
 import chess.websocket.exception.FullRoomException;
@@ -19,7 +19,7 @@ public class RequestCommander {
 
     private ChessRoom chessRoom = new ChessRoom();
     private ChatSender chatSender = new ChatSender();
-    private ChessController chessController = new ChessController(new ChessRepositoryImpl(new ChessDAOImpl()));
+    ChessController chessController = new ChessController(new ChessServiceImpl(new ChessDAOImpl()));
 
     public void enterRoom(String[] contents, Session player) {
         try {

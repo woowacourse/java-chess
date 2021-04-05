@@ -9,30 +9,30 @@ import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.converter.StringPositionConverter;
 import chess.domain.piece.Piece;
-import chess.repository.ChessRepository;
+import chess.service.ChessService;
 import java.util.List;
 import java.util.Map;
 
 public class ChessController {
 
     private final StringPositionConverter stringPositionConverter;
-    private final ChessRepository chessRepository;
+    private final ChessService chessService;
 
-    public ChessController(ChessRepository chessRepository) {
+    public ChessController(ChessService chessService) {
         this.stringPositionConverter = new StringPositionConverter();
-        this.chessRepository = chessRepository;
+        this.chessService = chessService;
     }
 
     public List<PieceDTO> startGame(Long id) {
-        ChessGame chessGame = chessRepository.createGame(id);
-        List<Piece> pieces = chessGame.pieces().asList();
-        return pieces.stream()
+        ChessGame chessGame =
+            chessService.loadChess(id);
+        return chessGame.pieces().asList().stream()
             .map(PieceDTO::new)
             .collect(toList());
     }
 
     public RoundStatusDTO roundStatus(Long gameId) {
-        ChessGame chessGame = chessRepository.createGame(gameId);
+        ChessGame chessGame = chessService.loadChess(gameId);
         List<Piece> pieces = chessGame.currentColorPieces();
         return new RoundStatusDTO(
             mapMovablePositions(pieces),
@@ -55,7 +55,7 @@ public class ChessController {
     }
 
     public void move(Long gameId, String currentPosition, String targetPosition) {
-        ChessGame chessGame = chessRepository.createGame(gameId);
+        ChessGame chessGame = chessService.loadChess(gameId);
 
         Position current = stringPositionConverter.convert(currentPosition);
         Position target = stringPositionConverter.convert(targetPosition);
@@ -63,14 +63,14 @@ public class ChessController {
     }
 
     public void restart(Long gameId) {
-        chessRepository.restart(gameId);
+        chessService.restart(gameId);
     }
 
     public void exitGame(Long gameId) {
-        chessRepository.endGame(gameId);
+        chessService.exitGame(gameId);
     }
 
     public void saveGame(Long gameId) {
-        chessRepository.save(gameId);
+        chessService.saveGame(gameId);
     }
 }

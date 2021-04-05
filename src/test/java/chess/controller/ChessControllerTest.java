@@ -8,9 +8,8 @@ import chess.controller.dto.RoundStatusDTO;
 import chess.dao.ChessDAO;
 import chess.dao.ChessDAO.Fake;
 import chess.domain.TeamColor;
-import chess.domain.piece.Piece;
-import chess.repository.ChessRepository;
-import chess.repository.ChessRepositoryImpl;
+import chess.service.ChessService;
+import chess.service.ChessServiceImpl;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -21,14 +20,14 @@ import org.junit.jupiter.api.Test;
 class ChessControllerTest {
 
     ChessDAO chessDAO;
-    ChessRepository chessRepository;
+    ChessService chessService;
     ChessController chessController;
 
     @BeforeEach
     void init() {
         chessDAO = new Fake();
-        chessRepository = new ChessRepositoryImpl(chessDAO);
-        chessController = new ChessController(chessRepository);
+        chessService = new ChessServiceImpl(chessDAO);
+        chessController = new ChessController(chessService);
     }
 
     @Test
@@ -86,8 +85,7 @@ class ChessControllerTest {
         chessController.startGame(gameId);
         chessController.exitGame(gameId);
 
-        List<Piece> pieces = chessDAO.loadGame(gameId);
-        Assertions.assertThat(pieces).isEmpty();
+        Assertions.assertThat(chessDAO.loadGame(gameId)).isEmpty();
     }
 
     @Test
