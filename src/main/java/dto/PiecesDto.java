@@ -9,7 +9,8 @@ import java.util.Map;
 
 public class PiecesDto {
     private List<PieceDto> pieces = new ArrayList<>();
-    private Map<String, Double> status;
+    private double blackScore;
+    private double whiteScore;
     private boolean turn;
     private boolean isEnd;
 
@@ -17,7 +18,8 @@ public class PiecesDto {
         for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
             this.pieces.add(new PieceDto(entry.getKey().toString(), entry.getValue().toString()));
         }
-        this.status = statusDto.getStatusResult();
+        this.blackScore = statusDto.getBlackScore();
+        this.whiteScore = statusDto.getWhiteScore();
         this.isEnd = isEnd;
         this.turn = turn;
     }
@@ -26,8 +28,12 @@ public class PiecesDto {
         return pieces;
     }
 
-    public Map<String, Double> getStatus() {
-        return status;
+    public double getBlackScore() {
+        return blackScore;
+    }
+
+    public double getWhiteScore() {
+        return whiteScore;
     }
 
     public boolean isEnd() {

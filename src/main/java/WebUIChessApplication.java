@@ -1,22 +1,19 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import controller.WebMenuController;
 import dao.GameDao;
 import domain.ChessGame;
-import dto.PiecesDto;
-import dto.ResultDto;
-import dto.StatusDto;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
 import domain.piece.position.Position;
+import domain.score.Score;
+import dto.PieceDto;
+import dto.PiecesDto;
+import dto.ResultDto;
+import dto.StatusDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +26,7 @@ public class WebUIChessApplication {
         ChessGame game = new ChessGame();
         WebMenuController menuController = new WebMenuController();
         GameDao gameDao = new GameDao();
+        Gson gson = new Gson();
 
         staticFiles.location("/static");
         get("/", (req, res) -> {
@@ -39,71 +37,61 @@ public class WebUIChessApplication {
         get("/roomNumber", (req, res) -> gameDao.findGames());
 
         get("/startClick", (req, res) -> {
-            String roomNumber = req.queryParams("roomNumber");
-            if (roomNumber.equals("new")) {
+            String input = req.queryParams("roomNumber");
+            if ("new".equals(input)) {
                 menuController.run("start", game);
                 ResultDto resultDto = getResultDto(game, menuController);
                 gameDao.insertNewGameInfo(resultDto);
                 gameID = gameDao.lastGameID();
-                return render(new HashMap<String, Object>(){{put("roomNumber", gameID);}}, "start.html");
+                return render(new HashMap<String, Object>() {{
+                    put("roomNumber", gameID);
+                }}, "start.html");
             }
-            JsonObject responseObject = getJsonObject(gameDao, roomNumber);
-            JsonElement pieces = responseObject.get("pieces");
-            Map<Position, Piece> data = convertJsonToPieces(pieces.getAsJsonArray());
-            game.load(data, responseObject.get("turn").getAsBoolean());
-            gameID = Integer.parseInt(roomNumber);
+            gameID = Integer.parseInt(input);
+            ResultDto resultDto = gameDao.selectGameInfo(gameID);
+            Map<Position, Piece> data = convertPiecesDtoToPieces(resultDto.getPiecesDto());
+            game.load(data, resultDto.getPiecesDto().isTurn());
             return render(new HashMap<>(), "start.html");
         });
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/showData", (req, res) -> {
-            ResultDto resultDto = getResultDto(game, menuController);
-            return new ObjectMapper().writeValueAsString(resultDto);
-        });
+        get("/showData", (req, res) -> gson.toJson(getResultDto(game, menuController)));
 
         post("/movedata", (req, res) -> {
-            JsonObject jsonObject = (JsonObject) JsonParser.parseString(req.body());
-            String command = "move " + jsonObject.get("source").getAsString() + " "
-                    + Position.of(jsonObject.get("target").getAsString());
+            JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
+            String source = jsonObject.get("source").getAsString();
+            String target = jsonObject.get("target").getAsString();
+            String command = "move " + source + " " + Position.of(target);
             menuController.run(command, game);
-            ResultDto resultDto = getResultDto(game, menuController);
-            String jsonData = new ObjectMapper().writeValueAsString(resultDto);
             if (game.isRunning()) {
-                gameDao.updateGame(jsonData, gameID);
-                return new ObjectMapper().writeValueAsString(resultDto);
+                ResultDto resultDto = getResultDto(game, menuController);
+                gameDao.updateGame(resultDto, source, target, gameID);
+                return gson.toJson(resultDto);
             }
+
             gameDao.deleteGame(gameID);
-            return jsonData;
+            return gson.toJson(getResultDto(game, menuController));
         });
 
-        get("/status", (req, res) -> {
-            ResultDto result = getResultDto(game, menuController);
-            return new ObjectMapper().writeValueAsString(result);
-        });
+        get("/status", (req, res) -> gson.toJson(getResultDto(game, menuController)));
     }
 
-    private static JsonObject getJsonObject(GameDao gameDao, String roomNumber) throws SQLException {
-        String gameInfoJason = gameDao.selectGameInfo(roomNumber);
-        JsonObject jsonObject = (JsonObject) JsonParser.parseString(gameInfoJason);
-        String response = jsonObject.get("response").getAsString();
-        JsonObject responseObject = (JsonObject) JsonParser.parseString(response);
-        return responseObject;
-    }
-
-    private static Map<Position, Piece> convertJsonToPieces(JsonArray gameInfoJason) {
+    private static Map<Position, Piece> convertPiecesDtoToPieces(PiecesDto piecesDto) {
         Map<Position, Piece> data = new HashMap<>();
-        for (JsonElement jsonElement : gameInfoJason) {
-            JsonObject element = jsonElement.getAsJsonObject();
-            data.put(Position.of(element.get("position").getAsString()),
-                    PieceFactory.findPiece(element.get("pieceName").getAsString()));
+        for (PieceDto pieceDto : piecesDto.getPieces()) {
+            Position position = Position.of(pieceDto.getPosition());
+            Piece piece = PieceFactory.findPiece(pieceDto.getPieceName());
+            data.put(position, piece);
         }
         return data;
     }
 
-    private static ResultDto getResultDto(ChessGame game, WebMenuController menuController) throws JsonProcessingException {
+    private static ResultDto getResultDto(ChessGame game, WebMenuController menuController) {
+        Map<Boolean, Score> scoreMap = game.piecesScore();
         return new ResultDto(new PiecesDto(game.getBoard().getBoard(),
-                new StatusDto(game.piecesScore()), game.isRunning(), game.getTurn()), menuController.getErrorMessage());
+                new StatusDto(scoreMap.get(true).getValue(), scoreMap.get(false).getValue()),
+                !game.isRunning(), game.getTurn()), menuController.getErrorMessage());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

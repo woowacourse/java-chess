@@ -1,16 +1,12 @@
 package dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class ResultDto {
+    private PiecesDto piecesDto;
     private boolean success = true;
-    private String response = "";
     private String errorMessage;
 
-    public ResultDto(PiecesDto piecesDto, String errorMessage) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        response += mapper.writeValueAsString(piecesDto);
+    public ResultDto(PiecesDto piecesDto, String errorMessage) {
+        this.piecesDto = piecesDto;
         this.errorMessage = errorMessage;
         checkSuccess(errorMessage);
     }
@@ -21,12 +17,12 @@ public class ResultDto {
         }
     }
 
-    public boolean isSuccess() {
-        return success;
+    public PiecesDto getPiecesDto() {
+        return this.piecesDto;
     }
 
-    public String getResponse() {
-        return response;
+    public boolean isSuccess() {
+        return success;
     }
 
     public String getErrorMessage() {
