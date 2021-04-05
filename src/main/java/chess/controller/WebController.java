@@ -52,10 +52,10 @@ public class WebController {
                     "새로운 게임을 시작합니다.",
                     GameStatusDto.from(chessGameManager));
         } catch (DomainException e) {
-            return new CommonDto<ErrorResponse>(
+            return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
                     e.getMessage(),
-                    new ErrorResponse());
+                    new NoneItem());
         }
     }
 
@@ -72,10 +72,10 @@ public class WebController {
                     "기물을 이동했습니다.",
                     GameStatusDto.from(chessGameManager));
         } catch (DomainException e) {
-            return new CommonDto<ErrorResponse>(
+            return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
                     e.getMessage(),
-                    new ErrorResponse());
+                    new NoneItem());
         }
     }
 
@@ -87,10 +87,10 @@ public class WebController {
                     "게임을 저장했습니다.",
                     new NoneItem());
         } catch (SQLException e) {
-            return new CommonDto<ErrorResponse>(
+            return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
                     "게임을 데이터베이스에 저장하는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
-                    new ErrorResponse());
+                    new NoneItem());
         }
     }
 }
