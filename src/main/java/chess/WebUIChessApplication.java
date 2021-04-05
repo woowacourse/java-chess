@@ -6,8 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.ChessController;
-import chess.domain.dto.ErrorResponseDto;
-import chess.domain.dto.OkResponseDto;
+import chess.domain.dto.ResponseDto;
 import chess.domain.dto.move.MoveRequestDto;
 import chess.domain.dto.move.MoveResponseDto;
 import com.google.gson.Gson;
@@ -19,7 +18,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
 
     private static final Gson gson = new Gson();
-
     private static final ChessController controller = new ChessController();
 
     public static void main(String[] args) {
@@ -35,9 +33,9 @@ public class WebUIChessApplication {
             try {
                 String roomName = req.params(":name");
                 controller.createRoom(roomName);
-                return gson.toJson(OkResponseDto.payload(roomName));
+                return ResponseDto.ok(roomName);
             } catch (Exception e) {
-                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+                return ResponseDto.error(e.getMessage());
             }
         });
 
@@ -46,9 +44,9 @@ public class WebUIChessApplication {
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.findPiecesByRoomName(roomName);
                 res.type("application/json");
-                return gson.toJson(OkResponseDto.payload(result));
+                return ResponseDto.ok(result);
             } catch (Exception e) {
-                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+                return ResponseDto.error(e.getMessage());
             }
         });
 
@@ -56,9 +54,9 @@ public class WebUIChessApplication {
             try {
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.start(roomName);
-                return gson.toJson(OkResponseDto.payload(result));
+                return ResponseDto.ok(result);
             } catch (Exception e) {
-                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+                return ResponseDto.error(e.getMessage());
             }
         });
 
@@ -66,9 +64,9 @@ public class WebUIChessApplication {
             try {
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.end(roomName);
-                return gson.toJson(OkResponseDto.payload(result));
+                return ResponseDto.ok(result);
             } catch (Exception e) {
-                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+                return ResponseDto.error(e.getMessage());
             }
         });
 
@@ -77,9 +75,9 @@ public class WebUIChessApplication {
                 String roomName = req.params(":name");
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
                 MoveResponseDto result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
-                return gson.toJson(OkResponseDto.payload(result));
+                return ResponseDto.ok(result);
             } catch (Exception e) {
-                return gson.toJson(ErrorResponseDto.message(e.getMessage()));
+                return ResponseDto.error(e.getMessage());
             }
         });
     }
