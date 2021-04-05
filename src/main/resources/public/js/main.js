@@ -38,7 +38,7 @@ function getCookie(name) {
 
 async function removePreviousGame(id) {
     await fetch('/chess/' + id + '/pieces', DELETE);
-    await fetch('/chess', DELETE);
+    await fetch('/chess/' + id, DELETE);
 }
 
 async function onNewGame() {

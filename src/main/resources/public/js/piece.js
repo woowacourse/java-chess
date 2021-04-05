@@ -30,21 +30,8 @@ async function inputImageAtBoard(chessId) {
     return data;
 }
 
-async function borderTurn(chessId) {
-    const response = await fetch('/chess/' + chessId + '/turn');
-    const data = await response.json();
-    if (data.content === "BLACK") {
-        document.getElementById("black-versus").classList.add("currentTurn");
-        document.getElementById("white-versus").classList.remove("currentTurn");
-    } else {
-        document.getElementById("black-versus").classList.remove("currentTurn");
-        document.getElementById("white-versus").classList.add("currentTurn");
-    }
-}
-
 async function buildPieces() {
     const chessId = getCookie("chessId");
-    await borderTurn(chessId);
     await inputImageAtBoard(chessId);
 }
 

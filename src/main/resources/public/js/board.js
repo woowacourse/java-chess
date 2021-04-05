@@ -4,12 +4,16 @@ const BLACK_SQUARE = "black-square";
 
 document.addEventListener("DOMContentLoaded", buildBoard);
 
-const OPTION = {
-    method: 'POST',
+const PATCH = {
+    method: 'PATCH',
     headers: {
         'Content-Type': 'application/json'
     },
     "body": "",
+}
+
+const DELETE = {
+    method: 'DELETE',
 }
 
 const CHESS_DTO = {
@@ -17,7 +21,7 @@ const CHESS_DTO = {
     "boardDTO": ''
 }
 
-function buildBoard() {
+async function buildBoard() {
     let $board = document.getElementById("board");
     if ($board == null) {
         document.querySelector("body").insertAdjacentHTML("afterbegin", build());
@@ -26,6 +30,8 @@ function buildBoard() {
     $board.addEventListener("click", onMove);
     $board.addEventListener("mouseover", onMouseOverSquare);
     $board.addEventListener("mouseout", onRevertSquareColor);
+    color = await getColor();
+    borderTurn(color);
 }
 
 async function chessBoard(chessId) {
@@ -42,6 +48,51 @@ async function chessTurn(chessId) {
     const response = await fetch('/chess/' + chessId + '/turn');
     const data = await response.json();
     return data.content;
+}
+
+async function patchMovePiece(chessId, source, target) {
+    const moveResult = await fetch('/chess/' + chessId + '/pieces/move?source=' + source + '&target=' + target, PATCH);
+    if (moveResult.ok) {
+        await patchChangeTurn(chessId);
+        movePiece(source, target);
+        borderTurn();
+        return await moveResult.json();
+    }
+
+    alert("해당 위치로 이동할 수 없습니다.");
+    return "잘못된 위치입니다.";
+}
+
+async function getColor() {
+    const chessId = getCookie("chessId");
+    const response = await fetch('/chess/' + chessId + '/turn');
+    const data = await response.json();
+    return data.content;
+}
+
+let color;
+
+function borderTurn() {
+    console.log(color);
+    if (color === "BLACK") {
+        document.getElementById("black-versus").classList.add("currentTurn");
+        document.getElementById("white-versus").classList.remove("currentTurn");
+        color = "WHITE";
+    } else {
+        document.getElementById("black-versus").classList.remove("currentTurn");
+        document.getElementById("white-versus").classList.add("currentTurn");
+        color = "BLACK";
+    }
+}
+
+async function patchChangeTurn(chessId) {
+    const response = await fetch('/chess/' + chessId + '/turn', PATCH);
+    return await response.json();
+}
+
+async function deleteEndChess(chessId) {
+    await fetch('/chess/' + chessId + '/pieces', DELETE);
+    await fetch('/chess/' + chessId, DELETE);
 }
 
 async function onMove(event) {
@@ -64,25 +115,16 @@ async function onMove(event) {
     const data = await chessBoard(chessId);
     CHESS_DTO.turn = turn;
     CHESS_DTO.boardDTO = data;
-    OPTION["body"] = JSON.stringify(CHESS_DTO);
+    PATCH["body"] = JSON.stringify(CHESS_DTO);
 
-    fetch('/chess/' + chessId + '/pieces/move?source=' + source + '&target=' + target, OPTION)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(res.status);
-            }
-            return res.json();
-        })
-        .then(data => {
-            movePiece(source, target);
-            if (data.content === "왕이 죽었습니다.") {
-                alert("왕이 죽었습니다. 게임을 종료합니다.")
-                window.location.replace(data.url);
-                return data;
-            }
-            return data;
-        })
-        .catch(() => alert("해당 위치로 이동할 수 없습니다."));
+    const moveResult = await patchMovePiece(chessId, source, target);
+    if (moveResult.content === "왕이 죽었습니다.") {
+        alert("왕이 죽었습니다. 게임을 종료합니다.")
+        await deleteEndChess(chessId);
+        window.location.href = "/";
+        return;
+    }
+
     revertSquareColor($position);
 }
 
@@ -93,7 +135,6 @@ function movePiece(source, target) {
     $targetPosition.innerHTML = $sourcePosition.innerHTML;
     $sourcePosition.innerHTML = "";
 }
-
 
 function onChangeColorOfSquare(event) {
     let squareClassList = event.target.closest("div").classList;
