@@ -7,15 +7,17 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 
 import chess.dao.ChessDao;
+import chess.dao.SQLConnection;
 import chess.dto.UserDto;
 import chess.dto.BoardDto;
 
 class ChessDaoTest {
-    private final ChessDao chessDAO = new ChessDao();
+    private final SQLConnection connection = new SQLConnection();
+    private final ChessDao chessDAO = new ChessDao(connection);
 
     @Test
     public void connection() {
-        Connection con = chessDAO.getConnection();
+        Connection con = connection.getConnection();
         assertNotNull(con);
     }
 
@@ -27,7 +29,7 @@ class ChessDaoTest {
 
     @Test
     void find() throws Exception {
-        UserDto userDto = chessDAO.findByUserId("2");
+        UserDto userDto = chessDAO.findByUserId("13");
         assertEquals(new UserDto("testUser", "testPwd"), userDto);
     }
 
@@ -39,10 +41,7 @@ class ChessDaoTest {
 
     @Test
     void findBoard() throws Exception {
-        // Map<Point, Piece> map = new HashMap<>();
-        // map.put(Point.of("a8"), new Rook())
         BoardDto boardDto = chessDAO.findBoard("1");
-        // assertEquals(boardDto, )
         System.out.println(boardDto.getBoard());
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import chess.dao.ChessDao;
+import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
 import chess.dto.RequestDto;
 import chess.dto.UserDto;
@@ -21,7 +22,7 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessService {
-    private static final ChessDao chessDAO = new ChessDao();
+    private static final ChessDao chessDAO = new ChessDao(new SQLConnection());
     private static final Gson GSON = new Gson();
 
     private static ChessGame chessGame;
