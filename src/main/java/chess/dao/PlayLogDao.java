@@ -10,13 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlayLogDataSource{
+public class PlayLogDao {
 
     private static final Gson GSON = new Gson();
 
     private final ChessDataSource chessDataSource;
 
-    public PlayLogDataSource(ChessDataSource chessDataSource) {
+    public PlayLogDao(ChessDataSource chessDataSource) {
         this.chessDataSource = chessDataSource;
     }
 

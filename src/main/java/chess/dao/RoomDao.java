@@ -9,11 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDataSource {
+public class RoomDao {
 
     private final ChessDataSource chessDataSource;
 
-    public RoomDataSource(ChessDataSource chessDataSource) {
+    public RoomDao(ChessDataSource chessDataSource) {
         this.chessDataSource = chessDataSource;
     }
 

@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDataSource {
+public class UserDao {
 
     private final ChessDataSource chessDataSource;
 
-    public UserDataSource(ChessDataSource chessDataSource) {
+    public UserDao(ChessDataSource chessDataSource) {
         this.chessDataSource = chessDataSource;
     }
 
