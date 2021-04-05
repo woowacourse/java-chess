@@ -9,7 +9,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'junit:junit:4.12'
     compile('com.sparkjava:spark-core:2.9.0')
     compile('com.sparkjava:spark-template-handlebars:2.7.1')
     compile('ch.qos.logback:logback-classic:1.2.3')
