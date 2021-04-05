@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div id="room">
+    <h1 style="font-size:50px;" class="{{{room_id}}}">ROOM {{room_id}}</h1>
+</div>
+<div id="turn">
+    <label style="color:darkgreen;font-size:30px;" class="{{{turn.turn}}}">{{turn.turn}}의 차례입니다.</label>
+</div>
+<table class="chessboard">
+    <tr id="8" class="chessboard">
+        <td id="a8" class="chessboard">
+            <img class="chessboard" src="images/{{{a8.color}}}{{{a8.type}}}.png" id="{{{a8.color}}}_{{{a8.type}}}"/>
+        </td>
+        <td id="b8" class="chessboard">
+            <img class="chessboard" src="images/{{{b8.color}}}{{{b8.type}}}.png" id="{{{b8.color}}}_{{{b8.type}}}"/>
+        </td>
+        <td id="c8" class="chessboard">
+            <img class="chessboard" src="images/{{{c8.color}}}{{{c8.type}}}.png" id="{{{c8.color}}}_{{{c8.type}}}"/>
+        </td>
+        <td id="d8" class="chessboard">
+            <img class="chessboard" src="images/{{{d8.color}}}{{{d8.type}}}.png" id="{{{d8.color}}}_{{{d8.type}}}"/>
+        </td>
+        <td id="e8" class="chessboard">
+            <img class="chessboard" src="images/{{{e8.color}}}{{{e8.type}}}.png" id="{{{e8.color}}}_{{{e8.type}}}"/>
+        </td>
+        <td id="f8" class="chessboard">
+            <img class="chessboard" src="images/{{{f8.color}}}{{{f8.type}}}.png" id="{{{f8.color}}}_{{{f8.type}}}"/>
+        </td>
+        <td id="g8" class="chessboard">
+            <img class="chessboard" src="images/{{{g8.color}}}{{{g8.type}}}.png" id="{{{g8.color}}}_{{{g8.type}}}"/>
+        </td>
+        <td id="h8" class="chessboard">
+            <img class="chessboard" src="images/{{{h8.color}}}{{{h8.type}}}.png" id="{{{h8.color}}}_{{{h8.type}}}"/>
+        </td>
+    </tr>
+    <tr id="7" class="chessboard">
+        <td id="a7" class="chessboard">
+            <img class="chessboard" src="images/{{{a7.color}}}{{{a7.type}}}.png" id="{{{a7.color}}}_{{{a7.type}}}"/>
+        </td>
+        <td id="b7" class="chessboard">
+            <img class="chessboard" src="images/{{{b7.color}}}{{{b7.type}}}.png" id="{{{b7.color}}}_{{{b7.type}}}"/>
+        </td>
+        <td id="c7" class="chessboard">
+            <img class="chessboard" src="images/{{{c7.color}}}{{{c7.type}}}.png" id="{{{c7.color}}}_{{{c7.type}}}"/>
+        </td>
+        <td id="d7" class="chessboard">
+            <img class="chessboard" src="images/{{{d7.color}}}{{{d7.type}}}.png" id="{{{d7.color}}}_{{{d7.type}}}"/>
+        </td>
+        <td id="e7" class="chessboard">
+            <img class="chessboard" src="images/{{{e7.color}}}{{{e7.type}}}.png" id="{{{e7.color}}}_{{{e7.type}}}"/>
+        </td>
+        <td id="f7" class="chessboard">
+            <img class="chessboard" src="images/{{{f7.color}}}{{{f7.type}}}.png" id="{{{f7.color}}}_{{{f7.type}}}"/>
+        </td>
+        <td id="g7" class="chessboard">
+            <img class="chessboard" src="images/{{{g7.color}}}{{{g7.type}}}.png" id="{{{g7.color}}}_{{{g7.type}}}"/>
+        </td>
+        <td id="h7" class="chessboard">
+            <img class="chessboard" src="images/{{{h7.color}}}{{{h7.type}}}.png" id="{{{h7.color}}}_{{{h7.type}}}"/>
+        </td>
+    </tr>
+    <tr id="6" class="chessboard">
+        <td id="a6" class="chessboard">
+            <img class="chessboard" src="images/{{{a6.color}}}{{{a6.type}}}.png" id="{{{a6.color}}}_{{{a6.type}}}"/>
+        </td>
+        <td id="b6" class="chessboard">
+            <img class="chessboard" src="images/{{{b6.color}}}{{{b6.type}}}.png" id="{{{b6.color}}}_{{{b6.type}}}"/>
+        </td>
+        <td id="c6" class="chessboard">
+            <img class="chessboard" src="images/{{{c6.color}}}{{{c6.type}}}.png" id="{{{c6.color}}}_{{{c6.type}}}"/>
+        </td>
+        <td id="d6" class="chessboard">
+            <img class="chessboard" src="images/{{{d6.color}}}{{{d6.type}}}.png" id="{{{d6.color}}}_{{{d6.type}}}"/>
+        </td>
+        <td id="e6" class="chessboard">
+            <img class="chessboard" src="images/{{{e6.color}}}{{{e6.type}}}.png" id="{{{e6.color}}}_{{{e6.type}}}"/>
+        </td>
+        <td id="f6" class="chessboard">
+            <img class="chessboard" src="images/{{{f6.color}}}{{{f6.type}}}.png" id="{{{f6.color}}}_{{{f6.type}}}"/>
+        </td>
+        <td id="g6" class="chessboard">
+            <img class="chessboard" src="images/{{{g6.color}}}{{{g6.type}}}.png" id="{{{g6.color}}}_{{{g6.type}}}"/>
+        </td>
+        <td id="h6" class="chessboard">
+            <img class="chessboard" src="images/{{{h6.color}}}{{{h6.type}}}.png" id="{{{h6.color}}}_{{{h6.type}}}"/>
+        </td>
+    </tr>
+    <tr id="5" class="chessboard">
+        <td id="a5" class="chessboard">
+            <img class="chessboard" src="images/{{{a5.color}}}{{{a5.type}}}.png" id="{{{a5.color}}}_{{{a5.type}}}"/>
+        </td>
+        <td id="b5" class="chessboard">
+            <img class="chessboard" src="images/{{{b5.color}}}{{{b5.type}}}.png" id="{{{b5.color}}}_{{{b5.type}}}"/>
+        </td>
+        <td id="c5" class="chessboard">
+            <img class="chessboard" src="images/{{{c5.color}}}{{{c5.type}}}.png" id="{{{c5.color}}}_{{{c5.type}}}"/>
+        </td>
+        <td id="d5" class="chessboard">
+            <img class="chessboard" src="images/{{{d5.color}}}{{{d5.type}}}.png" id="{{{d5.color}}}_{{{d5.type}}}"/>
+        </td>
+        <td id="e5" class="chessboard">
+            <img class="chessboard" src="images/{{{e5.color}}}{{{e5.type}}}.png" id="{{{e5.color}}}_{{{e5.type}}}"/>
+        </td>
+        <td id="f5" class="chessboard">
+            <img class="chessboard" src="images/{{{f5.color}}}{{{f5.type}}}.png" id="{{{f5.color}}}_{{{f5.type}}}"/>
+        </td>
+        <td id="g5" class="chessboard">
+            <img class="chessboard" src="images/{{{g5.color}}}{{{g5.type}}}.png" id="{{{g5.color}}}_{{{g5.type}}}"/>
+        </td>
+        <td id="h5" class="chessboard">
+            <img class="chessboard" src="images/{{{h5.color}}}{{{h5.type}}}.png" id="{{{h5.color}}}_{{{h5.type}}}"/>
+        </td>
+    </tr>
+    <tr id="4" class="chessboard">
+        <td id="a4" class="chessboard">
+            <img class="chessboard" src="images/{{{a4.color}}}{{{a4.type}}}.png" id="{{{a4.color}}}_{{{a4.type}}}"/>
+        </td>
+        <td id="b4" class="chessboard">
+            <img class="chessboard" src="images/{{{b4.color}}}{{{b4.type}}}.png" id="{{{b4.color}}}_{{{b4.type}}}"/>
+        </td>
+        <td id="c4" class="chessboard">
+            <img class="chessboard" src="images/{{{c4.color}}}{{{c4.type}}}.png" id="{{{c4.color}}}_{{{c4.type}}}"/>
+        </td>
+        <td id="d4" class="chessboard">
+            <img class="chessboard" src="images/{{{d4.color}}}{{{d4.type}}}.png" id="{{{d4.color}}}_{{{d4.type}}}"/>
+        </td>
+        <td id="e4" class="chessboard">
+            <img class="chessboard" src="images/{{{e4.color}}}{{{e4.type}}}.png" id="{{{e4.color}}}_{{{e4.type}}}"/>
+        </td>
+        <td id="f4" class="chessboard">
+            <img class="chessboard" src="images/{{{f4.color}}}{{{f4.type}}}.png" id="{{{f4.color}}}_{{{f4.type}}}"/>
+        </td>
+        <td id="g4" class="chessboard">
+            <img class="chessboard" src="images/{{{g4.color}}}{{{g4.type}}}.png" id="{{{g4.color}}}_{{{g4.type}}}"/>
+        </td>
+        <td id="h4" class="chessboard">
+            <img class="chessboard" src="images/{{{h4.color}}}{{{h4.type}}}.png" id="{{{h4.color}}}_{{{h4.type}}}"/>
+        </td>
+    </tr>
+    <tr id="3" class="chessboard">
+        <td id="a3" class="chessboard">
+            <img class="chessboard" src="images/{{{a3.color}}}{{{a3.type}}}.png" id="{{{a3.color}}}_{{{a3.type}}}"/>
+        </td>
+        <td id="b3" class="chessboard">
+            <img class="chessboard" src="images/{{{b3.color}}}{{{b3.type}}}.png" id="{{{b3.color}}}_{{{b3.type}}}"/>
+        </td>
+        <td id="c3" class="chessboard">
+            <img class="chessboard" src="images/{{{c3.color}}}{{{c3.type}}}.png" id="{{{c3.color}}}_{{{c3.type}}}"/>
+        </td>
+        <td id="d3" class="chessboard">
+            <img class="chessboard" src="images/{{{d3.color}}}{{{d3.type}}}.png" id="{{{d3.color}}}_{{{d3.type}}}"/>
+        </td>
+        <td id="e3" class="chessboard">
+            <img class="chessboard" src="images/{{{e3.color}}}{{{e3.type}}}.png" id="{{{e3.color}}}_{{{e3.type}}}"/>
+        </td>
+        <td id="f3" class="chessboard">
+            <img class="chessboard" src="images/{{{f3.color}}}{{{f3.type}}}.png" id="{{{f3.color}}}_{{{f3.type}}}"/>
+        </td>
+        <td id="g3" class="chessboard">
+            <img class="chessboard" src="images/{{{g3.color}}}{{{g3.type}}}.png" id="{{{g3.color}}}_{{{g3.type}}}"/>
+        </td>
+        <td id="h3" class="chessboard">
+            <img class="chessboard" src="images/{{{h3.color}}}{{{h3.type}}}.png" id="{{{h3.color}}}_{{{h3.type}}}"/>
+        </td>
+    </tr>
+    <tr id="2" class="chessboard">
+        <td id="a2" class="chessboard">
+            <img class="chessboard" src="images/{{{a2.color}}}{{{a2.type}}}.png" id="{{{a2.color}}}_{{{a2.type}}}"/>
+        </td>
+        <td id="b2" class="chessboard">
+            <img class="chessboard" src="images/{{{b2.color}}}{{{b2.type}}}.png" id="{{{b2.color}}}_{{{b2.type}}}"/>
+        </td>
+        <td id="c2" class="chessboard">
+            <img class="chessboard" src="images/{{{c2.color}}}{{{c2.type}}}.png" id="{{{c2.color}}}_{{{c2.type}}}"/>
+        </td>
+        <td id="d2" class="chessboard">
+            <img class="chessboard" src="images/{{{d2.color}}}{{{d2.type}}}.png" id="{{{d2.color}}}_{{{d2.type}}}"/>
+        </td>
+        <td id="e2" class="chessboard">
+            <img class="chessboard" src="images/{{{e2.color}}}{{{e2.type}}}.png" id="{{{e2.color}}}_{{{e2.type}}}"/>
+        </td>
+        <td id="f2" class="chessboard">
+            <img class="chessboard" src="images/{{{f2.color}}}{{{f2.type}}}.png" id="{{{f2.color}}}_{{{f2.type}}}"/>
+        </td>
+        <td id="g2" class="chessboard">
+            <img class="chessboard" src="images/{{{g2.color}}}{{{g2.type}}}.png" id="{{{g2.color}}}_{{{g2.type}}}"/>
+        </td>
+        <td id="h2" class="chessboard">
+            <img class="chessboard" src="images/{{{h2.color}}}{{{h2.type}}}.png" id="{{{h2.color}}}_{{{h2.type}}}"/>
+        </td>
+    </tr>
+    <tr id="1" class="chessboard">
+        <td id="a1" class="chessboard">
+            <img class="chessboard" src="images/{{{a1.color}}}{{{a1.type}}}.png" id="{{{a1.color}}}_{{{a1.type}}}"/>
+        </td>
+        <td id="b1" class="chessboard">
+            <img class="chessboard" src="images/{{{b1.color}}}{{{b1.type}}}.png" id="{{{b1.color}}}_{{{b1.type}}}"/>
+        </td>
+        <td id="c1" class="chessboard">
+            <img class="chessboard" src="images/{{{c1.color}}}{{{c1.type}}}.png" id="{{{c1.color}}}_{{{c1.type}}}"/>
+        </td>
+        <td id="d1" class="chessboard">
+            <img class="chessboard" src="images/{{{d1.color}}}{{{d1.type}}}.png" id="{{{d1.color}}}_{{{d1.type}}}"/>
+        </td>
+        <td id="e1" class="chessboard">
+            <img class="chessboard" src="images/{{{e1.color}}}{{{e1.type}}}.png" id="{{{e1.color}}}_{{{e1.type}}}"/>
+        </td>
+        <td id="f1" class="chessboard">
+            <img class="chessboard" src="images/{{{f1.color}}}{{{f1.type}}}.png" id="{{{f1.color}}}_{{{f1.type}}}"/>
+        </td>
+        <td id="g1" class="chessboard">
+            <img class="chessboard" src="images/{{{g1.color}}}{{{g1.type}}}.png" id="{{{g1.color}}}_{{{g1.type}}}"/>
+        </td>
+        <td id="h1" class="chessboard">
+            <img class="chessboard" src="images/{{{h1.color}}}{{{h1.type}}}.png" id="{{{h1.color}}}_{{{h1.type}}}"/>
+        </td>
+    </tr>
+</table>
+<div id="result">{{result.blackOutcome}}{{result.whiteOutcome}}</div>
+<label class="move"><b>움직일 말의 위치</b></label>
+<input id="move" class="move" type="text" placeholder="move source target" autofocus><br/><br/>
+<input type="button" value="save"/><br/><br/>
+<input class="exit" type="button" onclick="location.href = '/';" value="exit"/><br/><br/>
+</body>
+<script src="js/game.js"></script>
+</html>

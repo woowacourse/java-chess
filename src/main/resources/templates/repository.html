@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<h1>저장된 게임 목록</h1>
+<div>
+    {{#rooms}}
+    <input type="button" value="{{{roomId}}}"/><br/>
+    {{/rooms}}
+</div>
+</body>
+<script src="js/repository.js"></script>
+</html>
