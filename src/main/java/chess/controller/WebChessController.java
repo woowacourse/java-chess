@@ -48,6 +48,7 @@ public class WebChessController {
                 blackTeam = Team.blackTeam();
                 chessGame = new ChessGame(blackTeam, whiteTeam);
                 chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+                res.status(200);
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
                 res.status(404);
@@ -61,6 +62,7 @@ public class WebChessController {
                 chessGame = chessGameDAO.readChessGame();
                 whiteTeam = chessGame.getWhiteTeam();
                 blackTeam = chessGame.getBlackTeam();
+                res.status(200);
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
                 res.status(404);
@@ -73,6 +75,7 @@ public class WebChessController {
             try {
                 chessGameDAO.deleteChessGame();
                 chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+                res.status(200);
                 return gson.toJson(DBConnectionDTO.success());
             } catch (SQLException e) {
                 res.status(404);
