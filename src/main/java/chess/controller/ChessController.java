@@ -6,7 +6,7 @@ import chess.controller.command.Show;
 import chess.controller.command.Status;
 import chess.controller.dto.BoardResponseDto;
 import chess.controller.dto.GameResultDto;
-import chess.controller.dto.ShowPathResponseDto;
+import chess.controller.dto.MovablePathResponseDto;
 import chess.controller.dto.StatusResponseDto;
 import chess.domain.manager.ChessManager;
 import chess.view.InputView;
@@ -68,7 +68,7 @@ public class ChessController {
         if (command.isShow()) {
             Show show = (Show) command;
             OutputView.printMovablePath(BoardResponseDto.toBoard(chessManager.getBoard()),
-                    ShowPathResponseDto.toPath(show.path()));
+                    MovablePathResponseDto.toPath(show.path()));
         }
 
         if (command.isStatus()) {

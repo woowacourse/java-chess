@@ -41,8 +41,8 @@ public class OutputView {
     }
 
     public static void printMovablePath(final BoardResponseDto boardResponseDto,
-                                        final ShowPathResponseDto showPathResponseDto) {
-        List<PositionResponseDto> path = showPathResponseDto.getPath();
+                                        final MovablePathResponseDto movablePathResponseDto) {
+        List<PositionResponseDto> path = movablePathResponseDto.getPath();
         List<String> pieces = parseMovablePathOrPiece(boardResponseDto.getPieces(), path);
         int count = 0;
         for (String symbol : pieces) {
