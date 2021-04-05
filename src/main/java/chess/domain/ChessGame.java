@@ -9,9 +9,7 @@ import chess.domain.player.Scores;
 import chess.domain.player.Turn;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class ChessGame {
@@ -19,12 +17,13 @@ public class ChessGame {
     private final Board board;
 
     private Turn turn;
-    private boolean isGameEnd = false;
+    private boolean isGameEnd;
 
     private ChessGame(final Board board, final Turn turn) {
         this.board = board;
         this.players = Players.init(board);
         this.turn = turn;
+        this.isGameEnd = players.anyKingDead(board);
     }
 
     public static ChessGame initNew() {
@@ -80,8 +79,8 @@ public class ChessGame {
         return isGameEnd;
     }
 
-    public Queue<Owner> winner() {
-        return new LinkedList<>(scores().winner());
+    public List<Owner> winner() {
+        return scores().winner();
     }
 
     public double score(final Owner owner) {

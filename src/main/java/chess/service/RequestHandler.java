@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.board.position.Position;
 import spark.Request;
 
 import java.util.HashMap;
@@ -15,6 +16,18 @@ public class RequestHandler {
 
     }
 
+    public static String roomName(final Request req) {
+        return req.params(":roomName");
+    }
+
+    public static Position source(final Request req) {
+        return new Position(parse(req).get("source"));
+    }
+
+    public static Position target(final Request req) {
+        return new Position(parse(req).get("target"));
+    }
+
     public static Map<String, String> parse(final Request request) {
         final Map<String, String> queryTable = new HashMap<>();
 
@@ -28,4 +41,6 @@ public class RequestHandler {
 
         return queryTable;
     }
+
+
 }

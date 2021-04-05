@@ -9,10 +9,10 @@ import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
 
-import java.util.Queue;
+import java.util.List;
 
 public class OutputView {
-    private static final int NUMBER_OF_WINNER = 1;
+    private static final int SIZE_OF_ONLY_WINNER = 1;
 
     public static void printBoard(final Board board) {
         printPiece(board);
@@ -45,11 +45,11 @@ public class OutputView {
         System.out.println("white 의 점수 : " + scoresDto.getWhiteScore());
     }
 
-    public static void printWinner(final Queue<Owner> owner) {
+    public static void printWinner(final List<Owner> owner) {
         System.out.println("=== 게임 결과 ===");
 
-        if (owner.size() == NUMBER_OF_WINNER) {
-            System.out.println("승자 : " + decidePlayerSymbol(owner.peek()));
+        if (owner.size() == SIZE_OF_ONLY_WINNER) {
+            System.out.println("승자 : " + decidePlayerSymbol(owner.get(0)));
             return;
         }
 

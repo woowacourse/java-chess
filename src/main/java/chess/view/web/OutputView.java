@@ -11,9 +11,10 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 public class OutputView {
+
+    private static int SIZE_OF_ONLY_WINNER = 1;
 
     private OutputView() {
 
@@ -25,30 +26,31 @@ public class OutputView {
         return render(model, "mainPage.html");
     }
 
-    public static String printGame(RoomDto roomDto, BoardDto boardDto, ScoresDto scoresDto) {
+    public static String printGame(final RoomDto room, final BoardDto board, final ScoresDto scores) {
         Map<String, Object> model = new HashMap<>();
-        model.put("room", roomDto);
-        model.put("board", boardDto);
-        model.put("scores", scoresDto);
+        model.put("room", room);
+        model.put("board", board);
+        model.put("scores", scores);
         return render(model, "chessBoard.html");
     }
 
-    public static String printResult(final Queue<Owner> winner) {
+    public static String printResult(final List<Owner> winners) {
         final Map<String, Object> model = new HashMap<>();
-
         final WinnerDto winnerDto = new WinnerDto();
-        if (winner.size() == 1) {
-            winnerDto.setWinner(winner.peek().name());
-        }
-
-        if (winner.size() != 1) {
-            winnerDto.setWinner("무승부");
-        }
+        winnerDto.setWinner(decideWinnerName(winners));
         model.put("winner", winnerDto);
         return render(model, "result.html");
     }
 
-    public static String render(Map<String, Object> model, String templatePath) {
+    private static String decideWinnerName(final List<Owner> winners) {
+        if (winners.size() == SIZE_OF_ONLY_WINNER) {
+            final Owner winner = winners.get(0);
+            return winner.name();
+        }
+        return "무승부";
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

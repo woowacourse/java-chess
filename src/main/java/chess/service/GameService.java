@@ -11,7 +11,6 @@ import chess.service.dao.GameDao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Queue;
 
 public class GameService {
 
@@ -34,8 +33,11 @@ public class GameService {
     public void move(final Long roomId, final Position source, final Position target) throws SQLException {
         final ChessGame chessGame = loadChessGame(roomId);
         chessGame.move(source, target);
-
         gameDao.save(roomId, chessGame.turn(), chessGame.board());
+    }
+
+    public boolean isGameEnd(final Long roomId) throws SQLException {
+        return loadChessGame(roomId).isGameEnd();
     }
 
     public ChessGame loadChessGame(final Long roomId) throws SQLException {
@@ -58,13 +60,7 @@ public class GameService {
         return boardDto;
     }
 
-    public boolean isGameEnd(final Long roomId) throws SQLException {
-        final ChessGame chessGame = loadChessGame(roomId);
-        return chessGame.isGameEnd();
-    }
-
-    public Queue<Owner> winner(final Long roomId) throws SQLException {
-        final ChessGame chessGame = loadChessGame(roomId);
-        return chessGame.winner();
+    public List<Owner> winner(final Long roomId) throws SQLException {
+        return loadChessGame(roomId).winner();
     }
 }
