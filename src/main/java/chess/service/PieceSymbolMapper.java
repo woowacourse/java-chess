@@ -53,21 +53,7 @@ public enum PieceSymbolMapper {
                 .orElseThrow(() -> new IllegalArgumentException("심볼, 색상 매칭 오류" + piece));
     }
 
-    public static Board parseToBoard(final String dataLine) {
-        final Map<Position, Piece> board = new HashMap<>();
-
-        final String[] pieces = dataLine.split(",");
-        int index = 0;
-        for (final Horizontal h : Horizontal.values()) {
-            for (final Vertical v : Vertical.values()) {
-                board.put(new Position(v, h), parseToPiece(pieces[index]));
-                index++;
-            }
-        }
-        return new Board(board);
-    }
-
-    private static Piece parseToPiece(final String uniCode) {
+    public static Piece parseToPiece(final String uniCode) {
         return Arrays.stream(values())
                 .filter(value -> value.uniCode.equals(uniCode))
                 .map(value -> value.piece)

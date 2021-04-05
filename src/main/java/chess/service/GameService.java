@@ -4,13 +4,19 @@ import chess.controller.dto.BoardDto;
 import chess.controller.dto.GameDto;
 import chess.controller.dto.ScoresDto;
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
 import chess.service.dao.GameDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameService {
 
@@ -67,4 +73,6 @@ public class GameService {
     public List<Owner> winner(final Long roomId) throws SQLException {
         return loadChessGame(roomId).winner();
     }
+
+
 }

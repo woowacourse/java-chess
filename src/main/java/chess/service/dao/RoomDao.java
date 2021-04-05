@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class RoomDao {
-
+    private static final int COLUMN_INDEX_OF_ROOM_NAME= 2;
+    private static final int COLUMN_INDEX_OF_ROOM_ID = 3;
     private final Connection conn;
 
     public RoomDao(Connection conn) {
@@ -35,34 +36,23 @@ public class RoomDao {
 
         final List<RoomDto> list = new ArrayList<>();
         while (rs.next()) {
-            RoomDto roomDto = new RoomDto();
-            roomDto.setName(rs.getString(2));
-            roomDto.setId(rs.getLong(3));
-            list.add(roomDto);
+            list.add(makeRoomDto(rs));
         }
         Collections.reverse(list);
         return list;
     }
 
-    public long id(final String roomName) throws SQLException {
-        final String query = "SELECT room_id FROM room_status WHERE room_name = ?";
-        final PreparedStatement insertQuery = conn.prepareStatement(query);
-
-        insertQuery.setString(1, roomName);
-        ResultSet rs = insertQuery.executeQuery();
-        rs.next();
-
-        return rs.getLong(1);
+    private RoomDto makeRoomDto(final ResultSet rs) throws SQLException {
+        RoomDto roomDto = new RoomDto();
+        roomDto.setName(rs.getString(COLUMN_INDEX_OF_ROOM_NAME));
+        roomDto.setId(rs.getLong(COLUMN_INDEX_OF_ROOM_ID));
+        return roomDto;
     }
 
     public String name(final Long roomId) throws SQLException {
-        final String query = "SELECT room_name FROM room_status WHERE room_id = ?";
-        final PreparedStatement insertQuery = conn.prepareStatement(query);
-
-        insertQuery.setLong(1, roomId);
-        ResultSet rs = insertQuery.executeQuery();
+        final Statement stmt = conn.createStatement();
+        final ResultSet rs = stmt.executeQuery("SELECT * FROM room_status WHERE room_id = "+roomId);
         rs.next();
-
-        return rs.getString(1);
+        return rs.getString(COLUMN_INDEX_OF_ROOM_NAME);
     }
 }
