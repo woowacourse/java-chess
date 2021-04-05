@@ -6,15 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChessGameTest {
 
     private ChessGame chessGame;
 
     @BeforeEach
-    void initGame(){
+    void initGame() {
         chessGame = new ChessGame();
     }
 
@@ -41,7 +41,7 @@ class ChessGameTest {
 
     @DisplayName("왕이 죽은 상태에서 게임이 종료되었는지 확인한다.")
     @Test
-    void isGameEndWhenKingDead(){
+    void isGameEndWhenKingDead() {
         chessGame.move(new Position("c7"), new Position("c6"));
         chessGame.move(new Position("d8"), new Position("a5"));
         chessGame.move(new Position("d2"), new Position("d3"));
@@ -52,7 +52,7 @@ class ChessGameTest {
 
     @DisplayName("외부에서 게임을 종료시킬 수 있다.")
     @Test
-    void setGameEnd(){
+    void setGameEnd() {
         assertThat(chessGame.isGameEnd()).isFalse();
         chessGame.setGameEnd();
         assertThat(chessGame.isGameEnd()).isTrue();

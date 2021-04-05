@@ -67,7 +67,7 @@ public class BoardTest {
         board.movePiece(new Position("a2"), new Position("a3"));
 
         assertThatThrownBy(
-                ()->board.movePiece(new Position("a3"), new Position("a5"))
+                () -> board.movePiece(new Position("a3"), new Position("a5"))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -101,7 +101,7 @@ public class BoardTest {
     @Test
     void validatePawnMovement6() {
         assertThatThrownBy(
-                ()->board.movePiece(new Position("a7"), new Position("b6"))
+                () -> board.movePiece(new Position("a7"), new Position("b6"))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

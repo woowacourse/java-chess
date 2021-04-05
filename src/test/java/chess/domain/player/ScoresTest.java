@@ -1,8 +1,8 @@
 package chess.domain.player;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
-import chess.domain.ChessGame;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Score;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,23 +17,23 @@ class ScoresTest {
     private Board board;
 
     @BeforeEach
-    void initGame(){
+    void initGame() {
         chessGame = new ChessGame();
         board = chessGame.board();
     }
 
     @DisplayName("시작 점수는 38점이다.")
     @Test
-    void testStartScore(){
+    void testStartScore() {
         final Scores scores = chessGame.scores();
-        for(final Player player : scores.players()){
+        for (final Player player : scores.players()) {
             assertThat(player.score(board)).isEqualTo(new Score(38.0d));
         }
     }
 
     @DisplayName("같은 수직 라인에 있지 않은 폰은 1점으로 취급한다.")
     @Test
-    void testScoreLosingPawn(){
+    void testScoreLosingPawn() {
         assertThat(getScoreOf(Owner.BLACK)).isEqualTo(new Score(38.0d));
 
         chessGame.move(new Position("a2"), new Position("a4"));
@@ -45,7 +45,7 @@ class ScoresTest {
 
     @DisplayName("같은 수직 라인에 있는 폰은 0.5점으로 취급한다.")
     @Test
-    void testScoreLosingPawnInVerticalLine(){
+    void testScoreLosingPawnInVerticalLine() {
         assertThat(getScoreOf(Owner.WHITE)).isEqualTo(new Score(38.0d));
 
         chessGame.move(new Position("a2"), new Position("a4"));
@@ -57,7 +57,7 @@ class ScoresTest {
 
     @DisplayName("왕이 죽으면 점수는 다른 기물에 상관없이 0점이다.")
     @Test
-    void testScoreIfKingDead(){
+    void testScoreIfKingDead() {
         chessGame.move(new Position("c7"), new Position("c6"));
         chessGame.move(new Position("d8"), new Position("a5"));
         chessGame.move(new Position("d2"), new Position("d3"));
@@ -66,7 +66,7 @@ class ScoresTest {
         assertThat(getScoreOf(Owner.WHITE)).isEqualTo(new Score(0d));
     }
 
-    private Score getScoreOf(final Owner owner){
+    private Score getScoreOf(final Owner owner) {
         final Scores scores = chessGame.scores();
 
         final Player searched = scores.players()

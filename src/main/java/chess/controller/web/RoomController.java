@@ -6,7 +6,7 @@ import chess.view.web.OutputView;
 
 import java.sql.Connection;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 public class RoomController {
     private final RoomService roomService;
@@ -22,15 +22,13 @@ public class RoomController {
     }
 
     private void loadRoomList() {
-        get("/main", (req, res) ->
-                OutputView.printRoomList(roomService.loadList()));
+        get("/main", (req, res) -> OutputView.printRoomList(roomService.loadList()));
     }
 
     private void createRoom() {
         get("/room/create/:roomName", (req, res) -> {
             final String roomName = RequestHandler.roomName(req);
             final Long roomId = roomService.save(roomName);
-
             res.redirect("/game/create/" + roomId);
             return null;
         });
@@ -40,7 +38,7 @@ public class RoomController {
         get("/room/delete/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
             roomService.delete(roomId);
-            res.redirect("/game/delete/"+roomId);
+            res.redirect("/game/delete/" + roomId);
             return null;
         });
     }

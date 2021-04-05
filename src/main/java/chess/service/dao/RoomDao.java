@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class RoomDao {
-    private static final int COLUMN_INDEX_OF_ROOM_NAME= 2;
+    private static final int COLUMN_INDEX_OF_ROOM_NAME = 2;
     private static final int COLUMN_INDEX_OF_ROOM_ID = 3;
     private final Connection conn;
 
@@ -51,7 +51,7 @@ public class RoomDao {
 
     public String name(final Long roomId) throws SQLException {
         final Statement stmt = conn.createStatement();
-        final ResultSet rs = stmt.executeQuery("SELECT * FROM room_status WHERE room_id = "+roomId);
+        final ResultSet rs = stmt.executeQuery("SELECT * FROM room_status WHERE room_id = " + roomId);
         rs.next();
         return rs.getString(COLUMN_INDEX_OF_ROOM_NAME);
     }

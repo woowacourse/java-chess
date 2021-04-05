@@ -1,9 +1,6 @@
 package chess.view.web;
 
-import chess.controller.dto.BoardDto;
-import chess.controller.dto.RoomDto;
-import chess.controller.dto.ScoresDto;
-import chess.controller.dto.WinnerDto;
+import chess.controller.dto.*;
 import chess.domain.piece.Owner;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,14 +17,23 @@ public class OutputView {
 
     }
 
-    public static String printRoomList(List<RoomDto> roomDtos) {
-        Map<String, Object> model = new HashMap<>();
+    public static String printErrorMessage(final String message) {
+        final ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage(message);
+
+        final Map<String, Object> model = new HashMap<>();
+        model.put("error", message);
+        return render(model, "errorPage.html");
+    }
+
+    public static String printRoomList(final List<RoomDto> roomDtos) {
+        final Map<String, Object> model = new HashMap<>();
         model.put("list", roomDtos);
         return render(model, "mainPage.html");
     }
 
     public static String printGame(final RoomDto room, final BoardDto board, final ScoresDto scores) {
-        Map<String, Object> model = new HashMap<>();
+        final Map<String, Object> model = new HashMap<>();
         model.put("room", room);
         model.put("board", board);
         model.put("scores", scores);
@@ -50,7 +56,7 @@ public class OutputView {
         return "무승부";
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private static String render(final Map<String, Object> model, final String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

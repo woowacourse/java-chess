@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class GameDaoTest {
 
     private GameDao dao;
+
     @BeforeEach
-    void init(){
+    void init() {
         DBConfig dbConfig = new DBConfig();
         Connection connection = dbConfig.getConnection();
         dao = new GameDao(connection);
@@ -25,11 +25,11 @@ class GameDaoTest {
 
     @DisplayName("Game의 현재 상태가 db에 저장되는지 확인한다.")
     @Test
-    void testInsert(){
+    void testInsert() {
         Board board = BoardInitializer.initiateBoard();
-        try{
+        try {
             dao.save(0, Turn.BLACK, board);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             fail();
         }
