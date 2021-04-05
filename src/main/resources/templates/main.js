@@ -34,11 +34,11 @@ function moveHandler() {
   }, false);
 
   this.$chessBoard.addEventListener("dragenter", function (e) {
-      e.target.style.background = "blue";
+    e.target.style.background = "blue";
   }, false);
 
   this.$chessBoard.addEventListener("dragleave", function (e) {
-      e.target.style.background = "";
+    e.target.style.background = "";
   }, false);
 
   this.$chessBoard.addEventListener("drop", function (e) {
@@ -51,17 +51,17 @@ function moveHandler() {
 }
 
 function boardTemplate(position, piece) {
-  return `<div id=${position} class='square ${positionColor(
-      position)} ${piece.type}'>
-<img class='piece' src=${pieceImage(piece)} />
-</div>`
+  return `<div id=${position} class='square ${positionColor(position)}
+          ${piece.color} ${piece.type}'>
+          <img class='piece' src=${pieceImage(piece)} alt=${piece}/>
+        </div>`
 }
 
 function positionColor(position) {
   if (position[1] % 2 === 0) {
-    return position[0].charCodeAt(0) % 2 === 0 ? 'white' : 'black'
+    return position[0].charCodeAt(0) % 2 === 0 ? 'b-white' : 'b-black'
   }
-  return position[0].charCodeAt(0) % 2 === 0 ? 'black' : 'white'
+  return position[0].charCodeAt(0) % 2 === 0 ? 'b-black' : 'b-white'
 }
 
 function pieceImage(piece) {
