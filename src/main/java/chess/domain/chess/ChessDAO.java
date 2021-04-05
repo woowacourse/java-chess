@@ -10,14 +10,6 @@ import chess.domain.ConnectionUtils;
 
 public class ChessDAO {
 
-    public void deleteIfPreviousChessExists() throws SQLException {
-        Optional<Long> chessId = findChessId();
-        if (chessId.isPresent()) {
-            deletePreviousPiece(chessId.get());
-            deletePreviousChess(chessId.get());
-        }
-    }
-
     public Optional<Long> findChessId() throws SQLException {
         String query = "SELECT chess_id FROM chess c";
 
@@ -31,20 +23,11 @@ public class ChessDAO {
         return Optional.empty();
     }
 
-    private void deletePreviousPiece(Long chessId) throws SQLException {
-        String chessQuery = "DELETE FROM piece WHERE chess_id = (?)";
-        deleteById(chessQuery, chessId);
-    }
-
-    private void deletePreviousChess(Long chessId) throws SQLException {
-        String chessQuery = "DELETE FROM chess WHERE chess_id = (?)";
-        deleteById(chessQuery, chessId);
-    }
-
-    private void deleteById(String query, Long id) throws SQLException {
+    public void delete(Long chessId) throws SQLException {
+        String query = "DELETE FROM chess WHERE chess_id = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, id);
+            pstmt.setLong(1, chessId);
             pstmt.executeUpdate();
         }
     }
@@ -64,19 +47,5 @@ public class ChessDAO {
             pstmt.setLong(1, chessId);
             pstmt.executeUpdate();
         }
-    }
-
-    public String findTurnByChessId() throws SQLException {
-        Optional<String> turn = Optional.empty();
-        String query = "SELECT turn FROM chess c";
-
-        try (Connection connection = ConnectionUtils.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            ResultSet resultSet = pstmt.executeQuery();
-            if (resultSet.next()) {
-                turn = Optional.of(resultSet.getString("turn"));
-            }
-        }
-        return turn.orElseThrow(() -> new IllegalStateException("진행 중인 체스 게임이 없습니다."));
     }
 }
