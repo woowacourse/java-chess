@@ -13,16 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameDAO {
-    private static final String WHITE_TEAM = "white";
-    private static final String BLACK_TEAM = "black";
+    private static final String WHITE_TEAM_FORMAT = "white";
+    private static final String BLACK_TEAM_FORMAT = "black";
 
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess_db"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+        final String server = "localhost:13306"; // MySQL 서버 주소
+        final String database = "chess_db"; // MySQL DATABASE 이름
+        final String option = "?useSSL=false&serverTimezone=UTC";
+        final String userName = "root"; //  MySQL 서버 아이디
+        final String password = "root"; // MySQL 서버 비밀번호
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -43,9 +43,9 @@ public class ChessGameDAO {
     }
 
     public void createChessGame(final ChessGame chessGame, final String currentTurnTeam) throws SQLException {
-        createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM);
-        createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM);
-        String query = "INSERT INTO chess_game VALUES (?, ?)";
+        createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM_FORMAT);
+        createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM_FORMAT);
+        final String query = "INSERT INTO chess_game VALUES (?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, currentTurnTeam);
         pstmt.setBoolean(2, chessGame.isPlaying());
@@ -66,22 +66,26 @@ public class ChessGameDAO {
     }
 
     public ChessGame readChessGame() throws SQLException {
-        final String blackTeamQuery = "SELECT * FROM piece_position where team = 'black'";
-        Team blackTeam = readPiecePositionByTeam(blackTeamQuery);
-        final String whiteTeamQuery = "SELECT * FROM piece_position where team = 'white'";
-        Team whiteTeam = readPiecePositionByTeam(whiteTeamQuery);
+        final Team blackTeam = readPiecePositionByTeam(BLACK_TEAM_FORMAT);
+        final Team whiteTeam = readPiecePositionByTeam(WHITE_TEAM_FORMAT);
         return generateChessGame(blackTeam, whiteTeam);
     }
 
-    private Team readPiecePositionByTeam(String teamQuery) throws SQLException {
+    private Team readPiecePositionByTeam(final String teamAsString) throws SQLException {
+        final String teamQuery = "SELECT * FROM piece_position where team = (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(teamQuery);
+        pstmt.setString(1, teamAsString);
         ResultSet ResultSet = pstmt.executeQuery();
+        return generateTeam(ResultSet);
+    }
+
+    private Team generateTeam(final ResultSet resultSet) throws SQLException {
         final Map<Position, Piece> piecePosition = new HashMap<>();
-        while (ResultSet.next()) {
-            final String team = ResultSet.getString(1);
-            final String pieceAsString = ResultSet.getString(2);
-            final String positionAsString = ResultSet.getString(3);
-            final boolean isFirstMove = ResultSet.getBoolean(4);
+        while (resultSet.next()) {
+            final String team = resultSet.getString(1);
+            final String pieceAsString = resultSet.getString(2);
+            final String positionAsString = resultSet.getString(3);
+            final boolean isFirstMove = resultSet.getBoolean(4);
             piecePosition.put(Position.of(positionAsString), DAOtoPiece.generatePiece(team, pieceAsString, isFirstMove));
         }
         final PiecePosition PiecePositionByTeam = new PiecePosition(piecePosition);
@@ -103,7 +107,7 @@ public class ChessGameDAO {
 
     private ChessGame generateChessGameAccordingToDB(final Team blackTeam, final Team whiteTeam,
                                                      final String currentTurnTeam, final boolean isPlaying) {
-        if ("white".equals(currentTurnTeam)) {
+        if (WHITE_TEAM_FORMAT.equals(currentTurnTeam)) {
             return new ChessGame(blackTeam, whiteTeam, whiteTeam, isPlaying);
         }
         return new ChessGame(blackTeam, whiteTeam, blackTeam, isPlaying);
