@@ -43,11 +43,7 @@ public class WebChessController {
         get("/startNewGame", (req, res) -> {
             Gson gson = new Gson();
             try {
-                chessGameDAO.deleteChessGame();
-                whiteTeam = Team.whiteTeam();
-                blackTeam = Team.blackTeam();
-                chessGame = new ChessGame(blackTeam, whiteTeam);
-                chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+                startNewGame();
                 res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
@@ -59,9 +55,7 @@ public class WebChessController {
         get("/loadPrevGame", (req, res) -> {
             Gson gson = new Gson();
             try {
-                chessGame = chessGameDAO.readChessGame();
-                whiteTeam = chessGame.getWhiteTeam();
-                blackTeam = chessGame.getBlackTeam();
+                loadPreviousGame();
                 res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
@@ -73,8 +67,7 @@ public class WebChessController {
         post("/save", (req, res) -> {
             Gson gson = new Gson();
             try {
-                chessGameDAO.deleteChessGame();
-                chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+                saveGame();
                 res.status(SUCCESS.statusCode());
                 return gson.toJson(DBConnectionDTO.success());
             } catch (SQLException e) {
@@ -89,7 +82,7 @@ public class WebChessController {
             final String start = moveRequestDTO.getStart();
             final String destination = moveRequestDTO.getDestination();
             try {
-                chessGame.move(Position.of(start), Position.of(destination));
+                move(start, destination);
                 res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
             } catch (IllegalArgumentException e) {
@@ -103,7 +96,30 @@ public class WebChessController {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    private ChessGameDTO generateChessGameDTO() {
+    private synchronized void startNewGame() throws SQLException {
+        chessGameDAO.deleteChessGame();
+        whiteTeam = Team.whiteTeam();
+        blackTeam = Team.blackTeam();
+        chessGame = new ChessGame(blackTeam, whiteTeam);
+        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+    }
+
+    private synchronized void loadPreviousGame() throws SQLException {
+        chessGame = chessGameDAO.readChessGame();
+        whiteTeam = chessGame.getWhiteTeam();
+        blackTeam = chessGame.getBlackTeam();
+    }
+
+    private synchronized void saveGame() throws SQLException {
+        chessGameDAO.deleteChessGame();
+        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+    }
+
+    private synchronized void move(final String start, final String destination) {
+        chessGame.move(Position.of(start), Position.of(destination));
+    }
+
+    private synchronized ChessGameDTO generateChessGameDTO() {
         final Map<String, Map<String, String>> piecePositionToString = generatePiecePositionToString();
         final String currentTurnTeam = currentTurnTeamToString();
         final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
@@ -130,7 +146,7 @@ public class WebChessController {
         return piecePositionConverted;
     }
 
-    private String currentTurnTeamToString() {
+    private synchronized String currentTurnTeamToString() {
         final Team currentTurnTeam = chessGame.getCurrentTurnTeam();
         if (currentTurnTeam.equals(whiteTeam)) {
             return WHITE_TEAM.asDAOFormat();
