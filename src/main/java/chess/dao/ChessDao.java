@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import chess.dto.BoardDto;
 import chess.dto.UserDto;
@@ -95,13 +96,11 @@ public class ChessDao {
             return null;
         }
         String info = rs.getString("board_info");
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Point point = Point.valueOf(i, j);
-                Piece piece = PieceType.findPiece(String.valueOf(info.charAt(i * 8 + j)));  //"K"
-                chessBoard.put(point, piece);
-            }
-        }
+            IntStream.rangeClosed(0, 7)
+                .forEach(i -> IntStream.rangeClosed(0,7).forEachOrdered(j -> chessBoard.put(
+                        Point.valueOf(i, j), PieceType.findPiece(String.valueOf(info.charAt(i * 8 + j)))
+                    ))
+                );
         return new BoardDto(chessBoard);
     }
 }
