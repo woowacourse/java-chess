@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.controller.HTTPStatusCode.*;
 import static spark.Spark.*;
 
 public class WebChessController {
@@ -48,10 +49,10 @@ public class WebChessController {
                 blackTeam = Team.blackTeam();
                 chessGame = new ChessGame(blackTeam, whiteTeam);
                 chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
-                res.status(200);
+                res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
-                res.status(404);
+                res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
             }
         });
@@ -62,10 +63,10 @@ public class WebChessController {
                 chessGame = chessGameDAO.readChessGame();
                 whiteTeam = chessGame.getWhiteTeam();
                 blackTeam = chessGame.getBlackTeam();
-                res.status(200);
+                res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
             } catch (SQLException e) {
-                res.status(404);
+                res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
             }
         });
@@ -75,10 +76,10 @@ public class WebChessController {
             try {
                 chessGameDAO.deleteChessGame();
                 chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
-                res.status(200);
+                res.status(SUCCESS.statusCode());
                 return gson.toJson(DBConnectionDTO.success());
             } catch (SQLException e) {
-                res.status(404);
+                res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
             }
         });
@@ -90,10 +91,10 @@ public class WebChessController {
             final String destination = moveRequestDTO.getDestination();
             try {
                 chessGame.move(Position.of(start), Position.of(destination));
-                res.status(200);
+                res.status(SUCCESS.statusCode());
                 return gson.toJson(generateChessGameDTO());
-            } catch (Exception e) {
-                res.status(404);
+            } catch (IllegalArgumentException e) {
+                res.status(BAD_REQUEST.statusCode());
                 return gson.toJson(generateChessGameDTO());
             }
         });
