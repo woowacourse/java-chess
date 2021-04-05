@@ -7,15 +7,52 @@ async function getBoard() {
 }
 
 async function init() {
-  const $chessBoard = document.querySelector('.chessBoard')
-  const chessBoard = await getBoard();
-  chessBoard.map((board) => {
-    $chessBoard.insertAdjacentHTML('beforeend', boardTemplate(board.position, board.piece))
+  this.$chessBoard = document.querySelector('.chessBoard')
+  this.chessBoard = await getBoard();
+  this.chessBoard.map((board) => {
+    this.$chessBoard.insertAdjacentHTML('beforeend',
+        boardTemplate(board.position, board.piece))
   })
+  moveHandler()
+}
+
+function moveHandler() {
+  let source
+  let target
+  this.$chessBoard.addEventListener("drag", function (e) {
+  }, false);
+
+  this.$chessBoard.addEventListener("dragstart", function (e) {
+    source = e.target.closest('div');
+  }, false);
+
+  this.$chessBoard.addEventListener("dragend", function (e) {
+  }, false);
+
+  this.$chessBoard.addEventListener("dragover", function (e) {
+    e.preventDefault();
+  }, false);
+
+  this.$chessBoard.addEventListener("dragenter", function (e) {
+      e.target.style.background = "blue";
+  }, false);
+
+  this.$chessBoard.addEventListener("dragleave", function (e) {
+      e.target.style.background = "";
+  }, false);
+
+  this.$chessBoard.addEventListener("drop", function (e) {
+    e.preventDefault();
+    e.target.style.background = "";
+    target = e.target.closest('div')
+    move(source, target)
+    console.log(source, target)
+  }, false);
 }
 
 function boardTemplate(position, piece) {
-  return `<div id=${position} class='square ${positionColor(position)}'>
+  return `<div id=${position} class='square ${positionColor(
+      position)} ${piece.type}'>
 <img class='piece' src=${pieceImage(piece)} />
 </div>`
 }
@@ -29,22 +66,28 @@ function positionColor(position) {
 
 function pieceImage(piece) {
   if (piece.type === 'rook') {
-    return piece.color === 'WHITE' ? './images/rook_white.png' : './images/rook_black.png'
+    return piece.color === 'WHITE' ? './images/rook_white.png'
+        : './images/rook_black.png'
   }
   if (piece.type === 'knight') {
-    return piece.color === 'WHITE' ? './images/knight_white.png' : './images/knight_black.png'
+    return piece.color === 'WHITE' ? './images/knight_white.png'
+        : './images/knight_black.png'
   }
   if (piece.type === 'bishop') {
-    return piece.color === 'WHITE' ? './images/bishop_white.png' : './images/bishop_black.png'
+    return piece.color === 'WHITE' ? './images/bishop_white.png'
+        : './images/bishop_black.png'
   }
   if (piece.type === 'queen') {
-    return piece.color === 'WHITE' ? './images/queen_white.png' : './images/queen_black.png'
+    return piece.color === 'WHITE' ? './images/queen_white.png'
+        : './images/queen_black.png'
   }
   if (piece.type === 'king') {
-    return piece.color === 'WHITE' ? './images/king_white.png' : './images/king_black.png'
+    return piece.color === 'WHITE' ? './images/king_white.png'
+        : './images/king_black.png'
   }
   if (piece.type === 'pawn') {
-    return piece.color === 'WHITE' ? './images/pawn_white.png' : './images/pawn_black.png'
+    return piece.color === 'WHITE' ? './images/pawn_white.png'
+        : './images/pawn_black.png'
   }
   return './images/blank.png'
 }
