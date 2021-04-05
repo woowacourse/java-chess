@@ -80,7 +80,7 @@ public class ChessGame implements Serializable {
             this.isPlaying = true;
             return;
         }
-        this.isPlaying = false;
+        exit();
     }
 
     private void restart() {

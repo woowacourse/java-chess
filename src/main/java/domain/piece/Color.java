@@ -1,6 +1,8 @@
 package domain.piece;
 
-public enum Color {
+import java.io.Serializable;
+
+public enum Color implements Serializable {
 
     BLACK("검은색"),
     WHITE("흰색"),

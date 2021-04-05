@@ -215,6 +215,7 @@ MainPage.prototype.putPieces = function () {
 
     if (!data.isPlaying) {
       alert(data.winner);
+      mainPage.putChessGame(true, false);
     }
     mainPage.isPlaying = data.isPlaying;
     mainPage.templatePieces(data.pieces);
