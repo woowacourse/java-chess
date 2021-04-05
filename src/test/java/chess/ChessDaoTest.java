@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import chess.dao.ChessDao;
@@ -21,6 +22,7 @@ class ChessDaoTest {
         assertNotNull(con);
     }
 
+    @Disabled
     @Test
     public void addUser() throws Exception {
         UserDto userDto = new UserDto("testUser", "testPwd");
