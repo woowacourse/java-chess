@@ -44,7 +44,7 @@ async function removePreviousGame(id) {
 async function onNewGame() {
     const idResponse = await fetch('/chess/ids');
     const idJson = await idResponse.json();
-    const id = idJson["body"];
+    const id = idJson.content;
     if (id !== 'EMPTY') {
         await removePreviousGame(id);
     }
@@ -55,7 +55,7 @@ async function onNewGame() {
 async function onContinue() {
     const idResponse = await fetch('/chess/ids');
     const idJson = await idResponse.json();
-    const id = idJson["body"];
+    const id = idJson.content;
     if (id === 'EMPTY') {
         alert("진행 중인 게임이 없습니다.");
         return;
