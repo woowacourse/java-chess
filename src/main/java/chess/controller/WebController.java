@@ -85,12 +85,12 @@ public class WebController {
         try {
             gameDAO.saveGame(ChessBoardDto.from(chessGameManager.getBoard()), chessGameManager.getCurrentTurnColor());
             return new CommonDto<NoneItem>(
-                    StatusCode.OK,
+                    StatusCode.CREATE,
                     "게임을 저장했습니다.",
                     new NoneItem());
         } catch (SQLException e) {
             return new CommonDto<NoneItem>(
-                    StatusCode.BAD_REQUEST,
+                    StatusCode.INTERNAL_SERVER_ERROR,
                     "게임을 데이터베이스에 저장하는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
                     new NoneItem());
         }
