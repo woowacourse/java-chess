@@ -1,21 +1,49 @@
 package chess;
 
-import static spark.Spark.get;
+import chess.repository.ChessRepository;
+import chess.repository.RoomRepository;
+import chess.service.ChessService;
+import chess.service.RoomService;
+import chess.web.ChessController;
+import chess.web.ExceptionHandler;
+import chess.web.MoveController;
+import chess.web.RoomController;
 
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
+
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        ChessController chessController = initializeChessController();
+        RoomController roomController = initializeRoomController();
+
+        setConfiguration();
+        get("/", MoveController::moveToMainPage);
+        get("/chessgame/:roomId", MoveController::moveToGamePage);
+        get("/result/:roomId", MoveController::moveToResultPage);
+        get("/room/show", roomController::showRooms);
+        post("/room/add", roomController::insertRoom);
+        get("/chessgame/:roomId/show", chessController::showChessBoard);
+        post("/chessgame/:roomId/move", chessController::move);
+        get("/chessgame/:roomId/show/result", chessController::showResult);
+        get("/chessgame/:roomId/restart", chessController::restart);
+        exception(RuntimeException.class, ExceptionHandler::bindException);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void setConfiguration() {
+        port(8080);
+        staticFiles.location("/static");
+    }
+
+    private static ChessController initializeChessController() {
+        ChessRepository chessRepository = new ChessRepository();
+        ChessService chessService = new ChessService(chessRepository);
+        return new ChessController(chessService);
+    }
+
+    private static RoomController initializeRoomController() {
+        RoomRepository roomRepository = new RoomRepository();
+        RoomService roomService = new RoomService(roomRepository);
+        return new RoomController(roomService);
     }
 }

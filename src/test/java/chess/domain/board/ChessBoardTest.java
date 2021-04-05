@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -55,10 +55,10 @@ class ChessBoardTest {
         cells.get(Coordinate.from("e1")).put(new Rook(TeamType.WHITE));
         cells.get(Coordinate.from("f1")).put(new King(TeamType.WHITE));
 
-        Result result = chessBoard.calculateScores();
+        Scores scores = chessBoard.calculateScores();
 
-        assertThat(result.getBlackTeamScore()).isEqualTo(20);
-        assertThat(result.getWhiteTeamScore()).isEqualTo(19.5);
+        assertThat(scores.getBlackTeamScore()).isEqualTo(20);
+        assertThat(scores.getWhiteTeamScore()).isEqualTo(19.5);
     }
 
     @DisplayName("체크메이트 상태가 아니라 승리한 팀을 찾을 수 없다.")

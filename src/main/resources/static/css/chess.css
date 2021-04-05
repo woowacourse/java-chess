@@ -1,0 +1,25 @@
+#board {
+    display: grid;
+    grid-template-columns: repeat(8, 105px);
+    grid-template-rows: repeat(8, 105px);
+    position: absolute;
+}
+
+#status {
+    position: absolute;
+    left: 900px;
+}
+
+.piece-current-position {
+    margin-top: 100px;
+}
+
+.reset {
+    margin-top: 100px;
+}
+
+.piece {
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
+}

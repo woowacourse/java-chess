@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.console;
 
 import chess.domain.board.Cell;
 import chess.domain.board.ChessBoard;
@@ -8,7 +8,7 @@ import chess.domain.command.Command;
 import chess.domain.command.CommandRequest;
 import chess.domain.command.CommandTokens;
 import chess.domain.piece.TeamType;
-import chess.domain.result.Result;
+import chess.domain.result.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,9 +67,9 @@ class CommandTest {
         ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateDefaultChessBoard());
         CommandRequest commandRequest = new CommandRequest(TeamType.WHITE, CommandTokens.from(Arrays.asList("status")));
 
-        Result result = command.execute(chessBoard, commandRequest);
-        double blackTeamScore = result.getBlackTeamScore();
-        double whiteTeamScore = result.getWhiteTeamScore();
+        Scores scores = command.execute(chessBoard, commandRequest);
+        double blackTeamScore = scores.getBlackTeamScore();
+        double whiteTeamScore = scores.getWhiteTeamScore();
 
         assertThat(blackTeamScore).isEqualTo(38.0);
         assertThat(whiteTeamScore).isEqualTo(38.0);
