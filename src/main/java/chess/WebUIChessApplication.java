@@ -34,7 +34,7 @@ public class WebUIChessApplication {
                 String roomName = req.params(":name");
                 controller.createRoom(roomName);
                 return ResponseDto.ok(roomName);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 return ResponseDto.error(e.getMessage());
             }
         });
@@ -45,7 +45,7 @@ public class WebUIChessApplication {
                 MoveResponseDto result = controller.findPiecesByRoomName(roomName);
                 res.type("application/json");
                 return ResponseDto.ok(result);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 return ResponseDto.error(e.getMessage());
             }
         });
@@ -55,7 +55,7 @@ public class WebUIChessApplication {
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.start(roomName);
                 return ResponseDto.ok(result);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 return ResponseDto.error(e.getMessage());
             }
         });
@@ -65,7 +65,7 @@ public class WebUIChessApplication {
                 String roomName = req.params(":name");
                 MoveResponseDto result = controller.end(roomName);
                 return ResponseDto.ok(result);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 return ResponseDto.error(e.getMessage());
             }
         });
@@ -76,7 +76,7 @@ public class WebUIChessApplication {
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
                 MoveResponseDto result = controller.move(roomName, moveRequestDto.getSource(), moveRequestDto.getTarget());
                 return ResponseDto.ok(result);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 return ResponseDto.error(e.getMessage());
             }
         });
