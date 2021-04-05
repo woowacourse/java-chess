@@ -25,6 +25,10 @@ public class GameService {
         gameDao.save(roomId, chessGame.turn(), chessGame.board());
     }
 
+    public void delete(final Long roomId) throws SQLException {
+        gameDao.delete(roomId);
+    }
+
     public List<String> show(final Long roomId, final Position source) throws SQLException {
         final ChessGame chessGame = loadChessGame(roomId);
         return chessGame.reachablePositions(source);
@@ -33,7 +37,7 @@ public class GameService {
     public void move(final Long roomId, final Position source, final Position target) throws SQLException {
         final ChessGame chessGame = loadChessGame(roomId);
         chessGame.move(source, target);
-        gameDao.save(roomId, chessGame.turn(), chessGame.board());
+        gameDao.update(roomId, chessGame.turn(), chessGame.board());
     }
 
     public boolean isGameEnd(final Long roomId) throws SQLException {

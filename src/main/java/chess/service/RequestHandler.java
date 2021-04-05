@@ -16,18 +16,6 @@ public class RequestHandler {
 
     }
 
-    public static String roomName(final Request req) {
-        return req.params(":roomName");
-    }
-
-    public static Position source(final Request req) {
-        return new Position(parse(req).get("source"));
-    }
-
-    public static Position target(final Request req) {
-        return new Position(parse(req).get("target"));
-    }
-
     public static Map<String, String> parse(final Request request) {
         final Map<String, String> queryTable = new HashMap<>();
 
@@ -42,5 +30,19 @@ public class RequestHandler {
         return queryTable;
     }
 
+    public static Position source(final Request req) {
+        return new Position(parse(req).get("source"));
+    }
 
+    public static Position target(final Request req) {
+        return new Position(parse(req).get("target"));
+    }
+
+    public static Long roomId(final Request req) {
+        return Long.parseLong(req.params(":roomId"));
+    }
+
+    public static String roomName(final Request req) {
+        return req.params(":roomName");
+    }
 }

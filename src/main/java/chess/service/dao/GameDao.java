@@ -5,10 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.player.Turn;
 import chess.service.PieceSymbolMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -19,7 +16,6 @@ public class GameDao {
         this.conn = connection;
     }
 
-    // XXX :: gameDTO를 이용해볼 생각
     public void save(final long roomId, final Turn turn, final Board board) throws SQLException {
         final String query = "INSERT INTO game_status (room, turn, board) VALUES (?, ?, ?)";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
@@ -30,27 +26,41 @@ public class GameDao {
         insertQuery.executeUpdate();
     }
 
-    public GameDto load(final long roomId) throws SQLException {
-        final GameDto gameDto = new GameDto();
-
+    public GameDto load(final Long roomId) throws SQLException {
         final String query = "SELECT * FROM game_status WHERE room = (?) ORDER BY id DESC limit 1";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
         insertQuery.setLong(1, roomId);
-        final ResultSet rs = insertQuery.executeQuery();
 
+        final ResultSet rs = insertQuery.executeQuery();
         rs.next();
+
+        final GameDto gameDto = new GameDto();
         gameDto.setTurn(Turn.of(rs.getString("turn")));
         gameDto.setBoard(PieceSymbolMapper.parseToBoard(rs.getString("board")));
 
         return gameDto;
     }
 
-    // XXX :: Service로 분리하기
+    public void delete(final Long roomId) throws SQLException {
+        final Statement statement = conn.createStatement();
+        statement.executeUpdate("DELETE FROM game_status WHERE room = "+roomId);
+    }
+
     public String boardToText(final Board board) {
         final String separator = ",";
         final String[][] boardAsUnicode = board.parseUnicodeBoard();
         return Arrays.stream(boardAsUnicode)
                 .flatMap(strings -> Arrays.stream(strings))
                 .collect(Collectors.joining(separator));
+    }
+
+    public void update(final Long roomId, final Turn turn, final Board board) throws SQLException {
+        final String query = "UPDATE game_status SET turn = ?,  board= ?  WHERE  room = ?";
+        final PreparedStatement insertQuery = conn.prepareStatement(query);
+
+        insertQuery.setString(1, turn.name());
+        insertQuery.setString(2, boardToText(board));
+        insertQuery.setLong(3, roomId);
+        insertQuery.executeUpdate();
     }
 }

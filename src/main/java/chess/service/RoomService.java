@@ -21,6 +21,10 @@ public class RoomService {
         return roomId;
     }
 
+    public void delete(final Long roomId) throws SQLException {
+        roomDao.delete(roomId);
+    }
+
     public List<RoomDto> loadList() throws SQLException {
         return roomDao.load();
     }

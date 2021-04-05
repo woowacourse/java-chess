@@ -16,8 +16,8 @@ let source = "";
 let target = "";
 
 function enterNewGame() {
-    const gameName = document.getElementById("game-name-input").value;
-    location.href = "/create/" + gameName;
+    const roomName = document.getElementById("game-name-input").value;
+    location.href = "/room/create/" + roomName;
 }
 
 function click() {
@@ -53,12 +53,12 @@ function clickWhereToMove(eventTarget) {
 }
 
 function submitMove(src, tar) {
-    const roomName = document.getElementById("roomName").innerText;
+    const roomId = document.getElementById("roomId").innerText;
 
     const form = document.createElement("form");
     form.setAttribute("charset", "UTF-8");
     form.setAttribute("method", "Post");
-    form.setAttribute("action", "/move/" + roomName);
+    form.setAttribute("action", "/game/move/" + roomId);
 
     const sourceField = document.createElement("input");
     sourceField.setAttribute("type", "hidden");
@@ -87,11 +87,11 @@ function checkIsEnd() {
 }
 
 function show(target) {
-    const roomName = document.getElementById("roomName").innerText;
+    const roomId = document.getElementById("roomId").innerText;
     const requestQuery = "source=" + target.id;
 
     $.ajax({
-        url: "/show/" + roomName,
+        url: "/game/show/" + roomId,
         type: "POST",
         data: requestQuery,
         success: function (result) {

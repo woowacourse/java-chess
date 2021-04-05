@@ -1,6 +1,7 @@
 package chess;
 
-import chess.controller.web.WebController;
+import chess.controller.web.GameController;
+import chess.controller.web.RoomController;
 import chess.service.dao.DBConfig;
 
 import java.sql.Connection;
@@ -13,7 +14,11 @@ public class WebApplication {
 
         DBConfig dbConfig = new DBConfig();
         Connection connection = dbConfig.getConnection();
-        WebController webController = new WebController(connection);
-        webController.mapping();
+
+        GameController gameController = new GameController(connection);
+        RoomController roomController = new RoomController(connection);
+
+        gameController.mapping();
+        roomController.mapping();
     }
 }
