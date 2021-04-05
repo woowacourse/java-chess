@@ -16,13 +16,12 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
-
-    private static final Gson gson = new Gson();
-    private static final ChessController controller = new ChessController();
-
     public static void main(String[] args) {
         port(8080);
         staticFiles.location("/public");
+
+        Gson gson = new Gson();
+        ChessController controller = new ChessController();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
