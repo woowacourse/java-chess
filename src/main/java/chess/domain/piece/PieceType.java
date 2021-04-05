@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.*;
 import static chess.domain.piece.PieceType.Constants.*;
-import static chess.domain.piece.kind.Pawn.*;
+import static chess.domain.piece.kind.Pawn.INITIAL_BLACK_PAWN_ROW;
+import static chess.domain.piece.kind.Pawn.INITIAL_WHITE_PAWN_ROW;
+import static chess.domain.piece.kind.Pawn.PAWN_NAME;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,134 +24,134 @@ public enum PieceType {
     ROOK(INITIAL_COLUMN_OF_ROOK, Rook.ROOK_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new Rook(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new Rook(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new Rook(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_BLACK_ROW_WITHOUT_PAWN) {
                 return new Rook(BLACK);
             }
-            if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new Rook(WHITE);
             }
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     },
 
     KNIGHT(INITIAL_COLUMN_OF_KNIGHT, Knight.KNIGHT_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new Knight(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new Knight(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new Knight(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_BLACK_ROW_WITHOUT_PAWN) {
                 return new Knight(BLACK);
             }
-            if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new Knight(WHITE);
             }
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     },
     BISHOP(INITIAL_COLUMN_OF_BISHOP, Bishop.BISHOP_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new Bishop(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new Bishop(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new Bishop(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_BLACK_ROW_WITHOUT_PAWN) {
                 return new Bishop(BLACK);
             }
-            if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new Bishop(WHITE);
             }
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     },
     QUEEN(INITIAL_COLUMN_OF_QUEEN, Queen.QUEEN_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new Queen(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new Queen(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new Queen(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_BLACK_ROW_WITHOUT_PAWN) {
                 return new Queen(BLACK);
             }
-            if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new Queen(WHITE);
             }
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     },
     KING(INITIAL_COLUMN_OF_KING, King.KING_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new King(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new King(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new King(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_BLACK_ROW_WITHOUT_PAWN) {
                 return new King(BLACK);
             }
-            if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
+            if (row == INITIAL_WHITE_ROW_WITHOUT_PAWN) {
                 return new King(WHITE);
             }
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     },
     PAWN(new ArrayList<>(), PAWN_NAME) {
         @Override
         public Piece of(String name) {
-            if (name.equals(this.pieceName)) {
-                return new Pawn(WHITE);
-            }
             if (name.equals(this.pieceName.toUpperCase())) {
                 return new Pawn(BLACK);
+            }
+            if (name.equals(this.pieceName)) {
+                return new Pawn(WHITE);
             }
             return new Empty(NOTHING);
         }
 
         @Override
         public Piece create(int row, int column) {
-            return createDefaultPieces(row, column);
+            return createDefaultPieces(row);
         }
     };
 
@@ -161,7 +163,7 @@ public enum PieceType {
         this.pieceName = pieceName;
     }
 
-    private static Piece createDefaultPieces(int row, int column) {
+    private static Piece createDefaultPieces(int row) {
         if (row == INITIAL_BLACK_PAWN_ROW) {
             return new Pawn(BLACK);
         }
@@ -195,12 +197,12 @@ public enum PieceType {
     public abstract Piece create(int row, int column);
 
     static final class Constants {
-        public static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);
-        public static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);
-        public static final List<Integer> INITIAL_COLUMN_OF_BISHOP = Arrays.asList(2, 5);
-        public static final List<Integer> INITIAL_COLUMN_OF_QUEEN = Collections.singletonList(3);
-        public static final List<Integer> INITIAL_COLUMN_OF_KING = Collections.singletonList(4);
-        private static final int INITIAL_WHITE_ROW_WITHOUT_PAWN = 7;
-        private static final int INITIAL_BLACK_ROW_WITHOUT_PAWN = 0;
+        static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);
+        static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);
+        static final List<Integer> INITIAL_COLUMN_OF_BISHOP = Arrays.asList(2, 5);
+        static final List<Integer> INITIAL_COLUMN_OF_QUEEN = Collections.singletonList(3);
+        static final List<Integer>  INITIAL_COLUMN_OF_KING = Collections.singletonList(4);
+        static final int INITIAL_WHITE_ROW_WITHOUT_PAWN = 7;
+        static final int INITIAL_BLACK_ROW_WITHOUT_PAWN = 0;
     }
 }
