@@ -75,8 +75,6 @@ public class WebUIChessApplication {
         });
 
         get("/status", (req, res) -> gson.toJson(getResultDto(game, menuController)));
-
-        gameDao.closeConnection();
     }
 
     private static Map<Position, Piece> convertPiecesDtoToPieces(PiecesDto piecesDto) {
