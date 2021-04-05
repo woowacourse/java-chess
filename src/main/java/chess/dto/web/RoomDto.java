@@ -17,10 +17,6 @@ public class RoomDto {
         this.black = black;
     }
 
-    public RoomDto(String name, String white, String black) {
-        this("", name, white, black);
-    }
-
     private static void validateName(String name) {
         if (name.length() < NAME_COUNT_MIN) {
             throw new IllegalArgumentException("방 이름은 2글자 이상입니다.");
