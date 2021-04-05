@@ -12,10 +12,10 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessGameDAO {
-    private static final String WHITE_TEAM_FORMAT = "white";
-    private static final String BLACK_TEAM_FORMAT = "black";
+import static chess.controller.TeamFormat.BLACK_TEAM;
+import static chess.controller.TeamFormat.WHITE_TEAM;
 
+public class ChessGameDAO {
     public Connection getConnection() {
         Connection con = null;
         final String server = "localhost:13306"; // MySQL 서버 주소
@@ -43,8 +43,8 @@ public class ChessGameDAO {
     }
 
     public void createChessGame(final ChessGame chessGame, final String currentTurnTeam) throws SQLException {
-        createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM_FORMAT);
-        createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM_FORMAT);
+        createPiecePosition(chessGame.currentWhitePiecePosition(), WHITE_TEAM.asDAOFormat());
+        createPiecePosition(chessGame.currentBlackPiecePosition(), BLACK_TEAM.asDAOFormat());
         final String query = "INSERT INTO chess_game VALUES (?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, currentTurnTeam);
@@ -66,8 +66,8 @@ public class ChessGameDAO {
     }
 
     public ChessGame readChessGame() throws SQLException {
-        final Team blackTeam = readPiecePositionByTeam(BLACK_TEAM_FORMAT);
-        final Team whiteTeam = readPiecePositionByTeam(WHITE_TEAM_FORMAT);
+        final Team blackTeam = readPiecePositionByTeam(BLACK_TEAM.asDAOFormat());
+        final Team whiteTeam = readPiecePositionByTeam(WHITE_TEAM.asDAOFormat());
         return generateChessGame(blackTeam, whiteTeam);
     }
 
@@ -107,7 +107,7 @@ public class ChessGameDAO {
 
     private ChessGame generateChessGameAccordingToDB(final Team blackTeam, final Team whiteTeam,
                                                      final String currentTurnTeam, final boolean isPlaying) {
-        if (WHITE_TEAM_FORMAT.equals(currentTurnTeam)) {
+        if (WHITE_TEAM.asDAOFormat().equals(currentTurnTeam)) {
             return new ChessGame(blackTeam, whiteTeam, whiteTeam, isPlaying);
         }
         return new ChessGame(blackTeam, whiteTeam, blackTeam, isPlaying);

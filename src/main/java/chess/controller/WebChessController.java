@@ -18,12 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.controller.HTTPStatusCode.*;
+import static chess.controller.TeamFormat.BLACK_TEAM;
+import static chess.controller.TeamFormat.WHITE_TEAM;
 import static spark.Spark.*;
 
 public class WebChessController {
-    private static final String WHITE_TEAM_FORMAT = "white";
-    private static final String BLACK_TEAM_FORMAT = "black";
-
     private ChessGame chessGame;
     private Team whiteTeam;
     private Team blackTeam;
@@ -115,8 +114,8 @@ public class WebChessController {
 
     private Map<String, Map<String, String>> generatePiecePositionToString() {
         final Map<String, Map<String, String>> piecePosition = new HashMap<>();
-        piecePosition.put(WHITE_TEAM_FORMAT, generatePiecePositionByTeamToString(chessGame.currentWhitePiecePosition()));
-        piecePosition.put(BLACK_TEAM_FORMAT, generatePiecePositionByTeamToString(chessGame.currentBlackPiecePosition()));
+        piecePosition.put(WHITE_TEAM.asDTOFormat(), generatePiecePositionByTeamToString(chessGame.currentWhitePiecePosition()));
+        piecePosition.put(BLACK_TEAM.asDTOFormat(), generatePiecePositionByTeamToString(chessGame.currentBlackPiecePosition()));
         return piecePosition;
     }
 
@@ -134,8 +133,8 @@ public class WebChessController {
     private String currentTurnTeamToString() {
         final Team currentTurnTeam = chessGame.getCurrentTurnTeam();
         if (currentTurnTeam.equals(whiteTeam)) {
-            return WHITE_TEAM_FORMAT;
+            return WHITE_TEAM.asDAOFormat();
         }
-        return BLACK_TEAM_FORMAT;
+        return BLACK_TEAM.asDAOFormat();
     }
 }
