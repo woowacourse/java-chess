@@ -53,13 +53,13 @@ public class WebUIChessApplication {
 
         get("/room/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", CHESS_SERVICE.lastestBoard(req.params("id")));
+            model.put("board", CHESS_SERVICE.latestBoard(req.params("id")));
             model.put("roomId", req.params(":id"));
             model.put("userInfo", CHESS_SERVICE.usersInRoom(req.params("id")));
             return render(model, "index.html");
         });
 
-        get("/room/:id/stat", "application/json",
+        get("/room/:id/statistics", "application/json",
             (req, res) -> GSON.toJson(CHESS_SERVICE.usersInRoom(req.params("id"))));
 
         put("/room/:id/start", (req, res) -> GSON.toJson(CHESS_SERVICE.start(req.params(":id"))));

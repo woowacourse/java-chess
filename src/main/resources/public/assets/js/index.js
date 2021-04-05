@@ -27,7 +27,7 @@ const usersTemplate = (users) => `<p><strong>BLACK</strong>  닉네임:${users.b
     <p><strong>WHITE</strong>  닉네임:${users.whiteName} 승:${users.whiteWin} 패:${users.whiteLose}</p>`;
 
 const reloadUsers = async () => {
-  const response = await fetch("./" + roomId + "/stat");
+  const response = await fetch("./" + roomId + "/statistics");
   const result = await response.json();
   console.log(result);
   console.log(result);

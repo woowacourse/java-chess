@@ -47,7 +47,7 @@ public class ChessService {
         return ROOM_DAO.insert(newRoom);
     }
 
-    public BoardDto lastestBoard(String id) throws SQLException {
+    public BoardDto latestBoard(String id) throws SQLException {
         return PLAY_LOG_DAO.latestBoard(id);
     }
 
@@ -83,7 +83,7 @@ public class ChessService {
         chessGame.move(source, destination);
         PLAY_LOG_DAO.insert(new BoardDto(board), new GameStatusDto(chessGame), id);
         if (!chessGame.isOngoing() && chessGame.winner() != Team.NONE) {
-            USER_DAO.updateStats(id, chessGame.winner());
+            USER_DAO.updateStatistics(id, chessGame.winner());
         }
         return new BoardDto(board);
     }

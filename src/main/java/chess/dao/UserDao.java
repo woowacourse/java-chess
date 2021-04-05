@@ -51,7 +51,7 @@ public class UserDao extends ChessDao {
         }
     }
 
-    public void updateStats(String roomId, Team winnerTeam) throws SQLException {
+    public void updateStatistics(String roomId, Team winnerTeam) throws SQLException {
         String winner = "white";
         String loser = "black";
         if (winnerTeam.isBlack()) {
