@@ -5,9 +5,6 @@ import static chess.domain.piece.Color.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gson.Gson;
 
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
@@ -19,67 +16,57 @@ import chess.domain.piece.Color;
 import chess.dto.BoardDto;
 
 public class ChessService {
-    private static final ChessDao chessDAO = new ChessDao(new SQLConnection());
-    private static final Gson GSON = new Gson();
+    private final ChessDao chessDAO;
 
-    private static ChessGame chessGame;
-    private static UserDto userDto;
-
-    public static String makeChessBoard() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("user", userDto);
-        return render(model, "chess.html");
+    public ChessService() {
+        chessDAO = new ChessDao(new SQLConnection());
     }
 
-    public static String restartChess() throws SQLException {
-        chessGame = new ChessGame();
+    public ChessGame restartChess(UserDto userDto) throws SQLException {
         chessDAO.deleteBoard(chessDAO.findUserIdByUser(userDto));
-        return render(new HashMap<>(), "/chess");
+        return new ChessGame();
     }
 
-    public static String matchBoardImageSource(String requestBody) throws SQLException {
+    public ChessGame matchBoard(UserDto userDto) throws SQLException {
         String userId = chessDAO.findUserIdByUser(userDto);
         BoardDto boardDto = chessDAO.findBoard(userId);
-        chessGame = makeChessGame(boardDto);
-        return GSON.toJson(chessGame.getBoard().get(Point.of(requestBody)).getImage());
+        return makeChessGame(boardDto);
     }
 
-    public static String matchPieceName(String requestBody) {
-        return GSON.toJson(chessGame.getBoard().get(Point.of(requestBody)).getName());
+    public String matchBoardImageSource(ChessGame chessGame, String requestBody) {
+        return chessGame.getBoard().get(Point.of(requestBody)).getImage();
     }
 
-    private static ChessGame makeChessGame(BoardDto boardDto) {
+    public String matchPieceName(ChessGame chessGame, String requestBody) {
+        return chessGame.getBoard().get(Point.of(requestBody)).getName();
+    }
+
+    private ChessGame makeChessGame(BoardDto boardDto) {
         if (boardDto == null) {
             return new ChessGame();
         }
         return new ChessGame(boardDto.getBoard());
     }
 
-    public static int moveRequest(String requestBody) {
-        RequestDto requestDto = GSON.fromJson(requestBody, RequestDto.class);
-        return move(requestDto);
-    }
-
-    public static String addBoard(String requestBody) throws SQLException {
+    public void addBoard(ChessGame chessGame, UserDto userDto, String requestBody) throws SQLException {
         chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, chessGame.nextTurn());
-        return render(new HashMap<>(), "start.html");
     }
 
-    public static String makeNextColor() {
+    public String makeNextColor(ChessGame chessGame) {
         if (chessGame.nextTurn().isSameAs(BLACK)) {
             return WHITE.name();
         }
         return BLACK.name();
     }
 
-    public static String makeCurrentColor(String requestBody) {
+    public String makeCurrentColor(ChessGame chessGame, String requestBody) {
         if (chessGame.getBoard().get(Point.of(requestBody)).isSameTeam(BLACK)) {
             return BLACK.name();
         }
         return WHITE.name();
     }
 
-    public static int move(RequestDto requestDto) {
+    public int move(ChessGame chessGame, RequestDto requestDto) {
         String source = requestDto.getSource();
         String target = requestDto.getTarget();
         try {
@@ -93,23 +80,20 @@ public class ChessService {
         }
     }
 
-    public static double score(String requestBody) {
+    public double score(ChessGame chessGame, String requestBody) {
         return chessGame.calculateScore(Color.valueOf(requestBody)).getScore();
     }
 
-    public static String signUp(String requestName, String requestPassword) throws SQLException {
+    public void addUser(String requestName, String requestPassword) throws SQLException {
         UserDto userDto = new UserDto(requestName, requestPassword);
         chessDAO.addUser(userDto);
-        return render(new HashMap<>(), "start.html");
     }
 
-    public static String login(String requestName, String requestPassword) throws SQLException {
-        userDto = new UserDto(requestName, requestPassword);
-        Map<String, Object> model = new HashMap<>();
-        if (chessDAO.findByUserNameAndPwd(userDto.getName(), userDto.getPwd()) == null) {
-            return render(model, "start.html");
-        }
-        model.put("user", userDto);
-        return render(model, "chess.html");
+    public UserDto requestLoginUser(String requestName, String requestPassword) {
+        return new UserDto(requestName, requestPassword);
+    }
+
+    public UserDto findUser(UserDto userDto) throws SQLException {
+        return chessDAO.findByUserNameAndPwd(userDto.getName(), userDto.getPwd());
     }
 }
