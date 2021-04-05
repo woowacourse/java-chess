@@ -16,12 +16,12 @@ public class ChessService {
         chessDAO.insert();
     }
 
-    public void updateTurn() throws SQLException {
-        chessDAO.updateTurn(findChessId());
+    public void updateTurn(Long chessId) throws SQLException {
+        chessDAO.updateTurn(chessId);
     }
 
-    public void delete() throws SQLException {
-        chessDAO.delete(findChessId());
+    public void delete(Long chessId) throws SQLException {
+        chessDAO.delete(chessId);
     }
 
     public Long findChessId() throws SQLException {

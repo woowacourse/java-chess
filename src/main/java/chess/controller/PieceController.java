@@ -31,7 +31,6 @@ public class PieceController {
     }
 
     public String get(Request req, Response res) throws SQLException {
-        log.warn("piece get");
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok(GSON.toJson(pieceDTOS));
@@ -39,7 +38,6 @@ public class PieceController {
     }
 
     public String insert(Request req, Response res) throws SQLException {
-        log.warn("piece insert");
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.insert(chessId);
         ChessResponse chessResponse = new ChessResponse.Created("기물들이 생성되었습니다.");
@@ -57,14 +55,12 @@ public class PieceController {
         pieceService.move(chessId, movePositionDTO);
 
         if (chess.isKindDead()) {
-            res.redirect("/");
             return GSON.toJson(new ChessResponse.Ok("왕이 죽었습니다."));
         }
         return GSON.toJson(new ChessResponse.Ok("기물이 이동했습니다."));
     }
 
     public String delete(Request req, Response res) throws SQLException {
-        log.warn("piece delete");
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.delete(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok("기물들을 삭제했습니다.");
