@@ -70,7 +70,7 @@ public class WebChessController {
             }
         });
 
-        get("/save", (req, res) -> {
+        post("/save", (req, res) -> {
             Gson gson = new Gson();
             try {
                 chessGameDAO.deleteChessGame();

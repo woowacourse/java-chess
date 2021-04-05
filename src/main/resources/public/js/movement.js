@@ -108,7 +108,14 @@ export function enableSaveBtn() {
 }
 
 function saveGame() {
-    fetch("/save")
+    const postOption = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    fetch("/save", postOption)
         .then(response => {
             if(!response.ok) {
                 throw new Error((response.status));
