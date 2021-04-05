@@ -82,7 +82,7 @@ async function move(sourcePoint, targetPoint) {
         }
     }).then(res => res.json());
 
-    if (response === 333) {
+    if (response === 205) {
         movePiece(sourcePoint, targetPoint);
         document.getElementById("notice").innerText = "게임 끝!";
         if (!confirm('킹이 죽어 게임이 끝났습니다.\n다시 게임하시겠습니까?')) {
@@ -104,7 +104,7 @@ async function move(sourcePoint, targetPoint) {
         });
         movePiece(sourcePoint, targetPoint);
     }
-    if (response === 401) {
+    if (response === 204) {
         alert('불가능한 이동입니다.');
         toggleClicked(sourcePoint, targetPoint);
     }

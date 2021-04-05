@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static chess.domain.Status.*;
 import static spark.Spark.*;
 
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import chess.domain.ChessGame;
+import chess.domain.Status;
 import chess.dto.RequestDto;
 import chess.dto.UserDto;
 import chess.service.ChessService;

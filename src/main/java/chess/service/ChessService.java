@@ -1,6 +1,7 @@
 package chess.service;
 
 import static chess.controller.WebChessController.*;
+import static chess.domain.Status.*;
 import static chess.domain.piece.Color.*;
 
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
+import chess.domain.Status;
 import chess.dto.RequestDto;
 import chess.dto.UserDto;
 import chess.domain.board.Point;
@@ -24,11 +26,8 @@ public class ChessService {
 
     public ChessGame restartChess(UserDto userDto) throws SQLException {
         String userId = chessDAO.findUserIdByUser(userDto);
-        System.out.println(userId);
         chessDAO.deleteBoard(userId);
-        ChessGame chessGame = new ChessGame();
-        // addBoard(chessGame, userDto, "WHITE");
-        return chessGame;
+        return new ChessGame();
     }
 
     public ChessGame matchBoard(UserDto userDto) throws SQLException {
@@ -75,12 +74,12 @@ public class ChessService {
         String target = requestDto.getTarget();
         try {
             chessGame.playTurn(Point.of(source), Point.of(target));
-            if (chessGame.isEnd()) {
-                return 333;
+            if(chessGame.isEnd()) {
+                return RESET_CONTENT.getCode();
             }
-            return 200;
+            return OK.getCode();
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
-            return 401;
+            return NO_CONTENT.getCode();
         }
     }
 
