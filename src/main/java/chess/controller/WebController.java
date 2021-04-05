@@ -5,6 +5,7 @@ import chess.domain.ChessGameManager;
 import chess.domain.position.Position;
 import chess.dto.*;
 import chess.exception.DomainException;
+import chess.exception.HandledException;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 import spark.ModelAndView;
@@ -33,6 +34,7 @@ public class WebController {
         get("/newgame", this::createNewGame, gson::toJson);
         post("/move", this::move, gson::toJson);
         get("/save", this::saveGame, gson::toJson);
+        get("/load", this::loadGame, gson::toJson);
     }
 
     private String responseHomePage(Request request, Response response) {
@@ -92,5 +94,22 @@ public class WebController {
                     "게임을 데이터베이스에 저장하는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
                     new NoneItem());
         }
+    }
+
+    private CommonDto<?> loadGame(Request request, Response response) throws SQLException {
+        try {
+            SavedGameData savedGameData = gameDAO.loadGame();
+            chessGameManager.load(savedGameData.getChessBoardDto().toChessBoard(), savedGameData.getCurrentTurnColor());
+            return new CommonDto<GameResponse>(
+                    StatusCode.OK,
+                    "게임을 불러왔습니다.",
+                    GameResponse.from(chessGameManager));
+        } catch (HandledException e) {
+            return new CommonDto<NoneItem>(
+                    StatusCode.BAD_REQUEST,
+                    "게임을 불러오는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
+                    new NoneItem());
+        }
+
     }
 }

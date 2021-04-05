@@ -5,6 +5,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.*;
 import chess.domain.statistics.ChessGameStatistics;
@@ -14,7 +15,8 @@ import chess.exception.DomainException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class ChessGameManager {
     private ChessBoard chessBoard;
@@ -30,8 +32,21 @@ public class ChessGameManager {
         chessBoard = BoardFactory.createBoard();
         this.coloredPieces = Arrays.stream(Color.values())
                 .map(ColoredPieces::createByColor)
-                .collect(Collectors.toList());
+                .collect(toList());
         currentTurnColor = Color.WHITE;
+        updateState(this.state.start());
+    }
+
+    public void load(ChessBoard chessBoard, Color currentTurnColor) {
+        this.chessBoard = chessBoard;
+        this.currentTurnColor = currentTurnColor;
+        this.coloredPieces = chessBoard.board().values().stream()
+                .filter(Piece::isNotBlank)
+                .collect(groupingBy(Piece::getColor))
+                .entrySet()
+                .stream()
+                .map(entry -> new ColoredPieces(entry.getValue(), entry.getKey()))
+                .collect(toList());
         updateState(this.state.start());
     }
 

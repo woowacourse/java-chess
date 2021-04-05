@@ -20,5 +20,4 @@ class GameDAOTest {
         Connection con = gameDao.getConnection();
         assertNotNull(con);
     }
-
 }

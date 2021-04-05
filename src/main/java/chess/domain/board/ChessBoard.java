@@ -7,10 +7,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.*;
 import chess.domain.statistics.ScoreTable;
 import chess.exception.DomainException;
 
@@ -28,6 +25,17 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    public static ChessBoard from(Map<Position, Piece> realPiecesMap) {
+        Map<Position, Piece> board = new HashMap<>(realPiecesMap);
+        for (Position position: PositionRepository.positions()) {
+            if (position.equals(Position.of("e2"))) {
+                System.out.println();
+            }
+            board.merge(position, new Blank(), (existPiece, newPiece) -> existPiece);
+        }
+        return new ChessBoard(board);
     }
 
     public Piece getPieceByPosition(Position position) {

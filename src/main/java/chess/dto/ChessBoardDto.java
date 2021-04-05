@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.position.Position;
 
 import java.util.Collections;
 import java.util.Map;
@@ -27,5 +28,16 @@ public class ChessBoardDto {
                         toMap(entrySet -> entrySet.getKey().getNotation(),
                                 entrySet -> PieceDto.from(entrySet.getValue())),
                         ChessBoardDto::new));
+    }
+
+    public ChessBoard toChessBoard() {
+        return this.chessBoard.entrySet()
+                .stream()
+                .collect(collectingAndThen(
+                        toMap(
+                                entry -> Position.of(entry.getKey()),
+                                entry -> entry.getValue().toPiece()
+                        )
+                , ChessBoard::from));
     }
 }

@@ -1,5 +1,6 @@
 package chess.dto;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 public class PieceDto {
@@ -13,6 +14,10 @@ public class PieceDto {
 
     public static PieceDto from(Piece piece){
         return new PieceDto(piece.getName(), piece.getColor().name());
+    }
+
+    public Piece toPiece() {
+        return PieceDeserializeTable.deserializeFrom(this.notation, Color.of(this.color));
     }
 
     @Override

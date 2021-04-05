@@ -11,6 +11,7 @@ addSelectionEventOnChessBoard();
 addEventOnStartButton();
 addEventOnRegameButton();
 addEventOnSaveGameButton();
+addEventOnLoadGameButton();
 
 function processResponse(responseJsonBody, successScenarioFunction) {
     updateMessage(responseJsonBody.message);
@@ -98,7 +99,20 @@ function addEventOnSaveGameButton() {
                 .then(res => processResponse(res, () => {}));
             turnOnPanel();
         } catch (error) {
-            console.error(error.messages);
+            console.error(error.message);
+        }
+    })
+}
+
+function addEventOnLoadGameButton() {
+    document.getElementById('load-button').addEventListener('click', event => {
+        try {
+            fetch('/load')
+                .then(res => res.json())
+                .then(res => processResponse(res, () => updateGameData(res)));
+            turnOnPanel();
+        } catch (error) {
+            console.error(error.message);
         }
     })
 }

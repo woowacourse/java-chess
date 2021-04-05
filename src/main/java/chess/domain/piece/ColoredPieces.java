@@ -9,16 +9,16 @@ import java.util.stream.IntStream;
 public class ColoredPieces {
     private static final int PAWN_SIZE = 8;
 
-    private final List<RealPiece> pieces;
+    private final List<Piece> pieces;
     private final Color color;
 
-    public ColoredPieces(List<RealPiece> pieces, Color color) {
+    public ColoredPieces(List<Piece> pieces, Color color) {
         this.pieces = pieces;
         this.color = color;
     }
 
     public static ColoredPieces createByColor(Color color) {
-        ArrayList<RealPiece> pieces = new ArrayList<>(Arrays.asList(
+        ArrayList<Piece> pieces = new ArrayList<>(Arrays.asList(
                 new King(color), new Queen(color),
                 new Bishop(color), new Bishop(color),
                 new Rook(color), new Rook(color),
@@ -27,17 +27,17 @@ public class ColoredPieces {
         return new ColoredPieces(pieces, color);
     }
 
-    private static List<RealPiece> createPawnsByColor(Color color) {
+    private static List<Piece> createPawnsByColor(Color color) {
         return IntStream.range(0, PAWN_SIZE)
                 .mapToObj(i -> new Pawn(color))
                 .collect(Collectors.toList());
     }
 
-    public void remove(RealPiece realPiece) {
-        if (!realPiece.isSameColor(this.color)) {
+    public void remove(Piece piece) {
+        if (!piece.isSameColor(this.color)) {
             throw new DomainException("진영이 다른 피스를 제거할 수 없습니다");
         }
-        pieces.remove(realPiece);
+        pieces.remove(piece);
     }
 
     public boolean isSameColor(Color color) {
@@ -56,8 +56,8 @@ public class ColoredPieces {
         return pieces.size();
     }
 
-    public boolean contains(RealPiece realPiece) {
-        return pieces.contains(realPiece);
+    public boolean contains(Piece Piece) {
+        return pieces.contains(Piece);
     }
 
     public Color getColor() {
