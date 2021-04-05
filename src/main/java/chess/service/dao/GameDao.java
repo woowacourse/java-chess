@@ -1,11 +1,14 @@
-package chess.dao;
+package chess.service.dao;
 
 import chess.controller.dto.GameDto;
 import chess.domain.board.Board;
 import chess.domain.player.Turn;
 import chess.service.PieceSymbolMapper;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

@@ -1,67 +1,70 @@
 package chess.service;
 
+import chess.controller.dto.BoardDto;
 import chess.controller.dto.GameDto;
-import chess.dao.GameDao;
-import chess.dao.RoomDao;
+import chess.controller.dto.ScoresDto;
 import chess.domain.ChessGame;
 import chess.domain.board.position.Position;
-import spark.Request;
+import chess.domain.piece.Owner;
+import chess.service.dao.GameDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Queue;
 
 public class GameService {
 
-    private ChessGame chessGame;
     private final GameDao gameDao;
-    private final RoomDao roomDao;
 
     public GameService(Connection connection) {
         this.gameDao = new GameDao(connection);
-        this.roomDao = new RoomDao(connection);
     }
 
-    public void createGame(final Request req) throws SQLException {
-        final Long roomId = System.currentTimeMillis();
-        roomDao.save(roomName(req), roomId);
-
-        chessGame = ChessGame.initNew();
+    public void create(final Long roomId) throws SQLException {
+        final ChessGame chessGame = ChessGame.initNew();
         gameDao.save(roomId, chessGame.turn(), chessGame.board());
     }
 
-
-    public List<String> show(final Request req) throws SQLException {
-        chessGame = loadChessGame(req);
-
-        final Map<String, String> requestParams = RequestHandler.parse(req);
-        final Position source = new Position(requestParams.get("source"));
+    public List<String> show(final Long roomId, final Position source) throws SQLException {
+        final ChessGame chessGame = loadChessGame(roomId);
         return chessGame.reachablePositions(source);
     }
 
-    public void move(Request request) throws SQLException {
-        chessGame = loadChessGame(request);
-
-        final Map<String, String> requestParams = RequestHandler.parse(request);
-        final Position source = new Position(requestParams.get("source"));
-        final Position target = new Position(requestParams.get("target"));
+    public void move(final Long roomId, final Position source, final Position target) throws SQLException {
+        final ChessGame chessGame = loadChessGame(roomId);
         chessGame.move(source, target);
 
-        gameDao.save(roomId(request), chessGame.turn(), chessGame.board());
+        gameDao.save(roomId, chessGame.turn(), chessGame.board());
     }
 
-    public ChessGame loadChessGame(final Request req) throws SQLException {
-        final GameDto gameDto = gameDao.load(roomId(req));
+    public ChessGame loadChessGame(final Long roomId) throws SQLException {
+        final GameDto gameDto = gameDao.load(roomId);
         return ChessGame.load(gameDto.getBoard(), gameDto.getTurn());
     }
 
-    private String roomName(final Request req){
-        return req.params(":roomName");
+    public ScoresDto scores(final Long roomId) throws SQLException {
+        final ScoresDto scoresDto = new ScoresDto();
+        final ChessGame chessGame = loadChessGame(roomId);
+        scoresDto.setWhiteScore(chessGame.score(Owner.WHITE));
+        scoresDto.setBlackScore(chessGame.score(Owner.BLACK));
+        return scoresDto;
     }
 
-    private Long roomId(final Request req) throws SQLException {
-        return roomDao.id(roomName(req));
+    public BoardDto board(final Long roomId) throws SQLException {
+        final BoardDto boardDto = new BoardDto();
+        final ChessGame chessGame = loadChessGame(roomId);
+        boardDto.setBoard(chessGame.unicodeBoard());
+        return boardDto;
+    }
+
+    public boolean isGameEnd(final Long roomId) throws SQLException {
+        final ChessGame chessGame = loadChessGame(roomId);
+        return chessGame.isGameEnd();
+    }
+
+    public Queue<Owner> winner(final Long roomId) throws SQLException {
+        final ChessGame chessGame = loadChessGame(roomId);
+        return chessGame.winner();
     }
 }

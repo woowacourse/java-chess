@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

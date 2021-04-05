@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.service.dao;
 
 import chess.controller.dto.RoomDto;
 
@@ -11,7 +11,7 @@ public class RoomDao {
 
     private final Connection conn;
 
-    public RoomDao(Connection conn){
+    public RoomDao(Connection conn) {
         this.conn = conn;
     }
 
@@ -29,7 +29,7 @@ public class RoomDao {
         final ResultSet rs = selectQuery.executeQuery("SELECT * FROM room_status");
 
         final List<RoomDto> list = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             RoomDto roomDto = new RoomDto();
             roomDto.setName(rs.getString(2));
             roomDto.setId(rs.getLong(3));
@@ -48,5 +48,16 @@ public class RoomDao {
         rs.next();
 
         return rs.getLong(1);
+    }
+
+    public String name(final Long roomId) throws SQLException {
+        final String query = "SELECT room_name FROM room_status WHERE room_id = ?";
+        final PreparedStatement insertQuery = conn.prepareStatement(query);
+
+        insertQuery.setLong(1, roomId);
+        ResultSet rs = insertQuery.executeQuery();
+        rs.next();
+
+        return rs.getString(1);
     }
 }

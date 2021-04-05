@@ -1,4 +1,4 @@
-.container{
+.container {
     margin-left: 10%;
     margin-top: 1%;
     margin-right: 10%;
@@ -18,14 +18,14 @@
     width: 70px;
     height: 70px;
     background-color: #999;
-    font-size:50px;
-    text-align:center;
+    font-size: 50px;
+    text-align: center;
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 .black:hover {
-    background-color : lightyellow;
+    background-color: lightyellow;
 }
 
 .white {
@@ -34,17 +34,17 @@
     width: 70px;
     height: 70px;
     background-color: #fff;
-    font-size:50px;
-    text-align:center;
+    font-size: 50px;
+    text-align: center;
     display: table-cell;
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
-.white:hover{
-    background-color : lightyellow;
+.white:hover {
+    background-color: lightyellow;
 }
 
-.score{
-    text-align:left;
+.score {
+    text-align: left;
     font-size: 17px;
 }

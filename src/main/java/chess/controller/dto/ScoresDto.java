@@ -8,15 +8,15 @@ public class ScoresDto {
         return whiteScore;
     }
 
+    public void setWhiteScore(double whiteScore) {
+        this.whiteScore = whiteScore;
+    }
+
     public double getBlackScore() {
         return blackScore;
     }
 
     public void setBlackScore(double blackScore) {
         this.blackScore = blackScore;
-    }
-
-    public void setWhiteScore(double whiteScore) {
-        this.whiteScore = whiteScore;
     }
 }

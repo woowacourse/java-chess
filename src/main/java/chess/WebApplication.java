@@ -1,7 +1,7 @@
 package chess;
 
 import chess.controller.web.WebController;
-import chess.dao.DBConfig;
+import chess.service.dao.DBConfig;
 
 import java.sql.Connection;
 

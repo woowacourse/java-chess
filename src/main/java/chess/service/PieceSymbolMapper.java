@@ -28,7 +28,7 @@ public enum PieceSymbolMapper {
     private final String uniCode;
     private final Piece piece;
 
-    PieceSymbolMapper(final Piece piece, final String uniCode ) {
+    PieceSymbolMapper(final Piece piece, final String uniCode) {
         this.uniCode = uniCode;
         this.piece = piece;
     }
@@ -57,10 +57,10 @@ public enum PieceSymbolMapper {
         final Map<Position, Piece> board = new HashMap<>();
 
         final String[] pieces = dataLine.split(",");
-        int index =0;
+        int index = 0;
         for (final Horizontal h : Horizontal.values()) {
             for (final Vertical v : Vertical.values()) {
-                board.put(new Position(v,h), parseToPiece(pieces[index]));
+                board.put(new Position(v, h), parseToPiece(pieces[index]));
                 index++;
             }
         }

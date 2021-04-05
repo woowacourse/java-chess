@@ -8,7 +8,10 @@ import chess.domain.player.Players;
 import chess.domain.player.Scores;
 import chess.domain.player.Turn;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class ChessGame {
@@ -28,7 +31,7 @@ public class ChessGame {
         return new ChessGame(BoardInitializer.initiateBoard(), Turn.WHITE);
     }
 
-    public static ChessGame load(final Board board, final Turn turn){
+    public static ChessGame load(final Board board, final Turn turn) {
         return new ChessGame(board, turn);
     }
 
@@ -38,12 +41,6 @@ public class ChessGame {
         players.move(source, target);
         isGameEnd = players.anyKingDead(board);
         changeTurn();
-    }
-
-    public void move(final Map<String, String> request) {
-        final Position source = new Position(request.get("source"));
-        final Position target = new Position(request.get("target"));
-        move(source, target);
     }
 
     public void validateTurn(final Position source) {
@@ -59,14 +56,12 @@ public class ChessGame {
     }
 
     public List<String> reachablePositions(final Position source) {
-        try{
-            validateTurn(source);
+        if (turn.is(players.ownerOf(source))) {
             return board.reachablePositions(source).stream()
                     .map(position -> position.parseAsString())
                     .collect(Collectors.toList());
-        }catch (Exception e){
-            return Collections.EMPTY_LIST;
         }
+        return Collections.EMPTY_LIST;
     }
 
     public Board board() {
@@ -93,7 +88,7 @@ public class ChessGame {
         return scores().getValueOf(owner);
     }
 
-    public Turn turn(){
+    public Turn turn() {
         return turn;
     }
 }

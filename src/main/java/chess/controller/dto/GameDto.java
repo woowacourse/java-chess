@@ -11,12 +11,12 @@ public class GameDto {
         return board;
     }
 
-    public Turn getTurn() {
-        return turn;
-    }
-
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 
     public void setTurn(Turn turn) {

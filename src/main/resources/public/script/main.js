@@ -1,12 +1,11 @@
-
-window.onload = function(){
+window.onload = function () {
     const pieces = document.getElementsByClassName('piece');
-    Array.from(pieces).forEach((el)=>{
+    Array.from(pieces).forEach((el) => {
         el.addEventListener('click', click());
     })
 
     const scores = document.getElementsByClassName("score");
-    Array.from(scores).forEach((el)=>{
+    Array.from(scores).forEach((el) => {
         el.addEventListener('change', checkIsEnd());
     })
 }
@@ -16,50 +15,50 @@ let state = "stay"; // stay, show
 let source = "";
 let target = "";
 
-function enterNewGame(){
+function enterNewGame() {
     const gameName = document.getElementById("game-name-input").value;
-    location.href= "/create/"+gameName;
+    location.href = "/create/" + gameName;
 }
 
-function click(){
-    return function (event){
-        if(state === "stay"){
+function click() {
+    return function (event) {
+        if (state === "stay") {
             show(event.target);
             state = "show";
             source = event.target.id;
             return;
         }
 
-        if(state === "show"){
+        if (state === "show") {
             clickWhereToMove(event.target);
             state = "stay";
             source = "";
             target = "";
-            return  ;
+            return;
         }
     }
 }
 
-function clickWhereToMove(eventTarget){
-    if(checkIsValidTarget(eventTarget)){
+function clickWhereToMove(eventTarget) {
+    if (checkIsValidTarget(eventTarget)) {
         target = eventTarget.id;
         submitMove(source, target);
     }
 
     const piece = document.getElementsByClassName("piece");
-    for(let i=0; i<piece.length; i++){
+    for (let i = 0; i < piece.length; i++) {
         piece[i].classList.remove("moveAble");
         piece[i].style.backgroundColor = "";
     }
 }
 
-function submitMove(src, tar){
+function submitMove(src, tar) {
     const roomName = document.getElementById("roomName").innerText;
 
     const form = document.createElement("form");
     form.setAttribute("charset", "UTF-8");
     form.setAttribute("method", "Post");
-    form.setAttribute("action", "/move/"+roomName);
+    form.setAttribute("action", "/move/" + roomName);
 
     const sourceField = document.createElement("input");
     sourceField.setAttribute("type", "hidden");
@@ -77,11 +76,11 @@ function submitMove(src, tar){
     form.submit();
 }
 
-function checkIsValidTarget(target){
+function checkIsValidTarget(target) {
     return target.classList.contains("moveAble");
 }
 
-function checkIsEnd(){
+function checkIsEnd() {
     return function (event) {
         console.log(event.target.text);
     }
@@ -89,10 +88,10 @@ function checkIsEnd(){
 
 function show(target) {
     const roomName = document.getElementById("roomName").innerText;
-    const requestQuery = "source="+target.id;
+    const requestQuery = "source=" + target.id;
 
     $.ajax({
-        url: "/show/"+roomName,
+        url: "/show/" + roomName,
         type: "POST",
         data: requestQuery,
         success: function (result) {

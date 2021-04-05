@@ -1,6 +1,6 @@
 package chess.view.console;
 
-import chess.controller.console.ScoreDto;
+import chess.controller.dto.ScoresDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
@@ -40,11 +40,9 @@ public class OutputView {
         return symbol.asString().toLowerCase();
     }
 
-    public static void printScore(final ScoreDto scoreDto) {
-        final String owner = decidePlayerSymbol(scoreDto.owner());
-        final double score = scoreDto.score();
-
-        System.out.println(owner + "의 점수 : " + score);
+    public static void printScore(final ScoresDto scoresDto) {
+        System.out.println("black 의 점수 : " + scoresDto.getBlackScore());
+        System.out.println("white 의 점수 : " + scoresDto.getWhiteScore());
     }
 
     public static void printWinner(final Queue<Owner> owner) {

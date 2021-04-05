@@ -33,10 +33,10 @@ public class OutputView {
         return render(model, "chessBoard.html");
     }
 
-    public static Object printResult(Queue<Owner> winner) {
-        Map<String, Object> model = new HashMap<>();
+    public static String printResult(final Queue<Owner> winner) {
+        final Map<String, Object> model = new HashMap<>();
 
-        WinnerDto winnerDto = new WinnerDto();
+        final WinnerDto winnerDto = new WinnerDto();
         if (winner.size() == 1) {
             winnerDto.setWinner(winner.peek().name());
         }

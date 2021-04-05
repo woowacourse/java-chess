@@ -1,10 +1,8 @@
-package chess.dao;
+package chess.service.dao;
 
-import chess.controller.dto.BoardDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.player.Turn;
-import chess.service.PieceSymbolMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

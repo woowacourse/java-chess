@@ -5,9 +5,7 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
-import chess.domain.piece.Piece;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,11 +26,11 @@ public class Players {
         return new Players(board);
     }
 
-    private static List<Position> positions(final Board board, final Owner owner){
+    private static List<Position> positions(final Board board, final Owner owner) {
         return Arrays.stream(Vertical.values())
                 .flatMap(v -> Arrays.stream(Horizontal.values())
-                .filter(h -> board.of(v,h).isOwner(owner))
-                .map(h -> new Position(v,h)))
+                        .filter(h -> board.of(v, h).isOwner(owner))
+                        .map(h -> new Position(v, h)))
                 .collect(Collectors.toList());
     }
 

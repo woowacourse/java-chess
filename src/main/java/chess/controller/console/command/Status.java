@@ -1,11 +1,9 @@
 package chess.controller.console.command;
 
-import chess.controller.console.ScoreDto;
-import chess.domain.board.position.Position;
+import chess.controller.dto.ScoresDto;
 import chess.domain.ChessGame;
-import chess.domain.piece.Score;
-import chess.domain.player.Player;
-import chess.domain.player.Scores;
+import chess.domain.board.position.Position;
+import chess.domain.piece.Owner;
 import chess.view.console.OutputView;
 
 public class Status extends Command {
@@ -42,11 +40,11 @@ public class Status extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        final Scores scoreTable = chessGame.scores();
-        for (final Player player : scoreTable.players()) {
-            final Score score = scoreTable.get(player);
-            OutputView.printScore(new ScoreDto(player.owner(), score.score()));
-        }
+        ScoresDto scoresDto = new ScoresDto();
+        scoresDto.setBlackScore(chessGame.score(Owner.BLACK));
+        scoresDto.setWhiteScore(chessGame.score(Owner.WHITE));
+
+        OutputView.printScore(scoresDto);
     }
 
     @Override
