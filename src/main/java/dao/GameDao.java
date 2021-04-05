@@ -1,6 +1,7 @@
 package dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mysql.cj.protocol.Resultset;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
 import domain.piece.position.Position;
@@ -16,6 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 public class GameDao {
+    private Connection conn;
+    private List<PreparedStatement> preparedStatements;
+
+    public GameDao() {
+        this.conn = getConnection();
+        preparedStatements = new ArrayList<>();
+    }
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
@@ -42,113 +51,171 @@ public class GameDao {
         return con;
     }
 
-    public void closeConnection(Connection con) {
+    public void closeConnection() {
+        preparedStatements.forEach(preparedStatement -> {
+            try {
+                preparedStatement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         try {
-            if (con != null)
-                con.close();
+            if (conn != null)
+                conn.close();
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
     }
 
-    public void updateGame(ResultDto resultDto, String source, String target, int roomNumber) throws SQLException {
-        PiecesDto piecesDto = resultDto.getPiecesDto();
-        String query = "UPDATE game SET blackscore = ?, whitescore=?, turn=? WHERE gameid=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setDouble(1, piecesDto.getBlackScore());
-        pstmt.setDouble(2, piecesDto.getWhiteScore());
-        pstmt.setBoolean(3, piecesDto.isTurn());
-        pstmt.setInt(4, roomNumber);
-        pstmt.executeUpdate();
-
-        query = "delete from piece where position=? AND gameid=?"; // 이동할 위치에 있는 기물이 있는 경우 지운다.
-        pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, target);
-        pstmt.setInt(2, roomNumber);
-        pstmt.executeUpdate();
-
-        query = "update piece set position=? where position=? AND gameid=?";
-        pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, target);
-        pstmt.setString(2, source);
-        pstmt.setInt(3, roomNumber);
-        pstmt.executeUpdate();
+    public PreparedStatement getPrepareStatement(String query) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+        preparedStatements.add(preparedStatement);
+        return preparedStatement;
     }
 
-    public void insertNewGameInfo(ResultDto resultDto) throws SQLException, JsonProcessingException {
+    public void updateGame(ResultDto resultDto, String source, String target, int roomNumber) {
+        updateGameInfo(resultDto, roomNumber);
+        deleteTargetPiece(target, roomNumber);
+        updateTargetPiece(source, target, roomNumber);
+    }
+
+    private void updateTargetPiece(String source, String target, int roomNumber) {
+        try (PreparedStatement pstmt = getPrepareStatement("update piece set position=? where position=? AND gameid=?")) {
+            pstmt.setString(1, target);
+            pstmt.setString(2, source);
+            pstmt.setInt(3, roomNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteTargetPiece(String target, int roomNumber) {
+        try (PreparedStatement pstmt = getPrepareStatement("delete from piece where position=? AND gameid=?");) {
+            pstmt.setString(1, target);
+            pstmt.setInt(2, roomNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateGameInfo(ResultDto resultDto, int roomNumber) {
         PiecesDto piecesDto = resultDto.getPiecesDto();
-        String game2Query = "insert into game(blackscore, whitescore, turn) values(?, ?, ?)";
-        PreparedStatement pstmt2 = getConnection().prepareStatement(game2Query);
-        pstmt2.setDouble(1, piecesDto.getBlackScore());
-        pstmt2.setDouble(2, piecesDto.getBlackScore());
-        pstmt2.setBoolean(3, piecesDto.isTurn());
-        pstmt2.executeUpdate();
+        try (PreparedStatement pstmt = getPrepareStatement("UPDATE game SET blackscore = ?, whitescore=?, turn=? WHERE gameid=?")) {
+            pstmt.setDouble(1, piecesDto.getBlackScore());
+            pstmt.setDouble(2, piecesDto.getWhiteScore());
+            pstmt.setBoolean(3, piecesDto.isTurn());
+            pstmt.setInt(4, roomNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertNewGameInfo(ResultDto resultDto) {
+        PiecesDto piecesDto = resultDto.getPiecesDto();
+        try (PreparedStatement pstmt = getPrepareStatement("insert into game(blackscore, whitescore, turn) values(?, ?, ?)")) {
+            pstmt.setDouble(1, piecesDto.getBlackScore());
+            pstmt.setDouble(2, piecesDto.getBlackScore());
+            pstmt.setBoolean(3, piecesDto.isTurn());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         List<PieceDto> pieces = piecesDto.getPieces();
         int newGameID = lastGameID();
         for (PieceDto piece : pieces) {
-            String piece2Query = "insert into piece(gameid, name, position) values(" + newGameID + ", ?, ?)";
-            PreparedStatement pstmt3 = getConnection().prepareStatement(piece2Query);
-            pstmt3.setString(1, piece.getPieceName());
-            pstmt3.setString(2, piece.getPosition());
-            pstmt3.executeUpdate();
+            insertPieceInfo(newGameID, piece);
         }
     }
 
-    public ResultDto selectGameInfo(int roomNumber) throws SQLException, JsonProcessingException {
-        String query = "select blackscore, whitescore, turn from game where gameid=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, roomNumber);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) throw new SQLException();
-        double blackScore = rs.getInt(1);
-        double whiteScore = rs.getInt(2);
-        boolean turn = rs.getBoolean(3);
+    private void insertPieceInfo(int newGameID, PieceDto piece) {
+        try(PreparedStatement pstmt = getPrepareStatement("insert into piece(gameid, name, position) values(" + newGameID + ", ?, ?)")) {
+            pstmt.setString(1, piece.getPieceName());
+            pstmt.setString(2, piece.getPosition());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        query = "select name, position from piece where gameid=?";
-        pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, roomNumber);
-        rs = pstmt.executeQuery();
+    public ResultDto selectGameInfo(int roomNumber) {
+        double blackScore = 0, whiteScore = 0;
+        boolean turn = false;
+        try(PreparedStatement pstmt = getPrepareStatement("select blackscore, whitescore, turn from game where gameid=?")) {
+            pstmt.setInt(1, roomNumber);
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.next()) throw new SQLException();
+            blackScore = rs.getInt(1);
+            whiteScore = rs.getInt(2);
+            turn = rs.getBoolean(3);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         Map<Position, Piece> pieces = new HashMap<>();
+        try(PreparedStatement pstmt = getPrepareStatement("select name, position from piece where gameid=?")) {
+            pstmt.setInt(1, roomNumber);
+            ResultSet rs = pstmt.executeQuery();
+            putResultSetToPieces(pieces, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        PiecesDto piecesDto = new PiecesDto(pieces, new StatusDto(blackScore, whiteScore), false, turn);
+        return new ResultDto(piecesDto, "");
+    }
+
+    private void putResultSetToPieces(Map<Position, Piece> pieces, ResultSet rs) throws SQLException {
         while (rs.next()) {
             Piece piece = PieceFactory.findPiece(rs.getString(1));
             Position position = Position.of(rs.getString(2));
             pieces.put(position, piece);
         }
-        PiecesDto piecesDto = new PiecesDto(pieces, new StatusDto(blackScore, whiteScore), false, turn);
-        return new ResultDto(piecesDto, "");
     }
 
-    public void deleteGame(int roomNumber) throws SQLException {
-        String query = "delete from piece where gameid=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, roomNumber);
-        pstmt.executeUpdate();
-
-        query = "delete from game where gameid=?";
-        pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, roomNumber);
-        pstmt.executeUpdate();
-    }
-
-    public List<String> findGames() throws SQLException {
-        String query = "select gameid from game";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-
-        List<String> gameIDs = new ArrayList<>();
-        while (rs.next()) {
-            gameIDs.add(rs.getString(1));
+    public void deleteGame(int roomNumber) {
+        try(PreparedStatement pstmt = getPrepareStatement("delete from piece where gameid=?")) {
+            pstmt.setInt(1, roomNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return gameIDs;
+
+        try(PreparedStatement pstmt = getPrepareStatement("delete from game where gameid=?")) {
+            pstmt.setInt(1, roomNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public int lastGameID() throws SQLException {
-        String query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name ='game' AND table_schema = DATABASE()";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) throw new SQLException();
-        return rs.getInt(1) - 1;
+    public List<String> findGames() {
+        try(PreparedStatement pstmt = getPrepareStatement("select gameid from game")) {
+            ResultSet rs = pstmt.executeQuery();
+            List<String> gameIDs = new ArrayList<>();
+            while (rs.next()) {
+                gameIDs.add(rs.getString(1));
+            }
+            return gameIDs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int lastGameID() {
+        try (PreparedStatement pstmt = getPrepareStatement(
+                "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name ='game' AND table_schema = DATABASE()")) {
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.next()) throw new SQLException();
+            return rs.getInt(1) - 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
