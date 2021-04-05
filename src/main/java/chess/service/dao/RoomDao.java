@@ -26,7 +26,7 @@ public class RoomDao {
 
     public void delete(final Long roomId) throws SQLException {
         final Statement statement = conn.createStatement();
-        statement.executeUpdate("DELETE FROM room_status WHERE room_id = "+roomId);
+        statement.executeUpdate("DELETE FROM room_status WHERE room_id = " + roomId);
     }
 
     public List<RoomDto> load() throws SQLException {

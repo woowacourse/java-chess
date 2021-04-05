@@ -12,11 +12,11 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/public");
 
-        DBConfig dbConfig = new DBConfig();
-        Connection connection = dbConfig.getConnection();
+        final DBConfig dbConfig = new DBConfig();
+        final Connection connection = dbConfig.getConnection();
 
-        GameController gameController = new GameController(connection);
-        RoomController roomController = new RoomController(connection);
+        final GameController gameController = new GameController(connection);
+        final RoomController roomController = new RoomController(connection);
 
         gameController.mapping();
         roomController.mapping();

@@ -50,16 +50,16 @@ public class GameService {
     }
 
     public ScoresDto scores(final Long roomId) throws SQLException {
-        final ScoresDto scoresDto = new ScoresDto();
         final ChessGame chessGame = loadChessGame(roomId);
+        final ScoresDto scoresDto = new ScoresDto();
         scoresDto.setWhiteScore(chessGame.score(Owner.WHITE));
         scoresDto.setBlackScore(chessGame.score(Owner.BLACK));
         return scoresDto;
     }
 
     public BoardDto board(final Long roomId) throws SQLException {
-        final BoardDto boardDto = new BoardDto();
         final ChessGame chessGame = loadChessGame(roomId);
+        final BoardDto boardDto = new BoardDto();
         boardDto.setBoard(chessGame.unicodeBoard());
         return boardDto;
     }

@@ -34,16 +34,18 @@ public class GameDao {
         final ResultSet rs = insertQuery.executeQuery();
         rs.next();
 
+        final Turn turn = Turn.of(rs.getString("turn"));
+        final Board board = PieceSymbolMapper.parseToBoard(rs.getString("board"));
         final GameDto gameDto = new GameDto();
-        gameDto.setTurn(Turn.of(rs.getString("turn")));
-        gameDto.setBoard(PieceSymbolMapper.parseToBoard(rs.getString("board")));
+        gameDto.setTurn(turn);
+        gameDto.setBoard(board);
 
         return gameDto;
     }
 
     public void delete(final Long roomId) throws SQLException {
         final Statement statement = conn.createStatement();
-        statement.executeUpdate("DELETE FROM game_status WHERE room = "+roomId);
+        statement.executeUpdate("DELETE FROM game_status WHERE room = " + roomId);
     }
 
     public String boardToText(final Board board) {
