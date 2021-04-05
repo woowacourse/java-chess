@@ -23,17 +23,17 @@ public class UserDao extends ChessDao {
     }
 
     public UsersInRoomDto usersInRoom(String roomId) throws SQLException {
-        String query = "SELECT\n"
-            + "    white_user.name as whiteName,\n"
-            + "    white_user.win as whiteWin,\n"
-            + "    white_user.lose as whiteLose,\n"
-            + "    black_user.name as blackName,\n"
-            + "    black_user.win as blackWin,\n"
-            + "    black_user.lose as blackLose\n"
-            + "FROM \n"
-            + "\troom AS r\n"
-            + "    INNER JOIN users AS black_user ON r.black = black_user.name\n"
-            + "    INNER JOIN users AS white_user ON r.white = white_user.name\n"
+        String query = "SELECT"
+            + " white_user.name AS whiteName,"
+            + " white_user.win AS whiteWin,"
+            + " white_user.lose AS whiteLose,"
+            + " black_user.name AS blackName,"
+            + " black_user.win AS blackWin,"
+            + " black_user.lose AS blackLose "
+            + "FROM"
+            + " room AS r"
+            + " INNER JOIN users AS black_user ON r.black = black_user.name"
+            + " INNER JOIN users AS white_user ON r.white = white_user.name "
             + "WHERE r.id = ?;";
 
         try (Connection connection = connection();
@@ -63,8 +63,8 @@ public class UserDao extends ChessDao {
     }
 
     private void updateWinner(String roomId, String winner) throws SQLException {
-        String updateWinnerQueryForm = "UPDATE users\n"
-            + "SET users.win = users.win + 1\n"
+        String updateWinnerQueryForm = "UPDATE users "
+            + "SET users.win = users.win + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
 
         try (Connection connection = connection();
@@ -76,8 +76,8 @@ public class UserDao extends ChessDao {
     }
 
     private void updateLoser(String roomId, String loser) throws SQLException {
-        String updateLoserQuery = "UPDATE users\n"
-            + "SET users.lose = users.lose + 1\n"
+        String updateLoserQuery = "UPDATE users "
+            + "SET users.lose = users.lose + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
 
         try (Connection connection = connection();
