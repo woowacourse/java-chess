@@ -18,7 +18,7 @@ public final class ResultService {
         this.userDAO = userDAO;
     }
 
-    public List<ResultDTO> allUserResult() throws Exception {
+    public List<ResultDTO> allUserResult() {
         List<ResultDTO> results = new ArrayList<>();
         List<UserDTO> users = userDAO.findAll();
         for (UserDTO user : users) {
@@ -31,7 +31,7 @@ public final class ResultService {
         return results;
     }
 
-    public void saveGameResult(final String roomId, final int winnerId, final int loserId) throws Exception {
+    public void saveGameResult(final String roomId, final int winnerId, final int loserId) {
         resultDAO.saveGameResult(roomId, winnerId, loserId);
     }
 }

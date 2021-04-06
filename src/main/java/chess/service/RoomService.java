@@ -12,19 +12,19 @@ public final class RoomService {
         this.roomDAO = roomDAO;
     }
 
-    public List<RoomDTO> allRooms() throws Exception {
+    public List<RoomDTO> allRooms() {
         return roomDAO.allRooms();
     }
 
-    public void createRoom(final String name) throws Exception {
+    public void createRoom(final String name) {
         roomDAO.createRoom(name);
     }
 
-    public void changeStatus(final String roomId) throws Exception {
+    public void changeStatus(final String roomId) {
         roomDAO.changeStatusEndByRoomId(roomId);
     }
 
-    public List<String> allRoomsId() throws Exception {
+    public List<String> allRoomsId() {
         return roomDAO.allRoomIds();
     }
 }

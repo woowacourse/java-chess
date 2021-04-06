@@ -6,6 +6,8 @@ import chess.domain.Team;
 import chess.dto.PiecesDTO;
 import chess.dto.StatusDTO;
 import chess.dto.UsersDTO;
+import chess.exception.DataAccessException;
+import chess.exception.DriverLoadException;
 import chess.service.LogService;
 import chess.service.ResultService;
 import chess.service.RoomService;
@@ -14,7 +16,6 @@ import chess.util.JsonTransformer;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,13 +183,13 @@ public class WebChessGameController {
     }
 
     private void exceptionHandler() {
-        exception(ClassNotFoundException.class, (exception, request, response) -> {
+        exception(DriverLoadException.class, (exception, request, response) -> {
             response.status(404);
             response.type("application/json");
             response.body("!! JDBC Driver load 오류");
         });
 
-        exception(SQLException.class, (exception, request, response) -> {
+        exception(DataAccessException.class, (exception, request, response) -> {
             response.status(500);
             response.type("application/json");
             response.body(exception.getMessage());

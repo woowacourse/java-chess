@@ -10,11 +10,11 @@ public final class UserService {
         this.userDAO = userDAO;
     }
 
-    public UsersDTO usersParticipatedInGame(final String roomId) throws Exception {
+    public UsersDTO usersParticipatedInGame(final String roomId) {
         return userDAO.findByRoomId(roomId);
     }
 
-    public int userIdByNickname(final String nickname) throws Exception {
+    public int userIdByNickname(final String nickname) {
         return userDAO.findUserIdByNickname(nickname);
     }
 }

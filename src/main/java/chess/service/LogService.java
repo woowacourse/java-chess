@@ -12,11 +12,11 @@ public final class LogService {
         this.logDAO = logDAO;
     }
 
-    public void initializeByRoomId(final String roomId) throws Exception {
+    public void initializeByRoomId(final String roomId) {
         logDAO.deleteLogByRoomId(roomId);
     }
 
-    public List<String[]> logByRoomId(final String roomId) throws Exception {
+    public List<String[]> logByRoomId(final String roomId) {
         return logDAO.allLogByRoomId(roomId);
     }
 
@@ -24,7 +24,7 @@ public final class LogService {
         logs.forEach(positions -> chessGame.move(positions[0], positions[1]));
     }
 
-    public void createLog(final String roomId, final String startPoint, final String endPoint) throws Exception {
+    public void createLog(final String roomId, final String startPoint, final String endPoint) {
         logDAO.createLog(roomId, startPoint, endPoint);
     }
 }
