@@ -3,13 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>WOOWA CHESS</title>
-  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="./index.css"/>
 </head>
 <body>
-<div class="wrapper">
-  <div class="title"><h1>WOOWA CHESS</h1></div>
-  <div class="chessBoard"></div>
-  <div class="status"></div>
+<div class="container">
+  <div class="title"><span>우아한 체스</span></div>
+  <div class="content-wrapper">
+    <div class="chessBoard"></div>
+    <div class="status">
+      <div>player1</div>
+      <div class="b-turn">
+        <img class="black-turn" src="images/up.png" />
+        <img src="images/chess_clock.png"/>
+        <img class="white-turn" src="images/down.png" />
+      </div>
+      <div>player2</div>
+    </div>
+  </div>
 </div>
 <script src="main.js"></script>
 </body>

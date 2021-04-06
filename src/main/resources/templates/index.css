@@ -23,6 +23,7 @@ body {
   justify-content: space-around;
   align-items: center;
   width: 70rem;
+  margin-top: 2rem;
 }
 
 .title {
@@ -102,7 +103,7 @@ body {
   border: 5px solid #e8a32d;
 }
 
-.turn {
+.b-turn {
   display: flex;
   flex-direction: column;
   justify-content: space-around;

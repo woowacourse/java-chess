@@ -9,7 +9,8 @@ async function getBoard() {
 async function init() {
   this.$chessBoard = document.querySelector('.chessBoard')
   await setBoard()
-  moveHandler()
+  await moveHandler()
+  await changeTurn(await getTurn())
 }
 
 async function setBoard() {
@@ -19,6 +20,14 @@ async function setBoard() {
     this.$chessBoard.insertAdjacentHTML('beforeend',
       boardTemplate(board.position, board.piece))
   })
+}
+
+async function getTurn() {
+  return await fetch(
+    'http://localhost:3001/turn'
+  )
+  .then(res => res.json())
+  .then(data => data)
 }
 
 function moveHandler() {
@@ -39,19 +48,20 @@ function moveHandler() {
   }, false);
 
   this.$chessBoard.addEventListener("dragenter", function (e) {
-    e.target.style.background = "blue";
+    e.target.style.background = "#78c2c6";
   }, false);
 
   this.$chessBoard.addEventListener("dragleave", function (e) {
     e.target.style.background = "";
   }, false);
 
-  this.$chessBoard.addEventListener("drop", function (e) {
+  this.$chessBoard.addEventListener("drop", async function (e) {
     e.preventDefault();
     e.target.style.background = "";
     target = e.target.closest('div')
-    if (movable(source, target)) {
+    if (await movable(source, target)) {
       move(source, target)
+      await changeTurn(await getTurn())
     }
   }, false);
 }
@@ -149,6 +159,46 @@ function pieceImage(piece) {
       : './images/pawn_black.png'
   }
   return './images/blank.png'
+}
+
+async function changeTurn(turn) {
+  console.log(turn.turn)
+  const $blackTurn = document.querySelector('.black-turn')
+  const $whiteTurn = document.querySelector('.white-turn')
+  if (turn.turn === 'WHITE') {
+    $blackTurn.src = 'images/up.png'
+    $whiteTurn.src = 'images/down_turn.png'
+    console.log($blackTurn)
+    await fetch(
+      'http://localhost:3001/turn',
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          turn: 'BLACK'
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }
+    )
+  }
+  if (turn.turn === 'BLACK') {
+    $blackTurn.src = 'images/up_turn.png'
+    $whiteTurn.src = 'images/down.png'
+    console.log($blackTurn)
+    await fetch(
+      'http://localhost:3001/turn',
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          turn: 'WHITE'
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }
+    )
+  }
 }
 
 init();
