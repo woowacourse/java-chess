@@ -16,17 +16,18 @@ public final class Rook extends NoKingPieces {
     }
 
     public static Rook white(final int col) {
-        return new Rook(new Position(Row.location(WHITE_TEAM_ROW), validatesInitCol(col)));
+        validatesInitCol(col);
+        return new Rook(new Position(Row.location(WHITE_TEAM_ROW), col));
     }
 
     public static Rook black(final int col) {
-        return new Rook(new Position(Row.location(BLACK_TEAM_ROW), validatesInitCol(col)));
+        validatesInitCol(col);
+        return new Rook(new Position(Row.location(BLACK_TEAM_ROW), col));
     }
 
-    private static int validatesInitCol(final int col) {
+    private static void validatesInitCol(final int col) {
         if (col != LEFT_SIDE_INIT_COL && col != RIGHT_SIDE_INIT_COL) {
             throw new WrongInitPositionException();
         }
-        return col;
     }
 }
