@@ -48,6 +48,10 @@ public final class Position {
         return column;
     }
 
+    public String columnAndRow() {
+        return "" + column + row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

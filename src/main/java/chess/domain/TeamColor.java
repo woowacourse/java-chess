@@ -10,6 +10,13 @@ public enum TeamColor {
         return WHITE;
     }
 
+    public static TeamColor teamColor(String teamColor) {
+        if (teamColor.equalsIgnoreCase("WHITE")) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public boolean isWhite() {
         return this == WHITE;
     }
@@ -18,7 +25,8 @@ public enum TeamColor {
         return this == BLACK;
     }
 
-    public boolean isReverse(TeamColor teamColor) {
+    public boolean isEnemy(TeamColor teamColor) {
         return teamColor != this;
     }
+
 }

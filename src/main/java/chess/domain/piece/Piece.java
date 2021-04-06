@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.TeamColor.WHITE;
-
 import chess.domain.Position;
+import chess.domain.PositionInformation;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.exception.ImpossibleMoveException;
@@ -17,7 +16,8 @@ public abstract class Piece {
     private List<Position> movablePositions;
     private boolean moved;
 
-    public Piece(PieceDetails pieceDetails, AvailableDirections availableDirections, Position position) {
+    public Piece(PieceDetails pieceDetails, AvailableDirections availableDirections,
+        Position position) {
         this(pieceDetails, availableDirections, new ArrayList<>(), position, false);
     }
 
@@ -30,13 +30,13 @@ public abstract class Piece {
         this.moved = moved;
     }
 
-    public void updateMovablePositions(List<Position> existPiecePositions,
-        List<Position> enemiesPositions) {
-        movablePositions = new ArrayList<>();
-        movablePositions.addAll(
-            availableDirections.movablePositions(existPiecePositions, currentPosition, pieceDetails.iterable()));
-        movablePositions.addAll(
-            availableDirections.killablePositions(enemiesPositions, currentPosition, pieceDetails.iterable()));
+    public void updateMovablePositions(List<PositionInformation> existPiecePositions) {
+        PositionInformation currentPosition =
+            new PositionInformation(this.currentPosition, pieceDetails.color());
+
+        movablePositions = availableDirections
+            .allMovablePositions(existPiecePositions, currentPosition,
+                pieceDetails.iterable());
     }
 
     public boolean samePosition(Position position) {
@@ -85,10 +85,7 @@ public abstract class Piece {
     }
 
     public String name() {
-        if (isSameColor(WHITE)) {
-            return pieceDetails.name();
-        }
-        return pieceDetails.name().toUpperCase();
+        return pieceDetails.name();
     }
 
     public abstract boolean isKing();
@@ -97,5 +94,13 @@ public abstract class Piece {
 
     public boolean isNotSameColor(TeamColor currentColor) {
         return pieceDetails.isNotSameColor(currentColor);
+    }
+
+    public TeamColor color() {
+        return pieceDetails.color();
+    }
+
+    public PositionInformation positionInformation() {
+        return new PositionInformation(currentPosition, pieceDetails.color());
     }
 }

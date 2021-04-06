@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body, html {
+      width: 100%;
+      height: 100%;
+    }
+
+    .chess {
+      margin: 0 auto;
+    }
+
+    .board {
+      width: 640px;
+      height: 640px;
+      border: solid 1px black;
+      font-size: 0;
+      display: inline-block;
+    }
+
+    .board-item {
+      width: 80px;
+      height: 80px;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .board-item:hover {
+      background-color: purple;
+    }
+
+    .white {
+      background-color: white;
+    }
+
+    .black {
+      background-color: black;
+    }
+
+    .piece_white {
+      color: wheat;
+      font-size: 50px;
+    }
+
+    .piece_black {
+      color: sienna;
+      font-size: 50px;
+    }
+
+    .movable {
+      background-color: lightblue;
+      border: solid 1px grey;
+      box-sizing: border-box;
+    }
+
+    .game {
+      display: inline-block;
+      text-align: center;
+      width: 700px;
+      height: 800px;
+    }
+
+    /*.result-board {*/
+    /*  border: solid 1px black;*/
+    /*  display: inline-block;*/
+    /*}*/
+
+    .chat {
+      border: solid 1px black;
+      display: inline-block;
+      width: 300px;
+      /*height: 0px;*/
+    }
+
+    .chess {
+      width: 1100px;
+      height: 800px;
+    }
+
+    #contents {
+      height: 500px;
+    }
+
+
+  </style>
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/fb005c2c2f.js"></script>
+  <script defer src="./js/fetchService.js" type="text/javascript"></script>
+  <script defer src="./js/board.js" type="text/javascript"></script>
+  <script defer src="./js/chess.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div class="chess">
+  <div class="game">
+    <div class="result-board">
+      <div class="game-status">
+      </div>
+      <button id="save" type="button">게임 저장</button>
+      <button id="reload" type="button">게임 불러오기</button>
+      <button id="exit" type="button">게임 종료</button>
+    </div>
+
+    <div class="board">
+      <input
+          autofocus
+          class="ask-form"
+          id="ask-form"
+          placeholder="게임 id를 입력해주세요"
+      />
+    </div>
+  </div>
+</div>
+</body>
+</html>

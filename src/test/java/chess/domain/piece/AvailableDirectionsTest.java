@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.PieceDirection;
 import chess.domain.Position;
+import chess.domain.PositionInformation;
+import chess.domain.TeamColor;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,11 +29,13 @@ class AvailableDirectionsTest {
             Collections.singletonList(PieceDirection.UP)
         );
 
-        Position currentPosition = Position.of(0, 0);
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
+        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0),
+            TeamColor.WHITE);
+        List<PositionInformation> existPiecePositions = Collections
+            .singletonList(new PositionInformation(Position.of(0, 5), TeamColor.WHITE));
         boolean iterable = true;
 
-        List<Position> movablePositions = availableDirections.movablePositions(
+        List<Position> movablePositions = availableDirections.allMovablePositions(
             existPiecePositions,
             currentPosition,
             iterable
@@ -50,11 +54,13 @@ class AvailableDirectionsTest {
             Collections.singletonList(PieceDirection.UP)
         );
 
-        Position currentPosition = Position.of(0, 0);
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
+        PositionInformation currentPosition = new PositionInformation(Position.of(0, 0),
+            TeamColor.WHITE);
+        List<PositionInformation> existPiecePositions = Collections
+            .singletonList(new PositionInformation(Position.of(0, 5), TeamColor.WHITE));
         boolean iterable = false;
 
-        List<Position> movablePositions = availableDirections.movablePositions(
+        List<Position> movablePositions = availableDirections.allMovablePositions(
             existPiecePositions,
             currentPosition,
             iterable
@@ -62,52 +68,5 @@ class AvailableDirectionsTest {
 
         Assertions.assertThat(movablePositions).hasSameElementsAs(expectedMovablePositions);
     }
-
-    @Test
-    @DisplayName("계속해서 위로 올라갈 수 있는 말의 죽일 수 있는 자리를 테스트")
-    void killablePositions_iterable() {
-        List<Position> expectedMovablePositions = Collections.singletonList(Position.of(0, 5));
-
-        AvailableDirections availableDirections = new AvailableDirections(
-            Collections.singletonList(PieceDirection.UP),
-            Collections.singletonList(PieceDirection.UP)
-        );
-
-        Position currentPosition = Position.of(0, 0);
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
-        boolean iterable = true;
-
-        List<Position> movablePositions = availableDirections.killablePositions(
-            existPiecePositions,
-            currentPosition,
-            iterable
-        );
-
-        Assertions.assertThat(movablePositions).hasSameElementsAs(expectedMovablePositions);
-    }
-
-    @Test
-    @DisplayName("딱 한 번만 위로 올라갈 수 있는 말의 죽일 수 있는 자리를 테스트")
-    void killablePositions_notIterable() {
-        List<Position> expectedMovablePositions = Collections.emptyList();
-
-        AvailableDirections availableDirections = new AvailableDirections(
-            Collections.singletonList(PieceDirection.UP),
-            Collections.singletonList(PieceDirection.UP)
-        );
-
-        Position currentPosition = Position.of(0, 0);
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
-        boolean iterable = false;
-
-        List<Position> movablePositions = availableDirections.killablePositions(
-            existPiecePositions,
-            currentPosition,
-            iterable
-        );
-
-        Assertions.assertThat(movablePositions).hasSameElementsAs(expectedMovablePositions);
-    }
-
 
 }

@@ -7,7 +7,6 @@ import chess.domain.scorecalculator.ScoreCalculator;
 import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -81,10 +80,14 @@ public final class ChessGameImpl implements ChessGame {
         Set<Position> enemiesAttackPositions = pieces
             .attackPositionsByColor(currentColor.reverse());
 
-        return enemiesAttackPositions.contains(
-            pieces.kingByColor(currentColor)
-                .currentPosition()
-        );
+        if (!isKingDead()) {
+            return enemiesAttackPositions.contains(
+                pieces.kingByColor(currentColor)
+                    .currentPosition()
+            );
+        }
+
+        return false;
     }
 
     @Override
@@ -97,13 +100,13 @@ public final class ChessGameImpl implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> nameGroupingByPosition() {
-        return pieces.nameGroupingByPosition();
+    public Pieces pieces() {
+        return pieces;
     }
 
     @Override
-    public int boardSize() {
-        return BOARD_SIZE;
+    public List<Piece> currentColorPieces() {
+        return pieces.piecesByTeamColor(currentColor);
     }
 
     @Override

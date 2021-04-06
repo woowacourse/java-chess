@@ -5,6 +5,8 @@ import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.PieceDirection;
 import chess.domain.Position;
+import chess.domain.PositionInformation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +26,7 @@ class PawnTest {
 
         Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
 
-        List<Position> existPiecePositions = Collections.emptyList();
-
-        List<Position> enemiesPositions = Collections.emptyList();
-
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }
@@ -40,16 +38,13 @@ class PawnTest {
             Collections.singletonList(Position.of(3, 3));
 
         Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
-        List<Position> existPiecePositions = Collections.emptyList();
 
-        List<Position> enemiesPositions = Collections.emptyList();
-
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
         Position targetPosition = pawn.currentPosition()
             .go(PieceDirection.forwardDirection(WHITE).get(0));
         pawn.move(targetPosition);
 
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }
@@ -62,11 +57,12 @@ class PawnTest {
 
         Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
 
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(3, 2));
+        List<PositionInformation> positionInformation = Arrays.asList(
+            new PositionInformation(Position.of(3, 2), WHITE),
+            new PositionInformation(Position.of(4, 2), BLACK)
+        );
 
-        List<Position> enemiesPositions = Collections.singletonList(Position.of(4, 2));
-
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(positionInformation);
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }
@@ -81,11 +77,7 @@ class PawnTest {
 
         Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
-        List<Position> existPiecePositions = Collections.emptyList();
-
-        List<Position> enemiesPositions = Collections.emptyList();
-
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }
@@ -98,14 +90,12 @@ class PawnTest {
 
         Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
-        List<Position> existPiecePositions = Collections.emptyList();
-        List<Position> enemiesPositions = Collections.emptyList();
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
 
         Position targetPosition = pawn.currentPosition()
             .go(PieceDirection.forwardDirection(BLACK).get(0));
         pawn.move(targetPosition);
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(new ArrayList<>());
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }
@@ -118,11 +108,12 @@ class PawnTest {
 
         Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(3, 5));
+        List<PositionInformation> positionInformation = Arrays.asList(
+            new PositionInformation(Position.of(3, 5), WHITE),
+            new PositionInformation(Position.of(4, 5), WHITE)
+        );
 
-        List<Position> enemiesPositions = Collections.singletonList(Position.of(4, 5));
-
-        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(positionInformation);
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }

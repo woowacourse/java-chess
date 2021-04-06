@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
+import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.Position;
-import java.util.ArrayList;
+import chess.domain.PositionInformation;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -27,19 +27,14 @@ class BishopTest {
 
         Bishop bishop = new Bishop(WHITE, Position.of(3, 3));
 
-        List<Position> existPiecePositions =
-            new ArrayList<>(Arrays.asList(
-                Position.of(1, 1),
-                Position.of(5, 5),
-                Position.of(6, 6)
-            ));
-
-        List<Position> enemiesPositions = Collections.singletonList(
-            Position.of(2, 4)
+        List<PositionInformation> positionInformation = Arrays.asList(
+            new PositionInformation(Position.of(1, 1), WHITE),
+            new PositionInformation(Position.of(5, 5), WHITE),
+            new PositionInformation(Position.of(6, 6), WHITE),
+            new PositionInformation(Position.of(2, 4), BLACK)
         );
-        existPiecePositions.addAll(enemiesPositions);
 
-        bishop.updateMovablePositions(existPiecePositions, enemiesPositions);
+        bishop.updateMovablePositions(positionInformation);
 
         Assertions.assertThat(bishop.movablePositions())
             .hasSameElementsAs(expectedMovablePositions);

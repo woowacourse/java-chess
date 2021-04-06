@@ -1,6 +1,7 @@
 package chess.domain;
 
-import java.util.Map;
+import chess.domain.piece.Piece;
+import java.util.List;
 
 public interface ChessGame {
 
@@ -14,9 +15,9 @@ public interface ChessGame {
 
     boolean isCheckmate();
 
-    Map<Position, String> nameGroupingByPosition();
+    Pieces pieces();
 
-    int boardSize();
+    List<Piece> currentColorPieces();
 
     TeamColor currentColor();
 }

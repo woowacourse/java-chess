@@ -2,9 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.PieceDirection;
 import chess.domain.Position;
+import chess.domain.PositionInformation;
+import chess.domain.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class AvailableDirections {
 
@@ -19,13 +22,24 @@ public final class AvailableDirections {
         this.killPieceDirections = killPieceDirections;
     }
 
-    public List<Position> movablePositions(List<Position> existPiecePositions,
-        Position currentPosition, boolean iterable) {
+    public List<Position> allMovablePositions(List<PositionInformation> existPiecePositions,
+        PositionInformation currentPosition, boolean iterable) {
+        List<Position> positions = new ArrayList<>();
+        positions.addAll(movablePositions(existPiecePositions, currentPosition, iterable));
+        positions.addAll(killablePositions(existPiecePositions, currentPosition, iterable));
+        return positions;
+    }
+
+    private List<Position> movablePositions(List<PositionInformation> existPiecePositions,
+        PositionInformation currentPosition, boolean iterable) {
         List<Position> movablePositions = new ArrayList<>();
+        List<Position> positions = existPiecePositions.stream()
+            .map(PositionInformation::position)
+            .collect(Collectors.toList());
         for (PieceDirection movePieceDirection : movePieceDirections) {
             movablePositions.addAll(
                 movablePositionsByDirection(
-                    existPiecePositions, currentPosition, iterable, movePieceDirection
+                    positions, currentPosition.position(), iterable, movePieceDirection
                 )
             );
         }
@@ -48,13 +62,26 @@ public final class AvailableDirections {
         return movablePositions;
     }
 
-    public List<Position> killablePositions(List<Position> enemyPositions,
-        Position currentPosition, boolean iterable) {
+    private List<Position> killablePositions(List<PositionInformation> existPiecePositions,
+        PositionInformation currentPosition, boolean iterable) {
         List<Position> killablePositions = new ArrayList<>();
+        TeamColor teamColor = currentPosition.teamColor();
+
+        List<Position> teamPositions = existPiecePositions.stream()
+            .filter(position -> position.isSameTeam(teamColor))
+            .map(PositionInformation::position)
+            .collect(Collectors.toList());
+
+        List<Position> enemyPositions = existPiecePositions.stream()
+            .filter(position -> position.isEnemyTeam(teamColor))
+            .map(PositionInformation::position)
+            .collect(Collectors.toList());
+
         for (PieceDirection killPieceDirection : killPieceDirections) {
             killablePositions.addAll(
                 killablePositionsByDirection(
-                    enemyPositions, currentPosition, iterable, killPieceDirection
+                    enemyPositions, teamPositions, currentPosition.position(), iterable,
+                    killPieceDirection
                 )
             );
         }
@@ -62,7 +89,8 @@ public final class AvailableDirections {
     }
 
     private List<Position> killablePositionsByDirection(List<Position> enemyPositions,
-        Position currentPosition, boolean iterable, PieceDirection killPieceDirection) {
+        List<Position> teamPositions, Position currentPosition,
+        boolean iterable, PieceDirection killPieceDirection) {
         List<Position> killablePositions = new ArrayList<>();
 
         do {
@@ -71,6 +99,10 @@ public final class AvailableDirections {
             }
 
             currentPosition = currentPosition.go(killPieceDirection);
+
+            if (teamPositions.contains(currentPosition)) {
+                return killablePositions;
+            }
 
             if (enemyPositions.contains(currentPosition)) {
                 killablePositions.add(currentPosition);
@@ -81,8 +113,11 @@ public final class AvailableDirections {
         return killablePositions;
     }
 
-    public Optional<Position> pawnAdditionalPosition(List<Position> existPiecePositions,
+    public Optional<Position> pawnAdditionalPosition(List<PositionInformation> piecePositions,
         Position currentPosition) {
+        List<Position> existPiecePositions = piecePositions.stream()
+            .map(PositionInformation::position)
+            .collect(Collectors.toList());
         PieceDirection pieceDirection = movePieceDirections.get(PAWN_INDEX);
 
         Position oneStep = currentPosition.go(pieceDirection);

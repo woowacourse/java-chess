@@ -1,7 +1,6 @@
 package chess.domain;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
 import chess.domain.piece.Piece;
@@ -9,7 +8,6 @@ import chess.exception.PieceNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,30 +33,20 @@ public class Pieces {
 
     public void updateMovablePositions() {
         pieces.forEach(piece ->
-            piece.updateMovablePositions(
-                existPiecePositions(),
-                existPiecePositionsByColor(piece.enemyColor())
-            )
+            piece.updateMovablePositions(positionInformationList())
         );
+    }
+
+    private List<PositionInformation> positionInformationList() {
+        return pieces.stream()
+            .map(Piece::positionInformation)
+            .collect(toList());
     }
 
     public Optional<Piece> pieceByPosition(Position currentPosition) {
         return pieces.stream()
             .filter(piece -> piece.samePosition(currentPosition))
             .findAny();
-    }
-
-    private List<Position> existPiecePositions() {
-        return pieces.stream()
-            .map(Piece::currentPosition)
-            .collect(toList());
-    }
-
-    private List<Position> existPiecePositionsByColor(TeamColor teamColor) {
-        return pieces.stream()
-            .filter(piece -> piece.isSameColor(teamColor))
-            .map(Piece::currentPosition)
-            .collect(toList());
     }
 
     public void remove(Piece piece) {
@@ -78,14 +66,6 @@ public class Pieces {
             .collect(toSet());
     }
 
-    public Map<Position, String> nameGroupingByPosition() {
-        return pieces.stream()
-            .collect(toMap(
-                Piece::currentPosition,
-                Piece::name
-            ));
-    }
-
     public Piece kingByColor(TeamColor teamColor) {
         return pieces.stream()
             .filter(Piece::isKing)
@@ -96,7 +76,11 @@ public class Pieces {
 
     public boolean isKingEmpty(TeamColor teamColor) {
         return pieces.stream()
-            .filter(Piece::isKing)
-            .noneMatch(piece -> piece.isSameColor(teamColor));
+            .filter(piece -> piece.isSameColor(teamColor))
+            .noneMatch(Piece::isKing);
+    }
+
+    public List<Piece> asList() {
+        return pieces;
     }
 }

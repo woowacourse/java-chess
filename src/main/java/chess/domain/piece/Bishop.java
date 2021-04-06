@@ -8,8 +8,9 @@ import chess.domain.TeamColor;
 public final class Bishop extends Piece {
 
     public Bishop(TeamColor teamColor, Position position) {
-        super(new PieceDetails("b", teamColor, Score.from(3), true),
-            new AvailableDirections(PieceDirection.diagonalDirections(), PieceDirection.diagonalDirections()),
+        super(new PieceDetails("bishop", teamColor, Score.from(3), true),
+            new AvailableDirections(PieceDirection.diagonalDirections(),
+                PieceDirection.diagonalDirections()),
             position);
     }
 

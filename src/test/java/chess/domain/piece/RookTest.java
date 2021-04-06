@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
+import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.Position;
-import java.util.ArrayList;
+import chess.domain.PositionInformation;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -29,14 +29,12 @@ class RookTest {
 
         Rook rook = new Rook(WHITE, Position.of(3, 3));
 
-        List<Position> existPiecePositions =
-            new ArrayList<>(Collections.singletonList(Position.of(3, 5)));
+        List<PositionInformation> positionInformation = Arrays.asList(
+            new PositionInformation(Position.of(3, 5), WHITE),
+            new PositionInformation(Position.of(4, 3), BLACK)
+        );
 
-        List<Position> enemiesPositions =
-            Collections.singletonList(Position.of(4, 3));
-        existPiecePositions.addAll(enemiesPositions);
-
-        rook.updateMovablePositions(existPiecePositions, enemiesPositions);
+        rook.updateMovablePositions(positionInformation);
 
         Assertions.assertThat(rook.movablePositions()).hasSameElementsAs(expectedMovablePositions);
     }

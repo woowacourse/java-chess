@@ -13,11 +13,11 @@ public final class GameResult {
         this.blackTeamScore = blackTeamScore;
     }
 
-    public Score whiteTeamScore() {
+    public Score getWhiteTeamScore() {
         return whiteTeamScore;
     }
 
-    public Score blackTeamScore() {
+    public Score getBlackTeamScore() {
         return blackTeamScore;
     }
 

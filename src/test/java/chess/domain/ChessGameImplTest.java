@@ -5,7 +5,6 @@ import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.InvalidTurnException;

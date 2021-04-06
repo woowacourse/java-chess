@@ -8,8 +8,9 @@ import chess.domain.TeamColor;
 public final class King extends Piece {
 
     public King(TeamColor teamColor, Position position) {
-        super(new PieceDetails("k", teamColor, Score.from(0), false),
-            new AvailableDirections(PieceDirection.aroundDirections(), PieceDirection.aroundDirections()),
+        super(new PieceDetails("king", teamColor, Score.from(0), false),
+            new AvailableDirections(PieceDirection.aroundDirections(),
+                PieceDirection.aroundDirections()),
             position);
     }
 
