@@ -11,7 +11,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        Game game = new Game();
+        Game game = Game.newGame();
         while (!game.isEnd()) {
             selectMenu(game);
         }
@@ -27,7 +27,6 @@ public class ChessController {
     }
 
     public static void start(Game game, String command) {
-        game.init();
         OutputView.printBoard(game);
     }
 

@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
@@ -65,8 +66,7 @@ class DaoTest {
     void savePlayingBoard() {
         BackupBoardDao backupBoardDao = new BackupBoardDao();
         String name = "chess1";
-        Map<Position, Piece> board = playingBoard();
-        backupBoardDao.savePlayingBoard(name, board, PieceColor.WHITE);
+        backupBoardDao.savePlayingBoard(name, new Board(playingBoard()), PieceColor.WHITE);
     }
 
     @Test

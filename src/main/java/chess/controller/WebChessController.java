@@ -3,8 +3,10 @@ package chess.controller;
 import chess.dao.BackupBoardDao;
 import chess.dao.RoomDao;
 import chess.domain.Game;
+import chess.domain.Rooms;
 import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
+import chess.dto.RoomNamesDto;
 import chess.dto.SquareDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,8 +29,8 @@ public class WebChessController {
 
     public void run() {
         staticFiles.location("/static");
-        Game game = new Game();
-        game.init();
+        List<RoomNamesDto> roomNames = roomDao.findRoomNames();
+        Rooms rooms = new Rooms(roomNames);
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -40,59 +42,63 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             if (req.queryParams("newGame").equals("yes")) {
                 addRoomToDb(req.queryParams("roomName"));
+                rooms.addRoom(req.queryParams("roomName"));
             }
             return render(model, "game.html");
         });
 
         post("/game", (req, res) -> {
-            game.init();
             Map<String, Object> model = new HashMap<>();
-            model.put("squares", squareDtos(game.getBoard()));
-            model.put("turn", game.turnColor());
+            Game currentGame = rooms.findGame(req.queryParams("roomName"));
+            model.put("squares", squareDtos(currentGame.getBoard()));
+            model.put("turn", currentGame.turnColor().getName());
             return GSON.toJson(model);
         });
 
         post("/continue", (req, res) -> {
-            game.continueGame(req.queryParams("roomName"));
-
             Map<String, Object> model = new HashMap<>();
-            model.put("squares", squareDtos(game.getBoard()));
-            model.put("turn", game.turnColor());
+            Game currentGame = rooms.findGame(req.queryParams("roomName"));
+            model.put("squares", squareDtos(currentGame.getBoard()));
+            model.put("turn", currentGame.turnColor().getName());
             return GSON.toJson(model);
         });
 
         post("/move", (req, res) -> {
+            Game currentGame = rooms.findGame(req.queryParams("roomName"));
             try {
-                isStart(game);
-                game.move(req.queryParams("source"), req.queryParams("target"));
-                if (game.isEnd()) {
+                isStart(currentGame);
+                currentGame.move(req.queryParams("source"), req.queryParams("target"));
+                if (currentGame.isEnd()) {
                     backupBoardDao.deleteExistingBoard(req.queryParams("roomName"));
                     roomDao.deleteRoom(req.queryParams("roomName"));
-                    return req.queryParams("source") + " " + req.queryParams("target") + " " + game.winnerColor().getSymbol();
+                    return req.queryParams("source") + " " + req.queryParams("target") + " " + currentGame.winnerColor().getSymbol();
                 }
             } catch (RuntimeException e) {
                 res.status(400);
                 return e.getMessage();
             }
 
-            return req.queryParams("source") + " " + req.queryParams("target") + " " + game.turnColor().getName();
+            return req.queryParams("source") + " " + req.queryParams("target") + " " + currentGame.turnColor().getName();
         });
 
         post("/status", (req, res) -> {
-            String result;
+            Game currentGame = rooms.findGame(req.queryParams("roomName"));
             try {
-                result = game.computeWhitePoint() + " " + game.computeBlackPoint();
+                return currentGame.computeWhitePoint() + " " + currentGame.computeBlackPoint();
             } catch (RuntimeException e) {
                 res.status(400);
                 return e.getMessage();
             }
-
-            return result;
         });
 
         post("/end", (req, res) -> {
-            backupBoardDao.savePlayingBoard(req.queryParams("roomName"), game.getBoard(), game.turnColor());
-            game.end();
+            Game currentGame = rooms.findGame(req.queryParams("roomName"));
+            backupBoardDao.savePlayingBoard(req.queryParams("roomName"),
+                currentGame.getBoard(),
+                currentGame.turnColor()
+            );
+
+            currentGame.isEnd();
             return "";
         });
     }
@@ -109,9 +115,10 @@ public class WebChessController {
 
     private List<SquareDto> squareDtos(Board board) {
         List<SquareDto> squareDtos = new ArrayList<>();
-
         board.positions()
-            .forEach(key -> squareDtos.add(new SquareDto(key.toString(), board.pieceAtPosition(key).toString())));
+            .forEach(key ->
+                squareDtos.add(new SquareDto(key.toString(), board.pieceAtPosition(key).toString()))
+            );
 
         return squareDtos;
     }

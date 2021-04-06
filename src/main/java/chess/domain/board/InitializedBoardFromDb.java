@@ -24,7 +24,7 @@ public class InitializedBoardFromDb {
     }
 
     public PieceColor continueTurn(String roomName) {
-        RoomDao boardDao = new RoomDao();
-        return PieceColor.pieceColorByName(boardDao.findRoomTurnColor(roomName));
+        RoomDao roomDao = new RoomDao();
+        return PieceColor.pieceColorByName(roomDao.findRoomTurnColor(roomName));
     }
 }

@@ -10,28 +10,29 @@ public class Game {
     private GameState gameState;
     private PieceColor turnColor;
 
-    public Game() {
-        InitializedBoard initializedBoard = new InitializedBoard();
-        this.board = new Board(initializedBoard.emptyBoard());
-        this.point = new Point(board);
-        this.gameState = GameState.NOT_STARTED;
-        this.turnColor = PieceColor.WHITE;
+    private Game(Board board, Point point, GameState gameState, PieceColor turnColor) {
+        this.board = board;
+        this.point = point;
+        this.gameState = gameState;
+        this.turnColor = turnColor;
     }
 
-    public void init() {
+    public static Game newGame() {
         InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
-        this.board = new Board(initializedBoardFromDb.initBoard());
-        this.point = new Point(board);
-        this.gameState = GameState.START;
-        this.turnColor = PieceColor.WHITE;
+        Board board = new Board(initializedBoardFromDb.initBoard());
+        Point point = new Point(board);
+
+        return new Game(board, point, GameState.START, PieceColor.WHITE);
     }
 
-    public void continueGame(String roomName) {
+    public static Game continueGame(String roomName) {
         InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
-        this.board = new Board(initializedBoardFromDb.continueBoard(roomName));
-        this.point = new Point(board);
-        this.gameState = GameState.START;
-        this.turnColor = initializedBoardFromDb.continueTurn(roomName);
+
+        Board board = new Board(initializedBoardFromDb.continueBoard(roomName));
+        Point point = new Point(board);
+        PieceColor turnColor = initializedBoardFromDb.continueTurn(roomName);
+
+        return new Game(board, point, GameState.START, turnColor);
     }
 
     public void end() {

@@ -13,6 +13,9 @@ function startNewGame() {
     $.ajax({
         type: "POST",
         url: "/game",
+        data: {
+            roomName: getParameterByName('roomName')
+        },
         dataType: "json",
         success: setBoard
     });
@@ -41,6 +44,7 @@ function setBoard(res) {
         }
     }
     turnSetting(res.turn);
+    console.log(res.turn);
     status();
 }
 
@@ -148,6 +152,9 @@ function status() {
     $.ajax({
         type: "POST",
         url: "/status",
+        data: {
+            roomName: getParameterByName('roomName')
+        },
         success: printStatus,
         error: errorMessage,
     });

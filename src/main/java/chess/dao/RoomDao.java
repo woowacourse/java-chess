@@ -45,6 +45,7 @@ public class RoomDao {
                 return null;
             }
 
+            System.out.println("!!!"+rs.getString("turn"));
             return rs.getString("turn");
 
         } catch (SQLException e) {
