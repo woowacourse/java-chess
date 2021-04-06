@@ -32,7 +32,7 @@ public class ChessGameDaoTest {
     @DisplayName("새로운 체스 게임을 생성한다.")
     @Test
     void addChessGame() throws Exception {
-        chessGameDao.insertChessGameReturnId(chessGame);
+        chessGameDao.save(chessGame);
     }
 
     @DisplayName("체스 게임 id들을 반환받는다.")

@@ -27,7 +27,7 @@ public class ChessService {
 
     public void generateChessGame() throws SQLException {
         ChessGame chessGame = generateNewChessGame();
-        int chessGameId = chessGameDao.insertChessGameReturnId(chessGame);
+        int chessGameId = chessGameDao.save(chessGame);
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
     }
@@ -81,7 +81,7 @@ public class ChessService {
         ChessGame chessGame = generateNewChessGame();
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         chessGameDao.deleteChessGameById(chessGameId);
-        chessGameDao.insertChessGameById(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
+        chessGameDao.saveWithId(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
         pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
     }
 }
