@@ -18,7 +18,7 @@
 - [x] 컨트롤러는 상태를 갖지 않는다. static을 사용한다면 final과 같이 사용한다. 동시성 문제 때문 (컨트롤러가 상태를 갖지 않도록 수정하기)
 - [x] ChessBoardDao를 정리한다. 중복되는 내용이 많음 (비지니스 로직은 Service Layer로 분리)
 - [ ] DB의 다양한 자료구조를 활용한다. (ex. bigint, boolean, tinyint, ...)
-- [ ] gameId는 `long` 타입을 사용한다.
+- [x] gameId는 `long` 타입을 사용한다. -> 해당 인자 삭제
 - [ ] SQL 컨벤션 적용한다. (snake case) 
 - [x] 리소스는 정리한다. `try with resources` 사용한다. 이번 미션에서 사용하는 connection, statement, resultSet 등은 사용 후 반납(close)을 해야한다.
 
