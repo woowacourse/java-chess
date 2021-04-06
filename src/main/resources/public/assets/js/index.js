@@ -18,9 +18,11 @@ const clickSquare = function (event) {
 };
 
 const start = async () => {
-  const board = await getInitializedBoard(roomId)
-  reloadSquares(board["board"]);
-  updateGameState(roomId);
+  const board = await getInitializedBoard(roomId);
+  if (board !== undefined) {
+    reloadSquares(board["board"]);
+    updateGameState(roomId);
+  }
 }
 
 const usersTemplate = (users) => `<p><strong>BLACK</strong>  닉네임:${users.blackName} 승:${users.blackWin} 패:${users.blackLose}</p>
@@ -28,10 +30,13 @@ const usersTemplate = (users) => `<p><strong>BLACK</strong>  닉네임:${users.b
 
 const reloadUsers = async () => {
   const response = await fetch("./" + roomId + "/statistics");
+
   const result = await response.json();
-  console.log(result);
-  console.log(result);
-  document.querySelector(".stat").innerHTML = usersTemplate(result);
+  if (response.ok) {
+    document.querySelector(".stat").innerHTML = usersTemplate(result);
+  } else {
+    alert("HTTP-Error: " + result["message"]);
+  }
 }
 
 const restart = async () => {
@@ -46,12 +51,17 @@ const addEventToSquares = () => {
   );
 }
 
-const exitGame = () => {
-  fetch("./" + roomId + "/exit", {
+const exitGame = async () => {
+  const response = await fetch("./" + roomId + "/exit", {
     method: "PUT"
-  }).then(response => {
+  })
+
+  const result = await response.json();
+  if (response.ok) {
     updateGameState(roomId);
-  });
+  } else {
+    alert("HTTP-Error: " + result["message"]);
+  }
 }
 
 const addEventToScreen = () => {

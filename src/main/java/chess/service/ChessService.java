@@ -16,7 +16,6 @@ import chess.dto.web.GameStatusDto;
 import chess.dto.web.PointDto;
 import chess.dto.web.RoomDto;
 import chess.dto.web.UsersInRoomDto;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,37 +26,25 @@ public class ChessService {
     private static final UserDao USER_DAO = new UserDao(CHESS_DATA_SOURCE);
     private static final PlayLogDao PLAY_LOG_DAO = new PlayLogDao(CHESS_DATA_SOURCE);
 
-    private Board boardFromDb(String roomId) throws SQLException {
-        return PLAY_LOG_DAO.latestBoard(roomId).toEntity();
-    }
-
-    private ChessGame chessGameFromDb(Board board, String roomId)
-        throws SQLException {
-        GameStatusDto gameStatusDto = PLAY_LOG_DAO.latestGameStatus(roomId);
-        Turn turn = gameStatusDto.toTurnEntity();
-        GameState gameState = gameStatusDto.toGameStateEntity(board);
-        return new ChessGame(turn, new ScoreBoard(board), gameState);
-    }
-
-    public List<RoomDto> openedRooms() throws SQLException {
+    public List<RoomDto> openedRooms() {
         return ROOM_DAO.openedRooms();
     }
 
-    public String create(RoomDto newRoom) throws SQLException {
+    public String create(RoomDto newRoom) {
         USER_DAO.insert(newRoom.getWhite());
         USER_DAO.insert(newRoom.getBlack());
         return ROOM_DAO.insert(newRoom);
     }
 
-    public BoardDto latestBoard(String id) throws SQLException {
+    public BoardDto latestBoard(String id) {
         return PLAY_LOG_DAO.latestBoard(id);
     }
 
-    public UsersInRoomDto usersInRoom(String id) throws SQLException {
+    public UsersInRoomDto usersInRoom(String id) {
         return USER_DAO.usersInRoom(id);
     }
 
-    public BoardDto start(String id) throws SQLException {
+    public BoardDto start(String id) {
         Board board = PLAY_LOG_DAO.latestBoard(id).toEntity();
         ChessGame chessGame = chessGameFromDb(board, id);
         chessGame.start();
@@ -67,7 +54,7 @@ public class ChessService {
         return new BoardDto(board);
     }
 
-    public List<PointDto> movablePoints(String id, String point) throws SQLException {
+    public List<PointDto> movablePoints(String id, String point) {
         Board board = boardFromDb(id);
         ChessGame chessGame = chessGameFromDb(board, id);
         List<Point> movablePoints = chessGame.movablePoints(Point.of(point));
@@ -76,7 +63,7 @@ public class ChessService {
             .collect(Collectors.toList());
     }
 
-    public BoardDto move(String id, String sourceName, String destinationName) throws SQLException {
+    public BoardDto move(String id, String sourceName, String destinationName) {
         Board board = boardFromDb(id);
         ChessGame chessGame = chessGameFromDb(board, id);
 
@@ -88,14 +75,14 @@ public class ChessService {
         return new BoardDto(board);
     }
 
-    public GameStatusDto gameStatus(String id) throws SQLException {
+    public GameStatusDto gameStatus(String id) {
         Board board = boardFromDb(id);
         ChessGame chessGame = chessGameFromDb(board, id);
 
         return new GameStatusDto(chessGame);
     }
 
-    public void exit(String id) throws SQLException {
+    public void exit(String id) {
         Board board = boardFromDb(id);
         ChessGame chessGame = chessGameFromDb(board, id);
         chessGame.end();
@@ -104,7 +91,18 @@ public class ChessService {
         PLAY_LOG_DAO.insert(boardDto, gameStatusDto, id);
     }
 
-    public void close(String id) throws SQLException {
+    public void close(String id) {
         ROOM_DAO.close(id);
+    }
+
+    private Board boardFromDb(String roomId) {
+        return PLAY_LOG_DAO.latestBoard(roomId).toEntity();
+    }
+
+    private ChessGame chessGameFromDb(Board board, String roomId) {
+        GameStatusDto gameStatusDto = PLAY_LOG_DAO.latestGameStatus(roomId);
+        Turn turn = gameStatusDto.toTurnEntity();
+        GameState gameState = gameStatusDto.toGameStateEntity(board);
+        return new ChessGame(turn, new ScoreBoard(board), gameState);
     }
 }

@@ -17,7 +17,7 @@ public class RoomDao {
         this.chessDataSource = chessDataSource;
     }
 
-    public String insert(RoomDto roomDto) throws SQLException {
+    public String insert(RoomDto roomDto) {
         String query = "INSERT INTO room (name, is_opened, white, black) VALUES(?, true, ?, ?)";
 
         try (Connection connection = chessDataSource.connection();
@@ -32,10 +32,12 @@ public class RoomDao {
                 rs.next();
                 return rs.getString(1);
             }
+        } catch (SQLException e) {
+            throw new IllegalStateException("방을 db에 저장하는 중에 문제가 발생했습니다.", e);
         }
     }
 
-    public List<RoomDto> openedRooms() throws SQLException {
+    public List<RoomDto> openedRooms() {
         String query = "SELECT id, name, white, black FROM room WHERE is_opened = true";
 
         try (Connection connection = chessDataSource.connection();
@@ -48,16 +50,20 @@ public class RoomDao {
                     rs.getString(3), rs.getString(4)));
             }
             return result;
+        } catch (SQLException e) {
+            throw new IllegalStateException("방 리스트를 db에 불러오는 중에 문제가 발생했습니다.", e);
         }
     }
 
-    public void close(String roomId) throws SQLException {
+    public void close(String roomId) {
         String query = "UPDATE room SET is_opened = false WHERE id = (?)";
 
         try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, roomId);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("방 정보를 db에 갱신하는 중에 문제가 발생했습니다.", e);
         }
     }
 }

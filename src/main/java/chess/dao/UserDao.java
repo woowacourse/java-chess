@@ -15,7 +15,7 @@ public class UserDao {
         this.chessDataSource = chessDataSource;
     }
 
-    public void insert(String userName) throws SQLException {
+    public void insert(String userName) {
         String query = "INSERT INTO users (name) "
             + "SELECT * FROM (SELECT ?) AS tmp "
             + "WHERE NOT EXISTS (SELECT * FROM users WHERE name = ?);";
@@ -25,10 +25,12 @@ public class UserDao {
             pstmt.setString(1, userName);
             pstmt.setString(2, userName);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("유저 정보를 db에 생성하는 중에 문제가 발생했습니다.", e);
         }
     }
 
-    public UsersInRoomDto usersInRoom(String roomId) throws SQLException {
+    public UsersInRoomDto usersInRoom(String roomId) {
         String query = "SELECT"
             + " white_user.name AS whiteName,"
             + " white_user.win AS whiteWin,"
@@ -54,10 +56,12 @@ public class UserDao {
                     rs.getString("blackWin"),
                     rs.getString("blackLose"));
             }
+        } catch (SQLException e) {
+            throw new IllegalStateException("유저 정보를 db에 불러오는 중에 문제가 발생했습니다.", e);
         }
     }
 
-    public void updateStatistics(String roomId, Team winnerTeam) throws SQLException {
+    public void updateStatistics(String roomId, Team winnerTeam) {
         String winner = "white";
         String loser = "black";
         if (winnerTeam.isBlack()) {
@@ -68,7 +72,7 @@ public class UserDao {
         updateLoser(roomId, loser);
     }
 
-    private void updateWinner(String roomId, String winner) throws SQLException {
+    private void updateWinner(String roomId, String winner) {
         String updateWinnerQueryForm = "UPDATE users "
             + "SET users.win = users.win + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
@@ -78,10 +82,12 @@ public class UserDao {
                 .prepareStatement(String.format(updateWinnerQueryForm, winner));) {
             pstmt.setString(1, roomId);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("유저 기록을 db에 갱신하는 중에 문제가 발생했습니다.", e);
         }
     }
 
-    private void updateLoser(String roomId, String loser) throws SQLException {
+    private void updateLoser(String roomId, String loser) {
         String updateLoserQuery = "UPDATE users "
             + "SET users.lose = users.lose + 1 "
             + "WHERE users.name = (SELECT %s FROM room WHERE id = ?);";
@@ -91,6 +97,8 @@ public class UserDao {
                 .prepareStatement(String.format(updateLoserQuery, loser));) {
             pstmt.setString(1, roomId);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("유저 기록을 db에 갱신하는 중에 문제가 발생했습니다.", e);
         }
     }
 }

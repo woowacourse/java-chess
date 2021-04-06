@@ -17,14 +17,19 @@ document.querySelector(".rooms").addEventListener("click", async (event) => {
     const idToBeRemoved = event.target.closest(".room").getAttribute(
         "id").toString();
     console.log(idToBeRemoved)
-    await fetch("./room", {
+    const response = await fetch("./room", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({id: idToBeRemoved})
     });
-    window.location.reload();
+    const result = await response.json();
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      alert("HTTP-Error: " + result["message"]);
+    }
   }
 });
 
@@ -59,12 +64,11 @@ document.querySelector(".create-room").addEventListener("submit",
           })
         });
         const result = await response.json();
-        if (result["result"] === "success") {
+        if (response.ok) {
           window.location.href = "./room/" + result["roomId"];
-          return;
+        } else {
+          alert("HTTP-Error: " + result["message"]);
         }
-        alert("서버에 요청 중에 에러가 발생했습니다. (" + result["message"] + ")");
-        return;
       } else {
         alert("2자 이상의 이름을 입력해주세요.");
       }

@@ -9,7 +9,6 @@ import chess.dto.web.RoomDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -32,18 +31,11 @@ public class WebUIChessApplication {
         });
 
         post("/room", "application/json", (req, res) -> {
-            try {
-                RoomDto newRoom = GSON.fromJson(req.body(), RoomDto.class);
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("result", "success");
-                jsonObject.addProperty("roomId", CHESS_SERVICE.create(newRoom));
-                return GSON.toJson(jsonObject);
-            } catch (IllegalArgumentException e) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("result", "fail");
-                jsonObject.addProperty("message", e.getMessage());
-                return GSON.toJson(jsonObject);
-            }
+            RoomDto newRoom = GSON.fromJson(req.body(), RoomDto.class);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("result", "success");
+            jsonObject.addProperty("roomId", CHESS_SERVICE.create(newRoom));
+            return GSON.toJson(jsonObject);
         });
 
         put("/room", (req, res) -> {
@@ -85,9 +77,12 @@ public class WebUIChessApplication {
         get("/room/:id/movablePoints/:point", "application/json", (req, res) ->
             GSON.toJson(CHESS_SERVICE.movablePoints(req.params("id"), req.params("point"))));
 
-        exception(SQLException.class, (e, req, res) -> {
+        exception(Exception.class, (e, req, res) -> {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("result", "fail");
+            jsonObject.addProperty("message", e.getMessage());
             res.status(500);
-            res.body(e.getMessage());
+            res.body(GSON.toJson(jsonObject));
         });
     }
 

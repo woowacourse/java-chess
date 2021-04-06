@@ -13,7 +13,12 @@ const result = document.querySelector(".result");
 
 async function getGameStatus(roomId) {
   const response = await fetch("./" + roomId + "/getGameStatus");
-  return await response.json();
+  const result = await response.json();
+  if (response.ok) {
+    return result;
+  } else {
+    alert("HTTP-Error: " + result["message"]);
+  }
 }
 
 const blurContents = (isBlur) => {

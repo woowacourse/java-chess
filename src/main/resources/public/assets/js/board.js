@@ -33,14 +33,24 @@ export async function getBoardAfterMove(source, destination, roomId) {
           "destination": destination
         })
       });
-  return await response.json();
+  const result = await response.json();
+  if (response.ok) {
+    return result;
+  } else {
+    alert("HTTP-Error: " + result["message"]);
+  }
 }
 
 export async function getInitializedBoard(roomId) {
   const response = await fetch("./" + roomId + "/start", {
     method: "PUT"
   });
-  return await response.json();
+  const result = await response.json();
+  if (response.ok) {
+    return result;
+  } else {
+    alert("HTTP-Error: " + result["message"]);
+  }
 }
 
 export const reloadBoard = () => {
