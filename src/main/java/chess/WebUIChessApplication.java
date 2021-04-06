@@ -5,6 +5,7 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
@@ -14,6 +15,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         ChessControllerForUI chessController = new ChessControllerForUI();
+        CommandDAO commandDAO = new CommandDAO();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -48,6 +50,17 @@ public class WebUIChessApplication {
             }
 
             model = makeBoardModel(chessController);
+            return render(model, "chessboard.html");
+        });
+
+        get("/load", (req, res) -> {
+            chessController.init();
+            chessController.action("start");
+            List<String> commands = commandDAO.selectAll();
+            for (String command : commands) {
+                chessController.action(command);
+            }
+            Map<String, Object> model = makeBoardModel(chessController);
             return render(model, "chessboard.html");
         });
     }
