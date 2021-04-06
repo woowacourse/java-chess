@@ -43,6 +43,10 @@
 - [x] 특정 기물을 위한 메서드가 불 필요한 기물들에게까지 노출되는 것 리팩토링
     - [x] 특별 행마가 필요한 기물들에 대해 이동 가능한지 isMovable에서 조건 검사
     - [x] chessGame에서 특별 행마의 경우 처리해 줘야할 로직(캐슬링-룩의 이동, 프로모션-폰을 퀸으로)을 처리해줌
+- [x] Controller, Service, DAO는 stateless 하게 만들어 볼 것
+- [x] HTTP 상태코드를 명확히 명시해 줄 것
+    - [x] Enum으로 HTTP 상태코드를 관리해 볼 것
+- [x] JDBC API 자원들을 완벽히 반환할 것
 
 ## 웹 UI 적용 사안
 - [x] GET 요청이 들어오면, 초기 기물 위치를 가진 체스판을 띄워준다
@@ -67,13 +71,19 @@
 
 ## DB 테이블 구조
 ![table_structure](./img/table_structure.PNG)
-- __chess_game__
-    - current_turn_team : VARCHAR(5) NOT NULL,
-    - is_playing : boolean NOT NULL
-- __piece_position__
-    - team : VARCHAR(5) NOT NULL,     
-    - piece : VARCHAR(6) NOT NULL,     
-    - position : VARCHAR(2) NOT NULL,     
-    - is_first_move : boolean NOT NULL 
-    - primary key (position)
-        
+```sql
+CREATE DATABASE chess_db;
+
+USE chess_db;
+
+CREATE TABLE chess_game (
+    current_turn_team VARCHAR(5) NOT NULL,
+    is_playing boolean NOT NULL
+);
+
+CREATE TABLE team_info (
+    team VARCHAR(5) NOT NULL,
+    piece_info VARCHAR(400) NOT NULL,
+    primary key (team)
+);
+```       
