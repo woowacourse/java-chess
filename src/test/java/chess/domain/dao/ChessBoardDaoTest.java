@@ -53,7 +53,7 @@ class ChessBoardDaoTest {
     @Test
     @DisplayName("게임아이디로 모든 보드판 불러오기")
     void findByGameId() {
-        List<ChessCellDto> results = chessBoardDao.findByGameId("1");
+        List<ChessCellDto> results = chessBoardDao.findPositions();
         assertThat(results).isEmpty();
         assertThat(results).contains(
                 new ChessCellDto("a1", "WHITE", "ROOK", "true"),
@@ -66,7 +66,7 @@ class ChessBoardDaoTest {
     @DisplayName("게임아이디가 비어있을 때, 모든 보드판 불러오기")
     void findByGameId_removed() {
         chessBoardDao.removePositions();
-        List<ChessCellDto> results = chessBoardDao.findByGameId("1");
+        List<ChessCellDto> results = chessBoardDao.findPositions();
         assertThat(results).isEmpty();
     }
 

@@ -9,13 +9,12 @@ import java.util.List;
 public class ChessBoardDao implements ChessDao {
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_chess"; // MySQL DATABASE 이름
+        String server = "localhost:13306";
+        String database = "db_chess";
         String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+        String userName = "root";
+        String password = "root";
 
-        // 드라이버 로딩
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -23,7 +22,6 @@ public class ChessBoardDao implements ChessDao {
             e.printStackTrace();
         }
 
-        // 드라이버 연결
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
@@ -33,16 +31,6 @@ public class ChessBoardDao implements ChessDao {
         }
 
         return con;
-    }
-
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 
     @Override
@@ -60,7 +48,6 @@ public class ChessBoardDao implements ChessDao {
             throwables.printStackTrace();
         }
 
-
     }
 
     @Override
@@ -71,7 +58,7 @@ public class ChessBoardDao implements ChessDao {
     }
 
     @Override
-    public List<ChessCellDto> findByGameId(String gameId) {
+    public List<ChessCellDto> findPositions() {
         String query = "SELECT * FROM chessTable WHERE game_id = 1";
 
         List<ChessCellDto> chessboard = new ArrayList<>();
@@ -90,7 +77,6 @@ public class ChessBoardDao implements ChessDao {
         }
 
         return chessboard;
-
     }
 
     @Override

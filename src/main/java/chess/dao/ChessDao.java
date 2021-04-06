@@ -10,7 +10,7 @@ public interface ChessDao {
 
     void addPositions(List<ChessCellDto> board);
 
-    List<ChessCellDto> findByGameId(String gameId);
+    List<ChessCellDto> findPositions();
 
     void removePositions();
 }

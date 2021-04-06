@@ -20,7 +20,7 @@
 - [ ] DB의 다양한 자료구조를 활용한다. (ex. bigint, boolean, tinyint, ...)
 - [ ] gameId는 `long` 타입을 사용한다.
 - [ ] SQL 컨벤션 적용한다. (snake case) 
-- [ ] 리소스는 정리한다. `try with resources` 사용한다. 이번 미션에서 사용하는 connection, statement, resultSet 등은 사용 후 반납(close)을 해야한다.
+- [x] 리소스는 정리한다. `try with resources` 사용한다. 이번 미션에서 사용하는 connection, statement, resultSet 등은 사용 후 반납(close)을 해야한다.
 
 # todos
 - [x] 패키지 변경, 패키지 구조 찾아보기 

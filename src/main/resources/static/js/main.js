@@ -9,12 +9,10 @@ const $resultDisplay = document.querySelector(".result-display");
 const $start = document.querySelector(".start-btn");
 const $startSaved = document.querySelector(".start-saved-btn");
 const $saving = document.querySelector(".save-btn");
-console.log($saving);
 
 const alpha = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 function drawTable(data) {
-    console.log(data)
     let innerValue = `<div class="row">
             <div class="position"></div>
             <div class="position">a</div>
@@ -107,7 +105,6 @@ function checkIfBoard(event) {
 
 
 function showResult(data) {
-    console.log(data)
     const result = data['result'];
     const blackScore = result['BLACK']['score'];
     const whiteScore = result['WHITE']['score'];

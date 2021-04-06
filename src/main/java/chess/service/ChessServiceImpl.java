@@ -65,7 +65,7 @@ public class ChessServiceImpl implements ChessService {
 
     @Override
     public Map<String, PieceDto> getSavedChessBoard() {
-        List<ChessCellDto> previousGame = chessDao.findByGameId("1");
+        List<ChessCellDto> previousGame = chessDao.findPositions();
 
         Map<Position, Piece> boardFromDB = new LinkedHashMap<>();
         for (ChessCellDto eachInfo : previousGame) {
@@ -80,7 +80,6 @@ public class ChessServiceImpl implements ChessService {
 
     private Map<String, PieceDto> getSavedOfDefaultChessBoard(Map<Position, Piece> boardFromDB) {
         if (boardFromDB.isEmpty()) {
-            System.out.println("hihi!");
             chessBoard = new ChessBoard();
             return chessBoard.getChessBoardDto();
         }
