@@ -31,6 +31,16 @@ public class Round {
         this.command = command;
     }
 
+    public void execute(final Queue<String> commands) {
+        this.command = this.command.execute(commands.poll());
+        if (this.command.isMove()) {
+            this.command = command.ready();
+            Position sourcePosition = Position.from(commands.poll());
+            Position targetPosition = Position.from(commands.poll());
+            moveByTurn(sourcePosition, targetPosition);
+        }
+    }
+
     private void moveByTurn(final Position sourcePosition, final Position targetPosition) {
         if (whitePlayer.isFinish()) {
             move(blackPlayer, whitePlayer, sourcePosition, targetPosition);
@@ -56,8 +66,12 @@ public class Round {
             state.removePiece(target.getPosition());
         }
         if (isEnd) {
-            this.command = command.end();
+            changeToEnd();
         }
+    }
+
+    public void changeToEnd() {
+        this.command = command.end();
     }
 
     public Map<Position, Piece> getBoard() {
@@ -78,16 +92,6 @@ public class Round {
 
     public boolean isPlaying() {
         return !command.isEnd();
-    }
-
-    public void execute(final Queue<String> commands) {
-        this.command = this.command.execute(commands.poll());
-        if (this.command.isMove()) {
-            this.command = command.ready();
-            Position sourcePosition = Position.from(commands.poll());
-            Position targetPosition = Position.from(commands.poll());
-            moveByTurn(sourcePosition, targetPosition);
-        }
     }
 
     public double calculateScore() {
@@ -120,5 +124,9 @@ public class Round {
 
     public Player getBlackPlayer() {
         return blackPlayer;
+    }
+
+    public Command getCommand() {
+        return command;
     }
 }

@@ -90,8 +90,15 @@ public class WebUIChessController {
                 black.changeState(nextBlackTurn);
             }
 
-            double whiteScore = round.getWhitePlayer().calculateScore();
-            double blackScore = round.getBlackPlayer().calculateScore();
+            Player whitePlayer = round.getWhitePlayer();
+            Player blackPlayer = round.getBlackPlayer();
+
+            double whiteScore = whitePlayer.calculateScore();
+            double blackScore = blackPlayer.calculateScore();
+
+            if (!(whitePlayer.getPieces().isKing() && blackPlayer.getPieces().isKing())) {
+                round.changeToEnd();
+            }
 
             Map<String, Object> model = new HashMap<>();
             model.put("jsonFormatChessBoard", jsonFormatChessBoard);
