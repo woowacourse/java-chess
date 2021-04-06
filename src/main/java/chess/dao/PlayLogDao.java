@@ -35,7 +35,7 @@ public class PlayLogDao {
     }
 
     public BoardDto latestBoard(String roomId) {
-        String query = "SELECT board FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
+        String query = "SELECT board FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC, id DESC LIMIT 1";
 
         try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
@@ -54,7 +54,7 @@ public class PlayLogDao {
     }
 
     public GameStatusDto latestGameStatus(String roomId) {
-        String query = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC LIMIT 1";
+        String query = "SELECT game_status FROM play_log WHERE room_id = (?) ORDER BY last_played_time DESC, id DESC LIMIT 1";
 
         try (Connection connection = chessDataSource.connection();
             PreparedStatement pstmt = connection.prepareStatement(query);) {
