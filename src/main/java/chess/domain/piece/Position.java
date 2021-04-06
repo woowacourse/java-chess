@@ -9,6 +9,10 @@ public class Position {
         this.column = column;
     }
 
+    public static Position parseChessPosition(final String position) {
+        return ChessPositions.parseToPosition(position);
+    }
+
     public double calculateGradient(Position position) {
         return (position.row - row) / (double) (position.column - column);
     }
@@ -38,4 +42,5 @@ public class Position {
         result = 31 * result + column;
         return result;
     }
+
 }

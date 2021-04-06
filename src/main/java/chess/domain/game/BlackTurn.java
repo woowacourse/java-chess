@@ -4,9 +4,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class BlackTurn extends Running {
+    private static final String BLACK_TURN_STATE_IDENTITY_VALUE = "BlackTurn";
 
     public BlackTurn(final ChessGame chessGame) {
-        super(chessGame);
+        super(chessGame, BLACK_TURN_STATE_IDENTITY_VALUE);
     }
 
     @Override

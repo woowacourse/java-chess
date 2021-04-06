@@ -10,7 +10,10 @@ import java.util.Objects;
 
 public class Piece {
 
+    private Long id;
+
     private final Color color;
+
     private final Shape shape;
     private final List<MoveCondition> moveConditions;
     private Position position;
@@ -60,6 +63,10 @@ public class Piece {
         return this.shape == Shape.KING;
     }
 
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
     public String getNotation() {
         return shape.getNotation(color);
     }
@@ -96,7 +103,7 @@ public class Piece {
     }
 
     public Position getPosition() {
-        return new Position(position.getRow(), position.getColumn());
+        return position;
     }
 
     public boolean isPawn() {
@@ -125,6 +132,18 @@ public class Piece {
 
     public double calculateGradient(final Position target) {
         return position.calculateGradient(target);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public void setPosition(final Position target) {
+        this.position = target;
     }
 
 }

@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
+table {
+    table-layout: fixed !important;
+}
+
+.chess-board-info {
+    width: 100px;
+    height: 75px;
+    font-size: large;
+    color: #4a4a4a;
+}
+
+td {
+    max-height: 100px;
+    min-height: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    border: darkgray 2px solid;
+}
+
+td:hover {
+    background: cornflowerblue;
+    cursor: pointer;
+}
+
+.chess-column {
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+.chess-row {
+    text-align: center !important;
+    vertical-align: middle;
+}
+
+.black {
+    background-color: #2AC1BC;
+}
+
+.white {
+    background-color: white;
+}
+
+.chess-game {
+    background-color: linen;
+}
+
+.chess-board {
+    position: relative;
+    transform: skewX(-30deg);
+    left: 25%;
+    z-index: auto;
+    opacity: 0.65;
+    z-index: 99;
+}
+
+.piece {
+    width: 45%;
+    transform: skewX(33deg);
+    z-index: 1;
+}
+
+.game-title, .turn-info {
+    font-family: 'Jua', sans-serif;
+}
+
+.turn-info.text {
+    font-size: xxx-large;
+    position: relative;
+}
+
+.turn-info.color {
+    margin: 0;
+    position: absolute;
+}
+
+
+.turn-info {
+    width: 20%;
+    margin-top: 30px;
+}
+
+.game-title-header {
+    font-size: xxx-large;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.score-tag {
+    display: inline-block !important;
+}
+
+.score {
+
+}
+
+.score-info {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.score-black, .score-white {
+    display: inline-block;
+    width: 40% !important;
+    margin: 0 !important;
+}
+
+.chess-piece-position {
+    width: 8%;
+    text-align: center;
+}

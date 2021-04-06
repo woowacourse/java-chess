@@ -10,7 +10,7 @@ public class BoardDto {
 
     private final int row;
     private final int column;
-    List<PieceDto> pieceDtos;
+    private final List<PieceDto> pieceDtos;
 
     public BoardDto(final Board board) {
         this.row = board.getRow();
@@ -20,16 +20,16 @@ public class BoardDto {
                 .collect(toList());
     }
 
+    public List<PieceDto> getPieceDtos() {
+        return pieceDtos;
+    }
+
     public int getRow() {
         return row;
     }
 
     public int getColumn() {
         return column;
-    }
-
-    public List<PieceDto> getPieceDtos() {
-        return pieceDtos;
     }
 
 }

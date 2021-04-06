@@ -60,4 +60,8 @@ public class ChessGame {
         return board.getBlackScore();
     }
 
+    public State getState() {
+        return state;
+    }
+
 }

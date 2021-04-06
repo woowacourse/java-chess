@@ -1,9 +1,24 @@
 package chess.domain.piece;
 
+import util.TriFunction;
+
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PieceFactory {
+
+    private static final Map<String, TriFunction<Color, Integer, Integer, Piece>> PIECE_FUNCTIONS = new HashMap<>();
+
+    static {
+        PIECE_FUNCTIONS.put("ROOK", Piece::createRook);
+        PIECE_FUNCTIONS.put("KNIGHT", Piece::createKnight);
+        PIECE_FUNCTIONS.put("BISHOP", Piece::createBishop);
+        PIECE_FUNCTIONS.put("QUEEN", Piece::createQueen);
+        PIECE_FUNCTIONS.put("KING", Piece::createKing);
+        PIECE_FUNCTIONS.put("PAWN", Piece::createPawn);
+    }
 
     private PieceFactory() {
     }
@@ -45,4 +60,10 @@ public class PieceFactory {
                 Piece.createPawn(Color.WHITE, 6, 7)
         );
     }
+
+    public static Piece createPiece(String shape, String color, Integer row, Integer col) {
+        return PIECE_FUNCTIONS.get(shape.toUpperCase())
+                .apply(Color.valueOf(color), row, col);
+    }
+
 }

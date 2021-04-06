@@ -55,4 +55,13 @@
 
 - 점수 출력
     - [x] 구현: status명령을 입력하면 각 진영의 점수를 출력
-    
+
+
+- 테이블 구조
+  ![image](https://user-images.githubusercontent.com/47850258/113258550-0bfb3a00-9307-11eb-9b01-89ea6a732528.png)
+
+![image](https://user-images.githubusercontent.com/47850258/113258272-b4f56500-9306-11eb-8dcf-b970e9788494.png)
+
+### 실행 예시
+
+![image](src/main/resources/static/videos/chess.gif)

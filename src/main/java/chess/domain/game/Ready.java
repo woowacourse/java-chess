@@ -3,9 +3,10 @@ package chess.domain.game;
 import chess.domain.piece.Position;
 
 public class Ready extends Idle {
+    private static final String READY_STATE_IDENTITY_VALUE = "Ready";
 
     public Ready(final ChessGame chessGame) {
-        super(chessGame);
+        super(chessGame, READY_STATE_IDENTITY_VALUE);
     }
 
     @Override
