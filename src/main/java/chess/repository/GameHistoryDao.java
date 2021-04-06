@@ -24,21 +24,26 @@ public class GameHistoryDao {
         closeConnection(connection);
     }
 
-    public List<GameHistory> findAllGameHistoryByGameId(int gameId) throws SQLException {
+    public List<GameHistory> findAllGameHistoryByGameId(int gameId) {
         String query = "SELECT * FROM game_history gh JOIN game g ON gh.gameId = g.id WHERE gh.gameId = ?";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, gameId);
-        ResultSet rs = preparedStatement.executeQuery();
-
         List<GameHistory> gameHistories = new ArrayList<>();
-        while(rs.next()) {
-            gameHistories.add(new GameHistory(
-                rs.getInt("id"),
-                rs.getInt("gameId"),
-                rs.getString("command"),
-                rs.getTimestamp("createdTime").toLocalDateTime()
-            ));
+        Connection connection;
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, gameId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                gameHistories.add(new GameHistory(
+                    rs.getInt("id"),
+                    rs.getInt("gameId"),
+                    rs.getString("command"),
+                    rs.getTimestamp("createdTime").toLocalDateTime()
+                ));
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
         closeConnection(connection);
         return gameHistories;
