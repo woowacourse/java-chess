@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public interface GameState {
-    double MINUS_HALF_POINT = -0.5;
 
     GameState move(Position source, Position target);
 
