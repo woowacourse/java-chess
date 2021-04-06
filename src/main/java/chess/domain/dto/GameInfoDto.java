@@ -4,16 +4,19 @@ import chess.domain.ChessGame;
 import chess.domain.board.Team;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GameInfoDto {
     private List<SquareDto> squares;
     private Team turn;
     private ScoresDto scores;
+    private Optional<Team> winner;
 
     public GameInfoDto(ChessGame chessGame) {
         this.squares = new SquaresDto(chessGame.board()).squares();
         this.turn = chessGame.turn();
         this.scores = new ScoresDto(chessGame.pointDto());
+        this.winner = chessGame.winner();
     }
 
     public List<SquareDto> squares() {
@@ -26,5 +29,12 @@ public class GameInfoDto {
 
     public List<ScoreDto> scores() {
         return scores.scores();
+    }
+
+    public Team winner() {
+        if (!winner.isPresent()) {
+            throw new IllegalArgumentException("[ERROR] 승자가 결정되지 않았습니다.");
+        }
+        return winner.get();
     }
 }

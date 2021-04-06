@@ -13,12 +13,13 @@ import chess.view.OutputView;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Optional;
 
 public class ChessGame {
 
     private Board board;
     private State state;
-    private Team winner;
+    private Optional<Team> winner = Optional.empty();
     private Team turn;
 
     public ChessGame() {
@@ -66,7 +67,7 @@ public class ChessGame {
 
     private void confirmKingCaptured(Path path) {
         if (board.isKingAt(path.target())) {
-            winner = turn;
+            winner = Optional.of(turn);
             state = state.next();
         }
     }
@@ -100,7 +101,7 @@ public class ChessGame {
         return !state.isExit();
     }
 
-    public Team winner() {
+    public Optional<Team> winner() {
         return winner;
     }
 
