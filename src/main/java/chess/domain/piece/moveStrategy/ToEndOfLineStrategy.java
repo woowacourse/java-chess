@@ -8,30 +8,21 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class ToEndOfLineStrategy implements MoveStrategy {
-    public List<Position> searchMovablePositions(Position target, List<Direction> directions) {
-        return directions.stream()
-                .map(direction -> calculateBishopMovablePositions(target, direction))
-                .collect(Collectors.toList())
-                .stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
-
-    private List<Position> calculateBishopMovablePositions(Position target, Direction direction) {
+public class ToEndOfLineStrategy extends MoveStrategy {
+    @Override
+    public List<Position> calculateBoardPosition(Position target, Direction direction) {
         List<Position> result = new ArrayList<>();
-        int horizontalWeight = target.getHorizontalWeight();
-        int verticalWeight = target.getVerticalWeight();
-        while (isInsideBoard(horizontalWeight, verticalWeight, direction)) {
-            horizontalWeight += direction.getX();
-            verticalWeight += direction.getY();
+        int x = target.getHorizontalWeight();
+        int y = target.getVerticalWeight();
+
+        while (isInsideBoard(x, y, direction)) {
+            x += direction.getX();
+            y += direction.getY();
             result.add(
-                    Position.of(Horizontal.findFromWeight(horizontalWeight), Vertical.findFromWeight(verticalWeight))
+                    Position.of(Horizontal.findFromWeight(x), Vertical.findFromWeight(y))
             );
         }
         return result;

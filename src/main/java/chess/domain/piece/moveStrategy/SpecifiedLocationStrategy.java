@@ -8,22 +8,12 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class SpecifiedLocationStrategy implements MoveStrategy {
-    public List<Position> searchMovablePositions(Position target, List<Direction> directions) {
-        return directions.stream()
-                .map(direction -> calculateBoardPosition(target, direction))
-                .collect(Collectors.toList())
-                .stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
-
-    private List<Position> calculateBoardPosition(Position target, Direction direction) {
+public class SpecifiedLocationStrategy extends MoveStrategy {
+    @Override
+    public List<Position> calculateBoardPosition(Position target, Direction direction) {
         List<Position> result = new ArrayList<>();
         int x = target.getHorizontalWeight() + direction.getX();
         int y = target.getVerticalWeight() + direction.getY();
