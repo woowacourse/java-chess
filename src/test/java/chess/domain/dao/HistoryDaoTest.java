@@ -1,6 +1,5 @@
 package chess.domain.dao;
 
-import chess.domain.dto.HistoryDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

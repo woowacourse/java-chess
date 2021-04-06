@@ -1,13 +1,9 @@
 package chess.service;
 
-import chess.domain.ChessGame;
-import chess.domain.command.Commands;
 import chess.domain.dao.CommandDao;
 import chess.domain.dao.HistoryDao;
 import chess.domain.dto.CommandDto;
-import chess.domain.dto.GameInfoDto;
 import chess.domain.dto.HistoryDto;
-import chess.domain.utils.BoardInitializer;
 import spark.utils.StringUtils;
 
 import java.sql.SQLException;
