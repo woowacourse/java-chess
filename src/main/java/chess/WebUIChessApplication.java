@@ -21,14 +21,16 @@ import spark.Request;
 
 public class WebUIChessApplication {
 
+    private static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
+    private static final MoveCommandDAO MOVE_COMMAND_DAO = new MoveCommandDAO();
+
     public static void main(String[] args) {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ChessGameDAO chessGameDAO = new ChessGameDAO();
 
-            model.put("games", chessGameDAO.findActiveGames());
+            model.put("games", CHESS_GAME_DAO.findActiveGames());
 
             return renderHtml(model, "/lobby.html");
         });
@@ -37,8 +39,7 @@ public class WebUIChessApplication {
             ChessGame chessGame = ChessGame.initChessGame();
             chessGame.setName(req.queryParams("gameName"));
 
-            ChessGameDAO chessGameDAO = new ChessGameDAO();
-            String gameId = chessGameDAO.addGame(chessGame);
+            String gameId = CHESS_GAME_DAO.addGame(chessGame);
 
             res.redirect("/chess/game/" + gameId);
             return res;
@@ -64,8 +65,7 @@ public class WebUIChessApplication {
     private static ChessGame getChessGame(Request req) throws SQLException {
         String gameId = req.params(":id");
 
-        MoveCommandDAO moveCommandDAO = new MoveCommandDAO();
-        List<Command> commandsByGameId = moveCommandDAO.findCommandsByGameId(gameId);
+        List<Command> commandsByGameId = MOVE_COMMAND_DAO.findCommandsByGameId(gameId);
 
         ChessGame chessGame = ChessGame.initChessGame();
         for (Command command : commandsByGameId) {
@@ -82,15 +82,18 @@ public class WebUIChessApplication {
             chessGame.execute(command);
             saveMoveCommand(chessGame, (Move) command);
 
-            return modelFromChessGame(chessGame);
+            return chessModelFromGame(chessGame);
         } catch (ChessException e) {
-            Map<String, Object> model = new BoardDto(chessGame).getResult();
-            model.put("error", String.format("<script>alert(\"%s\")</script>", e));
-            return model;
+            return chessModelWithException(chessGame, e);
         }
     }
 
-    private static Map<String, Object> modelFromChessGame(ChessGame chessGame) {
+    private static void saveMoveCommand(ChessGame chessGame, Move command) throws SQLException {
+        command.setGameId(chessGame.getId());
+        MOVE_COMMAND_DAO.addMoveCommand(command);
+    }
+
+    private static Map<String, Object> chessModelFromGame(ChessGame chessGame) {
         Map<String, Object> model = new BoardDto(chessGame).getResult();
 
         if (chessGame.isGameSet()) {
@@ -103,9 +106,10 @@ public class WebUIChessApplication {
         return model;
     }
 
-    private static void saveMoveCommand(ChessGame chessGame, Move command) throws SQLException {
-        command.setGameId(chessGame.getId());
-        MoveCommandDAO moveCommandDAO = new MoveCommandDAO();
-        moveCommandDAO.addMoveCommand(command);
+    private static Map<String, Object> chessModelWithException(ChessGame chessGame,
+            ChessException e) {
+        Map<String, Object> model = new BoardDto(chessGame).getResult();
+        model.put("error", String.format("<script>alert(\"%s\")</script>", e));
+        return model;
     }
 }
