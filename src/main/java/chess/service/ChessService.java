@@ -8,6 +8,7 @@ import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.dto.HistoryDto;
 import chess.domain.utils.BoardInitializer;
+import spark.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -93,7 +94,9 @@ public class ChessService {
 
     public void movePiece(String command, String historyId) throws SQLException {
         move(command);
-        flushCommands(command, historyId);
+        if (!StringUtils.isEmpty(historyId)) {
+            flushCommands(command, historyId);
+        }
         if (chessGame.isEnd() && historyId != null) {
             updateDB(historyId);
         }

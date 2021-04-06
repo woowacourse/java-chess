@@ -10,7 +10,10 @@ for (let i = 0; i < squares.length; i++) {
 }
 
 function gameId() {
-    return document.getElementById("gameId").innerText;
+    let element = document.getElementById("gameId");
+    if (element == null)
+        return null;
+    return element.innerText;
 }
 
 function move(source, target) {
@@ -102,4 +105,23 @@ function mark(clickedLocation) {
     } else {
         clickedLocation.style.boxShadow = "inset 0px 0px 10px 3px #ffff60";
     }
+}
+
+function endMessage () {
+    if (gameId() != null) {
+        alert(`플레이를 저장했습니다!`);
+        return true;
+    }
+    else {
+        if (confirmEnd()) {
+            alert("게임을 종료합니다!");
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function confirmEnd() {
+    return confirm("게임 시작 시 이름을 입력하지 않으셨으므로, 종료 시 이어하기가 불가합니다.😱\n그래도 종료하시겠습니까?");
 }

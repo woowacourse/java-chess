@@ -25,8 +25,12 @@
 </body>
 <script>
     const playNewGame = function () {
-        const name = prompt("게임 저장 시 이용할 이름을 입력해주세요!");
-        window.location = `/play/${name}/new`;
+        const name = prompt("게임 저장 시 이용할 이름을 입력해주세요!\n 취소 시 게임은 가능하지만, 저장이 되지 않아 이어하기가 불가합니다.😱");
+        if (name == null) {
+            window.location = "/play/new";
+        } else {
+            window.location = `/play/${name}/new`;
+        }
     }
 
     const gameHistory = document.getElementById("historyList");

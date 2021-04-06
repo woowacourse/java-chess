@@ -21,6 +21,14 @@ public class ModelView {
         return model;
     }
 
+    public static Map<String, Object> commonResponseForm(GameInfoDto gameInfoDto) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("squares", gameInfoDto.squares());
+        model.put("turn", gameInfoDto.turn());
+        model.put("scores", gameInfoDto.scores());
+        return model;
+    }
+
     public static Map<String, Object> startResponse(List<HistoryDto> history) {
         Map<String, Object> model = new HashMap<>();
         if (!history.isEmpty()) {
@@ -31,6 +39,10 @@ public class ModelView {
 
     public static Map<String, Object> newGameResponse(GameInfoDto gameInfoDto, String id) {
         return commonResponseForm(gameInfoDto, id);
+    }
+
+    public static Map<String, Object> newGameResponse(GameInfoDto gameInfoDto) {
+        return commonResponseForm(gameInfoDto);
     }
 
     public static Map<String, Object> moveResponse(GameInfoDto gameInfoDto, String id) {

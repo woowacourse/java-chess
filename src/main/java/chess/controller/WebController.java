@@ -28,7 +28,11 @@ public class WebController {
                 "chessStart.html");
     }
 
-    public String playNewGame(Request request, Response response) throws SQLException {
+    public String playNewGameWithNoSave(Request request, Response response) {
+        return RenderView.renderHtml(ModelView.newGameResponse(chessService.gameInfo()), "chessGame.html");
+    }
+
+    public String playNewGameWithSave(Request request, Response response) throws SQLException {
         return RenderView.renderHtml(ModelView.newGameResponse(
                 chessService.gameInfo(),
                 chessService.addHistory(request.params(":name"))

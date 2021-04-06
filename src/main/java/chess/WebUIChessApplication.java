@@ -5,8 +5,6 @@ import chess.domain.dao.CommandDao;
 import chess.domain.dao.HistoryDao;
 import chess.service.ChessService;
 
-import java.sql.SQLException;
-
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
@@ -15,7 +13,8 @@ public class WebUIChessApplication {
         final WebController webController = initWebController(new CommandDao(), new HistoryDao());
 
         get("/play", webController::moveToMainPage);
-        get("/play/:name/new", webController::playNewGame);
+        get("/play/new", webController::playNewGameWithNoSave);
+        get("/play/:name/new", webController::playNewGameWithSave);
         post("/play/move", webController::movePiece);
         get("/play/continue", webController::continueGame);
         get("/play/end", webController::endGame);
