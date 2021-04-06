@@ -12,8 +12,8 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.controller.TeamFormat.BLACK_TEAM;
-import static chess.controller.TeamFormat.WHITE_TEAM;
+import static chess.service.TeamFormat.BLACK_TEAM;
+import static chess.service.TeamFormat.WHITE_TEAM;
 
 public class ChessGameDAO {
     public Connection getConnection() {

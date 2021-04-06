@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.service;
 
 public enum TeamFormat {
     WHITE_TEAM("white", "white"),
