@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.service.ChessService;
+import chess.webdto.ChessGameDTO;
 import chess.webdto.DBConnectionDTO;
 import chess.webdto.MoveRequestDTO;
 import com.google.gson.Gson;
@@ -33,9 +34,9 @@ public class WebChessController {
 
         get("/startNewGame", (req, res) -> {
             try {
-                chessService.startNewGame();
+                final ChessGameDTO chessGameDTO = chessService.startNewGame();
                 res.status(SUCCESS.statusCode());
-                return gson.toJson(chessService.generateChessGameDTO());
+                return gson.toJson(chessGameDTO);
             } catch (SQLException e) {
                 res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
@@ -44,20 +45,9 @@ public class WebChessController {
 
         get("/loadPrevGame", (req, res) -> {
             try {
-                chessService.loadPreviousGame();
+                final ChessGameDTO chessGameDTO = chessService.loadPreviousGame();
                 res.status(SUCCESS.statusCode());
-                return gson.toJson(chessService.generateChessGameDTO());
-            } catch (SQLException e) {
-                res.status(INTERNAL_SERVER_ERROR.statusCode());
-                return gson.toJson(DBConnectionDTO.fail());
-            }
-        });
-
-        post("/save", (req, res) -> {
-            try {
-                chessService.saveGame();
-                res.status(SUCCESS.statusCode());
-                return gson.toJson(DBConnectionDTO.success());
+                return gson.toJson(chessGameDTO);
             } catch (SQLException e) {
                 res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
@@ -69,12 +59,15 @@ public class WebChessController {
             final String start = moveRequestDTO.getStart();
             final String destination = moveRequestDTO.getDestination();
             try {
-                chessService.move(start, destination);
+                final ChessGameDTO chessGameDTO = chessService.move(start, destination);
                 res.status(SUCCESS.statusCode());
-                return gson.toJson(chessService.generateChessGameDTO());
+                return gson.toJson(chessGameDTO);
+            } catch (SQLException e) {
+                res.status(INTERNAL_SERVER_ERROR.statusCode());
+                return gson.toJson(DBConnectionDTO.fail());
             } catch (IllegalArgumentException e) {
                 res.status(BAD_REQUEST.statusCode());
-                return gson.toJson(chessService.generateChessGameDTO());
+                return gson.toJson(DBConnectionDTO.fail());
             }
         });
     }

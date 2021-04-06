@@ -16,48 +16,42 @@ import static chess.service.TeamFormat.BLACK_TEAM;
 import static chess.service.TeamFormat.WHITE_TEAM;
 
 public class ChessService {
-    private ChessGame chessGame;
-    private Team whiteTeam;
-    private Team blackTeam;
     private final ChessGameDAO chessGameDAO;
 
     public ChessService() {
         this.chessGameDAO = new ChessGameDAO();
     }
 
-    public synchronized void startNewGame() throws SQLException {
+    public synchronized ChessGameDTO startNewGame() throws SQLException {
         chessGameDAO.deleteChessGame();
-        whiteTeam = Team.whiteTeam();
-        blackTeam = Team.blackTeam();
-        chessGame = new ChessGame(blackTeam, whiteTeam);
-        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
+        final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
+        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString(chessGame));
+        return generateChessGameDTO(chessGame);
     }
 
-    public synchronized void loadPreviousGame() throws SQLException {
-        chessGame = chessGameDAO.readChessGame();
-        whiteTeam = chessGame.getWhiteTeam();
-        blackTeam = chessGame.getBlackTeam();
+    public synchronized ChessGameDTO loadPreviousGame() throws SQLException {
+        final ChessGame chessGame = chessGameDAO.readChessGame();
+        return generateChessGameDTO(chessGame);
     }
 
-    public synchronized void saveGame() throws SQLException {
-        chessGameDAO.deleteChessGame();
-        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString());
-    }
-
-    public synchronized void move(final String start, final String destination) {
+    public synchronized ChessGameDTO move(final String start, final String destination) throws SQLException {
+        final ChessGame chessGame = chessGameDAO.readChessGame();
         chessGame.move(Position.of(start), Position.of(destination));
+        chessGameDAO.deleteChessGame();
+        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString(chessGame));
+        return generateChessGameDTO(chessGame);
     }
 
-    public synchronized ChessGameDTO generateChessGameDTO() {
-        final Map<String, Map<String, String>> piecePositionToString = generatePiecePositionToString();
-        final String currentTurnTeam = currentTurnTeamToString();
+    private synchronized ChessGameDTO generateChessGameDTO(final ChessGame chessGame) {
+        final Map<String, Map<String, String>> piecePositionToString = generatePiecePositionToString(chessGame);
+        final String currentTurnTeam = currentTurnTeamToString(chessGame);
         final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
         final double blackTeamScore = chessGame.calculateBlackTeamScore();
         final boolean isPlaying = chessGame.isPlaying();
         return new ChessGameDTO(piecePositionToString, currentTurnTeam, whiteTeamScore, blackTeamScore, isPlaying);
     }
 
-    private Map<String, Map<String, String>> generatePiecePositionToString() {
+    private Map<String, Map<String, String>> generatePiecePositionToString(final ChessGame chessGame) {
         final Map<String, Map<String, String>> piecePosition = new HashMap<>();
         piecePosition.put(WHITE_TEAM.asDTOFormat(), generatePiecePositionByTeamToString(chessGame.currentWhitePiecePosition()));
         piecePosition.put(BLACK_TEAM.asDTOFormat(), generatePiecePositionByTeamToString(chessGame.currentBlackPiecePosition()));
@@ -75,9 +69,8 @@ public class ChessService {
         return piecePositionConverted;
     }
 
-    public synchronized String currentTurnTeamToString() {
-        final Team currentTurnTeam = chessGame.getCurrentTurnTeam();
-        if (currentTurnTeam.equals(whiteTeam)) {
+    private synchronized String currentTurnTeamToString(final ChessGame chessGame) {
+        if (chessGame.isWhiteTeamTurn()) {
             return WHITE_TEAM.asDAOFormat();
         }
         return BLACK_TEAM.asDAOFormat();
