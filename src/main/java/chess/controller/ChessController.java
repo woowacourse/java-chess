@@ -53,16 +53,16 @@ public class ChessController {
     }
 
     private void applyCommand(ChessGame chessGame, Command command, String inputCmd) {
-        if(command == Command.START) {
+        if (command == Command.START) {
             start(chessGame);
         }
-        if(command == Command.MOVE) {
+        if (command == Command.MOVE) {
             move(chessGame, inputCmd);
         }
-        if(command == Command.STATUS) {
+        if (command == Command.STATUS) {
             status(chessGame);
         }
-        if(command == Command.END) {
+        if (command == Command.END) {
             end(chessGame);
         }
     }

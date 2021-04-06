@@ -26,6 +26,10 @@ public class WebBoardDto {
         this.winner = winner;
     }
 
+    private static String makePositionFormat(Rank rank, File file) {
+        return file.getFile() + rank.getRank();
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -46,10 +50,6 @@ public class WebBoardDto {
             }
         }
         return webMap;
-    }
-
-    private static String makePositionFormat(Rank rank, File file) {
-        return file.getFile() + rank.getRank();
     }
 
     public Team getTurn() {

@@ -31,7 +31,7 @@
 </head>
 
 {{#em}}
-<body onload = alertError("{{em}}")>
+<body onload=alertError("{{em}}")>
 {{/em}}
 {{^em}}
 <body>
@@ -68,8 +68,8 @@
     <div>
         <a>ex) move a2 a4</a>
     </div>
-    <input hidden type="text" name="gameId" value={{gameId}}/>
-    <input type="text" name="command"/>
+    <input hidden name="gameId" type="text" value={{gameId}}/>
+    <input name="command" type="text"/>
     <button>이동</button>
 </form>
 

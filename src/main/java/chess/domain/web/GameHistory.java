@@ -3,13 +3,13 @@ package chess.domain.web;
 import java.time.LocalDateTime;
 
 public class GameHistory {
-    private int gameHistoryId;
-    private int gameId;
-    private String command;
-    private LocalDateTime createdTime;
+    private final int gameId;
+    private final String command;
+    private final LocalDateTime createdTime;
+    private int id;
 
-    public GameHistory(int gameHistoryId, int gameId, String command, LocalDateTime createdTime) {
-        this.gameHistoryId = gameHistoryId;
+    public GameHistory(int id, int gameId, String command, LocalDateTime createdTime) {
+        this.id = id;
         this.gameId = gameId;
         this.command = command;
         this.createdTime = createdTime;
@@ -19,10 +19,6 @@ public class GameHistory {
         this.gameId = gameId;
         this.command = command;
         this.createdTime = createdTime;
-    }
-
-    public int getGameHistoryId() {
-        return gameHistoryId;
     }
 
     public int getGameId() {

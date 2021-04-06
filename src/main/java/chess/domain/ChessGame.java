@@ -1,12 +1,12 @@
 package chess.domain;
 
+import chess.domain.dto.PrintBoardDto;
+import chess.domain.dto.WebBoardDto;
 import chess.domain.piece.Direction;
 import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.dto.PrintBoardDto;
 import chess.domain.piece.Team;
-import chess.domain.dto.WebBoardDto;
 import chess.domain.position.MovePath;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
