@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-public class GameOver {
+public final class GameOver {
 
     private boolean gameOver;
 

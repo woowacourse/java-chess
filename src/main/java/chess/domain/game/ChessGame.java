@@ -1,9 +1,10 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public class ChessGame {
+public final class ChessGame {
 
     private final Board board;
     private final Turn turn;
@@ -15,12 +16,32 @@ public class ChessGame {
         gameOver = new GameOver();
     }
 
+    public ChessGame(final Board board) {
+        this(board, new Turn(), new GameOver());
+    }
+
+    public ChessGame(final Board board, final String team, final boolean isGameOver) {
+        this.board = board;
+        this.turn = new Turn(team);
+        this.gameOver = new GameOver(isGameOver);
+    }
+
+    public ChessGame(final Board board, final Turn turn, final GameOver gameOver) {
+        this.board = board;
+        this.turn = turn;
+        this.gameOver = gameOver;
+    }
+
     public void changeGameOver() {
         gameOver.changeGameOver();
     }
 
     public boolean isGameOver() {
         return gameOver.isGameOver();
+    }
+
+    public Team nowTurn() {
+        return turn.now();
     }
 
     public void nextTurn() {

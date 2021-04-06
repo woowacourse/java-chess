@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.List;
 
-public class Difference {
+public final class Difference {
 
     private final int horizontalDegree;
     private final int verticalDegree;

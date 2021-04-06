@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Position implements Comparable<Position> {
+public final class Position implements Comparable<Position> {
 
     private final Horizontal horizontal;
     private final Vertical vertical;
@@ -21,6 +21,14 @@ public class Position implements Comparable<Position> {
 
     public Position(final int horizontal, final int vertical) {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
+    }
+
+    public static Position from(final String position) {
+        return getPositionByCommands(position.split(""));
+    }
+
+    private static Position getPositionByCommands(final String[] commands) {
+        return new Position(commands[0], commands[1]);
     }
 
     public List<Integer> subtract(final Position source) {
@@ -70,8 +78,16 @@ public class Position implements Comparable<Position> {
         return horizontal;
     }
 
+    public String horizontalSymbol() {
+        return horizontal.symbol();
+    }
+
     public Vertical vertical() {
         return vertical;
+    }
+
+    public String verticalSymbol() {
+        return vertical.symbol();
     }
 
     @Override

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    width: 700px;
+    height: 700px;
+    margin: auto;
+}
+
+img {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+
+button {
+    margin: 0 auto;
+    display: block;
+}
+
+.chess-board {
+    text-align: center;
+    margin: auto;
+}
+
+.clicked {
+    border: 10px solid yellow;
+    box-sizing: border-box;
+}

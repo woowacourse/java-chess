@@ -3,8 +3,8 @@ package chess.domain.piece;
 import java.util.Arrays;
 
 public enum Team {
-    BLACK("black"),
-    WHITE("white"),
+    BLACK("Black"),
+    WHITE("White"),
     NOTHING("");
 
     public static final int PLAYER_NUMBER = 2;
