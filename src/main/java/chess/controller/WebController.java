@@ -18,7 +18,9 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import spark.ModelAndView;
+import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -32,68 +34,95 @@ public class WebController {
     }
 
     public void run() {
-        get("/", (req, res) -> renderOnlyHTML("login.html"));
+        get("/", this::renderLogin);
+        get("/games", this::renderGames);
+        get("/games/:id", this::renderGame);
         post("/login", this::login);
-        post("/logout", this::logout);
-        get("/games", this::games);
-        get("/games/:id", this::eachGame);
-        post("/start", this::startGame);
+        post("/logout", this::logoutAndRedirect);
+        post("/start", this::start);
         post("/move/:id", this::move);
     }
 
-    private Response login(spark.Request req, Response res) throws SQLException {
+    private String renderLogin(Request req, Response res) {
+        return new HandlebarsTemplateEngine()
+            .render(new ModelAndView(new HashMap<>(), "login.html"));
+    }
+
+    private String renderGame(Request req, Response res) throws SQLException {
+        Optional<Integer> currentUserId = checkLogin(req);
+        return currentUserId.map(id -> {
+            int gameId = Integer.parseInt(req.params("id"));
+            return eachGame(gameId, getErrorMessage(req, res, gameId));
+        }).orElseGet(() -> logoutAndRedirect(req, res));
+    }
+
+    private String renderGames(Request req, Response res) {
+        Optional<Integer> currentUserId = checkLogin(req);
+        return currentUserId.map(this::games)
+            .orElseGet(() -> logoutAndRedirect(req, res));
+    }
+
+    private String login(Request req, Response res) {
         String userName = req.queryParams("userName");
-        userService.addUserIfNotExist(userName);
-        res.cookie("user", encodeCookie(userName));
+        int userId = userService.addUserIfNotExist(userName);
+        res.cookie("user", encodeCookie(String.valueOf(userId)));
         res.redirect("/games");
-        return res;
+        return "";
     }
 
-    private Response logout(spark.Request req, Response res) {
+    private String logoutAndRedirect(Request req, Response res) {
         res.removeCookie("user");
-        res.redirect("/games");
-        return res;
+        res.redirect("/");
+        return "";
     }
 
-    private String games(spark.Request req, Response res) throws SQLException {
-        String user = decodeCookie(req.cookie("user"));
-        if (user == null || user.equals("")) {
-            res.redirect("/");
-            return "";
+    private String start(Request req, Response res) {
+        Optional<Integer> currentUserId = checkLogin(req);
+        return currentUserId.map(id -> startGame(res, id))
+            .orElseGet(() -> logoutAndRedirect(req, res));
+    }
+
+    private Optional<Integer> checkLogin(Request req) {
+        String userIdStringFormat = decodeCookie(req.cookie("user"));
+        if (userIdStringFormat == null) {
+            return Optional.empty();
         }
-        int currentUserId = userService.findUserIdByName(user);
+        int userId = Integer.parseInt(userIdStringFormat);
+        if (userService.isUserExist(userId)) {
+            return Optional.of(userId);
+        }
+        return Optional.empty();
+    }
+
+    private String games(int currentUserId) {
         List<GameDto> runningGamesByUserId = chessService.findGamesByUserId(currentUserId);
         HashMap<String, Object> model = new HashMap<>();
         model.put("games", runningGamesByUserId);
-        model.put("user", user);
+        model.put("user", currentUserId);
         return render(model, "games.html");
     }
 
-    private String startGame(spark.Request req, Response res) throws SQLException {
-        String user = decodeCookie(req.cookie("user"));
-        int currentUser = userService.findUserIdByName(user);
+    private String startGame(Response res, int currentUserId) {
         int gameId = chessService.getAddedGameId(
-            new Game(currentUser, false, LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
+            new Game(currentUserId, false, LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
         res.redirect("/games/" + gameId);
         return "";
     }
 
-    private String eachGame(spark.Request req, Response res) throws SQLException {
-        int currentGameId = Integer.parseInt(req.params("id"));
-        String user = decodeCookie(req.cookie("user"));
-        if (user == null || user.equals("")) {
-            res.redirect("/");
-            return "";
-        }
+    private String getErrorMessage(Request req, Response res, int gameId) {
         String error = req.cookie("em");
-        res.removeCookie("/games/" + currentGameId, "em");
-        WebBoardDto webBoardDto = chessService.reloadAllHistory(currentGameId)
-            .getWebBoardDto();
-        Map<String, Object> model = getCurrentGameMap(user, error, currentGameId, webBoardDto);
+        res.removeCookie("/games/" + gameId, "em");
+        return error;
+    }
+
+    private String eachGame(int currentGameId, String error) {
+        WebBoardDto webBoardDto = chessService.reloadAllHistory(currentGameId).getWebBoardDto();
+        Map<String, Object> model = getCurrentGameMap(currentGameId, error, currentGameId,
+            webBoardDto);
         return render(model, "chess.html");
     }
 
-    private String move(spark.Request req, Response res) throws SQLException {
+    private String move(Request req, Response res) throws SQLException {
         int gameId = Integer.parseInt(req.params("id"));
         String command = req.queryParams("command");
         ChessGame chessGame = chessService.reloadAllHistory(gameId);
@@ -114,25 +143,8 @@ public class WebController {
         return "";
     }
 
-    private static String renderOnlyHTML(String templatePath) {
-        return new HandlebarsTemplateEngine()
-            .render(new ModelAndView(new HashMap<>(), templatePath));
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private Map<String, Object> getCurrentGameMap(String user, String error, int currentGameId,
-        WebBoardDto webBoardDto) {
-        Map<String, Object> model = webBoardDto.getWebBoard();
-        model.put("user", user);
-        model.put("em", error);
-        model.put("gameId", currentGameId);
-        model.put("turn", webBoardDto.getTurn());
-        model.put("isEnd", webBoardDto.isEnd());
-        model.put("winner", webBoardDto.getWinner());
-        return model;
     }
 
     private String encodeCookie(String cookie) {
@@ -148,5 +160,18 @@ public class WebController {
             return null;
         }
         return new String(Base64.getUrlDecoder().decode(cookie));
+    }
+
+    private Map<String, Object> getCurrentGameMap(int currentUserId, String error,
+        int currentGameId,
+        WebBoardDto webBoardDto) {
+        Map<String, Object> model = webBoardDto.getWebBoard();
+        model.put("user", currentUserId);
+        model.put("em", error);
+        model.put("gameId", currentGameId);
+        model.put("turn", webBoardDto.getTurn());
+        model.put("isEnd", webBoardDto.isEnd());
+        model.put("winner", webBoardDto.getWinner());
+        return model;
     }
 }
