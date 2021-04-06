@@ -30,6 +30,7 @@ public class ChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame();
+        Gson gson = new Gson();
 
         get("/", (req, res) -> {
             return render(new HashMap<>(), "chess.html");
@@ -37,23 +38,23 @@ public class ChessController {
 
         get("/loadSavedBoard", (req, res) -> {
             BoardDTO savedBoardInfo = chessService.getSavedBoardInfo(chessGame);
-            return new Gson().toJson(savedBoardInfo);
+            return gson.toJson(savedBoardInfo);
         });
 
         get("/resetBoard", (req, res) -> {
             BoardDTO boardDTO = chessService.initiateBoard(chessGame);
-            return new Gson().toJson(boardDTO);
+            return gson.toJson(boardDTO);
         });
 
         get("/scoreStatus", (req, res) -> {
             ScoreDTO scoreDTO = ScoreDTO.of(chessGame.scoreStatus());
-            return new Gson().toJson(scoreDTO);
+            return gson.toJson(scoreDTO);
         });
 
         post("/move", (req, res) -> {
-            MoveInfoDTO moveInfoDTO = new Gson().fromJson(req.body(), MoveInfoDTO.class);
+            MoveInfoDTO moveInfoDTO = gson.fromJson(req.body(), MoveInfoDTO.class);
             BoardDTO boardDTO = chessService.move(chessGame, moveInfoDTO);
-            return new Gson().toJson(boardDTO);
+            return gson.toJson(boardDTO);
         });
     }
 }
