@@ -12,4 +12,9 @@ public class WebChessGame {
         state.receive("start");
         state = state.next();
     }
+
+    public boolean isMovable(final String command) {
+        state.receive(command);
+        return state.isMovable();
+    }
 }

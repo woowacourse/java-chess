@@ -12,4 +12,12 @@ public class ChessGameService {
     public void initializeGame() {
         webChessGame = new WebChessGame();
     }
+
+    public boolean checkMovement(final String source, final String target) {
+        return webChessGame.isMovable(makeMoveCommand(source, target));
+    }
+
+    private String makeMoveCommand(final String source, final String target) {
+        return String.format("move %s %s", source, target);
+    }
 }

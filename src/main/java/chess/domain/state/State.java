@@ -17,4 +17,6 @@ public interface State {
     boolean needsParam();
 
     boolean isRunning();
+
+    boolean isMovable();
 }

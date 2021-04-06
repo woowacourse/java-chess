@@ -59,6 +59,11 @@ public class Start implements State {
     }
 
     @Override
+    public boolean isMovable() {
+        return false;
+    }
+
+    @Override
     public boolean needsParam() {
         return true;
     }

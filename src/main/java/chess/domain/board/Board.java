@@ -35,16 +35,20 @@ public class Board {
         return new Board(pieces);
     }
 
-    public void move(final Location source, final Location target, final Team team) {
+    public void validate(final Location source, final Location target, final Team team) {
         validateSameLocation(source, target);
-        Piece sourcePiece = find(source);
+        final Piece sourcePiece = find(source);
         validateTeam(sourcePiece, team);
 
         validateMoveCapable(target, sourcePiece);
         validateIsNotSameTeam(target, sourcePiece);
         validateNotExistentInPath(sourcePiece.findPath(target));
         validatePawnMovable(sourcePiece, source, target);
+    }
 
+    public void move(final Location source, final Location target, final Team team) {
+        validate(source, target, team);
+        final Piece sourcePiece = find(source);
         removeIfExistent(target);
         sourcePiece.move(target);
     }

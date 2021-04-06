@@ -1,5 +1,6 @@
 import {Tiles} from "../tile/Tiles.js"
 import {Pieces} from "../piece/Pieces.js"
+import {getData, postData} from "../utils/FetchUtil.js"
 
 export class Board {
   #tiles
@@ -61,8 +62,21 @@ export class Board {
     board.#sourceTile = null;
   }
 
-  #enterPiece(e, board) {
-
+  async #enterPiece(e, board) {
+    if (!e.target.classList.contains("tile") &&
+        !e.target.classList.contains("piece")) {
+      return;
+    }
+    let targetTile = this.#getTargetTile(e.target, board);
+    if (board.#sourceTile.same(targetTile)) {
+      return;
+    }
+    const params = {
+      source: board.#sourceTile.component.id,
+      target: targetTile.component.id
+    }
+    const response = await getData("http://localhost:4567/game", params);
+    targetTile.highlight(response["isMovable"]);
   }
 
   #getTargetTile(target, board) {
