@@ -12,8 +12,8 @@ public class DBConnectionUtils {
     public static Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
-        String database = "db_chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
+        String database = "chess_db";
+        String option = "?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
         String userName = "root";
         String password = "root";
 
