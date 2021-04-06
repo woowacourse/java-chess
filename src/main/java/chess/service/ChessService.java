@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
-import chess.dto.RequestDto;
-import chess.dto.UserDto;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.dto.BoardDto;
+import chess.dto.RequestDto;
+import chess.dto.UserDto;
 
 public class ChessService {
     private final ChessDao chessDAO;
@@ -46,7 +46,7 @@ public class ChessService {
         if (boardDto == null) {
             return new ChessGame();
         }
-        System.out.println("!@@@@@@@@@@"+color);
+        System.out.println("!@@@@@@@@@@" + color);
         return new ChessGame(boardDto.getBoard(), color);
     }
 
@@ -73,7 +73,7 @@ public class ChessService {
         String target = requestDto.getTarget();
         try {
             chessGame.playTurn(Point.of(source), Point.of(target));
-            if(chessGame.isEnd()) {
+            if (chessGame.isEnd()) {
                 return RESET_CONTENT.code();
             }
             return OK.code();

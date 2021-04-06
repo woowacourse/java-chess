@@ -78,7 +78,7 @@ public final class Point {
     }
 
     private int makeDoubleNumber(int subtract) {
-        return (int) Math.pow(subtract, 2);
+        return (int)Math.pow(subtract, 2);
     }
 
     public Direction makeDirection(Point point) {

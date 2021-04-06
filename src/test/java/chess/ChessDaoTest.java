@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
-import chess.dto.UserDto;
 import chess.dto.BoardDto;
+import chess.dto.UserDto;
 
 class ChessDaoTest {
     private final SQLConnection connection = new SQLConnection();
@@ -50,7 +50,8 @@ class ChessDaoTest {
 
     @Test
     void addBoard() {
-        assertDoesNotThrow(() -> chessDAO.addBoard("13", "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr", "WHITE"));
+        assertDoesNotThrow(
+            () -> chessDAO.addBoard("13", "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr", "WHITE"));
     }
 
     @Test

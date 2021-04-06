@@ -2,9 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.*;
 import static chess.domain.piece.PieceType.Constants.*;
-import static chess.domain.piece.kind.Pawn.INITIAL_BLACK_PAWN_ROW;
-import static chess.domain.piece.kind.Pawn.INITIAL_WHITE_PAWN_ROW;
-import static chess.domain.piece.kind.Pawn.PAWN_NAME;
+import static chess.domain.piece.kind.Pawn.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -201,7 +199,7 @@ public enum PieceType {
         static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);
         static final List<Integer> INITIAL_COLUMN_OF_BISHOP = Arrays.asList(2, 5);
         static final List<Integer> INITIAL_COLUMN_OF_QUEEN = Collections.singletonList(3);
-        static final List<Integer>  INITIAL_COLUMN_OF_KING = Collections.singletonList(4);
+        static final List<Integer> INITIAL_COLUMN_OF_KING = Collections.singletonList(4);
         static final int INITIAL_WHITE_ROW_WITHOUT_PAWN = 7;
         static final int INITIAL_BLACK_ROW_WITHOUT_PAWN = 0;
     }

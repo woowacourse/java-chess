@@ -26,7 +26,8 @@ public class SQLConnection {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
+                password);
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
