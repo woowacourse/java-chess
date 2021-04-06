@@ -42,7 +42,6 @@ public class ChessLogDao {
         return connection;
     }
 
-    // 드라이버 연결해제
     public void closeConnection(Connection con) {
         try {
             if (con != null)
