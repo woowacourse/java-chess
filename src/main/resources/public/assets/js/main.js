@@ -59,64 +59,37 @@ function moveHandler() {
     e.preventDefault();
     e.target.style.background = "";
     target = e.target.closest('div').parentNode
-    if (await movable(source, target)) {
-      move(source, target)
+    try {
+      move(await movable(source, target))
       await changeTurn(await getTurn())
+    } catch (e) {
+      console.log(e)
     }
   }, false);
 }
 
-function move(source, target) {
-  const sourcePiece = {
-    type: source.children[0].classList[3],
-    color: source.children[0].classList[2]
-  }
-  const blankPiece = {
-    type: 'blank',
-    color: 'none'
-  }
-  target.innerHTML = squareTemplate(target.id, sourcePiece)
-  source.innerHTML = squareTemplate(source.id, blankPiece)
+function move(response) {
+  const $source = document.getElementById(response.source.id)
+  const $target = document.getElementById(response.target.id)
+  $source.innerHTML = squareTemplate(response.source.id, response.source.piece)
+  $target.innerHTML = squareTemplate(response.target.id, response.target.piece)
 }
 
 async function movable(source, target) {
-  const sourcePosition = source.id
-  const targetPosition = target.id
-  let movable = true;
-
-  await fetch(
-    `http://localhost:3000/chessboard/${sourcePosition}`,
+  return await fetch(
+    '/move',
     {
-      method: 'PATCH',
+      method: 'PUT',
       body: JSON.stringify({
-        piece: {
-          type: 'blank',
-          color: 'none'
-        }
+        source: source.id,
+        target: target.id
       }),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8'
+        'Content-type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json'
       }
     }
-  ).then(res => res.json()).then(data => data).catch(() => movable = false)
-
-  await fetch(
-    `http://localhost:3000/chessboard/${targetPosition}`,
-    {
-      method: 'PATCH',
-      body: JSON.stringify({
-        piece: {
-          type: source.children[0].classList[3],
-          color: source.children[0].classList[2]
-        }
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    }
-  ).then(res => res.json()).then(data => data).catch(() => movable = false)
-
-  return movable
+  ).then(res => res.json()).then(data => data)
 }
 
 function boardTemplate(position, piece) {
@@ -139,7 +112,6 @@ function positionColor(position) {
 }
 
 function pieceImage(piece) {
-  console.log(piece)
   if (piece.type ===  'r' || piece.type === 'R') {
     return piece.color === 'WHITE' ? './images/rook_white.png'
       : './images/rook_black.png'

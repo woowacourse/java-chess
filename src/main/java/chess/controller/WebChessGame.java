@@ -16,11 +16,13 @@ public class WebChessGame {
         this.turn = Color.WHITE;
     }
 
-    public void start() {
+    public ChessBoard start() {
         chessBoard.initBoard();
+        return chessBoard;
     }
 
     public boolean movable(String source, String target) {
+        System.out.println(source);
         try {
             chessBoard.move(source, target);
             turn = turn.getOppositeColor();
