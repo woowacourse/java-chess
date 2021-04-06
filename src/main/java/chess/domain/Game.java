@@ -10,8 +10,10 @@ import chess.domain.position.Position;
 import chess.domain.result.Result;
 import chess.domain.state.End;
 import chess.domain.state.Ready;
+import chess.domain.state.Running;
 import chess.domain.state.State;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Game {
 
@@ -20,6 +22,7 @@ public class Game {
     private final Board board;
     private final Players players;
 
+    private String name;
     private PieceColor turn;
     private State state;
 
@@ -31,6 +34,12 @@ public class Game {
         ));
         turn = PieceColor.WHITE;
         state = new Ready();
+    }
+
+    public Game(String name) {
+        this();
+        this.name = name;
+        this.changeState(new Running());
     }
 
     public void move(Position from, Position to) {
@@ -77,5 +86,26 @@ public class Game {
 
     public String getWinner() {
         return getResult().findWinner();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Game game = (Game) o;
+        return name == game.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

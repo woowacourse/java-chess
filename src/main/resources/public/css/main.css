@@ -95,7 +95,7 @@ h1 {
   pointer-events: none;
 }
 
-.menu-box {
+.box {
   width: 20%;
   height: 420px;
   margin-left: 20px;
@@ -111,7 +111,7 @@ h1 {
   align-items: center;
 }
 
-.menu-box:hover {
+.box:hover {
   background-color: rgba(100, 149, 237, 0.5);
 }
 
