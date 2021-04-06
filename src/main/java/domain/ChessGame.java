@@ -29,8 +29,12 @@ public class ChessGame {
         state = state.move(start, end);
     }
 
-    public Map<Boolean, Score> piecesScore() {
-        return state.pieceScore();
+    public double blackScore() {
+        return state.blackScore().getValue();
+    }
+
+    public double whiteScore() {
+        return state.whiteScore().getValue();
     }
 
     public Board getBoard() {
@@ -47,5 +51,9 @@ public class ChessGame {
 
     public boolean getTurn() {
         return state.getTurn();
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
     }
 }

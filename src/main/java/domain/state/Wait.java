@@ -28,7 +28,12 @@ public class Wait extends Started {
     }
 
     @Override
-    public Map<Boolean, Score> pieceScore() {
+    public Score blackScore() {
+        throw new GameNotStartException();
+    }
+
+    @Override
+    public Score whiteScore() {
         throw new GameNotStartException();
     }
 }

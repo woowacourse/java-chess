@@ -6,7 +6,6 @@ import domain.ChessGame;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
 import domain.piece.position.Position;
-import domain.score.Score;
 import dto.PieceDto;
 import dto.PiecesDto;
 import dto.ResultDto;
@@ -56,7 +55,9 @@ public class WebUIChessApplication {
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/showData", (req, res) -> gson.toJson(getResultDto(game, menuController)));
+        get("/showData", (req, res) -> {
+            return gson.toJson(getResultDto(game, menuController));
+        });
 
         post("/movedata", (req, res) -> {
             JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
@@ -64,12 +65,11 @@ public class WebUIChessApplication {
             String target = jsonObject.get("target").getAsString();
             String command = "move " + source + " " + Position.of(target);
             menuController.run(command, game);
-            if (game.isRunning()) {
+            if (!game.isEnd()) {
                 ResultDto resultDto = getResultDto(game, menuController);
                 gameDao.updateGame(resultDto, source, target, gameID);
                 return gson.toJson(resultDto);
             }
-
             gameDao.deleteGame(gameID);
             return gson.toJson(getResultDto(game, menuController));
         });
@@ -88,10 +88,9 @@ public class WebUIChessApplication {
     }
 
     private static ResultDto getResultDto(ChessGame game, WebMenuController menuController) {
-        Map<Boolean, Score> scoreMap = game.piecesScore();
         return new ResultDto(new PiecesDto(game.getBoard().getBoard(),
-                new StatusDto(scoreMap.get(true).getValue(), scoreMap.get(false).getValue()),
-                !game.isRunning(), game.getTurn()), menuController.getErrorMessage());
+                new StatusDto(game.blackScore(), game.whiteScore()),
+                game.isEnd(), game.getTurn()), menuController.getErrorMessage());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

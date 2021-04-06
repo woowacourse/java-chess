@@ -23,7 +23,7 @@ class EndTest {
     void end_menu_test() {
         (new Start()).execute("start", chessGame);
         assertThat((new End()).execute("end", chessGame))
-                .isEqualTo(new StatusDto(chessGame.piecesScore()));
+                .isEqualTo(new StatusDto(chessGame.blackScore(), chessGame.whiteScore()));
     }
 
     @DisplayName("게임을 실행하지 않고 end 메뉴를 실행하면, 에러가 발생한다.")

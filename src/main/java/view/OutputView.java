@@ -24,8 +24,8 @@ public class OutputView {
     }
 
     public static void showStatus(StatusDto statusDto) {
-        statusDto.getStatusResult().entrySet().stream()
-                .forEach(entry -> System.out.println(entry.getKey() + " : " + entry.getValue() + ""));
+        System.out.println("BLACK : " + statusDto.getBlackScore());
+        System.out.println("WHITE : " + statusDto.getWhiteScore());
     }
 
     public static void invalidInputMenu() {

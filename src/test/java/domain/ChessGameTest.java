@@ -50,8 +50,7 @@ class ChessGameTest {
         }};
         ChessGame chessGame = new ChessGame();
         chessGame.start(pieces);
-        Map<Boolean, Score> result = chessGame.piecesScore();
-        assertThat(result.get(true)).isEqualTo(Score.of(20));
-        assertThat(result.get(false)).isEqualTo(Score.of(19.5));
+        assertThat(chessGame.blackScore()).isEqualTo(20);
+        assertThat(chessGame.whiteScore()).isEqualTo(19.5);
     }
 }

@@ -6,7 +6,6 @@ import domain.piece.position.Position;
 import domain.score.Score;
 import domain.score.ScoreMachine;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Started implements State {
@@ -22,15 +21,24 @@ public abstract class Started implements State {
         this.turn = turn;
     }
 
+    @Override
+    public Score blackScore() {
+        return ScoreMachine.blackPiecesScore(board);
+    }
+
+    @Override
+    public Score whiteScore() {
+        return ScoreMachine.whitePiecesScore(board);
+    }
+
+    @Override
     public boolean isRunning() {
         return true;
     }
 
-    public Map<Boolean, Score> pieceScore() {
-        Map<Boolean, Score> result = new HashMap<>();
-        result.put(true, ScoreMachine.blackPiecesScore(board));
-        result.put(false, ScoreMachine.whitePiecesScore(board));
-        return result;
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 
     @Override

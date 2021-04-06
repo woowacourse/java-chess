@@ -8,6 +8,6 @@ public class End implements Command {
     @Override
     public MenuDto execute(String command, ChessGame game) {
         game.finish();
-        return new StatusDto(game.piecesScore());
+        return new StatusDto(game.blackScore(), game.whiteScore());
     }
 }

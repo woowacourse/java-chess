@@ -17,9 +17,13 @@ public interface State {
 
     boolean isRunning();
 
-    Map<Boolean, Score> pieceScore();
+    boolean isEnd();
 
     Board getBoard();
 
     boolean getTurn();
+
+    Score blackScore();
+
+    Score whiteScore();
 }

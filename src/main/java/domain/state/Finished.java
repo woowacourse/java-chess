@@ -31,4 +31,9 @@ public class Finished extends Started {
     public boolean isRunning() {
         return false;
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
 }

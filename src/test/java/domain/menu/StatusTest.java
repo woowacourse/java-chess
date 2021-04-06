@@ -23,7 +23,7 @@ class StatusTest {
     void status_menu_test() {
         (new Start()).execute("start", chessGame);
         assertThat((new Status()).execute("status", chessGame))
-                .isEqualTo(new StatusDto(chessGame.piecesScore()));
+                .isEqualTo(new StatusDto(chessGame.blackScore(), chessGame.whiteScore()));
     }
 
     @DisplayName("게임이 실행되지 않은 상태에서 status 메뉴를 실행하면, 에러가 발생한다.")
