@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-    private static final String server ="localhost:13306";
+    private static final String server = "localhost:13306";
     private static final String database = "chess";
     private static final String option = "?useSSL=false&serverTimezone=UTC";
     private static final String userName = "root";

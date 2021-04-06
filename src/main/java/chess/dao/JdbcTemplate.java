@@ -11,8 +11,8 @@ import java.util.List;
 
 public class JdbcTemplate {
 
-    interface Mapper<T, R, U>  {
-         U apply(T t, R r) throws SQLException;
+    interface Mapper<T, R, U> {
+        U apply(T t, R r) throws SQLException;
     }
 
     private final DataSource dataSource;
