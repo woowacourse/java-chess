@@ -21,9 +21,13 @@
 </form>
 <div class="rooms">
 {{#names}}
-<div>
-    <button id="existingRoom" onclick="location.href='/start?newGame=no&roomName={{name}}'">{{name}}</button>
-</div>
+    <form action="start" method="get">
+        <div>
+            <input type="hidden" name="newGame" value="no">
+            <input type="hidden" name="roomName" value={{name}}>
+            <input type="submit" id="existingRoom" value={{name}}>
+        </div>
+    </form>
 {{/names}}
 </div>
 </body>

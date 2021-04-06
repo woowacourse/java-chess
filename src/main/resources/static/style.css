@@ -20,7 +20,7 @@ body {
 
 #room {
     position: relative;
-    left: 38%;
+    left: 43%;
     margin-top: 20px;
     background-color: #c9f3ea;
     font-size: 30px;
@@ -33,7 +33,7 @@ body {
 
 #start {
     position: absolute;
-    left: 47%;
+    left: 48%;
     margin-top: 30px;
     background-color: #c9f3ea;
     font-size: 28px;
@@ -50,14 +50,11 @@ body {
 #existingRoom {
     width: 200px;
     position: relative;
-    left: 600px;
-    /*top: 120px;*/
-    /*margin-top: 30px;*/
+    left: 46%;
     background-color: #cfecc0;
     font-size: 20px;
     font-weight: bold;
     font-family: cursive;
-    /*border-radius: 25px;*/
     border: floralwhite solid 5px;
 }
 
