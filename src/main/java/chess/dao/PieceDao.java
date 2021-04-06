@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.piece.Piece;
 import chess.dto.PieceDto;
 
 import java.sql.Connection;
@@ -47,13 +48,13 @@ public class PieceDao {
         return pieces;
     }
 
-    public void updatePiecePositionByChessGameId(int chessGameId, PieceDto pieceDto) {
+    public void updatePiece(int chessGameId, Piece piece) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "UPDATE PIECE SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, pieceDto.getColor());
-            pstmt.setString(2, pieceDto.getName());
-            pstmt.setString(3, pieceDto.getPosition());
+            pstmt.setString(1, piece.color().name());
+            pstmt.setString(2, piece.name());
+            pstmt.setString(3, piece.position().key());
             pstmt.setInt(4, chessGameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {

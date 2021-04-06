@@ -15,7 +15,7 @@ public class ChessGameDao {
         try (Connection connection = dbManager.getConnection()) {
             String query = "INSERT INTO CHESS_GAME(turn, isFinish) VALUE (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, chessGame.turn().name());
+            pstmt.setString(1, chessGame.turn());
             pstmt.setBoolean(2, !chessGame.runnable());
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();

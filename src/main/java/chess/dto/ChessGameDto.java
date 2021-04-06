@@ -18,7 +18,7 @@ public class ChessGameDto {
                 .stream()
                 .map(piece -> new PieceDto(piece.color().name(), piece.name(), piece.position().key()))
                 .collect(Collectors.toList());
-        this.turn = chessGame.turn().name();
+        this.turn = chessGame.turn();
         this.totalScoreByColor = chessGame.scoreStatus().totalScoreByColor();
         this.isFinish = !chessGame.runnable();
     }

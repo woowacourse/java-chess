@@ -1,8 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.command.Command;
-import chess.domain.command.MoveOnCommand;
 import chess.dto.ChessGameDto;
 import chess.dto.requestDto.MoveRequestDto;
 import chess.dto.responseDto.ResponseDto;
@@ -53,14 +51,10 @@ public class WebChessController {
         post("/move", (req, res) -> {
             try {
                 int chessGameId = Integer.parseInt(req.queryParams("id"));
-                ChessGame chessGame = chessService.findChessGameById(chessGameId);
                 MoveRequestDto moveRequestDto = gson.fromJson(req.body(), MoveRequestDto.class);
-                Command moveOnCommand = new MoveOnCommand();
                 String source = moveRequestDto.getSource();
                 String target = moveRequestDto.getTarget();
-                String[] sourceTarget = new String[]{"move", source, target};
-                moveOnCommand.execute(chessGame, sourceTarget);
-                chessService.updateChessGame(chessGameId, chessGame, source, target);
+                ChessGame chessGame = chessService.moveFromSourceToTarget(chessGameId, source, target);
                 return getChessGameGson(chessGame);
             } catch (Exception e) {
                 return gson.toJson(new ResponseDto(false, e.getMessage()));

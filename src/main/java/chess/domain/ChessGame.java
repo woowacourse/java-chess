@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
-import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
@@ -54,7 +53,7 @@ public class ChessGame {
         changeState(state.end());
     }
 
-    public Color turn() {
-        return state.color();
+    public String turn() {
+        return state.color().name();
     }
 }

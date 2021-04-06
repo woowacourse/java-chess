@@ -5,9 +5,11 @@ import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.ChessGameFactory;
 import chess.domain.command.Command;
+import chess.domain.command.MoveOnCommand;
 import chess.domain.command.StartOnCommand;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
 import chess.dto.ChessGameStatusDto;
 import chess.dto.PieceDto;
@@ -43,6 +45,15 @@ public class ChessService {
         return chessGameDao.selectAllChessGameId();
     }
 
+    public ChessGame moveFromSourceToTarget(int chessGameId, String source, String target){
+        ChessGame chessGame = findChessGameById(chessGameId);
+        Command moveOnCommand = new MoveOnCommand();
+        String[] sourceTarget = new String[]{"move", source, target};
+        moveOnCommand.execute(chessGame, sourceTarget);
+        updateChessGame(chessGameId, chessGame, source, target);
+        return chessGame;
+    }
+
     public ChessGame findChessGameById(int chessGameId) {
         ChessGameStatusDto chessGameStatusDto = chessGameDao.findChessGameStateById(chessGameId);
         List<PieceDto> piecesInfos = pieceDao.findAllPiecesByChessGameId(chessGameId);
@@ -59,19 +70,17 @@ public class ChessService {
     }
 
     public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) {
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-        chessGameDao.updateChessGameStateById(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
-        PieceDto sourcePieceDto = findPieceDtoByPosition(source, chessGameDto);
-        PieceDto targetPieceDto = findPieceDtoByPosition(target, chessGameDto);
-        pieceDao.updatePiecePositionByChessGameId(chessGameId, sourcePieceDto);
-        pieceDao.updatePiecePositionByChessGameId(chessGameId, targetPieceDto);
+        chessGameDao.updateChessGameStateById(chessGameId, chessGame.turn(), !chessGame.runnable());
+        Piece sourcePiece = findPieceDtoByPosition(source, chessGame);
+        Piece targetPiece = findPieceDtoByPosition(target, chessGame);
+        pieceDao.updatePiece(chessGameId, sourcePiece);
+        pieceDao.updatePiece(chessGameId, targetPiece);
     }
 
-    private PieceDto findPieceDtoByPosition(String position, ChessGameDto chessGameDto) {
-        return chessGameDto.getPieces()
+    private Piece findPieceDtoByPosition(String position, ChessGame chessGame) {
+        return chessGame.getPiecesByAllPosition()
                 .stream()
-                .filter(pieceDto -> pieceDto.getPosition()
-                        .equals(position))
+                .filter(piece -> piece.isSamePosition(Position.of(position)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 찾는 위치의 기물이 없습니다."));
     }
