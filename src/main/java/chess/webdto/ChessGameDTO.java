@@ -10,7 +10,7 @@ public class ChessGameDTO {
     private final boolean isPlaying;
 
     public ChessGameDTO(final Map<String, Map<String, String>> piecePositionByTeam, final String currentTurnTeam,
-                         final double whiteTeamScore, final double blackTeamScore, final boolean isPlaying) {
+                        final double whiteTeamScore, final double blackTeamScore, final boolean isPlaying) {
         this.piecePositionByTeam = piecePositionByTeam;
         this.whiteTeamScore = whiteTeamScore;
         this.blackTeamScore = blackTeamScore;

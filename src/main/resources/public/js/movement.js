@@ -1,7 +1,4 @@
-import {chessBoard} from "./initialize.js";
-import {whiteTeamCurrentTurn} from "./initialize.js";
-import {blackTeamCurrentTurn} from "./initialize.js";
-import {drawPieceImage} from "./initialize.js";
+import {blackTeamCurrentTurn, chessBoard, drawPieceImage, whiteTeamCurrentTurn} from "./initialize.js";
 import {finishGame} from "./finishGame.js";
 
 const whiteTeamScoreUI = document.getElementById("whiteTeamScore");
@@ -59,7 +56,7 @@ function serverMoveRequest(startPoint, destPoint) {
 
     fetch("/move", postOption)
         .then(response => {
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error(response.status);
             }
             return response.json();

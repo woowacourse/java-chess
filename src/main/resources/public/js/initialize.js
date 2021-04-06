@@ -72,7 +72,7 @@ function appendWhitePieceImage(whitePosition) {
     let whitePositionArray = Array.from(whitePositionMap.keys());
     for (let i = 0; i < whitePositionArray.length; i++) {
         let boardPosition = document.getElementById(String(whitePositionArray[i]));
-        boardPosition.firstChild.src =  whitePieceImageSource(whitePositionMap.get(whitePositionArray[i]));
+        boardPosition.firstChild.src = whitePieceImageSource(whitePositionMap.get(whitePositionArray[i]));
         boardPosition.firstChild.style.display = "block";
     }
 }
@@ -101,7 +101,7 @@ function appendBlackPieceImage(blackPosition) {
     let blackPositionArray = Array.from(blackPositionMap.keys());
     for (let i = 0; i < blackPositionArray.length; i++) {
         let boardPosition = document.getElementById(String(blackPositionArray[i]));
-        boardPosition.firstChild.src =  blackPieceImageSource(blackPositionMap.get(blackPositionArray[i]));
+        boardPosition.firstChild.src = blackPieceImageSource(blackPositionMap.get(blackPositionArray[i]));
         boardPosition.firstChild.style.display = "block";
     }
 }

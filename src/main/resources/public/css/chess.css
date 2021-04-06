@@ -4,11 +4,11 @@
 }
 
 body {
-    background-color:#F3E4DF;
+    background-color: #F3E4DF;
 }
 
 .title {
-    color:#522632;
+    color: #522632;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -105,13 +105,13 @@ body {
 }
 
 .gameResult > h2, .gameResult > h3 {
-    color:#F3E4DF;
+    color: #F3E4DF;
     text-align: center;
 }
 
 .gameResult > button {
     font-size: 15px;
-    background-color:#F3E4DF;
+    background-color: #F3E4DF;
     color: #6F3B48;
     margin-left: 25%;
     width: 50%;

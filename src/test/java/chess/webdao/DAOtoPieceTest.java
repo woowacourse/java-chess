@@ -7,12 +7,14 @@ import chess.domain.piece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class DAOtoPieceTest {
     @Test
     @DisplayName("DB에서 넘겨받은 기물 정보에 대응하여, Domain Piece를 정상 생성하는지 확인")
-    void DAOtoPiece() {
+    void DAOtoPiece() throws SQLException {
         Piece piece = DAOtoPiece.generatePiece("white", "Knight", true);
         assertThat(piece).isInstanceOf(Knight.class);
         assertThat(piece.isFirstMove()).isTrue();

@@ -1,13 +1,8 @@
 let startBtn = document.getElementById("startBtn");
 let loadBtn = document.getElementById("loadBtn");
 
-import {chessBoard} from "./initialize.js";
-import {gameResultWindow} from "./initialize.js";
-import {initChessBoard} from "./initialize.js";
-import {player1} from "./movement.js";
-import {player2} from "./movement.js";
-import {addChessBoardEvent} from "./movement.js";
-import {checkIsPlaying} from "./movement.js";
+import {chessBoard, gameResultWindow, initChessBoard} from "./initialize.js";
+import {addChessBoardEvent, checkIsPlaying, player1, player2} from "./movement.js";
 
 loadFirstPage();
 
@@ -21,7 +16,7 @@ function loadFirstPage() {
 function startNewGame() {
     fetch("/startNewGame")
         .then(response => {
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error(response.status);
             }
             return response.json();
@@ -38,7 +33,7 @@ function startNewGame() {
 function loadPrevGame() {
     fetch("/loadPrevGame")
         .then(response => {
-            if(!response.ok) {
+            if (!response.ok) {
                 throw new Error(response.status);
             }
             return response.json();

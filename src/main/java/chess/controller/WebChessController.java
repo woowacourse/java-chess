@@ -16,8 +16,8 @@ import static chess.controller.HTTPStatusCode.*;
 import static spark.Spark.*;
 
 public class WebChessController {
-    private ChessService chessService;
-    private Gson gson;
+    private final ChessService chessService;
+    private final Gson gson;
 
     public WebChessController() {
         this.chessService = new ChessService();
