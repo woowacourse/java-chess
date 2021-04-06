@@ -26,7 +26,7 @@
 - [x] 패키지 변경, 패키지 구조 찾아보기 
 - [x] VO, DTO 등의 차이 공부하기
 - [x] Service Layer 공부하기
-- [ ] try with resources 구문 공부하기 
+- [x] try with resources 구문 공부하기 
 - [ ] DB 테이블 및 자료구조 공부하기 
 - [ ] Test codes 마무리하기 (GameState)
 - [ ] 점수계산 로직 DB에 저장 이후로는 -4점(왠지 pawn이 0.5점으로 계산되는 듯하다.)

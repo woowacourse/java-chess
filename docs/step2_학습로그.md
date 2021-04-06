@@ -95,3 +95,20 @@ SELECT * FROM chessTable;
   
 ## 참고
 - 테코톡
+
+# [Java] try with resources - 4
+## 내용
+- java 7 부터 지원
+- 그전에는 finally를 사용하여 리소스를 정리해주었다.
+- 사용한 리소스를 종료할 때 반드시 닫아줌(정리해줌)
+- try catch 절이 종료되면 자동으로 close()를 호출해준다.
+- try 구문의 `()`부분에 정리할 리소스를 넣어준다.
+```
+try (정리할 리소스) { 
+  ...내용...
+} catch (Exception e) {
+}
+```
+## 링크
+[javadocs try-with-resources](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html)
+[참고한 블로그](https://hyoj.github.io/blog/java/basic/jdbc/jdbc-try-catch-tip.html#connection-preparedstatement-resultset-%EB%8B%AB%EB%8A%94-%EA%B0%80%EC%9E%A5-%EC%9D%B4%EC%83%81%EC%A0%81%EC%9D%B8-%EB%B0%A9%EC%8B%9D)
