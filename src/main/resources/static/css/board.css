@@ -119,7 +119,7 @@ body {
     left: 0vw;
 }
 
-#start {
+#start-btn {
     background:#1AAB8A;
     color:#fff;
     border:none;
@@ -131,11 +131,11 @@ body {
     transition:800ms ease all;
     outline:none;
 }
-#start:hover {
+#start-btn:hover {
     background:#fff;
     color:#1AAB8A;
 }
-#start:before, #start:after {
+#start-btn:before, #start-btn:after {
     content:'';
     position:absolute;
     top:0;
@@ -145,13 +145,13 @@ body {
     background: #1AAB8A;
     transition:400ms ease all;
 }
-#start:after {
+#start-btn:after {
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
 }
-#start:hover:before,#start:hover:after {
+#start-btn:hover:before,#start-btn:hover:after {
     width:100%;
     transition:800ms ease all;
 }

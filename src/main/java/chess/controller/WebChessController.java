@@ -1,10 +1,9 @@
 package chess.controller;
 
-import chess.controller.dto.MovablePathRequestDto;
-import chess.controller.dto.MoveRequestDto;
-import chess.controller.dto.PathResponseDto;
-import chess.controller.dto.StatusResponseDto;
+import chess.controller.dto.*;
 import chess.service.ChessService;
+
+import java.util.List;
 
 public class WebChessController {
 
@@ -25,5 +24,13 @@ public class WebChessController {
 
     public StatusResponseDto gameStatus() {
         return chessService.gameStatus();
+    }
+
+    public void newGame() {
+        chessService.newGame();
+    }
+
+    public List<PieceResponseDto> boardInfo() {
+        return chessService.boardInfo();
     }
 }

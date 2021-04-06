@@ -22,14 +22,20 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
+        post("/game", (request, response) -> {
+            webChessController.newGame();
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "board.html");
+        });
+
         get("/game", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "board.html");
         });
 
-        get("/game/status", (request, response) -> {
-            return webChessController.gameStatus();
-        }, gson::toJson);
+        get("/game/load", (request, response) -> webChessController.boardInfo(), gson::toJson);
+
+        get("/game/status", (request, response) -> webChessController.gameStatus(), gson::toJson);
 
         get("/game/path", (request, response) -> {
            String source = request.queryParams("source");

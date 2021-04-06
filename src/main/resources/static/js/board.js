@@ -3,7 +3,47 @@ const $sidebar = document.querySelector("#menu-container");
 
 $board.addEventListener("mouseover", onSquare);
 $board.addEventListener("mouseout", outSquare);
-$board.addEventListener("click", showMovablePath);
+$board.addEventListener("click", onclickSquare);
+window.addEventListener("load", loadBoard)
+
+async function loadBoard() {
+    await fetch("http://localhost:4567/game/load")
+        .then(data => {
+            if (!data.ok) {
+                throw new Error(data.status);
+            }
+            return data.json();
+        })
+        .then(pieces => {
+            for (const pieceInfo of pieces) {
+                const $symbol = pieceInfo.symbol;
+                const $position = pieceInfo.position;
+
+                if ($symbol === ".") {
+                    continue;
+                }
+
+                if ($symbol === $symbol.toLowerCase()) {
+                    const $imgTag = document.createElement("img");
+                    $imgTag.classList.add("piece");
+                    $imgTag.classList.add("white");
+                    $imgTag.src = "../images/w" + $symbol + ".png";
+                    $board.querySelector("#" + $position).appendChild($imgTag);
+                }
+
+                if ($symbol === $symbol.toUpperCase()) {
+                    const $imgTag = document.createElement("img");
+                    $imgTag.classList.add("piece");
+                    $imgTag.classList.add("black");
+                    $imgTag.src = "../images/b" + $symbol + ".png";
+                    $board.querySelector("#" + $position).appendChild($imgTag);
+                }
+            }
+        })
+        .catch(error => {
+            alert(error);
+        })
+}
 
 function onSquare(event) {
     event.target.classList.add("onboard");
@@ -13,7 +53,7 @@ function outSquare(event) {
     event.target.classList.remove("onboard");
 }
 
-function showMovablePath(event) {
+function onclickSquare(event) {
     let $source;
     if (event.target.tagName === 'IMG') {
         $source = event.target.closest('div').id;
@@ -53,11 +93,9 @@ function showMovablePath(event) {
                 const $sourceImg = $board.querySelector("#"+$source).querySelector(".piece");
                 const $targetImg = $board.querySelector("#"+$target).querySelector(".piece");
                 if ($targetImg) {
-                    console.log("타켓에 체스말 있을 때");
                     $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
                     $board.querySelector("#"+$source).removeChild($sourceImg);
                 } else {
-                    console.log("타켓에 체스말 없을 때")
                     $board.querySelector("#"+$target).appendChild($sourceImg);
                 }
                 removeMovablePath();
@@ -78,7 +116,7 @@ function showMovablePath(event) {
             .then(path => {
                 removeMovablePath();
                 $selectSquare.classList.add("selected");
-                $selectSquare.querySelector('.highlight').setAttribute("src", "./images/green-select.png");
+                $selectSquare.querySelector('.highlight').setAttribute("src", "../images/green-select.png");
 
                 let $isCatchableEnemy;
                 for (const dto of path) {
@@ -88,9 +126,9 @@ function showMovablePath(event) {
                     }
                 }
 
-                let $movableSquare = "./images/green.png"
+                let $movableSquare = "../images/green.png"
                 if ($isCatchableEnemy) {
-                    $movableSquare = "./images/green-take.png"
+                    $movableSquare = "../images/green-take.png"
                 }
                 for (const dto of path) {
                     $board.querySelector("#" + dto).querySelector('.highlight').setAttribute("src", $movableSquare);
@@ -100,7 +138,7 @@ function showMovablePath(event) {
                 if ($selectSquare.classList.contains("movable")) {
                     return;
                 }
-                $selectSquare.querySelector('.highlight').setAttribute("src", "./images/red.png");
+                $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red.png");
                 setTimeout(invalidSquare, 1000, $source);
             })
     }
@@ -109,7 +147,7 @@ function showMovablePath(event) {
 function removeMovablePath() {
     const $selectedPiece = $board.querySelector(".selected");
     if ($selectedPiece) {
-        $selectedPiece.querySelector(".highlight").setAttribute("src", "./images/null.png");
+        $selectedPiece.querySelector(".highlight").setAttribute("src", "../images/null.png");
         $selectedPiece.classList.remove("selected");
     }
 
@@ -117,12 +155,12 @@ function removeMovablePath() {
 
     $movablePath.forEach(path => {
         path.classList.remove("movable");
-        path.querySelector(".highlight").setAttribute("src", "./images/null.png")
+        path.querySelector(".highlight").setAttribute("src", "../images/null.png")
     })
 }
 
 function invalidSquare(id) {
-    $board.querySelector("#" + id).querySelector('.highlight').setAttribute("src", "./images/null.png");
+    $board.querySelector("#" + id).querySelector('.highlight').setAttribute("src", "../images/null.png");
 }
 
 function refreshScore() {
