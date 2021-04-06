@@ -79,6 +79,19 @@ public class RoomDao {
         }
     }
 
+    public void updateTurn(String roomName, PieceColor turnColor) {
+        String query = "UPDATE room SET turn = ? WHERE name = ?";
+
+        try (
+            Connection con = getConnection();
+            PreparedStatement pstmt = createPreparedStatementWithTwoParameter(
+                con.prepareStatement(query), turnColor.getName(), roomName)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException();
+        }
+    }
+
     private PreparedStatement createPreparedStatementWithOneParameter(
         PreparedStatement ps, String param) throws SQLException {
         ps.setString(1, param);

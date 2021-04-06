@@ -31,7 +31,8 @@ public class BackupBoardDao {
 
         try (
             Connection con = getConnection();
-            PreparedStatement pstmt = createPreparedStatementWithOneParameter(con.prepareStatement(query), name)) {
+            PreparedStatement pstmt =
+                createPreparedStatementWithOneParameter(con.prepareStatement(query), name)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException();
@@ -39,34 +40,33 @@ public class BackupBoardDao {
     }
 
     private void updateTurnColor(String roomName, PieceColor turnColor) {
-        String query = "UPDATE room SET turn = ? WHERE name = ?";
-
-        try (
-            Connection con = getConnection();
-            PreparedStatement pstmt = createPreparedStatementWithTwoParameter(
-                con.prepareStatement(query), turnColor.getName(), roomName)) {
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DatabaseException();
-        }
+        RoomDao roomDao = new RoomDao();
+        roomDao.updateTurn(roomName, turnColor);
     }
 
     private void addPlayingBoard(String name, Board board) {
-        board.positions()
-            .forEach(position -> addSquare(name, position, board)); //TODO 수정 필요
-    }
-
-    private void addSquare(String name, Position position, Board board) {
-        String positionName = position.toString();
-        String pieceName = board.pieceAtPosition(position).toString();
-
         String query = "INSERT INTO backup_board VALUES (?, ?, ?)";
 
         try (
             Connection con = getConnection();
-            PreparedStatement pstmt = createPreparedStatementWithThreeParameter(
-                con.prepareStatement(query), name, positionName, pieceName)) {
-            pstmt.executeUpdate();
+            PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            board.positions()
+                .forEach(position -> addSquare(pstmt, name, position, board));
+
+            pstmt.executeBatch();
+        } catch (SQLException e) {
+            throw new DatabaseException();
+        }
+
+    }
+
+    private void addSquare(PreparedStatement pstmt, String name, Position position, Board board) {
+        try {
+            pstmt.setString(1, name);
+            pstmt.setString(2, position.toString());
+            pstmt.setString(3, board.pieceAtPosition(position).toString());
+            pstmt.addBatch();
         } catch (SQLException e) {
             throw new DatabaseException();
         }
@@ -81,16 +81,10 @@ public class BackupBoardDao {
             PreparedStatement pstmt = createPreparedStatementWithOneParameter(
                 con.prepareStatement(query), name);
             ResultSet rs = pstmt.executeQuery()) {
+
             HashMap<Position, Piece> board = new HashMap<>();
-
             while (rs.next()) {
-                Position position = Position.from(rs.getString("position"));
-                List<String> pieceInfo = Arrays.asList(rs.getString("piece").split("_"));
-                PieceColor pieceColor = PieceColor.pieceColorByName(pieceInfo.get(0));
-                PieceKind pieceKind = PieceKind.pieceKindByName(pieceInfo.get(1).toUpperCase());
-                Piece piece = new Piece(pieceKind, pieceColor);
-
-                board.put(position, piece);
+                addSquareToBoard(rs, board);
             }
 
             return board;
@@ -99,25 +93,19 @@ public class BackupBoardDao {
         }
     }
 
+    private void addSquareToBoard(ResultSet rs, HashMap<Position, Piece> board) throws SQLException {
+        Position position = Position.from(rs.getString("position"));
+        List<String> pieceInfo = Arrays.asList(rs.getString("piece").split("_"));
+        PieceColor pieceColor = PieceColor.pieceColorByName(pieceInfo.get(0));
+        PieceKind pieceKind = PieceKind.pieceKindByName(pieceInfo.get(1).toUpperCase());
+        Piece piece = new Piece(pieceKind, pieceColor);
+
+        board.put(position, piece);
+    }
+
     private PreparedStatement createPreparedStatementWithOneParameter(
         PreparedStatement ps, String param) throws SQLException {
         ps.setString(1, param);
-        return ps;
-    }
-
-    private PreparedStatement createPreparedStatementWithTwoParameter(
-        PreparedStatement ps, String firstParam, String secondParam) throws SQLException {
-        ps.setString(1, firstParam);
-        ps.setString(2, secondParam);
-        return ps;
-    }
-
-    private PreparedStatement createPreparedStatementWithThreeParameter(
-        PreparedStatement ps, String firstParam, String secondParam, String thirdParam) throws SQLException {
-        ps.setString(1, firstParam);
-        ps.setString(2, secondParam);
-        ps.setString(3, thirdParam);
-
         return ps;
     }
 }

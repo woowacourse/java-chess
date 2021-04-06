@@ -44,7 +44,6 @@ function setBoard(res) {
         }
     }
     turnSetting(res.turn);
-    console.log(res.turn);
     status();
 }
 
