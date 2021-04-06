@@ -9,6 +9,14 @@ export class Tiles {
     this.#components.forEach(component => this.#tiles.push(new Tile(component)))
   }
 
+  get tiles() {
+    return this.#tiles;
+  }
+
+  get components() {
+    return this.#components;
+  }
+
   findByComponent(component) {
     for (const tile of this.#tiles) {
       if (Object.is(tile.component, component)) {
@@ -23,13 +31,5 @@ export class Tiles {
         return tile;
       }
     }
-  }
-
-  get tiles() {
-    return this.#tiles;
-  }
-
-  get components() {
-    return this.#components;
   }
 }

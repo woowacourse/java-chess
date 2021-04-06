@@ -10,6 +10,14 @@ export class Pieces {
         component => this.#pieces.push(new Piece(component)))
   }
 
+  get pieces() {
+    return this.#pieces;
+  }
+
+  get components() {
+    return this.#components;
+  }
+
   move(piece, tile) {
     this.#removeIfExistent(tile);
     piece.move(tile.x, tile.y);
@@ -47,13 +55,5 @@ export class Pieces {
         return piece;
       }
     }
-  }
-
-  get pieces() {
-    return this.#pieces;
-  }
-
-  get components() {
-    return this.#components;
   }
 }

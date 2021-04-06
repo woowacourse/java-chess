@@ -22,6 +22,26 @@ export class Piece {
     this.#addEvent();
   }
 
+  get x() {
+    return this.#x;
+  }
+
+  get y() {
+    return this.#y;
+  }
+
+  get team() {
+    return this.#team;
+  }
+
+  get type() {
+    return this.#type;
+  }
+
+  get component() {
+    return this.#component;
+  }
+
   #initialX() {
     const id = this.#component.id;
     return parseInt(id.charAt(X_INDEX));
@@ -77,25 +97,5 @@ export class Piece {
   remove() {
     const parent = this.component.parentNode;
     parent.removeChild(this.#component);
-  }
-
-  get x() {
-    return this.#x;
-  }
-
-  get y() {
-    return this.#y;
-  }
-
-  get team() {
-    return this.#team;
-  }
-
-  get type() {
-    return this.#type;
-  }
-
-  get component() {
-    return this.#component;
   }
 }

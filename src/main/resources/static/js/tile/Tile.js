@@ -10,6 +10,18 @@ export class Tile {
     this.#component = component;
   }
 
+  get x() {
+    return this.#x;
+  }
+
+  get y() {
+    return this.#y;
+  }
+
+  get component() {
+    return this.#component;
+  }
+
   #convert(id) {
     this.#x = id.charCodeAt(0) - "a".charCodeAt(0);
     this.#y = parseInt(id.charAt(1)) - 1;
@@ -34,17 +46,5 @@ export class Tile {
 
   same(other) {
     return Object.is(this, other);
-  }
-
-  get x() {
-    return this.#x;
-  }
-
-  get y() {
-    return this.#y;
-  }
-
-  get component() {
-    return this.#component;
   }
 }
