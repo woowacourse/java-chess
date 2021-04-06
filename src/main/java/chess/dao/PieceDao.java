@@ -13,14 +13,14 @@ import java.util.List;
 public class PieceDao {
     private DBManager dbManager = new DBManager();
 
-    public void addPieces(List<PieceDto> pieces, int chessGameId) {
+    public void addPieces(List<Piece> pieces, int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "INSERT INTO PIECE(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
-            for (PieceDto piece : pieces) {
-                pstmt.setString(1, piece.getColor());
-                pstmt.setString(2, piece.getName());
-                pstmt.setString(3, piece.getPosition());
+            for (Piece piece : pieces) {
+                pstmt.setString(1, piece.color().name());
+                pstmt.setString(2, piece.name());
+                pstmt.setString(3, piece.position().key());
                 pstmt.setInt(4, chessGameId);
                 pstmt.executeUpdate();
             }

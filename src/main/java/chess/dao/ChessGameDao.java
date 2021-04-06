@@ -29,13 +29,13 @@ public class ChessGameDao {
 
     }
 
-    public void saveWithId(int chessGameId, String turn, boolean isFinish) {
+    public void saveWithId(int chessGameId, ChessGame chessGame) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "INSERT INTO CHESS_GAME VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, chessGameId);
-            pstmt.setString(2, turn);
-            pstmt.setBoolean(3, isFinish);
+            pstmt.setString(2, chessGame.turn());
+            pstmt.setBoolean(3, !chessGame.runnable());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class ChessGameDao {
         }
     }
 
-    public void deleteChessGameById(int chessGameId) {
+    public void delete(int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "DELETE FROM CHESS_GAME WHERE chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);

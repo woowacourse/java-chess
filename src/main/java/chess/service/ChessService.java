@@ -10,7 +10,6 @@ import chess.domain.command.StartOnCommand;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
-import chess.dto.ChessGameDto;
 import chess.dto.ChessGameStatusDto;
 import chess.dto.PieceDto;
 
@@ -29,8 +28,7 @@ public class ChessService {
     public void generateChessGame() {
         ChessGame chessGame = generateNewChessGame();
         int chessGameId = chessGameDao.save(chessGame);
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-        pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
+        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 
     private ChessGame generateNewChessGame() {
@@ -45,7 +43,7 @@ public class ChessService {
         return chessGameDao.selectAllChessGameId();
     }
 
-    public ChessGame moveFromSourceToTarget(int chessGameId, String source, String target){
+    public ChessGame moveFromSourceToTarget(int chessGameId, String source, String target) {
         ChessGame chessGame = findChessGameById(chessGameId);
         Command moveOnCommand = new MoveOnCommand();
         String[] sourceTarget = new String[]{"move", source, target};
@@ -87,9 +85,8 @@ public class ChessService {
 
     public void resetChessGame(int chessGameId) {
         ChessGame chessGame = generateNewChessGame();
-        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-        chessGameDao.deleteChessGameById(chessGameId);
-        chessGameDao.saveWithId(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
-        pieceDao.addPieces(chessGameDto.getPieces(), chessGameId);
+        chessGameDao.delete(chessGameId);
+        chessGameDao.saveWithId(chessGameId, chessGame);
+        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 }
