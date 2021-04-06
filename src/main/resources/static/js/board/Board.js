@@ -92,8 +92,38 @@ export class Board {
     board.#unhighlight(e.target)
   }
 
-  #dropPiece(e, board) {
+  async #dropPiece(e, board) {
+    const pieceId = e.dataTransfer.getData("pieceId");
+    const piece = board.#pieces.findById(pieceId);
+    const sourceTile = board.#tiles.findByPosition(piece.x, piece.y);
+    const targetTile = this.#getTargetTile(e.target, board);
+    if (sourceTile.same(targetTile)) {
+      piece.unhighlight();
+      return;
+    }
 
+    const params = {
+      source: sourceTile.component.id,
+      target: targetTile.component.id
+    }
+    const response = await getData("http://localhost:4567/game", params);
+    const isMovable = response["isMovable"]
+    if (isMovable) {
+      await this.#requestMove(piece, targetTile, params);
+    } else {
+      piece.unhighlight();
+    }
+    targetTile.unhighlight();
+  }
+
+  async #requestMove(piece, targetTile, body) {
+    const response = await postData("http://localhost:4567/game", body);
+    const isSuccessful = response["isSuccessful"];
+    if (isSuccessful) {
+      this.#pieces.move(piece, targetTile)
+    } else {
+      console.error(response["message"]);
+    }
   }
 
   #unhighlight(target) {

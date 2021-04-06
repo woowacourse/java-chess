@@ -1,8 +1,10 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
+import chess.dto.BoardRequestDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.Collections;
@@ -28,6 +30,13 @@ public class WebUIChessApplication {
             final String target = req.queryParams("target");
             return gson.toJson(Collections.singletonMap("isMovable",
                 chessGameService.checkMovement(source, target)));
+        });
+
+        post("/game", (req, res) -> {
+            final BoardRequestDto boardRequestDto = gson
+                .fromJson(req.body(), BoardRequestDto.class);
+
+            return gson.toJson(chessGameService.move(boardRequestDto));
         });
     }
 
