@@ -41,7 +41,7 @@ public final class Pieces {
                 .anyMatch(Piece::isKing);
     }
 
-    public boolean containsPiece(final Piece piece) {
+    public boolean contains(final Piece piece) {
         return pieces.stream()
                 .anyMatch(p -> p.equals(piece));
     }

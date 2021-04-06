@@ -54,10 +54,10 @@ public final class Board {
     }
 
     public Team teamByPiece(final Piece piece) {
-        if (board.get(Team.BLACK).containsPiece(piece)) {
+        if (board.get(Team.BLACK).contains(piece)) {
             return Team.BLACK;
         }
-        if (board.get(Team.WHITE).containsPiece(piece)) {
+        if (board.get(Team.WHITE).contains(piece)) {
             return Team.WHITE;
         }
         throw new NoSuchPieceException();
