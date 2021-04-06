@@ -30,19 +30,19 @@ public class WebUIChessApplication {
         path("/chess", () -> {
             path("", () -> {
                 get("", (req, res) -> render(Collections.emptyMap(), "chess.html"));
+                post("", chessController::insert);
                 get("/ids", chessController::getIds);
                 get("/:chessId/turn", chessController::getTurn);
-                post("", chessController::insert);
                 patch("/:chessId/turn", chessController::updateTurn);
                 delete("/:chessId", chessController::delete);
             });
 
             path("/:chessId/pieces", () -> {
                 get("", pieceController::get);
-                get("/score", pieceController::getScore);
                 post("", pieceController::insert);
-                patch("/move", pieceController::move);
                 delete("", pieceController::delete);
+                get("/score", pieceController::getScore);
+                patch("/move", pieceController::move);
             });
         });
     }

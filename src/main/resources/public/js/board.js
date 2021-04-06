@@ -43,7 +43,6 @@ async function getScore() {
     const response = await fetch('/chess/' + chessId + '/pieces/score');
     const data = await response.json();
     const scores = data.content;
-    console.log(scores);
     $whiteScore.textContent = scores.whiteScore;
     $blackScore.textContent = scores.blackScore;
 }
@@ -88,7 +87,6 @@ async function getColor() {
 let color;
 
 function borderTurn() {
-    console.log(color);
     if (color === "BLACK") {
         document.getElementById("black-versus").classList.add("currentTurn");
         document.getElementById("white-versus").classList.remove("currentTurn");
