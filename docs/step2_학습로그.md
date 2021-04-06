@@ -68,8 +68,8 @@ SELECT * FROM chessTable;
 
 ## 링크
 [패키지 구조를 어떻게 가져가는게 좋을까?](https://www.slipp.net/questions/36)
-[계층별 패키지 구성하기](https://12bme.tistory.com/271)
-- 스프링 입문을 위한 자바 객체 지향의 원리와 이해(첵)
+[계층별 패키지 구성하기](https://12bme.tistory.com/271)        
+스프링 입문을 위한 자바 객체 지향의 원리와 이해(책)
 
 # [Structure] Service Layer - 4
 ## 내용
