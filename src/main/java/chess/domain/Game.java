@@ -2,10 +2,6 @@ package chess.domain;
 
 import chess.domain.board.*;
 import chess.domain.piece.PieceColor;
-import chess.dto.SquareDto;
-
-import java.sql.SQLException;
-import java.util.List;
 
 public class Game {
 
@@ -30,7 +26,7 @@ public class Game {
         this.turnColor = PieceColor.WHITE;
     }
 
-    public void continueGame(String roomName) throws SQLException {
+    public void continueGame(String roomName) {
         InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
         this.board = new Board(initializedBoardFromDb.continueBoard(roomName));
         this.point = new Point(board);
@@ -46,8 +42,8 @@ public class Game {
         return gameState.isEnd();
     }
 
-    public boolean isStart() {
-        return gameState.isStart();
+    public boolean isNotStart() {
+        return !gameState.isStart();
     }
 
     public void move(String source, String target) {
@@ -79,13 +75,5 @@ public class Game {
 
     public PieceColor winnerColor() {
         return board.winnerColor();
-    }
-
-    public List<SquareDto> squareDtos() {
-        return board.squareDtos();
-    }
-
-    public void saveBoard(String roomName) throws SQLException {
-        board.saveBoard(roomName, turnColor);
     }
 }

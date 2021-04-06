@@ -42,7 +42,7 @@ public class ChessController {
     }
 
     private static void isStart(Game game) {
-        if (!game.isStart()) {
+        if (game.isNotStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }

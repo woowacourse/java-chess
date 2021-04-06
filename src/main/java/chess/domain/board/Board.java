@@ -11,10 +11,7 @@ import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
 import chess.dto.SquareDto;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
 
@@ -148,17 +145,7 @@ public class Board {
             .get().color();
     }
 
-    public List<SquareDto> squareDtos() {
-        List<SquareDto> squareDtos = new ArrayList<>();
-
-        board.keySet()
-            .forEach(key -> squareDtos.add(new SquareDto(key.toString(), board.get(key).toString())));
-
-        return squareDtos;
-    }
-
-    public void saveBoard(String roomName, PieceColor turnColor) {
-        BackupBoardDao backupBoardDao = new BackupBoardDao();
-        backupBoardDao.savePlayingBoard(roomName, this.board, turnColor);
+    public Set<Position> positions() {
+        return board.keySet();
     }
 }

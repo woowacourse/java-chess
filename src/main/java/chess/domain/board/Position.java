@@ -95,10 +95,6 @@ public class Position {
         return Position.of(newXPosition, newYPosition);
     }
 
-    public static Map<String, Position> cachedPosition() {
-        return CACHE;
-    }
-
     @Override
     public String toString() {
         return String.format("%c%d", xPosition.getValue(), yPosition.getValue());

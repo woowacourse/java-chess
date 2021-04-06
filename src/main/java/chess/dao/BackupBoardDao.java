@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exceptions.DatabaseException;
 import chess.domain.piece.Piece;
@@ -17,11 +18,11 @@ import static chess.dao.DbConnection.getConnection;
 
 public class BackupBoardDao {
 
-    public void savePlayingBoard(String name, Map<Position, Piece> playingBoard, PieceColor turnColor) {
+    public void savePlayingBoard(String name, Board board, PieceColor turnColor) {
         deleteExistingBoard(name);
 
         updateTurnColor(name, turnColor);
-        addPlayingBoard(name, playingBoard);
+        addPlayingBoard(name, board);
     }
 
     public void deleteExistingBoard(String name) {
@@ -49,16 +50,16 @@ public class BackupBoardDao {
         }
     }
 
-    private void addPlayingBoard(String name, Map<Position, Piece> playingBoard) {
-        playingBoard.keySet()
-            .forEach(position -> addSquare(name, position, playingBoard)); //TODO 수정 필요
+    private void addPlayingBoard(String name, Board board) {
+        board.positions()
+            .forEach(position -> addSquare(name, position, board)); //TODO 수정 필요
     }
 
-    private void addSquare(String name, Position position, Map<Position, Piece> playingBoard) {
+    private void addSquare(String name, Position position, Board board) {
         PositionDao positionDao = new PositionDao();
         PieceDao pieceDao = new PieceDao();
         int positionId = positionDao.findPositionId(position);
-        int pieceId = pieceDao.findPieceId(playingBoard.get(position));
+        int pieceId = pieceDao.findPieceId(board.pieceAtPosition(position));
 
         String query = "INSERT INTO backup_board VALUES (?, ?, ?)";
 

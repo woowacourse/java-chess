@@ -3,13 +3,17 @@ package chess.controller;
 import chess.dao.BackupBoardDao;
 import chess.dao.RoomDao;
 import chess.domain.Game;
+import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
+import chess.dto.SquareDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -43,7 +47,7 @@ public class WebChessController {
         post("/game", (req, res) -> {
             game.init();
             Map<String, Object> model = new HashMap<>();
-            model.put("squares", game.squareDtos());
+            model.put("squares", squareDtos(game.getBoard()));
             model.put("turn", game.turnColor());
             return GSON.toJson(model);
         });
@@ -52,7 +56,7 @@ public class WebChessController {
             game.continueGame(req.queryParams("roomName"));
 
             Map<String, Object> model = new HashMap<>();
-            model.put("squares", game.squareDtos());
+            model.put("squares", squareDtos(game.getBoard()));
             model.put("turn", game.turnColor());
             return GSON.toJson(model);
         });
@@ -87,7 +91,7 @@ public class WebChessController {
         });
 
         post("/end", (req, res) -> {
-            game.saveBoard(req.queryParams("roomName"));
+            backupBoardDao.savePlayingBoard(req.queryParams("roomName"), game.getBoard(), game.turnColor());
             game.end();
             return "";
         });
@@ -98,9 +102,18 @@ public class WebChessController {
     }
 
     private static void isStart(Game game) {
-        if (!game.isStart()) {
+        if (game.isNotStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
+    }
+
+    private List<SquareDto> squareDtos(Board board) {
+        List<SquareDto> squareDtos = new ArrayList<>();
+
+        board.positions()
+            .forEach(key -> squareDtos.add(new SquareDto(key.toString(), board.pieceAtPosition(key).toString())));
+
+        return squareDtos;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
