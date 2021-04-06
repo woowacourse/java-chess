@@ -8,9 +8,6 @@ import {player1} from "./movement.js";
 import {player2} from "./movement.js";
 import {addChessBoardEvent} from "./movement.js";
 import {checkIsPlaying} from "./movement.js";
-import {enableSaveBtn} from "./movement.js";
-
-export let saveGameBtn = document.getElementById('saveGameBtn');
 
 loadFirstPage();
 
@@ -19,7 +16,6 @@ function loadFirstPage() {
     gameResultWindow.style.display = "none";
     player1.style.display = "none";
     player2.style.display = "none";
-    saveGameBtn.style.display = "none";
 }
 
 function startNewGame() {
@@ -61,8 +57,6 @@ function initializeChessBoard(data) {
     console.log(data);
     initChessBoard(data);
     addChessBoardEvent();
-    saveGameBtn.style.display = "block";
-    enableSaveBtn();
     startBtn.style.display = "none";
     loadBtn.style.display = "none";
     chessBoard.style.display = "flex";
