@@ -36,7 +36,7 @@ public class WebApplication {
     }
 
     private static void handlingIllegalArgumentException() {
-        exception(SQLException.class, (e, request, response) -> {
+        exception(IllegalArgumentException.class, (e, request, response) -> {
             response.status(404);
             response.body("Unexpected error : " + e.getMessage());
         });
