@@ -1,4 +1,4 @@
-package chess.DAO;
+package chess.Dao;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

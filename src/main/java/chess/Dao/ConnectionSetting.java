@@ -1,4 +1,4 @@
-package chess.DAO;
+package chess.Dao;
 
 import java.sql.Connection;
 

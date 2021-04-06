@@ -1,14 +1,14 @@
-package chess.DTO;
+package chess.Dto;
 
 
 import chess.domain.position.Position;
 
-public class MoveRequestDto {
+public class MoveRequest {
 
     private final String from;
     private final String to;
 
-    public MoveRequestDto(final String from, final String to) {
+    public MoveRequest(final String from, final String to) {
         this.from = from;
         this.to = to;
     }
