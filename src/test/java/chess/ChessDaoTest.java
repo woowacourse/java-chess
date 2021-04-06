@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
+import chess.domain.ChessGame;
+import chess.domain.piece.Color;
 import chess.dto.UserDto;
 import chess.dto.BoardDto;
 
@@ -24,26 +26,43 @@ class ChessDaoTest {
 
     @Disabled
     @Test
-    public void addUser() throws Exception {
+    public void addUser() {
         UserDto userDto = new UserDto("testUser", "testPwd");
-        chessDAO.addUser(userDto);
+        assertDoesNotThrow(() -> chessDAO.addUser(userDto));
     }
 
     @Test
-    void find() throws Exception {
+    void findUser() {
         UserDto userDto = chessDAO.findByUserId("13");
         assertEquals(new UserDto("testUser", "testPwd"), userDto);
     }
 
     @Test
-    void findNamePwd() throws Exception {
+    void findUserId() {
+        String userId = chessDAO.findUserIdByUser(new UserDto("testUser", "testPwd"));
+        assertEquals("13", userId);
+    }
+
+    @Test
+    void findNamePwd() {
         UserDto userDto = chessDAO.findByUserNameAndPwd("dusdn", "1230");
         assertEquals(new UserDto("dusdn", "1230"), userDto);
     }
 
     @Test
-    void findBoard() throws Exception {
-        BoardDto boardDto = chessDAO.findBoard("1");
-        System.out.println(boardDto.getBoard());
+    void addBoard() {
+        assertDoesNotThrow(() -> chessDAO.addBoard("13", "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr", Color.WHITE));
+    }
+
+    @Test
+    void findBoard() {
+        BoardDto boardDto = chessDAO.findBoard("13");
+        ChessGame chessGame = new ChessGame();
+        assertEquals(boardDto.getBoard(), chessGame.getBoard());
+    }
+
+    @Test
+    void deleteBoard() {
+        assertDoesNotThrow(() -> chessDAO.deleteBoard("13"));
     }
 }

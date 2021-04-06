@@ -23,7 +23,6 @@ async function boardSetting() {
 }
 
 function renderImage(input) {
-    console.log(input);
     if (input === "." || input === "") {
         return ``;
     } else if (input.charCodeAt(0) >= 97) {

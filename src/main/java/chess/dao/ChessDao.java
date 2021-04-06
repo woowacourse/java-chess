@@ -1,5 +1,7 @@
 package chess.dao;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,92 +17,124 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Piece;
 
 public class ChessDao {
-    private final SQLConnection connection;
+    private final SQLConnection sqlConnection;
 
-    public ChessDao(SQLConnection connection) {
-        this.connection = connection;
+    public ChessDao(SQLConnection sqlConnection) {
+        this.sqlConnection = sqlConnection;
     }
 
-    public void addUser(UserDto userDto) throws SQLException {
-        String query = "INSERT INTO user (user_name, user_password) VALUES (?, ?)";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, userDto.getName());
-        preparedStatement.setString(2, userDto.getPwd());
-        preparedStatement.executeUpdate();
-        connection.closeConnection();
-    }
-
-    public UserDto findByUserId(String userId) throws SQLException {
-        String query = "SELECT * FROM user WHERE user_id = ?";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, userId);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (!rs.next()) {
-            return null;
+    public void addUser(UserDto userDto){
+        try (Connection connection = sqlConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user (user_name, user_password) VALUES (?, ?)")
+        ) {
+            preparedStatement.setString(1, userDto.getName());
+            preparedStatement.setString(2, userDto.getPwd());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
         }
-        return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
     }
 
-    public String findUserIdByUser(UserDto userDto) throws SQLException {
-        String query = "SELECT user_id FROM user WHERE user_name = ? AND user_password = ?";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, userDto.getName());
-        preparedStatement.setString(2, userDto.getPwd());
-        ResultSet rs = preparedStatement.executeQuery();
-        if (!rs.next()) {
-            return null;
+    public UserDto findByUserId(String userId) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?")
+
+        ) {
+            preparedStatement.setString(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
         }
-        return rs.getString("user_id");
     }
 
-    public UserDto findByUserNameAndPwd(String name, String password) throws SQLException {
-        String query = "select * from user where user_name = ? and user_password = ?;";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, name);
-        preparedStatement.setString(2, password);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (!rs.next()) {
-            return null;
+    public String findUserIdByUser(UserDto userDto) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id FROM user WHERE user_name = ? AND user_password = ?")
+        ) {
+            preparedStatement.setString(1, userDto.getName());
+            preparedStatement.setString(2, userDto.getPwd());
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return rs.getString("user_id");
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
         }
-        return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
     }
 
-    public void addBoard(String userId, String boardInfo, Color color) throws SQLException {
-        String query = "INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        if (findBoard(userId) != null) {
-            deleteBoard(userId);
+    public UserDto findByUserNameAndPwd(String name, String password) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from user where user_name = ? and user_password = ?;")
+        ) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
         }
-        preparedStatement.setString(1, userId);
-        preparedStatement.setString(2, boardInfo);
-        preparedStatement.setString(3, color.name());
-        preparedStatement.executeUpdate();
-        connection.closeConnection();
     }
 
-    public void deleteBoard(String userId) throws SQLException {
-        String query = "DELETE FROM board WHERE user_id = ?";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, userId);
-        preparedStatement.executeUpdate();
-        connection.closeConnection();
-    }
-
-    public BoardDto findBoard(String userId) throws SQLException {
-        String query = "SELECT * FROM board WHERE user_id = ?";
-        PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
-        preparedStatement.setString(1, userId);
-        ResultSet rs = preparedStatement.executeQuery();
-        Map<Point, Piece> chessBoard = new HashMap<>();
-        if (!rs.next()) {
-            return null;
+    public void addBoard(String userId, String boardInfo, Color color) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)")
+        ) {
+            if (findBoard(userId) != null) {
+                deleteBoard(userId);
+            }
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, boardInfo);
+            preparedStatement.setString(3, color.name());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
         }
-        String info = rs.getString("board_info");
+    }
+
+    public void deleteBoard(String userId) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM board WHERE user_id = ?")
+        ) {
+            preparedStatement.setString(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    public BoardDto findBoard(String userId) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM board WHERE user_id = ?")
+        ) {
+            preparedStatement.setString(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            Map<Point, Piece> chessBoard = new HashMap<>();
+            if (!rs.next()) {
+                return null;
+            }
+            String info = rs.getString("board_info");
             IntStream.rangeClosed(0, 7)
                 .forEach(i -> IntStream.rangeClosed(0,7).forEachOrdered(j -> chessBoard.put(
-                        Point.valueOf(i, j), PieceType.findPiece(String.valueOf(info.charAt(i * 8 + j)))
+                    Point.valueOf(i, j), PieceType.findPiece(String.valueOf(info.charAt(i * 8 + j)))
                     ))
                 );
-        return new BoardDto(chessBoard);
+            return new BoardDto(chessBoard);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
     }
 }
