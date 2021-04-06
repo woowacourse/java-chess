@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Queen extends PieceOnBoard {
+    private static final PieceInformation QUEEN = PieceInformation.QUEEN;
+
     public Queen(TeamColor teamColor) {
-        super(teamColor, PieceInformation.QUEEN);
+        super(teamColor, QUEEN);
     }
 
     public Queen(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.QUEEN, state);
+        super(teamColor, QUEEN, state);
     }
 
 

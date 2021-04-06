@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Pawn extends PieceOnBoard {
+    private static final PieceInformation PAWN = PieceInformation.PAWN;
+
     public Pawn(TeamColor teamColor) {
-        super(teamColor, PieceInformation.PAWN);
+        super(teamColor, PAWN);
     }
 
     public Pawn(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.PAWN, state);
+        super(teamColor, PAWN, state);
     }
 
     @Override

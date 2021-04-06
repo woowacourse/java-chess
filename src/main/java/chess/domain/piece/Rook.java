@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Rook extends PieceOnBoard {
+    private static final PieceInformation ROOK = PieceInformation.ROOK;
+
     public Rook(TeamColor teamColor) {
-        super(teamColor, PieceInformation.ROOK);
+        super(teamColor, ROOK);
     }
 
     public Rook(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.BISHOP, state);
+        super(teamColor, ROOK, state);
     }
 
     @Override

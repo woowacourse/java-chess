@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Bishop extends PieceOnBoard {
+    private static final PieceInformation BISHOP = PieceInformation.BISHOP;
+
     public Bishop(TeamColor teamColor) {
-        super(teamColor, PieceInformation.BISHOP);
+        super(teamColor, BISHOP);
     }
 
     public Bishop(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.BISHOP, state);
+        super(teamColor, BISHOP, state);
     }
 
     @Override

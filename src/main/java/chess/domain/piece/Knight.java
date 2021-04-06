@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class Knight extends PieceOnBoard {
+    private static final PieceInformation KNIGHT = PieceInformation.KNIGHT;
+
     public Knight(TeamColor teamColor) {
-        super(teamColor, PieceInformation.KNIGHT);
+        super(teamColor, KNIGHT);
     }
 
     public Knight(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.KNIGHT, state);
+        super(teamColor, KNIGHT, state);
     }
 
     @Override

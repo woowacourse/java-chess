@@ -8,18 +8,20 @@ import java.util.Map;
 
 public class Blank implements Piece {
     public static final Blank INSTANCE = new Blank();
+    private static final String BLANK = "BLANK";
+    private static final String BLANK_CONSOLE_VIEW = ".";
 
     private Blank() {
     }
 
     @Override
     public String getPieceName() {
-        return ".";
+        return BLANK_CONSOLE_VIEW;
     }
 
     @Override
     public String getPieceType() {
-        return "BLANK";
+        return BLANK;
     }
 
     @Override

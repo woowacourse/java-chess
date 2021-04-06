@@ -29,7 +29,7 @@
 - [x] try with resources 구문 공부하기 
 - [ ] DB 테이블 및 자료구조 공부하기 
 - [ ] Test codes 마무리하기 (GameState)
-- [ ] 점수계산 로직 DB에 저장 이후로는 -4점(왠지 pawn이 0.5점으로 계산되는 듯하다.)
+- [x] 점수계산 로직 DB에 저장 이후로는 -4점(왠지 pawn이 0.5점으로 계산되는 듯하다.) -> Rook 대신 Bishop이 들어갔음 
 - [ ] DAO, Repository pattern?!
 
 

@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class King extends PieceOnBoard {
+    private static final PieceInformation KING = PieceInformation.KING;
+
     public King(TeamColor teamColor) {
-        super(teamColor, PieceInformation.KING);
+        super(teamColor, KING);
     }
 
     public King(TeamColor teamColor, State state) {
-        super(teamColor, PieceInformation.KING, state);
+        super(teamColor, KING, state);
     }
 
     @Override
