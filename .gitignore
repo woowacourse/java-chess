@@ -20,3 +20,4 @@ bin/
 *.iml
 *.ipr
 /src/main/node_modules/
+/docker-compose/db/
