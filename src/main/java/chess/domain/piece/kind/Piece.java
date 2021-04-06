@@ -14,12 +14,10 @@ public abstract class Piece {
 
     protected final Name name;
     protected final Color color;
-    protected String image;
 
     public Piece(String name, Color color) {
         this.name = new Name(name, color);
         this.color = color;
-        this.image = "";
     }
 
     public abstract double score();
@@ -61,10 +59,6 @@ public abstract class Piece {
 
     public final String getName() {
         return name.getName();
-    }
-
-    public String getImage() {
-        return image;
     }
 
     @Override
