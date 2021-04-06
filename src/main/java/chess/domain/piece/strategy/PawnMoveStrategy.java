@@ -1,10 +1,14 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static chess.domain.piece.Direction.*;
 
@@ -49,12 +53,12 @@ public class PawnMoveStrategy extends OneCellMoveStrategy {
 
     private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                                final Position position) {
-        return findPositions(basePieces, targetPieces, position, RIGHT_DOWN);
+        return findPawnPositions(basePieces, targetPieces, position, RIGHT_DOWN);
     }
 
     private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                               final Position position) {
-        return findPositions(basePieces, targetPieces, position, LEFT_DOWN);
+        return findPawnPositions(basePieces, targetPieces, position, LEFT_DOWN);
     }
 
     private List<Position> whitePositions(final Pieces basePieces, final Pieces targetPieces,
@@ -83,11 +87,26 @@ public class PawnMoveStrategy extends OneCellMoveStrategy {
 
     private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces,
                                              final Position position) {
-        return findPositions(basePieces, targetPieces, position, RIGHT_UP);
+        return findPawnPositions(basePieces, targetPieces, position, RIGHT_UP);
     }
 
     private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces,
                                             final Position position) {
-        return findPositions(basePieces, targetPieces, position, LEFT_UP);
+        return findPawnPositions(basePieces, targetPieces, position, LEFT_UP);
+    }
+
+    private List<Position> findPawnPositions(final Pieces basePieces, final Pieces targetPieces,
+                                            final Position position, final Direction direction) {
+        Position targetPosition = position.findTargetPosition(direction);
+        return findPawnPositionByTargetPosition(basePieces, targetPieces, targetPosition);
+    }
+
+    private List<Position> findPawnPositionByTargetPosition(final Pieces basePieces, final Pieces targetPieces,
+                                                            final Position targetPosition) {
+        Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
+        if (targetPiece.isPresent()) {
+            return Collections.singletonList(targetPosition);
+        }
+        return Collections.emptyList();
     }
 }
