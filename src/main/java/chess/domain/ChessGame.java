@@ -6,6 +6,7 @@ import chess.domain.board.Team;
 import chess.domain.command.Commands;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.CommandDto;
+import chess.domain.dto.GameInfoDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
@@ -32,14 +33,6 @@ public class ChessGame {
         turn = Team.WHITE;
     }
 
-    public BoardDto boardDto() {
-        return new BoardDto(board, turn);
-    }
-
-    public PointDto pointDto() {
-        return new PointDto(calculatePoint());
-    }
-
     public void move(Commands command) {
         try {
             final Path path = new Path(command.path());
@@ -47,6 +40,13 @@ public class ChessGame {
             movePiece(path);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    public void makeBoardStateOf(List<CommandDto> commands) {
+        for (CommandDto commandInDB : commands) {
+            final Path path = new Path(new Commands(commandInDB.data()).path());
+            movePiece(path);
         }
     }
 
@@ -116,10 +116,15 @@ public class ChessGame {
         return turn;
     }
 
-    public void makeBoardStateOf(List<CommandDto> commands) {
-        for (CommandDto commandInDB : commands) {
-            final Path path = new Path(new Commands(commandInDB.data()).path());
-            movePiece(path);
-        }
+    public BoardDto boardDto() {
+        return new BoardDto(board, turn);
+    }
+
+    public PointDto pointDto() {
+        return new PointDto(calculatePoint());
+    }
+
+    public GameInfoDto gameInfo() {
+        return new GameInfoDto(this);
     }
 }

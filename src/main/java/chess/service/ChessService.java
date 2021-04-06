@@ -16,18 +16,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessService {
-    private ChessGame chessGame;
     private CommandDao commandDao;
     private HistoryDao historyDao;
 
     public ChessService(CommandDao commandDao, HistoryDao historyDao) {
-        this.chessGame = new ChessGame();
         this.commandDao = commandDao;
         this.historyDao = historyDao;
-    }
-
-    public void init() {
-        chessGame.initBoard(BoardInitializer.init());
     }
 
     public List<HistoryDto> loadHistory() throws SQLException {
@@ -41,10 +35,6 @@ public class ChessService {
                 .collect(Collectors.toList());
     }
 
-    public GameInfoDto gameInfo() {
-        return new GameInfoDto(chessGame);
-    }
-
     public String addHistory(String name) throws SQLException {
         final Optional<String> id = historyDao.insert(name);
         if (!id.isPresent()) {
@@ -53,22 +43,13 @@ public class ChessService {
         return id.get();
     }
 
-    public void end() {
-        chessGame.endGame();
-    }
-
-    public void movePiece(String command, String historyId) throws SQLException {
-        move(command);
+    public void updateMoveInfo(String command, String historyId, boolean isEnd) throws SQLException {
         if (!StringUtils.isEmpty(historyId)) {
             flushCommands(command, historyId);
         }
-        if (chessGame.isEnd() && historyId != null) {
+        if (isEnd && historyId != null) {
             updateDB(historyId);
         }
-    }
-
-    public void move(String command) throws SQLException {
-        chessGame.moveAs(new Commands(command));
     }
 
     private void updateDB(String historyId) throws SQLException {
@@ -83,8 +64,8 @@ public class ChessService {
         }
     }
 
-    public void continueLastGame(String historyName) throws SQLException {
-        chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
+    public List<CommandDto> lastState(String historyName) throws SQLException {
+        return commandDao.selectAllCommands(historyName);
     }
 
     public String getIdByName(String name) throws SQLException {
