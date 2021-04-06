@@ -9,14 +9,6 @@ public final class King extends Piece {
 
     public King(Color color) {
         super(KING_NAME, color);
-        this.image = makeImage();
-    }
-
-    private String makeImage() {
-        if (this.color.isSameAs(Color.BLACK)) {
-            return "black_king.png";
-        }
-        return "white_king.png";
     }
 
     @Override

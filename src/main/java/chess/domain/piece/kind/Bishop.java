@@ -17,14 +17,6 @@ public final class Bishop extends Piece {
 
     public Bishop(Color color) {
         super(BISHOP_NAME, color);
-        this.image = makeImage();
-    }
-
-    private String makeImage() {
-        if (this.color.isSameAs(Color.BLACK)) {
-            return "black_bishop.png";
-        }
-        return "white_bishop.png";
     }
 
     @Override

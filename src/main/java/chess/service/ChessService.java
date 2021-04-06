@@ -1,16 +1,13 @@
 package chess.service;
 
-import static chess.controller.WebChessController.*;
 import static chess.domain.Status.*;
 import static chess.domain.piece.Color.*;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
-import chess.domain.Status;
 import chess.dto.RequestDto;
 import chess.dto.UserDto;
 import chess.domain.board.Point;
@@ -37,7 +34,7 @@ public class ChessService {
     }
 
     public String matchBoardImageSource(ChessGame chessGame, String requestBody) {
-        return chessGame.getBoard().get(Point.of(requestBody)).getImage();
+        return chessGame.getBoard().get(Point.of(requestBody)).getName();
     }
 
     public String matchPieceName(ChessGame chessGame, String requestBody) {
@@ -75,11 +72,11 @@ public class ChessService {
         try {
             chessGame.playTurn(Point.of(source), Point.of(target));
             if(chessGame.isEnd()) {
-                return RESET_CONTENT.getCode();
+                return RESET_CONTENT.code();
             }
-            return OK.getCode();
+            return OK.code();
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
-            return NO_CONTENT.getCode();
+            return NO_CONTENT.code();
         }
     }
 

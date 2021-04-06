@@ -23,14 +23,6 @@ public final class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(PAWN_NAME, color);
-        this.image = makeImage();
-    }
-
-    private String makeImage() {
-        if (this.color.isSameAs(Color.BLACK)) {
-            return "black_pawn.png";
-        }
-        return "white_pawn.png";
     }
 
     @Override

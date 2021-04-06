@@ -16,14 +16,6 @@ public final class Rook extends Piece {
 
     public Rook(Color color) {
         super(ROOK_NAME, color);
-        this.image = makeImage();
-    }
-
-    private String makeImage() {
-        if (this.color.isSameAs(Color.BLACK)) {
-            return "black_rook.png";
-        }
-        return "white_rook.png";
     }
 
     @Override

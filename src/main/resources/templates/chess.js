@@ -23,10 +23,13 @@ async function boardSetting() {
 }
 
 function renderImage(input) {
-    if (input === "") {
-        return `<img className="piece">`;
+    console.log(input);
+    if (input === "." || input === "") {
+        return ``;
+    } else if (input.charCodeAt(0) >= 97) {
+        return `<img src=/images/w${input}.png class="piece">`;
     } else {
-        return `<img src=/images/${input} class="piece">`;
+        return `<img src=/images/${input}.png class="piece">`;
     }
 }
 
