@@ -4,9 +4,10 @@ import chess.service.ChessService;
 import chess.view.RenderView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import spark.Request;
+import spark.Response;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import java.sql.SQLException;
 
 public class WebController {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -16,41 +17,38 @@ public class WebController {
         this.chessService = chessService;
     }
 
-    public void play() {
-        get("/play", (req, res) -> {
-            chessService.init();
-            return RenderView.renderHtml(chessService.startResponse(), "chessStart.html");
-        });
-
-        get("/play/:name/new", (req, res) ->
-                RenderView.renderHtml(chessService.initResponse(req.params(":name")), "chessGame.html"));
-
-        post("/play/move", (req, res) -> {
-            String command = makeMoveCmd(req.queryParams("source"), req.queryParams("target"));
-            String historyId = req.queryParams("gameId");
-            try {
-                chessService.move(command);
-                chessService.flushCommands(command, historyId);
-                return GSON.toJson(chessService.moveResponse(historyId));
-            } catch (IllegalArgumentException e) {
-                res.status(400);
-                return e.getMessage();
-            }
-        });
-
-        get("/play/end", (req, res) -> {
-            chessService.end();
-            return RenderView.renderHtml("chessGame.html");
-        });
-
-        get("/play/continue", (req, res) -> {
-            String id = chessService.getIdByName(req.queryParams("name"));
-            chessService.continueLastGame(id);
-            return RenderView.renderHtml(chessService.continueResponse(id), "chessGame.html");
-        });
-    }
-
     private String makeMoveCmd(String source, String target) {
         return String.join(" ", "move", source, target);
+    }
+
+    public String moveToMainPage(Request request, Response response) throws SQLException {
+        chessService.init();
+        return RenderView.renderHtml(chessService.startResponse(), "chessStart.html");
+    }
+
+    public String playNewGame(Request request, Response response) throws SQLException {
+        return RenderView.renderHtml(chessService.initResponse(request.params(":name")), "chessGame.html");
+    }
+
+    public String movePiece(Request request, Response response) {
+        String command = makeMoveCmd(request.queryParams("source"), request.queryParams("target"));
+        String historyId = request.queryParams("gameId");
+        try {
+            return GSON.toJson(chessService.movePiece(command, historyId));
+        } catch (IllegalArgumentException | SQLException e) {
+            response.status(400);
+            return e.getMessage();
+        }
+    }
+
+    public String continueGame(Request request, Response response) throws SQLException {
+        String id = chessService.getIdByName(request.queryParams("name"));
+        chessService.continueLastGame(id);
+        return RenderView.renderHtml(chessService.continueResponse(id), "chessGame.html");
+    }
+
+    public String endGame(Request request, Response response) {
+        chessService.end();
+        return RenderView.renderHtml("chessGame.html");
     }
 }

@@ -85,11 +85,6 @@ public class ChessService {
         return model;
     }
 
-//    public void continueLastGame(CommandDatabase commandDatabase, String historyName) throws SQLException {
-//        commandDatabase.init(commandDao.selectAllCommands(historyName));
-//        chessGame.makeBoardStateOf(commandDatabase);
-//    }
-
     public void continueLastGame(String historyName) throws SQLException {
         chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
     }
@@ -108,5 +103,11 @@ public class ChessService {
 
     public String getIdByName(String name) throws SQLException {
         return String.valueOf(historyDao.findIdByName(name));
+    }
+
+    public Map<String, Object> movePiece(String command, String historyId) throws SQLException {
+        move(command);
+        flushCommands(command, historyId);
+        return moveResponse(historyId);
     }
 }

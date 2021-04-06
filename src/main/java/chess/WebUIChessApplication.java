@@ -7,15 +7,21 @@ import chess.service.ChessService;
 
 import java.sql.SQLException;
 
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         staticFiles.location("/public");
+        final WebController webController = initWebController(new CommandDao(), new HistoryDao());
 
-        final CommandDao commandDao = new CommandDao();
-        final HistoryDao historyDao = new HistoryDao();
-        final WebController webController = new WebController(new ChessService(commandDao, historyDao));
-        webController.play();
+        get("/play", webController::moveToMainPage);
+        get("/play/:name/new", webController::playNewGame);
+        post("/play/move", webController::movePiece);
+        get("/play/continue", webController::continueGame);
+        get("/play/end", webController::endGame);
+    }
+
+    private static WebController initWebController(CommandDao commandDao, HistoryDao historyDao) {
+        return new WebController(new ChessService(commandDao, historyDao));
     }
 }
