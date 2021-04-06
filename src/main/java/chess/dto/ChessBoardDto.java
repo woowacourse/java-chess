@@ -9,6 +9,10 @@ import java.util.Map;
 public class ChessBoardDto {
     private final Map<String, PieceDto> chessBoard;
 
+    public ChessBoardDto(){
+        chessBoard = new LinkedHashMap<>();
+    }
+
     public ChessBoardDto(Map<Position, Piece> original) {
         chessBoard = new LinkedHashMap<>();
         for (Map.Entry<Position, Piece> piece : original.entrySet()) {
@@ -17,9 +21,12 @@ public class ChessBoardDto {
         }
     }
 
+    public void add(String position, PieceDto pieceDto){
+        chessBoard.put(position, pieceDto);
+    }
+
     public Map<String, PieceDto> getChessBoard() {
         return chessBoard;
     }
-
 
 }

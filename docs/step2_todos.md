@@ -15,8 +15,8 @@
     - [x] 웹 서버를 재시작하더라도 이전 게임을 이어 진행 가능
   
 # step2 피드백
-- [ ] 컨트롤러는 상태를 갖지 않는다. static을 사용한다면 final과 같이 사용한다. 동시성 문제 때문 (컨트롤러가 상태를 갖지 않도록 수정하기)
-- [ ] ChessBoardDao를 정리한다. 중복되는 내용이 많음 (비지니스 로직은 Service Layer로 분리)
+- [x] 컨트롤러는 상태를 갖지 않는다. static을 사용한다면 final과 같이 사용한다. 동시성 문제 때문 (컨트롤러가 상태를 갖지 않도록 수정하기)
+- [x] ChessBoardDao를 정리한다. 중복되는 내용이 많음 (비지니스 로직은 Service Layer로 분리)
 - [ ] DB의 다양한 자료구조를 활용한다. (ex. bigint, boolean, tinyint, ...)
 - [ ] gameId는 `long` 타입을 사용한다.
 - [ ] SQL 컨벤션 적용한다. (snake case) 

@@ -1,107 +1,91 @@
 package chess.service;
 
-import chess.dao.ChessBoardDao;
+import chess.dao.ChessDao;
+import chess.domain.ChessBoard;
+import chess.domain.Result;
+import chess.domain.piece.Piece;
+import chess.domain.pieceinformations.State;
+import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
+import chess.dto.ChessCellDto;
+import chess.dto.MovementDto;
+import chess.dto.PieceDto;
+import chess.dto.PieceMaker;
 
-import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessServiceImpl implements ChessService {
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+    private final ChessDao chessDao;
 
-        // 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
+    private ChessBoard chessBoard;
 
-        // 드라이버 연결
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
+    public ChessServiceImpl(ChessDao chessDao) {
+        this.chessDao = chessDao;
+        chessBoard = new ChessBoard();
     }
 
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
+    @Override
+    public Map<String, PieceDto> move(MovementDto movementDto) {
+        chessBoard.move(movementDto);
+        return chessBoard.getChessBoardDto();
     }
 
-    public void addPosition(ChessBoardDao eachPosition) {
-
-        String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
-
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            pstmt.setString(1, eachPosition.getPosition());
-            pstmt.setString(2, eachPosition.getTeamColor());
-            pstmt.setString(3, eachPosition.getPieceType());
-            pstmt.setString(4, eachPosition.getAlive());
-
-            pstmt.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    @Override
+    public Result saveAndShowResult() {
+        chessDao.removePositions();
+        Map<String, PieceDto> chessBoardDto = chessBoard.getChessBoardDto();
+        List<ChessCellDto> results = new ArrayList<>();
+        for (Map.Entry<String, PieceDto> eachInfo : chessBoardDto.entrySet()) {
+            PieceDto value = eachInfo.getValue();
+            results.add(new ChessCellDto(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
         }
-
-
+        chessDao.addPositions(results);
+        return chessBoard.result();
     }
 
-    public void addPositions(List<ChessBoardDao> board) {
-        for (ChessBoardDao eachPosition : board) {
-            addPosition(eachPosition);
-        }
+    @Override
+    public Map<String, PieceDto> getDefaultChessBoard() {
+        return chessBoard.getChessBoardDto();
     }
 
-
-    public List<ChessBoardDao> findByGameId(String gameId) {
-        String query = "SELECT * FROM chessTable WHERE game_id = ?";
-
-        List<ChessBoardDao> chessboard = new ArrayList<>();
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            pstmt.setString(1, gameId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                ChessBoardDao chessboardDto = new ChessBoardDao(
-                        rs.getString("position"),
-                        rs.getString("teamColor"),
-                        rs.getString("pieceType"),
-                        rs.getString("alive")
-                );
-                chessboard.add(chessboardDto);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return chessboard;
-
+    @Override
+    public Result getResult() {
+        return chessBoard.result();
     }
 
-    public void removePositions() {
-        String query = "DELETE FROM chessTable WHERE game_id=1";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            pstmt.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    @Override
+    public Result terminateGameAndGetResult() {
+        chessBoard.terminate();
+        chessDao.removePositions();
+        return chessBoard.result();
+    }
+
+    @Override
+    public Map<String, PieceDto> getSavedChessBoard() {
+        List<ChessCellDto> previousGame = chessDao.findByGameId("1");
+
+        Map<Position, Piece> boardFromDB = new LinkedHashMap<>();
+        for (ChessCellDto eachInfo : previousGame) {
+            boardFromDB.put(Position.valueOf(eachInfo.getPosition()),
+                    PieceMaker.getInstance(eachInfo.getPieceType(),
+                            TeamColor.getInstance(eachInfo.getTeamColor()),
+                            State.getInstance(eachInfo.getAlive())
+                    ));
         }
+        return getSavedOfDefaultChessBoard(boardFromDB);
+    }
+
+    private Map<String, PieceDto> getSavedOfDefaultChessBoard(Map<Position, Piece> boardFromDB) {
+        if (boardFromDB.isEmpty()) {
+            System.out.println("hihi!");
+            chessBoard = new ChessBoard();
+            return chessBoard.getChessBoardDto();
+        }
+        chessBoard = new ChessBoard(boardFromDB);
+        return chessBoard.getChessBoardDto();
     }
 
 }

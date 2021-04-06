@@ -62,12 +62,14 @@ SELECT * FROM chessTable;
 # [OOP] Package구조 - 3
 ## 내용
 - 일반적으로 domain, service, dao 패키지로 나뉘는 듯 하다.
-- dao: DB에 접속하여 데이터를 가져오는 클래스
-- service: domain과 dao로 직접 접근하여 기능 구현
+- dao: DB에 접속하여 데이터를 가져오는 클래스. 일반적으로 Dao는 테이블당 하나 만들게 됨
+- service: domain과 dao로 직접 접근하여 기능 구현. dao 연동뿐 아니라 데이터베이스에 종속되지 않는 로직을 구현.
+- dao, service 모두 호환을 위해 인터페이스를 만들고 구현하는 방식을 사용하기도 함
 
 ## 링크
 [패키지 구조를 어떻게 가져가는게 좋을까?](https://www.slipp.net/questions/36)
 [계층별 패키지 구성하기](https://12bme.tistory.com/271)
+- 스프링 입문을 위한 자바 객체 지향의 원리와 이해(첵)
 
 # [Structure] Service Layer - 4
 ## 내용

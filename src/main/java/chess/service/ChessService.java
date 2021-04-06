@@ -1,16 +1,23 @@
 package chess.service;
 
-import chess.dao.ChessBoardDao;
+import chess.domain.Result;
+import chess.dto.MovementDto;
+import chess.dto.PieceDto;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ChessService {
 
-    void addPosition(ChessBoardDao eachPosition);
+    Map<String, PieceDto> move(MovementDto movementDto);
 
-    void addPositions(List<ChessBoardDao> board);
+    Result saveAndShowResult();
 
-    List<ChessBoardDao> findByGameId(String gameId);
+    Map<String, PieceDto> getDefaultChessBoard();
 
-    void removePositions();
+    Result getResult();
+
+    Result terminateGameAndGetResult();
+
+    Map<String, PieceDto> getSavedChessBoard();
+
 }
