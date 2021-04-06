@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 public class MovementDto {
     private String source;

@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.dto.ChessBoardDto;
-import chess.domain.dto.MovementDto;
-import chess.domain.dto.PieceDto;
+import chess.dto.ChessBoardDto;
+import chess.dto.MovementDto;
+import chess.dto.PieceDto;
 import chess.domain.piece.*;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.AlphaColumns;

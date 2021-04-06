@@ -1,14 +1,14 @@
-package chess.domain.dao;
+package chess.dao;
 
 import java.util.Objects;
 
-public class ChessBoardVo {
+public class ChessBoardDao {
     private String position;
     private String teamColor;
     private String pieceType;
     private String alive;
 
-    public ChessBoardVo(String position, String teamColor, String pieceType, String alive) {
+    public ChessBoardDao(String position, String teamColor, String pieceType, String alive) {
         this.position = position;
         this.teamColor = teamColor;
         this.pieceType = pieceType;
@@ -35,7 +35,7 @@ public class ChessBoardVo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChessBoardVo that = (ChessBoardVo) o;
+        ChessBoardDao that = (ChessBoardDao) o;
         return Objects.equals(position, that.position) && Objects.equals(teamColor, that.teamColor) && Objects.equals(pieceType, that.pieceType) && Objects.equals(alive, that.alive);
     }
 

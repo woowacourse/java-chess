@@ -1,10 +1,12 @@
-package chess.domain.dao;
+package chess.service;
+
+import chess.dao.ChessBoardDao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessBoardDao {
+public class ChessServiceImpl implements ChessService {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -43,49 +45,63 @@ public class ChessBoardDao {
         }
     }
 
-    public void addPosition(ChessBoardVo eachPosition) throws SQLException {
+    public void addPosition(ChessBoardDao eachPosition) {
 
         String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
 
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, eachPosition.getPosition());
-        pstmt.setString(2, eachPosition.getTeamColor());
-        pstmt.setString(3, eachPosition.getPieceType());
-        pstmt.setString(4, eachPosition.getAlive());
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, eachPosition.getPosition());
+            pstmt.setString(2, eachPosition.getTeamColor());
+            pstmt.setString(3, eachPosition.getPieceType());
+            pstmt.setString(4, eachPosition.getAlive());
 
-        pstmt.executeUpdate();
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
 
     }
 
-    public void addPositions(List<ChessBoardVo> board) throws SQLException {
-        for (ChessBoardVo eachPosition : board) {
+    public void addPositions(List<ChessBoardDao> board) {
+        for (ChessBoardDao eachPosition : board) {
             addPosition(eachPosition);
         }
     }
 
 
-    public List<ChessBoardVo> findByGameId(String gameId) throws SQLException {
+    public List<ChessBoardDao> findByGameId(String gameId) {
         String query = "SELECT * FROM chessTable WHERE game_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-        List<ChessBoardVo> chessboard = new ArrayList<>();
-        while (rs.next()) {
-            ChessBoardVo chessboardDto = new ChessBoardVo(
-                    rs.getString("position"),
-                    rs.getString("teamColor"),
-                    rs.getString("pieceType"),
-                    rs.getString("alive")
-                    );
-            chessboard.add(chessboardDto);
+
+        List<ChessBoardDao> chessboard = new ArrayList<>();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ChessBoardDao chessboardDto = new ChessBoardDao(
+                        rs.getString("position"),
+                        rs.getString("teamColor"),
+                        rs.getString("pieceType"),
+                        rs.getString("alive")
+                );
+                chessboard.add(chessboardDto);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+
         return chessboard;
+
     }
 
-    public void removePositions() throws SQLException {
+    public void removePositions() {
         String query = "DELETE FROM chessTable WHERE game_id=1";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }

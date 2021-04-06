@@ -56,3 +56,40 @@ SELECT * FROM chessTable;
 ## 내용
 - event.target: 내가 선택한 바로 그 Node!
 - event.currentTarget: 내가 이벤트를 등록해준 그 Node! (더 넓은 범위)
+
+# 학습로그 2-2
+
+# [OOP] Package구조 - 3
+## 내용
+- 일반적으로 domain, service, dao 패키지로 나뉘는 듯 하다.
+- dao: DB에 접속하여 데이터를 가져오는 클래스
+- service: domain과 dao로 직접 접근하여 기능 구현
+
+## 링크
+[패키지 구조를 어떻게 가져가는게 좋을까?](https://www.slipp.net/questions/36)
+[계층별 패키지 구성하기](https://12bme.tistory.com/271)
+
+# [Structure] Service Layer - 4
+## 내용
+- Data Access Layer: 개별 SQL을 처리하는 것을 목표로 한다.
+- Service Layer: 여러 Data Access Layer를 하나로 묶어 관리한다. 데이터 베이스에 대한 트랜젝션을 관리한다.
+- 기능 단위로 interface의 책임을 작게 구성하는 것이 좋다.
+- 의존성주입을 통해 Service를 구현한 class가 사용되는 듯 하다.
+
+## 링크
+[Service Layer](https://goodteacher.tistory.com/252)
+[Service의 적절한 크기 가이드](https://www.popit.kr/spring-guide-service-%EC%A0%81%EC%A0%88%ED%95%9C-%ED%81%AC%EA%B8%B0-%EA%B0%80%EC%9D%B4%EB%93%9C/)
+
+# [Structure] VO, DTO - 3
+## 내용
+- DTO(Data Transfer Object)
+  - 데이터 전달용, 데이터를 담아 전달하는 바구니
+  - 계층 간 데이터를 전달 (Controller~Service)
+  - getter, setter 이외의 다른 로직을 갖지 않음 
+  - DTO도 불변객체 가능
+- VO(Value Object)
+  - 값 표현용, 값 그 자체를 표현하는 객체
+  - equals, hashCode 오버라이딩을 하여 비교한다.
+  
+## 참고
+- 테코톡

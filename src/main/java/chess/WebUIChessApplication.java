@@ -1,11 +1,11 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.dao.ChessBoardDao;
-import chess.domain.dao.ChessBoardVo;
-import chess.domain.dto.MovementDto;
-import chess.domain.dto.PieceDto;
-import chess.domain.dto.PieceMaker;
+import chess.service.ChessServiceImpl;
+import chess.dao.ChessBoardDao;
+import chess.dto.MovementDto;
+import chess.dto.PieceDto;
+import chess.dto.PieceMaker;
 import chess.domain.piece.Piece;
 import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
@@ -19,7 +19,7 @@ import java.util.*;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
+    private static final ChessServiceImpl CHESS_SERVICE_IMPLE = new ChessServiceImpl();
 
     private static ChessBoard chessBoard = new ChessBoard();
 
@@ -33,14 +33,14 @@ public class WebUIChessApplication {
         }, gson::toJson);
 
         post("/chessboard/save", (req, res) -> {
-            chessBoardDao.removePositions();
+            CHESS_SERVICE_IMPLE.removePositions();
             Map<String, PieceDto> chessBoardDto = chessBoard.getChessBoardDto();
-            List<ChessBoardVo> results = new ArrayList<>();
+            List<ChessBoardDao> results = new ArrayList<>();
             for (Map.Entry<String, PieceDto> eachInfo : chessBoardDto.entrySet()) {
                 PieceDto value = eachInfo.getValue();
-                results.add(new ChessBoardVo(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
+                results.add(new ChessBoardDao(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
             }
-            chessBoardDao.addPositions(results);
+            CHESS_SERVICE_IMPLE.addPositions(results);
             return chessBoard.result();
         }, gson::toJson);
 
@@ -57,16 +57,16 @@ public class WebUIChessApplication {
         get("/chessboard/end", (req, res) -> {
             res.type("application/json");
             chessBoard.terminate();
-            chessBoardDao.removePositions();
+            CHESS_SERVICE_IMPLE.removePositions();
             return chessBoard.result();
         }, gson::toJson);
 
         get("/chessboard/saved", (req, res) -> {
             res.type("application/json");
-            List<ChessBoardVo> previousGame = chessBoardDao.findByGameId("1");
+            List<ChessBoardDao> previousGame = CHESS_SERVICE_IMPLE.findByGameId("1");
 
             Map<Position, Piece> boardFromDB = new LinkedHashMap<>();
-            for (ChessBoardVo eachInfo : previousGame) {
+            for (ChessBoardDao eachInfo : previousGame) {
                 boardFromDB.put(Position.valueOf(eachInfo.getPosition()),
                         PieceMaker.getInstance(eachInfo.getPieceType(),
                                 TeamColor.getInstance(eachInfo.getTeamColor()),

@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import chess.domain.piece.Piece;
 
@@ -7,7 +7,10 @@ public class PieceDto {
     private String pieceType;
     private String alive;
 
-    public PieceDto() {
+    public PieceDto(String teamColor, String pieceType, String alive) {
+        this.teamColor = teamColor;
+        this.pieceType = pieceType;
+        this.alive = alive;
     }
 
     public PieceDto(Piece original) {
