@@ -1,0 +1,99 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+span {
+    display: inline;
+    width: 100%;
+    text-align: center;
+}
+
+.main {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    background-image: url('/images/chess-background.png');
+    background-position: center top;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 720px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.chess-board-margin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 694px;
+    height: 694px;
+    background-image: url('/images/chess-board-coordinate.jpg');
+    background-size: 694px;
+}
+
+.chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    width: 640px;
+    height: 640px;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.opaque {
+    opacity: 0.5;
+}
+
+.bright-square {
+    background-image: url('/images/bright-square.jpg');
+    background-size: 80px;
+}
+
+.bright-square:hover {
+    opacity: 0.8;
+}
+
+.dark-square {
+    background-image: url('/images/dark-square.jpg');
+    background-size: 80px;
+}
+
+.dark-square:hover {
+    opacity: 0.8;
+}
+
+.panel {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    display: grid;
+    grid-template-rows: 33.3%;
+    grid-template-columns: 100%;
+    line-height: 50px;
+    width: 480px;
+    height: 480px;
+    margin-left: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+}
+
+.panel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-profile {
+    margin: 20px;
+    font-size: 1.0em;
+    color: cornsilk;
+}

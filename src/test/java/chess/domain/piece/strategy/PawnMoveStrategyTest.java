@@ -6,6 +6,7 @@ import chess.domain.order.MoveRoute;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
+import chess.exception.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +39,7 @@ class PawnMoveStrategyTest {
         Pawn pawn = new Pawn(color);
         MoveRoute moveRoute = chessBoard.createMoveRoute(Position.of(from), Position.of(to));
         assertThatThrownBy(() -> pawn.canMove(moveRoute))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
     }
 

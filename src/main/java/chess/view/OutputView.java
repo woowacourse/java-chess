@@ -32,10 +32,27 @@ public class OutputView {
             String line = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
                     .map(chessBoard::getPieceByPosition)
-                    .map(Piece::getNotation)
+                    .map(OutputView::translateToViewNoation)
                     .collect(Collectors.joining());
             System.out.println(line);
         }
+    }
+
+    public static String translateToViewNoation(Piece piece) {
+        if (piece.isBlank()) {
+            return ".";
+        }
+        if (piece.getName().equals("Knight")) {
+            return translateNationByColor("n", piece.getColor());
+        }
+        return translateNationByColor(piece.getName(), piece.getColor());
+    }
+
+    private static String translateNationByColor(String name, Color color) {
+        if (color == Color.BLACK) {
+            return name.toUpperCase().substring(0, 1);
+        }
+        return name.toLowerCase().substring(0, 1);
     }
 
     public static void printResult(ChessGameStatistics chessGameStatistics) {

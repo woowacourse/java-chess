@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.exception.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,7 +30,7 @@ class PositionTest {
     @CsvSource({"aaa", "111", "a9", "i1"})
     void throwExceptionWhenWrongFormatArgument(String input) {
         assertThatThrownBy(() -> Position.of(input))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("위치 형식에 맞는 입력이 아닙니다.");
     }
 

@@ -3,14 +3,14 @@ package chess.domain.piece;
 import chess.domain.order.MoveRoute;
 
 public abstract class Piece {
-    private final String notation;
+    private final String name;
 
-    public Piece(String notation) {
-        this.notation = notation;
+    public Piece(String name) {
+        this.name = name;
     }
 
-    public String getNotation() {
-        return notation;
+    public String getName() {
+        return name;
     }
 
     public abstract boolean canMove(MoveRoute moveRoute);

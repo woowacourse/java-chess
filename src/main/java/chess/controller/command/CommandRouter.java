@@ -1,5 +1,7 @@
 package chess.controller.command;
 
+import chess.exception.CommandValidationException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -25,7 +27,7 @@ public enum CommandRouter {
                 .filter(commandRouter -> commandRouter.command.equalsIgnoreCase(command.get(ORDER_INDEX)))
                 .map(commandRouter -> commandRouter.commandFactory.apply(command))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException("커맨드를 잘못 입력하셨습니다"));
+                .orElseThrow(()-> new CommandValidationException("커맨드를 잘못 입력하셨습니다"));
 
     }
 }

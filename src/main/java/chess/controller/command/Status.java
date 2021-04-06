@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.domain.ChessGameManager;
 import chess.domain.statistics.ChessGameStatistics;
+import chess.exception.CommandValidationException;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class Status implements Command {
 
     public Status(List<String> inputCommand) {
         if (inputCommand.size() != STATUS_COMMAND_PROPER_SIZE) {
-            throw new IllegalArgumentException("유효하지 않은 상태 출력 명령입니다.");
+            throw new CommandValidationException("유효하지 않은 상태 출력 명령입니다.");
         }
     }
 

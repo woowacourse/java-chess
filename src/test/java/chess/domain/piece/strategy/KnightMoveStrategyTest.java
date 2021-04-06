@@ -3,6 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import chess.exception.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,7 +46,7 @@ class KnightMoveStrategyTest {
     @CsvSource({"a1, a3", "a1, b8"})
     void throwExceptionWhenWrongDirection(String from, String to) {
         assertThatThrownBy(() -> whiteKnight.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
 
