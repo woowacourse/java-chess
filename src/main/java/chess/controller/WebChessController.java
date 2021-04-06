@@ -20,9 +20,11 @@ import static spark.Spark.*;
 
 public class WebChessController {
     private final ChessService chessService;
+    private final Gson gson;
 
     public WebChessController() {
         this.chessService = new ChessService();
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -32,7 +34,6 @@ public class WebChessController {
     public void run() {
         staticFiles.location("/static");
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -46,9 +47,7 @@ public class WebChessController {
         get("/data", (req, res) -> {
             int chessGameId = Integer.parseInt(req.queryParams("id"));
             ChessGame chessGame = chessService.findChessGameById(chessGameId);
-            ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-            String chessGameDtoJson = gson.toJson(chessGameDto);
-            return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+            return getChessGameGson(chessGame);
         });
 
         post("/move", (req, res) -> {
@@ -62,9 +61,7 @@ public class WebChessController {
                 String[] sourceTarget = new String[]{"move", source, target};
                 moveOnCommand.execute(chessGame, sourceTarget);
                 chessService.updateChessGame(chessGameId, chessGame, source, target);
-                ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-                String chessGameDtoJson = gson.toJson(chessGameDto);
-                return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+                return getChessGameGson(chessGame);
             } catch (Exception e) {
                 return gson.toJson(new ResponseDto(false, e.getMessage()));
             }
@@ -86,9 +83,13 @@ public class WebChessController {
             int chessGameId = Integer.parseInt(req.queryParams("id"));
             chessService.resetChessGame(chessGameId);
             ChessGame chessGame = chessService.findChessGameById(chessGameId);
-            ChessGameDto chessGameDto = new ChessGameDto(chessGame);
-            String chessGameDtoJson = gson.toJson(chessGameDto);
-            return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+            return getChessGameGson(chessGame);
         });
+    }
+
+    private String getChessGameGson(ChessGame chessGame) {
+        ChessGameDto chessGameDto = new ChessGameDto(chessGame);
+        String chessGameDtoJson = gson.toJson(chessGameDto);
+        return gson.toJson(new ResponseDto(true, chessGameDtoJson));
     }
 }
