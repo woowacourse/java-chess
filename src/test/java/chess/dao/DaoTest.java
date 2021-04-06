@@ -38,24 +38,6 @@ class DaoTest {
     }
 
     @Test
-    void findInitialBoardPieceAtPosition() {
-        InitialBoardDao initialBoardDao = new InitialBoardDao();
-        Map<Position, Piece> initialBoard = initialBoardDao.findInitialBoard();
-
-        Piece expectedBlackRookPiece = new Piece(PieceKind.ROOK, PieceColor.BLACK);
-        Piece computedBlackRookPiece = initialBoard.get(Position.from("a8"));
-        assertEquals(expectedBlackRookPiece, computedBlackRookPiece);
-
-        Piece expectedWhitePawnPiece = new Piece(PieceKind.PAWN, PieceColor.WHITE);
-        Piece computedWhitePawnPiece = initialBoard.get(Position.from("d2"));
-        assertEquals(expectedWhitePawnPiece, computedWhitePawnPiece);
-
-        Piece expectedBlackKingPiece = new Piece(PieceKind.KING, PieceColor.BLACK);
-        Piece computedBlackKingPiece = initialBoard.get(Position.from("e8"));
-        assertEquals(expectedBlackKingPiece, computedBlackKingPiece);
-    }
-
-    @Test
     void addRoom() {
         RoomDao roomDao = new RoomDao();
         String name = "chess1";

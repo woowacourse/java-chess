@@ -18,8 +18,8 @@ public class Game {
     }
 
     public static Game newGame() {
-        InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
-        Board board = new Board(initializedBoardFromDb.initBoard());
+        InitializedBoard initializedBoard = new InitializedBoard();
+        Board board = new Board(initializedBoard.board());
         Point point = new Point(board);
 
         return new Game(board, point, GameState.START, PieceColor.WHITE);

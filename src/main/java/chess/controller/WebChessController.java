@@ -98,7 +98,6 @@ public class WebChessController {
                 currentGame.turnColor()
             );
 
-            currentGame.isEnd();
             return "";
         });
     }

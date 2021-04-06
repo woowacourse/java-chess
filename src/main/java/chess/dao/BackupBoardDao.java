@@ -11,8 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static chess.dao.DbConnection.getConnection;
 
@@ -56,17 +57,15 @@ public class BackupBoardDao {
     }
 
     private void addSquare(String name, Position position, Board board) {
-        PositionDao positionDao = new PositionDao();
-        PieceDao pieceDao = new PieceDao();
-        int positionId = positionDao.findPositionId(position);
-        int pieceId = pieceDao.findPieceId(board.pieceAtPosition(position));
+        String positionName = position.toString();
+        String pieceName = board.pieceAtPosition(position).toString();
 
         String query = "INSERT INTO backup_board VALUES (?, ?, ?)";
 
         try (
             Connection con = getConnection();
             PreparedStatement pstmt = createPreparedStatementWithThreeParameter(
-                con.prepareStatement(query), name, positionId, pieceId)) {
+                con.prepareStatement(query), name, positionName, pieceName)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException();
@@ -74,9 +73,7 @@ public class BackupBoardDao {
     }
 
     public HashMap<Position, Piece> findPlayingBoardByRoom(String name) {
-        String query = "SELECT position.address, piece.piece_kind, piece.piece_color FROM ((backup_board " +
-            "INNER JOIN piece ON backup_board.piece_id = piece.pid) " +
-            "INNER JOIN position ON backup_board.position_id = position.pid)" +
+        String query = "SELECT backup_board.position, backup_board.piece FROM backup_board " +
             "WHERE backup_board.room_name = ?";
 
         try (
@@ -87,9 +84,10 @@ public class BackupBoardDao {
             HashMap<Position, Piece> board = new HashMap<>();
 
             while (rs.next()) {
-                Position position = Position.from(rs.getString("address"));
-                PieceKind pieceKind = PieceKind.pieceKindByName(rs.getString("piece_kind"));
-                PieceColor pieceColor = PieceColor.pieceColorByName(rs.getString("piece_color"));
+                Position position = Position.from(rs.getString("position"));
+                List<String> pieceInfo = Arrays.asList(rs.getString("piece").split("_"));
+                PieceColor pieceColor = PieceColor.pieceColorByName(pieceInfo.get(0));
+                PieceKind pieceKind = PieceKind.pieceKindByName(pieceInfo.get(1).toUpperCase());
                 Piece piece = new Piece(pieceKind, pieceColor);
 
                 board.put(position, piece);
@@ -115,10 +113,10 @@ public class BackupBoardDao {
     }
 
     private PreparedStatement createPreparedStatementWithThreeParameter(
-        PreparedStatement ps, String firstParam, int secondParam, int thirdParam) throws SQLException {
+        PreparedStatement ps, String firstParam, String secondParam, String thirdParam) throws SQLException {
         ps.setString(1, firstParam);
-        ps.setInt(2, secondParam);
-        ps.setInt(3, thirdParam);
+        ps.setString(2, secondParam);
+        ps.setString(3, thirdParam);
 
         return ps;
     }
