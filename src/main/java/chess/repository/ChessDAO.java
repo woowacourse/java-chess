@@ -20,25 +20,27 @@ public class ChessDAO extends DBConnector {
 
     public BoardDTO getSavedBoardInfo() throws SQLException {
         String query = "select * from board;";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet savedBoardInfo = pstmt.executeQuery();
-
         Map<String, String> boardInfo = new HashMap<>();
-        while (savedBoardInfo.next()) {
-            boardInfo.put(savedBoardInfo.getString("position"),
-                    savedBoardInfo.getString("piece"));
+
+        try(PreparedStatement pstmt = getConnection().prepareStatement(query);
+            ResultSet savedBoardInfo = pstmt.executeQuery()) {
+            while (savedBoardInfo.next()) {
+                boardInfo.put(savedBoardInfo.getString("position"),
+                        savedBoardInfo.getString("piece"));
+            }
         }
         return BoardDTO.of(boardInfo);
     }
 
     public TurnDTO getSavedTurnOwner() throws SQLException {
         String query = "select * from turn;";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet savedTurnOwner = pstmt.executeQuery();
-
         String turnOwner = "";
-        while (savedTurnOwner.next()) {
-            turnOwner = savedTurnOwner.getString("turn_owner");
+
+        try(PreparedStatement pstmt = getConnection().prepareStatement(query);
+            ResultSet savedTurnOwner = pstmt.executeQuery()) {
+            while (savedTurnOwner.next()) {
+                turnOwner = savedTurnOwner.getString("turn_owner");
+            }
         }
         return TurnDTO.of(turnOwner);
     }
@@ -53,36 +55,40 @@ public class ChessDAO extends DBConnector {
     }
 
     private void executeBoardUpdateQuery(String unicode, String position) throws SQLException {
-        PreparedStatement pstmt = getConnection().prepareStatement(updateBoardTableQuery);
-        pstmt.setString(1, unicode);
-        pstmt.setString(2, position);
-        pstmt.executeUpdate();
+        try(PreparedStatement pstmt = getConnection().prepareStatement(updateBoardTableQuery)) {
+            pstmt.setString(1, unicode);
+            pstmt.setString(2, position);
+            pstmt.executeUpdate();
+        }
     }
 
     public void renewBoardAfterMove(String targetPosition, String destinationPosition,
                                     Piece targetPiece) throws SQLException {
-        PreparedStatement pstmt = getConnection().prepareStatement(updateBoardTableQuery);
-        pstmt.setString(1, targetPiece.getUnicode());
-        pstmt.setString(2, destinationPosition);
-        pstmt.executeUpdate();
+        try(PreparedStatement destinationChangeQuery = getConnection().prepareStatement(updateBoardTableQuery);
+            PreparedStatement targetPositionChangeQuery = getConnection().prepareStatement(updateBoardTableQuery)) {
+            destinationChangeQuery.setString(1, targetPiece.getUnicode());
+            destinationChangeQuery.setString(2, destinationPosition);
+            destinationChangeQuery.executeUpdate();
 
-        PreparedStatement pstmt2 = getConnection().prepareStatement(updateBoardTableQuery);
-        pstmt2.setString(1, "");
-        pstmt2.setString(2, targetPosition);
-        pstmt2.executeUpdate();
+            targetPositionChangeQuery.setString(1, "");
+            targetPositionChangeQuery.setString(2, targetPosition);
+            targetPositionChangeQuery.executeUpdate();
+        }
     }
 
     public void renewTurnOwnerAfterMove(Team turnOwner) throws SQLException {
-        PreparedStatement pstmt = getConnection().prepareStatement(updateTurnTableQuery);
-        pstmt.setString(1, turnOwner.getTeamString());
-        pstmt.setString(2, turnOwner.getOpposite().getTeamString());
-        pstmt.executeUpdate();
+        try(PreparedStatement pstmt = getConnection().prepareStatement(updateTurnTableQuery)) {
+            pstmt.setString(1, turnOwner.getTeamString());
+            pstmt.setString(2, turnOwner.getOpposite().getTeamString());
+            pstmt.executeUpdate();
+        }
     }
 
     public void resetTurnOwner(Team turnOwner) throws SQLException {
-        PreparedStatement pstmt = getConnection().prepareStatement(updateTurnTableQuery);
-        pstmt.setString(1, "white");
-        pstmt.setString(2, turnOwner.getTeamString());
-        pstmt.executeUpdate();
+        try(PreparedStatement pstmt = getConnection().prepareStatement(updateTurnTableQuery)) {
+            pstmt.setString(1, "white");
+            pstmt.setString(2, turnOwner.getTeamString());
+            pstmt.executeUpdate();
+        }
     }
 }
