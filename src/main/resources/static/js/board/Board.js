@@ -136,4 +136,8 @@ export class Board {
       tile.unhighlight();
     }
   }
+
+  findPieceById(pieceId) {
+    return this.#pieces.findById(pieceId);
+  }
 }
