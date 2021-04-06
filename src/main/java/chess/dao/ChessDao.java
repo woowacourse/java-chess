@@ -86,7 +86,7 @@ public class ChessDao {
         }
     }
 
-    public void addBoard(String userId, String boardInfo, Color color) {
+    public void addBoard(String userId, String boardInfo, String color) {
         try (Connection connection = sqlConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO board (user_id, board_info, color) VALUES (?, ?, ?)")
         ) {
@@ -95,7 +95,7 @@ public class ChessDao {
             }
             preparedStatement.setString(1, userId);
             preparedStatement.setString(2, boardInfo);
-            preparedStatement.setString(3, color.name());
+            preparedStatement.setString(3, color);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + e.getMessage());
@@ -132,6 +132,25 @@ public class ChessDao {
                     ))
                 );
             return new BoardDto(chessBoard);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    public Color findBoardNextTurn(String userId) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT color FROM board WHERE user_id = ?")
+        ) {
+            preparedStatement.setString(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            if(rs.getString("color").equals(Color.BLACK.name())){
+                return Color.BLACK;
+            }
+            return Color.WHITE;
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + e.getMessage());
             throw new IllegalArgumentException("SQL Error 발생");

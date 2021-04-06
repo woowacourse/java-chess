@@ -21,16 +21,17 @@ public class ChessService {
         chessDAO = new ChessDao(new SQLConnection());
     }
 
-    public ChessGame restartChess(UserDto userDto) throws SQLException {
+    public ChessGame restartChess(UserDto userDto) {
         String userId = chessDAO.findUserIdByUser(userDto);
         chessDAO.deleteBoard(userId);
         return new ChessGame();
     }
 
-    public ChessGame matchBoard(UserDto userDto) throws SQLException {
+    public ChessGame matchBoard(UserDto userDto) {
         String userId = chessDAO.findUserIdByUser(userDto);
         BoardDto boardDto = chessDAO.findBoard(userId);
-        return makeChessGame(boardDto);
+        Color color = chessDAO.findBoardNextTurn(userId);
+        return makeChessGame(boardDto, color);
     }
 
     public String matchBoardImageSource(ChessGame chessGame, String requestBody) {
@@ -41,15 +42,16 @@ public class ChessService {
         return chessGame.getBoard().get(Point.of(requestBody)).getName();
     }
 
-    private ChessGame makeChessGame(BoardDto boardDto) {
+    private ChessGame makeChessGame(BoardDto boardDto, Color color) {
         if (boardDto == null) {
             return new ChessGame();
         }
-        return new ChessGame(boardDto.getBoard());
+        System.out.println("!@@@@@@@@@@"+color);
+        return new ChessGame(boardDto.getBoard(), color);
     }
 
-    public void addBoard(ChessGame chessGame, UserDto userDto, String requestBody) throws SQLException {
-        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, chessGame.nextTurn());
+    public void addBoard(ChessGame chessGame, UserDto userDto, String requestBody) {
+        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, makeNextColor(chessGame));
     }
 
     public String makeNextColor(ChessGame chessGame) {

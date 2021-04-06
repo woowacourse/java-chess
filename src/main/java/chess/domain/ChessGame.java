@@ -20,8 +20,9 @@ public final class ChessGame {
         this.board = new Board(initialize(new HashMap<>()));
     }
 
-    public ChessGame(Map<Point, Piece> boardInfo) {
+    public ChessGame(Map<Point, Piece> boardInfo, Color color) {
         this.board = new Board(boardInfo);
+        currentColor = color;
     }
 
     private Map<Point, Piece> initialize(Map<Point, Piece> boardMap) {

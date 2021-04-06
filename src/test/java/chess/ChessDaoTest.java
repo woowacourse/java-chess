@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
-import chess.domain.piece.Color;
 import chess.dto.UserDto;
 import chess.dto.BoardDto;
 
@@ -51,7 +50,7 @@ class ChessDaoTest {
 
     @Test
     void addBoard() {
-        assertDoesNotThrow(() -> chessDAO.addBoard("13", "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr", Color.WHITE));
+        assertDoesNotThrow(() -> chessDAO.addBoard("13", "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr", "WHITE"));
     }
 
     @Test
