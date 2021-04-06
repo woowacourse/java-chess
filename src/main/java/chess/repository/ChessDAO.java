@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class ChessRepository extends DBConnector {
+public class ChessDAO extends DBConnector {
     private final String updateBoardTableQuery = "update board set piece = ? where position = ?";
     private final String updateTurnTableQuery = "update turn set turn_owner = ? where turn_owner = ?";
 

@@ -6,7 +6,7 @@ import chess.domain.DTO.MoveInfoDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.repository.ChessRepository;
+import chess.repository.ChessDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,28 +14,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessService {
-    private final ChessRepository chessRepository;
+    private final ChessDAO chessDAO;
 
     public ChessService() {
-        chessRepository = new ChessRepository();
+        chessDAO = new ChessDAO();
     }
 
     public BoardDTO initiateBoard(ChessGame chessGame) throws SQLException {
-        chessRepository.resetTurnOwner(chessGame.getTurnOwner());
+        chessDAO.resetTurnOwner(chessGame.getTurnOwner());
         chessGame.settingBoard();
-        chessRepository.resetBoard(chessGame.getBoard());
+        chessDAO.resetBoard(chessGame.getBoard());
         return BoardDTO.of(chessGame.getBoard());
     }
 
     public BoardDTO getSavedBoardInfo(ChessGame chessGame) throws SQLException {
-        ResultSet savedBoardInfo = chessRepository.getSavedBoardInfo();
+        ResultSet savedBoardInfo = chessDAO.getSavedBoardInfo();
         Map<String, String> boardInfo = new HashMap<>();
         while (savedBoardInfo.next()) {
             boardInfo.put(savedBoardInfo.getString("position"),
                     savedBoardInfo.getString("piece"));
         }
 
-        ResultSet savedTurnOwner = chessRepository.getSavedTurnOwner();
+        ResultSet savedTurnOwner = chessDAO.getSavedTurnOwner();
         String turnOwner = "";
         while (savedTurnOwner.next()) {
             turnOwner = savedTurnOwner.getString("turn_owner");
@@ -52,8 +52,8 @@ public class ChessService {
 
         chessGame.move(moveInfoDTO.getTarget(), moveInfoDTO.getDestination());
 
-        chessRepository.renewBoardAfterMove(moveInfoDTO.getTarget(), moveInfoDTO.getDestination(), targetPiece);
-        chessRepository.renewTurnOwnerAfterMove(chessGame.getTurnOwner());
+        chessDAO.renewBoardAfterMove(moveInfoDTO.getTarget(), moveInfoDTO.getDestination(), targetPiece);
+        chessDAO.renewTurnOwnerAfterMove(chessGame.getTurnOwner());
         return BoardDTO.of(board);
     }
 }
