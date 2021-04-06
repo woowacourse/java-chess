@@ -60,7 +60,7 @@ public class ChessGameDAO {
         final Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, team);
-        pstmt.setString(2, PieceInfoToDAO.convert(teamPiecePosition));
+        pstmt.setString(2, PiecePositionDAOConverter.asDAO(teamPiecePosition));
         pstmt.executeUpdate();
         pstmt.close();
         connection.close();
@@ -87,9 +87,8 @@ public class ChessGameDAO {
     private Team generateTeam(final ResultSet resultSet, final String team) throws SQLException {
         Map<Position, Piece> piecePosition = new HashMap<>();
         while (resultSet.next()) {
-            final String pieceInfo = resultSet.getString(2);
-            System.out.println("pieceInfo = " + pieceInfo);
-            piecePosition = DAOtoPieceInfo.convert(pieceInfo, team);
+            final String teamPieceInfo = resultSet.getString(2);
+            piecePosition = PiecePositionDAOConverter.asPiecePosition(teamPieceInfo, team);
         }
         final PiecePosition PiecePositionByTeam = new PiecePosition(piecePosition);
         return new Team(PiecePositionByTeam, new PieceCaptured(), new Score());
@@ -128,7 +127,6 @@ public class ChessGameDAO {
         pstmt.setString(1, currentTurnTeam);
         pstmt.setBoolean(2, chessGame.isPlaying());
         pstmt.executeUpdate();
-        System.out.println("pstmt = " + pstmt);
         pstmt.close();
         connection.close();
     }
@@ -137,9 +135,8 @@ public class ChessGameDAO {
         final String query = "UPDATE team_info SET piece_info = (?) WHERE team = (?)";
         final Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, PieceInfoToDAO.convert(teamPiecePosition));
+        pstmt.setString(1, PiecePositionDAOConverter.asDAO(teamPiecePosition));
         pstmt.setString(2, team);
-        System.out.println("pstmt = " + pstmt);
         pstmt.executeUpdate();
         pstmt.close();
         connection.close();
