@@ -8,8 +8,6 @@ import chess.web.dto.GameDto;
 import chess.web.dto.MessageDto;
 import spark.Response;
 
-import java.sql.SQLException;
-
 public class StartService {
 
     public Object startNewGame(String gameId, Response response) {
@@ -17,7 +15,7 @@ public class StartService {
 
         try {
             chessGame = saveGameAndStart(gameId);
-        } catch (RuntimeException | SQLException e) {
+        } catch (RuntimeException e) {
             response.status(400);
             return new MessageDto(e.getMessage());
         }
@@ -25,7 +23,7 @@ public class StartService {
         return new GameDto(chessGame);
     }
 
-    private ChessGame saveGameAndStart(String gameId) throws SQLException {
+    private ChessGame saveGameAndStart(String gameId) {
         ChessGame chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         chessGame.start();
 

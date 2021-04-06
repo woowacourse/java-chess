@@ -1,12 +1,12 @@
 package chess.console;
 
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
+import chess.console.view.dto.BoardDto;
 import chess.domain.board.Board;
 import chess.domain.command.*;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
-import chess.console.view.InputView;
-import chess.console.view.OutputView;
-import chess.console.view.dto.BoardDto;
 
 import java.util.Arrays;
 

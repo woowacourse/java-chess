@@ -1,30 +1,30 @@
 package chess.repository;
 
 import chess.dao.ChessDAO;
+import chess.dao.DataSource;
 import chess.domain.game.ChessGame;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class GameRepository {
 
-    private static ChessDAO chessDAO = new ChessDAO();
+    private static ChessDAO chessDAO = new ChessDAO(new DataSource());
     private static Map<String, ChessGame> repository = new HashMap<>();
 
     public static void saveToCache(String gameId, ChessGame chessGame) {
         repository.put(gameId, chessGame);
     }
 
-    public static void saveToDB(String gameId, ChessGame chessGame) throws SQLException {
+    public static void saveToDB(String gameId, ChessGame chessGame) {
         chessDAO.addChessGame(
                 gameId,
                 ChessGameConvertor.chessGameToJson(chessGame)
         );
     }
 
-    public static void updateToDB(String gameId, ChessGame chessGame) throws SQLException {
+    public static void updateToDB(String gameId, ChessGame chessGame) {
         chessDAO.updateChessGame(
                 gameId,
                 ChessGameConvertor.chessGameToJson(chessGame)
@@ -42,18 +42,12 @@ public class GameRepository {
     }
 
     public static ChessGame findByGameIdFromDB(String gameId) {
-        String chessGameJson = null;
-
-        try {
-            chessGameJson = chessDAO.findChessGameByGameId(gameId);
-        } catch (SQLException e) {
-            throw new IllegalArgumentException("게임 ID가 존재하지 않습니다.");
-        }
+        String chessGameJson = chessDAO.findChessGameByGameId(gameId);
 
         return ChessGameConvertor.jsonToChessGame(chessGameJson);
     }
 
-    public static boolean isGameIdExistingInDB(String gameId) throws SQLException {
+    public static boolean isGameIdExistingInDB(String gameId) {
         return chessDAO.isGameIdExisting(gameId);
     }
 }

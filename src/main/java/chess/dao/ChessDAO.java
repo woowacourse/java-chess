@@ -1,96 +1,47 @@
 package chess.dao;
 
-import java.sql.*;
+import java.util.List;
 
 public class ChessDAO {
 
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+    private final DataSource dataSource;
+    private final JdbcTemplate jdbcTemplate;
 
-        // 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        // 드라이버 연결
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
+    public ChessDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void addChessGame(String gameId, String data) throws SQLException {
+    public void addChessGame(String gameId, String data) {
         String query = "INSERT INTO chess VALUES (?, ?)";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, gameId);
-            pstmt.setString(2, data);
-            pstmt.executeUpdate();
-        }
+        jdbcTemplate.update(query, gameId, data);
     }
 
-    public void updateChessGame(String gameId, String data) throws SQLException {
+    public void updateChessGame(String gameId, String data) {
         String query = "UPDATE chess SET data=? WHERE game_id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, data);
-            pstmt.setString(2, gameId);
-            pstmt.execute();
-        }
+        jdbcTemplate.update(query, data, gameId);
     }
 
-    public String findChessGameByGameId(String gameId) throws SQLException {
+    public String findChessGameByGameId(String gameId) {
         String query = "SELECT data FROM chess WHERE game_id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, gameId);
+        List<String> data = jdbcTemplate.query(query, (rs, i) -> rs.getString("data"), gameId);
 
-            return getChessGameFromDB(pstmt);
+        if (data.size() == 0) {
+            throw new IllegalArgumentException("데이터가 존재하지 않습니다.");
         }
+
+        return data.get(0);
     }
 
-    private String getChessGameFromDB(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet resultSet = pstmt.executeQuery()) {
-            resultSet.next();
-
-            return resultSet.getString("data");
-        }
-    }
-
-    public boolean isGameIdExisting(String gameId) throws SQLException {
+    public boolean isGameIdExisting(String gameId) {
         String query = "SELECT count(*) as count FROM chess WHERE game_id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, gameId);
+        List<Integer> count = jdbcTemplate.query(query, (rs, i) -> rs.getInt("count"), gameId);
 
-            return isGameIdExistingInDB(pstmt);
-        }
-
-    }
-
-    private boolean isGameIdExistingInDB(PreparedStatement pstmt) throws SQLException {
-        try (ResultSet resultSet = pstmt.executeQuery()) {
-            resultSet.next();
-
-            return resultSet.getInt("count") != 0;
-        }
+        return count.get(0) != 0;
     }
 
 }
