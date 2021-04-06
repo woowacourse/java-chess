@@ -15,7 +15,7 @@ public class DataSource {
     private static final String password = "root";
 
     public Connection getConnection() {
-        setJdbc();
+        setJdbcDriver();
         return connectToDB();
     }
 
@@ -32,7 +32,7 @@ public class DataSource {
         return con;
     }
 
-    private void setJdbc() {
+    private void setJdbcDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
