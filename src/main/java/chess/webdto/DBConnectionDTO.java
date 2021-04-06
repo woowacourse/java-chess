@@ -1,7 +1,7 @@
 package chess.webdto;
 
 public class DBConnectionDTO {
-    private String connection;
+    private final String connection;
 
     private DBConnectionDTO(String connection) {
         this.connection = connection;
