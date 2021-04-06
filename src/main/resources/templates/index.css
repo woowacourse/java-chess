@@ -62,7 +62,6 @@ body {
   }
 }
 
-
 .chessBoard {
   display: grid;
   grid-template-rows: repeat(8, 5rem);
@@ -108,4 +107,9 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.player img {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
