@@ -48,21 +48,28 @@ public class ChessBoard {
 
     public MoveResult move(MoveRoute moveRoute) {
         Position fromPosition = moveRoute.getFromPosition();
+        Position toPosition = moveRoute.getToPosition();
+        Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
+
+        validateRealPieceHasBeenChosen(fromPosition);
+        validateProperMoveStrategy(pieceToMove, moveRoute);
+
+        Piece pieceAtToPosition = this.board.get(toPosition);
+        this.board.put(toPosition, pieceToMove);
+        this.board.put(fromPosition, new Blank());
+        return new MoveResult(pieceAtToPosition);
+    }
+
+    private void validateRealPieceHasBeenChosen(Position fromPosition) {
         if (!this.hasPiece(fromPosition)) {
             throw new DomainException("해당 위치에는 말이 없습니다.");
         }
+    }
 
-        Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
-        Position toPosition = moveRoute.getToPosition();
-
-        if (pieceToMove.canMove(moveRoute)) {
-            Piece piece = this.board.get(toPosition);
-            this.board.put(toPosition, pieceToMove);
-            this.board.put(fromPosition, new Blank());
-            return new MoveResult(piece);
+    private void validateProperMoveStrategy(Piece pieceToMove, MoveRoute moveRoute) {
+        if (!pieceToMove.canMove(moveRoute)) {
+            throw new DomainException("기물이 움직일 수 없는 상황입니다.");
         }
-
-        throw new DomainException("기물이 움직일 수 없는 상황입니다.");
     }
 
     public MoveRoute createMoveRoute(Position from, Position to) {
