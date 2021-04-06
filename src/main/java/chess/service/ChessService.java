@@ -12,7 +12,6 @@ import chess.dto.ChessGameDto;
 import chess.dto.ChessGameStatusDto;
 import chess.dto.PieceDto;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class ChessService {
         this.pieceDao = new PieceDao();
     }
 
-    public void generateChessGame() throws SQLException {
+    public void generateChessGame() {
         ChessGame chessGame = generateNewChessGame();
         int chessGameId = chessGameDao.save(chessGame);
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
@@ -40,11 +39,11 @@ public class ChessService {
         return chessGame;
     }
 
-    public List<Integer> getAllChessGameId() throws SQLException {
+    public List<Integer> getAllChessGameId() {
         return chessGameDao.selectAllChessGameId();
     }
 
-    public ChessGame findChessGameById(int chessGameId) throws SQLException {
+    public ChessGame findChessGameById(int chessGameId) {
         ChessGameStatusDto chessGameStatusDto = chessGameDao.findChessGameStateById(chessGameId);
         List<PieceDto> piecesInfos = pieceDao.findAllPiecesByChessGameId(chessGameId);
         List<Piece> pieces = getPiecesByInfo(piecesInfos);
@@ -59,7 +58,7 @@ public class ChessService {
         return pieces;
     }
 
-    public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) throws SQLException {
+    public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) {
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         chessGameDao.updateChessGameStateById(chessGameId, chessGameDto.getTurn(), chessGameDto.isFinish());
         PieceDto sourcePieceDto = findPieceDtoByPosition(source, chessGameDto);
@@ -77,7 +76,7 @@ public class ChessService {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 찾는 위치의 기물이 없습니다."));
     }
 
-    public void resetChessGame(int chessGameId) throws SQLException {
+    public void resetChessGame(int chessGameId) {
         ChessGame chessGame = generateNewChessGame();
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         chessGameDao.deleteChessGameById(chessGameId);
