@@ -22,7 +22,6 @@ public class CommandDao {
             preparedStatement.setString(1, commandDto.data());
             preparedStatement.setInt(2, historyId);
             preparedStatement.executeUpdate();
-            DriveManager.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -34,11 +33,11 @@ public class CommandDao {
         try (Connection connection = DriveManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                commands.add(new CommandDto(rs.getString("C.Data")));
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    commands.add(new CommandDto(rs.getString("C.Data")));
+                }
             }
-            DriveManager.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
