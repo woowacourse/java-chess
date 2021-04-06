@@ -2,28 +2,27 @@ package chess.dto;
 
 import chess.domain.ChessGameManager;
 import chess.domain.piece.Color;
-import chess.domain.statistics.ChessGameStatistics;
 
 import java.util.Map;
 
-public class GameResponse {
+public class NewGameResponse {
     private final Map<String, PieceDto> chessBoard;
     private final Color currentTurnColor;
-    private final ChessGameStatistics chessGameStatistics;
+    private final Map<Color, Double> colorsScore;
     private final boolean isEnd;
 
-    public GameResponse(Map<String, PieceDto> chessBoard, Color currentTurnColor, ChessGameStatistics chessGameStatistics, boolean isEnd) {
+    public NewGameResponse(Map<String, PieceDto> chessBoard, Color currentTurnColor, Map<Color, Double> colorsScore, boolean isEnd) {
         this.chessBoard = chessBoard;
         this.currentTurnColor = currentTurnColor;
-        this.chessGameStatistics = chessGameStatistics;
+        this.colorsScore = colorsScore;
         this.isEnd = isEnd;
     }
 
-    public static GameResponse from(ChessGameManager chessGameManager) {
-        return new GameResponse(
+    public static NewGameResponse from(ChessGameManager chessGameManager) {
+        return new NewGameResponse(
                 ChessBoardDto.from(chessGameManager.getBoard()).board(),
                 chessGameManager.getCurrentTurnColor(),
-                chessGameManager.getStatistics(),
+                chessGameManager.getStatistics().getColorsScore(),
                 chessGameManager.isEnd());
     }
 }

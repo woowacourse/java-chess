@@ -21,4 +21,8 @@ public class ChessGameStatistics {
     public String getResultText() {
         return this.matchResult.getText();
     }
+
+    public MatchResult getMatchResult() {
+        return this.matchResult;
+    }
 }

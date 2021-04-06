@@ -18,7 +18,6 @@ function processResponse(responseJsonBody, successScenarioFunction) {
     console.log(responseJsonBody.message);
     if (Math.floor(responseJsonBody.statusCode / 100) === 2) {
         successScenarioFunction();
-        console.log(responseJsonBody.message);
     }
 }
 
@@ -120,12 +119,12 @@ function addEventOnLoadGameButton() {
 function updateGameData(responseJsonBody) {
     updateBoard(responseJsonBody.item.chessBoard);
     if (responseJsonBody.item.isEnd) {
-        updateWinner(responseJsonBody.item.chessGameStatistics);
+        updateWinner(responseJsonBody);
         updateMessage('게임이 끝났습니다.');
         turnOffPanel();
         return;
     }
-    updateScoreAndTurn(responseJsonBody.item.chessGameStatistics, responseJsonBody.item.currentTurnColor);
+    updateScoreAndTurn(responseJsonBody);
 }
 
 function updateBoard(piecesMap) {
@@ -149,16 +148,17 @@ function makeImage(imageName) {
     return img;
 }
 
-function updateScoreAndTurn(chessGameStatistics, currentTurn) {
-    const blackScore = chessGameStatistics.colorsScore.BLACK;
-    const whiteScore = chessGameStatistics.colorsScore.WHITE;
+function updateScoreAndTurn(responseJsonBody) {
+    const blackScore = responseJsonBody.item.colorsScore.BLACK;
+    const whiteScore = responseJsonBody.item.colorsScore.WHITE;
+    const currentTurn = responseJsonBody.item.currentTurnColor;
     document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n현재 순서: ${colorTranslationTable[currentTurn]}`;
 }
 
-function updateWinner(chessGameStatistics) {
-    const blackScore = chessGameStatistics.colorsScore.BLACK;
-    const whiteScore = chessGameStatistics.colorsScore.WHITE;
-    const winner = chessGameStatistics.matchResult;
+function updateWinner(responseJsonBody) {
+    const blackScore = responseJsonBody.item.colorsScore.BLACK;
+    const whiteScore = responseJsonBody.item.colorsScore.WHITE;
+    const winner = responseJsonBody.item.matchResult;
     document.getElementById('score-console').innerText = `백: ${whiteScore}점 흑: ${blackScore}점\n승: ${matchResultTranslationTable[winner]}`;
 }
 
