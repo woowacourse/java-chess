@@ -16,6 +16,14 @@ public class RoomService {
     }
 
     public Long save(final String roomName) throws SQLException {
+        final boolean isDuplicated = roomDao.load().stream()
+                .map(roomDto -> roomDto.getName())
+                .anyMatch(name -> name.equals(roomName));
+
+        if (isDuplicated) {
+            throw new IllegalArgumentException("중복된 방 이름입니다.");
+        }
+
         final Long roomId = System.currentTimeMillis();
         roomDao.save(roomName, roomId);
         return roomId;

@@ -24,13 +24,21 @@ public class WebApplication {
         roomController.mapping();
 
         handlingSQLException();
+        handlingIllegalArgumentException();
         handlingPageNotFoundError();
     }
 
     private static void handlingSQLException() {
         exception(SQLException.class, (e, request, response) -> {
             response.status(404);
-            response.body("error : " + e.getMessage());
+            response.body("SQL error : " + e.getMessage());
+        });
+    }
+
+    private static void handlingIllegalArgumentException() {
+        exception(SQLException.class, (e, request, response) -> {
+            response.status(404);
+            response.body("Unexpected error : " + e.getMessage());
         });
     }
 
