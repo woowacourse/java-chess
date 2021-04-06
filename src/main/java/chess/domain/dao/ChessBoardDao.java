@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessBoardDAO {
+public class ChessBoardDao {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -43,7 +43,7 @@ public class ChessBoardDAO {
         }
     }
 
-    public void addPosition(ChessBoardVO eachPosition) throws SQLException {
+    public void addPosition(ChessBoardVo eachPosition) throws SQLException {
 
         String query = "INSERT INTO chessTable (game_id, position, teamColor, pieceType, alive) VALUES (1, ?, ?, ?, ?)";
 
@@ -57,26 +57,27 @@ public class ChessBoardDAO {
 
     }
 
-    public void addPositions(List<ChessBoardVO> board) throws SQLException {
-        for (ChessBoardVO eachPosition : board) {
+    public void addPositions(List<ChessBoardVo> board) throws SQLException {
+        for (ChessBoardVo eachPosition : board) {
             addPosition(eachPosition);
         }
     }
 
 
-    public List<ChessBoardVO> findByGameId(String gameId) throws SQLException {
+    public List<ChessBoardVo> findByGameId(String gameId) throws SQLException {
         String query = "SELECT * FROM chessTable WHERE game_id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-        List<ChessBoardVO> chessboard = new ArrayList<>();
+        List<ChessBoardVo> chessboard = new ArrayList<>();
         while (rs.next()) {
-            ChessBoardVO chessboardDto = new ChessBoardVO();
+            ChessBoardVo chessboardDto = new ChessBoardVo(
+                    rs.getString("position"),
+                    rs.getString("teamColor"),
+                    rs.getString("pieceType"),
+                    rs.getString("alive")
+                    );
             chessboard.add(chessboardDto);
-            chessboardDto.setPosition(rs.getString("position"));
-            chessboardDto.setTeamColor(rs.getString("teamColor"));
-            chessboardDto.setPieceType(rs.getString("pieceType"));
-            chessboardDto.setAlive(rs.getString("alive"));
         }
         return chessboard;
     }

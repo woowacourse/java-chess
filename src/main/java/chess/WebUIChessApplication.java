@@ -1,8 +1,8 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.dao.ChessBoardDAO;
-import chess.domain.dao.ChessBoardVO;
+import chess.domain.dao.ChessBoardDao;
+import chess.domain.dao.ChessBoardVo;
 import chess.domain.dto.MovementDto;
 import chess.domain.dto.PieceDto;
 import chess.domain.dto.PieceMaker;
@@ -14,20 +14,18 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.Connection;
 import java.util.*;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static final ChessBoardDAO chessBoardDao = new ChessBoardDAO();
+    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
 
     private static ChessBoard chessBoard = new ChessBoard();
 
     public static void main(String[] args) {
         staticFileLocation("/static");
         Gson gson = new Gson();
-        Connection connection = chessBoardDao.getConnection();
 
         post("/chessboard", (req, res) -> {
             chessBoard.move(gson.fromJson(req.body(), MovementDto.class));
@@ -37,10 +35,10 @@ public class WebUIChessApplication {
         post("/chessboard/save", (req, res) -> {
             chessBoardDao.removePositions();
             Map<String, PieceDto> chessBoardDto = chessBoard.getChessBoardDto();
-            List<ChessBoardVO> results = new ArrayList<>();
+            List<ChessBoardVo> results = new ArrayList<>();
             for (Map.Entry<String, PieceDto> eachInfo : chessBoardDto.entrySet()) {
                 PieceDto value = eachInfo.getValue();
-                results.add(new ChessBoardVO(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
+                results.add(new ChessBoardVo(eachInfo.getKey(), value.getTeamColor(), value.getPieceType(), value.getAlive()));
             }
             chessBoardDao.addPositions(results);
             return chessBoard.result();
@@ -65,10 +63,10 @@ public class WebUIChessApplication {
 
         get("/chessboard/saved", (req, res) -> {
             res.type("application/json");
-            List<ChessBoardVO> previousGame = chessBoardDao.findByGameId("1");
+            List<ChessBoardVo> previousGame = chessBoardDao.findByGameId("1");
 
             Map<Position, Piece> boardFromDB = new LinkedHashMap<>();
-            for (ChessBoardVO eachInfo : previousGame) {
+            for (ChessBoardVo eachInfo : previousGame) {
                 boardFromDB.put(Position.valueOf(eachInfo.getPosition()),
                         PieceMaker.getInstance(eachInfo.getPieceType(),
                                 TeamColor.getInstance(eachInfo.getTeamColor()),
