@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.db.MySQLConnector;
+import chess.db.DriveManager;
 import chess.domain.dto.CommandDto;
 
 import java.sql.Connection;
@@ -17,12 +17,12 @@ public class CommandDao {
 
     public void insert(CommandDto commandDto, Integer historyId) throws SQLException {
         String query = "INSERT INTO Command (data, history_id) VALUES (?, ?)";
-        try (Connection connection = MySQLConnector.getConnection();
+        try (Connection connection = DriveManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, commandDto.data());
             preparedStatement.setInt(2, historyId);
             preparedStatement.executeUpdate();
-            MySQLConnector.closeConnection(connection);
+            DriveManager.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -31,14 +31,14 @@ public class CommandDao {
     public List<CommandDto> selectAllCommands(String id) throws SQLException {
         List<CommandDto> commands = new ArrayList<>();
         String query = "SELECT * FROM history H JOIN Command C on H.history_id = C.history_id WHERE H.history_id = ? AND H.is_end = false";
-        try (Connection connection = MySQLConnector.getConnection();
+        try (Connection connection = DriveManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 commands.add(new CommandDto(rs.getString("C.Data")));
             }
-            MySQLConnector.closeConnection(connection);
+            DriveManager.closeConnection(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

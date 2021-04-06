@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQLConnector {
+public class DriveManager {
     public static Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소

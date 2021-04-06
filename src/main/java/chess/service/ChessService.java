@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -47,8 +48,11 @@ public class ChessService {
     }
 
     public Map<String, Object> initResponse(String name) throws SQLException {
-        final String id = historyDao.insert(name);
-        return makeCommonResponse(id);
+        final Optional<String> id = historyDao.insert(name);
+        if (!id.isPresent()) {
+            throw new SQLException("[ERROR] 해당 사용자가 존재하지 않습니다.");
+        }
+        return makeCommonResponse(id.get());
     }
 
     public void end() {
@@ -102,7 +106,11 @@ public class ChessService {
     }
 
     public String getIdByName(String name) throws SQLException {
-        return String.valueOf(historyDao.findIdByName(name));
+        final Optional<Integer> id = historyDao.findIdByName(name);
+        if (!id.isPresent()) {
+            throw new SQLException("[ERROR] 해당 이름의 사용자가 존재하지 않습니다.");
+        }
+        return String.valueOf(id.get());
     }
 
     public Map<String, Object> movePiece(String command, String historyId) throws SQLException {
