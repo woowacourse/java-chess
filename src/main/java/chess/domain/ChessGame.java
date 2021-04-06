@@ -134,15 +134,7 @@ public final class ChessGame {
         return whiteTeam.currentPiecePosition();
     }
 
-    public Team getCurrentTurnTeam() {
-        return currentTurnTeam;
-    }
-
-    public Team getBlackTeam() {
-        return blackTeam;
-    }
-
-    public Team getWhiteTeam() {
-        return whiteTeam;
+    public boolean isWhiteTeamTurn() {
+        return currentTurnTeam == whiteTeam;
     }
 }
