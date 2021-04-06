@@ -6,6 +6,7 @@ import domain.exception.PieceCannotMoveException;
 import domain.exception.PieceEmptyException;
 import domain.piece.objects.Empty;
 import domain.piece.objects.Piece;
+import domain.piece.objects.PieceFactory;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 
@@ -19,6 +20,10 @@ import static domain.piece.Color.WHITE;
 
 public class Board {
     private Map<Position, Piece> pieceMap;
+
+    public Board() {
+        pieceMap = new HashMap<>(PieceFactory.createPieces());
+    }
 
     public Board(Map<Position, Piece> pieces) {
         pieceMap = new HashMap<>(pieces);

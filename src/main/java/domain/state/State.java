@@ -1,15 +1,12 @@
 package domain.state;
 
 import domain.Board;
-import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 import domain.score.Score;
 
-import java.util.Map;
-
 public interface State {
 
-    State run(Map<Position, Piece> pieces);
+    State run();
 
     State move(Position start, Position end);
 

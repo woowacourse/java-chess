@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Board;
 import domain.ChessGame;
 import domain.menu.Menu;
 import domain.piece.objects.Piece;
@@ -19,7 +20,7 @@ public class WebMenuController {
     private ChessGame game;
 
     public WebMenuController() {
-        game = new ChessGame(new Wait(PieceFactory.createPieces()));
+        game = new ChessGame(new Wait(new Board()));
     }
 
     public WebMenuController(PiecesDto piecesDto) {
@@ -29,7 +30,7 @@ public class WebMenuController {
             Piece piece = PieceFactory.findPiece(pieceDto.getPieceName());
             data.put(position, piece);
         }
-        game = new ChessGame(new Running(data, piecesDto.isTurn()));
+        game = new ChessGame(new Running(new Board(data), piecesDto.isTurn()));
     }
 
     public ResultDto run(String command) {

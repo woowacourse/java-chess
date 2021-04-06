@@ -1,23 +1,19 @@
 package domain.state;
 
 import domain.Board;
-import domain.piece.objects.Piece;
-import domain.piece.position.Position;
 import domain.score.Score;
 import domain.score.ScoreMachine;
-
-import java.util.Map;
 
 public abstract class Started implements State {
     protected Board board;
     protected boolean turn;
 
-    public Started(Map<Position, Piece> pieces) {
-        this.board = new Board(pieces);
+    public Started(Board board) {
+        this.board = board;
     }
 
-    public Started(Map<Position, Piece> pieces, boolean turn) {
-        this(pieces);
+    public Started(Board board, boolean turn) {
+        this(board);
         this.turn = turn;
     }
 

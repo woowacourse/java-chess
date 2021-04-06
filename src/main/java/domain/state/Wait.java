@@ -1,20 +1,18 @@
 package domain.state;
 
+import domain.Board;
 import domain.exception.GameNotStartException;
-import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 import domain.score.Score;
 
-import java.util.Map;
-
 public class Wait extends Started {
-    public Wait(Map<Position, Piece> pieces) {
-        super(pieces);
+    public Wait(Board board) {
+        super(board);
     }
 
     @Override
-    public State run(Map<Position, Piece> pieces) {
-        return new Running(pieces);
+    public State run() {
+        return new Running(board);
     }
 
     @Override

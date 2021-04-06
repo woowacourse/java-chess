@@ -1,8 +1,10 @@
 package domain.menu;
 
+import domain.Board;
 import domain.ChessGame;
-import dto.StatusDto;
 import domain.exception.GameNotStartException;
+import domain.state.Wait;
+import dto.StatusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,7 @@ class StatusTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(new Wait(new Board()));
     }
 
     @DisplayName("status 메뉴를 실행하면, 현재 체스 게임의 결과를 출력한다.")

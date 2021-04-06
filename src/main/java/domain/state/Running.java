@@ -1,24 +1,23 @@
 package domain.state;
 
+import domain.Board;
 import domain.exception.AlreadyStartException;
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 
-import java.util.Map;
-
 public class Running extends Started {
 
-    public Running(Map<Position, Piece> pieces) {
-        super(pieces);
+    public Running(Board board) {
+        super(board);
     }
 
-    public Running(Map<Position, Piece> pieces, boolean turn) {
-        super(pieces, turn);
+    public Running(Board board, boolean turn) {
+        super(board, turn);
     }
 
     private State gameStateByKing(Piece endPiece) {
         if (board.isKingDead(endPiece)) {
-            return new Finished(board.getPieceMap());
+            return new Finished(board);
         }
         return this;
     }
@@ -34,11 +33,11 @@ public class Running extends Started {
 
     @Override
     public State finish() {
-        return new Finished(board.getPieceMap());
+        return new Finished(board);
     }
 
     @Override
-    public State run(Map<Position, Piece> pieces) {
+    public State run() {
         throw new AlreadyStartException();
     }
 }
