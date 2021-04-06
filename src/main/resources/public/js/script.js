@@ -84,6 +84,7 @@ async function addEventOnRegameButton() {
             fetch('/newgame')
                 .then(res => res.json())
                 .then(res => processResponse(res, () => updateGameData(res)));
+            turnOnPanel();
         } catch (error) {
             console.error(error.messages);
         }
