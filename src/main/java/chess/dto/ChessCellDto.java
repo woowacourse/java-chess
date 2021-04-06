@@ -6,9 +6,9 @@ public class ChessCellDto {
     private String position;
     private String teamColor;
     private String pieceType;
-    private String alive;
+    private boolean alive;
 
-    public ChessCellDto(String position, String teamColor, String pieceType, String alive) {
+    public ChessCellDto(String position, String teamColor, String pieceType, boolean alive) {
         this.position = position;
         this.teamColor = teamColor;
         this.pieceType = pieceType;
@@ -27,9 +27,10 @@ public class ChessCellDto {
         return pieceType;
     }
 
-    public String getAlive() {
+    public boolean getAlive() {
         return alive;
     }
+
 
     @Override
     public boolean equals(Object o) {

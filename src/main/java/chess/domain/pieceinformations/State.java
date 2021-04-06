@@ -3,13 +3,10 @@ package chess.domain.pieceinformations;
 public enum State {
     ALIVE, DEAD;
 
-    public static State getInstance(String value) {
-        if ("true".equals(value)) {
+    public static State getInstance(boolean value) {
+        if (value) {
             return ALIVE;
         }
-        if ("false".equals(value)) {
-            return DEAD;
-        }
-        throw new IllegalArgumentException("해당하는 상태가 없네요~");
+        return DEAD;
     }
 }

@@ -1,8 +1,5 @@
 package chess.domain;
 
-import chess.dto.ChessBoardDto;
-import chess.dto.MovementDto;
-import chess.dto.PieceDto;
 import chess.domain.piece.*;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.AlphaColumns;
@@ -10,6 +7,9 @@ import chess.domain.position.NumberRows;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.Running;
+import chess.dto.ChessBoardDto;
+import chess.dto.MovementDto;
+import chess.dto.PieceDto;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
