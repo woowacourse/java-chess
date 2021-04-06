@@ -17,7 +17,8 @@ public class ChessGameDAO {
         String query = "INSERT INTO chess_game (name) VALUES (?)";
 
         final Connection con = getConnection();
-        final PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        final PreparedStatement pstmt = con
+                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, chessGame.getName());
         pstmt.executeUpdate();
         final ResultSet rs = pstmt.getGeneratedKeys();
@@ -49,5 +50,17 @@ public class ChessGameDAO {
             gameDTOs.add(gameDTO);
         }
         return gameDTOs;
+    }
+
+    public void updateGameEnd(String gameId) throws SQLException {
+        String query = "UPDATE chess_game SET is_end = true WHERE id = ?";
+
+        final Connection con = getConnection();
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, gameId);
+
+        try (con; pstmt) {
+            pstmt.executeUpdate();
+        }
     }
 }
