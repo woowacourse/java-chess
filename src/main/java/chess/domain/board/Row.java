@@ -38,4 +38,8 @@ public enum Row {
     public int getIndex() {
         return index;
     }
+
+    public Character getString() {
+        return row;
+    }
 }

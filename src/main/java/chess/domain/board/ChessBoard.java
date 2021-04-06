@@ -37,7 +37,7 @@ public class ChessBoard {
     private void initBlank() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                chessBoard.put(Position.of(i, j), new Blank(Color.NO_COLOR));
+                chessBoard.put(Position.of(i, j), new Blank(Color.NONE));
             }
         }
     }
@@ -83,7 +83,7 @@ public class ChessBoard {
         Piece sourcePiece = chessBoard.get(sourcePosition);
 
         if (sourcePiece.isMovable(this, sourcePosition, targetPosition)) {
-            chessBoard.put(sourcePosition, new Blank(Color.NO_COLOR));
+            chessBoard.put(sourcePosition, new Blank(Color.NONE));
             chessBoard.put(targetPosition, sourcePiece);
             return;
         }

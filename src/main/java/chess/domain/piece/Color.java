@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 public enum Color {
-    BLACK, WHITE, NO_COLOR;
+    BLACK, WHITE, NONE;
 
     public boolean isWhite() {
         return this.equals(WHITE);
@@ -19,5 +19,10 @@ public enum Color {
             return Color.BLACK;
         }
         throw new IllegalArgumentException();
+    }
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 }

@@ -66,6 +66,10 @@ public class Position {
         return column.getIndex();
     }
 
+    public String getStringPosition() {
+        return String.valueOf(column.getString()) + row.getString();
+    }
+
     public Position nextPosition(Direction direction) {
         return Position.of(this.row.getIndex() + direction.getYDegree(),
             this.column.getIndex() + direction.getXDegree());

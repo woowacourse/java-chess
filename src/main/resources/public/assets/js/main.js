@@ -1,6 +1,6 @@
 async function getBoard() {
   return await fetch(
-    'http://localhost:3000/chessboard'
+    '/chessboard'
   )
   .then(res => res.json())
   .then(data => data);
@@ -139,27 +139,28 @@ function positionColor(position) {
 }
 
 function pieceImage(piece) {
-  if (piece.type === 'rook') {
+  console.log(piece)
+  if (piece.type ===  'r' || piece.type === 'R') {
     return piece.color === 'WHITE' ? './images/rook_white.png'
       : './images/rook_black.png'
   }
-  if (piece.type === 'knight') {
+  if (piece.type ===  'n' || piece.type === 'N') {
     return piece.color === 'WHITE' ? './images/knight_white.png'
       : './images/knight_black.png'
   }
-  if (piece.type === 'bishop') {
+  if (piece.type ===  'b' || piece.type === 'B') {
     return piece.color === 'WHITE' ? './images/bishop_white.png'
       : './images/bishop_black.png'
   }
-  if (piece.type === 'queen') {
+  if (piece.type ===  'q' || piece.type === 'Q') {
     return piece.color === 'WHITE' ? './images/queen_white.png'
       : './images/queen_black.png'
   }
-  if (piece.type === 'king') {
+  if (piece.type ===  'k' || piece.type === 'K') {
     return piece.color === 'WHITE' ? './images/king_white.png'
       : './images/king_black.png'
   }
-  if (piece.type === 'pawn') {
+  if (piece.type ===  'p' || piece.type === 'P') {
     return piece.color === 'WHITE' ? './images/pawn_white.png'
       : './images/pawn_black.png'
   }
@@ -207,3 +208,4 @@ async function changeTurn(turn) {
 }
 
 init();
+

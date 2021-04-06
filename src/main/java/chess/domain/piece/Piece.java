@@ -35,6 +35,10 @@ public abstract class Piece {
         return color;
     }
 
+    public String getColorAsString() {
+        return color.toString();
+    }
+
     public abstract List<Direction> direction();
 
     public boolean isSameColor(Color color) {
