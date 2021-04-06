@@ -25,9 +25,10 @@ public class JdbcTemplate {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             setParameters(pstmt, parameters);
-            ResultSet resultSet = pstmt.executeQuery();
 
-            return createResultWithMapper(resultSet, mapper);
+            try(ResultSet resultSet = pstmt.executeQuery()) {
+                return createResultWithMapper(resultSet, mapper);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException(e);
