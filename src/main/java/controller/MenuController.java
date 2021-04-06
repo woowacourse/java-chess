@@ -1,10 +1,10 @@
 package controller;
 
 import domain.ChessGame;
+import domain.menu.Menu;
 import dto.BoardDto;
 import dto.MenuDto;
 import dto.StatusDto;
-import domain.menu.Menu;
 import view.OutputView;
 
 public class MenuController {

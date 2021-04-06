@@ -15,8 +15,6 @@ public interface State {
 
     State finish();
 
-    boolean isRunning();
-
     boolean isEnd();
 
     Board getBoard();

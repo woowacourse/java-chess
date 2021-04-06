@@ -10,7 +10,7 @@ import java.util.Map;
 
 public abstract class Started implements State {
     protected Board board;
-    protected boolean turn = false;
+    protected boolean turn;
 
     public Started(Map<Position, Piece> pieces) {
         this.board = new Board(pieces);
@@ -29,11 +29,6 @@ public abstract class Started implements State {
     @Override
     public Score whiteScore() {
         return ScoreMachine.whitePiecesScore(board);
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 
     @Override

@@ -24,7 +24,7 @@ class ChessGameTest {
         chessGame.move(Position.of("f8"), Position.of("c5"));
         chessGame.move(Position.of("e2"), Position.of("e3"));
         chessGame.move(Position.of("c5"), Position.of("e3"));
-        assertThat(chessGame.isRunning()).isFalse();
+        assertThat(chessGame.isEnd()).isTrue();
     }
 
     @DisplayName("체스 판의 말들을 통해 점수를 계산한다.")

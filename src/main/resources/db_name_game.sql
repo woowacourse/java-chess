@@ -22,12 +22,13 @@
 DROP TABLE IF EXISTS `game`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `game` (
-  `gameid` int(11) NOT NULL AUTO_INCREMENT,
-  `blackscore` double NOT NULL,
-  `whitescore` double NOT NULL,
-  `turn` tinyint(1) NOT NULL,
-  PRIMARY KEY (`gameid`)
+CREATE TABLE `game`
+(
+    `gameid`     int(11) NOT NULL AUTO_INCREMENT,
+    `blackscore` double NOT NULL,
+    `whitescore` double NOT NULL,
+    `turn`       tinyint(1) NOT NULL,
+    PRIMARY KEY (`gameid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,11 +36,14 @@ CREATE TABLE `game` (
 -- Dumping data for table `game`
 --
 
-LOCK TABLES `game` WRITE;
+LOCK
+TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game` VALUES (7,38,38,0);
+INSERT INTO `game`
+VALUES (7, 38, 38, 0);
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
-UNLOCK TABLES;
+UNLOCK
+TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

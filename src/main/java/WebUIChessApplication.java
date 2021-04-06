@@ -2,7 +2,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.WebMenuController;
 import dao.GameDao;
-import domain.piece.position.Position;
 import dto.ResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -13,8 +12,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    static int gameID;
     static WebMenuController testController;
+    static int gameID;
 
     public static void main(String[] args) {
         GameDao gameDao = new GameDao();
@@ -50,16 +49,16 @@ public class WebUIChessApplication {
             JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
             String source = jsonObject.get("source").getAsString();
             String target = jsonObject.get("target").getAsString();
-            String command = "move " + source + " " + Position.of(target);
+            String command = "move " + source + " " + target;
             ResultDto resultDto = testController.run(command);
-            if (resultDto.isSuccess()) {
-                if (!resultDto.isEnd()) {
-                    gameDao.updateGame(resultDto, source, target, gameID);
-                    return gson.toJson(resultDto);
-                }
-                gameDao.deleteGame(gameID);
+            if (!resultDto.isSuccess()) {
                 return gson.toJson(resultDto);
             }
+            if (!resultDto.isEnd()) {
+                gameDao.updateGame(resultDto, source, target, gameID);
+                return gson.toJson(resultDto);
+            }
+            gameDao.deleteGame(gameID);
             return gson.toJson(resultDto);
         });
 

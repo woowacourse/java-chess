@@ -32,6 +32,12 @@ public class WebMenuController {
         game = new ChessGame(new Running(data, piecesDto.isTurn()));
     }
 
+    public ResultDto run(String command) {
+        String menuButton = command.split(" ")[0];
+        Menu menu = Menu.findMenu(menuButton);
+        return startMenu(command, game, menu);
+    }
+
     private ResultDto startMenu(String command, ChessGame game, Menu menu) {
         try {
             return new ResultDto(menu.executeWebMenu(command, game), "");
@@ -44,11 +50,5 @@ public class WebMenuController {
         return new ResultDto(new PiecesDto(game.getBoard().getPieceMap(),
                 new StatusDto(game.blackScore(), game.whiteScore()),
                 game.isEnd(), game.getTurn()), "");
-    }
-
-    public ResultDto run(String command) {
-        String menuButton = command.split(" ")[0];
-        Menu menu = Menu.findMenu(menuButton);
-        return startMenu(command, game, menu);
     }
 }

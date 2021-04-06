@@ -28,11 +28,6 @@ public class Finished extends Started {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
     public boolean isEnd() {
         return true;
     }
