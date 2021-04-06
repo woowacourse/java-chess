@@ -59,13 +59,15 @@ public class ChessGameDAO {
         for (Position position : piecePosition.keySet()) {
             final Piece pieceToSave = piecePosition.get(position);
             String query = "INSERT INTO piece_position VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = getConnection().prepareStatement(query);
+            final Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, team);
             pstmt.setString(2, PieceToDAO.convert(pieceToSave));
             pstmt.setString(3, position.getPositionInitial());
             pstmt.setBoolean(4, pieceToSave.isFirstMove());
             pstmt.executeUpdate();
             pstmt.close();
+            connection.close();
         }
     }
 
@@ -130,6 +132,7 @@ public class ChessGameDAO {
         final Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(deletePiecePositionQuery);
         pstmt.executeUpdate();
+        pstmt.close();
         pstmt = connection.prepareStatement(deleteChessGameQuery);
         pstmt.executeUpdate();
         pstmt.close();
