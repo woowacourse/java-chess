@@ -118,7 +118,6 @@ public class ChessGame {
 
     public void makeBoardStateOf(List<CommandDto> commands) {
         for (CommandDto commandInDB : commands) {
-            System.out.println(commandInDB.data());
             final Path path = new Path(new Commands(commandInDB.data()).path());
             movePiece(path);
         }
