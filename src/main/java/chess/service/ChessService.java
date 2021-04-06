@@ -20,36 +20,34 @@ public class ChessService {
         this.gameHistoryDao = gameHistoryDao;
     }
 
-    public int getAddedGameId(Game game) throws SQLException {
+    public int getAddedGameId(Game game) {
         return gameDao.addGame(game);
     }
 
-    public void addGameHistory(GameHistory gameHistory) throws SQLException{
+    public void addGameHistory(GameHistory gameHistory) throws SQLException {
         gameHistoryDao.addGameHistory(gameHistory);
     }
 
-    public List<GameDto> findGamesByUserId(int userId) throws SQLException{
+    public List<GameDto> findGamesByUserId(int userId) {
         return gameDao.findRunningGamesByUserId(userId)
             .stream()
             .map(GameDto::new)
             .collect(Collectors.toList());
     }
 
-    public List<GameHistory> findHistoriesByGameId(int gameId) throws SQLException {
+    public List<GameHistory> findHistoriesByGameId(int gameId) {
         return gameHistoryDao.findAllGameHistoryByGameId(gameId);
     }
 
-    public void updateGameIsEnd(int gameId) throws SQLException{
+    public void updateGameIsEnd(int gameId) throws SQLException {
         gameDao.updateGameIsEnd(gameId);
     }
 
-    public ChessGame reloadAllHistory(int gameId) throws SQLException {
+    public ChessGame reloadAllHistory(int gameId) {
         List<GameHistory> historiesByGameId = findHistoriesByGameId(gameId);
         ChessGame chessGame = new ChessGame();
         chessGame.initBoard(BoardInitializer.init());
-        if (historiesByGameId != null) {
-            historiesByGameId.forEach(gameHistory -> chessGame.move(gameHistory.getCommand()));
-        }
+        historiesByGameId.forEach(gameHistory -> chessGame.move(gameHistory.getCommand()));
         return chessGame;
     }
 }

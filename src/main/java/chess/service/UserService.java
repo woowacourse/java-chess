@@ -2,7 +2,7 @@ package chess.service;
 
 import chess.domain.web.User;
 import chess.repository.UserDao;
-import java.sql.SQLException;
+import java.util.Optional;
 
 public class UserService {
     private final UserDao userDao;
@@ -11,17 +11,16 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public User findUserByName(String name) throws SQLException {
+    public Optional<User> findUserByName(String name) {
         return userDao.findByName(name);
     }
 
-    public int findUserIdByName(String name) throws SQLException {
-        return userDao.findByName(name).getUserId();
+    public int addUserIfNotExist(String name) {
+        Optional<User> userByName = findUserByName(name);
+        return userByName.map(User::getUserId).orElseGet(() -> userDao.addUser(new User(name)));
     }
 
-    public void addUserIfNotExist(String name) throws SQLException {
-        if(findUserByName(name) == null) {
-            userDao.addUser(new User(name));
-        }
+    public boolean isUserExist(int userId) {
+        return userDao.findUserById(userId).isPresent();
     }
 }
