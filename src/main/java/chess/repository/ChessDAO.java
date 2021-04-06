@@ -1,5 +1,7 @@
 package chess.repository;
 
+import chess.domain.DTO.BoardDTO;
+import chess.domain.DTO.TurnDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -9,22 +11,36 @@ import chess.utils.DBConnector;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessDAO extends DBConnector {
     private final String updateBoardTableQuery = "update board set piece = ? where position = ?";
     private final String updateTurnTableQuery = "update turn set turn_owner = ? where turn_owner = ?";
 
-    public ResultSet getSavedBoardInfo() throws SQLException {
+    public BoardDTO getSavedBoardInfo() throws SQLException {
         String query = "select * from board;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        return pstmt.executeQuery();
+        ResultSet savedBoardInfo = pstmt.executeQuery();
+
+        Map<String, String> boardInfo = new HashMap<>();
+        while (savedBoardInfo.next()) {
+            boardInfo.put(savedBoardInfo.getString("position"),
+                    savedBoardInfo.getString("piece"));
+        }
+        return BoardDTO.of(boardInfo);
     }
 
-    public ResultSet getSavedTurnOwner() throws SQLException {
+    public TurnDTO getSavedTurnOwner() throws SQLException {
         String query = "select * from turn;";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        return pstmt.executeQuery();
+        ResultSet savedTurnOwner = pstmt.executeQuery();
+
+        String turnOwner = "";
+        while (savedTurnOwner.next()) {
+            turnOwner = savedTurnOwner.getString("turn_owner");
+        }
+        return TurnDTO.of(turnOwner);
     }
 
     public void resetBoard(Board board) throws SQLException {

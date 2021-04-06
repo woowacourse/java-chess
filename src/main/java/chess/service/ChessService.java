@@ -3,6 +3,7 @@ package chess.service;
 import chess.domain.ChessGame;
 import chess.domain.DTO.BoardDTO;
 import chess.domain.DTO.MoveInfoDTO;
+import chess.domain.DTO.TurnDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -28,20 +29,11 @@ public class ChessService {
     }
 
     public BoardDTO getSavedBoardInfo(ChessGame chessGame) throws SQLException {
-        ResultSet savedBoardInfo = chessDAO.getSavedBoardInfo();
-        Map<String, String> boardInfo = new HashMap<>();
-        while (savedBoardInfo.next()) {
-            boardInfo.put(savedBoardInfo.getString("position"),
-                    savedBoardInfo.getString("piece"));
-        }
+        BoardDTO boardDTO = chessDAO.getSavedBoardInfo();
+        TurnDTO turnDTO = chessDAO.getSavedTurnOwner();
 
-        ResultSet savedTurnOwner = chessDAO.getSavedTurnOwner();
-        String turnOwner = "";
-        while (savedTurnOwner.next()) {
-            turnOwner = savedTurnOwner.getString("turn_owner");
-        }
-        chessGame.loadSavedBoardInfo(boardInfo, turnOwner);
-        return BoardDTO.of(boardInfo);
+        chessGame.loadSavedBoardInfo(boardDTO.getBoardInfo(), turnDTO.getTurn());
+        return boardDTO;
     }
 
     public BoardDTO move(ChessGame chessGame, MoveInfoDTO moveInfoDTO) throws SQLException {
