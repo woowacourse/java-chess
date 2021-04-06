@@ -37,7 +37,7 @@ function moveHandler() {
   }, false);
 
   this.$chessBoard.addEventListener("dragstart", function (e) {
-    source = e.target.closest('div');
+    source = e.target.closest('div').parentNode
   }, false);
 
   this.$chessBoard.addEventListener("dragend", function (e) {
@@ -58,7 +58,7 @@ function moveHandler() {
   this.$chessBoard.addEventListener("drop", async function (e) {
     e.preventDefault();
     e.target.style.background = "";
-    target = e.target.closest('div')
+    target = e.target.closest('div').parentNode
     if (await movable(source, target)) {
       move(source, target)
       await changeTurn(await getTurn())
@@ -68,15 +68,15 @@ function moveHandler() {
 
 function move(source, target) {
   const sourcePiece = {
-    type: source.classList[3],
-    color: source.classList[2]
+    type: source.children[0].classList[3],
+    color: source.children[0].classList[2]
   }
   const blankPiece = {
     type: 'blank',
     color: 'none'
   }
-  target.innerHTML = boardTemplate(target.id, sourcePiece)
-  source.innerHTML = boardTemplate(source.id, blankPiece)
+  target.innerHTML = squareTemplate(target.id, sourcePiece)
+  source.innerHTML = squareTemplate(source.id, blankPiece)
 }
 
 async function movable(source, target) {
@@ -106,8 +106,8 @@ async function movable(source, target) {
       method: 'PATCH',
       body: JSON.stringify({
         piece: {
-          type: source.classList[3],
-          color: source.classList[2]
+          type: source.children[0].classList[3],
+          color: source.children[0].classList[2]
         }
       }),
       headers: {
@@ -120,10 +120,15 @@ async function movable(source, target) {
 }
 
 function boardTemplate(position, piece) {
-  return `<div id=${position} class='square ${positionColor(
-    position)} ${piece.color} ${piece.type}'>
-          <img class='piece' src=${pieceImage(piece)} alt=${piece}/>
-        </div>`
+  return `<div id=${position}>
+  ${squareTemplate(position, piece)}
+  </div>`
+}
+
+function squareTemplate(position, piece) {
+  return `<div id=${position} class='square ${positionColor(position)} ${piece.color} ${piece.type}'>
+    <img class='piece' src=${pieceImage(piece)} alt=${piece}/>
+    </div>`
 }
 
 function positionColor(position) {
