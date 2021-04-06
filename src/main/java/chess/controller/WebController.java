@@ -69,10 +69,10 @@ public class WebController {
 
             chessGameManager.move(Position.of(from), Position.of(to));
 
-            return new CommonDto<MoveResponse>(
+            return new CommonDto<RunningGameResponse>(
                     StatusCode.OK,
                     "기물을 이동했습니다.",
-                    MoveResponse.from(chessGameManager));
+                    RunningGameResponse.from(chessGameManager));
         } catch (DomainException e) {
             return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
@@ -100,10 +100,10 @@ public class WebController {
         try {
             SavedGameData savedGameData = gameDAO.loadGame();
             chessGameManager.load(savedGameData.getChessBoardDto().toChessBoard(), savedGameData.getCurrentTurnColor());
-            return new CommonDto<MoveResponse>(
+            return new CommonDto<RunningGameResponse>(
                     StatusCode.OK,
                     "게임을 불러왔습니다.",
-                    MoveResponse.from(chessGameManager));
+                    RunningGameResponse.from(chessGameManager));
         } catch (HandledException e) {
             return new CommonDto<NoneItem>(
                     StatusCode.BAD_REQUEST,
