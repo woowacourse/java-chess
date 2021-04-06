@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import static spark.Spark.delete;
@@ -25,11 +25,11 @@ public class WebUIChessApplication {
         ChessController chessController = new ChessController();
         PieceController pieceController = new PieceController();
 
-        get("/", (req, res) -> render(new HashMap<>(), "main.html"));
+        get("/", (req, res) -> render(Collections.emptyMap(), "main.html"));
 
         path("/chess", () -> {
             path("", () -> {
-                get("", (req, res) -> render(new HashMap<>(), "chess.html"));
+                get("", (req, res) -> render(Collections.emptyMap(), "chess.html"));
                 get("/ids", chessController::getIds);
                 get("/:chessId/turn", chessController::getTurn);
                 post("", chessController::insert);

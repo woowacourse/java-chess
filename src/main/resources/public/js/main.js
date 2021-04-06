@@ -4,15 +4,7 @@ document.getElementById("restart").addEventListener("click", onNewGame);
 
 const POST = {
     "method": 'POST',
-    "headers" : {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-}
-
-const PATCH = {
-    "method": 'PATCH',
-    "headers" : {
+    "headers": {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     },

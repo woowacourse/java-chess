@@ -29,7 +29,8 @@ public class ChessDAOTest {
         }
 
         chessDAO.insert();
-        chessId = chessDAO.findChessId().get();
+        chessId = chessDAO.findChessId()
+                          .get();
     }
 
 
@@ -38,7 +39,8 @@ public class ChessDAOTest {
     void findChessId() throws SQLException {
 
         // when
-        ThrowableAssert.ThrowingCallable callable =  () -> chessDAO.findChessId().get();
+        ThrowableAssert.ThrowingCallable callable = () -> chessDAO.findChessId()
+                                                                  .get();
 
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -49,7 +51,8 @@ public class ChessDAOTest {
     void findTurnById() throws SQLException {
 
         // when
-        final String turn = chessDAO.findTurnById(chessId).get();
+        final String turn = chessDAO.findTurnById(chessId)
+                                    .get();
 
         // then
         assertThat(turn).isEqualTo("WHITE");
@@ -60,7 +63,8 @@ public class ChessDAOTest {
     void insert() throws SQLException {
 
         // then
-        final boolean inserted = chessDAO.findTurnById(chessId).isPresent();
+        final boolean inserted = chessDAO.findTurnById(chessId)
+                                         .isPresent();
         assertThat(inserted).isTrue();
     }
 
@@ -72,7 +76,8 @@ public class ChessDAOTest {
         chessDAO.updateTurn(chessId);
 
         // then
-        final String turn = chessDAO.findTurnById(chessId).get();
+        final String turn = chessDAO.findTurnById(chessId)
+                                    .get();
         assertThat(turn).isEqualTo("BLACK");
     }
 
@@ -84,7 +89,8 @@ public class ChessDAOTest {
         chessDAO.delete(chessId);
 
         // then
-        final boolean isChessRemaining = chessDAO.findTurnById(chessId).isPresent();
+        final boolean isChessRemaining = chessDAO.findTurnById(chessId)
+                                                 .isPresent();
         assertThat(isChessRemaining).isFalse();
     }
 }

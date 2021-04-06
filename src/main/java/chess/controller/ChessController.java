@@ -4,17 +4,12 @@ import java.sql.SQLException;
 
 import com.google.gson.Gson;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import chess.ChessResponse;
 import chess.service.ChessService;
 import spark.Request;
 import spark.Response;
 
 public class ChessController {
-
-    private static final Logger log = LoggerFactory.getLogger(ChessController.class);
 
     private static final Gson GSON = new Gson();
 

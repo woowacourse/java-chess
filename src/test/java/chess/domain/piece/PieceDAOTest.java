@@ -32,7 +32,8 @@ public class PieceDAOTest {
 
         chessDAO.insert();
 
-        chessId = chessDAO.findChessId().get();
+        chessId = chessDAO.findChessId()
+                          .get();
         final Chess chess = Chess.createWithEmptyBoard()
                                  .start();
         final BoardDTO boardDTO = BoardDTO.from(chess);
@@ -47,7 +48,8 @@ public class PieceDAOTest {
         final List<PieceDTO> pieces = pieceDAO.findPiecesByChessId(chessId);
 
         // then
-        assertThat(pieces).size().isEqualTo(64);
+        assertThat(pieces).size()
+                          .isEqualTo(64);
     }
 
     @DisplayName("체스 초기 위치의 기물들 삽입 테스트")
@@ -56,7 +58,8 @@ public class PieceDAOTest {
 
         // then
         final List<PieceDTO> pieces = pieceDAO.findPiecesByChessId(chessId);
-        assertThat(pieces).size().isEqualTo(64);
+        assertThat(pieces).size()
+                          .isEqualTo(64);
     }
 
     @DisplayName("기물 이동 테스트")
@@ -72,11 +75,13 @@ public class PieceDAOTest {
         // then
         final List<PieceDTO> pieces = pieceDAO.findPiecesByChessId(chessId);
         for (PieceDTO piece : pieces) {
-            if (piece.getPosition().equals("a2")) {
+            if (piece.getPosition()
+                     .equals("a2")) {
                 assertThat(piece.getName()).isEqualTo("BLANK");
             }
 
-            if (piece.getPosition().equals("a4")) {
+            if (piece.getPosition()
+                     .equals("a4")) {
                 assertThat(piece.getName()).isEqualTo("PAWN");
             }
         }

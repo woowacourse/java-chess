@@ -37,6 +37,7 @@ async function buildBoard() {
 
 const $whiteScore = document.getElementById("white-score");
 const $blackScore = document.getElementById("black-score");
+
 async function getScore() {
     const chessId = getCookie("chessId");
     const response = await fetch('/chess/' + chessId + '/pieces/score');

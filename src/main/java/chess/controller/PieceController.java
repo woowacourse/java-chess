@@ -5,12 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import chess.ChessResponse;
-import chess.domain.board.Board;
-import chess.domain.board.BoardDTO;
 import chess.domain.board.ScoreDTO;
 import chess.domain.chess.Chess;
 import chess.domain.chess.ChessDTO;
@@ -22,8 +17,6 @@ import spark.Request;
 import spark.Response;
 
 public class PieceController {
-
-    private static final Logger log = LoggerFactory.getLogger(PieceController.class);
 
     private static final Gson GSON = new Gson();
 
