@@ -107,19 +107,12 @@ function mark(clickedLocation) {
     }
 }
 
-function endMessage () {
+function endMessage() {
     if (gameId() != null) {
         alert(`플레이를 저장했습니다!`);
         return true;
     }
-    else {
-        if (confirmEnd()) {
-            alert("게임을 종료합니다!");
-            return true;
-        } else {
-            return false;
-        }
-    }
+    return confirmEnd();
 }
 
 function confirmEnd() {

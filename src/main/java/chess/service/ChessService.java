@@ -11,9 +11,7 @@ import chess.domain.utils.BoardInitializer;
 import spark.utils.StringUtils;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,15 +34,6 @@ public class ChessService {
         return histories();
     }
 
-//    public Map<String, Object> startResponse() throws SQLException {
-//        Map<String, Object> model = new HashMap<>();
-//        final List<HistoryDto> history = histories();
-//        if (!history.isEmpty()) {
-//            model.put("history", history);
-//        }
-//        return model;
-//    }
-
     private List<HistoryDto> histories() throws SQLException {
         return historyDao.selectActive()
                 .stream()
@@ -59,38 +48,14 @@ public class ChessService {
     public String addHistory(String name) throws SQLException {
         final Optional<String> id = historyDao.insert(name);
         if (!id.isPresent()) {
-            throw new SQLException("[ERROR] 해당 사용자가 존재하지 않습니다.");
+            throw new SQLException("[ERROR] id 값을 불러올 수 없습니다.");
         }
         return id.get();
     }
 
-//    public Map<String, Object> initResponse(String name) throws SQLException {
-//        final Optional<String> id = historyDao.insert(name);
-//        if (!id.isPresent()) {
-//            throw new SQLException("[ERROR] 해당 사용자가 존재하지 않습니다.");
-//        }
-//        return makeCommonResponse(id.get());
-//    }
-
     public void end() {
         chessGame.endGame();
     }
-
-    public void move(String command) throws SQLException {
-        chessGame.move(new Commands(command));
-    }
-
-//    public Map<String, Object> moveResponse(String historyId) throws SQLException {
-//        final Map<String, Object> model = makeCommonResponse(historyId);
-//        if (chessGame.isEnd()) {
-//            model.put("winner", chessGame.winner());
-//            if (historyId != null) {
-//                updateDB(historyId);
-//            }
-//        }
-//        return model;
-//    }
-//
 
     public void movePiece(String command, String historyId) throws SQLException {
         move(command);
@@ -102,34 +67,13 @@ public class ChessService {
         }
     }
 
-//    public Map<String, Object> movePiece(String command, String historyId) throws SQLException {
-//        move(command);
-//        flushCommands(command, historyId);
-//        return moveResponse(historyId);
-//    }
+    public void move(String command) throws SQLException {
+        chessGame.moveAs(new Commands(command));
+    }
 
     private void updateDB(String historyId) throws SQLException {
         historyDao.updateEndState(historyId);
     }
-
-
-//    private Map<String, Object> makeCommonResponse(String id) {
-//        final GameInfoDto gameInfoDto = new GameInfoDto(chessGame);
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("squares", gameInfoDto.squares());
-//        model.put("turn", gameInfoDto.turn());
-//        model.put("scores", gameInfoDto.scores());
-//        model.put("gameId", id);
-//        return model;
-//    }
-
-    public void continueLastGame(String historyName) throws SQLException {
-        chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
-    }
-
-//    public Map<String, Object> continueResponse(String id) {
-//        return makeCommonResponse(id);
-//    }
 
     public void flushCommands(String command, String gameId) throws SQLException {
         try {
@@ -137,6 +81,10 @@ public class ChessService {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void continueLastGame(String historyName) throws SQLException {
+        chessGame.makeBoardStateOf(commandDao.selectAllCommands(historyName));
     }
 
     public String getIdByName(String name) throws SQLException {

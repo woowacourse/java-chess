@@ -37,20 +37,7 @@ public class WebController {
                 chessService.gameInfo(),
                 chessService.addHistory(request.params(":name"))
         ), "chessGame.html");
-//        return RenderView.renderHtml(chessService.initResponse(request.params(":name")), "chessGame.html");
     }
-
-//    public String movePiece(Request request, Response response) {
-//        String command = makeMoveCmd(request.queryParams("source"), request.queryParams("target"));
-//        String historyId = request.queryParams("gameId");
-//        try {
-////            chessService.movePiece(command, historyId);
-//            return GSON.toJson(chessService.movePiece(command, historyId));
-//        } catch (IllegalArgumentException | SQLException e) {
-//            response.status(400);
-//            return e.getMessage();
-//        }
-//    }
 
     public String movePiece(Request request, Response response) {
         String command = makeMoveCmd(request.queryParams("source"), request.queryParams("target"));

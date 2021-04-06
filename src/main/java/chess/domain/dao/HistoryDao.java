@@ -13,12 +13,13 @@ public class HistoryDao {
         final String query = "INSERT INTO History (Name) VALUES (?)";
         Optional<String> id = Optional.empty();
         try (Connection connection = DriveManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-             ResultSet resultSet = preparedStatement.getGeneratedKeys();) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
-            resultSet.next();
-            id = Optional.ofNullable(resultSet.getString(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                resultSet.next();
+                id = Optional.ofNullable(resultSet.getString(1));
+            }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
