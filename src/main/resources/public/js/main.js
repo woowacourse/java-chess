@@ -1,5 +1,6 @@
 document.getElementById("new-game").addEventListener("click", onNewGame);
 document.getElementById("continue").addEventListener("click", onContinue);
+document.getElementById("restart").addEventListener("click", onNewGame);
 
 const POST = {
     "method": 'POST',

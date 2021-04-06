@@ -3,12 +3,6 @@ package chess;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.patch;
@@ -45,6 +39,7 @@ public class WebUIChessApplication {
 
             path("/:chessId/pieces", () -> {
                 get("", pieceController::get);
+                get("/score", pieceController::getScore);
                 post("", pieceController::insert);
                 patch("/move", pieceController::move);
                 delete("", pieceController::delete);

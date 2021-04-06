@@ -29,8 +29,8 @@ public enum PieceFactory {
 
     private static PieceFactory findPieceFactoryByName(String name) {
         return Arrays.stream(PieceFactory.values())
-              .filter(pieceFactory -> pieceFactory.name.equals(name))
-              .findAny()
-              .orElseThrow(() -> new IllegalArgumentException("잘못된 피스의 이름입니다."));
+                     .filter(pieceFactory -> pieceFactory.name.equals(name))
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException("잘못된 피스의 이름입니다."));
     }
 }

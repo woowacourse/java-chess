@@ -9,7 +9,7 @@
 <div class="screen">
     <label id="black-status" class="status">
         <h2>BLACK TEAM</h2>
-        SCORE : <br>
+        SCORE : <label id="black-score">0</label><br>
     </label>
     <div id="versus">
         <img id="black-versus" src="/img/queen_black.png" class="versus-piece">
@@ -18,12 +18,10 @@
     </div>
     <label id="white-status" class="status">
         <h2>WHITE TEAM</h2>
-        SCORE : <br>
+        SCORE : <label id="white-score">0</label><br>
     </label>
     <div class="game-menu">
-        <form id="restart" action="/chess/new" method="post">
-            <button class="game-option">다시하기</button>
-        </form>
+        <button id="restart" class="game-option">다시하기</button>
         <button class="game-option" onclick="location.href='/'">나가기</button>
     </div>
 </div>

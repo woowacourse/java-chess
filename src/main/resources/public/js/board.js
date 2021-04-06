@@ -32,6 +32,19 @@ async function buildBoard() {
     $board.addEventListener("mouseout", onRevertSquareColor);
     color = await getColor();
     borderTurn(color);
+    await getScore();
+}
+
+const $whiteScore = document.getElementById("white-score");
+const $blackScore = document.getElementById("black-score");
+async function getScore() {
+    const chessId = getCookie("chessId");
+    const response = await fetch('/chess/' + chessId + '/pieces/score');
+    const data = await response.json();
+    const scores = data.content;
+    console.log(scores);
+    $whiteScore.textContent = scores.whiteScore;
+    $blackScore.textContent = scores.blackScore;
 }
 
 async function chessBoard(chessId) {
@@ -54,6 +67,7 @@ async function patchMovePiece(chessId, source, target) {
     const moveResult = await fetch('/chess/' + chessId + '/pieces/move?source=' + source + '&target=' + target, PATCH);
     if (moveResult.ok) {
         await patchChangeTurn(chessId);
+        await getScore();
         movePiece(source, target);
         borderTurn();
         return await moveResult.json();

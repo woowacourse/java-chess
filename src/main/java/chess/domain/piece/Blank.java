@@ -10,7 +10,7 @@ public class Blank extends AbstractPiece {
 
     static {
         final DirectionGroup DIRECTION_GROUP = DirectionGroup.empty();
-         INSTANCE = new Blank(Color.BLANK, DIRECTION_GROUP);
+        INSTANCE = new Blank(Color.BLANK, DIRECTION_GROUP);
     }
 
     private static final String SYMBOL = ".";

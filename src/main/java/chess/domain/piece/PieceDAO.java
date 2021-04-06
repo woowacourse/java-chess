@@ -44,8 +44,10 @@ public class PieceDAO {
         }
     }
 
-    private void updateSourcePosition(Long chessId, MovePositionDTO movePositionDTO) throws SQLException {
-        String query = "UPDATE piece, (SELECT color, name FROM piece WHERE position = (?)) AS source SET piece.color = source.color, piece.name = source.name WHERE position = (?) AND chess_id = (?)";
+    private void updateSourcePosition(Long chessId, MovePositionDTO movePositionDTO)
+            throws SQLException {
+        String query =
+                "UPDATE piece, (SELECT color, name FROM piece WHERE position = (?)) AS source SET piece.color = source.color, piece.name = source.name WHERE position = (?) AND chess_id = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, movePositionDTO.getSource());

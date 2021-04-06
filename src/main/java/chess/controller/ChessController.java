@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import chess.ChessResponse;
-import chess.domain.service.ChessService;
+import chess.service.ChessService;
 import spark.Request;
 import spark.Response;
 
@@ -57,7 +57,7 @@ public class ChessController {
     public String delete(Request req, Response res) throws SQLException {
         Long chessId = Long.valueOf(req.params(":chessId"));
         chessService.delete(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok( "저장된 체스를 삭제했습니다.");
+        ChessResponse chessResponse = new ChessResponse.Ok("저장된 체스를 삭제했습니다.");
         return GSON.toJson(chessResponse);
     }
 }

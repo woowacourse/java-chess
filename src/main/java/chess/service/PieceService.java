@@ -1,4 +1,4 @@
-package chess.domain.service;
+package chess.service;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -9,12 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import chess.ChessResponse;
+import chess.domain.board.Board;
+import chess.domain.board.BoardDTO;
+import chess.domain.board.ScoreDTO;
 import chess.domain.chess.Chess;
 import chess.domain.chess.ChessDTO;
 import chess.domain.piece.PieceDTO;
 import chess.domain.position.MovePosition;
 import chess.domain.position.MovePositionDTO;
-import chess.domain.service.PieceService;
+import chess.service.PieceService;
 import spark.Request;
 import spark.Response;
 
@@ -34,6 +37,14 @@ public class PieceController {
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok(GSON.toJson(pieceDTOS));
+        return GSON.toJson(chessResponse);
+    }
+
+    public String getScore(Request req, Response res) throws SQLException {
+        Long chessId = Long.valueOf(req.params(":chessId"));
+        final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
+        ScoreDTO scoreDTO = ScoreDTO.from(pieceDTOS);
+        ChessResponse chessResponse = new ChessResponse.Ok(scoreDTO);
         return GSON.toJson(chessResponse);
     }
 

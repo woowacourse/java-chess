@@ -1,4 +1,4 @@
-package chess.domain.service;
+package chess.service;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -38,6 +38,7 @@ public class ChessService {
     }
 
     public String findTurnById(Long chessId) throws SQLException {
-        return chessDAO.findTurnById(chessId).orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
+        return chessDAO.findTurnById(chessId)
+                       .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
     }
 }
