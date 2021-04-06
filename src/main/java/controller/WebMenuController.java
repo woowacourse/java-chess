@@ -1,30 +1,21 @@
 package controller;
 
 import domain.ChessGame;
-import dto.MenuDto;
 import domain.menu.Menu;
+import dto.ResultDto;
 
 public class WebMenuController {
-    String errorMessage = "";
-
-    public MenuDto run(String command, ChessGame game) {
+    public ResultDto run(String command, ChessGame game) {
         String menuButton = command.split(" ")[0];
         Menu menu = Menu.findMenu(menuButton);
         return startMenu(command, game, menu);
     }
 
-    private MenuDto startMenu(String command, ChessGame game, Menu menu) {
+    private ResultDto startMenu(String command, ChessGame game, Menu menu) {
         try {
-            MenuDto menuDto = menu.execute(command, game);
-            errorMessage = "";
-            return menuDto;
+            return new ResultDto(menu.executeWebMenu(command, game), "");
         } catch (RuntimeException e) {
-            errorMessage = e.getMessage();
+            return new ResultDto(null, e.getMessage());
         }
-        return null;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
     }
 }

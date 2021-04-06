@@ -1,8 +1,9 @@
 package domain.menu;
 
 import domain.ChessGame;
-import dto.MenuDto;
 import domain.exception.InvalidMenuException;
+import dto.MenuDto;
+import dto.PiecesDto;
 
 import java.util.Arrays;
 
@@ -29,6 +30,10 @@ public enum Menu {
 
     public MenuDto execute(String command, ChessGame game) {
         return strategy.execute(command, game);
+    }
+
+    public PiecesDto executeWebMenu(String command, ChessGame game) {
+        return strategy.executeWebCommand(command, game);
     }
 
     public boolean isEnd() {

@@ -20,7 +20,7 @@ class KnightTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), knight);
         }});
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of(endPosition))).isTrue();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPosition))).isTrue();
     }
 
     @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.(다른 색의 기물일 경우)")
@@ -32,8 +32,8 @@ class KnightTest {
             put(Position.of("d2"), Pawn.of("p", false));
             put(Position.of("f2"), Queen.of("q", false));
         }});
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of("d2"))).isTrue();
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of("f2"))).isTrue();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d2"))).isTrue();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f2"))).isTrue();
     }
 
     @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 없다.(같은 색의 기물일 경우)")
@@ -45,8 +45,8 @@ class KnightTest {
             put(Position.of("d2"), Pawn.of("P", true));
             put(Position.of("f2"), Queen.of("Q", true));
         }});
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of("d2"))).isFalse();
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of("f2"))).isFalse();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d2"))).isFalse();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f2"))).isFalse();
     }
 
     @DisplayName("knight의 이동 가능 범위 외의 위치가 목적지인 경우 이동할 수 없다.")
@@ -57,6 +57,6 @@ class KnightTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), knight);
         }});
-        assertThat(knight.canMove(board.getBoard(), Position.of("e4"), Position.of(endPoint))).isFalse();
+        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPoint))).isFalse();
     }
 }

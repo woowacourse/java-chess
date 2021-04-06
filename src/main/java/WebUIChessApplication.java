@@ -38,8 +38,7 @@ public class WebUIChessApplication {
         get("/startClick", (req, res) -> {
             String input = req.queryParams("roomNumber");
             if ("new".equals(input)) {
-                menuController.run("start", game);
-                ResultDto resultDto = getResultDto(game, menuController);
+                ResultDto resultDto = menuController.run("start", game);
                 gameDao.insertNewGameInfo(resultDto);
                 gameID = gameDao.lastGameID();
                 return render(new HashMap<String, Object>() {{
@@ -64,17 +63,19 @@ public class WebUIChessApplication {
             String source = jsonObject.get("source").getAsString();
             String target = jsonObject.get("target").getAsString();
             String command = "move " + source + " " + Position.of(target);
-            menuController.run(command, game);
-            if (!game.isEnd()) {
-                ResultDto resultDto = getResultDto(game, menuController);
-                gameDao.updateGame(resultDto, source, target, gameID);
+            ResultDto resultDto = menuController.run(command, game);
+            if (resultDto.isSuccess()) {
+                if (!resultDto.isEnd()) {
+                    gameDao.updateGame(resultDto, source, target, gameID);
+                    return gson.toJson(resultDto);
+                }
+                gameDao.deleteGame(gameID);
                 return gson.toJson(resultDto);
             }
-            gameDao.deleteGame(gameID);
-            return gson.toJson(getResultDto(game, menuController));
+            return gson.toJson(resultDto);
         });
 
-        get("/status", (req, res) -> gson.toJson(getResultDto(game, menuController)));
+        get("/status", (req, res) -> gson.toJson(menuController.run("status", game)));
     }
 
     private static Map<Position, Piece> convertPiecesDtoToPieces(PiecesDto piecesDto) {
@@ -88,9 +89,9 @@ public class WebUIChessApplication {
     }
 
     private static ResultDto getResultDto(ChessGame game, WebMenuController menuController) {
-        return new ResultDto(new PiecesDto(game.getBoard().getBoard(),
+        return new ResultDto(new PiecesDto(game.getBoard().getPieceMap(),
                 new StatusDto(game.blackScore(), game.whiteScore()),
-                game.isEnd(), game.getTurn()), menuController.getErrorMessage());
+                game.isEnd(), game.getTurn()), "");
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

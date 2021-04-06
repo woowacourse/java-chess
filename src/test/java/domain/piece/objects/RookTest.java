@@ -21,7 +21,7 @@ class RookTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d5"), rook);
         }});
-        assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of(endPosition))).isTrue();
+        assertThat(rook.canMove(board.getPieceMap(), Position.of("d5"), Position.of(endPosition))).isTrue();
     }
 
     @DisplayName("룩이 이동하려는 위치에 같은 편 말이 있는 경우 이동할 수 없다.")
@@ -32,7 +32,7 @@ class RookTest {
             put(Position.of("d6"), rook);
             put(Position.of("d7"), Queen.of("Q", true));
         }});
-        assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of("d7"))).isFalse();
+        assertThat(rook.canMove(board.getPieceMap(), Position.of("d5"), Position.of("d7"))).isFalse();
     }
 
     @DisplayName("룩이 이동하려는 위치가 상하좌우 범위가 아니라면, 실패를 반환한다.")
@@ -42,8 +42,8 @@ class RookTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("d5"), rook);
         }});
-        assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of("e4"))).isFalse();
-        assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of("c6"))).isFalse();
+        assertThat(rook.canMove(board.getPieceMap(), Position.of("d5"), Position.of("e4"))).isFalse();
+        assertThat(rook.canMove(board.getPieceMap(), Position.of("d5"), Position.of("c6"))).isFalse();
     }
 
     @DisplayName("룩이 이동하려는 경로에 다른 말이 있으면, 실패를 반환한다.")
@@ -54,6 +54,6 @@ class RookTest {
             put(Position.of("d5"), rook);
             put(Position.of("e5"), Pawn.of("P", true));
         }});
-        assertThat(rook.canMove(board.getBoard(), Position.of("d5"), Position.of("f5"))).isFalse();
+        assertThat(rook.canMove(board.getPieceMap(), Position.of("d5"), Position.of("f5"))).isFalse();
     }
 }

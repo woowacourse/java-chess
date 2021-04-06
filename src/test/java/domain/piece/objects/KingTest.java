@@ -21,7 +21,7 @@ class KingTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), King.of("K", true));
         }});
-        assertThat(king.canMove(board.getBoard(), Position.of("e4"), Position.of(endPosition))).isTrue();
+        assertThat(king.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPosition))).isTrue();
     }
 
     @DisplayName("King은 상하좌우 모든 대각선 방향으로 1칸 이동할 수 있다.(목적지에 적의 기물이 있을 경우)")
@@ -33,8 +33,8 @@ class KingTest {
             put(Position.of("f4"), Pawn.of("p", false));
             put(Position.of("d3"), Pawn.of("p", false));
         }});
-        assertThat(king.canMove(board.getBoard(), Position.of("e4"), Position.of("f4"))).isTrue();
-        assertThat(king.canMove(board.getBoard(), Position.of("e4"), Position.of("d3"))).isTrue();
+        assertThat(king.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f4"))).isTrue();
+        assertThat(king.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d3"))).isTrue();
     }
 
     @DisplayName("같은 편 말이 존재하는 위치로 이동할 수 없다.")
@@ -46,7 +46,7 @@ class KingTest {
             put(Position.of("f4"), Pawn.of("P", true));
             put(Position.of("d3"), Pawn.of("P", true));
         }});
-        assertThat(king.canMove(board.getBoard(), Position.of("e4"), Position.of("f4"))).isFalse();
-        assertThat(king.canMove(board.getBoard(), Position.of("e4"), Position.of("d3"))).isFalse();
+        assertThat(king.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f4"))).isFalse();
+        assertThat(king.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d3"))).isFalse();
     }
 }

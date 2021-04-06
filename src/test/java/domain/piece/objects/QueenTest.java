@@ -21,7 +21,7 @@ class QueenTest {
             put(Position.of("e4"), queen);
         }});
 
-        assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of(endPosition))).isTrue();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPosition))).isTrue();
     }
 
     @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.(적 기물이 있는 경우)")
@@ -32,7 +32,7 @@ class QueenTest {
             put(Position.of("e4"), queen);
             put(Position.of("e2"), Queen.of("q", false));
         }});
-        assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of("e2"))).isTrue();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e4"), Position.of("e2"))).isTrue();
     }
 
     @DisplayName("Queen은 전후좌우, 대각선으로 움직일 수 없다.(같은 색의 기물이 있는 경우)")
@@ -43,7 +43,7 @@ class QueenTest {
             put(Position.of("e5"), queen);
             put(Position.of("g7"), Pawn.of("P", true));
         }});
-        assertThat(queen.canMove(board.getBoard(), Position.of("e5"), Position.of("g7"))).isFalse();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e5"), Position.of("g7"))).isFalse();
     }
 
     @DisplayName("Queen은 전후좌우, 대각선 이외의 위치로 움직일 수 없다.")
@@ -54,7 +54,7 @@ class QueenTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), queen);
         }});
-        assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of(endPosition))).isFalse();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPosition))).isFalse();
     }
 
     @DisplayName("Queen이 이동하려는 경로에 다른 말이 있으면, 실패를 반환한다.")
@@ -66,7 +66,7 @@ class QueenTest {
             put(Position.of("e5"), Pawn.of("P", true));
             put(Position.of("f3"), Pawn.of("p", false));
         }});
-        assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of("e6"))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.of("e4"), Position.of("g2"))).isFalse();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e4"), Position.of("e6"))).isFalse();
+        assertThat(queen.canMove(board.getPieceMap(), Position.of("e4"), Position.of("g2"))).isFalse();
     }
 }

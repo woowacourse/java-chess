@@ -18,7 +18,7 @@ public class Running extends Started {
 
     private State gameStateByKing(Piece endPiece) {
         if (board.isKingDead(endPiece)) {
-            return new Finished(board.getBoard());
+            return new Finished(board.getPieceMap());
         }
         return this;
     }
@@ -34,7 +34,7 @@ public class Running extends Started {
 
     @Override
     public State finish() {
-        return new Finished(board.getBoard());
+        return new Finished(board.getPieceMap());
     }
 
     @Override

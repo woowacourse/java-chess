@@ -18,27 +18,27 @@ import static domain.piece.Color.BLACK;
 import static domain.piece.Color.WHITE;
 
 public class Board {
-    private Map<Position, Piece> board;
+    private Map<Position, Piece> pieceMap;
 
     public Board(Map<Position, Piece> pieces) {
-        board = new HashMap<>(pieces);
+        pieceMap = new HashMap<>(pieces);
     }
 
     public void move(Position start, Position end) {
-        Piece piece = board.get(start);
-        if (!piece.canMove(getBoard(), start, end)) {
+        Piece piece = pieceMap.get(start);
+        if (!piece.canMove(getPieceMap(), start, end)) {
             throw new PieceCannotMoveException(piece.getName());
         }
-        board.remove(start);
-        board.put(end, piece);
+        pieceMap.remove(start);
+        pieceMap.put(end, piece);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+    public Map<Position, Piece> getPieceMap() {
+        return Collections.unmodifiableMap(pieceMap);
     }
 
     public Piece getPiece(Position position) {
-        return board.getOrDefault(position, Empty.create());
+        return pieceMap.getOrDefault(position, Empty.create());
     }
 
     public void checkMovable(Position start, Position end, boolean color) {
@@ -67,7 +67,7 @@ public class Board {
     }
 
     public Map<Position, Piece> getTeam(boolean color) {
-        return board.entrySet().stream()
+        return pieceMap.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
     }

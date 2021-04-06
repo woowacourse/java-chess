@@ -28,4 +28,8 @@ public class ResultDto {
     public String getErrorMessage() {
         return errorMessage;
     }
+
+    public boolean isEnd() {
+        return piecesDto.isEnd();
+    }
 }
