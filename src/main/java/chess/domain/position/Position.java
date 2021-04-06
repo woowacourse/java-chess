@@ -11,7 +11,7 @@ public class Position {
     public static final int POSITION_FORMAT_LENGTH = 2;
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
-    public static final Pattern positionPattern = Pattern.compile("([a-h][1-8])");
+    public static final Pattern POSITION_PATTERN = Pattern.compile("([a-h][1-8])");
 
     private final File file;
     private final Rank rank;
@@ -28,7 +28,7 @@ public class Position {
     public static Position of(String position) {
         List<String> splitPosition = Arrays.asList(position.split(""));
 
-        if (splitPosition.size() != POSITION_FORMAT_LENGTH || !positionPattern.matcher(position).find()) {
+        if (splitPosition.size() != POSITION_FORMAT_LENGTH || !POSITION_PATTERN.matcher(position).find()) {
             throw new DomainException("위치 형식에 맞는 입력이 아닙니다.");
         }
         File file = File.from(splitPosition.get(FILE_INDEX));
