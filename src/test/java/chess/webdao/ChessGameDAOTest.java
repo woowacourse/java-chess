@@ -1,6 +1,7 @@
 package chess.webdao;
 
 import chess.domain.ChessGame;
+import chess.domain.Position;
 import chess.domain.team.Team;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ChessGameDAOTest {
     @Test
-    public void connection() {
+    public void connection() throws SQLException {
         final ChessGameDAO chessGameDAO = new ChessGameDAO();
         Connection con = chessGameDAO.getConnection();
         assertNotNull(con);
+        con.close();
     }
 
     @Test
@@ -30,6 +32,14 @@ public class ChessGameDAOTest {
         final ChessGameDAO chessGameDAO = new ChessGameDAO();
         final ChessGame chessGame = chessGameDAO.readChessGame();
         assertThat(chessGame.isPlaying()).isTrue();
+    }
+
+    @Test
+    public void updateChessGameDB() throws SQLException {
+        final ChessGameDAO chessGameDAO = new ChessGameDAO();
+        final ChessGame chessGame = chessGameDAO.readChessGame();
+        chessGame.move(Position.of("e2"), Position.of("e4"));
+        chessGameDAO.updateChessGame(chessGame, "black");
     }
 
     @Test
