@@ -2,7 +2,6 @@ package domain;
 
 import domain.piece.objects.Piece;
 import domain.piece.position.Position;
-import domain.score.Score;
 import domain.state.Running;
 import domain.state.State;
 import domain.state.Wait;
@@ -12,6 +11,10 @@ import java.util.Map;
 
 public class ChessGame {
     private State state;
+
+    public ChessGame(State state) {
+        this.state = state;
+    }
 
     public ChessGame() {
         state = new Wait(new HashMap<>());
