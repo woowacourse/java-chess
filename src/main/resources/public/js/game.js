@@ -18,34 +18,27 @@ function getFetch(url) {
 }
 
 function postFetchMove(url) {
-    return fetch(url, {
-        method: 'post',
-        headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            "roomId": $roomId,
-            "target": $target,
-            "destination": $destination
-        })
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-    });
+    return postFetch(url, JSON.stringify({
+        "roomId": $roomId,
+        "target": $target,
+        "destination": $destination
+    }));
 }
 
-async function postFetchPath(url) {
+function postFetchPath(url) {
+    return postFetch(url, JSON.stringify({
+        "target": $target,
+    }));
+}
+
+function postFetch(url, bodyData) {
     return fetch(url, {
         method: 'post',
         headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({
-            "target": $target,
-        })
+        body: bodyData
     }).then(response => {
         if (response.ok) {
             return response.json();
@@ -195,9 +188,9 @@ function changeTurn(team) {
 
 async function clearRoom() {
     clearBoard();
-    await getFetch("clear/" + $roomId).then(data => {
-        window.location.href = data;
-    })
+    window.location.href = "/clear/" + $roomId;
+    // await getFetch("clear/" + $roomId).then(data => {
+    // })
 }
 
 document.addEventListener("click", createMoveCommand);
