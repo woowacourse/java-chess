@@ -1,0 +1,81 @@
+@font-face {
+    src: url("../font/BMHANNAProOTF.otf");
+    font-family: "hanna";
+}
+
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title p {
+    font-family: "hanna";
+    font-size: 100px;
+}
+
+footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#rooms {
+    background-color: burlywood;
+    width: 85%;
+    height: 250px;
+    overflow: auto;
+    margin-right: 60px;
+}
+
+#result {
+    background-color: burlywood;
+    width: 40%;
+    height: 250px;
+    overflow: auto;
+}
+
+#rooms table, #result table {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tbody tr {
+    height: 60px;
+}
+
+th {
+    padding: 10px;
+}
+
+th, td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.fixed {
+    background-color: burlywood;
+    position: sticky;
+    top: 0;
+}
+
+#create-button {
+    margin-top: 10px;
+    width: 85%;
+    text-align: end;
+}
+
+#right {
+    width: 100%;
+}

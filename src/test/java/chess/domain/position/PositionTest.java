@@ -28,10 +28,10 @@ class PositionTest {
     @Test
     @DisplayName("팀에따른 pawn의 초기위치 확인")
     void isInitPawnPositionByTeam() {
-        Pawn whitePawn = new Pawn(Team.WHITE, new Position(6, 0));
+        Pawn whitePawn = Pawn.white(0);
         assertTrue(whitePawn.position().isSameInitPawnPositionByTeam(Team.WHITE));
 
-        Pawn blackPawn = new Pawn(Team.BLACK, new Position(1, 0));
+        Pawn blackPawn = Pawn.black(0);
         assertTrue(blackPawn.position().isSameInitPawnPositionByTeam(Team.BLACK));
     }
 

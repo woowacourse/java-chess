@@ -1,9 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Command;
 import chess.domain.Team;
 import chess.exception.StartCommandException;
-import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public final class ChessGameController {
 
-    public final void start(final ChessGame chessGame) {
+    public void start(final ChessGame chessGame) {
         OutputView.printStartMessage();
         checkInitialCommand(chessGame);
         play(chessGame);

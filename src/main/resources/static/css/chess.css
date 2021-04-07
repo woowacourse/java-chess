@@ -1,0 +1,149 @@
+@font-face {
+    src: url("../font/BMHANNAProOTF.otf");
+    font-family: "hanna";
+}
+
+body {
+    z-index: 1;
+}
+
+body::after {
+    content: "";
+    background-image: url("../img/background.jpg");
+    opacity: 0.5;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+
+}
+
+#total {
+    display: flex;
+    flex-direction: column;
+}
+
+#top {
+    text-align: center;
+    height: 20%;
+}
+
+#top p {
+    font-family: "hanna";
+    font-size: 30px;
+}
+
+#middle {
+    display: flex;
+    height: 65%;
+    margin-left: 15%;
+}
+
+#chessboard {
+    width: 100%;
+    text-align: center;
+}
+
+#chessboard img {
+    width: 65%;
+    height: auto;
+}
+
+#status {
+    margin-left: 10%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+#status .score {
+    justify-content: center;
+    height: 40%;
+    display: flex;
+}
+
+#status #turn {
+    justify-content: center;
+    height: 20%;
+    display: flex;
+    margin-bottom: 15%;
+}
+
+#status #bottom {
+    height: 15%;
+    text-align: center;
+}
+
+#bottom form {
+    display: inline;
+}
+
+#chessboard-box {
+    background: url("../img/chessboard.jpg") no-repeat;
+    background-size: cover;
+    display: flex;
+    text-align: center;
+}
+
+#chessboard {
+    display: grid;
+    margin: 60px;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px 60px 60px 60px 60px 60px;
+}
+
+.grid-item {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    text-align: center;
+}
+
+#chessboard img {
+    width: 60px;
+    height: 60px;
+}
+
+#turn img {
+    width: 100px;
+    height: 100px;
+}
+
+.score img {
+    width: 100px;
+    height: 150px;
+}
+
+.score p {
+    margin-top: 0;
+}
+
+.nickname {
+    margin-bottom: 0;
+}
+
+.selected {
+    background-color: yellow;
+    opacity: 0.5;
+}
+
+.movable {
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    opacity: 0.4;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#white-score, #black-score {
+    margin-bottom: 50px;
+}

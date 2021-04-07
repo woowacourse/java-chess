@@ -2,9 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Woowa Kingdom Chess</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        #center {
+            display: flex;
+            justify-content: center;
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div id="main">
+    <div id="title">
+        <p>Woowa Kingdom Chess</p>
+        <p style="font-size: 30px; color: red">{{error}}</p>
+    </div>
+    <div id="center">
+        <div id="right">
+            <div id="rooms">
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="fixed">No.</th>
+                        <th class="fixed">방 이름</th>
+                        <th class="fixed">black 팀</th>
+                        <th class="fixed">white 팀</th>
+                        <th class="fixed">상태</th>
+                        <th class="fixed">입장</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#rooms}}
+                    <tr>
+                        <td class="room-no">{{@index}}</td>
+                        <td>{{title}}</td>
+                        <td>{{blackUser}}</td>
+                        <td>{{whiteUser}}</td>
+                        <td>{{status}}</td>
+                        <td>
+                            {{#if playing}}
+                            <button onclick="location.href = '/enter?id={{id}}'">입장하기</button>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/rooms}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="create-button">
+                <input type="button" value="방 만들기" onclick="createRoom()">
+            </div>
+        </div>
+        <div id="result">
+            <table>
+                <thead>
+                <tr>
+                    <th class="fixed">No.</th>
+                    <th class="fixed">닉네임</th>
+                    <th class="fixed">승</th>
+                    <th class="fixed">패</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#results}}
+                <tr>
+                    <td class="user-no">{{@index}}</td>
+                    <td>{{nickname}}</td>
+                    <td>{{winCount}}</td>
+                    <td>{{loseCount}}</td>
+                </tr>
+                {{/results}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer>
+    image source:
+    <cite><a href="https://kr.freepik.com/vectors/banner">kr.freepik.com</a></cite>
+</footer>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

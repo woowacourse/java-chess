@@ -37,48 +37,48 @@ public final class BoardFactory {
     private void pawnInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.pawnInitCols();
         cols.forEach((col) -> {
-            black.add(Pawn.of(Team.BLACK, col));
-            white.add(Pawn.of(Team.WHITE, col));
+            black.add(Pawn.black(col));
+            white.add(Pawn.white(col));
         });
     }
 
     private void rookInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.rookInitCols();
         cols.forEach((col) -> {
-            black.add(Rook.of(Team.BLACK, col));
-            white.add(Rook.of(Team.WHITE, col));
+            black.add(Rook.black(col));
+            white.add(Rook.white(col));
         });
     }
 
     private void knightInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.knightInitCols();
         cols.forEach((col) -> {
-            black.add(Knight.of(Team.BLACK, col));
-            white.add(Knight.of(Team.WHITE, col));
+            black.add(Knight.black(col));
+            white.add(Knight.white(col));
         });
     }
 
     private void bishopInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.bishopInitCols();
         cols.forEach((col) -> {
-            black.add(Bishop.of(Team.BLACK, col));
-            white.add(Bishop.of(Team.WHITE, col));
+            black.add(Bishop.black(col));
+            white.add(Bishop.white(col));
         });
     }
 
     private void queenInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.queenInitCols();
         cols.forEach((col) -> {
-            black.add(Queen.of(Team.BLACK, col));
-            white.add(Queen.of(Team.WHITE, col));
+            black.add(Queen.black(col));
+            white.add(Queen.white(col));
         });
     }
 
     private void kingInitialize(final List<Piece> black, final List<Piece> white) {
         List<Integer> cols = Col.kingInitCols();
         cols.forEach((col) -> {
-            black.add(King.of(Team.BLACK, col));
-            white.add(King.of(Team.WHITE, col));
+            black.add(King.black(col));
+            white.add(King.white(col));
         });
     }
 

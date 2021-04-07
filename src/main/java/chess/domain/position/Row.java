@@ -29,4 +29,12 @@ public enum Row {
                 .orElseThrow(InvalidCoordinateException::new)
                 .location;
     }
+
+    public static String initial(final int location) {
+        return Arrays.stream(Row.values())
+                .filter(value -> value.location == location)
+                .findFirst()
+                .orElseThrow(InvalidCoordinateException::new)
+                .row;
+    }
 }

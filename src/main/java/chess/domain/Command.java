@@ -1,6 +1,4 @@
-package chess.view;
-
-import chess.domain.ChessGame;
+package chess.domain;
 
 import java.util.Arrays;
 import java.util.function.Consumer;

@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.moving.KnightMoving;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.exception.WrongInitPositionException;
@@ -34,7 +35,7 @@ class KnightTest {
     @DisplayName("Knight가 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")
     @ValueSource(strings = {"b", "g"})
     void blackTeamPositionCheck(String col) {
-        Knight knight = Knight.of(Team.BLACK, Col.location(col));
+        Knight knight = Knight.black(Col.location(col));
         Position KnightPosition = knight.position();
 
         assertThat(KnightPosition.row()).isEqualTo(0);
@@ -45,7 +46,7 @@ class KnightTest {
     @DisplayName("Knight가 White 팀으로 생성되면, row의 실제 좌표 위치는 7이다.")
     @ValueSource(strings = {"b", "g"})
     void whiteTeamPositionCheck(String col) {
-        Knight knight = Knight.of(Team.WHITE, Col.location(col));
+        Knight knight = Knight.white(Col.location(col));
         Position KnightPosition = knight.position();
 
         assertThat(KnightPosition.row()).isEqualTo(7);
@@ -56,31 +57,31 @@ class KnightTest {
     @DisplayName("Knight 초기 col 위치가 b혹은 g가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "c", "d", "e", "f", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Knight.of(Team.BLACK, Col.location(col))).isInstanceOf(WrongInitPositionException.class);
+        assertThatThrownBy(() -> Knight.white(Col.location(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test
-    @DisplayName("Knight가 Black 팀으로 생성되면, initial은 대문자 N이다.")
+    @DisplayName("Knight가 Black 팀으로 생성되면, initial은 N이다.")
     void blackTeamInitialCheck() {
-        Knight knight = Knight.of(Team.BLACK, 1);
+        Knight knight = Knight.black(1);
         assertThat(knight.initial()).isEqualTo("N");
     }
 
     @Test
-    @DisplayName("Knight가 White 팀으로 생성되면, initial은 소문자 n이다.")
+    @DisplayName("Knight가 White 팀으로 생성되면, initial은 N이다.")
     void whiteTeamInitialCheck() {
-        Knight knight = Knight.of(Team.WHITE, 1);
-        assertThat(knight.initial()).isEqualTo("n");
+        Knight knight = Knight.white(1);
+        assertThat(knight.initial()).isEqualTo("N");
     }
 
     void set(final Knight knight) {
         Pieces blackTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.BLACK, crossBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightBlackTeamPawnPosition),
-                new Pawn(Team.BLACK, straightCrossBlackTeamPawnPosition)
+                new Pawn(crossBlackTeamPawnPosition),
+                new Pawn(straightBlackTeamPawnPosition),
+                new Pawn(straightCrossBlackTeamPawnPosition)
         ));
         Pieces whiteTeamPieces = new Pieces(Arrays.asList(
-                new Pawn(Team.WHITE, whiteTeamPawnPosition),
+                new Pawn(whiteTeamPawnPosition),
                 knight
         ));
         Map<Team, Pieces> boardMap = new HashMap<>();
@@ -92,10 +93,10 @@ class KnightTest {
     @Test
     @DisplayName("White팀 Knight가 board를 받으면, 갈 수 있는 위치를 반환한다.")
     void movablePositionsCheck() {
-        Knight knight = new Knight(Team.WHITE, new Position(1, 1));
+        Knight knight = new Knight(new Position(1, 1));
         set(knight);
 
-        List<Position> movablePositions = knight.allMovablePositions(board);
+        List<Position> movablePositions = new KnightMoving().allMovablePositions(knight, board);
 
         assertTrue(movablePositions.contains(straightCrossBlackTeamPawnPosition));
         assertTrue(movablePositions.contains(straightCrossBlankPosition));
