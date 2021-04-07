@@ -12,8 +12,16 @@ public class Bishop extends Piece {
         super(location, team);
     }
 
+    private Bishop(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Bishop of(final Location location, final Team team) {
         return new Bishop(location, team);
+    }
+
+    public static Bishop of(long id, long roomId, Team team, Location location) {
+        return new Bishop(id, roomId, team, location);
     }
 
     @Override

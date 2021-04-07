@@ -12,8 +12,16 @@ public class King extends Piece {
         super(location, team);
     }
 
+    private King(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static King of(final Location location, final Team team) {
         return new King(location, team);
+    }
+
+    public static King of(long id, long roomId, Team team, Location location) {
+        return new King(id, roomId, team, location);
     }
 
     @Override

@@ -12,8 +12,16 @@ public class Rook extends Piece {
         super(location, team);
     }
 
+    private Rook(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Rook of(final Location location, final Team team) {
         return new Rook(location, team);
+    }
+
+    public static Rook of(long id, long roomId, Team team, Location location) {
+        return new Rook(id, roomId, team, location);
     }
 
     @Override

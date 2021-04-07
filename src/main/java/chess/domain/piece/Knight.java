@@ -14,8 +14,16 @@ public class Knight extends Piece {
         super(location, team);
     }
 
+    private Knight(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Knight of(final Location location, final Team team) {
         return new Knight(location, team);
+    }
+
+    public static Knight of(long id, long roomId, Team team, Location location) {
+        return new Knight(id, roomId, team, location);
     }
 
     @Override

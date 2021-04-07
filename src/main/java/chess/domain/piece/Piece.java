@@ -10,12 +10,22 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    private static final int NON_ENTITY_SIGNATURE = -1;
+
+    protected final long id;
+    protected final long roomId;
     protected final Team team;
     protected Location location;
 
-    protected Piece(final Location location, final Team team) {
-        this.location = location;
+    protected Piece(Location location, Team team) {
+        this(NON_ENTITY_SIGNATURE, NON_ENTITY_SIGNATURE, team, location);
+    }
+
+    protected Piece(long id, long roomId, Team team, Location location) {
+        this.id = id;
+        this.roomId = roomId;
         this.team = team;
+        this.location = location;
     }
 
     public void moveTo(Location target, Board board) {

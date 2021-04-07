@@ -18,8 +18,16 @@ public class Pawn extends Piece {
         super(location, team);
     }
 
+    private Pawn(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Pawn of(Location location, Team team) {
         return new Pawn(location, team);
+    }
+
+    public static Pawn of(long id, long roomId, Team team, Location location) {
+        return new Pawn(id, roomId, team, location);
     }
 
     @Override
