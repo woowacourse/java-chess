@@ -1,7 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Piece;
-import chess.dto.PieceDto;
+import chess.domain.piece.PieceFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,8 +29,8 @@ public class PieceDao {
         }
     }
 
-    public List<PieceDto> findAllPiecesByChessGameId(int chessGameId) {
-        List<PieceDto> pieces = new ArrayList<>();
+    public List<Piece> findAllPiecesByChessGameId(int chessGameId) {
+        List<Piece> pieces = new ArrayList<>();
         try (Connection connection = dbManager.getConnection()) {
             String query = "SELECT color, name, position FROM PIECE WHERE chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -38,9 +38,9 @@ public class PieceDao {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                PieceDto pieceDto = new PieceDto(rs.getString("color"),
+                Piece piece = PieceFactory.findByInfo(rs.getString("color"),
                         rs.getString("name"), rs.getString("position"));
-                pieces.add(pieceDto);
+                pieces.add(piece);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -8,12 +8,9 @@ import chess.domain.command.Command;
 import chess.domain.command.MoveOnCommand;
 import chess.domain.command.StartOnCommand;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import chess.dto.ChessGameStatusDto;
-import chess.dto.PieceDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessService {
@@ -54,28 +51,19 @@ public class ChessService {
 
     public ChessGame findChessGameById(int chessGameId) {
         ChessGameStatusDto chessGameStatusDto = chessGameDao.findChessGameStateById(chessGameId);
-        List<PieceDto> piecesInfos = pieceDao.findAllPiecesByChessGameId(chessGameId);
-        List<Piece> pieces = getPiecesByInfo(piecesInfos);
+        List<Piece> pieces = pieceDao.findAllPiecesByChessGameId(chessGameId);
         return ChessGameFactory.loadChessGameByInfo(pieces, chessGameStatusDto.getTurn(), chessGameStatusDto.isFinish());
     }
 
-    private List<Piece> getPiecesByInfo(List<PieceDto> piecesInfos) {
-        List<Piece> pieces = new ArrayList<>();
-        for (PieceDto pieceDto : piecesInfos) {
-            pieces.add(PieceFactory.findByInfo(pieceDto.getColor(), pieceDto.getName(), pieceDto.getPosition()));
-        }
-        return pieces;
-    }
-
     public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) {
-        chessGameDao.updateChessGameStateById(chessGameId, chessGame.turn(), !chessGame.runnable());
-        Piece sourcePiece = findPieceDtoByPosition(source, chessGame);
-        Piece targetPiece = findPieceDtoByPosition(target, chessGame);
+        chessGameDao.updateChessGameStateById(chessGameId, chessGame);
+        Piece sourcePiece = findPieceByPosition(source, chessGame);
+        Piece targetPiece = findPieceByPosition(target, chessGame);
         pieceDao.updatePiece(chessGameId, sourcePiece);
         pieceDao.updatePiece(chessGameId, targetPiece);
     }
 
-    private Piece findPieceDtoByPosition(String position, ChessGame chessGame) {
+    private Piece findPieceByPosition(String position, ChessGame chessGame) {
         return chessGame.getPiecesByAllPosition()
                 .stream()
                 .filter(piece -> piece.isSamePosition(Position.of(position)))

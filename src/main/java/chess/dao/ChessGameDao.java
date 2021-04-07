@@ -72,12 +72,12 @@ public class ChessGameDao {
         return null;
     }
 
-    public void updateChessGameStateById(int chessGameId, String turn, boolean isFinish) {
+    public void updateChessGameStateById(int chessGameId, ChessGame chessGame) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "UPDATE CHESS_GAME SET turn = ?, isFinish = ? WHERE chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, turn);
-            pstmt.setBoolean(2, isFinish);
+            pstmt.setString(1, chessGame.turn());
+            pstmt.setBoolean(2, !chessGame.runnable());
             pstmt.setInt(3, chessGameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
