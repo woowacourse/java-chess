@@ -1,6 +1,7 @@
 package chess;
 
 import static chess.web.view.RenderView.renderHtml;
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
@@ -32,28 +33,18 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
-            try {
-                Map<String, Object> model = new HashMap<>();
-                model.put("games", CHESS_GAME_DAO.findActiveGames());
-                return renderHtml(model, "/lobby.html");
-            } catch (SQLException e) {
-                res.status(400);
-                return e.getMessage();
-            }
+            Map<String, Object> model = new HashMap<>();
+            model.put("games", CHESS_GAME_DAO.findActiveGames());
+            return renderHtml(model, "/lobby.html");
         });
 
         post("/chess/new", (req, res) -> {
             ChessGame chessGame = ChessGame.initChessGame();
             chessGame.setName(req.queryParams("gameName"));
 
-            try {
-                String gameId = CHESS_GAME_DAO.addGame(chessGame);
-                res.redirect("/chess/game/" + gameId);
-                return res;
-            } catch (SQLException e) {
-                res.status(400);
-                return e.getMessage();
-            }
+            String gameId = CHESS_GAME_DAO.addGame(chessGame);
+            res.redirect("/chess/game/" + gameId);
+            return res;
         });
 
         get("/chess/game/:id", (req, res) -> {
@@ -66,47 +57,47 @@ public class WebUIChessApplication {
         });
 
         get("/chess/game/:id/board", (req, res) -> {
-            try {
-                ChessGame chessGame = replayedChessGame(req);
-                String boardHtml = renderHtml(new BoardDto(chessGame).getResult(), "/board.html");
+            ChessGame chessGame = replayedChessGame(req);
+            String boardHtml = renderHtml(new BoardDto(chessGame).getResult(), "/board.html");
 
-                Map<Object, Object> model = new HashMap<>();
-                model.put("board", boardHtml);
-                model.put("currentTurn", chessGame.currentTurn());
-                return GSON.toJson(model);
-            } catch (SQLException e) {
-                res.status(400);
-                return e.getMessage();
-            }
+            Map<Object, Object> model = new HashMap<>();
+            model.put("board", boardHtml);
+            model.put("currentTurn", chessGame.currentTurn());
+            return GSON.toJson(model);
         });
 
         post("/chess/game/:id/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            try {
-                ChessGame chessGame = replayedChessGame(req);
-                String boardHtml = renderHtml(movePiece(chessGame, source, target), "/board.html");
+            ChessGame chessGame = replayedChessGame(req);
+            String boardHtml = renderHtml(movePiece(chessGame, source, target), "/board.html");
 
-                Map<Object, Object> model = new HashMap<>();
-                model.put("board", boardHtml);
-                model.put("currentTurn", chessGame.currentTurn());
+            Map<Object, Object> model = new HashMap<>();
+            model.put("board", boardHtml);
+            model.put("currentTurn", chessGame.currentTurn());
 
-                if (chessGame.isGameSet()) {
-                    CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
-                    model.put("isGameSet", Boolean.TRUE);
+            if (chessGame.isGameSet()) {
+                CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
+                model.put("isGameSet", Boolean.TRUE);
 
-                    model.put("winner", chessGame.winner().toString());
-                    Score score = chessGame.score();
-                    model.put("blackScore", score.blackScore());
-                    model.put("whiteScore", score.whiteScore());
-                }
-
-                return GSON.toJson(model);
-            } catch (ChessException | SQLException e) {
-                res.status(400);
-                return e.getMessage();
+                model.put("winner", chessGame.winner().toString());
+                Score score = chessGame.score();
+                model.put("blackScore", score.blackScore());
+                model.put("whiteScore", score.whiteScore());
             }
+
+            return GSON.toJson(model);
+        });
+
+        exception(ChessException.class, (e, request, response) -> {
+            response.status(400);
+            response.body(e.getMessage());
+        });
+
+        exception(SQLException.class, (e, request, response) -> {
+            response.status(400);
+            response.body("에러 발생");
         });
     }
 
