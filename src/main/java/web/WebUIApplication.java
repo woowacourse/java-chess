@@ -11,12 +11,12 @@ import chess.domain.game.state.BlackWin;
 import chess.domain.game.state.State;
 import chess.domain.game.state.WhiteWin;
 import chess.domain.piece.Piece;
-import web.dao.ChessGameDao;
-import web.dao.RoomDao;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import web.service.ChessGameService;
+import web.service.RoomService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +30,14 @@ public class WebUIApplication {
 
         ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
         Commands commands = Commands.initCommands(chessGame);
-        ChessGameDao chessGameDao = new ChessGameDao();
-        RoomDao roomDao = new RoomDao();
+        ChessGameService chessGameService = new ChessGameService();
+        RoomService roomService = new RoomService();
         JSONParser jsonParser = new JSONParser();
 
         post("/start", "application/json", (req, res) -> {
             JSONObject jsonObj = (JSONObject) jsonParser.parse(req.body());
             int roomId = Integer.parseInt((String) jsonObj.get("roomId"));
-            ChessGame loadChessGame = chessGameDao.findByRoomId(roomId);
+            ChessGame loadChessGame = chessGameService.chessGameByRoomId(roomId);
             chessGame.load(loadChessGame);
 
             JSONObject jsonObject = new JSONObject();
@@ -68,7 +68,7 @@ public class WebUIApplication {
             String webCommand = (String) jsonObj.get("command");
             Command command = commands.matchedCommand(webCommand);
             command.execution(webCommand);
-            chessGameDao.addCommand(webCommand, roomId);
+            chessGameService.addCommand(webCommand, roomId);
 
             JSONObject jsonObject = new JSONObject();
             Map<Position, Piece> board = chessGame.board();
@@ -90,7 +90,7 @@ public class WebUIApplication {
         });
 
         get("/rooms", (req, res) -> {
-            List<Integer> roomIds = roomDao.findRoomIds();
+            List<Integer> roomIds = roomService.roomIdS();
             if (roomIds.isEmpty()) {
                 throw new IllegalStateException();
             }
@@ -110,7 +110,7 @@ public class WebUIApplication {
         });
 
         get("/newRoomId", (req, res) -> {
-            int roomId = roomDao.newRoomId();
+            int roomId = roomService.newRoomId();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("roomId", roomId);
             return jsonObject.toJSONString();

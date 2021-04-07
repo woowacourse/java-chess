@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDao {
-    public static final int NO_ROOM_NUMBER = 0;
+    private static final int NO_ROOM_NUMBER = 0;
 
     public Connection getConnection() {
         Connection con = null;

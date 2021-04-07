@@ -1,12 +1,8 @@
 package web.dao;
 
-import chess.domain.board.Board;
-import chess.domain.board.InitBoardGenerator;
-import chess.domain.command.Command;
-import chess.domain.command.Commands;
-import chess.domain.game.ChessGame;
-
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessGameDao {
     public Connection getConnection() {
@@ -45,10 +41,8 @@ public class ChessGameDao {
         }
     }
 
-    public ChessGame findByRoomId(int roomId) throws SQLException {
-        ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
-        chessGame.start();
-        Commands commands = Commands.initCommands(chessGame);
+    public List<String> findByRoomId(int roomId) throws SQLException {
+        List<String> moves = new ArrayList<>();
 
         try (Connection con = getConnection()) {
             String query = "SELECT command FROM chessGame WHERE room_id = ? ORDER BY command_id";
@@ -57,12 +51,10 @@ public class ChessGameDao {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                String move = rs.getString("command");
-                Command command = commands.matchedCommand(move);
-                command.execution(move);
+                moves.add(rs.getString("command"));
             }
         }
 
-        return chessGame;
+        return moves;
     }
 }
