@@ -41,7 +41,7 @@ public class WebChessController {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             if (req.queryParams("newGame").equals("yes")) {
-                addRoomToDb(req.queryParams("roomName"));
+                roomDao.addRoom(req.queryParams("roomName"), PieceColor.WHITE);
                 rooms.addRoom(req.queryParams("roomName"));
             }
             return render(model, "game.html");
@@ -50,6 +50,7 @@ public class WebChessController {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Game currentGame = rooms.findGame(req.queryParams("roomName"));
+            currentGame.init();
             model.put("squares", squareDtos(currentGame.getBoard()));
             model.put("turn", currentGame.turnColor().getName());
             return GSON.toJson(model);
@@ -65,30 +66,22 @@ public class WebChessController {
 
         post("/move", (req, res) -> {
             Game currentGame = rooms.findGame(req.queryParams("roomName"));
-            try {
-                isStart(currentGame);
-                currentGame.move(req.queryParams("source"), req.queryParams("target"));
-                if (currentGame.isEnd()) {
-                    backupBoardDao.deleteExistingBoard(req.queryParams("roomName"));
-                    roomDao.deleteRoom(req.queryParams("roomName"));
-                    return req.queryParams("source") + " " + req.queryParams("target") + " " + currentGame.winnerColor().getSymbol();
-                }
-            } catch (RuntimeException e) {
-                res.status(400);
-                return e.getMessage();
+            isStart(currentGame);
+            currentGame.move(req.queryParams("source"), req.queryParams("target"));
+            if (currentGame.isEnd()) {
+                backupBoardDao.deleteExistingBoard(req.queryParams("roomName"));
+                roomDao.deleteRoom(req.queryParams("roomName"));
+                return req.queryParams("source") + " " +
+                    req.queryParams("target") + " " + currentGame.winnerColor().getSymbol();
             }
 
-            return req.queryParams("source") + " " + req.queryParams("target") + " " + currentGame.turnColor().getName();
+            return req.queryParams("source") + " " +
+                req.queryParams("target") + " " + currentGame.turnColor().getName();
         });
 
         post("/status", (req, res) -> {
             Game currentGame = rooms.findGame(req.queryParams("roomName"));
-            try {
-                return currentGame.computeWhitePoint() + " " + currentGame.computeBlackPoint();
-            } catch (RuntimeException e) {
-                res.status(400);
-                return e.getMessage();
-            }
+            return currentGame.computeWhitePoint() + " " + currentGame.computeBlackPoint();
         });
 
         post("/end", (req, res) -> {
@@ -97,13 +90,13 @@ public class WebChessController {
                 currentGame.getBoard(),
                 currentGame.turnColor()
             );
-
             return "";
         });
-    }
 
-    private void addRoomToDb(String room) {
-        roomDao.addRoom(room, PieceColor.WHITE);
+        exception(RuntimeException.class, (exception, request, response) -> {
+            response.status(400);
+            response.body(exception.getMessage());
+        });
     }
 
     private static void isStart(Game game) {

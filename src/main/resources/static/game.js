@@ -17,7 +17,8 @@ function startNewGame() {
             roomName: getParameterByName('roomName')
         },
         dataType: "json",
-        success: setBoard
+        success: setBoard,
+        error: errorMessage
     });
 }
 
@@ -29,7 +30,8 @@ function continueGame() {
             roomName: getParameterByName('roomName')
         },
         dataType: "json",
-        success: setBoard
+        success: setBoard,
+        error: errorMessage
     });
 }
 

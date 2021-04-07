@@ -35,6 +35,14 @@ public class Game {
         return new Game(board, point, GameState.START, turnColor);
     }
 
+    public void init() {
+        InitializedBoard initializedBoard = new InitializedBoard();
+        this.board = new Board(initializedBoard.board());
+        this.point = new Point(this.board);
+        this.gameState = GameState.START;
+        this.turnColor = PieceColor.WHITE;
+    }
+
     public void end() {
         gameState = GameState.END;
     }
