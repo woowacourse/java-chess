@@ -1,5 +1,7 @@
 const $board = document.querySelector("#main");
 const $sidebar = document.querySelector("#menu-container");
+let $isPlaying = true;
+let $turnOwner = "WHITE";
 
 $board.addEventListener("mouseover", onSquare);
 $board.addEventListener("mouseout", outSquare);
@@ -99,12 +101,25 @@ function onclickSquare(event) {
                     $board.querySelector("#"+$target).appendChild($sourceImg);
                 }
                 removeMovablePath();
-                refreshScore();
+                chessScore();
+                if ($isPlaying) {
+                    state();
+                }
             })
             .catch(error => {
                 alert(error);
             })
-
+    } else if (!$selectSquare.querySelector(".piece")) {
+        console.log("빈칸 누르면 실행됐니?");
+        if ($selectSquare.classList.contains("movable")) {
+            return;
+        }
+        $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red.png");
+        setTimeout(invalidSquare, 1000, $source);
+    } else if (!$selectSquare.querySelector(".piece").classList.contains($turnOwner.toLowerCase())) {
+        console.log("턴이랑 타겟 말이 다르면 실행됐니?");
+        $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red-take.png");
+        setTimeout(invalidSquare, 1000, $source);
     } else {
         fetch('http://localhost:4567/game/path?source=' + $source)
             .then(data => {
@@ -135,6 +150,7 @@ function onclickSquare(event) {
                 }
             })
             .catch(error => {
+                console.log("에러 잡는곳에서 실행됐니?");
                 if ($selectSquare.classList.contains("movable")) {
                     return;
                 }
@@ -160,10 +176,11 @@ function removeMovablePath() {
 }
 
 function invalidSquare(id) {
-    $board.querySelector("#" + id).querySelector('.highlight').setAttribute("src", "../images/null.png");
+    $board.querySelector("#" + id).querySelector('.highlight')
+        .setAttribute("src", "../images/null.png");
 }
 
-function refreshScore() {
+function chessScore() {
     fetch("http://localhost:4567/game/status")
         .then(data => {
             if (!data.ok) {
@@ -179,5 +196,35 @@ function refreshScore() {
         })
         .catch(error => {
             alert(error);
+        })
+}
+
+function state() {
+    fetch("http://localhost:4567/game/state")
+        .then(data => {
+            if (!data.ok) {
+                throw new Error(data.status);
+            }
+            return data.json();
+        })
+        .then(state => {
+            if (!state.isPlaying) {
+                $isPlaying = state.isPlaying;
+                alert("게임이 종료됐습니다!");
+                document.querySelector("#turn-color").classList.add("hidden");
+                document.querySelector("#turn-number").classList.add("hidden");
+
+                const $winner = document.querySelector("#turn-color").innerHTML.toString();
+                if ($winner.includes("WHITE")) {
+                    document.querySelector("#winner").innerHTML = "WHITE 승리!!";
+                }
+                if ($winner.includes("BLACK")) {
+                    document.querySelector("#winner").innerHTML = "BLACK 승리!!";
+                }
+                return;
+            }
+            $turnOwner = state.turnOwner;
+            document.querySelector("#turn-color").innerHTML = "현재 턴 : " + state.turnOwner;
+            document.querySelector("#turn-number").innerHTML = "턴 횟수 : " + state.turnNumber;
         })
 }

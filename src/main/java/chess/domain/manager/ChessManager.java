@@ -10,8 +10,9 @@ public class ChessManager {
     private static final Owner FIRST_TURN = Owner.WHITE;
 
     private final Board board;
-    private Owner turn = FIRST_TURN;
+    private Owner turnOwner = FIRST_TURN;
     private boolean isPlaying = true;
+    private int turnNumber = 1;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
@@ -19,9 +20,10 @@ public class ChessManager {
 
     public void move(final Position source, final Position target) {
         validateSourcePiece(source);
-        validateTurn(source);
+        validateTurnOwner(source);
         board.move(source, target);
-        changeTurn();
+        increaseTurnNumber();
+        changeTurnOwner();
         checkCaughtKing();
     }
 
@@ -31,27 +33,33 @@ public class ChessManager {
         }
     }
 
-    private void validateTurn(final Position source) {
-        if (!board.isPositionSameOwner(source, turn)) {
-            throw new IllegalArgumentException("현재는 " + turn.name() + "플레이어의 턴입니다.");
+    private void validateTurnOwner(final Position source) {
+        if (!board.isPositionSameOwner(source, turnOwner)) {
+            throw new IllegalArgumentException("현재는 " + turnOwner.name() + "플레이어의 턴입니다.");
         }
     }
 
-    public void changeTurn() {
-        turn = turn.reverse();
+    public void changeTurnOwner() {
+        turnOwner = turnOwner.reverse();
     }
 
     private void checkCaughtKing() {
         if (isKingDead()) {
-            endGame();
+            gameEnd();
+        }
+    }
+
+    private void increaseTurnNumber() {
+        if (this.turnOwner.equals(Owner.BLACK)) {
+            this.turnNumber++;
         }
     }
 
     private boolean isKingDead() {
-        return !board.isKingAlive(this.turn);
+        return !board.isKingAlive(this.turnOwner);
     }
 
-    public void endGame() {
+    public void gameEnd() {
         isPlaying = false;
     }
 
@@ -60,7 +68,7 @@ public class ChessManager {
     }
 
     public void resetBoard() {
-        turn = FIRST_TURN;
+        turnOwner = FIRST_TURN;
         board.resetBoard();
     }
 
@@ -75,5 +83,13 @@ public class ChessManager {
 
     public Board getBoard() {
         return board;
+    }
+
+    public int turnNumber() {
+        return this.turnNumber;
+    }
+
+    public Owner turnOwner() {
+        return turnOwner;
     }
 }

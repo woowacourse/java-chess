@@ -9,6 +9,10 @@ body {
     height: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 #chessTitle {
     font-size: 4vw;
 }

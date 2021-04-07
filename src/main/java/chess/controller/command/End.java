@@ -25,7 +25,7 @@ public class End extends Executor {
 
     @Override
     public void execute() {
-        chessManager.endGame();
+        chessManager.gameEnd();
     }
 
     @Override

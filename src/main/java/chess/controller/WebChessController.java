@@ -33,4 +33,8 @@ public class WebChessController {
     public List<PieceResponseDto> boardInfo() {
         return chessService.boardInfo();
     }
+
+    public StateResponseDto gameState() {
+        return chessService.gameState();
+    }
 }

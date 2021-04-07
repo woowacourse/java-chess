@@ -42,6 +42,10 @@ public class WebUIChessApplication {
             return webChessController.movablePath(source).getPath();
         }, gson::toJson);
 
+        get("/game/state", (request, response) -> {
+            return webChessController.gameState();
+        }, gson::toJson);
+
         post("/game/move", (request, response) -> {
             MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
             webChessController.move(moveRequestDto);

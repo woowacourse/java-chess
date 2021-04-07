@@ -39,4 +39,8 @@ public class ChessService {
                         entry.getKey().getHorizontal().name().toLowerCase() + entry.getKey().getVerticalIndex()))
                 .collect(Collectors.toList());
     }
+
+    public StateResponseDto gameState() {
+        return StateResponseDto.toChessManager(chessManager);
+    }
 }
