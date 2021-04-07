@@ -11,8 +11,8 @@ public class ChessManager {
 
     private final Board board;
     private Owner turnOwner = FIRST_TURN;
-    private boolean isPlaying = true;
     private int turnNumber = 1;
+    private boolean isPlaying = true;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
