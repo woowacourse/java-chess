@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 import chess.domain.board.ChessBoard;
 import chess.domain.service.WebController;
 
+
 public class WebUIChessApplication {
 
 
@@ -20,9 +21,8 @@ public class WebUIChessApplication {
             post("/start", webController::start);
             post("/move", webController::move);
             post("/reset", webController::reset);
-//            post("/save", WebController::save);
             post("/load", webController::load);
-        } catch (Exception exception) {
+        } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
         }
 

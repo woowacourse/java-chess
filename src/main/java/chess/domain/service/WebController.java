@@ -33,7 +33,6 @@ public class WebController {
     public Object move(Request request, Response response) throws SQLException {
         MoveRequestDTO moveRequestDTO = gson.fromJson(request.body(), MoveRequestDTO.class);
         MoveResultDTO moveResultDTO = createMoveResultDTO(moveRequestDTO);
-
         return gson.toJson(moveResultDTO);
     }
 
@@ -50,6 +49,7 @@ public class WebController {
         } catch (IllegalArgumentException exception) {
             result = chessBoard.result();
             moveResultDTO = getMoveResultDTO(result, false);
+            ServiceView.printErrorMessage(exception);
         }
         if (!chessBoard.isPlaying()) {
             moveResultDTO.setWinner(result.getWinner());
