@@ -15,14 +15,14 @@ class NormalWhitePawnMoveConditionTest {
 
     @DisplayName("하얀 폰의 기본 움직임을 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         NormalWhitePawnMoveCondition condition = new NormalWhitePawnMoveCondition();
         Board board = new Board(Collections.singletonList(
                 WhitePawn.createWithCoordinate(7, 0)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
+        boolean rightActual = condition.isSatisfiedBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(6, 0));
-        boolean falseActual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
+        boolean falseActual = condition.isSatisfiedBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(5, 0));
 
         assertThat(rightActual).isTrue();
@@ -31,14 +31,14 @@ class NormalWhitePawnMoveConditionTest {
 
     @DisplayName("하얀 폰의 이동 경로에 장애물이 있는지 확인")
     @Test
-    void isSatisfyBy_false() {
+    void isSatisfiedBy_false() {
         NormalWhitePawnMoveCondition condition = new NormalWhitePawnMoveCondition();
         Board board = new Board(Arrays.asList(
                 WhitePawn.createWithCoordinate(7, 0),
                 WhitePawn.createWithCoordinate(6, 0)
 
         ));
-        boolean actual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
+        boolean actual = condition.isSatisfiedBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(6, 0));
 
         assertThat(actual).isFalse();

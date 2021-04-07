@@ -1,0 +1,70 @@
+#wrapper {
+    display: grid;
+
+    grid-template-rows: 100px 100px 1fr;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.chess_game {
+    height: 500px;
+    width: 800px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    place-items: center;
+}
+
+.turn {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+#chess_board {
+    height: 500px;
+    width: 500px;
+
+    grid-column: 1;
+    grid-row: 1 / 3;
+
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: 1fr;
+
+    border-width: 10px;
+    border-color: black;
+    border-style: solid;
+}
+
+#chess_board > .line {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+#chess_board > .line:nth-child(odd) > .cell:nth-child(odd),
+#chess_board > .line:nth-child(even) > .cell:nth-child(even) {
+    background-color: darkgray;
+}
+
+#chess_board > .line > .cell {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+#chess_board > .line > .white {
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+#chess_board > .line > .black {
+    color: black;
+}
+
+.selected {
+    box-shadow: inset 0 0 0 5px red;
+}
+

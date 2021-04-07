@@ -1,12 +1,10 @@
 package chess.domain.piece.black;
 
 import chess.domain.piece.Position;
-import chess.domain.piece.condition.CatchingPieceBlackPawnMoveCondition;
-import chess.domain.piece.condition.FirstTurnBlackPawnMoveCondition;
 import chess.domain.piece.condition.MoveCondition;
-import chess.domain.piece.condition.NormalBlackPawnMoveCondition;
+import chess.domain.piece.condition.QueenMoveCondition;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +18,7 @@ public class BlackQueen extends BlackPiece {
     public static BlackQueen createWithCoordinate(int row, int column) {
         return new BlackQueen(
                 new Position(row, column),
-                Arrays.asList(
-                        new FirstTurnBlackPawnMoveCondition(),
-                        new NormalBlackPawnMoveCondition(),
-                        new CatchingPieceBlackPawnMoveCondition()
-                )
+                Collections.singletonList(new QueenMoveCondition())
         );
     }
 

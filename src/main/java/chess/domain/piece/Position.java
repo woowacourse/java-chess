@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.piece.condition.MoveCondition;
+import chess.exception.ChessPieceMoveNotAllowException;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Position {
 
@@ -29,13 +29,10 @@ public class Position {
     }
 
     public Position changePosition(Position target, Board board, ChessPiece piece, List<MoveCondition> moveConditions) {
-        Optional<MoveCondition> selectedCondition = moveConditions.stream()
-                .filter(moveCondition -> moveCondition.isSatisfyBy(board, piece, target))
-                .findAny();
-
-        if (!selectedCondition.isPresent()) {
-            throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
-        }
+        moveConditions.stream()
+                .filter(moveCondition -> moveCondition.isSatisfiedBy(board, piece, target))
+                .findAny()
+                .orElseThrow(ChessPieceMoveNotAllowException::new);
 
         return target;
     }
@@ -57,4 +54,5 @@ public class Position {
         result = 31 * result + column;
         return result;
     }
+
 }

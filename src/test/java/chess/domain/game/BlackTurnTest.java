@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.running.BlackTurn;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;

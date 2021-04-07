@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PieceFactory {
+
     public static List<ChessPiece> createPieces() {
         return Arrays.asList(
                 BlackRook.createWithCoordinate(0, 0),
@@ -44,4 +45,5 @@ public class PieceFactory {
                 WhitePawn.createWithCoordinate(6, 7)
         );
     }
+
 }

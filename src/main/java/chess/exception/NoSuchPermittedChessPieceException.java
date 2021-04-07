@@ -6,4 +6,5 @@ public class NoSuchPermittedChessPieceException extends RuntimeException {
     public NoSuchPermittedChessPieceException() {
         super(MESSAGE);
     }
+
 }

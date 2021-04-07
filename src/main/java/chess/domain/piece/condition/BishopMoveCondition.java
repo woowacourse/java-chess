@@ -10,12 +10,12 @@ import java.util.function.Predicate;
 public class BishopMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
-                isNotExistObstacleOnPath(board, piece, target) &&
-                isNotExistSameColorObstacleOnTarget(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereNoObstacleInThePath(board, piece, target) &&
+                isThereNoObstacleOfTheSameColorAtTarget(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovePath(final ChessPiece piece, final Position target) {
@@ -23,16 +23,16 @@ public class BishopMoveCondition extends MoveCondition {
                 == Math.abs(piece.getRow() - target.getRow());
     }
 
-    private boolean isNotExistObstacleOnPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleInThePath(Board board, ChessPiece piece, Position target) {
         List<ChessPiece> pieces = board.getAllPieces();
 
         return pieces.stream()
-                .filter(isExistInMoveArea(piece, target))
+                .filter(isTherePieceInTheMovementArea(piece, target))
                 .filter(hasSameGradientWithSourceAndTarget(piece, target))
                 .noneMatch(piece::isSameColor);
     }
 
-    private boolean isNotExistSameColorObstacleOnTarget(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOfTheSameColorAtTarget(Board board, ChessPiece piece, Position target) {
         return board.getWhitePieces().stream()
                 .noneMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
@@ -46,7 +46,7 @@ public class BishopMoveCondition extends MoveCondition {
                         piece.getPosition().calculateGradient(selectedPiece.getPosition());
     }
 
-    private Predicate<ChessPiece> isExistInMoveArea(final ChessPiece piece, final Position target) {
+    private Predicate<ChessPiece> isTherePieceInTheMovementArea(final ChessPiece piece, final Position target) {
         int maxCol = Math.max(piece.getColumn(), target.getColumn());
         int minCol = Math.min(piece.getColumn(), target.getColumn());
         int maxRow = Math.max(piece.getRow(), target.getRow());

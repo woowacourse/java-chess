@@ -19,15 +19,15 @@ class QueenMoveConditionTest {
 
     @DisplayName("퀸이 조건대로 움직이는지 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         QueenMoveCondition condition = new QueenMoveCondition();
         Board board = new Board(Collections.singletonList(
                 WhiteQueen.createWithCoordinate(4, 4)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
+        boolean rightActual = condition.isSatisfiedBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 4));
 
-        boolean falseActual = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
+        boolean falseActual = condition.isSatisfiedBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 5));
 
         assertThat(rightActual).isTrue();
@@ -36,7 +36,7 @@ class QueenMoveConditionTest {
 
     @DisplayName("퀸의 이동 경로에 장애물이 있으면 안된다.")
     @Test
-    void isSatisfyBy_notAllowObstaclesOnPath() {
+    void isSatisfiedBy_notAllowObstacleOnPath() {
         QueenMoveCondition condition = new QueenMoveCondition();
         Board board = new Board(Arrays.asList(
                 WhiteQueen.createWithCoordinate(4, 4),
@@ -44,9 +44,9 @@ class QueenMoveConditionTest {
                 WhitePawn.createWithCoordinate(5, 5)
         ));
 
-        boolean actualCross = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
+        boolean actualCross = condition.isSatisfiedBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 4));
-        boolean actualX = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4), new Position(6, 6));
+        boolean actualX = condition.isSatisfiedBy(board, WhiteQueen.createWithCoordinate(4, 4), new Position(6, 6));
 
         assertThat(actualCross).isFalse();
         assertThat(actualX).isFalse();
@@ -54,7 +54,7 @@ class QueenMoveConditionTest {
 
     @DisplayName("퀸의 붙어있는 적 먹기 테스트")
     @Test
-    void isSatisfyBy_catchAttachOtherColors() {
+    void isSatisfiedBy_catchAttachOtherColors() {
         QueenMoveCondition condition = new QueenMoveCondition();
         ChessPiece queen = BlackQueen.createWithCoordinate(4, 4);
 
@@ -62,21 +62,21 @@ class QueenMoveConditionTest {
         int[] col = {0, 0, 1, -1, 1, -1, 1, -1};
 
         for (int i = 0; i < row.length; i++) {
-            int dr = row[i] + 4;
-            int dc = col[i] + 4;
+            int nextRow = row[i] + 4;
+            int nextColumn = col[i] + 4;
 
             Board board = new Board(Arrays.asList(
                     queen,
-                    WhiteKnight.createWithCoordinate(dr, dc)
+                    WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, queen, new Position(nextRow, nextColumn))).isTrue();
         }
     }
 
     @DisplayName("퀸의 떨어져있는 적 먹기 테스트")
     @Test
-    void isSatisfyBy_catchRemoteOtherColors() {
+    void isSatisfiedBy_catchRemoteOtherColors() {
         QueenMoveCondition condition = new QueenMoveCondition();
         ChessPiece queen = BlackQueen.createWithCoordinate(4, 4);
 
@@ -84,15 +84,15 @@ class QueenMoveConditionTest {
         int[] col = {0, 0, 2, -2, 2, -2, 2, -2};
 
         for (int i = 0; i < row.length; i++) {
-            int dr = row[i] + 4;
-            int dc = col[i] + 4;
+            int nextRow = row[i] + 4;
+            int nextColumn = col[i] + 4;
 
             Board board = new Board(Arrays.asList(
                     queen,
-                    WhiteKnight.createWithCoordinate(dr, dc)
+                    WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, queen, new Position(nextRow, nextColumn))).isTrue();
         }
     }
 

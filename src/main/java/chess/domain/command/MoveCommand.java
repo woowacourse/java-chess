@@ -2,6 +2,7 @@ package chess.domain.command;
 
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Position;
+import chess.exception.CommandFormatException;
 
 public class MoveCommand extends CommandInit {
 
@@ -16,6 +17,7 @@ public class MoveCommand extends CommandInit {
     @Override
     public void execute(String input) {
         String[] inputs = input.split(" ");
+        validateRightInputs(inputs);
 
         Position source = getPositionFromInput(inputs[1]);
         Position target = getPositionFromInput(inputs[2]);
@@ -23,10 +25,14 @@ public class MoveCommand extends CommandInit {
         chessGame.move(source, target);
     }
 
-    private boolean isRightInputs(final String[] inputs) {
-        return isContainsThreeElements(inputs) &&
+    private void validateRightInputs(final String[] inputs) {
+        if (isContainsThreeElements(inputs) &&
                 isRightCommand(inputs) &&
-                isRightPositionFormat(inputs);
+                isRightPositionFormat(inputs)) {
+            return;
+        }
+
+        throw new CommandFormatException();
     }
 
     private Position getPositionFromInput(String input) {
@@ -36,13 +42,6 @@ public class MoveCommand extends CommandInit {
         int row = chessGame.getBoardRow() - Integer.parseInt(inputs[1]);
 
         return new Position(row, column);
-    }
-
-    @Override
-    public boolean isUsable(final String input) {
-        String[] inputs = input.split(" ");
-
-        return isRightInputs(inputs);
     }
 
     private boolean isContainsThreeElements(String[] inputs) {
@@ -59,6 +58,11 @@ public class MoveCommand extends CommandInit {
 
         return source.matches(POSITION_FORMAT) &&
                 target.matches(POSITION_FORMAT);
+    }
+
+    @Override
+    public String getCommand() {
+        return COMMAND;
     }
 
 }

@@ -14,7 +14,7 @@ public class MoveConditionTest {
 
     @DisplayName("보드를 벗어나면 안된다.")
     @Test
-    void isSatisfyBy_outOfBoardBoundTest() {
+    void isSatisfiedBy_outOfBoardBoundTest() {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
         Board board = new Board(
                 Collections.singletonList(
@@ -22,16 +22,16 @@ public class MoveConditionTest {
                 )
         );
 
-        boolean actualLeft = bishopMoveCondition.isSatisfyBy(board, BlackQueen.createWithCoordinate(0, 0),
+        boolean actualLeft = bishopMoveCondition.isSatisfiedBy(board, BlackQueen.createWithCoordinate(0, 0),
                 new Position(-1, 0));
 
-        boolean actualDown = bishopMoveCondition.isSatisfyBy(board, BlackQueen.createWithCoordinate(0, 0),
+        boolean actualDown = bishopMoveCondition.isSatisfiedBy(board, BlackQueen.createWithCoordinate(0, 0),
                 new Position(8, 0));
 
-        boolean actualUp = bishopMoveCondition.isSatisfyBy(board, BlackQueen.createWithCoordinate(0, 0),
+        boolean actualUp = bishopMoveCondition.isSatisfiedBy(board, BlackQueen.createWithCoordinate(0, 0),
                 new Position(0, -1));
 
-        boolean actualRight = bishopMoveCondition.isSatisfyBy(board, BlackQueen.createWithCoordinate(0, 0),
+        boolean actualRight = bishopMoveCondition.isSatisfiedBy(board, BlackQueen.createWithCoordinate(0, 0),
                 new Position(0, 8));
 
 

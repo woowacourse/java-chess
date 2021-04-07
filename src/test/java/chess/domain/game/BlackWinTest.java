@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.finished.BlackWin;
 import chess.domain.piece.black.BlackQueen;
 import chess.domain.piece.white.WhitePawn;
 import org.junit.jupiter.api.BeforeEach;

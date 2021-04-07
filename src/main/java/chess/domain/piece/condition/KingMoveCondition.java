@@ -12,11 +12,11 @@ public class KingMoveCondition extends MoveCondition {
     private static final int[] MOVABLE_COLUMN = {0, 0, 1, -1, 1, -1, 1, -1};
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
-                isNotExistSameColorPieceOnPath(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereNoObstacleOfTheSameColorOnPath(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightPath(final ChessPiece piece, final Position target) {
@@ -27,7 +27,7 @@ public class KingMoveCondition extends MoveCondition {
                 ).anyMatch(position -> position.equals(target));
     }
 
-    public boolean isNotExistSameColorPieceOnPath(Board board, ChessPiece piece, Position target) {
+    public boolean isThereNoObstacleOfTheSameColorOnPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
                 .noneMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&

@@ -54,4 +54,5 @@ public class WhiteQueen extends WhitePiece {
     protected int toHashCode() {
         return Objects.hash(NOTATION, "WHITE", getPosition().hashCode());
     }
+
 }

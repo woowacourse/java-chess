@@ -8,15 +8,15 @@ import java.util.stream.IntStream;
 
 public class KnightMoveCondition extends MoveCondition {
     private static final int COUNT_OF_MOVABLE_PATH = 8;
-    private static final int[] MOVABLE_ROW = new int[]{2, 2, -2, -2, 1, -1, 1, -1};
-    private static final int[] MOVABLE_COLUMN = new int[]{1, -1, 1, -1, 2, 2, -2, -2};
+    private static final int[] MOVABLE_ROW = {2, 2, -2, -2, 1, -1, 1, -1};
+    private static final int[] MOVABLE_COLUMN = {1, -1, 1, -1, 2, 2, -2, -2};
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
-                isNotExistSameColorPieceOnPath(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereNoObstacleOfTheSameColorOnPath(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightPath(final ChessPiece piece, final Position target) {
@@ -27,7 +27,7 @@ public class KnightMoveCondition extends MoveCondition {
                 ).anyMatch(position -> position.equals(target));
     }
 
-    public boolean isNotExistSameColorPieceOnPath(Board board, ChessPiece piece, Position target) {
+    public boolean isThereNoObstacleOfTheSameColorOnPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
                 .noneMatch(pieceOnBoard ->
                         pieceOnBoard.isSamePosition(target) &&

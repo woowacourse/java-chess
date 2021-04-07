@@ -10,26 +10,26 @@ import java.util.function.Predicate;
 public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
-                isNotExistPieceOnPath(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereNoPieceOnPath(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovePath(final ChessPiece piece, final Position target) {
-        return target.equals(new Position(piece.getRow() - 2, piece.getColumn()));
+        return target.equals(new Position(piece.getRow() - 2, piece.getColumn())) && piece.getRow() == 6;
     }
 
-    private boolean isNotExistPieceOnPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoPieceOnPath(Board board, ChessPiece piece, Position target) {
         List<ChessPiece> pieces = board.getAllPieces();
 
         return pieces.stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistInMoveArea(piece, target));
+                .noneMatch(isTherePieceInTheMovementArea(piece, target));
     }
 
-    private Predicate<ChessPiece> isExistInMoveArea(final ChessPiece piece, final Position target) {
+    private Predicate<ChessPiece> isTherePieceInTheMovementArea(final ChessPiece piece, final Position target) {
         return pieceOnBoard -> pieceOnBoard.getColumn() == piece.getColumn() &&
                 target.getRow() <= pieceOnBoard.getRow() && pieceOnBoard.getRow() <= piece.getRow();
     }

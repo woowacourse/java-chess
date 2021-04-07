@@ -7,11 +7,11 @@ import chess.domain.piece.Position;
 public class CatchingPieceWhitePawnMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
-                isEnemyExist(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereAnyEnemies(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovePath(final ChessPiece piece, final Position target) {
@@ -19,7 +19,7 @@ public class CatchingPieceWhitePawnMoveCondition extends MoveCondition {
                 target.equals(new Position(piece.getRow() - 1, piece.getColumn() + 1));
     }
 
-    private boolean isEnemyExist(final Board board, final ChessPiece piece, final Position target) {
+    private boolean isThereAnyEnemies(final Board board, final ChessPiece piece, final Position target) {
         return board.getBlackPieces().stream()
                 .anyMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&

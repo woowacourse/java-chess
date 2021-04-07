@@ -9,12 +9,12 @@ import java.util.function.Predicate;
 public class RookMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovable(piece, target) &&
-                isNotExistObstacleOnCrossPath(board, piece, target) &&
-                isNotExistSameColorObstacleOnTarget(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isThereNoObstacleOnCrossPath(board, piece, target) &&
+                isThereNoObstacleOfTheSameColorAtTarget(board, piece, target) &&
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovable(final ChessPiece piece, final Position target) {
@@ -22,13 +22,13 @@ public class RookMoveCondition extends MoveCondition {
                 piece.getColumn() == target.getColumn();
     }
 
-    private boolean isNotExistObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistObstacleOnCrossPath(piece, target));
+                .noneMatch(isThereNoObstacleOnCrossPath(piece, target));
     }
 
-    private boolean isNotExistSameColorObstacleOnTarget(Board board, ChessPiece piece, Position target) {
+    private boolean isThereNoObstacleOfTheSameColorAtTarget(Board board, ChessPiece piece, Position target) {
         return board.getWhitePieces().stream()
                 .noneMatch(
                         pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
@@ -36,7 +36,7 @@ public class RookMoveCondition extends MoveCondition {
                 );
     }
 
-    private Predicate<ChessPiece> isExistObstacleOnCrossPath(final ChessPiece piece, final Position target) {
+    private Predicate<ChessPiece> isThereNoObstacleOnCrossPath(final ChessPiece piece, final Position target) {
         int maxCol = Math.max(piece.getColumn(), target.getColumn());
         int minCol = Math.min(piece.getColumn(), target.getColumn());
         int maxRow = Math.max(piece.getRow(), target.getRow());
@@ -52,8 +52,7 @@ public class RookMoveCondition extends MoveCondition {
                     minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol;
         }
 
-
-        throw new IllegalArgumentException("잘못된 접근입니다.");
+        return chessPiece -> false;
     }
 
 }

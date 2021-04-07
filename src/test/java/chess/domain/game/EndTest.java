@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.finished.End;
 import chess.domain.piece.PieceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

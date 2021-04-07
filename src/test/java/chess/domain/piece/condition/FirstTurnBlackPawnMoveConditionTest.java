@@ -15,14 +15,14 @@ class FirstTurnBlackPawnMoveConditionTest {
 
     @DisplayName("검정 폰의 첫 움직임을 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         FirstTurnBlackPawnMoveCondition condition = new FirstTurnBlackPawnMoveCondition();
         Board board = new Board(Collections.singletonList(
                 BlackPawn.createWithCoordinate(0, 0)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
+        boolean rightActual = condition.isSatisfiedBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(2, 0));
-        boolean falseActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
+        boolean falseActual = condition.isSatisfiedBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(3, 0));
 
         assertThat(rightActual).isTrue();
@@ -31,15 +31,16 @@ class FirstTurnBlackPawnMoveConditionTest {
 
     @DisplayName("검정 폰의 첫 이동경로에 장애물이 있으면 안된다.")
     @Test
-    void isSatisfyBy_false() {
+    void isSatisfiedBy_false() {
         FirstTurnBlackPawnMoveCondition condition = new FirstTurnBlackPawnMoveCondition();
         Board board = new Board(Arrays.asList(
                 BlackPawn.createWithCoordinate(0, 0),
                 BlackPawn.createWithCoordinate(1, 0)
         ));
-        boolean actual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
+        boolean actual = condition.isSatisfiedBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(2, 0));
 
         assertThat(actual).isFalse();
     }
+
 }
