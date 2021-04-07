@@ -25,23 +25,27 @@ public final class PiecesDAO extends AbstractDAO {
 
     public Pieces joinPieces(final int boardId, Connection connection) throws SQLException {
         PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
         try {
             String query = "SELECT piece_position, piece_symbol FROM piece WHERE board_id = ?";
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, boardId);
-            ResultSet resultSet = pstmt.executeQuery();
+            resultSet = pstmt.executeQuery();
             Map<Position, Piece> pieces = getPieces(resultSet);
             return new Pieces(pieces);
         } catch (Exception e) {
             throw new IllegalArgumentException("잘못된 보드 정보입니다.");
         } finally {
-            closePreparedStatemnt(pstmt);
+            disconnect(pstmt, resultSet);
         }
     }
 
-    private void closePreparedStatemnt(PreparedStatement pstmt) throws SQLException {
+    protected void disconnect(PreparedStatement pstmt, ResultSet resultSet) throws SQLException {
         if (!Objects.isNull(pstmt)) {
             pstmt.close();
+        }
+        if (!Objects.isNull(resultSet)) {
+            resultSet.close();
         }
     }
 
@@ -57,7 +61,8 @@ public final class PiecesDAO extends AbstractDAO {
         return pieces;
     }
 
-    public void addPieces(final int boardId, final Map<Position, Piece> pieces, Connection connection)
+    public void addPieces(final int boardId, final Map<Position, Piece> pieces,
+        Connection connection)
         throws SQLException {
         PreparedStatement pstmt = null;
         connection.setAutoCommit(false);
@@ -73,7 +78,7 @@ public final class PiecesDAO extends AbstractDAO {
                 pstmt.close();
             }
         } finally {
-            closePreparedStatemnt(pstmt);
+            disconnect(pstmt, null);
         }
     }
 
@@ -84,7 +89,8 @@ public final class PiecesDAO extends AbstractDAO {
         pstmt.setString(3, piece.symbol());
     }
 
-    public void updatePiece(final int boardId, WebPiecesDTO webPiecesDTO, Connection connection) throws SQLException {
+    public void updatePiece(final int boardId, WebPiecesDTO webPiecesDTO, Connection connection)
+        throws SQLException {
         PreparedStatement pstmt = null;
         try {
             Map<Position, Piece> pieces = webPiecesDTO.getPieces();
@@ -102,7 +108,7 @@ public final class PiecesDAO extends AbstractDAO {
             pstmt.executeUpdate();
             pstmt.close();
         } finally {
-            closePreparedStatemnt(pstmt);
+            disconnect(pstmt, null);
         }
     }
 

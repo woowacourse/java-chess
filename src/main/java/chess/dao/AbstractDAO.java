@@ -2,7 +2,10 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public abstract class AbstractDAO {
 
@@ -42,6 +45,15 @@ public abstract class AbstractDAO {
             }
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
+    protected void disconnect(PreparedStatement pstmt, ResultSet resultSet) throws SQLException {
+        if (!Objects.isNull(pstmt)) {
+            pstmt.close();
+        }
+        if (!Objects.isNull(resultSet)) {
+            resultSet.close();
         }
     }
 }
