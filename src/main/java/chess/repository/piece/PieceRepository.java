@@ -9,17 +9,15 @@ public interface PieceRepository {
 
     long insert(long roomId, Piece piece) throws SQLException;
 
-    void update(long pieceId, Piece piece) throws SQLException;
-
-    // deletePieceByLocation(String location)
+    void update(Piece piece) throws SQLException;
 
     void deleteAll() throws SQLException;
 
     int count() throws SQLException;
 
-    PieceDto findPieceById(long pieceId) throws SQLException;
+    Piece findPieceById(long pieceId) throws SQLException;
 
-    List<PieceDto> findPiecesByRoomId(long roomId) throws SQLException;
+    List<Piece> findPiecesByRoomId(long roomId) throws SQLException;
 
     void deletePieceById(long id) throws SQLException;
 }

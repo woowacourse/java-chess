@@ -1,8 +1,8 @@
 package chess.repository.piece;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.repository.ConnectionUtil;
+import chess.utils.PieceUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,8 +32,8 @@ public class JdbcPieceRepository implements PieceRepository {
             conn = connectionUtil.getConnection();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setLong(roomIdIdx, roomId);
-            ps.setString(signatureIdx, String.valueOf(piece.signature()));
-            ps.setString(teamIdx, piece.team().getValue());
+            ps.setString(signatureIdx, String.valueOf(piece.getSignature()));
+            ps.setString(teamIdx, piece.getTeam().getValue());
             ps.setString(locationIdx, String.valueOf(piece.getX()) + String.valueOf(piece.getY()));
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -54,7 +54,7 @@ public class JdbcPieceRepository implements PieceRepository {
     }
 
     @Override
-    public void update(long pieceId, Piece piece) throws SQLException {
+    public void update(Piece piece) throws SQLException {
         int locationIdx = 1;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -63,7 +63,7 @@ public class JdbcPieceRepository implements PieceRepository {
             conn = connectionUtil.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(locationIdx, String.valueOf(piece.getX()) + String.valueOf(piece.getY()));
-            ps.setLong(2, pieceId);
+            ps.setLong(2, piece.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -78,7 +78,7 @@ public class JdbcPieceRepository implements PieceRepository {
     }
 
     @Override
-    public PieceDto findPieceById(long pieceId) throws SQLException {
+    public Piece findPieceById(long pieceId) throws SQLException {
         Connection conn = null;
         Statement ps = null;
         ResultSet rs = null;
@@ -95,7 +95,7 @@ public class JdbcPieceRepository implements PieceRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                return new PieceDto(id, roomId, signature, team, location);
+                return PieceUtil.generatePieceFromDb(id, roomId, signature, team, location);
             }
             throw new IllegalArgumentException("[ERROR] findPieceById - DB로부터 Piece정보를 가져오지 못했습니다.");
         } catch (SQLException e) {
@@ -190,7 +190,7 @@ public class JdbcPieceRepository implements PieceRepository {
     }
 
     @Override
-    public List<PieceDto> findPiecesByRoomId(long roomId) throws SQLException {
+    public List<Piece> findPiecesByRoomId(long roomId) throws SQLException {
         Connection conn = null;
         Statement ps = null;
         ResultSet rs = null;
@@ -201,14 +201,14 @@ public class JdbcPieceRepository implements PieceRepository {
             ps = conn.createStatement();
             rs = ps.executeQuery(query);
 
-            List<PieceDto> result = new ArrayList<>();
+            List<Piece> result = new ArrayList<>();
             while (rs.next()) {
                 long id = rs.getLong("id");
                 long roomid = rs.getLong("roomid");
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                result.add(new PieceDto(id, roomid, signature, team, location));
+                result.add(PieceUtil.generatePieceFromDb(id, roomid, signature, team, location));
             }
             if (result.size() == 0) {
                 throw new IllegalArgumentException("[ERROR] 아직 시작되지 않은 방입니다.");
