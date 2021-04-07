@@ -4,6 +4,7 @@ import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.grid.gridStrategy.TestGridStrategy;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +51,7 @@ public class PawnTest {
         grid.lines().assign(new Position("b2"), pawn);
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '1'), grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @Test
@@ -72,7 +73,7 @@ public class PawnTest {
         grid.move(pawn, new Empty('b', '3'));
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '5'), grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 초기 자리에서만 두칸 이동 가능합니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("폰은 초기 자리에서만 두칸 이동 가능합니다.");
     }
 
     @Test
@@ -83,7 +84,7 @@ public class PawnTest {
         grid.lines().assign(new Position("b2"), pawn);
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('c', '3'), grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
     }
 
     @Test
@@ -96,6 +97,6 @@ public class PawnTest {
         grid.lines().assign(new Position("b3"), obstaacle);
         assertThatThrownBy(() -> {
             pawn.validateSteps(obstaacle, grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("폰은 한칸 앞 말이 있으면 가지 못합니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("폰은 한칸 앞 말이 있으면 가지 못합니다.");
     }
 }

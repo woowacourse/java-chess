@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.TestGridStrategy;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +63,7 @@ public class QueenTest {
         grid.lines().assign(new Position("b2"), queen);
         assertThatThrownBy(() -> {
             queen.validateSteps(new Empty('c', '5'), grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @Test
@@ -75,6 +76,6 @@ public class QueenTest {
         grid.lines().assign(new Position("c3"), obstacle);
         assertThatThrownBy(() -> {
             queen.validateRoute(obstacle, grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 }

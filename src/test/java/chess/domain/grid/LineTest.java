@@ -2,6 +2,7 @@ package chess.domain.grid;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ public class LineTest {
         Line line = Line.general(Row.FIRST, Color.BLACK);
         assertThatThrownBy(() -> {
             line.piece('l');
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("해당하는 이름의 Row가 존재하지 않습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("해당하는 이름의 Row가 존재하지 않습니다.");
     }
 
 }

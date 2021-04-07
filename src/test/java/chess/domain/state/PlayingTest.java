@@ -7,6 +7,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class PlayingTest {
     public void start() {
         assertThatThrownBy(() -> {
             new Playing().start();
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이미 게임이 시작했습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이미 게임이 시작했습니다.");
     }
 
     @Test
