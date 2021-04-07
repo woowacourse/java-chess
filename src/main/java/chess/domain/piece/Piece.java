@@ -24,8 +24,8 @@ public abstract class Piece {
     protected Piece(long id, long roomId, Team team, Location location) {
         this.id = id;
         this.roomId = roomId;
-        this.team = team;
-        this.location = location;
+        this.team = Team.of(team.getValue());
+        this.location = Location.of(location.getX(), location.getY());
     }
 
     public void moveTo(Location target, Board board) {
@@ -127,11 +127,11 @@ public abstract class Piece {
     }
 
     public Team getTeam() {
-        return team;
+        return Team.of(team.getValue());
     }
 
     public Location getLocation() {
-        return location;
+        return Location.of(location.getX(), location.getY());
     }
 
     public abstract char getSignature();
