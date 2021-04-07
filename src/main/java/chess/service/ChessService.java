@@ -4,10 +4,13 @@ import chess.Dao.MoveDao;
 import chess.Dto.ScoreDto;
 import chess.domain.Game;
 import chess.domain.board.Board;
+import chess.domain.board.Path;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import chess.domain.state.Running;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessService implements Service {
 
@@ -30,7 +33,7 @@ public class ChessService implements Service {
     @Override
     public boolean addMove(Position from, Position to) {
         Board board = findBoard();
-        boolean movable = board.isMovable(to, board.generateAvailablePath(board.findPieceBy(from)));
+        boolean movable = board.isMovable(to, board.generateAvailablePath(from));
         if (movable) {
             findGame().move(from, to);
             moveDao.addMove(from, to);
@@ -57,5 +60,14 @@ public class ChessService implements Service {
     @Override
     public Map<PieceColor, Double> getScores() {
         return new ScoreDto(findBoard()).getScores();
+    }
+
+    @Override
+    public List<String> findPath(Position from) {
+        Path path = findBoard().generateAvailablePath(from);
+        return path.positions()
+            .stream()
+            .map(Position::toString)
+            .collect(Collectors.toList());
     }
 }

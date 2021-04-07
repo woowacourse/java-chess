@@ -35,6 +35,15 @@ export async function getStatus() {
   return await response.json();
 }
 
+export async function getPath(from) {
+  const data = await fetch("http://localhost:8080/board/path", {
+    method: "POST",
+    body: JSON.stringify({from}),
+    headers: {'Content-Type': 'application/json'}
+  });
+  return await data.json();
+}
+
 export async function restart() {
   const response = await fetch("http://localhost:8080/board/restart");
   return await response.json();

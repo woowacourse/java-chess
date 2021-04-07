@@ -1,5 +1,6 @@
 import {
   getBoard,
+  getPath,
   getScores,
   getStatus,
   getTurn,
@@ -60,19 +61,36 @@ window.onload = function () {
     to.classList.remove("selected", "target");
   }
 
+  async function showPath() {
+    const from = document.querySelector(".source");
+    let paths = await getPath(from.id);
+    paths.forEach(path => {
+      document.getElementById(path).classList.add("path");
+    });
+  }
+
+  function removePath() {
+    document.querySelectorAll(".path").forEach(path => {
+      path.classList.remove("path");
+    })
+  }
+
   async function grabPiece(event) {
     let movePieces = document.querySelectorAll(".selected").length;
     const tile = event.target.closest("div").classList;
     if (movePieces === 0 && await isValidSource(event)) {
       tile.add("selected", "source");
+      await showPath();
       return;
     }
     if (movePieces === 1 && tile.contains("source")) {
       tile.remove("selected", "source");
+      removePath();
       return;
     }
     if (movePieces === 1 && !tile.contains("source")) {
       tile.add("selected", "target");
+      removePath();
       await movePiece();
     }
   }

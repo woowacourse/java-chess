@@ -7,12 +7,14 @@ import static spark.Spark.post;
 
 import chess.Dto.BoardDto;
 import chess.Dto.MoveRequest;
+import chess.Dto.PathDto;
 import chess.domain.piece.PieceColor;
 import chess.service.ChessService;
 import chess.service.Service;
 import com.google.gson.Gson;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
@@ -43,7 +45,7 @@ public class WebUIChessController {
             get("/turn", this::getTurn, json());
             get("/score", this::getScore, json());
 
-            post("/movable", this::movablePath, json());
+            post("/path", this::movablePath, json());
             post("/move", this::move, json());
         });
     }
@@ -52,8 +54,9 @@ public class WebUIChessController {
         return new BoardDto(service.findBoard());
     }
 
-    private boolean movablePath(final Request request, final Response response) {
-        return false;
+    private List<String> movablePath(final Request request, final Response response) {
+        PathDto dto = new Gson().fromJson(request.body(), PathDto.class);
+        return service.findPath(dto.getFrom());
     }
 
     private boolean move(final Request request, final Response response) {
