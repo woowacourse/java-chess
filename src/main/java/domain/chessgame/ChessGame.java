@@ -5,6 +5,7 @@ import domain.board.Score;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
+import exception.IllegalTurnException;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
@@ -43,7 +44,7 @@ public class ChessGame implements Serializable {
 
     private void validateTurn(Piece piece) {
         if (piece.isNotEmpty() && piece.isBlack() != isBlackTurn) {
-            throw new IllegalArgumentException("[Error] 해당 기물의 턴이 아닙니다.");
+            throw new IllegalTurnException();
         }
     }
 

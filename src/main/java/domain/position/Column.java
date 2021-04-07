@@ -3,6 +3,7 @@ package domain.position;
 import static domain.position.Position.CHESS_BOARD_END_RANGE;
 import static domain.position.Position.CHESS_BOARD_START_RANGE;
 
+import exception.IllegalPositionException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Column implements Serializable {
 
     private void validateChessCoordinate(String chessCoordinate) {
         if (!chessColumns.contains(String.valueOf(chessCoordinate.charAt(0)))) {
-            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+            throw new IllegalPositionException();
         }
     }
 

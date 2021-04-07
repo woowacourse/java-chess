@@ -12,8 +12,6 @@ import dto.response.ChessGameResponseDto;
 import dto.response.PieceResponseDto;
 import dto.response.PiecesResponseDto;
 import dto.response.ScoreResponseDto;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +20,7 @@ public class ChessGameService {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
-    public ChessGameResponseDto putChessGame(ChessGameRequestDto chessGameRequestDto)
-        throws IOException, SQLException {
+    public ChessGameResponseDto putChessGame(ChessGameRequestDto chessGameRequestDto) {
         ChessGame chessGame = chessGameDao.selectByGameId(chessGameRequestDto.getGameId());
         chessGame.operate(chessGameRequestDto.isRestart(), chessGameRequestDto.isPlaying());
 
@@ -41,21 +38,14 @@ public class ChessGameService {
         return pieceResponseDtos;
     }
 
-    public PiecesResponseDto putPiece(PiecesRequestDto piecesRequestDto)
-        throws IOException, SQLException {
+    public PiecesResponseDto putPiece(PiecesRequestDto piecesRequestDto){
         ChessGame chessGame = chessGameDao.selectByGameId(piecesRequestDto.getGameId());
-        try {
-            chessGame.move(new Position(piecesRequestDto.getSource()),
-                new Position(piecesRequestDto.getTarget()));
-        } catch (Exception e) {
-            return new PiecesResponseDto(chessGame, pieceResponseDtos(chessGame), e.getMessage());
-        }
+        chessGame.move(new Position(piecesRequestDto.getSource()), new Position(piecesRequestDto.getTarget()));
         chessGame = chessGameDao.updateChessGameByGameId(piecesRequestDto.getGameId(), chessGame);
         return new PiecesResponseDto(chessGame, pieceResponseDtos(chessGame));
     }
 
-    public ScoreResponseDto getScore(ScoreRequestDto scoreRequestDto)
-        throws IOException, SQLException {
+    public ScoreResponseDto getScore(ScoreRequestDto scoreRequestDto) {
         ChessGame chessGame = chessGameDao.selectByGameId(scoreRequestDto.getGameId());
         return new ScoreResponseDto(chessGame.score(Color.BLACK), chessGame.score(Color.WHITE));
     }

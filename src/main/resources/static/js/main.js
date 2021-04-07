@@ -78,7 +78,16 @@ MainPage.prototype.putChessGame = function (isRestart, isPlaying) {
   }
 
   fetch(mainPage.putChessGameUrl, obj)
-  .then((response) => response.json())
+  .then(function (response) {
+    if (response.ok) {
+      return response.json();
+    }
+    response.text().then(function (data) {
+      alert(data);
+
+      throw new Error(data);
+    })
+  })
   .then(function (data) {
     mainPage.isPlaying = data.isPlaying;
     if (mainPage.isPlaying) {
@@ -207,12 +216,17 @@ MainPage.prototype.putPieces = function () {
   }
 
   fetch(mainPage.putPiecesUrl, obj)
-  .then((response) => response.json())
-  .then(function (data) {
-    if (!data.isSuccess) {
-      alert(data.responseMessage);
+  .then(function (response) {
+    if (response.ok) {
+      return response.json();
     }
+    response.text().then(function (data) {
+      alert(data);
 
+      throw new Error(data);
+    })
+  })
+  .then(function (data) {
     if (!data.isPlaying) {
       alert(data.winner);
       mainPage.putChessGame(true, false);
@@ -223,3 +237,4 @@ MainPage.prototype.putPieces = function () {
   })
 
 }
+

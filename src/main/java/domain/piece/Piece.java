@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.board.Score;
 import domain.position.Position;
+import exception.IllegalMoveException;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public abstract class Piece implements Serializable {
 
     public void validateMove(Map<Position, Piece> board, Position source, Position target) {
         if (!canMove(board, source, target)) {
-            throw new IllegalArgumentException("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
+            throw new IllegalMoveException();
         }
     }
 
@@ -68,7 +69,7 @@ public abstract class Piece implements Serializable {
         return false;
     }
 
-    public boolean isAlly(Color color){
+    public boolean isAlly(Color color) {
         return this.color.equals(color);
     }
 

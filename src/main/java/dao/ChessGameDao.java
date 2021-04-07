@@ -1,6 +1,7 @@
 package dao;
 
 import domain.chessgame.ChessGame;
+import exception.DataBaseException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,38 +22,25 @@ public class ChessGameDao {
     private static final String DATABASE_USER_NAME = "root";
     private static final String DATABASE_USER_PASSWORD = "root";
 
-
-    public Connection getConnection() {
-        Connection con = null;
-        String server = SERVER_PORT_NUMBER;
-        String database = DATABASE_NAME;
-        String option = DATABASE_OPTION;
-        String userName = DATABASE_USER_NAME;
-        String password = DATABASE_USER_PASSWORD;
-
+    public Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
         }
 
-        try {
-            con = DriverManager
-                .getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
-                    password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-        }
-
-        return con;
+        return DriverManager
+            .getConnection(
+                "jdbc:mysql://" + SERVER_PORT_NUMBER + "/" + DATABASE_NAME + DATABASE_OPTION,
+                DATABASE_USER_NAME,
+                DATABASE_USER_PASSWORD);
     }
 
-    public ChessGame selectByGameId(int gameId) throws SQLException, IOException {
+    public ChessGame selectByGameId(int gameId) {
         String query = "SELECT * FROM chessGame WHERE game_id = ?";
 
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, String.valueOf(gameId));
             ResultSet rs = pstmt.executeQuery();
 
@@ -61,21 +49,24 @@ public class ChessGameDao {
             }
 
             return chessGame(rs.getString("serialized_base64_chess_game"));
+        } catch (SQLException | IOException e) {
+            throw new DataBaseException();
         }
     }
 
-    public ChessGame updateChessGameByGameId(int gameId, ChessGame chessGame)
-        throws SQLException, IOException {
+    public ChessGame updateChessGameByGameId(int gameId, ChessGame chessGame) {
         String query = "INSERT INTO chessGame (game_id, serialized_base64_chess_game) "
             + "VALUES (?, ?) ON DUPLICATE KEY UPDATE serialized_base64_chess_game = ?";
 
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, String.valueOf(gameId));
             pstmt.setString(2, serializedChessGame(chessGame));
             pstmt.setString(3, serializedChessGame(chessGame));
             pstmt.executeUpdate();
             return selectByGameId(gameId);
+        } catch (SQLException | IOException e) {
+            throw new DataBaseException();
         }
     }
 

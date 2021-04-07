@@ -1,5 +1,6 @@
 package domain.position;
 
+import exception.IllegalPositionException;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class Position implements Serializable {
 
     private void validateChessCoordinate(String chessCoordinates) {
         if (chessCoordinates.length() != CHESS_COORDINATES_LENGTH) {
-            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+            throw new IllegalPositionException();
         }
     }
 
@@ -61,8 +62,7 @@ public class Position implements Serializable {
     }
 
     public boolean isNotLinearPosition(Position target) {
-        return !row.equals(target.row)
-            && !column.equals(target.column);
+        return !row.equals(target.row) && !column.equals(target.column);
     }
 
     public boolean isColumnEquals(Column column) {

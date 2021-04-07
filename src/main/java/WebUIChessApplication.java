@@ -1,3 +1,4 @@
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.put;
@@ -7,6 +8,8 @@ import com.google.gson.Gson;
 import dto.request.ChessGameRequestDto;
 import dto.request.PiecesRequestDto;
 import dto.request.ScoreRequestDto;
+import exception.DataBaseException;
+import exception.PieceMoveException;
 import java.util.HashMap;
 import java.util.Map;
 import service.ChessGameService;
@@ -19,12 +22,20 @@ public class WebUIChessApplication {
     private static final ChessGameService chessGameService = new ChessGameService();
 
     public static void main(String[] args) {
-        port(8080);
-        staticFiles.location("/static");
+        initServerConfiguration();
         getMainPage();
         putChessGame();
         putPieces();
         getScore();
+        exceptionHandler();
+    }
+
+    private static void initServerConfiguration() {
+        port(8080);
+        staticFiles.location("/static");
+        exception(IllegalArgumentException.class, (exception, request, response) -> {
+            response.body(GSON.toJson(exception.getMessage()));
+        });
     }
 
     private static void getMainPage() {
@@ -37,7 +48,8 @@ public class WebUIChessApplication {
     private static void putChessGame() {
         put("/api/chessGame", (request, response) -> {
             response.type("application/json");
-            ChessGameRequestDto chessGameRequestDto = GSON.fromJson(request.body(), ChessGameRequestDto.class);
+            ChessGameRequestDto chessGameRequestDto = GSON
+                .fromJson(request.body(), ChessGameRequestDto.class);
             return chessGameService.putChessGame(chessGameRequestDto);
         }, GSON::toJson);
     }
@@ -56,6 +68,25 @@ public class WebUIChessApplication {
             response.type("application/json");
             return chessGameService.getScore(new ScoreRequestDto(request.queryString()));
         }, GSON::toJson);
+    }
+
+    private static void pieceMoveExceptionHandler() {
+        exception(PieceMoveException.class, (exception, request, response) -> {
+            response.status(500);
+            response.body(exception.getMessage());
+        });
+    }
+
+    private static void dataBaseExceptionHandler() {
+        exception(DataBaseException.class, (exception, request, response) -> {
+            response.status(500);
+            response.body(exception.getMessage());
+        });
+    }
+
+    private static void exceptionHandler() {
+        pieceMoveExceptionHandler();
+        dataBaseExceptionHandler();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

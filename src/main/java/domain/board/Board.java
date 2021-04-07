@@ -4,6 +4,8 @@ import domain.piece.Color;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
 import domain.position.Position;
+import exception.AllyPiecePositionException;
+import exception.SourcePositionException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -41,10 +43,10 @@ public class Board implements Serializable {
 
     public void validateMove(Position source, Position target) {
         if (piece(source).isEmpty()) {
-            throw new IllegalArgumentException("[Error] source 위치에 기물이 없습니다.");
+            throw new SourcePositionException();
         }
         if (piece(source).isSameColor(piece(target))) {
-            throw new IllegalArgumentException("[Error] 같은 팀 기물이 존재하는 위치로 이동할 수 없습니다.");
+            throw new AllyPiecePositionException();
         }
     }
 
