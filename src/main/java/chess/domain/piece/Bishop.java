@@ -47,7 +47,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public char signature() {
+    public char getSignature() {
         return SIGNATURE;
     }
 }

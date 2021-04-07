@@ -118,11 +118,23 @@ public abstract class Piece {
         return location.getY();
     }
 
-    public abstract char signature();
+    public long getId() {
+        return id;
+    }
 
-    public Team team() {
+    public long getRoomId() {
+        return roomId;
+    }
+
+    public Team getTeam() {
         return team;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public abstract char getSignature();
 
     @Override
     public boolean equals(Object o) {
