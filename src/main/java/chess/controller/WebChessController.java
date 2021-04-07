@@ -13,17 +13,13 @@ public class WebChessController {
         this.chessService = new ChessService();
     }
 
-    public PathResponseDto movablePath(String source) {
+    public PathResponseDto movablePath(String source, Long gameId) {
         MovablePathRequestDto movablePathRequestDto = new MovablePathRequestDto(source);
-        return chessService.movablePath(movablePathRequestDto);
+        return chessService.movablePath(movablePathRequestDto, gameId);
     }
 
-    public void move(MoveRequestDto moveRequestDto) {
-        chessService.move(moveRequestDto);
-    }
-
-    public StatusResponseDto gameStatus() {
-        return chessService.gameStatus();
+    public void move(MoveRequestDto moveRequestDto, Long gameId) {
+        chessService.move(moveRequestDto, gameId);
     }
 
     public Long newGame(NewGameRequestDto newGameRequestDto) {
@@ -32,10 +28,6 @@ public class WebChessController {
 
     public List<PieceResponseDto> findPiecesByGameId(Long gameID) {
         return chessService.findPiecesByGameId(gameID);
-    }
-
-    public StateResponseDto gameState() {
-        return chessService.gameState();
     }
 
     public GameResponseDto findGameByGameId(Long gameID) {

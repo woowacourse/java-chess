@@ -18,6 +18,9 @@ async function loadBoard() {
             return data.json();
         })
         .then(pieces => {
+            state();
+            score();
+
             for (const pieceInfo of pieces) {
                 const $symbol = pieceInfo.symbol;
                 const $position = pieceInfo.position;
@@ -85,7 +88,7 @@ function onclickSquare(event) {
             body: JSON.stringify($movePosition)
         }
 
-        fetch('http://localhost:4567/game/move', $option)
+        fetch('http://localhost:4567/game/' + $gameId + '/move', $option)
             .then(data => {
                 if (!data.ok) {
                     throw new Error(data.status);
@@ -104,7 +107,7 @@ function onclickSquare(event) {
                     $board.querySelector("#"+$target).appendChild($sourceImg);
                 }
                 removeMovablePath();
-                chessScore();
+                score();
                 if ($isPlaying) {
                     state();
                 }
@@ -123,7 +126,7 @@ function onclickSquare(event) {
         $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red-take.png");
         setTimeout(invalidSquare, 1000, $source);
     } else {
-        fetch('http://localhost:4567/game/path?source=' + $source)
+        fetch('http://localhost:4567/game/' + $gameId + '/path?source=' + $source)
             .then(data => {
                 if (!data.ok) {
                     throw new Error(data.status)
@@ -179,8 +182,8 @@ function invalidSquare(id) {
         .setAttribute("src", "../images/null.png");
 }
 
-function chessScore() {
-    fetch("http://localhost:4567/game/status")
+function score() {
+    fetch("http://localhost:4567/game/" + $gameId + "/score")
         .then(data => {
             if (!data.ok) {
                 throw new Error(data.status);
@@ -199,7 +202,7 @@ function chessScore() {
 }
 
 function state() {
-    fetch("http://localhost:4567/game/state")
+    fetch("http://localhost:4567/game/" + $gameId + "/state")
         .then(data => {
             if (!data.ok) {
                 throw new Error(data.status);

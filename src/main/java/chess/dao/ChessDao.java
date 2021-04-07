@@ -3,6 +3,7 @@ package chess.dao;
 import chess.controller.dto.*;
 import chess.domain.manager.ChessManager;
 import chess.domain.manager.GameStatus;
+import chess.domain.piece.Piece;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -193,6 +194,90 @@ public class ChessDao {
                         resultSet.getInt("turn_number"),
                         resultSet.getBoolean("isPlaying"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long updateScore(GameStatus gameStatus, Long gameId) {
+        final String query =
+                "UPDATE score SET white_score=?, black_score=? WHERE gameId=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setDouble(1, gameStatus.whiteScore());
+            pstmt.setDouble(2, gameStatus.blackScore());
+            pstmt.setInt(3, gameId.intValue());
+            return pstmt.executeLargeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long updateState(ChessManager chessManager, Long gameId) {
+        final String query =
+                "UPDATE state SET turn_owner=?, turn_number=?, isPlaying=? WHERE gameId=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setString(1, chessManager.turnOwner().name());
+            pstmt.setInt(2, chessManager.turnNumber());
+            pstmt.setBoolean(3, chessManager.isPlaying());
+            pstmt.setInt(4, gameId.intValue());
+            return pstmt.executeLargeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long updateTargetPiece(String target, Piece sourcePiece, Long gameId) {
+        final String query =
+                "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setString(1, sourcePiece.getSymbol());
+            pstmt.setInt(2, gameId.intValue());
+            pstmt.setString(3, target);
+            return pstmt.executeLargeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long updateSourcePiece(String source, Long gameId) {
+        final String query =
+                "UPDATE piece SET symbol = ? WHERE gameId=? && position=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setString(1, ".");
+            pstmt.setInt(2, gameId.intValue());
+            pstmt.setString(3, source);
+            return pstmt.executeLargeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long createHistory(ChessManager chessManager, String moveCommand, Long gameId) {
+        final String query =
+                "INSERT INTO history(gameID, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setInt(1, gameId.intValue());
+            pstmt.setString(2, moveCommand);
+            pstmt.setString(3, chessManager.turnOwner().name());
+            pstmt.setInt(4, chessManager.turnNumber());
+            pstmt.setBoolean(5, chessManager.isPlaying());
+            return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

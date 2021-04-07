@@ -62,7 +62,8 @@ body {
     grid-template-columns: repeat(8, [col] 5.5vw);
     grid-template-rows: repeat(8, [row] 5.5vw);
     width: 44vw;
-    border: 20px solid burlywood;
+    border: 25px solid burlywood;
+    border-radius: 15px;
     box-shadow: 0 5px 8px #777;
     justify-content: center;
     align-content: center;

@@ -18,8 +18,19 @@ public class ChessManager {
     private int turnNumber = 1;
     private boolean isPlaying = true;
 
+    public ChessManager(Board board, Owner turnOwner, int turnNumber, boolean isPlaying) {
+        this.board = board;
+        this.turnOwner = turnOwner;
+        this.turnNumber = turnNumber;
+        this.isPlaying = isPlaying;
+    }
+
+    public ChessManager(Board board) {
+        this.board = board;
+    }
+
     public ChessManager() {
-        this.board = BoardInitializer.initiateBoard();
+        this(BoardInitializer.initiateBoard());
     }
 
     public void move(final Position source, final Position target) {
@@ -79,6 +90,10 @@ public class ChessManager {
     public Path movablePath(final Position source) {
         validateSourcePiece(source);
         return board.movablePath(source);
+    }
+
+    public Piece pickPiece(Position position) {
+        return this.board.pickPiece(position);
     }
 
     public GameStatus gameStatus() {
