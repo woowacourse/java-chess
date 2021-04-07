@@ -44,12 +44,12 @@ public final class BoardDAO extends AbstractDAO {
         }
     }
 
-    private void createBoardDataInit(WebSimpleBoardDTO webSimpleBoardDTO, PreparedStatement pstmt)
+    private void createBoardDataInit(WebSimpleBoardDTO webSimpleBoardDTO, PreparedStatement preparedStatement)
         throws SQLException {
-        pstmt.setString(1, webSimpleBoardDTO.getWhitePlayer());
-        pstmt.setString(2, webSimpleBoardDTO.getBlackPlayer());
-        pstmt.setBoolean(3, webSimpleBoardDTO.isWhiteTurn());
-        pstmt.setBoolean(4, webSimpleBoardDTO.isFinish());
+        preparedStatement.setString(1, webSimpleBoardDTO.getWhitePlayer());
+        preparedStatement.setString(2, webSimpleBoardDTO.getBlackPlayer());
+        preparedStatement.setBoolean(3, webSimpleBoardDTO.isWhiteTurn());
+        preparedStatement.setBoolean(4, webSimpleBoardDTO.isFinish());
     }
 
     private void validateCreate(ResultSet resultSet) throws SQLException {
@@ -60,21 +60,21 @@ public final class BoardDAO extends AbstractDAO {
 
     public List<WebSimpleBoardDTO> findBoardsByPlayerName(String playerName) throws SQLException {
         Connection connection = connection();
-        PreparedStatement pstmt = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             String query = "SELECT * FROM board WHERE white_player = ? OR black_player = ?";
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, playerName);
-            pstmt.setString(2, playerName);
-            resultSet = pstmt.executeQuery();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, playerName);
+            preparedStatement.setString(2, playerName);
+            resultSet = preparedStatement.executeQuery();
 
             return WebBoardDTOs(resultSet);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             closeConnection(connection);
-            disconnect(pstmt, resultSet);
+            disconnect(preparedStatement, resultSet);
         }
         throw new SQLException();
     }
@@ -104,7 +104,7 @@ public final class BoardDAO extends AbstractDAO {
             preparedStatement.setInt(1, boardId);
             resultSet = preparedStatement.executeQuery();
             validateFindBoard(resultSet);
-            return createBoardObject(resultSet, boardId, pieces);
+            return createBoardObject(resultSet, pieces);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -114,7 +114,7 @@ public final class BoardDAO extends AbstractDAO {
         throw new SQLException();
     }
 
-    private Board createBoardObject(ResultSet resultSet, int boardId, Pieces pieces)
+    private Board createBoardObject(ResultSet resultSet, Pieces pieces)
         throws SQLException {
         Players players = new Players(resultSet.getString("white_player"),
             resultSet.getString("black_player"));
@@ -157,10 +157,10 @@ public final class BoardDAO extends AbstractDAO {
         }
     }
 
-    private void updateBoardDataInit(Board board, int boardId, PreparedStatement pstmt)
+    private void updateBoardDataInit(Board board, int boardId, PreparedStatement preparedStatement)
         throws SQLException {
-        pstmt.setBoolean(1, board.turn().isWhite());
-        pstmt.setBoolean(2, board.isFinish());
-        pstmt.setInt(3, boardId);
+        preparedStatement.setBoolean(1, board.turn().isWhite());
+        preparedStatement.setBoolean(2, board.isFinish());
+        preparedStatement.setInt(3, boardId);
     }
 }
