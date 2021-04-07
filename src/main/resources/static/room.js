@@ -26,6 +26,9 @@ function createButtonEvent(event) {
   const option = getOption("POST", newData);
   fetch(API_URL + "create", option)
   .then((response) => {
+    if (!response.ok) {
+      throw new Error("게임 생성에 실패했습니다.");
+    }
     return response.json();
   })
   .then(renderChess)
@@ -42,6 +45,9 @@ function searchButtonEvent(event) {
   }
   fetch(API_URL + "search?playerName=" + playerName)
   .then((response) => {
+    if (!response.ok) {
+      throw new Error("검색에 실패했습니다.");
+    }
     return response.json();
   })
   .then(updateBoardInfo)
