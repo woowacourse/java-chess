@@ -7,7 +7,6 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class ChessGame {
     private final Board board;

@@ -17,6 +17,23 @@ import java.util.Map;
 
 import static spark.Spark.*;
 
+enum HttpStatus {
+    SUCCESS(200, true),
+    FAIL(400, false);
+
+    private final int code;
+    private final boolean succeeded;
+
+    HttpStatus(int code, boolean succeeded) {
+        this.code = code;
+        this.succeeded = succeeded;
+    }
+
+    public boolean succeeded() {
+        return succeeded;
+    }
+}
+
 public class WebUIChessApplication {
     private static final Gson GSON = new Gson();
     private static final ChessDao DAO = new ChessDao();
@@ -99,22 +116,5 @@ public class WebUIChessApplication {
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-}
-
-enum HttpStatus {
-    SUCCESS(200, true),
-    FAIL(400, false);
-
-    private final int code;
-    private final boolean succeeded;
-
-    HttpStatus(int code, boolean succeeded) {
-        this.code = code;
-        this.succeeded = succeeded;
-    }
-
-    public boolean succeeded() {
-        return succeeded;
     }
 }

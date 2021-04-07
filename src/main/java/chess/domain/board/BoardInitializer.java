@@ -24,7 +24,6 @@ public final class BoardInitializer {
             Blank.getInstance()
     );
 
-
     static {
         locationInitializers = Arrays.asList(new PawnInitializer(), new RookInitializer(), new KingInitializer(),
                 new QueenInitializer(), new BishopInitializer(), new KnightInitializer());
@@ -51,7 +50,7 @@ public final class BoardInitializer {
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 말이 없습니다."));
     }
 
-    public static Map<Position, Piece> emptyBoard() {
+    private static Map<Position, Piece> emptyBoard() {
         final Map<Position, Piece> chessBoard = new TreeMap<>();
         for (String horizontal : HORIZONTAL_RANGE) {
             VERTICAL_RANGE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), Blank.getInstance()));

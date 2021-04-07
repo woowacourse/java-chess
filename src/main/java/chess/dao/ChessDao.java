@@ -92,7 +92,7 @@ final public class ChessDao {
                 return new ChessGame(rs.getString("pieces"), rs.getString("turn"));
             }
         } catch (SQLException throwables) {
-            return null;
+            return new ChessGame();
         }
     }
 

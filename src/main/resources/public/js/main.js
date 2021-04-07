@@ -32,7 +32,7 @@ function enterGame(gameId) {
     })
         .then(function (res) {
             if (res.data) {
-                location.replace("/game?id="+gameId);
+                location.replace("/game?id=" + gameId);
                 alert(gameId + "번 방에 입장했습니다.");
                 return;
             }
