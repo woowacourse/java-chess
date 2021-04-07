@@ -21,28 +21,23 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-    private static ChessBoard chessBoard;
-    private static Gson gson;
-    private static ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+    private final Gson gson = new Gson();
+    private ChessBoard chessBoard;
+    private final ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
 
-    public WebController(Gson gson) {
-        WebController.gson = gson;
-    }
-
-    public static Object start(Request request, Response response) {
+    public Object start(Request request, Response response) {
         Map<String, PieceOnBoardDTO> pieces = getAllPieces();
         return gson.toJson(pieces);
     }
 
-    public static Object move(Request request, Response response) throws SQLException {
+    public Object move(Request request, Response response) throws SQLException {
         MoveRequestDTO moveRequestDTO = gson.fromJson(request.body(), MoveRequestDTO.class);
-        MoveResultDTO moveResultDTO;
-        moveResultDTO = createMoveResultDTO(moveRequestDTO);
+        MoveResultDTO moveResultDTO = createMoveResultDTO(moveRequestDTO);
 
         return gson.toJson(moveResultDTO);
     }
 
-    private static MoveResultDTO createMoveResultDTO(MoveRequestDTO moveRequestDTO)
+    private MoveResultDTO createMoveResultDTO(MoveRequestDTO moveRequestDTO)
         throws SQLException {
         ResultDto result;
         MoveResultDTO moveResultDTO;
@@ -62,26 +57,26 @@ public class WebController {
         return moveResultDTO;
     }
 
-    private static MoveResultDTO getMoveResultDTO(ResultDto result, boolean state) {
+    private MoveResultDTO getMoveResultDTO(ResultDto result, boolean state) {
         return new MoveResultDTO(state,
             chessBoard.isPlaying(),
             result.whiteScore().getScore(),
             result.blackScore().getScore());
     }
 
-    private static void checkGameEnd() {
+    private void checkGameEnd() {
         if (!chessBoard.isPlaying()) {
             throw new IllegalArgumentException("game End state");
         }
     }
 
-    public static Object reset(Request request, Response response) throws SQLException {
+    public Object reset(Request request, Response response) throws SQLException {
         chessBoard = new ChessBoard();
         chessBoardDAO.clearLog();
         return request;
     }
 
-    private static Map<String, PieceOnBoardDTO> getAllPieces() {
+    private Map<String, PieceOnBoardDTO> getAllPieces() {
         Map<String, PieceOnBoardDTO> pieces = new HashMap<>();
         for (Entry<Position, Piece> entry : chessBoard.getChessBoard().entrySet()) {
             pieces.put(entry.getKey().getPosition(),
@@ -95,22 +90,22 @@ public class WebController {
         this.chessBoard = chessBoard;
     }
 
-    public static Object load(Request request, Response response) throws SQLException {
+    public Object load(Request request, Response response) throws SQLException {
         ChessBoard chessBoard = new ChessBoard();
         List<MoveRequestDTO> moveRequestDTOs = chessBoardDAO.getLog();
         for (MoveRequestDTO log : moveRequestDTOs) {
             chessBoard.move(log.getSource(), log.getTarget());
         }
-        WebController.chessBoard = chessBoard;
+        this.chessBoard = chessBoard;
         return "";
     }
 
-    public static Object main(Request request, Response response) {
+    public Object main(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
         return render(model, "index.html");
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
