@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class Rook extends Piece {
-    private static final char NAME_WHEN_BLACK = 'R';
-    private static final char NAME_WHEN_WHITE = 'r';
+    public static final char NAME_WHEN_BLACK = 'R';
+    public static final char NAME_WHEN_WHITE = 'r';
     private static final int STEP_RANGE = 8;
     private static final int SCORE = 5;
 

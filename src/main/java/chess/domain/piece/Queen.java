@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class Queen extends Piece {
-    private static final char NAME_WHEN_BLACK = 'Q';
-    private static final char NAME_WHEN_WHITE = 'q';
+    public static final char NAME_WHEN_BLACK = 'Q';
+    public static final char NAME_WHEN_WHITE = 'q';
     private static final int STEP_RANGE = 8;
     private static final int SCORE = 9;
 

@@ -7,11 +7,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PieceFactory {
-    private static final Map<Condition, Constructor> constructors;
+    private static final Map<Condition, Constructor> constructors = new HashMap<>();
 
     static {
-        constructors = new HashMap<>();
-//        constructors.put(x -> true, (color, x, y) -> new Bishop(color, x, y));
+        constructors.put(pieceName -> pieceName == Bishop.NAME_WHEN_BLACK || pieceName == Bishop.NAME_WHEN_WHITE,
+                (color, x, y) -> new Bishop(color, x, y));
+        constructors.put(pieceName -> pieceName == Empty.NAME,
+                (color, x, y) -> new Empty(color, x, y));
+        constructors.put(pieceName -> pieceName == King.NAME_WHEN_BLACK || pieceName == King.NAME_WHEN_WHITE,
+                (color, x, y) -> new King(color, x, y));
+        constructors.put(pieceName -> pieceName == Knight.NAME_WHEN_BLACK || pieceName == Knight.NAME_WHEN_WHITE,
+                (color, x, y) -> new Knight(color, x, y));
+        constructors.put(pieceName -> pieceName == Pawn.NAME_WHEN_BLACK || pieceName == Pawn.NAME_WHEN_WHITE,
+                (color, x, y) -> new Pawn(color, x, y));
+        constructors.put(pieceName -> pieceName == Queen.NAME_WHEN_BLACK || pieceName == Queen.NAME_WHEN_WHITE,
+                (color, x, y) -> new Queen(color, x, y));
+        constructors.put(pieceName -> pieceName == Rook.NAME_WHEN_BLACK || pieceName == Rook.NAME_WHEN_WHITE,
+                (color, x, y) -> new Rook(color, x, y));
     }
 
     private PieceFactory() {
