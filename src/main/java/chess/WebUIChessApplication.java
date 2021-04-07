@@ -73,7 +73,7 @@ public class WebUIChessApplication {
 
         get("/status", (req, res) -> {
             ChessGame game = DAO.findGameById(req.queryParams("gameId"));
-            StatusDto statusDto = new StatusDto(new ChessResult(game.board()), game.stringifiedTurn());
+            StatusDto statusDto = new StatusDto(new ChessResult(game.board()), game.currentTurn());
             return GSON.toJson(statusDto.status());
         });
 

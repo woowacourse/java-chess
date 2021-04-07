@@ -11,10 +11,10 @@ public class StatusDto {
     private final String whiteScore;
     private final String turn;
 
-    public StatusDto(ChessResult result, String turn) {
+    public StatusDto(ChessResult result, Team currentTurn) {
         this.blackScore = Double.toString(result.totalScore(Team.BLACK));
         this.whiteScore = Double.toString(result.totalScore(Team.WHITE));
-        this.turn = turn;
+        this.turn = currentTurn.teamName();
     }
 
     public List<String> status() {

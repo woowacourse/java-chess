@@ -1,8 +1,15 @@
 package chess.dao;
 
+import chess.domain.board.Board;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.chessgame.Turn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
 
 import java.sql.*;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessDAO {
     public Connection getConnection() {
@@ -51,10 +58,21 @@ public class ChessDAO {
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, gameId);
-        pstmt.setString(2, game.stringifiedBoard());
-        pstmt.setString(3, game.stringifiedTurn());
+        pstmt.setString(2, stringifiedBoard(game.board()));
+        pstmt.setString(3, stringifiedTurn(game.currentTurn()));
         pstmt.executeUpdate();
         closeConnection(connection);
+    }
+
+    private String stringifiedBoard(Map<Position, Piece> board) {
+        return board.values()
+                .stream()
+                .map(Piece::name)
+                .collect(Collectors.joining(","));
+    }
+
+    private String stringifiedTurn(Team team) {
+        return team.teamName();
     }
 
     public boolean isExistingGame(String gameId) throws SQLException {
@@ -95,8 +113,8 @@ public class ChessDAO {
         String query = "UPDATE games SET pieces = ? , turn = ? WHERE game_id = ?";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, game.stringifiedBoard());
-        pstmt.setString(2, game.stringifiedTurn());
+        pstmt.setString(1, stringifiedBoard(game.board()));
+        pstmt.setString(2, stringifiedTurn(game.currentTurn()));
         pstmt.setString(3, gameId);
         pstmt.executeUpdate();
         closeConnection(connection);

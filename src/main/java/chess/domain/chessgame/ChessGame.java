@@ -3,6 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -62,14 +63,7 @@ public final class ChessGame {
         return board.unwrap();
     }
 
-    public String stringifiedBoard() {
-        return board.unwrap().values()
-                .stream()
-                .map(Piece::name)
-                .collect(Collectors.joining(","));
-    }
-
-    public String stringifiedTurn() {
-        return turn.now().teamName();
+    public Team currentTurn() {
+        return turn.now();
     }
 }
