@@ -24,20 +24,22 @@ public final class PiecesDAO extends AbstractDAO {
         return piecesDAO;
     }
 
-    public Pieces joinPieces(final int boardId, Connection connection) throws SQLException {
-        PreparedStatement pstmt = null;
+    public Pieces joinPieces(final int boardId) throws SQLException {
+        Connection connection = connection();
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             String query = "SELECT piece_position, piece_symbol FROM piece WHERE board_id = ?";
-            pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, boardId);
-            resultSet = pstmt.executeQuery();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, boardId);
+            resultSet = preparedStatement.executeQuery();
             Map<Position, Piece> pieces = getPieces(resultSet);
             return new Pieces(pieces);
         } catch (Exception e) {
             throw new IllegalArgumentException("잘못된 보드 정보입니다.");
         } finally {
-            disconnect(pstmt, resultSet);
+            closeConnection(connection);
+            disconnect(preparedStatement, resultSet);
         }
     }
 
@@ -56,7 +58,7 @@ public final class PiecesDAO extends AbstractDAO {
     public void addPieces(final int boardId, final Map<Position, Piece> pieces,
         Connection connection)
         throws SQLException {
-        PreparedStatement pstmt = null;
+        PreparedStatement preparedStatement = null;
         connection.setAutoCommit(false);
         try {
             for (Piece piece : pieces.values()) {
@@ -64,57 +66,57 @@ public final class PiecesDAO extends AbstractDAO {
                     continue;
                 }
                 String query = "INSERT INTO piece(board_id, piece_position, piece_symbol) VALUES (?, ?, ?)";
-                pstmt = connection.prepareStatement(query);
-                addPieceDataInit(boardId, pstmt, piece);
-                pstmt.executeUpdate();
-                pstmt.close();
+                preparedStatement = connection.prepareStatement(query);
+                addPieceDataInit(boardId, preparedStatement, piece);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
             }
         } finally {
-            disconnect(pstmt, null);
+            disconnect(preparedStatement, null);
         }
     }
 
-    private void addPieceDataInit(int boardId, PreparedStatement pstmt, Piece piece)
+    private void addPieceDataInit(int boardId, PreparedStatement preparedStatement, Piece piece)
         throws SQLException {
-        pstmt.setInt(1, boardId);
-        pstmt.setString(2, piece.position().positionToString());
-        pstmt.setString(3, piece.symbol());
+        preparedStatement.setInt(1, boardId);
+        preparedStatement.setString(2, piece.position().positionToString());
+        preparedStatement.setString(3, piece.symbol());
     }
 
     public void updatePiece(Board board, MovePieceDTO movePieceDTO, Connection connection)
         throws SQLException {
-        PreparedStatement pstmt = null;
+        PreparedStatement preparedStatement = null;
         try {
             Map<Position, Piece> pieces = board.pieces();
             Piece source = pieces.get(Position.of(movePieceDTO.getTarget()));
             connection.setAutoCommit(false);
             String deleteQuery = "DELETE FROM piece WHERE board_id = ? AND (piece_position = ? OR piece_position = ?)";
-            pstmt = connection.prepareStatement(deleteQuery);
-            deleteBoardDataInit(movePieceDTO.getBoardId(), movePieceDTO, pstmt);
-            pstmt.executeUpdate();
-            pstmt.close();
+            preparedStatement = connection.prepareStatement(deleteQuery);
+            deleteBoardDataInit(movePieceDTO.getBoardId(), movePieceDTO, preparedStatement);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
 
             String insertQuery = "INSERT INTO piece(board_id, piece_position, piece_symbol) VALUES (?, ?, ?)";
-            pstmt = connection.prepareStatement(insertQuery);
-            updatePieceDataInit(movePieceDTO, pstmt, source);
-            pstmt.executeUpdate();
-            pstmt.close();
+            preparedStatement = connection.prepareStatement(insertQuery);
+            updatePieceDataInit(movePieceDTO, preparedStatement, source);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } finally {
-            disconnect(pstmt, null);
+            disconnect(preparedStatement, null);
         }
     }
 
     private void deleteBoardDataInit(int boardId, MovePieceDTO movePieceDTO,
-        PreparedStatement pstmt) throws SQLException {
-        pstmt.setInt(1, boardId);
-        pstmt.setString(2, movePieceDTO.getSource());
-        pstmt.setString(3, movePieceDTO.getTarget());
+        PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setInt(1, boardId);
+        preparedStatement.setString(2, movePieceDTO.getSource());
+        preparedStatement.setString(3, movePieceDTO.getTarget());
     }
 
     private void updatePieceDataInit(MovePieceDTO movePieceDTO,
-        PreparedStatement pstmt, Piece source) throws SQLException {
-        pstmt.setInt(1, movePieceDTO.getBoardId());
-        pstmt.setString(2, movePieceDTO.getTarget());
-        pstmt.setString(3, source.symbol());
+        PreparedStatement preparedStatement, Piece source) throws SQLException {
+        preparedStatement.setInt(1, movePieceDTO.getBoardId());
+        preparedStatement.setString(2, movePieceDTO.getTarget());
+        preparedStatement.setString(3, source.symbol());
     }
 }

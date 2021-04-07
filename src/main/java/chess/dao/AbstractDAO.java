@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public abstract class AbstractDAO {
 
-    protected AbstractDAO() {};
+    protected AbstractDAO() {}
 
     public Connection connection() {
         Connection connection = null;
@@ -48,9 +48,9 @@ public abstract class AbstractDAO {
         }
     }
 
-    protected void disconnect(PreparedStatement pstmt, ResultSet resultSet) throws SQLException {
-        if (!Objects.isNull(pstmt)) {
-            pstmt.close();
+    protected void disconnect(PreparedStatement preparedStatement, ResultSet resultSet) throws SQLException {
+        if (!Objects.isNull(preparedStatement)) {
+            preparedStatement.close();
         }
         if (!Objects.isNull(resultSet)) {
             resultSet.close();

@@ -94,17 +94,17 @@ public final class BoardDAO extends AbstractDAO {
         return webSimpleBoardDTOS;
     }
 
-    public Board findBoardByBoardId(int boardId) throws SQLException {
+    public Board findBoardByBoardId(int boardId, Pieces pieces) throws SQLException {
         Connection connection = connection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        String query = "SELECT * FROM board WHERE board_id = ?";
         try {
-            String query = "SELECT * FROM board WHERE board_id = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, boardId);
             resultSet = preparedStatement.executeQuery();
             validateFindBoard(resultSet);
-            return dataToBoardObject(resultSet, boardId, connection);
+            return createBoardObject(resultSet, boardId, pieces);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -114,13 +114,11 @@ public final class BoardDAO extends AbstractDAO {
         throw new SQLException();
     }
 
-    private Board dataToBoardObject(ResultSet resultSet, int boardId, Connection connection)
+    private Board createBoardObject(ResultSet resultSet, int boardId, Pieces pieces)
         throws SQLException {
         Players players = new Players(resultSet.getString("white_player"),
             resultSet.getString("black_player"));
         Color color = getColor(resultSet);
-        PiecesDAO piecesDAO = PiecesDAO.instance();
-        Pieces pieces = piecesDAO.joinPieces(boardId, connection);
         State state = getState(resultSet, color, pieces);
         return new Board(state, players);
     }
@@ -145,9 +143,8 @@ public final class BoardDAO extends AbstractDAO {
         }
     }
 
-    public void updateBoard(Board board, MovePieceDTO movePieceDTO)
+    public void updateBoard(Board board, MovePieceDTO movePieceDTO, Connection connection)
         throws SQLException {
-        Connection connection = connection();
         PreparedStatement preparedStatement = null;
         connection.setAutoCommit(false);
         try {
@@ -155,13 +152,7 @@ public final class BoardDAO extends AbstractDAO {
             preparedStatement = connection.prepareStatement(query);
             updateBoardDataInit(board, movePieceDTO.getBoardId(), preparedStatement);
             preparedStatement.executeUpdate();
-            PiecesDAO.instance().updatePiece(board, movePieceDTO, connection);
-            connection.commit();
-        } catch (Exception e) {
-            connection.rollback();
-            System.out.println(e.getMessage());
         } finally {
-            closeConnection(connection);
             disconnect(preparedStatement, null);
         }
     }
