@@ -29,7 +29,7 @@ public final class ChessWebController {
     public void run() {
         staticFileLocation("/static");
 
-        get("/room", roomRender());
+        get("/", roomRender());
 
         get("/chess", chessRender());
 
