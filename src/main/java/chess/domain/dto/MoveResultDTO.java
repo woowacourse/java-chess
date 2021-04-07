@@ -2,11 +2,11 @@ package chess.domain.dto;
 
 public class MoveResultDTO {
 
-    boolean isMove;
-    boolean runningGame;
-    Double whiteScore;
-    Double blackScore;
-    String winner;
+    private boolean isMove;
+    private boolean runningGame;
+    private Double whiteScore;
+    private Double blackScore;
+    private String winner;
 
     public MoveResultDTO(boolean isMove, boolean runningGame, Double whiteScore,
         Double blackScore) {
