@@ -29,9 +29,9 @@ async function reflectBoard() {
       for (let j = 0; j < 8; j++) {
         const newTd = document.createElement("td");
 
-        const row = String(8 - i); // 열(12345678)
-        const asciiNum = 'a'.charCodeAt(); // h의 아스키코드
-        const column = String.fromCharCode(asciiNum + j);
+        const row = String(8 - i);
+        const referenceColumn = 'a'.charCodeAt();
+        const column = String.fromCharCode(referenceColumn + j);
         let position = column + row;
         newTd.id = position;
         const pieceName = data[position].teamColor
