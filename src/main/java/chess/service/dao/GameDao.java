@@ -58,11 +58,7 @@ public class GameDao {
         rs.next();
         final Turn turn = Turn.of(rs.getString(COLUMN_LABEL_OF_TURN));
         final Board board = dataToBoard(rs.getString(COLUMN_LABEL_OF_BOARD));
-
-        final GameDto gameDto = new GameDto();
-        gameDto.setTurn(turn);
-        gameDto.setBoard(board);
-        return gameDto;
+        return new GameDto(turn, board);
     }
 
     public void delete(final Long roomId) throws SQLException {

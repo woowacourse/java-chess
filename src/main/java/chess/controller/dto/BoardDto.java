@@ -2,13 +2,13 @@ package chess.controller.dto;
 
 public class BoardDto {
 
-    private String[][] board;
+    private final String[][] board;
+
+    public BoardDto(final String[][] board) {
+        this.board = board;
+    }
 
     public String[][] getBoard() {
         return board;
-    }
-
-    public void setBoard(final String[][] board) {
-        this.board = board;
     }
 }

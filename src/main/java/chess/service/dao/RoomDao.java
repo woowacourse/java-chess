@@ -43,10 +43,9 @@ public class RoomDao {
     }
 
     private RoomDto makeRoomDto(final ResultSet rs) throws SQLException {
-        RoomDto roomDto = new RoomDto();
-        roomDto.setName(rs.getString(COLUMN_INDEX_OF_ROOM_NAME));
-        roomDto.setId(rs.getLong(COLUMN_INDEX_OF_ROOM_ID));
-        return roomDto;
+        final Long id = rs.getLong(COLUMN_INDEX_OF_ROOM_ID);
+        final String name = rs.getString(COLUMN_INDEX_OF_ROOM_NAME);
+        return new RoomDto(id, name);
     }
 
     public String name(final Long roomId) throws SQLException {

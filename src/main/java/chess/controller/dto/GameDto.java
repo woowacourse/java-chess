@@ -4,22 +4,19 @@ import chess.domain.board.Board;
 import chess.domain.player.Turn;
 
 public class GameDto {
-    private Turn turn;
-    private Board board;
+    private final Turn turn;
+    private final Board board;
+
+    public GameDto(final Turn turn, final Board board) {
+        this.board = board;
+        this.turn = turn;
+    }
 
     public Board getBoard() {
         return board;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     public Turn getTurn() {
         return turn;
-    }
-
-    public void setTurn(Turn turn) {
-        this.turn = turn;
     }
 }

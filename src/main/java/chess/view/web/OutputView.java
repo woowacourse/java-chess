@@ -18,11 +18,8 @@ public class OutputView {
     }
 
     public static String printErrorMessage(final String message) {
-        final ErrorDto errorDto = new ErrorDto();
-        errorDto.setMessage(message);
-
         final Map<String, Object> model = new HashMap<>();
-        model.put("error", message);
+        model.put("error", new ErrorDto(message));
         return render(model, "errorPage.html");
     }
 
@@ -42,8 +39,7 @@ public class OutputView {
 
     public static String printResult(final List<Owner> winners) {
         final Map<String, Object> model = new HashMap<>();
-        final WinnerDto winnerDto = new WinnerDto();
-        winnerDto.setWinner(decideWinnerName(winners));
+        final WinnerDto winnerDto = new WinnerDto(decideWinnerName(winners));
         model.put("winner", winnerDto);
         return render(model, "result.html");
     }

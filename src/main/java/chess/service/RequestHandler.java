@@ -13,7 +13,6 @@ public class RequestHandler {
     private static final int INDEX_OF_PARAMETER_VALUE = 1;
 
     private RequestHandler() {
-
     }
 
     public static Map<String, String> parse(final Request request) {

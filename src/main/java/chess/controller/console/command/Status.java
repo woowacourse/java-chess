@@ -40,10 +40,7 @@ public class Status extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        ScoresDto scoresDto = new ScoresDto();
-        scoresDto.setBlackScore(chessGame.score(Owner.BLACK));
-        scoresDto.setWhiteScore(chessGame.score(Owner.WHITE));
-
+        ScoresDto scoresDto = new ScoresDto(chessGame.score(Owner.BLACK), chessGame.score(Owner.WHITE));
         OutputView.printScore(scoresDto);
     }
 

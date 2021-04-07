@@ -38,9 +38,6 @@ public class RoomService {
     }
 
     public RoomDto room(final Long roomId) throws SQLException {
-        final RoomDto roomDto = new RoomDto();
-        roomDto.setId(roomId);
-        roomDto.setName(roomDao.name(roomId));
-        return roomDto;
+        return new RoomDto(roomId, roomDao.name(roomId));
     }
 }
