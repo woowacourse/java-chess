@@ -63,4 +63,20 @@ public class ChessGameDAO {
             pstmt.executeUpdate();
         }
     }
+
+    public ChessGameDTO findGameById(String gameId) throws SQLException {
+        String query = "SELECT * FROM chess_game WHERE id = ? AND is_end = false ORDER BY created_at";
+
+        final Connection con = getConnection();
+        final PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, gameId);
+        final ResultSet rs = pstmt.executeQuery();
+
+        try (con; pstmt; rs) {
+            rs.next();
+            return new ChessGameDTO(
+                    rs.getString("id"),
+                    rs.getString("name"));
+        }
+    }
 }

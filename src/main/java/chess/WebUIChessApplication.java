@@ -13,6 +13,9 @@ import chess.domain.game.ChessGameDAO;
 import chess.domain.game.Score;
 import chess.exception.ChessException;
 import chess.web.dto.BoardDto;
+import chess.web.dto.ChessGameDTO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +24,7 @@ import spark.Request;
 
 public class WebUIChessApplication {
 
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final ChessGameDAO CHESS_GAME_DAO = new ChessGameDAO();
     private static final MoveCommandDAO MOVE_COMMAND_DAO = new MoveCommandDAO();
 
@@ -33,7 +37,8 @@ public class WebUIChessApplication {
                 model.put("games", CHESS_GAME_DAO.findActiveGames());
                 return renderHtml(model, "/lobby.html");
             } catch (SQLException e) {
-                return gotoLobbyAndAlertError();
+                res.status(400);
+                return e.getMessage();
             }
         });
 
@@ -46,30 +51,61 @@ public class WebUIChessApplication {
                 res.redirect("/chess/game/" + gameId);
                 return res;
             } catch (SQLException e) {
-                return gotoLobbyAndAlertError();
+                res.status(400);
+                return e.getMessage();
             }
         });
 
         get("/chess/game/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            ChessGameDTO chessGameDTO = CHESS_GAME_DAO.findGameById(req.params(":id"));
+
+            model.put("gameId", chessGameDTO.getId());
+            model.put("gameName", chessGameDTO.getName());
+            return renderHtml(model, "/game.html");
+        });
+
+        get("/chess/game/:id/board", (req, res) -> {
             try {
                 ChessGame chessGame = replayedChessGame(req);
-                Map<String, Object> model = new BoardDto(chessGame).getResult();
-                return renderHtml(model, "/index.html");
+                String boardHtml = renderHtml(new BoardDto(chessGame).getResult(), "/board.html");
+
+                Map<Object, Object> model = new HashMap<>();
+                model.put("board", boardHtml);
+                model.put("currentTurn", chessGame.currentTurn());
+                return GSON.toJson(model);
             } catch (SQLException e) {
-                return gotoLobbyAndAlertError();
+                res.status(400);
+                return e.getMessage();
             }
         });
 
-        // todo POST로 변경
-        get("/chess/game/:id/move", (req, res) -> {
-            String target = req.queryParams("target");
+        post("/chess/game/:id/move", (req, res) -> {
             String source = req.queryParams("source");
+            String target = req.queryParams("target");
 
             try {
-                Map<String, Object> model = movePiece(replayedChessGame(req), target, source);
-                return renderHtml(model, "/index.html");
-            } catch (SQLException e) {
-                return gotoLobbyAndAlertError();
+                ChessGame chessGame = replayedChessGame(req);
+                String boardHtml = renderHtml(movePiece(chessGame, source, target), "/board.html");
+
+                Map<Object, Object> model = new HashMap<>();
+                model.put("board", boardHtml);
+                model.put("currentTurn", chessGame.currentTurn());
+
+                if (chessGame.isGameSet()) {
+                    CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
+                    model.put("isGameSet", Boolean.TRUE);
+
+                    model.put("winner", chessGame.winner().toString());
+                    Score score = chessGame.score();
+                    model.put("blackScore", score.blackScore());
+                    model.put("whiteScore", score.whiteScore());
+                }
+
+                return GSON.toJson(model);
+            } catch (ChessException | SQLException e) {
+                res.status(400);
+                return e.getMessage();
             }
         });
     }
@@ -87,53 +123,17 @@ public class WebUIChessApplication {
         return chessGame;
     }
 
-    private static Map<String, Object> movePiece(ChessGame chessGame, String target,
-            String source) throws SQLException {
-        try {
-            Command command = Command.from("move " + target + " " + source);
-            chessGame.execute(command);
-            saveMoveCommand(chessGame, (Move) command);
+    private static Map<String, Object> movePiece(ChessGame chessGame, String source,
+            String target) throws SQLException {
+        Move moveCommand = new Move(source, target);
+        chessGame.execute(moveCommand);
+        saveMoveCommand(chessGame, moveCommand);
 
-            return chessModelFromGame(chessGame);
-        } catch (ChessException e) {
-            return chessModelWithException(chessGame, e);
-        }
+        return new BoardDto(chessGame).getResult();
     }
 
     private static void saveMoveCommand(ChessGame chessGame, Move command) throws SQLException {
         command.setGameId(chessGame.getId());
         MOVE_COMMAND_DAO.addMoveCommand(command);
-    }
-
-    private static Map<String, Object> chessModelFromGame(ChessGame chessGame) throws SQLException {
-        Map<String, Object> model = new BoardDto(chessGame).getResult();
-
-        if (chessGame.isGameSet()) {
-            CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
-
-            model.put("winner", chessGame.winner().toString());
-            Score score = chessGame.score();
-            model.put("blackScore", score.blackScore());
-            model.put("whiteScore", score.whiteScore());
-        }
-        return model;
-    }
-
-    private static Map<String, Object> chessModelWithException(ChessGame chessGame,
-            ChessException e) {
-        Map<String, Object> model = new BoardDto(chessGame).getResult();
-        model.put("error", exceptionAlertScript(e.getMessage()));
-        return model;
-    }
-
-    private static Object gotoLobbyAndAlertError() throws SQLException {
-        Map<String, Object> model = new HashMap<>();
-        model.put("games", CHESS_GAME_DAO.findActiveGames());
-        model.put("error", exceptionAlertScript("에러 발생"));
-        return renderHtml(model, "/lobby.html");
-    }
-
-    private static String exceptionAlertScript(String msg) {
-        return String.format("<script>alert(\"%s\")</script>", msg);
     }
 }

@@ -21,18 +21,10 @@ body {
     margin: auto;
 }
 
-#numberContainer {
-    width: 200px;
-    height: 25px;
-    margin-left: 24px;
+.none {
+    display: none;
 }
 
-#letterContainer {
-    width: 23px;
-    display: inline-block;
-    height: 200px;
-    margin-top: 1px;
-}
 
 .white {
     background-color: beige;
@@ -90,8 +82,4 @@ body {
 
 .R {
     background-image: url("../img/black-rook.png");
-}
-
-.score {
-    display: block;
 }

@@ -21,7 +21,6 @@ public class BoardDto {
 
             result.put(position.toString(), initial);
         }
-        result.put("currentTurn", chessGame.currentTurn());
     }
 
     private String convertToInitial(Piece piece) {
