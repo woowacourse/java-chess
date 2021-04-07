@@ -22,7 +22,7 @@ function move(source, target) {
         }
     })
         .then(function (response) {
-            if (response.data === 200) {
+            if (response.data) {
                 movePieces(source, target);
                 checkGameStatus();
                 updateStatus();

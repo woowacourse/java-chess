@@ -26,7 +26,6 @@ export function restartGame() {
 }
 
 export function syncBoard() {
-    console.log("syncBoard : " + gameId);
     axios({
         method: 'get',
         url: '/drawBoard',

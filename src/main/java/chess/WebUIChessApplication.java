@@ -33,18 +33,18 @@ public class WebUIChessApplication {
             try {
                 GameIdDTO id = GSON.fromJson(req.body(), GameIdDTO.class);
                 DAO.addGame(id.getGameId(), new ChessGame());
-                return 200;
+                return HttpStatus.SUCCESS.succeeded();
             } catch (IllegalArgumentException e) {
-                return 401;
+                return HttpStatus.FAIL.succeeded();
             }
         });
 
         post("/enter", (req, res) -> {
             String gameId = req.queryParams("gameId");
             if (DAO.isExistingGame(gameId)) {
-                return 200;
+                return HttpStatus.SUCCESS.succeeded();
             }
-            return 401;
+            return HttpStatus.FAIL.succeeded();
         });
 
         get("/game", (req, res) -> {
@@ -65,9 +65,9 @@ public class WebUIChessApplication {
             try {
                 game.move(new Position(dto.getSource()), new Position(dto.getTarget()));
                 DAO.updateGame(id, game);
-                return 200;
+                return HttpStatus.SUCCESS.succeeded();
             } catch (IllegalArgumentException | IllegalStateException e) {
-                return 401;
+                return HttpStatus.FAIL.succeeded();
             }
         });
 
@@ -87,7 +87,7 @@ public class WebUIChessApplication {
             ChessGame game = DAO.findGameById(id);
             game.restartGame();
             DAO.updateGame(id, game);
-            return 200;
+            return HttpStatus.SUCCESS.succeeded();
         });
 
         get("/result", (req, res) -> {
@@ -99,5 +99,22 @@ public class WebUIChessApplication {
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+}
+
+enum HttpStatus {
+    SUCCESS(200, true),
+    FAIL(400, false);
+
+    private final int code;
+    private final boolean succeeded;
+
+    HttpStatus(int code, boolean succeeded) {
+        this.code = code;
+        this.succeeded = succeeded;
+    }
+
+    public boolean succeeded() {
+        return succeeded;
     }
 }

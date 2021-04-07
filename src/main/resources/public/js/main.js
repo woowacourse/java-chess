@@ -14,8 +14,7 @@ function createNewGame() {
         }
     })
         .then(function (res) {
-            if (res.data === 200) {
-                console.log("hi");
+            if (res.data) {
                 enterGame(gameId);
                 return;
             }
@@ -32,7 +31,7 @@ function enterGame(gameId) {
         }
     })
         .then(function (res) {
-            if (res.data === 200) {
+            if (res.data) {
                 location.replace("/game?id="+gameId);
                 alert(gameId + "번 방에 입장했습니다.");
                 return;
