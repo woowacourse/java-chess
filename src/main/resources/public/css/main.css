@@ -202,5 +202,20 @@ h1 {
 }
 
 .d-flex > .path, .d-flex > .start-pink > .path {
-  background-color: lawngreen;
+  background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      springgreen 1rem,
+      springgreen 2rem
+  );
+  background-size: 200% 200%;
+  animation: barberpole 10s linear infinite;
 }
+
+@keyframes barberpole {
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
