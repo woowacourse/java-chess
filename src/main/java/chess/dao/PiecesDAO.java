@@ -1,10 +1,11 @@
 package chess.dao;
 
+import chess.domain.board.Board;
 import chess.domain.board.Pieces;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.dto.WebPiecesDTO;
+import chess.dto.MovePieceDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,15 +38,6 @@ public final class PiecesDAO extends AbstractDAO {
             throw new IllegalArgumentException("잘못된 보드 정보입니다.");
         } finally {
             disconnect(pstmt, resultSet);
-        }
-    }
-
-    protected void disconnect(PreparedStatement pstmt, ResultSet resultSet) throws SQLException {
-        if (!Objects.isNull(pstmt)) {
-            pstmt.close();
-        }
-        if (!Objects.isNull(resultSet)) {
-            resultSet.close();
         }
     }
 
@@ -89,22 +81,22 @@ public final class PiecesDAO extends AbstractDAO {
         pstmt.setString(3, piece.symbol());
     }
 
-    public void updatePiece(final int boardId, WebPiecesDTO webPiecesDTO, Connection connection)
+    public void updatePiece(Board board, MovePieceDTO movePieceDTO, Connection connection)
         throws SQLException {
         PreparedStatement pstmt = null;
         try {
-            Map<Position, Piece> pieces = webPiecesDTO.getPieces();
-            Piece source = pieces.get(webPiecesDTO.getTarget());
+            Map<Position, Piece> pieces = board.pieces();
+            Piece source = pieces.get(Position.of(movePieceDTO.getTarget()));
             connection.setAutoCommit(false);
             String deleteQuery = "DELETE FROM piece WHERE board_id = ? AND (piece_position = ? OR piece_position = ?)";
             pstmt = connection.prepareStatement(deleteQuery);
-            deleteBoardDataInit(boardId, webPiecesDTO, pstmt);
+            deleteBoardDataInit(movePieceDTO.getBoardId(), movePieceDTO, pstmt);
             pstmt.executeUpdate();
             pstmt.close();
 
             String insertQuery = "INSERT INTO piece(board_id, piece_position, piece_symbol) VALUES (?, ?, ?)";
             pstmt = connection.prepareStatement(insertQuery);
-            updatePieceDataInit(boardId, webPiecesDTO, pstmt, source);
+            updatePieceDataInit(movePieceDTO, pstmt, source);
             pstmt.executeUpdate();
             pstmt.close();
         } finally {
@@ -112,17 +104,17 @@ public final class PiecesDAO extends AbstractDAO {
         }
     }
 
-    private void deleteBoardDataInit(int boardId, WebPiecesDTO webPiecesDTO,
+    private void deleteBoardDataInit(int boardId, MovePieceDTO movePieceDTO,
         PreparedStatement pstmt) throws SQLException {
         pstmt.setInt(1, boardId);
-        pstmt.setString(2, webPiecesDTO.getSource().positionToString());
-        pstmt.setString(3, webPiecesDTO.getTarget().positionToString());
+        pstmt.setString(2, movePieceDTO.getSource());
+        pstmt.setString(3, movePieceDTO.getTarget());
     }
 
-    private void updatePieceDataInit(int boardId, WebPiecesDTO webPiecesDTO,
+    private void updatePieceDataInit(MovePieceDTO movePieceDTO,
         PreparedStatement pstmt, Piece source) throws SQLException {
-        pstmt.setInt(1, boardId);
-        pstmt.setString(2, webPiecesDTO.getTarget().positionToString());
+        pstmt.setInt(1, movePieceDTO.getBoardId());
+        pstmt.setString(2, movePieceDTO.getTarget());
         pstmt.setString(3, source.symbol());
     }
 }

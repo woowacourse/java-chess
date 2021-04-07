@@ -6,6 +6,9 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
+import chess.dto.MovablePositionDTO;
+import chess.dto.MovePieceDTO;
+import chess.dto.WebSimpleBoardDTO;
 import chess.service.ChessService;
 import chess.ResponseStatus;
 import com.google.gson.Gson;
@@ -39,7 +42,7 @@ public final class ChessWebController {
 
         put("/api/move", movePiece());
 
-        get("/api/movablePositions", movablePosition());
+        post("/api/movablePositions", movablePosition());
 
         get("/api/search", searchBoard());
     }
@@ -67,11 +70,9 @@ public final class ChessWebController {
     private Route createBoard() {
         return (request, response) -> {
             try {
-                Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class);
-                String whitePlayer = (String) requestBody.get("whitePlayer");
-                String blackPlayer = (String) requestBody.get("blackPlayer");
-                Map<String, Integer> boardInfo = chessService.start(whitePlayer, blackPlayer);
-                return gson.toJson(boardInfo);
+                WebSimpleBoardDTO webSimpleBoardDTO = gson.fromJson(request.body(), WebSimpleBoardDTO.class);
+                response.status(ResponseStatus.OK.getStateCode());
+                return chessService.createBoard(webSimpleBoardDTO);
             } catch (Exception e) {
                 return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
@@ -81,11 +82,12 @@ public final class ChessWebController {
     private Route joinBoard() {
         return (request, response) -> {
             try {
-                Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class);
-                int boardId = (int) (double) requestBody.get("boardId");
-                Map<String, String> boardInfo = chessService.joinBoard(boardId);
-                return gson.toJson(boardInfo);
+                WebSimpleBoardDTO webSimpleBoardDTO = gson.fromJson(request.body(), WebSimpleBoardDTO.class);
+                response.status(ResponseStatus.OK.getStateCode());
+                return gson.toJson(chessService.joinBoard(webSimpleBoardDTO));
             } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
@@ -94,12 +96,9 @@ public final class ChessWebController {
     private Route movePiece() {
         return (request, response) -> {
             try {
-                Map<String, Object> requestBody = gson.fromJson(request.body(), HashMap.class);
-                int boardId = (int) (double) requestBody.get("boardId");
-                String source = (String) requestBody.get("source");
-                String target = (String) requestBody.get("target");
-                Map<String, String> boardInfo = chessService.movedPiece(boardId, source, target);
-                return gson.toJson(boardInfo);
+                MovePieceDTO movePieceDTO = gson.fromJson(request.body(), MovePieceDTO.class);
+                response.status(ResponseStatus.OK.getStateCode());
+                return gson.toJson(chessService.movedPiece(movePieceDTO));
             } catch (Exception e) {
                 return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
@@ -109,11 +108,10 @@ public final class ChessWebController {
     private Route movablePosition() {
         return (request, response) -> {
             try {
-                String boardId = request.queryParams("boardId");
-                String source = request.queryParams("source");
-                List<String> movablePositions = chessService
-                    .movablePositions(Integer.parseInt(boardId), source);
-                return gson.toJson(movablePositions);
+                MovablePositionDTO movablePositionDTO = gson.fromJson(request.body(), MovablePositionDTO.class);
+                movablePositionDTO = chessService.movablePositions(movablePositionDTO);
+                response.status(ResponseStatus.OK.getStateCode());
+                return gson.toJson(movablePositionDTO);
             } catch (Exception e) {
                 return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
@@ -124,9 +122,11 @@ public final class ChessWebController {
         return (request, response) -> {
             try {
                 String playerName = request.queryParams("playerName");
-                List<Map<String, Object>> boards = chessService.searchBoard(playerName);
-                return gson.toJson(boards);
+                response.status();
+                List<WebSimpleBoardDTO> webSimpleBoardDTOS = chessService.searchBoard(playerName);
+                return gson.toJson(webSimpleBoardDTOS);
             } catch (Exception e) {
+                e.printStackTrace();
                 return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };

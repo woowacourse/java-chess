@@ -20,6 +20,7 @@ const SYMBOL_TO_IMAGE_PATH = {
     "K": DEFAULT_PATH + "blackKing.png"
 };
 let boardInfo = {};
+let pieces = {};
 let movablePosition = [];
 let isClicked = false;
 let source = null;
@@ -56,10 +57,11 @@ function boardJoin() {
 function imageSetting(responseData) {
     boardInfo = responseData;
     const divs = BOARD.querySelectorAll("div");
+    pieces = responseData["pieces"];
     for (const div of divs) {
         const key = div.getAttribute("id");
-        if (SYMBOL_TO_IMAGE_PATH[responseData[key]] !== undefined) {
-            div.style.backgroundImage = "url(" + SYMBOL_TO_IMAGE_PATH[responseData[key]] + ")";;
+        if (SYMBOL_TO_IMAGE_PATH[pieces[key]] !== undefined) {
+            div.style.backgroundImage = "url(" + SYMBOL_TO_IMAGE_PATH[pieces[key]] + ")";;
         } else {
             div.style.backgroundImage = null;
         }
@@ -68,19 +70,19 @@ function imageSetting(responseData) {
 }
 
 function divClickEvent(event) {
-    if (boardInfo["isFinish"] === "true") {
+    if (boardInfo["isFinish"] === true) {
         exitAsk();
         return;
     }
     const targetPosition = event.target.getAttribute("id");
     if (isClicked === false) {
-        if (boardInfo[targetPosition] === ".") {
+        if (pieces[targetPosition] === ".") {
             console.log("빈 공간은 움직일 수 없습니다.")
             return;
         }
-        const isWhite = boardInfo["turn"] === "WHITE";
-        if ((isWhite === true && boardInfo[targetPosition] !== boardInfo[targetPosition].toLowerCase())
-        || (isWhite === false && boardInfo[targetPosition] !== boardInfo[targetPosition].toUpperCase())) {
+        const isWhite = boardInfo["isWhiteTurn"];
+        if ((isWhite === true && pieces[targetPosition] !== pieces[targetPosition].toLowerCase())
+        || (isWhite === false && pieces[targetPosition] !== pieces[targetPosition].toUpperCase())) {
             alert("상대방의 턴입니다.");
             return;
         }
@@ -97,9 +99,9 @@ function divClickEvent(event) {
             return;
         }
         const targetPosition = event.target.getAttribute("id");
-        const isWhite = boardInfo["turn"] === "WHITE";
-        if (boardInfo[targetPosition] !== "." && ((isWhite === true && boardInfo[targetPosition] === boardInfo[targetPosition].toLowerCase())
-        || (isWhite === false && boardInfo[targetPosition] === boardInfo[targetPosition].toUpperCase()))) {
+        const isWhite = boardInfo["isWhiteTurn"];
+        if (pieces[targetPosition] !== "." && ((isWhite === true && pieces[targetPosition] === pieces[targetPosition].toLowerCase())
+        || (isWhite === false && pieces[targetPosition] === pieces[targetPosition].toUpperCase()))) {
             source.style.backgroundColor = "";
             source = event.target;
             source.style.backgroundColor = "yellow";
@@ -157,7 +159,13 @@ function exitAsk() {
 }
 
 function getMovablePositions(sourcePosition) {
-    fetch(API_URL + "movablePositions?source=" + sourcePosition + "&boardId=" + BOARD_ID)
+    const newData = {
+        "boardId": BOARD_ID,
+        "source": sourcePosition,
+    }
+    const option = getOption("POST", newData);
+
+    fetch(API_URL + "movablePositions", option)
     .then((response) => {
         if (!response.ok) {
             throw new Error("문제가 발생했습니다. 관리자에게 문의하세요.");
@@ -165,7 +173,7 @@ function getMovablePositions(sourcePosition) {
         return response.json();
     })
     .then((responseData) => {
-        movablePosition = responseData;
+        movablePosition = responseData["movablePositions"];
         movablePositionSetting(true);
     })
     .catch((error) => {
@@ -185,10 +193,10 @@ function movablePositionSetting(isDisplay) {
 }
 
 function dataSetting() {
-    if (boardInfo["isFinish"] === "true") {
+    if (boardInfo["isFinish"] === true) {
         document.querySelector("#view-type").textContent = "승리자 :ㅤ";
     }
-    const isWhite = boardInfo["turn"] === "WHITE";
+    const isWhite = boardInfo["isWhiteTurn"];
     let playerType = ""
     if (isWhite === true) {
         playerType = "whitePlayer";

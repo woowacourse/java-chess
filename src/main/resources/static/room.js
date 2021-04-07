@@ -47,11 +47,11 @@ function searchButtonEvent(event) {
   .then(updateBoardInfo)
   .catch((error) => {
     console.log(error);
-  })
+  });
 }
 
 function renderChess(responseData) {
-  location.href = HTML_URL + "chess?boardId=" + responseData["boardId"]
+  location.href = HTML_URL + "chess?boardId=" + responseData;
 }
 
 function getOption(methodType, bodyData) {
@@ -71,7 +71,6 @@ function updateBoardInfo(responseData) {
   }
 
   for (data of responseData) {
-    console.log(data);
     const newTableRow = document.createElement("tr");
     const tableDataBoardId = document.createElement("th");
     tableDataBoardId.innerText = data["boardId"];
@@ -84,14 +83,14 @@ function updateBoardInfo(responseData) {
     tableDataBlackPlayer.innerText = data["blackPlayer"];
 
     const tableDataTrun = document.createElement("td");
-    if (data["turnIsWhite"] === true) {
+    if (data["isWhiteTurn"]) {
       tableDataTrun.innerText = "white";
     } else {
       tableDataTrun.innerText = "black";
     }
 
     const tableDataFinish = document.createElement("td");
-    if (data["isFinish"] === true) {
+    if (data["isFinish"]) {
       newTableRow.className += "table-secondary";
       tableDataFinish.innerText = "finish";
     } else {
@@ -110,6 +109,6 @@ function updateBoardInfo(responseData) {
 }
 
 function playChessGame(event) {
-  const data = {"boardId": event.target.parentNode.firstChild.innerText};
+  const data = event.target.parentNode.firstChild.innerText;
   renderChess(data);
 }

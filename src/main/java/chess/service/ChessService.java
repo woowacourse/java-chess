@@ -1,11 +1,17 @@
 package chess.service;
 
+import chess.dao.AbstractDAO;
 import chess.dao.BoardDAO;
+import chess.dao.PiecesDAO;
 import chess.domain.board.Board;
+import chess.domain.board.Pieces;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.dto.MovablePositionDTO;
+import chess.dto.MovePieceDTO;
 import chess.dto.WebBoardDTO;
-import chess.dto.WebPiecesDTO;
+import chess.dto.WebSimpleBoardDTO;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,25 +21,32 @@ import java.util.Objects;
 
 public class ChessService {
 
-    public Map<String, Integer> start(String whitePlayer, String blackPlayer) throws SQLException {
-        Map<String, Integer> boardInfo = new HashMap<>();
-        Board board = new Board(whitePlayer, blackPlayer);
+    public int createBoard(WebSimpleBoardDTO webSimpleBoardDTO) throws SQLException {
+        Board board = new Board(webSimpleBoardDTO.getWhitePlayer(),
+            webSimpleBoardDTO.getBlackPlayer());
         board.init();
+        webSimpleBoardDTO = new WebSimpleBoardDTO(board);
         BoardDAO boardDAO = BoardDAO.instance();
-        int boardId = boardDAO.addBoard(new WebBoardDTO(board), new WebPiecesDTO(board.pieces()));
-        boardInfo.put("boardId", boardId);
-        return boardInfo;
+        Connection connection = boardDAO.connection();
+        connection.setAutoCommit(false);
+        try {
+            int boardId = boardDAO.addBoard(webSimpleBoardDTO, connection);
+            PiecesDAO.instance().addPieces(boardId, board.pieces(), connection);
+            connection.commit();
+            return boardId;
+        } catch (Exception e) {
+            connection.rollback();
+            throw new SQLException(e.getMessage());
+        } finally {
+            boardDAO.closeConnection(connection);
+        }
     }
 
-    private Map<String, String> PositionToStringMap(Map<Position, Piece> pieces, Board board) {
+    private Map<String, String> PositionToStringMap(Map<Position, Piece> pieces) {
         Map<String, String> boardInfo = new HashMap<>();
         for (Position position : pieces.keySet()) {
             boardInfo.put(position.positionToString(), getSymbol(pieces.get(position)));
         }
-        boardInfo.put("whitePlayer", board.players().getWhitePlayer());
-        boardInfo.put("blackPlayer", board.players().getBlackPlayer());
-        boardInfo.put("isFinish", String.valueOf(board.isFinish()));
-        boardInfo.put("turn", board.turn().color());
         return boardInfo;
     }
 
@@ -44,53 +57,41 @@ public class ChessService {
         return piece.symbol();
     }
 
-    public Map<String, String> movedPiece(int boardId ,String source, String target)
-        throws SQLException {
+    public WebBoardDTO movedPiece(MovePieceDTO movePieceDTO) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
-        Board board = boardDAO.findBoardByBoardId(boardId);
-        board.movePiece(source, target);
-        WebBoardDTO webBoardDTO = new WebBoardDTO(board, boardId);
-        WebPiecesDTO webPiecesDTO = new WebPiecesDTO(board.pieces(), source, target);
-        boardDAO.updateBoard(webBoardDTO, webPiecesDTO);
-        Map<Position, Piece> pieces = board.pieces();
-        return PositionToStringMap(pieces, board);
+        Board board = boardDAO.findBoardByBoardId(movePieceDTO.getBoardId());
+        board.movePiece(movePieceDTO.getSource(), movePieceDTO.getTarget());
+
+        boardDAO.updateBoard(board, movePieceDTO);
+        Map<String, String> pieces = PositionToStringMap(board.pieces());
+        WebBoardDTO webBoardDTO = new WebBoardDTO(board, movePieceDTO.getBoardId());
+        webBoardDTO.setPieces(pieces);
+
+        return webBoardDTO;
     }
 
-    public List<String> movablePositions(int boardId, String source) throws SQLException {
+    public MovablePositionDTO movablePositions(MovablePositionDTO movablePositionDTO) throws SQLException {
         List<String> positions = new ArrayList<>();
         BoardDAO boardDAO = BoardDAO.instance();
-        Board board = boardDAO.findBoardByBoardId(boardId);
-        for (Position position : board.movablePositions(source)) {
+        Board board = boardDAO.findBoardByBoardId(movablePositionDTO.getBoardId());
+        for (Position position : board.movablePositions(movablePositionDTO.getSource())) {
             positions.add(position.positionToString());
         }
-        return positions;
+        movablePositionDTO.setMovablePositions(positions);
+        return movablePositionDTO;
     }
 
-    public Map<String, String> joinBoard(int boardId) throws SQLException {
+    public WebBoardDTO joinBoard(WebSimpleBoardDTO webSimpleBoardDTO) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
-        Board board = boardDAO.findBoardByBoardId(boardId);
-        Map<Position, Piece> pieces = board.pieces();
-        return PositionToStringMap(pieces, board);
+        Board board = boardDAO.findBoardByBoardId(webSimpleBoardDTO.getBoardId());
+        Map<String, String> pieces = PositionToStringMap(board.pieces());
+        WebBoardDTO webBoardDTO = new WebBoardDTO(board, webSimpleBoardDTO.getBoardId());
+        webBoardDTO.setPieces(pieces);
+        return webBoardDTO;
     }
 
-    public List<Map<String, Object>> searchBoard(String playerName) throws SQLException {
+    public List<WebSimpleBoardDTO> searchBoard(String playerName) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
-        List<WebBoardDTO> webBoardDTOS = boardDAO.findBoardsByPlayerName(playerName);
-        List<Map<String, Object>> boards = webBoardDTOSToBoards(webBoardDTOS);
-        return boards;
-    }
-
-    private List<Map<String, Object>> webBoardDTOSToBoards(List<WebBoardDTO> webBoardDTOS) {
-        List<Map<String, Object>> boards = new ArrayList<>();
-        for (WebBoardDTO webBoardDTO : webBoardDTOS) {
-            Map<String, Object> board = new HashMap<>();
-            board.put("boardId", webBoardDTO.getBoardId());
-            board.put("whitePlayer", webBoardDTO.getWhitePlayer());
-            board.put("blackPlayer", webBoardDTO.getBlackPlayer());
-            board.put("isFinish", webBoardDTO.getIsFinish());
-            board.put("turnIsWhite", webBoardDTO.getTurnIsWhite());
-            boards.add(board);
-        }
-        return boards;
+        return boardDAO.findBoardsByPlayerName(playerName);
     }
 }

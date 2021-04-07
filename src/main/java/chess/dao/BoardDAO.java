@@ -7,8 +7,8 @@ import chess.domain.piece.Color;
 import chess.domain.state.Finish;
 import chess.domain.state.Play;
 import chess.domain.state.State;
-import chess.dto.WebBoardDTO;
-import chess.dto.WebPiecesDTO;
+import chess.dto.MovePieceDTO;
+import chess.dto.WebSimpleBoardDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,38 +28,28 @@ public final class BoardDAO extends AbstractDAO {
         return boardDAO;
     }
 
-    public int addBoard(WebBoardDTO webBoardDTO, WebPiecesDTO webPiecesDTO) throws SQLException {
-        Connection connection = connection();
-        PreparedStatement pstmt = null;
+    public int addBoard(WebSimpleBoardDTO webSimpleBoardDTO, Connection connection) throws SQLException {
+        String query = "INSERT INTO board(white_player, black_player, turn_is_white, is_finish) VALUES (?, ?, ?, ?)";
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        connection.setAutoCommit(false);
         try {
-            String query = "INSERT INTO board(white_player, black_player, turn_is_white, is_finish) VALUES (?, ?, ?, ?)";
-            pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            createBoardDataInit(webBoardDTO, pstmt);
-            pstmt.executeUpdate();
-            resultSet = pstmt.getGeneratedKeys();
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            createBoardDataInit(webSimpleBoardDTO, preparedStatement);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
             validateCreate(resultSet);
-            int boardID = resultSet.getInt(1);
-            addPieces(webPiecesDTO, connection, boardID);
-            connection.commit();
-            return boardID;
-        } catch (Exception e) {
-            connection.rollback();
-            System.out.println(e.getMessage());
+            return resultSet.getInt(1);
         } finally {
-            closeConnection(connection);
-            disconnect(pstmt, resultSet);
+            disconnect(preparedStatement, resultSet);
         }
-        throw new SQLException();
     }
 
-    private void createBoardDataInit(WebBoardDTO webBoardDTO, PreparedStatement pstmt)
+    private void createBoardDataInit(WebSimpleBoardDTO webSimpleBoardDTO, PreparedStatement pstmt)
         throws SQLException {
-        pstmt.setString(1, webBoardDTO.getWhitePlayer());
-        pstmt.setString(2, webBoardDTO.getBlackPlayer());
-        pstmt.setBoolean(3, webBoardDTO.getTurnIsWhite());
-        pstmt.setBoolean(4, webBoardDTO.getIsFinish());
+        pstmt.setString(1, webSimpleBoardDTO.getWhitePlayer());
+        pstmt.setString(2, webSimpleBoardDTO.getBlackPlayer());
+        pstmt.setBoolean(3, webSimpleBoardDTO.isWhiteTurn());
+        pstmt.setBoolean(4, webSimpleBoardDTO.isFinish());
     }
 
     private void validateCreate(ResultSet resultSet) throws SQLException {
@@ -68,13 +58,7 @@ public final class BoardDAO extends AbstractDAO {
         }
     }
 
-    private void addPieces(WebPiecesDTO webPiecesDTO, Connection connection, int boardID)
-        throws SQLException {
-        PiecesDAO piecesDAO = PiecesDAO.instance();
-        piecesDAO.addPieces(boardID, webPiecesDTO.getPieces(), connection);
-    }
-
-    public List<WebBoardDTO> findBoardsByPlayerName(String playerName) throws SQLException {
+    public List<WebSimpleBoardDTO> findBoardsByPlayerName(String playerName) throws SQLException {
         Connection connection = connection();
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
@@ -95,37 +79,37 @@ public final class BoardDAO extends AbstractDAO {
         throw new SQLException();
     }
 
-    private List<WebBoardDTO> WebBoardDTOs(ResultSet resultSet)
+    private List<WebSimpleBoardDTO> WebBoardDTOs(ResultSet resultSet)
         throws SQLException {
-        List<WebBoardDTO> webBoardDTOs = new ArrayList<>();
+        List<WebSimpleBoardDTO> webSimpleBoardDTOS = new ArrayList<>();
         while (resultSet.next()) {
-            WebBoardDTO webBoardDTO = new WebBoardDTO();
-            webBoardDTO.setBoardId(resultSet.getInt("board_id"));
-            webBoardDTO.setWhitePlayer(resultSet.getString("white_player"));
-            webBoardDTO.setBlackPlayer(resultSet.getString("black_player"));
-            webBoardDTO.setTurnIsWhite(resultSet.getBoolean("turn_is_white"));
-            webBoardDTO.setFinish(resultSet.getBoolean("is_finish"));
-            webBoardDTOs.add(webBoardDTO);
+            WebSimpleBoardDTO webSimpleBoardDTO = new WebSimpleBoardDTO();
+            webSimpleBoardDTO.setBoardId(resultSet.getInt("board_id"));
+            webSimpleBoardDTO.setWhitePlayer(resultSet.getString("white_player"));
+            webSimpleBoardDTO.setBlackPlayer(resultSet.getString("black_player"));
+            webSimpleBoardDTO.setWhiteTurn(resultSet.getBoolean("turn_is_white"));
+            webSimpleBoardDTO.setFinish(resultSet.getBoolean("is_finish"));
+            webSimpleBoardDTOS.add(webSimpleBoardDTO);
         }
-        return webBoardDTOs;
+        return webSimpleBoardDTOS;
     }
 
     public Board findBoardByBoardId(int boardId) throws SQLException {
         Connection connection = connection();
-        PreparedStatement pstmt = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             String query = "SELECT * FROM board WHERE board_id = ?";
-            pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, boardId);
-            resultSet = pstmt.executeQuery();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, boardId);
+            resultSet = preparedStatement.executeQuery();
             validateFindBoard(resultSet);
             return dataToBoardObject(resultSet, boardId, connection);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             closeConnection(connection);
-            disconnect(pstmt, resultSet);
+            disconnect(preparedStatement, resultSet);
         }
         throw new SQLException();
     }
@@ -161,33 +145,31 @@ public final class BoardDAO extends AbstractDAO {
         }
     }
 
-    public boolean updateBoard(WebBoardDTO webBoardDTO, WebPiecesDTO webPiecesDTO)
+    public void updateBoard(Board board, MovePieceDTO movePieceDTO)
         throws SQLException {
         Connection connection = connection();
-        PreparedStatement pstmt = null;
+        PreparedStatement preparedStatement = null;
         connection.setAutoCommit(false);
         try {
             String query = "UPDATE board SET turn_is_white = ?, is_finish = ? WHERE board_id = ?";
-            pstmt = connection.prepareStatement(query);
-            updateBoardDataInit(webBoardDTO, pstmt);
-            pstmt.executeUpdate();
-            PiecesDAO.instance().updatePiece(webBoardDTO.getBoardId(), webPiecesDTO, connection);
+            preparedStatement = connection.prepareStatement(query);
+            updateBoardDataInit(board, movePieceDTO.getBoardId(), preparedStatement);
+            preparedStatement.executeUpdate();
+            PiecesDAO.instance().updatePiece(board, movePieceDTO, connection);
             connection.commit();
         } catch (Exception e) {
             connection.rollback();
             System.out.println(e.getMessage());
-            return false;
         } finally {
             closeConnection(connection);
-            disconnect(pstmt, null);
+            disconnect(preparedStatement, null);
         }
-        return true;
     }
 
-    private void updateBoardDataInit(WebBoardDTO webBoardDTO, PreparedStatement pstmt)
+    private void updateBoardDataInit(Board board, int boardId, PreparedStatement pstmt)
         throws SQLException {
-        pstmt.setBoolean(1, webBoardDTO.getTurnIsWhite());
-        pstmt.setBoolean(2, webBoardDTO.getIsFinish());
-        pstmt.setInt(3, webBoardDTO.getBoardId());
+        pstmt.setBoolean(1, board.turn().isWhite());
+        pstmt.setBoolean(2, board.isFinish());
+        pstmt.setInt(3, boardId);
     }
 }

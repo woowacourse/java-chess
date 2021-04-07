@@ -6,7 +6,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class AbstractState implements State {
 
