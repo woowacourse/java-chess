@@ -33,15 +33,15 @@ public final class ChessWebController {
 
         get("/chess", chessRender());
 
-        post("/create", createBoard());
+        post("/api/create", createBoard());
 
-        post("/join", joinBoard());
+        post("/api/join", joinBoard());
 
-        put("/move", movePiece());
+        put("/api/move", movePiece());
 
-        get("/movablePositions", movablePosition());
+        get("/api/movablePositions", movablePosition());
 
-        get("/search", searchBoard());
+        get("/api/search", searchBoard());
     }
 
     private Route roomRender() {

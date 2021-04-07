@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:4567/";
+const HTML_URL = "http://localhost:4567/";
+const API_URL = HTML_URL + "api/";
 const BOARD_LIST = document.querySelector("#board-list");
 
 window.onload = () => {
@@ -50,7 +51,7 @@ function searchButtonEvent(event) {
 }
 
 function renderChess(responseData) {
-  location.href = API_URL + "chess?boardId=" + responseData["boardId"]
+  location.href = HTML_URL + "chess?boardId=" + responseData["boardId"]
 }
 
 function getOption(methodType, bodyData) {

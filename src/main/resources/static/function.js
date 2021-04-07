@@ -1,6 +1,7 @@
 const BOARD = document.querySelector("#board");
 const CURRENT_PLAYER = document.querySelector("#current-player");
-const API_URL = "http://localhost:4567/";
+const HTML_URL = "http://localhost:4567/";
+const API_URL = HTML_URL + "api/";
 const DEFAULT_PATH = "./image/";
 const MOVABLE_CLASS_NAME = "movable";
 const BOARD_ID = parseInt(document.querySelector("#room-number").textContent, 10);
@@ -26,7 +27,7 @@ let source = null;
 window.onload = () => {
     const divs = BOARD.querySelectorAll("div");
     document.querySelector("#exit-button").addEventListener("click", exitButtonEvent);
-    history.pushState(null, "우아한 체스", API_URL+"chess");
+    history.pushState(null, "우아한 체스", HTML_URL+"chess");
     boardJoin();
     for (const div of divs) {
         div.addEventListener("click", divClickEvent);
@@ -198,5 +199,5 @@ function dataSetting() {
 }
 
 function exitButtonEvent() {
-    location.href = API_URL + "room";
+    location.href = HTML_URL;
 }
