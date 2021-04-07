@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChessDAO {
+final public class ChessDAO {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
