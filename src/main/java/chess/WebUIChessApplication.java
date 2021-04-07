@@ -1,8 +1,9 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.controller.dto.MoveRequestDto;
+import chess.controller.dto.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -23,17 +24,28 @@ public class WebUIChessApplication {
         });
 
         post("/game", (request, response) -> {
-            webChessController.newGame();
+            NewGameRequestDto newGameRequestDto = gson.fromJson(request.body(), NewGameRequestDto.class);
+            Long gameID =  webChessController.newGame(newGameRequestDto);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("gameID", gameID);
+            return jsonObject;
+        }, gson::toJson);
+
+        get("/game/:id", (request, response) -> {
+            Long gameID = Long.parseLong(request.params("id"));
+            GameResponseDto gameResponseDto = webChessController.findGameByGameId(gameID);
             Map<String, Object> model = new HashMap<>();
+            model.put("gameId", gameID);
+            model.put("whiteUsername", gameResponseDto.getWhiteUsername());
+            model.put("blackUsername", gameResponseDto.getBlackUsername());
+            model.put("roomName", gameResponseDto.getRoomName());
             return render(model, "board.html");
         });
 
-        get("/game", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "board.html");
-        });
-
-        get("/game/load", (request, response) -> webChessController.boardInfo(), gson::toJson);
+        get("/game/:id/load", (request, response) ->  {
+            Long gameID = Long.parseLong(request.params("id"));
+            return webChessController.findPiecesByGameId(gameID);
+        }, gson::toJson);
 
         get("/game/status", (request, response) -> webChessController.gameStatus(), gson::toJson);
 

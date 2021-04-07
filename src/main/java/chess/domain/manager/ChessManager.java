@@ -5,6 +5,10 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessManager {
     private static final Owner FIRST_TURN = Owner.WHITE;
@@ -83,6 +87,10 @@ public class ChessManager {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Map<Position, Piece> boardToMap() {
+        return new HashMap<>(this.board.getBoard());
     }
 
     public int turnNumber() {

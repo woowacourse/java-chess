@@ -2,6 +2,7 @@ package chess.domain.board.position;
 
 import chess.domain.direction.Direction;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Position {
@@ -99,6 +100,12 @@ public class Position {
 
     public int getVerticalIndex() {
         return vertical.getIndex();
+    }
+
+    public String parseString() {
+        String horizontal = this.horizontal.name().toLowerCase();
+        int vertical = this.vertical.getIndex();
+        return horizontal + vertical;
     }
 
     @Override

@@ -1,5 +1,6 @@
 const $board = document.querySelector("#main");
 const $sidebar = document.querySelector("#menu-container");
+const $gameId = document.querySelector("#game-id").innerHTML;
 let $isPlaying = true;
 let $turnOwner = "WHITE";
 
@@ -9,7 +10,7 @@ $board.addEventListener("click", onclickSquare);
 window.addEventListener("load", loadBoard)
 
 async function loadBoard() {
-    await fetch("http://localhost:4567/game/load")
+    await fetch("http://localhost:4567/game/" + $gameId + "/load")
         .then(data => {
             if (!data.ok) {
                 throw new Error(data.status);

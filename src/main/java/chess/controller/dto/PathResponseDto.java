@@ -1,6 +1,7 @@
 package chess.controller.dto;
 
 import chess.domain.board.position.Path;
+import chess.domain.board.position.Position;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class PathResponseDto {
 
     public static PathResponseDto toPath(Path path) {
         return new PathResponseDto(path.stream()
-                .map(position -> position.getHorizontal().name().toLowerCase() + position.getVerticalIndex())
+                .map(Position::parseString)
                 .collect(Collectors.toList()));
     }
 

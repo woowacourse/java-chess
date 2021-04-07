@@ -3,8 +3,14 @@ const $start = document.querySelector("#start-btn");
 $start.addEventListener("click", startGame);
 
 function startGame(event) {
+    const $roomName = document.querySelector("#room-name").value;
+    const $whiteUsername = document.querySelector("#white-username").value;
+    const $blackUsername = document.querySelector("#black-username").value;
+
     const room = {
-        id : Date.now().toString()
+        roomName: $roomName,
+        whiteUsername: $whiteUsername,
+        blackUsername: $blackUsername
     }
 
     const option = {
@@ -20,7 +26,10 @@ function startGame(event) {
             if (!data.ok) {
                 throw new Error(data.status);
             }
-            location.href = "http://localhost:4567/game";
+            return data.json();
+        })
+        .then(post => {
+            location.href = "http://localhost:4567/game/" + post.gameID;
         })
         .catch(error => {
             console.log(error);

@@ -17,6 +17,23 @@ body {
     font-size: 4vw;
 }
 
+#input-container {
+    font-size: 1.5vw;
+    height: 12vw;
+}
+
+.game {
+    height: 3vw;
+}
+
+.game-input {
+    float: right;
+    height: 2vw;
+    right: 7vw;
+    position: relative;
+    width: 15vw;
+}
+
 #main-container {
     position: absolute;
     width: 100%;
