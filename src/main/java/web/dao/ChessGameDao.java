@@ -1,12 +1,14 @@
-package database;
+package web.dao;
+
+import chess.domain.board.Board;
+import chess.domain.board.InitBoardGenerator;
+import chess.domain.command.Command;
+import chess.domain.command.Commands;
+import chess.domain.game.ChessGame;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class RoomDao {
-    public static final int NO_ROOM_NUMBER = 0;
-
+public class ChessGameDao {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
@@ -33,36 +35,34 @@ public class RoomDao {
         return con;
     }
 
-    public int newRoomId() throws SQLException {
-        int roomId = NO_ROOM_NUMBER;
+    public void addCommand(String command, int roomId) throws SQLException {
         try (Connection con = getConnection()) {
-            String query = "INSERT INTO chessRoom() VALUES()";
+            String query = "INSERT INTO chessGame(command, room_id) VALUES (?, ?)";
             PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, command);
+            pstmt.setInt(2, roomId);
             pstmt.executeUpdate();
-            query = "SELECT LAST_INSERT_ID()";
-            pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                roomId = rs.getInt(1);
-            }
         }
-
-        return roomId;
     }
 
-    public List<Integer> findRoomIds() throws SQLException {
-        List<Integer> roomIds = new ArrayList<>();
+    public ChessGame findByRoomId(int roomId) throws SQLException {
+        ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
+        chessGame.start();
+        Commands commands = Commands.initCommands(chessGame);
+
         try (Connection con = getConnection()) {
-            String query = "SELECT room_id FROM chessRoom";
+            String query = "SELECT command FROM chessGame WHERE room_id = ? ORDER BY command_id";
             PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, roomId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                roomIds.add(rs.getInt("room_id"));
+                String move = rs.getString("command");
+                Command command = commands.matchedCommand(move);
+                command.execution(move);
             }
         }
 
-        return roomIds;
+        return chessGame;
     }
 }
