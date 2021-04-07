@@ -2,12 +2,15 @@ package chess.domain.piece;
 
 
 import chess.domain.grid.Grid;
-import chess.domain.grid.gridstrategy.TestGridStrategy;
+import chess.domain.grid.gridStrategy.TestGridStrategy;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class KingTest {
     @Test
@@ -61,7 +64,7 @@ public class KingTest {
         grid.lines().assign(new Position("b2"), king);
         assertThatThrownBy(() -> {
             king.validateSteps(new Empty('c', '4'), grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @Test
@@ -74,6 +77,6 @@ public class KingTest {
         grid.lines().assign(new Position("c3"), obstacle);
         assertThatThrownBy(() -> {
             king.validateRoute(obstacle, grid.lines());
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 }

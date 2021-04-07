@@ -3,6 +3,7 @@ package chess.domain.state;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class FinishedTest {
     public void start() {
         assertThatThrownBy(() -> {
             new Finished().start();
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이미 게임이 끝났습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이미 게임이 끝났습니다.");
     }
 
     @Test
@@ -25,7 +26,7 @@ public class FinishedTest {
                     new Grid(new NormalGridStrategy()),
                     new Position('a', '2'),
                     new Position('a', '3'));
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이미 게임이 끝났습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이미 게임이 끝났습니다.");
     }
 
     @Test
@@ -33,7 +34,7 @@ public class FinishedTest {
     public void end() {
         assertThatThrownBy(() -> {
             new Finished().end();
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이미 게임이 끝났습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이미 게임이 끝났습니다.");
     }
 
     @Test
@@ -41,6 +42,6 @@ public class FinishedTest {
     public void status() {
         assertThatThrownBy(() -> {
             new Finished().status();
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("이미 게임이 끝났습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("이미 게임이 끝났습니다.");
     }
 }

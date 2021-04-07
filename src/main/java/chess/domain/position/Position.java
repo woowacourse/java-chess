@@ -32,7 +32,8 @@ public final class Position {
     }
 
     public boolean isInValidRange() {
-        return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
+        return x >= MIN_X_RANGE && x <= MAX_X_RANGE
+                && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
     }
 
     public Position next(final int xDegree, final int yDegree) {

@@ -1,8 +1,8 @@
-package chess.domain.grid.gridstrategy;
+package chess.domain.grid.gridStrategy;
 
 import chess.domain.grid.Line;
 import chess.domain.grid.Row;
-import chess.domain.grid.gridStrategy.GridStrategy;
+import chess.domain.piece.Color;
 import chess.domain.state.GameState;
 import chess.domain.state.Playing;
 
@@ -28,4 +28,10 @@ public class TestGridStrategy implements GridStrategy {
     public GameState initGameState() {
         return new Playing();
     }
+
+    @Override
+    public Color turn() {
+        return Color.WHITE;
+    }
 }
+

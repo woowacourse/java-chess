@@ -3,6 +3,7 @@ package chess.domain.state;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ public class ReadyTest {
                     new Grid(new NormalGridStrategy()),
                     new Position('a', '2'),
                     new Position('a', '3'));
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("아직 게임이 시작되지 않았습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("아직 게임이 시작되지 않았습니다.");
     }
 
     @Test
@@ -38,6 +39,6 @@ public class ReadyTest {
     public void status() {
         assertThatThrownBy(() -> {
             new Ready().status();
-        }).isInstanceOf(IllegalArgumentException.class).hasMessage("아직 게임이 시작되지 않았습니다.");
+        }).isInstanceOf(ChessException.class).hasMessage("아직 게임이 시작되지 않았습니다.");
     }
 }

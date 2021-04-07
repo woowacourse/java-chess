@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public final class Knight extends Piece {
-    private static final char NAME_WHEN_BLACK = 'N';
-    private static final char NAME_WHEN_WHITE = 'n';
+    public static final char NAME_WHEN_BLACK = 'N';
+    public static final char NAME_WHEN_WHITE = 'n';
     private static final int STEP_RANGE = 1;
     private static final double SCORE = 2.5;
 
@@ -22,6 +22,11 @@ public final class Knight extends Piece {
 
     public Knight(final Color color, final char x, final char y) {
         super(color, x, y);
+    }
+
+    @Override
+    public Piece create(Color color, char x, char y) {
+        return new Knight(color, x, y);
     }
 
     @Override
@@ -45,6 +50,11 @@ public final class Knight extends Piece {
     @Override
     public double score() {
         return SCORE;
+    }
+
+    @Override
+    public boolean match(char pieceName) {
+        return pieceName == NAME_WHEN_BLACK || pieceName == NAME_WHEN_WHITE;
     }
 }
 

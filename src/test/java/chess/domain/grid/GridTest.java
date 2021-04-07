@@ -1,6 +1,7 @@
 package chess.domain.grid;
 
-import chess.domain.grid.gridstrategy.TestGridStrategy;
+import chess.domain.grid.gridStrategy.NormalGridStrategy;
+import chess.domain.grid.gridStrategy.TestGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -30,5 +31,12 @@ public class GridTest {
         Piece piece = new Queen(Color.WHITE, 'b', '4');
         grid.lines().assign(position, piece);
         assertThat(grid.score(Color.WHITE)).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("Grid 내에 있는 모든 Piece들을 조회한 개수가 64개가 맞는 지 테스트")
+    public void pieces() {
+        Grid grid = new Grid(new NormalGridStrategy());
+        assertThat(grid.pieces().size()).isEqualTo(64);
     }
 }

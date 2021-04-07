@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<div id="layout-wrap">
+    <div id="layout">
+        <table id="chess-board">
+        </table>
+        <div>
+            <button class="btn" id="start-btn">
+                Start
+            </button>
+            <button class="btn" id="restart-btn">
+                Restart
+            </button>
+            <div>
+                <div class="player">
+                    Player2
+                </div>
+                <div class="player" id="player1">
+                    Player1
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/script.js" type="module"></script>
 </body>
 </html>

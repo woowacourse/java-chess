@@ -16,10 +16,14 @@ public final class Grid {
     private GameState gameState;
 
     public Grid(GridStrategy gridStrategy) {
+        initGame(gridStrategy);
+    }
+
+    private void initGame(GridStrategy gridStrategy) {
         List<Line> lineGroup = gridStrategy.linesInInitGrid();
         this.lines = new Lines(lineGroup);
         this.score = new Score(lines);
-        this.turn = Color.WHITE;
+        this.turn = gridStrategy.turn();
         this.gameState = gridStrategy.initGameState();
     }
 
@@ -37,6 +41,12 @@ public final class Grid {
 
     public void move(final Piece sourcePiece, final Piece targetPiece) {
         this.gameState = gameState.move(this, sourcePiece.position(), targetPiece.position());
+    }
+
+    public void move(final String sourcePosition, final String targetPosition) {
+        Position start = new Position(sourcePosition.charAt(0), sourcePosition.charAt(1));
+        Position end = new Position(targetPosition.charAt(0), targetPosition.charAt(1));
+        this.gameState = gameState.move(this, start, end);
     }
 
     public void start() {
@@ -84,5 +94,9 @@ public final class Grid {
 
     public boolean isKingCaught() {
         return score.isKingCaught();
+    }
+
+    public List<Piece> pieces() {
+        return lines.pieces();
     }
 }

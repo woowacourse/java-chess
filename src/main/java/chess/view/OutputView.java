@@ -48,9 +48,4 @@ public class OutputView {
             System.out.println("White 플레이어가 승리하였습니다.");
         }
     }
-
-    public static void printError(IllegalArgumentException error) {
-        System.err.println(error.getMessage());
-        System.out.println("다시 입력 해주세요.");
-    }
 }

@@ -4,11 +4,13 @@ import chess.domain.grid.Grid;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.response.ResponseCode;
+import chess.exception.ChessException;
 
 public class Playing implements GameState {
     @Override
     public GameState start() {
-        throw new IllegalArgumentException("이미 게임이 시작했습니다.");
+        throw new ChessException(ResponseCode.GAME_START);
     }
 
     @Override
@@ -34,17 +36,17 @@ public class Playing implements GameState {
 
     private void validateMyPiece(final Piece sourcePiece, final Grid grid) {
         if (!grid.isMyTurn(sourcePiece.color())) {
-            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
+            throw new ChessException(ResponseCode.MY_PIECE_MOVE);
         }
     }
 
-    private final void validateSourcePieceIsEmpty(final Piece sourcePiece) {
+    private void validateSourcePieceIsEmpty(final Piece sourcePiece) {
         if (sourcePiece.isEmpty()) {
-            throw new IllegalArgumentException("움직이려는 대상이 빈칸입니다");
+            throw new ChessException(ResponseCode.EMPTY_CANNOT_MOVE);
         }
     }
 
-    private final boolean isKingCaught(final Piece targetPiece) {
+    private boolean isKingCaught(final Piece targetPiece) {
         return targetPiece instanceof King;
     }
 
