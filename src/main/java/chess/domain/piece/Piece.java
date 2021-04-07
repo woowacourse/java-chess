@@ -9,20 +9,33 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final String name;
+    private final String unicode;
     private final Team team;
     private final double score;
     private final MoveStrategy moveStrategy;
 
-    public Piece(String name, Team team, double score, MoveStrategy moveStrategy) {
+    public Piece(String name, String whiteUnicode, String blackUnicode, Team team, double score, MoveStrategy moveStrategy) {
         this.team = team;
+        this.unicode = unicodeSelector(whiteUnicode, blackUnicode, team);
         this.name = convertName(name, team);
         this.score = score;
         this.moveStrategy = moveStrategy;
     }
 
-    public abstract boolean isKing();
+    public String unicodeSelector(String whiteUnicode, String blackUnicode, Team team) {
+        if (team.equals(Team.BLACK)) {
+            return blackUnicode;
+        }
+        return whiteUnicode;
+    }
 
-    public abstract boolean isPawn();
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
 
     private String convertName(String name, Team team) {
         if (team.isBlack()) {
@@ -63,7 +76,15 @@ public abstract class Piece {
         return team;
     }
 
+    public Team getNextTurnOwner() {
+        return team.getOpposite();
+    }
+
     public double getScore() {
         return score;
+    }
+
+    public String getUnicode() {
+        return unicode;
     }
 }

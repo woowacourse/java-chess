@@ -45,13 +45,12 @@ public class Board {
     private Team movePieceIfPossible(Piece targetPiece, Position target, Position destination) {
         if (targetPiece.canMove(target, destination, this)) {
             Piece destinationPiece = findPieceFromPosition(destination);
-            exitWhenPieceIsKing(destinationPiece);
             loseScoreWhenDestinationIsPiece(destinationPiece);
 
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
 
-            return targetPiece.getTeam();
+            return targetPiece.getNextTurnOwner();
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
     }
@@ -73,12 +72,6 @@ public class Board {
         if (Objects.nonNull(destinationPiece)) {
             lostScoreByTeam.put(destinationPiece.getTeam()
                     , lostScoreByTeam.get(destinationPiece.getTeam()) + destinationPiece.getScore());
-        }
-    }
-
-    private void exitWhenPieceIsKing(Piece destinationPiece) {
-        if (Objects.nonNull(destinationPiece) && destinationPiece.isKing()) {
-            System.exit(0);
         }
     }
 
@@ -140,5 +133,15 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public boolean isAnyKingDead() {
+        int cnt = 0;
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            if (Objects.nonNull(entry.getValue()) && entry.getValue().isKing()) {
+                cnt += 1;
+            }
+        }
+        return cnt != 2;
     }
 }

@@ -15,8 +15,8 @@ public enum Horizontal {
     private final String value;
     private final int weight;
 
-    Horizontal(final String horizontalValue, final int weight) {
-        this.value = horizontalValue;
+    Horizontal(final String value, final int weight) {
+        this.value = value;
         this.weight = weight;
     }
 
@@ -36,6 +36,10 @@ public enum Horizontal {
 
     public boolean isSameHorizontal(Position position) {
         return this == position.getHorizontal();
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public int getWeight() {

@@ -1,18 +1,15 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.Horizontal;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
-import chess.domain.board.Vertical;
 import chess.domain.piece.Team;
+
+import java.util.Map;
 
 import static chess.controller.ChessController.boardFactory;
 
 public class ChessGame {
-    private static final int TARGET_POSITION_INDEX = 1;
-    private static final int DESTINATION_POSITION_INDEX = 2;
-    public static final String DELIMITER = " ";
-
     private Board board;
     private Team turnOwner;
 
@@ -21,25 +18,21 @@ public class ChessGame {
         turnOwner = Team.WHITE;
     }
 
-    public void move(String command) {
+    public void move(String target, String destination) {
         boardInitializeCheck();
-        String[] commands = command.split(DELIMITER);
-        turnOwner = board.movePiece(convertStringToPosition(commands[TARGET_POSITION_INDEX]),
-                convertStringToPosition(commands[DESTINATION_POSITION_INDEX]), turnOwner);
+        turnOwner = board.movePiece(convertStringToPosition(target),
+                convertStringToPosition(destination), turnOwner);
     }
 
-    public double status(Team team) {
+    public String scoreStatus() {
         boardInitializeCheck();
-        return board.calculateScore(team);
-    }
-
-    public void end() {
-        System.exit(0);
+        double whiteScore = board.calculateScore(Team.WHITE);
+        double blackScore = board.calculateScore(Team.BLACK);
+        return "백 : " + whiteScore + "  흑 : " + blackScore;
     }
 
     private Position convertStringToPosition(String input) {
-        return Position.of(Horizontal.find(input.substring(0, 1)),
-                Vertical.find(input.substring(1, 2)));
+        return Position.convertStringToPosition(input);
     }
 
     private void boardInitializeCheck() {
@@ -48,7 +41,16 @@ public class ChessGame {
         }
     }
 
+    public void loadSavedBoardInfo(Map<String, String> boardInfo, String turnOwner) {
+        board = BoardFactory.loadSavedBoardInfo(boardInfo);
+        this.turnOwner = Team.convertStringToTeam(turnOwner);
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public Team getTurnOwner() {
+        return turnOwner;
     }
 }
