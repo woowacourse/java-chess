@@ -24,6 +24,7 @@ public class WebController {
     private final Gson gson = new Gson();
     private ChessBoard chessBoard;
     private final ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+    private final HandlebarsTemplateEngine handler = new HandlebarsTemplateEngine();
 
     public Object start(Request request, Response response) {
         Map<String, PieceOnBoardDTO> pieces = getAllPieces();
@@ -106,6 +107,6 @@ public class WebController {
     }
 
     private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return handler.render(new ModelAndView(model, templatePath));
     }
 }
