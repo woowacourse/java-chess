@@ -1,7 +1,9 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,6 +21,10 @@ public class Position {
     private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static List<Position> getPositionCache() {
+        return new ArrayList<>(POSITION_CACHE.values());
     }
 
     public static Position of(String value) {

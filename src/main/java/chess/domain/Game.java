@@ -38,15 +38,17 @@ public class Game {
         if (!players.currentPlayer(turn).isOwnerOf(source)) {
             throw new IllegalArgumentException(INVALID_SOURCE_ERROR_MESSAGE);
         }
-        board.move(source, to);
-        turn = turn.reversed();
-        RefreshState();
+        if (board.move(from, to)) {
+            refreshState();
+        }
     }
 
-    private void RefreshState() {
+    private void refreshState() {
         if (board.kingDead()) {
             changeState(new End());
+            return;
         }
+        turn = turn.reversed();
     }
 
     public void changeState(State state) {
@@ -76,4 +78,5 @@ public class Game {
     public String getWinner() {
         return getResult().findWinner();
     }
+
 }

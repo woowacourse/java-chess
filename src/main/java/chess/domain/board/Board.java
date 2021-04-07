@@ -41,16 +41,22 @@ public class Board {
         return coordinates.get(piece);
     }
 
-    public void move(Piece piece, Position target) {
-        Path path = generateAvailablePath(piece);
-        if (path.isAble(target)) {
+    public boolean move(Position source, Position target) {
+        Path path = generateAvailablePath(source);
+        if (isMovable(target, path)) {
             coordinates.remove(findPieceBy(target));
-            putPiece(piece, target);
+            putPiece(findPieceBy(source), target);
+            return true;
         }
+        return false;
     }
 
-    public Path generateAvailablePath(Piece piece) {
-        return piece.generatePaths(findPositionBy(piece), this);
+    public boolean isMovable(Position target, Path path) {
+        return path.isAble(target);
+    }
+
+    public Path generateAvailablePath(Position from) {
+        return findPieceBy(from).generatePaths(from, this);
     }
 
     public Map<Piece, Position> remainPieces(PieceColor color) {

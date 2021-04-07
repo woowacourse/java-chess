@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+* {
+  font-family: 'DotGothic16', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0 auto;
+  background-color: #ffb6c1;
+}
+
+h1 {
+  color: #4169e1;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+  letter-spacing: 8px;
+}
+
+.chess-game {
+  margin: 0 auto;
+  max-width: 1000px;
+  height: 600px;
+  width: 100%;
+  padding: 10px;
+  background-color: #4169e1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  width: 580px;
+  height: 580px;
+  background-color: #4169e1;
+}
+
+.d-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile {
+  width: 70px;
+  height: 70px;
+}
+
+.tile:nth-of-type(2n) {
+  background-color: #6495ed;
+}
+
+.tile:nth-of-type(2n-1) {
+  background-color: lightpink;
+}
+
+.start-pink > .tile:nth-of-type(2n-1) {
+  background-color: cornflowerblue;
+}
+
+.start-pink > .tile:nth-of-type(2n) {
+  background-color: lightpink;
+}
+
+.column-rank {
+  width: 70px;
+  text-align: center;
+}
+
+.col {
+  padding-left: 20px;
+}
+
+.row_number {
+  width: 10px;
+  height: 70px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.location {
+  font-size: 20px;
+  color: lightpink;
+  font-weight: bold;
+}
+
+.end {
+  pointer-events: none;
+}
+
+.box {
+  width: 20%;
+  height: 420px;
+  margin-left: 20px;
+  background-color: rgba(100, 149, 237, 0.3);
+  text-align: center;
+  color: lightpink;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 3px;
+  word-spacing: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box:hover {
+  background-color: rgba(100, 149, 237, 0.5);
+}
+
+.menus {
+  width: 70%;
+  margin-top: -20px;
+}
+
+.room-number {
+  font-size: 40px;
+}
+
+.players {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.winning {
+  color: firebrick;
+}
+
+.hidden {
+  display: none;
+}
+
+.horizontal-button {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button:hover, .button:focus {
+  animation-duration: 0.7s;
+  animation-name: rainbowLink;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rainbowLink {
+  0% {
+    color: #ff2a2a;
+  }
+  15% {
+    color: #ff7a2a;
+  }
+  30% {
+    color: #ffc52a;
+  }
+  45% {
+    color: #43ff2a;
+  }
+  60% {
+    color: #2a89ff;
+  }
+  75% {
+    color: #202082;
+  }
+  90% {
+    color: #6b2aff;
+  }
+  100% {
+    color: #e82aff;
+  }
+}
+
+.horizontal-divider {
+  border-top: 3px dotted #ffb6c1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.vertical-divider {
+  border-left: 2px solid lightpink;
+  height: 70px;
+  margin-left: 5px;
+  margin-right: 7px;
+  align-self: center;
+}
+
+.d-flex > .tile:hover {
+  background-color: aquamarine;
+  cursor: grab;
+}
+
+.d-flex > .selected, .d-flex > .start-pink > .selected, img > .selected {
+  background-color: aquamarine;
+}
+
+.d-flex > .path, .d-flex > .start-pink > .path {
+  background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      springgreen 1rem,
+      springgreen 2rem
+  );
+  background-size: 200% 200%;
+  animation: barberpole 10s linear infinite;
+}
+
+@keyframes barberpole {
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
