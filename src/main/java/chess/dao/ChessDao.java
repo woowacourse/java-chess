@@ -4,6 +4,7 @@ import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
 import chess.dto.PlayerIdsDto;
 import chess.dto.UserIdsDto;
+import chess.exception.DataAccessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +28,7 @@ public class ChessDao {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("데이터베이스 드라이버 로딩에 에러가 발생했습니다.");
         }
 
         // 드라이버 연결
@@ -38,7 +39,7 @@ public class ChessDao {
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("데이터베이스 드라이버 연결에 에러가 발생했습니다.");
         }
 
         return con;
@@ -52,6 +53,7 @@ public class ChessDao {
             }
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
+            throw new DataAccessException("데이터베이스 드라이버 연결해제에 에러가 발생했습니다.");
         }
     }
 
