@@ -59,7 +59,7 @@ public final class ChessWebController {
                 model.put("boardId", boardId);
                 return render(model, "index.html");
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
@@ -73,7 +73,7 @@ public final class ChessWebController {
                 Map<String, Integer> boardInfo = chessService.start(whitePlayer, blackPlayer);
                 return gson.toJson(boardInfo);
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
@@ -86,7 +86,7 @@ public final class ChessWebController {
                 Map<String, String> boardInfo = chessService.joinBoard(boardId);
                 return gson.toJson(boardInfo);
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
@@ -101,7 +101,7 @@ public final class ChessWebController {
                 Map<String, String> boardInfo = chessService.movedPiece(boardId, source, target);
                 return gson.toJson(boardInfo);
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
@@ -115,7 +115,7 @@ public final class ChessWebController {
                     .movablePositions(Integer.parseInt(boardId), source);
                 return gson.toJson(movablePositions);
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
@@ -127,7 +127,7 @@ public final class ChessWebController {
                 List<Map<String, Object>> boards = chessService.searchBoard(playerName);
                 return gson.toJson(boards);
             } catch (Exception e) {
-                return halt(ResponseStatus.BAD_REQUEST);
+                return halt(ResponseStatus.BAD_REQUEST.getStateCode());
             }
         };
     }
