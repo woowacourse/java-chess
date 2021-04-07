@@ -9,7 +9,7 @@ import static chess.domain.board.ChessBoardInfo.COLUMN_LAST;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.result.ResultDto;
+import chess.domain.result.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,10 +68,10 @@ public class OutputView {
         System.out.println(NOTICE_CHESS_GAME_HOW_MOVE);
     }
 
-    public static void printScore(ResultDto resultDto) {
-        System.out.println(String.format(SKELETON_RESULT_WHITE_SCORE, resultDto.whiteScore()));
-        System.out.println(String.format(SKELETON_RESULT_BLACK_SCORE, resultDto.blackScore()));
-        System.out.println(String.format(WINNER, resultDto.getWinner()));
+    public static void printScore(Result result) {
+        System.out.println(String.format(SKELETON_RESULT_WHITE_SCORE, result.whiteScore()));
+        System.out.println(String.format(SKELETON_RESULT_BLACK_SCORE, result.blackScore()));
+        System.out.println(String.format(WINNER, result.getWinner()));
     }
 
     public static void printErrorMessage(Exception exception) {

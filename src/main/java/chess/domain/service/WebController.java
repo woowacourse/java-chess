@@ -7,7 +7,7 @@ import chess.domain.dto.MoveRequestDTO;
 import chess.domain.dto.MoveResultDTO;
 import chess.domain.dto.PieceOnBoardDTO;
 import chess.domain.piece.Piece;
-import chess.domain.result.ResultDto;
+import chess.domain.result.Result;
 import com.google.gson.Gson;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class WebController {
 
     private MoveResultDTO createMoveResultDTO(MoveRequestDTO moveRequestDTO)
         throws SQLException {
-        ResultDto result;
+        Result result;
         MoveResultDTO moveResultDTO;
         try {
             chessBoard.move(moveRequestDTO.getSource(), moveRequestDTO.getTarget());
@@ -58,7 +58,7 @@ public class WebController {
         return moveResultDTO;
     }
 
-    private MoveResultDTO getMoveResultDTO(ResultDto result, boolean state) {
+    private MoveResultDTO getMoveResultDTO(Result result, boolean state) {
         return new MoveResultDTO(state,
             chessBoard.isPlaying(),
             result.whiteScore().getScore(),
