@@ -2,9 +2,11 @@ package domain.piece;
 
 import domain.board.Score;
 import domain.position.Position;
+import exception.IllegalMoveException;
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
 
     private final String name;
     private final Color color;
@@ -18,7 +20,7 @@ public abstract class Piece {
 
     public Piece(String name) {
         this.name = name;
-        this.color = null;
+        this.color = Color.NONE;
         this.score = null;
     }
 
@@ -35,7 +37,7 @@ public abstract class Piece {
 
     public void validateMove(Map<Position, Piece> board, Position source, Position target) {
         if (!canMove(board, source, target)) {
-            throw new IllegalArgumentException("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
+            throw new IllegalMoveException();
         }
     }
 
@@ -45,6 +47,10 @@ public abstract class Piece {
 
     public boolean isBlack() {
         return color.isBlack();
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public boolean isNotEmpty() {
@@ -61,6 +67,10 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public boolean isAlly(Color color) {
+        return this.color.equals(color);
     }
 
     protected abstract boolean canMove(Map<Position, Piece> board, Position source,

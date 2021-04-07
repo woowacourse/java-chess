@@ -4,7 +4,10 @@ import domain.board.Board;
 import domain.command.Command;
 import domain.command.Commands;
 import domain.piece.Color;
+import domain.piece.Piece;
+import domain.position.Position;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGameManager {
 
@@ -44,11 +47,11 @@ public class ChessGameManager {
         return chessGame.board();
     }
 
-    public boolean isBlackKingAlive(){
+    public boolean isBlackKingAlive() {
         return chessGame.isKingAlive(Color.BLACK);
     }
 
-    public boolean isWhiteKingAlive(){
+    public boolean isWhiteKingAlive() {
         return chessGame.isKingAlive(Color.WHITE);
     }
 

@@ -24,7 +24,7 @@ class KnightTest {
 
         board.put(sourcePosition, blackKnight);
 
-        assertThat(blackKnight.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
+        assertThat(blackKnight.canMove(board.getPieces(), sourcePosition, targetPosition)).isTrue();
     }
 
     @DisplayName("나이트는 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
@@ -43,7 +43,7 @@ class KnightTest {
             .hasMessage("[Error] 해당 기물은 target 위치로 이동할 수 없습니다.");
     }
 
-    @DisplayName("나이트은 다른 편 기물이 있는 위치로 이동할 수 있다.")
+    @DisplayName("나이트는 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
     void testMoveEnemyPiecePlace() {
         Board board = new Board();
@@ -55,7 +55,7 @@ class KnightTest {
         board.put(sourcePosition, blackKnight);
         board.put(targetPosition, blackRook);
 
-        assertThat(blackKnight.canMove(board.getBoard(), sourcePosition, targetPosition)).isTrue();
+        assertThat(blackKnight.canMove(board.getPieces(), sourcePosition, targetPosition)).isTrue();
     }
 
 }

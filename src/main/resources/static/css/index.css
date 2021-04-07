@@ -1,0 +1,60 @@
+.chess-board {
+  text-align: center;
+}
+
+.chess-board-cell {
+  display: grid;
+  grid-template-columns: repeat(8, 80px);
+  grid-template-rows: repeat(8, 80px);
+  position: absolute;
+  left: 548px;
+  top: 57px;
+}
+
+.chess-board-image {
+  position: absolute;
+  top: 33px;
+  left: 523px;
+}
+
+.chess-piece {
+  width: 70px;
+  margin-top: 6px;
+  margin-left: -3px;
+}
+
+.chess-game-move-button {
+  position: absolute;
+  top: 840px;
+  left: 670px;
+}
+
+.chess-game-start-button {
+  position: absolute;
+  top: 765px;
+  left: 521px;
+}
+
+.chess-game-score-button {
+  position: absolute;
+  top: 803px;
+  left: 521px;
+}
+
+.chess-game-exit-button {
+  position: absolute;
+  top: 840px;
+  left: 521px;
+}
+
+.chess-game-restart-button {
+  position: absolute;
+  top: 876px;
+  left: 521px;
+}
+
+.chess-game-select-gameId-button {
+  position: absolute;
+  top: 730px;
+  left: 520px;
+}

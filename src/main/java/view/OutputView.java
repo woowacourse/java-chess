@@ -21,7 +21,7 @@ public class OutputView {
 
     public static void printBoard(ChessGameManager chessGameManager) {
         System.out.println();
-        Map<Position, Piece> chessBoard = chessGameManager.board().getBoard();
+        Map<Position, Piece> chessBoard = chessGameManager.board().getPieces();
         for (int row = 0; row < 8; row++) {
             printPieces(chessBoard, row);
         }
@@ -37,8 +37,8 @@ public class OutputView {
     }
 
     public static void printScore(ChessGameManager chessGameManager) {
-        double blackScore = chessGameManager.board().piecesScore(Color.BLACK).value();
-        double whiteScore = chessGameManager.board().piecesScore(Color.WHITE).value();
+        double blackScore = chessGameManager.board().piecesScore(Color.BLACK).getValue();
+        double whiteScore = chessGameManager.board().piecesScore(Color.WHITE).getValue();
         System.out.println("검은색 : " + blackScore + "점");
         System.out.println("흰색 : " + whiteScore + "점");
         if (blackScore > whiteScore) {

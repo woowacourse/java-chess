@@ -1,23 +1,21 @@
 package domain.piece;
 
-public enum Color {
+import java.io.Serializable;
 
-    BLACK("흑", true),
-    WHITE("백", false);
+public enum Color implements Serializable {
+
+    BLACK("검은색"),
+    WHITE("흰색"),
+    NONE("무색");
 
     private final String name;
-    private final boolean isBlack;
 
-    Color(String name, boolean isBlack) {
+    Color(String name) {
         this.name = name;
-        this.isBlack = isBlack;
     }
 
     public boolean isBlack() {
-        return isBlack;
+        return Color.BLACK.equals(this);
     }
 
-    public String getName() {
-        return name;
-    }
 }

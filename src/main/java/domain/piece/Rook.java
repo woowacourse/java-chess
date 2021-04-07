@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Rook extends Piece {
 
-    private static final Score SCORE = new Score(5);
     private static final String NAME = "r";
+    private static final Score SCORE = new Score(5);
 
     public Rook(Color color) {
         super(NAME, color, SCORE);

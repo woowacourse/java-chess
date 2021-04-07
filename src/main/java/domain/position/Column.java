@@ -3,11 +3,13 @@ package domain.position;
 import static domain.position.Position.CHESS_BOARD_END_RANGE;
 import static domain.position.Position.CHESS_BOARD_START_RANGE;
 
+import exception.IllegalPositionException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Column {
+public class Column implements Serializable {
 
     private static final List<String> chessColumns = Arrays
         .asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -24,8 +26,12 @@ public class Column {
 
     private void validateChessCoordinate(String chessCoordinate) {
         if (!chessColumns.contains(String.valueOf(chessCoordinate.charAt(0)))) {
-            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+            throw new IllegalPositionException();
         }
+    }
+
+    public String chessCoordinate() {
+        return chessColumns.get(value);
     }
 
     public Column sum(Column column) {

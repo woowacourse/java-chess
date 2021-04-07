@@ -1,8 +1,10 @@
 package domain.position;
 
+import exception.IllegalPositionException;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Serializable {
 
     public static final int CHESS_BOARD_START_RANGE = 0;
     public static final int CHESS_BOARD_END_RANGE = 8;
@@ -29,7 +31,7 @@ public class Position {
 
     private void validateChessCoordinate(String chessCoordinates) {
         if (chessCoordinates.length() != CHESS_COORDINATES_LENGTH) {
-            throw new IllegalArgumentException("[Error] 유효하지 않은 체스 좌표 입니다.");
+            throw new IllegalPositionException();
         }
     }
 
@@ -60,8 +62,7 @@ public class Position {
     }
 
     public boolean isNotLinearPosition(Position target) {
-        return !row.equals(target.row)
-            && !column.equals(target.column);
+        return !row.equals(target.row) && !column.equals(target.column);
     }
 
     public boolean isColumnEquals(Column column) {
@@ -77,6 +78,10 @@ public class Position {
 
     public boolean isChessBoardPosition() {
         return row.isChessBoardPosition() && column.isChessBoardPosition();
+    }
+
+    public String chessCoordinate() {
+        return column.chessCoordinate() + row.chessCoordinate();
     }
 
     @Override
