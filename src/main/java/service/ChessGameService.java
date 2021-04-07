@@ -23,10 +23,9 @@ public class ChessGameService {
     public ChessGameResponseDto putChessGame(ChessGameRequestDto chessGameRequestDto) {
         ChessGame chessGame = chessGameDao.selectByGameId(chessGameRequestDto.getGameId());
         chessGame.operate(chessGameRequestDto.isRestart(), chessGameRequestDto.isPlaying());
-
         chessGame = chessGameDao.updateChessGameByGameId(chessGameRequestDto.getGameId(), chessGame);
-        List<PieceResponseDto> pieceResponseDtos = pieceResponseDtos(chessGame);
-        return new ChessGameResponseDto(chessGame.isPlaying(), pieceResponseDtos);
+
+        return new ChessGameResponseDto(chessGame.isPlaying(), pieceResponseDtos(chessGame));
     }
 
     public List<PieceResponseDto> pieceResponseDtos(ChessGame chessGame) {
@@ -42,11 +41,13 @@ public class ChessGameService {
         ChessGame chessGame = chessGameDao.selectByGameId(piecesRequestDto.getGameId());
         chessGame.move(new Position(piecesRequestDto.getSource()), new Position(piecesRequestDto.getTarget()));
         chessGame = chessGameDao.updateChessGameByGameId(piecesRequestDto.getGameId(), chessGame);
+        
         return new PiecesResponseDto(chessGame, pieceResponseDtos(chessGame));
     }
 
     public ScoreResponseDto getScore(ScoreRequestDto scoreRequestDto) {
         ChessGame chessGame = chessGameDao.selectByGameId(scoreRequestDto.getGameId());
+
         return new ScoreResponseDto(chessGame.score(Color.BLACK), chessGame.score(Color.WHITE));
     }
 
