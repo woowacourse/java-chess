@@ -205,4 +205,3 @@ function isWhite(rank, fileIndex) {
 
     return (rank % 2 === 1) && (fileIndex % 2 === 1);
 }
-

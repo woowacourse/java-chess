@@ -21,5 +21,4 @@
     <logger name="src.main.java.chess.controller" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
-
 </configuration>

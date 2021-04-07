@@ -47,7 +47,7 @@ public class ChessDAO {
 
     public void updateTurn(Long chessId) throws SQLException {
         String query =
-                "UPDATE chess SET turn = IF(turn = 'WHITE', 'BLACK', 'WHITE') WHERE chess_id = (?);";
+                "UPDATE chess SET turn = IF(turn = 'WHITE', 'BLACK', 'WHITE') WHERE chess_id = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, chessId);
