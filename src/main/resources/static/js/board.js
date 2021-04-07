@@ -95,6 +95,8 @@ function onclickSquare(event) {
                 const $sourceImg = $board.querySelector("#"+$source).querySelector(".piece");
                 const $targetImg = $board.querySelector("#"+$target).querySelector(".piece");
                 if ($targetImg) {
+                    // TODO 체스말 이동시 targetImg에 className 색깔 변경 해주기
+                    replacePieceColor($targetImg);
                     $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
                     $board.querySelector("#"+$source).removeChild($sourceImg);
                 } else {
@@ -105,19 +107,18 @@ function onclickSquare(event) {
                 if ($isPlaying) {
                     state();
                 }
+                afterFinishedChangeState();
             })
             .catch(error => {
                 alert(error);
             })
     } else if (!$selectSquare.querySelector(".piece")) {
-        console.log("빈칸 누르면 실행됐니?");
         if ($selectSquare.classList.contains("movable")) {
             return;
         }
         $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red.png");
         setTimeout(invalidSquare, 1000, $source);
     } else if (!$selectSquare.querySelector(".piece").classList.contains($turnOwner.toLowerCase())) {
-        console.log("턴이랑 타겟 말이 다르면 실행됐니?");
         $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red-take.png");
         setTimeout(invalidSquare, 1000, $source);
     } else {
@@ -131,7 +132,8 @@ function onclickSquare(event) {
             .then(path => {
                 removeMovablePath();
                 $selectSquare.classList.add("selected");
-                $selectSquare.querySelector('.highlight').setAttribute("src", "../images/green-select.png");
+                $selectSquare.querySelector('.highlight')
+                    .setAttribute("src", "../images/green-select.png");
 
                 let $isCatchableEnemy;
                 for (const dto of path) {
@@ -146,7 +148,8 @@ function onclickSquare(event) {
                     $movableSquare = "../images/green-take.png"
                 }
                 for (const dto of path) {
-                    $board.querySelector("#" + dto).querySelector('.highlight').setAttribute("src", $movableSquare);
+                    $board.querySelector("#" + dto)
+                        .querySelector('.highlight').setAttribute("src", $movableSquare);
                 }
             })
             .catch(error => {
@@ -208,18 +211,32 @@ function state() {
                 alert("게임이 종료됐습니다!");
                 document.querySelector("#turn-color").classList.add("hidden");
                 document.querySelector("#turn-number").classList.add("hidden");
-
-                const $winner = document.querySelector("#turn-color").innerHTML.toString();
-                if ($winner.includes("WHITE")) {
-                    document.querySelector("#winner").innerHTML = "WHITE 승리!!";
-                }
-                if ($winner.includes("BLACK")) {
-                    document.querySelector("#winner").innerHTML = "BLACK 승리!!";
-                }
-                return;
+                document.querySelector("#winner").innerHTML = $turnOwner + " 승리!!";
             }
             $turnOwner = state.turnOwner;
             document.querySelector("#turn-color").innerHTML = "현재 턴 : " + state.turnOwner;
             document.querySelector("#turn-number").innerHTML = "턴 횟수 : " + state.turnNumber;
         })
+}
+
+function afterFinishedChangeState() {
+    if (!$isPlaying) {
+        if ($turnOwner === "WHITE") {
+            $turnOwner = "BLACK";
+            return;
+        }
+        if ($turnOwner === "BLACK") {
+            $turnOwner = "WHITE";
+        }
+    }
+}
+
+
+function replacePieceColor(targetImg) {
+    if ($turnOwner === "WHITE") {
+        targetImg.classList.replace("black", "white");
+    }
+    if ($turnOwner === "BLACK") {
+        targetImg.classList.replace("white", "black");
+    }
 }
