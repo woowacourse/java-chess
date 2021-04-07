@@ -38,7 +38,7 @@ public class GameDao {
     }
 
     public void save(final long roomId, final Turn turn, final Board board) throws SQLException {
-        final String query = "INSERT INTO game_status (room, turn, board) VALUES (?, ?, ?)";
+        final String query = "INSERT INTO game_status (room_id, turn, board) VALUES (?, ?, ?)";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
 
         insertQuery.setLong(1, roomId);
@@ -48,7 +48,7 @@ public class GameDao {
     }
 
     public GameDto load(final Long roomId) throws SQLException {
-        final String query = "SELECT * FROM game_status WHERE room = (?) ORDER BY id DESC limit 1";
+        final String query = "SELECT * FROM game_status WHERE room_id = (?) ORDER BY id DESC limit 1";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
         insertQuery.setLong(1, roomId);
         return makeGameDto(insertQuery.executeQuery());
@@ -63,11 +63,11 @@ public class GameDao {
 
     public void delete(final Long roomId) throws SQLException {
         final Statement statement = conn.createStatement();
-        statement.executeUpdate("DELETE FROM game_status WHERE room = " + roomId);
+        statement.executeUpdate("DELETE FROM game_status WHERE room_id = " + roomId);
     }
 
     public void update(final Long roomId, final Turn turn, final Board board) throws SQLException {
-        final String query = "UPDATE game_status SET turn = ?,  board= ?  WHERE  room = ?";
+        final String query = "UPDATE game_status SET turn = ?,  board= ?  WHERE room_id = ?";
         final PreparedStatement insertQuery = conn.prepareStatement(query);
 
         insertQuery.setString(1, turn.name());

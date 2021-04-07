@@ -33,6 +33,30 @@
     - db에서 텍스트 형태로 관리되는 보드 내용 (white_pawn, white_knight, black_pawn, , white_king...)
     - http 메소드 별 의미를 생각하지 않고 요청하고, 처리하고 있음
 
+##  실행 환경
+port : 4567   
+main page : /main   
+
+database : web_chess     
+table1 : room_status   
+``` java
+CREATE TABLE room_status(
+id int not null auto_increment primary key,
+room_name CHAR(10) not null,
+room_id BIGINT
+);
+```
+
+table2 : game_status   
+``` java
+CREATE TABLE game_status(
+id int not null auto_increment primary key,
+room BIGINT,
+turn  CHAR(10) not null,
+board TEXT
+);
+```
+
 ## 기능 구현 목록
 - 체스판 초기화
     - 가로는 a~h 까지, 세로는 1~8까지
