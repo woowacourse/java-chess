@@ -37,7 +37,7 @@ public class WebUIChessApplication {
 
         post("/move", (req, res) -> {
             MoveRequestDto moveRequestDto = GSON.fromJson(req.body(), MoveRequestDto.class);
-            res.status(NO_CONTENT);
+            res.status(OK);
             return chessService.move(moveRequestDto);
         }, GSON::toJson);
 
@@ -52,14 +52,14 @@ public class WebUIChessApplication {
         post("/grid/:gridId/start", (req, res) -> {
             String gridId = req.params("gridId");
             chessService.start(Long.parseLong(gridId));
-            res.status(NO_CONTENT);
+            res.status(OK);
             return new Response(ResponseCode.NO_CONTENT);
         }, GSON::toJson);
 
         post("/grid/:gridId/finish", (req, res) -> {
             String gridId = req.params("gridId");
             chessService.finish(Long.parseLong(gridId));
-            res.status(NO_CONTENT);
+            res.status(OK);
             return new Response(ResponseCode.NO_CONTENT);
         }, GSON::toJson);
 
