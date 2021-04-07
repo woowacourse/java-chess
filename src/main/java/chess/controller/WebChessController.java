@@ -18,8 +18,8 @@ public class WebChessController {
         return chessService.movablePath(movablePathRequestDto, gameId);
     }
 
-    public void move(MoveRequestDto moveRequestDto, Long gameId) {
-        chessService.move(moveRequestDto, gameId);
+    public HistoryResponseDto move(MoveRequestDto moveRequestDto, Long gameId) {
+        return chessService.move(moveRequestDto, gameId);
     }
 
     public Long newGame(NewGameRequestDto newGameRequestDto) {
@@ -40,5 +40,9 @@ public class WebChessController {
 
     public StateResponseDto findStateByGameId(Long gameID) {
         return chessService.findStateByGameId(gameID);
+    }
+
+    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+        return chessService.findHistoryByGameId(gameId);
     }
 }

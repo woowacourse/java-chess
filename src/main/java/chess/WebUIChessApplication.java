@@ -63,11 +63,15 @@ public class WebUIChessApplication {
             return webChessController.movablePath(source, gameId).getPath();
         }, gson::toJson);
 
+        get("/game/:id/history", (request, response) -> {
+            Long gameId = Long.parseLong(request.params("id"));
+            return webChessController.findHistoryByGameId(gameId);
+        }, gson::toJson);
+
         post("/game/:id/move", (request, response) -> {
             Long gameID = Long.parseLong(request.params("id"));
             MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
-            webChessController.move(moveRequestDto, gameID);
-            return "";
+            return webChessController.move(moveRequestDto, gameID);
         }, gson::toJson);
     }
 

@@ -13,6 +13,20 @@ body {
     display: none;
 }
 
+#name-container {
+    font-size: 2.5vw;
+    margin-left: 7vw;
+    margin-top: 1vw;
+}
+
+#game {
+    float: left;
+}
+
+#room-name {
+    float: left;
+}
+
 #chessTitle {
     font-size: 4vw;
 }
@@ -20,6 +34,88 @@ body {
 #input-container {
     font-size: 1.5vw;
     height: 12vw;
+}
+
+#top {
+    font-size: 2vw;
+    margin-left: 5vw;
+}
+
+.flag {
+    float: left;
+    margin-left: 1.5vw;
+    margin-top: 0.5vw;
+    padding-right: 1.5vw;
+    border-right: 2px solid;
+}
+
+.score {
+    float: right;
+    margin-top: 0.7vw;
+    margin-right: 1.5vw;
+    padding-left: 1.5vw;
+    border-left: 2px solid;
+    width: 3.5vw;
+}
+
+.user {
+    height: 3.5vw;
+    border: 5px solid dimgrey;
+    border-radius: 10px;
+}
+
+.user-name {
+    float: left;
+    margin-top: 0.2vw;
+    margin-left: 1.5vw;
+}
+
+#black-userName {
+    border-top: none;
+}
+
+#history {
+    margin-left: 5vw;
+    border: 5px solid dimgray;
+    border-radius: 10px;
+    border-top: none;
+}
+
+#historyList {
+    overflow-y:auto!important;
+    overflow-x: hidden;
+    height: 100%;
+    max-height: 18vw;
+}
+
+#historyList ol li {
+    display: block;
+}
+
+#historyList ol dl {
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 1px solid;
+    height: 3.5vw;
+}
+
+#historyList ol dl dt {
+    width: 10%;
+    margin: 0.5vw 0 0;
+    display: block;
+    float: left;
+}
+
+#historyList ol dl dd {
+    width: 85%;
+    float: left;
+    display: contents;
+}
+
+#historyList ol {
+    margin: 0.3vw;
+    padding: 0;
 }
 
 .game {
@@ -36,6 +132,7 @@ body {
 
 #main-container {
     position: absolute;
+    margin-top: 20px;
     width: 100%;
     height: 100%;
 }
@@ -51,7 +148,6 @@ body {
 
 #menu-container {
     display: block;
-    margin-top: 6vw;
     float: left;
     width: 40%;
 }
@@ -59,9 +155,9 @@ body {
 .grid {
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(8, [col] 5.5vw);
-    grid-template-rows: repeat(8, [row] 5.5vw);
-    width: 44vw;
+    grid-template-columns: repeat(8, [col] 5vw);
+    grid-template-rows: repeat(8, [row] 5vw);
+    width: 40vw;
     border: 25px solid burlywood;
     border-radius: 15px;
     box-shadow: 0 5px 8px #777;
@@ -71,7 +167,7 @@ body {
 }
 
 .grid img {
-    width: 5.5vw;
+    width: 5vw;
 }
 
 .grid .onboard {

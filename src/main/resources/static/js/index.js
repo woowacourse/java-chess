@@ -3,7 +3,7 @@ const $start = document.querySelector("#start-btn");
 $start.addEventListener("click", startGame);
 
 function startGame(event) {
-    const $roomName = document.querySelector("#room-name").value;
+    const $roomName = document.querySelector("#roomName").value;
     const $whiteUsername = document.querySelector("#white-username").value;
     const $blackUsername = document.querySelector("#black-username").value;
 

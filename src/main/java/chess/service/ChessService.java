@@ -62,16 +62,18 @@ public class ChessService {
         return PathResponseDto.toPath(path);
     }
 
-    public void move(final MoveRequestDto moveRequestDto, final Long gameId) {
+    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
+        String moveCommand = String.format(MOVE_COMMAND_FORMAT, moveRequestDto.getSource(), moveRequestDto.getTarget());
         ChessManager chessManager = createChessManager(gameId);
+        HistoryResponseDto historyResponseDto = HistoryResponseDto.toChessManager(moveCommand, chessManager);
         Piece sourcePiece = chessManager.pickPiece(Position.of(moveRequestDto.getSource()));
         chessManager.move(Position.of(moveRequestDto.getSource()), Position.of(moveRequestDto.getTarget()));
         chessDao.updateScore(chessManager.gameStatus(), gameId);
         chessDao.updateState(chessManager, gameId);
         chessDao.updateTargetPiece(moveRequestDto.getTarget(), sourcePiece, gameId);
         chessDao.updateSourcePiece(moveRequestDto.getSource(), gameId);
-        String moveCommand = String.format(MOVE_COMMAND_FORMAT, moveRequestDto.getSource(), moveRequestDto.getTarget());
-        chessDao.createHistory(chessManager, moveCommand, gameId);
+        chessDao.createHistory(historyResponseDto, moveCommand, gameId);
+        return historyResponseDto;
     }
 
     private ChessManager createChessManager(final Long gameId) {
@@ -86,5 +88,9 @@ public class ChessService {
                 Owner.valueOf(stateResponseDto.getTurnOwner()),
                 stateResponseDto.getTurnNumber(),
                 stateResponseDto.isPlaying());
+    }
+
+    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+        return chessDao.findHistoryByGameId(gameId);
     }
 }

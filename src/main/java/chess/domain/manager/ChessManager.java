@@ -18,14 +18,14 @@ public class ChessManager {
     private int turnNumber = 1;
     private boolean isPlaying = true;
 
-    public ChessManager(Board board, Owner turnOwner, int turnNumber, boolean isPlaying) {
+    public ChessManager(final Board board, final Owner turnOwner, final int turnNumber, final boolean isPlaying) {
         this.board = board;
         this.turnOwner = turnOwner;
         this.turnNumber = turnNumber;
         this.isPlaying = isPlaying;
     }
 
-    public ChessManager(Board board) {
+    public ChessManager(final Board board) {
         this.board = board;
     }
 

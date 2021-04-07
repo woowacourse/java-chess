@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap" rel="stylesheet">
 </head>
 <body>
+<div id="name-container">
+    <div id="game">Room ID : <span id="game-id">{{gameId}}</span></div>
+    <div id="room-name">&nbsp; / {{roomName}}</div>
+</div>
 <div id="main-container">
     <div id="board-container">
         <main id="main" class="grid">
@@ -88,12 +92,24 @@
     <div id="menu-container">
         <h1 id="chessTitle">Woowahan Chess</h1>
         <div id="score-container">
-            <div>방 번호 : <div id="game-id">{{gameId}}</div></div>
-            <div id="room-name">방 이름 : {{roomName}}</div>
-            <div id="white-userName">White User : {{whiteUsername}}</div>
-            <div id="black-userName">Black User : {{blackUsername}}</div>
-            <div id="white-score">White Score : 38.0</div>
-            <div id="black-score">Black Score : 38.0</div>
+            <div id="top">
+                <div id="white-userName" class="user">
+                    <span class="flag">🏳️</span>
+                    <span class="user-name">{{whiteUsername}}</span>
+                    <span id="white-score" class="score">38.0</span>
+                </div>
+                <div id="black-userName" class="user">
+                    <span class="flag">🏴</span>
+                    <span class="user-name">{{blackUsername}}</span>
+                    <span id="black-score" class="score">38.0</span>
+                </div>
+            </div>
+            <div id="history">
+                <div id="historyList">
+                    <ol>
+                    </ol>
+                </div>
+            </div>
             <div id="turn-color"></div>
             <div id="turn-number"></div>
             <br>

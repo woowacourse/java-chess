@@ -20,6 +20,7 @@ async function loadBoard() {
         .then(pieces => {
             state();
             score();
+            history();
 
             for (const pieceInfo of pieces) {
                 const $symbol = pieceInfo.symbol;
@@ -95,16 +96,15 @@ function onclickSquare(event) {
                 }
                 return data.json();
             })
-            .then(post => {
-                const $sourceImg = $board.querySelector("#"+$source).querySelector(".piece");
-                const $targetImg = $board.querySelector("#"+$target).querySelector(".piece");
+            .then(history => {
+                const $sourceImg = $board.querySelector("#" + $source).querySelector(".piece");
+                const $targetImg = $board.querySelector("#" + $target).querySelector(".piece");
                 if ($targetImg) {
-                    // TODO 체스말 이동시 targetImg에 className 색깔 변경 해주기
                     replacePieceColor($targetImg);
                     $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
-                    $board.querySelector("#"+$source).removeChild($sourceImg);
+                    $board.querySelector("#" + $source).removeChild($sourceImg);
                 } else {
-                    $board.querySelector("#"+$target).appendChild($sourceImg);
+                    $board.querySelector("#" + $target).appendChild($sourceImg);
                 }
                 removeMovablePath();
                 score();
@@ -112,6 +112,7 @@ function onclickSquare(event) {
                     state();
                 }
                 afterFinishedChangeState();
+                addHistory(history);
             })
             .catch(error => {
                 alert(error);
@@ -191,8 +192,8 @@ function score() {
             return data.json();
         })
         .then(status => {
-            const $whiteScoreText = "White Score : " + status.whiteScore;
-            const $blackScoreText = "Black Score : " + status.blackScore;
+            const $whiteScoreText = status.whiteScore;
+            const $blackScoreText = status.blackScore;
             $sidebar.querySelector("#white-score").innerHTML = $whiteScoreText;
             $sidebar.querySelector("#black-score").innerHTML = $blackScoreText;
         })
@@ -243,4 +244,39 @@ function replacePieceColor(targetImg) {
     if ($turnOwner === "BLACK") {
         targetImg.classList.replace("white", "black");
     }
+}
+
+function history() {
+    fetch("http://localhost:4567/game/" + $gameId + "/history")
+        .then(data => {
+            if (!data.ok) {
+                throw new Error(data.status);
+            }
+            return data.json();
+        })
+        .then(histories => {
+            for (const history of histories) {
+                addHistory(history);
+            }
+        })
+        .catch(error => {
+            alert(error);
+        })
+}
+
+function addHistory(history) {
+    document.querySelector("#historyList ol").insertAdjacentHTML("beforeend", renderHistoryItem(history));
+}
+
+function renderHistoryItem(history) {
+    return `<li>
+                <dl>
+                    <dt>
+                        <span>${history.turnNumber}</span>
+                    </dt>
+                    <dd>
+                        <span>${history.turnOwner} ${history.moveCommand}</span>
+                    </dd>
+                </dl>
+            </li>`;
 }
