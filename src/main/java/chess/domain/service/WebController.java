@@ -1,11 +1,11 @@
 package chess.domain.service;
 
-import chess.DAO.ChessBoardDAO;
-import chess.domain.DTO.MoveRequestDTO;
-import chess.domain.DTO.MoveResultDTO;
-import chess.domain.DTO.PieceOnBoardDTO;
+import chess.dao.ChessBoardDAO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.dto.MoveRequestDTO;
+import chess.domain.dto.MoveResultDTO;
+import chess.domain.dto.PieceOnBoardDTO;
 import chess.domain.piece.Piece;
 import chess.domain.result.ResultDto;
 import com.google.gson.Gson;

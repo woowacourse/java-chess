@@ -1,6 +1,6 @@
-package chess.DAO;
+package chess.dao;
 
-import chess.domain.DTO.MoveRequestDTO;
+import chess.domain.dto.MoveRequestDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

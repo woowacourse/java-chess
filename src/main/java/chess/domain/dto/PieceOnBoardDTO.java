@@ -1,4 +1,4 @@
-package chess.domain.DTO;
+package chess.domain.dto;
 
 import chess.domain.state.TeamColor;
 

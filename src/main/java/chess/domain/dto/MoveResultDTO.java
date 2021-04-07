@@ -1,4 +1,4 @@
-package chess.domain.DTO;
+package chess.domain.dto;
 
 public class MoveResultDTO {
 

@@ -1,6 +1,6 @@
 package domain.DAO;
 
-import chess.DAO.ChessBoardDAO;
+import chess.dao.ChessBoardDAO;
 import org.junit.jupiter.api.BeforeEach;
 
 public class ChessBoardDAOTest {
