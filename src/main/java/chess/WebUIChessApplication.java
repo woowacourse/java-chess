@@ -1,6 +1,6 @@
 package chess;
 
-import chess.dao.ChessDAO;
+import chess.dao.ChessDao;
 import chess.domain.ChessResult;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.position.Position;
@@ -19,7 +19,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     private static final Gson GSON = new Gson();
-    private static final ChessDAO DAO = new ChessDAO();
+    private static final ChessDao DAO = new ChessDao();
 
     public static void main(String[] args) {
         staticFiles.location("/public");
