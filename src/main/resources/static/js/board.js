@@ -150,12 +150,7 @@ function onclickSquare(event) {
                 }
             })
             .catch(error => {
-                console.log("에러 잡는곳에서 실행됐니?");
-                if ($selectSquare.classList.contains("movable")) {
-                    return;
-                }
-                $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red.png");
-                setTimeout(invalidSquare, 1000, $source);
+                alert(error);
             })
     }
 }
