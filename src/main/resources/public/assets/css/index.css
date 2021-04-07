@@ -1,0 +1,206 @@
+@font-face {
+  font-family: "pencil";
+  src: url("../fonts/SaucerBB.ttf") format("truetype");
+  src: url("../fonts/나눔손글씨 가람연꽃.ttf") format("truetype");
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-image: url("../images/paper.png");
+  background-repeat: repeat;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 10%;
+  vertical-align: middle;
+}
+
+.title {
+  position: relative;
+  cursor: pointer;
+  font-family: "pencil", sans-serif;
+  font-size: xx-large;
+  margin: 0 auto;
+  top: 15px;
+  text-align: center;
+}
+
+.exit {
+  position: relative;
+  cursor: pointer;
+  font-family: "pencil", sans-serif;
+  font-size: x-large;
+  left: 15px;
+  top: 15px;
+  text-align: left;
+  margin: 0;
+}
+
+.stat {
+  position: fixed;
+  cursor: pointer;
+  right: 15px;
+  top: 5px;
+  text-align: right;
+  margin: 0;
+  font-family: "pencil", sans-serif;
+  font-size: 2.5vw;
+}
+
+.stat p {
+  margin: 5px;
+}
+
+@media screen and (min-width: 600px) {
+  .stat {
+    font-size: 20px;
+  }
+}
+
+
+.movable {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/green_circle.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+section {
+  position: relative;
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  height: 90%;
+}
+
+.board-container {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 720px;
+  text-align: center;
+  user-select: none;
+}
+
+.board {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  box-shadow: 2px 2px 5px 0 black;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.square {
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(2px 2px 5px #000) blur(0);
+}
+
+.selected {
+  filter: drop-shadow(2px 2px 5px #57AA51);
+}
+
+.whiteTurn, .blackTurn {
+  filter: drop-shadow(2px 2px 5px #000);
+}
+
+.bw {
+  background-image: url('../images/bw.png');
+}
+
+.kw {
+  background-image: url('../images/kw.png');
+}
+
+.nw {
+  background-image: url('../images/nw.png');
+}
+
+.pw {
+  background-image: url('../images/pw.png');
+}
+
+.qw {
+  background-image: url('../images/qw.png');
+}
+
+.rw {
+  background-image: url('../images/rw.png');
+}
+
+.bb {
+  background-image: url('../images/bb.png');
+}
+
+.kb {
+  background-image: url('../images/kb.png');
+}
+
+.nb {
+  background-image: url('../images/nb.png');
+}
+
+.pb {
+  background-image: url('../images/pb.png');
+}
+
+.qb {
+  background-image: url('../images/qb.png');
+}
+
+.rb {
+  background-image: url('../images/rb.png');
+}
+
+.en {
+  background-image: url('../images/en.png');
+}
+
+.result, .launch {
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  text-align: center;
+}
+
+.launch p, .result p {
+  position: relative;
+  top: 40%;
+  font-size: xx-large;
+  font-family: "pencil", sans-serif;
+  color: #eee;
+}
+
+.blur {
+  filter: blur(2px);
+}

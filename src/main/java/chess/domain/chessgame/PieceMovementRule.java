@@ -6,6 +6,8 @@ import chess.domain.board.Row;
 import chess.domain.board.Team;
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PieceMovementRule {
 
@@ -18,6 +20,13 @@ public class PieceMovementRule {
         this.board = board;
     }
 
+    public List<Point> movablePoints(Point currentPoint, Team currentTeam) {
+        return board.points()
+            .stream()
+            .filter(point -> canMove(currentPoint, point, currentTeam))
+            .collect(Collectors.toList());
+    }
+
     public boolean canMove(Point source, Point destination, Team currentTeam) {
         return isValidSourceAndDestination(source, destination, currentTeam)
             && board.hasMovableVector(source, destination)
@@ -25,8 +34,8 @@ public class PieceMovementRule {
     }
 
     private boolean isValidSourceAndDestination(Point source, Point destination, Team currentTeam) {
-        return board.isSameTeamAt(source, currentTeam)
-            && board.isNotSameTeamAt(destination, currentTeam);
+        return board.hasSameTeamAt(source, currentTeam)
+            && board.hasNotSameTeamAt(destination, currentTeam);
 
     }
 
@@ -42,7 +51,7 @@ public class PieceMovementRule {
         for (Point now = source.movedPoint(moveVector); isNotArrived(destination, now) && success;
             now = now.movedPoint(moveVector)) {
             success = isWithinMovementRange(source, nextMoveCount, moveVector)
-                && board.isSameTeamAt(now, Team.NONE);
+                && board.hasSameTeamAt(now, Team.NONE);
             nextMoveCount++;
         }
         return success;
@@ -61,24 +70,24 @@ public class PieceMovementRule {
     }
 
     private boolean isFirstStraightMovingPawn(Point source, MoveVector moveVector) {
-        return board.isSamePieceTypeAt(source, Piece.PAWN)
+        return board.hasSamePieceTypeAt(source, Piece.PAWN)
             && moveVector.isPawnStraight()
-            && (source.isRow(Row.TWO) || source.isRow(Row.SEVEN));
+            && (source.isLocatedIn(Row.TWO) || source.isLocatedIn(Row.SEVEN));
     }
 
-    private boolean isNotPawnOrValidPawnMove(Point source, Point destination,
-        MoveVector moveVector) {
-        return board.isNotSamePieceTypeAt(source, Piece.PAWN) ||
+    private boolean isNotPawnOrValidPawnMove(Point source, Point destination, MoveVector
+        moveVector) {
+        return board.hasNotSamePieceTypeAt(source, Piece.PAWN) ||
             (isNotOrValidPawnStraightMove(destination, moveVector)
                 && isNotOrValidPawnDiagonalMove(source, destination, moveVector));
     }
 
     private boolean isNotOrValidPawnStraightMove(Point destination, MoveVector moveVector) {
-        return !moveVector.isPawnStraight() || board.isSameTeamAt(destination, Team.NONE);
+        return !moveVector.isPawnStraight() || board.hasSameTeamAt(destination, Team.NONE);
     }
 
     private boolean isNotOrValidPawnDiagonalMove(Point source, Point destination,
         MoveVector moveVector) {
-        return !moveVector.isDiagonalVector() || board.isEnemy(source, destination);
+        return !moveVector.isDiagonalVector() || board.hasEnemy(source, destination);
     }
 }

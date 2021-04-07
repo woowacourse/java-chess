@@ -6,6 +6,7 @@ import chess.domain.board.Team;
 import chess.domain.chessgame.PieceMovementRule;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
+import java.util.List;
 
 public class Running implements GameState {
 
@@ -22,7 +23,7 @@ public class Running implements GameState {
 
     @Override
     public GameState start() {
-        throw EXCEPTION;
+        return new Ready(board).start();
     }
 
     @Override
@@ -30,7 +31,7 @@ public class Running implements GameState {
         if (!pieceMovementRule.canMove(source, destination, turn.now())) {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
-        boolean isKingDead = board.isSamePieceTypeAt(destination, Piece.KING);
+        boolean isKingDead = board.hasSamePieceTypeAt(destination, Piece.KING);
         Team destinationTeam = board.teamAt(destination);
 
         board.move(source, destination);
@@ -41,14 +42,14 @@ public class Running implements GameState {
 
     private GameState gameStateAfterMovement(boolean isKingDead, Team destinationTeam) {
         if (isKingDead) {
-            return new Finished(destinationTeam.opposingTeam());
+            return new Finished(board, destinationTeam.opposingTeam());
         }
         return this;
     }
 
     @Override
     public GameState end() {
-        return new Finished(Team.NONE);
+        return new Finished(board, Team.NONE);
     }
 
     @Override
@@ -64,5 +65,10 @@ public class Running implements GameState {
     @Override
     public Team winner() {
         throw EXCEPTION;
+    }
+
+    @Override
+    public List<Point> movablePoints(Point currentPoint, Turn turn) {
+        return pieceMovementRule.movablePoints(currentPoint, turn.now());
     }
 }

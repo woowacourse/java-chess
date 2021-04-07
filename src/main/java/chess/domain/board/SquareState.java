@@ -70,11 +70,15 @@ public class SquareState {
         return team;
     }
 
-    public boolean isTeam(Team team) {
+    public Piece piece() {
+        return piece;
+    }
+
+    public boolean isOnTeam(Team team) {
         return this.team == team;
     }
 
-    public boolean isEnemy(SquareState sourceSquareState) {
+    public boolean isEnemyOf(SquareState sourceSquareState) {
         return team == sourceSquareState.team.opposingTeam();
     }
 

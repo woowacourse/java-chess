@@ -1,0 +1,120 @@
+@font-face {
+  font-family: "pencil";
+  src: url("../fonts/SaucerBB.ttf") format("truetype");
+  src: url("../fonts/나눔손글씨 가람연꽃.ttf") format("truetype");
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-image: url("../images/paper.png");
+  background-repeat: repeat;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 10%;
+  vertical-align: middle;
+}
+
+.title {
+  position: relative;
+  cursor: pointer;
+  font-family: "pencil", sans-serif;
+  font-size: xx-large;
+  margin: 0 auto;
+  top: 15px;
+  text-align: center;
+}
+
+.rooms {
+  position: relative;
+  display: block;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px 0 black;
+  font-family: "pencil", sans-serif;
+  font-size: x-large;
+  width: 80%;
+  min-width: 360px;
+  margin: 0 auto;
+  padding: 10px 5px 5px 5px;
+}
+
+.room {
+  text-align: center;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.remove-room {
+  position: absolute;
+  display: inline;
+  right: 20px;
+  color: #D18063
+}
+
+.create {
+  position: relative;
+  cursor: pointer;
+  font-family: "pencil", sans-serif;
+  font-size: x-large;
+  left: 15px;
+  top: 15px;
+  text-align: left;
+  margin: 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  box-shadow: 2px 2px 5px 0 black;
+  font-family: "pencil", sans-serif;
+  font-size: large;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  color: #D18063;
+}
+
+.close:hover,
+.close:focus {
+  color: #D18063;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+section {
+  position: relative;
+  margin: 0 auto 10px auto;
+  padding: 20px 0;
+  width: 100%;
+}

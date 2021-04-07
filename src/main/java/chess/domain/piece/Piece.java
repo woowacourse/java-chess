@@ -9,6 +9,7 @@ import chess.domain.piece.movementStrategy.MovementStrategy;
 import chess.domain.piece.movementStrategy.PawnMovementStrategy;
 import chess.domain.piece.movementStrategy.QueenMovementStrategy;
 import chess.domain.piece.movementStrategy.RookMovementStrategy;
+import java.util.Arrays;
 
 public enum Piece {
     KING(new KingMovementStrategy(), 0, "k"),
@@ -27,6 +28,13 @@ public enum Piece {
         this.movementStrategy = movementStrategy;
         this.score = score;
         this.pieceName = pieceName;
+    }
+
+    public static Piece pieceByName(String name) {
+        return Arrays.stream(values())
+            .filter(piece -> piece.pieceName.equals(name))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public MoveVector movableVector(Point source, Point destination) {

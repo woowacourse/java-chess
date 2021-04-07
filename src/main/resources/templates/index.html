@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>로또</title>
+  <title>체스</title>
+  <link href="/assets/css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-Hello World!!
+<div class="launch"><p>Click anywhere to start</p></div>
+<div class="result"></div>
+<header>
+  <h2 class="title">Paper Chess</h2>
+  <h2 class="exit">exit</h2>
+  <div class="stat">
+    {{#userInfo}}
+    <p><strong>BLACK</strong> 닉네임:{{blackName}} 승:{{blackWin}} 패:{{blackLose}}</p>
+    <p><strong>WHITE</strong> 닉네임:{{whiteName}} 승:{{whiteWin}} 패:{{whiteLose}}</p>
+    {{/userInfo}}
+  </div>
+
+</header>
+<section>
+  <div class="board-container">
+    <img class="board" id="{{roomId}}" src="/assets/images/board.png">
+    {{#board}}
+    {{#board}}
+    {{#.}} {{#.}}
+    <div class="square {{piece}}{{team}}" id="{{x}}{{y}}"></div>
+    {{/.}} {{/.}}
+    {{/board}}
+    {{/board}}
+    <img class="whiteTurn" src="/assets/images/white_turn.png">
+    <img class="blackTurn" src="/assets/images/black_turn.png">
+  </div>
+</section>
+<script src="/assets/js/index.js" type="module"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import chess.domain.board.Row;
 import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class Ready implements GameState {
         WHITE_INITIAL_POINTS.put(
             Piece.PAWN,
             Point.allPoints().stream()
-                .filter(point -> point.isRow(Row.TWO))
+                .filter(point -> point.isLocatedIn(Row.TWO))
                 .collect(Collectors.toList())
         );
     }
@@ -41,6 +42,7 @@ public class Ready implements GameState {
 
     @Override
     public GameState start() {
+        board.clear();
         WHITE_INITIAL_POINTS.keySet()
             .forEach(this::initializePiece);
         return new Running(board);
@@ -74,5 +76,10 @@ public class Ready implements GameState {
     @Override
     public Team winner() {
         throw EXCEPTION;
+    }
+
+    @Override
+    public List<Point> movablePoints(Point currentPoint, Turn turn) {
+        return new ArrayList<>();
     }
 }

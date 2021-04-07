@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <title>체스</title>
+  <link href="/assets/css/lobby.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+  <h2 class="title">Paper Chess</h2>
+  <h2 class="create">create</h2>
+</header>
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <span class="close">X</span>
+    <form action="./room" class="create-room" onsubmit="return false">
+      방 이름 : <input autofocus id="room_name" pattern=".{2,}" type="text"><br><br>
+      white 이름: <input id="white" type="text"><br><br>
+      black 이름: <input id="black" type="text"><br><br>
+      <input type="submit">
+    </form>
+  </div>
+</div>
+<section>
+  <div class="rooms">
+    {{#rooms}}
+    <div class="room" id="{{id}}"> {{name}}
+      <div class="remove-room">X</div>
+    </div>
+    <hr color="#eeeeee" width="90%"/>
+    {{/rooms}}
+  </div>
+</section>
+<script src="/assets/js/lobby.js" type="module"></script>
+</body>
+</html>

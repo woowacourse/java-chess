@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,18 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private final Map<Point, SquareState> squares = new HashMap<>();
+    private final Map<Point, SquareState> squares;
 
     public Board() {
+        squares = new HashMap<>();
+        clear();
+    }
+
+    public Board(Map<Point, SquareState> squares) {
+        this.squares = new HashMap<>(squares);
+    }
+
+    public void clear() {
         Point.allPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
     }
@@ -26,37 +36,37 @@ public class Board {
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
     }
 
-    public boolean isSamePieceTypeAt(Point point, Piece piece) {
+    public boolean hasSamePieceTypeAt(Point point, Piece piece) {
         return squares.get(point).isPieceTypeOf(piece);
     }
 
-    public boolean isNotSamePieceTypeAt(Point point, Piece piece) {
-        return !isSamePieceTypeAt(point, piece);
+    public boolean hasNotSamePieceTypeAt(Point point, Piece piece) {
+        return !hasSamePieceTypeAt(point, piece);
     }
 
-    public boolean isSameTeamAt(Point point, Team team) {
-        return squares.get(point).isTeam(team);
+    public boolean hasSameTeamAt(Point point, Team team) {
+        return squares.get(point).isOnTeam(team);
     }
 
-    public boolean isNotSameTeamAt(Point point, Team team) {
-        return !isSameTeamAt(point, team);
+    public boolean hasNotSameTeamAt(Point point, Team team) {
+        return !hasSameTeamAt(point, team);
     }
 
-    public boolean isEnemy(Point source, Point destination) {
+    public boolean hasEnemy(Point source, Point destination) {
         SquareState sourceState = squares.get(source);
         SquareState destinationState = squares.get(destination);
 
-        return sourceState.isEnemy(destinationState);
-    }
-
-    public Team teamAt(Point point) {
-        return squares.get(point).team();
+        return sourceState.isEnemyOf(destinationState);
     }
 
     public boolean hasMovableVector(Point source, Point destination) {
         SquareState sourceState = squares.get(source);
 
         return sourceState.hasMovableVector(source, destination);
+    }
+
+    public Team teamAt(Point point) {
+        return squares.get(point).team();
     }
 
     public MoveVector movableVector(Point source, Point destination) {
@@ -71,19 +81,23 @@ public class Board {
 
     public long pawnCountInColumn(Team team, Column column) {
         return squares.keySet().stream()
-            .filter(point -> point.isColumn(column))
+            .filter(point -> point.isLocatedIn(column))
             .map(squares::get)
-            .filter(square -> square.isTeam(team) && square.isPieceTypeOf(Piece.PAWN))
+            .filter(square -> square.isOnTeam(team) && square.isPieceTypeOf(Piece.PAWN))
             .count();
     }
 
     public List<SquareState> AllSquaresFrom(Team team) {
         return squares.values().stream()
-            .filter(state -> state.isTeam(team))
+            .filter(state -> state.isOnTeam(team))
             .collect(Collectors.toList());
     }
 
     public Map<Point, SquareState> squares() {
         return new HashMap<>(squares);
+    }
+
+    public List<Point> points() {
+        return new ArrayList<>(squares.keySet());
     }
 }

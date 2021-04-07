@@ -3,17 +3,19 @@ package chess.contoller;
 import chess.domain.board.Board;
 import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
-import chess.domain.chessgame.Turn;
 import chess.domain.command.Command;
-import chess.dto.BoardDto;
+import chess.dto.console.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
+    public ChessController() {
+    }
+
     public void play() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
+        ChessGame chessGame = new ChessGame(board);
         OutputView.printStartInfo();
         proceed(chessGame, board);
         printGameResult(chessGame);

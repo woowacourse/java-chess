@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Team;
-import chess.dto.BoardDto;
+import chess.dto.console.BoardDto;
 import java.util.List;
 
 public class OutputView {
@@ -18,6 +18,8 @@ public class OutputView {
     private static final String GAME_RESULT_WINNER_FORMAT = "승자는 %s 입니다.\n";
     private static final String ILLEGAL_COMMAND_MESSAGE = "%s 다시 입력해주세요.\n";
 
+    private OutputView() {
+    }
 
     public static void printStartInfo() {
         System.out.printf(INFO_MESSAGE_FORMAT, START_MESSAGE);
@@ -52,8 +54,8 @@ public class OutputView {
         System.out.printf(GAME_RESULT_WINNER_FORMAT, winner.teamName());
     }
 
-    public static void printIllegalCommand(IllegalArgumentException ipe) {
+    public static void printIllegalCommand(IllegalArgumentException e) {
         System.out.printf(INFO_MESSAGE_FORMAT,
-            String.format(ILLEGAL_COMMAND_MESSAGE, ipe.getMessage()));
+            String.format(ILLEGAL_COMMAND_MESSAGE, e.getMessage()));
     }
 }

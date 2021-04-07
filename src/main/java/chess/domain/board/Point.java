@@ -82,11 +82,19 @@ public class Point {
         return column.index() + moveVector.horizontal();
     }
 
-    public boolean isRow(Row row) {
+    public String xCoordinate() {
+        return column.coordinate();
+    }
+
+    public String yCoordinate() {
+        return row.coordinate();
+    }
+
+    public boolean isLocatedIn(Row row) {
         return this.row == row;
     }
 
-    public boolean isColumn(Column column) {
+    public boolean isLocatedIn(Column column) {
         return this.column == column;
     }
 }
