@@ -1,6 +1,7 @@
-import {updateStatus} from "./board.js";
+import {restartGame, updateStatus} from "./board.js";
 
 const $chessboard = document.querySelector(".chessboard");
+const gameId = new URLSearchParams(window.location.search).get("id");
 $chessboard.addEventListener("click", select);
 
 function movePieces(source, target) {
@@ -12,6 +13,9 @@ function move(source, target) {
     axios({
         method: 'post',
         url: '/move',
+        params: {
+            gameId: gameId
+        },
         data: {
             source: source,
             target: target
@@ -31,12 +35,33 @@ function move(source, target) {
 function checkGameStatus() {
     axios({
         method: 'get',
-        url: '/checkStatus'
+        url: '/checkStatus',
+        params: {
+            gameId: gameId
+        }
     })
         .then(function (res) {
             if (!res.data) {
-                location.replace("/finish")
+                notifyGameResult();
             }
+        })
+}
+
+function notifyGameResult() {
+    axios({
+        method: 'get',
+        url: '/result',
+        params: {
+            gameId: gameId
+        }
+    })
+        .then(function (res) {
+            if (confirm(res.data + "팀이 이겼습니다! 다시 시작 하시겠습니까?")) {
+                restartGame();
+                return;
+            }
+            restartGame();
+            location.replace("/");
         })
 }
 

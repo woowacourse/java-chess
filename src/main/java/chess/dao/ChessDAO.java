@@ -44,6 +44,9 @@ public class ChessDAO {
     }
 
     public void addGame(String gameId, ChessGame game) throws SQLException {
+        if (isExistingGame(gameId)) {
+            throw new IllegalArgumentException("이미 존재하는 게임입니다.");
+        }
         String query = "INSERT INTO games VALUES (?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -54,15 +57,26 @@ public class ChessDAO {
         closeConnection(connection);
     }
 
+    public boolean isExistingGame(String gameId) throws SQLException {
+        String query = "SELECT * FROM games WHERE game_id = ?";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+        boolean isExisting = rs.next();
+        closeConnection(connection);
+        return isExisting;
+    }
+
     public ChessGame findGameById(String gameId) throws SQLException {
         String query = "SELECT * FROM games WHERE game_id = ?";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) return null;
-
+        if (!rs.next()) {
+            throw new IllegalArgumentException("존재하지 않는 게임입니다.");
+        }
         ChessGame game = new ChessGame(rs.getString("pieces"), rs.getString("turn"));
         closeConnection(connection);
         return game;

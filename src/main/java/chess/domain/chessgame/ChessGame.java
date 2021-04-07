@@ -20,7 +20,7 @@ public final class ChessGame {
     }
 
     public ChessGame(Board board) {
-        this(board, new Turn(), new GameState());
+        this(board, new Turn(), new GameState(!board.isKingDead()));
     }
 
     public ChessGame() {
@@ -28,7 +28,7 @@ public final class ChessGame {
     }
 
     public ChessGame(String pieces, String turn) {
-        this(BoardInitializer.boardFromString(pieces), new Turn(turn), new GameState());
+        this(BoardInitializer.boardFromString(pieces), new Turn(turn), new GameState(!BoardInitializer.boardFromString(pieces).isKingDead()));
     }
 
     public boolean isRunning() {

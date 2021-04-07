@@ -1,22 +1,24 @@
 import * as piece from "./pieceview.js";
 
 const startButton = document.querySelector(".start");
-const saveButton = document.querySelector(".save");
+const gameId = new URLSearchParams(window.location.search).get("id");
 
 if (isMainPage()) {
     window.addEventListener('DOMContentLoaded', syncBoard)
     startButton.addEventListener('click', restartGame)
-    saveButton.addEventListener('click', saveGame)
 }
 
 function isMainPage() {
-    return window.location.pathname === "/";
+    return window.location.pathname === "/game";
 }
 
 export function restartGame() {
     axios({
         method: 'put',
-        url: '/restart'
+        url: '/restart',
+        params: {
+            gameId: gameId
+        }
     })
         .then(function () {
             syncBoard();
@@ -24,9 +26,13 @@ export function restartGame() {
 }
 
 export function syncBoard() {
+    console.log("syncBoard : " + gameId);
     axios({
         method: 'get',
-        url: '/drawBoard'
+        url: '/drawBoard',
+        params: {
+            gameId: gameId
+        }
     })
         .then(function (res) {
             const currentBoard = res.data;
@@ -43,7 +49,10 @@ export function syncBoard() {
 export function updateStatus() {
     axios({
         method: 'get',
-        url: '/status'
+        url: '/status',
+        params: {
+            gameId: gameId
+        }
     })
         .then(function (res) {
             const status = res.data;
@@ -51,12 +60,5 @@ export function updateStatus() {
             document.querySelector("#whiteScore").querySelector("a").textContent = status[1];
             document.querySelector("#turn").querySelector("a").textContent = status[2];
         })
-}
-
-function saveGame() {
-    axios({
-        method: 'put',
-        url: '/save'
-    })
 }
 
