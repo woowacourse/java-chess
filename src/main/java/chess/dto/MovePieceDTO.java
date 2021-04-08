@@ -1,11 +1,13 @@
 package chess.dto;
 
 public class MovePieceDTO {
+
     private int boardId;
     private String source;
     private String target;
 
-    public MovePieceDTO() {}
+    public MovePieceDTO() {
+    }
 
     public MovePieceDTO(final int boardId, final String source, final String target) {
         this.boardId = boardId;

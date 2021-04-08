@@ -3,6 +3,7 @@ package chess.dto;
 import java.util.List;
 
 public class MovablePositionDTO {
+
     private List<String> movablePositions;
     private int boardId;
     private String source;

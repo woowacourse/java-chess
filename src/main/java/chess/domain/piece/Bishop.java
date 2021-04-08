@@ -30,7 +30,7 @@ public final class Bishop extends AbstractPiece {
     }
 
     @Override
-    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+    public List<Position> movablePositions(final Map<Position, Piece> pieces) {
         final List<Direction> directions = Direction.diagonalDirection();
 
         return positions(pieces, directions, ABLE_LENGTH);

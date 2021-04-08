@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import java.util.Map;
 
 public class WebBoardDTO extends WebSimpleBoardDTO {
+
     private Map<String, String> pieces;
 
     public WebBoardDTO(Board board, int boardId) {

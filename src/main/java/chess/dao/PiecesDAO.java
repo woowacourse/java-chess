@@ -35,15 +35,13 @@ public final class PiecesDAO extends AbstractDAO {
             resultSet = preparedStatement.executeQuery();
             Map<Position, Piece> pieces = getPieces(resultSet);
             return new Pieces(pieces);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("잘못된 보드 정보입니다.");
         } finally {
             closeConnection(connection);
             disconnect(preparedStatement, resultSet);
         }
     }
 
-    private Map<Position, Piece> getPieces(ResultSet resultSet) throws SQLException {
+    private Map<Position, Piece> getPieces(final ResultSet resultSet) throws SQLException {
         Map<Position, Piece> pieces = new Pieces().pieces();
         while (resultSet.next()) {
             String piecePosition = resultSet.getString("piece_position");
@@ -56,8 +54,7 @@ public final class PiecesDAO extends AbstractDAO {
     }
 
     public void addPieces(final int boardId, final Map<Position, Piece> pieces,
-        Connection connection)
-        throws SQLException {
+        final Connection connection) throws SQLException {
         PreparedStatement preparedStatement = null;
         connection.setAutoCommit(false);
         try {
@@ -76,15 +73,15 @@ public final class PiecesDAO extends AbstractDAO {
         }
     }
 
-    private void addPieceDataInit(int boardId, PreparedStatement preparedStatement, Piece piece)
-        throws SQLException {
+    private void addPieceDataInit(final int boardId, final PreparedStatement preparedStatement,
+        final Piece piece) throws SQLException {
         preparedStatement.setInt(1, boardId);
         preparedStatement.setString(2, piece.position().changedPositionToString());
         preparedStatement.setString(3, piece.symbol());
     }
 
-    public void updatePiece(Board board, MovePieceDTO movePieceDTO, Connection connection)
-        throws SQLException {
+    public void updatePiece(final Board board, final MovePieceDTO movePieceDTO,
+        final Connection connection) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
             Map<Position, Piece> pieces = board.pieces();
@@ -106,15 +103,15 @@ public final class PiecesDAO extends AbstractDAO {
         }
     }
 
-    private void deleteBoardDataInit(int boardId, MovePieceDTO movePieceDTO,
-        PreparedStatement preparedStatement) throws SQLException {
+    private void deleteBoardDataInit(final int boardId, final MovePieceDTO movePieceDTO,
+        final PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setInt(1, boardId);
         preparedStatement.setString(2, movePieceDTO.getSource());
         preparedStatement.setString(3, movePieceDTO.getTarget());
     }
 
-    private void updatePieceDataInit(MovePieceDTO movePieceDTO,
-        PreparedStatement preparedStatement, Piece source) throws SQLException {
+    private void updatePieceDataInit(final MovePieceDTO movePieceDTO,
+        final PreparedStatement preparedStatement, final Piece source) throws SQLException {
         preparedStatement.setInt(1, movePieceDTO.getBoardId());
         preparedStatement.setString(2, movePieceDTO.getTarget());
         preparedStatement.setString(3, source.symbol());

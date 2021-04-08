@@ -3,17 +3,17 @@ package chess.domain.state;
 import chess.domain.board.Pieces;
 import chess.domain.piece.Color;
 
-public class Ready extends WinnerBlank {
+public final class Ready extends WinnerBlank {
 
     public Ready() {
         this(Color.WHITE);
     }
 
-    public Ready(Color color) {
+    public Ready(final Color color) {
         this(color, new Pieces());
     }
 
-    public Ready(Color color, Pieces pieces) {
+    public Ready(final Color color, final Pieces pieces) {
         super(color, pieces);
     }
 

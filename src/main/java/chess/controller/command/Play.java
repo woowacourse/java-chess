@@ -8,7 +8,7 @@ import chess.view.OutputView;
 import java.util.Map;
 import java.util.Objects;
 
-public class Play extends AbstractCommand {
+public final class Play extends AbstractCommand {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final int CHESS_SIZE = 8;
@@ -41,7 +41,7 @@ public class Play extends AbstractCommand {
         return this;
     }
 
-    private void pieceMove(String[] commands) {
+    private void pieceMove(final String[] commands) {
         try {
             board.movePiece(commands[SOURCE_INDEX], commands[TARGET_INDEX]);
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class Play extends AbstractCommand {
         return stringBuilder.toString();
     }
 
-    private void addSymbol(StringBuilder stringBuilder, Piece piece) {
+    private void addSymbol(final StringBuilder stringBuilder, final Piece piece) {
         if (Objects.isNull(piece)) {
             stringBuilder.append(".");
             return;
@@ -89,7 +89,7 @@ public class Play extends AbstractCommand {
         }
     }
 
-    private int chessRow(int count) {
+    private int chessRow(final int count) {
         return (CHESS_SIZE + 1) - (count / CHESS_SIZE);
     }
 }

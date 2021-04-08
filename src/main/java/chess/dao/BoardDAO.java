@@ -62,21 +62,18 @@ public final class BoardDAO extends AbstractDAO {
         Connection connection = connection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        String query = "SELECT * FROM board WHERE white_player = ? OR black_player = ?";
         try {
-            String query = "SELECT * FROM board WHERE white_player = ? OR black_player = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, playerName);
             preparedStatement.setString(2, playerName);
             resultSet = preparedStatement.executeQuery();
 
             return WebBoardDTOs(resultSet);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         } finally {
             closeConnection(connection);
             disconnect(preparedStatement, resultSet);
         }
-        throw new SQLException();
     }
 
     private List<WebSimpleBoardDTO> WebBoardDTOs(ResultSet resultSet)
@@ -105,13 +102,10 @@ public final class BoardDAO extends AbstractDAO {
             resultSet = preparedStatement.executeQuery();
             validateFindBoard(resultSet);
             return createBoardObject(resultSet, pieces);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         } finally {
             closeConnection(connection);
             disconnect(preparedStatement, resultSet);
         }
-        throw new SQLException();
     }
 
     private Board createBoardObject(ResultSet resultSet, Pieces pieces)
@@ -146,9 +140,8 @@ public final class BoardDAO extends AbstractDAO {
     public void updateBoard(Board board, MovePieceDTO movePieceDTO, Connection connection)
         throws SQLException {
         PreparedStatement preparedStatement = null;
-        connection.setAutoCommit(false);
+        String query = "UPDATE board SET turn_is_white = ?, is_finish = ? WHERE board_id = ?";
         try {
-            String query = "UPDATE board SET turn_is_white = ?, is_finish = ? WHERE board_id = ?";
             preparedStatement = connection.prepareStatement(query);
             updateBoardDataInit(board, movePieceDTO.getBoardId(), preparedStatement);
             preparedStatement.executeUpdate();

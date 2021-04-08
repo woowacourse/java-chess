@@ -62,15 +62,15 @@ public final class Pawn extends AbstractPiece {
     }
 
     @Override
-    public List<Position> movablePositions(Map<Position, Piece> pieces) {
+    public List<Position> movablePositions(final Map<Position, Piece> pieces) {
         final List<Direction> directions = findPawnDirection();
 
         return positions(pieces, directions, ABLE_LENGTH);
     }
 
     @Override
-    protected List<Position> positions(Map<Position, Piece> pieces, List<Direction> directions,
-        int ableLength) {
+    protected List<Position> positions(final Map<Position, Piece> pieces,
+        final List<Direction> directions, final int ableLength) {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
             addMovableDirectionPositions(pieces, positions, direction);
@@ -79,8 +79,8 @@ public final class Pawn extends AbstractPiece {
         return positions;
     }
 
-    private void addMovableDirectionPositions(Map<Position, Piece> pieces, List<Position> positions,
-        Direction direction) {
+    private void addMovableDirectionPositions(final Map<Position, Piece> pieces,
+        final List<Position> positions, final Direction direction) {
         int dx = direction.getXDegree();
         int dy = direction.getYDegree();
         if (!position.isAdd(dx, dy)) {
@@ -98,8 +98,8 @@ public final class Pawn extends AbstractPiece {
         positions.add(movablePosition);
     }
 
-    private void addOneTwoForwardPosition(Map<Position, Piece> pieces, List<Position> positions, int dx, int dy,
-        Position movablePosition, Piece targetPiece) {
+    private void addOneTwoForwardPosition(final Map<Position, Piece> pieces, final List<Position> positions,
+        final int dx, final int dy, final Position movablePosition, Piece targetPiece) {
         if (!Objects.isNull(targetPiece)) {
             return;
         }

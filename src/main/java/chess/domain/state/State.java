@@ -16,7 +16,7 @@ public interface State {
 
     State init();
 
-    double score(Color color);
+    double score(final Color color);
 
     Map<Position, Piece> pieces();
 
@@ -24,5 +24,5 @@ public interface State {
 
     Color turn();
 
-    List<Position> movablePositions(String source);
+    List<Position> movablePositions(final String source);
 }

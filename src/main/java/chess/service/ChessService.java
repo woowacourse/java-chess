@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ChessService {
+public final class ChessService {
 
     public int createBoard(WebSimpleBoardDTO webSimpleBoardDTO) throws SQLException {
         Board board = new Board(webSimpleBoardDTO.getWhitePlayer(),
@@ -28,7 +28,8 @@ public class ChessService {
         return addDatabaseBoard(webSimpleBoardDTO, board);
     }
 
-    private int addDatabaseBoard(WebSimpleBoardDTO webSimpleBoardDTO, Board board) throws SQLException {
+    private int addDatabaseBoard(final WebSimpleBoardDTO webSimpleBoardDTO, final Board board)
+        throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
         Connection connection = boardDAO.connection();
         connection.setAutoCommit(false);
@@ -45,7 +46,7 @@ public class ChessService {
         }
     }
 
-    public WebBoardDTO movedPiece(MovePieceDTO movePieceDTO) throws SQLException {
+    public WebBoardDTO movedPiece(final MovePieceDTO movePieceDTO) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
         Pieces pieces = PiecesDAO.instance().joinPieces(movePieceDTO.getBoardId());
         Board board = boardDAO.findBoardByBoardId(movePieceDTO.getBoardId(), pieces);
@@ -59,9 +60,11 @@ public class ChessService {
         return webBoardDTO;
     }
 
-    private void updateDatabaseBoard(MovePieceDTO movePieceDTO, Board board) throws SQLException {
+    private void updateDatabaseBoard(final MovePieceDTO movePieceDTO, final Board board)
+        throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
         Connection connection = boardDAO.connection();
+        connection.setAutoCommit(false);
         try {
             BoardDAO.instance().updateBoard(board, movePieceDTO, connection);
             PiecesDAO.instance().updatePiece(board, movePieceDTO, connection);
@@ -74,11 +77,12 @@ public class ChessService {
         }
     }
 
-    public MovablePositionDTO movablePositions(MovablePositionDTO movablePositionDTO)
+    public MovablePositionDTO movablePositions(final MovablePositionDTO movablePositionDTO)
         throws SQLException {
         List<String> positions = new ArrayList<>();
         Pieces pieces = PiecesDAO.instance().joinPieces(movablePositionDTO.getBoardId());
-        Board board = BoardDAO.instance().findBoardByBoardId(movablePositionDTO.getBoardId(), pieces);
+        Board board = BoardDAO.instance()
+            .findBoardByBoardId(movablePositionDTO.getBoardId(), pieces);
         for (Position position : board.movablePositions(movablePositionDTO.getSource())) {
             positions.add(position.changedPositionToString());
         }
@@ -86,7 +90,7 @@ public class ChessService {
         return movablePositionDTO;
     }
 
-    public WebBoardDTO joinBoard(WebSimpleBoardDTO webSimpleBoardDTO) throws SQLException {
+    public WebBoardDTO joinBoard(final WebSimpleBoardDTO webSimpleBoardDTO) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
         Pieces pieces = PiecesDAO.instance().joinPieces(webSimpleBoardDTO.getBoardId());
         Board board = boardDAO.findBoardByBoardId(webSimpleBoardDTO.getBoardId(), pieces);
@@ -96,12 +100,12 @@ public class ChessService {
         return webBoardDTO;
     }
 
-    public List<WebSimpleBoardDTO> searchBoard(String playerName) throws SQLException {
+    public List<WebSimpleBoardDTO> searchBoard(final String playerName) throws SQLException {
         BoardDAO boardDAO = BoardDAO.instance();
         return boardDAO.findBoardsByPlayerName(playerName);
     }
 
-    private Map<String, String> changedPositionToStringMap(Map<Position, Piece> pieces) {
+    private Map<String, String> changedPositionToStringMap(final Map<Position, Piece> pieces) {
         Map<String, String> piecesData = new HashMap<>();
         for (Position position : pieces.keySet()) {
             piecesData.put(position.changedPositionToString(), getSymbol(pieces.get(position)));
@@ -109,7 +113,7 @@ public class ChessService {
         return piecesData;
     }
 
-    private String getSymbol(Piece piece) {
+    private String getSymbol(final Piece piece) {
         if (Objects.isNull(piece)) {
             return ".";
         }

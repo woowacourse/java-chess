@@ -2,7 +2,7 @@ package chess.controller.command;
 
 import chess.domain.board.Board;
 
-public class Finish extends AbstractCommand{
+public final class Finish extends AbstractCommand{
 
     public Finish(final Board board) {
         super(board);

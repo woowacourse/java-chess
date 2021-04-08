@@ -116,9 +116,8 @@ public final class ChessWebController {
         return (request, response) -> {
             MovablePositionDTO movablePositionDTO = gson
                 .fromJson(request.body(), MovablePositionDTO.class);
-            movablePositionDTO = chessService.movablePositions(movablePositionDTO);
             response.status(ResponseStatus.OK.getStateCode());
-            return gson.toJson(movablePositionDTO);
+            return gson.toJson(chessService.movablePositions(movablePositionDTO));
         };
     }
 

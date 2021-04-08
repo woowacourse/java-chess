@@ -7,7 +7,8 @@ import java.util.Objects;
 
 public final class OutputView {
 
-    private OutputView() {}
+    private OutputView() {
+    }
 
     public static void printStart() {
         System.out.println("> 체스 게임을 시작합니다.");

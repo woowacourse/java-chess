@@ -43,7 +43,7 @@ public final class Position {
         return of(x, y);
     }
 
-    private static void validateValue(String value) {
+    private static void validateValue(final String value) {
         if (value.length() != POSITION_VALUE_SIZE) {
             throw new IllegalArgumentException("a1 과 h8 사이여야 합니다.");
         }
@@ -54,7 +54,7 @@ public final class Position {
         return positions[asIndex(x, y)];
     }
 
-    private static void validate(int x, int y) {
+    private static void validate(final int x, final int y) {
         Point.validate(x);
         Point.validate(y);
     }

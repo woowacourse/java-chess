@@ -38,8 +38,8 @@ public final class Pieces {
         }
     }
 
-    public Pieces(Map<Position, Piece> pieces) {
-        this.pieces = pieces;
+    public Pieces(final Map<Position, Piece> pieces) {
+        this.pieces = new LinkedHashMap<>(pieces);
     }
 
     public void init() {
@@ -156,7 +156,7 @@ public final class Pieces {
         return kingCount != TOTAL_KING_SIZE;
     }
 
-    public List<Position> movablePositions(Position sourcePosition) {
+    public List<Position> movablePositions(final Position sourcePosition) {
         Piece piece = pieces.get(sourcePosition);
         if (Objects.isNull(piece)) {
             throw new IllegalArgumentException("빈 공간은 이동경로가 없습니다.");

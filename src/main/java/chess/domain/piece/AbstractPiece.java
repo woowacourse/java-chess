@@ -18,12 +18,12 @@ public abstract class AbstractPiece implements Piece {
     protected final Color color;
     protected final Position position;
 
-    protected AbstractPiece(Color color, Position position) {
+    protected AbstractPiece(final Color color, final Position position) {
         this.color = color;
         this.position = position;
     }
 
-    public static Piece of(String symbol, Position position) {
+    public static Piece of(final String symbol, final Position position) {
         String symbolType = symbol.toLowerCase();
         Color color = getColor(symbol, symbolType);
         if (PAWN.equals(symbolType)) {
@@ -47,7 +47,7 @@ public abstract class AbstractPiece implements Piece {
         throw new IllegalArgumentException("잘못된 입력입니다.");
     }
 
-    private static Color getColor(String symbol, String symbolType) {
+    private static Color getColor(final String symbol, final String symbolType) {
         if (symbol.equals(symbolType)) {
             return Color.WHITE;
         }
@@ -86,8 +86,8 @@ public abstract class AbstractPiece implements Piece {
         return false;
     }
 
-    protected List<Position> positions(Map<Position, Piece> pieces, List<Direction> directions,
-        int ableLength) {
+    protected List<Position> positions(final Map<Position, Piece> pieces,
+        final List<Direction> directions, final int ableLength) {
         final List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
             addMovableDirectionPositions(pieces, ableLength, positions, direction);
@@ -95,9 +95,8 @@ public abstract class AbstractPiece implements Piece {
         return positions;
     }
 
-    private void addMovableDirectionPositions(Map<Position, Piece> pieces, int ableLength,
-        List<Position> positions,
-        Direction direction) {
+    private void addMovableDirectionPositions(final Map<Position, Piece> pieces,
+        final int ableLength, List<Position> positions, final Direction direction) {
         boolean isStop = false;
         int distance = 1;
         while (!isStop && distance <= ableLength) {
@@ -106,8 +105,8 @@ public abstract class AbstractPiece implements Piece {
         }
     }
 
-    protected boolean addMovablePosition(Map<Position, Piece> pieces, List<Position> positions,
-        Direction direction, int distance) {
+    protected boolean addMovablePosition(final Map<Position, Piece> pieces,
+        final List<Position> positions,final Direction direction, final int distance) {
         int dx = direction.getXDegree() * distance;
         int dy = direction.getYDegree() * distance;
         if (!position.isAdd(dx, dy)) {
@@ -122,7 +121,7 @@ public abstract class AbstractPiece implements Piece {
         return !Objects.isNull(piece);
     }
 
-    protected void validateMove(Position position, Map<Position, Piece> pieces) {
+    protected void validateMove(final Position position, final Map<Position, Piece> pieces) {
         List<Position> positions = movablePositions(pieces);
         if (!positions.contains(position)) {
             throw new IllegalArgumentException(ERROR_CAN_NOT_MOVE);

@@ -17,7 +17,7 @@ public final class Board {
         this(new Ready(), new Players("player1", "player2"));
     }
 
-    public Board(String whitePlayer, String blackPlayer) {
+    public Board(final String whitePlayer, final String blackPlayer) {
         this(new Ready(), new Players(whitePlayer, blackPlayer));
     }
 
@@ -56,7 +56,7 @@ public final class Board {
         return state.turn();
     }
 
-    public List<Position> movablePositions(String source) {
+    public List<Position> movablePositions(final String source) {
         return state.movablePositions(source);
     }
 

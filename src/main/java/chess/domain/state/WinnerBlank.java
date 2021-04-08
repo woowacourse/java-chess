@@ -5,7 +5,7 @@ import chess.domain.piece.Color;
 
 public abstract class WinnerBlank extends AbstractState {
 
-    protected WinnerBlank(Color color, Pieces pieces) {
+    protected WinnerBlank(final Color color, final Pieces pieces) {
         super(color, pieces);
     }
 

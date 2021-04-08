@@ -21,7 +21,7 @@ public interface Piece {
 
     boolean isKing();
 
-    List<Position> movablePositions(Map<Position, Piece> pieces);
+    List<Position> movablePositions(final Map<Position, Piece> pieces);
 
     Position position();
 }

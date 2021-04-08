@@ -58,7 +58,7 @@ public abstract class AbstractState implements State {
     }
 
     @Override
-    public List<Position> movablePositions(String source) {
+    public List<Position> movablePositions(final String source) {
         Position sourcePosition = Position.of(source);
         return pieces.movablePositions(sourcePosition);
     }
