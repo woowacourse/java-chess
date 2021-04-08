@@ -32,7 +32,7 @@ public class WebChessController {
 
         get("/startNewGame", (req, res) -> {
             try {
-                final ChessGameDTO chessGameDTO = chessService.startNewGame();
+                final ChessGameDTO chessGameDTO = chessService.startNewGame(false);
                 res.status(SUCCESS.statusCode());
                 return gson.toJson(chessGameDTO);
             } catch (SQLException e) {
@@ -41,6 +41,17 @@ public class WebChessController {
             } catch (IllegalArgumentException e) {
                 res.status(BAD_REQUEST.statusCode());
                 return gson.toJson(StartNewGameResponseDTO.unavailable());
+            }
+        });
+
+        get("/forceNewGame", (req, res) -> {
+            try {
+                final ChessGameDTO chessGameDTO = chessService.startNewGame(true);
+                res.status(SUCCESS.statusCode());
+                return gson.toJson(chessGameDTO);
+            } catch (SQLException e) {
+                res.status(INTERNAL_SERVER_ERROR.statusCode());
+                return gson.toJson(DBConnectionDTO.fail());
             }
         });
 

@@ -12,8 +12,8 @@ export function finishGame(data) {
     } else {
         winnerAnnouncement.innerText = "🎺 Black Team Wins! 🎺";
     }
-    finalWhiteTeamScore.innerText = "White Team Score: " + data.whiteTeamScore;
-    finalBlackTeamScore.innerText = "Black Team Score: " + data.blackTeamScore;
+    finalWhiteTeamScore.innerText = "White Team Score: " + data.teamScore.white;
+    finalBlackTeamScore.innerText = "Black Team Score: " + data.teamScore.black;
 }
 
 playAgainButton.addEventListener('click', playAgain);

@@ -53,7 +53,7 @@ export function drawPieceImage(data) {
     emptyBoardImage();
     appendWhitePieceImage(data.piecePositionByTeam.white);
     appendBlackPieceImage(data.piecePositionByTeam.black);
-    updateScoreUI(data.whiteTeamScore, data.blackTeamScore);
+    updateScoreUI(data.teamScore.white, data.teamScore.black);
 }
 
 function emptyBoardImage() {

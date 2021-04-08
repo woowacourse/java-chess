@@ -63,7 +63,7 @@ function serverMoveRequest(startPoint, destPoint) {
         })
         .then(data => {
             drawPieceImage(data);
-            updateScoreUI(data.whiteTeamScore, data.blackTeamScore);
+            updateScoreUI(data.teamScore.white, data.teamScore.black);
             updateTurn(data.currentTurnTeam);
             checkIsPlaying(data);
         })

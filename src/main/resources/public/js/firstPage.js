@@ -20,14 +20,35 @@ function startNewGame() {
         })
         .then(data => {
             if (data.availability === "unavailable") {
-                alert("현재 진행중인 체스게임을 먼저 마무리해주세요");
+                let forceStart = confirm("현재 진행 중인 체스 게임이 있습니다. 삭제 후 새 게임을 시작하시겠습니까?");
+                if (forceStart) {
+                    forceNewGame();
+                }
             } else if (data.connection === "fail") {
-                alert("서버와의 통신에 실패했습니다.")
+                alert("서버와의 통신에 실패했습니다.");
             } else {
                 initializeChessBoard(data);
             }
         })
-        .catch(error => { })
+        .catch(error => {
+            alert("서버와의 통신에 실패했습니다.");
+        })
+}
+
+function forceNewGame() {
+    fetch("/forceNewGame")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            initializeChessBoard(data);
+        })
+        .catch(error => {
+            alert("서버와의 통신이 실패하였습니다.");
+        })
 }
 
 function loadPrevGame() {
