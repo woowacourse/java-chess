@@ -8,7 +8,7 @@ import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.PieceDTO;
 import chess.dto.StatusDTO;
-import chess.vo.PointsVO;
+import chess.dto.PointsDTO;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -64,7 +64,7 @@ public final class WebUIChessController {
 
     private ChessGame getChessGameByRoomId(final String roomId) throws SQLException {
         ChessGame chessGame = new ChessGame();
-        for (PointsVO points : commandDAO.getCommandsByRoomId(roomId)) {
+        for (PointsDTO points : commandDAO.getCommandsByRoomId(roomId)) {
             String start_point = points.getStartPoint();
             String end_point = points.getEndPoint();
             chessGame.move(new Position(start_point), new Position(end_point));

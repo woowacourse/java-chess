@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.vo.PointsVO;
+import chess.dto.PointsDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,12 +21,12 @@ class CommandDAOTest {
             "root"
     );
     private final String testRoomId = "testId";
-    private final List<PointsVO> commands = new ArrayList<>();
+    private final List<PointsDTO> commands = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        commands.add(new PointsVO("00", "02"));
-        commands.add(new PointsVO("02", "04"));
+        commands.add(new PointsDTO("00", "02"));
+        commands.add(new PointsDTO("02", "04"));
     }
 
     @Test
@@ -53,12 +53,19 @@ class CommandDAOTest {
     }
 
     private void findPoint(final String testRoomId) throws SQLException {
-        List<PointsVO> points = commandDAO.getCommandsByRoomId(testRoomId);
-        assertThat(points).isEqualTo(commands);
+        List<PointsDTO> points = commandDAO.getCommandsByRoomId(testRoomId);
+
+        for (int i = 0; i < points.size(); ++i) {
+            PointsDTO pointsDTO = points.get(i);
+            PointsDTO expectPointsDTO = commands.get(i);
+
+            assertThat(pointsDTO.getStartPoint()).isEqualTo(expectPointsDTO.getStartPoint());
+            assertThat(pointsDTO.getEndPoint()).isEqualTo(expectPointsDTO.getEndPoint());
+        }
     }
 
     void addPoints(final String roomId) {
-        for (PointsVO points : commands) {
+        for (PointsDTO points : commands) {
             commandDAO.addCommand(roomId, points.getStartPoint(), points.getEndPoint());
         }
     }
