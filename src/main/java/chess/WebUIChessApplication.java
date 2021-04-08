@@ -15,7 +15,6 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     public static void main(String[] args) throws SQLException {
         port(8084);
-        final Gson GSON = new Gson();
         JsonTransformer jsonTransformer = new JsonTransformer();
 
         ChessService chessService = new ChessService();
@@ -31,7 +30,7 @@ public class WebUIChessApplication {
             return "보드 초기화 성공!";
         }, jsonTransformer);
         post("/move", (req, res) -> {
-            PositionDTO positionDTO = GSON.fromJson(req.body(), PositionDTO.class);
+            PositionDTO positionDTO = jsonTransformer.getGson().fromJson(req.body(), PositionDTO.class);
             return chessService.move(positionDTO);
         }, jsonTransformer);
         post("/currentBoard", (req, res) -> {
