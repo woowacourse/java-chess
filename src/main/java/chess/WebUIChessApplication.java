@@ -6,10 +6,14 @@ import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.PiecesDto;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -44,15 +48,12 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-            JsonParser jsonParser = new JsonParser();
-            JsonObject jsonObject = (JsonObject) jsonParser.parse(req.body());
-
-            System.out.println(jsonObject.get("source").getAsString()); //b7
-            System.out.println(jsonObject.get("target").getAsString()); //b5
+            ObjectMapper mapper = new ObjectMapper();
+            MovePositionInfo mpi = mapper.readValue(req.body(), MovePositionInfo.class);
 
             try {
-                chessGame.move(new Position(jsonObject.get("source").getAsString().split("")),
-                        new Position(jsonObject.get("target").getAsString().split("")));
+                chessGame.move(new Position(mpi.getSource().split("")),
+                        new Position(mpi.getTarget().split("")));
             } catch (Exception e) {
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이동할 수 없습니다.", chessGame.getStatus()));
             }
