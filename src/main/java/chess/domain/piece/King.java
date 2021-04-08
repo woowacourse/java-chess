@@ -9,7 +9,7 @@ import static chess.domain.piece.info.Score.ZERO;
 
 public class King extends Piece {
     public King(Color color, Position position) {
-        super(Name.KING, color,position, ZERO);
+        super(Name.KING, color, position, ZERO);
     }
 
     @Override

@@ -9,11 +9,16 @@ repositories {
 }
 
 dependencies {
+    implementation "com.fasterxml.jackson.core:jackson-core:2.9.9"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:2.9.9"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.9.9"
+    implementation 'com.google.code.gson:gson:2.8.6'
     compile('com.sparkjava:spark-core:2.9.0')
     compile('com.sparkjava:spark-template-handlebars:2.7.1')
     compile('ch.qos.logback:logback-classic:1.2.3')
     testCompile('org.junit.jupiter:junit-jupiter:5.6.0')
     testCompile('org.assertj:assertj-core:3.15.0')
+    implementation("mysql:mysql-connector-java:8.0.16")
 }
 
 test {

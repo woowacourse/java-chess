@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Source+Serif+Pro:wght@700&display=swap"
+          rel="stylesheet">
+    <title>🕹 Chess Game 🕹</title>
+</head>
+<body>
+<div class="buttons">
+    <button class="snip1535" id="start">start</button>
+</div>
+
+<div id="turn"></div>
+<div class="main">
+    <div class="board child" id="BLACK"></div>
+    <div class="wrapper child" id="chess-board">
+        <div class="box white" id="a8"></div>
+        <div class="box black" id="b8"></div>
+        <div class="box white" id="c8"></div>
+        <div class="box black" id="d8"></div>
+        <div class="box white" id="e8"></div>
+        <div class="box black" id="f8"></div>
+        <div class="box white" id="g8"></div>
+        <div class="box black" id="h8"></div>
+
+        <div class="box black" id="a7"></div>
+        <div class="box white" id="b7"></div>
+        <div class="box black" id="c7"></div>
+        <div class="box white" id="d7"></div>
+        <div class="box black" id="e7"></div>
+        <div class="box white" id="f7"></div>
+        <div class="box black" id="g7"></div>
+        <div class="box white" id="h7"></div>
+
+        <div class="box white" id="a6"></div>
+        <div class="box black" id="b6"></div>
+        <div class="box white" id="c6"></div>
+        <div class="box black" id="d6"></div>
+        <div class="box white" id="e6"></div>
+        <div class="box black" id="f6"></div>
+        <div class="box white" id="g6"></div>
+        <div class="box black" id="h6"></div>
+
+        <div class="box black" id="a5"></div>
+        <div class="box white" id="b5"></div>
+        <div class="box black" id="c5"></div>
+        <div class="box white" id="d5"></div>
+        <div class="box black" id="e5"></div>
+        <div class="box white" id="f5"></div>
+        <div class="box black" id="g5"></div>
+        <div class="box white" id="h5"></div>
+
+        <div class="box white" id="a4"></div>
+        <div class="box black" id="b4"></div>
+        <div class="box white" id="c4"></div>
+        <div class="box black" id="d4"></div>
+        <div class="box white" id="e4"></div>
+        <div class="box black" id="f4"></div>
+        <div class="box white" id="g4"></div>
+        <div class="box black" id="h4"></div>
+
+        <div class="box black" id="a3"></div>
+        <div class="box white" id="b3"></div>
+        <div class="box black" id="c3"></div>
+        <div class="box white" id="d3"></div>
+        <div class="box black" id="e3"></div>
+        <div class="box white" id="f3"></div>
+        <div class="box black" id="g3"></div>
+        <div class="box white" id="h3"></div>
+
+        <div class="box white" id="a2"></div>
+        <div class="box black" id="b2"></div>
+        <div class="box white" id="c2"></div>
+        <div class="box black" id="d2"></div>
+        <div class="box white" id="e2"></div>
+        <div class="box black" id="f2"></div>
+        <div class="box white" id="g2"></div>
+        <div class="box black" id="h2"></div>
+
+        <div class="box black" id="a1"></div>
+        <div class="box white" id="b1"></div>
+        <div class="box black" id="c1"></div>
+        <div class="box white" id="d1"></div>
+        <div class="box black" id="e1"></div>
+        <div class="box white" id="f1"></div>
+        <div class="box black" id="g1"></div>
+        <div class="box white" id="h1"></div>
+    </div>
+    <div class="board child" id="WHITE"></div>
+</div>
+
+<div class="buttons">
+    <button class="snip1535" id="reset">reset</button>
+</div>
+<script src="../js/board.js"></script>
+</body>
+</html>

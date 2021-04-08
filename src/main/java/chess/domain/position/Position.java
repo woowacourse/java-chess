@@ -50,6 +50,10 @@ public class Position {
         return y;
     }
 
+    public String key() {
+        return x + String.valueOf(y);
+    }
+
     public int yDistance(Position anotherPosition) {
         return this.y - anotherPosition.y;
     }

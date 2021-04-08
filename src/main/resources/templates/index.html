@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <title>🕹 Chess Game 🕹</title>
 </head>
 <body>
-Hello World!!
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h3>🕹 Chess Game Room List 🕹</h3>
+            <ul class="list-group" id="chess-game-list"></ul>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="generator-container">
+    ✨ Generate new Chess Game Room ✨ <br>
+    <button id="generator">Generate!</button>
+</div>
+<script src="../js/index.js"></script>
 </body>
 </html>

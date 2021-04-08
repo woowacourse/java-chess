@@ -7,46 +7,37 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    private final ChessGame chessGame;
-    private final Commands commands;
-
     public ChessController() {
-        this.chessGame = new ChessGame();
-        this.commands = Commands.validCommands();
     }
 
     public void run() {
+        ChessGame chessGame = new ChessGame();
         OutputView.printStartMessage();
         while (chessGame.runnable()) {
-            executeByCommand();
+            executeByCommand(chessGame);
         }
-        end();
     }
 
-    private void executeByCommand() {
+    private void executeByCommand(ChessGame chessGame) {
         try {
             OutputView.printRequestCommandMessage();
             String[] splitCommand = InputView.command().split(" ");
             String firstCommand = splitCommand[0];
-            Command command = commands.findCommandByText(firstCommand);
+            Command command = Commands.findCommandByText(firstCommand);
             command.execute(chessGame, splitCommand);
-            showResultByCommand(command);
+            showResultByCommand(command, chessGame);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            executeByCommand();
+            executeByCommand(chessGame);
         }
     }
 
-    private void showResultByCommand(Command command) {
+    private void showResultByCommand(Command command, ChessGame chessGame) {
         if (command.isMustShowBoard()) {
             OutputView.printChessBoard(chessGame.getPiecesByAllPosition());
         }
         if (command.isMustShowStatus()) {
             OutputView.printStatus(chessGame.scoreStatus());
         }
-    }
-
-    public void end() {
-        System.exit(0);
     }
 }
