@@ -35,29 +35,29 @@ public final class CommandDAO {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
         return connection;
     }
 
-
-    public void addCommand(final String roomId, final String startPoint, final String endPoint) throws SQLException {
+    public void addCommand(final String roomId, final String startPoint, final String endPoint) {
         String query = "INSERT INTO command(room_id, start_point, end_point) VALUES(?, ?, ?)";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, roomId);
-        preparedStatement.setString(2, startPoint);
-        preparedStatement.setString(3, endPoint);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, roomId);
+            preparedStatement.setString(2, startPoint);
+            preparedStatement.setString(3, endPoint);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public List<List<String>> getCommandsByRoomId(final String roomId) throws SQLException {
         String query = "SELECT start_point, end_point FROM command WHERE room_id = ? ORDER BY command_time";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, roomId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<List<String>> points = getPoints(resultSet);
-        preparedStatement.close();
-        return points;
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, roomId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return getPoints(resultSet);
+        }
     }
 
     private List<List<String>> getPoints(final ResultSet resultSet) throws SQLException {
@@ -68,14 +68,18 @@ public final class CommandDAO {
             positions.add(resultSet.getString("end_point"));
             points.add(positions);
         }
+        resultSet.close();
         return points;
     }
 
-    public void deleteCommandsByRoomId(final String roomId) throws SQLException {
+    public void deleteCommandsByRoomId(final String roomId) {
         String query = "DELETE FROM command WHERE room_id = ?";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, roomId);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, roomId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
