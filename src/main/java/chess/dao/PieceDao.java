@@ -15,7 +15,7 @@ public class PieceDao {
 
     public void addPieces(List<Piece> pieces, int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "INSERT INTO PIECE(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
+            String query = "INSERT INTO piece(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
             for (Piece piece : pieces) {
                 pstmt.setString(1, piece.color().name());
@@ -32,7 +32,7 @@ public class PieceDao {
     public List<Piece> findAllPiecesByChessGameId(int chessGameId) {
         List<Piece> pieces = new ArrayList<>();
         try (Connection connection = dbManager.getConnection()) {
-            String query = "SELECT color, name, position FROM PIECE WHERE chessGameId = ?";
+            String query = "SELECT color, name, position FROM piece WHERE chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, chessGameId);
             ResultSet rs = pstmt.executeQuery();
@@ -50,7 +50,7 @@ public class PieceDao {
 
     public void updatePiece(int chessGameId, Piece piece) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "UPDATE PIECE SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
+            String query = "UPDATE piece SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, piece.color().name());
             pstmt.setString(2, piece.name());

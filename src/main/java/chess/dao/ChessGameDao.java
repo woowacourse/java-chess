@@ -13,7 +13,7 @@ public class ChessGameDao {
     public int save(ChessGame chessGame) {
         int newChessGameId = 0;
         try (Connection connection = dbManager.getConnection()) {
-            String query = "INSERT INTO CHESS_GAME(turn, isFinish) VALUE (?, ?)";
+            String query = "INSERT INTO chess_game(turn, isFinish) VALUE (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, chessGame.turn());
             pstmt.setBoolean(2, !chessGame.runnable());
@@ -31,7 +31,7 @@ public class ChessGameDao {
 
     public void saveWithId(int chessGameId, ChessGame chessGame) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "INSERT INTO CHESS_GAME VALUES (?, ?, ?)";
+            String query = "INSERT INTO chess_game VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, chessGameId);
             pstmt.setString(2, chessGame.turn());
@@ -45,12 +45,12 @@ public class ChessGameDao {
     public List<Integer> selectAllChessGameId() {
         List<Integer> chessGameIds = new ArrayList<>();
         try (Connection connection = dbManager.getConnection()) {
-            String query = "SELECT * FROM CHESS_GAME";
+            String query = "SELECT * FROM chess_game";
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                chessGameIds.add(rs.getInt("chessGameId"));
+                chessGameIds.add(rs.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class ChessGameDao {
 
     public ChessGameStatusDto findChessGameStateById(int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "SELECT turn, IF(isFinish, 'true', 'false') isFinish FROM CHESS_GAME WHERE chessGameId = ?";
+            String query = "SELECT turn, IF(isFinish, 'true', 'false') isFinish FROM chess_game WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, chessGameId);
             ResultSet rs = pstmt.executeQuery();
@@ -74,7 +74,7 @@ public class ChessGameDao {
 
     public void updateChessGameStateById(int chessGameId, ChessGame chessGame) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "UPDATE CHESS_GAME SET turn = ?, isFinish = ? WHERE chessGameId = ?";
+            String query = "UPDATE chess_game SET turn = ?, isFinish = ? WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, chessGame.turn());
             pstmt.setBoolean(2, !chessGame.runnable());
@@ -87,7 +87,7 @@ public class ChessGameDao {
 
     public void delete(int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
-            String query = "DELETE FROM CHESS_GAME WHERE chessGameId = ?";
+            String query = "DELETE FROM chess_game WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, chessGameId);
             pstmt.executeUpdate();
