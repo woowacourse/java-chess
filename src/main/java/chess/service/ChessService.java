@@ -3,7 +3,6 @@ package chess.service;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.domain.team.Team;
 import chess.webdao.ChessGameDAO;
 import chess.webdto.ChessGameDTO;
 import chess.webdto.PieceDTOFormat;
@@ -27,8 +26,7 @@ public class ChessService {
             throw new IllegalArgumentException("아직 진행 중인 체스게임이 있습니다");
         }
         chessGameDAO.deleteChessGame();
-        final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
-        chessGameDAO.createChessGame(chessGame, currentTurnTeamToString(chessGame));
+        ChessGame chessGame = chessGameDAO.createChessGame();
         return generateChessGameDTO(chessGame);
     }
 

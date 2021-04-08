@@ -49,17 +49,19 @@ public class ChessGameDAO {
         return con;
     }
 
-    public void createChessGame(final ChessGame chessGame, final String currentTurnTeam) throws SQLException {
+    public ChessGame createChessGame() throws SQLException {
+        final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
         createTeamInfo(chessGame.currentWhitePiecePosition(), WHITE_TEAM.asDAOFormat());
         createTeamInfo(chessGame.currentBlackPiecePosition(), BLACK_TEAM.asDAOFormat());
         final String query = "INSERT INTO chess_game VALUES (?, ?)";
         final Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, currentTurnTeam);
+        pstmt.setString(1, WHITE_TEAM.asDAOFormat());
         pstmt.setBoolean(2, chessGame.isPlaying());
         pstmt.executeUpdate();
         pstmt.close();
         connection.close();
+        return chessGame;
     }
 
     private void createTeamInfo(final Map<Position, Piece> teamPiecePosition, final String team) throws SQLException {

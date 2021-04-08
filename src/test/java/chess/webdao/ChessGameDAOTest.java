@@ -23,8 +23,10 @@ public class ChessGameDAOTest {
     @Test
     public void createChessGameDB() throws SQLException {
         final ChessGameDAO chessGameDAO = new ChessGameDAO();
-        final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
-        chessGameDAO.createChessGame(chessGame, "white");
+        final ChessGame chessGame = chessGameDAO.createChessGame();
+        assertThat(chessGame.isWhiteTeamTurn()).isTrue();
+        assertThat(chessGame.calculateWhiteTeamScore()).isEqualTo(38.0);
+        assertThat(chessGame.calculateBlackTeamScore()).isEqualTo(38.0);
     }
 
     @Test
