@@ -140,7 +140,7 @@
 
 ### Refactoring TODO
 
-- [ ] gradle implementation 변경
+- [x] gradle implementation 변경
 - [ ] 인스턴스 변수와 클래스 변수 공백 생성
 - [ ] 사용하지 않는 메소드 삭제
 - [ ] GSON을 재활용하도록 수정
