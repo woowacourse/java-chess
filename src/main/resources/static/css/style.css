@@ -4,14 +4,15 @@
 }
 
 
-.score-board{
-    margin : 20px;
+.score-board {
+    margin: 20px;
 }
-.score{
+
+.score {
     font-size: 20px;
 }
 
-#score-board-container{
+#score-board-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,8 +43,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width : 100%;
-    height : 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #board {

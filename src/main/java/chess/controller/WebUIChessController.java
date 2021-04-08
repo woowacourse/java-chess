@@ -7,8 +7,8 @@ import chess.domain.board.Board;
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import chess.dto.PieceDTO;
-import chess.vo.PointsVO;
 import chess.dto.StatusDTO;
+import chess.vo.PointsVO;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -103,7 +103,6 @@ public final class WebUIChessController {
         }
         return pieceDTOGroup;
     }
-
 
     private List<Piece> getEntirePieces() {
         Board board = chessGame.getBoard();

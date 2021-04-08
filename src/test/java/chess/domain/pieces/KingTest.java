@@ -44,7 +44,6 @@ class KingTest {
         assertThat(kingPosition.getRow()).isNotEqualTo(1);
     }
 
-
     @ParameterizedTest
     @DisplayName("King 초기 col 위치가 e가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "c", "d", "f", "g", "h"})

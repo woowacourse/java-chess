@@ -44,7 +44,6 @@ class BishopTest {
         assertThat(bishopPosition.getRow()).isNotEqualTo(1);
     }
 
-
     @ParameterizedTest
     @DisplayName("Bishop 초기 col 위치가 c혹은 f가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "b", "d", "e", "g", "h"})
