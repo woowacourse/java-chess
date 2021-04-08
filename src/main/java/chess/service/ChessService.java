@@ -22,8 +22,8 @@ public class ChessService {
         this.chessGameDAO = new ChessGameDAO();
     }
 
-    public synchronized ChessGameDTO startNewGame() throws SQLException {
-        if (chessGameDAO.checkChessGameIsPlaying()) {
+    public synchronized ChessGameDTO startNewGame(final boolean forceStart) throws SQLException {
+        if (chessGameDAO.checkChessGameIsPlaying() && !forceStart) {
             throw new IllegalArgumentException("아직 진행 중인 체스게임이 있습니다");
         }
         chessGameDAO.deleteChessGame();
@@ -47,10 +47,11 @@ public class ChessService {
     private synchronized ChessGameDTO generateChessGameDTO(final ChessGame chessGame) {
         final Map<String, Map<String, String>> piecePositionToString = generatePiecePositionToString(chessGame);
         final String currentTurnTeam = currentTurnTeamToString(chessGame);
-        final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
-        final double blackTeamScore = chessGame.calculateBlackTeamScore();
+        final Map<String, Double> teamScore = new HashMap<>();
+        teamScore.put(WHITE_TEAM.asDTOFormat(), chessGame.calculateWhiteTeamScore());
+        teamScore.put(BLACK_TEAM.asDTOFormat(), chessGame.calculateBlackTeamScore());
         final boolean isPlaying = chessGame.isPlaying();
-        return new ChessGameDTO(piecePositionToString, currentTurnTeam, whiteTeamScore, blackTeamScore, isPlaying);
+        return new ChessGameDTO(piecePositionToString, currentTurnTeam, teamScore, isPlaying);
     }
 
     private Map<String, Map<String, String>> generatePiecePositionToString(final ChessGame chessGame) {
