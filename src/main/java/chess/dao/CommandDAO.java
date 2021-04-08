@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.vo.PointsVO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public final class CommandDAO {
         }
     }
 
-    public List<List<String>> getCommandsByRoomId(final String roomId) throws SQLException {
+    public List<PointsVO> getCommandsByRoomId(final String roomId) throws SQLException {
         String query = "SELECT start_point, end_point FROM command WHERE room_id = ? ORDER BY command_time";
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, roomId);
@@ -60,13 +62,10 @@ public final class CommandDAO {
         }
     }
 
-    private List<List<String>> getPoints(final ResultSet resultSet) throws SQLException {
-        List<List<String>> points = new ArrayList<>();
+    private List<PointsVO> getPoints(final ResultSet resultSet) throws SQLException {
+        List<PointsVO> points = new ArrayList<>();
         while (resultSet.next()) {
-            List<String> positions = new ArrayList<>();
-            positions.add(resultSet.getString("start_point"));
-            positions.add(resultSet.getString("end_point"));
-            points.add(positions);
+            points.add(new PointsVO(resultSet.getString("start_point"), resultSet.getString("end_point")));
         }
         resultSet.close();
         return points;

@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.vo.PointsVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,12 +21,12 @@ class CommandDAOTest {
             "root"
     );
     private final String testRoomId = "testId";
-    private final List<List<String>> commands = new ArrayList<>();
+    private final List<PointsVO> commands = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        commands.add(Arrays.asList("00", "02"));
-        commands.add(Arrays.asList("02", "04"));
+        commands.add(new PointsVO("00", "02"));
+        commands.add(new PointsVO("02", "04"));
     }
 
     @Test
@@ -53,23 +53,23 @@ class CommandDAOTest {
     }
 
     private void findPoint(final String testRoomId) throws SQLException {
-        List<List<String>> points = commandDAO.getCommandsByRoomId(testRoomId);
+        List<PointsVO> points = commandDAO.getCommandsByRoomId(testRoomId);
         assertThat(points).isEqualTo(commands);
     }
 
-    void addPoints(final String roomId) throws SQLException {
-        for (List<String> command : commands) {
-            commandDAO.addCommand(roomId, command.get(0), command.get(1));
+    void addPoints(final String roomId) {
+        for (PointsVO points : commands) {
+            commandDAO.addCommand(roomId, points.getStartPoint(), points.getEndPoint());
         }
     }
 
     @Test
     @DisplayName("roomId을 testId로 가진 것들을 삭제하면, 성공한다.")
-    void deleteCommands() throws SQLException {
+    void deleteCommands() {
         deleteCommandsByRoomId(testRoomId);
     }
 
-    void deleteCommandsByRoomId(final String roomId) throws SQLException {
+    void deleteCommandsByRoomId(final String roomId) {
         commandDAO.deleteCommandsByRoomId(roomId);
     }
 }
