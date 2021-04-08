@@ -23,12 +23,8 @@ function reset() {
             id: chessGameId
         }
     }).then(function (response) {
-        if (response.data.isSuccess) {
-            const jsonData = JSON.parse(response.data.jsonData);
-            updateBoard(jsonData);
-        } else {
-            alert(response.data.jsonData);
-        }
+        const data = JSON.parse(response.data);
+        updateBoard(data);
     }).catch(err => {
         console.log(err)
     })
@@ -43,11 +39,11 @@ function initializeChessBoard() {
             id: chessGameId
         }
     }).then(function (response) {
-        const jsonData = JSON.parse(response.data.jsonData);
-        const pieces = jsonData.pieces;
+        const data = JSON.parse(response.data);
+        const pieces = data.pieces;
         addPieces(pieces);
-        setTurn(jsonData.turn);
-        setScoreByTeam(jsonData.totalScoreByColor);
+        setTurn(data.turn);
+        setScoreByTeam(data.totalScoreByColor);
     }).catch(function (error) {
         console.log(error);
     });
@@ -78,14 +74,10 @@ function moveFromSourceToTarget() {
             "target": target
         }
     }).then(function (response) {
-        if (response.data.isSuccess) {
-            const jsonData = JSON.parse(response.data.jsonData);
-            updateBoard(jsonData);
-        } else {
-            alert(response.data.jsonData);
-        }
+        const data = JSON.parse(response.data);
+        updateBoard(data);
     }).catch(err => {
-        console.log(err)
+        alert(err.response.data)
     })
 }
 

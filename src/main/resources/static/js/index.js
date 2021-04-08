@@ -6,8 +6,8 @@ function updateChessGameList() {
         method: 'get',
         url: '/chess-game-list',
     }).then(function (response) {
-        const jsonData = JSON.parse(response.data.jsonData);
-        addChessGameList(jsonData);
+        const data = JSON.parse(response.data);
+        addChessGameList(data);
     }).catch(function (error) {
         console.log(error);
     });
@@ -23,7 +23,6 @@ function addChessGameList(chessGameList) {
             </div>`;
         document.getElementById("chess-game-list").appendChild(chessGameLI);
     }
-
 }
 
 function enterGame(chessGameList) {

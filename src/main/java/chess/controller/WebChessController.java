@@ -3,7 +3,6 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.dto.ChessGameDto;
 import chess.dto.requestDto.MoveRequestDto;
-import chess.dto.responseDto.ResponseDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,7 +56,8 @@ public class WebChessController {
                 ChessGame chessGame = chessService.moveFromSourceToTarget(chessGameId, source, target);
                 return getChessGameGson(chessGame);
             } catch (Exception e) {
-                return gson.toJson(new ResponseDto(false, e.getMessage()));
+                res.status(400);
+                return e.getMessage();
             }
         });
 
@@ -70,7 +70,7 @@ public class WebChessController {
         get("/chess-game-list", (req, res) -> {
             List<Integer> chessGameList = chessService.getAllChessGameId();
             String chessGameListJson = gson.toJson(chessGameList);
-            return gson.toJson(new ResponseDto(true, chessGameListJson));
+            return gson.toJson(chessGameListJson);
         });
 
         get("/reset", (req, res) -> {
@@ -84,6 +84,6 @@ public class WebChessController {
     private String getChessGameGson(ChessGame chessGame) {
         ChessGameDto chessGameDto = new ChessGameDto(chessGame);
         String chessGameDtoJson = gson.toJson(chessGameDto);
-        return gson.toJson(new ResponseDto(true, chessGameDtoJson));
+        return gson.toJson(chessGameDtoJson);
     }
 }
