@@ -9,7 +9,8 @@ const $whiteScore = document.querySelector('#white-score');
 
 $board.addEventListener('click', onClickSquare)
 
-let sourceId = null;
+let sourceId;
+let turn;
 
 function gameId() {
     return $gameId.value
@@ -20,17 +21,17 @@ function onClickSquare(e) {
         sourceId = e.target.id;
         return;
     }
-    move(sourceId, e.target.id)
+    move(sourceId, e.target.id, turn)
 }
 
-function move(source, target) {
+function move(source, target, turn) {
     $.ajax({
         type: "POST",
-        // url: "/chess/game/" + gameId() + "/move",
-        url: "/chess/game/" + "999" + "/move",
+        url: "/chess/game/" + gameId() + "/move",
         data: {
             "source": source,
-            "target": target
+            "target": target,
+            "turn": turn
         },
         dataType: "json",
         success: update,
@@ -53,18 +54,19 @@ function initBoard() {
 function update(response) {
     $board.innerHTML = response.board;
     $currentTurn.innerHTML = response.currentTurn;
+    turn = response.currentTurn;
 
     if (response.isGameSet) {
-        gameSet(response)
+        showResult(response.gameResult)
     }
 }
 
-function gameSet(response) {
-    $winner.innerHTML = response.winner
-    $blackScore.innerHTML = response.blackScore
-    $whiteScore.innerHTML = response.whiteScore
+function showResult(result) {
+    $winner.innerHTML = result.winner
+    $blackScore.innerHTML = result.blackScore
+    $whiteScore.innerHTML = result.whiteScore
 
-    $gameSetResult.classList.toggle("none")
+    $gameSetResult.classList.remove("none")
     $board.removeEventListener('click', onClickSquare)
 }
 

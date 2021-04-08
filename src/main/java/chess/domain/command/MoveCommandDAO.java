@@ -11,17 +11,25 @@ import java.util.List;
 
 public class MoveCommandDAO {
 
-    public void addMoveCommand(Move moveCommand) throws SQLException {
-        String query = "INSERT INTO move_command (game_id, source_position, target_position) VALUES (?, ?, ?)";
+    public int addMoveCommand(Move moveCommand) throws SQLException {
+        String query = "INSERT INTO move_command (game_id, source_position, target_position, turn)"
+                + "SELECT ?, ?, ?, ?"
+                + "FROM DUAL "
+                + "WHERE (SELECT turn FROM move_command WHERE game_id = ? ORDER BY created_at DESC LIMIT 1) = ?"
+                + "   OR (SELECT turn FROM move_command WHERE game_id = ? ORDER BY created_at DESC LIMIT 1) IS NULL;";
 
         final Connection con = getConnection();
         final PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, moveCommand.getGameId());
         pstmt.setString(2, moveCommand.getSource());
         pstmt.setString(3, moveCommand.getTarget());
+        pstmt.setString(4, moveCommand.getSide().name());
+        pstmt.setString(5, moveCommand.getGameId());
+        pstmt.setString(6, moveCommand.getSide().changeTurn().name());
+        pstmt.setString(7, moveCommand.getGameId());
 
         try (con; pstmt) {
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         }
     }
 

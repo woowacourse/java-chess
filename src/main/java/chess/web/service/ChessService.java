@@ -6,6 +6,8 @@ import chess.domain.command.MoveCommandDAO;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameDAO;
 import chess.domain.game.Score;
+import chess.domain.game.Side;
+import chess.exception.ChessException;
 import chess.web.view.RenderView;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -35,34 +37,37 @@ public class ChessService {
         return chessGame;
     }
 
-    public Map<String, Object> movePiece(ChessGame chessGame, String source, String target)
-            throws SQLException {
-        move(chessGame, source, target);
+    public Map<String, Object> movePiece(String gameId, String source, String target,
+            Side turn) throws SQLException {
+        ChessGame chessGame = replayedChessGame(gameId);
+        validateCurrentTurn(chessGame, turn);
+
+        move(chessGame, new Move(source, target), turn);
+
         Map<String, Object> model = RenderView.renderBoard(chessGame);
 
         if (chessGame.isGameSet()) {
             CHESS_GAME_DAO.updateGameEnd(chessGame.getId());
-            model.put("result", result(chessGame));
+            model.put("isGameSet", Boolean.TRUE);
+            model.put("gameResult", result(chessGame));
         }
-
         return model;
     }
 
-    private void move(ChessGame chessGame, String source, String target) throws SQLException {
-        Move moveCommand = new Move(source, target);
-        chessGame.execute(moveCommand);
-        saveMoveCommand(chessGame, moveCommand);
-    }
+    private void move(ChessGame chessGame, Move command, Side side) throws SQLException {
+        chessGame.execute(command);
 
-    private void saveMoveCommand(ChessGame chessGame, Move command) throws SQLException {
         command.setGameId(chessGame.getId());
-        MOVE_COMMAND_DAO.addMoveCommand(command);
+        command.setSide(side);
+        int insertedRowCount = MOVE_COMMAND_DAO.addMoveCommand(command);
+        if (insertedRowCount == 0) {
+            throw new ChessException("플레이어의 턴이 아닙니다");
+        }
     }
 
     private Map<String, Object> result(ChessGame chessGame) {
         Map<String, Object> model = new HashMap<>();
 
-        model.put("isGameSet", Boolean.TRUE);
         model.put("winner", chessGame.winner().toString());
 
         Score score = chessGame.score();
@@ -70,5 +75,11 @@ public class ChessService {
         model.put("whiteScore", score.whiteScore());
 
         return model;
+    }
+
+    private void validateCurrentTurn(ChessGame chessGame, Side playerSide) {
+        if (!chessGame.currentTurn().equals(playerSide)) {
+            throw new ChessException("플레이어의 턴이 아닙니다");
+        }
     }
 }

@@ -7,6 +7,7 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameDAO;
+import chess.domain.game.Side;
 import chess.exception.ChessException;
 import chess.web.dto.ChessGameDTO;
 import chess.web.service.ChessService;
@@ -53,9 +54,9 @@ public class WebUIChessApplication {
         post("/chess/game/:id/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
+            Side playerSide = Side.valueOf(req.queryParams("turn"));
 
-            ChessGame chessGame = CHESS_SERVICE.replayedChessGame(req.params(":id"));
-            Map<String, Object> model = CHESS_SERVICE.movePiece(chessGame, source, target);
+            Map<String, Object> model = CHESS_SERVICE.movePiece(req.params(":id"), source, target, playerSide);
             return GSON.toJson(model);
         });
 

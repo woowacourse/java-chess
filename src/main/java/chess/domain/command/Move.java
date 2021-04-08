@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.game.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
@@ -10,6 +11,7 @@ public final class Move implements Command {
 
     private String moveId;
     private String gameId;
+    private Side side;
 
     private final Position source;
     private final Position target;
@@ -91,5 +93,13 @@ public final class Move implements Command {
 
     public String getTarget() {
         return target.toString();
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public void setSide(Side side) {
+        this.side = side;
     }
 }
