@@ -137,4 +137,12 @@ public class PawnTest {
         assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("a3"), chessBoard));
         assertTrue(piece.isMovable(Position.valueOf("b2"), Position.valueOf("c3"), chessBoard));
     }
+
+    @Test
+    @DisplayName("블랙 폰이 앞으로 두 칸 가는 경우")
+    void black_move_double_front() {
+        Piece piece = chessBoard.getPiece(Position.valueOf("h7"));
+
+        assertTrue(piece.isMovable(Position.valueOf("h7"), Position.valueOf("h5"), chessBoard));
+    }
 }

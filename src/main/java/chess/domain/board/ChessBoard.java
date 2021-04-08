@@ -4,13 +4,14 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.result.Pieces;
-import chess.domain.result.ResultDto;
+import chess.domain.result.Result;
 import chess.domain.result.Score;
 import chess.domain.state.TeamColor;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable {
 
     private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
@@ -119,18 +120,18 @@ public class ChessBoard {
         return piece(position);
     }
 
-    public ResultDto result() {
+    public Result result() {
         Map<TeamColor, Score> result = new HashMap<>();
         result.put(TeamColor.BLACK, blackPieces.calculateScore());
         result.put(TeamColor.WHITE, whitePieces.calculateScore());
 
         if (isBlankWin(result)) {
-            return new ResultDto(result, TeamColor.BLACK);
+            return new Result(result, TeamColor.BLACK);
         }
         if (isWhiteWin(result)) {
-            return new ResultDto(result, TeamColor.WHITE);
+            return new Result(result, TeamColor.WHITE);
         }
-        return new ResultDto(result, TeamColor.NONE);
+        return new Result(result, TeamColor.NONE);
     }
 
     private boolean isWhiteWin(Map<TeamColor, Score> result) {

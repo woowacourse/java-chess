@@ -158,12 +158,8 @@ public class Position {
         return alpha;
     }
 
-
-    @Override
-    public String toString() {
-        return "Position{" +
-            "boardPosition='" + alpha + ", " + number + '\'' +
-            '}';
+    public String getPosition() {
+        return String.valueOf(alpha) + number;
     }
 
     @Override

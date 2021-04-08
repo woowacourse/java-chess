@@ -160,7 +160,8 @@ public abstract class PieceOnBoard implements Piece {
 
     @Override
     public boolean isEnemyTeam(Piece comparePiece) {
-        return teamColor != comparePiece.getColor();
+        return (teamColor == TeamColor.WHITE && comparePiece.getColor() == TeamColor.BLACK) ||
+            (teamColor == TeamColor.BLACK && comparePiece.getColor() == TeamColor.WHITE);
     }
 
     @Override
@@ -170,6 +171,11 @@ public abstract class PieceOnBoard implements Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    @Override
+    public void setPosition(Position end) {
+        position = end;
     }
 
     public Score getScore() {
@@ -198,15 +204,4 @@ public abstract class PieceOnBoard implements Piece {
         }
         return pieceType.getName().toLowerCase();
     }
-
-    @Override
-    public void setPosition(Position end) {
-        position = end;
-    }
-
-    @Override
-    public String toString() {
-        return teamColor.name() + "" + pieceType + "\n";
-    }
-
 }

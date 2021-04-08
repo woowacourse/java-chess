@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="UTF-8">
+  <title>로또</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
-Hello World!!
+
+<button class="btn" onclick="reflectBoard()">
+  Start
+</button>
+
+<button class="btn" onclick="reset()">
+  reset
+</button>
+
+<button class="btn" onclick="load()">
+  load
+</button>
+<table id="chessBoard">
+</table>
+<div id="whitePoint">white Point: 38</div>
+<div id="blackPoint">black Point: 38</div>
+<script src=script/chessBoard.js></script>
 </body>
 </html>

@@ -16,6 +16,10 @@ public class Score implements Comparable<Score> {
         return new Score(value.score + this.score);
     }
 
+    public double getScore() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -42,5 +46,4 @@ public class Score implements Comparable<Score> {
     public int compareTo(Score o) {
         return Double.compare(score, o.score);
     }
-
 }
