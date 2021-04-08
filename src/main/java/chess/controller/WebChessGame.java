@@ -22,14 +22,28 @@ public class WebChessGame {
         return chessBoard;
     }
 
+    public boolean moved(String source, String target) {
+        if (validTurn(source) && movable(source, target)) {
+            turn = turn.getOppositeColor();
+            return true;
+        }
+        return false;
+    }
+
     public boolean movable(String source, String target) {
         try {
             chessBoard.move(source, target);
-            turn = turn.getOppositeColor();
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean validTurn(String source) {
+        if (turn != chessBoard.getPiece(Position.of(source)).getColor()) {
+            throw new IllegalArgumentException();
+        }
+        return true;
     }
 
     public Map<Position, Piece> getChessBoard() {

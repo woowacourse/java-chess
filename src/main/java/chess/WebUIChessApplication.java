@@ -16,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -45,7 +46,7 @@ public class WebUIChessApplication {
 
         put("/move", "application/json", (req, res) -> {
             Map<String, String> body = gson.fromJson(req.body(), HashMap.class);
-            if (chessGame.movable(body.get("source"), body.get("target"))) {
+            if (chessGame.moved(body.get("source"), body.get("target"))) {
                 JsonObject response = new JsonObject();
                 JsonObject movedSource = boardToJSON(Position.of(body.get("source")),
                     chessBoard.getPiece(Position.of(body.get("source"))));
@@ -55,7 +56,7 @@ public class WebUIChessApplication {
                 response.add("target", movedTarget);
                 return response;
             }
-            return null;
+            return HttpStatus.BAD_REQUEST_400;
         });
 
         get("/turn", "application/json", (req, res) -> {

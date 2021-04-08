@@ -65,7 +65,7 @@ function moveHandler() {
       await changeTurn(await getTurn())
       await result()
     } catch (e) {
-      console.log(e)
+      alert('잘못된 이동입니다.')
     }
   }, false);
 }
@@ -91,7 +91,7 @@ async function movable(source, target) {
         'Accept': 'application/json'
       }
     }
-  ).then(res => res.json()).then(data => data)
+  ).then(res => res.json()).then(data => data).catch(err => err)
 }
 
 function boardTemplate(position, piece) {
