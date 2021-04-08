@@ -1,6 +1,7 @@
 package chess.repository;
 
-import chess.dao.ChessDao;
+import chess.dao.PieceDao;
+import chess.dao.TurnDao;
 import chess.dto.*;
 
 import java.sql.SQLException;
@@ -8,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessRepositoryImpl implements ChessRepository {
-    private final ChessDao chessDao;
+    private final PieceDao pieceDao;
+    private final TurnDao turnDao;
 
     public ChessRepositoryImpl() {
-        this.chessDao = new ChessDao();
+        this.pieceDao = new PieceDao();
+        this.turnDao = new TurnDao();
     }
 
     @Override
@@ -19,47 +22,47 @@ public class ChessRepositoryImpl implements ChessRepository {
         for (Map.Entry<String, String> boardStatus : board.entrySet()) {
             PieceRequestDto pieceRequestDto = new PieceRequestDto(
                     boardStatus.getValue(), boardStatus.getKey());
-            chessDao.initializePieceStatus(pieceRequestDto);
+            pieceDao.initializePieceStatus(pieceRequestDto);
         }
     }
 
     @Override
     public void initializeTurn() throws SQLException {
-        chessDao.initializeTurn();
+        turnDao.initializeTurn();
     }
 
     @Override
     public List<ChessRequestDto> showAllPieces() throws SQLException {
-        return chessDao.showAllPieces();
+        return pieceDao.showAllPieces();
     }
 
     @Override
     public List<TurnRequestDto> showCurrentTurn() throws SQLException {
-        return chessDao.showCurrentTurn();
+        return turnDao.showCurrentTurn();
     }
 
     @Override
     public void movePiece(final MoveRequestDto moveRequestDto) throws SQLException {
-        chessDao.movePiece(moveRequestDto);
+        pieceDao.movePiece(moveRequestDto);
     }
 
     @Override
     public void changeTurn(final TurnChangeRequestDto turnChangeRequestDto) throws SQLException {
-        chessDao.changeTurn(turnChangeRequestDto);
+        turnDao.changeTurn(turnChangeRequestDto);
     }
 
     @Override
     public void removeAllPieces() throws SQLException {
-        chessDao.removeAllPieces();
+        pieceDao.removeAllPieces();
     }
 
     @Override
     public void removeTurn() throws SQLException {
-        chessDao.removeTurn();
+        turnDao.removeTurn();
     }
 
     @Override
     public void removePiece(final MoveRequestDto moveRequestDto) throws SQLException {
-        chessDao.removePiece(moveRequestDto);
+        pieceDao.removePiece(moveRequestDto);
     }
 }

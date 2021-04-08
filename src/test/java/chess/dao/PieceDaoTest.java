@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.command.Command;
 import chess.domain.command.CommandFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PiecesFactory;
@@ -9,8 +8,6 @@ import chess.domain.position.Position;
 import chess.domain.state.StateFactory;
 import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
-import chess.dto.TurnChangeRequestDto;
-import chess.dto.TurnRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import org.junit.jupiter.api.*;
 
@@ -23,17 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-class ChessDaoTest {
-    private static Command command;
+class PieceDaoTest {
     private static Round round;
-    private ChessDao chessDao;
+    private PieceDao pieceDao;
 
     @BeforeEach
     public void setUp() {
-        command = CommandFactory.initialCommand("start");
         round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
-                StateFactory.initialization(PiecesFactory.blackPieces()), command);
-        chessDao = new ChessDao();
+                StateFactory.initialization(PiecesFactory.blackPieces()),
+                CommandFactory.initialCommand("start"));
+        pieceDao = new PieceDao();
     }
 
     public Map<String, String> getBoard() {
@@ -51,7 +47,7 @@ class ChessDaoTest {
     @DisplayName("데이터베이스 연결을 확인한다.")
     @Test
     public void connect() {
-        Connection con = chessDao.getConnection();
+        Connection con = pieceDao.getConnection();
         assertNotNull(con);
     }
 
@@ -64,78 +60,33 @@ class ChessDaoTest {
     }
 
     @Order(3)
-    @DisplayName("turn 테이블에 레코드를 삽입한다.")
-    @Test
-    public void initializeTurn() throws Exception {
-        chessDao.initializeTurn();
-    }
-
-    @Order(4)
     @DisplayName("piece_status 테이블에서 모든 레코드를 읽어온다.")
     @Test
     public void showAllPieces() throws Exception {
-        List<ChessRequestDto> pieces = chessDao.showAllPieces();
+        List<ChessRequestDto> pieces = pieceDao.showAllPieces();
         assertThat(pieces).hasSize(32);
     }
 
-    @Order(5)
-    @DisplayName("turn 테이블에서 모든 레코드를 읽어온다.")
-    @Test
-    public void showCurrentTurn() throws Exception {
-        List<TurnRequestDto> turns = chessDao.showCurrentTurn();
-        assertThat(turns).hasSize(1);
-    }
-
-    @Order(6)
-    @DisplayName("turn 테이블에서 현재 턴을 읽어온다.")
-    @Test
-    public void showTurn() throws Exception {
-        System.out.println(round.currentPlayerName());
-    }
-
-    @Order(7)
+    @Order(4)
     @DisplayName("source에서 target으로 기물을 이동한다.")
     @Test
     public void movePiece() throws Exception {
         MoveRequestDto moveRequestDto = new MoveRequestDto("a2", "a4");
-        chessDao.movePiece(moveRequestDto);
+        pieceDao.movePiece(moveRequestDto);
     }
 
-    @Order(8)
-    @DisplayName("white 턴에서 black 턴으로 변경한다.")
-    @Test
-    public void changeTurnWhite() throws Exception {
-        TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("white", "black");
-        chessDao.changeTurn(turnChangeRequestDto);
-    }
-
-    @Order(9)
-    @DisplayName("black 턴에서 white 턴으로 변경한다.")
-    @Test
-    public void changeTurnBlack() throws Exception {
-        TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("black", "white");
-        chessDao.changeTurn(turnChangeRequestDto);
-    }
-
-    @Order(10)
+    @Order(5)
     @DisplayName("piece_status 테이블의 모든 레코드를 삭제한다.")
     @Test
     public void removeAllPieces() throws Exception {
-        chessDao.removeAllPieces();
+        pieceDao.removeAllPieces();
     }
 
-    @Order(11)
-    @DisplayName("turn 테이블의 레코드를 삭제한다.")
-    @Test
-    public void removeTurn() throws Exception {
-        chessDao.removeTurn();
-    }
-
-    @Order(12)
+    @Order(6)
     @DisplayName("target 위치의 기물을 삭제한다.")
     @Test
     public void removePiece() throws Exception {
         MoveRequestDto moveRequestDto = new MoveRequestDto("a6", "a7");
-        chessDao.removePiece(moveRequestDto);
+        pieceDao.removePiece(moveRequestDto);
     }
 }
