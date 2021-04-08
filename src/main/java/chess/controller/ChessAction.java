@@ -33,7 +33,8 @@ public class ChessAction {
                 chessGame.getBoardSize(),
                 chessGame.getCurrentColor(),
                 chessGame.checked(),
-                chessGame.isKingDead()));
+                chessGame.isKingDead(),
+                "boardName"));
         return GameStatus.RUN;
     }
 
@@ -52,7 +53,8 @@ public class ChessAction {
                 chessGame.getBoardSize(),
                 chessGame.getCurrentColor(),
                 chessGame.checked(),
-                chessGame.isKingDead()));
+                chessGame.isKingDead(),
+                "boardName"));
 
         return chessStatus();
     }

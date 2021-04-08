@@ -35,8 +35,11 @@ public class WebChessAction {
 
     public String move(Request req, Response res) throws SQLException {
         Map<String, Object> model = new HashMap<>();
-        BoardDto board = chessGameService.move(req.queryParams("source"), req.queryParams("target"));
-
+        BoardDto board = chessGameService.move(
+                req.queryParams("boardName"),
+                req.queryParams("source"),
+                req.queryParams("target")
+        );
         model.put("board", board);
         return render(model, "game.html");
     }

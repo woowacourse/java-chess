@@ -3,6 +3,7 @@ package chess.service;
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.PieceDto;
 import chess.dao.BoardDao;
+import chess.dao.MoveLogDao;
 import chess.dao.PieceDao;
 import chess.domain.Position;
 import chess.domain.TeamColor;
@@ -17,11 +18,12 @@ public class ChessGameService {
 
     private final BoardDao boardDao;
     private final PieceDao pieceDao;
-    private ChessGame chessGame;
+    private final MoveLogDao moveLogDao;
 
-    public ChessGameService(BoardDao boardDao, PieceDao pieceDao) {
+    public ChessGameService(BoardDao boardDao, PieceDao pieceDao, MoveLogDao moveLogDao) {
         this.boardDao = boardDao;
         this.pieceDao = pieceDao;
+        this.moveLogDao = moveLogDao;
     }
 
     public BoardDto start() throws SQLException {
@@ -31,7 +33,8 @@ public class ChessGameService {
         int boardId = boardDao.addBoard(chessGame.getBoardSize(),
                 chessGame.getCurrentColor(),
                 chessGame.checked(),
-                chessGame.isKingDead());
+                chessGame.isKingDead()
+        );
         List<PieceDto> pieces = chessGame.getPieces();
         for (PieceDto piece : pieces) {
             pieceDao.addPiece(piece.getName(),
@@ -44,7 +47,27 @@ public class ChessGameService {
                 chessGame.getBoardSize(),
                 chessGame.getCurrentColor(),
                 chessGame.checked(),
-                chessGame.isKingDead());
+                chessGame.isKingDead(),
+                boardName);
+    }
+
+    public BoardDto move(String boardName, String source, String target) {
+        ChessGame chessGame = new ChessGame();
+        executeMoveLog(boardName, chessGame);
+
+        Position currentPosition = StringPositionConverter.convertToPosition(source);
+        Position targetPosition = StringPositionConverter.convertToPosition(target);
+        chessGame.move(currentPosition, targetPosition);
+
+        moveLogDao.addMoveLog(boardName, source, target);
+        pieceDao.update(boardName, source, target);
+        boardDao.updateTurn(boardName, chessGame.getCurrentColor());
+        return new BoardDto(chessGame.getPieces(),
+                chessGame.getBoardSize(),
+                chessGame.getCurrentColor(),
+                chessGame.checked(),
+                chessGame.isKingDead(),
+                boardName);
     }
 
     public BoardDto move(String source, String target) throws SQLException {
@@ -60,9 +83,15 @@ public class ChessGameService {
                 chessGame.isKingDead());
     }
 
-    public BoardDto continueGame() throws SQLException {
-        List<PieceDto> piecesDto = pieceDao.selectAllPiece();
-        return boardDao.selectBoard(piecesDto);
+    public BoardDto status(String boardName) {
+        ChessGame chessGame = new ChessGame();
+        executeMoveLog(boardName, chessGame);
+        return new BoardDto(chessGame.getPieces(),
+                chessGame.getBoardSize(),
+                chessGame.getCurrentColor(),
+                chessGame.checked(),
+                chessGame.isKingDead(),
+                boardName);
     }
 
     public ChessResult result(){
