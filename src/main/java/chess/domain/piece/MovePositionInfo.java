@@ -2,22 +2,22 @@ package chess.domain.piece;
 
 public class MovePositionInfo {
 
-    private String source;
-    private String target;
+    private Position source;
+    private Position target;
 
     public MovePositionInfo() {
     }
 
     public MovePositionInfo(String source, String target) {
-        this.source = source;
-        this.target = target;
+        this.source = new Position(source);
+        this.target = new Position(target);
     }
 
-    public String getSource() {
+    public Position getSource() {
         return source;
     }
 
-    public String getTarget() {
+    public Position getTarget() {
         return target;
     }
 }

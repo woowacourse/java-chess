@@ -41,6 +41,15 @@ public class PieceDAO {
         return con;
     }
 
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
     public boolean save(final Piece piece) {
         String color = piece.getColor().toString();
         String shape = piece.getShape().toString();
@@ -58,15 +67,6 @@ public class PieceDAO {
             return true;
         } catch (SQLException e) {
             return false;
-        }
-    }
-
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
         }
     }
 

@@ -52,8 +52,7 @@ public class WebUIChessApplication {
             MovePositionInfo mpi = mapper.readValue(req.body(), MovePositionInfo.class);
 
             try {
-                chessGame.move(new Position(mpi.getSource().split("")),
-                        new Position(mpi.getTarget().split("")));
+                chessGame.move(mpi.getSource(), mpi.getTarget());
             } catch (Exception e) {
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이동할 수 없습니다.", chessGame.getStatus()));
             }
