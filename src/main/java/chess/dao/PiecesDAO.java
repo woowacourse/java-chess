@@ -15,13 +15,13 @@ import java.util.Objects;
 
 public final class PiecesDAO extends AbstractDAO {
 
-    private static final PiecesDAO piecesDAO = new PiecesDAO();
+    private static final PiecesDAO PIECES_DAO = new PiecesDAO();
 
     private PiecesDAO() {
     }
 
     public static PiecesDAO instance() {
-        return piecesDAO;
+        return PIECES_DAO;
     }
 
     public Pieces joinPieces(final int boardId) throws SQLException {

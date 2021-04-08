@@ -19,13 +19,13 @@ import java.util.List;
 
 public final class BoardDAO extends AbstractDAO {
 
-    private static final BoardDAO boardDAO = new BoardDAO();
+    private static final BoardDAO BOARD_DAO = new BoardDAO();
 
     private BoardDAO() {
     }
 
     public static BoardDAO instance() {
-        return boardDAO;
+        return BOARD_DAO;
     }
 
     public int addBoard(WebSimpleBoardDTO webSimpleBoardDTO, Connection connection) throws SQLException {
