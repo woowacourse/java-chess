@@ -47,7 +47,7 @@
 - [x] HTTP 상태코드를 명확히 명시해 줄 것
     - [x] Enum으로 HTTP 상태코드를 관리해 볼 것
 - [x] JDBC API 자원들을 완벽히 반환할 것
-- [ ] status code에 따라 알맞게 DTO를 반환할 것
+- [x] status code에 따라 알맞게 DTO를 반환할 것
 - [x] DAO 내의 상수로 분리할 부분을 분리할 것
 - [ ] 기존 Game이 종료가 되지 않으면 새로운 게임이 시작하지 않도록 할 것
 - [x] 디버깅용 system.out 삭제
