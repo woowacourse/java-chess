@@ -68,6 +68,9 @@ public class ChessGameService {
     public BoardDto continueGame(String boardName) {
         ChessGame chessGame = new ChessGame();
         executeMoveLog(boardName, chessGame);
+        if (boardDao.isNameInBoard(boardName)) {
+            return boardDao.selectByName(boardName);
+        }
         return new BoardDto(chessGame.getPieces(),
                 chessGame.getBoardSize(),
                 chessGame.getCurrentColor(),
@@ -94,21 +97,13 @@ public class ChessGameService {
     }
 
     private void resetBoard(String boardName) {
-        try {
-            boardDao.deleteByName(boardName);
-            pieceDao.deleteByBoardName(boardName);
-            moveLogDao.deleteByBoardName(boardName);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
+        boardDao.deleteByName(boardName);
+        pieceDao.deleteByBoardName(boardName);
+        moveLogDao.deleteByBoardName(boardName);
     }
 
     private void executeMoveLog(String boardName, ChessGame chessGame) {
-        try {
-            Map<Position, Position> moveLog = moveLogDao.selectByBoardName(boardName);
-            moveLog.forEach(chessGame::move);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
+        Map<Position, Position> moveLog = moveLogDao.selectByBoardName(boardName);
+        moveLog.forEach(chessGame::move);
     }
 }

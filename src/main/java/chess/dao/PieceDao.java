@@ -45,7 +45,7 @@ public class PieceDao {
         }
     }
 
-    public List<PieceDto> selectAllByBoardName(String boardName) {
+    public List<PieceDto> selectByBoardName(String boardName) {
         String sql = "SELECT * FROM piece WHERE board_name = ?";
         try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
             pstmt.setString(1, boardName);

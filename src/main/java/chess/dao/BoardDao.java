@@ -32,7 +32,7 @@ public class BoardDao {
         try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
             pstmt.setString(1, boardName);
             try (ResultSet rs = pstmt.executeQuery()) {
-                List<PieceDto> pieces = new PieceDao().selectAllByBoardName(boardName);
+                List<PieceDto> pieces = new PieceDao().selectByBoardName(boardName);
                 int boardSize = rs.getInt("board_size");
                 String turn = rs.getString("turn");
                 boolean checked = rs.getBoolean("checked");
@@ -40,8 +40,20 @@ public class BoardDao {
                 String name = rs.getString("name");
 
                 return new BoardDto(pieces, boardSize, turn, checked, isKingDead, name);
-
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("Board가 DB에 없습니다.");
+        }
+    }
+
+    public boolean isNameInBoard(String boardName) {
+        String sql = "SELECT * FROM board WHERE name = ?";
+        try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
+            pstmt.setString(1, boardName);
+            if (pstmt.executeUpdate() == 0) {
+                return false;
+            }
+            return true;
         } catch (SQLException e) {
             throw new IllegalArgumentException("Board가 DB에 없습니다.");
         }
