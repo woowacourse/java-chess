@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static chess.dao.TurnState.*;
+
 import chess.domain.board.Board;
 import chess.domain.game.Game;
 import chess.domain.game.state.BlackTurnState;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 
 public final class GameSerializer {
 
-    public static Game deserialize(String gameInfo) {
+    public static Game deserialize(final String gameInfo) {
         Gson gson = new Gson();
         GameStateDto gameStateDto = gson.fromJson(gameInfo, GameStateDto.class);
         Board currentBoard = createBoard(gameStateDto.board());
@@ -26,12 +28,12 @@ public final class GameSerializer {
         return new Game(currentState);
     }
 
-    private static Board createBoard(BoardDto board) {
+    private static Board createBoard(final BoardDto board) {
         Map<Position, Piece> coordinates = convert(board);
         return new Board(coordinates);
     }
 
-    private static Map<Position, Piece> convert(BoardDto board) {
+    private static Map<Position, Piece> convert(final BoardDto board) {
         return board.coordinates()
                 .entrySet()
                 .stream()
@@ -42,14 +44,14 @@ public final class GameSerializer {
                 ;
     }
 
-    private static GameState createState(String currentState, Board currentBoard) {
-        if ("not started".equals(currentState)) {
+    private static GameState createState(final String currentState, final Board currentBoard) {
+        if (NOT_STARTED.stringFormat().equals(currentState)) {
             return new InitialState();
         }
-        if ("white".equals(currentState)) {
+        if (WHITE.stringFormat().equals(currentState)) {
             return new WhiteTurnState(currentBoard);
         }
-        if ("black".equals(currentState)) {
+        if (BLACK.stringFormat().equals(currentState)) {
             return new BlackTurnState(currentBoard);
         }
         return new EndState(currentBoard);

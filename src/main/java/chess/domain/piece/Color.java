@@ -13,10 +13,13 @@ public enum Color {
     }
 
     public static Color find(String name) {
-        if ("white".equals(name)) {
+        if (WHITE.name.equals(name)) {
             return WHITE;
         }
-        return BLACK;
+        if (BLACK.name.equals(name)) {
+            return BLACK;
+        }
+        return NOTHING;
     }
 
     public Color reversed() {

@@ -28,18 +28,30 @@ public final class Path {
     private List<Position> calculatePawnPath(final Position position, final Board board) {
         final List<Position> cleanPath = new ArrayList<>();
         for (Position target : positions) {
-            final Piece piece = board.pieceAt(position);
-            final Piece otherPiece = board.pieceAt(target);
-            if (position.isOfColumn(target.column()) && otherPiece.isEmpty()) {
+            if (straightPositionIsEmpty(position, target, board)) {
                 cleanPath.add(target);
             }
-            if (!position.isOfColumn(target.column())
-                    && piece.isDifferentColor(otherPiece)
-                    && !otherPiece.isEmpty()) {
+            if (diagonalPositionHasEnemy(position, target, board)) {
                 cleanPath.add(target);
             }
         }
         return cleanPath;
+    }
+
+    private boolean straightPositionIsEmpty(final Position position, final Position target,
+            final Board board) {
+        final Piece otherPiece = board.pieceAt(target);
+        return position.isOfColumn(target.column()) && otherPiece.isEmpty();
+    }
+
+    private boolean diagonalPositionHasEnemy(final Position position, final Position target,
+            final Board board) {
+        final Piece piece = board.pieceAt(position);
+        final Piece otherPiece = board.pieceAt(target);
+        return !position.isOfColumn(target.column())
+                && piece.isDifferentColor(otherPiece)
+                && !otherPiece.isEmpty();
+
     }
 
     private List<Position> calculateNonePawnPath(final Piece piece, final Board board) {
