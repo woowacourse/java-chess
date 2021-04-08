@@ -91,7 +91,8 @@
 - [x] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
 
 ### DB ERD
-<p align="center"><img src="https://user-images.githubusercontent.com/50176238/113257599-cc801e00-9305-11eb-8c8f-78df52784525.PNG"></p>
+<p align="center"><img src="![DB_ERD](https://user-images.githubusercontent.com/50176238/114058330-5021a800-98ce-11eb-9225-98aa4425f68a.PNG)
+"></p>
 
 ### DB DDL
 ```sql
@@ -112,24 +113,24 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`piece_status`
+-- Table `mydb`.`piece`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`piece_status` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `piece_name` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`piece` (
+                                            `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                            `piece_name` VARCHAR(45) NOT NULL,
   `piece_position` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`turn`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`turn` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `current_turn` VARCHAR(45) NOT NULL,
+                                           `id` BIGINT NOT NULL AUTO_INCREMENT,
+                                           `current_turn` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
