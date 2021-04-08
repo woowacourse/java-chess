@@ -80,7 +80,7 @@ public class ChessService {
         Pieces pieces = PiecesDAO.instance().joinPieces(movablePositionDTO.getBoardId());
         Board board = BoardDAO.instance().findBoardByBoardId(movablePositionDTO.getBoardId(), pieces);
         for (Position position : board.movablePositions(movablePositionDTO.getSource())) {
-            positions.add(position.positionToString());
+            positions.add(position.changePositionToString());
         }
         movablePositionDTO.setMovablePositions(positions);
         return movablePositionDTO;
@@ -104,7 +104,7 @@ public class ChessService {
     private Map<String, String> PositionToStringMap(Map<Position, Piece> pieces) {
         Map<String, String> boardInfo = new HashMap<>();
         for (Position position : pieces.keySet()) {
-            boardInfo.put(position.positionToString(), getSymbol(pieces.get(position)));
+            boardInfo.put(position.changePositionToString(), getSymbol(pieces.get(position)));
         }
         return boardInfo;
     }
