@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess Game</title>
+    <style type="text/css">
+        .chessboard {
+            width: 640px;
+            height: 640px;
+            margin: 20px;
+            border: 25px solid #333;
+        }
+        .black {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #999;
+              font-size:50px;
+            text-align:center;
+            display: table-cell;
+            vertical-align:middle;
+        }
+        .white {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            font-size:50px;
+            text-align:center;
+            display: table-cell;
+            vertical-align:middle;
+        }
+        . {
+            cursor: pointer;
+        }
+        .chessboard > div:hover {
+            background-color: red;
+        }
+        .selected {
+            background-color: yellow;
+        }
+        .possible {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<h1 class="roomId" id="{{roomId}}">Room ID {{roomId}}</h1>
+<div class="chessboard">
+    <!-- row 8 -->
+    <div class="white" id="a8"></div>
+    <div class="black" id="b8"></div>
+    <div class="white" id="c8"></div>
+    <div class="black" id="d8"></div>
+    <div class="white" id="e8"></div>
+    <div class="black" id="f8"></div>
+    <div class="white" id="g8"></div>
+    <div class="black" id="h8"></div>
+    <!-- row 7 -->
+    <div class="black" id="a7"></div>
+    <div class="white" id="b7"></div>
+    <div class="black" id="c7"></div>
+    <div class="white" id="d7"></div>
+    <div class="black" id="e7"></div>
+    <div class="white" id="f7"></div>
+    <div class="black" id="g7"></div>
+    <div class="white" id="h7"></div>
+    <!-- row 6 -->
+    <div class="white" id="a6"></div>
+    <div class="black" id="b6"></div>
+    <div class="white" id="c6"></div>
+    <div class="black" id="d6"></div>
+    <div class="white" id="e6"></div>
+    <div class="black" id="f6"></div>
+    <div class="white" id="g6"></div>
+    <div class="black" id="h6"></div>
+    <!-- row 5 -->
+    <div class="black" id="a5"></div>
+    <div class="white" id="b5"></div>
+    <div class="black" id="c5"></div>
+    <div class="white" id="d5"></div>
+    <div class="black" id="e5"></div>
+    <div class="white" id="f5"></div>
+    <div class="black" id="g5"></div>
+    <div class="white" id="h5"></div>
+    <!-- row 4 -->
+    <div class="white" id="a4"></div>
+    <div class="black" id="b4"></div>
+    <div class="white" id="c4"></div>
+    <div class="black" id="d4"></div>
+    <div class="white" id="e4"></div>
+    <div class="black" id="f4"></div>
+    <div class="white" id="g4"></div>
+    <div class="black" id="h4"></div>
+    <!-- row 3 -->
+    <div class="black" id="a3"></div>
+    <div class="white" id="b3"></div>
+    <div class="black" id="c3"></div>
+    <div class="white" id="d3"></div>
+    <div class="black" id="e3"></div>
+    <div class="white" id="f3"></div>
+    <div class="black" id="g3"></div>
+    <div class="white" id="h3"></div>
+    <!-- row 2 -->
+    <div class="white" id="a2"></div>
+    <div class="black" id="b2"></div>
+    <div class="white" id="c2"></div>
+    <div class="black" id="d2"></div>
+    <div class="white" id="e2"></div>
+    <div class="black" id="f2"></div>
+    <div class="white" id="g2"></div>
+    <div class="black" id="h2"></div>
+    <!-- row 1 -->
+    <div class="black" id="a1"></div>
+    <div class="white" id="b1"></div>
+    <div class="black" id="c1"></div>
+    <div class="white" id="d1"></div>
+    <div class="black" id="e1"></div>
+    <div class="white" id="f1"></div>
+    <div class="black" id="g1"></div>
+    <div class="white" id="h1"></div>
+</div>
+<p id="message"></p>
+<p id="blackScore"></p>
+<p id="whiteScore"></p>
+<a href="index.html">로비로 돌아가기</a>
+<script src="js/chess.js"></script>
+</body>
+</html>

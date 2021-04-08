@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
 import java.util.Map;
+import java.util.Set;
 
 public interface State {
     State start();
@@ -26,4 +27,8 @@ public interface State {
     Color winner();
 
     boolean isInit();
+
+    Set<Position> movablePath(Position source);
+
+    String toString();
 }

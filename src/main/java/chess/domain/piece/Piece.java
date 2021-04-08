@@ -68,6 +68,8 @@ public abstract class Piece {
 
     public abstract MoveStrategy moveStrategy();
 
+    public abstract double score();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -84,6 +86,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, symbol);
     }
-
-    public abstract double score();
 }

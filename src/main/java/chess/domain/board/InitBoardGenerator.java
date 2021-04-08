@@ -5,7 +5,8 @@ import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
 import chess.domain.piece.Piece;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class InitBoardGenerator {
     private InitBoardGenerator() {
