@@ -167,13 +167,13 @@ async function result() {
   $blackResult.getElementsByClassName('score')[0].innerHTML = `<span>${blackResult.score}</span>`
   $whiteResult.getElementsByClassName('score')[0].innerHTML = `<span>${whiteResult.score}</span>`
 
-  if (blackResult.outcome === 'WIN') {
+  if (blackResult.outcome === '승') {
     $blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
     $whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
     return
   }
-  if (blackResult.outcome === 'DRAW') {
-    $blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+  if (blackResult.outcome === '패') {
+    $blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
     $whiteResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
     return
   }
