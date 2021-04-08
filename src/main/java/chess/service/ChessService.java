@@ -56,7 +56,7 @@ public class ChessService {
         return chessDao.findStateByGameId(gameId);
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
         return chessDao.findHistoryByGameId(gameId);
     }
 
@@ -76,7 +76,7 @@ public class ChessService {
         chessDao.updateState(chessManager, gameId);
         chessDao.updateTargetPiece(moveRequestDto.getTarget(), sourcePiece, gameId);
         chessDao.updateSourcePiece(moveRequestDto.getSource(), gameId);
-        chessDao.createHistory(historyResponseDto, moveCommand, gameId);
+        chessDao.createHistory(historyResponseDto, gameId);
         return historyResponseDto;
     }
 

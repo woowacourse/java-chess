@@ -10,11 +10,11 @@ public class PathResponseDto {
 
     private final List<String> path;
 
-    public PathResponseDto(List<String> path) {
+    public PathResponseDto(final List<String> path) {
         this.path = path;
     }
 
-    public static PathResponseDto toPath(Path path) {
+    public static PathResponseDto toPath(final Path path) {
         return new PathResponseDto(path.stream()
                 .map(Position::parseString)
                 .collect(Collectors.toList()));

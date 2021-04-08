@@ -113,7 +113,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createHistory(final HistoryResponseDto history, final String moveCommand, final Long gameId) {
+    public Long createHistory(final HistoryResponseDto history, final Long gameId) {
         final String query =
                 "INSERT INTO history(gameId, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
 
@@ -121,7 +121,7 @@ public class ChessDao {
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, gameId.intValue());
-            pstmt.setString(2, moveCommand);
+            pstmt.setString(2, history.getMoveCommand());
             pstmt.setString(3, history.getTurnOwner());
             pstmt.setInt(4, history.getTurnNumber());
             pstmt.setBoolean(5, history.isPlaying());

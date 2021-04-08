@@ -23,7 +23,7 @@ public class PieceConverter {
     private PieceConverter() {
     }
 
-    public static Piece parsePiece(String symbol) {
+    public static Piece parsePiece(final String symbol) {
         if (symbol.equals(EMPTY_PIECE_SYMBOL)) {
             return EmptyPiece.getInstance();
         }
@@ -54,42 +54,42 @@ public class PieceConverter {
         throw new IllegalArgumentException("해당 심볼에 맞는 체스말이 없습니다.");
     }
 
-    private static Piece parseRook(String symbol) {
+    private static Piece parseRook(final String symbol) {
         if (symbol.equals("r")) {
             return Rook.getInstanceOf(Owner.WHITE);
         }
         return Rook.getInstanceOf(Owner.BLACK);
     }
 
-    private static Piece parseKnight(String symbol) {
+    private static Piece parseKnight(final String symbol) {
         if (symbol.equals("n")) {
             return Knight.getInstanceOf(Owner.WHITE);
         }
         return Knight.getInstanceOf(Owner.BLACK);
     }
 
-    private static Piece parseBishop(String symbol) {
+    private static Piece parseBishop(final String symbol) {
         if (symbol.equals("b")) {
             return Bishop.getInstanceOf(Owner.WHITE);
         }
         return Bishop.getInstanceOf(Owner.BLACK);
     }
 
-    private static Piece parseQueen(String symbol) {
+    private static Piece parseQueen(final String symbol) {
         if (symbol.equals("q")) {
             return Queen.getInstanceOf(Owner.WHITE);
         }
         return Queen.getInstanceOf(Owner.BLACK);
     }
 
-    private static Piece parseKing(String symbol) {
+    private static Piece parseKing(final String symbol) {
         if (symbol.equals("k")) {
             return King.getInstanceOf(Owner.WHITE);
         }
         return King.getInstanceOf(Owner.BLACK);
     }
 
-    private static Piece parsePawn(String symbol) {
+    private static Piece parsePawn(final String symbol) {
         if (symbol.equals("p")) {
             return Pawn.getInstanceOf(Owner.WHITE);
         }

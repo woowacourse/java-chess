@@ -2,9 +2,9 @@ package chess.controller.dto;
 
 public class MovablePathRequestDto {
 
-    String source;
+    private final String source;
 
-    public MovablePathRequestDto(String source) {
+    public MovablePathRequestDto(final String source) {
         this.source = source;
     }
 

@@ -9,14 +9,14 @@ public class HistoryResponseDto {
     private final int turnNumber;
     private final boolean isPlaying;
 
-    public HistoryResponseDto(String moveCommand, String turnOwner, int turnNumber, boolean isPlaying) {
+    public HistoryResponseDto(final String moveCommand, final String turnOwner, final int turnNumber, final boolean isPlaying) {
         this.moveCommand = moveCommand;
         this.turnOwner = turnOwner;
         this.turnNumber = turnNumber;
         this.isPlaying = isPlaying;
     }
 
-    public static HistoryResponseDto toChessManager(String moveCommand, ChessManager chessManager) {
+    public static HistoryResponseDto toChessManager(final String moveCommand, final ChessManager chessManager) {
         return new HistoryResponseDto(
                 moveCommand,
                 chessManager.turnOwner().name(),

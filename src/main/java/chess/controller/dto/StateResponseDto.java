@@ -8,13 +8,13 @@ public class StateResponseDto {
     private final int turnNumber;
     private final boolean isPlaying;
 
-    public StateResponseDto(String turnOwner, int turnNumber, boolean isPlaying) {
+    public StateResponseDto(final String turnOwner, final int turnNumber, final boolean isPlaying) {
         this.turnOwner = turnOwner;
         this.turnNumber = turnNumber;
         this.isPlaying = isPlaying;
     }
 
-    public static StateResponseDto toChessManager(ChessManager chessManager) {
+    public static StateResponseDto toChessManager(final ChessManager chessManager) {
         return new StateResponseDto(chessManager.turnOwner().name(), chessManager.turnNumber(), chessManager.isPlaying());
     }
 

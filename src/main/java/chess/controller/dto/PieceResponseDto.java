@@ -5,7 +5,7 @@ public class PieceResponseDto {
     private final String symbol;
     private final String position;
 
-    public PieceResponseDto(String symbol, String position) {
+    public PieceResponseDto(final String symbol, final String position) {
         this.symbol = symbol;
         this.position = position;
     }

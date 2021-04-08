@@ -6,7 +6,7 @@ public class GameResponseDto {
     private final String blackUsername;
     private final String roomName;
 
-    public GameResponseDto(String whiteUsername, String blackUsername, String roomName) {
+    public GameResponseDto(final String whiteUsername, final String blackUsername, final String roomName) {
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
         this.roomName = roomName;
