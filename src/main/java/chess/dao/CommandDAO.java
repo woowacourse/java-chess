@@ -31,16 +31,6 @@ public final class CommandDAO {
         return connection;
     }
 
-    public void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("connection 오류:" + e.getMessage());
-        }
-    }
-
     public void addCommand(final String roomId, final String startPoint, final String endPoint) throws SQLException {
         String query = "INSERT INTO command(room_id, start_point, end_point) VALUES(?, ?, ?)";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
