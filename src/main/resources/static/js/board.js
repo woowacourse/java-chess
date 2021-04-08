@@ -97,22 +97,13 @@ function onclickSquare(event) {
                 return data.json();
             })
             .then(history => {
-                const $sourceImg = $board.querySelector("#" + $source).querySelector(".piece");
-                const $targetImg = $board.querySelector("#" + $target).querySelector(".piece");
-                if ($targetImg) {
-                    replacePieceColor($targetImg);
-                    $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
-                    $board.querySelector("#" + $source).removeChild($sourceImg);
-                } else {
-                    $board.querySelector("#" + $target).appendChild($sourceImg);
-                }
-                removeMovablePath();
+                movePiece($source, $target);
                 score();
                 if ($isPlaying) {
                     state();
                 }
-                afterFinishedChangeState();
                 addHistory(history);
+                afterFinishedChangeState()
             })
             .catch(error => {
                 alert(error);
@@ -281,4 +272,17 @@ function renderHistoryItem(history) {
                     </dd>
                 </dl>
             </li>`;
+}
+
+function movePiece(source, target) {
+    const $sourceImg = $board.querySelector("#" + source).querySelector(".piece");
+    const $targetImg = $board.querySelector("#" + target).querySelector(".piece");
+    if ($targetImg) {
+        replacePieceColor($targetImg);
+        $targetImg.setAttribute("src", $sourceImg.getAttribute("src"));
+        $board.querySelector("#" + source).removeChild($sourceImg);
+    } else {
+        $board.querySelector("#" + target).appendChild($sourceImg);
+    }
+    removeMovablePath();
 }
