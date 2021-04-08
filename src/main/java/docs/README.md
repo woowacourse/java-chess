@@ -141,7 +141,7 @@
 ### Refactoring TODO
 
 - [x] gradle implementation 변경
-- [ ] 인스턴스 변수와 클래스 변수 공백 생성
+- [x] 인스턴스 변수와 클래스 변수 공백 생성
 - [ ] 사용하지 않는 메소드 삭제
 - [ ] GSON을 재활용하도록 수정
 - [ ] DAO 테스트 구조 변경

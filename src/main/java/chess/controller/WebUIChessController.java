@@ -25,6 +25,7 @@ public final class WebUIChessController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
     public static final int START_POINT_INDEX = 0;
     public static final int END_POINT_INDEX = 1;
+
     private final CommandDAO commandDAO = new CommandDAO();
     private ChessGame chessGame = new ChessGame();
     private String roomId;
