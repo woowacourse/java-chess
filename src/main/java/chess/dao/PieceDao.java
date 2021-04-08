@@ -14,9 +14,9 @@ public class PieceDao {
     private DBManager dbManager = new DBManager();
 
     public void saveAll(List<Piece> pieces, int chessGameId) {
-        try (Connection connection = dbManager.getConnection()) {
-            String query = "INSERT INTO piece(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(query);
+        String query = "INSERT INTO piece(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             for (Piece piece : pieces) {
                 pstmt.setString(1, piece.color().name());
                 pstmt.setString(2, piece.name());
@@ -31,9 +31,9 @@ public class PieceDao {
 
     public List<Piece> findAllByChessGameId(int chessGameId) {
         List<Piece> pieces = new ArrayList<>();
-        try (Connection connection = dbManager.getConnection()) {
-            String query = "SELECT color, name, position FROM piece WHERE chessGameId = ?";
-            PreparedStatement pstmt = connection.prepareStatement(query);
+        String query = "SELECT color, name, position FROM piece WHERE chessGameId = ?";
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, chessGameId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -49,9 +49,9 @@ public class PieceDao {
     }
 
     public void update(int chessGameId, Piece piece) {
-        try (Connection connection = dbManager.getConnection()) {
-            String query = "UPDATE piece SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
-            PreparedStatement pstmt = connection.prepareStatement(query);
+        String query = "UPDATE piece SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, piece.color().name());
             pstmt.setString(2, piece.name());
             pstmt.setString(3, piece.position().key());
