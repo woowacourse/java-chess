@@ -36,7 +36,6 @@ public class ChessService {
 
     public synchronized ChessGameDTO move(final String start, final String destination) throws SQLException {
         final ChessGame chessGame = chessGameDAO.readChessGame();
-        System.out.println("chessGame = " + chessGame);
         chessGame.move(Position.of(start), Position.of(destination));
         chessGameDAO.updateChessGame(chessGame, currentTurnTeamToString(chessGame));
         return generateChessGameDTO(chessGame);
