@@ -1,8 +1,6 @@
 package chess.domain.dao;
 
 import chess.domain.board.Board;
-import chess.domain.dto.PieceDto;
-import chess.domain.dto.PiecesDto;
 import chess.domain.game.BlackTurn;
 import chess.domain.game.ChessGame;
 import chess.domain.game.State;
@@ -17,9 +15,7 @@ import java.util.List;
 
 public class PieceDAO {
 
-    private static Connection con = getConnection();
-
-    public static Connection getConnection() {
+    public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
         String database = "chess_game"; // MySQL DATABASE 이름
@@ -45,13 +41,14 @@ public class PieceDAO {
         return con;
     }
 
-    public static boolean save(final Piece piece) {
+    public boolean save(final Piece piece) {
         String color = piece.getColor().toString();
         String shape = piece.getShape().toString();
         if ("WHITE".equals(color)) {
             shape = shape.toLowerCase();
         }
         try {
+            Connection con = getConnection();
             String query = "INSERT INTO pieces(color, shape, position) VALUES(?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, color);
@@ -64,7 +61,16 @@ public class PieceDAO {
         }
     }
 
-    public static boolean saveAll(List<Piece> pieces) {
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
+    public boolean saveAll(List<Piece> pieces) {
         deleteAll();
         for (Piece piece : pieces) {
             if (!save(piece)) {
@@ -74,8 +80,9 @@ public class PieceDAO {
         return true;
     }
 
-    private static void deleteAll() {
+    private void deleteAll() {
         try {
+            Connection con = getConnection();
             String query = "DELETE FROM pieces";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.executeUpdate();
@@ -84,8 +91,9 @@ public class PieceDAO {
         }
     }
 
-    public static Board loadPieces() {
+    public Board loadPieces() {
         try {
+            Connection con = getConnection();
             String query = "SELECT * FROM pieces";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
@@ -107,8 +115,9 @@ public class PieceDAO {
         }
     }
 
-    public static State loadTurn(ChessGame chessGame) {
+    public State loadTurn(ChessGame chessGame) {
         try {
+            Connection con = getConnection();
             String query = "SELECT * FROM turn";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
@@ -126,9 +135,10 @@ public class PieceDAO {
         }
     }
 
-    public static boolean saveTurn(String status) {
+    public boolean saveTurn(String status) {
         deleteTurn();
         try {
+            Connection con = getConnection();
             String query = "INSERT INTO turn(turn) values (?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, status);
@@ -140,8 +150,9 @@ public class PieceDAO {
         }
     }
 
-    private static void deleteTurn() {
+    private void deleteTurn() {
         try {
+            Connection con = getConnection();
             String query = "DELETE FROM turn";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.executeUpdate();

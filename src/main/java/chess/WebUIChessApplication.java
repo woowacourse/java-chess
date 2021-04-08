@@ -39,7 +39,6 @@ public class WebUIChessApplication {
             if (!chessGame.isReady()) {
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "이미 게임이 실행되었습니다.", ""));
             }
-            System.out.println("-------------------------------");
             chessGame.start();
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "", chessGame.getStatus()));
         });
@@ -93,7 +92,8 @@ public class WebUIChessApplication {
         });
 
         post("/save", (req, res) -> {
-            if (PieceDAO.saveAll(chessGame.getBoard().getPieces()) && PieceDAO.saveTurn(chessGame.getStatus())) {
+            PieceDAO pieceDAO = new PieceDAO();
+            if (pieceDAO.saveAll(chessGame.getBoard().getPieces()) && pieceDAO.saveTurn(chessGame.getStatus())) {
                 return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "게임이 저장되었습니다.", chessGame.getStatus()));
             }
             return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장에 실패하였습니다. ", chessGame.getStatus()));
@@ -101,11 +101,12 @@ public class WebUIChessApplication {
         });
 
         post("/load", (req, res) -> {
-            if (PieceDAO.loadPieces() == null) {
+            PieceDAO pieceDAO = new PieceDAO();
+            if (pieceDAO.loadPieces() == null) {
                 return gson.toJson(new ChessBoardDto("false", new PiecesDto(chessGame.getBoard().getPieces()), "저장된 게임이 없습니다. ", chessGame.getStatus()));
             }
-            chessGame = new ChessGame(PieceDAO.loadPieces());
-            chessGame.changeState(PieceDAO.loadTurn(chessGame));
+            chessGame = new ChessGame(pieceDAO.loadPieces());
+            chessGame.changeState(pieceDAO.loadTurn(chessGame));
 
             return gson.toJson(new ChessBoardDto("true", new PiecesDto(chessGame.getBoard().getPieces()), "저장된 게임을 불러왔습니다.", chessGame.getStatus()));
         });
