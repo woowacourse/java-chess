@@ -2,10 +2,20 @@ package chess.domain.piece;
 
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.MoveStrategy;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
+
+    private static final Map<String, Piece> PIECE_CACHE = new HashMap<>();
+
+    static {
+        whitePieces();
+        blackPieces();
+        PIECE_CACHE.put(Symbol.EMPTY.getBlack(), Empty.create());
+    }
 
     private final Color color;
     private final Symbol symbol;
@@ -13,7 +23,34 @@ public abstract class Piece {
     public Piece(Color color, Symbol symbol) {
         this.color = color;
         this.symbol = symbol;
+    }
 
+    public static Piece of(final String symbol) {
+        Piece piece = PIECE_CACHE.get(symbol);
+
+        if (Objects.isNull(piece)) {
+            throw new IllegalArgumentException("해당 심볼에 매칭되는 체스 말이 없습니다.");
+        }
+
+        return piece;
+    }
+
+    private static void whitePieces() {
+        PIECE_CACHE.put(Symbol.QUEEN.getWhite(), Queen.createWhite());
+        PIECE_CACHE.put(Symbol.KING.getWhite(), King.createWhite());
+        PIECE_CACHE.put(Symbol.BISHOP.getWhite(), Bishop.createWhite());
+        PIECE_CACHE.put(Symbol.KNIGHT.getWhite(), Knight.createWhite());
+        PIECE_CACHE.put(Symbol.ROOK.getWhite(), Rook.createWhite());
+        PIECE_CACHE.put(Symbol.PAWN.getWhite(), Pawn.createWhite());
+    }
+
+    private static void blackPieces() {
+        PIECE_CACHE.put(Symbol.QUEEN.getBlack(), Queen.createBlack());
+        PIECE_CACHE.put(Symbol.KING.getBlack(), King.createBlack());
+        PIECE_CACHE.put(Symbol.BISHOP.getBlack(), Bishop.createBlack());
+        PIECE_CACHE.put(Symbol.KNIGHT.getBlack(), Knight.createBlack());
+        PIECE_CACHE.put(Symbol.ROOK.getBlack(), Rook.createBlack());
+        PIECE_CACHE.put(Symbol.PAWN.getBlack(), Pawn.createBlack());
     }
 
     public abstract List<List<Position>> vectors(Position position);
