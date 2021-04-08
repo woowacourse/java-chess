@@ -5,10 +5,19 @@ import chess.domain.Team;
 import java.util.Objects;
 
 public final class Position {
-    public static final int RANGE_MIN_PIVOT = 0;
+    private static final int RANGE_MIN_PIVOT = 0;
+    private static final int START_POINT_INDEX = 0;
+    private static final int END_POINT_INDEX = 1;
 
     private final int row;
     private final int column;
+
+    public Position(final String point) {
+        this(
+                Character.getNumericValue(point.charAt(START_POINT_INDEX)),
+                Character.getNumericValue(point.charAt(END_POINT_INDEX))
+        );
+    }
 
     public Position(final int row, final int column) {
         validateRange(row, column);

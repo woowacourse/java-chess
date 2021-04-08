@@ -10,6 +10,5 @@ public class WebUIChessApplication {
 
         WebUIChessController webUIChessController = new WebUIChessController();
         webUIChessController.run();
-
     }
 }

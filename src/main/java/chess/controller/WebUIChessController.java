@@ -25,8 +25,6 @@ import static spark.Spark.put;
 public final class WebUIChessController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
     private static final Gson GSON = new Gson();
-    private static final int START_POINT_INDEX = 0;
-    private static final int END_POINT_INDEX = 1;
 
     private final CommandDAO commandDAO = new CommandDAO(
             "localhost:13306",
@@ -70,17 +68,15 @@ public final class WebUIChessController {
 
     private ChessGame getChessGameByRoomId(final String roomId) throws SQLException {
         ChessGame chessGame = new ChessGame();
-        List<PointsVO> commands = commandDAO.getCommandsByRoomId(roomId);
-        for (PointsVO points : commands) {
+        for (PointsVO points : commandDAO.getCommandsByRoomId(roomId)) {
             String start_point = points.getStartPoint();
             String end_point = points.getEndPoint();
-            chessGame.move(position(start_point), position(end_point));
+            chessGame.move(new Position(start_point), new Position(end_point));
         }
         return chessGame;
     }
 
     public void status() {
-
         get("/status", (req, res) -> {
             StatusDTO statusDTO = new StatusDTO(
                     String.valueOf(chessGame.getScoreByTeam(Team.WHITE)),
@@ -126,19 +122,10 @@ public final class WebUIChessController {
 
             String startPoint = (String) requestBody.get("startPoint");
             String endPoint = (String) requestBody.get("endPoint");
-            Position startPosition = position(startPoint);
-            Position endPosition = position(endPoint);
-            chessGame.move(startPosition, endPosition);
+            chessGame.move(new Position(startPoint), new Position(endPoint));
             commandDAO.addCommand(roomId, startPoint, endPoint);
             return GSON.toJson(getPieceDTOs());
         });
-    }
-
-    private Position position(final String point) {
-        return new Position(
-                Character.getNumericValue(point.charAt(START_POINT_INDEX)),
-                Character.getNumericValue(point.charAt(END_POINT_INDEX))
-        );
     }
 
     private static String render(final Map<String, Object> model, final String templatePath) {
