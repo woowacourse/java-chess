@@ -27,7 +27,13 @@ public final class WebUIChessController {
     private static final int START_POINT_INDEX = 0;
     private static final int END_POINT_INDEX = 1;
 
-    private final CommandDAO commandDAO = new CommandDAO();
+    private final CommandDAO commandDAO = new CommandDAO(
+            "localhost:13306",
+            "db_chess",
+            "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8",
+            "root",
+            "root"
+    );
     private ChessGame chessGame = new ChessGame();
     private String roomId;
 

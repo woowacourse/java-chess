@@ -5,14 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class CommandDAO {
+    private final String server;
+    private final String database;
+    private final String option;
+    private final String userName;
+    private final String password;
+
+    public CommandDAO(final String server, final String database, final String option, final String userName, final String password) {
+        this.server = server;
+        this.database = database;
+        this.option = option;
+        this.userName = userName;
+        this.password = password;
+    }
+
     public Connection getConnection() {
         Connection connection = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -30,6 +38,7 @@ public final class CommandDAO {
 
         return connection;
     }
+
 
     public void addCommand(final String roomId, final String startPoint, final String endPoint) throws SQLException {
         String query = "INSERT INTO command(room_id, start_point, end_point) VALUES(?, ?, ?)";

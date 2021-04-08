@@ -13,7 +13,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandDAOTest {
-    private final CommandDAO commandDAO = new CommandDAO();
+    private final CommandDAO commandDAO = new CommandDAO(
+            "localhost:13306",
+            "db_chess",
+            "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8",
+            "root",
+            "root"
+    );
     private final String testRoomId = "testId";
     private final List<List<String>> commands = new ArrayList<>();
 
