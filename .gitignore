@@ -21,3 +21,4 @@ bin/
 *.ipr
 /src/main/node_modules/
 /docker-compose/db/
+/chess-docker/db/
