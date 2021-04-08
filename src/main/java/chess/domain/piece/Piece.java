@@ -42,19 +42,13 @@ public abstract class Piece {
         return false;
     }
 
-    ;
-
     public boolean isPawn() {
         return false;
     }
 
-    ;
-
     public boolean isKing() {
         return false;
     }
-
-    ;
 
     public abstract double score();
 
