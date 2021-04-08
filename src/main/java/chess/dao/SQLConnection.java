@@ -34,14 +34,4 @@ public class SQLConnection {
         }
         return connection;
     }
-
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
 }

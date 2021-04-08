@@ -53,12 +53,12 @@ public class WebChessController {
         return render(model, "chess.html");
     }
 
-    private String restart() throws SQLException {
+    private String restart() {
         chessGame = chessService.restartChess(userDto);
         return render(new HashMap<>(), "chess.html");
     }
 
-    private String login(Request req) throws SQLException {
+    private String login(Request req) {
         UserDto loginUser = chessService.requestLoginUser(req.queryParams("name"), req.queryParams("password"));
         Map<String, Object> model = new HashMap<>();
         loginUser = chessService.findUser(loginUser);
@@ -70,22 +70,22 @@ public class WebChessController {
         return render(model, "chess.html");
     }
 
-    private String signup(Request req) throws SQLException {
+    private String signup(Request req) {
         chessService.addUser(req.queryParams("name"), req.queryParams("password"));
         return render(new HashMap<>(), "start.html");
     }
 
-    private String exit(Request req) throws SQLException {
+    private String exit(Request req) {
         chessService.addBoard(chessGame, userDto, req.body());
         return render(new HashMap<>(), "start.html");
     }
 
-    private String makeBoard(spark.Request req) throws SQLException {
+    private String makeBoard(spark.Request req) {
         chessGame = chessService.matchBoard(userDto);
         return GSON.toJson(chessService.matchBoardImageSource(chessGame, req.body()));
     }
 
-    public String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

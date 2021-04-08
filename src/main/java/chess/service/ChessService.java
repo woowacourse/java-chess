@@ -46,7 +46,6 @@ public class ChessService {
         if (boardDto == null) {
             return new ChessGame();
         }
-        System.out.println("!@@@@@@@@@@" + color);
         return new ChessGame(boardDto.getBoard(), color);
     }
 
@@ -86,7 +85,7 @@ public class ChessService {
         return chessGame.calculateScore(Color.valueOf(requestBody)).getScore();
     }
 
-    public void addUser(String requestName, String requestPassword) throws SQLException {
+    public void addUser(String requestName, String requestPassword) {
         UserDto userDto = new UserDto(requestName, requestPassword);
         chessDAO.addUser(userDto);
     }
@@ -95,7 +94,7 @@ public class ChessService {
         return new UserDto(requestName, requestPassword);
     }
 
-    public UserDto findUser(UserDto userDto) throws SQLException {
+    public UserDto findUser(UserDto userDto) {
         return chessDAO.findByUserNameAndPwd(userDto.getName(), userDto.getPwd());
     }
 }

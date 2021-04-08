@@ -38,7 +38,6 @@ public class ChessDao {
     public UserDto findByUserId(String userId) {
         try (Connection connection = sqlConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?")
-
         ) {
             preparedStatement.setString(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
