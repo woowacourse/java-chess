@@ -25,7 +25,7 @@ public class ChessService {
     public void generateChessGame() {
         ChessGame chessGame = generateNewChessGame();
         int chessGameId = chessGameDao.save(chessGame);
-        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
+        pieceDao.saveAll(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 
     private ChessGame generateNewChessGame() {
@@ -37,7 +37,7 @@ public class ChessService {
     }
 
     public List<Integer> getAllChessGameId() {
-        return chessGameDao.selectAllChessGameId();
+        return chessGameDao.selectAllId();
     }
 
     public ChessGame moveFromSourceToTarget(int chessGameId, String source, String target) {
@@ -51,7 +51,7 @@ public class ChessService {
 
     public ChessGame findChessGameById(int chessGameId) {
         ChessGameStatusDto chessGameStatusDto = chessGameDao.findChessGameStateById(chessGameId);
-        List<Piece> pieces = pieceDao.findAllPiecesByChessGameId(chessGameId);
+        List<Piece> pieces = pieceDao.findAllByChessGameId(chessGameId);
         return ChessGameFactory.loadChessGameByInfo(pieces, chessGameStatusDto.getTurn(), chessGameStatusDto.isFinish());
     }
 
@@ -59,8 +59,8 @@ public class ChessService {
         chessGameDao.updateChessGameStateById(chessGameId, chessGame);
         Piece sourcePiece = findPieceByPosition(source, chessGame);
         Piece targetPiece = findPieceByPosition(target, chessGame);
-        pieceDao.updatePiece(chessGameId, sourcePiece);
-        pieceDao.updatePiece(chessGameId, targetPiece);
+        pieceDao.update(chessGameId, sourcePiece);
+        pieceDao.update(chessGameId, targetPiece);
     }
 
     private Piece findPieceByPosition(String position, ChessGame chessGame) {
@@ -75,6 +75,6 @@ public class ChessService {
         ChessGame chessGame = generateNewChessGame();
         chessGameDao.delete(chessGameId);
         chessGameDao.saveWithId(chessGameId, chessGame);
-        pieceDao.addPieces(chessGame.getPiecesByAllPosition(), chessGameId);
+        pieceDao.saveAll(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 }

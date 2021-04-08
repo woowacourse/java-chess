@@ -42,7 +42,7 @@ public class ChessGameDao {
         }
     }
 
-    public List<Integer> selectAllChessGameId() {
+    public List<Integer> selectAllId() {
         List<Integer> chessGameIds = new ArrayList<>();
         try (Connection connection = dbManager.getConnection()) {
             String query = "SELECT * FROM chess_game";

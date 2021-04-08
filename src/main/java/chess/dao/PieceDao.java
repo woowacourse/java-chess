@@ -13,7 +13,7 @@ import java.util.List;
 public class PieceDao {
     private DBManager dbManager = new DBManager();
 
-    public void addPieces(List<Piece> pieces, int chessGameId) {
+    public void saveAll(List<Piece> pieces, int chessGameId) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "INSERT INTO piece(color, name, position, chessGameId) VALUE (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -29,7 +29,7 @@ public class PieceDao {
         }
     }
 
-    public List<Piece> findAllPiecesByChessGameId(int chessGameId) {
+    public List<Piece> findAllByChessGameId(int chessGameId) {
         List<Piece> pieces = new ArrayList<>();
         try (Connection connection = dbManager.getConnection()) {
             String query = "SELECT color, name, position FROM piece WHERE chessGameId = ?";
@@ -48,7 +48,7 @@ public class PieceDao {
         return pieces;
     }
 
-    public void updatePiece(int chessGameId, Piece piece) {
+    public void update(int chessGameId, Piece piece) {
         try (Connection connection = dbManager.getConnection()) {
             String query = "UPDATE piece SET color = ?, name = ? WHERE position = ? and chessGameId = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);

@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ChessGameDaoTest {
@@ -32,6 +30,6 @@ public class ChessGameDaoTest {
     @DisplayName("체스 게임 id들을 반환받는다.")
     @Test
     void selectAllChessGameId() throws Exception {
-        System.out.println(chessGameDao.selectAllChessGameId());
+        System.out.println(chessGameDao.selectAllId());
     }
 }
