@@ -23,6 +23,9 @@ public class ChessService {
     }
 
     public synchronized ChessGameDTO startNewGame() throws SQLException {
+        if (chessGameDAO.checkChessGameIsPlaying()) {
+            throw new IllegalArgumentException("아직 진행 중인 체스게임이 있습니다");
+        }
         chessGameDAO.deleteChessGame();
         final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
         chessGameDAO.createChessGame(chessGame, currentTurnTeamToString(chessGame));

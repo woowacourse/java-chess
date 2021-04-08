@@ -125,6 +125,20 @@ public class ChessGameDAO {
         return new ChessGame(blackTeam, whiteTeam, blackTeam, isPlaying);
     }
 
+    public boolean checkChessGameIsPlaying() throws SQLException {
+        final String chessGameQuery = "SELECT * FROM chess_game";
+        final Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(chessGameQuery);
+        ResultSet ResultSet = pstmt.executeQuery();
+        boolean isPlaying = true;
+        while (ResultSet.next()) {
+            isPlaying = ResultSet.getBoolean(2);
+        }
+        pstmt.close();
+        connection.close();
+        return isPlaying;
+    }
+
     public void updateChessGame(final ChessGame chessGame, final String currentTurnTeam) throws SQLException {
         updateTeamInfo(chessGame.currentWhitePiecePosition(), WHITE_TEAM.asDAOFormat());
         updateTeamInfo(chessGame.currentBlackPiecePosition(), BLACK_TEAM.asDAOFormat());

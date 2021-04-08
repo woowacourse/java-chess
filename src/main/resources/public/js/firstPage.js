@@ -16,18 +16,18 @@ function loadFirstPage() {
 function startNewGame() {
     fetch("/startNewGame")
         .then(response => {
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
             return response.json();
         })
         .then(data => {
-            initializeChessBoard(data);
+            if (data.availability === "unavailable") {
+                alert("현재 진행중인 체스게임을 먼저 마무리해주세요");
+            } else if (data.connection === "fail") {
+                alert("서버와의 통신에 실패했습니다.")
+            } else {
+                initializeChessBoard(data);
+            }
         })
-        .catch(error => {
-            console.log(error)
-            alert("서버와의 통신이 실패하였습니다.");
-        })
+        .catch(error => { })
 }
 
 function loadPrevGame() {

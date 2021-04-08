@@ -1,10 +1,7 @@
 package chess.controller;
 
 import chess.service.ChessService;
-import chess.webdto.ChessGameDTO;
-import chess.webdto.DBConnectionDTO;
-import chess.webdto.MoveRequestDTO;
-import chess.webdto.MoveResponseDTO;
+import chess.webdto.*;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -41,6 +38,9 @@ public class WebChessController {
             } catch (SQLException e) {
                 res.status(INTERNAL_SERVER_ERROR.statusCode());
                 return gson.toJson(DBConnectionDTO.fail());
+            } catch (IllegalArgumentException e) {
+                res.status(BAD_REQUEST.statusCode());
+                return gson.toJson(StartNewGameResponseDTO.unavailable());
             }
         });
 

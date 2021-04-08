@@ -14,5 +14,4 @@ public class MoveResponseDTO {
     public static MoveResponseDTO fail() {
         return new MoveResponseDTO("fail");
     }
-
 }
