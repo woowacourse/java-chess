@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Play extends AbstractCommand {
 
-    private static final String newline = System.lineSeparator();
+    private static final String NEW_LINE = System.lineSeparator();
     private static final int CHESS_SIZE = 8;
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int TARGET_INDEX = 2;
@@ -68,7 +68,7 @@ public class Play extends AbstractCommand {
             count++;
             chessNewLine(stringBuilder, count);
         }
-        stringBuilder.append(newline);
+        stringBuilder.append(NEW_LINE);
         stringBuilder.append(CHESS_COLUMN);
         return stringBuilder.toString();
     }
@@ -85,7 +85,7 @@ public class Play extends AbstractCommand {
         if (count != 0 && count % CHESS_SIZE == 0) {
             stringBuilder.append("  ");
             stringBuilder.append(chessRow(count));
-            stringBuilder.append(newline);
+            stringBuilder.append(NEW_LINE);
         }
     }
 
