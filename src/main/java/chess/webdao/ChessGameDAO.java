@@ -16,16 +16,23 @@ import static chess.service.TeamFormat.BLACK_TEAM;
 import static chess.service.TeamFormat.WHITE_TEAM;
 
 public class ChessGameDAO {
+    private static final String MYSQL_SERVER_ADDRESS = "localhost:13306";
+    private static final String MYSQL_DATABASE_NAME = "chess_db";
+    private static final String MYSQL_OPTION = "?useSSL=false&serverTimezone=UTC";
+    private static final String MYSQL_USERNAME = "root";
+    private static final String MYSQL_PASSWORD = "root";
+    private static final String JDBC_DRIVER_CLASSNAME = "com.mysql.cj.jdbc.Driver";
+
     public Connection getConnection() {
         Connection con = null;
-        final String server = "localhost:13306"; // MySQL 서버 주소
-        final String database = "chess_db"; // MySQL DATABASE 이름
-        final String option = "?useSSL=false&serverTimezone=UTC";
-        final String userName = "root"; //  MySQL 서버 아이디
-        final String password = "root"; // MySQL 서버 비밀번호
+        final String server = MYSQL_SERVER_ADDRESS;
+        final String database = MYSQL_DATABASE_NAME;
+        final String option = MYSQL_OPTION;
+        final String userName = MYSQL_USERNAME;
+        final String password = MYSQL_PASSWORD;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(JDBC_DRIVER_CLASSNAME);
         } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
             e.printStackTrace();
