@@ -35,7 +35,7 @@ public class ChessBoardDAO {
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+
         }
 
         return con;
@@ -54,32 +54,38 @@ public class ChessBoardDAO {
 
     public void addLog(String source, String target) throws SQLException {
         String query = "INSERT INTO log VALUES (?, ?)";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, source);
-        pstmt.setString(2, target);
-        pstmt.executeUpdate();
 
-        closeConnection(connection);
+        try (Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)
+        ) {
+            pstmt.setString(1, source);
+            pstmt.setString(2, target);
+            pstmt.executeQuery();
+            closeConnection(connection);
+        }
+
     }
 
     public void clearLog() throws SQLException {
         String query = "DELETE FROM log";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.executeUpdate();
 
-        closeConnection(connection);
+        try (Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.executeUpdate();
+            closeConnection(connection);
+        }
+
     }
 
     public List<MoveRequestDTO> getLog() throws SQLException {
         String query = "SELECT * FROM log";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        List<MoveRequestDTO> resultLog = extractLog(rs);
-        closeConnection(connection);
-        return resultLog;
+        try (Connection connection = getConnection();
+            PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            List<MoveRequestDTO> resultLog = extractLog(rs);
+            closeConnection(connection);
+            return resultLog;
+        }
     }
 
     private List<MoveRequestDTO> extractLog(ResultSet rs) throws SQLException {

@@ -1,5 +1,6 @@
 package chess;
 
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
@@ -16,16 +17,14 @@ public class WebUIChessApplication {
         WebController webController = new WebController();
         webController.setChessBoard(new ChessBoard());
 
-        try {
-            get("/", webController::main);
-            post("/start", webController::start);
-            post("/move", webController::move);
-            post("/reset", webController::reset);
-            post("/load", webController::load);
-        } catch (IllegalArgumentException exception) {
+        get("/", webController::main);
+        post("/start", webController::start);
+        post("/move", webController::move);
+        post("/reset", webController::reset);
+        post("/load", webController::load);
+        exception(IllegalArgumentException.class, (exception, request, response) -> {
             System.out.println(exception.getMessage());
-        }
-
+        });
 
     }
 
