@@ -58,42 +58,42 @@ public final class GameDao {
         String query = "INSERT INTO games VALUES (?, ?)";
         Gson gson = new Gson();
         String gameInfo = gson.toJson(gameStateDto);
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, gameId);
-        pstmt.setString(2, gameInfo);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            pstmt.setString(2, gameInfo);
+            pstmt.executeUpdate();
+        }
     }
 
     public void updateGame(String gameId, GameStateDto gameStateDto) throws SQLException {
         String query = "UPDATE games SET game_info = ? WHERE game_id = ?";
         Gson gson = new Gson();
         String gameInfo = gson.toJson(gameStateDto);
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, gameInfo);
-        pstmt.setString(2, gameId);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameInfo);
+            pstmt.setString(2, gameId);
+            pstmt.executeUpdate();
+        }
     }
 
     public Game findGameByGameId(String gameId) throws SQLException {
         String query = "SELECT * FROM games WHERE game_id = ?";
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, gameId);
-        String gameInfo = "";
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            gameInfo = rs.getString("game_info");
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            String gameInfo = "";
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                gameInfo = rs.getString("game_info");
+            }
+            return GameSerializer.deserialize(gameInfo);
         }
-        return GameSerializer.deserialize(gameInfo);
     }
 
     public void deleteGame(String gameId) throws SQLException {
         String query = "DELETE FROM games WHERE game_id = ?";
-        Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, gameId);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            pstmt.executeUpdate();
+        }
     }
 }
