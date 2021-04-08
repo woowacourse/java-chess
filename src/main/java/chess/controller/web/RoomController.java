@@ -22,13 +22,17 @@ public class RoomController {
     }
 
     private void loadRoomList() {
-        get("/main", (req, res) -> OutputView.printRoomList(roomService.loadList()));
+        get("/main", (req, res) -> {
+            res.status(200);
+            return OutputView.printRoomList(roomService.loadList());
+        });
     }
 
     private void createRoom() {
         get("/room/create/:roomName", (req, res) -> {
-            final String roomName = RequestHandler.roomName(req);
-            final Long roomId = roomService.save(roomName);
+            final Long roomId = roomService.save(RequestHandler.roomName(req));
+
+            res.status(200);
             res.redirect("/game/create/" + roomId);
             return null;
         });
@@ -38,6 +42,8 @@ public class RoomController {
         get("/room/delete/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
             roomService.delete(roomId);
+
+            res.status(200);
             res.redirect("/game/delete/" + roomId);
             return null;
         });

@@ -3,7 +3,6 @@ package chess.controller.web;
 import chess.controller.dto.BoardDto;
 import chess.controller.dto.RoomDto;
 import chess.controller.dto.ScoresDto;
-import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
 import chess.service.GameService;
 import chess.service.RequestHandler;
@@ -39,6 +38,8 @@ public class GameController {
         get("/game/create/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
             gameService.create(roomId);
+
+            res.status(200);
             res.redirect("/game/load/" + roomId);
             return null;
         });
@@ -46,8 +47,9 @@ public class GameController {
 
     private void deleteGame() {
         get("/game/delete/:roomId", (req, res) -> {
-            final Long roomId = RequestHandler.roomId(req);
-            gameService.delete(roomId);
+            gameService.delete(RequestHandler.roomId(req));
+
+            res.status(200);
             res.redirect("/main");
             return null;
         });
@@ -55,27 +57,24 @@ public class GameController {
 
     private void loadGame() {
         get("/game/load/:roomId", (req, res) -> {
-            final Long roomId = RequestHandler.roomId(req);
-            return printGame(roomId);
+            res.status(200);
+            return printGame(RequestHandler.roomId(req));
         });
     }
 
     private void show() {
         post("/game/show/:roomId", (req, res) -> {
-            final Long roomId = RequestHandler.roomId(req);
-            final Position source = RequestHandler.source(req);
-            return gameService.show(roomId, source);
+            res.status(200);
+            return gameService.show(RequestHandler.roomId(req), RequestHandler.source(req));
         });
     }
 
     private void move() {
         post("/game/move/:roomId", (req, res) -> {
             final Long roomId = RequestHandler.roomId(req);
+            gameService.move(roomId, RequestHandler.source(req), RequestHandler.target(req));
 
-            final Position source = RequestHandler.source(req);
-            final Position target = RequestHandler.target(req);
-            gameService.move(roomId, source, target);
-
+            res.status(200);
             return printGame(roomId);
         });
     }
@@ -91,7 +90,6 @@ public class GameController {
         final RoomDto roomDto = roomService.room(roomId);
         final BoardDto boardDto = gameService.board(roomId);
         final ScoresDto scoresDto = gameService.scores(roomId);
-
         return OutputView.printGame(roomDto, boardDto, scoresDto);
     }
 }
