@@ -29,7 +29,7 @@ function startGame(event) {
             return data.json();
         })
         .then(post => {
-            location.href = "http://localhost:4567/game/" + post.gameID;
+            location.href = "http://localhost:4567/game/" + post.gameId;
         })
         .catch(error => {
             console.log(error);

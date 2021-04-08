@@ -59,14 +59,14 @@ public class ChessDao {
         return null;
     }
 
-    public Long createState(final ChessManager chessManager, final Long gameID) {
+    public Long createState(final ChessManager chessManager, final Long gameId) {
         final String query =
-                "INSERT INTO state(gameID, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?)";
+                "INSERT INTO state(gameId, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             pstmt.setString(2, chessManager.turnOwner().name());
             pstmt.setInt(3, chessManager.turnNumber());
             pstmt.setBoolean(4, chessManager.isPlaying());
@@ -77,15 +77,15 @@ public class ChessDao {
         return null;
     }
 
-    public Long createScore(final GameStatus gameStatus, final Long gameID) {
+    public Long createScore(final GameStatus gameStatus, final Long gameId) {
         final String query =
-                "INSERT INTO score(gameID, white_score, black_score) VALUES (?, ?, ?)";
+                "INSERT INTO score(gameId, white_score, black_score) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt =
                      connection.prepareStatement(query)) {
 
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             pstmt.setDouble(2, gameStatus.whiteScore());
             pstmt.setDouble(3, gameStatus.blackScore());
             return pstmt.executeLargeUpdate();
@@ -95,14 +95,14 @@ public class ChessDao {
         return null;
     }
 
-    public Long createPieces(final Long gameID, final String position, final String symbol) {
+    public Long createPieces(final Long gameId, final String position, final String symbol) {
         final String query =
-                "INSERT INTO piece(gameID, position, symbol) VALUES (?, ?, ?)";
+                "INSERT INTO piece(gameId, position, symbol) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             pstmt.setString(2, position);
             pstmt.setString(3, symbol);
 
@@ -113,13 +113,13 @@ public class ChessDao {
         return null;
     }
 
-    public List<PieceResponseDto> findPiecesByGameId(final Long gameID) {
+    public List<PieceResponseDto> findPiecesBygameId(final Long gameId) {
         final String query =
-                "SELECT * from piece where gameID = ?";
+                "SELECT * from piece where gameId = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             List<PieceResponseDto> pieceResponseDtos = new ArrayList<>();
 
             try (ResultSet resultSet = pstmt.executeQuery()) {
@@ -136,12 +136,12 @@ public class ChessDao {
         return null;
     }
 
-    public GameResponseDto findGameByGameId(final Long gameID) {
+    public GameResponseDto findGameBygameId(final Long gameId) {
         final String query =
                 "SELECT * from game where id = ?";
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 if (!resultSet.next()) {
                     return null;
@@ -157,13 +157,13 @@ public class ChessDao {
         return null;
     }
 
-    public ScoreResponseDto findScoreByGameId(final Long gameID) {
+    public ScoreResponseDto findScoreBygameId(final Long gameId) {
         final String query =
                 "SELECT * from score where gameId = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 if (!resultSet.next()) {
                     return null;
@@ -178,13 +178,13 @@ public class ChessDao {
         return null;
     }
 
-    public StateResponseDto findStateByGameId(final Long gameID) {
+    public StateResponseDto findStateBygameId(final Long gameId) {
         final String query =
                 "SELECT * from state where gameId = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setInt(1, gameID.intValue());
+            pstmt.setInt(1, gameId.intValue());
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 if (!resultSet.next()) {
                     return null;
@@ -267,7 +267,7 @@ public class ChessDao {
 
     public Long createHistory(final HistoryResponseDto history, final String moveCommand, final Long gameId) {
         final String query =
-                "INSERT INTO history(gameID, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
+                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -284,7 +284,7 @@ public class ChessDao {
         return null;
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
+    public List<HistoryResponseDto> findHistoryBygameId(final Long gameId) {
         final String query =
                 "SELECT * from history where gameId = ? ORDER BY id ASC";
 

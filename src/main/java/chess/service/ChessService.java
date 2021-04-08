@@ -27,33 +27,33 @@ public class ChessService {
     public Long newGame(final NewGameRequestDto newGameRequestDto) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
-        Long gameID = chessDao.createNewGame(newGameRequestDto);
-        chessDao.createState(chessManager, gameID);
-        chessDao.createScore(chessManager.gameStatus(), gameID);
-        createAllPiece(pieces, gameID);
-        return gameID;
+        Long gameId = chessDao.createNewGame(newGameRequestDto);
+        chessDao.createState(chessManager, gameId);
+        chessDao.createScore(chessManager.gameStatus(), gameId);
+        createAllPiece(pieces, gameId);
+        return gameId;
     }
 
-    private void createAllPiece(final Map<Position, Piece> pieces, final Long gameID) {
+    private void createAllPiece(final Map<Position, Piece> pieces, final Long gameId) {
         for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
-            chessDao.createPieces(gameID, entry.getKey().parseString(), entry.getValue().getSymbol());
+            chessDao.createPieces(gameId, entry.getKey().parseString(), entry.getValue().getSymbol());
         }
     }
 
-    public List<PieceResponseDto> findPiecesByGameId(final Long gameID) {
-        return chessDao.findPiecesByGameId(gameID);
+    public List<PieceResponseDto> findPiecesBygameId(final Long gameId) {
+        return chessDao.findPiecesBygameId(gameId);
     }
 
-    public GameResponseDto findGameByGameId(final Long gameID) {
-        return chessDao.findGameByGameId(gameID);
+    public GameResponseDto findGameBygameId(final Long gameId) {
+        return chessDao.findGameBygameId(gameId);
     }
 
-    public ScoreResponseDto findScoreByGameId(final Long gameID) {
-        return chessDao.findScoreByGameId(gameID);
+    public ScoreResponseDto findScoreBygameId(final Long gameId) {
+        return chessDao.findScoreBygameId(gameId);
     }
 
-    public StateResponseDto findStateByGameId(final Long gameID) {
-        return chessDao.findStateByGameId(gameID);
+    public StateResponseDto findStateBygameId(final Long gameId) {
+        return chessDao.findStateBygameId(gameId);
     }
 
     public PathResponseDto movablePath(final MovablePathRequestDto movablePathRequestDto, final Long gameId) {
@@ -77,8 +77,8 @@ public class ChessService {
     }
 
     private ChessManager createChessManager(final Long gameId) {
-        List<PieceResponseDto> pieceResponseDtos = chessDao.findPiecesByGameId(gameId);
-        StateResponseDto stateResponseDto = chessDao.findStateByGameId(gameId);
+        List<PieceResponseDto> pieceResponseDtos = chessDao.findPiecesBygameId(gameId);
+        StateResponseDto stateResponseDto = chessDao.findStateBygameId(gameId);
         Map<Position, Piece> pieces = new HashMap<>();
         for (PieceResponseDto pieceResponseDto : pieceResponseDtos) {
             pieces.put(Position.of(pieceResponseDto.getPosition()), PieceConverter.parsePiece(pieceResponseDto.getSymbol()));
@@ -90,7 +90,7 @@ public class ChessService {
                 stateResponseDto.isPlaying());
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
-        return chessDao.findHistoryByGameId(gameId);
+    public List<HistoryResponseDto> findHistoryBygameId(Long gameId) {
+        return chessDao.findHistoryBygameId(gameId);
     }
 }

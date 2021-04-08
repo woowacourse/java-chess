@@ -128,6 +128,8 @@ body {
     right: 7vw;
     position: relative;
     width: 15vw;
+    padding-left: 10px;
+    font-size: 1.5vw;
 }
 
 #main-container {
