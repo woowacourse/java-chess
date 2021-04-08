@@ -22,15 +22,14 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
-        System.out.println("pawn 0");
         if (!checkPositionRule(current, destination)) {
             return false;
         }
-        System.out.println("pawn 1");
+
         if (current.checkDiagonalRule(destination)) {
             return chessBoard.containsKey(destination);
         }
-        System.out.println("pawn 2");
+
         return checkStraightEmptyPath(current, destination, chessBoard);
     }
 

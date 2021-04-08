@@ -41,9 +41,7 @@ public class ChessGame {
     }
 
     public boolean move(final Position current, final Position destination) {
-        System.out.println("move() called current : " + current + " destination : " + destination);
         final Piece chosenPiece = currentTurn.choosePiece(current);
-        System.out.println("move() called chosenPiece : " + chosenPiece);
         if (!validateMovable(current, destination, chosenPiece)) {
             return false;
         }
@@ -55,7 +53,6 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         changeTurn();
-        System.out.println("move() called current 123 : " + current + " destination : " + destination);
         return true;
     }
 
