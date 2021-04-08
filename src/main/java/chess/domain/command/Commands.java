@@ -1,23 +1,21 @@
 package chess.domain.command;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class Commands {
-    private static final List<Command> commands;
+    private static final Map<String, Command> commands = new HashMap<>();
 
     static {
-        commands = Arrays.asList(
-                new StartOnCommand(),
-                new EndOnCommand(),
-                new MoveOnCommand(),
-                new StatusOnCommand());
+        commands.put("end", new EndOnCommand());
+        commands.put("start", new StartOnCommand());
+        commands.put("move", new MoveOnCommand());
+        commands.put("status", new StatusOnCommand());
     }
 
-    public static Command findCommandByText(String anotherCommandText) {
-        return commands.stream()
-                .filter(command -> command.isMatch(anotherCommandText))
-                .findFirst()
+    public static Command findCommandByText(String commandText) {
+        return Optional.ofNullable(commands.get(commandText))
                 .orElseThrow(() ->
                         new IllegalArgumentException("[ERROR] 잘못된 명령어 입니다."));
     }

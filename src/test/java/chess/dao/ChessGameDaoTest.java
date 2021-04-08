@@ -23,12 +23,6 @@ public class ChessGameDaoTest {
         startOnCommand.execute(chessGame, temp);
     }
 
-    @Test
-    public void connection() {
-        Connection con = chessGameDao.getConnection();
-        assertNotNull(con);
-    }
-
     @DisplayName("새로운 체스 게임을 생성한다.")
     @Test
     void addChessGame() throws Exception {
