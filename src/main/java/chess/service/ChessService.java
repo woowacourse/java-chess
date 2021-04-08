@@ -21,7 +21,7 @@ public class ChessService {
         this.chessGameDAO = new ChessGameDAO();
     }
 
-    public synchronized ChessGameDTO startNewGame(final boolean forceStart) throws SQLException {
+    public ChessGameDTO startNewGame(final boolean forceStart) throws SQLException {
         if (chessGameDAO.checkChessGameIsPlaying() && !forceStart) {
             throw new IllegalArgumentException("아직 진행 중인 체스게임이 있습니다");
         }
@@ -30,19 +30,19 @@ public class ChessService {
         return generateChessGameDTO(chessGame);
     }
 
-    public synchronized ChessGameDTO loadPreviousGame() throws SQLException {
+    public ChessGameDTO loadPreviousGame() throws SQLException {
         final ChessGame chessGame = chessGameDAO.readChessGame();
         return generateChessGameDTO(chessGame);
     }
 
-    public synchronized ChessGameDTO move(final String start, final String destination) throws SQLException {
+    public ChessGameDTO move(final String start, final String destination) throws SQLException {
         final ChessGame chessGame = chessGameDAO.readChessGame();
         chessGame.move(Position.of(start), Position.of(destination));
         chessGameDAO.updateChessGame(chessGame, currentTurnTeamToString(chessGame));
         return generateChessGameDTO(chessGame);
     }
 
-    private synchronized ChessGameDTO generateChessGameDTO(final ChessGame chessGame) {
+    private ChessGameDTO generateChessGameDTO(final ChessGame chessGame) {
         final Map<String, Map<String, String>> piecePositionToString = generatePiecePositionToString(chessGame);
         final String currentTurnTeam = currentTurnTeamToString(chessGame);
         final Map<String, Double> teamScore = new HashMap<>();
@@ -70,7 +70,7 @@ public class ChessService {
         return piecePositionConverted;
     }
 
-    private synchronized String currentTurnTeamToString(final ChessGame chessGame) {
+    private String currentTurnTeamToString(final ChessGame chessGame) {
         if (chessGame.isWhiteTeamTurn()) {
             return WHITE_TEAM.asDAOFormat();
         }
