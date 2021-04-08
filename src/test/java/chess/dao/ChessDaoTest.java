@@ -1,13 +1,13 @@
 package chess.dao;
 
 import chess.controller.dto.NewGameRequestDto;
-import chess.controller.dto.PieceResponseDto;
 import chess.domain.manager.ChessManager;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,7 +32,6 @@ class ChessDaoTest {
     }
 
     @Test
-    @Order(1)
     @DisplayName("Game insert 테스트")
     void createGameTest() {
         NewGameRequestDto newGameRequestDto =
@@ -43,7 +42,6 @@ class ChessDaoTest {
     }
 
     @Test
-    @Order(2)
     @DisplayName("State insert 테스트")
     void createStateTest() {
         stateId = chessDao.createState(chessManager, 1L);
@@ -52,7 +50,6 @@ class ChessDaoTest {
     }
 
     @Test
-    @Order(3)
     @DisplayName("Piece insert 테스트")
     void createPieceTest() {
         Long pieceID = chessDao.createPieces(1L, "a1", "r");

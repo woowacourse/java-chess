@@ -147,9 +147,9 @@ public class ChessDao {
                     return null;
                 }
                 return new GameResponseDto(
-                                resultSet.getString("white_username"),
-                                resultSet.getString("black_username"),
-                                resultSet.getString("room_name"));
+                        resultSet.getString("white_username"),
+                        resultSet.getString("black_username"),
+                        resultSet.getString("room_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

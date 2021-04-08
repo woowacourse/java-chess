@@ -1,7 +1,9 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.controller.dto.*;
+import chess.controller.dto.GameResponseDto;
+import chess.controller.dto.MoveRequestDto;
+import chess.controller.dto.NewGameRequestDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import spark.ModelAndView;
@@ -25,7 +27,7 @@ public class WebUIChessApplication {
 
         post("/game", (request, response) -> {
             NewGameRequestDto newGameRequestDto = gson.fromJson(request.body(), NewGameRequestDto.class);
-            Long gameId =  webChessController.newGame(newGameRequestDto);
+            Long gameId = webChessController.newGame(newGameRequestDto);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("gameId", gameId);
             return jsonObject;
@@ -42,7 +44,7 @@ public class WebUIChessApplication {
             return render(model, "board.html");
         });
 
-        get("/game/:id/load", (request, response) ->  {
+        get("/game/:id/load", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
             return webChessController.findPiecesBygameId(gameId);
         }, gson::toJson);

@@ -2,7 +2,6 @@ package chess.domain.board.position;
 
 import chess.domain.direction.Direction;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class Position {
