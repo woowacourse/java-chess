@@ -22,7 +22,7 @@ public class ChessService {
     }
 
     public ChessGameDTO startNewGame(final boolean forceStart) throws SQLException {
-        if (chessGameDAO.checkChessGameIsPlaying() && !forceStart) {
+        if (!forceStart && chessGameDAO.checkChessGameIsPlaying()) {
             throw new IllegalArgumentException("아직 진행 중인 체스게임이 있습니다");
         }
         chessGameDAO.deleteChessGame();
