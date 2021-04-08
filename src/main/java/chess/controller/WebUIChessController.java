@@ -36,10 +36,6 @@ public final class WebUIChessController {
     private ChessGame chessGame = new ChessGame();
     private String roomId;
 
-    public WebUIChessController() {
-        commandDAO.getConnection();
-    }
-
     public void run() {
         mainPage();
         start();
