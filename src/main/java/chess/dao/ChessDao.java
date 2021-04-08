@@ -77,7 +77,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createScore(GameStatus gameStatus, Long gameID) {
+    public Long createScore(final GameStatus gameStatus, final Long gameID) {
         final String query =
                 "INSERT INTO score(gameID, white_score, black_score) VALUES (?, ?, ?)";
 
@@ -95,7 +95,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createPieces(Long gameID, String position, String symbol) {
+    public Long createPieces(final Long gameID, final String position, final String symbol) {
         final String query =
                 "INSERT INTO piece(gameID, position, symbol) VALUES (?, ?, ?)";
 
@@ -136,7 +136,7 @@ public class ChessDao {
         return null;
     }
 
-    public GameResponseDto findGameByGameId(Long gameID) {
+    public GameResponseDto findGameByGameId(final Long gameID) {
         final String query =
                 "SELECT * from game where id = ?";
         try (Connection connection = getConnection();
@@ -157,7 +157,7 @@ public class ChessDao {
         return null;
     }
 
-    public ScoreResponseDto findScoreByGameId(Long gameID) {
+    public ScoreResponseDto findScoreByGameId(final Long gameID) {
         final String query =
                 "SELECT * from score where gameId = ?";
 
@@ -178,7 +178,7 @@ public class ChessDao {
         return null;
     }
 
-    public StateResponseDto findStateByGameId(Long gameID) {
+    public StateResponseDto findStateByGameId(final Long gameID) {
         final String query =
                 "SELECT * from state where gameId = ?";
 
@@ -200,7 +200,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long updateScore(GameStatus gameStatus, Long gameId) {
+    public Long updateScore(final GameStatus gameStatus, final Long gameId) {
         final String query =
                 "UPDATE score SET white_score=?, black_score=? WHERE gameId=?";
 
@@ -216,7 +216,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long updateState(ChessManager chessManager, Long gameId) {
+    public Long updateState(final ChessManager chessManager, final Long gameId) {
         final String query =
                 "UPDATE state SET turn_owner=?, turn_number=?, isPlaying=? WHERE gameId=?";
 
@@ -233,7 +233,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long updateTargetPiece(String target, Piece sourcePiece, Long gameId) {
+    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId) {
         final String query =
                 "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
 
@@ -249,7 +249,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long updateSourcePiece(String source, Long gameId) {
+    public Long updateSourcePiece(final String source, final Long gameId) {
         final String query =
                 "UPDATE piece SET symbol = ? WHERE gameId=? && position=?";
 
@@ -265,7 +265,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createHistory(HistoryResponseDto history, String moveCommand, Long gameId) {
+    public Long createHistory(final HistoryResponseDto history, final String moveCommand, final Long gameId) {
         final String query =
                 "INSERT INTO history(gameID, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
 
@@ -284,7 +284,7 @@ public class ChessDao {
         return null;
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
         final String query =
                 "SELECT * from history where gameId = ? ORDER BY id ASC";
 
