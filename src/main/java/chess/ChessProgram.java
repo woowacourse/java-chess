@@ -15,7 +15,14 @@ import java.util.Map;
 
 public class ChessProgram {
 
-    private static final String GameNumber = "1";
+    private static final String GAME_NUMBER = "1";
+    private static final String SUCCEED_CODE = "200";
+    private static final String GAME_SET_CODE = "300";
+    private static final String FAIL_CODE = "400";
+    private static final String WHITE = "W";
+    private static final String BLACK = "B";
+    private static final String BLANK = ".";
+
     private static BoardDAO boardDAO;
 
     public void initChessGame() throws SQLException {
@@ -25,11 +32,11 @@ public class ChessProgram {
     }
 
     public ResponseDTO move(PositionDTO positionDTO) throws SQLException {
-        Board board = new Board(boardDAO.findBoard(GameNumber));
+        Board board = new Board(boardDAO.findBoard(GAME_NUMBER));
         try {
             return moveExecute(positionDTO, board);
         } catch (ChessException e) {
-            return new ResponseDTO("400", e.getMessage(), currentTurn().name());
+            return new ResponseDTO(FAIL_CODE, e.getMessage(), currentTurn().name());
         }
     }
 
@@ -38,13 +45,13 @@ public class ChessProgram {
         boardDAO.updateBoard(board, currentTurn().changeTurn().name());
         if (board.isGameSet()) {
             Side side = board.winner();
-            return new ResponseDTO("300", side.name(), "게임 종료(" + side.name() + " 승리)");
+            return new ResponseDTO(GAME_SET_CODE, side.name(), "게임 종료(" + side.name() + " 승리)");
         }
-        return new ResponseDTO("200", "Succeed", currentTurn().name());
+        return new ResponseDTO(SUCCEED_CODE, "Succeed", currentTurn().name());
     }
 
     public Map<String, String> getCurrentBoard() throws SQLException {
-        Map<Position, Piece> board = boardDAO.findBoard(GameNumber);
+        Map<Position, Piece> board = boardDAO.findBoard(GAME_NUMBER);
         Map<String, String> boardName = new LinkedHashMap<>();
 
         for (Position position : board.keySet()) {
@@ -56,12 +63,12 @@ public class ChessProgram {
 
     private String pieceToName(Piece piece) {
         if (piece.side() == Side.WHITE) {
-            return "W" + piece.getInitial().toUpperCase();
+            return WHITE + piece.getInitial().toUpperCase();
         }
         if (piece.side() == Side.BLACK) {
-            return "B" + piece.getInitial().toUpperCase();
+            return BLACK + piece.getInitial().toUpperCase();
         }
-        return ".";
+        return BLANK;
     }
 
     public String turnName() throws SQLException {
@@ -69,6 +76,6 @@ public class ChessProgram {
     }
 
     private Side currentTurn() throws SQLException {
-        return boardDAO.findTurn(GameNumber);
+        return boardDAO.findTurn(GAME_NUMBER);
     }
 }
