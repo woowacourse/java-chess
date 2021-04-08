@@ -117,7 +117,7 @@ public class PieceDAO {
     private void deleteTurn() {
         String query = "DELETE FROM turn";
         try (Connection con = dbConnection.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query)){
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

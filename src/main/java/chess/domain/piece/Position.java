@@ -24,7 +24,7 @@ public class Position {
     }
 
     private static int makeRow(String str) {
-        return 8-Integer.parseInt(str.split("")[1]) ;
+        return 8 - Integer.parseInt(str.split("")[1]);
     }
 
     public int getRow() {
@@ -37,7 +37,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return columnStr[column] + (8-row);
+        return columnStr[column] + (8 - row);
     }
 
     @Override

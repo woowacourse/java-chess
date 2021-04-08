@@ -14,14 +14,15 @@ public class EndGameDto {
 
     public EndGameDto(ChessGame chessGame) {
         this.isOk = "end";
-        this.message = result(chessGame);;
+        this.message = result(chessGame);
+        ;
     }
 
     private String result(ChessGame chessGame) {
-        if(chessGame.getBlackScore() > chessGame.getWhiteScore()) {
+        if (chessGame.getBlackScore() > chessGame.getWhiteScore()) {
             return "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore() + "\n" + "블랙팀 승 입니다.";
         }
-        if(chessGame.getBlackScore() < chessGame.getWhiteScore()) {
+        if (chessGame.getBlackScore() < chessGame.getWhiteScore()) {
             return "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore() + "\n" + "화이트 승 입니다.";
         }
 
