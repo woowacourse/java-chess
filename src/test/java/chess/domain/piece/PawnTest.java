@@ -100,4 +100,26 @@ class PawnTest {
         //then
         assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
+
+    @Test
+    @DisplayName("흰색 폰이 한번 움직인 뒤 kill 조건 테스트")
+    void testUpdateKillable_moved() throws ImpossibleMoveException {
+        //given
+        Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 2));
+        List<Position> enemiesPositions = Collections.singletonList(
+                Position.of(4, 4)
+        );
+        pawn.updateMovablePositions(enemiesPositions, enemiesPositions);
+        pawn.move(Position.of(3, 3));
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(3, 4));
+        expectedPosition.add(Position.of(4, 4));
+
+        //when
+        pawn.updateMovablePositions(enemiesPositions, enemiesPositions);
+        List<Position> movablePosition = pawn.movablePositions();
+
+        //then
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
+    }
 }
