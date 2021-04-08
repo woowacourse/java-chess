@@ -2,6 +2,7 @@ package chess;
 
 import chess.dao.ChessBoardDao;
 import chess.dto.MovementDto;
+import chess.service.ChessService;
 import chess.service.ChessServiceImpl;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -13,7 +14,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static final ChessServiceImpl chessService = new ChessServiceImpl(new ChessBoardDao());
+    private static final ChessService chessService = new ChessServiceImpl(new ChessBoardDao());
 
     public static void main(String[] args) {
         staticFileLocation("/static");
