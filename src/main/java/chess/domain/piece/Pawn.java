@@ -70,7 +70,7 @@ public final class Pawn extends AbstractPiece {
 
     @Override
     protected List<Position> positions(Map<Position, Piece> pieces, List<Direction> directions,
-        int able_length) {
+        int ableLength) {
         List<Position> positions = new ArrayList<>();
         for (Direction direction : directions) {
             addMovableDirectionPositions(pieces, positions, direction);
