@@ -79,7 +79,7 @@ public final class PiecesDAO extends AbstractDAO {
     private void addPieceDataInit(int boardId, PreparedStatement preparedStatement, Piece piece)
         throws SQLException {
         preparedStatement.setInt(1, boardId);
-        preparedStatement.setString(2, piece.position().changePositionToString());
+        preparedStatement.setString(2, piece.position().changedPositionToString());
         preparedStatement.setString(3, piece.symbol());
     }
 

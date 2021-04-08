@@ -117,7 +117,7 @@ class PositionTest {
     @Test
     @DisplayName("포지션위치를 문자로 반환하는 테스트")
     void name() {
-        assertThat(Position.of("a1").changePositionToString()).isEqualTo("a1");
-        assertThat(Position.of("h8").changePositionToString()).isEqualTo("h8");
+        assertThat(Position.of("a1").changedPositionToString()).isEqualTo("a1");
+        assertThat(Position.of("h8").changedPositionToString()).isEqualTo("h8");
     }
 }

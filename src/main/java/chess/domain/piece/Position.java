@@ -108,7 +108,7 @@ public final class Position {
         return Objects.hash(x, y);
     }
 
-    public String changePositionToString() {
+    public String changedPositionToString() {
         char valueX = (char) (x.point() + CORRECTION_X);
         char valueY = (char) (y.point() + CORRECTION_Y);
         return valueY + Character.toString(valueX);

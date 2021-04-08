@@ -53,7 +53,7 @@ public class ChessService {
 
         updateDatabaseBoard(movePieceDTO, board);
 
-        Map<String, String> piecesData = PositionToStringMap(board.pieces());
+        Map<String, String> piecesData = changedPositionToStringMap(board.pieces());
         WebBoardDTO webBoardDTO = new WebBoardDTO(board, movePieceDTO.getBoardId());
         webBoardDTO.setPieces(piecesData);
         return webBoardDTO;
@@ -80,7 +80,7 @@ public class ChessService {
         Pieces pieces = PiecesDAO.instance().joinPieces(movablePositionDTO.getBoardId());
         Board board = BoardDAO.instance().findBoardByBoardId(movablePositionDTO.getBoardId(), pieces);
         for (Position position : board.movablePositions(movablePositionDTO.getSource())) {
-            positions.add(position.changePositionToString());
+            positions.add(position.changedPositionToString());
         }
         movablePositionDTO.setMovablePositions(positions);
         return movablePositionDTO;
@@ -90,7 +90,7 @@ public class ChessService {
         BoardDAO boardDAO = BoardDAO.instance();
         Pieces pieces = PiecesDAO.instance().joinPieces(webSimpleBoardDTO.getBoardId());
         Board board = boardDAO.findBoardByBoardId(webSimpleBoardDTO.getBoardId(), pieces);
-        Map<String, String> piecesData = PositionToStringMap(board.pieces());
+        Map<String, String> piecesData = changedPositionToStringMap(board.pieces());
         WebBoardDTO webBoardDTO = new WebBoardDTO(board, webSimpleBoardDTO.getBoardId());
         webBoardDTO.setPieces(piecesData);
         return webBoardDTO;
@@ -101,12 +101,12 @@ public class ChessService {
         return boardDAO.findBoardsByPlayerName(playerName);
     }
 
-    private Map<String, String> PositionToStringMap(Map<Position, Piece> pieces) {
-        Map<String, String> boardInfo = new HashMap<>();
+    private Map<String, String> changedPositionToStringMap(Map<Position, Piece> pieces) {
+        Map<String, String> piecesData = new HashMap<>();
         for (Position position : pieces.keySet()) {
-            boardInfo.put(position.changePositionToString(), getSymbol(pieces.get(position)));
+            piecesData.put(position.changedPositionToString(), getSymbol(pieces.get(position)));
         }
-        return boardInfo;
+        return piecesData;
     }
 
     private String getSymbol(Piece piece) {
