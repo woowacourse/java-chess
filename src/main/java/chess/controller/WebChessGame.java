@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -22,7 +23,6 @@ public class WebChessGame {
     }
 
     public boolean movable(String source, String target) {
-        System.out.println(source);
         try {
             chessBoard.move(source, target);
             turn = turn.getOppositeColor();
@@ -38,5 +38,12 @@ public class WebChessGame {
 
     public String getTurn() {
         return turn.toString();
+    }
+
+    public Result getResult() {
+        Result result = new Result();
+        result.add(Color.BLACK, chessBoard.score(Color.BLACK));
+        result.add(Color.WHITE, chessBoard.score(Color.WHITE));
+        return result;
     }
 }

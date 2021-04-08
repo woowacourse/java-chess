@@ -8,6 +8,8 @@ import static spark.Spark.staticFiles;
 import chess.controller.WebChessGame;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.game.Result;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -59,6 +61,14 @@ public class WebUIChessApplication {
         get("/turn", "application/json", (req, res) -> {
             return gson.toJson(chessGame.getTurn());
         });
+
+        get("/result", "application/json", (req, res) -> {
+            Result result = chessGame.getResult();
+            JsonObject response = new JsonObject();
+            response.add("black", resultToJson(result, Color.BLACK));
+            response.add("white", resultToJson(result, Color.WHITE));
+            return response;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
@@ -80,5 +90,12 @@ public class WebUIChessApplication {
 
     private static JsonObject boardToJSON(Map.Entry<Position, Piece> board) {
         return boardToJSON(board.getKey(), board.getValue());
+    }
+
+    private static JsonObject resultToJson(Result result, Color color) {
+        JsonObject colorResult = new JsonObject();
+        colorResult.addProperty("score", result.getScore(color));
+        colorResult.addProperty("outcome", result.winOrLose(color));
+        return colorResult;
     }
 }

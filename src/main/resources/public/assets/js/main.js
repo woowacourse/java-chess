@@ -11,6 +11,7 @@ async function init() {
   await setBoard()
   await moveHandler()
   await changeTurn(await getTurn())
+  await result()
 }
 
 async function setBoard() {
@@ -62,6 +63,7 @@ function moveHandler() {
     try {
       move(await movable(source, target))
       await changeTurn(await getTurn())
+      await result()
     } catch (e) {
       console.log(e)
     }
@@ -152,5 +154,34 @@ function changeTurn(turn) {
   }
 }
 
-init();
+async function result() {
+  const result = await fetch(
+    '/result'
+  ).then(res => res.json()).then(data => data)
+
+  const $blackResult = document.getElementById('BLACK')
+  const $whiteResult = document.getElementById('WHITE')
+  const blackResult = result.black
+  const whiteResult = result.white
+
+  $blackResult.getElementsByClassName('score')[0].innerHTML = `<span>${blackResult.score}</span>`
+  $whiteResult.getElementsByClassName('score')[0].innerHTML = `<span>${whiteResult.score}</span>`
+
+  if (blackResult.outcome === 'WIN') {
+    $blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    $whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+    return
+  }
+  if (blackResult.outcome === 'DRAW') {
+    $blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    $whiteResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    return
+  }
+  $blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+  $whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+}
+
+window.onload = () => {
+  init()
+}
 
