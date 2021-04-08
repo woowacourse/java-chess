@@ -266,6 +266,8 @@ function history() {
 
 function addHistory(history) {
     document.querySelector("#historyList ol").insertAdjacentHTML("beforeend", renderHistoryItem(history));
+    const $historyList = document.querySelector("#historyList");
+    $historyList.scrollTop = $historyList.scrollHeight;
 }
 
 function renderHistoryItem(history) {
