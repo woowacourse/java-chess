@@ -55,23 +55,14 @@ public class WebUIChessApplication {
             }
             return null;
         });
+
+        get("/turn", "application/json", (req, res) -> {
+            return gson.toJson(chessGame.getTurn());
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private static JsonObject boardToJSON(Map.Entry<Position, Piece> board) {
-        JsonObject square = new JsonObject();
-        square.addProperty("id", board.getKey().getStringPosition());
-        square.addProperty("position", board.getKey().getStringPosition());
-
-        JsonObject piece = new JsonObject();
-        piece.addProperty("type", board.getValue().getName());
-        piece.addProperty("color", board.getValue().getColorAsString());
-
-        square.add("piece", piece);
-        return square;
     }
 
     private static JsonObject boardToJSON(Position movedPosition, Piece movedPiece) {
@@ -85,5 +76,9 @@ public class WebUIChessApplication {
 
         square.add("piece", piece);
         return square;
+    }
+
+    private static JsonObject boardToJSON(Map.Entry<Position, Piece> board) {
+        return boardToJSON(board.getKey(), board.getValue());
     }
 }

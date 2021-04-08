@@ -35,4 +35,8 @@ public class WebChessGame {
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getChessBoard();
     }
+
+    public String getTurn() {
+        return turn.toString();
+    }
 }

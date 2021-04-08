@@ -24,7 +24,7 @@ async function setBoard() {
 
 async function getTurn() {
   return await fetch(
-    'http://localhost:3001/turn'
+    '/turn'
   )
   .then(res => res.json())
   .then(data => data)
@@ -139,43 +139,16 @@ function pieceImage(piece) {
   return './images/blank.png'
 }
 
-async function changeTurn(turn) {
-  console.log(turn.turn)
+function changeTurn(turn) {
   const $blackTurn = document.querySelector('.black-turn')
   const $whiteTurn = document.querySelector('.white-turn')
-  if (turn.turn === 'WHITE') {
+  if (turn === 'WHITE') {
     $blackTurn.src = 'images/up.png'
     $whiteTurn.src = 'images/down_turn.png'
-    console.log($blackTurn)
-    await fetch(
-      'http://localhost:3001/turn',
-      {
-        method: 'PATCH',
-        body: JSON.stringify({
-          turn: 'BLACK'
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8'
-        }
-      }
-    )
   }
-  if (turn.turn === 'BLACK') {
+  if (turn === 'BLACK') {
     $blackTurn.src = 'images/up_turn.png'
     $whiteTurn.src = 'images/down.png'
-    console.log($blackTurn)
-    await fetch(
-      'http://localhost:3001/turn',
-      {
-        method: 'PATCH',
-        body: JSON.stringify({
-          turn: 'WHITE'
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8'
-        }
-      }
-    )
   }
 }
 
