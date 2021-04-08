@@ -50,7 +50,7 @@ public class PieceDAO {
         }
     }
 
-    public boolean save(final Piece piece) {
+    public void save(final Piece piece) {
         String color = piece.getColor().toString();
         String shape = piece.getShape().toString();
         if ("WHITE".equals(color)) {
@@ -64,20 +64,16 @@ public class PieceDAO {
             preparedStatement.setString(2, shape);
             preparedStatement.setString(3, piece.getPosition().toString());
             preparedStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
-            return false;
+
         }
     }
 
-    public boolean saveAll(List<Piece> pieces) {
+    public void saveAll(List<Piece> pieces) {
         deleteAll();
         for (Piece piece : pieces) {
-            if (!save(piece)) {
-                return false;
-            }
+            save(piece);
         }
-        return true;
     }
 
     private void deleteAll() {

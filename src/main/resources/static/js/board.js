@@ -67,13 +67,15 @@ function select(event) {
                 alert(data.message);
                 return;
             }
-            document.getElementById(source).innerHTML = "";
-            getPieces(data.piecesDto);
-            showTurn(data.turn);
             if (data.isOk === "end") {
                 alert(data.message);
                 location.reload();
+                return;
             }
+            document.getElementById(source).innerHTML = "";
+            getPieces(data.piecesDto);
+            showTurn(data.turn);
+
         });
 }
 
@@ -107,7 +109,7 @@ function status() {
             return;
         }
         const h1 = document.getElementById("status");
-        h1.innerHTML = data.message;
+        h1.innerHTML = data.status;
     })
 }
 
@@ -140,7 +142,7 @@ function savePieces() {
             alert(data.message);
             return;
         }
-        alert(data.message);
+        alert("게임이 저장되었습니다.");
     })
 }
 
@@ -153,7 +155,7 @@ function loadPieces() {
         if (data.isOk === 'false') {
             alert(data.message);
         }
-        alert(data.message);
+        alert("게임을 불러왔습니다.");
         deletePieces()
         getPieces(data.piecesDto);
         showTurn(data.turn);

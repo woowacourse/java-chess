@@ -1,17 +1,19 @@
 package chess.domain.dto;
 
+import chess.domain.game.ChessGame;
+
 public class ChessBoardDto {
 
     private String isOk;
     private PiecesDto piecesDto;
-    private String message;
     private String turn;
+    private String status;
 
-    public ChessBoardDto(String isOk, PiecesDto piecesDto, String message, String turn) {
-        this.isOk = isOk;
-        this.piecesDto = piecesDto;
-        this.message = message;
-        this.turn = turn;
+    public ChessBoardDto(ChessGame chessGame) {
+        this.isOk = "ture";
+        this.piecesDto = new PiecesDto(chessGame.getBoard().getPieces());
+        this.turn = chessGame.getStatus();
+        this.status = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
     }
 
     public String getIsOk() {
@@ -22,7 +24,11 @@ public class ChessBoardDto {
         return piecesDto;
     }
 
-    public String getMessage() {
-        return message;
+    public String getTurn() {
+        return turn;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
