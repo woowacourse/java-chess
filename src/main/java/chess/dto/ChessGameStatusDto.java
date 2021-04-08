@@ -1,8 +1,15 @@
 package chess.dto;
 
+import chess.domain.ChessGame;
+
 public class ChessGameStatusDto {
     private final String turn;
     private final boolean isFinish;
+
+    public ChessGameStatusDto(ChessGame chessGame) {
+        this.turn = chessGame.turn();
+        this.isFinish = !chessGame.runnable();
+    }
 
     public ChessGameStatusDto(String turn, boolean isFinish) {
         this.turn = turn;

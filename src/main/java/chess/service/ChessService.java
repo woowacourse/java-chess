@@ -56,7 +56,8 @@ public class ChessService {
     }
 
     public void updateChessGame(int chessGameId, ChessGame chessGame, String source, String target) {
-        chessGameDao.updateChessGameStateById(chessGameId, chessGame);
+        ChessGameStatusDto chessGameStatusDto = new ChessGameStatusDto(chessGame);
+        chessGameDao.updateChessGameStateById(chessGameId, chessGameStatusDto);
         Piece sourcePiece = findPieceByPosition(source, chessGame);
         Piece targetPiece = findPieceByPosition(target, chessGame);
         pieceDao.update(chessGameId, sourcePiece);
@@ -73,8 +74,9 @@ public class ChessService {
 
     public void resetChessGame(int chessGameId) {
         ChessGame chessGame = generateNewChessGame();
+        ChessGameStatusDto chessGameStatusDto = new ChessGameStatusDto(chessGame);
         chessGameDao.delete(chessGameId);
-        chessGameDao.saveWithId(chessGameId, chessGame);
+        chessGameDao.saveWithId(chessGameId, chessGameStatusDto);
         pieceDao.saveAll(chessGame.getPiecesByAllPosition(), chessGameId);
     }
 }
