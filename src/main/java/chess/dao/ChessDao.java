@@ -58,63 +58,94 @@ public class ChessDao {
     }
 
     public List<String> runningGameNames() throws SQLException {
-        String query = "SELECT game_name FROM game ORDER BY game_id DESC";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+        List<String> gameNames = new ArrayList<>();
+        String query = "SELECT game_name FROM game WHERE state='BlackTurn' OR state='WhiteTurn' ORDER BY game_id DESC";
+        
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery()) {
+            gameNames(gameNames, rs);
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
 
-        List<String> ids = new ArrayList<>();
+        return gameNames;
+    }
+
+    private void gameNames(final List<String> ids, final ResultSet rs) throws SQLException {
         while (rs.next()) {
             ids.add(rs.getString("game_name"));
         }
-
-        return ids;
     }
 
     public void createGameByName(final CreateRequestDto createRequestDto) throws SQLException {
         String query = "INSERT INTO game(game_name) VALUES(?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, createRequestDto.getGameName());
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, createRequestDto.getGameName());
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insertStartCommand(final String gameName) throws SQLException {
         String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, findGameIdByName(gameName));
-        pstmt.setString(2, "start");
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, findGameIdByName(gameName));
+            pstmt.setString(2, "start");
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insertMoveCommand(final String source, final String target, final String gameName)
         throws SQLException {
         String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, findGameIdByName(gameName));
-        pstmt.setString(2, String.format("move %s %s", source, target));
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, findGameIdByName(gameName));
+            pstmt.setString(2, String.format("move %s %s", source, target));
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName)
         throws SQLException {
         String query = "UPDATE game SET white_user=?, black_user=? WHERE game_id=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, playerIdsDto.getWhiteUserId());
-        pstmt.setString(2, playerIdsDto.getBlackUserId());
-        pstmt.setString(3, findGameIdByName(gameName));
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, playerIdsDto.getWhiteUserId());
+            pstmt.setString(2, playerIdsDto.getBlackUserId());
+            pstmt.setString(3, findGameIdByName(gameName));
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private String findGameIdByName(final String gameName) throws SQLException {
+        ResultSet resultSet;
         String query = "SELECT game_id FROM game WHERE game_name=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameName);
-        ResultSet rs = pstmt.executeQuery();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameName);
+            resultSet = resultSet(pstmt);
+        }
+        return resultSet.getString("game_id");
+    }
 
+    private ResultSet resultSet(final PreparedStatement pstmt) throws SQLException {
+        ResultSet resultSet;
+        try (ResultSet rs = pstmt.executeQuery()) {
+            validateResultSet(rs);
+            resultSet = rs;
+        }
+        return resultSet;
+    }
+
+    private void validateResultSet(final ResultSet rs) throws SQLException {
         if (!rs.next()) {
             throw new SQLException();
         }
-
-        return rs.getString("game_id");
     }
 
     public CommandsDto findCommandsByName(final String gameName) throws SQLException {
