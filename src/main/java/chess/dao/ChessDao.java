@@ -1,8 +1,10 @@
 package chess.dao;
 
+import chess.dto.ChessGameDto;
 import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
 import chess.dto.PlayerIdsDto;
+import chess.dto.SquareDto;
 import chess.dto.UserIdsDto;
 import chess.exception.DataAccessException;
 import java.sql.Connection;
@@ -60,7 +62,7 @@ public class ChessDao {
     public List<String> runningGameNames() throws SQLException {
         List<String> gameNames = new ArrayList<>();
         String query = "SELECT game_name FROM game WHERE state='BlackTurn' OR state='WhiteTurn' ORDER BY game_id DESC";
-        
+
         try (PreparedStatement pstmt = getConnection().prepareStatement(query);
             ResultSet rs = pstmt.executeQuery()) {
             gameNames(gameNames, rs);
@@ -78,12 +80,58 @@ public class ChessDao {
     }
 
     public void createGameByName(final CreateRequestDto createRequestDto) throws SQLException {
-        String query = "INSERT INTO game(game_name) VALUES(?)";
+        String query = "INSERT INTO game(game_name, state) VALUES(?, 'Init')";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, createRequestDto.getGameName());
             pstmt.executeUpdate();
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateGameByName(final String gameName, final ChessGameDto chessGameDto) throws SQLException {
+        String gameId = findGameIdByName(gameName);
+        updateGameState(gameId, chessGameDto.getState());
+        deleteBoard(gameId);
+        insertBoard(gameId, chessGameDto.getSquareDtos());
+    }
+
+    private void updateGameState(final String gameId, final String state) throws SQLException {
+        String query = "UPDATE game SET state=? WHERE game_id=?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, state);
+            pstmt.setString(2, gameId);
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteBoard(final String gameId) throws SQLException {
+        String query = "DELETE FROM board WHERE game_id=?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void insertBoard(final String gameId, final List<SquareDto> squareDtos) throws SQLException {
+        String query = "INSERT INTO board(game_id, symbol, position) VALUES(?, ?, ?)";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            insertSquare(gameId, squareDtos, pstmt);
+            pstmt.executeUpdate();
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void insertSquare(final String gameId, final List<SquareDto> squareDtos, final PreparedStatement pstmt) throws SQLException {
+        for (SquareDto squareDto : squareDtos) {
+            pstmt.setString(1, gameId);
+            pstmt.setString(2, squareDto.getPiece());
+            pstmt.setString(3, squareDto.getPosition());
         }
     }
 

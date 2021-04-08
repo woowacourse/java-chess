@@ -39,12 +39,12 @@ public class WebUIChessApplication {
             return render(model, "chess-game-list.html");
         });
 
-        // refactor list 1
         post("/tryCreateGame", (req, res) -> {
             CreateRequestDto createRequestDto = gson.fromJson(req.body(), CreateRequestDto.class);
-            chessDao.createGameByName(createRequestDto);
             ChessGame chessGame = webUIChessGameController.chessGame();
-            return DtoAssembler.chessGameDto(chessGame);
+            ChessGameDto chessGameDto = DtoAssembler.chessGameDto(chessGame);
+            chessDao.createGameByName(createRequestDto);
+            return chessGameDto;
         }, gson::toJson);
 
         // refactor list 2
@@ -73,6 +73,7 @@ public class WebUIChessApplication {
         post("/:name/start", (req, res) -> {
             String gameName = req.params(":name");
             PlayerIdsDto playerIdsDto = gson.fromJson(req.body(), PlayerIdsDto.class);
+            //chessDao.updateGameByName(createRequestDto.getGameName(), chessGameDto);
             chessDao.insertStartCommand(gameName);
             chessDao.updatePlayerIds(playerIdsDto, gameName);
             CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
