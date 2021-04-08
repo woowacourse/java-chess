@@ -1,12 +1,11 @@
 package chess.domain.game;
 
+import chess.controller.dto.PieceDto;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.domain.piece.*;
-import chess.controller.dto.PieceDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

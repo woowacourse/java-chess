@@ -1,13 +1,11 @@
 package chess.controller;
 
 import chess.controller.dto.BoardDto;
-import chess.domain.TeamColor;
 import chess.domain.game.ChessResult;
 import chess.service.ChessGameService;
 import spark.Request;
 import spark.Response;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,14 +24,14 @@ public class WebChessAction {
         return render(model, "index.html");
     }
 
-    public String start(Request req, Response res) throws SQLException {
+    public String start(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
-        BoardDto board = chessGameService.start();
+        BoardDto board = chessGameService.start(req.queryParams("boardName"));
         model.put("board", board);
         return render(model, "game.html");
     }
 
-    public String move(Request req, Response res) throws SQLException {
+    public String move(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         BoardDto board = chessGameService.move(
                 req.queryParams("boardName"),
@@ -49,9 +47,9 @@ public class WebChessAction {
         return render(model, "index.html");
     }
 
-    public String continueGame(Request req, Response res) throws SQLException {
+    public String continueGame(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
-        BoardDto board = chessGameService.continueGame();
+        BoardDto board = chessGameService.continueGame(req.queryParams("boardName"));
 
         model.put("board", board);
         return render(model, "game.html");
@@ -59,12 +57,10 @@ public class WebChessAction {
 
     public String status(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
-        ChessResult chessResult = chessGameService.result();
-        String winner = chessGameService.winner(chessResult.getWhiteTeamScore(), chessResult.getBlackTeamScore());
-        BoardDto board = chessGameService.status();
+        ChessResult chessResult = chessGameService.result(req.queryParams("boardName"));
+        BoardDto board = chessGameService.status(req.queryParams("boardName"));
         model.put("board", board);
         model.put("result", chessResult);
-        model.put("winner", winner);
         return render(model, "game.html");
     }
 }

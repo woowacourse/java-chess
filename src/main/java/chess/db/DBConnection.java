@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class DBConnection {
-    private static final String server = "chess@localhost";
-    private static final String database = "chessDB";
+    private static final String server = "root@localhost";
+    private static final String database = "chessdb";
     private static final String userName = "root";
     private static final String password = "root";
 

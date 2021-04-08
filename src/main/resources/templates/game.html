@@ -24,13 +24,15 @@
         }
 
         form {
-            display:inline;
+            display: inline;
         }
 
     </style>
 </head>
 <body>
 <h1 text align="center">{{board.currentTeam}}팀 차례</h1>
+<h1 text align="center">boardName : {{board.boardName}}</h1>
+
 <div>
     <div class="table_container">
         <div id="a8" class="chessboard"></div>
@@ -105,26 +107,27 @@
         <div id="g1" class="chessboard"></div>
         <div id="h1" class="chessboard"></div>
     </div>
-        <div class="row" style="text-align: center">
-            <form name="moveForm" action="/move" method="post" onsubmit="return validateMove()">
-                <input type="text" name="source" placeholder="source" style="width:240px;height:60px;font-size:30px;">
-                <input type="text" name="target" placeholder="target" style="width:240px;height:60px;font-size:30px;">
-                <input type="hidden" name="board", >
-                <input type="submit" id="move" value="move" style="width:240px;height:60px;font-size:30px;" >
-            </form>
-            <form action="/end" onsubmit="return confirmExit()">
-                <button type="submit"  style="width:240px;height:60px;font-size:30px;">end</button>
-            </form>
-            <form action="/status" method="post">
-                <button type="submit" id="status" style="width:240px;height:60px;font-size:30px;">status</button>
-            </form>
-        </div>
+    <div class="row" style="text-align: center">
+        <form name="moveForm" action="/move" method="post" onsubmit="return validateMove()">
+            <input type="text" name="source" placeholder="source ex)a2" style="width:240px;height:60px;font-size:30px;">
+            <input type="text" name="target" placeholder="target ex)a4" style="width:240px;height:60px;font-size:30px;">
+            <input type="hidden" name="boardName" value="{{board.boardName}}">
+            <input type="submit" id="move" value="move" style="width:240px;height:60px;font-size:30px;">
+        </form>
+        <form action="/end" onsubmit="return confirmExit()">
+            <button type="submit" style="width:240px;height:60px;font-size:30px;">end</button>
+        </form>
+        <form action="/status" method="post">
+            <input type="hidden" name="boardName" value="{{board.boardName}}">
+            <button type="submit" id="status" style="width:240px;height:60px;font-size:30px;">status</button>
+        </form>
     </div>
-    <div style="text-align: center; font-size: 30px">
-        BLACK팀 점수 : {{result.blackTeamScore}} <br>
-        WHITE팀 점수 : {{result.whiteTeamScore}} <br>
-        승자 : {{winner}}
-    </div>
+</div>
+<div style="text-align: center; font-size: 30px">
+    BLACK팀 점수 : {{result.blackTeamScore}} <br>
+    WHITE팀 점수 : {{result.whiteTeamScore}} <br>
+    승자 : {{winner}}
+</div>
 </div>
 
 <script>
@@ -144,23 +147,23 @@
     };
 
     window.onload = function () {
-        let winner = "{{winner}}";
+        let winner = "{{result.winner}}";
         let move = document.getElementById("move");
         let status = document.getElementById("status");
         let checked = "{{board.checked}}";
         let kingDead = "{{board.kindDead}}";
-        if(!winner){
+        if (!winner) {
             move.disabled = false;
             status.disabled = false;
-        } else{
+        } else {
             move.disabled = true;
             status.disabled = true;
         }
-        if(checked == true){
+        if (checked == true) {
             alert("체크!");
         }
-        if(kingDead == true){
-            alert("왕이 죽었습니다!");
+        if (kingDead == true) {
+            alert("{{result.winner}} 승리!");
         }
     }
 

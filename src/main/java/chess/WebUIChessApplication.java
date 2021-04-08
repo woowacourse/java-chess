@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.WebChessAction;
-import chess.controller.dto.PieceDto;
 import chess.dao.BoardDao;
 import chess.dao.MoveLogDao;
 import chess.dao.PieceDao;

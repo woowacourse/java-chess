@@ -7,64 +7,64 @@ import chess.db.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class BoardDao {
 
     private final DBConnection dbConnection = DBConnection.getInstance();
 
-    public int addBoard(int boardSize, String turn, boolean isChecked, boolean isKingDead) throws SQLException {
-        String sql = "INSERT INTO board(board_size, turn, checked, king_dead) VALUES (?,?,?,?)";
-        PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setInt(1, boardSize);
-        pstmt.setString(2, turn);
-        pstmt.setBoolean(3, isChecked);
-        pstmt.setBoolean(4, isKingDead);
-        pstmt.executeUpdate();
-        ResultSet rs = pstmt.getGeneratedKeys();
-        if(!rs.next()){
-            throw new IllegalArgumentException("DB에 board를 추가할 수 없습니다.");
+    public void add(String boardName, int boardSize, String turn, boolean isChecked, boolean isKingDead) {
+        String sql = "INSERT INTO board(name, board_size, turn, checked, king_dead) VALUES (?,?,?,?,?)";
+        try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
+            pstmt.setString(1, boardName);
+            pstmt.setInt(2, boardSize);
+            pstmt.setString(3, turn);
+            pstmt.setBoolean(4, isChecked);
+            pstmt.setBoolean(5, isKingDead);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("Board를 추가할 수 없습니다.");
         }
-        int id = rs.getInt(1);
-
-        rs.close();
-        pstmt.close();
-        return id;
     }
 
-    public BoardDto selectBoard(List<PieceDto> pieces) throws SQLException {
-        String sql = "SELECT * FROM board";
-        PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
+    public BoardDto selectByName(String boardName) {
+        String sql = "SELECT * FROM board WHERE name = ?";
+        try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
+            pstmt.setString(1, boardName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                List<PieceDto> pieces = new PieceDao().selectAllByBoardName(boardName);
+                int boardSize = rs.getInt("board_size");
+                String turn = rs.getString("turn");
+                boolean checked = rs.getBoolean("checked");
+                boolean isKingDead = rs.getBoolean("king_dead");
+                String name = rs.getString("name");
+
+                return new BoardDto(pieces, boardSize, turn, checked, isKingDead, name);
+
+            }
+        } catch (SQLException e) {
             throw new IllegalArgumentException("Board가 DB에 없습니다.");
         }
-        int boardSize = rs.getInt("board_size");
-        String turn = rs.getString("turn");
-        boolean checked = rs.getBoolean("checked");
-        boolean isKingDead = rs.getBoolean("king_dead");
-        BoardDto boardDto = new BoardDto(pieces, boardSize, turn, checked, isKingDead);
-        rs.close();
-        pstmt.close();
-        return boardDto;
     }
 
-    public void updateTurn(String turn) throws SQLException {
-        String sql = "UPDATE board SET turn = ?";
-        PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql);
-        pstmt.setString(1, turn);
-
-        if (pstmt.executeUpdate() == 0) {
-            throw new IllegalArgumentException("DB에 move update 실패");
+    public void updateTurn(String turn, String boardName) {
+        String sql = "UPDATE board SET turn = ? WHERE name = ?";
+        try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
+            pstmt.setString(1, turn);
+            pstmt.setString(2, boardName);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("DB에 turn update 실패");
         }
-        pstmt.close();
     }
 
-    public void deleteAll() throws SQLException {
-        String sql = "DELETE FROM board";
-        PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql);
-        pstmt.executeUpdate();
-        pstmt.close();
+    public void deleteByName(String boardName) {
+        String sql = "DELETE FROM board WHERE name = ?";
+        try (PreparedStatement pstmt = dbConnection.connection().prepareStatement(sql)) {
+            pstmt.setString(1, boardName);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("DB에 delete 실패");
+        }
     }
 }

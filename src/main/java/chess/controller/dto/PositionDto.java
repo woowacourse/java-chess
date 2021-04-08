@@ -10,7 +10,7 @@ public class PositionDto {
         char row = (char) ('a' + position.row());
         StringBuilder rowAndColumn = new StringBuilder();
         rowAndColumn.append(row)
-                .append(position.column()+1);
+                .append(position.column() + 1);
         this.position = rowAndColumn.toString();
     }
 

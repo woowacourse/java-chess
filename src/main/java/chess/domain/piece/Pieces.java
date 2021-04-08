@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
+import chess.controller.dto.PieceDto;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.domain.game.ImpossibleMoveException;
 import chess.domain.game.PieceNotFoundException;
-import chess.controller.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class Pieces {
                 .map(Piece::row)
                 .distinct()
                 .count();
-        if(sameColumnPawnCount != 0){
+        if (sameColumnPawnCount != 0) {
             sameColumnPawnCount += 1;
         }
 
