@@ -30,4 +30,12 @@ CREATE TABLE piece
     FOREIGN KEY (board_name) references board (name)
 );
 
-
+CREATE TABLE move_log
+(
+    id               INT AUTO_INCREMENT NOT NULL,
+    board_name       VARCHAR(30)        NOT NULL,
+    current_position VARCHAR(10)        NOT NULL,
+    target_position  VARCHAR(10)        NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (board_name) REFERENCES board (name)
+);

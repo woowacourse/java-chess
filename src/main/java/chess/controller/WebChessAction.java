@@ -50,7 +50,6 @@ public class WebChessAction {
     public String continueGame(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         BoardDto board = chessGameService.continueGame(req.queryParams("boardName"));
-
         model.put("board", board);
         return render(model, "game.html");
     }
@@ -58,7 +57,7 @@ public class WebChessAction {
     public String status(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
         ChessResult chessResult = chessGameService.result(req.queryParams("boardName"));
-        BoardDto board = chessGameService.status(req.queryParams("boardName"));
+        BoardDto board = chessGameService.resultBoard(req.queryParams("boardName"));
         model.put("board", board);
         model.put("result", chessResult);
         return render(model, "game.html");

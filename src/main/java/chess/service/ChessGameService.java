@@ -82,7 +82,7 @@ public class ChessGameService {
         return chessGame.result();
     }
 
-    public BoardDto status(String boardName) {
+    public BoardDto resultBoard(String boardName) {
         ChessGame chessGame = new ChessGame();
         executeMoveLog(boardName, chessGame);
         return new BoardDto(chessGame.getPieces(),
