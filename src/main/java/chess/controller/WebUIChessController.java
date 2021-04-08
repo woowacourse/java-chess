@@ -23,8 +23,9 @@ import static spark.Spark.put;
 
 public final class WebUIChessController {
     private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
-    public static final int START_POINT_INDEX = 0;
-    public static final int END_POINT_INDEX = 1;
+    private static final Gson GSON = new Gson();
+    private static final int START_POINT_INDEX = 0;
+    private static final int END_POINT_INDEX = 1;
 
     private final CommandDAO commandDAO = new CommandDAO();
     private ChessGame chessGame = new ChessGame();
@@ -72,7 +73,7 @@ public final class WebUIChessController {
     }
 
     public void status() {
-        Gson gson = new Gson();
+
         get("/status", (req, res) -> {
             StatusDTO statusDTO = new StatusDTO(
                     String.valueOf(chessGame.getScoreByTeam(Team.WHITE)),
@@ -83,7 +84,7 @@ public final class WebUIChessController {
             if (chessGame.isKingDieEnd()) {
                 commandDAO.deleteCommandsByRoomId(roomId);
             }
-            return gson.toJson(statusDTO);
+            return GSON.toJson(statusDTO);
         });
     }
 
@@ -113,9 +114,8 @@ public final class WebUIChessController {
     }
 
     public void move() {
-        Gson gson = new Gson();
         put("/move", (req, res) -> {
-            Map<String, Object> requestBody = gson.fromJson(req.body(), HashMap.class);
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
 
             String startPoint = (String) requestBody.get("startPoint");
             String endPoint = (String) requestBody.get("endPoint");
@@ -123,7 +123,7 @@ public final class WebUIChessController {
             Position endPosition = position(endPoint);
             chessGame.move(startPosition, endPosition);
             commandDAO.addCommand(roomId, startPoint, endPoint);
-            return gson.toJson(getPieceDTOs());
+            return GSON.toJson(getPieceDTOs());
         });
     }
 
