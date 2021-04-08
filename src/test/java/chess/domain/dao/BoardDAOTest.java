@@ -1,8 +1,8 @@
 package chess.domain.dao;
 
 import chess.dao.BoardDAO;
-import chess.domain.board.Board;
 import chess.domain.Side;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

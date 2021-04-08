@@ -1,4 +1,4 @@
-package chess.service;
+package chess;
 
 import chess.dao.BoardDAO;
 import chess.domain.Side;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ChessService {
+public class ChessProgram {
 
     private static final String GameNumber = "1";
     private static BoardDAO boardDAO;

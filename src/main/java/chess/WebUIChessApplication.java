@@ -1,8 +1,6 @@
 package chess;
 
 import chess.dto.PositionDTO;
-import chess.service.ChessService;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -17,27 +15,27 @@ public class WebUIChessApplication {
         port(8084);
         JsonTransformer jsonTransformer = new JsonTransformer();
 
-        ChessService chessService = new ChessService();
+        ChessProgram chessProgram = new ChessProgram();
         staticFiles.location("/public");
-        chessService.initChessGame();
+        chessProgram.initChessGame();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
         post("/restart", (req, res) -> {
-            chessService.initChessGame();
+            chessProgram.initChessGame();
             return "보드 초기화 성공!";
         }, jsonTransformer);
         post("/move", (req, res) -> {
             PositionDTO positionDTO = jsonTransformer.getGson().fromJson(req.body(), PositionDTO.class);
-            return chessService.move(positionDTO);
+            return chessProgram.move(positionDTO);
         }, jsonTransformer);
         post("/currentBoard", (req, res) -> {
-            return chessService.getCurrentBoard();
+            return chessProgram.getCurrentBoard();
         }, jsonTransformer);
         post("/currentTurn", (req, res) -> {
-            return chessService.turnName();
+            return chessProgram.turnName();
         }, jsonTransformer);
 
     }
