@@ -35,7 +35,7 @@ public class WebUIChessApplication {
 
         get("/game/:id", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
-            GameResponseDto gameResponseDto = webChessController.findGameBygameId(gameId);
+            GameResponseDto gameResponseDto = webChessController.findGameByGameId(gameId);
             Map<String, Object> model = new HashMap<>();
             model.put("gameId", gameId);
             model.put("whiteUsername", gameResponseDto.getWhiteUsername());
@@ -46,17 +46,17 @@ public class WebUIChessApplication {
 
         get("/game/:id/load", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
-            return webChessController.findPiecesBygameId(gameId);
+            return webChessController.findPiecesByGameId(gameId);
         }, gson::toJson);
 
         get("/game/:id/score", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
-            return webChessController.findScoreBygameId(gameId);
+            return webChessController.findScoreByGameId(gameId);
         }, gson::toJson);
 
         get("/game/:id/state", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
-            return webChessController.findStateBygameId(gameId);
+            return webChessController.findStateByGameId(gameId);
         }, gson::toJson);
 
         get("/game/:id/path", (request, response) -> {
@@ -67,7 +67,7 @@ public class WebUIChessApplication {
 
         get("/game/:id/history", (request, response) -> {
             Long gameId = Long.parseLong(request.params("id"));
-            return webChessController.findHistoryBygameId(gameId);
+            return webChessController.findHistoryByGameId(gameId);
         }, gson::toJson);
 
         post("/game/:id/move", (request, response) -> {

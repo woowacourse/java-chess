@@ -40,20 +40,24 @@ public class ChessService {
         }
     }
 
-    public List<PieceResponseDto> findPiecesBygameId(final Long gameId) {
-        return chessDao.findPiecesBygameId(gameId);
+    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
+        return chessDao.findPiecesByGameId(gameId);
     }
 
-    public GameResponseDto findGameBygameId(final Long gameId) {
-        return chessDao.findGameBygameId(gameId);
+    public GameResponseDto findGameByGameId(final Long gameId) {
+        return chessDao.findGameByGameId(gameId);
     }
 
-    public ScoreResponseDto findScoreBygameId(final Long gameId) {
-        return chessDao.findScoreBygameId(gameId);
+    public ScoreResponseDto findScoreByGameId(final Long gameId) {
+        return chessDao.findScoreByGameId(gameId);
     }
 
-    public StateResponseDto findStateBygameId(final Long gameId) {
-        return chessDao.findStateBygameId(gameId);
+    public StateResponseDto findStateByGameId(final Long gameId) {
+        return chessDao.findStateByGameId(gameId);
+    }
+
+    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+        return chessDao.findHistoryByGameId(gameId);
     }
 
     public PathResponseDto movablePath(final MovablePathRequestDto movablePathRequestDto, final Long gameId) {
@@ -77,8 +81,8 @@ public class ChessService {
     }
 
     private ChessManager createChessManager(final Long gameId) {
-        List<PieceResponseDto> pieceResponseDtos = chessDao.findPiecesBygameId(gameId);
-        StateResponseDto stateResponseDto = chessDao.findStateBygameId(gameId);
+        List<PieceResponseDto> pieceResponseDtos = chessDao.findPiecesByGameId(gameId);
+        StateResponseDto stateResponseDto = chessDao.findStateByGameId(gameId);
         Map<Position, Piece> pieces = new HashMap<>();
         for (PieceResponseDto pieceResponseDto : pieceResponseDtos) {
             pieces.put(Position.of(pieceResponseDto.getPosition()), PieceConverter.parsePiece(pieceResponseDto.getSymbol()));
@@ -88,9 +92,5 @@ public class ChessService {
                 Owner.valueOf(stateResponseDto.getTurnOwner()),
                 stateResponseDto.getTurnNumber(),
                 stateResponseDto.isPlaying());
-    }
-
-    public List<HistoryResponseDto> findHistoryBygameId(Long gameId) {
-        return chessDao.findHistoryBygameId(gameId);
     }
 }

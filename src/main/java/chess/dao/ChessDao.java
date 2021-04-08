@@ -113,7 +113,26 @@ public class ChessDao {
         return null;
     }
 
-    public List<PieceResponseDto> findPiecesBygameId(final Long gameId) {
+    public Long createHistory(final HistoryResponseDto history, final String moveCommand, final Long gameId) {
+        final String query =
+                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setInt(1, gameId.intValue());
+            pstmt.setString(2, moveCommand);
+            pstmt.setString(3, history.getTurnOwner());
+            pstmt.setInt(4, history.getTurnNumber());
+            pstmt.setBoolean(5, history.isPlaying());
+            return pstmt.executeLargeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
         final String query =
                 "SELECT * from piece where gameId = ?";
 
@@ -136,7 +155,7 @@ public class ChessDao {
         return null;
     }
 
-    public GameResponseDto findGameBygameId(final Long gameId) {
+    public GameResponseDto findGameByGameId(final Long gameId) {
         final String query =
                 "SELECT * from game where id = ?";
         try (Connection connection = getConnection();
@@ -157,7 +176,7 @@ public class ChessDao {
         return null;
     }
 
-    public ScoreResponseDto findScoreBygameId(final Long gameId) {
+    public ScoreResponseDto findScoreByGameId(final Long gameId) {
         final String query =
                 "SELECT * from score where gameId = ?";
 
@@ -178,7 +197,7 @@ public class ChessDao {
         return null;
     }
 
-    public StateResponseDto findStateBygameId(final Long gameId) {
+    public StateResponseDto findStateByGameId(final Long gameId) {
         final String query =
                 "SELECT * from state where gameId = ?";
 
@@ -193,6 +212,31 @@ public class ChessDao {
                         resultSet.getString("turn_owner"),
                         resultSet.getInt("turn_number"),
                         resultSet.getBoolean("isPlaying"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
+        final String query =
+                "SELECT * from history where gameId = ? ORDER BY id ASC";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setInt(1, gameId.intValue());
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                List<HistoryResponseDto> historyResponseDtos = new ArrayList<>();
+                while (resultSet.next()) {
+                    historyResponseDtos.add(new HistoryResponseDto(
+                            resultSet.getString("move_command"),
+                            resultSet.getString("turn_owner"),
+                            resultSet.getInt("turn_number"),
+                            resultSet.getBoolean("isPlaying")
+                    ));
+                }
+                return historyResponseDtos;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -259,50 +303,6 @@ public class ChessDao {
             pstmt.setInt(2, gameId.intValue());
             pstmt.setString(3, source);
             return pstmt.executeLargeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Long createHistory(final HistoryResponseDto history, final String moveCommand, final Long gameId) {
-        final String query =
-                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-
-            pstmt.setInt(1, gameId.intValue());
-            pstmt.setString(2, moveCommand);
-            pstmt.setString(3, history.getTurnOwner());
-            pstmt.setInt(4, history.getTurnNumber());
-            pstmt.setBoolean(5, history.isPlaying());
-            return pstmt.executeLargeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public List<HistoryResponseDto> findHistoryBygameId(final Long gameId) {
-        final String query =
-                "SELECT * from history where gameId = ? ORDER BY id ASC";
-
-        try (Connection connection = getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setInt(1, gameId.intValue());
-            try (ResultSet resultSet = pstmt.executeQuery()) {
-                List<HistoryResponseDto> historyResponseDtos = new ArrayList<>();
-                while (resultSet.next()) {
-                    historyResponseDtos.add(new HistoryResponseDto(
-                            resultSet.getString("move_command"),
-                            resultSet.getString("turn_owner"),
-                            resultSet.getInt("turn_number"),
-                            resultSet.getBoolean("isPlaying")
-                    ));
-                }
-                return historyResponseDtos;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -26,23 +26,23 @@ public class WebChessController {
         return chessService.newGame(newGameRequestDto);
     }
 
-    public List<PieceResponseDto> findPiecesBygameId(Long gameId) {
-        return chessService.findPiecesBygameId(gameId);
+    public List<PieceResponseDto> findPiecesByGameId(Long gameId) {
+        return chessService.findPiecesByGameId(gameId);
     }
 
-    public GameResponseDto findGameBygameId(Long gameId) {
-        return chessService.findGameBygameId(gameId);
+    public GameResponseDto findGameByGameId(Long gameId) {
+        return chessService.findGameByGameId(gameId);
     }
 
-    public ScoreResponseDto findScoreBygameId(Long gameId) {
-        return chessService.findScoreBygameId(gameId);
+    public ScoreResponseDto findScoreByGameId(Long gameId) {
+        return chessService.findScoreByGameId(gameId);
     }
 
-    public StateResponseDto findStateBygameId(Long gameId) {
-        return chessService.findStateBygameId(gameId);
+    public StateResponseDto findStateByGameId(Long gameId) {
+        return chessService.findStateByGameId(gameId);
     }
 
-    public List<HistoryResponseDto> findHistoryBygameId(Long gameId) {
-        return chessService.findHistoryBygameId(gameId);
+    public List<HistoryResponseDto> findHistoryByGameId(Long gameId) {
+        return chessService.findHistoryByGameId(gameId);
     }
 }
