@@ -50,7 +50,7 @@ public final class WebUIChessController {
         });
     }
 
-    public void start() {
+    private void start() {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             roomId = req.queryParams("roomId");
@@ -72,7 +72,7 @@ public final class WebUIChessController {
         return chessGame;
     }
 
-    public void status() {
+    private void status() {
         get("/status", (req, res) -> {
             StatusDTO statusDTO = new StatusDTO(
                     String.valueOf(chessGame.getScoreByTeam(Team.WHITE)),
@@ -112,7 +112,7 @@ public final class WebUIChessController {
         return pieces;
     }
 
-    public void move() {
+    private void move() {
         put("/move", (req, res) -> {
             Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
 
