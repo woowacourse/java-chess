@@ -17,39 +17,7 @@ public class PieceUtil {
 
     private PieceUtil() {}
 
-    public static List<Piece> generatePiecesByPieceDtos(List<PieceDto> pieceDtos) {
-        return pieceDtos
-            .stream()
-            .map(pieceDto -> generatePieceByPieceDto(pieceDto))
-            .collect(Collectors.toList());
-    }
-
-    public static Piece generatePieceByPieceDto(PieceDto pieceDto) {
-        char signature = pieceDto.getSignature();
-        Location location = Location.of(pieceDto.getLocation());
-        Team team = Team.of(pieceDto.getTeam());
-        if (signature == 'r') {
-            return Rook.of(location, team);
-        }
-        if (signature == 'k') {
-            return King.of(location, team);
-        }
-        if (signature == 'q') {
-            return Queen.of(location, team);
-        }
-        if (signature == 'p') {
-            return Pawn.of(location, team);
-        }
-        if (signature == 'n') {
-            return Knight.of(location, team);
-        }
-        if (signature == 'b') {
-            return Bishop.of(location, team);
-        }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
-    }
-
-    public static Piece generatePieceFromDb(long id, long roomId, char signature, String team, String location) {
+    public static Piece generatePiece(long id, long roomId, char signature, String team, String location) {
         Team pieceTeam = Team.of(team);
         Location pieceLocation = Location.of(location);
         if (signature == 'r') {

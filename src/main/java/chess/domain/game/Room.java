@@ -7,10 +7,14 @@ import chess.domain.team.Team;
 
 public class Room {
 
+    private final long id;
+    private final String name;
     private State state;
     private Team currentTeam;
 
-    public Room(State state, Team currentTeam) {
+    public Room(long id, String name, State state, Team currentTeam) {
+        this.id = id;
+        this.name = name;
         this.state = state;
         this.currentTeam = currentTeam;
     }
@@ -38,15 +42,22 @@ public class Room {
         }
     }
 
-    public State state() {
+    public ScoreDto judgeResult() {
+        return state.judgeResult();
+    }
+
+    public State getState() {
         return state;
     }
 
-    public Team currentTeam() {
+    public Team getCurrentTeam() {
         return currentTeam;
     }
 
-    public ScoreDto judgeResult() {
-        return state.judgeResult();
+    public long getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
     }
 }

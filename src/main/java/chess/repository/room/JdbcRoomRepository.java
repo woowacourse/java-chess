@@ -1,8 +1,14 @@
 package chess.repository.room;
 
+import chess.domain.board.Board;
 import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
+import chess.domain.piece.Piece;
+import chess.domain.team.Team;
 import chess.repository.ConnectionUtil;
+import chess.utils.BoardUtil;
+import chess.utils.PieceUtil;
+import chess.utils.StateUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,22 +27,20 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public long insert(long userId,
-        String name, Room room) throws SQLException {
-        int userIdIdx = 1;
-        int nameIdx = 2;
-        int stateIdx = 3;
-        int currentTeamIdx = 4;
+    public long insert(Room room) throws SQLException {
+        int nameIdx = 1;
+        int stateIdx = 2;
+        int currentTeamIdx = 3;
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
-            String query = "INSERT INTO rooms (userid, name, state, currentteam) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO rooms (name, state, currentteam) VALUES (?, ?, ?)";
             conn = connectionUtil.getConnection();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(userIdIdx, userId);
-            ps.setString(nameIdx, name);
-            ps.setString(stateIdx, room.state().getValue());
-            ps.setString(currentTeamIdx, room.currentTeam().getValue());
+            ps.setString(nameIdx, room.getName());
+            ps.setString(stateIdx, room.getState().getValue());
+            ps.setString(currentTeamIdx, room.getCurrentTeam().getValue());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -56,17 +60,20 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public void update(long roomId, String name, Room room) throws SQLException {
+    public void update(Room room) throws SQLException {
+        int stateIdx = 1;
+        int currentTeamIdx = 2;
+        int idIdx = 3;
+
         Connection conn = null;
         PreparedStatement ps = null;
         try {
-            String query = "UPDATE rooms SET name = ?, state = ?, currentteam = ? WHERE id = ?";
+            String query = "UPDATE rooms SET state = ?, currentteam = ? WHERE id = ?";
             conn = connectionUtil.getConnection();
             ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setString(2, room.state().getValue());
-            ps.setString(3, room.currentTeam().getValue());
-            ps.setLong(4, roomId);
+            ps.setString(stateIdx, room.getState().getValue());
+            ps.setString(currentTeamIdx, room.getCurrentTeam().getValue());
+            ps.setLong(idIdx, room.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -81,27 +88,47 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public RoomDto findRoomById(long roomId) throws SQLException {
+    public Room findRoomById(long roomId) throws SQLException {
         Connection conn = null;
         Statement ps = null;
         ResultSet rs = null;
 
         try {
-            String query = "SELECT * FROM rooms WHERE id = " + roomId;
+            String query = "SELECT * FROM rooms LEFT OUTER JOIN pieces ON pieces.roomid = rooms.id WHERE rooms.id = " + roomId;
             conn = connectionUtil.getConnection();
             ps = conn.createStatement();
             rs = ps.executeQuery(query);
 
-            if (rs.next()) {
-                long id = rs.getLong("id");
-                long userid = rs.getLong("userid");
+            rs.last();
+            int size = rs.getRow();
+            if (size == 0) {
+                throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+            }
+            if (size == 1) {
+                long id = rs.getLong("rooms.id");
                 String name = rs.getString("name");
                 String state = rs.getString("state");
                 String currentTeam = rs.getString("currentteam");
-                Timestamp createdAt = rs.getTimestamp("created_at");
-                return new RoomDto(id, userid, name, state, currentTeam, createdAt);
+                return new Room(id, name, StateUtil.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
             }
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+
+            List<Piece> pieces = new ArrayList<>();
+            rs.first();
+            long id = rs.getLong("rooms.id");
+            String name = rs.getString("name");
+            String state = rs.getString("state");
+            String currentTeam = rs.getString("currentteam");
+            rs.beforeFirst();
+            while (rs.next()) {
+                long pieceId = rs.getLong("pieces.id");
+                long roomid = rs.getLong("pieces.roomid");
+                char signature = rs.getString("signature").charAt(0);
+                String team = rs.getString("team");
+                String location = rs.getString("location");
+                pieces.add(PieceUtil.generatePiece(pieceId, roomid, signature, team, location));
+            }
+            Board board = Board.of(pieces);
+            return new Room(id, name, StateUtil.generateState(state, board), Team.of(currentTeam));
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -118,28 +145,47 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public RoomDto findRoomByRoomName(String roomName) throws SQLException {
+    public Room findRoomByRoomName(String roomName) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
-            String query = "SELECT * FROM rooms WHERE name = ?";
+            String query = "SELECT * FROM rooms LEFT OUTER JOIN pieces ON pieces.roomid = rooms.id WHERE rooms.name = ?";
             conn = connectionUtil.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, roomName);
             rs = ps.executeQuery();
 
-            if (rs.next()) {
-                long id = rs.getLong("id");
-                long userid = rs.getLong("userid");
+            rs.last();
+            int size = rs.getRow();
+            if (size == 0) {
+                throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+            }
+            if (size == 1) {
+                long id = rs.getLong("rooms.id");
                 String name = rs.getString("name");
                 String state = rs.getString("state");
                 String currentTeam = rs.getString("currentteam");
-                Timestamp createdAt = rs.getTimestamp("created_at");
-                return new RoomDto(id, userid, name, state, currentTeam, createdAt);
+                return new Room(id, name, StateUtil.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
             }
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 방입니다.");
+
+            List<Piece> pieces = new ArrayList<>();
+            rs.first();
+            long id = rs.getLong("rooms.id");
+            String name = rs.getString("name");
+            String state = rs.getString("state");
+            String currentTeam = rs.getString("currentteam");
+            rs.beforeFirst();
+            while (rs.next()) {
+                long pieceId = rs.getLong("pieces.id");
+                long roomid = rs.getLong("pieces.roomid");
+                char signature = rs.getString("signature").charAt(0);
+                String team = rs.getString("team");
+                String location = rs.getString("location");
+                pieces.add(PieceUtil.generatePiece(pieceId, roomid, signature, team, location));
+            }
+            return new Room(id, name, StateUtil.generateState(state, Board.of(pieces)), Team.of(currentTeam));
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -192,28 +238,44 @@ public class JdbcRoomRepository implements RoomRepository {
     }
 
     @Override
-    public List<RoomDto> findRoomsByUserId(long userId) throws SQLException {
+    public void deleteAll() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            String sql = "DELETE FROM rooms";
+            conn = connectionUtil.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    @Override
+    public int count() throws SQLException {
         Connection conn = null;
         Statement ps = null;
         ResultSet rs = null;
 
         try {
-            String query = "SELECT * FROM rooms WHERE userid = " + userId;
+            String query = "SELECT COUNT(*) FROM rooms";
             conn = connectionUtil.getConnection();
             ps = conn.createStatement();
             rs = ps.executeQuery(query);
 
-            List<RoomDto> result = new ArrayList<>();
-            while (rs.next()) {
-                long id = rs.getLong("id");
-                long userid = rs.getLong("userid");
-                String name = rs.getString("name");
-                String state = rs.getString("state");
-                String currentTeam = rs.getString("currentteam");
-                Timestamp createdAt = rs.getTimestamp("created_at");
-                result.add(new RoomDto(id, userid, name, state, currentTeam, createdAt));
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count;
             }
-            return result;
+            throw new IllegalArgumentException("[ERROR] count - DB에 저장된 모든 Piece의 개수를 가져오지 못했습니다.");
         } catch (SQLException e) {
             throw e;
         } finally {

@@ -14,7 +14,7 @@ public class StateUtil {
 
     public static State generateState(String stateSignature, Board board) {
         if (stateSignature.equals("ready")) {
-            return new Ready(BoardUtil.generateInitialBoard());
+            return new Ready(board);
         }
         if (stateSignature.equals("start")) {
             return new Start(board);

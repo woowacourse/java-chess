@@ -7,15 +7,17 @@ import java.util.List;
 
 public interface RoomRepository {
 
-    long insert(long userId, String name, Room room) throws SQLException;
+    long insert(Room room) throws SQLException;
 
-    void update(long roomId, String name, Room room) throws SQLException;
+    void update(Room room) throws SQLException;
 
-    RoomDto findRoomByRoomName(String name) throws SQLException;
+    Room findRoomByRoomName(String name) throws SQLException;
 
     boolean isExistRoomName(String name) throws SQLException;
 
-    RoomDto findRoomById(long roomId) throws SQLException;
+    Room findRoomById(long roomId) throws SQLException;
 
-    List<RoomDto> findRoomsByUserId(long userId) throws SQLException;
+    void deleteAll() throws SQLException;
+
+    int count() throws SQLException;
 }
