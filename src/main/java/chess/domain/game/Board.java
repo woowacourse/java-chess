@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -30,18 +31,20 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        Piece fromPiece = pieceByPosition.get(from);
         Piece toPiece = pieceByPosition.get(to);
-
-        if (!fromPiece.movablePositions(from, Collections.unmodifiableMap(pieceByPosition))
-                      .contains(to)) {
+        if (!movablePositions(from).contains(to)) {
             throw new IllegalArgumentException("이동할 수 없는 위치로의 이동입니다.");
         }
-        pieceByPosition.put(to, fromPiece);
+        pieceByPosition.put(to, pieceByPosition.get(from));
         pieceByPosition.put(from, new Empty());
         if (toPiece.isKing()) {
             isKingDead = true;
         }
+    }
+
+    private List<Position> movablePositions(Position from) {
+        Piece fromPiece = pieceByPosition.get(from);
+        return fromPiece.movablePositions(from, allPieces());
     }
 
 
