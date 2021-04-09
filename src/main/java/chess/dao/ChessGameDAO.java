@@ -75,20 +75,20 @@ public class ChessGameDAO {
         return -1;
     }
 
-    public void saveGame(int id, WebChessGame chessGame) throws SQLException {
-        String query = "UPDATE chess_game SET (turn, finished, board) = (?, ?, ?) WHERE id = ?";
+    public void saveGame(int gameId, WebChessGame chessGame) throws SQLException {
+        String query = "UPDATE chess_game SET turn = ?, finished = ?, board = ? WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, chessGame.getTurn());
         pstmt.setBoolean(2, chessGame.isOver());
         pstmt.setString(3, gson.toJson(chessGame.getChessBoardMap()));
-        pstmt.setInt(4, id);
+        pstmt.setInt(4, gameId);
         pstmt.executeUpdate();
     }
 
-    public WebChessGame loadGame(int id) throws SQLException {
+    public WebChessGame loadGame(int gameId) throws SQLException {
         String query = "SELECT * FROM chess_game WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, id);
+        pstmt.setInt(1, gameId);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
@@ -99,5 +99,18 @@ public class ChessGameDAO {
             gson.fromJson(rs.getString("board"), ChessBoard.class),
             gson.fromJson(rs.getString("turn"), Color.class)
         );
+    }
+
+    public Color turn(int gameId) throws SQLException {
+        String query = "SELECT turn FROM chess_game WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        return gson.fromJson(rs.getString("turn"), Color.class);
     }
 }

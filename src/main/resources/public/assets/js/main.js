@@ -7,16 +7,17 @@ async function init() {
   this.$whiteResult = document.getElementById('WHITE')
   displayResult('none')
 
+  const url = window.location.href.split('/')
+  this.gameId = url[url.length - 1]
+
   await setBoard()
   await moveHandler()
   await changeTurn(await getTurn())
 }
 
 async function getBoard() {
-  const url = window.location.href.split('/')
-  const gameId = url[url.length - 1]
   return await fetch(
-    `/chessboard/${gameId}`
+    `/chessboard/${this.gameId}`
   )
   .then(res => res.json())
   .then(data => data);
@@ -33,7 +34,7 @@ async function setBoard() {
 
 async function getTurn() {
   return await fetch(
-    '/turn'
+    `/${this.gameId}/turn`
   )
   .then(res => res.json())
   .then(data => data)
@@ -91,7 +92,7 @@ function move(response) {
 
 async function movable(source, target) {
   return await fetch(
-    '/move',
+    `/${this.gameId}/move`,
     {
       method: 'PUT',
       body: JSON.stringify({
@@ -169,7 +170,7 @@ function changeTurn(turn) {
 
 async function result() {
   const result = await fetch(
-    '/result'
+    `/${this.gameId}/result`
   ).then(res => res.json()).then(data => data)
 
   const blackResult = result.black

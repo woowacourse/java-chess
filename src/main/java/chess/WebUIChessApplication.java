@@ -62,6 +62,7 @@ public class WebUIChessApplication {
         });
 
         put("/:id/move", "application/json", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("id"));
             Map<String, String> body = gson.fromJson(req.body(), HashMap.class);
             if (chessGame.moved(body.get("source"), body.get("target"))) {
                 JsonObject response = new JsonObject();
@@ -73,13 +74,16 @@ public class WebUIChessApplication {
                 response.add("target", movedTarget);
 
                 response.addProperty("isOver", chessGame.isOver());
+
+                chessGameDAO.saveGame(gameId, chessGame);
                 return response;
             }
             return HttpStatus.BAD_REQUEST_400;
         });
 
         get("/:id/turn", "application/json", (req, res) -> {
-            return gson.toJson(chessGame.getTurn());
+            Color turn = chessGameDAO.turn(Integer.parseInt(req.params("id")));
+            return gson.toJson(turn);
         });
 
         get("/:id/result", "application/json", (req, res) -> {
