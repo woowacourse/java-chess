@@ -7,7 +7,6 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.WebChessGame;
 import chess.dao.ChessGameDAO;
-import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
@@ -20,13 +19,11 @@ import java.util.Map;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import sun.rmi.server.InactiveGroupException;
 
 public class WebUIChessApplication {
 
     private static final ChessGameDAO chessGameDAO = new ChessGameDAO();
     private static WebChessGame chessGame;
-    private static ChessBoard chessBoard;
 
     public static void main(String[] args) {
         port(8080);
@@ -53,9 +50,8 @@ public class WebUIChessApplication {
         get("/chessboard/:id", "application/json", (req, res) -> {
             int gameId = Integer.parseInt(req.params("id"));
             chessGame = chessGameDAO.loadGame(gameId);
-            chessBoard = chessGame.getChessBoard();
             JsonArray chessBoardArray = new JsonArray();
-            for (Map.Entry<Position, Piece> board : chessBoard.getChessBoard().entrySet()) {
+            for (Map.Entry<Position, Piece> board : chessGame.getChessBoardMap().entrySet()) {
                 chessBoardArray.add(boardToJSON(board));
             }
             return chessBoardArray;
@@ -67,9 +63,9 @@ public class WebUIChessApplication {
             if (chessGame.moved(body.get("source"), body.get("target"))) {
                 JsonObject response = new JsonObject();
                 JsonObject movedSource = boardToJSON(Position.of(body.get("source")),
-                    chessBoard.getPiece(Position.of(body.get("source"))));
+                    chessGame.getPiece(Position.of(body.get("source"))));
                 JsonObject movedTarget = boardToJSON(Position.of(body.get("target")),
-                    chessBoard.getPiece(Position.of(body.get("target"))));
+                    chessGame.getPiece(Position.of(body.get("target"))));
                 response.add("source", movedSource);
                 response.add("target", movedTarget);
 

@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import java.util.Collections;
 import java.util.Map;
 
 public class WebChessGame {
@@ -54,7 +55,11 @@ public class WebChessGame {
     }
 
     public Map<Position, Piece> getChessBoardMap() {
-        return chessBoard.getChessBoard();
+        return Collections.unmodifiableMap(chessBoard.getChessBoard());
+    }
+
+    public Piece getPiece(Position position) {
+        return chessBoard.getPiece(position);
     }
 
     public String getTurn() {
