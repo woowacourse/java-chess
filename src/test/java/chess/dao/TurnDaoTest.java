@@ -32,14 +32,14 @@ class TurnDaoTest {
     @Order(2)
     @DisplayName("turn 테이블에 레코드를 삽입한다.")
     @Test
-    public void initializeTurn() throws Exception {
+    public void initializeTurn() {
         turnDao.initializeTurn();
     }
 
     @Order(3)
     @DisplayName("turn 테이블에서 모든 레코드를 읽어온다.")
     @Test
-    public void showCurrentTurn() throws Exception {
+    public void showCurrentTurn() {
         List<TurnRequestDto> turns = turnDao.showCurrentTurn();
         assertThat(turns).hasSize(1);
     }
@@ -47,7 +47,7 @@ class TurnDaoTest {
     @Order(4)
     @DisplayName("white 턴에서 black 턴으로 변경한다.")
     @Test
-    public void changeTurnWhite() throws Exception {
+    public void changeTurnWhite() {
         TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("white", "black");
         turnDao.changeTurn(turnChangeRequestDto);
     }
@@ -55,7 +55,7 @@ class TurnDaoTest {
     @Order(5)
     @DisplayName("black 턴에서 white 턴으로 변경한다.")
     @Test
-    public void changeTurnBlack() throws Exception {
+    public void changeTurnBlack() {
         TurnChangeRequestDto turnChangeRequestDto = new TurnChangeRequestDto("black", "white");
         turnDao.changeTurn(turnChangeRequestDto);
     }
@@ -63,7 +63,7 @@ class TurnDaoTest {
     @Order(6)
     @DisplayName("turn 테이블의 레코드를 삭제한다.")
     @Test
-    public void removeTurn() throws Exception {
+    public void removeTurn() {
         turnDao.removeTurn();
     }
 }

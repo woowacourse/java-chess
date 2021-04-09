@@ -54,7 +54,7 @@ class PieceDaoTest {
     @Order(2)
     @DisplayName("piece_status 테이블에 레코드를 삽입한다.")
     @Test
-    public void initializePieceStatus() throws Exception {
+    public void initializePieceStatus() {
         ChessRepositoryImpl chessRepository = new ChessRepositoryImpl();
         chessRepository.initializePieceStatus(getBoard());
     }
@@ -62,7 +62,7 @@ class PieceDaoTest {
     @Order(3)
     @DisplayName("piece_status 테이블에서 모든 레코드를 읽어온다.")
     @Test
-    public void showAllPieces() throws Exception {
+    public void showAllPieces() {
         List<ChessRequestDto> pieces = pieceDao.showAllPieces();
         assertThat(pieces).hasSize(32);
     }
@@ -70,7 +70,7 @@ class PieceDaoTest {
     @Order(4)
     @DisplayName("source에서 target으로 기물을 이동한다.")
     @Test
-    public void movePiece() throws Exception {
+    public void movePiece() {
         MoveRequestDto moveRequestDto = new MoveRequestDto("a2", "a4");
         pieceDao.movePiece(moveRequestDto);
     }
@@ -78,14 +78,14 @@ class PieceDaoTest {
     @Order(5)
     @DisplayName("piece_status 테이블의 모든 레코드를 삭제한다.")
     @Test
-    public void removeAllPieces() throws Exception {
+    public void removeAllPieces() {
         pieceDao.removeAllPieces();
     }
 
     @Order(6)
     @DisplayName("target 위치의 기물을 삭제한다.")
     @Test
-    public void removePiece() throws Exception {
+    public void removePiece() {
         MoveRequestDto moveRequestDto = new MoveRequestDto("a6", "a7");
         pieceDao.removePiece(moveRequestDto);
     }

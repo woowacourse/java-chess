@@ -11,15 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurnDao extends DBConnection {
-    public void initializeTurn() throws SQLException {
+    public void initializeTurn() {
         String query = "INSERT INTO turn (current_turn) VALUE (?)";
         try (PreparedStatement psmt = getConnection().prepareStatement(query)) {
             psmt.setString(1, "white");
             psmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public List<TurnRequestDto> showCurrentTurn() throws SQLException {
+    public List<TurnRequestDto> showCurrentTurn() {
         List<TurnRequestDto> turn = new ArrayList<>();
         String query = "SELECT * FROM turn";
         try (PreparedStatement psmt = getConnection().prepareStatement(query);
@@ -30,23 +32,29 @@ public class TurnDao extends DBConnection {
                         rs.getString("current_turn")
                 ));
             }
-            return turn;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return turn;
     }
 
-    public void changeTurn(final TurnChangeRequestDto turnChangeRequestDto) throws SQLException {
+    public void changeTurn(final TurnChangeRequestDto turnChangeRequestDto) {
         String query = "UPDATE turn SET current_turn=? WHERE current_turn=?";
         try (PreparedStatement psmt = getConnection().prepareStatement(query)) {
             psmt.setString(1, turnChangeRequestDto.getNextTurn());
             psmt.setString(2, turnChangeRequestDto.getCurrentTurn());
             psmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void removeTurn() throws SQLException {
+    public void removeTurn() {
         String query = "DELETE FROM turn";
         try (PreparedStatement pstm = getConnection().prepareStatement(query)) {
             pstm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
