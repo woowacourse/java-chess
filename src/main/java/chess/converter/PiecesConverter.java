@@ -2,9 +2,7 @@ package chess.converter;
 
 import chess.domain.board.Board;
 import chess.domain.board.Square;
-import chess.domain.piece.ColoredPieces;
 import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -14,15 +12,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
 
 public class PiecesConverter {
-    public static List<ColoredPieces> createColoredPieces(Board board) {
-        Map<Color, List<Piece>> coloredPiecesMap = board.getColoredPieces();
-        return coloredPiecesMap.keySet().stream()
-                .map(color -> new ColoredPieces(coloredPiecesMap.get(color), color))
-                .collect(toList());
+    public static String convertString(Board board) {
+        return Rank.asListInReverseOrder().stream().flatMap(rank ->
+                rankNotation(board, rank)
+        ).collect(joining(""));
+    }
+
+    private static Stream<String> rankNotation(Board board, Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Position.of(file, rank))
+                .map(board::findByPosition)
+                .map(Square::getNotationText);
     }
 
     public static List<Square> convertSquares(String pieces) {
