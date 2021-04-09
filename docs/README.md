@@ -91,20 +91,11 @@
 - [x] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
 
 ### DB ERD
-<p align="center"><img src="![DB_ERD](https://user-images.githubusercontent.com/50176238/114058330-5021a800-98ce-11eb-9225-98aa4425f68a.PNG)
-"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/114058330-5021a800-98ce-11eb-9225-98aa4425f68a.PNG"></p>
 
 ### DB DDL
 ```sql
 -- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -116,8 +107,8 @@ USE `mydb` ;
 -- Table `mydb`.`piece`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`piece` (
-                                            `id` BIGINT NOT NULL AUTO_INCREMENT,
-                                            `piece_name` VARCHAR(45) NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `piece_name` VARCHAR(45) NOT NULL,
   `piece_position` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
@@ -127,13 +118,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`piece` (
 -- Table `mydb`.`turn`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`turn` (
-                                           `id` BIGINT NOT NULL AUTO_INCREMENT,
-                                           `current_turn` VARCHAR(45) NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `current_turn` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
