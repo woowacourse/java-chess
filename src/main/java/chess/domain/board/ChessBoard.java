@@ -27,6 +27,7 @@ public class ChessBoard {
 
     public ChessBoard() {
         initBlank();
+        initBoard();
     }
 
     public void initBoard() {
