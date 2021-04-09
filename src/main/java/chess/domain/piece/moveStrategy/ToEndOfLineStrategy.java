@@ -21,9 +21,7 @@ public class ToEndOfLineStrategy extends MoveStrategy {
         while (isInsideBoard(x, y, direction)) {
             x += direction.getX();
             y += direction.getY();
-            result.add(
-                    Position.of(Horizontal.findFromWeight(x), Vertical.findFromWeight(y))
-            );
+            result.add(Position.of(Horizontal.findFromWeight(x), Vertical.findFromWeight(y)));
         }
         return result;
     }
