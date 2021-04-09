@@ -1,6 +1,6 @@
 package chess.domain.grid;
 
-import chess.dao.Chess;
+import chess.entity.Chess;
 import chess.domain.grid.gridStrategy.EmptyGridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.*;

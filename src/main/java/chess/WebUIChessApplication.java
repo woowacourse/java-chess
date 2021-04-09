@@ -1,6 +1,6 @@
 package chess;
 
-import chess.dao.Chess;
+import chess.entity.Chess;
 import chess.dao.ChessDAO;
 import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;

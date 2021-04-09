@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.entity.Chess;
+
 import java.sql.*;
 
 public class ChessDAO {

@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.entity;
 
 import java.util.Objects;
 
