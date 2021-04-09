@@ -13,8 +13,10 @@ async function init() {
 }
 
 async function getBoard() {
+  const url = window.location.href.split('/')
+  const gameId = url[url.length - 1]
   return await fetch(
-    '/chessboard'
+    `/chessboard/${gameId}`
   )
   .then(res => res.json())
   .then(data => data);

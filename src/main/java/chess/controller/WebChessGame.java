@@ -13,13 +13,12 @@ public class WebChessGame {
     private Color turn;
 
     public WebChessGame() {
-        this.chessBoard = new ChessBoard();
-        this.turn = Color.WHITE;
+        this(new ChessBoard(), Color.WHITE);
     }
 
-    public ChessBoard start() {
-        chessBoard.initBoard();
-        return chessBoard;
+    public WebChessGame(ChessBoard chessBoard, Color turn) {
+        this.chessBoard = chessBoard;
+        this.turn = turn;
     }
 
     public boolean moved(String source, String target) {
@@ -50,7 +49,11 @@ public class WebChessGame {
         return true;
     }
 
-    public Map<Position, Piece> getChessBoard() {
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
+    public Map<Position, Piece> getChessBoardMap() {
         return chessBoard.getChessBoard();
     }
 

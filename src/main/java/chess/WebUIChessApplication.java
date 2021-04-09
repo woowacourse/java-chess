@@ -6,6 +6,7 @@ import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 
 import chess.controller.WebChessGame;
+import chess.dao.ChessGameDAO;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.game.Result;
@@ -19,24 +20,40 @@ import java.util.Map;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import sun.rmi.server.InactiveGroupException;
 
 public class WebUIChessApplication {
+
+    private static final ChessGameDAO chessGameDAO = new ChessGameDAO();
+    private static WebChessGame chessGame;
+    private static ChessBoard chessBoard;
 
     public static void main(String[] args) {
         port(8080);
         staticFiles.location("/public/assets");
 
-        WebChessGame chessGame = new WebChessGame();
-        ChessBoard chessBoard = chessGame.start();
         Gson gson = new Gson();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessGame.start();
+            return render(model, "lobby.html");
+        });
+
+        get("/lobby/new", "application/json", (req, res) -> {
+            chessGame = new WebChessGame();
+            chessGameDAO.addGame(chessGame);
+            return gson.toJson(chessGameDAO.recentGame());
+        });
+
+        get("/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        get("/chessboard", "application/json", (req, res) -> {
+        get("/chessboard/:id", "application/json", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("id"));
+            chessGame = chessGameDAO.loadGame(gameId);
+            chessBoard = chessGame.getChessBoard();
             JsonArray chessBoardArray = new JsonArray();
             for (Map.Entry<Position, Piece> board : chessBoard.getChessBoard().entrySet()) {
                 chessBoardArray.add(boardToJSON(board));
@@ -44,7 +61,7 @@ public class WebUIChessApplication {
             return chessBoardArray;
         });
 
-        put("/move", "application/json", (req, res) -> {
+        put("/:id/move", "application/json", (req, res) -> {
             Map<String, String> body = gson.fromJson(req.body(), HashMap.class);
             if (chessGame.moved(body.get("source"), body.get("target"))) {
                 JsonObject response = new JsonObject();
@@ -61,11 +78,11 @@ public class WebUIChessApplication {
             return HttpStatus.BAD_REQUEST_400;
         });
 
-        get("/turn", "application/json", (req, res) -> {
+        get("/:id/turn", "application/json", (req, res) -> {
             return gson.toJson(chessGame.getTurn());
         });
 
-        get("/result", "application/json", (req, res) -> {
+        get("/:id/result", "application/json", (req, res) -> {
             Result result = chessGame.getResult();
             JsonObject response = new JsonObject();
             response.add("black", resultToJson(result, Color.BLACK));
