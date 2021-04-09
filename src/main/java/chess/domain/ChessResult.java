@@ -78,19 +78,17 @@ public final class ChessResult {
     }
 
     public Map<String, Double> scoreResult() {
-        Map<String, Double> result = new LinkedHashMap<>();
         if (winner().undefined()) {
             Team team = winner().anyTeamExcludingThis();
-            result.put(team.teamName(), totalScore(team));
-            result.put(team.oppositeTeamName(), totalScore(team.oppositeTeam()));
-            return result;
+            return teamScores(team);
         }
-        result.put(winner().teamName(), totalScore(winner()));
-        result.put(winner().oppositeTeamName(), totalScore(winner().oppositeTeam()));
-        return result;
+        return teamScores(winner());
     }
 
-    public boolean isTie() {
-        return winner().undefined();
+    private Map<String, Double> teamScores(Team winner) {
+        Map<String, Double> result = new LinkedHashMap<>();
+        result.put(winner.teamName(), totalScore(winner));
+        result.put(winner.oppositeTeamName(), totalScore(winner.oppositeTeam()));
+        return result;
     }
 }

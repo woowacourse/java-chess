@@ -13,6 +13,13 @@ public enum Team {
         this.teamName = teamName;
     }
 
+    public static Team matchingTeam(String teamName) {
+        return Arrays.stream(values())
+                .filter(team -> team.teamName.equals(teamName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 팀이 없습니다."));
+    }
+
     public Team anyTeamExcludingThis() {
         return Arrays.stream(values())
                 .filter(team -> team != this)

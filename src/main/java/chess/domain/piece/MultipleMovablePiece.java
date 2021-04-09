@@ -6,12 +6,12 @@ public abstract class MultipleMovablePiece extends GeneralPiece {
     }
 
     @Override
-    public boolean isKing() {
+    public final boolean isKing() {
         return false;
     }
 
     @Override
-    public boolean multipleMovable() {
+    public final boolean multipleMovable() {
         return true;
     }
 }

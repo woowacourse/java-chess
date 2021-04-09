@@ -58,7 +58,7 @@ public class ChessController {
         OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
             ChessResult result = new ChessResult(board);
-            OutputView.printResult(result.scoreResult(), result.winner(), result.isTie());
+            OutputView.printResult(result.scoreResult(), result.winner());
         }
     }
 }

@@ -20,6 +20,10 @@ public final class Position implements Comparable<Position> {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
 
+    public Position(final String position) {
+        this(Horizontal.of(position.split("")[0]), Vertical.of(position.split("")[1]));
+    }
+
     public Position(final int horizontal, final int vertical) {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
@@ -46,7 +50,9 @@ public final class Position implements Comparable<Position> {
 
     public Direction directionToTarget(Position target) {
         if (hasMiddlePath(target)) {
-            return Direction.matchingDirection(directionFormat(target));
+            List<Integer> directionFormat = directionFormat(target);
+            return Direction.matchingDirection(
+                    directionFormat.get(0), directionFormat.get(1));
         }
         throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
@@ -75,6 +81,10 @@ public final class Position implements Comparable<Position> {
 
     public Vertical vertical() {
         return vertical;
+    }
+
+    public String position() {
+        return this.horizontal.symbol() + this.vertical.symbol();
     }
 
     @Override

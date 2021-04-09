@@ -3,8 +3,12 @@ package chess.domain.chessgame;
 public final class GameState {
     private boolean isRunning;
 
+    public GameState(boolean isRunning) {
+        this.isRunning = isRunning;
+    }
+
     public GameState() {
-        this.isRunning = true;
+        this(true);
     }
 
     public boolean isRunning() {
@@ -13,5 +17,9 @@ public final class GameState {
 
     public void endGame() {
         this.isRunning = false;
+    }
+
+    public void refresh() {
+        isRunning = true;
     }
 }
