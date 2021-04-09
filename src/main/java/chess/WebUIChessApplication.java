@@ -2,14 +2,17 @@ package chess;
 
 import chess.domain.board.Board;
 
+import chess.domain.dao.ChessGameDAO;
 import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.EndGameDto;
 import chess.domain.dto.MessageDto;
 import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.PieceFactory;
 
+import chess.service.ChessGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import spark.ModelAndView;
@@ -25,22 +28,20 @@ public class WebUIChessApplication {
     private static ChessGame chessGame;
 
     public static void main(String[] args) {
+        ChessGameService chessGameService = new ChessGameService(new PieceDAO(), new ChessGameDAO());
 
         Gson gson = new Gson();
         staticFiles.location("/static");
         get("/", (req, res) -> {
             chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
-
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
         post("/start", (req, res) -> {
-            if (!chessGame.isReady()) {
-                return gson.toJson(new MessageDto("이미 게임이 실행되었습니다."));
-            }
-            chessGame.start();
-            return gson.toJson(new ChessBoardDto(chessGame));
+            ObjectMapper mapper = new ObjectMapper();
+            ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
+            return gson.toJson(chessGameService.createNewChessGame(chessGameID.getRoomID()));
         });
 
         post("/move", (req, res) -> {
@@ -79,7 +80,8 @@ public class WebUIChessApplication {
 
         post("/save", (req, res) -> {
             PieceDAO pieceDAO = new PieceDAO();
-            pieceDAO.saveAll(chessGame.getBoard().getPieces());
+            String roomID = req.queryParams("roomID");
+            pieceDAO.saveAll(roomID, chessGame.getBoard().getPieces());
             pieceDAO.saveTurn(chessGame.getStatus());
 
             return gson.toJson(new ChessBoardDto(chessGame));

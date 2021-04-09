@@ -1,7 +1,6 @@
 package chess.domain.dao;
 
 import chess.domain.board.Board;
-import chess.domain.dto.PiecesDto;
 import chess.domain.game.BlackTurn;
 import chess.domain.game.ChessGame;
 import chess.domain.game.State;
@@ -22,28 +21,29 @@ public class PieceDAO {
         dbConnection = new DBConnection();
     }
 
-    public void save(final Piece piece) {
+    public void save(final String roomID, final Piece piece) {
         String color = piece.getColor().toString();
         String shape = piece.getShape().toString();
         if ("WHITE".equals(color)) {
             shape = shape.toLowerCase();
         }
-        String query = "INSERT INTO pieces(color, shape, position) VALUES(?,?,?)";
+        String query = "INSERT INTO pieces(roomID, color, shape, position) VALUES(?,?,?,?)";
         try (Connection con = dbConnection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query)) {
-            preparedStatement.setString(1, color);
-            preparedStatement.setString(2, shape);
-            preparedStatement.setString(3, piece.getPosition().toString());
+            preparedStatement.setString(1,roomID);
+            preparedStatement.setString(2, color);
+            preparedStatement.setString(3, shape);
+            preparedStatement.setString(4, piece.getPosition().toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
 
         }
     }
 
-    public void saveAll(List<Piece> pieces) {
+    public void saveAll(String roomID, List<Piece> pieces) {
         deleteAll();
         for (Piece piece : pieces) {
-            save(piece);
+            save(roomID, piece);
         }
     }
 

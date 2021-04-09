@@ -6,9 +6,13 @@ const pieceMap = {
 document.getElementById("start-btn").addEventListener("click", gameStart);
 
 function gameStart() {
+    const roomID = prompt("방의 이름을 입력하세요");
     axios({
         method: 'post',
-        url: '/start'
+        url: '/start',
+        data:{
+            roomID:roomID
+        }
     })
         .then((res) => {
             const data = res.data
@@ -16,10 +20,16 @@ function gameStart() {
                 alert(data.message);
                 return;
             }
+            showRoomNumber(data.roomID);
             showTurn(data.turn);
             getPieces(data.piecesDto);
             saveButton();
         });
+}
+
+function showRoomNumber(roomID) {
+    const roomNum = document.getElementById("room-number");
+    roomNum.innerHTML = roomID;
 }
 
 function showTurn(turn) {

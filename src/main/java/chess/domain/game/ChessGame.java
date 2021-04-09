@@ -6,12 +6,19 @@ import chess.domain.piece.Position;
 
 public class ChessGame {
 
+    private String roomID;
     private Board board;
     private State state;
 
     public ChessGame(final Board board) {
         this.board = board;
         this.state = new Ready(this);
+    }
+
+    public ChessGame(final Board board, String roomID) {
+        this.board = board;
+        this.state = new Ready(this);
+        this.roomID = roomID;
     }
 
     public void changeState(State state) {
@@ -61,5 +68,9 @@ public class ChessGame {
 
     public String getStatus() {
         return state.toString();
+    }
+
+    public String getRoomID() {
+        return roomID;
     }
 }
