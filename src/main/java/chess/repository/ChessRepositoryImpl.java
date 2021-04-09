@@ -4,7 +4,6 @@ import chess.dao.PieceDao;
 import chess.dao.TurnDao;
 import chess.dto.*;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +19,7 @@ public class ChessRepositoryImpl implements ChessRepository {
     @Override
     public void initializePieceStatus(final Map<String, String> board) {
         for (Map.Entry<String, String> boardStatus : board.entrySet()) {
-            PieceRequestDto pieceRequestDto = new PieceRequestDto(
-                    boardStatus.getValue(), boardStatus.getKey());
-            pieceDao.initializePieceStatus(pieceRequestDto);
+            pieceDao.initializePieceStatus(boardStatus.getValue(), boardStatus.getKey());
         }
     }
 

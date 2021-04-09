@@ -3,7 +3,6 @@ package chess.dao;
 import chess.dao.setting.DBConnection;
 import chess.dto.ChessRequestDto;
 import chess.dto.MoveRequestDto;
-import chess.dto.PieceRequestDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao extends DBConnection {
-    public void initializePieceStatus(final PieceRequestDto pieceRequestDto) {
+    public void initializePieceStatus(final String pieceName, final String piecePosition) {
         String query = "INSERT INTO piece (piece_name, piece_position) VALUE (?, ?)";
         try (PreparedStatement psmt = getConnection().prepareStatement(query)) {
-            psmt.setString(1, pieceRequestDto.getPieceName());
-            psmt.setString(2, pieceRequestDto.getPiecePosition());
+            psmt.setString(1, pieceName);
+            psmt.setString(2, piecePosition);
             psmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
