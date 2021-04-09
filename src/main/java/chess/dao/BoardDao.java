@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardDAO {
+public class BoardDao {
 
     private static final String GameNumber = "1";
 
@@ -55,52 +55,74 @@ public class BoardDAO {
         }
     }
 
-    public void initBoardTable() throws SQLException {
-        String query = "truncate table board";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+    public void initBoardTable() {
+        try (Connection connection = getConnection()) {
+            String query = "truncate table board";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void addBoard(Board board, String turn) throws SQLException {
-        String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, GameNumber);
-        pstmt.setString(2, boardPositionSet(board.getBoard()));
-        pstmt.setString(3, boardPieceSet(board.getBoard()));
-        pstmt.setString(4, turn);
-        pstmt.executeUpdate();
+    public void addBoard(Board board, String turn) {
+        try (Connection connection = getConnection()) {
+            String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, GameNumber);
+            pstmt.setString(2, boardPositionSet(board.getBoard()));
+            pstmt.setString(3, boardPieceSet(board.getBoard()));
+            pstmt.setString(4, turn);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void updateBoard(Board board, String turn) throws SQLException {
-        String query = "UPDATE board SET position = ?, pieceName = ?, turn = ? WHERE number = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, boardPositionSet(board.getBoard()));
-        pstmt.setString(2, boardPieceSet(board.getBoard()));
-        pstmt.setString(3, turn);
-        pstmt.setString(4, GameNumber);
-        pstmt.executeUpdate();
+    public void updateBoard(Board board, String turn) {
+        try (Connection connection = getConnection()) {
+            String query = "UPDATE board SET position = ?, pieceName = ?, turn = ? WHERE number = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, boardPositionSet(board.getBoard()));
+            pstmt.setString(2, boardPieceSet(board.getBoard()));
+            pstmt.setString(3, turn);
+            pstmt.setString(4, GameNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public Map<Position, Piece> findBoard(String gameNumber) throws SQLException {
-        String query = "SELECT * FROM board WHERE number = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameNumber);
-        ResultSet rs = pstmt.executeQuery();
+    public Map<Position, Piece> findBoard(String gameNumber) {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM board WHERE number = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, gameNumber);
+            ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) return null;
+            if (!rs.next()) return null;
 
-        return daoToBoard(rs.getString("position"), rs.getString("pieceName"));
+            return daoToBoard(rs.getString("position"), rs.getString("pieceName"));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
-    public Side findTurn(String gameNumber) throws SQLException {
-        String query = "SELECT * FROM board WHERE number = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameNumber);
-        ResultSet rs = pstmt.executeQuery();
+    public Side findTurn(String gameNumber) {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM board WHERE number = ?";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, gameNumber);
+            ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) return null;
+            if (!rs.next()) return null;
 
-        return Side.getTurnByName(rs.getString("turn"));
+            return Side.getTurnByName(rs.getString("turn"));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     private String boardPositionSet(Map<Position, Piece> board) {

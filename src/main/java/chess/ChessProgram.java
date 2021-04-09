@@ -1,6 +1,6 @@
 package chess;
 
-import chess.dao.BoardDAO;
+import chess.dao.BoardDao;
 import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
@@ -23,10 +23,10 @@ public class ChessProgram {
     private static final String BLACK = "B";
     private static final String BLANK = ".";
 
-    private static BoardDAO boardDAO;
+    private static BoardDao boardDAO;
 
-    public void initChessGame() throws SQLException {
-        boardDAO = new BoardDAO();
+    public void initChessGame() {
+        boardDAO = new BoardDao();
         boardDAO.initBoardTable();
         boardDAO.addBoard(Board.getGamingBoard(), Side.WHITE.name());
     }
@@ -40,7 +40,7 @@ public class ChessProgram {
         }
     }
 
-    private ResponseDTO moveExecute(PositionDTO positionDTO, Board board) throws SQLException {
+    private ResponseDTO moveExecute(PositionDTO positionDTO, Board board) {
         board.move(Position.from(positionDTO.from()), Position.from(positionDTO.to()), currentTurn());
         boardDAO.updateBoard(board, currentTurn().changeTurn().name());
         if (board.isGameSet()) {
@@ -50,7 +50,7 @@ public class ChessProgram {
         return new ResponseDTO(SUCCEED_CODE, "Succeed", currentTurn().name());
     }
 
-    public Map<String, String> getCurrentBoard() throws SQLException {
+    public Map<String, String> getCurrentBoard() {
         Map<Position, Piece> board = boardDAO.findBoard(GAME_NUMBER);
         Map<String, String> boardName = new LinkedHashMap<>();
 
@@ -71,11 +71,11 @@ public class ChessProgram {
         return BLANK;
     }
 
-    public String turnName() throws SQLException {
+    public String turnName() {
         return currentTurn().name();
     }
 
-    private Side currentTurn() throws SQLException {
+    private Side currentTurn() {
         return boardDAO.findTurn(GAME_NUMBER);
     }
 }

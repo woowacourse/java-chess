@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.dao.BoardDAO;
+import chess.dao.BoardDao;
 import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
@@ -13,16 +13,16 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class BoardDAOTest {
+public class BoardDaoTest {
 
     public static final String GameNumber = "1";
 
-    private BoardDAO boardDAO;
+    private BoardDao boardDAO;
     private Board board;
 
     @BeforeEach
     void setUp() {
-        boardDAO = new BoardDAO();
+        boardDAO = new BoardDao();
         board = Board.getGamingBoard();
     }
 
