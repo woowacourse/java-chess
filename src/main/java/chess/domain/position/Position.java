@@ -1,7 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
-import chess.domain.util.BoardInitializer;
+import chess.util.BoardInitializer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -79,8 +79,8 @@ public class Position {
             Rank.of(this.rank.getRank() + dir.getYDegree() * step));
     }
 
-    public int calculateDistance(Position source) {
-        return (int) Math.sqrt(
+    public double calculateDistance(Position source) {
+        return Math.sqrt(
             (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
     }
 

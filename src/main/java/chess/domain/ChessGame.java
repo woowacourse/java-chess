@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.dto.PrintBoardDto;
+import chess.domain.dto.WebBoardDto;
 import chess.domain.piece.Direction;
 import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Pawn;
@@ -9,8 +11,8 @@ import chess.domain.position.MovePath;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.domain.util.BoardInitializer;
-import chess.domain.util.StringParser;
+import chess.util.BoardInitializer;
+import chess.util.StringParser;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -28,10 +30,14 @@ public class ChessGame {
 
     public void initBoard(Board board) {
         this.board = board;
+        turn = Team.WHITE;
         state = state.init();
     }
 
     public void move(String command) {
+        if (state.isReady() || state.isEnd()) {
+            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았거나 종료되었습니다.");
+        }
         MovePath movePath = StringParser.splitSourceAndTargetPosition(command);
         Position source = movePath.getSource();
         Position target = movePath.getTarget();
@@ -61,7 +67,7 @@ public class ChessGame {
     private int calculateTargetMove(MovePath movePath, Direction currentDirection) {
         Position source = movePath.getSource();
         Position target = movePath.getTarget();
-        return target.calculateDistance(source) / currentDirection.getUnit();
+        return (int) (target.calculateDistance(source) / currentDirection.getUnit());
     }
 
     private void validateTargetPath(MovePath movePath, Piece piece, Direction currentDirection) {
@@ -155,5 +161,9 @@ public class ChessGame {
 
     public PrintBoardDto getPrintBoardDto() {
         return new PrintBoardDto(board, turn);
+    }
+
+    public WebBoardDto getWebBoardDto() {
+        return new WebBoardDto(board, turn, state.isEnd(), winner);
     }
 }

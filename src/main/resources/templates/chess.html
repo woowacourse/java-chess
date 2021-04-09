@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+    <style>
+        table.chessboard {
+            margin: 2rem auto 2rem auto;
+            border: 30px solid #333;
+            background-color: #777;
+            border-collapse: collapse;
+        }
+
+        td.chessboard {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+        }
+
+        tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
+        tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
+            background: rgb(235, 235, 235);
+        }
+
+        img.chessboard {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+{{#em}}
+<body onload=alertError("{{em}}")>
+{{/em}}
+{{^em}}
+<body>
+{{/em}}
+
+{{#user}}
+<form action="/games" method="get">
+    <button> 게임방 목록 보기</button>
+</form>
+<div>
+    <div>
+        <a> 게임번호 - {{gameId}}</a>
+    </div>
+    <div>
+        <a> 현재 턴 - {{turn}}</a>
+    </div>
+    <div>
+        {{#winner}}
+        <a> 우승 - {{winner}}</a>
+        {{/winner}}
+    </div>
+</div>
+{{/user}}
+{{^user}}
+<form action="/home" method="get">
+    <button> 로그인</button>
+</form>
+{{/user}}
+<br/>
+<form action="/move/{{gameId}}" method="post">
+    <div>
+        <a> move "움직이려는 말의 좌표" "도착지 좌표"</a>
+    </div>
+    <div>
+        <a>ex) move a2 a4</a>
+    </div>
+    <input hidden name="gameId" type="text" value={{gameId}}/>
+    <input name="command" type="text"/>
+    <button>이동</button>
+</form>
+
+<table class="chessboard">
+    <tr class="chessboard">
+        <td class="chessboard" id="a8">{{{a8}}}</td>
+        <td class="chessboard" id="b8">{{{b8}}}</td>
+        <td class="chessboard" id="c8">{{{c8}}}</td>
+        <td class="chessboard" id="d8">{{{d8}}}</td>
+        <td class="chessboard" id="e8">{{{e8}}}</td>
+        <td class="chessboard" id="f8">{{{f8}}}</td>
+        <td class="chessboard" id="g8">{{{g8}}}</td>
+        <td class="chessboard" id="h8">{{{h8}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a7">{{{a7}}}</td>
+        <td class="chessboard" id="b7">{{{b7}}}</td>
+        <td class="chessboard" id="c7">{{{c7}}}</td>
+        <td class="chessboard" id="d7">{{{d7}}}</td>
+        <td class="chessboard" id="e7">{{{e7}}}</td>
+        <td class="chessboard" id="f7">{{{f7}}}</td>
+        <td class="chessboard" id="g7">{{{g7}}}</td>
+        <td class="chessboard" id="h7">{{{h7}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a6">{{{a6}}}</td>
+        <td class="chessboard" id="b6">{{{b6}}}</td>
+        <td class="chessboard" id="c6">{{{c6}}}</td>
+        <td class="chessboard" id="d6">{{{d6}}}</td>
+        <td class="chessboard" id="e6">{{{e6}}}</td>
+        <td class="chessboard" id="f6">{{{f6}}}</td>
+        <td class="chessboard" id="g6">{{{g6}}}</td>
+        <td class="chessboard" id="h6">{{{h6}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a5">{{{a5}}}</td>
+        <td class="chessboard" id="b5">{{{b5}}}</td>
+        <td class="chessboard" id="c5">{{{c5}}}</td>
+        <td class="chessboard" id="d5">{{{d5}}}</td>
+        <td class="chessboard" id="e5">{{{e5}}}</td>
+        <td class="chessboard" id="f5">{{{f5}}}</td>
+        <td class="chessboard" id="g5">{{{g5}}}</td>
+        <td class="chessboard" id="h5">{{{h5}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a4">{{{a4}}}</td>
+        <td class="chessboard" id="b4">{{{b4}}}</td>
+        <td class="chessboard" id="c4">{{{c4}}}</td>
+        <td class="chessboard" id="d4">{{{d4}}}</td>
+        <td class="chessboard" id="e4">{{{e4}}}</td>
+        <td class="chessboard" id="f4">{{{f4}}}</td>
+        <td class="chessboard" id="g4">{{{g4}}}</td>
+        <td class="chessboard" id="h4">{{{h4}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a3">{{{a3}}}</td>
+        <td class="chessboard" id="b3">{{{b3}}}</td>
+        <td class="chessboard" id="c3">{{{c3}}}</td>
+        <td class="chessboard" id="d3">{{{d3}}}</td>
+        <td class="chessboard" id="e3">{{{e3}}}</td>
+        <td class="chessboard" id="f3">{{{f3}}}</td>
+        <td class="chessboard" id="g3">{{{g3}}}</td>
+        <td class="chessboard" id="h3">{{{h3}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a2">{{{a2}}}</td>
+        <td class="chessboard" id="b2">{{{b2}}}</td>
+        <td class="chessboard" id="c2">{{{c2}}}</td>
+        <td class="chessboard" id="d2">{{{d2}}}</td>
+        <td class="chessboard" id="e2">{{{e2}}}</td>
+        <td class="chessboard" id="f2">{{{f2}}}</td>
+        <td class="chessboard" id="g2">{{{g2}}}</td>
+        <td class="chessboard" id="h2">{{{h2}}}</td>
+    </tr>
+    <tr class="chessboard">
+        <td class="chessboard" id="a1">{{{a1}}}</td>
+        <td class="chessboard" id="b1">{{{b1}}}</td>
+        <td class="chessboard" id="c1">{{{c1}}}</td>
+        <td class="chessboard" id="d1">{{{d1}}}</td>
+        <td class="chessboard" id="e1">{{{e1}}}</td>
+        <td class="chessboard" id="f1">{{{f1}}}</td>
+        <td class="chessboard" id="g1">{{{g1}}}</td>
+        <td class="chessboard" id="h1">{{{h1}}}</td>
+    </tr>
+</table>
+<script type="text/javascript">
+    function alertError(name) {
+        var message = decodeURIComponent(escape(window.atob(name)));
+        alert(message);
+    }
+</script>
+</body>
+</html>
+

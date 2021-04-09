@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.util.BoardInitializer;
+import chess.util.BoardInitializer;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,16 +17,12 @@ public class ChessController {
 
     public static void move(ChessGame chessGame, String command) {
         try {
-            if (chessGame.isReady() || chessGame.isEnd()) {
-                throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았거나 종료되었습니다.");
-            }
             chessGame.move(command);
             OutputView.printBoard(chessGame.getPrintBoardDto());
             if (chessGame.isEnd()) {
                 OutputView.printTeamWin(chessGame.getWinTeam());
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             OutputView.printBoard(chessGame.getPrintBoardDto());
         }
     }
@@ -57,16 +53,16 @@ public class ChessController {
     }
 
     private void applyCommand(ChessGame chessGame, Command command, String inputCmd) {
-        if(command == Command.START) {
+        if (command == Command.START) {
             start(chessGame);
         }
-        if(command == Command.MOVE) {
+        if (command == Command.MOVE) {
             move(chessGame, inputCmd);
         }
-        if(command == Command.STATUS) {
+        if (command == Command.STATUS) {
             status(chessGame);
         }
-        if(command == Command.END) {
+        if (command == Command.END) {
             end(chessGame);
         }
     }
