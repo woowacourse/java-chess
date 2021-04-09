@@ -1,10 +1,12 @@
 package chess.controller;
 
-import chess.domain.game.Board;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Command;
 import chess.domain.game.Game;
 import chess.domain.piece.Color;
+import chess.dto.BoardDTO;
+import chess.dto.ColorDTO;
+import chess.dto.ScoreDTO;
 
 import java.util.ArrayList;
 import java.util.List;

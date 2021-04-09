@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.*;
+import chess.dto.*;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
