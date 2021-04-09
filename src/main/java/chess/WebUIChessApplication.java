@@ -77,7 +77,7 @@ public class WebUIChessApplication {
             ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
             return webUIChessGameController.movablePositions(chessGameDto, movableDto);
         }, gson::toJson);
-        
+
         post("/:name/move", (req, res) -> {
             String gameName = req.params(":name");
             MoveRequestDto moveDto = gson.fromJson(req.body(), MoveRequestDto.class);
@@ -87,15 +87,12 @@ public class WebUIChessApplication {
             return movedChessGameDto;
         }, gson::toJson);
 
-        // refactor list 7
         post("/:name/score", (req, res) -> {
             String gameName = req.params(":name");
-            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
-            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-            return DtoAssembler.scoreDto(chessGame.score());
+            ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
+            return webUIChessGameController.score(chessGameDto);
         }, gson::toJson);
-
-        // refactor list 8
+        
         get("/search/search-page", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "chess-game-search.html");
