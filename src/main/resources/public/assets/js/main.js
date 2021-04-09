@@ -1,11 +1,3 @@
-async function getBoard() {
-  return await fetch(
-    '/chessboard'
-  )
-  .then(res => res.json())
-  .then(data => data);
-}
-
 async function init() {
   this.$chessBoard = document.querySelector('.chessBoard')
   this.$controller = document.querySelector('.controller')
@@ -18,6 +10,14 @@ async function init() {
   await setBoard()
   await moveHandler()
   await changeTurn(await getTurn())
+}
+
+async function getBoard() {
+  return await fetch(
+    '/chessboard'
+  )
+  .then(res => res.json())
+  .then(data => data);
 }
 
 async function setBoard() {
@@ -76,14 +76,15 @@ function moveHandler() {
 }
 
 function move(response) {
+  if (response.isOver === true) {
+    alert('게임이 종료되었습니다.')
+    finish()
+  }
+
   const $source = document.getElementById(response.source.id)
   const $target = document.getElementById(response.target.id)
   $source.innerHTML = squareTemplate(response.source.id, response.source.piece)
   $target.innerHTML = squareTemplate(response.target.id, response.target.piece)
-
-  if (response.isOver === true) {
-    finish()
-  }
 }
 
 async function movable(source, target) {
@@ -178,20 +179,26 @@ async function result() {
     'score')[0].innerHTML = `<span>${whiteResult.score}</span>`
 
   if (blackResult.outcome === '승') {
-    this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
-    this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+    this.$blackResult.getElementsByTagName(
+      'img')[0].src = "./images/player_win.png"
+    this.$whiteResult.getElementsByTagName(
+      'img')[0].src = "./images/player_lose.png"
     return
   }
   if (blackResult.outcome === '패') {
-    this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
-    this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    this.$blackResult.getElementsByTagName(
+      'img')[0].src = "./images/player_lose.png"
+    this.$whiteResult.getElementsByTagName(
+      'img')[0].src = "./images/player_win.png"
     return
   }
-  this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
-  this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+  this.$blackResult.getElementsByTagName(
+    'img')[0].src = "./images/player_lose.png"
+  this.$whiteResult.getElementsByTagName(
+    'img')[0].src = "./images/player_lose.png"
 }
 
-function displayResult( val ) {
+function displayResult(val) {
   this.$blackResult.style.display = val;
   this.$whiteResult.style.display = val;
 }
