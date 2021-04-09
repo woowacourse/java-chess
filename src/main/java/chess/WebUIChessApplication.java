@@ -15,6 +15,7 @@ import chess.dto.MovableRequestDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.PlayerIdsDto;
 import chess.dto.ScoreDto;
+import chess.dto.SquareDto;
 import chess.dto.UserIdsDto;
 import chess.utils.DtoAssembler;
 import com.google.gson.Gson;
@@ -47,26 +48,18 @@ public class WebUIChessApplication {
             return chessGameDto;
         }, gson::toJson);
 
-        // refactor list 2
         get("/:name", (req, res) -> {
             String gameName = req.params(":name");
-            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
-            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-            ChessGameDto chessGameDto = DtoAssembler.chessGameDto(chessGame);
             Map<String, Object> model = new HashMap<>();
-            model.put("gameName", req.params(":name"));
-            model.put("state", chessGameDto.getState());
-            model.put("squares", chessGameDto.getPieces());
-
+            model.put("gameName", gameName);
             return render(model, "chess-game.html");
         });
 
-        // refactor list 3
         post("/:name/load", (req, res) -> {
             String gameName = req.params(":name");
-            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
-            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-            return DtoAssembler.chessGameDto(chessGame);
+            String state = chessDao.findStateByName(gameName);
+            List<SquareDto> squareDtos = chessDao.findSquaresByName(gameName);
+            return DtoAssembler.chessGameDto(squareDtos, state);
         }, gson::toJson);
 
         // refactor list 4

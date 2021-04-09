@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 
 public class DtoAssembler {
 
+    public static ChessGameDto chessGameDto(final List<SquareDto> squareDtos, final String state) {
+        return new ChessGameDto(squareDtos, state);
+    }
+
     public static ChessGameDto chessGameDto(final ChessGame chessGame) {
         List<SquareDto> squareDtos = new ArrayList<>();
         Map<Position, Piece> squares = chessGame.board().squares();

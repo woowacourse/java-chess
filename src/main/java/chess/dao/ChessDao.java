@@ -89,7 +89,8 @@ public class ChessDao {
         }
     }
 
-    public void updateGameByName(final String gameName, final ChessGameDto chessGameDto) throws SQLException {
+    public void updateGameByName(final String gameName, final ChessGameDto chessGameDto)
+        throws SQLException {
         String gameId = findGameIdByName(gameName);
         updateGameState(gameId, chessGameDto.getState());
         deleteBoard(gameId);
@@ -117,7 +118,8 @@ public class ChessDao {
         }
     }
 
-    private void insertBoard(final String gameId, final List<SquareDto> squareDtos) throws SQLException {
+    private void insertBoard(final String gameId, final List<SquareDto> squareDtos)
+        throws SQLException {
         String query = "INSERT INTO board(game_id, symbol, position) VALUES(?, ?, ?)";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             insertSquare(gameId, squareDtos, pstmt);
@@ -127,12 +129,44 @@ public class ChessDao {
         }
     }
 
-    private void insertSquare(final String gameId, final List<SquareDto> squareDtos, final PreparedStatement pstmt) throws SQLException {
+    private void insertSquare(final String gameId, final List<SquareDto> squareDtos,
+        final PreparedStatement pstmt) throws SQLException {
         for (SquareDto squareDto : squareDtos) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, squareDto.getPiece());
             pstmt.setString(3, squareDto.getPosition());
         }
+    }
+
+    public String findStateByName(final String gameName) throws SQLException {
+        String query = "SELECT state FROM game WHERE game_id=?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, findGameIdByName(gameName));
+            return resultSet(pstmt).getString("state");
+        } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<SquareDto> findSquaresByName(final String gameName) {
+        String query = "SELECT symbol FROM board WHERE game_id=?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, findGameIdByName(gameName));
+            return squareDtos(resultSet(pstmt));
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    private List<SquareDto> squareDtos(final ResultSet resultSet) throws SQLException {
+        List<SquareDto> squareDtos = new ArrayList<>();
+        while (resultSet.next()) {
+            String symbol = resultSet.getString("symbol");
+            String position = resultSet.getString("position");
+            squareDtos.add(new SquareDto(position, symbol));
+        }
+        return squareDtos;
     }
 
     public void insertStartCommand(final String gameName) throws SQLException {
@@ -171,28 +205,28 @@ public class ChessDao {
         }
     }
 
-    private String findGameIdByName(final String gameName) throws SQLException {
-        ResultSet resultSet;
+    private String findGameIdByName(final String gameName) {
         String query = "SELECT game_id FROM game WHERE game_name=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameName);
-            resultSet = resultSet(pstmt);
+            return resultSet(pstmt).getString("game_id");
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
-        return resultSet.getString("game_id");
     }
 
-    private ResultSet resultSet(final PreparedStatement pstmt) throws SQLException {
-        ResultSet resultSet;
+    private ResultSet resultSet(final PreparedStatement pstmt) {
         try (ResultSet rs = pstmt.executeQuery()) {
             validateResultSet(rs);
-            resultSet = rs;
+            return rs;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
-        return resultSet;
     }
 
     private void validateResultSet(final ResultSet rs) throws SQLException {
         if (!rs.next()) {
-            throw new SQLException();
+            throw new SQLException("game id 검색 결과가 존재하지 않습니다.");
         }
     }
 

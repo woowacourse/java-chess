@@ -11,7 +11,11 @@ public class ChessGame {
     private State state;
 
     public ChessGame(final Board board) {
-        state = new Init(board);
+        this(new Init(board));
+    }
+
+    public ChessGame(final State state) {
+        this.state = state;
     }
 
     public void start() {
