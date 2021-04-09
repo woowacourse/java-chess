@@ -6,6 +6,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -13,7 +14,7 @@ public class Board {
     private boolean isKingDead = false;
 
     public Board(Map<Position, Piece> maps) {
-        this.pieceByPosition = maps;
+        this.pieceByPosition = new HashMap<>(maps);
     }
 
     public void action(Color color, Position from, Position to) {

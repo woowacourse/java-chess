@@ -28,12 +28,13 @@ public class WebUIChessApplication {
                 chessController.init();
                 chessController.action(req.queryParams("start"));
             } catch (IllegalArgumentException e) {
-                model.put("error", new ErrorDTO(e.getMessage()));
+                model.put("error", new ErrorDTO("error" + e.getMessage()));
                 return render(model, "index.html");
             }
             if (chessController.isFinished()) {
                 return render(model, "end.html");
             }
+            commandDAO.deleteAll();
             model = makeBoardModel(chessController);
             return render(model, "chessboard.html");
         });
@@ -50,6 +51,8 @@ public class WebUIChessApplication {
             }
 
             model = makeBoardModel(chessController);
+            model.put("error", new ErrorDTO(""));
+            commandDAO.insert(command);
             return render(model, "chessboard.html");
         });
 

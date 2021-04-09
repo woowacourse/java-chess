@@ -14,8 +14,7 @@ public class ChessControllerForUI {
     Game game;
 
     public void init() {
-        Board board = BoardFactory.create();
-        game = new Game(board);
+        game = new Game(BoardFactory.create());
     }
 
     public void action(String command) {
