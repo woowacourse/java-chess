@@ -125,9 +125,68 @@ body {
   font-family: 'Song Myung', serif;
   -wwebkit-text-stroke: px #DF59F6;
   color: #ffffff;
-  text-shadow: 0px 0px 0 #DF59F6,
+  text-shadow: 0 0 0 #DF59F6,
   -1px -1px 0 #DF59F6,
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
+}
+
+.control-btn {
+  appearance: none;
+  box-sizing: border-box;
+  padding: 7px;
+  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #935471;
+  background: #cc7ba0;
+  border-radius: 50px;
+  border: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #f389ba;
+  cursor: pointer;
+  margin: 6px 6px;
+  letter-spacing: .1em;
+  transition: all 200ms ease;
+  box-shadow: 1px 1px 1px #95667b,
+  0 0 0 4px #be829d,
+  1px 1px 1px white,
+  inset -2px -2px 2px #7b3e5a,
+  inset -0.5rem -0.5rem 0.25rem -0.2rem #b26788
+}
+
+.control-btn::-moz-focus-inner {
+  outline: none;
+  border: none;
+}
+
+.control-btn::-moz-focus-inner {
+  outline: none;
+  border: none;
+}
+
+.control-btn:hover {
+  color: #f389ba;
+  text-shadow: 1px 1px #935471;
+}
+
+.control-btn:active {
+  color: #935471;
+  text-shadow: 1px 1px #f389ba;
+  box-shadow: -1px -1px 1px #95667b,
+  0 0 0 4px #be829d,
+  1px 1px 1px white,
+  inset 2px 2px 2px #7b3e5a,
+  inset 0.5rem 0.5rem 0.25rem #b26788;
+}
+
+.control-btn:disabled {
+  color: #646464;
+  background: #959595;
+  text-shadow: 1px 1px #acacac;
+  box-shadow: -1px -1px 1px #6a6a6a,
+  0 0 0 4px #6c6c6c, 1px 1px 1px white,
+  inset 2px 2px 2px #4f4e4e,
+  inset 0.5rem 0.5rem 0.25rem #7d7d7d;
 }
