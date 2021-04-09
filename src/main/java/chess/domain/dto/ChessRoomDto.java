@@ -38,4 +38,16 @@ public class ChessRoomDto {
     public String getTurn() {
         return turn;
     }
+
+    public int getRoomNo() {
+        return roomNo;
+    }
+
+    public double getBlackScore() {
+        return blackScore;
+    }
+
+    public double getWhiteScore() {
+        return whiteScore;
+    }
 }

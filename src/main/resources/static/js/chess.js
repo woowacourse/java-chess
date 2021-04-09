@@ -36,7 +36,7 @@ function initBoard(data) {
             $board.appendChild(newDiv);
         }
     }
-    $roomNo.innerText = data.room_no;
+    $roomNo.innerText = data.roomNo;
     $blackScore.innerText = data.blackScore;
     $whiteScore.innerText = data.whiteScore;
     $turn.innerText = data.turn;
