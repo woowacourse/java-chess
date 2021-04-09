@@ -40,14 +40,21 @@ public class ChessDao {
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?")
         ) {
             preparedStatement.setString(1, userId);
-            ResultSet rs = preparedStatement.executeQuery();
+            return makeUser(preparedStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    private UserDto makeUser(PreparedStatement preparedStatement) throws SQLException {
+        try (ResultSet rs = preparedStatement.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }
             return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
         } catch (SQLException e) {
-            System.out.println(e.getErrorCode() + e.getMessage());
-            throw new IllegalArgumentException("SQL Error 발생");
+            throw new SQLException();
         }
     }
 
@@ -58,14 +65,21 @@ public class ChessDao {
         ) {
             preparedStatement.setString(1, userDto.getName());
             preparedStatement.setString(2, userDto.getPwd());
-            ResultSet rs = preparedStatement.executeQuery();
+            return makeUserId(preparedStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    private String makeUserId(PreparedStatement preparedStatement) throws SQLException {
+        try (ResultSet rs = preparedStatement.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }
             return rs.getString("user_id");
         } catch (SQLException e) {
-            System.out.println(e.getErrorCode() + e.getMessage());
-            throw new IllegalArgumentException("SQL Error 발생");
+            throw new SQLException();
         }
     }
 
@@ -76,11 +90,7 @@ public class ChessDao {
         ) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (!rs.next()) {
-                return null;
-            }
-            return new UserDto(rs.getString("user_name"), rs.getString("user_password"));
+            return makeUser(preparedStatement);
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + e.getMessage());
             throw new IllegalArgumentException("SQL Error 발생");
@@ -122,7 +132,15 @@ public class ChessDao {
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM board WHERE user_id = ?")
         ) {
             preparedStatement.setString(1, userId);
-            ResultSet rs = preparedStatement.executeQuery();
+            return makeBoard(preparedStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    private BoardDto makeBoard(PreparedStatement preparedStatement) throws SQLException {
+        try (ResultSet rs = preparedStatement.executeQuery()) {
             Map<Point, Piece> chessBoard = new HashMap<>();
             if (!rs.next()) {
                 return null;
@@ -135,8 +153,7 @@ public class ChessDao {
                 );
             return new BoardDto(chessBoard);
         } catch (SQLException e) {
-            System.out.println(e.getErrorCode() + e.getMessage());
-            throw new IllegalArgumentException("SQL Error 발생");
+            throw new SQLException();
         }
     }
 
@@ -146,7 +163,15 @@ public class ChessDao {
                  "SELECT color FROM board WHERE user_id = ?")
         ) {
             preparedStatement.setString(1, userId);
-            ResultSet rs = preparedStatement.executeQuery();
+            return makeColor(preparedStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
+
+    private Color makeColor(PreparedStatement preparedStatement) throws SQLException {
+        try(ResultSet rs = preparedStatement.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }
@@ -155,8 +180,7 @@ public class ChessDao {
             }
             return Color.WHITE;
         } catch (SQLException e) {
-            System.out.println(e.getErrorCode() + e.getMessage());
-            throw new IllegalArgumentException("SQL Error 발생");
+            throw new SQLException();
         }
     }
 }
