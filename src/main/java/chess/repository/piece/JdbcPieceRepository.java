@@ -2,7 +2,6 @@ package chess.repository.piece;
 
 import chess.domain.piece.Piece;
 import chess.repository.ConnectionUtil;
-import chess.utils.PieceUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,7 +94,7 @@ public class JdbcPieceRepository implements PieceRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                return PieceUtil.generatePiece(id, roomId, signature, team, location);
+                return Piece.generatePiece(id, roomId, signature, team, location);
             }
             throw new IllegalArgumentException("[ERROR] findPieceById - DB로부터 Piece정보를 가져오지 못했습니다.");
         } catch (SQLException e) {
@@ -208,7 +207,7 @@ public class JdbcPieceRepository implements PieceRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                result.add(PieceUtil.generatePiece(id, roomid, signature, team, location));
+                result.add(Piece.generatePiece(id, roomid, signature, team, location));
             }
             if (result.size() == 0) {
                 throw new IllegalArgumentException("[ERROR] 아직 시작되지 않은 방입니다.");

@@ -3,12 +3,11 @@ package chess.repository.room;
 import chess.domain.board.Board;
 import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
+import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import chess.repository.ConnectionUtil;
 import chess.utils.BoardUtil;
-import chess.utils.PieceUtil;
-import chess.utils.StateUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,7 +108,7 @@ public class JdbcRoomRepository implements RoomRepository {
                 String name = rs.getString("name");
                 String state = rs.getString("state");
                 String currentTeam = rs.getString("currentteam");
-                return new Room(id, name, StateUtil.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
+                return new Room(id, name, State.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
             }
 
             List<Piece> pieces = new ArrayList<>();
@@ -125,10 +124,10 @@ public class JdbcRoomRepository implements RoomRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                pieces.add(PieceUtil.generatePiece(pieceId, roomid, signature, team, location));
+                pieces.add(Piece.generatePiece(pieceId, roomid, signature, team, location));
             }
             Board board = Board.of(pieces);
-            return new Room(id, name, StateUtil.generateState(state, board), Team.of(currentTeam));
+            return new Room(id, name, State.generateState(state, board), Team.of(currentTeam));
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -167,7 +166,7 @@ public class JdbcRoomRepository implements RoomRepository {
                 String name = rs.getString("name");
                 String state = rs.getString("state");
                 String currentTeam = rs.getString("currentteam");
-                return new Room(id, name, StateUtil.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
+                return new Room(id, name, State.generateState(state, BoardUtil.generateInitialBoard()), Team.of(currentTeam));
             }
 
             List<Piece> pieces = new ArrayList<>();
@@ -183,9 +182,9 @@ public class JdbcRoomRepository implements RoomRepository {
                 char signature = rs.getString("signature").charAt(0);
                 String team = rs.getString("team");
                 String location = rs.getString("location");
-                pieces.add(PieceUtil.generatePiece(pieceId, roomid, signature, team, location));
+                pieces.add(Piece.generatePiece(pieceId, roomid, signature, team, location));
             }
-            return new Room(id, name, StateUtil.generateState(state, Board.of(pieces)), Team.of(currentTeam));
+            return new Room(id, name, State.generateState(state, Board.of(pieces)), Team.of(currentTeam));
         } catch (SQLException e) {
             throw e;
         } finally {
