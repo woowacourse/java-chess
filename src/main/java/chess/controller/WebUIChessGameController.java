@@ -79,7 +79,8 @@ public class WebUIChessGameController {
         return DtoAssembler.scoreDto(chessGame.score());
     }
 
-    public List<SearchResultDto> searchResult(final List<ChessGameDto> chessGameDtos, final List<UserIdsDto> userIdsDtos) {
+    public List<SearchResultDto> searchResult(final List<ChessGameDto> chessGameDtos,
+        final List<UserIdsDto> userIdsDtos) {
         List<ScoreDto> scoreDtos = new ArrayList<>();
         List<String> states = new ArrayList<>();
 

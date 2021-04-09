@@ -6,20 +6,15 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.WebUIChessGameController;
 import chess.dao.ChessDao;
-import chess.domain.board.position.Position;
-import chess.domain.game.ChessGame;
 import chess.dto.ChessGameDto;
-import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
 import chess.dto.MovableRequestDto;
 import chess.dto.MoveRequestDto;
 import chess.dto.PlayerIdsDto;
-import chess.dto.ScoreDto;
 import chess.dto.SquareDto;
 import chess.dto.UserIdsDto;
 import chess.utils.DtoAssembler;
 import com.google.gson.Gson;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +60,8 @@ public class WebUIChessApplication {
             String gameName = req.params(":name");
             PlayerIdsDto playerIdsDto = gson.fromJson(req.body(), PlayerIdsDto.class);
             ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
-            ChessGameDto startedChessGameDto = webUIChessGameController.startedChessGame(chessGameDto);
+            ChessGameDto startedChessGameDto = webUIChessGameController
+                .startedChessGame(chessGameDto);
             chessDao.updatePlayerIds(playerIdsDto, gameName);
             chessDao.updateGameByName(gameName, startedChessGameDto);
             return startedChessGameDto;
@@ -82,7 +78,8 @@ public class WebUIChessApplication {
             String gameName = req.params(":name");
             MoveRequestDto moveDto = gson.fromJson(req.body(), MoveRequestDto.class);
             ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
-            ChessGameDto movedChessGameDto = webUIChessGameController.movedChessGame(chessGameDto, moveDto);
+            ChessGameDto movedChessGameDto = webUIChessGameController
+                .movedChessGame(chessGameDto, moveDto);
             chessDao.updateGameByName(gameName, movedChessGameDto);
             return movedChessGameDto;
         }, gson::toJson);

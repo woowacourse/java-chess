@@ -70,7 +70,8 @@ public class DtoAssembler {
         return new ScoreDto(score.white(), score.black());
     }
 
-    public static List<SearchResultDto> searchResultDto(final List<String> states, final List<UserIdsDto> userIdsDtos, final List<ScoreDto> scoreDtos) {
+    public static List<SearchResultDto> searchResultDto(final List<String> states,
+        final List<UserIdsDto> userIdsDtos, final List<ScoreDto> scoreDtos) {
         List<SearchResultDto> searchResultDtos = new ArrayList<>();
 
         for (int i = 0; i < states.size(); i++) {
