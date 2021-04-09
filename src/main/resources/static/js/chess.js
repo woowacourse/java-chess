@@ -14,8 +14,9 @@ $board.addEventListener('click', selectSource);
 async function startBoard() {
     let start = await fetch('/start');
     start = await start.json();
-    if (start === 0) {
-        alert('[ERROR] 게임 시작하는 것을 실패했습니다.');
+    if (start.error) {
+        alert(start.error);
+        return;
     }
     initBoard(start);
 }
@@ -27,7 +28,7 @@ function initBoard(data) {
     for (let i = 8; i >= 1; i--) {
         for (let j = 0; j < 8; j++) {
             const newDiv = document.createElement('div');
-            newDiv.id = String.fromCharCode(97+j)+i;
+            newDiv.id = String.fromCharCode(97 + j) + i;
             newDiv.classList.add('box');
             const piece = data.chessBoard[newDiv.id];
             if (piece) {
@@ -68,9 +69,12 @@ async function loadChessRoom() {
 async function exitChessRoom() {
     let exit = await fetch('/exit?roomNo=1');
     exit = await exit.json();
-    if (exit === 1) {
-        resetStatus();
+    if (exit.error) {
+        alert(exit.error);
+        return;
     }
+    alert(exit.success);
+    resetStatus();
 }
 
 function resetStatus() {
@@ -82,9 +86,9 @@ function resetStatus() {
 }
 
 let select = {
-    source : '',
-    target : '',
-    routes : ''
+    source: '',
+    target: '',
+    routes: ''
 }
 
 function selectSource(event) {
@@ -170,7 +174,7 @@ function updateBoard(data) {
     }
     for (let i = 8; i >= 1; i--) {
         for (let j = 0; j < 8; j++) {
-            const boxDiv = document.getElementById(String.fromCharCode(97+j)+i);
+            const boxDiv = document.getElementById(String.fromCharCode(97 + j) + i);
             const piece = data.chessRoomInfo.chessBoard[boxDiv.id];
             boxDiv.innerHTML = makePiece(piece);
         }

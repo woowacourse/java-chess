@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ChessDaoTest {
     private ChessDao chessDao;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException {
         chessDao = new ChessDao();
+        addChessRoom();
     }
 
     @Test
@@ -27,15 +27,13 @@ public class ChessDaoTest {
     }
 
     @Test
-    @Order(1)
     void addChessRoom() throws SQLException {
+        deleteChessRoomByRoomNo();
         ChessBoardDto chessBoardDto = new ChessBoardDto(ChessBoard.generate().getChessBoard());
-        ChessRoomDto chessRoomDto = new ChessRoomDto(chessBoardDto.getChessBoard(), Color.WHITE.name(), 38, 38);
-        chessDao.addChessRoom(chessRoomDto);
+        chessDao.addChessRoom(chessBoardDto.getChessBoard(), Color.WHITE.name(), 38, 38);
     }
 
     @Test
-    @Order(2)
     void findChessRoomByNo() throws SQLException {
         ChessBoardDto chessBoardDto = new ChessBoardDto(ChessBoard.generate().getChessBoard());
         ChessRoomDto chessRoomDto = chessDao.findChessRoomByRoomNo(1);
@@ -43,18 +41,16 @@ public class ChessDaoTest {
     }
 
     @Test
-    @Order(3)
     void updateChessRoom() throws SQLException {
-        ChessRoomDto chessRoomDto = new ChessRoomDto(Color.BLACK.name(), 23, 23);
+        MoveResultDto moveResultDto = new MoveResultDto(Color.BLACK.name(), 23, 23);
         PieceDto pieceDto = new PieceDto("p", "WHITE");
         PositionDto source = new PositionDto("g2");
         PositionDto target = new PositionDto("g4");
-        assertThat(chessDao.updateChessRoom(chessRoomDto, pieceDto, source, target)).isEqualTo(1);
+        chessDao.updateChessRoom(moveResultDto, pieceDto, source, target);
     }
 
     @Test
-    @Order(4)
     void deleteChessRoomByRoomNo() throws SQLException {
-        assertThat(chessDao.deleteChessRoomByRoomNo(1)).isEqualTo(1);
+        chessDao.deleteChessRoomByRoomNo(1);
     }
 }

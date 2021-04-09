@@ -34,7 +34,7 @@ public class ChessService {
         ChessBoard chessBoard = chessBoards.findChessBoardByRoomNo(1);
         Piece sourcePiece = chessBoard.findByPosition(source);
         return chessBoard.routes(sourcePiece, source).stream()
-                .map(position -> new PositionDto(String.valueOf(position.getX())+position.getY()))
+                .map(position -> new PositionDto(String.valueOf(position.getX()) + position.getY()))
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +63,7 @@ public class ChessService {
         return chessRoomDto;
     }
 
-    public int exitChess(int roomNo) throws SQLException {
-        return chessDao.deleteChessRoomByRoomNo(roomNo);
+    public void exitChess(int roomNo) throws SQLException {
+        chessDao.deleteChessRoomByRoomNo(roomNo);
     }
 }
