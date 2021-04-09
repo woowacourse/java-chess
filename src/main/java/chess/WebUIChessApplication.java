@@ -71,14 +71,11 @@ public class WebUIChessApplication {
             return startedChessGameDto;
         }, gson::toJson);
 
-        // refactor list 5
         post("/:name/movable", (req, res) -> {
             String gameName = req.params(":name");
             MovableRequestDto movableDto = gson.fromJson(req.body(), MovableRequestDto.class);
-            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
-            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-            List<Position> positions = chessGame.movablePath(movableDto.position());
-            return DtoAssembler.movableResponse(positions);
+            ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
+            return webUIChessGameController.movablePositions(chessGameDto, movableDto);
         }, gson::toJson);
 
         // refactor list 6

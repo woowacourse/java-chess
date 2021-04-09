@@ -9,6 +9,8 @@ import chess.domain.game.state.StateConverter;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
 import chess.dto.ChessGameDto;
+import chess.dto.MovableRequestDto;
+import chess.dto.MovableResponseDto;
 import chess.dto.SquareDto;
 import chess.utils.DtoAssembler;
 import java.util.LinkedHashMap;
@@ -34,10 +36,7 @@ public class WebUIChessGameController {
     }
 
     public ChessGameDto startedChessGame(final ChessGameDto chessGameDto) {
-        Board board = board(chessGameDto.getSquareDtos());
-        StateConverter stateConverter = new StateConverter(board);
-        State state = stateConverter.matchedState(chessGameDto.getState());
-        ChessGame chessGame = new ChessGame(state);
+        ChessGame chessGame = chessGameByDto(chessGameDto);
         chessGame.start();
         return DtoAssembler.chessGameDto(chessGame);
     }
@@ -52,5 +51,18 @@ public class WebUIChessGameController {
         }
 
         return new Board(squares);
+    }
+
+    public MovableResponseDto movablePositions(final ChessGameDto chessGameDto, final MovableRequestDto movableDto) {
+        ChessGame chessGame = chessGameByDto(chessGameDto);
+        List<Position> positions = chessGame.movablePath(movableDto.position());
+        return DtoAssembler.movableResponse(positions);
+    }
+
+    private ChessGame chessGameByDto(ChessGameDto chessGameDto) {
+        Board board = board(chessGameDto.getSquareDtos());
+        StateConverter stateConverter = new StateConverter(board);
+        State state = stateConverter.matchedState(chessGameDto.getState());
+        return new ChessGame(state);
     }
 }
