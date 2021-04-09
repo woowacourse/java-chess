@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.dto.ChessGameDto;
-import chess.dto.CommandsDto;
 import chess.dto.CreateRequestDto;
 import chess.dto.PlayerIdsDto;
 import chess.dto.SquareDto;
@@ -59,23 +58,23 @@ public class ChessDao {
         }
     }
 
-    public List<String> runningGameNames() throws SQLException {
+    public List<String> runningGameNames() {
         List<String> gameNames = new ArrayList<>();
-        String query = "SELECT game_name FROM game WHERE state='흑색 차례' OR state='백색 차례' ORDER BY game_id DESC";
+        String query = "SELECT game_name FROM game WHERE state='흑색 차례' OR state='백색 차례' OR state='게임 시작 전' ORDER BY game_id DESC";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(query);
             ResultSet rs = pstmt.executeQuery()) {
             gameNames(gameNames, rs);
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new DataAccessException("진행 중인 게임이 없습니다.");
         }
 
         return gameNames;
     }
 
-    private void gameNames(final List<String> ids, final ResultSet rs) throws SQLException {
+    private void gameNames(final List<String> gameNames, final ResultSet rs) throws SQLException {
         while (rs.next()) {
-            ids.add(rs.getString("game_name"));
+            gameNames.add(rs.getString("game_name"));
         }
     }
 
@@ -92,32 +91,31 @@ public class ChessDao {
         insertBoard(findGameIdByName(createRequestDto.getGameName()), chessGameDto.getSquareDtos());
     }
 
-    public void updateGameByName(final String gameName, final ChessGameDto chessGameDto)
-        throws SQLException {
+    public void updateGameByName(final String gameName, final ChessGameDto chessGameDto) {
         String gameId = findGameIdByName(gameName);
         updateGameState(gameId, chessGameDto.getState());
         deleteBoard(gameId);
         insertBoard(gameId, chessGameDto.getSquareDtos());
     }
 
-    private void updateGameState(final String gameId, final String state) throws SQLException {
+    private void updateGameState(final String gameId, final String state) {
         String query = "UPDATE game SET state=? WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, state);
             pstmt.setString(2, gameId);
             pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
     }
 
-    private void deleteBoard(final String gameId) throws SQLException {
+    private void deleteBoard(final String gameId) {
         String query = "DELETE FROM board WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -143,10 +141,11 @@ public class ChessDao {
         String query = "SELECT state FROM game WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, findGameIdByName(gameName));
-            ResultSet rs = pstmt.executeQuery();
-            validateResultSet(rs);
-            return rs.getString("state");
-        } catch (DataAccessException | SQLException e) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                validateResultSet(rs);
+                return rs.getString("state");
+            }
+        } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
@@ -158,7 +157,7 @@ public class ChessDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 return squareDtos(rs);
             }
-        } catch (DataAccessException | SQLException e) {
+        } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
@@ -179,16 +178,15 @@ public class ChessDao {
         return new ChessGameDto(squareDtos, state);
     }
 
-    public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName)
-        throws SQLException {
+    public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName) {
         String query = "UPDATE game SET white_user=?, black_user=? WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, playerIdsDto.getWhiteUserId());
             pstmt.setString(2, playerIdsDto.getBlackUserId());
             pstmt.setString(3, findGameIdByName(gameName));
             pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -196,10 +194,11 @@ public class ChessDao {
         String query = "SELECT game_id FROM game WHERE game_name=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameName);
-            ResultSet rs = pstmt.executeQuery();
-            validateResultSet(rs);
-            return rs.getString("game_id");
-        } catch (DataAccessException | SQLException e) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                validateResultSet(rs);
+                return rs.getString("game_id");
+            }
+        } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
@@ -210,44 +209,22 @@ public class ChessDao {
         }
     }
 
-    private List<String> findGameIdByUserId(final String userId) throws SQLException {
-        String query = "SELECT game_id FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
-        pstmt.setString(2, userId);
-        ResultSet rs = pstmt.executeQuery();
-
-        List<String> gameIds = new ArrayList<>();
-        while (rs.next()) {
-            gameIds.add(rs.getString("game_id"));
-        }
-
-        return gameIds;
-    }
-
-    private void findCommandsByUserId(String gameId, List<CommandsDto> commandsDtos)
-        throws SQLException {
-        String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-
-        List<String> commands = new ArrayList<>();
-        while (rs.next()) {
-            commands.add(rs.getString("command"));
-        }
-
-        commandsDtos.add(new CommandsDto(commands));
-    }
-
-    public List<UserIdsDto> findUserIdsByUserId(final UserIdsDto userIdsDto) throws SQLException {
+    public List<UserIdsDto> findUserIdsByUserId(final UserIdsDto userIdsDto) {
         String query = "SELECT white_user, black_user FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userIdsDto.getWhiteUserId());
-        pstmt.setString(2, userIdsDto.getBlackUserId());
-        ResultSet rs = pstmt.executeQuery();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, userIdsDto.getWhiteUserId());
+            pstmt.setString(2, userIdsDto.getBlackUserId());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return userIdsDtos(rs);
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
 
+    private List<UserIdsDto> userIdsDtos(final ResultSet rs) throws SQLException {
         List<UserIdsDto> userIdsDtos = new ArrayList<>();
+
         while (rs.next()) {
             userIdsDtos.add(new UserIdsDto(rs.getString("white_user"), rs.getString("black_user")));
         }
@@ -257,12 +234,20 @@ public class ChessDao {
 
     public List<ChessGameDto> findGamesByUserId(final UserIdsDto userIdsDto) throws SQLException {
         String query = "SELECT game_name FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userIdsDto.getWhiteUserId());
-        pstmt.setString(2, userIdsDto.getBlackUserId());
-        ResultSet rs = pstmt.executeQuery();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, userIdsDto.getWhiteUserId());
+            pstmt.setString(2, userIdsDto.getBlackUserId());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return chessGameDtos(rs);
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
 
+    private List<ChessGameDto> chessGameDtos(final ResultSet rs) throws SQLException {
         List<ChessGameDto> chessGameDtos = new ArrayList<>();
+
         while (rs.next()) {
             chessGameDtos.add(findGameByName(rs.getString("game_name")));
         }
