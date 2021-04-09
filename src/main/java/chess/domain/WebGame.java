@@ -6,7 +6,7 @@ import chess.domain.board.YPosition;
 import chess.domain.command.Command;
 import chess.domain.command.End;
 import chess.domain.command.Move;
-import chess.domain.dao.ChessDAO;
+import chess.domain.dao.ChessDao;
 import chess.domain.dto.PieceDTO;
 import chess.domain.piece.Piece;
 import java.sql.SQLException;
@@ -31,11 +31,11 @@ public class WebGame {
             .recentBoard();
     }
 
-    public void loadGame(ChessDAO chessDAO) throws SQLException {
+    public void loadGame(ChessDao chessDAO) throws SQLException {
         game.loadGame(loadBoard(chessDAO), chessDAO.loadTurnDTO(1));
     }
 
-    public Map<Position, PieceDTO> loadBoard(ChessDAO chessDAO) throws SQLException {
+    public Map<Position, PieceDTO> loadBoard(ChessDao chessDAO) throws SQLException {
         Map<Position, PieceDTO> loadBoard = new HashMap<>();
         for (XPosition xPosition : XPosition.values()) {
             putPieceOnXPosition(chessDAO, loadBoard, xPosition);
@@ -43,7 +43,7 @@ public class WebGame {
         return loadBoard;
     }
 
-    private void putPieceOnXPosition(ChessDAO chessDAO, Map<Position, PieceDTO> loadBoard,
+    private void putPieceOnXPosition(ChessDao chessDAO, Map<Position, PieceDTO> loadBoard,
         XPosition xPosition) throws SQLException {
         for (YPosition yPosition : YPosition.values()) {
             Position position = Position.of(xPosition, yPosition);

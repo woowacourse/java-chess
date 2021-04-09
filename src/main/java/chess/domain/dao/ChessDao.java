@@ -8,10 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ChessDAO {
+public class ChessDao {
 
     public static final String INITIAL_TURN_COLOR = "white";
-    private final int SINGLE_BOARD_NUMBER  = 1;
+    private static final int SINGLE_BOARD_NUMBER  = 1;
 
     public Connection getConnection() {
         Connection con = null;

@@ -26,7 +26,7 @@ public class Board {
     }
 
     public static Board loadBoard(Map<Position, PieceDTO> pieceDTOMap) {
-        Map<Position, Piece> board = new HashMap<Position, Piece>();
+        Map<Position, Piece> board = new HashMap<>();
         for (Map.Entry<Position, PieceDTO> element : pieceDTOMap.entrySet()) {
             Position position = element.getKey();
             PieceDTO pieceDTO = element.getValue();

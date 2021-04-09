@@ -6,7 +6,7 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.WebGame;
 import chess.domain.board.Position;
-import chess.domain.dao.ChessDAO;
+import chess.domain.dao.ChessDao;
 import chess.domain.dto.PieceDTO;
 import chess.domain.piece.Piece;
 import com.google.gson.Gson;
@@ -20,10 +20,10 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessWebController {
 
-    private final static Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
 
     public void run() {
-        ChessDAO chessDAO = new ChessDAO();
+        ChessDao chessDAO = new ChessDao();
         chessDAO.getConnection();
         WebGame webGame = new WebGame();
 
@@ -44,7 +44,7 @@ public class ChessWebController {
 
             submitData.put("turn", webGame.getTurn());
             submitData.put("chessBoard", loadedSubmitBoard);
-            return gson.toJson(submitData);
+            return GSON.toJson(submitData);
         });
 
         post("/initial", (req, res) -> {
@@ -56,12 +56,12 @@ public class ChessWebController {
 
             submitData.put("turn", webGame.getTurn());
             submitData.put("chessBoard", initialChessBoard);
-            return gson.toJson(submitData);
+            return GSON.toJson(submitData);
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
-            Map<String, Object> requestBody = gson.fromJson(req.body(), HashMap.class);
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
             String moveRawCommand = (String) requestBody.get("move");
             String moveResult = webGame.move(moveRawCommand);
             submitData.put("isSuccess", moveResult);
@@ -73,20 +73,20 @@ public class ChessWebController {
 
             judgeEnd(webGame, submitData);
             submitData.put("turn", webGame.getTurn());
-            return gson.toJson(submitData);
+            return GSON.toJson(submitData);
         });
 
         post("/grade", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
             submitData.put("whiteScore", webGame.whiteScore());
             submitData.put("blackScore", webGame.blackScore());
-            return gson.toJson(submitData);
+            return GSON.toJson(submitData);
         });
 
         post("/end", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
             webGame.end();
-            return gson.toJson(submitData);
+            return GSON.toJson(submitData);
         });
     }
 
@@ -98,7 +98,7 @@ public class ChessWebController {
     }
 
     private static void insertInitialBoard(Map<String, Object> initialChessBoard,
-        Map<Position, Piece> startedBoard, ChessDAO chessDAO) throws SQLException {
+        Map<Position, Piece> startedBoard, ChessDao chessDAO) throws SQLException {
         chessDAO.resetPiece(1);
         for (Map.Entry<Position, Piece> elem : startedBoard.entrySet()) {
             Position position = elem.getKey();
@@ -124,7 +124,7 @@ public class ChessWebController {
         return new PieceDTO(position.symbol(), piece.symbol());
     }
 
-    public static void moveOnDB(ChessDAO chessDAO, String rawMoveCommand) throws SQLException {
+    public static void moveOnDB(ChessDao chessDAO, String rawMoveCommand) throws SQLException {
         List<String> moveSourceTarget = Arrays.asList(rawMoveCommand.split(" "));
         PieceDTO pieceDTO = chessDAO.pieceOnLocation(moveSourceTarget.get(1),1);
         pieceDTO.setLocation(moveSourceTarget.get(2));
