@@ -26,9 +26,9 @@ function renderImage(input) {
     if (input === "." || input === "") {
         return ``;
     } else if (input.charCodeAt(0) >= 97) {
-        return `<img src=/images/w${input}.png class="piece">`;
+        return `<img src=/images/w${input}.png class="piece" value=${input}>`;
     } else {
-        return `<img src=/images/${input}.png class="piece">`;
+        return `<img src=/images/${input}.png class="piece" value=${input}>`;
     }
 }
 
@@ -41,6 +41,7 @@ function movePiece(sourcePoint, targetPoint) {
     let sourcePiece = document.getElementById(sourcePoint).innerHTML;
     document.getElementById(sourcePoint).innerHTML = renderImage("");
     document.getElementById(targetPoint).innerHTML = sourcePiece;
+
     toggleClicked(sourcePoint, targetPoint);
 }
 
@@ -168,9 +169,6 @@ async function save(boardInfo) {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => {
-        alert('게임 나가기!');
-        location.replace('/');
     });
 }
 
@@ -193,6 +191,25 @@ async function makeBoardInfo() {
 
 function toggleExit() {
     makeBoardInfo();
+    alert('게임 나가기!');
+    location.replace('/');
 }
 
 boardSetting();
+
+//하고자 하는거: 64개 돌면서 value 얻어서 boardinfo 넣어서 저장하는거
+//결국: 움직일 때마다 보드 저장하는거
+
+for (let j = 1; j <= 8; j++) {
+    for (let i = 0; i < 8; i++) {
+        let row = String.fromCharCode('a'.charCodeAt(0) + i);
+        let point = row + j;
+        let td = document.querySelector("#"+point).value;
+        let img = td.innerClass("piece");
+        if(img === null) {
+            console.log('.');
+        } else {
+            console.log(img);
+        }
+    }
+}

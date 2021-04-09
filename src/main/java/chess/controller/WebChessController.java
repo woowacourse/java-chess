@@ -2,7 +2,6 @@ package chess.controller;
 
 import static spark.Spark.*;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,15 +35,15 @@ public class WebChessController {
         get("/chess", (req, res) -> startWithUser());
         get("/restart", (req, res) -> restart());
         post("/user", (req, res) -> login(req));
-        get("/signup", (req, res) -> signup(req));
+        post("/signup", (req, res) -> signup(req));
         get("/adduser", (req, res) -> render(new HashMap<>(), "signup.html"));
         post("/board", (req, res) -> makeBoard(req));
         post("/save", (req, res) -> exit(req));
         put("/piece", (req, res) -> GSON.toJson(chessService.matchPieceName(chessGame, req.body())));
-        put("/move", (req, res) -> chessService.move(chessGame, GSON.fromJson(req.body(), RequestDto.class)));
+        put("/move", (req, res) -> chessService.move(userDto, chessGame, GSON.fromJson(req.body(), RequestDto.class)));
         post("/color", (req, res) -> chessService.makeCurrentColor(chessGame, req.body()));
         post("/turn", (req, res) -> chessService.makeNextColor(chessGame));
-        post("/score", (req, res) -> chessService.score(chessGame, req.body()));
+        post("/score", (req, res) -> chessService.score(userDto, req.body()));
     }
 
     private String startWithUser() {
@@ -54,7 +53,7 @@ public class WebChessController {
     }
 
     private String restart() {
-        chessGame = chessService.restartChess(userDto);
+        chessService.restartChess(userDto);
         return render(new HashMap<>(), "chess.html");
     }
 
@@ -67,6 +66,10 @@ public class WebChessController {
         }
         userDto = loginUser;
         model.put("user", userDto);
+
+        //chess/1 했을 때 1을 넣는 것
+        // String userId = req.params(":name");
+        // model.put("userId", userId);
         return render(model, "chess.html");
     }
 

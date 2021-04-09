@@ -3,8 +3,6 @@ package chess.service;
 import static chess.domain.Status.*;
 import static chess.domain.piece.Color.*;
 
-import java.sql.SQLException;
-
 import chess.dao.ChessDao;
 import chess.dao.SQLConnection;
 import chess.domain.ChessGame;
@@ -21,10 +19,9 @@ public class ChessService {
         chessDAO = new ChessDao(new SQLConnection());
     }
 
-    public ChessGame restartChess(UserDto userDto) {
+    public void restartChess(UserDto userDto) {
         String userId = chessDAO.findUserIdByUser(userDto);
         chessDAO.deleteBoard(userId);
-        return new ChessGame();
     }
 
     public ChessGame matchBoard(UserDto userDto) {
@@ -67,22 +64,24 @@ public class ChessService {
         return WHITE.name();
     }
 
-    public int move(ChessGame chessGame, RequestDto requestDto) {
+    public int move(UserDto userDto, ChessGame chessGame, RequestDto requestDto) {
         String source = requestDto.getSource();
         String target = requestDto.getTarget();
         try {
             chessGame.playTurn(Point.of(source), Point.of(target));
             if (chessGame.isEnd()) {
+                chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), chessGame, makeNextColor(chessGame));
                 return RESET_CONTENT.code();
             }
+            chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), chessGame, makeNextColor(chessGame));
             return OK.code();
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
             return NO_CONTENT.code();
         }
     }
 
-    public double score(ChessGame chessGame, String requestBody) {
-        return chessGame.calculateScore(Color.valueOf(requestBody)).getScore();
+    public double score(UserDto userDto, String requestBody) {
+        return matchBoard(userDto).calculateScore(Color.valueOf(requestBody)).getScore();
     }
 
     public void addUser(String requestName, String requestPassword) {

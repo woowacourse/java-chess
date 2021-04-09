@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
@@ -113,6 +114,16 @@ public class ChessDao {
             System.out.println(e.getErrorCode() + e.getMessage());
             throw new IllegalArgumentException("SQL Error 발생");
         }
+    }
+
+    public void saveBoard(String userId, ChessGame chessGame, String color) {
+        String boardInfo = "";
+            for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+                boardInfo += chessGame.getBoard().get(Point.valueOf(i, j)).getName();
+            }
+        }
+        addBoard(userId, boardInfo, color);
     }
 
     public void deleteBoard(String userId) {
