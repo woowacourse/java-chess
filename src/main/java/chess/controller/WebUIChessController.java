@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,13 @@ public class WebUIChessController {
             StateFactory.initialization(PiecesFactory.blackPieces()), START);
 
     public void run() {
-        get("/", (req, res) -> {
+        get("/", (req, res) -> render(new HashMap<>(), "home.html"));
+
+        get("/start", (req, res) -> makeNewGame(res));
+
+        get("/reset", (req, res) -> makeNewGame(res));
+
+        get("/chess", (req, res) -> {
             Map<String, String> chessBoardFromDB = new LinkedHashMap<>();
             List<ChessRequestDto> pieces = CHESS_REPOSITORY.showAllPieces();
             for (ChessRequestDto piece : pieces) {
@@ -137,30 +144,30 @@ public class WebUIChessController {
 
             return "{\"status\":\"200\", \"message\":\"성공\"}";
         });
+    }
 
-        get("/reset", (req, res) -> {
-            CHESS_REPOSITORY.removeAllPieces();
-            CHESS_REPOSITORY.removeTurn();
+    private Object makeNewGame(final spark.Response res) throws SQLException {
+        CHESS_REPOSITORY.removeAllPieces();
+        CHESS_REPOSITORY.removeTurn();
 
-            round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
-                    StateFactory.initialization(PiecesFactory.blackPieces()), START);
+        round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
+                StateFactory.initialization(PiecesFactory.blackPieces()), START);
 
-            Map<Position, Piece> chessBoard = round.getBoard();
-            Map<String, String> filteredChessBoard = new LinkedHashMap<>();
-            for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
-                if (chessBoardEntry.getValue() != null) {
-                    filteredChessBoard.put(chessBoardEntry.getKey().toString(),
-                            chessBoardEntry.getValue().getPiece());
-                }
+        Map<Position, Piece> chessBoard = round.getBoard();
+        Map<String, String> filteredChessBoard = new LinkedHashMap<>();
+        for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
+            if (chessBoardEntry.getValue() != null) {
+                filteredChessBoard.put(chessBoardEntry.getKey().toString(),
+                        chessBoardEntry.getValue().getPiece());
             }
+        }
 
-            CHESS_REPOSITORY.initializePieceStatus(filteredChessBoard);
-            CHESS_REPOSITORY.initializeTurn();
+        CHESS_REPOSITORY.initializePieceStatus(filteredChessBoard);
+        CHESS_REPOSITORY.initializeTurn();
 
-            res.redirect("/");
+        res.redirect("/chess");
 
-            return null;
-        });
+        return null;
     }
 
     private static String render(final Map<String, Object> model, final String templatePath) {

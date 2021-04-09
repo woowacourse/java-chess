@@ -102,7 +102,7 @@ const resetBtn = document.getElementById('reset-btn');
 
 resetBtn.addEventListener('click', function() {
     window.location.href = '/reset';
-})
+});
 
 let is_start_position_clicked = false;
 let start_position = null;
@@ -157,6 +157,6 @@ function request_move_post(first_click, second_click) {
             second_click.style.backgroundColor = '';
             return;
         }
-        window.location.href = '/';
+        window.location.href = '/chess';
     };
 }
