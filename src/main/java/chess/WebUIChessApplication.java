@@ -92,29 +92,17 @@ public class WebUIChessApplication {
             ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
             return webUIChessGameController.score(chessGameDto);
         }, gson::toJson);
-        
+
         get("/search/search-page", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "chess-game-search.html");
         });
 
-        // refactor list 9
         post("/search/search", (req, res) -> {
             UserIdsDto userIdsDto = gson.fromJson(req.body(), UserIdsDto.class);
-            List<CommandsDto> commandsByUserIds = chessDao
-                .findCommandsByUserIds(userIdsDto.getWhiteUserId());
-            List<UserIdsDto> userIdsDtos = chessDao
-                .findUserIdsByUserId(userIdsDto.getWhiteUserId());
-            List<String> states = new ArrayList<>();
-            List<ScoreDto> scoreDtos = new ArrayList<>();
-
-            for (CommandsDto commandsDto : commandsByUserIds) {
-                ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-                scoreDtos.add(new ScoreDto(chessGame.score().white(), chessGame.score().black()));
-                states.add(chessGame.state());
-            }
-
-            return DtoAssembler.searchResultDto(states, userIdsDtos, scoreDtos);
+            List<ChessGameDto> chessGameDtos = chessDao.findGamesByUserId(userIdsDto);
+            List<UserIdsDto> userIdsDtos = chessDao.findUserIdsByUserId(userIdsDto);
+            return webUIChessGameController.searchResult(chessGameDtos, userIdsDtos);
         }, gson::toJson);
     }
 

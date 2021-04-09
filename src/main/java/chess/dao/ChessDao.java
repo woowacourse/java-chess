@@ -173,33 +173,10 @@ public class ChessDao {
         return squareDtos;
     }
 
-    public ChessGameDto findGameByName(final String gameName) throws SQLException {
+    public ChessGameDto findGameByName(final String gameName) {
         List<SquareDto> squareDtos = findSquaresByName(gameName);
         String state = findStateByName(gameName);
         return new ChessGameDto(squareDtos, state);
-    }
-
-    public void insertStartCommand(final String gameName) throws SQLException {
-        String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            pstmt.setString(1, findGameIdByName(gameName));
-            pstmt.setString(2, "start");
-            pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void insertMoveCommand(final String source, final String target, final String gameName)
-        throws SQLException {
-        String query = "INSERT INTO history(game_id, command) VALUES(?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            pstmt.setString(1, findGameIdByName(gameName));
-            pstmt.setString(2, String.format("move %s %s", source, target));
-            pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void updatePlayerIds(final PlayerIdsDto playerIdsDto, final String gameName)
@@ -233,28 +210,6 @@ public class ChessDao {
         }
     }
 
-    public CommandsDto findCommandsByName(final String gameName) throws SQLException {
-        String query = "SELECT command FROM history WHERE game_id=? ORDER BY history_id";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, findGameIdByName(gameName));
-        ResultSet rs = pstmt.executeQuery();
-
-        List<String> commands = new ArrayList<>();
-        while (rs.next()) {
-            commands.add(rs.getString("command"));
-        }
-
-        return new CommandsDto(commands);
-    }
-
-    public List<CommandsDto> findCommandsByUserIds(final String userId) throws SQLException {
-        List<CommandsDto> commandsDtos = new ArrayList<>();
-        for (String gameId : findGameIdByUserId(userId)) {
-            findCommandsByUserId(gameId, commandsDtos);
-        }
-        return commandsDtos;
-    }
-
     private List<String> findGameIdByUserId(final String userId) throws SQLException {
         String query = "SELECT game_id FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -285,11 +240,11 @@ public class ChessDao {
         commandsDtos.add(new CommandsDto(commands));
     }
 
-    public List<UserIdsDto> findUserIdsByUserId(final String userId) throws SQLException {
+    public List<UserIdsDto> findUserIdsByUserId(final UserIdsDto userIdsDto) throws SQLException {
         String query = "SELECT white_user, black_user FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userId);
-        pstmt.setString(2, userId);
+        pstmt.setString(1, userIdsDto.getWhiteUserId());
+        pstmt.setString(2, userIdsDto.getBlackUserId());
         ResultSet rs = pstmt.executeQuery();
 
         List<UserIdsDto> userIdsDtos = new ArrayList<>();
@@ -298,5 +253,20 @@ public class ChessDao {
         }
 
         return userIdsDtos;
+    }
+
+    public List<ChessGameDto> findGamesByUserId(final UserIdsDto userIdsDto) throws SQLException {
+        String query = "SELECT game_name FROM game WHERE white_user=? OR black_user=? ORDER BY game_id DESC";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, userIdsDto.getWhiteUserId());
+        pstmt.setString(2, userIdsDto.getBlackUserId());
+        ResultSet rs = pstmt.executeQuery();
+
+        List<ChessGameDto> chessGameDtos = new ArrayList<>();
+        while (rs.next()) {
+            chessGameDtos.add(findGameByName(rs.getString("game_name")));
+        }
+
+        return chessGameDtos;
     }
 }
