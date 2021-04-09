@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
@@ -44,6 +45,10 @@ public class Room {
 
     public ScoreDto judgeResult() {
         return state.judgeResult();
+    }
+
+    public Board getBoard() {
+        return state.getBoard();
     }
 
     public State getState() {

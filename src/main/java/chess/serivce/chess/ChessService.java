@@ -28,12 +28,12 @@ public class ChessService {
         room.play("start");
         roomRepository.update(room);
 
-        Board board = room.getState().getBoard();
+        Board board = room.getBoard();
         for (Piece piece : board.getPieces()) {
             pieceRepository.insert(room.getId(), piece);
         }
 
-        List<PieceDto> pieceDtos = room.getState().getBoard().getPieces()
+        List<PieceDto> pieceDtos = board.getPieces()
             .stream()
             .map(piece -> PieceDto.from(piece))
             .collect(Collectors.toList());
@@ -50,7 +50,8 @@ public class ChessService {
         room.play("end");
         roomRepository.update(room);
 
-        List<PieceDto> pieceDtos = room.getState().getBoard().getPieces()
+        Board board = room.getBoard();
+        List<PieceDto> pieceDtos = board.getPieces()
             .stream()
             .map(piece -> PieceDto.from(piece))
             .collect(Collectors.toList());
@@ -63,7 +64,7 @@ public class ChessService {
 
     public MoveResponseDto move(String roomName, String source, String target) throws SQLException {
         Room room = roomRepository.findRoomByRoomName(roomName);
-        Board board = room.getState().getBoard();
+        Board board = room.getBoard();
         Piece sourcePiece = board.find(Location.of(source));
         List<Piece> beforeMovePieces = board.getPieces();
 
