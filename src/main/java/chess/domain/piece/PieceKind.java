@@ -47,6 +47,13 @@ public enum PieceKind {
         this.initialYPositions = initialYPositions;
     }
 
+    public static PieceKind pieceKindByName(String name) {
+        return Arrays.stream(PieceKind.values())
+            .filter(pieceKind -> pieceKind.symbol.equals(name))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     public List<XPosition> bringInitialXPositions() {
         return this.initialXPositions;
     }
@@ -58,6 +65,7 @@ public enum PieceKind {
     public boolean isSameKind(PieceKind pieceKind) {
         return this == pieceKind;
     }
+
     public String getName(PieceColor pieceColor) {
         if (pieceColor.isSameColor(PieceColor.WHITE)) {
             return symbol.toLowerCase();

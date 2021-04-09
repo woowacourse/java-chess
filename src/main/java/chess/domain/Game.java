@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.board.InitializedBoard;
-import chess.domain.board.Point;
-import chess.domain.board.Position;
+import chess.domain.board.*;
 import chess.domain.piece.PieceColor;
 
 public class Game {
@@ -13,19 +10,37 @@ public class Game {
     private GameState gameState;
     private PieceColor turnColor;
 
-    public Game() {
+    private Game(Board board, Point point, GameState gameState, PieceColor turnColor) {
+        this.board = board;
+        this.point = point;
+        this.gameState = gameState;
+        this.turnColor = turnColor;
+    }
+
+    public static Game newGame() {
         InitializedBoard initializedBoard = new InitializedBoard();
-        this.board = new Board(initializedBoard.emptyBoard());
-        this.point = new Point(board);
-        this.gameState = GameState.NOT_STARTED;
-        this.turnColor = PieceColor.WHITE;
+        Board board = new Board(initializedBoard.board());
+        Point point = new Point(board);
+
+        return new Game(board, point, GameState.START, PieceColor.WHITE);
+    }
+
+    public static Game continueGame(String roomName) {
+        InitializedBoardFromDb initializedBoardFromDb = new InitializedBoardFromDb();
+
+        Board board = new Board(initializedBoardFromDb.continueBoard(roomName));
+        Point point = new Point(board);
+        PieceColor turnColor = initializedBoardFromDb.continueTurn(roomName);
+
+        return new Game(board, point, GameState.START, turnColor);
     }
 
     public void init() {
         InitializedBoard initializedBoard = new InitializedBoard();
         this.board = new Board(initializedBoard.board());
-        this.point = new Point(board);
+        this.point = new Point(this.board);
         this.gameState = GameState.START;
+        this.turnColor = PieceColor.WHITE;
     }
 
     public void end() {
@@ -36,8 +51,8 @@ public class Game {
         return gameState.isEnd();
     }
 
-    public boolean isStart() {
-        return gameState.isStart();
+    public boolean isNotStart() {
+        return !gameState.isStart();
     }
 
     public void move(String source, String target) {
@@ -49,6 +64,10 @@ public class Game {
         }
 
         this.turnColor = turnColor.oppositeColor();
+    }
+
+    public PieceColor turnColor() {
+        return turnColor;
     }
 
     public double computeWhitePoint() {

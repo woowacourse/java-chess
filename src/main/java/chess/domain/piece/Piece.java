@@ -57,6 +57,11 @@ public class Piece {
     }
 
     @Override
+    public String toString() {
+        return String.format("%s_%s", pieceColor.getName(), pieceKind.getName(pieceColor));
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

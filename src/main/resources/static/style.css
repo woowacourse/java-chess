@@ -1,0 +1,240 @@
+html,
+
+body {
+    background-image: url("./img/home.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.95;
+}
+
+#title {
+    text-align: center;
+    text-shadow: -1px 0 #c9f3ea, 0 1px #c9f3ea, 1px 0 #c9f3ea, 0 -1px #c9f3ea;
+    font-size: 100px;
+    font-weight: bold;
+    font-family: cursive;
+    color: mediumaquamarine;
+    margin-top: 100px;
+}
+
+#room {
+    position: relative;
+    left: 43%;
+    margin-top: 20px;
+    background-color: #c9f3ea;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: cursive;
+    text-align: center;
+    border-radius: 25px;
+    border: floralwhite solid 5px;
+}
+
+#start {
+    position: absolute;
+    left: 48%;
+    margin-top: 30px;
+    background-color: #c9f3ea;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: cursive;
+    border-radius: 25px;
+    border: floralwhite solid 5px;
+}
+
+.rooms {
+    margin-top: 120px;
+}
+
+#existingRoom {
+    width: 200px;
+    position: relative;
+    left: 46%;
+    background-color: #cfecc0;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: cursive;
+    border: floralwhite solid 5px;
+}
+
+#restart {
+    position: relative;
+    left: 45px;
+    top: 20px;
+    padding: 10px 17px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: cursive;
+    border-radius: 15px;
+    border: floralwhite solid 4px;
+    background-color: cadetblue;
+}
+
+
+#end {
+    position: relative;
+    left: 50px;
+    top: 20px;
+    padding: 10px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: cursive;
+    border-radius: 15px;
+    border: floralwhite solid 4px;
+    background-color: cadetblue;
+}
+
+#restart:hover {
+    background-color: antiquewhite;
+}
+
+#end:hover {
+    background-color: antiquewhite;
+}
+
+#gameTitle {
+    text-align: center;
+    text-shadow: -1px 0 #c9f3ea, 0 1px #c9f3ea, 1px 0 #c9f3ea, 0 -1px #c9f3ea;
+    font-size: 80px;
+    font-weight: bold;
+    font-family: cursive;
+    color: mediumaquamarine;
+    margin-top: 10px;
+    clear: both;
+}
+
+table {
+    border: floralwhite solid 10px;
+    float: left;
+    margin-left: 140px;
+    margin-top: 20px;
+    border-collapse: collapse;    
+}
+
+.info {
+    float: left;
+    margin-left: 130px;
+    margin-top: 70px;
+    width: 300px;
+    height: 470px;
+    border: mediumaquamarine solid 5px;
+    background-color: #c9f3ea;
+    border-radius: 25px;
+}
+
+#turn {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: cadetblue solid 4px;
+    text-align: center;
+    text-shadow: -1px 0 #c9f3ea, 0 1px #c9f3ea, 1px 0 #c9f3ea, 0 -1px #c9f3ea;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: cursive;
+    color: #1C3C30;
+}
+
+#scoreboard {
+    margin-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: cadetblue solid 4px;
+    border-top: cadetblue solid 4px;
+    text-align: center;
+    text-shadow: -1px 0 #c9f3ea, 0 1px #c9f3ea, 1px 0 #c9f3ea, 0 -1px #c9f3ea;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: cursive;
+    color: #1c3c30;
+}
+
+#infoTitle {
+    padding-bottom: 15px;
+    border-bottom: cadetblue solid 4px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-shadow: -1px 0 #0c3229, 0 1px #0c3229, 1px 0 #0c3229, 0 -1px #0c3229;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: cursive;
+    color: #a4a7a4;
+}
+
+td {
+    width: 70px;
+    height: 70px;
+}
+
+.eight .odd {
+    background-color: papayawhip;
+}
+
+.eight .even {
+    background-color: #45a282;
+}
+
+.seven .odd {
+    background-color: #45a282;
+}
+
+.seven .even {
+    background-color: papayawhip;
+}
+
+.six .odd {
+    background-color: papayawhip;
+}
+
+.six .even {
+    background-color: #45a282;
+}
+
+.five .odd {
+    background-color: #45a282;
+}
+
+.five .even {
+    background-color: papayawhip;
+}
+
+.four .odd {
+    background-color: papayawhip;
+}
+
+.four .even {
+    background-color: #45a282;
+}
+
+.three .odd {
+    background-color: #45a282;
+}
+
+.three .even {
+    background-color: papayawhip;
+}
+
+.two .odd {
+    background-color: papayawhip;
+}
+
+.two .even {
+    background-color: #45a282;
+}
+
+.one .odd {
+    background-color: #45a282;
+}
+
+.one .even {
+    background-color: papayawhip;
+}
+
+td:hover {
+    background-color: SlateGrey !important;
+}
+
+.selected {
+    background-color: SlateGrey !important;
+}

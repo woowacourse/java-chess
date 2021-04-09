@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.dao.BackupBoardDao;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.exceptions.SameTeamException;
 import chess.domain.exceptions.UnableCrossException;
@@ -8,9 +9,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
+import chess.dto.SquareDto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
 
@@ -142,5 +143,9 @@ public class Board {
             .filter(Piece::isKing)
             .findFirst()
             .get().color();
+    }
+
+    public Set<Position> positions() {
+        return board.keySet();
     }
 }

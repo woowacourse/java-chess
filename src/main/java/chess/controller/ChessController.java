@@ -11,7 +11,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        Game game = new Game();
+        Game game = Game.newGame();
         while (!game.isEnd()) {
             selectMenu(game);
         }
@@ -27,7 +27,6 @@ public class ChessController {
     }
 
     public static void start(Game game, String command) {
-        game.init();
         OutputView.printBoard(game);
     }
 
@@ -42,7 +41,7 @@ public class ChessController {
     }
 
     private static void isStart(Game game) {
-        if (!game.isStart()) {
+        if (game.isNotStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }

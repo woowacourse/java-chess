@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chess Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-Hello World!!
+<div id="title">
+    Chess Game
+</div>
+<form action="start" method="get">
+    <div class="roomName">
+        <input type="hidden" name="newGame" value="yes">
+        <input type="text" name="roomName" id="room" placeholder="Room Name" autofocus>
+    </div>
+    <div class="startButton">
+        <input type="submit" id="start" value="start">
+    </div>
+</form>
+<div class="rooms">
+{{#names}}
+    <form action="start" method="get">
+        <div>
+            <input type="hidden" name="newGame" value="no">
+            <input type="hidden" name="roomName" value={{name}}>
+            <input type="submit" id="existingRoom" value={{name}}>
+        </div>
+    </form>
+{{/names}}
+</div>
 </body>
+
 </html>
