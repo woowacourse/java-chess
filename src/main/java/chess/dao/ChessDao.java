@@ -61,7 +61,7 @@ public class ChessDao {
 
     public List<String> runningGameNames() throws SQLException {
         List<String> gameNames = new ArrayList<>();
-        String query = "SELECT game_name FROM game WHERE state='BlackTurn' OR state='WhiteTurn' ORDER BY game_id DESC";
+        String query = "SELECT game_name FROM game WHERE state='흑색 차례' OR state='백색 차례' ORDER BY game_id DESC";
 
         try (PreparedStatement pstmt = getConnection().prepareStatement(query);
             ResultSet rs = pstmt.executeQuery()) {
