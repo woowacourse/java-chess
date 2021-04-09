@@ -4,10 +4,7 @@ import chess.entity.Chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ChessDAOTest {
     private ChessDAO chessDao = new ChessDAO();
@@ -15,12 +12,6 @@ class ChessDAOTest {
     @BeforeEach
     public void deleteAll() throws Exception {
         chessDao.deleteAllChess();
-    }
-
-    @Test
-    public void connection() {
-        Connection con = chessDao.getConnection();
-        assertNotNull(con);
     }
 
     @Test
