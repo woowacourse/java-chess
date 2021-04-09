@@ -56,7 +56,7 @@ class CommandDAOTest {
         }
     }
 
-    void addPoints(final String roomId) {
+    void addPoints(final String roomId) throws SQLException {
         for (PointsDTO points : commands) {
             commandDAO.addCommand(roomId, points.getStartPoint(), points.getEndPoint());
         }
@@ -64,11 +64,11 @@ class CommandDAOTest {
 
     @Test
     @DisplayName("roomId을 testId로 가진 것들을 삭제하면, 성공한다.")
-    void deleteCommands() {
+    void deleteCommands() throws SQLException {
         deleteCommandsByRoomId(testRoomId);
     }
 
-    void deleteCommandsByRoomId(final String roomId) {
+    void deleteCommandsByRoomId(final String roomId) throws SQLException {
         commandDAO.deleteCommandsByRoomId(roomId);
     }
 }

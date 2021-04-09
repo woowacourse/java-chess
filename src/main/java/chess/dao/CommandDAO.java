@@ -16,7 +16,7 @@ public final class CommandDAO {
         dataBaseConnector = new DataBaseConnector(server, database, option, userName, password);
     }
 
-    public void addCommand(final String roomId, final String startPoint, final String endPoint) {
+    public void addCommand(final String roomId, final String startPoint, final String endPoint) throws SQLException {
         String query = "INSERT INTO command(room_id, start_point, end_point) VALUES(?, ?, ?)";
         try (
                 Connection connection = dataBaseConnector.getConnection();
@@ -29,6 +29,7 @@ public final class CommandDAO {
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
+            throw e;
         }
     }
 
@@ -53,7 +54,7 @@ public final class CommandDAO {
         return points;
     }
 
-    public void deleteCommandsByRoomId(final String roomId) {
+    public void deleteCommandsByRoomId(final String roomId) throws SQLException {
         String query = "DELETE FROM command WHERE room_id = ?";
         try (
                 Connection connection = dataBaseConnector.getConnection();
@@ -64,6 +65,7 @@ public final class CommandDAO {
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
+            throw e;
         }
     }
 }
