@@ -30,7 +30,8 @@ public class RoomController {
 
     private void createRoom() {
         get("/room/create/:roomName", (req, res) -> {
-            final Long roomId = roomService.save(RequestHandler.roomName(req));
+            final String roomName = RequestHandler.roomName(req);
+            final Long roomId = roomService.save(roomName);
 
             res.status(200);
             res.redirect("/game/create/" + roomId);
