@@ -10,30 +10,30 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class MysqlMovementDaoTest {
+class DBMovementDaoTest {
     private static final String DUMMY_NAME = "테스트 게임";
-    private final MysqlMovementDao mysqlMovementDao = new MysqlMovementDao();
-    private final MysqlChessDao mysqlChessDao = new MysqlChessDao();
+    private final DBMovementDao DBMovementDao = new DBMovementDao();
+    private final DBChessDao DBChessDao = new DBChessDao();
 
     @BeforeEach
     void init() {
-        mysqlChessDao.save(new Chess(DUMMY_NAME));
+        DBChessDao.save(new Chess(DUMMY_NAME));
     }
 
     @AfterEach
     void close() {
-        mysqlChessDao.deleteByName(DUMMY_NAME);
+        DBChessDao.deleteByName(DUMMY_NAME);
     }
 
     @DisplayName("정상 저장 테스트")
     @Test
     void save() {
         //given
-        Chess chess = mysqlChessDao.findByName(DUMMY_NAME).orElse(new Chess("없슈"));
+        Chess chess = DBChessDao.findByName(DUMMY_NAME).orElse(new Chess("없슈"));
 
         //when
         Movement movement = new Movement(chess.getId(), "2a", "4a");
-        mysqlMovementDao.save(movement);
+        DBMovementDao.save(movement);
 
         //then
         Assertions.assertThat(chess.getId()).isEqualTo(movement.getChessId());
@@ -43,12 +43,12 @@ class MysqlMovementDaoTest {
     @Test
     void findByChessName() {
         //given
-        Chess chess = mysqlChessDao.findByName(DUMMY_NAME).orElse(new Chess("없슈"));
+        Chess chess = DBChessDao.findByName(DUMMY_NAME).orElse(new Chess("없슈"));
         //when
-        mysqlMovementDao.save(new Movement(chess.getId(), "2a", "4a"));
-        mysqlMovementDao.save(new Movement(chess.getId(), "4a", "6a"));
-        mysqlMovementDao.save(new Movement(chess.getId(), "6a", "8a"));
-        List<Movement> movements = mysqlMovementDao.findByChessName(DUMMY_NAME);
+        DBMovementDao.save(new Movement(chess.getId(), "2a", "4a"));
+        DBMovementDao.save(new Movement(chess.getId(), "4a", "6a"));
+        DBMovementDao.save(new Movement(chess.getId(), "6a", "8a"));
+        List<Movement> movements = DBMovementDao.findByChessName(DUMMY_NAME);
 
         //then
         Assertions.assertThat(movements).hasSize(3);

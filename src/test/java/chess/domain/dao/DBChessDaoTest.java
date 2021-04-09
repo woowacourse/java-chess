@@ -10,8 +10,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class MysqlChessDaoTest {
-    private final MysqlChessDao mysqlChessDao = new MysqlChessDao();
+class DBChessDaoTest {
+    private final DBChessDao DBChessDao = new DBChessDao();
 
     @DisplayName("체스 저장 테스트")
     @Test
@@ -21,12 +21,12 @@ class MysqlChessDaoTest {
         Chess chess = new Chess(name);
 
         //when
-        mysqlChessDao.save(chess);
-        Chess findByName = mysqlChessDao.findByName(name).get();
+        DBChessDao.save(chess);
+        Chess findByName = DBChessDao.findByName(name).get();
 
         //then
         assertThat(findByName.getName()).isEqualTo(chess.getName());
-        mysqlChessDao.deleteByName(name);
+        DBChessDao.deleteByName(name);
 
     }
 
@@ -38,12 +38,12 @@ class MysqlChessDaoTest {
         Chess chess = new Chess(name);
 
         //when
-        mysqlChessDao.save(chess);
+        DBChessDao.save(chess);
 
         //then
-        assertThatThrownBy(() -> mysqlChessDao.save(chess))
+        assertThatThrownBy(() -> DBChessDao.save(chess))
                 .isInstanceOf(IllegalStateException.class);
-        mysqlChessDao.deleteByName(name);
+        DBChessDao.deleteByName(name);
 
     }
 
@@ -55,18 +55,18 @@ class MysqlChessDaoTest {
         Chess chess = new Chess(name);
 
         //when
-        mysqlChessDao.save(chess);
+        DBChessDao.save(chess);
         chess.changeWinnerColor(Color.BLACK);
         chess.changeRunning(false);
-        mysqlChessDao.update(chess);
+        DBChessDao.update(chess);
 
-         if(mysqlChessDao.findByName(name).isPresent()){
-             Chess findChess = mysqlChessDao.findByName(name).get();
+         if(DBChessDao.findByName(name).isPresent()){
+             Chess findChess = DBChessDao.findByName(name).get();
 
              assertThat(findChess.getWinnerColor()).isEqualTo(Color.BLACK);
              assertThat(findChess.isRunning()).isEqualTo(false);
          }
-        mysqlChessDao.deleteByName(name);
+        DBChessDao.deleteByName(name);
     }
 
     @DisplayName("체스 삭제 테스트")
@@ -77,9 +77,9 @@ class MysqlChessDaoTest {
         Chess chess = new Chess(name);
 
         //when
-        mysqlChessDao.save(chess);
-        mysqlChessDao.deleteByName(name);
-        Optional<Chess> findByName = mysqlChessDao.findByName(name);
+        DBChessDao.save(chess);
+        DBChessDao.deleteByName(name);
+        Optional<Chess> findByName = DBChessDao.findByName(name);
 
         //then
         assertThat(findByName).isEqualTo(Optional.empty());

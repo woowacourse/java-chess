@@ -6,8 +6,8 @@ import chess.domain.piece.Color;
 import java.sql.*;
 import java.util.Optional;
 
-public class MysqlChessDao implements ChessDao {
-    public MysqlChessDao() {
+public class DBChessDao implements ChessDao {
+    public DBChessDao() {
         String query = "CREATE TABLE IF NOT EXISTS chess ( " +
                 "chess_id VARCHAR(36) NOT NULL," +
                 "name VARCHAR(64) NOT NULL," +

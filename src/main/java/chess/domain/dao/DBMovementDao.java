@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MysqlMovementDao implements MovementDao {
-    public MysqlMovementDao() {
+public class DBMovementDao implements MovementDao {
+    public DBMovementDao() {
         String query = "CREATE TABLE IF NOT EXISTS movement ( " +
                 "movement_id VARCHAR(36) NOT NULL," +
                 "chess_id VARCHAR(36) NOT NULL," +

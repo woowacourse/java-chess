@@ -26,7 +26,6 @@ public class ChessWebController {
         return new Gson().toJson(object);
     }
 
-
     public void run() {
         staticFiles.location("/static");
 
@@ -58,7 +57,6 @@ public class ChessWebController {
             String name = request.params(":name");
             GameStatusDto responseDto = chessService.loadChess(name);
             return toJson(responseDto);
-
         });
 
         put("/pieces", (request, response) -> {
