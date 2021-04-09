@@ -16,6 +16,4 @@ public class ChessGameManagerBundle {
         return chessGameManagers.stream()
                 .collect(toMap(ChessGameManager::getId, game -> game.nextColor().name()));
     }
-
-
 }

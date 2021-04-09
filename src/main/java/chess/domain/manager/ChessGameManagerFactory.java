@@ -7,7 +7,6 @@ import chess.domain.piece.attribute.Color;
 import chess.domain.statistics.ChessGameStatistics;
 
 import static chess.converter.PiecesConverter.convertSquares;
-import static chess.converter.PiecesConverter.createColoredPieces;
 import static chess.domain.piece.attribute.Color.WHITE;
 
 public class ChessGameManagerFactory {
@@ -15,8 +14,7 @@ public class ChessGameManagerFactory {
     }
 
     public static ChessGameManager createRunningGame(long id) {
-        Board board = InitBoardInitializer.getBoard();
-        return new RunningGameManager(id, InitBoardInitializer.getBoard(), createColoredPieces(board), WHITE);
+        return new RunningGameManager(id, InitBoardInitializer.getBoard(), WHITE);
     }
 
     public static ChessGameManager createEndGame(long id, ChessGameStatistics chessGameStatistics) {
@@ -30,10 +28,8 @@ public class ChessGameManagerFactory {
     public static ChessGameManager loadingGame(boolean isRunning, Long id, String pieces, Color nextTurn) {
         Board loadedBoard = LoadBoardInitializer.getBoard(convertSquares(pieces));
         if (isRunning) {
-            return new RunningGameManager(id, loadedBoard, createColoredPieces(loadedBoard), nextTurn);
+            return new RunningGameManager(id, loadedBoard, nextTurn);
         }
         return createEndGame(id, ChessGameStatistics.createNotStartGameResult());
     }
-
-
 }

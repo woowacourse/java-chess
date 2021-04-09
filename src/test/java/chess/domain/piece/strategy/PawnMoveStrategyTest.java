@@ -47,8 +47,11 @@ class PawnMoveStrategyTest {
         Square toSquare = new Square(toPosition, oppositePawn);
 
         Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(fromSquare, toSquare));
+        testBoard.move(fromPosition, toPosition);
 
-        assertThat(testBoard.move(fromPosition, toPosition).getCapturedPiece()).isEqualTo(oppositePawn);
+        boolean hasPiece = testBoard.getAliveSquares().stream()
+                .anyMatch(square -> square.isSamePosition(fromPosition));
+        assertThat(hasPiece).isFalse();
     }
 
     @DisplayName("첫 움직임일 때 폰이 2칸을 이동할 수 있는지")
@@ -63,7 +66,7 @@ class PawnMoveStrategyTest {
 
     @DisplayName("대각선에 말이 없을 때 대각선으로 이동하려하면 예외가 발생하는지")
     @Test
-    void throwExceptionWhenDiagonalIsEmpty(){
+    void throwExceptionWhenDiagonalIsEmpty() {
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");

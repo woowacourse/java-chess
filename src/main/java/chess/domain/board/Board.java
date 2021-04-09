@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
-import chess.domain.order.MoveResult;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
@@ -50,9 +50,9 @@ public class Board {
         return colorablePiece.getColor();
     }
 
-    public MoveResult move(Position from, Position to) {
+    public void move(Position from, Position to) {
         Square fromSquare = this.findByPosition(from);
-        return fromSquare.move(createMoveOrder(from, to));
+        fromSquare.move(createMoveOrder(from, to));
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {
@@ -71,6 +71,20 @@ public class Board {
         return route.stream()
                 .map(this::findByPosition)
                 .collect(toList());
+    }
+
+    public boolean isKingDead() {
+        return board.stream()
+                .filter(Square::hasPiece)
+                .noneMatch(square -> square.kindOf(King.class));
+    }
+
+    public Color kingAliveColor() {
+        return board.stream()
+                .filter(square -> square.kindOf(King.class))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("왕이 남아있는 색깔이 없습니다."))
+                .getColor();
     }
 
     public Map<Color, Double> getScoreMap() {
