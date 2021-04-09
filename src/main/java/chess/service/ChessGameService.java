@@ -2,19 +2,14 @@ package chess.service;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
-import chess.domain.team.Team;
 import chess.domain.team.WhiteTeam;
-import chess.dto.*;
+import chess.dto.ChessGameDTO;
+import chess.dto.ResponseDTO;
+import chess.dto.RoomDTO;
+import chess.dto.RoomsDTO;
 import chess.repository.ChessRepository;
-import chess.view.PieceConverter;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ChessGameService {
     private ChessRepository chessRepository;
@@ -89,102 +84,4 @@ public class ChessGameService {
         RoomsDTO roomsDTO = chessRepository.getTotalRoom();
         return new ResponseDTO(true, gson.toJson(roomsDTO), "방을 가져왔습니다.");
     }
-
-    private ChessGame createChessGame(final ChessGameDTO chessGameDTO) {
-        TeamDTO blackTeamDTO = chessGameDTO.getBlackTeam();
-        BlackTeam blackTeam = createBlackTeam(blackTeamDTO);
-
-        TeamDTO whiteTeamDTO = chessGameDTO.getWhiteTeam();
-        WhiteTeam whiteTeam = createWhiteTeam(whiteTeamDTO);
-
-        Team currentTurn = whiteTeam;
-        if (blackTeam.isCurrentTurn()) {
-            currentTurn = blackTeam;
-        }
-
-        blackTeam.setEnemy(whiteTeam);
-        whiteTeam.setEnemy(blackTeam);
-
-        return new ChessGame(blackTeam, whiteTeam, currentTurn, !chessGameDTO.isRunning());
-    }
-
-
-    private BlackTeam createBlackTeam(final TeamDTO blackTeamDTO) {
-        PiecesDTO blackPiecesDTO = blackTeamDTO.getPiecesDto();
-        List<PieceDTO> blackPieceDTOs = blackPiecesDTO.getPieceDtoList();
-        Map<Position, Piece> blackPiecePositions = new HashMap<>();
-
-        for (PieceDTO pieceDTO : blackPieceDTOs) {
-            Position position = Position.of(pieceDTO.getPosition());
-            Piece piece = PieceConverter.convertToPiece(pieceDTO.getPiece());
-            blackPiecePositions.put(position, piece);
-        }
-
-        BlackTeam blackTeam = new BlackTeam(blackTeamDTO.getName(), blackTeamDTO.isTurn(), blackPiecePositions);
-        return blackTeam;
-    }
-
-    private WhiteTeam createWhiteTeam(final TeamDTO whiteTeamDTO) {
-        PiecesDTO whitePiecesDTO = whiteTeamDTO.getPiecesDto();
-        List<PieceDTO> whitePieceDTOs = whitePiecesDTO.getPieceDtoList();
-        Map<Position, Piece> whitePiecePositions = new HashMap<>();
-
-        for (PieceDTO pieceDTO : whitePieceDTOs) {
-            Position position = Position.of(pieceDTO.getPosition());
-            Piece piece = PieceConverter.convertToPiece(pieceDTO.getPiece());
-            whitePiecePositions.put(position, piece);
-        }
-
-        WhiteTeam whiteTeam = new WhiteTeam(whiteTeamDTO.getName(), whiteTeamDTO.isTurn(), whitePiecePositions);
-        return whiteTeam;
-    }
-
-    private ChessGameDTO createChessGameDTO(final ChessGame chessGame) {
-        Map<Position, String> blackPieces = convertToBlackPrintName(chessGame.getBlackTeam().getPiecePosition());
-        Map<Position, String> whitePieces = convertToWhitePrintName(chessGame.getWhiteTeam().getPiecePosition());
-
-        PiecesDTO blackPiecesDto = createPiecesDTO(blackPieces);
-        PiecesDTO whitePiecesDto = createPiecesDTO(whitePieces);
-
-        TeamDTO whiteTeamDTO = new TeamDTO(whitePiecesDto, chessGame.getWhiteTeam().getName(),
-                String.valueOf(chessGame.getWhiteTeam().calculateTotalScore()),
-                chessGame.getWhiteTeam().isCurrentTurn());
-
-        TeamDTO blackTeamDTO = new TeamDTO(blackPiecesDto, chessGame.getBlackTeam().getName(),
-                String.valueOf(chessGame.getBlackTeam().calculateTotalScore()),
-                chessGame.getBlackTeam().isCurrentTurn());
-
-        return new ChessGameDTO(blackTeamDTO, whiteTeamDTO, !chessGame.isEnd());
-    }
-
-    private PiecesDTO createPiecesDTO(final Map<Position, String> pieces) {
-        List<PieceDTO> pieceDTOs = new ArrayList<>();
-
-        for (Map.Entry<Position, String> entry : pieces.entrySet()) {
-            pieceDTOs.add(new PieceDTO(entry.getKey().getKey(), entry.getValue()));
-        }
-
-        PiecesDTO piecesDTO = new PiecesDTO(pieceDTOs);
-        return piecesDTO;
-    }
-
-    private Map<Position, String> convertToBlackPrintName(final Map<Position, Piece> pieces) {
-        Map<Position, String> blackPrintFormat = new HashMap<>();
-        for (Position position : pieces.keySet()) {
-            final Piece piece = pieces.get(position);
-            blackPrintFormat.put(position, PieceConverter.convertToPieceName(piece).toUpperCase());
-        }
-        return blackPrintFormat;
-    }
-
-    private Map<Position, String> convertToWhitePrintName(final Map<Position, Piece> pieces) {
-        Map<Position, String> whitePrintFormat = new HashMap<>();
-        for (Position position : pieces.keySet()) {
-            final Piece piece = pieces.get(position);
-            if (piece == null) continue;
-            whitePrintFormat.put(position, PieceConverter.convertToPieceName(piece).toLowerCase());
-        }
-        return whitePrintFormat;
-    }
-
 }
