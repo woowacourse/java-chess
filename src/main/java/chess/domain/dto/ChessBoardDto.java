@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoardDto {
-    private Map<PositionDto, PieceDto> chessBoard;
+    private final Map<PositionDto, PieceDto> chessBoard;
 
     public ChessBoardDto(Map<Position, Piece> chessBoard) {
         Map<PositionDto, PieceDto> chessBoardDto = chessBoard.keySet().stream()
@@ -18,9 +18,5 @@ public class ChessBoardDto {
 
     public Map<PositionDto, PieceDto> getChessBoard() {
         return chessBoard;
-    }
-
-    public void setChessBoard(Map<PositionDto, PieceDto> chessBoard) {
-        this.chessBoard = chessBoard;
     }
 }

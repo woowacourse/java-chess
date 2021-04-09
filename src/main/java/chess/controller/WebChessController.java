@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.dto.ChessRoomDto;
+import chess.domain.dto.MoveStatusDto;
 import chess.domain.dto.PositionDto;
 import chess.service.ChessService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,7 +52,7 @@ public class WebChessController {
     private void showRoute() {
         post("/route", (req, res) -> {
             Map<String, String> map = mapper.readValue(req.body(), new TypeReference<Map<String, String>>() {});
-            List<PositionDto> routes = chessService.showRoutes(map);
+            List<PositionDto> routes = chessService.showRoutes(map.get("source"));
             return mapper.writeValueAsString(routes);
         });
     }
@@ -61,7 +62,10 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             try {
                 Map<String, String> map = mapper.readValue(req.body(), new TypeReference<Map<String, String>>() {});
-                chessService.movePiece(map, model);
+                ChessRoomDto chessRoomDto = chessService.movePiece(new MoveStatusDto(map.get("source"), map.get("target"), map.get("turn")), model);
+                boolean isAliveAllKings = chessService.isAliveAllKings();
+                model.put("chessRoomInfo", chessRoomDto);
+                model.put("isAliveAllKings", isAliveAllKings);
                 return mapper.writeValueAsString(model);
             }catch (Exception e) {
                 model.put("error", e.getMessage());
