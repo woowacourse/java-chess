@@ -11,6 +11,7 @@ import chess.domain.piece.Piece;
 import chess.dto.ChessGameDto;
 import chess.dto.MovableRequestDto;
 import chess.dto.MovableResponseDto;
+import chess.dto.MoveRequestDto;
 import chess.dto.SquareDto;
 import chess.utils.DtoAssembler;
 import java.util.LinkedHashMap;
@@ -57,6 +58,14 @@ public class WebUIChessGameController {
         ChessGame chessGame = chessGameByDto(chessGameDto);
         List<Position> positions = chessGame.movablePath(movableDto.position());
         return DtoAssembler.movableResponse(positions);
+    }
+
+    public ChessGameDto movedChessGame(final ChessGameDto chessGameDto, final MoveRequestDto moveDto) {
+        ChessGame chessGame = chessGameByDto(chessGameDto);
+        Position source = Position.of(moveDto.getSource());
+        Position target = Position.of(moveDto.getTarget());
+        chessGame.move(source, target);
+        return DtoAssembler.chessGameDto(chessGame);
     }
 
     private ChessGame chessGameByDto(ChessGameDto chessGameDto) {
