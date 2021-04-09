@@ -52,11 +52,15 @@ public class ChessGameDao {
     }
 
     public void addUser(UserDto userDto) throws SQLException {
+        Connection con = getConnection();
         String query = "INSERT INTO user(user_id) VALUES(?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userDto.getUserId());
-        pstmt.executeUpdate();
-        closeConnection(getConnection());
+        PreparedStatement pstmt = con.prepareStatement(query);
+        try (con; pstmt;) {
+            pstmt.setString(1, userDto.getUserId());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public UserDto findUser(UserDto userDto) throws SQLException {
@@ -73,8 +77,9 @@ public class ChessGameDao {
     }
 
     public ChessGameDto findGameByUserId(UserDto userDto) throws SQLException {
+        Connection con = getConnection();
         String query = "SELECT * FROM game WHERE user_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, userDto.getUserId());
         ResultSet rs = pstmt.executeQuery();
 
