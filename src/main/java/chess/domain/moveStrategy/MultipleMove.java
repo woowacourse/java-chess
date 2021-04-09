@@ -28,15 +28,20 @@ public class MultipleMove implements MoveStrategy {
     }
 
     private Stream<Position> movablePositionsOf(Vector direction, Position from, Map<Position, Piece> pieceByPosition) {
-        List<Position> positions = new ArrayList<>();
-        Position temp = from;
-        while (pieceByPosition.get(temp).isEmpty() && temp.canMove(direction)) {
-            temp = temp.move(direction);
-            positions.add(temp);
+        if (!from.canMove(direction)) {
+            return Stream.empty();
         }
 
+        List<Position> positions = new ArrayList<>();
+        Position temp = from;
+        do {
+            temp = temp.move(direction);
+            positions.add(temp);
+        } while (pieceByPosition.get(temp)
+                                .isEmpty() && temp.canMove(direction));
+
         if (pieceByPosition.get(temp)
-                            .isOpposite(color)) {
+                           .isOpposite(color)) {
             positions.add(temp);
         }
         return positions.stream();

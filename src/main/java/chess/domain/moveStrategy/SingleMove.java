@@ -21,6 +21,7 @@ public class SingleMove implements MoveStrategy {
     @Override
     public List<Position> movablePositions(Position from, Map<Position, Piece> pieceByPosition) {
         return directions.stream()
+                         .filter(from::canMove)
                          .map(from::move)
                          .filter(position -> !pieceByPosition.get(position)
                                                              .isSame(color))
