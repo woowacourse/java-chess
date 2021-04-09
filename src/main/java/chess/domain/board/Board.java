@@ -14,7 +14,7 @@ public class Board {
     private final List<Piece> pieces;
 
     private Board(final List<Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new ArrayList<>(pieces);
     }
 
     public static Board of(final List<Piece> pieces) {
@@ -122,6 +122,6 @@ public class Board {
     }
 
     public List<Piece> getPieces() {
-        return pieces;
+        return new ArrayList<>(pieces);
     }
 }
