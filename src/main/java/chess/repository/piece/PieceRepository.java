@@ -1,6 +1,5 @@
 package chess.repository.piece;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import java.sql.SQLException;
 import java.util.List;

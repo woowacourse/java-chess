@@ -3,7 +3,6 @@ package chess.repository.room;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.Board;
 import chess.domain.game.Room;
 import chess.domain.gamestate.running.Ready;
 import chess.domain.team.Team;

@@ -1,9 +1,7 @@
 package chess.repository.room;
 
-import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import java.sql.SQLException;
-import java.util.List;
 
 public interface RoomRepository {
 

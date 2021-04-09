@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.location.Location;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;

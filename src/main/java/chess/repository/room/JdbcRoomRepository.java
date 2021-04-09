@@ -1,7 +1,6 @@
 package chess.repository.room;
 
 import chess.domain.board.Board;
-import chess.domain.dto.RoomDto;
 import chess.domain.game.Room;
 import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;
@@ -13,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
