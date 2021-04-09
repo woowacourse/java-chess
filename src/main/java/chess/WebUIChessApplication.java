@@ -1,6 +1,5 @@
 package chess;
 
-import chess.entity.Chess;
 import chess.dao.ChessDAO;
 import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;
@@ -8,6 +7,7 @@ import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.dto.PositionDTO;
+import chess.entity.Chess;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,7 +20,10 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    public static final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson();
+    private static final int SUCCESSFUL_RESPONSE = 200;
+    private static final int CLIENT_ERROR_RESPONSE = 400;
+    private static final String CHESS_ID = "1";
 
     public static void main(String[] args) {
         staticFiles.location("/public");
@@ -58,42 +61,38 @@ public class WebUIChessApplication {
             try {
                 chessGame.move(chessGame.grid().piece(new Position(sourcePosition)),
                         chessGame.grid().piece(new Position(targetPosition)));
-                return 200;
+                return SUCCESSFUL_RESPONSE;
             } catch (IllegalArgumentException error) {
-                return 400;
+                return CLIENT_ERROR_RESPONSE;
             }
         });
 
         post("/start", (req, res) -> {
-            try {
-                chessGame.start();
-                return 200;
-            } catch (IllegalArgumentException error) {
-                return 201;
-            }
+            chessGame.start();
+            return SUCCESSFUL_RESPONSE;
         });
 
         post("/reset", (req, res) -> {
             chessGame.reset();
-            return 200;
+            return SUCCESSFUL_RESPONSE;
         });
 
         post("/save", (req, res) -> {
-            Chess chess = new Chess("1", chessGame.gridStringify(), chessGame.turn().name());
-            if (chessDAO.findByChessId("1") == null) {
+            Chess chess = new Chess(CHESS_ID, chessGame.gridStringify(), chessGame.turn().name());
+            if (chessDAO.findByChessId(CHESS_ID) == null) {
                 chessDAO.addChess(chess);
             }
             chessDAO.updateChess(chess, chess.getChess(), chess.getTurn());
-            return 200;
+            return SUCCESSFUL_RESPONSE;
         });
 
         post("/load", (req, res) -> {
-            if (chessDAO.findByChessId("1") == null) {
+            if (chessDAO.findByChessId(CHESS_ID) == null) {
                 throw new SQLDataException("저장된 보드가 없습니다.");
             }
-            Chess chess = chessDAO.findByChessId("1");
+            Chess chess = chessDAO.findByChessId(CHESS_ID);
             chessGame.load(chess);
-            return 200;
+            return SUCCESSFUL_RESPONSE;
         });
     }
 

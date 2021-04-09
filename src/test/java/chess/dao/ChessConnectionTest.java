@@ -14,7 +14,7 @@ public class ChessConnectionTest {
 
     @DisplayName("DB 잘못된 서버로 연결시 throws Exception")
     @Test
-    void connectionWrongServerThrowsException(){
+    void connectionWrongServerThrowsException() {
         ChessConnection chessConnection = new ChessConnection(new ConnectionProperty("localhost:13307", "db_name",
                 "?useSSL=false&serverTimezone=UTC", "root", "root"));
 
@@ -25,7 +25,7 @@ public class ChessConnectionTest {
 
     @DisplayName("DB 잘못된 DB로 연결시 throws Exception")
     @Test
-    void connectionWrongDBThrowsException(){
+    void connectionWrongDBThrowsException() {
         ChessConnection chessConnection = new ChessConnection(new ConnectionProperty("localhost:13306", "db_nam",
                 "?useSSL=false&serverTimezone=UTC", "root", "root"));
 
@@ -36,7 +36,7 @@ public class ChessConnectionTest {
 
     @DisplayName("DB 잘못된 option timezone으로 연결시 throws Exception")
     @Test
-    void connectionWrongOptionTimezoneThrowsException(){
+    void connectionWrongOptionTimezoneThrowsException() {
         ChessConnection chessConnection = new ChessConnection(new ConnectionProperty("localhost:13306", "db_name",
                 "?useSSL=false&serverTimezone=UT", "root", "root"));
 
@@ -45,9 +45,9 @@ public class ChessConnectionTest {
                 .hasMessageContaining("timezone");
     }
 
-    @DisplayName("DB 잘못된 option timezone으로 연결시 throws Exception")
+    @DisplayName("DB 잘못된 username으로 연결시 throws Exception")
     @Test
-    void connectionWrongUserNameThrowsException(){
+    void connectionWrongUserNameThrowsException() {
         ChessConnection chessConnection = new ChessConnection(new ConnectionProperty("localhost:13306", "db_name",
                 "?useSSL=false&serverTimezone=UTC", "roo", "root"));
 
@@ -56,9 +56,9 @@ public class ChessConnectionTest {
                 .hasMessageContaining("Access denied for user");
     }
 
-    @DisplayName("DB 잘못된 option timezone으로 연결시 throws Exception")
+    @DisplayName("DB 잘못된 password으로 연결시 throws Exception")
     @Test
-    void connectionWrongPasswordThrowsException(){
+    void connectionWrongPasswordThrowsException() {
         ChessConnection chessConnection = new ChessConnection(new ConnectionProperty("localhost:13306", "db_name",
                 "?useSSL=false&serverTimezone=UTC", "root", "roo"));
 

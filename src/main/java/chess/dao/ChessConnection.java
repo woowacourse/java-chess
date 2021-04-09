@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public final class ChessConnection {
     ConnectionProperty connectionProperty;
 
-    public ChessConnection(final ConnectionProperty connectionProperty){
+    public ChessConnection(final ConnectionProperty connectionProperty) {
         this.connectionProperty = connectionProperty;
     }
 

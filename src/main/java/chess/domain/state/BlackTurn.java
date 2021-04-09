@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 public final class BlackTurn extends Playing {
     @Override
     public GameState start() {
-        throw new IllegalArgumentException("게임이 이미 시작하였습니다.");
+        return this;
     }
 
     @Override

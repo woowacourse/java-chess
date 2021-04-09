@@ -1,14 +1,15 @@
 package chess.domain.grid;
 
-import chess.entity.Chess;
 import chess.domain.grid.gridStrategy.EmptyGridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
-import chess.domain.piece.*;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.BlackTurn;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.domain.state.WhiteTurn;
+import chess.entity.Chess;
 
 import java.util.Map;
 
@@ -103,7 +104,6 @@ public final class ChessGame {
             grid.assign(PieceMapper.of(name, piecePosition), piecePosition);
         }
         assignTurn(turn);
-
     }
 
     private void assignTurn(String turn) {
