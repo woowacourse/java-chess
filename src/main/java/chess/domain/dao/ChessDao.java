@@ -43,11 +43,7 @@ public class ChessDao {
             connection.setAutoCommit(false);
             try (PreparedStatement pstmt1 = connection.prepareStatement(addRoomQuery);
                  PreparedStatement pstmt2 = connection.prepareStatement(addPieceQuery)) {
-                pstmt1.setDouble(1, blackScore);
-                pstmt1.setDouble(2, whiteScore);
-                pstmt1.setString(3, turn);
-                pstmt1.executeUpdate();
-
+                addChessRoom(blackScore, whiteScore, turn, pstmt1);
                 addChessPiece(chessBoard, pstmt2);
             } catch (SQLException throwables) {
                 connection.rollback();
@@ -57,6 +53,13 @@ public class ChessDao {
             connection.commit();
             connection.setAutoCommit(true);
         }
+    }
+
+    private void addChessRoom(double blackScore, double whiteScore, String turn, PreparedStatement pstmt) throws SQLException {
+        pstmt.setDouble(1, blackScore);
+        pstmt.setDouble(2, whiteScore);
+        pstmt.setString(3, turn);
+        pstmt.executeUpdate();
     }
 
     private void addChessPiece(Map<PositionDto, PieceDto> chessBoard, PreparedStatement pstmt) throws SQLException {
@@ -72,24 +75,28 @@ public class ChessDao {
 
     public ChessRoomDto findChessRoomByRoomNo(int roomNo) throws SQLException {
         String findRoomQuery = "SELECT * FROM chess_room r JOIN chess_piece b ON r.room_no = b.room_no WHERE r.room_no = ?;";
-        PreparedStatement pstmt = getConnection().prepareStatement(findRoomQuery);
-        pstmt.setInt(1, roomNo);
-        ResultSet rs = pstmt.executeQuery();
-        validateRoomEmpty(rs);
-        rs.previous();
-        double blackScore = 0;
-        double whiteScore = 0;
-        String turn = "";
-        Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
-        while (rs.next()) {
-            PositionDto positionDto = new PositionDto(rs.getString("coordinate"));
-            PieceDto pieceDto = new PieceDto(rs.getString("piece_name"), rs.getString("piece_color"));
-            chessBoard.put(positionDto, pieceDto);
-            blackScore = rs.getDouble("black_score");
-            whiteScore = rs.getDouble("white_score");
-            turn = rs.getString("turn");
+        try (Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(findRoomQuery)) {
+            pstmt.setInt(1, roomNo);
+            try (ResultSet rs = pstmt.executeQuery()){
+                validateRoomEmpty(rs);
+                double blackScore = 0;
+                double whiteScore = 0;
+                String turn = "";
+                Map<PositionDto, PieceDto> chessBoard = new HashMap<>();
+                while (rs.next()) {
+                    PositionDto positionDto = new PositionDto(rs.getString("coordinate"));
+                    PieceDto pieceDto = new PieceDto(rs.getString("piece_name"), rs.getString("piece_color"));
+                    chessBoard.put(positionDto, pieceDto);
+                    blackScore = rs.getDouble("black_score");
+                    whiteScore = rs.getDouble("white_score");
+                    turn = rs.getString("turn");
+                }
+                return new ChessRoomDto(roomNo, chessBoard, turn, blackScore, whiteScore);
+            }
+        } catch (SQLException throwables) {
+            throw new SQLException(DB_ERROR);
         }
-        return new ChessRoomDto(roomNo, chessBoard, turn, blackScore, whiteScore);
     }
 
 
@@ -97,6 +104,7 @@ public class ChessDao {
         if (!rs.next()) {
             throw new IllegalArgumentException("[ERROR] 불러올 방이 없습니다.");
         }
+        rs.previous();
     }
 
     public void updateChessRoom(MoveResultDto moveResultDto, PieceDto targetPiece, PositionDto source, PositionDto target) throws SQLException {
@@ -108,11 +116,9 @@ public class ChessDao {
             try (PreparedStatement pstmt1 = connection.prepareStatement(updateRoomQuery);
                  PreparedStatement pstmt2 = connection.prepareStatement(updatePieceQuery);
                  PreparedStatement pstmt3 = connection.prepareStatement(deleteTargetPieceQuery)) {
-                pstmt1.setDouble(1, moveResultDto.getBlackScore());
-                pstmt1.setDouble(2, moveResultDto.getWhiteScore());
-                pstmt1.setString(3, moveResultDto.getTurn());
-                pstmt1.executeUpdate();
-                updateChessPiece(targetPiece, source, target, pstmt2, pstmt3);
+                updateChessRoom(moveResultDto, pstmt1);
+                deleteTargetPiece(target.getPosition(), pstmt3);
+                updateChessPiece(targetPiece, source, target, pstmt2);
             } catch (SQLException throwables) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -123,19 +129,24 @@ public class ChessDao {
         }
     }
 
-    private void updateChessPiece(PieceDto pieceDto, PositionDto source, PositionDto target, PreparedStatement pstmt2,
-                                  PreparedStatement pstmt3) throws SQLException {
-        deleteTargetPiece(target.getPosition(), pstmt3);
-        pstmt2.setString(1, target.getPosition());
-        pstmt2.setString(2, pieceDto.getName());
-        pstmt2.setString(3, pieceDto.getColor());
-        pstmt2.setString(4, source.getPosition());
-        pstmt2.executeUpdate();
+    private void updateChessRoom(MoveResultDto moveResultDto, PreparedStatement pstmt) throws SQLException {
+        pstmt.setDouble(1, moveResultDto.getBlackScore());
+        pstmt.setDouble(2, moveResultDto.getWhiteScore());
+        pstmt.setString(3, moveResultDto.getTurn());
+        pstmt.executeUpdate();
     }
 
-    private void deleteTargetPiece(String position, PreparedStatement pstmt3) throws SQLException {
-        pstmt3.setString(1, position);
-        pstmt3.executeUpdate();
+    private void deleteTargetPiece(String position, PreparedStatement pstmt) throws SQLException {
+        pstmt.setString(1, position);
+        pstmt.executeUpdate();
+    }
+
+    private void updateChessPiece(PieceDto pieceDto, PositionDto source, PositionDto target, PreparedStatement pstmt) throws SQLException {
+        pstmt.setString(1, target.getPosition());
+        pstmt.setString(2, pieceDto.getName());
+        pstmt.setString(3, pieceDto.getColor());
+        pstmt.setString(4, source.getPosition());
+        pstmt.executeUpdate();
     }
 
     public void deleteChessRoomByRoomNo(int roomNo) throws SQLException {
