@@ -1,7 +1,6 @@
 package chess;
 
 import chess.dto.RequestDto;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -16,7 +15,6 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
         port(8080);
 
-        final Gson GSON = new Gson();
         final JsonTransformer jsonTransformer = new JsonTransformer();
         final ChessService chessService = new ChessService();
 
@@ -27,7 +25,7 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
-            RequestDto requestDto = GSON.fromJson(req.body(), RequestDto.class);
+            RequestDto requestDto = jsonTransformer.getGson().fromJson(req.body(), RequestDto.class);
             return chessService.move(requestDto);
         }, jsonTransformer);
 
