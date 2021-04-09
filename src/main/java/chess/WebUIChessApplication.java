@@ -20,22 +20,23 @@ public class WebUIChessApplication {
 
         staticFiles.location("/static");
 
-        get("/", (req, res) -> {
+        get("/", (req, res) -> render(Collections.emptyMap(), "home.html"));
+
+        get("/game/:id", (req, res) -> {
             chessGameService.initializeGame();
             return render(Collections.emptyMap(), "chess.html");
         });
 
-        get("/game", (req, res) -> {
+        get("api/game/:id/piece", (req, res) -> {
             final String source = req.queryParams("source");
             final String target = req.queryParams("target");
             return gson.toJson(Collections.singletonMap("isMovable",
                 chessGameService.checkMovement(source, target)));
         });
 
-        post("/game", (req, res) -> {
+        post("api/game/:id/piece", (req, res) -> {
             final BoardRequestDto boardRequestDto = gson
                 .fromJson(req.body(), BoardRequestDto.class);
-
             return gson.toJson(chessGameService.move(boardRequestDto));
         });
     }

@@ -3,7 +3,7 @@ const TYPE_INDEX = 1;
 const X_INDEX = 2;
 const Y_INDEX = 3;
 const SPEED = 0.5;
-const SRC_PATH = "./img/";
+const SRC_PATH = "/img/";
 
 export class Piece {
   #x

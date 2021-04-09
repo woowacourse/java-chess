@@ -2,6 +2,8 @@ import {Tiles} from "../tile/Tiles.js"
 import {Pieces} from "../piece/Pieces.js"
 import {getData, postData} from "../utils/FetchUtil.js"
 
+const url = "http://localhost:4567/api";
+
 export class Board {
   #tiles
   #pieces
@@ -75,8 +77,19 @@ export class Board {
       source: board.#sourceTile.component.id,
       target: targetTile.component.id
     }
-    const response = await getData("http://localhost:4567/game", params);
+
+    const gameId = this.#findGameIdInUri();
+    const response = await getData(
+        `${url}/game/${gameId}/piece`, params
+    );
+
     targetTile.highlight(response["isMovable"]);
+  }
+
+  #findGameIdInUri() {
+    const path = window.location.pathname
+    const gameId = path.substr(path.lastIndexOf("/") + 1);
+    return gameId;
   }
 
   #getTargetTile(target, board) {
@@ -106,18 +119,21 @@ export class Board {
       source: sourceTile.component.id,
       target: targetTile.component.id
     }
-    const response = await getData("http://localhost:4567/game", params);
+    const gameId = this.#findGameIdInUri();
+    const response = await getData(
+        `${url}/game/${gameId}/piece`, params);
     const isMovable = response["isMovable"]
     if (isMovable) {
-      await this.#requestMove(piece, targetTile, params);
+      await this.#requestMove(piece, targetTile, params, gameId);
     } else {
       piece.unhighlight();
     }
     targetTile.unhighlight();
   }
 
-  async #requestMove(piece, targetTile, body) {
-    const response = await postData("http://localhost:4567/game", body);
+  async #requestMove(piece, targetTile, body, gameId) {
+    const response = await postData(
+        `${url}/game/${gameId}/piece`, body);
     const isSuccessful = response["isSuccessful"];
     if (isSuccessful) {
       this.#pieces.move(piece, targetTile)
