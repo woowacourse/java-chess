@@ -8,10 +8,16 @@ async function getBoard() {
 
 async function init() {
   this.$chessBoard = document.querySelector('.chessBoard')
+  this.$controller = document.querySelector('.controller')
+  this.$controller.addEventListener('click', btnHandler)
+
+  this.$blackResult = document.getElementById('BLACK')
+  this.$whiteResult = document.getElementById('WHITE')
+  displayResult('none')
+
   await setBoard()
   await moveHandler()
   await changeTurn(await getTurn())
-  await result()
 }
 
 async function setBoard() {
@@ -63,7 +69,6 @@ function moveHandler() {
     try {
       move(await movable(source, target))
       await changeTurn(await getTurn())
-      await result()
     } catch (e) {
       alert('잘못된 이동입니다.')
     }
@@ -101,7 +106,8 @@ function boardTemplate(position, piece) {
 }
 
 function squareTemplate(position, piece) {
-  return `<div id=${position} class='square ${positionColor(position)} ${piece.color} ${piece.type}'>
+  return `<div id=${position} class='square ${positionColor(
+    position)} ${piece.color} ${piece.type}'>
     <img class='piece' src=${pieceImage(piece)} alt=${piece}/>
     </div>`
 }
@@ -114,27 +120,27 @@ function positionColor(position) {
 }
 
 function pieceImage(piece) {
-  if (piece.type ===  'r' || piece.type === 'R') {
+  if (piece.type === 'r' || piece.type === 'R') {
     return piece.color === 'WHITE' ? './images/rook_white.png'
       : './images/rook_black.png'
   }
-  if (piece.type ===  'n' || piece.type === 'N') {
+  if (piece.type === 'n' || piece.type === 'N') {
     return piece.color === 'WHITE' ? './images/knight_white.png'
       : './images/knight_black.png'
   }
-  if (piece.type ===  'b' || piece.type === 'B') {
+  if (piece.type === 'b' || piece.type === 'B') {
     return piece.color === 'WHITE' ? './images/bishop_white.png'
       : './images/bishop_black.png'
   }
-  if (piece.type ===  'q' || piece.type === 'Q') {
+  if (piece.type === 'q' || piece.type === 'Q') {
     return piece.color === 'WHITE' ? './images/queen_white.png'
       : './images/queen_black.png'
   }
-  if (piece.type ===  'k' || piece.type === 'K') {
+  if (piece.type === 'k' || piece.type === 'K') {
     return piece.color === 'WHITE' ? './images/king_white.png'
       : './images/king_black.png'
   }
-  if (piece.type ===  'p' || piece.type === 'P') {
+  if (piece.type === 'p' || piece.type === 'P') {
     return piece.color === 'WHITE' ? './images/pawn_white.png'
       : './images/pawn_black.png'
   }
@@ -159,26 +165,51 @@ async function result() {
     '/result'
   ).then(res => res.json()).then(data => data)
 
-  const $blackResult = document.getElementById('BLACK')
-  const $whiteResult = document.getElementById('WHITE')
   const blackResult = result.black
   const whiteResult = result.white
 
-  $blackResult.getElementsByClassName('score')[0].innerHTML = `<span>${blackResult.score}</span>`
-  $whiteResult.getElementsByClassName('score')[0].innerHTML = `<span>${whiteResult.score}</span>`
+  this.$blackResult.getElementsByClassName(
+    'score')[0].innerHTML = `<span>${blackResult.score}</span>`
+  this.$whiteResult.getElementsByClassName(
+    'score')[0].innerHTML = `<span>${whiteResult.score}</span>`
 
   if (blackResult.outcome === '승') {
-    $blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
-    $whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+    this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
     return
   }
   if (blackResult.outcome === '패') {
-    $blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
-    $whiteResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
+    this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+    this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_win.png"
     return
   }
-  $blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
-  $whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+  this.$blackResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+  this.$whiteResult.getElementsByTagName('img')[0].src = "./images/player_lose.png"
+}
+
+function displayResult( val ) {
+  this.$blackResult.style.display = val;
+  this.$whiteResult.style.display = val;
+}
+
+async function btnHandler({target}) {
+  if (target.id === 'restart') {
+    console.log(target.id)
+    // restart
+    // 새 db 생성
+  }
+  if (target.id === "finish") {
+    console.log(target.id)
+    // over
+    // 종료 요청
+    target.disabled = true;
+    document.querySelector('#status').disabled = false;
+  }
+  if (target.id === "status") {
+    displayResult('flex')
+    await result()
+    target.disabled = true;
+  }
 }
 
 window.onload = () => {
