@@ -80,6 +80,10 @@ function move(response) {
   const $target = document.getElementById(response.target.id)
   $source.innerHTML = squareTemplate(response.source.id, response.source.piece)
   $target.innerHTML = squareTemplate(response.target.id, response.target.piece)
+
+  if (response.isOver === true) {
+    finish()
+  }
 }
 
 async function movable(source, target) {
@@ -194,22 +198,26 @@ function displayResult( val ) {
 
 async function btnHandler({target}) {
   if (target.id === 'restart') {
-    console.log(target.id)
-    // restart
-    // 새 db 생성
+    init()
+    document.querySelector('#finish').disabled = false
+    // 새 게임 db 가져오기
+
   }
   if (target.id === "finish") {
-    console.log(target.id)
     // over
     // 종료 요청
-    target.disabled = true;
-    document.querySelector('#status').disabled = false;
+    finish()
   }
   if (target.id === "status") {
     displayResult('flex')
     await result()
     target.disabled = true;
   }
+}
+
+function finish() {
+  document.querySelector('#finish').disabled = true
+  document.querySelector('#status').disabled = false
 }
 
 window.onload = () => {

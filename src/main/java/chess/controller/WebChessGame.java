@@ -30,13 +30,17 @@ public class WebChessGame {
         return false;
     }
 
+    public boolean isOver() {
+        return chessBoard.isOver();
+    }
+
     public boolean movable(String source, String target) {
         try {
             chessBoard.move(source, target);
-            return true;
         } catch (Exception e) {
             return false;
         }
+        return true;
     }
 
     public boolean validTurn(String source) {

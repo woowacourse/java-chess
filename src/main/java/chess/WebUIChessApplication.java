@@ -54,6 +54,8 @@ public class WebUIChessApplication {
                     chessBoard.getPiece(Position.of(body.get("target"))));
                 response.add("source", movedSource);
                 response.add("target", movedTarget);
+
+                response.addProperty("isOver", chessGame.isOver());
                 return response;
             }
             return HttpStatus.BAD_REQUEST_400;
