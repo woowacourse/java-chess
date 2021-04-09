@@ -95,8 +95,9 @@ html {
   justify-content: space-around;
   align-items: center;
 
-  width: 20rem;
-  height: 40rem;
+  width: 12rem;
+  height: 30rem;
+  padding: 1rem;
   background-color: #FFF3E0;
   border: 5px solid #e8a32d;
 }
@@ -116,19 +117,14 @@ html {
 }
 
 .player img {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 1rem;
+  max-width: 4rem;
 }
 
 .player .score {
   font-size: 3rem;
-  -wwebkit-text-stroke: px #DF59F6;
-  color: #ffffff;
-  text-shadow: 0 0 0 #DF59F6,
-  -1px -1px 0 #DF59F6,
-  1px -1px 0 #000,
-  -1px 1px 0 #000,
-  1px 1px 0 #000;
+  color: #7A9E7E;
+  text-shadow: 0 2px 2px #5c8360;
 }
 
 .control-btn {
