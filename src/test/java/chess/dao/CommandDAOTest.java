@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +26,6 @@ class CommandDAOTest {
     void setUp() {
         commands.add(new PointsDTO("00", "02"));
         commands.add(new PointsDTO("02", "04"));
-    }
-
-    @Test
-    @DisplayName("DB 접속에 성공하면 null이 나오지 않는다.")
-    void connection() {
-        Connection connection = commandDAO.getConnection();
-        assertThat(connection).isNotNull();
     }
 
     @Test
