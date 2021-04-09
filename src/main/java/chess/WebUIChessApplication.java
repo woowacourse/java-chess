@@ -42,9 +42,8 @@ public class WebUIChessApplication {
 
         post("/tryCreateGame", (req, res) -> {
             CreateRequestDto createRequestDto = gson.fromJson(req.body(), CreateRequestDto.class);
-            ChessGame chessGame = webUIChessGameController.chessGame();
-            ChessGameDto chessGameDto = DtoAssembler.chessGameDto(chessGame);
-            chessDao.createGameByName(createRequestDto);
+            ChessGameDto chessGameDto = webUIChessGameController.chessGame();
+            chessDao.createGameByName(createRequestDto, chessGameDto);
             return chessGameDto;
         }, gson::toJson);
 
@@ -62,16 +61,14 @@ public class WebUIChessApplication {
             return DtoAssembler.chessGameDto(squareDtos, state);
         }, gson::toJson);
 
-        // refactor list 4
         post("/:name/start", (req, res) -> {
             String gameName = req.params(":name");
             PlayerIdsDto playerIdsDto = gson.fromJson(req.body(), PlayerIdsDto.class);
-            //chessDao.updateGameByName(createRequestDto.getGameName(), chessGameDto);
-            chessDao.insertStartCommand(gameName);
+            ChessGameDto chessGameDto = chessDao.findGameByName(gameName);
+            ChessGameDto startedChessGameDto = webUIChessGameController.startedChessGame(chessGameDto);
             chessDao.updatePlayerIds(playerIdsDto, gameName);
-            CommandsDto commandsDto = chessDao.findCommandsByName(gameName);
-            ChessGame chessGame = webUIChessGameController.chessGame(commandsDto.getCommands());
-            return DtoAssembler.chessGameDto(chessGame);
+            chessDao.updateGameByName(gameName, startedChessGameDto);
+            return startedChessGameDto;
         }, gson::toJson);
 
         // refactor list 5

@@ -8,15 +8,17 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.state.StateConverter;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
+import chess.dto.ChessGameDto;
 import chess.dto.SquareDto;
+import chess.utils.DtoAssembler;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class WebUIChessGameController {
 
-    public ChessGame chessGame() {
-        return new ChessGame(new Board());
+    public ChessGameDto chessGame() {
+        return DtoAssembler.chessGameDto(new ChessGame(new Board()));
     }
 
     public ChessGame chessGame(List<String> commandsStrings) {
@@ -31,11 +33,13 @@ public class WebUIChessGameController {
         return chessGame;
     }
 
-    public ChessGame chessGame(final String stateString, final List<SquareDto> squareDtos) {
-        Board board = board(squareDtos);
+    public ChessGameDto startedChessGame(final ChessGameDto chessGameDto) {
+        Board board = board(chessGameDto.getSquareDtos());
         StateConverter stateConverter = new StateConverter(board);
-        State state = stateConverter.matchedState(stateString);
-        return new ChessGame(state);
+        State state = stateConverter.matchedState(chessGameDto.getState());
+        ChessGame chessGame = new ChessGame(state);
+        chessGame.start();
+        return DtoAssembler.chessGameDto(chessGame);
     }
 
     private Board board(List<SquareDto> squareDtos) {

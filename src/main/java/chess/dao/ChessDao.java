@@ -79,14 +79,17 @@ public class ChessDao {
         }
     }
 
-    public void createGameByName(final CreateRequestDto createRequestDto) throws SQLException {
-        String query = "INSERT INTO game(game_name, state) VALUES(?, 'Init')";
+    public void createGameByName(final CreateRequestDto createRequestDto,
+        final ChessGameDto chessGameDto) {
+        String query = "INSERT INTO game(game_name, state) VALUES(?, '게임 시작 전')";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, createRequestDto.getGameName());
             pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
+
+        insertBoard(findGameIdByName(createRequestDto.getGameName()), chessGameDto.getSquareDtos());
     }
 
     public void updateGameByName(final String gameName, final ChessGameDto chessGameDto)
@@ -118,43 +121,44 @@ public class ChessDao {
         }
     }
 
-    private void insertBoard(final String gameId, final List<SquareDto> squareDtos)
-        throws SQLException {
-        String query = "INSERT INTO board(game_id, symbol, position) VALUES(?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-            insertSquare(gameId, squareDtos, pstmt);
-            pstmt.executeUpdate();
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
+    private void insertBoard(final String gameId, final List<SquareDto> squareDtos) {
+        for (SquareDto squareDto : squareDtos) {
+            insertSquare(gameId, squareDto);
         }
     }
 
-    private void insertSquare(final String gameId, final List<SquareDto> squareDtos,
-        final PreparedStatement pstmt) throws SQLException {
-        for (SquareDto squareDto : squareDtos) {
+    private void insertSquare(final String gameId, final SquareDto squareDto) {
+        String query = "INSERT INTO board(game_id, symbol, position) VALUES(?, ?, ?)";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, squareDto.getPiece());
             pstmt.setString(3, squareDto.getPosition());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
     }
 
-    public String findStateByName(final String gameName) throws SQLException {
+    public String findStateByName(final String gameName) {
         String query = "SELECT state FROM game WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, findGameIdByName(gameName));
-            return resultSet(pstmt).getString("state");
-        } catch (DataAccessException e) {
-            System.out.println(e.getMessage());
-            return null;
+            ResultSet rs = pstmt.executeQuery();
+            validateResultSet(rs);
+            return rs.getString("state");
+        } catch (DataAccessException | SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
     }
 
     public List<SquareDto> findSquaresByName(final String gameName) {
-        String query = "SELECT symbol FROM board WHERE game_id=?";
+        String query = "SELECT symbol, position FROM board WHERE game_id=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, findGameIdByName(gameName));
-            return squareDtos(resultSet(pstmt));
-        } catch (SQLException e) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return squareDtos(rs);
+            }
+        } catch (DataAccessException | SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
@@ -167,6 +171,12 @@ public class ChessDao {
             squareDtos.add(new SquareDto(position, symbol));
         }
         return squareDtos;
+    }
+
+    public ChessGameDto findGameByName(final String gameName) throws SQLException {
+        List<SquareDto> squareDtos = findSquaresByName(gameName);
+        String state = findStateByName(gameName);
+        return new ChessGameDto(squareDtos, state);
     }
 
     public void insertStartCommand(final String gameName) throws SQLException {
@@ -209,17 +219,10 @@ public class ChessDao {
         String query = "SELECT game_id FROM game WHERE game_name=?";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameName);
-            return resultSet(pstmt).getString("game_id");
-        } catch (SQLException e) {
-            throw new DataAccessException(e.getMessage());
-        }
-    }
-
-    private ResultSet resultSet(final PreparedStatement pstmt) {
-        try (ResultSet rs = pstmt.executeQuery()) {
+            ResultSet rs = pstmt.executeQuery();
             validateResultSet(rs);
-            return rs;
-        } catch (SQLException e) {
+            return rs.getString("game_id");
+        } catch (DataAccessException | SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
     }
