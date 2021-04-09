@@ -72,6 +72,9 @@ public class WebUIChessController {
 
             String jsonFormatChessBoard = GSON.toJson(stringChessBoard);
 
+            Map<String, Object> model = new HashMap<>();
+            model.put("jsonFormatChessBoard", jsonFormatChessBoard);
+
             round = new Round(StateFactory.initialization(new Pieces(whitePieces)),
                     StateFactory.initialization(new Pieces(blackPieces)), START);
 
@@ -79,6 +82,8 @@ public class WebUIChessController {
             String currentTurn = turns.stream()
                     .map(TurnRequestDto::getCurrentTurn)
                     .collect(Collectors.joining());
+
+            model.put("currentTurn", currentTurn);
 
             if ("white".equals(currentTurn)) {
                 Player white = round.getWhitePlayer();
@@ -103,15 +108,12 @@ public class WebUIChessController {
             double whiteScore = whitePlayer.calculateScore();
             double blackScore = blackPlayer.calculateScore();
 
+            model.put("whiteScore", whiteScore);
+            model.put("blackScore", blackScore);
+
             if (!(whitePlayer.getPieces().isKing() && blackPlayer.getPieces().isKing())) {
                 round.changeToEnd();
             }
-
-            Map<String, Object> model = new HashMap<>();
-            model.put("jsonFormatChessBoard", jsonFormatChessBoard);
-            model.put("currentTurn", currentTurn);
-            model.put("whiteScore", whiteScore);
-            model.put("blackScore", blackScore);
 
             return render(model, "chess.html");
         });
