@@ -8,6 +8,7 @@ public enum Color {
     NONE("NONE");
 
     private final String value;
+
     Color(String value) {
         this.value = value;
     }

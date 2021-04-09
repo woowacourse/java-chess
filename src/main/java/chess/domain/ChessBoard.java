@@ -155,7 +155,7 @@ public class ChessBoard {
                 validateMovable(sourcePiece, source, target);
                 validateSameColor(source, target);
                 routes.add(target);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 continue;
             }
         }
