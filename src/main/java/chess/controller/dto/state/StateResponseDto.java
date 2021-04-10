@@ -14,10 +14,6 @@ public class StateResponseDto {
         this.isPlaying = isPlaying;
     }
 
-    public static StateResponseDto toChessManager(final ChessManager chessManager) {
-        return new StateResponseDto(chessManager.turnOwner().name(), chessManager.turnNumber(), chessManager.isPlaying());
-    }
-
     public String getTurnOwner() {
         return turnOwner;
     }
