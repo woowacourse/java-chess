@@ -71,4 +71,15 @@ public class ChessGameDAO {
             throwables.printStackTrace();
         }
     }
+
+    public void deleteGameByRoomID(String roomID) {
+        String query = "DELETE FROM game WHERE roomID = ?";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, roomID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

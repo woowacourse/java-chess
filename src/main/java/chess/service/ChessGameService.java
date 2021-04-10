@@ -4,10 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.dao.ChessGameDAO;
 import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
-import chess.domain.game.BlackTurn;
-import chess.domain.game.ChessGame;
-import chess.domain.game.ChessGameEntity;
-import chess.domain.game.WhiteTurn;
+import chess.domain.dto.EndGameDto;
+import chess.domain.game.*;
 import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -26,6 +24,7 @@ public class ChessGameService {
 
     public ChessBoardDto createNewChessGame(String roomID) {
         Optional<ChessGameEntity> existChessGame = chessGameDAO.findRoomID(roomID);
+
         if(existChessGame.isPresent()) {
             throw new IllegalArgumentException();
         }
@@ -53,5 +52,16 @@ public class ChessGameService {
         chessGameDAO.update(chessGame);
 
         return new ChessBoardDto(chessGame);
+    }
+
+    public Object endChessGame(String roomID) {
+        Board board = pieceDAO.loadPiecesByRoomID(roomID);
+        ChessGame chessGame = new ChessGame(board, roomID);
+        chessGame.changeState(new End(chessGame));
+
+        pieceDAO.deleteGameByRoomID(roomID);
+        chessGameDAO.deleteGameByRoomID(roomID);
+
+        return new EndGameDto(chessGame);
     }
 }

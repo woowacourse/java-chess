@@ -57,13 +57,9 @@ public class WebUIChessApplication {
         });
 
         post("/end", (req, res) -> {
-            if (chessGame.isFinished()) {
-                return gson.toJson(new MessageDto("이미 게임이 종료되었습니다."));
-            }
-            chessGame.end();
-            String json = gson.toJson(new EndGameDto(chessGame));
-            chessGame.ready();
-            return json;
+            ObjectMapper mapper = new ObjectMapper();
+            ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
+            return chessGameService.endChessGame(chessGameID.getRoomID());
 
         });
 

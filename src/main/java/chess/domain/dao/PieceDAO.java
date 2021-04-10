@@ -41,7 +41,6 @@ public class PieceDAO {
     }
 
     public void saveAll(String roomID, List<Piece> pieces) {
-        deleteAll();
         for (Piece piece : pieces) {
             save(roomID, piece);
         }
@@ -153,6 +152,17 @@ public class PieceDAO {
             preparedStatement.setString(1, target.toString());
             preparedStatement.setString(2, roomID);
             preparedStatement.setString(3, source.toString());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteGameByRoomID(String roomID) {
+        String query = "DELETE FROM pieces WHERE roomID = ?";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, roomID);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

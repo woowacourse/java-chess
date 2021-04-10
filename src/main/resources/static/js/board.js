@@ -57,7 +57,6 @@ let source
 
 function select(event) {
     const roomID = document.getElementById("room-number").innerHTML;
-    console.log(roomID);
     if (!isClick) {
         isClick = true;
         source = event.target.id;
@@ -95,9 +94,13 @@ function select(event) {
 document.getElementById("end-btn").addEventListener("click", endGame);
 
 function endGame() {
+    const roomID = document.getElementById("room-number").innerHTML;
     axios({
         method: 'post',
-        url: '/end'
+        url: '/end',
+        data: {
+            roomID:roomID
+        }
     }).then((res) => {
         const data = res.data;
         if (data.isOk === "false") {
