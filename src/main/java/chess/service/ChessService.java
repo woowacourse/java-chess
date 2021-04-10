@@ -31,12 +31,12 @@ public class ChessService {
         return makeChessGame(boardDto, color);
     }
 
-    public String matchBoardImageSource(ChessGame chessGame, String requestBody) {
-        return chessGame.getBoard().get(Point.of(requestBody)).getName();
+    public String matchBoardImageSource(UserDto userDto, String requestBody) {
+        return matchBoard(userDto).getBoard().get(Point.of(requestBody)).getName();
     }
 
-    public String matchPieceName(ChessGame chessGame, String requestBody) {
-        return chessGame.getBoard().get(Point.of(requestBody)).getName();
+    public String matchPieceName(UserDto userDto, String requestBody) {
+        return matchBoard(userDto).getBoard().get(Point.of(requestBody)).getName();
     }
 
     private ChessGame makeChessGame(BoardDto boardDto, Color color) {
@@ -46,34 +46,35 @@ public class ChessService {
         return new ChessGame(boardDto.getBoard(), color);
     }
 
-    public void addBoard(ChessGame chessGame, UserDto userDto, String requestBody) {
-        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, makeNextColor(chessGame));
+    public void addBoard(UserDto userDto, String requestBody) {
+        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, makeNextColor(userDto));
     }
 
-    public String makeNextColor(ChessGame chessGame) {
-        if (chessGame.nextTurn().isSameAs(BLACK)) {
+    public String makeNextColor(UserDto userDto) {
+        if (matchBoard(userDto).nextTurn().isSameAs(BLACK)) {
             return WHITE.name();
         }
         return BLACK.name();
     }
 
-    public String makeCurrentColor(ChessGame chessGame, String requestBody) {
-        if (chessGame.getBoard().get(Point.of(requestBody)).isSameTeam(BLACK)) {
+    public String makeCurrentColor(UserDto userDto, String requestBody) {
+        if (matchBoard(userDto).getBoard().get(Point.of(requestBody)).isSameTeam(BLACK)) {
             return BLACK.name();
         }
         return WHITE.name();
     }
 
-    public int move(UserDto userDto, ChessGame chessGame, RequestDto requestDto) {
+    public int move(UserDto userDto, RequestDto requestDto) {
         String source = requestDto.getSource();
         String target = requestDto.getTarget();
         try {
-            chessGame.playTurn(Point.of(source), Point.of(target));
-            if (chessGame.isEnd()) {
-                chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), chessGame, makeNextColor(chessGame));
+            ChessGame playerGame = matchBoard(userDto);
+            playerGame.playTurn(Point.of(source), Point.of(target));
+            if (playerGame.isEnd()) {
+                chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), playerGame, playerGame.color());
                 return RESET_CONTENT.code();
             }
-            chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), chessGame, makeNextColor(chessGame));
+            chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), playerGame, playerGame.color());
             return OK.code();
         } catch (UnsupportedOperationException | IllegalArgumentException e) {
             return NO_CONTENT.code();

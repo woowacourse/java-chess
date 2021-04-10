@@ -19,12 +19,10 @@ public class WebChessController {
     private static final Gson GSON = new Gson();
 
     private final ChessService chessService;
-    private ChessGame chessGame;
     private UserDto userDto;
 
     public WebChessController() {
         chessService = new ChessService();
-        chessGame = new ChessGame();
     }
 
     public void run() {
@@ -39,10 +37,10 @@ public class WebChessController {
         get("/adduser", (req, res) -> render(new HashMap<>(), "signup.html"));
         post("/board", (req, res) -> makeBoard(req));
         post("/save", (req, res) -> exit(req));
-        put("/piece", (req, res) -> GSON.toJson(chessService.matchPieceName(chessGame, req.body())));
-        put("/move", (req, res) -> chessService.move(userDto, chessGame, GSON.fromJson(req.body(), RequestDto.class)));
-        post("/color", (req, res) -> chessService.makeCurrentColor(chessGame, req.body()));
-        post("/turn", (req, res) -> chessService.makeNextColor(chessGame));
+        put("/piece", (req, res) -> GSON.toJson(chessService.matchPieceName(userDto, req.body())));
+        put("/move", (req, res) -> chessService.move(userDto, GSON.fromJson(req.body(), RequestDto.class)));
+        post("/color", (req, res) -> chessService.makeCurrentColor(userDto, req.body()));
+        post("/turn", (req, res) -> chessService.makeNextColor(userDto));
         post("/score", (req, res) -> chessService.score(userDto, req.body()));
     }
 
@@ -79,13 +77,12 @@ public class WebChessController {
     }
 
     private String exit(Request req) {
-        chessService.addBoard(chessGame, userDto, req.body());
+        chessService.addBoard(userDto, req.body());
         return render(new HashMap<>(), "start.html");
     }
 
-    private String makeBoard(spark.Request req) {
-        chessGame = chessService.matchBoard(userDto);
-        return GSON.toJson(chessService.matchBoardImageSource(chessGame, req.body()));
+    private String makeBoard(Request req) {
+        return GSON.toJson(chessService.matchBoardImageSource(userDto, req.body()));
     }
 
     private String render(Map<String, Object> model, String templatePath) {

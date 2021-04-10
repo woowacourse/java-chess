@@ -61,4 +61,8 @@ public final class ChessGame {
     public Map<Point, Piece> getBoard() {
         return board.getBoard();
     }
+
+    public String color() {
+        return currentColor.name();
+    }
 }

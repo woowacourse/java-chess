@@ -118,8 +118,8 @@ public class ChessDao {
 
     public void saveBoard(String userId, ChessGame chessGame, String color) {
         String boardInfo = "";
-            for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 boardInfo += chessGame.getBoard().get(Point.valueOf(i, j)).getName();
             }
         }

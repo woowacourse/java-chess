@@ -196,20 +196,3 @@ function toggleExit() {
 }
 
 boardSetting();
-
-//하고자 하는거: 64개 돌면서 value 얻어서 boardinfo 넣어서 저장하는거
-//결국: 움직일 때마다 보드 저장하는거
-
-for (let j = 1; j <= 8; j++) {
-    for (let i = 0; i < 8; i++) {
-        let row = String.fromCharCode('a'.charCodeAt(0) + i);
-        let point = row + j;
-        let td = document.querySelector("#"+point).value;
-        let img = td.innerClass("piece");
-        if(img === null) {
-            console.log('.');
-        } else {
-            console.log(img);
-        }
-    }
-}
