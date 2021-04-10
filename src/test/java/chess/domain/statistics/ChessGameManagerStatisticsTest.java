@@ -24,7 +24,6 @@ class ChessGameManagerStatisticsTest {
     @Test
     void defaultScoreTest() {
         Map<Color, Double> colorsScore = ChessGameStatistics.createNotStartGameResult().getColorsScore();
-        System.out.println(colorsScore);
         assertThat(colorsScore.get(Color.BLACK)).isEqualTo(38.0);
         assertThat(colorsScore.get(Color.WHITE)).isEqualTo(38.0);
     }
