@@ -7,6 +7,7 @@ import chess.controller.web.GameController;
 import chess.controller.web.HomeController;
 import chess.controller.web.UserController;
 import chess.dao.exception.UncheckedSQLException;
+import chess.service.exception.DataNotFoundException;
 
 public class WebUIChessApplication {
 
@@ -15,6 +16,12 @@ public class WebUIChessApplication {
         final HomeController homeController = new HomeController();
         final GameController gameController = new GameController();
         final UserController userController = new UserController();
+
+        exception(DataNotFoundException.class, (exception, request, response) -> {
+            response.status(200);
+            response.type("application/json");
+            response.body("{}");
+        });
 
         exception(UncheckedSQLException.class, (exception, request, response) -> {
             response.status(500);
