@@ -115,17 +115,22 @@ function endGame() {
 document.getElementById("status-btn").addEventListener("click", status);
 
 function status() {
+    const roomID = document.getElementById("room-number").innerHTML;
     axios({
         method: 'post',
-        url: '/status'
+        url: '/status',
+        data:{
+            roomID:roomID
+        }
     }).then((res) => {
         const data = res.data;
         if (data.isOk === "false") {
             alert(data.message);
             return;
         }
+        console.log(data.roomID)
         const h1 = document.getElementById("status");
-        h1.innerHTML = data.status;
+        h1.innerHTML = data.score;
     })
 }
 

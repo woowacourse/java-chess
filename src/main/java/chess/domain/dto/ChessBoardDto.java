@@ -7,14 +7,14 @@ public class ChessBoardDto {
     private String isOk;
     private PiecesDto piecesDto;
     private String turn;
-    private String status;
+    private String score;
     private String roomID;
 
     public ChessBoardDto(ChessGame chessGame) {
         this.isOk = "ture";
         this.piecesDto = new PiecesDto(chessGame.getBoard().getPieces());
         this.turn = chessGame.getStatus();
-        this.status = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
+        this.score = "블랙팀 : " + chessGame.getBlackScore() + " 화이트팀 : " + chessGame.getWhiteScore();
         this.roomID = chessGame.getRoomID();
     }
 
@@ -30,8 +30,8 @@ public class ChessBoardDto {
         return turn;
     }
 
-    public String getStatus() {
-        return status;
+    public String getScore() {
+        return score;
     }
 
     public String getRoomID() {

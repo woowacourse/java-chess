@@ -38,7 +38,7 @@ public class ChessGameService {
         return new ChessBoardDto(chessGame);
     }
 
-    public ChessBoardDto moveChessByRoomID(MovePositionInfo mpi) {
+    public Object moveChessByRoomID(MovePositionInfo mpi) {
         String roomID = mpi.getRoomID();
         Board board = pieceDAO.loadPiecesByRoomID(roomID);
         ChessGame chessGame = new ChessGame(board, roomID);
@@ -48,7 +48,11 @@ public class ChessGameService {
         }
 
         chessGame.move(mpi.getSource(), mpi.getTarget());
-        pieceDAO.updateMovePiece(mpi.getRoomID(), mpi.getSource(), mpi.getTarget());
+
+        if(chessGame.isFinished()) {
+            return new EndGameDto("왕을 잡아 게임이 종료됩니다.");
+        }
+        pieceDAO.updatePieces(mpi.getRoomID(), chessGame);
         chessGameDAO.update(chessGame);
 
         return new ChessBoardDto(chessGame);
@@ -63,5 +67,15 @@ public class ChessGameService {
         chessGameDAO.deleteGameByRoomID(roomID);
 
         return new EndGameDto(chessGame);
+    }
+
+    public ChessBoardDto chessGameStatus(String roomID) {
+        Board board = pieceDAO.loadPiecesByRoomID(roomID);
+        ChessGame chessGame = new ChessGame(board, roomID);
+        System.out.println("-----------------------");
+        System.out.println(chessGame.getBlackScore());
+        System.out.println(chessGame.getWhiteScore());
+
+        return new ChessBoardDto(chessGame);
     }
 }

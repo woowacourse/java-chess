@@ -46,11 +46,11 @@ public class PieceDAO {
         }
     }
 
-    private void deleteAll() {
-        String query = "DELETE FROM pieces";
+    private void deleteAll(String roomID) {
+        String query = "DELETE FROM pieces WHERE roomID = ?";
         try (Connection con = dbConnection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query);) {
-
+            preparedStatement.setString(1, roomID);
             preparedStatement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -145,17 +145,9 @@ public class PieceDAO {
         }
     }
 
-    public void updateMovePiece(String roomID, Position source, Position target) {
-        String query = "UPDATE pieces SET position = ? WHERE roomID = ? AND position = ?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
-            preparedStatement.setString(1, target.toString());
-            preparedStatement.setString(2, roomID);
-            preparedStatement.setString(3, source.toString());
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public void updatePieces(String roomID, ChessGame chessGame) {
+        deleteAll(roomID);
+        saveAll(roomID, chessGame.getBoard().getPieces());
     }
 
     public void deleteGameByRoomID(String roomID) {

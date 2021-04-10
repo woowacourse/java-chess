@@ -12,7 +12,6 @@ import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.PieceFactory;
 
-import chess.domain.piece.Position;
 import chess.service.ChessGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -49,25 +48,21 @@ public class WebUIChessApplication {
             ObjectMapper mapper = new ObjectMapper();
             MovePositionInfo mpi = mapper.readValue(req.body(), MovePositionInfo.class);
 
-            ChessBoardDto chessBoardDto = chessGameService.moveChessByRoomID(mpi);
-            if("end".equals(chessBoardDto.getStatus())){
-                return gson.toJson(new EndGameDto("왕을잡아 게임이 종료됩니다."));
-            }
-            return gson.toJson(chessBoardDto);
+            return gson.toJson(chessGameService.moveChessByRoomID(mpi));
         });
 
         post("/end", (req, res) -> {
             ObjectMapper mapper = new ObjectMapper();
             ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
-            return chessGameService.endChessGame(chessGameID.getRoomID());
+            return gson.toJson(chessGameService.endChessGame(chessGameID.getRoomID()));
 
         });
 
         post("/status", (req, res) -> {
-            if (chessGame == null || chessGame.isReady() || chessGame.isFinished()) {
-                return gson.toJson(new MessageDto("게임을 실행시켜주세요."));
-            }
-            return gson.toJson(new ChessBoardDto(chessGame));
+            ObjectMapper mapper = new ObjectMapper();
+            ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
+
+            return gson.toJson(chessGameService.chessGameStatus(chessGameID.getRoomID()));
         });
 
         post("/save", (req, res) -> {
