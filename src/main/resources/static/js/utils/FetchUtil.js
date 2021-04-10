@@ -5,7 +5,6 @@ export async function getData(url = '', params = {}) {
   }
   return fetch(`${url}?${urlSearchParams.toString()}`)
   .then(response => {
-    console.log(response.status);
     if (!response.ok) {
       throw new Error(response.status);
     }
