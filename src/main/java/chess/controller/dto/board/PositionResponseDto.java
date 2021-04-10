@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.controller.dto.board;
 
 public class PositionResponseDto {
 

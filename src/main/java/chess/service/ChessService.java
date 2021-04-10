@@ -1,6 +1,14 @@
 package chess.service;
 
-import chess.controller.dto.*;
+import chess.controller.dto.board.MovablePathRequestDto;
+import chess.controller.dto.board.MoveRequestDto;
+import chess.controller.dto.board.PathResponseDto;
+import chess.controller.dto.board.PieceResponseDto;
+import chess.controller.dto.game.GameResponseDto;
+import chess.controller.dto.game.NewGameRequestDto;
+import chess.controller.dto.history.HistoryResponseDto;
+import chess.controller.dto.score.ScoreResponseDto;
+import chess.controller.dto.state.StateResponseDto;
 import chess.dao.ChessDao;
 import chess.domain.board.Board;
 import chess.domain.board.position.Path;

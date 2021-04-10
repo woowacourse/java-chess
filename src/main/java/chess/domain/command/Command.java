@@ -1,4 +1,4 @@
-package chess.controller.command;
+package chess.domain.command;
 
 public interface Command {
 

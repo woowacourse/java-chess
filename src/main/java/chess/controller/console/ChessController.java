@@ -1,13 +1,13 @@
-package chess.controller;
+package chess.controller.console;
 
-import chess.controller.command.Command;
-import chess.controller.command.CommandMenu;
-import chess.controller.command.Show;
-import chess.controller.command.Status;
-import chess.controller.dto.BoardResponseDto;
-import chess.controller.dto.GameResultDto;
-import chess.controller.dto.MovablePathResponseDto;
-import chess.controller.dto.StatusResponseDto;
+import chess.controller.dto.board.BoardResponseDto;
+import chess.controller.dto.score.GameResultDto;
+import chess.controller.dto.board.MovablePathResponseDto;
+import chess.controller.dto.score.StatusResponseDto;
+import chess.domain.command.Command;
+import chess.domain.command.CommandMenu;
+import chess.domain.command.Show;
+import chess.domain.command.Status;
 import chess.domain.manager.ChessManager;
 import chess.view.InputView;
 import chess.view.OutputView;

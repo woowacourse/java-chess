@@ -1,6 +1,10 @@
 package chess.view;
 
-import chess.controller.dto.*;
+import chess.controller.dto.board.BoardResponseDto;
+import chess.controller.dto.board.MovablePathResponseDto;
+import chess.controller.dto.board.PositionResponseDto;
+import chess.controller.dto.score.GameResultDto;
+import chess.controller.dto.score.StatusResponseDto;
 import chess.domain.piece.Owner;
 
 import java.util.List;

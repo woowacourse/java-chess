@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.controller.dto.state;
 
 import chess.domain.manager.ChessManager;
 
