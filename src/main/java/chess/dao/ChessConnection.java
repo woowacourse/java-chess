@@ -5,26 +5,30 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ChessConnection {
-    public static Connection getConnection() {
-        java.sql.Connection con = null;
-        String server = "localhost:13306";
-        String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
+    private static final String server = "localhost:13306";
+    private static final String database = "chess";
+    private static final String option = "?useSSL=false&serverTimezone=UTC";
+    private static final String userName = "root";
+    private static final String password = "root";
 
+    public static Connection getConnection() {
+        checkDriver();
+        return connect();
+    }
+
+    private static void checkDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
+    private static Connection connect() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            return DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
-
-        return con;
     }
 }
