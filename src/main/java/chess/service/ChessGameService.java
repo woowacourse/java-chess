@@ -5,6 +5,7 @@ import chess.domain.dao.ChessGameDAO;
 import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.EndGameDto;
+import chess.domain.dto.RoomIdDto;
 import chess.domain.game.*;
 import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.Piece;
@@ -43,7 +44,7 @@ public class ChessGameService {
         Board board = pieceDAO.loadPiecesByRoomID(roomID);
         ChessGame chessGame = new ChessGame(board, roomID);
         chessGame.changeState(new WhiteTurn(chessGame));
-        if("black".equals(chessGameDAO.loadGameStatusByRoomID(roomID))) {
+        if("black".equals(chessGameDAO.loadGameTurnByRoomID(roomID))) {
             chessGame.changeState(new BlackTurn(chessGame));
         }
 
@@ -72,9 +73,23 @@ public class ChessGameService {
     public ChessBoardDto chessGameStatus(String roomID) {
         Board board = pieceDAO.loadPiecesByRoomID(roomID);
         ChessGame chessGame = new ChessGame(board, roomID);
-        System.out.println("-----------------------");
-        System.out.println(chessGame.getBlackScore());
-        System.out.println(chessGame.getWhiteScore());
+
+        return new ChessBoardDto(chessGame);
+    }
+
+    public RoomIdDto chessGames() {
+        List<String> roomIDs = chessGameDAO.chessGameNames();
+
+        return new RoomIdDto(roomIDs);
+    }
+
+    public ChessBoardDto loadChessGameByRoomID(String roomID) {
+        Board board = pieceDAO.loadPiecesByRoomID(roomID);
+        ChessGame chessGame = new ChessGame(board, roomID);
+        chessGame.changeState(new WhiteTurn(chessGame));
+        if("black".equals(chessGameDAO.loadGameTurnByRoomID(roomID))) {
+            chessGame.changeState(new BlackTurn(chessGame));
+        }
 
         return new ChessBoardDto(chessGame);
     }

@@ -75,15 +75,13 @@ public class WebUIChessApplication {
 
         });
 
-        post("/load", (req, res) -> {
-            PieceDAO pieceDAO = new PieceDAO();
-            if (pieceDAO.loadPieces() == null) {
-                return gson.toJson(new MessageDto("저장된 게임이 없습니다. "));
-            }
-            chessGame = new ChessGame(pieceDAO.loadPieces());
-            chessGame.changeState(pieceDAO.loadTurn(chessGame));
+        post("/load", (req, res) -> gson.toJson(chessGameService.chessGames()));
 
-            return gson.toJson(new ChessBoardDto(chessGame));
+        post("/loadGame", (req, res) -> {
+            ObjectMapper mapper = new ObjectMapper();
+            ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
+
+            return gson.toJson(chessGameService.loadChessGameByRoomID(chessGameID.getRoomID()));
         });
 
     }

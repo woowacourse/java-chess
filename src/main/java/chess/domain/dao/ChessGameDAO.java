@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ChessGameDAO {
@@ -29,7 +31,7 @@ public class ChessGameDAO {
         }
     }
 
-    public String loadGameStatusByRoomID(String roomID) {
+    public String loadGameTurnByRoomID(String roomID) {
         String query = "SELECT turn FROM game WHERE roomID = ?";
         try(Connection con = dbConnection.getConnection();
             PreparedStatement preparedStatement = con.prepareStatement(query)) {
@@ -81,5 +83,23 @@ public class ChessGameDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public List<String> chessGameNames() {
+        List<String> rooms = new ArrayList<>();
+        String query = "SELECT roomID FROM game";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)){
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                rooms.add(rs.getString("roomID"));
+            }
+            return rooms;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+
     }
 }

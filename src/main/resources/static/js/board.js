@@ -60,10 +60,12 @@ function select(event) {
     if (!isClick) {
         isClick = true;
         source = event.target.id;
+        document.getElementById(source).style.background = "#AE905E";
         return;
     }
     let target = event.target.id;
     isClick = false;
+    document.getElementById(source).style.background = "";
     axios({
         method: 'post',
         url: '/move',
@@ -128,49 +130,61 @@ function status() {
             alert(data.message);
             return;
         }
-        console.log(data.roomID)
         const h1 = document.getElementById("status");
         h1.innerHTML = data.score;
     })
 }
 
-function saveButton() {
-    const save = document.getElementById("connect");
 
-    const loading_btn = document.createElement("button");
-    loading_btn.addEventListener("click", loadPieces);
-    loading_btn.setAttribute("class", "loading button");
-    loading_btn.innerHTML = "LOAD";
 
-    const save_btn = document.createElement("button");
-    save_btn.addEventListener("click", savePieces);
-    save_btn.setAttribute("class", "save button");
-    save_btn.setAttribute("id", "save-btn")
-
-    save_btn.innerHTML = "SAVE";
-
-    save.appendChild(loading_btn);
-    save.appendChild(save_btn);
-}
-
-function savePieces() {
-    axios({
-        method: 'post',
-        url: '/save'
-    }).then((res) => {
-        const data = res.data;
-        if (data.isOk === 'false') {
-            alert(data.message);
-            return;
-        }
-        alert("게임이 저장되었습니다.");
-    })
-}
-
+document.getElementById("load-btn").addEventListener("click", loadPieces);
 function loadPieces() {
     axios({
         method: 'post',
         url: '/load'
+    }).then((res)=> {
+        const data = res.data;
+        const form = document.getElementById("room-name");
+        const br = document.createElement('br');
+        for(let i=0;i<data.roomIDs.length;i++) {
+            const label = document.createElement("label");
+            label.innerHTML = data.roomIDs[i];
+            form.appendChild(label);
+
+            const input = document.createElement("input");
+            input.setAttribute("type","radio");
+            input.setAttribute("name","roomName");
+            input.setAttribute("onclick",'getRoomName');
+            input.value = data.roomIDs[i];
+            form.appendChild(input);
+        }
+        form.appendChild(br);
+        const button = document.createElement("input");
+        button.setAttribute("type", "button");
+        button.setAttribute("value", "LOAD");
+        button.addEventListener("click",getRoomName);
+        form.appendChild(button);
+    });
+
+
+}
+
+function getRoomName() {
+    console.log("hello");
+    const roomNameList = document.getElementsByName('roomName');
+    let roomID;
+    roomNameList.forEach((node) => {
+        console.log(node);
+        if(node.checked) {
+            roomID = node.value;
+        }
+    })
+    axios({
+        method: 'post',
+        url: '/loadGame',
+        data:{
+            roomID:roomID
+        }
     }).then((res) => {
         const data = res.data;
         if (data.isOk === 'false') {
@@ -178,10 +192,13 @@ function loadPieces() {
         }
         alert("게임을 불러왔습니다.");
         deletePieces()
+        showRoomNumber(roomID);
         getPieces(data.piecesDto);
         showTurn(data.turn);
     });
+
 }
+
 
 function deletePieces() {
     const row = ["a", "b", "c", "d", "e", "f", "g", "h"];
