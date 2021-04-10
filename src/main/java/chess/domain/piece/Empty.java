@@ -17,7 +17,7 @@ public class Empty extends Piece {
         );
     }
 
-    public static Empty getInstance() {
+    public static Empty of() {
         return EMPTY;
     }
 }

@@ -4,16 +4,17 @@ import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Vertical {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+    a(1),
+    b(2),
+    c(3),
+    d(4),
+    e(5),
+    f(6),
+    g(7),
+    h(8);
 
     private final int index;
 
@@ -22,7 +23,7 @@ public enum Vertical {
     }
 
     public static Vertical parse(final String symbol) {
-        return Vertical.valueOf(symbol.toUpperCase());
+        return Vertical.valueOf(symbol.toLowerCase(Locale.ROOT));
     }
 
     public static Vertical of(final int index) {
@@ -34,5 +35,9 @@ public enum Vertical {
 
     public Vertical add(final Direction direction, final Distance distance) {
         return of(index + direction.getX() * distance.getValue());
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

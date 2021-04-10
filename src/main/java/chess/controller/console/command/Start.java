@@ -1,19 +1,15 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
-import chess.controller.ScoreDto;
+import chess.domain.ChessGame;
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
-import chess.domain.piece.Score;
-import chess.domain.player.Player;
-import chess.domain.player.Scores;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
-public class Status extends Command {
-    public Status(String line) {
+public class Start extends Command {
+
+    public Start(String line) {
         super(line);
     }
 
-    @Override
     public Command read(final String input) {
         final Menu menu = Menu.of(input);
 
@@ -42,11 +38,8 @@ public class Status extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-        final Scores scoreTable = chessGame.scores();
-        for (final Player player : scoreTable.players()) {
-            final Score score = scoreTable.get(player);
-            OutputView.printScore(new ScoreDto(player.owner(), score.score()));
-        }
+        chessGame.initNew();
+        OutputView.printBoard(chessGame.board());
     }
 
     @Override

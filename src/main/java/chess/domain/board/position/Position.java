@@ -22,6 +22,10 @@ public class Position {
         this(s.split(""));
     }
 
+    public Vertical vertical() {
+        return vertical;
+    }
+
     public Horizontal horizontal() {
         return horizontal;
     }
@@ -41,5 +45,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
+    }
+
+    public String parseAsString() {
+        return vertical().name() + horizontal().getIndex();
     }
 }

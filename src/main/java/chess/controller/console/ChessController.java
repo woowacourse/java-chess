@@ -1,15 +1,15 @@
-package chess.controller;
+package chess.controller.console;
 
-import chess.controller.command.Command;
-import chess.controller.command.Start;
-import chess.domain.manager.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.controller.console.command.Command;
+import chess.controller.console.command.Start;
+import chess.domain.ChessGame;
+import chess.view.console.InputView;
+import chess.view.console.OutputView;
 
 public class ChessController {
     private static final String COMMAND_TO_START = "start";
 
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGame chessGame = ChessGame.initNew();
     private Command command;
 
     public void run() {

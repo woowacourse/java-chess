@@ -17,7 +17,7 @@ public class Knight extends Piece {
         );
     }
 
-    public static Knight getInstanceOf(final Owner owner) {
+    public static Knight of(final Owner owner) {
         if (owner.isBlack()) {
             return BLACK_KNIGHT;
         }

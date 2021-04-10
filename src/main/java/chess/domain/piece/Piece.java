@@ -5,6 +5,7 @@ import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private final Owner owner;
@@ -62,7 +63,20 @@ public abstract class Piece {
         return owner.isBlack();
     }
 
-    public String symbol() {
-        return symbol.getSymbol();
+    public Symbol symbol() {
+        return symbol;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return owner == piece.owner && symbol == piece.symbol;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(owner, symbol);
     }
 }

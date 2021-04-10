@@ -49,4 +49,12 @@ public class Scores {
     public Score get(final Player player) {
         return scoreTable.get(player);
     }
+
+    public double getValueOf(final Owner owner) {
+        return players().stream()
+                .filter(player -> player.isOwner(owner))
+                .map(player -> get(player).score())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 진영 입력입니다."));
+    }
 }

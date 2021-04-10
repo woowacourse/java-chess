@@ -1,7 +1,7 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
+import chess.domain.ChessGame;
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
 
 public class End extends Command {
     public End(String line) {

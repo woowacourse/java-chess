@@ -1,0 +1,19 @@
+.table-corgi {
+    width: 70%;
+    max-width: 1400px;
+}
+
+.container {
+    margin-left: 10%;
+    margin-top: 1%;
+    margin-right: 10%;
+    text-align: -webkit-center;
+}
+
+.input-new-game {
+    float: left;
+}
+
+table {
+    table-layout: fixed
+}

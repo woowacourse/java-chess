@@ -1,8 +1,8 @@
 package chess.domain.player;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
 import chess.domain.piece.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,9 +18,9 @@ class PlayersTest {
 
     @BeforeEach
     void initPlayersAndBoard() {
-        chessGame = new ChessGame();
+        chessGame = ChessGame.initNew();
         board = chessGame.board();
-        players = new Players();
+        players = Players.init(board);
     }
 
     @DisplayName("해당 위치의 기물이 어떤 진영의 것인지 확인한다.")

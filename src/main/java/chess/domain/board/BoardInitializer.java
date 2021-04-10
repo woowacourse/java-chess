@@ -36,26 +36,26 @@ public class BoardInitializer {
 
     private static Piece[] getPiecesOfFirstLine(final Owner owner) {
         return new Piece[]{
-                Rook.getInstanceOf(owner),
-                Knight.getInstanceOf(owner),
-                Bishop.getInstanceOf(owner),
-                Queen.getInstanceOf(owner),
-                King.getInstanceOf(owner),
-                Bishop.getInstanceOf(owner),
-                Knight.getInstanceOf(owner),
-                Rook.getInstanceOf(owner)
+                Rook.of(owner),
+                Knight.of(owner),
+                Bishop.of(owner),
+                Queen.of(owner),
+                King.of(owner),
+                Bishop.of(owner),
+                Knight.of(owner),
+                Rook.of(owner)
         };
     }
 
     private static Piece[] getPiecesOfSecondLine(final Owner owner) {
         final Piece[] pieces = new Pawn[BOARD_LENGTH];
-        Arrays.fill(pieces, Pawn.getInstanceOf(owner));
+        Arrays.fill(pieces, Pawn.of(owner));
         return pieces;
     }
 
     private static Piece[] getEmptyLine() {
         final Piece[] pieces = new Empty[BOARD_LENGTH];
-        Arrays.fill(pieces, Empty.getInstance());
+        Arrays.fill(pieces, Empty.of());
         return pieces;
     }
 }

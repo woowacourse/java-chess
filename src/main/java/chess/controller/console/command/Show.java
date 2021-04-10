@@ -1,8 +1,8 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
+import chess.domain.ChessGame;
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
 public class Show extends Command {
     public Show(String line) {
@@ -38,9 +38,6 @@ public class Show extends Command {
 
     @Override
     public void execute(final ChessGame chessGame) {
-//        final List<Position> reachablePositions = chessManager.getReachablePositions(super.source());
-//        OutputView.printReachableBoard(chessManager.board(), reachablePositions);
-
         OutputView.printBoard(chessGame.board());
     }
 

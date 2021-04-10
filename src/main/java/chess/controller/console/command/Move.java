@@ -1,15 +1,15 @@
-package chess.controller.command;
+package chess.controller.console.command;
 
+import chess.domain.ChessGame;
 import chess.domain.board.position.Position;
-import chess.domain.manager.ChessGame;
-import chess.view.OutputView;
+import chess.view.console.OutputView;
 
-public class Start extends Command {
-
-    public Start(String line) {
+public class Move extends Command {
+    public Move(String line) {
         super(line);
     }
 
+    @Override
     public Command read(final String input) {
         final Menu menu = Menu.of(input);
 
@@ -36,19 +36,17 @@ public class Start extends Command {
         throw new IllegalArgumentException("부적절한 명령어 입력입니다.");
     }
 
+    // XXX :: ChessGame.move()에 validateTurn과 changeTurn을 넣을까
+
     @Override
     public void execute(final ChessGame chessGame) {
-        chessGame.initNewGame();
+        final Position source = super.source();
+        final Position target = super.target();
+
+        chessGame.validateTurn(source);
+        chessGame.move(source, target);
+        chessGame.changeTurn();
+
         OutputView.printBoard(chessGame.board());
-    }
-
-    @Override
-    public Position source() {
-        throw new IllegalArgumentException("Source parameter 가 존재하지 않습니다.");
-    }
-
-    @Override
-    public Position target() {
-        throw new IllegalArgumentException("Target parameter 가 존재하지 않습니다.");
     }
 }

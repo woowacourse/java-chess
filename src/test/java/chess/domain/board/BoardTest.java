@@ -23,22 +23,22 @@ public class BoardTest {
     @DisplayName("올바른 보드 생성된다.")
     @Test
     void createTest() {
-        assertThat(board.of(Vertical.A, Horizontal.ONE)).isInstanceOf(Rook.class);
+        assertThat(board.of(Vertical.a, Horizontal.ONE)).isInstanceOf(Rook.class);
     }
 
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
     void of() {
-        final Piece piece = board.of(Vertical.B, Horizontal.TWO);
+        final Piece piece = board.of(Vertical.b, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
-        assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+        assertThat(piece).isEqualTo(Pawn.of(Owner.WHITE));
     }
 
     @DisplayName("입력한 위치로 이동된다.")
     @Test
     void moveTest() {
-        final Position source = new Position(Vertical.B, Horizontal.TWO);
-        final Position target = new Position(Vertical.B, Horizontal.THREE);
+        final Position source = new Position(Vertical.b, Horizontal.TWO);
+        final Position target = new Position(Vertical.b, Horizontal.THREE);
 
         board.movePiece(source, target);
 
@@ -58,7 +58,7 @@ public class BoardTest {
     @Test
     void validatePawnMovement1() {
         board.movePiece(new Position("a2"), new Position("a4"));
-        assertThat(board.of(new Position("a4"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+        assertThat(board.of(new Position("a4"))).isEqualTo(Pawn.of(Owner.WHITE));
     }
 
     @DisplayName("폰은 첫 움직임이 아니라면 두 칸을 이동할 수 없다.")
@@ -67,7 +67,7 @@ public class BoardTest {
         board.movePiece(new Position("a2"), new Position("a3"));
 
         assertThatThrownBy(
-                ()->board.movePiece(new Position("a3"), new Position("a5"))
+                () -> board.movePiece(new Position("a3"), new Position("a5"))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -75,7 +75,7 @@ public class BoardTest {
     @Test
     void validatePawnMovement3() {
         board.movePiece(new Position("a2"), new Position("a3"));
-        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.of(Owner.WHITE));
     }
 
     @DisplayName("폰의 전진은 적 기물을 잡을 수 없다.")
@@ -94,14 +94,14 @@ public class BoardTest {
         board.movePiece(new Position("a5"), new Position("a4"));
         board.movePiece(new Position("a4"), new Position("a3"));
         board.movePiece(new Position("b2"), new Position("a3"));
-        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
+        assertThat(board.of(new Position("a3"))).isEqualTo(Pawn.of(Owner.WHITE));
     }
 
     @DisplayName("폰은 대각선으로 적이 없다면 대각선으로 움직일 수 없다.")
     @Test
     void validatePawnMovement6() {
         assertThatThrownBy(
-                ()->board.movePiece(new Position("a7"), new Position("b6"))
+                () -> board.movePiece(new Position("a7"), new Position("b6"))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

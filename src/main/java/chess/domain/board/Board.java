@@ -8,6 +8,7 @@ import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
+import chess.view.web.PieceSymbolMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class Board {
     public void movePiece(final Position source, final Position target) {
         if (reachablePositions(source).contains(target)) {
             board.put(target, board.get(source));
-            board.put(source, Empty.getInstance());
+            board.put(source, Empty.of());
             return;
         }
         throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");
@@ -104,5 +105,9 @@ public class Board {
         return (int) Arrays.stream(Horizontal.values())
                 .filter(h -> of(v, h).isOwner(owner) && of(v, h).isPawn())
                 .count();
+    }
+
+    public String[][] parseUnicodeBoard() {
+        return PieceSymbolMapper.parseBoardAsUnicode(board);
     }
 }

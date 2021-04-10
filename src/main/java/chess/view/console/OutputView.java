@@ -1,17 +1,18 @@
-package chess.view;
+package chess.view.console;
 
-import chess.controller.ScoreDto;
+import chess.controller.dto.ScoresDto;
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Symbol;
 
-import java.util.Queue;
+import java.util.List;
 
 public class OutputView {
-    private static final int NUMBER_OF_WINNER = 1;
+    private static final int SIZE_OF_ONLY_WINNER = 1;
 
     public static void printBoard(final Board board) {
         printPiece(board);
@@ -31,26 +32,24 @@ public class OutputView {
     }
 
     private static String decidePieceSymbol(final Piece piece) {
-        final String symbol = piece.symbol();
+        final Symbol symbol = piece.symbol();
 
         if (piece.isBlack()) {
-            return symbol.toUpperCase();
+            return symbol.asString().toUpperCase();
         }
-        return symbol.toLowerCase();
+        return symbol.asString().toLowerCase();
     }
 
-    public static void printScore(final ScoreDto scoreDto) {
-        final String owner = decidePlayerSymbol(scoreDto.owner());
-        final double score = scoreDto.score();
-
-        System.out.println(owner + "의 점수 : " + score);
+    public static void printScore(final ScoresDto scoresDto) {
+        System.out.println("black 의 점수 : " + scoresDto.getBlackScore());
+        System.out.println("white 의 점수 : " + scoresDto.getWhiteScore());
     }
 
-    public static void printWinner(final Queue<Owner> owner) {
+    public static void printWinner(final List<Owner> owner) {
         System.out.println("=== 게임 결과 ===");
 
-        if (owner.size() == NUMBER_OF_WINNER) {
-            System.out.println("승자 : " + decidePlayerSymbol(owner.peek()));
+        if (owner.size() == SIZE_OF_ONLY_WINNER) {
+            System.out.println("승자 : " + decidePlayerSymbol(owner.get(0)));
             return;
         }
 
