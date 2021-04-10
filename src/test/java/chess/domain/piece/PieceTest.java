@@ -8,9 +8,12 @@ import chess.domain.piece.knight.Knight;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.queen.Queen;
 import chess.domain.piece.rook.Rook;
+import chess.util.PieceConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,49 +25,12 @@ class PieceTest {
     private Piece whitePawn;
     private Piece blackPawn;
     private Piece whiteKing;
-    private Piece bishop;
-    private Piece queen;
-    private Piece rook;
-    private Piece knight;
 
     @BeforeEach
     void setUp() {
         whitePawn = Pawn.getInstanceOf(Owner.WHITE);
         blackPawn = Pawn.getInstanceOf(Owner.BLACK);
         whiteKing = King.getInstanceOf(Owner.WHITE);
-        bishop = Bishop.getInstanceOf(Owner.BLACK);
-        queen = Queen.getInstanceOf(Owner.BLACK);
-        rook = Rook.getInstanceOf(Owner.BLACK);
-        knight = Knight.getInstanceOf(Owner.BLACK);
-    }
-
-    @Test
-    @DisplayName("체스말의 이동 가능 경로 반환한다.")
-    void movablePathTest() {
-        //given
-        Pawn whitePawn = Pawn.getInstanceOf(Owner.WHITE);
-        Knight whiteKnight = Knight.getInstanceOf(Owner.WHITE);
-
-        //when
-        List<Path> pawnPaths = whitePawn.movablePath(Position.of("a2"));
-        List<Path> knightPaths = whiteKnight.movablePath(Position.of("b1"));
-
-        List<Position> pawnPathsList = pawnPaths.stream().flatMap(Path::stream).collect(Collectors.toList());
-        List<Position> knightPathList = knightPaths.stream().flatMap(Path::stream).collect(Collectors.toList());
-
-        //then
-        assertThat(pawnPathsList).containsExactly(
-                Position.of("a3"),
-                Position.of("a4"),
-                Position.of("b3"),
-                Position.of("c4")
-        );
-
-        assertThat(knightPathList).containsExactly(
-                Position.of("c3"),
-                Position.of("a3"),
-                Position.of("d2")
-        );
     }
 
     @Test
@@ -80,7 +46,7 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("인자로 주는 색깔과 같은지 비교한다.")
+    @DisplayName("인자로 주는 Owner와 같은지 비교한다.")
     void isSameOwnerTest() {
         //when
         boolean isTrue = whitePawn.isSameOwner(Owner.WHITE);
@@ -91,18 +57,14 @@ class PieceTest {
         assertThat(isFalse).isFalse();
     }
 
-    @Test
-    @DisplayName("체스말이 폰인지와 같은 색인지 확인한다.")
-    void isSameOwnerPawnTest() {
-        //when
-        boolean isTrue = whitePawn.isSameOwnerPawn(Owner.WHITE);
-        boolean isFalse = whiteKing.isSameOwnerPawn(Owner.WHITE);
-        boolean isFalse2 = blackPawn.isSameOwnerPawn(Owner.WHITE);
+    @ParameterizedTest(name = "체스말이 폰인지와 같은 색인지 확인한다.")
+    @CsvSource({"p, true", "k, false", "P, false"})
+    void isSameOwnerPawnTest(String symbol, boolean isSameOwnerPawn) {
+        //given
+        Piece piece = PieceConverter.parsePiece(symbol);
 
         //then
-        assertThat(isTrue).isTrue();
-        assertThat(isFalse).isFalse();
-        assertThat(isFalse2).isFalse();
+        assertThat(piece.isSameOwnerPawn(Owner.WHITE)).isEqualTo(isSameOwnerPawn);
     }
 
     @Test
@@ -144,58 +106,38 @@ class PieceTest {
         assertThat(isFalse).isFalse();
     }
 
-    @Test
-    @DisplayName("체스말의 점수 반환한다.")
-    void scoreTest() {
+    @ParameterizedTest(name = "모든 종류의 체스말이 각각 자신에 맞는 점수를 반환한다.")
+    @CsvSource({"p, 1.0d", "k, 0.0d", "b, 3.0d", "q, 9.0d", "r, 5.0d", "n, 2.5d"})
+    void scoreTest(String symbol, double scoreValue) {
         //given
-        Piece bishop = Bishop.getInstanceOf(Owner.BLACK);
-        Piece queen = Queen.getInstanceOf(Owner.BLACK);
-        Piece rook = Rook.getInstanceOf(Owner.BLACK);
-        Piece knight = Knight.getInstanceOf(Owner.BLACK);
+        Piece piece = PieceConverter.parsePiece(symbol);
 
         //when
-        Score pawnScore = whitePawn.score();
-        Score kingScore = whiteKing.score();
-        Score bishopScore = bishop.score();
-        Score queenScore = queen.score();
-        Score rookScore = rook.score();
-        Score knightScore = knight.score();
+        Score score = piece.score();
 
         //then
-        assertThat(pawnScore.value()).isEqualTo(1.0d);
-        assertThat(kingScore.value()).isEqualTo(0.0d);
-        assertThat(bishopScore.value()).isEqualTo(3.0d);
-        assertThat(queenScore.value()).isEqualTo(9.0d);
-        assertThat(rookScore.value()).isEqualTo(5.0d);
-        assertThat(knightScore.value()).isEqualTo(2.5d);
+        assertThat(score.value()).isEqualTo(scoreValue);
     }
 
-    @Test
-    @DisplayName("최대 거리 반환한다.")
-    void maxDistanceTest() {
-        int pawnMaxDistance = whitePawn.maxDistance();
-        int kingMaxDistance = whiteKing.maxDistance();
-        int queenMaxDistance = queen.maxDistance();
-        int rookMaxDistance = rook.maxDistance();
-        int bishopMaxDistance = bishop.maxDistance();
-        int knightMaxDistance = knight.maxDistance();
+    @ParameterizedTest(name = "모든 종류의 체스말이 각각 자신에 맞는 최대 거리 반환한다.")
+    @CsvSource({"p, 2", "k, 1", "b, 7", "q, 7", "r, 7", "n, 1"})
+    void maxDistanceTest(String symbol, int distance) {
+        //given
+        Piece piece = PieceConverter.parsePiece(symbol);
 
-        assertThat(pawnMaxDistance).isEqualTo(2);
-        assertThat(kingMaxDistance).isEqualTo(1);
-        assertThat(queenMaxDistance).isEqualTo(7);
-        assertThat(rookMaxDistance).isEqualTo(7);
-        assertThat(bishopMaxDistance).isEqualTo(7);
-        assertThat(knightMaxDistance).isEqualTo(1);
+        int maxDistance = piece.maxDistance();
+
+        assertThat(maxDistance).isEqualTo(distance);
     }
 
     @Test
     @DisplayName("자신의 심볼을 반환한다.")
     void getSymbolTest() {
         //given
-        String whitePawnSymbol = Pawn.getInstanceOf(Owner.WHITE).getSymbol(); // "p"
-        String blackPawnSymbol = Pawn.getInstanceOf(Owner.BLACK).getSymbol(); // "P"
-        String whiteKingSymbol = King.getInstanceOf(Owner.WHITE).getSymbol(); // "k"
-        String blackKingSymgol = King.getInstanceOf(Owner.BLACK).getSymbol();
+        String whitePawnSymbol = Pawn.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackPawnSymbol = Pawn.getInstanceOf(Owner.BLACK).getSymbol();
+        String whiteKingSymbol = King.getInstanceOf(Owner.WHITE).getSymbol();
+        String blackKingSymbol = King.getInstanceOf(Owner.BLACK).getSymbol();
         String whiteBishopSymbol = Bishop.getInstanceOf(Owner.WHITE).getSymbol();
         String blackBishopSymbol = Bishop.getInstanceOf(Owner.BLACK).getSymbol();
         String whiteKnightSymbol = Knight.getInstanceOf(Owner.WHITE).getSymbol();
@@ -209,7 +151,7 @@ class PieceTest {
         assertThat(whitePawnSymbol).isEqualTo("p");
         assertThat(blackPawnSymbol).isEqualTo("P");
         assertThat(whiteKingSymbol).isEqualTo("k");
-        assertThat(blackKingSymgol).isEqualTo("K");
+        assertThat(blackKingSymbol).isEqualTo("K");
         assertThat(whiteBishopSymbol).isEqualTo("b");
         assertThat(blackBishopSymbol).isEqualTo("B");
         assertThat(whiteKnightSymbol).isEqualTo("n");

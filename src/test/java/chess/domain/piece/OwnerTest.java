@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -27,16 +29,15 @@ class OwnerTest {
                 .isInstanceOf(IllegalStateException.class).hasMessage("유효하지 않은 색깔입니다.");
     }
 
-    @Test
-    @DisplayName("상대편의 색깔인지 판단한다.")
-    void isEnemyTest() {
+    @ParameterizedTest(name = "인자로 받는 Owner가 상대편의 색깔인지 판단한다.")
+    @CsvSource({"BLACK, WHITE, true", "BLACK, BLACK, false"})
+    void isEnemyTest(String ownerName, String ownerToCompareName, boolean isDifferent) {
         //given
-        boolean isTrue = Owner.BLACK.isEnemy(Owner.WHITE);
-        boolean isFalse = Owner.BLACK.isEnemy(Owner.BLACK);
+        Owner owner = Owner.valueOf(ownerName);
+        Owner ownerToCompare = Owner.valueOf(ownerToCompareName);
 
         //then
-        assertThat(isTrue).isTrue();
-        assertThat(isFalse).isFalse();
+        assertThat(owner.isEnemy(ownerToCompare)).isEqualTo(isDifferent);
     }
 
     @Test
@@ -47,32 +48,26 @@ class OwnerTest {
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("적이 존재하지 않는 색입니다.");
     }
 
-    @Test
-    @DisplayName("같은 색깔인지 판단한다.")
-    void isSameTest() {
+    @ParameterizedTest(name = "인자로 받는 Owner가 같은 색깔인지 판단한다.")
+    @CsvSource({"BLACK, BLACK, true", "BLACK, WHITE, false"})
+    void isSameTest(String ownerName, String ownerToCompareName, boolean isDifferent) {
         //given
-        boolean isTrue = Owner.BLACK.isSame(Owner.BLACK);
-        boolean isFalse = Owner.BLACK.isSame(Owner.WHITE);
+        Owner owner = Owner.valueOf(ownerName);
+        Owner ownerToCompare = Owner.valueOf(ownerToCompareName);
 
         //then
-        assertThat(isTrue).isTrue();
-        assertThat(isFalse).isFalse();
+        assertThat(owner.isSame(ownerToCompare)).isEqualTo(isDifferent);
     }
 
-    @Test
-    @DisplayName("다른 요소인지 확인한다.")
-    void isDifferent() {
+    @ParameterizedTest(name = "인자로 받는 Owner가 다른 Owner 인지 확인한다.")
+    @CsvSource({"BLACK, WHITE, true", "WHITE, NONE, true", "BLACK, BLACK, false", "NONE, NONE, false"})
+    void isDifferent(String ownerName, String ownerToCompareName, boolean isDifferent) {
         //given
-        boolean isTrue = Owner.BLACK.isDifferent(Owner.WHITE);
-        boolean isTrue2 = Owner.WHITE.isDifferent(Owner.NONE);
-        boolean isFalse = Owner.BLACK.isDifferent(Owner.BLACK);
-        boolean isFalse2 = Owner.NONE.isDifferent(Owner.NONE);
+        Owner owner = Owner.valueOf(ownerName);
+        Owner ownerToCompare = Owner.valueOf(ownerToCompareName);
 
         //then
-        assertThat(isTrue).isTrue();
-        assertThat(isTrue2).isTrue();
-        assertThat(isFalse).isFalse();
-        assertThat(isFalse2).isFalse();
+        assertThat(owner.isDifferent(ownerToCompare)).isEqualTo(isDifferent);
     }
 
 

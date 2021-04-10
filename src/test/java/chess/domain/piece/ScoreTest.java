@@ -3,6 +3,8 @@ package chess.domain.piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,19 +51,13 @@ class ScoreTest {
         assertThat(result).isEqualTo(new Score(9.5d));
     }
 
-    @Test
-    @DisplayName("Score 객체끼리 대소 관계 비교 가능하다.")
-    void isHigherThanTest() {
+    @ParameterizedTest(name = "Score 객체끼리 대소 관계 비교 가능하다.")
+    @CsvSource({"1, true", "11, false"})
+    void isHigherThanTest2(int value, boolean isHigherThan) {
         //given
-        Score oneScore = new Score(1);
-        Score elevenScore = new Score(11);
-
-        //when
-        boolean isTrue = score.isHigherThan(oneScore);
-        boolean isFalse = score.isHigherThan(elevenScore);
+        Score otherScore = new Score(value);
 
         //then
-        assertThat(isTrue).isTrue();
-        assertThat(isFalse).isFalse();
+        assertThat(score.isHigherThan(otherScore)).isEqualTo(isHigherThan);
     }
 }
