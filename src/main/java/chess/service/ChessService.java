@@ -1,84 +1,77 @@
 package chess.service;
 
-import chess.controller.web.dto.PieceDto;
-import chess.controller.web.dto.SaveRequestDto;
-import chess.dao.MysqlChessDao;
-import chess.dao.dto.ChessGame;
-import chess.domain.board.Board;
+import chess.controller.web.dto.MoveRequestDto;
+import chess.dao.ChessDao;
 import chess.domain.manager.ChessGameManager;
 import chess.domain.manager.ChessGameManagerBundle;
 import chess.domain.manager.ChessGameManagerFactory;
 import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
+import chess.domain.repository.ChessGameRepository;
 import chess.domain.statistics.ChessGameStatistics;
-
-import java.util.Map;
-
-import static java.util.stream.Collectors.toMap;
 
 public class ChessService {
     private static final long TEMPORARY_ID = 0;
 
-    private static ChessGameManager chessGameManager = ChessGameManagerFactory.createNotStartedGameManager(TEMPORARY_ID);
-    private static MysqlChessDao dao = new MysqlChessDao();
+    private final ChessGameRepository chessGameRepository;
 
-    public static void start() {
-        chessGameManager = ChessGameManagerFactory.createRunningGame(TEMPORARY_ID);
+    public ChessService(ChessDao chessDao) {
+        this.chessGameRepository = new ChessGameRepository(chessDao);
     }
 
-    public static ChessGameManagerBundle findRunningGames() {
-        return dao.findAllOnRunning();
+    public ChessGameManager start() {
+        long gameId = chessGameRepository.add(ChessGameManagerFactory.createRunningGame(TEMPORARY_ID));
+        return ChessGameManagerFactory.createRunningGame(gameId);
     }
 
-    public static void save(SaveRequestDto saveRequestDto) {
-        ChessGame chessGame = new ChessGame(chessGameManager);
-        if (saveRequestDto.getId() == TEMPORARY_ID) {
-            dao.save(chessGame);
-            return;
-        }
-        update(chessGame);
+    public ChessGameManager end(long gameId) {
+        ChessGameManager endGameManager = findById(gameId).end();
+        update(endGameManager);
+        return endGameManager;
     }
 
-    private static void update(ChessGame chessGame) {
-        dao.update(chessGame);
+    public ChessGameManagerBundle findRunningGames() {
+        return chessGameRepository.findRunningGames();
     }
 
-    public static void load(long id) {
-        chessGameManager = dao.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 ID가 없습니다."));
+    public boolean isKindDead(long gameId) {
+        return findById(gameId).isKingDead();
     }
 
-    public static void move(Position from, Position to) {
+    private void update(ChessGameManager chessGameManager) {
+        chessGameRepository.update(chessGameManager);
+    }
+
+    public ChessGameManager load(long gameId) {
+        return chessGameRepository.findById(gameId);
+    }
+
+    public void move(long gameId, Position from, Position to) {
+        ChessGameManager chessGameManager = chessGameRepository.findById(gameId);
         chessGameManager.move(from, to);
         if (chessGameManager.isKingDead()) {
             chessGameManager = chessGameManager.end();
         }
+        chessGameRepository.update(chessGameManager);
     }
 
-    public static boolean isEnd() {
-        return chessGameManager.isEnd();
+    public void move(MoveRequestDto moveRequestDto) {
+        move(moveRequestDto.getId(), moveRequestDto.getFromPosition(), moveRequestDto.getToPosition());
     }
 
-    public static Map<String, PieceDto> getPieces() {
-        Board board = chessGameManager.getBoard();
-        return board.getAliveSquares().stream()
-                .collect(toMap(square -> square.getPosition().toString()
-                        , square -> new PieceDto(square.getNotationText(), square.getColor().name())));
+    public boolean isEnd(long gameId) {
+        return chessGameRepository.isEnd(gameId);
     }
 
-    public static Color nextColor() {
-        try {
-            return chessGameManager.nextColor();
-        } catch (UnsupportedOperationException e) {
-            return Color.BLANK;
-        }
+    public ChessGameManager findById(long gameId) {
+        return chessGameRepository.findById(gameId);
     }
 
-    public static ChessGameStatistics getStatistics() {
-        return chessGameManager.getStatistics();
+    public Color nextColor(long gameId) {
+        return findById(gameId).nextColor();
     }
 
-    public static long getId() {
-        return chessGameManager.getId();
+    public ChessGameStatistics getStatistics(long gameId) {
+        return findById(gameId).getStatistics();
     }
 }
