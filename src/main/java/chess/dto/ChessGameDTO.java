@@ -18,18 +18,10 @@ public class ChessGameDTO {
     private final TeamDTO whiteTeamDTO;
     private final boolean isRunning;
 
-    public ChessGameDTO(final TeamDTO blackTeam, final TeamDTO whiteTeam, final boolean isRunning) {
+    private ChessGameDTO(final TeamDTO blackTeam, final TeamDTO whiteTeam, final boolean isRunning) {
         this.blackTeamDTO = blackTeam;
         this.whiteTeamDTO = whiteTeam;
         this.isRunning = isRunning;
-    }
-
-    public TeamDTO getBlackTeam() {
-        return blackTeamDTO;
-    }
-
-    public TeamDTO getWhiteTeam() {
-        return whiteTeamDTO;
     }
 
     public boolean isRunning() {
@@ -48,7 +40,7 @@ public class ChessGameDTO {
         blackTeam.setEnemy(whiteTeam);
         whiteTeam.setEnemy(blackTeam);
 
-        return new ChessGame(blackTeam, whiteTeam, currentTurn, isRunning());
+        return new ChessGame(blackTeam, whiteTeam, currentTurn, !isRunning());
     }
 
     private BlackTeam createBlackTeam() {
