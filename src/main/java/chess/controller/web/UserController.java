@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.controller.web.utils.JsonConverter;
-import chess.dao.UserDao;
 import chess.dto.user.UserRequestDto;
 import chess.dto.user.UserResponseDto;
 import chess.service.UserService;
@@ -12,10 +11,11 @@ import java.util.Collections;
 
 public class UserController {
 
-    private final UserService userService = new UserService(new UserDao());
+    private final UserService userService;
 
-    public UserController() {
+    public UserController(final UserService userService) {
         addResponsePath();
+        this.userService = userService;
     }
 
     private void addResponsePath() {
