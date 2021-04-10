@@ -5,7 +5,7 @@ import chess.domain.manager.ChessGameManager;
 import chess.domain.piece.attribute.Color;
 
 public class ChessGame {
-    private final Long id;
+    private final long id;
     private final Color nextTurn;
     private final boolean running;
     private final String pieces;
@@ -15,6 +15,13 @@ public class ChessGame {
         this.nextTurn = chessGameManager.nextColor();
         this.running = chessGameManager.isStart() && chessGameManager.isNotEnd();
         this.pieces = PiecesConverter.convertString(chessGameManager.getBoard());
+    }
+
+    public ChessGame(long id, Color nextTurn, boolean running, String pieces) {
+        this.id = id;
+        this.nextTurn = nextTurn;
+        this.running = running;
+        this.pieces = pieces;
     }
 
     public Long getId() {
