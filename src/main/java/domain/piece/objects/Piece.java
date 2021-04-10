@@ -6,7 +6,6 @@ import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
 
-import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -14,7 +13,9 @@ public abstract class Piece {
     private final Score score;
     private final Color color;
 
-    public abstract boolean canMove(Map<Position, Piece> board, Position start, Position end);
+    public abstract boolean existPath();
+
+    public abstract void checkMovable(Position start, Position end, boolean turn);
 
     public Piece(String name, Score score, boolean isBlack) {
         this.name = Name.of(name, isBlack);
@@ -26,7 +27,7 @@ public abstract class Piece {
         return score;
     }
 
-    public String getName() {
+    public String name() {
         return name.getName();
     }
 
@@ -62,10 +63,6 @@ public abstract class Piece {
         return (rowDiff == 0) || (colDiff == 0);
     }
 
-    protected boolean isEmptyPiecePosition(Map<Position, Piece> board, Position nextPosition) {
-        return !board.containsKey(nextPosition);
-    }
-
     protected Direction getLinearDirection(Position start, Position end) {
         int rowDiff = Position.makeRowDiff(start, end);
         int colDiff = Position.makeColumnDiff(start, end);
@@ -78,6 +75,10 @@ public abstract class Piece {
         int colDiff = Position.makeColumnDiff(start, end);
         Direction direction = Direction.findDiagonalDirection(rowDiff, colDiff);
         return direction;
+    }
+
+    public Direction direction(Position start, Position end) {
+        throw new RuntimeException(name.getName() + "은 direction이 구현되지 않았습니다. ");
     }
 
     @Override

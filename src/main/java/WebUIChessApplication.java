@@ -12,7 +12,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    static WebMenuController testController;
+    static WebMenuController menuController;
     static int gameID;
 
     public static void main(String[] args) {
@@ -27,8 +27,8 @@ public class WebUIChessApplication {
         get("/startClick", (req, res) -> {
             String input = req.queryParams("roomNumber");
             if ("new".equals(input)) {
-                testController = new WebMenuController();
-                ResultDto resultDto = testController.run("start");
+                menuController = new WebMenuController();
+                ResultDto resultDto = menuController.run("start");
                 gameDao.insertNewGameInfo(resultDto);
                 gameID = gameDao.lastGameID();
                 return render(new HashMap<String, Object>() {{
@@ -37,20 +37,20 @@ public class WebUIChessApplication {
             }
             gameID = Integer.parseInt(input);
             ResultDto resultDto = gameDao.selectGameInfo(gameID);
-            testController = new WebMenuController(resultDto.getPiecesDto());
+            menuController = new WebMenuController(resultDto.getPiecesDto());
             return render(new HashMap<>(), "start.html");
         });
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/showData", (req, res) -> gson.toJson(testController.getResultDto()));
+        get("/showData", (req, res) -> gson.toJson(menuController.getResultDto()));
 
         post("/movedata", (req, res) -> {
             JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
             String source = jsonObject.get("source").getAsString();
             String target = jsonObject.get("target").getAsString();
             String command = "move " + source + " " + target;
-            ResultDto resultDto = testController.run(command);
+            ResultDto resultDto = menuController.run(command);
             if (!resultDto.isSuccess()) {
                 return gson.toJson(resultDto);
             }
@@ -62,7 +62,7 @@ public class WebUIChessApplication {
             return gson.toJson(resultDto);
         });
 
-        get("/status", (req, res) -> gson.toJson(testController.run("status")));
+        get("/status", (req, res) -> gson.toJson(menuController.run("status")));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

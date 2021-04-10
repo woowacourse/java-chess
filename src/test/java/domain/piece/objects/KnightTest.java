@@ -1,62 +1,39 @@
 package domain.piece.objects;
 
-import domain.Board;
 import domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class KnightTest {
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.(빈칸일 경우)")
+    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.")
     @ParameterizedTest
     @ValueSource(strings = {"d6", "c5", "f6", "g5", "c3", "d2", "f2", "g3"})
     void knight_move_if_empty_piece(String endPosition) {
         Knight knight = Knight.of("N", true);
-        Board board = new Board(new HashMap<Position, Piece>() {{
-            put(Position.of("e4"), knight);
-        }});
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPosition))).isTrue();
+        assertDoesNotThrow(() -> knight.checkMovable(Position.of("e4"), Position.of(endPosition), true));
     }
 
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.(다른 색의 기물일 경우)")
-    @Test
-    void knight_move_if_different_color_piece() {
+    @DisplayName("이동하려는 기물(나이)의 턴이 아니면 이동할 수 없다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"d6", "c5", "f6", "g5", "c3", "d2", "f2", "g3"})
+    void invalid_turn_false_test(String endPosition) {
         Knight knight = Knight.of("N", true);
-        Board board = new Board(new HashMap<Position, Piece>() {{
-            put(Position.of("e4"), knight);
-            put(Position.of("d2"), Pawn.of("p", false));
-            put(Position.of("f2"), Queen.of("q", false));
-        }});
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d2"))).isTrue();
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f2"))).isTrue();
+        assertThatThrownBy(() -> knight.checkMovable(Position.of("e4"), Position.of(endPosition), false))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("상대방의 차례입니다.");
     }
 
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 없다.(같은 색의 기물일 경우)")
-    @Test
-    void knight_move_if_same_color_piece() {
-        Knight knight = Knight.of("N", true);
-        Board board = new Board(new HashMap<Position, Piece>() {{
-            put(Position.of("e4"), knight);
-            put(Position.of("d2"), Pawn.of("P", true));
-            put(Position.of("f2"), Queen.of("Q", true));
-        }});
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("d2"))).isFalse();
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of("f2"))).isFalse();
-    }
-
-    @DisplayName("knight의 이동 가능 범위 외의 위치가 목적지인 경우 이동할 수 없다.")
+    @DisplayName("나이트가 이동하려는 위치가 이동 가능한 범위가 아니면 실패를 반환한다.")
     @ParameterizedTest
     @ValueSource(strings = {"d5", "f3", "e5", "e4"})
     void cant_move_knight_test(String endPoint) {
         Knight knight = Knight.of("N", true);
-        Board board = new Board(new HashMap<Position, Piece>() {{
-            put(Position.of("e4"), knight);
-        }});
-        assertThat(knight.canMove(board.getPieceMap(), Position.of("e4"), Position.of(endPoint))).isFalse();
+        assertThatThrownBy(() -> knight.checkMovable(Position.of("e4"), Position.of(endPoint), true))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("N은 선택된 위치로 이동할 수 없습니다.");
     }
 }

@@ -17,12 +17,26 @@ public final class Empty extends Piece {
     }
 
     @Override
+    public boolean isSameColor(boolean value) {
+        return false;
+    }
+
+    @Override
     public boolean isEmpty() {
         return true;
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
         return false;
+    }
+
+    @Override
+    public boolean existPath() {
+        throw new RuntimeException("찾을 수 없음!");
+    }
+
+    @Override
+    public void checkMovable(Position start, Position end, boolean turn) {
+        throw new RuntimeException("빈 칸은 움직일 수 없습니다!");
     }
 }

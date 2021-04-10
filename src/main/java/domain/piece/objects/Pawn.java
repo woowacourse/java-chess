@@ -1,5 +1,7 @@
 package domain.piece.objects;
 
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static domain.piece.Color.BLACK;
+import static domain.piece.position.Direction.linearDirection;
 
 public class Pawn extends Piece {
     private static final Score SCORE = Score.of(1);
@@ -44,24 +47,6 @@ public class Pawn extends Piece {
         return PAWNS;
     }
 
-    private boolean movableDiagonal(List<Direction> directions, Map<Position, Piece> board, Position start, Position end) {
-        return directions.stream()
-                .map(direction -> start.move(direction))
-                .filter(nextPosition -> nextPosition.notEmptyPosition() && nextPosition.equals(end))
-                .anyMatch(nextPosition -> !isEmptyPiecePosition(board, nextPosition) && !this.isSameColor(board.get(nextPosition)));
-    }
-
-    private boolean movableLinear(Direction direction, Map<Position, Piece> board, Position start, Position end) {
-        Position next = start.move(direction);
-        if (next.equals(end) && (next.notEmptyPosition() && isEmptyPiecePosition(board, end))) { // 한칸 이동이고 이동 가능하면 true를 반환한다.
-            return true;
-        }
-
-        return PAWNS.containsKey(start)
-                && (next.move(direction).notEmptyPosition() && next.move(direction).equals(end))
-                && !board.containsKey(end);
-    }
-
     private List<Direction> selectDirectionByColor() {
         if (this.isSameColor(BLACK.getValue())) {
             return Direction.blackPawnDirection();
@@ -69,14 +54,50 @@ public class Pawn extends Piece {
         return Direction.whitePawnDirection();
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
+    private boolean movablePositionByDirection(Position start, Position end) {
         List<Direction> directions = new ArrayList<>(selectDirectionByColor());
-        boolean result = movableLinear(directions.remove(0), board, start, end);
-        if (!result) {
-            result = movableDiagonal(directions, board, start, end);
+        return directions.stream()
+                .anyMatch(direction -> (linearDirection().contains(direction) && validLinearMove(start, end, direction))
+                        || start.move(direction).equals(end));
+    }
+
+    private boolean validLinearMove(Position start, Position end, Direction direction) {
+        Position movePosition = start.move(direction);
+        if (movableEndPosition(movePosition, end)) {
+            return true;
         }
-        return result;
+
+        return movableEndPosition(movePosition.move(direction), end);
+    }
+
+    private boolean movableEndPosition(Position movePosition, Position end) {
+        return movePosition.validPosition() && movePosition.equals(end);
+    }
+
+    @Override
+    public void checkMovable(Position start, Position end, boolean turn) {
+        if (!isSameColor(turn)) {
+            throw new InvalidTurnException();
+        }
+
+        if (!movablePositionByDirection(start, end)) {
+            throw new PieceCannotMoveException(name());
+        }
+    }
+
+    @Override
+    public Direction direction(Position start, Position end) {
+        List<Direction> directions = new ArrayList<>(selectDirectionByColor());
+        return directions.stream()
+                .filter(direction -> start.move(direction).equals(end) ||
+                        (linearDirection().contains(direction) && start.move(direction).move(direction).equals(end)))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("해당 위치로 가는 방향을 찾을 수 없습니다."));
+    }
+
+    @Override
+    public boolean existPath() {
+        return true;
     }
 
     @Override

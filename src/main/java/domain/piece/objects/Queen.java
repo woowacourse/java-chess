@@ -1,5 +1,7 @@
 package domain.piece.objects;
 
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
@@ -25,40 +27,46 @@ public class Queen extends Piece {
         }};
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
-        boolean result = canMoveDiagonal(board, start, end);
-        if (!result) {
-            result = canMoveStraight(board, start, end);
-        }
-        return result;
-    }
-
-    private boolean canMoveStraight(Map<Position, Piece> board, Position start, Position end) {
-        if (!isLinear(start, end)) {
-            return false;
-        }
-
+    private boolean movablePosition(Position start, Position end) {
         Direction direction = getLinearDirection(start, end);
-        do {
-            start = start.move(direction);
-        } while (!start.equals(end) && (start.notEmptyPosition() && isEmptyPiecePosition(board, start)));
 
-        return start.equals(end) && start.notEmptyPosition()
-                && (isEmptyPiecePosition(board, end) || !this.isSameColor(board.get(end)));
-    }
-
-    private boolean canMoveDiagonal(Map<Position, Piece> board, Position start, Position end) {
-        if (!isDiagonal(start, end)) {
-            return false;
+        if (isDiagonal(start, end)) {
+            direction = getDiagonalDirection(start, end);
         }
 
-        Direction direction = getDiagonalDirection(start, end);
-        do {
-            start = start.move(direction);
-        } while (!start.equals(end) && start.notEmptyPosition() && isEmptyPiecePosition(board, start));
+        Position temp = start.move(direction);
+        while (!temp.equals(end) && temp.validPosition()) {
+            temp = temp.move(direction);
+        }
+        return temp.equals(end) && temp.validPosition();
+    }
 
-        return start.equals(end) && start.notEmptyPosition()
-                && (isEmptyPiecePosition(board, start) || !this.isSameColor(board.get(end)));
+    @Override
+    public void checkMovable(Position start, Position end, boolean turn) {
+        if (!isSameColor(turn)) {
+            throw new InvalidTurnException();
+        }
+
+        if (!movablePosition(start, end)) {
+            throw new PieceCannotMoveException(name());
+        }
+    }
+
+    @Override
+    public Direction direction(Position start, Position end) {
+        if (isLinear(start, end)) {
+            return getLinearDirection(start, end);
+        }
+
+        if (isDiagonal(start, end)) {
+            return getDiagonalDirection(start, end);
+        }
+
+        throw new RuntimeException("올바른 방향이 아닙니다!");
+    }
+
+    @Override
+    public boolean existPath() {
+        return false;
     }
 }

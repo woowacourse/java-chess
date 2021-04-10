@@ -24,9 +24,8 @@ public class Running extends Started {
 
     @Override
     public State move(Position start, Position end) {
-        board.checkMovable(start, end, turn);
         Piece endPiece = board.getPiece(end);
-        board.move(start, end);
+        board.move(start, end, turn);
         turn = !turn;
         return gameStateByKing(endPiece);
     }

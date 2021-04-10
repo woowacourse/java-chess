@@ -1,8 +1,6 @@
 package domain.menu;
 
-import domain.Board;
 import domain.ChessGame;
-import domain.piece.objects.PieceFactory;
 import dto.BoardDto;
 import dto.MenuDto;
 import dto.PiecesDto;
