@@ -113,4 +113,25 @@ public class ChessGameDAO {
 
         return gson.fromJson(rs.getString("turn"), Color.class);
     }
+
+    public void finish(int gameId) throws SQLException {
+        String query = "UPDATE chess_game SET finished = ? WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setBoolean(1, true);
+        pstmt.setInt(2, gameId);
+        pstmt.executeUpdate();
+    }
+
+    public boolean finished(int gameId) throws SQLException {
+        String query = "SELECT finished FROM chess_game WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, gameId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) {
+            return false;
+        }
+
+        return rs.getBoolean("finished");
+    }
 }

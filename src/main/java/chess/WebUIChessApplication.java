@@ -89,6 +89,15 @@ public class WebUIChessApplication {
             response.add("white", resultToJson(result, Color.WHITE));
             return response;
         });
+
+        get("/:id/finish", (req, res) -> {
+            chessGameDAO.finish(Integer.parseInt(req.params("id")));
+            return HttpStatus.ACCEPTED_202;
+        });
+
+        get("/:id/finished", (req, res) -> {
+            return chessGameDAO.finished(Integer.parseInt(req.params("id")));
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

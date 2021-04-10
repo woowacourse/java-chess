@@ -11,6 +11,7 @@ async function init() {
   this.gameId = url[url.length - 1]
 
   await setBoard()
+  await checkFinished()
   await moveHandler()
   await changeTurn(await getTurn())
 }
@@ -31,6 +32,18 @@ async function setBoard() {
       boardTemplate(board.position, board.piece))
   })
 }
+
+async function checkFinished() {
+  const finished = await fetch(
+    `${this.gameId}/finished`
+  ).then(res => res.json())
+  .then(data => data)
+  if (finished === true) {
+    alert('게임이 종료되었습니다.')
+    toggleFinish()
+  }
+}
+
 
 async function getTurn() {
   return await fetch(
@@ -81,7 +94,7 @@ function moveHandler() {
 function move(response) {
   if (response.isOver === true) {
     alert('게임이 종료되었습니다.')
-    finish()
+    toggleFinish()
   }
 
   const $source = document.getElementById(response.source.id)
@@ -208,15 +221,12 @@ function displayResult(val) {
 
 async function btnHandler({target}) {
   if (target.id === 'restart') {
-    init()
-    document.querySelector('#finish').disabled = false
-    // 새 게임 db 가져오기
-
+    await newGame()
   }
   if (target.id === "finish") {
-    // over
-    // 종료 요청
-    finish()
+    if (await finish() === 202) {
+      toggleFinish()
+    }
   }
   if (target.id === "status") {
     displayResult('flex')
@@ -225,7 +235,15 @@ async function btnHandler({target}) {
   }
 }
 
-function finish() {
+async function finish() {
+  const url = window.location.href.split('/')
+  const gameId = url[url.length - 1]
+  return await fetch(
+      `${gameId}/finish`
+    ).then(res => res.json())
+}
+
+function toggleFinish() {
   document.querySelector('#finish').disabled = true
   document.querySelector('#status').disabled = false
 }
