@@ -1,7 +1,7 @@
 package chess.controller.console;
 
 import chess.controller.console.dto.board.BoardResponseDto;
-import chess.controller.console.dto.result.GameResultDto;
+import chess.controller.console.dto.result.GameResultResponseDto;
 import chess.controller.console.dto.position.MovablePathResponseDto;
 import chess.domain.command.Command;
 import chess.domain.command.CommandMenu;
@@ -32,7 +32,7 @@ public class ChessController {
         do {
             initCommand();
         } while (chessManager.isPlaying());
-        OutputView.printGameResult(GameResultDto.from(chessManager.gameStatus()));
+        OutputView.printGameResult(GameResultResponseDto.from(chessManager.gameStatus()));
     }
 
     private Command initFirstCommand() {
@@ -72,7 +72,7 @@ public class ChessController {
 
         if (command.isStatus()) {
             Status status = (Status) command;
-            OutputView.printStatus(GameResultDto.from(status.gameStatus()));
+            OutputView.printStatus(GameResultResponseDto.from(status.gameStatus()));
         }
 
         if (command.isRestart()) {
