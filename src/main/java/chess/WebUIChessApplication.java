@@ -10,7 +10,6 @@ import chess.domain.dto.MessageDto;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.MovePositionInfo;
-import chess.domain.piece.PieceFactory;
 
 import chess.service.ChessGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +32,6 @@ public class WebUIChessApplication {
         Gson gson = new Gson();
         staticFiles.location("/static");
         get("/", (req, res) -> {
-            chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
@@ -54,6 +52,9 @@ public class WebUIChessApplication {
         post("/end", (req, res) -> {
             ObjectMapper mapper = new ObjectMapper();
             ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
+            if("".equals(chessGameID.getRoomID())) {
+                return gson.toJson(new MessageDto("진행중인 게임이 없습니다."));
+            }
             return gson.toJson(chessGameService.endChessGame(chessGameID.getRoomID()));
 
         });
@@ -72,7 +73,6 @@ public class WebUIChessApplication {
             pieceDAO.saveTurn(chessGame.getStatus());
 
             return gson.toJson(new ChessBoardDto(chessGame));
-
         });
 
         post("/load", (req, res) -> gson.toJson(chessGameService.chessGames()));

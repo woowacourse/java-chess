@@ -5,6 +5,7 @@ import chess.domain.dao.ChessGameDAO;
 import chess.domain.dao.PieceDAO;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.EndGameDto;
+import chess.domain.dto.MessageDto;
 import chess.domain.dto.RoomIdDto;
 import chess.domain.game.*;
 import chess.domain.piece.MovePositionInfo;
@@ -23,11 +24,11 @@ public class ChessGameService {
         this.chessGameDAO = chessGameDAO;
     }
 
-    public ChessBoardDto createNewChessGame(String roomID) {
+    public Object createNewChessGame(String roomID) {
         Optional<ChessGameEntity> existChessGame = chessGameDAO.findRoomID(roomID);
 
         if(existChessGame.isPresent()) {
-            throw new IllegalArgumentException();
+            return new MessageDto("같은 이름의 게임이 존재합니다.");
         }
 
         chessGameDAO.create(roomID);
@@ -41,16 +42,16 @@ public class ChessGameService {
 
     public Object moveChessByRoomID(MovePositionInfo mpi) {
         String roomID = mpi.getRoomID();
-        Board board = pieceDAO.loadPiecesByRoomID(roomID);
-        ChessGame chessGame = new ChessGame(board, roomID);
-        chessGame.changeState(new WhiteTurn(chessGame));
-        if("black".equals(chessGameDAO.loadGameTurnByRoomID(roomID))) {
-            chessGame.changeState(new BlackTurn(chessGame));
+        ChessGame chessGame = new ChessGame(pieceDAO.loadPiecesByRoomID(roomID), roomID);
+        checkState(chessGame);
+        try{
+            chessGame.move(mpi.getSource(), mpi.getTarget());
+        }catch(Exception e) {
+            return new MessageDto("이동할 수 없습니다.");
         }
 
-        chessGame.move(mpi.getSource(), mpi.getTarget());
-
         if(chessGame.isFinished()) {
+            endChessGame(roomID);
             return new EndGameDto("왕을 잡아 게임이 종료됩니다.");
         }
         pieceDAO.updatePieces(mpi.getRoomID(), chessGame);
@@ -59,7 +60,7 @@ public class ChessGameService {
         return new ChessBoardDto(chessGame);
     }
 
-    public Object endChessGame(String roomID) {
+    public EndGameDto endChessGame(String roomID) {
         Board board = pieceDAO.loadPiecesByRoomID(roomID);
         ChessGame chessGame = new ChessGame(board, roomID);
         chessGame.changeState(new End(chessGame));
@@ -86,11 +87,15 @@ public class ChessGameService {
     public ChessBoardDto loadChessGameByRoomID(String roomID) {
         Board board = pieceDAO.loadPiecesByRoomID(roomID);
         ChessGame chessGame = new ChessGame(board, roomID);
-        chessGame.changeState(new WhiteTurn(chessGame));
-        if("black".equals(chessGameDAO.loadGameTurnByRoomID(roomID))) {
-            chessGame.changeState(new BlackTurn(chessGame));
-        }
+        checkState(chessGame);
 
         return new ChessBoardDto(chessGame);
+    }
+
+    private void checkState(ChessGame chessGame) {
+        chessGame.changeState(new WhiteTurn(chessGame));
+        if("black".equals(chessGameDAO.loadGameTurnByRoomID(chessGame.getRoomID()))) {
+            chessGame.changeState(new BlackTurn(chessGame));
+        }
     }
 }

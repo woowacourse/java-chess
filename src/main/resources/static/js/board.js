@@ -7,6 +7,10 @@ document.getElementById("start-btn").addEventListener("click", gameStart);
 
 function gameStart() {
     const roomID = prompt("방의 이름을 입력하세요");
+    if(roomID === "") {
+        alert("방이름을 입력하세요");
+        return;
+    }
     axios({
         method: 'post',
         url: '/start',
@@ -118,6 +122,11 @@ document.getElementById("status-btn").addEventListener("click", status);
 
 function status() {
     const roomID = document.getElementById("room-number").innerHTML;
+    if(roomID === ""){
+        alert("진행중인 게임이 없습니다.");
+        return;
+    }
+
     axios({
         method: 'post',
         url: '/status',
@@ -146,6 +155,10 @@ function loadPieces() {
         const data = res.data;
         const form = document.getElementById("room-name");
         const br = document.createElement('br');
+
+        if(form.childNodes.length > 1){
+            return;
+        }
         for(let i=0;i<data.roomIDs.length;i++) {
             const label = document.createElement("label");
             label.innerHTML = data.roomIDs[i];
@@ -171,7 +184,6 @@ function loadPieces() {
 }
 
 function getRoomName() {
-    console.log("hello");
     const roomNameList = document.getElementsByName('roomName');
     let roomID;
     roomNameList.forEach((node) => {
@@ -196,10 +208,18 @@ function getRoomName() {
         showRoomNumber(roomID);
         getPieces(data.piecesDto);
         showTurn(data.turn);
+        removeLoadGames();
     });
 
 }
 
+function removeLoadGames() {
+    const rooms = document.getElementById("room-name");
+
+    while(rooms.hasChildNodes()) {
+        rooms.removeChild(rooms.firstChild);
+    }
+}
 
 function deletePieces() {
     const row = ["a", "b", "c", "d", "e", "f", "g", "h"];
