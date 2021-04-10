@@ -26,6 +26,5 @@ public enum CommandRouter {
                 .map(commandRouter -> commandRouter.commandFactory.apply(command))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("커맨드를 잘 못 입력하셨습니다"));
-
     }
 }

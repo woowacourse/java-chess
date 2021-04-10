@@ -3,7 +3,6 @@ import pieceFonts from "./enum/chessPieceFont.js"
 
 const $chessboard = document.querySelector('#chessboard');
 const $startBtn = document.querySelector('#startBtn');
-const $saveBtn = document.querySelector('#saveBtn');
 const $loadBtn = document.querySelector('#loadBtn');
 const $blackScore = document.querySelector('#blackScore')
 const $whiteScore = document.querySelector('#whiteScore')
@@ -15,21 +14,22 @@ findGames();
 
 $chessboard.addEventListener("click", onClickPiece);
 $startBtn.addEventListener("click", onClickStartBtn);
-$saveBtn.addEventListener("click", onClickSaveBtn);
 $loadBtn.addEventListener("click", onClickLoadBtn);
 
 async function getPieces(url) {
-    const piecesData = await getFetch(url);
+    const piecesData = await getFetch(url, chessGameId);
     chessGameId = piecesData.id;
+    await findGames();
     await calculateScore();
     setBoard(piecesData.piecesAndPositions);
     nextColor = piecesData.color;
 }
 
 async function movePiece(from, to) {
-    const moveResult = await postFetch("/game/move", {id: 1, from: from, to: to});
+    const moveResult = await postFetch("/game/move", {id: chessGameId, from: from, to: to});
     if (moveResult.hasOwnProperty("isEnd") && moveResult.isEnd === true) {
         alert("게임이 종료되었습니다~!");
+        findGames();
     }
     if (moveResult.hasOwnProperty("isEnd") && moveResult.isEnd === false) {
         const $to = $chessboard.querySelector("#" + to);
@@ -45,21 +45,6 @@ async function movePiece(from, to) {
     }
 }
 
-async function savePiece() {
-    const rank = [8, 7, 6, 5, 4, 3, 2, 1];
-    const file = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-    const boardPieces = rank.flatMap(rank => file.map(file => file + rank))
-        .map(position => getKeyByValue(pieceFonts, $chessboard.querySelector("#" + position).innerText))
-        .join("");
-    await postFetch("/game/save", {id: chessGameId, pieces: boardPieces});
-    findGames();
-}
-
-function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
-}
-
 async function findGames() {
     const responseData = await getFetch("/user");
     const games = responseData.runningGames;
@@ -68,7 +53,8 @@ async function findGames() {
 }
 
 async function calculateScore() {
-    const scoreResponseData = await getFetch("/game/score");
+    console.log(chessGameId);
+    const scoreResponseData = await getFetch(`/game/score/${chessGameId}`);
 
     $blackScore.innerText = scoreResponseData.colorsScore.BLACK;
     $whiteScore.innerText = scoreResponseData.colorsScore.WHITE;
@@ -103,12 +89,6 @@ async function onClickPiece(e) {
 function onClickStartBtn(e) {
     if (e.target && e.target.id === "startBtn") {
         getPieces("/game/start");
-    }
-}
-
-function onClickSaveBtn(e) {
-    if (e.target && e.target.id === "saveBtn") {
-        savePiece();
     }
 }
 

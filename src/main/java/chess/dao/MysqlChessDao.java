@@ -1,39 +1,44 @@
 package chess.dao;
 
 import chess.dao.dto.ChessGame;
-import chess.domain.manager.ChessGameManager;
-import chess.domain.manager.ChessGameManagerBundle;
-import chess.domain.manager.ChessGameManagerFactory;
 import chess.domain.piece.attribute.Color;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MysqlChessDao {
-    public void save(ChessGame entity) {
+public class MysqlChessDao implements ChessDao {
+    @Override
+    public long save(ChessGame entity) {
         String query =
                 "INSERT INTO CHESSGAME " +
                         "(pieces, running, next_turn) " +
                         "VALUES (?, ?, ?)";
 
         try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getPieces());
             preparedStatement.setBoolean(2, entity.isRunning());
             preparedStatement.setString(3, entity.getNextTurn().name());
 
             preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong(1);
+            }
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
+        throw new IllegalStateException("생성된 ID가 없습니다.");
     }
 
-    public Optional<ChessGameManager> findById(Long id) {
+    @Override
+    public Optional<ChessGame> findById(long id) {
         String query =
                 "SELECT * " +
                         "FROM CHESSGAME " +
@@ -53,12 +58,13 @@ public class MysqlChessDao {
             String pieces = resultSet.getString("pieces");
             Color nextTurn = Color.of(resultSet.getString("next_turn"));
 
-            return Optional.of(ChessGameManagerFactory.loadingGame(isRunning, rowId, pieces, nextTurn));
+            return Optional.of(new ChessGame(rowId, nextTurn, isRunning, pieces));
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
     }
 
+    @Override
     public void update(ChessGame entity) {
         String query =
                 "UPDATE CHESSGAME " +
@@ -78,7 +84,8 @@ public class MysqlChessDao {
         }
     }
 
-    public ChessGameManagerBundle findAllOnRunning() {
+    @Override
+    public List<ChessGame> findAllOnRunning() {
         String query =
                 "SELECT * " +
                         "FROM CHESSGAME " +
@@ -93,27 +100,30 @@ public class MysqlChessDao {
         }
     }
 
-    public void deleteAll() {
-        String query = "DELETE FROM CHESSGAME";
+    @Override
+    public void delete(long id) {
+        String query = "DELETE FROM CHESSGAME " +
+                "WHERE id = ?";
         try (Connection connection = ChessConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
     }
 
-    private ChessGameManagerBundle getChessGames(PreparedStatement preparedStatement) {
+    private List<ChessGame> getChessGames(PreparedStatement preparedStatement) {
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            List<ChessGameManager> chessGameManagers = new ArrayList<>();
+            List<ChessGame> chessGameManagers = new ArrayList<>();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String pieces = resultSet.getString("pieces");
                 boolean isRunning = resultSet.getBoolean("running");
                 Color nextTurn = Color.of(resultSet.getString("next_turn"));
-                chessGameManagers.add(ChessGameManagerFactory.loadingGame(isRunning, id, pieces, nextTurn));
+                chessGameManagers.add(new ChessGame(id, nextTurn, isRunning, pieces));
             }
-            return new ChessGameManagerBundle(chessGameManagers);
+            return chessGameManagers;
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }

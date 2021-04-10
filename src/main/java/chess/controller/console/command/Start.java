@@ -1,6 +1,7 @@
 package chess.controller.console.command;
 
 import chess.domain.manager.ChessGameManager;
+import chess.service.ChessService;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class Start implements Command {
     }
 
     @Override
-    public ChessGameManager execute(ChessGameManager chessGameManager) {
-        chessGameManager = chessGameManager.start();
+    public ChessGameManager execute(ChessService chessService, long gameId) {
+        ChessGameManager chessGameManager = chessService.start();
         OutputView.printBoard(chessGameManager.getBoard());
         return chessGameManager;
     }
