@@ -25,13 +25,14 @@ class UserServiceTest {
 
     @Test
     void addAndFind() {
-        final UserRequestDto userRequestDto = new UserRequestDto("testName");
+        final String name = "testName";
+        final UserRequestDto userRequestDto = new UserRequestDto(name);
 
         assertThatCode(() -> userService.add(userRequestDto))
             .doesNotThrowAnyException();
 
-        assertThat(userService.find(userRequestDto).getName())
-            .isEqualTo("testName");
+        assertThat(userService.find(name).getName())
+            .isEqualTo(name);
     }
 }
 
