@@ -35,7 +35,7 @@ public class WebChessController {
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
-        return chessService.findPiecesByGameId(gameId);
+        return chessService.findPiecesById(gameId);
     }
 
     public GameResponseDto findGameByGameId(final Long gameId) {

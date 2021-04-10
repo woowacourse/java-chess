@@ -10,49 +10,30 @@ import java.sql.Connection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessDaoTest {
+class GameDaoTest {
 
-    private ChessDao chessDao;
-    private ChessManager chessManager;
-    private Long stateId;
+    private GameDao gameDao;
     private Long gameId;
 
     @BeforeEach
     void setUp() {
-        chessDao = new ChessDao();
-        chessManager = new ChessManager();
+        gameDao = new GameDao();
     }
 
     @Test
     void getConnectionTest() {
-        Connection connection = chessDao.getConnection();
+        Connection connection = ConnectionProvider.getConnection();
 
         assertThat(connection).isInstanceOf(Connection.class);
     }
 
     @Test
     @DisplayName("Game insert 테스트")
-    void createGameTest() {
+    void saveGameTest() {
         GameRequestDto gameRequestDto =
                 new GameRequestDto("white유저임다", "black유저임다", "1:1초보만");
-        gameId = chessDao.saveGame(gameRequestDto);
+        gameId = gameDao.saveGame(gameRequestDto);
 
         assertThat(gameId).isNotNull();
-    }
-
-    @Test
-    @DisplayName("State insert 테스트")
-    void createStateTest() {
-        stateId = chessDao.saveState(chessManager, 1L);
-
-        assertThat(stateId).isNotNull();
-    }
-
-    @Test
-    @DisplayName("Score insert 테스트")
-    void createScoreTest() {
-        Long scoreId = chessDao.saveScore(chessManager.gameStatus(), 1L);
-
-        assertThat(scoreId).isEqualTo(1);
     }
 }
