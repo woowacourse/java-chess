@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -137,7 +136,7 @@ public class WebUIChessController {
             return "{\"status\":\"200\", \"message\":\"성공\"}";
         });
 
-        post("turn", (req, res) -> {
+        post("/turn", (req, res) -> {
             TurnChangeRequestDto turnChangeRequestDto = GSON.fromJson(req.body(), TurnChangeRequestDto.class);
             CHESS_REPOSITORY.changeTurn(turnChangeRequestDto);
 

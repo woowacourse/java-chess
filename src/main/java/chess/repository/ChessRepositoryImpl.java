@@ -2,7 +2,10 @@ package chess.repository;
 
 import chess.dao.PieceDao;
 import chess.dao.TurnDao;
-import chess.dto.*;
+import chess.dto.ChessRequestDto;
+import chess.dto.MoveRequestDto;
+import chess.dto.TurnChangeRequestDto;
+import chess.dto.TurnRequestDto;
 
 import java.util.List;
 import java.util.Map;
