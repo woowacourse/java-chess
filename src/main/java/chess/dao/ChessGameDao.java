@@ -38,16 +38,18 @@ public class ChessGameDao {
         return con;
     }
 
-    public void addUser(UserDto userDto) throws SQLException {
+    public boolean addUser(UserDto userDto) throws SQLException {
         Connection con = getConnection();
         String query = "INSERT INTO user(user_id) VALUES(?)";
         PreparedStatement pstmt = con.prepareStatement(query);
         try (con; pstmt;) {
             pstmt.setString(1, userDto.getUserId());
             pstmt.executeUpdate();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public UserDto findUser(UserDto userDto) throws SQLException {

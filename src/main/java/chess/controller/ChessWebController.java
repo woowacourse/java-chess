@@ -37,9 +37,11 @@ public class ChessWebController {
 
         post("/users", (req, res) -> {
             UserDto userDto = new UserDto(req.queryParams("userId"));
-            chessGameService.addUser(userDto);
-            res.redirect("/");
-            return 200;
+            if (chessGameService.addUser(userDto)) {
+                res.redirect("/");
+                return 200;
+            }
+            return 400;
         });
 
         post("/login", (req, res) -> {
@@ -48,7 +50,7 @@ public class ChessWebController {
                 res.redirect("/chess");
                 return 200;
             }
-            return 401;
+            return 404;
         });
 
         post("/point", (req, res) -> {

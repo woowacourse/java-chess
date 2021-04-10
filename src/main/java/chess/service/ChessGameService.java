@@ -40,8 +40,8 @@ public class ChessGameService {
         }
     }
 
-    public void addUser(UserDto userDto) throws SQLException {
-        chessGameDao.addUser(userDto);
+    public boolean addUser(UserDto userDto) throws SQLException {
+        return chessGameDao.addUser(userDto);
     }
 
     public boolean login(UserDto userDto) throws SQLException {
