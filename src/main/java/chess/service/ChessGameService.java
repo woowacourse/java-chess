@@ -18,12 +18,6 @@ public class ChessGameService {
         this.chessRepository = chessRepository;
     }
 
-    public ChessGameDTO createChessGame() {
-        ChessGame newChessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
-        chessRepository.createChessGame(newChessGame);
-        return ChessGameDTO.from(newChessGame);
-    }
-
     public ChessGameDTO refreshChessGame(final String roomId) {
         ChessGame newChessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
         chessRepository.saveChessGameFromRoom(roomId, newChessGame);
