@@ -16,10 +16,10 @@ public class WebUIChessApplication {
         final GameController gameController = new GameController();
         final UserController userController = new UserController();
 
-        exception(RuntimeException.class, ((exception, request, response) -> {
+        exception(UncheckedSQLException.class, (exception, request, response) -> {
             response.status(500);
             response.type("text/html");
             response.body(exception.getMessage());
-        }));
+        });
     }
 }
