@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta char
+        set="UTF-8">
+  <link rel="stylesheet" href="css/chess-game.css">
+  <title>Chess 9ame</title>
+</head>
+<body>
+<h1 align="center">Chess 9ame</h1>
+<main>
+
+  <div class="chess-game-room-list">
+
+    <br>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a id="search-page" href="javascript:void(0)"
+         class="btn btn-sm animated-button victoria-one create-game">전적 검색 페이지</a>
+    </div>
+
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a id="createGame" href="javascript:void(0)"
+         class="btn btn-sm animated-button victoria-one create-game">새로운 게임 생성</a>
+    </div>
+    <br>
+    <hr/>
+    <h2 align="center">게임 목록</h2>
+
+    <div class="game-ids" align="center">
+      {{#gameNames}}
+      <a align="center" href="javascript:void(0)" id="{{.}}"
+         class="btn btn-sm animated-button victoria-one game-list">{{.}}</a>
+      {{/gameNames}}
+    </div>
+    <br>
+    <hr/>
+  </div>
+</main>
+<script type="module" src="js/chess-game-list.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta char
+        set="UTF-8">
+  <link rel="stylesheet" href="css/chess-game.css">
+  <title>Chess 9ame</title>
+</head>
+<body>
+<h1 align="center">Chess 9ame</h1>
+<main>
+  <div class="chess-game-info">
+    <h2 align="center" id="game-name">{{#gameName}}{{.}}{{/gameName}}</h2>
+    <hr/>
+    <br>
+    <p align="center" class="current-chess-game-message1">{{#gameState}}{{.}}{{/gameState}} 입니다.</p>
+    <p align="center" class="black-user">
+      흑색 플레이어 <input type="text" value="Black User ID" id="black-user-id"/>
+    </p>
+    <p align="center" class="white-user">
+      백색 플에이어 <input type="text" value="White User ID" id="white-user-id"/>
+    </p>
+    <p align="center" class="current-chess-game-score"></p>
+    <p align="center" class="current-chess-game-message2"></p>
+    <p align="center" class="current-chess-game-score"></p>
+
+    <br>
+    <hr/>
+
+    <div id="start-game-block" class="col-md-3 col-sm-3 col-xs-6">
+      <a id="start-game" href="javascript:void(0)" class="btn btn-sm animated-button victoria-one">체스
+        게임 시작</a>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6">
+      <a href="/" class="btn btn-sm animated-button victoria-one">게임 목록으로 돌아가기</a>
+    </div>
+  </div>
+  <div class="chess-game">
+    <div class="board-border">
+      <div class="board">
+        <div class="rank">
+          <div class="position" id="a8"></div>
+          <div class="position" id="b8"></div>
+          <div class="position" id="c8"></div>
+          <div class="position" id="d8"></div>
+          <div class="position" id="e8"></div>
+          <div class="position" id="f8"></div>
+          <div class="position" id="g8"></div>
+          <div class="position" id="h8"></div>
+          <div class="rank-text">8</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a7"></div>
+          <div class="position" id="b7"></div>
+          <div class="position" id="c7"></div>
+          <div class="position" id="d7"></div>
+          <div class="position" id="e7"></div>
+          <div class="position" id="f7"></div>
+          <div class="position" id="g7"></div>
+          <div class="position" id="h7"></div>
+          <div class="rank-text">7</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a6"></div>
+          <div class="position" id="b6"></div>
+          <div class="position" id="c6"></div>
+          <div class="position" id="d6"></div>
+          <div class="position" id="e6"></div>
+          <div class="position" id="f6"></div>
+          <div class="position" id="g6"></div>
+          <div class="position" id="h6"></div>
+          <div class="rank-text">6</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a5"></div>
+          <div class="position" id="b5"></div>
+          <div class="position" id="c5"></div>
+          <div class="position" id="d5"></div>
+          <div class="position" id="e5"></div>
+          <div class="position" id="f5"></div>
+          <div class="position" id="g5"></div>
+          <div class="position" id="h5"></div>
+          <div class="rank-text">5</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a4"></div>
+          <div class="position" id="b4"></div>
+          <div class="position" id="c4"></div>
+          <div class="position" id="d4"></div>
+          <div class="position" id="e4"></div>
+          <div class="position" id="f4"></div>
+          <div class="position" id="g4"></div>
+          <div class="position" id="h4"></div>
+          <div class="rank-text">4</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a3"></div>
+          <div class="position" id="b3"></div>
+          <div class="position" id="c3"></div>
+          <div class="position" id="d3"></div>
+          <div class="position" id="e3"></div>
+          <div class="position" id="f3"></div>
+          <div class="position" id="g3"></div>
+          <div class="position" id="h3"></div>
+          <div class="rank-text">3</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a2"></div>
+          <div class="position" id="b2"></div>
+          <div class="position" id="c2"></div>
+          <div class="position" id="d2"></div>
+          <div class="position" id="e2"></div>
+          <div class="position" id="f2"></div>
+          <div class="position" id="g2"></div>
+          <div class="position" id="h2"></div>
+          <div class="rank-text">2</div>
+        </div>
+        <div class="rank">
+          <div class="position" id="a1"></div>
+          <div class="position" id="b1"></div>
+          <div class="position" id="c1"></div>
+          <div class="position" id="d1"></div>
+          <div class="position" id="e1"></div>
+          <div class="position" id="f1"></div>
+          <div class="position" id="g1"></div>
+          <div class="position" id="h1"></div>
+          <div class="rank-text">1</div>
+        </div>
+        <div class="rank file-texts">
+          <div class="column-text">a</div>
+          <div class="column-text">b</div>
+          <div class="column-text">c</div>
+          <div class="column-text">d</div>
+          <div class="column-text">e</div>
+          <div class="column-text">f</div>
+          <div class="column-text">g</div>
+          <div class="column-text">h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script type="module" src="js/chess-game.js"></script>
+</body>
+</html>
+
+

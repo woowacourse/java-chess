@@ -38,9 +38,9 @@ public class InitTest {
     }
 
     @Test
-    @DisplayName("초기 상태에서 ranks 명령시 에러 반환")
-    void testRanksException() {
-        assertThatThrownBy(() -> this.init.ranks()).isInstanceOf(IllegalStateException.class);
+    @DisplayName("초기 상태에서 board 명령시 보드 반환")
+    void testBoard() {
+        assertThat(this.init.board()).isInstanceOf(Board.class);
     }
 
     @Test
@@ -77,5 +77,18 @@ public class InitTest {
     @DisplayName("초기 상태에서 isNotEnd 명령시 true 반환")
     void testIsNotEndTrue() {
         assertThat(this.init.isNotEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.init.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 state 명령시 초기 상태 반환")
+    void testState() {
+        assertThat(this.init.state()).isEqualTo("게임 시작 전");
     }
 }

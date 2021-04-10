@@ -40,6 +40,22 @@ public enum InitPosition {
         this.piece = piece;
     }
 
+    public static Map<Position, Piece> initSquares() {
+        Map<Position, Piece> squares = new LinkedHashMap<>();
+
+        for (Ypoint y : Ypoint.values()) {
+            initSquare(squares, y);
+        }
+
+        return squares;
+    }
+
+    private static void initSquare(Map<Position, Piece> squares, Ypoint y) {
+        for (Xpoint x : Xpoint.values()) {
+            squares.put(Position.of(x, y), findPiece(x, y));
+        }
+    }
+
     public static List<Rank> initRanks() {
         List<Rank> ranks = new ArrayList<>();
         for (Ypoint ypoint : Ypoint.values()) {

@@ -12,4 +12,9 @@ public class WhiteWin extends Finished {
     public String winner() {
         return "백색";
     }
+
+    @Override
+    public String state() {
+        return "백색 승리";
+    }
 }

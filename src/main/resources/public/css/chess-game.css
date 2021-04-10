@@ -1,0 +1,204 @@
+body {
+  background-image: url("/img/darkWood.jpeg");
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 5em;
+  color: white;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+main {
+  /*max-width: 1200px;*/
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.chess-game-room-list {
+  width: 50%;
+  margin-left: 0%;
+  color: white;
+  background-color: rgba(70, 70, 70, 0.5);
+  padding: 1em 1em 1em;
+  position: relative;
+  border-radius: 5px;
+}
+
+.chess-game {
+  width: 50%;
+  margin-right: 10%;
+}
+
+.chess-game-info {
+  width: 20%;
+  margin-left: 20%;
+  color: white;
+  background-color: rgba(70, 70, 70, 0.5);
+  padding: 1em 1em 1em;
+  position: relative;
+  border-radius: 5px;
+}
+
+.board-border {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 40px;
+  position: relative;
+  background-image: url("/img/board/darkBoardBorder.jpeg");
+  user-select: none;
+  box-shadow: 0 14px 28px #000000, 0 10px 10px #000000;
+}
+
+.board {
+  width: calc(100% - 60px);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.rank {
+  display: flex;
+  position: relative;
+}
+
+.position {
+  width: calc(100% / 6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url("/img/board/whiteTile.jpeg");
+}
+
+.rank:nth-of-type(odd) .position:nth-of-type(odd),
+.rank:nth-of-type(even) .position:nth-of-type(even) {
+  background-image: url("/img/board/blackTile.jpeg");
+}
+
+.position:after {
+  content: "";
+  float: left;
+  padding-top: 100%;
+}
+
+.position > img {
+  position: absolute;
+  bottom: 10px;
+  height: 75px;
+  filter: drop-shadow(0 5px 1.5px #222222);
+}
+
+.rank-text {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+  position: absolute;
+  top: 25px;
+  right: -19px;
+}
+
+.file-texts {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 1em;
+  color: #ffffff;
+  position: absolute;
+  justify-content: space-around;
+  width: calc(100% - 10%);
+  bottom: 10px;
+}
+
+.selected {
+  box-shadow: inset 0px 0px 10px 3px cyan;
+}
+
+.movable {
+  box-shadow: inset 0px 0px 10px 3px chartreuse;
+}
+
+a.animated-button:link, a.animated-button:visited {
+  position: relative;
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px 15px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  border-radius: 0;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+a.animated-button:link:after, a.animated-button:visited:after {
+  content: "";
+  position: absolute;
+  height: 0%;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  z-index: -1;
+  -webkit-transition: all 0.75s ease 0s;
+  -moz-transition: all 0.75s ease 0s;
+  -o-transition: all 0.75s ease 0s;
+  transition: all 0.75s ease 0s;
+}
+
+a.animated-button:link:hover, a.animated-button:visited:hover {
+  color: #FFF;
+  text-shadow: none;
+}
+
+a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
+  height: 450%;
+}
+
+a.animated-button:link, a.animated-button:visited {
+  position: relative;
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px 15px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 0;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+a.animated-button.victoria-one {
+  border: 2px solid #ffffff;
+}
+
+a.animated-button.victoria-one:after {
+  background: #ffffff;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+}
+
+.search-bar {
+  width: 90%;
+  text-align: center;
+}

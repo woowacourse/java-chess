@@ -1,7 +1,6 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class Init extends Preparing {
 
     @Override
     public State start() {
-        return new WhiteTurn(board());
+        return new WhiteTurn(afterStartBoard());
     }
 
     @Override
@@ -27,8 +26,8 @@ public class Init extends Preparing {
     }
 
     @Override
-    public List<Rank> ranks() {
-        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    public Board board() {
+        return afterStartBoard();
     }
 
     @Override
@@ -38,7 +37,7 @@ public class Init extends Preparing {
 
     @Override
     public State end() {
-        return new End(board());
+        return new End(afterStartBoard());
     }
 
     @Override
@@ -60,4 +59,16 @@ public class Init extends Preparing {
     public boolean isNotEnd() {
         return true;
     }
+
+    @Override
+    public List<Position> movablePath(Position position) {
+        throw new IllegalStateException("아직 체스게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public String state() {
+        return "게임 시작 전";
+    }
+
+
 }

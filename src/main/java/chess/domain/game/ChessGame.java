@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
@@ -11,25 +10,29 @@ public class ChessGame {
 
     private State state;
 
-    public ChessGame(Board board) {
-        this.state = new Init(board);
+    public ChessGame(final Board board) {
+        this(new Init(board));
+    }
+
+    public ChessGame(final State state) {
+        this.state = state;
     }
 
     public void start() {
-        this.state = state.start();
+        state = state.start();
     }
 
-    public void move(Position source, Position target) {
-        this.state.moveIfValidColor(source, target);
-        this.state = state.passTurn();
+    public void move(final Position source, final Position target) {
+        state.moveIfValidColor(source, target);
+        state = state.passTurn();
     }
 
     public void end() {
-        this.state = state.end();
+        state = state.end();
     }
 
-    public List<Rank> ranks() {
-        return state.ranks();
+    public Board board() {
+        return state.board();
     }
 
     public boolean isInit() {
@@ -50,5 +53,18 @@ public class ChessGame {
 
     public boolean isNotEnd() {
         return state.isNotEnd();
+    }
+
+    public List<Position> movablePath(final Position position) {
+        return state.movablePath(position);
+    }
+
+    public String state() {
+        return state.state();
+    }
+
+    public Score score() {
+        ScoreCalculator scoreCalculator = new ScoreCalculator(state.board());
+        return new Score(scoreCalculator.totalWhiteScore(), scoreCalculator.totalBlackScore());
     }
 }

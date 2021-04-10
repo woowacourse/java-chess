@@ -28,7 +28,7 @@ public class Status implements Command {
 
     @Override
     public void execution(String text) {
-        this.scoreCalculator = new ScoreCalculator(chessGame.ranks());
+        this.scoreCalculator = new ScoreCalculator(chessGame.board());
     }
 
     @Override

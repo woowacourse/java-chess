@@ -38,9 +38,9 @@ public class EndTest {
     }
 
     @Test
-    @DisplayName("프로그램 종료 상태에서 ranks 명령시 예외 반환")
-    void testRanksException() {
-        assertThatThrownBy(() -> this.end.ranks()).isInstanceOf(IllegalStateException.class);
+    @DisplayName("프로그램 종료 상태에서 board 명령시 예외 반환")
+    void testBoardException() {
+        assertThatThrownBy(() -> this.end.board()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -77,6 +77,19 @@ public class EndTest {
     @DisplayName("프로그램 종료 상태에서 isNotEnd 명령시 false 반환")
     void testIsNotEndFalse() {
         assertThat(this.end.isNotEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프로그램 종료 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.end.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("프로그램 종료에서 state 명령시 프로그램 종료 반환")
+    void testState() {
+        assertThat(this.end.state()).isEqualTo("종료");
     }
 
 }

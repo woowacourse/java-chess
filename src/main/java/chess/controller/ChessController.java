@@ -34,7 +34,7 @@ public class ChessController {
     private void runningChess(ChessGame chessGame, Commands commands) {
         OutputView.printChessStarted();
         while (chessGame.isRunning()) {
-            OutputView.printChessBoard(DtoAssembler.board(chessGame.ranks()));
+            OutputView.printChessBoard(DtoAssembler.ranks(chessGame.board()));
             executeCommand(commands);
         }
     }

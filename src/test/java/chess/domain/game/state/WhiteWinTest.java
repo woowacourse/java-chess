@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,13 +40,9 @@ class WhiteWinTest {
     }
 
     @Test
-    @DisplayName("백색 승리 상태에서 ranks 명령시 예외 반환")
-    void testRanksException() {
-        List<Rank> ranks = this.whiteWin.ranks();
-        assertThat(ranks).hasSize(8);
-        for (Rank rank : ranks) {
-            assertThat(rank.squares()).hasSize(8);
-        }
+    @DisplayName("백색 승리 상태에서 board 명령시 board 반환")
+    void testBoard() {
+        assertThat(this.whiteWin.board()).isInstanceOf(Board.class);
     }
 
     @Test
@@ -85,5 +79,18 @@ class WhiteWinTest {
     @DisplayName("백색 승리 상태에서 isNotEnd 명령시 true 반환")
     void testIsNotEndTrue() {
         assertThat(this.whiteWin.isNotEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("백색 승리 상태에서 movablePath 명령시 예외 반환")
+    void testMovablePathException() {
+        assertThatThrownBy(() -> this.whiteWin.movablePath(Position.of("a2")))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("백색 승리 상태에서 state 명령시 백색 승리 반환")
+    void testState() {
+        assertThat(this.whiteWin.state()).isEqualTo("백색 승리");
     }
 }

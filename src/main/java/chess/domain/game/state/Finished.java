@@ -1,7 +1,6 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.board.position.Position;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public abstract class Finished extends AfterStart {
 
     @Override
     public State start() {
-        return new Init(board());
+        return new Init(afterStartBoard());
     }
 
     @Override
@@ -27,13 +26,13 @@ public abstract class Finished extends AfterStart {
     }
 
     @Override
-    public List<Rank> ranks() {
-        return board().ranks();
+    public Board board() {
+        return afterStartBoard();
     }
 
     @Override
     public State end() {
-        return new End(board());
+        return new End(afterStartBoard());
     }
 
     @Override
@@ -54,5 +53,10 @@ public abstract class Finished extends AfterStart {
     @Override
     public boolean isNotEnd() {
         return true;
+    }
+
+    @Override
+    public List<Position> movablePath(Position position) {
+        throw new IllegalStateException("이미 체스게임이 종료되었습니다.");
     }
 }
