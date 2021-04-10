@@ -18,12 +18,12 @@ public class WebChessController {
     private final ChessGameService chessGameService;
 
     public WebChessController(final ChessGameService chessGameService) {
+        this.gson = new Gson();
         this.chessGameService = chessGameService;
     }
 
     public void run() {
-        gson = new Gson();
-
+        
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
