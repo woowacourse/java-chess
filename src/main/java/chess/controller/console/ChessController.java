@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.console;
 
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printBoard;
