@@ -2,11 +2,12 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
+import chess.domain.result.PathResult;
 import chess.domain.result.Result;
 import chess.domain.result.StatusResult;
 import chess.domain.result.TurnResult;
-import chess.domain.piece.Color;
-import chess.domain.position.Position;
 
 public abstract class TurnState extends PlayingState {
 
@@ -25,7 +26,7 @@ public abstract class TurnState extends PlayingState {
         if (command.isMove()) {
             return executeMove(command.source(), command.target());
         }
-        if (command.isStatus()) {
+        if (command.isStatus() || command.isShow()) {
             return this;
         }
         throw new IllegalArgumentException("가능한 명령이 아닙니다.");
@@ -52,7 +53,17 @@ public abstract class TurnState extends PlayingState {
     }
 
     @Override
+    public Result pathResult(final Position source) {
+        return new PathResult(currentBoard(), source, currentTurnColor);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public String currentState() {
+        return currentTurnColor.getName();
     }
 }

@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.domain.CommandAsString;
 import chess.domain.game.Game;
-import chess.domain.result.Result;
 import chess.domain.game.state.InitialState;
+import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,7 +17,7 @@ public final class ChessController {
                 final CommandAsString command = new CommandAsString(InputView.receiveInput());
                 game = game.execute(command);
                 final Result result = game.result(command);
-                OutputView.print(result.visualAsString());
+                OutputView.print(result.infoAsString());
             } catch (IllegalArgumentException e) {
                 OutputView.printError(e);
             }

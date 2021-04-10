@@ -1,10 +1,13 @@
 package chess.domain.result;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,8 +23,23 @@ public final class TurnResult implements Result {
     }
 
     @Override
-    public String visualAsString() {
+    public String infoAsString() {
         return renderBoard(board);
+    }
+
+    @Override
+    public Map<Position, Piece> infoAsMap() {
+        return board.coordinates();
+    }
+
+    @Override
+    public List<Position> infoAsList() {
+        throw new IllegalArgumentException("보드는 경로 정보로 활용될 수 없습니다.");
+    }
+
+    @Override
+    public Score infoAsScore(final Color color) {
+        throw new IllegalArgumentException("보드는 점수로 활용될 수 없습니다.");
     }
 
     private String renderBoard(final Board board) {

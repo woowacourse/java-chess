@@ -8,6 +8,7 @@ public final class RookStrategy implements PieceStrategy {
 
     private static final String NAME = "r";
     private static final double VALUE = 5;
+    private static final String TYPE = "rook";
 
     @Override
     public List<Direction> directions() {
@@ -37,5 +38,10 @@ public final class RookStrategy implements PieceStrategy {
     @Override
     public double value() {
         return VALUE;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
     }
 }

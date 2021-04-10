@@ -1,7 +1,9 @@
 package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
+import chess.domain.position.Position;
 import chess.domain.result.Result;
+import chess.dto.BoardDto;
 
 public interface GameState {
 
@@ -11,5 +13,11 @@ public interface GameState {
 
     Result statusResult();
 
+    Result pathResult(final Position source);
+
     boolean isFinished();
+
+    String currentState();
+
+    BoardDto boardDto();
 }

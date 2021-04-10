@@ -1,9 +1,10 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.BoardDto;
 
 public abstract class PlayingState implements GameState {
 
@@ -38,5 +39,10 @@ public abstract class PlayingState implements GameState {
         if (!board.hasAvailablePath(sourceName, targetName)) {
             throw new IllegalArgumentException("경로 안에서 체스말이 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public BoardDto boardDto() {
+        return new BoardDto(board);
     }
 }

@@ -1,5 +1,7 @@
 package chess.view;
 
+import java.sql.SQLException;
+
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
@@ -21,6 +23,10 @@ public class OutputView {
     }
 
     public static void printError(IllegalArgumentException e) {
+        System.out.println(NEWLINE + e.getMessage());
+    }
+
+    public static void printSqlError(SQLException e) {
         System.out.println(NEWLINE + e.getMessage());
     }
 }

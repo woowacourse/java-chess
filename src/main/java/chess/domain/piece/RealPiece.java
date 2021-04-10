@@ -78,4 +78,14 @@ public final class RealPiece implements Piece {
     public Score score() {
         return new Score(pieceStrategy.value());
     }
+
+    @Override
+    public String type() {
+        return pieceStrategy.type();
+    }
+
+    @Override
+    public String colorName() {
+        return color.getName();
+    }
 }

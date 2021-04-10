@@ -8,6 +8,7 @@ public final class WhitePawnStrategy implements PieceStrategy {
 
     private static final String NAME = "p";
     private static final double VALUE = 1;
+    private static final String TYPE = "white pawn";
 
     @Override
     public List<Direction> directions() {
@@ -37,5 +38,10 @@ public final class WhitePawnStrategy implements PieceStrategy {
     @Override
     public double value() {
         return VALUE;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
     }
 }

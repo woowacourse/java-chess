@@ -10,6 +10,7 @@ public class EmptyPiece implements Piece {
 
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece();
     private static final String NAME = ".";
+    private static final String TYPE = "empty";
 
     private EmptyPiece() {
     }
@@ -30,13 +31,11 @@ public class EmptyPiece implements Piece {
 
     @Override
     public boolean isDifferentColor(Piece piece) {
-//        throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물을 대체할 수 없습니다.");
         return true;
     }
 
     @Override
     public boolean isSameColor(Piece piece) {
-//        throw new IllegalArgumentException("존재하지 않는 체스말은 다른 기물이 가로막을 수 없습니다.");
         return false;
     }
 
@@ -68,5 +67,15 @@ public class EmptyPiece implements Piece {
     @Override
     public Score score() {
         return Score.MIN;
+    }
+
+    @Override
+    public String type() {
+        return TYPE;
+    }
+
+    @Override
+    public String colorName() {
+        return "none";
     }
 }

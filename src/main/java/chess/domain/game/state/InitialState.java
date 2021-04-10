@@ -2,10 +2,9 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
-import chess.domain.result.Result;
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import chess.domain.piece.RealPiece;
 import chess.domain.piece.strategy.BishopStrategy;
 import chess.domain.piece.strategy.BlackPawnStrategy;
@@ -17,6 +16,8 @@ import chess.domain.piece.strategy.WhitePawnStrategy;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.domain.result.Result;
+import chess.dto.BoardDto;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -68,8 +69,23 @@ public final class InitialState implements GameState {
     }
 
     @Override
+    public Result pathResult(final Position source) {
+        throw new IllegalArgumentException("게임이 시작되기 전에는 체스말의 경로를 확인할 수 없습니다.");
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public String currentState() {
+        return "not started";
+    }
+
+    @Override
+    public BoardDto boardDto() {
+        return new BoardDto(initiateBoard());
     }
 
     private void placePawns(final Map<Position, Piece> coordinates) {

@@ -2,8 +2,12 @@ package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import chess.domain.result.EndResult;
+import chess.domain.result.PathResult;
 import chess.domain.result.Result;
+import chess.domain.result.StatusResult;
 
 public final class EndState extends PlayingState {
 
@@ -13,7 +17,7 @@ public final class EndState extends PlayingState {
 
     @Override
     public GameState execute(final CommandAsString command) {
-        throw new UnsupportedOperationException("게임이 종료한 후에는 명령을 실행할 수 없습니다.");
+        return new EndState(currentBoard());
     }
 
     @Override
@@ -23,11 +27,21 @@ public final class EndState extends PlayingState {
 
     @Override
     public Result statusResult() {
-        throw new IllegalArgumentException("게임이 종료된 후에는 점수를 조회할 수 없습니다.");
+        return new StatusResult(currentBoard());
+    }
+
+    @Override
+    public Result pathResult(Position source) {
+        return new PathResult(currentBoard(), source, Color.NOTHING);
     }
 
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public String currentState() {
+        return "finished";
     }
 }
