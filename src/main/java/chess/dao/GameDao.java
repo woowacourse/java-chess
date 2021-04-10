@@ -1,13 +1,13 @@
 package chess.dao;
 
-import chess.controller.web.dto.game.GameRequestDto;
 import chess.controller.web.dto.game.GameResponseDto;
+import chess.domain.game.Game;
 
 import java.sql.*;
 
 public class GameDao {
 
-    public Long saveGame(final GameRequestDto gameRequestDto) {
+    public Long saveGame(final Game game) {
         final String query =
                 "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
@@ -15,9 +15,9 @@ public class GameDao {
              PreparedStatement pstmt =
                      connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, gameRequestDto.getRoomName());
-            pstmt.setString(2, gameRequestDto.getWhiteUsername());
-            pstmt.setString(3, gameRequestDto.getBlackUsername());
+            pstmt.setString(1, game.roomName());
+            pstmt.setString(2, game.whiteUsername());
+            pstmt.setString(3, game.blackUsername());
             pstmt.executeLargeUpdate();
 
             ResultSet resultSet = pstmt.getGeneratedKeys();
@@ -39,6 +39,7 @@ public class GameDao {
                     return null;
                 }
                 return new GameResponseDto(
+                        gameId,
                         resultSet.getString("white_username"),
                         resultSet.getString("black_username"),
                         resultSet.getString("room_name"));

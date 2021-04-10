@@ -1,5 +1,7 @@
 package chess.controller.web.dto.game;
 
+import chess.domain.game.Game;
+
 public class GameRequestDto {
 
     private final String whiteUsername;
@@ -10,6 +12,10 @@ public class GameRequestDto {
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
         this.roomName = roomName;
+    }
+
+    public Game toGame() {
+        return Game.of(this.roomName, this.whiteUsername, this.blackUsername);
     }
 
     public String getWhiteUsername() {

@@ -13,6 +13,7 @@ import chess.dao.*;
 import chess.domain.board.Board;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
+import chess.domain.game.Game;
 import chess.domain.manager.ChessManager;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
@@ -40,10 +41,10 @@ public class ChessService {
         this.stateDao = new StateDao();
     }
 
-    public Long saveGame(final GameRequestDto gameRequestDto) {
+    public Long saveGame(final Game game) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
-        Long gameId = gameDao.saveGame(gameRequestDto);
+        Long gameId = gameDao.saveGame(game);
         stateDao.saveState(chessManager, gameId);
         scoreDao.saveScore(chessManager.gameStatus(), gameId);
         pieceDao.savePieces(gameId, pieces);

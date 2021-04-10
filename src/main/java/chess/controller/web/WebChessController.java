@@ -31,7 +31,7 @@ public class WebChessController {
     }
 
     public Long newGame(final GameRequestDto gameRequestDto) {
-        return chessService.saveGame(gameRequestDto);
+        return chessService.saveGame(gameRequestDto.toGame());
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
