@@ -1,23 +1,14 @@
 package chess.dto;
 
+import chess.domain.Room;
+
 public class RoomDTO {
     private int id;
     private String name;
     private String pw;
     private String gameId;
 
-    public RoomDTO(String name, String pw) {
-        this.name = name;
-        this.pw = pw;
-    }
-
-    public RoomDTO(int id, String name, String pw) {
-        this.id = id;
-        this.name = name;
-        this.pw = pw;
-    }
-
-    public RoomDTO(int id, String name, String pw, String gameId) {
+    private RoomDTO(int id, String name, String pw, String gameId) {
         this.id = id;
         this.name = name;
         this.pw = pw;
@@ -48,5 +39,9 @@ public class RoomDTO {
                 ", pw='" + pw + '\'' +
                 ", gameId='" + gameId + '\'' +
                 '}';
+    }
+
+    public static RoomDTO from(Room room) {
+        return new RoomDTO(room.getId(), room.getName(), room.getPw(), room.getGameId());
     }
 }
