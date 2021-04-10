@@ -161,6 +161,7 @@ function loadPieces() {
         form.appendChild(br);
         const button = document.createElement("input");
         button.setAttribute("type", "button");
+        button.setAttribute("class","button")
         button.setAttribute("value", "LOAD");
         button.addEventListener("click",getRoomName);
         form.appendChild(button);

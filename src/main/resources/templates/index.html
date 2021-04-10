@@ -6,24 +6,6 @@
     <link href="css/boardStyle.css" rel="stylesheet">
 </head>
 <body>
-<h1>체스 게임</h1>
-<div class="room number">
-    <h1 id="room-number"></h1>
-</div>
-<div class="turn">
-    <h1 id="turn"></h1>
-</div>
-<div class="buttons">
-    <button id="start-btn" class="start button">START</button>
-    <button id="end-btn" class="end button" formmethod="post">END</button>
-    <button id="status-btn" class="status button" formmethod="post">STATUS</button>
-    <button id="load-btn" class="load button" formmethod="post">LOAD</button>
-</div>
-<div id="room-name">
-</div>
-<div id="connect" class="connect">
-
-</div>
 
 <div class="chessboard">
     <!-- 1st -->
@@ -100,9 +82,66 @@
     <div class="square white" id="h1"></div>
 </div>
 
-<div class="game-status">
-    <h1 id="status"></h1>
-</div>
+
+<table id="table" class="table">
+    <tr>
+        <td colspan="2">
+            <div class="buttons">
+                <button id="start-btn" class="start button">START</button>
+                <button id="end-btn" class="end button" formmethod="post">END</button>
+                <button id="status-btn" class="status button" formmethod="post">STATUS</button>
+                <button id="load-btn" class="load button" formmethod="post">LOAD</button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">
+            <h1>체스 게임</h1>
+        </th>
+    </tr>
+    <tr>
+        <th width="150px">
+            <h3>ROOM NAME</h3>
+        </th>
+        <td>
+            <div class="room number">
+                <h3 id="room-number"></h3>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <h3>TURN</h3>
+        </th>
+        <td>
+            <div class="turn">
+                <h3 id="turn"></h3>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <h3>SCORE</h3>
+        </th>
+        <td>
+            <div class="game-status">
+                <h3 id="status"></h3>
+            </div>
+        </td>
+
+    </tr>
+    <tr>
+        <th>
+            <h3>SAVED GAMES</h3>
+        </th>
+        <td>
+            <div id="room-name">
+            </div>
+        </td>
+    </tr>
+
+</table>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/board.js"></script>
 </body>
