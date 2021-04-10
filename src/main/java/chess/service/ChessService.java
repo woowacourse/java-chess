@@ -63,14 +63,14 @@ public class ChessService {
     }
 
     public PathResponseDto movablePath(final MovablePathRequestDto movablePathRequestDto, final Long gameId) {
-        ChessManager chessManager = createChessManager(gameId);
+        ChessManager chessManager = loadChessManager(gameId);
         Path path = chessManager.movablePath(Position.of(movablePathRequestDto.getSource()));
         return PathResponseDto.toPath(path);
     }
 
     public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
         String moveCommand = String.format(MOVE_COMMAND_FORMAT, moveRequestDto.getSource(), moveRequestDto.getTarget());
-        ChessManager chessManager = createChessManager(gameId);
+        ChessManager chessManager = loadChessManager(gameId);
         HistoryResponseDto historyResponseDto = HistoryResponseDto.toChessManager(moveCommand, chessManager);
         Piece sourcePiece = chessManager.pickPiece(Position.of(moveRequestDto.getSource()));
         chessManager.move(Position.of(moveRequestDto.getSource()), Position.of(moveRequestDto.getTarget()));
@@ -82,7 +82,7 @@ public class ChessService {
         return historyResponseDto;
     }
 
-    private ChessManager createChessManager(final Long gameId) {
+    private ChessManager loadChessManager(final Long gameId) {
         List<PieceResponseDto> pieceResponseDtos = chessDao.findPiecesByGameId(gameId);
         StateResponseDto stateResponseDto = chessDao.findStateByGameId(gameId);
         Map<Position, Piece> pieces = new HashMap<>();
