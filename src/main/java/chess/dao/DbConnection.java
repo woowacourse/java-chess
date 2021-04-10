@@ -31,6 +31,7 @@ public class DbConnection {
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("연결에 실패했습니다. 다시 시도해주세요.");
         }
 
         return con;
