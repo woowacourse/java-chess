@@ -44,7 +44,6 @@ async function checkFinished() {
   }
 }
 
-
 async function getTurn() {
   return await fetch(
     `/${this.gameId}/turn`
@@ -239,8 +238,8 @@ async function finish() {
   const url = window.location.href.split('/')
   const gameId = url[url.length - 1]
   return await fetch(
-      `${gameId}/finish`
-    ).then(res => res.json())
+    `${gameId}/finish`
+  ).then(res => res.json())
 }
 
 function toggleFinish() {
