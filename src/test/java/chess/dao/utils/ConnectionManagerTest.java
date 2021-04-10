@@ -1,6 +1,6 @@
 package chess.dao.utils;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ class ConnectionManagerTest {
 
     @Test
     void createConnect() {
-        assertThatThrownBy(ConnectionManager::createConnection)
+        assertThatCode(ConnectionManager::createConnection)
             .doesNotThrowAnyException();
     }
 }
