@@ -5,7 +5,7 @@ import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.move.PathResponseDto;
 import chess.controller.web.dto.piece.PieceResponseDto;
 import chess.controller.web.dto.game.GameResponseDto;
-import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.game.GameRequestDto;
 import chess.controller.web.dto.history.HistoryResponseDto;
 import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
@@ -30,8 +30,8 @@ public class WebChessController {
         return chessService.move(moveRequestDto, gameId);
     }
 
-    public Long newGame(final NewGameRequestDto newGameRequestDto) {
-        return chessService.saveGame(newGameRequestDto);
+    public Long newGame(final GameRequestDto gameRequestDto) {
+        return chessService.saveGame(gameRequestDto);
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {

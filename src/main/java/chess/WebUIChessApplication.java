@@ -3,7 +3,7 @@ package chess;
 import chess.controller.web.WebChessController;
 import chess.controller.web.dto.game.GameResponseDto;
 import chess.controller.web.dto.move.MoveRequestDto;
-import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.game.GameRequestDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import spark.ModelAndView;
@@ -26,8 +26,8 @@ public class WebUIChessApplication {
         });
 
         post("/game", (request, response) -> {
-            NewGameRequestDto newGameRequestDto = gson.fromJson(request.body(), NewGameRequestDto.class);
-            Long gameId = webChessController.newGame(newGameRequestDto);
+            GameRequestDto gameRequestDto = gson.fromJson(request.body(), GameRequestDto.class);
+            Long gameId = webChessController.newGame(gameRequestDto);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("gameId", gameId);
             return jsonObject;

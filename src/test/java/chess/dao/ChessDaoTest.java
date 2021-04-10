@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.game.GameRequestDto;
 import chess.domain.manager.ChessManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,9 +33,9 @@ class ChessDaoTest {
     @Test
     @DisplayName("Game insert 테스트")
     void createGameTest() {
-        NewGameRequestDto newGameRequestDto =
-                new NewGameRequestDto("white유저임다", "black유저임다", "1:1초보만");
-        gameId = chessDao.saveGame(newGameRequestDto);
+        GameRequestDto gameRequestDto =
+                new GameRequestDto("white유저임다", "black유저임다", "1:1초보만");
+        gameId = chessDao.saveGame(gameRequestDto);
 
         assertThat(gameId).isNotNull();
     }

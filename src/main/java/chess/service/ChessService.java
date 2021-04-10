@@ -5,7 +5,7 @@ import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.move.PathResponseDto;
 import chess.controller.web.dto.piece.PieceResponseDto;
 import chess.controller.web.dto.game.GameResponseDto;
-import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.game.GameRequestDto;
 import chess.controller.web.dto.history.HistoryResponseDto;
 import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
@@ -32,10 +32,10 @@ public class ChessService {
         this.chessDao = new ChessDao();
     }
 
-    public Long saveGame(final NewGameRequestDto newGameRequestDto) {
+    public Long saveGame(final GameRequestDto gameRequestDto) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
-        Long gameId = chessDao.saveGame(newGameRequestDto);
+        Long gameId = chessDao.saveGame(gameRequestDto);
         chessDao.saveState(chessManager, gameId);
         chessDao.saveScore(chessManager.gameStatus(), gameId);
         chessDao.savePieces(gameId, pieces);

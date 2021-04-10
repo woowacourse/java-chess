@@ -1,12 +1,12 @@
 package chess.controller.web.dto.game;
 
-public class NewGameRequestDto {
+public class GameRequestDto {
 
     private final String whiteUsername;
     private final String blackUsername;
     private final String roomName;
 
-    public NewGameRequestDto(final String whiteUsername, final String blackUsername, final String roomName) {
+    public GameRequestDto(final String whiteUsername, final String blackUsername, final String roomName) {
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
         this.roomName = roomName;
