@@ -1,4 +1,4 @@
-package chess.controller.dto.score;
+package chess.controller.console.dto.result;
 
 import chess.domain.manager.GameStatus;
 import chess.domain.piece.Owner;
@@ -7,16 +7,16 @@ public class GameResultDto {
 
     private final double whiteScore;
     private final double blackScore;
-    private final Owner winner;
+    private final String winner;
 
-    public GameResultDto(final double whiteScore, final double blackScore, final Owner winner) {
+    public GameResultDto(final double whiteScore, final double blackScore, final String winner) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
         this.winner = winner;
     }
 
-    public static GameResultDto toStatus(final GameStatus gameStatus) {
-        return new GameResultDto(gameStatus.whiteScore(), gameStatus.blackScore(), gameStatus.judgeWinner());
+    public static GameResultDto from(final GameStatus gameStatus) {
+        return new GameResultDto(gameStatus.whiteScore(), gameStatus.blackScore(), gameStatus.judgeWinner().name());
     }
 
     public double getWhiteScore() {
@@ -27,7 +27,7 @@ public class GameResultDto {
         return blackScore;
     }
 
-    public Owner getWinner() {
+    public String getWinner() {
         return winner;
     }
 }

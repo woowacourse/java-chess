@@ -1,11 +1,9 @@
 package chess.view;
 
-import chess.controller.dto.board.BoardResponseDto;
-import chess.controller.dto.board.MovablePathResponseDto;
-import chess.controller.dto.board.PositionResponseDto;
-import chess.controller.dto.score.GameResultDto;
-import chess.controller.dto.score.StatusResponseDto;
-import chess.domain.piece.Owner;
+import chess.controller.console.dto.board.BoardResponseDto;
+import chess.controller.console.dto.position.MovablePathResponseDto;
+import chess.controller.console.dto.position.PositionResponseDto;
+import chess.controller.console.dto.result.GameResultDto;
 
 import java.util.List;
 
@@ -65,9 +63,9 @@ public class OutputView {
     }
 
 
-    public static void printStatus(final StatusResponseDto statusResponseDto) {
-        System.out.println("White score : " + statusResponseDto.getWhiteScore());
-        System.out.println("Black score : " + statusResponseDto.getBlackScore());
+    public static void printStatus(final GameResultDto gameResultDto) {
+        System.out.println("White score : " + gameResultDto.getWhiteScore());
+        System.out.println("Black score : " + gameResultDto.getBlackScore());
     }
 
     public static void printGameResult(final GameResultDto gameResultDto) {
@@ -77,18 +75,12 @@ public class OutputView {
 
         System.out.println("=== 게임 결과 ===");
 
-        Owner winner = gameResultDto.getWinner();
-        if (winner == Owner.WHITE) {
-            System.out.println("화이트의 승리입니다.");
+        String winner = gameResultDto.getWinner();
+        if (winner.equals("NONE")) {
+            System.out.println("무승부 입니다.");
+            return;
         }
-
-        if (winner == Owner.BLACK) {
-            System.out.println("블랙의 승리입니다.");
-        }
-
-        if (winner == Owner.NONE) {
-            System.out.println("무승부입니다.");
-        }
+        System.out.printf("%s의 승리입니다.", winner);
     }
 
     public static void printEndGame() {
