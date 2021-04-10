@@ -30,9 +30,6 @@ public class ChessBoard {
     public static ChessBoard from(Map<Position, Piece> realPiecesMap) {
         Map<Position, Piece> board = new HashMap<>(realPiecesMap);
         for (Position position: PositionRepository.positions()) {
-            if (position.equals(Position.of("e2"))) {
-                System.out.println();
-            }
             board.merge(position, new Blank(), (existPiece, newPiece) -> existPiece);
         }
         return new ChessBoard(board);
