@@ -134,21 +134,18 @@ public class WebUIChessController {
             CHESS_REPOSITORY.removePiece(moveRequestDto);
             CHESS_REPOSITORY.movePiece(moveRequestDto);
 
-            List<TurnRequestDto> turns = CHESS_REPOSITORY.showCurrentTurn();
-            String currentTurn = turns.stream()
-                    .map(TurnRequestDto::getCurrentTurn)
-                    .collect(Collectors.joining());
-            String nextTurn = TURNS.stream()
-                    .filter(t -> !t.equals(currentTurn))
-                    .collect(Collectors.joining());
-
-            CHESS_REPOSITORY.changeTurn(new TurnChangeRequestDto(currentTurn, nextTurn));
-
             return "{\"status\":\"200\", \"message\":\"성공\"}";
+        });
+
+        post("turn", (req, res) -> {
+            TurnChangeRequestDto turnChangeRequestDto = GSON.fromJson(req.body(), TurnChangeRequestDto.class);
+            CHESS_REPOSITORY.changeTurn(turnChangeRequestDto);
+
+            return null;
         });
     }
 
-    private Object makeNewGame(final spark.Response res) throws SQLException {
+    private Object makeNewGame(final spark.Response res) {
         CHESS_REPOSITORY.removeAllPieces();
         CHESS_REPOSITORY.removeTurn();
 

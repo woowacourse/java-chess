@@ -157,6 +157,25 @@ function request_move_post(first_click, second_click) {
             second_click.style.backgroundColor = '';
             return;
         }
+
+        let current_turn = document.getElementById('currentTurn').innerText;
+        let next_turn;
+
+        if (current_turn === 'white') {
+            next_turn = 'black';
+        }
+        if (current_turn === 'black') {
+            next_turn = 'white';
+        }
+
+        xhr.open('POST', '/turn', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.responseType = 'json';
+        xhr.send(JSON.stringify({
+            currentTurn: current_turn,
+            nextTurn: next_turn
+        }));
+
         window.location.href = '/chess';
     };
 }
