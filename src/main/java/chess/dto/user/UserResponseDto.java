@@ -1,5 +1,6 @@
 package chess.dto.user;
 
+import chess.entity.User;
 import java.time.LocalDateTime;
 
 public class UserResponseDto {
@@ -9,12 +10,18 @@ public class UserResponseDto {
     private final long loseCount;
     private final LocalDateTime createdTime;
 
-    public UserResponseDto(final String name, final long winCount, final long loseCount,
+    private UserResponseDto(final String name, final long winCount, final long loseCount,
         final LocalDateTime createdTime) {
         this.name = name;
         this.winCount = winCount;
         this.loseCount = loseCount;
         this.createdTime = createdTime;
+    }
+
+    public static UserResponseDto from(final User user) {
+        return new UserResponseDto(
+            user.getName(), user.getWinCount(), user.getLoseCount(), user.getCreatedTime()
+        );
     }
 
     public String getName() {
