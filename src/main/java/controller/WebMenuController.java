@@ -11,10 +11,6 @@ import java.util.List;
 public class WebMenuController {
     private GameDao gameDao = new GameDao();
 
-    public int newGameId() {
-        return gameDao.lastGameID();
-    }
-
     public void startNewGame() {
         gameDao.start();
     }
@@ -37,6 +33,10 @@ public class WebMenuController {
 
     public ResultDto status() {
         return toResultDto(gameDao.status());
+    }
+
+    public int newGameId() {
+        return gameDao.lastGameID();
     }
 
     private ResultDto toResultDto(ChessGame game) {

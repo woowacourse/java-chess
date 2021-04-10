@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameDao {
-    private ChessGame game = new ChessGame(new Running(new Board()));
+    private ChessGame game;
     private int gameID;
 
     public Connection getConnection() {
@@ -44,6 +44,7 @@ public class GameDao {
     }
 
     public void start() {
+        game = new ChessGame(new Running(new Board()));
         insertNewGameInfo();
         this.gameID = lastGameID();
         insertPiecesInfo();
