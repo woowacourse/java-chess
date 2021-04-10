@@ -57,7 +57,7 @@ public class WebChessController {
                 String selected = req.queryParams("position");
                 chessGameService.selectPiece(id, selected);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(500);
+                res.status(400);
             }
             return "";
         });
@@ -70,7 +70,7 @@ public class WebChessController {
                 ChessGameDTO chessGameDTO = chessGameService.moveChessGame(id, selected, target);
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(500);
+                res.status(400);
                 return "";
 
             }
@@ -82,7 +82,7 @@ public class WebChessController {
                 RoomsDTO roomsDTO = chessGameService.getTotalRoom();
                 return gson.toJson(roomsDTO);
             } catch (IllegalArgumentException e) {
-                res.status(500);
+                res.status(400);
                 return "";
             }
         });
