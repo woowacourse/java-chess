@@ -32,20 +32,14 @@ public class ChessService {
         this.chessDao = new ChessDao();
     }
 
-    public Long newGame(final NewGameRequestDto newGameRequestDto) {
+    public Long saveGame(final NewGameRequestDto newGameRequestDto) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
-        Long gameId = chessDao.createNewGame(newGameRequestDto);
-        chessDao.createState(chessManager, gameId);
-        chessDao.createScore(chessManager.gameStatus(), gameId);
-        createAllPiece(pieces, gameId);
+        Long gameId = chessDao.saveGame(newGameRequestDto);
+        chessDao.saveState(chessManager, gameId);
+        chessDao.saveScore(chessManager.gameStatus(), gameId);
+        chessDao.savePieces(gameId, pieces);
         return gameId;
-    }
-
-    private void createAllPiece(final Map<Position, Piece> pieces, final Long gameId) {
-        for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
-            chessDao.createPieces(gameId, entry.getKey().parseString(), entry.getValue().getSymbol());
-        }
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {

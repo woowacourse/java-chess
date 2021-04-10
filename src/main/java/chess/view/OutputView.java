@@ -20,6 +20,7 @@ public class OutputView {
     public static void printGuideStartGame() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작은 start, 재시작은 restart, 종료는 end 명령을 입력하세요.");
+        System.out.println("> 현재 게임 점수 확인 : status");
         System.out.println("> 이동 가능 경로 확인 : show source위치 - 예. show b2");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }

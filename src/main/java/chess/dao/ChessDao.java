@@ -6,6 +6,7 @@ import chess.controller.web.dto.game.NewGameRequestDto;
 import chess.controller.web.dto.history.HistoryResponseDto;
 import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
+import chess.domain.board.position.Position;
 import chess.domain.manager.ChessManager;
 import chess.domain.manager.GameStatus;
 import chess.domain.piece.Piece;
@@ -13,6 +14,7 @@ import chess.domain.piece.Piece;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ChessDao {
     private static final String SERVER = "localhost:3306";
@@ -39,7 +41,7 @@ public class ChessDao {
         return con;
     }
 
-    public Long createNewGame(final NewGameRequestDto newGameRequestDto) {
+    public Long saveGame(final NewGameRequestDto newGameRequestDto) {
         final String query =
                 "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
@@ -61,7 +63,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createState(final ChessManager chessManager, final Long gameId) {
+    public Long saveState(final ChessManager chessManager, final Long gameId) {
         final String query =
                 "INSERT INTO state(gameId, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?)";
 
@@ -79,7 +81,7 @@ public class ChessDao {
         return null;
     }
 
-    public Long createScore(final GameStatus gameStatus, final Long gameId) {
+    public Long saveScore(final GameStatus gameStatus, final Long gameId) {
         final String query =
                 "INSERT INTO score(gameId, white_score, black_score) VALUES (?, ?, ?)";
 
@@ -97,18 +99,21 @@ public class ChessDao {
         return null;
     }
 
-    public Long createPieces(final Long gameId, final String position, final String symbol) {
+    public long[] savePieces(final Long gameId, final Map<Position, Piece> pieces) {
         final String query =
                 "INSERT INTO piece(gameId, position, symbol) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            pstmt.setInt(1, gameId.intValue());
-            pstmt.setString(2, position);
-            pstmt.setString(3, symbol);
+            for (final Map.Entry<Position, Piece> entry : pieces.entrySet()) {
+                pstmt.setInt(1, gameId.intValue());
+                pstmt.setString(2, entry.getKey().parseString());
+                pstmt.setString(3, entry.getValue().getSymbol());
+                pstmt.addBatch();
+            }
 
-            return pstmt.executeLargeUpdate();
+            return pstmt.executeLargeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
