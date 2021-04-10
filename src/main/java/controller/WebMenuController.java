@@ -1,55 +1,51 @@
 package controller;
 
-import domain.Board;
+import dao.GameDao;
 import domain.ChessGame;
-import domain.menu.Menu;
-import domain.piece.objects.Piece;
-import domain.piece.objects.PieceFactory;
-import domain.piece.position.Position;
-import domain.state.Running;
-import domain.state.Wait;
-import dto.PieceDto;
 import dto.PiecesDto;
 import dto.ResultDto;
 import dto.StatusDto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class WebMenuController {
-    private ChessGame game;
+    private GameDao gameDao = new GameDao();
 
-    public WebMenuController() {
-        game = new ChessGame(new Wait(new Board()));
+    public int newGameId() {
+        return gameDao.lastGameID();
     }
 
-    public WebMenuController(PiecesDto piecesDto) {
-        Map<Position, Piece> data = new HashMap<>();
-        for (PieceDto pieceDto : piecesDto.getPieces()) {
-            Position position = Position.of(pieceDto.getPosition());
-            Piece piece = PieceFactory.findPiece(pieceDto.getPieceName());
-            data.put(position, piece);
-        }
-        game = new ChessGame(new Running(new Board(data), piecesDto.isTurn()));
+    public void startNewGame() {
+        gameDao.start();
     }
 
-    public ResultDto run(String command) {
-        String menuButton = command.split(" ")[0];
-        Menu menu = Menu.findMenu(menuButton);
-        return startMenu(command, game, menu);
+    public void startGame(int gameID) {
+        gameDao.start(gameID);
     }
 
-    private ResultDto startMenu(String command, ChessGame game, Menu menu) {
+    public ResultDto move(String source, String target) {
+        ResultDto resultDto;
         try {
-            return new ResultDto(menu.executeWebMenu(command, game), "");
+            ChessGame game = gameDao.move(source, target);
+            resultDto = toResultDto(game);
         } catch (RuntimeException e) {
-            return new ResultDto(null, e.getMessage());
+            resultDto = new ResultDto(null, false, e.getMessage());
         }
+
+        return resultDto;
     }
 
-    public ResultDto getResultDto() {
+    public ResultDto status() {
+        return toResultDto(gameDao.status());
+    }
+
+    private ResultDto toResultDto(ChessGame game) {
         return new ResultDto(new PiecesDto(game.getBoard().getPieceMap(),
                 new StatusDto(game.blackScore(), game.whiteScore()),
-                game.isEnd(), game.getTurn()), "");
+                game.isEnd(), game.getTurn()), true, "");
+    }
+
+    public List<String> findGames() {
+        return gameDao.findGames();
     }
 }

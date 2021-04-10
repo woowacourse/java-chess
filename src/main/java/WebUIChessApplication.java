@@ -1,7 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.WebMenuController;
-import dao.GameDao;
 import dto.ResultDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -12,57 +11,42 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    static WebMenuController menuController;
-    static int gameID;
+    static WebMenuController menuController = new WebMenuController();
 
     public static void main(String[] args) {
-        GameDao gameDao = new GameDao();
         Gson gson = new Gson();
 
         staticFiles.location("/static");
         get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
-        get("/roomNumber", (req, res) -> gameDao.findGames());
+        get("/roomNumber", (req, res) -> menuController.findGames());
 
         get("/startClick", (req, res) -> {
             String input = req.queryParams("roomNumber");
             if ("new".equals(input)) {
-                menuController = new WebMenuController();
-                ResultDto resultDto = menuController.run("start");
-                gameDao.insertNewGameInfo(resultDto);
-                gameID = gameDao.lastGameID();
+                menuController.startNewGame();
                 return render(new HashMap<String, Object>() {{
-                    put("roomNumber", gameID);
+                    put("roomNumber", menuController.newGameId());
                 }}, "start.html");
             }
-            gameID = Integer.parseInt(input);
-            ResultDto resultDto = gameDao.selectGameInfo(gameID);
-            menuController = new WebMenuController(resultDto.getPiecesDto());
+            int gameID = Integer.parseInt(input);
+            menuController.startGame(gameID);
             return render(new HashMap<>(), "start.html");
         });
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/showData", (req, res) -> gson.toJson(menuController.getResultDto()));
+        get("/showData", (req, res) -> gson.toJson(menuController.status()));
 
         post("/movedata", (req, res) -> {
             JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
             String source = jsonObject.get("source").getAsString();
             String target = jsonObject.get("target").getAsString();
-            String command = "move " + source + " " + target;
-            ResultDto resultDto = menuController.run(command);
-            if (!resultDto.isSuccess()) {
-                return gson.toJson(resultDto);
-            }
-            if (!resultDto.isEnd()) {
-                gameDao.updateGame(resultDto, source, target, gameID);
-                return gson.toJson(resultDto);
-            }
-            gameDao.deleteGame(gameID);
-            return gson.toJson(resultDto);
+            ResultDto resultDto2 = menuController.move(source, target);
+            return gson.toJson(resultDto2);
         });
 
-        get("/status", (req, res) -> gson.toJson(menuController.run("status")));
+        get("/status", (req, res) -> gson.toJson(menuController.status()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
