@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Optional;
 
-public class UserDao {
+public class UserDao implements UserDaoInterface {
 
     public void insertUser(final String name) {
         final String query = "INSERT INTO user(name) VALUES (?)";
