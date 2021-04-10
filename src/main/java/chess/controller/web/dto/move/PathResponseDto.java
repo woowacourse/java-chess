@@ -14,7 +14,7 @@ public class PathResponseDto {
         this.path = path;
     }
 
-    public static PathResponseDto toPath(final Path path) {
+    public static PathResponseDto from(final Path path) {
         return new PathResponseDto(path.stream()
                 .map(Position::parseString)
                 .collect(Collectors.toList()));

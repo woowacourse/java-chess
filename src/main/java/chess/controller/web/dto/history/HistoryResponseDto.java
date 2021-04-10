@@ -16,7 +16,7 @@ public class HistoryResponseDto {
         this.isPlaying = isPlaying;
     }
 
-    public static HistoryResponseDto toChessManager(final String moveCommand, final ChessManager chessManager) {
+    public static HistoryResponseDto from(final String moveCommand, final ChessManager chessManager) {
         return new HistoryResponseDto(
                 moveCommand,
                 chessManager.turnOwner().name(),

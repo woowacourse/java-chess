@@ -12,7 +12,7 @@ public class MovablePathResponseDto {
         this.path = path;
     }
 
-    public static MovablePathResponseDto toPath(final Path path) {
+    public static MovablePathResponseDto from(final Path path) {
         return new MovablePathResponseDto(path.stream()
                 .map(position -> new PositionResponseDto(position.getHorizontalIndex(), position.getVerticalIndex()))
                 .collect(Collectors.toList()));

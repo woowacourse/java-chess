@@ -13,7 +13,7 @@ public class BoardResponseDto {
         this.pieces = pieces;
     }
 
-    public static BoardResponseDto toBoard(final Board board) {
+    public static BoardResponseDto from(final Board board) {
         return new BoardResponseDto(board.pieces().stream()
                 .map(Piece::getSymbol)
                 .collect(Collectors.toList()));

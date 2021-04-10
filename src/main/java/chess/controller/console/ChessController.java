@@ -28,7 +28,7 @@ public class ChessController {
             OutputView.printEndGame();
             return;
         }
-        OutputView.printBoard(BoardResponseDto.toBoard(chessManager.getBoard()));
+        OutputView.printBoard(BoardResponseDto.from(chessManager.getBoard()));
         do {
             initCommand();
         } while (chessManager.isPlaying());
@@ -61,13 +61,13 @@ public class ChessController {
 
     private void printRunningGame(final Command command) {
         if (command.isMove()) {
-            OutputView.printBoard(BoardResponseDto.toBoard(chessManager.getBoard()));
+            OutputView.printBoard(BoardResponseDto.from(chessManager.getBoard()));
         }
 
         if (command.isShow()) {
             Show show = (Show) command;
-            OutputView.printMovablePath(BoardResponseDto.toBoard(chessManager.getBoard()),
-                    MovablePathResponseDto.toPath(show.path()));
+            OutputView.printMovablePath(BoardResponseDto.from(chessManager.getBoard()),
+                    MovablePathResponseDto.from(show.path()));
         }
 
         if (command.isStatus()) {
@@ -76,7 +76,7 @@ public class ChessController {
         }
 
         if (command.isRestart()) {
-            OutputView.printRestartGame(BoardResponseDto.toBoard(chessManager.getBoard()));
+            OutputView.printRestartGame(BoardResponseDto.from(chessManager.getBoard()));
         }
     }
 }
