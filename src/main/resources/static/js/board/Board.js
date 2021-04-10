@@ -79,11 +79,14 @@ export class Board {
     }
 
     const gameId = this.#findGameIdInUri();
-    const response = await getData(
-        `${url}/game/${gameId}/piece`, params
-    );
-
-    targetTile.highlight(response["isMovable"]);
+    try {
+      const response = await getData(
+          `${url}/game/${gameId}/piece`, params
+      );
+      targetTile.highlight(response["isMovable"]);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   #findGameIdInUri() {

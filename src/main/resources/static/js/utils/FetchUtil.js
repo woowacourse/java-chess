@@ -4,7 +4,13 @@ export async function getData(url = '', params = {}) {
     urlSearchParams.append(key, params[key])
   }
   return fetch(`${url}?${urlSearchParams.toString()}`)
-  .then(response => response.json())
+  .then(response => {
+    console.log(response.status);
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    return response.json();
+  })
   .catch(error => console.error('Error:', error));
 }
 
@@ -19,6 +25,11 @@ export async function postData(url = '', data = {}) {
     },
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    return response.json()
+  })
   .catch(error => console.error('Error:', error));
 }
