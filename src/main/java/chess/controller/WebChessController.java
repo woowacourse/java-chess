@@ -23,7 +23,7 @@ public class WebChessController {
     }
 
     public void run() {
-        
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -35,7 +35,7 @@ public class WebChessController {
                 ChessGameDTO chessGameDTO = chessGameService.refreshChessGame(id);
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(400);
+                res.status(500);
                 return "";
             }
         });
@@ -46,7 +46,7 @@ public class WebChessController {
                 ChessGameDTO chessGameDTO = chessGameService.loadChessGame(id);
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(400);
+                res.status(500);
                 return "";
             }
         });
@@ -57,7 +57,7 @@ public class WebChessController {
                 String selected = req.queryParams("position");
                 chessGameService.selectPiece(id, selected);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(400);
+                res.status(500);
             }
             return "";
         });
@@ -70,7 +70,7 @@ public class WebChessController {
                 ChessGameDTO chessGameDTO = chessGameService.moveChessGame(id, selected, target);
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
-                res.status(400);
+                res.status(500);
                 return "";
 
             }
@@ -82,7 +82,7 @@ public class WebChessController {
                 RoomsDTO roomsDTO = chessGameService.getTotalRoom();
                 return gson.toJson(roomsDTO);
             } catch (IllegalArgumentException e) {
-                res.status(400);
+                res.status(500);
                 return "";
             }
         });
@@ -97,7 +97,7 @@ public class WebChessController {
                 RoomsDTO roomsDTO = chessGameService.getTotalRoom();
                 return gson.toJson(roomsDTO);
             } catch (IllegalArgumentException e) {
-                res.status(400);
+                res.status(500);
                 return "";
             }
         });
