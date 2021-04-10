@@ -1,12 +1,8 @@
 package chess.controller.web;
 
 import chess.controller.web.dto.MoveRequestDto;
-import chess.controller.web.dto.SaveRequestDto;
 import chess.dao.MysqlChessDao;
-import chess.domain.board.Square;
-import chess.domain.manager.ChessGameManager;
-import chess.domain.piece.Pawn;
-import chess.domain.position.Position;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpEntity;
@@ -26,7 +22,6 @@ import spark.Spark;
 
 import java.io.IOException;
 
-import static chess.domain.piece.attribute.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
@@ -38,7 +33,9 @@ class WebControllerTest {
     void setUp() {
         port(8081);
         staticFileLocation("static");
-        WebController.start();
+
+        WebController webController = new WebController(new ChessService(new MysqlChessDao()));
+        webController.start();
     }
 
     @AfterEach
@@ -52,11 +49,11 @@ class WebControllerTest {
     void whenCallStartRestApi() throws IOException {
         // Given
         // When
-        JsonObject basicResponseDto = callStartRestApi();
-        boolean isError = basicResponseDto.get("isError").getAsBoolean();
-
+        JsonObject chessEntity = callStartRestApi();
+        String nextColor = chessEntity.get("color").getAsString();
+        String expectedColor = "WHITE";
         // Then
-        assertThat(isError).isFalse();
+        assertThat(nextColor).isEqualTo(expectedColor);
     }
 
     private JsonObject callStartRestApi() throws IOException {
@@ -71,21 +68,25 @@ class WebControllerTest {
     @Test
     void whenCallMoveRestApi() throws IOException {
         // Given
-        callStartRestApi();
+        JsonObject jsonObject = callStartRestApi();
+        long id = jsonObject.get("id").getAsLong();
 
         // When
-        JsonObject basicResponseDto = callMoveRestApi("a2", "a3");
-        boolean isError = basicResponseDto.get("isError").getAsBoolean();
+        JsonObject responseDto = callMoveRestApi(id, "a2", "a3");
+        boolean isError = responseDto.get("isEnd").getAsBoolean();
+        String color = responseDto.get("nextColor").getAsString();
+        String expectedColor = "BLACK";
 
         // Then
         assertThat(isError).isFalse();
+        assertThat(color).isEqualTo(expectedColor);
     }
 
-    private JsonObject callMoveRestApi(String from, String to) throws IOException {
+    private JsonObject callMoveRestApi(long id, String from, String to) throws IOException {
         HttpPost request = new HttpPost("http://localhost:8081/game/move");
         request.setHeader("Content-Type", "application/json;charset=utf-8");
 
-        MoveRequestDto moveRequestDto = new MoveRequestDto(from, to, "1");
+        MoveRequestDto moveRequestDto = new MoveRequestDto(id, from, to);
         String jsonValue = gson.toJson(moveRequestDto);
         HttpEntity httpEntity = new StringEntity(jsonValue, "utf-8");
         request.setEntity(httpEntity);
@@ -101,10 +102,11 @@ class WebControllerTest {
     @CsvSource({"a1,a2,동일한 진영의 말이 있어서 행마할 수 없습니다.", "a3,a4,현재 움직일 수 있는 진영의 기물이 아닙니다.", "a2,a5,폰이 움직일 수 있는 범위를 벗어났습니다."})
     void whenCantMoveReturnErrorJson(String from, String to, String expectedErrorMsg) throws IOException {
         // Given
-        callStartRestApi();
+        JsonObject jsonObject = callStartRestApi();
+        long id = jsonObject.get("id").getAsLong();
 
         // When
-        JsonObject errorJson = callMoveRestApi(from, to);
+        JsonObject errorJson = callMoveRestApi(id, from, to);
 
         // Then
         assertThat(errorJson.get("errorMsg").getAsString()).isEqualTo(expectedErrorMsg);
@@ -114,13 +116,14 @@ class WebControllerTest {
     @Test
     void whenCallGetScoreApi() throws IOException {
         // given
-        callStartRestApi();
+        JsonObject jsonObject = callStartRestApi();
+        long id = jsonObject.get("id").getAsLong();
+
         // when
-        HttpGet request = new HttpGet("http://localhost:8081/game/score");
+        HttpGet request = new HttpGet("http://localhost:8081/game/score/" + id);
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
         String responseEntity = EntityUtils.toString(response.getEntity());
-        JsonObject responseJson = gson.fromJson(responseEntity, JsonObject.class);
-        JsonObject scoreResponseJson = responseJson.get("data").getAsJsonObject();
+        JsonObject scoreResponseJson = gson.fromJson(responseEntity, JsonObject.class);
 
         String matchResult = scoreResponseJson.get("matchResult").getAsString();
         JsonObject colorsScore = scoreResponseJson.get("colorsScore").getAsJsonObject();
@@ -132,32 +135,5 @@ class WebControllerTest {
         assertThat(matchResult).isEqualTo("무승부");
         assertThat(blackScore).isEqualTo(38.0);
         assertThat(whiteScore).isEqualTo(38.0);
-    }
-
-    @DisplayName("/game/save API 요청 시 저장을 할 수 있는지 확인")
-    @Test
-    void whenCallSaveApi() throws IOException {
-        // given
-        callStartRestApi();
-        MysqlChessDao dao = new MysqlChessDao();
-        dao.deleteAll();
-
-        // when
-        HttpPost request = new HttpPost("http://localhost:8081/game/save");
-        request.setHeader("Content-Type", "application/json;charset=utf-8");
-
-        SaveRequestDto saveRequestDto = new SaveRequestDto(0,"RKBQKBKRPPPPPPPP........................p........ppppppprkbqkbkr");
-        String jsonValue = gson.toJson(saveRequestDto);
-        HttpEntity httpEntity = new StringEntity(jsonValue, "utf-8");
-        request.setEntity(httpEntity);
-        HttpClientBuilder.create().build().execute(request);
-
-        ChessGameManager expectedGameManager = dao.findById(1L).get();
-        // then
-        assertThat(expectedGameManager.getId()).isEqualTo(1);
-
-        Square a3 = expectedGameManager.getBoard().findByPosition(Position.of("a3"));
-        assertThat(a3.getPiece().getClass()).isEqualTo(Pawn.class);
-        assertThat(a3.getPiece().getColor()).isEqualTo(WHITE);
     }
 }

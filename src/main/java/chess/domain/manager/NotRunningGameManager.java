@@ -1,9 +1,12 @@
 package chess.domain.manager;
 
-import chess.domain.board.Board;
+import chess.controller.web.dto.PieceDto;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
 import chess.domain.statistics.ChessGameStatistics;
+
+import java.util.Map;
 
 public abstract class NotRunningGameManager implements ChessGameManager {
     private final long id;
@@ -19,7 +22,7 @@ public abstract class NotRunningGameManager implements ChessGameManager {
 
     @Override
     public ChessGameManager end() {
-        return ChessGameManagerFactory.createEndGame(id, ChessGameStatistics.createNotStartGameResult());
+        return ChessGameManagerFactory.createEndGame(id, ChessGameStatistics.createNotStartGameResult(), InitBoardInitializer.getBoard());
     }
 
     @Override
@@ -29,7 +32,7 @@ public abstract class NotRunningGameManager implements ChessGameManager {
 
     @Override
     public Color nextColor() {
-        throw new UnsupportedOperationException("게임이 진행중이지 않아 실행할 수 없습니다.");
+        return Color.BLANK;
     }
 
     @Override
@@ -38,12 +41,12 @@ public abstract class NotRunningGameManager implements ChessGameManager {
     }
 
     @Override
-    public Board getBoard() {
-        throw new UnsupportedOperationException("게임이 진행중이지 않아 실행할 수 없습니다.");
+    public long getId() {
+        return id;
     }
 
     @Override
-    public long getId() {
-        return id;
+    public Map<String, PieceDto> getPieces() {
+        throw new UnsupportedOperationException("게임이 진행중이지 않아 실행할 수 없습니다.");
     }
 }

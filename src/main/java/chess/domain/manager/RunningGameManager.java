@@ -1,5 +1,6 @@
 package chess.domain.manager;
 
+import chess.controller.web.dto.PieceDto;
 import chess.domain.board.Board;
 import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
@@ -7,6 +8,8 @@ import chess.domain.statistics.ChessGameStatistics;
 import chess.domain.statistics.MatchResult;
 
 import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 public class RunningGameManager implements ChessGameManager {
     private final long id;
@@ -26,7 +29,7 @@ public class RunningGameManager implements ChessGameManager {
 
     @Override
     public ChessGameManager end() {
-        return ChessGameManagerFactory.createEndGame(id, getStatistics());
+        return ChessGameManagerFactory.createEndGame(id, getStatistics(), board);
     }
 
     @Override
@@ -50,6 +53,13 @@ public class RunningGameManager implements ChessGameManager {
     @Override
     public long getId() {
         return id;
+    }
+
+    @Override
+    public Map<String, PieceDto> getPieces() {
+        return board.getAliveSquares().stream()
+                .collect(toMap(square -> square.getPosition().toString()
+                        , square -> new PieceDto(square.getNotationText(), square.getColor().name())));
     }
 
     @Override

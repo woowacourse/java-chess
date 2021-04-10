@@ -1,5 +1,7 @@
 package chess.domain.manager;
 
+import chess.domain.board.Board;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.statistics.ChessGameStatistics;
 
 public class NotStartedChessGameManager extends NotRunningGameManager {
@@ -20,6 +22,11 @@ public class NotStartedChessGameManager extends NotRunningGameManager {
     @Override
     public boolean isStart() {
         return false;
+    }
+
+    @Override
+    public Board getBoard() {
+        return InitBoardInitializer.getBoard();
     }
 
     @Override
