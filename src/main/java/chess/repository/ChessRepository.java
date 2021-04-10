@@ -1,13 +1,14 @@
 package chess.repository;
 
-import chess.dto.RoomDTO;
-import chess.dto.RoomsDTO;
+import chess.domain.ChessGame;
+import chess.domain.Room;
+
+import java.util.List;
 
 public interface ChessRepository {
-    void createChessGame(final String chessGameData);
-    void saveChessGame(final String gameId, final String chessGameData);
-    String loadChessGame(final String gameId);
-    RoomsDTO createRoom(final String name, final String pw);
-    RoomsDTO getTotalRoom();
-    RoomDTO findRoomFromId(final String roomId);
+    void createChessGame(final ChessGame chessGame);
+    void saveChessGameFromRoom(final String roomId, final ChessGame chessGame);
+    ChessGame loadChessGameFromRoom(final String roomId);
+    void createRoom(final String roomReqData);
+    List<Room> getTotalRoom();
 }
