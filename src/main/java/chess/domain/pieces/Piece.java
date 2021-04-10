@@ -25,8 +25,8 @@ public abstract class Piece {
         return score;
     }
 
-    public final boolean sameCol(final int col) {
-        return position.sameCol(col);
+    public final boolean sameCol(final int column) {
+        return position.sameColumn(column);
     }
 
     public final boolean samePosition(final Position startPoint) {
@@ -40,7 +40,7 @@ public abstract class Piece {
         this.position = endPoint;
     }
 
-    protected final Team getTeam() {
+    public final Team getTeam() {
         return team;
     }
 
@@ -70,22 +70,15 @@ public abstract class Piece {
         }
     }
 
-    protected List<Position> getMovablePositionsByDir(final Board board, final int[] rowDirection, final int[] colDirection) {
+    protected List<Position> getMovablePositionsByDirection(final Board board, final int[] rowDirection, final int[] colDirection) {
         List<Position> movablePositions = new ArrayList<>();
-        for (int dir = 0; dir < colDirection.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDirection[dir], colDirection[dir]);
+        for (int direction = 0; direction < colDirection.length; ++direction) {
+            addMovablePositions(movablePositions, board, rowDirection[direction], colDirection[direction]);
         }
         return movablePositions;
     }
 
-    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection) {
-        int currentRow = getPosition().getRow();
-        int currentCol = getPosition().getCol();
-
-        while (isMoveAble(movablePositions, board, currentRow + rowDirection, currentCol + colDirection)) {
-            movablePositions.add(new Position(currentRow += rowDirection, currentCol += colDirection));
-        }
-    }
+    protected abstract void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection);
 
     protected abstract boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol);
 

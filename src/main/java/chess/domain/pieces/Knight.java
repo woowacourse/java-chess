@@ -14,8 +14,8 @@ public final class Knight extends NoKingPieces implements SingleMove {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 2.5;
-    private static final int LEFT_SIDE_INIT_COL = 1;
-    private static final int RIGHT_SIDE_INIT_COL = 6;
+    private static final int LEFT_SIDE_INIT_COLUMN = 1;
+    private static final int RIGHT_SIDE_INIT_COLUMN = 6;
 
     private Knight(final Team team, final Position position) {
         super(position, "N", team, SCORE);
@@ -29,35 +29,45 @@ public final class Knight extends NoKingPieces implements SingleMove {
         return new Knight(position, "N", team, SCORE);
     }
 
-    public static Knight of(final Team team, final int col) {
-        if (col != LEFT_SIDE_INIT_COL && col != RIGHT_SIDE_INIT_COL) {
+    public static Knight of(final Team team, final int column) {
+        if (column != LEFT_SIDE_INIT_COLUMN && column != RIGHT_SIDE_INIT_COLUMN) {
             throw new IllegalArgumentException("잘못된 초기 위치입니다.");
         }
-        return new Knight(team, getInitPosition(team, col));
+        return new Knight(team, getInitPosition(team, column));
     }
 
-    private static Position getInitPosition(final Team team, final int col) {
+    private static Position getInitPosition(final Team team, final int column) {
         if (team.equals(Team.BLACK)) {
-            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), col);
+            return new Position(RowConverter.getLocation(BLACK_TEAM_ROW), column);
         }
-        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), col);
+        return new Position(RowConverter.getLocation(WHITE_TEAM_ROW), column);
     }
 
     public static List<Knight> getInitKnights(final Team team) {
         List<Knight> knights = new ArrayList<>();
-        ColumnConverter.getKnightInitCols().forEach((col) -> knights.add(Knight.of(team, col)));
+        ColumnConverter.getKnightInitCols().forEach((column) -> knights.add(Knight.of(team, column)));
         return knights;
     }
 
     @Override
     public List<Position> getMovablePositions(final Board board) {
         int[] rowDirection = {-1, 1, 2, 2, 1, -1, -2, -2};
-        int[] colDirection = {2, 2, 1, -1, -2, -2, -1, 1};
-        return getMovablePositionsByDir(board, rowDirection, colDirection);
+        int[] columnDirection = {2, 2, 1, -1, -2, -2, -1, 1};
+        return getMovablePositionsByDirection(board, rowDirection, columnDirection);
     }
 
     @Override
-    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
-        return isMoveAbleDir(board, nextRow, nextCol, getTeam());
+    protected void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDirection, final int colDirection) {
+        int currentRow = getPosition().getRow();
+        int currentColumn = getPosition().getColumn();
+
+        if (isMoveAble(movablePositions, board, currentRow + rowDirection, currentColumn + colDirection)) {
+            movablePositions.add(new Position(currentRow += rowDirection, currentColumn += colDirection));
+        }
+    }
+
+    @Override
+    public boolean isMoveAble(final List<Position> movablePositions, final Board board, final int nextRow, final int nextColumn) {
+        return isMoveAbleDirection(board, nextRow, nextColumn, getTeam());
     }
 }

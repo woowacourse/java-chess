@@ -1,8 +1,8 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
-import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

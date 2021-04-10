@@ -51,7 +51,7 @@ public final class OutputView {
                 .forEach(v -> {
                     for (Piece piece : v.toList()) {
                         Position position = piece.getPosition();
-                        arr[position.getRow()][position.getCol()] = piece.getInitial();
+                        arr[position.getRow()][position.getColumn()] = piece.getInitial();
                     }
                 });
     }

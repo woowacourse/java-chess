@@ -1,0 +1,59 @@
+#header {
+    text-align: center;
+    padding: 50px;
+}
+
+
+.score-board {
+    margin: 20px;
+}
+
+.score {
+    font-size: 20px;
+}
+
+#score-board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square {
+    width: 75px;
+    height: 75px;
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+}
+
+.square:hover {
+    background-color: rosybrown;
+    cursor: pointer;
+}
+
+.blackSquare {
+    background-color: dimgray;
+}
+
+.whiteSquare {
+    background-color: whitesmoke;
+}
+
+#board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#board {
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 100%;
+    border: 10px solid black;
+    text-align: center;
+    font-size: 0px;
+    z-index: 1;
+}

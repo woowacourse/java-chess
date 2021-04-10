@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,7 +43,6 @@ class BishopTest {
         assertThat(bishopPosition.getRow()).isEqualTo(7);
         assertThat(bishopPosition.getRow()).isNotEqualTo(1);
     }
-
 
     @ParameterizedTest
     @DisplayName("Bishop 초기 col 위치가 c혹은 f가 아니면, 예외가 발생한다.")

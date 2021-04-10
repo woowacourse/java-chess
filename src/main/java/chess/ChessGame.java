@@ -11,7 +11,7 @@ public final class ChessGame {
     private Team currentTurnTeam;
 
     public ChessGame() {
-        this(new BoardFactory().getBoard(), Team.WHITE);
+        this(new BoardFactory().createBoard(), Team.WHITE);
     }
 
     public ChessGame(final Board board, final Team team) {

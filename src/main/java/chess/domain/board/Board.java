@@ -28,7 +28,7 @@ public final class Board {
         startPointPiece.move(this, endPoint);
     }
 
-    public final Pieces piecesByTeam(final Team team) {
+    public Pieces piecesByTeam(final Team team) {
         return board.get(team);
     }
 

@@ -15,7 +15,7 @@ public final class BoardFactory {
         initSetting();
     }
 
-    public Board getBoard() {
+    public Board createBoard() {
         return new Board(board);
     }
 

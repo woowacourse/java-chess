@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>포츈 체스</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<h1 id="header">포츈 체스</h1>
+
+<div id="board-container">
+    <div id="board">
+        <div id="00" class="square blackSquare"></div>
+        <div id="01" class="square whiteSquare"></div>
+        <div id="02" class="square blackSquare"></div>
+        <div id="03" class="square whiteSquare"></div>
+        <div id="04" class="square blackSquare"></div>
+        <div id="05" class="square whiteSquare"></div>
+        <div id="06" class="square blackSquare"></div>
+        <div id="07" class="square whiteSquare"></div>
+        <br/>
+        <div id="10" class="square whiteSquare"></div>
+        <div id="11" class="square blackSquare"></div>
+        <div id="12" class="square whiteSquare"></div>
+        <div id="13" class="square blackSquare"></div>
+        <div id="14" class="square whiteSquare"></div>
+        <div id="15" class="square blackSquare"></div>
+        <div id="16" class="square whiteSquare"></div>
+        <div id="17" class="square blackSquare"></div>
+        <br/>
+        <div id="20" class="square blackSquare"></div>
+        <div id="21" class="square whiteSquare"></div>
+        <div id="22" class="square blackSquare"></div>
+        <div id="23" class="square whiteSquare"></div>
+        <div id="24" class="square blackSquare"></div>
+        <div id="25" class="square whiteSquare"></div>
+        <div id="26" class="square blackSquare"></div>
+        <div id="27" class="square whiteSquare"></div>
+        <br/>
+        <div id="30" class="square whiteSquare"></div>
+        <div id="31" class="square blackSquare"></div>
+        <div id="32" class="square whiteSquare"></div>
+        <div id="33" class="square blackSquare"></div>
+        <div id="34" class="square whiteSquare"></div>
+        <div id="35" class="square blackSquare"></div>
+        <div id="36" class="square whiteSquare"></div>
+        <div id="37" class="square blackSquare"></div>
+        <br/>
+        <div id="40" class="square blackSquare"></div>
+        <div id="41" class="square whiteSquare"></div>
+        <div id="42" class="square blackSquare"></div>
+        <div id="43" class="square whiteSquare"></div>
+        <div id="44" class="square blackSquare"></div>
+        <div id="45" class="square whiteSquare"></div>
+        <div id="46" class="square blackSquare"></div>
+        <div id="47" class="square whiteSquare"></div>
+        <br>
+        <div id="50" class="square whiteSquare"></div>
+        <div id="51" class="square blackSquare"></div>
+        <div id="52" class="square whiteSquare"></div>
+        <div id="53" class="square blackSquare"></div>
+        <div id="54" class="square whiteSquare"></div>
+        <div id="55" class="square blackSquare"></div>
+        <div id="56" class="square whiteSquare"></div>
+        <div id="57" class="square blackSquare"></div>
+        <br/>
+        <div id="60" class="square blackSquare"></div>
+        <div id="61" class="square whiteSquare"></div>
+        <div id="62" class="square blackSquare"></div>
+        <div id="63" class="square whiteSquare"></div>
+        <div id="64" class="square blackSquare"></div>
+        <div id="65" class="square whiteSquare"></div>
+        <div id="66" class="square blackSquare"></div>
+        <div id="67" class="square whiteSquare"></div>
+        <br/>
+        <div id="70" class="square whiteSquare"></div>
+        <div id="71" class="square blackSquare"></div>
+        <div id="72" class="square whiteSquare"></div>
+        <div id="73" class="square blackSquare"></div>
+        <div id="74" class="square whiteSquare"></div>
+        <div id="75" class="square blackSquare"></div>
+        <div id="76" class="square whiteSquare"></div>
+        <div id="77" class="square blackSquare"></div>
+        <br/>
+    </div>
+</div>
+
+<div id = "score-board-container">
+    <span id ="white-score" class = "score-board">화이트팀 점수 :
+        <span class = "score"></span>점
+    </span>
+    <br>
+    <span id="black-score" class="score-board">블랙팀 점수 :
+        <span class="score"></span>점
+    </span>
+</div>
+</body>
+<script src="./js/chess.js"></script>
+<script>
+    {{#pieces}}
+        document.getElementById("{{position}}").style.backgroundImage = `url("/image/{{team}}_{{initial}}.png")`
+    {{/pieces}}
+</script>
+
+</html>

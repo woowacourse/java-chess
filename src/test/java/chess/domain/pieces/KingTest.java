@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.util.ColumnConverter;
 import chess.domain.position.Position;
+import chess.domain.util.ColumnConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,7 +43,6 @@ class KingTest {
         assertThat(kingPosition.getRow()).isEqualTo(7);
         assertThat(kingPosition.getRow()).isNotEqualTo(1);
     }
-
 
     @ParameterizedTest
     @DisplayName("King 초기 col 위치가 e가 아니면, 예외가 발생한다.")
