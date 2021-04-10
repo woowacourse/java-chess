@@ -24,9 +24,8 @@ public class GameDao {
             resultSet.next();
             return resultSet.getLong(1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public GameResponseDto findGameById(final Long gameId) {
@@ -45,8 +44,7 @@ public class GameDao {
                         resultSet.getString("room_name"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 }

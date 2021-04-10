@@ -25,9 +25,8 @@ public class HistoryDao {
             pstmt.setBoolean(5, history.isPlaying());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
@@ -50,8 +49,7 @@ public class HistoryDao {
                 return historyResponseDtos;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 }

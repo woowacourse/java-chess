@@ -23,7 +23,9 @@ function startGame(event) {
 
     fetch("http://localhost:4567/game", option)
         .then(data => {
-            if (!data.ok) {
+            if (data.status === 400) {
+                exceptionHandling(data.json());
+            } else if (!data.ok) {
                 throw new Error(data.status);
             }
             return data.json();
@@ -34,4 +36,11 @@ function startGame(event) {
         .catch(error => {
             console.log(error);
         })
+
+    function exceptionHandling(error) {
+        error.then(data => {
+            console.log(data);
+            alert(data.exceptionMessage);
+        })
+    }
 }

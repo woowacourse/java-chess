@@ -23,9 +23,8 @@ public class ScoreDao {
             pstmt.setDouble(3, gameStatus.blackScore());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
     public ScoreResponseDto findScoreByGameId(final Long gameId) {
         final String query =
@@ -43,9 +42,8 @@ public class ScoreDao {
                         resultSet.getDouble("black_score"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public Long updateScore(final GameStatus gameStatus, final Long gameId) {
@@ -59,8 +57,7 @@ public class ScoreDao {
             pstmt.setInt(3, gameId.intValue());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 }

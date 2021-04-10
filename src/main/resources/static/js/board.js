@@ -12,7 +12,9 @@ window.addEventListener("load", loadBoard)
 async function loadBoard() {
     await fetch("http://localhost:4567/game/" + $gameId + "/load")
         .then(data => {
-            if (!data.ok) {
+            if (data.status === 400) {
+                exceptionHandling(data.json());
+            } else if (!data.ok) {
                 throw new Error(data.status);
             }
             return data.json();
@@ -91,7 +93,9 @@ function onclickSquare(event) {
 
         fetch('http://localhost:4567/game/' + $gameId + '/move', $option)
             .then(data => {
-                if (!data.ok) {
+                if (data.status === 400) {
+                    exceptionHandling(data.json());
+                } else if (!data.ok) {
                     throw new Error(data.status);
                 }
                 return data.json();
@@ -120,8 +124,10 @@ function onclickSquare(event) {
     } else {
         fetch('http://localhost:4567/game/' + $gameId + '/path?source=' + $source)
             .then(data => {
-                if (!data.ok) {
-                    throw new Error(data.status)
+                if (data.status === 400) {
+                    exceptionHandling(data.json());
+                } else if (!data.ok) {
+                    throw new Error(data.status);
                 }
                 return data.json()
             })
@@ -177,7 +183,9 @@ function invalidSquare(id) {
 function score() {
     fetch("http://localhost:4567/game/" + $gameId + "/score")
         .then(data => {
-            if (!data.ok) {
+            if (data.status === 400) {
+                exceptionHandling(data.json());
+            } else if (!data.ok) {
                 throw new Error(data.status);
             }
             return data.json();
@@ -196,7 +204,9 @@ function score() {
 function state() {
     fetch("http://localhost:4567/game/" + $gameId + "/state")
         .then(data => {
-            if (!data.ok) {
+            if (data.status === 400) {
+                exceptionHandling(data.json());
+            } else if (!data.ok) {
                 throw new Error(data.status);
             }
             return data.json();
@@ -240,7 +250,9 @@ function replacePieceColor(targetImg) {
 function history() {
     fetch("http://localhost:4567/game/" + $gameId + "/history")
         .then(data => {
-            if (!data.ok) {
+            if (data.status === 400) {
+                exceptionHandling(data.json());
+            } else if (!data.ok) {
                 throw new Error(data.status);
             }
             return data.json();
@@ -285,4 +297,11 @@ function movePiece(source, target) {
         $board.querySelector("#" + target).appendChild($sourceImg);
     }
     removeMovablePath();
+}
+
+function exceptionHandling(error) {
+    error.then(data => {
+        console.log(data);
+        alert(data.exceptionMessage);
+    })
 }

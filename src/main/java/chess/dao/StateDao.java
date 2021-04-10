@@ -45,9 +45,8 @@ public class StateDao {
                         resultSet.getBoolean("isPlaying"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public Long updateState(final ChessManager chessManager, final Long gameId) {
@@ -62,8 +61,7 @@ public class StateDao {
             pstmt.setInt(4, gameId.intValue());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 }

@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.web.WebChessController;
+import chess.controller.web.dto.ExceptionMessageResponseDto;
 import chess.controller.web.dto.game.GameResponseDto;
 import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.game.GameRequestDto;
@@ -75,6 +76,12 @@ public class WebUIChessApplication {
             MoveRequestDto moveRequestDto = gson.fromJson(request.body(), MoveRequestDto.class);
             return webChessController.move(moveRequestDto, gameId);
         }, gson::toJson);
+
+        exception(RuntimeException.class, (exception, request, response) -> {
+            response.type("application/json; charset=utf-8");
+            response.status(400);
+            response.body(gson.toJson(new ExceptionMessageResponseDto(exception.getMessage())));
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

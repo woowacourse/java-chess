@@ -30,9 +30,8 @@ public class PieceDao {
 
             return pstmt.executeLargeBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
@@ -53,9 +52,8 @@ public class PieceDao {
                 return pieceResponseDtos;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId) {
@@ -69,9 +67,8 @@ public class PieceDao {
             pstmt.setString(3, target);
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     public Long updateSourcePiece(final String source, final Long gameId) {
@@ -85,8 +82,7 @@ public class PieceDao {
             pstmt.setString(3, source);
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 }
