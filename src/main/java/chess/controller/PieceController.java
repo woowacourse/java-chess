@@ -43,6 +43,8 @@ public class PieceController {
     public String insert(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.insert(chessId);
+        res.status(201);
+
         ChessResponse chessResponse = new ChessResponse.Created("기물들이 생성되었습니다.");
         return GSON.toJson(chessResponse);
     }

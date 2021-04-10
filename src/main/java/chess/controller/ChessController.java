@@ -35,6 +35,7 @@ public class ChessController {
 
         Long chessId = chessService.findChessId();
         res.cookie("chessId", String.valueOf(chessId));
+        res.status(201);
 
         ChessResponse chessResponse = new ChessResponse.Created("새로운 체스가 추가되었습니다.");
         return GSON.toJson(chessResponse);
