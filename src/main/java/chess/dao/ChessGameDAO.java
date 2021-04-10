@@ -28,14 +28,6 @@ public class ChessGameDAO {
         closeConnection(getConnection());
     }
 
-    public void deleteMoveCommand(String argument) throws SQLException {
-        String query = "DELETE FROM chessgame WHERE command = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, argument);
-        pstmt.executeUpdate();
-        closeConnection(getConnection());
-    }
-
     public List<String> getRunningGameMove() throws SQLException {
         String query = "SELECT command FROM chessgame WHERE is_end = false ORDER BY date_time ASC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
