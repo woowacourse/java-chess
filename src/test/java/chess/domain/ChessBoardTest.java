@@ -1,21 +1,20 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ChessBoardTest {
 
@@ -38,14 +37,14 @@ public class ChessBoardTest {
     @DisplayName("말 이동 실패 테스트")
     void failOutOfBoundary() {
         assertThatThrownBy(() -> chessBoard.move("b2", "b10"))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("동일한 위치 금지 테스트")
     void failSamePosition() {
         assertThatThrownBy(() -> chessBoard.move("b2", "b2"))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -59,8 +58,8 @@ public class ChessBoardTest {
     @Test
     @DisplayName("킹이 잡히는 경우 게임 종료")
     void game_end_die_king() {
-        Piece kingPiece = new King(TeamColor.BLACK, Position.valueOf("b4"));
-        Piece piece = new Queen(TeamColor.WHITE, Position.valueOf("b5"));
+        Piece kingPiece = new King(TeamColor.BLACK);
+        Piece piece = new Queen(TeamColor.WHITE);
         board.put(Position.valueOf("b4"), kingPiece);
         board.put(Position.valueOf("b5"), piece);
 

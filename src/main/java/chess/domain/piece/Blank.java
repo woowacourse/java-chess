@@ -2,29 +2,31 @@ package chess.domain.piece;
 
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
-import chess.domain.team.Score;
+import chess.domain.state.Score;
+
 import java.util.Map;
 
 public class Blank implements Piece {
-
     public static final Blank INSTANCE = new Blank();
+    private static final String BLANK = "BLANK";
+    private static final String BLANK_CONSOLE_VIEW = ".";
 
     private Blank() {
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
-        return false;
+    public String getPieceName() {
+        return BLANK_CONSOLE_VIEW;
     }
 
     @Override
-    public String getPieceName() {
-        return ".";
+    public String getPieceType() {
+        return BLANK;
     }
 
     @Override
     public TeamColor getColor() {
-        throw new UnsupportedOperationException("빈칸입니다.");
+        return TeamColor.NONE;
     }
 
     @Override
@@ -38,11 +40,6 @@ public class Blank implements Piece {
     }
 
     @Override
-    public void changePosition(Position end) {
-        throw new UnsupportedOperationException("공백은 움직일 수 없습니다.");
-    }
-
-    @Override
     public String toString() {
         return " .\n";
     }
@@ -52,12 +49,6 @@ public class Blank implements Piece {
         throw new UnsupportedOperationException("빈칸은 점수가 없어요~");
     }
 
-
-    @Override
-    public Character getColumn() {
-        throw new UnsupportedOperationException("공백의 값을 구할 수 없습니다.");
-    }
-
     @Override
     public boolean isKing() {
         return false;
@@ -65,6 +56,11 @@ public class Blank implements Piece {
 
     @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
         return false;
     }
 

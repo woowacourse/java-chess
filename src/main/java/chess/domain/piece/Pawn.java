@@ -1,27 +1,35 @@
 package chess.domain.piece;
 
 import chess.domain.pieceinformations.PieceInformation;
+import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class Pawn extends PieceOnBoard {
+    private static final PieceInformation PAWN = PieceInformation.PAWN;
 
     public Pawn(TeamColor teamColor) {
-        super(teamColor, PieceInformation.PAWN);
+        super(teamColor, PAWN);
     }
 
-    public Pawn(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.PAWN, position);
+    public Pawn(TeamColor teamColor, State state) {
+        super(teamColor, PAWN, state);
     }
 
     @Override
-    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard) {
         final Set<Position> candidates = new HashSet<>();
-        candidates.addAll(checkFront(chessBoard));
-        candidates.addAll(checkFrontDiagonal(target, chessBoard));
+        candidates.addAll(checkFront(source, chessBoard));
+        candidates.addAll(checkFrontDiagonal(source, target, chessBoard));
         return candidates.contains(target);
     }
 

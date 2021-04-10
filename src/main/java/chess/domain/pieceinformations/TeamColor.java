@@ -1,7 +1,16 @@
 package chess.domain.pieceinformations;
 
+import java.util.Arrays;
+
 public enum TeamColor {
     BLACK, WHITE, NONE;
+
+    public static TeamColor getInstance(String value) {
+        return Arrays.stream(TeamColor.values())
+                .filter(color -> color.name().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 팀이 없네요ㅠ"));
+    }
 
     public TeamColor counterpart() {
         if (this == BLACK) {

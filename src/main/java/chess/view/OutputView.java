@@ -1,25 +1,29 @@
 package chess.view;
 
-import chess.domain.position.Position;
 import chess.domain.Result;
 import chess.domain.piece.Piece;
+import chess.domain.position.AlphaColumns;
+import chess.domain.position.NumberRows;
+import chess.domain.position.Position;
+
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     private OutputView() {
     }
 
     public static void printBoard(Map<Position, Piece> chessBoard) {
-        List<String> chessBoardNames = chessBoard.values().stream()
-            .map(Piece::getPieceName)
-            .collect(Collectors.toList());
+        List<NumberRows> reversedNumberRows = Arrays.stream(NumberRows.values())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
 
-        for (int i = 7; i> -1; i--) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(chessBoardNames.get(i + j*8));
+        for (NumberRows number : reversedNumberRows) {
+            for (AlphaColumns alpha : AlphaColumns.values()) {
+                System.out.print(chessBoard.get(Position.valueOf(alpha, number)).getPieceName());
             }
             System.out.println();
         }

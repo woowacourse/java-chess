@@ -1,0 +1,119 @@
+:root {
+    --board-dark: #664585;
+    --board-light: #7a699b;
+    --piece-white: white;
+    --piece-black: black;
+    --piece-clicked: darkgrey;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: burlywood;
+}
+
+.title {
+    font-size: 2.5em;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5%;
+}
+
+.start-btn, .start-saved-btn, .save-btn {
+    margin-right: 5%;
+}
+
+.chessboard_section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.chessboard {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5%;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    margin: 10%;
+    justify-content: space-around;
+}
+
+.result-display {
+    display: flex;
+    width: 100px;
+    height: 200px;
+    align-items: center;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.position {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.dark {
+    background-color: var(--board-dark);
+    border: 0.5px solid black;
+}
+
+.light {
+    background-color: var(--board-light);
+    border: 0.5px solid black;
+}
+
+.black {
+    color: var(--piece-black);
+}
+
+.white {
+    color: var(--piece-white);
+}
+
+.clicked {
+    background-color: var(--piece-clicked);
+}
+
+.hidden {
+    visibility: hidden;
+}

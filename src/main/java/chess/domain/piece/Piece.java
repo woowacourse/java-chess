@@ -2,14 +2,15 @@ package chess.domain.piece;
 
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
-import chess.domain.team.Score;
+import chess.domain.state.Score;
+
 import java.util.Map;
 
 public interface Piece {
 
-    boolean isMoveAble(Position target, Map<Position, Piece> chessBoard);
-
     String getPieceName();
+
+    String getPieceType();
 
     TeamColor getColor();
 
@@ -17,14 +18,11 @@ public interface Piece {
 
     boolean isAlive();
 
-    void changePosition(Position end);
-
     Score getScore();
-
-    Character getColumn();
 
     boolean isKing();
 
     boolean isPawn();
 
+    boolean isMovable(Position source, Position target, Map<Position, Piece> chessBoard);
 }

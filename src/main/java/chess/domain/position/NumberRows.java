@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
+
 import java.util.Arrays;
 
 public enum NumberRows {
@@ -21,9 +22,9 @@ public enum NumberRows {
 
     public static NumberRows getInstance(int value) {
         return Arrays.stream(NumberRows.values())
-            .filter(item -> item.number == value)
-            .findFirst()
-            .orElse(null);
+                .filter(item -> item.number == value)
+                .findFirst()
+                .orElse(null);
     }
 
     public static NumberRows getInstance(char value) {
@@ -52,5 +53,4 @@ public enum NumberRows {
     public String number() {
         return String.valueOf(number);
     }
-
 }
