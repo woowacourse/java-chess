@@ -7,7 +7,6 @@ import domain.piece.position.Position;
 import domain.score.Score;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {

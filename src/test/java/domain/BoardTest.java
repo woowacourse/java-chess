@@ -275,7 +275,7 @@ class BoardTest {
     void pawn_cant_move_two_step_if_not_initial_position(String name, boolean color, String start, String end) {
         pieces.put(Position.of(start), Pawn.of(name, color));
         Board board = new Board(pieces);
-        assertThatThrownBy(()->board.move(Position.of(start), Position.of(end), color))
+        assertThatThrownBy(() -> board.move(Position.of(start), Position.of(end), color))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage(name + "은 선택된 위치로 이동할 수 없습니다.");
         assertThat(board.getPiece(Position.of(end))).isInstanceOf(Empty.class);
