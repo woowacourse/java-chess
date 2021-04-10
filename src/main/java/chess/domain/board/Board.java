@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.*;
 
 public class Board {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
+    public static final int ALL_KING_ALIVE_COUNT = 2;
 
     private final List<Square> board;
 
@@ -76,7 +77,8 @@ public class Board {
     public boolean isKingDead() {
         return board.stream()
                 .filter(Square::hasPiece)
-                .noneMatch(square -> square.kindOf(King.class));
+                .filter(square -> square.kindOf(King.class))
+                .count() != ALL_KING_ALIVE_COUNT;
     }
 
     public Color kingAliveColor() {
