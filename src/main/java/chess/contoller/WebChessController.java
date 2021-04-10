@@ -63,9 +63,7 @@ public class WebChessController {
         get("/chess/move", (req, res) -> {
             ChessGame chessGame = startAndLoadChessGame();
             try {
-                List<String> arguments = Arrays.asList("move", req.queryParams("source"), req.queryParams("target"));
-                chessGame.move(arguments);
-                CHESS_GAME_DAO.addMoveCommand(String.join(" ", arguments));
+                movePieces(req, chessGame);
                 if (!chessGame.isRunning()) {
                     return alertWinner(chessGame);
                 }
@@ -75,6 +73,12 @@ public class WebChessController {
                 return alertError(chessGame, e);
             }
         });
+    }
+
+    private void movePieces(spark.Request req, ChessGame chessGame) throws SQLException {
+        List<String> arguments = Arrays.asList("move", req.queryParams("source"), req.queryParams("target"));
+        chessGame.move(arguments);
+        CHESS_GAME_DAO.addMoveCommand(String.join(" ", arguments));
     }
 
     private String alertWinner(ChessGame chessGame) throws SQLException {
