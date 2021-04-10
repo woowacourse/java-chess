@@ -5,14 +5,14 @@ import chess.domain.position.Position;
 import java.util.Objects;
 
 public class MoveRequestDto {
+    private final long id;
     private final String from;
     private final String to;
-    private final String id;
 
-    public MoveRequestDto(String from, String to, String id) {
+    public MoveRequestDto(long id, String from, String to) {
+        this.id = id;
         this.from = from;
         this.to = to;
-        this.id = id;
     }
 
     public Position getFromPosition() {
@@ -23,7 +23,7 @@ public class MoveRequestDto {
         return Position.of(to);
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -32,11 +32,11 @@ public class MoveRequestDto {
         if (this == o) return true;
         if (!(o instanceof MoveRequestDto)) return false;
         MoveRequestDto that = (MoveRequestDto) o;
-        return Objects.equals(from, that.from) && Objects.equals(to, that.to) && Objects.equals(getId(), that.getId());
+        return getId() == that.getId() && Objects.equals(from, that.from) && Objects.equals(to, that.to);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(from, to, getId());
+        return Objects.hash(getId(), from, to);
     }
 }

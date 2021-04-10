@@ -2,7 +2,7 @@ package chess.controller.web.dto;
 
 import java.util.Map;
 
-public class RunningGameResponseDto implements WebResponseDto {
+public class RunningGameResponseDto {
     private final Map<Long, String> runningGames;
 
     public RunningGameResponseDto(Map<Long, String> runningGames) {

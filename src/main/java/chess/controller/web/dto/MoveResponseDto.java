@@ -2,7 +2,7 @@ package chess.controller.web.dto;
 
 import chess.domain.piece.attribute.Color;
 
-public class MoveResponseDto implements WebResponseDto {
+public class MoveResponseDto {
     private final boolean isEnd;
     private final String nextColor;
 

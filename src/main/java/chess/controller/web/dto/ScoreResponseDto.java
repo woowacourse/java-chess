@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 
-public class ScoreResponseDto implements WebResponseDto {
+public class ScoreResponseDto {
     private final String matchResult;
     private final Map<String, Double> colorsScore;
 
