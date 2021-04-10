@@ -54,7 +54,7 @@ public class WebController {
                     "새로운 게임을 시작합니다.",
                     NewGameResponse.from(chessGameManager));
         } catch (DomainException e) {
-            return new CommonDto<NoneItem>(
+            return new CommonDto<>(
                     StatusCode.BAD_REQUEST,
                     e.getMessage(),
                     new NoneItem());
@@ -74,7 +74,7 @@ public class WebController {
                     "기물을 이동했습니다.",
                     RunningGameResponse.from(chessGameManager));
         } catch (DomainException e) {
-            return new CommonDto<NoneItem>(
+            return new CommonDto<>(
                     StatusCode.BAD_REQUEST,
                     e.getMessage(),
                     new NoneItem());
@@ -84,12 +84,12 @@ public class WebController {
     private CommonDto<?> saveGame(Request request, Response response) {
         try {
             gameDAO.saveGame(ChessBoardDto.from(chessGameManager.getBoard()), chessGameManager.getCurrentTurnColor());
-            return new CommonDto<NoneItem>(
+            return new CommonDto<>(
                     StatusCode.CREATE,
                     "게임을 저장했습니다.",
                     new NoneItem());
         } catch (SQLException e) {
-            return new CommonDto<NoneItem>(
+            return new CommonDto<>(
                     StatusCode.INTERNAL_SERVER_ERROR,
                     "게임을 데이터베이스에 저장하는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
                     new NoneItem());
@@ -100,12 +100,12 @@ public class WebController {
         try {
             SavedGameData savedGameData = gameDAO.loadGame();
             chessGameManager.load(savedGameData.getChessBoardDto().toChessBoard(), savedGameData.getCurrentTurnColor());
-            return new CommonDto<RunningGameResponse>(
+            return new CommonDto<>(
                     StatusCode.OK,
                     "게임을 불러왔습니다.",
                     RunningGameResponse.from(chessGameManager));
         } catch (HandledException e) {
-            return new CommonDto<NoneItem>(
+            return new CommonDto<>(
                     StatusCode.BAD_REQUEST,
                     "게임을 불러오는 데에 오류가 발생했습니다.\n에러 메세지: " + e.getMessage(),
                     new NoneItem());
