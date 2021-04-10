@@ -12,6 +12,7 @@ import chess.domain.game.ChessGameEntity;
 import chess.domain.piece.MovePositionInfo;
 import chess.domain.piece.PieceFactory;
 
+import chess.domain.piece.Position;
 import chess.service.ChessGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -48,16 +49,11 @@ public class WebUIChessApplication {
             ObjectMapper mapper = new ObjectMapper();
             MovePositionInfo mpi = mapper.readValue(req.body(), MovePositionInfo.class);
 
-            try {
-                chessGame.move(mpi.getSource(), mpi.getTarget());
-            } catch (Exception e) {
-                return gson.toJson(new MessageDto("이동할 수 없습니다."));
+            ChessBoardDto chessBoardDto = chessGameService.moveChessByRoomID(mpi);
+            if("end".equals(chessBoardDto.getStatus())){
+                return gson.toJson(new EndGameDto("왕을잡아 게임이 종료됩니다."));
             }
-            if (chessGame.isFinished()) {
-                return gson.toJson(new EndGameDto("왕을 잡아 게임이 종료됩니다."));
-            }
-
-            return gson.toJson(new ChessBoardDto(chessGame));
+            return gson.toJson(chessBoardDto);
         });
 
         post("/end", (req, res) -> {

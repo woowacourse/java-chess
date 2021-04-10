@@ -17,7 +17,6 @@ public class ChessGameDAO {
         this.dbConnection = new DBConnection();
     }
 
-
     public void create(String roomID) {
         String query = "INSERT INTO game(roomID, turn) VALUES(?, ?)";
         try(Connection con = dbConnection.getConnection();
@@ -28,6 +27,22 @@ public class ChessGameDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public String loadGameStatusByRoomID(String roomID) {
+        String query = "SELECT turn FROM game WHERE roomID = ?";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, roomID);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next()) {
+                 return rs.getString("turn");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     public Optional<ChessGameEntity> findRoomID(String roomID) {
@@ -43,5 +58,17 @@ public class ChessGameDAO {
             throwables.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    public void update(ChessGame chessGame) {
+        String query = "UPDATE game SET turn = ? WHERE roomID = ?";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)){
+            preparedStatement.setString(1, chessGame.getStatus());
+            preparedStatement.setString(2, chessGame.getRoomID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

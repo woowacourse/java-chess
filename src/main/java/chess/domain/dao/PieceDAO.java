@@ -58,6 +58,28 @@ public class PieceDAO {
         }
     }
 
+    public Board loadPiecesByRoomID(String roomID) {
+        String query = "SELECT * FROM pieces WHERE roomID = ?";
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, roomID);
+            ResultSet rs = preparedStatement.executeQuery();
+            List<Piece> pieces = new ArrayList<>();
+
+            while (rs.next()) {
+                String color = rs.getString("color");
+                String shape = rs.getString("shape");
+                String position = rs.getString("position");
+
+                pieces.add(PieceFactory.createPiece(color, shape, new Position(position)));
+            }
+            return new Board(pieces);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
     public Board loadPieces() {
         String query = "SELECT * FROM pieces";
         try (Connection con = dbConnection.getConnection();
@@ -118,6 +140,19 @@ public class PieceDAO {
         String query = "DELETE FROM turn";
         try (Connection con = dbConnection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void updateMovePiece(String roomID, Position source, Position target) {
+        String query = "UPDATE pieces SET position = ? WHERE roomID = ? AND position = ?";
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, target.toString());
+            preparedStatement.setString(2, roomID);
+            preparedStatement.setString(3, source.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

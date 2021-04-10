@@ -56,6 +56,8 @@ let isClick = false;
 let source
 
 function select(event) {
+    const roomID = document.getElementById("room-number").innerHTML;
+    console.log(roomID);
     if (!isClick) {
         isClick = true;
         source = event.target.id;
@@ -68,7 +70,8 @@ function select(event) {
         url: '/move',
         data: {
             source: source,
-            target: target
+            target: target,
+            roomID: roomID
         }
     })
         .then((res) => {
