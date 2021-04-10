@@ -1,28 +1,19 @@
 package chess.dto;
 
-import chess.domain.Point;
-import chess.domain.piece.Color;
-import chess.domain.piece.kind.Piece;
-
-import java.util.Map;
-
 public class ChessGameDto {
-    private Map<Point, Piece> board;
-    private Color color;
+    private String currentColor;
+    private String[] pieceNames;
 
-    public Map<Point, Piece> getBoard() {
-        return this.board;
+    public ChessGameDto(String currentColor, String[] pieceNames) {
+        this.currentColor = currentColor;
+        this.pieceNames = pieceNames;
     }
 
-    public void setBoard(Map<Point, Piece> board) {
-        this.board = board;
+    public String getCurrentColor() {
+        return this.currentColor;
     }
 
-    public Color getCurrentColor() {
-        return this.color;
-    }
-
-    public void setCurrentColor(Color color) {
-        this.color = color;
+    public String[] getPieceNames() {
+        return this.pieceNames;
     }
 }
