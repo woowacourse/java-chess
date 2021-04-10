@@ -3,36 +3,40 @@ package chess.service;
 import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.kind.Piece;
 import chess.dto.ChessGameDto;
 import chess.dto.RequestDto;
 import chess.dto.UserDto;
-import com.google.gson.Gson;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGameService {
-    private static final Gson GSON = new Gson();
-
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private ChessGame chessGame;
     private UserDto userDto;
 
-    public String getPiece(String point) {
-        return GSON.toJson(chessGame.getBoard().get(Point.of(point)));
+    public Piece getPiece(String coordinate) {
+        Point point = Point.of(coordinate);
+        return chessGame.getBoard().get(point);
     }
 
-    public int movePiece(String body) { // TODO: DB UPDATE
-        RequestDto requestDto = GSON.fromJson(body, RequestDto.class);
+    public Status movePiece(RequestDto requestDto) {
+        Point sourcePoint = Point.of(requestDto.getSourcePoint());
+        Point targetPoint = Point.of(requestDto.getTargetPoint());
         try {
-            chessGame.playTurn(Point.of(requestDto.getSourcePoint()), Point.of(requestDto.getTargetPoint()));
-            chessGameDao.updateGame(userDto.getUserId(), chessGame);
+            chessGame.playTurn(sourcePoint, targetPoint);
+            chessGameDao.updateGame(userDto, chessGame);
             if (!chessGame.isProgressing()) {
-                return 0;
+                return Status.GAME_FINISHED;
             }
-            return 200;
+            return Status.MOVE_SUCCESS;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return 400;
+            return Status.MOVE_FAILED;
         }
     }
 
@@ -56,6 +60,24 @@ public class ChessGameService {
             chessGameDao.createNewGame(userDto, chessGame.getBoard());
             return chessGame;
         }
-        return new ChessGame(chessGameDto.getBoard(), chessGameDto.getCurrentColor());
+        return new ChessGame(parseBoard(chessGameDto.getPieceNames()), parseTurn(chessGameDto.getCurrentColor()));
+    }
+
+    private Map<Point, Piece> parseBoard(String[] pieceNames) {
+        Map<Point, Piece> board = new HashMap<>();
+        for (int column = 0; column <= 7; column++) {
+            makeRow(pieceNames, board, column);
+        }
+        return board;
+    }
+
+    private void makeRow(String[] pieceNames, Map<Point, Piece> board, int column) {
+        for (int row = 7; row >= 0; row--) {
+            board.put(Point.of(row, column), PieceType.createByPieceName(pieceNames[(7 - row) + column * 8].charAt(0)));
+        }
+    }
+
+    private Color parseTurn(String currentColor) {
+        return Color.parseColor(currentColor);
     }
 }
