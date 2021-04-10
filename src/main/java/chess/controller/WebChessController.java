@@ -4,7 +4,6 @@ import chess.dto.ChessGameDTO;
 import chess.dto.RoomsDTO;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
-import org.json.JSONObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -37,7 +36,7 @@ public class WebChessController {
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
                 res.status(400);
-                return generateJsonMessage("게임을 갱신하지 못했습니다.");
+                return "";
             }
         });
 
@@ -48,7 +47,7 @@ public class WebChessController {
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
                 res.status(400);
-                return generateJsonMessage("게임을 로드하지 못했습니다.");
+                return "";
             }
         });
 
@@ -57,11 +56,10 @@ public class WebChessController {
                 String id = req.queryParams("id");
                 String selected = req.queryParams("position");
                 chessGameService.selectPiece(id, selected);
-                return "";
             } catch (IllegalArgumentException illegalArgumentException) {
                 res.status(400);
-                return generateJsonMessage("선택 할 수 없습니다.");
             }
+            return "";
         });
 
         get("/movePiece", (req, res) -> {
@@ -73,7 +71,7 @@ public class WebChessController {
                 return gson.toJson(chessGameDTO);
             } catch (IllegalArgumentException illegalArgumentException) {
                 res.status(400);
-                return generateJsonMessage("움직일 수 없습니다.");
+                return "";
 
             }
         });
@@ -85,7 +83,7 @@ public class WebChessController {
                 return gson.toJson(roomsDTO);
             } catch (IllegalArgumentException e) {
                 res.status(400);
-                return generateJsonMessage(e.getMessage());
+                return "";
             }
         });
 
@@ -100,18 +98,12 @@ public class WebChessController {
                 return gson.toJson(roomsDTO);
             } catch (IllegalArgumentException e) {
                 res.status(400);
-                return generateJsonMessage(e.getMessage());
+                return "";
             }
         });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
-
-    private String generateJsonMessage(String message) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.append("message", message);
-        return jsonObject.toString();
     }
 }

@@ -8,17 +8,14 @@ import chess.domain.team.WhiteTeam;
 import chess.dto.ChessGameDTO;
 import chess.dto.RoomsDTO;
 import chess.repository.ChessRepository;
-import com.google.gson.Gson;
 
 import java.util.List;
 
 public class ChessGameService {
     private ChessRepository chessRepository;
-    private Gson gson;
 
     public ChessGameService(final ChessRepository chessRepository) {
         this.chessRepository = chessRepository;
-        this.gson = new Gson();
     }
 
     public ChessGameDTO createChessGame() {
@@ -45,7 +42,7 @@ public class ChessGameService {
         boolean havePiece = chessGame.havePieceInCurrentTurn(selectedPosition);
 
         if (!havePiece) {
-            throw new IllegalArgumentException("잘못된 선택 입니다.");
+            throw new IllegalArgumentException();
         }
     }
 
@@ -60,7 +57,7 @@ public class ChessGameService {
             return ChessGameDTO.from(chessGame);
         }
 
-        throw new IllegalArgumentException("움직일 수 없습니다.");
+        throw new IllegalArgumentException();
 
     }
 
