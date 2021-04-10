@@ -2,9 +2,9 @@ package chess.service;
 
 import chess.domain.game.WebChessGame;
 import chess.domain.result.BoardResult;
-import chess.dto.BoardRequestDto;
-import chess.dto.BoardResponseDto;
-import chess.dto.PiecesDto;
+import chess.dto.board.BoardRequestDto;
+import chess.dto.board.BoardResponseDto;
+import chess.dto.piece.PiecesDto;
 
 public class ChessGameService {
 

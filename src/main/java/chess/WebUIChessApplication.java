@@ -4,7 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
-import chess.dto.BoardRequestDto;
+import chess.dto.board.BoardRequestDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.Collections;

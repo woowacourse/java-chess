@@ -1,4 +1,6 @@
-package chess.dto;
+package chess.dto.board;
+
+import chess.dto.piece.PiecesDto;
 
 public class BoardResponseDto {
 

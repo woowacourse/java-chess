@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.piece;
 
 import chess.domain.result.BoardResult;
 import java.util.Collections;

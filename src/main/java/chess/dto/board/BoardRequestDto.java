@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.board;
 
 public class BoardRequestDto {
 
