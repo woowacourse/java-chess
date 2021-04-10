@@ -1,7 +1,5 @@
 package chess.controller;
 
-import java.sql.SQLException;
-
 import com.google.gson.Gson;
 
 import chess.ChessResponse;
@@ -19,20 +17,20 @@ public class ChessController {
         this.chessService = new ChessService();
     }
 
-    public String getIds(Request req, Response res) throws SQLException {
+    public String getIds(Request req, Response res) {
         String chessId = chessService.findChessIdAsString();
         ChessResponse chessResponse = new ChessResponse.Ok(chessId);
         return GSON.toJson(chessResponse);
     }
 
-    public String getTurn(Request req, Response res) throws SQLException {
+    public String getTurn(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         String turn = chessService.findTurnById(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok(turn);
         return GSON.toJson(chessResponse);
     }
 
-    public String insert(Request req, Response res) throws SQLException {
+    public String insert(Request req, Response res) {
         chessService.insert();
 
         Long chessId = chessService.findChessId();
@@ -42,14 +40,14 @@ public class ChessController {
         return GSON.toJson(chessResponse);
     }
 
-    public String updateTurn(Request req, Response res) throws SQLException {
+    public String updateTurn(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         chessService.updateTurn(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok("턴이 변경되었습니다.");
         return GSON.toJson(chessResponse);
     }
 
-    public String delete(Request req, Response res) throws SQLException {
+    public String delete(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         chessService.delete(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok("저장된 체스를 삭제했습니다.");

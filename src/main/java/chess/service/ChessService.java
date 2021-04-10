@@ -1,6 +1,5 @@
 package chess.service;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 import chess.domain.chess.ChessDAO;
@@ -12,24 +11,24 @@ public class ChessService {
         this.chessDAO = new ChessDAO();
     }
 
-    public void insert() throws SQLException {
+    public void insert() {
         chessDAO.insert();
     }
 
-    public void updateTurn(Long chessId) throws SQLException {
+    public void updateTurn(Long chessId) {
         chessDAO.updateTurn(chessId);
     }
 
-    public void delete(Long chessId) throws SQLException {
+    public void delete(Long chessId) {
         chessDAO.delete(chessId);
     }
 
-    public Long findChessId() throws SQLException {
+    public Long findChessId() {
         return chessDAO.findChessId()
                        .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
     }
 
-    public String findChessIdAsString() throws SQLException {
+    public String findChessIdAsString() {
         final Optional<Long> chessId = chessDAO.findChessId();
         if (chessId.isPresent()) {
             return String.valueOf(chessId.get());
@@ -37,7 +36,7 @@ public class ChessService {
         return "EMPTY";
     }
 
-    public String findTurnById(Long chessId) throws SQLException {
+    public String findTurnById(Long chessId) {
         return chessDAO.findTurnById(chessId)
                        .orElseThrow(() -> new IllegalStateException("진행 중인 게임이 없습니다."));
     }

@@ -12,7 +12,7 @@ import chess.domain.board.BoardDTO;
 import chess.domain.position.MovePositionDTO;
 
 public class PieceDAO {
-    public List<PieceDTO> findPiecesByChessId(Long chessId) throws SQLException {
+    public List<PieceDTO> findPiecesByChessId(Long chessId) {
         List<PieceDTO> pieceDTOS = new ArrayList<>();
         String query = "SELECT position, color, name FROM piece WHERE chess_id = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
@@ -25,11 +25,13 @@ public class PieceDAO {
                 final String name = resultSet.getString("name");
                 pieceDTOS.add(new PieceDTO(position, color, name));
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return pieceDTOS;
     }
 
-    public void insert(Long chessId, BoardDTO boardDTO) throws SQLException {
+    public void insert(Long chessId, BoardDTO boardDTO) {
         String query = "INSERT INTO piece (chess_id, position, color, name) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -44,25 +46,28 @@ public class PieceDAO {
                 pstmt.setString(4, name);
                 pstmt.executeUpdate();
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    public void move(Long chessId, MovePositionDTO movePositionDTO) throws SQLException {
+    public void move(Long chessId, MovePositionDTO movePositionDTO) {
         updateSourcePosition(chessId, movePositionDTO);
         updateTargetPosition(movePositionDTO);
     }
 
-    private void updateTargetPosition(MovePositionDTO movePositionDTO) throws SQLException {
+    private void updateTargetPosition(MovePositionDTO movePositionDTO) {
         String query = "UPDATE piece SET color = 'BLANK', name = 'BLANK' WHERE position = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, movePositionDTO.getSource());
             pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    private void updateSourcePosition(Long chessId, MovePositionDTO movePositionDTO)
-            throws SQLException {
+    private void updateSourcePosition(Long chessId, MovePositionDTO movePositionDTO) {
         String query =
                 "UPDATE piece, (SELECT color, name FROM piece WHERE position = (?)) AS source " +
                         "SET piece.color = source.color, piece.name = source.name " +
@@ -73,15 +78,19 @@ public class PieceDAO {
             pstmt.setString(2, movePositionDTO.getTarget());
             pstmt.setLong(3, chessId);
             pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    public void delete(Long chessId) throws SQLException {
+    public void delete(Long chessId) {
         String query = "DELETE FROM piece WHERE chess_id = (?)";
         try (Connection connection = ConnectionUtils.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, chessId);
             pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

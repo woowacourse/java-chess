@@ -1,6 +1,5 @@
 package chess.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -26,14 +25,14 @@ public class PieceController {
         this.pieceService = new PieceService();
     }
 
-    public String get(Request req, Response res) throws SQLException {
+    public String get(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok(GSON.toJson(pieceDTOS));
         return GSON.toJson(chessResponse);
     }
 
-    public String getScore(Request req, Response res) throws SQLException {
+    public String getScore(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
         ScoreDTO scoreDTO = ScoreDTO.from(pieceDTOS);
@@ -41,14 +40,14 @@ public class PieceController {
         return GSON.toJson(chessResponse);
     }
 
-    public String insert(Request req, Response res) throws SQLException {
+    public String insert(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.insert(chessId);
         ChessResponse chessResponse = new ChessResponse.Created("기물들이 생성되었습니다.");
         return GSON.toJson(chessResponse);
     }
 
-    public String move(Request req, Response res) throws SQLException {
+    public String move(Request req, Response res) {
         String source = req.queryParams("source");
         String target = req.queryParams("target");
         MovePositionDTO movePositionDTO = new MovePositionDTO(source, target);
@@ -64,7 +63,7 @@ public class PieceController {
         return GSON.toJson(new ChessResponse.Ok("기물이 이동했습니다."));
     }
 
-    public String delete(Request req, Response res) throws SQLException {
+    public String delete(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.delete(chessId);
         ChessResponse chessResponse = new ChessResponse.Ok("기물들을 삭제했습니다.");
