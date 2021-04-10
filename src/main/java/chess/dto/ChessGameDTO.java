@@ -115,7 +115,6 @@ public class ChessGameDTO {
         Map<Position, String> whitePrintFormat = new HashMap<>();
         for (Position position : pieces.keySet()) {
             final Piece piece = pieces.get(position);
-            if (piece == null) continue;
             whitePrintFormat.put(position, PieceConverter.convertToPieceName(piece).toLowerCase());
         }
         return whitePrintFormat;
