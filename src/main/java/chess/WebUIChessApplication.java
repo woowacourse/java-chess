@@ -1,9 +1,9 @@
 package chess;
 
 import chess.controller.web.WebChessController;
-import chess.controller.dto.game.GameResponseDto;
-import chess.controller.dto.board.MoveRequestDto;
-import chess.controller.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.game.GameResponseDto;
+import chess.controller.web.dto.move.MoveRequestDto;
+import chess.controller.web.dto.game.NewGameRequestDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import spark.ModelAndView;

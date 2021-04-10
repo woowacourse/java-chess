@@ -1,4 +1,4 @@
-package chess.controller.dto.board;
+package chess.controller.console.dto.position;
 
 import chess.domain.board.position.Path;
 

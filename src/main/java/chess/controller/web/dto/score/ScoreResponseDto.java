@@ -1,4 +1,4 @@
-package chess.controller.dto.score;
+package chess.controller.web.dto.score;
 
 public class ScoreResponseDto {
 

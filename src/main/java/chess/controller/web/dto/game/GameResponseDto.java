@@ -1,4 +1,4 @@
-package chess.controller.dto.game;
+package chess.controller.web.dto.game;
 
 public class GameResponseDto {
 

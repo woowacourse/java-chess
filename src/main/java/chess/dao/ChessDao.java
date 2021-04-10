@@ -1,11 +1,11 @@
 package chess.dao;
 
-import chess.controller.dto.board.PieceResponseDto;
-import chess.controller.dto.game.GameResponseDto;
-import chess.controller.dto.game.NewGameRequestDto;
-import chess.controller.dto.history.HistoryResponseDto;
-import chess.controller.dto.score.ScoreResponseDto;
-import chess.controller.dto.state.StateResponseDto;
+import chess.controller.web.dto.piece.PieceResponseDto;
+import chess.controller.web.dto.game.GameResponseDto;
+import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.history.HistoryResponseDto;
+import chess.controller.web.dto.score.ScoreResponseDto;
+import chess.controller.web.dto.state.StateResponseDto;
 import chess.domain.manager.ChessManager;
 import chess.domain.manager.GameStatus;
 import chess.domain.piece.Piece;

@@ -1,4 +1,4 @@
-package chess.controller.dto.history;
+package chess.controller.web.dto.history;
 
 import chess.domain.manager.ChessManager;
 

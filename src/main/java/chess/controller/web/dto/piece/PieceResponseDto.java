@@ -1,4 +1,4 @@
-package chess.controller.dto.board;
+package chess.controller.web.dto.piece;
 
 public class PieceResponseDto {
 

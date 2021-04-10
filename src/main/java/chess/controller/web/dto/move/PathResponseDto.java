@@ -1,4 +1,4 @@
-package chess.controller.dto.board;
+package chess.controller.web.dto.move;
 
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;

@@ -1,14 +1,14 @@
 package chess.controller.web;
 
-import chess.controller.dto.board.MovablePathRequestDto;
-import chess.controller.dto.board.MoveRequestDto;
-import chess.controller.dto.board.PathResponseDto;
-import chess.controller.dto.board.PieceResponseDto;
-import chess.controller.dto.game.GameResponseDto;
-import chess.controller.dto.game.NewGameRequestDto;
-import chess.controller.dto.history.HistoryResponseDto;
-import chess.controller.dto.score.ScoreResponseDto;
-import chess.controller.dto.state.StateResponseDto;
+import chess.controller.web.dto.move.MovablePathRequestDto;
+import chess.controller.web.dto.move.MoveRequestDto;
+import chess.controller.web.dto.move.PathResponseDto;
+import chess.controller.web.dto.piece.PieceResponseDto;
+import chess.controller.web.dto.game.GameResponseDto;
+import chess.controller.web.dto.game.NewGameRequestDto;
+import chess.controller.web.dto.history.HistoryResponseDto;
+import chess.controller.web.dto.score.ScoreResponseDto;
+import chess.controller.web.dto.state.StateResponseDto;
 import chess.service.ChessService;
 
 import java.util.List;

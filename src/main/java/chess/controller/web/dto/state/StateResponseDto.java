@@ -1,6 +1,4 @@
-package chess.controller.dto.state;
-
-import chess.domain.manager.ChessManager;
+package chess.controller.web.dto.state;
 
 public class StateResponseDto {
 
