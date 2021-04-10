@@ -3,14 +3,14 @@ package chess.dao;
 import chess.dao.dto.ChessGame;
 import chess.domain.piece.attribute.Color;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static chess.dao.DbConnectionTemplate.executeQuery;
+import static chess.dao.DbConnectionTemplate.executeQueryWithGenerateKey;
 
 public class MysqlChessDao implements ChessDao {
     @Override
@@ -20,21 +20,11 @@ public class MysqlChessDao implements ChessDao {
                         "(pieces, running, next_turn) " +
                         "VALUES (?, ?, ?)";
 
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, entity.getPieces());
-            preparedStatement.setBoolean(2, entity.isRunning());
-            preparedStatement.setString(3, entity.getNextTurn().name());
-
-            preparedStatement.executeUpdate();
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return generatedKeys.getLong(1);
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-        throw new IllegalStateException("생성된 ID가 없습니다.");
+        return executeQueryWithGenerateKey(query, ps -> {
+            ps.setString(1, entity.getPieces());
+            ps.setBoolean(2, entity.isRunning());
+            ps.setString(3, entity.getNextTurn().name());
+        }, rs -> rs.getLong(1));
     }
 
     @Override
@@ -44,25 +34,11 @@ public class MysqlChessDao implements ChessDao {
                         "FROM CHESSGAME " +
                         "WHERE id = ?";
 
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                return Optional.empty();
-            }
-
-            Long rowId = resultSet.getLong("id");
-            boolean isRunning = resultSet.getBoolean("running");
-            String pieces = resultSet.getString("pieces");
-            Color nextTurn = Color.of(resultSet.getString("next_turn"));
-
-            return Optional.of(new ChessGame(rowId, nextTurn, isRunning, pieces));
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
+        return executeQuery(query,
+                (preparedStatement -> preparedStatement.setLong(1, id)),
+                this::getOptionalChessGame);
     }
+
 
     @Override
     public void update(ChessGame entity) {
@@ -71,17 +47,12 @@ public class MysqlChessDao implements ChessDao {
                         "SET pieces = ?, running = ? , next_turn = ?" +
                         "WHERE id = ?";
 
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, entity.getPieces());
-            preparedStatement.setBoolean(2, entity.isRunning());
-            preparedStatement.setString(3, entity.getNextTurn().name());
-            preparedStatement.setLong(4, entity.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
+        executeQuery(query, ps -> {
+            ps.setString(1, entity.getPieces());
+            ps.setBoolean(2, entity.isRunning());
+            ps.setString(3, entity.getNextTurn().name());
+            ps.setLong(4, entity.getId());
+        });
     }
 
     @Override
@@ -91,39 +62,47 @@ public class MysqlChessDao implements ChessDao {
                         "FROM CHESSGAME " +
                         "WHERE running = ?";
 
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setBoolean(1, true);
-            return getChessGames(preparedStatement);
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
+        return executeQuery(query,
+                ps -> ps.setBoolean(1, true),
+                this::getChessGames);
     }
 
     @Override
     public void delete(long id) {
         String query = "DELETE FROM CHESSGAME " +
                 "WHERE id = ?";
-        try (Connection connection = ChessConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
+
+        executeQuery(query, ps -> ps.setLong(1, id));
+    }
+
+    private Optional<ChessGame> getOptionalChessGame(ResultSet resultSet) {
+        try (ResultSet rs = resultSet) {
+            if (!rs.next()) {
+                return Optional.empty();
+            }
+
+            Long rowId = rs.getLong("id");
+            boolean isRunning = rs.getBoolean("running");
+            String pieces = rs.getString("pieces");
+            Color nextTurn = Color.of(rs.getString("next_turn"));
+
+            return Optional.of(new ChessGame(rowId, nextTurn, isRunning, pieces));
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
     }
 
-    private List<ChessGame> getChessGames(PreparedStatement preparedStatement) {
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            List<ChessGame> chessGameManagers = new ArrayList<>();
-            while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String pieces = resultSet.getString("pieces");
-                boolean isRunning = resultSet.getBoolean("running");
-                Color nextTurn = Color.of(resultSet.getString("next_turn"));
-                chessGameManagers.add(new ChessGame(id, nextTurn, isRunning, pieces));
+    private List<ChessGame> getChessGames(ResultSet resultSet) {
+        try (ResultSet rs = resultSet) {
+            List<ChessGame> chessGames = new ArrayList<>();
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String pieces = rs.getString("pieces");
+                boolean isRunning = rs.getBoolean("running");
+                Color nextTurn = Color.of(rs.getString("next_turn"));
+                chessGames.add(new ChessGame(id, nextTurn, isRunning, pieces));
             }
-            return chessGameManagers;
+            return chessGames;
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage());
         }
