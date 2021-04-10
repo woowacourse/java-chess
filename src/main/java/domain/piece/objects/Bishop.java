@@ -50,15 +50,15 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean existPath() {
+        return false;
+    }
+
+    @Override
     public Direction direction(Position start, Position end) {
         if (!isDiagonal(start, end)) {
             throw new RuntimeException("비숍은 대각선 방향만 가질 수 있습니다!");
         }
         return getDiagonalDirection(start, end);
-    }
-
-    @Override
-    public boolean existPath() {
-        return false;
     }
 }
