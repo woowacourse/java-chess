@@ -1,4 +1,5 @@
 const $start = document.querySelector("#start-btn");
+const $url = "http://localhost:4567/game";
 
 $start.addEventListener("click", startGame);
 
@@ -21,7 +22,7 @@ function startGame(event) {
         body: JSON.stringify(room)
     }
 
-    fetch("http://localhost:4567/game", option)
+    fetch($url, option)
         .then(data => {
             if (data.status === 400) {
                 exceptionHandling(data.json());
@@ -31,7 +32,7 @@ function startGame(event) {
             return data.json();
         })
         .then(post => {
-            location.href = "http://localhost:4567/game/" + post.gameId;
+            location.href = $url + "/" + post.gameId;
         })
         .catch(error => {
             console.log(error);

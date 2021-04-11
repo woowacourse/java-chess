@@ -1,16 +1,17 @@
+const $url = "http://localhost:4567/game/";
 const $board = document.querySelector("#main");
 const $sidebar = document.querySelector("#menu-container");
 const $gameId = document.querySelector("#game-id").innerHTML;
 let $isPlaying = true;
 let $turnOwner = "WHITE";
 
+window.addEventListener("load", loadBoard)
 $board.addEventListener("mouseover", onSquare);
 $board.addEventListener("mouseout", outSquare);
 $board.addEventListener("click", onclickSquare);
-window.addEventListener("load", loadBoard)
 
 async function loadBoard() {
-    await fetch("http://localhost:4567/game/" + $gameId + "/load")
+    await fetch($url + $gameId + "/load")
         .then(data => {
             if (data.status === 400) {
                 exceptionHandling(data.json());
@@ -91,7 +92,7 @@ function onclickSquare(event) {
             body: JSON.stringify($movePosition)
         }
 
-        fetch('http://localhost:4567/game/' + $gameId + '/move', $option)
+        fetch($url + $gameId + '/move', $option)
             .then(data => {
                 if (data.status === 400) {
                     exceptionHandling(data.json());
@@ -122,7 +123,7 @@ function onclickSquare(event) {
         $selectSquare.querySelector('.highlight').setAttribute("src", "../images/red-take.png");
         setTimeout(invalidSquare, 1000, $source);
     } else {
-        fetch('http://localhost:4567/game/' + $gameId + '/path?source=' + $source)
+        fetch($url + $gameId + "/path?source=" + $source)
             .then(data => {
                 if (data.status === 400) {
                     exceptionHandling(data.json());
@@ -181,7 +182,7 @@ function invalidSquare(id) {
 }
 
 function score() {
-    fetch("http://localhost:4567/game/" + $gameId + "/score")
+    fetch($url + $gameId + "/score")
         .then(data => {
             if (data.status === 400) {
                 exceptionHandling(data.json());
@@ -202,7 +203,7 @@ function score() {
 }
 
 function state() {
-    fetch("http://localhost:4567/game/" + $gameId + "/state")
+    fetch($url + $gameId + "/state")
         .then(data => {
             if (data.status === 400) {
                 exceptionHandling(data.json());
@@ -248,7 +249,7 @@ function replacePieceColor(targetImg) {
 }
 
 function history() {
-    fetch("http://localhost:4567/game/" + $gameId + "/history")
+    fetch($url + $gameId + "/history")
         .then(data => {
             if (data.status === 400) {
                 exceptionHandling(data.json());
