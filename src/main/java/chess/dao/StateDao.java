@@ -25,9 +25,9 @@ public class StateDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("체스게임의 상태를 저장하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스게임의 상태를 저장하는데 실패했습니다.", e);
         }
     }
 
@@ -45,9 +45,9 @@ public class StateDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("체스게임의 상태를 업데이트하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스게임의 상태를 업데이트하는데 실패했습니다.", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class StateDao {
                         resultSet.getBoolean("playing"));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new IllegalStateException("해당 GameID의 상태를 검색하는데 실패했습니다.", e);
         }
     }
 }

@@ -30,9 +30,9 @@ public class PieceDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("체스말을 저장하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스말을 저장하는데 실패했습니다.", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class PieceDao {
                 return pieceResponseDtos;
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new IllegalStateException("해당 GameID에 해당하는 체스말들을 검색하는데 실패했습니다.", e);
         }
     }
 
@@ -71,9 +71,9 @@ public class PieceDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("선택한 위치의 체스말을 수정하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("선택한 위치의 체스말을 수정하는데 실패했습니다.", e);
         }
     }
 
@@ -91,9 +91,9 @@ public class PieceDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("이동하려는 위치의 체스말을 수정하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("이동하려는 위치의 체스말을 수정하는데 실패했습니다.", e);
         }
     }
 }

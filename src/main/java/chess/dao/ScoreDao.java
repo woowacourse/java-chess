@@ -23,9 +23,9 @@ public class ScoreDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("체스 게임의 점수를 저장하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스 게임의 점수를 저장하는데 실패했습니다.", e);
         }
     }
     public Long updateScore(final Connection connection, final GameStatus gameStatus, final Long gameId) {
@@ -41,9 +41,9 @@ public class ScoreDao {
             try {
                 connection.rollback();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
+                throw new IllegalStateException("체스 게임의 점수를 업데이트하는데 실패했습니다.", sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스 게임의 점수를 업데이트하는데 실패했습니다.", e);
         }
     }
 
@@ -63,7 +63,7 @@ public class ScoreDao {
                         resultSet.getDouble("black_score"));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new IllegalStateException("해당 GameID의 점수를 검색하는데 실패했습니다.", e);
         }
     }
 }

@@ -25,7 +25,7 @@ public class GameDao {
             } catch (SQLException sqlException) {
                 throw new IllegalStateException(sqlException);
             }
-            throw new IllegalStateException(e);
+            throw new IllegalStateException("체스 게임을 저장하는데 실패했습니다.", e);
         }
     }
 
@@ -46,7 +46,7 @@ public class GameDao {
                         resultSet.getString("room_name"));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new IllegalStateException("해당 ID의 체스게임을 검색하는데 실패했습니다.", e);
         }
     }
 }
