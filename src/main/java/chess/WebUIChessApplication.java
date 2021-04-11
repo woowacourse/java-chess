@@ -33,7 +33,6 @@ public class WebUIChessApplication {
                 post("", chessController::insert);
                 get("/ids", chessController::getIds);
                 get("/:chessId/turn", chessController::getTurn);
-                patch("/:chessId/turn", chessController::updateTurn);
                 delete("/:chessId", chessController::delete);
             });
 

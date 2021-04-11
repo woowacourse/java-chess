@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import chess.ChessResponse;
+import chess.domain.board.Board;
 import chess.domain.board.ScoreDTO;
 import chess.domain.chess.Chess;
 import chess.domain.chess.ChessDTO;
@@ -28,28 +28,26 @@ public class PieceController {
     public String get(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok(GSON.toJson(pieceDTOS));
-        return GSON.toJson(chessResponse);
+        return GSON.toJson(pieceDTOS);
     }
 
     public String getScore(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         final List<PieceDTO> pieceDTOS = pieceService.get(chessId);
-        ScoreDTO scoreDTO = ScoreDTO.from(pieceDTOS);
-        ChessResponse chessResponse = new ChessResponse.Ok(scoreDTO);
-        return GSON.toJson(chessResponse);
+        Board board = Board.from(pieceDTOS);
+        ScoreDTO scoreDTO = new ScoreDTO(board);
+        return GSON.toJson(scoreDTO);
     }
 
     public String insert(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
-        pieceService.insert(chessId);
+        List<PieceDTO> pieceDTOS = pieceService.insert(chessId);
         res.status(201);
 
-        ChessResponse chessResponse = new ChessResponse.Created("기물들이 생성되었습니다.");
-        return GSON.toJson(chessResponse);
+        return GSON.toJson(pieceDTOS);
     }
 
-    public String move(Request req, Response res) {
+    public Response move(Request req, Response res) {
         String source = req.queryParams("source");
         String target = req.queryParams("target");
         MovePositionDTO movePositionDTO = new MovePositionDTO(source, target);
@@ -59,16 +57,14 @@ public class PieceController {
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.move(chessId, movePositionDTO);
 
-        if (chess.isKindDead()) {
-            return GSON.toJson(new ChessResponse.Ok("왕이 죽었습니다."));
-        }
-        return GSON.toJson(new ChessResponse.Ok("기물이 이동했습니다."));
+        res.status(204);
+        return res;
     }
 
-    public String delete(Request req, Response res) {
+    public Response delete(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         pieceService.delete(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok("기물들을 삭제했습니다.");
-        return GSON.toJson(chessResponse);
+        res.status(204);
+        return res;
     }
 }

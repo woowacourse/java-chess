@@ -2,7 +2,6 @@ package chess.controller;
 
 import com.google.gson.Gson;
 
-import chess.ChessResponse;
 import chess.service.ChessService;
 import spark.Request;
 import spark.Response;
@@ -19,39 +18,29 @@ public class ChessController {
 
     public String getIds(Request req, Response res) {
         String chessId = chessService.findChessIdAsString();
-        ChessResponse chessResponse = new ChessResponse.Ok(chessId);
-        return GSON.toJson(chessResponse);
+        return GSON.toJson(chessId);
     }
 
     public String getTurn(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         String turn = chessService.findTurnById(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok(turn);
-        return GSON.toJson(chessResponse);
+        return GSON.toJson(turn);
     }
 
     public String insert(Request req, Response res) {
-        chessService.insert();
+        Long chessId = chessService.insert();
 
-        Long chessId = chessService.findChessId();
         res.cookie("chessId", String.valueOf(chessId));
         res.status(201);
 
-        ChessResponse chessResponse = new ChessResponse.Created("새로운 체스가 추가되었습니다.");
-        return GSON.toJson(chessResponse);
+        return GSON.toJson(chessId);
     }
 
-    public String updateTurn(Request req, Response res) {
-        Long chessId = Long.valueOf(req.params(":chessId"));
-        chessService.updateTurn(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok("턴이 변경되었습니다.");
-        return GSON.toJson(chessResponse);
-    }
-
-    public String delete(Request req, Response res) {
+    public Response delete(Request req, Response res) {
         Long chessId = Long.valueOf(req.params(":chessId"));
         chessService.delete(chessId);
-        ChessResponse chessResponse = new ChessResponse.Ok("저장된 체스를 삭제했습니다.");
-        return GSON.toJson(chessResponse);
+
+        res.status(204);
+        return res;
     }
 }
