@@ -12,7 +12,7 @@ public class StateDao {
 
     public Long saveState(final Connection connection, final ChessManager chessManager, final Long gameId) {
         final String query =
-                "INSERT INTO state(gameId, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?)";
+                "INSERT INTO state(gameId, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
 
@@ -33,7 +33,7 @@ public class StateDao {
 
     public Long updateState(final Connection connection, final ChessManager chessManager, final Long gameId) {
         final String query =
-                "UPDATE state SET turn_owner=?, turn_number=?, isPlaying=? WHERE gameId=?";
+                "UPDATE state SET turn_owner=?, turn_number=?, playing=? WHERE gameId=?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, chessManager.turnOwner().name());
@@ -65,7 +65,7 @@ public class StateDao {
                 return new StateResponseDto(
                         resultSet.getString("turn_owner"),
                         resultSet.getInt("turn_number"),
-                        resultSet.getBoolean("isPlaying"));
+                        resultSet.getBoolean("playing"));
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e.getMessage(), e);

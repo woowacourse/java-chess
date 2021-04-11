@@ -13,7 +13,7 @@ public class HistoryDao {
 
     public Long saveHistory(final Connection connection, final HistoryResponseDto history, final Long gameId) {
         final String query =
-                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, isPlaying) VALUES (?, ?, ?, ?, ?)";
+                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
 
@@ -47,7 +47,7 @@ public class HistoryDao {
                             resultSet.getString("move_command"),
                             resultSet.getString("turn_owner"),
                             resultSet.getInt("turn_number"),
-                            resultSet.getBoolean("isPlaying")
+                            resultSet.getBoolean("playing")
                     ));
                 }
                 return historyResponseDtos;
