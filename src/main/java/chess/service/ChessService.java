@@ -11,8 +11,9 @@ public class ChessService {
         this.chessDAO = new ChessDAO();
     }
 
-    public void insert() {
+    public Long insert() {
         chessDAO.insert();
+        return findChessId();
     }
 
     public void updateTurn(Long chessId) {

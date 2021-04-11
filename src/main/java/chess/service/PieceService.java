@@ -19,11 +19,12 @@ public class PieceService {
         return pieceDAO.findPiecesByChessId(chessId);
     }
 
-    public void insert(Long chessId) {
+    public List<PieceDTO> insert(Long chessId) {
         Chess chess = Chess.createWithEmptyBoard()
                            .start();
         BoardDTO boardDTO = BoardDTO.from(chess);
         pieceDAO.insert(chessId, boardDTO);
+        return get(chessId);
     }
 
     public void move(Long chessId, MovePositionDTO movePositionDTO) {
