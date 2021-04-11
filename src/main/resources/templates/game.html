@@ -1,0 +1,229 @@
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Chessboard using Pure CSS and HTML</title>
+
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            background: #302E2B;
+        }
+
+        .chessboard {
+            width: 640px;
+            height: 640px;
+            margin: 20px;
+            float: left;
+        }
+
+        .tile:hover {
+            background-color: #F6F686;
+        }
+
+        .black {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #779556;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .white {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #EBECD0;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .sidebar {
+            float: left;
+        }
+
+        button {
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin: 1em auto;
+            padding: 1em 3em;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        button::before,
+        button::after {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
+
+        button:hover {
+            color: #2ecc71;
+        }
+
+        .btn-start::after, .btn-end::after {
+            height: 0;
+            left: 50%;
+            top: 50%;
+            width: 0;
+        }
+
+        .btn-start:hover:after,
+        .btn-end:hover:after {
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .btn-start {
+            float: left;
+        }
+
+        .btn-end {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .status-white {
+            width: 475px;
+            height: 230px;
+            border-radius: 5px;
+            border: 3px solid #fff;
+            position: absolute;
+            top: 130px;
+            font-size: 3.0em;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        .status-black {
+            width: 475px;
+            height: 230px;
+            border-radius: 5px;
+            border: 3px solid #fff;
+            position: absolute;
+            top: 400px;
+            font-size: 3.0em;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="chessboard">
+        <!-- 1st -->
+        <div id="a8" class="tile white"></div>
+        <div id="b8" class="tile black"></div>
+        <div id="c8" class="tile white"></div>
+        <div id="d8" class="tile black"></div>
+        <div id="e8" class="tile white"></div>
+        <div id="f8" class="tile black"></div>
+        <div id="g8" class="tile white"></div>
+        <div id="h8" class="tile black"></div>
+        <!-- 2nd -->
+        <div id="a7" class="tile black"></div>
+        <div id="b7" class="tile white"></div>
+        <div id="c7" class="tile black"></div>
+        <div id="d7" class="tile white"></div>
+        <div id="e7" class="tile black"></div>
+        <div id="f7" class="tile white"></div>
+        <div id="g7" class="tile black"></div>
+        <div id="h7" class="tile white"></div>
+        <!-- 3th -->
+        <div id="a6" class="tile white"></div>
+        <div id="b6" class="tile black"></div>
+        <div id="c6" class="tile white"></div>
+        <div id="d6" class="tile black"></div>
+        <div id="e6" class="tile white"></div>
+        <div id="f6" class="tile black"></div>
+        <div id="g6" class="tile white"></div>
+        <div id="h6" class="tile black"></div>
+        <!-- 4st -->
+        <div id="a5" class="tile black"></div>
+        <div id="b5" class="tile white"></div>
+        <div id="c5" class="tile black"></div>
+        <div id="d5" class="tile white"></div>
+        <div id="e5" class="tile black"></div>
+        <div id="f5" class="tile white"></div>
+        <div id="g5" class="tile black"></div>
+        <div id="h5" class="tile white"></div>
+        <!-- 5th -->
+        <div id="a4" class="tile white"></div>
+        <div id="b4" class="tile black"></div>
+        <div id="c4" class="tile white"></div>
+        <div id="d4" class="tile black"></div>
+        <div id="e4" class="tile white"></div>
+        <div id="f4" class="tile black"></div>
+        <div id="g4" class="tile white"></div>
+        <div id="h4" class="tile black"></div>
+        <!-- 6th -->
+        <div id="a3" class="tile black"></div>
+        <div id="b3" class="tile white"></div>
+        <div id="c3" class="tile black"></div>
+        <div id="d3" class="tile white"></div>
+        <div id="e3" class="tile black"></div>
+        <div id="f3" class="tile white"></div>
+        <div id="g3" class="tile black"></div>
+        <div id="h3" class="tile white"></div>
+        <!-- 7th -->
+        <div id="a2" class="tile white"></div>
+        <div id="b2" class="tile black"></div>
+        <div id="c2" class="tile white"></div>
+        <div id="d2" class="tile black"></div>
+        <div id="e2" class="tile white"></div>
+        <div id="f2" class="tile black"></div>
+        <div id="g2" class="tile white"></div>
+        <div id="h2" class="tile black"></div>
+        <!-- 8th -->
+        <div id="a1" class="tile black"></div>
+        <div id="b1" class="tile white"></div>
+        <div id="c1" class="tile black"></div>
+        <div id="d1" class="tile white"></div>
+        <div id="e1" class="tile black"></div>
+        <div id="f1" class="tile white"></div>
+        <div id="g1" class="tile black"></div>
+        <div id="h1" class="tile white"></div>
+    </div>
+
+    <div class="sidebar">
+        <button class="btn-start">새로하기</button>
+
+        <div class="status-white">
+            <p id="name-white">WHITE</p>
+            <p id="score-white"></p>
+        </div>
+
+        <div class="status-black">
+            <p id="name-black">BLACK</p>
+            <p id="score-black"></p>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="module" src="game.js"></script>
+</body>
+</html>

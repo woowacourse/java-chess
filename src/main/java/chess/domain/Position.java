@@ -28,6 +28,15 @@ public class Position {
         return positionMap.get(input);
     }
 
+    public String getKey() {
+        for (Map.Entry<String, Position> entry : positionMap.entrySet())
+            if (this.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+
+        return "";
+    }
+
     public Position moveXandY(final int xDistance, final int yDistance) {
         return new Position(x + xDistance, y + yDistance);
     }
@@ -115,6 +124,14 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 
     @Override

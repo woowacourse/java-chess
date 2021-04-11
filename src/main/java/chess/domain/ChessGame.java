@@ -25,12 +25,26 @@ public class ChessGame {
         whiteTeam.setEnemy(blackTeam);
 
         this.currentTurn = this.whiteTeam;
+        this.currentTurn.startTurn();
         this.isEnd = false;
     }
 
-    public void move(final Position current, final Position destination) {
+    public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam, Team currentTurn, boolean isEnd) {
+        this.blackTeam = blackTeam;
+        this.whiteTeam = whiteTeam;
+        this.currentTurn = currentTurn;
+        this.isEnd = isEnd;
+    }
+
+    public boolean havePieceInCurrentTurn(final Position position) {
+        return currentTurn.havePiece(position);
+    }
+
+    public boolean move(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurn.choosePiece(current);
-        validateMovable(current, destination, chosenPiece);
+        if (!validateMovable(current, destination, chosenPiece)) {
+            return false;
+        }
 
         Team enemy = currentTurn.getEnemy();
         if (enemy.havePiece(destination)) {
@@ -39,13 +53,16 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         changeTurn();
+        return true;
     }
 
-    private void validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
+    private boolean validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
         if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
-            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+            return false;
         }
+        return true;
     }
+
 
     private void killEnemyPiece(Position destination, Team enemy) {
         Piece piece = enemy.killPiece(destination);
@@ -58,7 +75,11 @@ public class ChessGame {
         }
     }
 
-    private void finish() {
+    public Team getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void finish() {
         isEnd = true;
     }
 
@@ -67,7 +88,9 @@ public class ChessGame {
     }
 
     private void changeTurn() {
+        currentTurn.endTurn();
         currentTurn = currentTurn.getEnemy();
+        currentTurn.startTurn();
     }
 
     public Map<Position, Piece> generateChessBoard() {

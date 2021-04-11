@@ -2,9 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Title</title>
+
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            background: #302E2B;
+        }
+
+        #list-chess-game {
+            margin-top: 5em;
+        }
+
+        #btn-game-create {
+            width: 240px;
+            height: 120px;
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-top: 1em;
+            margin-left: 1em;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .box-chess-game {
+            width: 120px;
+            height: 120px;
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-left: 1em;
+            margin-bottom: 1em;
+            padding: 1em 3em;
+            position: relative;
+            text-transform: uppercase;
+            float: left;
+        }
+
+        .box-chess-game::before,
+        .box-chess-game::after,
+        #btn-game-create::before,
+        #btn-game-create::after {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
+
+        .box-chess-game:hover,
+        #btn-game-create:hover {
+            color: #2ecc71;
+        }
+
+        .box-chess-game::after,
+        #btn-game-create::after {
+            height: 0;
+            left: 50%;
+            top: 50%;
+            width: 0;
+        }
+
+        .box-chess-game:hover:after,
+        #btn-game-create:hover:after {
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .box-chess-game-title {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+
 </head>
 <body>
-Hello World!!
+
+<div id="top">
+    <button id="btn-game-create">게임 생성하기</button>
+</div>
+
+<div id="list-chess-game">
+</div>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="module" src="index.js"></script>
 </html>
