@@ -1,14 +1,13 @@
 package chess.domain.piece;
 
 import chess.exception.DomainException;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum Color {
-    @SerializedName("BLACK") BLACK(),
-    @SerializedName("WHITE") WHITE();
+    BLACK(),
+    WHITE();
 
     public Color opposite() {
         return Arrays.stream(values())
