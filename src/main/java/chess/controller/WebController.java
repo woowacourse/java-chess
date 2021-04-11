@@ -1,11 +1,11 @@
 package chess.controller;
 
 import chess.dao.GameDAO;
+import chess.dao.Serializer;
 import chess.domain.ChessGameManager;
 import chess.domain.position.Position;
 import chess.dto.*;
 import chess.exception.HandledException;
-import com.google.gson.Gson;
 import org.json.JSONObject;
 import spark.ModelAndView;
 import spark.Request;
@@ -23,7 +23,7 @@ import static spark.Spark.post;
 public class WebController {
     private final ChessGameManager chessGameManager;
     private final GameDAO gameDAO = new GameDAO();
-    private final Gson gson = new Gson();
+    private final Serializer serializer = Serializer.getInstance();
 
     public WebController(ChessGameManager chessGameManager) {
         this.chessGameManager = chessGameManager;
@@ -31,10 +31,10 @@ public class WebController {
 
     public void run() {
         get("/", this::responseHomePage);
-        get("/newgame", this::createNewGame, gson::toJson);
-        post("/move", this::move, gson::toJson);
-        get("/save", this::saveGame, gson::toJson);
-        get("/load", this::loadGame, gson::toJson);
+        get("/newgame", this::createNewGame, serializer::toJson);
+        post("/move", this::move, serializer::toJson);
+        get("/save", this::saveGame, serializer::toJson);
+        get("/load", this::loadGame, serializer::toJson);
     }
 
     private String responseHomePage(Request request, Response response) {

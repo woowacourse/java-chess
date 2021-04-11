@@ -4,14 +4,13 @@ import chess.domain.piece.Color;
 import chess.dto.ChessBoardDto;
 import chess.dto.SavedGameData;
 import chess.exception.NoSavedGameException;
-import com.google.gson.Gson;
 
 import java.sql.*;
 
 public class GameDAO {
     private static final int UNIQUE_GAME_ID = 1;
 
-    private final Gson gson = new Gson();
+    private final Serializer serializer = Serializer.getInstance();
 
     public Connection getConnection() {
         Connection con = null;
@@ -48,7 +47,7 @@ public class GameDAO {
         try (Connection connection = getConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, UNIQUE_GAME_ID);    // 하나의 row만을 이용합니다.
-            pstmt.setString(2, gson.toJson(chessBoardDto));
+            pstmt.setString(2, serializer.toJson(chessBoardDto));
             pstmt.setString(3, currentTurnColor.name());
             pstmt.executeUpdate();
         }
@@ -70,8 +69,8 @@ public class GameDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                ChessBoardDto chessBoardDto = gson.fromJson(rs.getString("board"), ChessBoardDto.class);
-                Color currentTurnColor = gson.fromJson(rs.getString("turn"), Color.class);
+                ChessBoardDto chessBoardDto = serializer.fromJson(rs.getString("board"), ChessBoardDto.class);
+                Color currentTurnColor = serializer.fromJson(rs.getString("turn"), Color.class);
                 return new SavedGameData(chessBoardDto, currentTurnColor);
             }
             throw new NoSavedGameException("저장된 게임을 찾을 수 없습니다.");
