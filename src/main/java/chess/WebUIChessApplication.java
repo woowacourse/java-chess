@@ -25,7 +25,8 @@ public class WebUIChessApplication {
         get("/", (req, res) -> render(Collections.emptyMap(), "main.html"));
 
         path("/chess", () -> {
-            get("/:chessId", (req, res) -> render(Collections.emptyMap(), "chess.html"));
+            get("/:chessId/view", (req, res) -> render(Collections.emptyMap(), "chess.html"));
+            get("/:chessId", chessController::get);
             post("", chessController::insert);
             patch("/:chessId", chessController::move);
         });
