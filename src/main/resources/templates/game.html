@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Joyful Chess</title>
+  <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>{{gameName}}</h1>
+<a href="/">로비로 나가기</a>
+<div id="game-result" class="none">
+  <h2>승자:<span id="winner"></span></h2>
+  <h2>점수</h2>
+  <h3>Black: <span id="black-score"></span></h3>
+  <h3>White: <span id="white-score"></span></h3>
+</div>
+
+<h3>현재 턴 : <span id="currentTurn"></span></h3>
+
+<div id="board"></div>
+<input id="gameId" type="hidden" value="{{gameId}}">
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="module" src="/js/index.js"></script>
+</html>

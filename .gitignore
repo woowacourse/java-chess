@@ -19,3 +19,6 @@ bin/
 *.iws
 *.iml
 *.ipr
+/src/main/node_modules/
+/docker-compose/db/
+/chess-docker/db/

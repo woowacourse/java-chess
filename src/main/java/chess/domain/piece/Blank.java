@@ -54,4 +54,9 @@ public final class Blank implements Piece {
     public String getInitial() {
         return INITIAL;
     }
+
+    @Override
+    public String getSide() {
+        return "";
+    }
 }

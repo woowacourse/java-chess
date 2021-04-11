@@ -21,4 +21,6 @@ public interface Piece {
     boolean isKing();
 
     String getInitial();
+
+    String getSide();
 }

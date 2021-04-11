@@ -1,5 +1,7 @@
 package chess.domain.game;
 
+import java.util.Locale;
+
 public enum Side {
     WHITE, BLACK, NONE;
 
@@ -12,5 +14,10 @@ public enum Side {
         }
 
         throw new UnsupportedOperationException("NONE은 Side 교체 불가.");
+    }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase(Locale.ROOT);
     }
 }
