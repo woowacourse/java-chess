@@ -194,4 +194,17 @@ public class ChessDao {
             throw new SQLException();
         }
     }
+
+    public String findUserIdByUserName(String userName) {
+        try (Connection connection = sqlConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                 "SELECT user_id FROM user WHERE user_name = ?")
+        ) {
+            preparedStatement.setString(1, userName);
+            return makeUserId(preparedStatement);
+        } catch (SQLException e) {
+            System.out.println(e.getErrorCode() + e.getMessage());
+            throw new IllegalArgumentException("SQL Error 발생");
+        }
+    }
 }

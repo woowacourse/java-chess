@@ -19,8 +19,7 @@ public class ChessService {
         chessDAO = new ChessDao(new SQLConnection());
     }
 
-    public void restartChess(UserDto userDto) {
-        String userId = chessDAO.findUserIdByUser(userDto);
+    public void restartChess(String userId) {
         chessDAO.deleteBoard(userId);
     }
 
@@ -31,12 +30,15 @@ public class ChessService {
         return makeChessGame(boardDto, color);
     }
 
-    public String matchBoardImageSource(UserDto userDto, String requestBody) {
+    public String matchBoardImageSource(String userBody, String requestBody) {
+        UserDto userDto = chessDAO.findByUserId(userBody);
         return matchBoard(userDto).getBoard().get(Point.of(requestBody)).getName();
     }
 
-    public String matchPieceName(UserDto userDto, String requestBody) {
-        return matchBoard(userDto).getBoard().get(Point.of(requestBody)).getName();
+    public String matchPieceName(RequestDto requestDto) {
+        UserDto userDto = chessDAO.findByUserId(requestDto.getSecondInfo());
+        String point = requestDto.getFirstInfo();
+        return matchBoard(userDto).getBoard().get(Point.of(point)).getName();
     }
 
     private ChessGame makeChessGame(BoardDto boardDto, Color color) {
@@ -46,32 +48,36 @@ public class ChessService {
         return new ChessGame(boardDto.getBoard(), color);
     }
 
-    public void addBoard(UserDto userDto, String requestBody) {
-        chessDAO.addBoard(chessDAO.findUserIdByUser(userDto), requestBody, makeNextColor(userDto));
+    public void addBoard(String userId, String boardInfo) {
+        chessDAO.addBoard(userId, boardInfo, makeNextColor(userId));
     }
 
-    public String makeNextColor(UserDto userDto) {
+    public String makeNextColor(String userId) {
+        UserDto userDto = chessDAO.findByUserId(userId);
         if (matchBoard(userDto).nextTurn().isSameAs(BLACK)) {
             return WHITE.name();
         }
         return BLACK.name();
     }
 
-    public String makeCurrentColor(UserDto userDto, String requestBody) {
-        if (matchBoard(userDto).getBoard().get(Point.of(requestBody)).isSameTeam(BLACK)) {
+    public String makeCurrentColor(RequestDto requestDto) {
+        UserDto userDto = chessDAO.findByUserId(requestDto.getSecondInfo());
+        String point = requestDto.getFirstInfo();
+        if (matchBoard(userDto).getBoard().get(Point.of(point)).isSameTeam(BLACK)) {
             return BLACK.name();
         }
         return WHITE.name();
     }
 
-    public int move(UserDto userDto, RequestDto requestDto) {
-        String source = requestDto.getSource();
-        String target = requestDto.getTarget();
+    public int move(RequestDto requestDto) {
+        String source = requestDto.getFirstInfo().substring(0,2);
+        String target = requestDto.getFirstInfo().substring(2,4);
+        UserDto userDto = chessDAO.findByUserId(requestDto.getSecondInfo());
         try {
             ChessGame playerGame = matchBoard(userDto);
             playerGame.playTurn(Point.of(source), Point.of(target));
             if (playerGame.isEnd()) {
-                chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), playerGame, playerGame.color());
+                chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), playerGame, playerGame.nextTurn().name());
                 return RESET_CONTENT.code();
             }
             chessDAO.saveBoard(chessDAO.findUserIdByUser(userDto), playerGame, playerGame.color());
@@ -81,8 +87,10 @@ public class ChessService {
         }
     }
 
-    public double score(UserDto userDto, String requestBody) {
-        return matchBoard(userDto).calculateScore(Color.valueOf(requestBody)).getScore();
+    public double score(RequestDto requestDto) {
+        UserDto userDto = chessDAO.findByUserId(requestDto.getSecondInfo());
+        String colorName = requestDto.getFirstInfo();
+        return matchBoard(userDto).calculateScore(Color.valueOf(colorName)).getScore();
     }
 
     public void addUser(String requestName, String requestPassword) {
@@ -94,7 +102,11 @@ public class ChessService {
         return new UserDto(requestName, requestPassword);
     }
 
-    public UserDto findUser(UserDto userDto) {
-        return chessDAO.findByUserNameAndPwd(userDto.getName(), userDto.getPwd());
+    public String makeUserID(String body) {
+        return chessDAO.findUserIdByUserName(body);
+    }
+
+    public UserDto findUserWithId(String userId) {
+        return chessDAO.findByUserId(userId);
     }
 }

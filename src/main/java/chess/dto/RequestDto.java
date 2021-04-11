@@ -1,19 +1,19 @@
 package chess.dto;
 
 public class RequestDto {
-    private final String source;
-    private final String target;
+    private final String firstInfo;
+    private final String secondInfo;
 
-    public RequestDto(String sourcePoint, String targetPoint) {
-        this.source = sourcePoint;
-        this.target = targetPoint;
+    public RequestDto(String firstInfo, String secondInfo) {
+        this.firstInfo = firstInfo;
+        this.secondInfo = secondInfo;
     }
 
-    public String getSource() {
-        return source;
+    public String getFirstInfo() {
+        return firstInfo;
     }
 
-    public String getTarget() {
-        return target;
+    public String getSecondInfo() {
+        return secondInfo;
     }
 }

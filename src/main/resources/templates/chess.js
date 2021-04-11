@@ -7,14 +7,35 @@ $blackScore.addEventListener('click', toggleScore);
 $whiteScore.addEventListener('click', toggleScore);
 $exit.addEventListener('click', toggleExit);
 
-async function boardSetting() {
+let globalUserId;
+let user = document.querySelector(".user-name").innerText;
+
+async function makeUser() {
+   await fetch('/userId', {
+        method: 'POST',
+        body: user,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json()).then(res => boardSetting(res));
+}
+
+async function boardSetting(userId) {
+    globalUserId = userId;
     for (let j = 1; j <= 8; j++) {
         for (let i = 0; i < 8; i++) {
             let row = String.fromCharCode('a'.charCodeAt(0) + i);
             let point = row + j;
+            let info = {
+                firstInfo: point,
+                secondInfo: globalUserId
+            }
             await fetch('/board', {
                 method: 'POST',
-                body: point,
+                body: JSON.stringify(info),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }).then(res => res.json()).then(data => {
                 document.getElementById(point).innerHTML = renderImage(data);
             });
@@ -41,7 +62,6 @@ function movePiece(sourcePoint, targetPoint) {
     let sourcePiece = document.getElementById(sourcePoint).innerHTML;
     document.getElementById(sourcePoint).innerHTML = renderImage("");
     document.getElementById(targetPoint).innerHTML = sourcePiece;
-
     toggleClicked(sourcePoint, targetPoint);
 }
 
@@ -56,7 +76,10 @@ async function gameFinishedAlert(targetPoint) {
 function colorData(point) {
     return {
         method: 'POST',
-        body: point,
+        body: JSON.stringify({
+            firstInfo: point,
+            secondInfo: globalUserId
+        }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -72,14 +95,12 @@ async function colorText(targetPoint) {
 }
 
 async function move(sourcePoint, targetPoint) {
-    let data = {
-        source: sourcePoint,
-        target: targetPoint
-    }
-
     const response = await fetch('/move', {
         method: 'PUT',
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+            firstInfo: sourcePoint+targetPoint,
+            secondInfo: globalUserId
+        }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -89,17 +110,15 @@ async function move(sourcePoint, targetPoint) {
         movePiece(sourcePoint, targetPoint);
         document.getElementById("notice").innerText = "게임 끝!";
         if (!confirm('킹이 죽어 게임이 끝났습니다.\n다시 게임하시겠습니까?')) {
-            await gameFinishedAlert(targetPoint);
-            fetch('/restart').then(location.replace('/'));
-
+            await restart(targetPoint, location.replace('/'));
         } else {
-            await gameFinishedAlert(targetPoint);
-            fetch('/restart').then(location.replace('/chess'));
+            await restart(targetPoint, resetBoard());
         }
     }
     if (response === 200) {
         await fetch('/turn', {
-            method: 'POST'
+            method: 'POST',
+            body: globalUserId
         }).then(function (repsponse) {
             repsponse.text().then(function (text) {
                 document.getElementById("notice").innerText = text + "팀의 차례입니다."
@@ -111,6 +130,23 @@ async function move(sourcePoint, targetPoint) {
         alert('불가능한 이동입니다.');
         toggleClicked(sourcePoint, targetPoint);
     }
+}
+
+async function restart(targetPoint, func) {
+    await gameFinishedAlert(targetPoint);
+    await fetch('/restart', {
+        method: 'POST',
+        body: globalUserId
+    }).then(res => res.json())
+        .then(func);
+}
+
+function resetBoard() {
+    return fetch('/chess', {
+        method: 'POST',
+        body: globalUserId
+    }).then(res => res.json())
+        .then(location.reload());
 }
 
 function getPoint(event) {
@@ -154,7 +190,10 @@ async function score(color) {
     let colorName = color.id;
     const score = await fetch('/score', {
         method: 'POST',
-        body: colorName,
+        body: JSON.stringify({
+            firstInfo: colorName,
+            secondInfo: globalUserId
+        }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -165,7 +204,10 @@ async function score(color) {
 async function save(boardInfo) {
     await fetch('/save', {
         method: 'POST',
-        body: boardInfo,
+        body: JSON.stringify({
+            firstInfo: boardInfo,
+            secondInfo: globalUserId
+        }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -180,7 +222,10 @@ async function makeBoardInfo() {
             let point = row + j;
             await fetch('/piece', {
                 method: 'PUT',
-                body: point,
+                body: {
+                    firstInfo: point,
+                    secondInfo: globalUserId
+                },
             }).then(res => res.json()).then(data => {
                 boardInfo += data;
             });
@@ -195,4 +240,4 @@ function toggleExit() {
     location.replace('/');
 }
 
-boardSetting();
+makeUser();
