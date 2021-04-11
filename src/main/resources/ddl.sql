@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS chess
 (
     chess_id BIGINT AUTO_INCREMENT,
+    status   varchar(10),
     turn     varchar(10),
     PRIMARY KEY (chess_id)
 );
