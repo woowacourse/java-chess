@@ -2,35 +2,13 @@ package chess.domain.piece;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import chess.domain.ConnectionUtils;
 import chess.domain.board.BoardDTO;
 import chess.domain.position.MovePositionDTO;
 
 public class PieceDAO {
-    public List<PieceDTO> findPiecesByChessId(Long chessId) {
-        List<PieceDTO> pieceDTOS = new ArrayList<>();
-        String query = "SELECT position, color, name FROM piece WHERE chess_id = (?)";
-        try (Connection connection = ConnectionUtils.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, chessId);
-            final ResultSet resultSet = pstmt.executeQuery();
-            while (resultSet.next()) {
-                final String position = resultSet.getString("position");
-                final String color = resultSet.getString("color");
-                final String name = resultSet.getString("name");
-                pieceDTOS.add(new PieceDTO(position, color, name));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return pieceDTOS;
-    }
-
     public void insert(Long chessId, BoardDTO boardDTO) {
         String query = "INSERT INTO piece (chess_id, position, color, name) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionUtils.getConnection();

@@ -5,7 +5,9 @@ import java.util.List;
 import chess.domain.board.BoardDTO;
 import chess.domain.chess.Chess;
 import chess.domain.chess.ChessDAO;
+import chess.domain.chess.ChessDTO;
 import chess.domain.piece.PieceDAO;
+import chess.domain.piece.PieceDTO;
 
 public class ChessService {
     private final ChessDAO chessDAO;
@@ -28,5 +30,9 @@ public class ChessService {
 
     public void delete(Long chessId) {
         chessDAO.delete(chessId);
+    }
+
+    public ChessDTO getChessGame(Long chessId) {
+        return chessDAO.findChessById(chessId);
     }
 }
