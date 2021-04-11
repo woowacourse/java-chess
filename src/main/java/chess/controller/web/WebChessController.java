@@ -1,6 +1,5 @@
 package chess.controller.web;
 
-import chess.controller.web.dto.move.MovablePathRequestDto;
 import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.move.PathResponseDto;
 import chess.controller.web.dto.piece.PieceResponseDto;
@@ -22,8 +21,7 @@ public class WebChessController {
     }
 
     public PathResponseDto movablePath(final String source, final Long gameId) {
-        MovablePathRequestDto movablePathRequestDto = new MovablePathRequestDto(source);
-        return chessService.movablePath(movablePathRequestDto, gameId);
+        return chessService.movablePath(source, gameId);
     }
 
     public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
