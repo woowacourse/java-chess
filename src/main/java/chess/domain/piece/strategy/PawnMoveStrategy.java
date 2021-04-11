@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.*;
 
 public class PawnMoveStrategy implements MoveStrategy {
@@ -12,12 +11,11 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
+    public boolean canMove(Position source, Position target) {
         if (isAttackAble(source, target)) {
             return true;
         }
         Direction pawnDirection = Cross.findCrossByTwoPosition(source, target);
-        chessBoard.hasPieceInPath(source, target, pawnDirection);
         if (isMoveAble(source, target, pawnDirection)) {
             validateFirstTurnIfTwoDistance(source, target);
             return true;
@@ -25,7 +23,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         throw new IllegalArgumentException(PAWN_ERROR);
     }
 
-    private boolean isAttackAble(Position source, Position target) {
+    public boolean isAttackAble(Position source, Position target) {
         if (this.color == Color.BLACK) {
             return Math.abs(source.subtractX(target)) == 1 && source.subtractY(target) == 1;
         }

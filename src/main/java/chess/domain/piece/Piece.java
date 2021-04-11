@@ -39,17 +39,21 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public abstract boolean canMove(Position source, Position target);
+
+    public boolean isKnight() {
+        return false;
+    }
+
     public boolean isKing() {
-        return this instanceof King;
+        return false;
     }
 
     public boolean isPawn() {
-        return this instanceof Pawn;
+        return false;
     }
 
     public boolean isEmpty() {
-        return this instanceof Empty;
+        return false;
     }
-
-    public abstract boolean canMove(Position source, Position target, ChessBoard chessBoard);
 }

@@ -1,17 +1,17 @@
 package chess.domain;
 
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.PositionDto;
 import chess.domain.piece.*;
-import chess.domain.piece.info.Color;
-import chess.domain.piece.info.Direction;
-import chess.domain.piece.info.Position;
+import chess.domain.piece.info.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
     private static final String OBSTACLE_ERROR = "[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.";
     private static final String SAME_COLOR_ERROR = "[ERROR] taget에 같은 편 말이 있습니다.";
+    private static final String NOT_MOVE_ERROR = "[ERROR] 올바른 이동이 아닙니다.";
     private static final String EMPTY_ERROR = "[ERROR] 체스말이 없습니다.";
     private Map<Position, Piece> chessBoard;
 
@@ -31,15 +31,11 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public Piece findByPosition(Position position) {
-        return chessBoard.keySet().stream()
-                .filter(key -> key.equals(position))
-                .map(key -> chessBoard.get(position))
-                .findFirst()
-                .orElse(Empty.EMPTY);
+        return chessBoard.getOrDefault(position, Empty.EMPTY);
     }
 
     public boolean isAliveAllKings() {
@@ -83,8 +79,37 @@ public class ChessBoard {
     }
 
     private void validateMovable(Piece sourcePiece, Position source, Position target) {
-        if (!sourcePiece.canMove(source, target, this)) {
-            throw new IllegalArgumentException();
+        if (!sourcePiece.canMove(source, target)) {
+            throw new IllegalArgumentException(NOT_MOVE_ERROR);
+        }
+        validatePieceRoute(sourcePiece, source, target);
+    }
+
+    private void validatePieceRoute(Piece sourcePiece, Position source, Position target) {
+        if (sourcePiece.isKnight()) {
+            return;
+        }
+        if (!sourcePiece.isKnight() && !sourcePiece.isPawn()) {
+            validateCrossOrDiagonalRoute(source, target);
+            return;
+        }
+        Pawn pawn = (Pawn) sourcePiece;
+        if (pawn.isAttackAble(source, target)) {
+            validateEmpty(findByPosition(target));
+        }
+        if (!pawn.isAttackAble(source, target)) {
+            validateCrossOrDiagonalRoute(source, target);
+        }
+    }
+
+    private void validateCrossOrDiagonalRoute(Position source, Position target) {
+        if (source.isCross(target)) {
+            Direction cross = Cross.findCrossByTwoPosition(source, target);
+            hasPieceInPath(source, target, cross);
+        }
+        if (source.isDiagonal(target)) {
+            Direction diagonal = Diagonal.findDiagonalByTwoPosition(source, target);
+            hasPieceInPath(source, target, diagonal);
         }
     }
 
@@ -121,5 +146,49 @@ public class ChessBoard {
     public boolean hasSamePositionPiece(Position target) {
         return chessBoard.keySet().stream()
                 .anyMatch(position -> position.equals(target));
+    }
+
+    public List<Position> routes(Piece sourcePiece, Position source) {
+        List<Position> routes = new ArrayList<>();
+        for (Position target : Position.POSITIONS) {
+            try {
+                validateMovable(sourcePiece, source, target);
+                validateSameColor(source, target);
+                routes.add(target);
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        return routes;
+    }
+
+    public void sync(Map<PositionDto, PieceDto> chessBoard) {
+        this.chessBoard.clear();
+        for (PositionDto positionDto : chessBoard.keySet()) {
+            Position position = Position.of(positionDto.getPosition().charAt(0), positionDto.getPosition().charAt(1));
+            String pieceName = chessBoard.get(positionDto).getName();
+            String pieceColor = chessBoard.get(positionDto).getColor();
+            Piece piece = piece(pieceName, pieceColor);
+            this.chessBoard.put(position, piece);
+        }
+    }
+
+    private Piece piece(String pieceName, String pieceColor) {
+        if (pieceName.equalsIgnoreCase("K")) {
+            return new King(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("Q")) {
+            return new Queen(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("N")) {
+            return new Knight(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("B")) {
+            return new Bishop(pieceName, Color.from(pieceColor));
+        }
+        if (pieceName.equalsIgnoreCase("R")) {
+            return new Rook(pieceName, Color.from(pieceColor));
+        }
+        return new Pawn(pieceName, Color.from(pieceColor));
     }
 }

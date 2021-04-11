@@ -1,12 +1,13 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.Position;
 
-public class RookMoveStrategy extends AllMoveStrategy {
+public class RookMoveStrategy implements MoveStrategy {
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        validateCross(source, target, chessBoard);
-        return true;
+    public boolean canMove(Position source, Position target) {
+        if (source.isCross(target)) {
+            return true;
+        }
+        return false;
     }
 }

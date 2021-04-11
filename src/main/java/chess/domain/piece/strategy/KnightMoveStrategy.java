@@ -1,13 +1,12 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.Position;
 
 public class KnightMoveStrategy implements MoveStrategy {
     private static final String KNIGHT_ERROR = "[ERROR] 나이트의 이동 규칙에 어긋났습니다.";
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
+    public boolean canMove(Position source, Position target) {
         if (!canKnightMove(source, target)) {
             throw new IllegalArgumentException(KNIGHT_ERROR);
         }

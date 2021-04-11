@@ -10,13 +10,18 @@ public class Empty extends Piece {
     public static final Empty EMPTY = new Empty(".", Color.NONE);
 
     public Empty(String name, Color color) {
-        super(name, color, new Score(0), ((source, target, chessBoard) -> {
+        super(name, color, new Score(0), ((source, target) -> {
             throw new IllegalArgumentException(EMPTY_ERROR);
         }));
     }
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target) {
         throw new IllegalArgumentException(EMPTY_ERROR);
     }
 }

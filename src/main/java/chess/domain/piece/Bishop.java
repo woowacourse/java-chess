@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.info.Color;
 import chess.domain.piece.info.Position;
 import chess.domain.piece.info.Score;
@@ -19,23 +18,19 @@ public class Bishop extends Piece {
             Position.of('f', '1'));
 
     public Bishop(String name, Color color) {
-        super(name, color, new Score(0), new BishopMoveStrategy());
-    }
-
-    public Bishop(String name, Color color, Score score) {
-        super(name, color, score, new BishopMoveStrategy());
+        super(name, color, SCORE, new BishopMoveStrategy());
     }
 
     @Override
-    public boolean canMove(Position source, Position target, ChessBoard chessBoard) {
-        return moveStrategy.canMove(source, target, chessBoard);
+    public boolean canMove(Position source, Position target) {
+        return moveStrategy.canMove(source, target);
     }
 
     public static Map<Position, Bishop> generate() {
         Map<Position, Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .collect(Collectors.toMap(position -> position, position -> new Bishop("B", Color.BLACK, SCORE)));
+                .collect(Collectors.toMap(position -> position, position -> new Bishop("B", Color.BLACK)));
         Map<Position, Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .collect(Collectors.toMap(position -> position, position -> new Bishop("b", Color.WHITE, SCORE)));
+                .collect(Collectors.toMap(position -> position, position -> new Bishop("b", Color.WHITE)));
         blackBishops.putAll(whiteBishops);
         return blackBishops;
     }
