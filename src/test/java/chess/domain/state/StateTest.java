@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PiecesFactory;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
@@ -18,8 +18,8 @@ class StateTest {
 
     @BeforeEach
     void init() {
-        Pieces whitePieces = PieceFactory.whitePieces();
-        Pieces blackPieces = PieceFactory.blackPieces();
+        Pieces whitePieces = PiecesFactory.whitePieces();
+        Pieces blackPieces = PiecesFactory.blackPieces();
 
         white = StateFactory.initialization(whitePieces);
         black = StateFactory.initialization(blackPieces);

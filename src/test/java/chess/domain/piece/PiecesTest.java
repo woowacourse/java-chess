@@ -14,8 +14,8 @@ class PiecesTest {
 
     @BeforeEach
     void setUp() {
-        whitePieces = PieceFactory.whitePieces();
-        blackPieces = PieceFactory.blackPieces();
+        whitePieces = PiecesFactory.whitePieces();
+        blackPieces = PiecesFactory.blackPieces();
     }
 
     @DisplayName("현재 남아 있는 말에 대한 점수를 계산한다.")

@@ -15,7 +15,7 @@ public interface MoveStrategy {
         }
     }
 
-    default Position findNextPosition(final int rank, final int file) {
+    default Position findTargetPosition(final int rank, final int file) {
         return Position.valueOf(rank, file);
     }
 

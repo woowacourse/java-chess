@@ -1,7 +1,7 @@
 package chess.domain.player;
 
 import chess.domain.command.CommandFactory;
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PiecesFactory;
 import chess.domain.state.StateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +14,8 @@ class RoundTest {
 
     @BeforeEach
     void setUp() {
-        round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
-                StateFactory.initialization(PieceFactory.blackPieces()),
+        round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
+                StateFactory.initialization(PiecesFactory.blackPieces()),
                 CommandFactory.initialCommand("start"));
     }
 

@@ -74,3 +74,52 @@
   - [x] 한 번에 한 쪽의 점수만을 계산한다.
     - ex. white 턴이면 white 진영의 점수, black 턴이면 black 진영의 점수를 계산한다.
 - [x] `status` 명령을 입력하면 각 진영의 점수를 출력하고, 어느 진영이 이겼는지 결과를 보여준다.
+
+<br/>
+
+## 4단계 기능목록 정리
+- [x] 웹 UI를 적용한다.
+  - 도메인 객체의 변경을 최소화한다.
+- [x] 체스판을 출력한다.
+- [x] 원하는 위치를 클릭하면 기물이 움직인다.
+- [x] status 버튼을 클릭하면 점수를 출력한다.
+  - [x] white, black 진영의 점수를 출력한다.
+
+<br/>
+
+## 5단계 기능목록 정리
+- [x] 웹 서버를 재시작해도 이전에 하던 체스 게임을 다시 진행할 수 있다.
+
+### DB ERD
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/114058330-5021a800-98ce-11eb-9225-98aa4425f68a.PNG"></p>
+
+### DB DDL
+```sql
+-- MySQL Workbench Forward Engineering
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`piece`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`piece` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `piece_name` VARCHAR(45) NOT NULL,
+  `piece_position` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`turn`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`turn` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `current_turn` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB;
+```

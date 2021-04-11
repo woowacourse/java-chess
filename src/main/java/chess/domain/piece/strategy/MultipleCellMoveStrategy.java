@@ -17,15 +17,15 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
                                           final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
         for (int index = position.getRankValue(); index < range; index++) {
-            Position nextPosition = position.findNextPositionByRank(UP, index);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Position targetPosition = position.findTargetPositionByRank(UP, index);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -37,15 +37,15 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
                                             final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
         for (int index = position.getRankValue(); index > range; index--) {
-            Position nextPosition = position.findNextPositionByRank(DOWN, index);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Position targetPosition = position.findTargetPositionByRank(DOWN, index);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -57,15 +57,15 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
                                             final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
         for (int index = position.getFileValue(); index > range; index--) {
-            Position nextPosition = position.findNextPositionByFile(LEFT, index);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Position targetPosition = position.findTargetPositionByFile(LEFT, index);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -79,19 +79,19 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
         int rank = position.getRankValue();
         int file = position.getFileValue();
         for (int index = rank; index < range; index++) {
-            Position nextPosition = findNextPosition(index + LEFT_UP.getRow(),
+            Position targetPosition = findTargetPosition(index + LEFT_UP.getRow(),
                     file-- + LEFT_UP.getColumn());
             if (file < 1) {
                 break;
             }
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -105,19 +105,19 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
         int rank = position.getRankValue();
         int file = position.getFileValue();
         for (int index = rank; index > range; index--) {
-            Position nextPosition = findNextPosition(index + LEFT_DOWN.getRow(),
+            Position targetPosition = findTargetPosition(index + LEFT_DOWN.getRow(),
                     file-- + LEFT_DOWN.getColumn());
             if (file < 1) {
                 break;
             }
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -129,15 +129,15 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
                                              final Position position, final int range) {
         List<Position> positions = new ArrayList<>();
         for (int index = position.getFileValue(); index < range; index++) {
-            Position nextPosition = position.findNextPositionByFile(RIGHT, index);
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Position targetPosition = position.findTargetPositionByFile(RIGHT, index);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -151,19 +151,19 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
         int rank = position.getRankValue();
         int file = position.getFileValue();
         for (int index = rank; index < range; index++) {
-            Position nextPosition = findNextPosition(index + RIGHT_UP.getRow(),
+            Position targetPosition = findTargetPosition(index + RIGHT_UP.getRow(),
                     file++ + RIGHT_UP.getColumn());
             if (file > 7) {
                 break;
             }
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;
@@ -177,19 +177,19 @@ public abstract class MultipleCellMoveStrategy implements MoveStrategy {
         int rank = position.getRankValue();
         int file = position.getFileValue();
         for (int index = rank; index > range; index--) {
-            Position nextPosition = findNextPosition(index + RIGHT_DOWN.getRow(),
+            Position targetPosition = findTargetPosition(index + RIGHT_DOWN.getRow(),
                     file++ + RIGHT_DOWN.getColumn());
             if (file > 7) {
                 break;
             }
-            Optional<Piece> basePiece = findPiece(basePieces, nextPosition);
-            Optional<Piece> targetPiece = findPiece(targetPieces, nextPosition);
+            Optional<Piece> basePiece = findPiece(basePieces, targetPosition);
+            Optional<Piece> targetPiece = findPiece(targetPieces, targetPosition);
             if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 break;
             }
             if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
+                positions.add(targetPosition);
                 continue;
             }
             break;

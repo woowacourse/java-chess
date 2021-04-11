@@ -37,4 +37,14 @@ public abstract class Turn implements State {
     public double calculateScore() {
         return pieces.calculateScore();
     }
+
+    @Override
+    public State toRunningTurn() {
+        return new RunningTurn(pieces);
+    }
+
+    @Override
+    public State toFinishedTurn() {
+        return new FinishedTurn(pieces);
+    }
 }

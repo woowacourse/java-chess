@@ -19,6 +19,8 @@ public class Round {
     private Command command;
     private boolean isEnd = false;
 
+    private static Map<Position, Piece> board;
+
     public Round(final State white, final State black, final Command command) {
         this(new WhitePlayer(white), new BlackPlayer(black), command);
     }
@@ -29,37 +31,51 @@ public class Round {
         this.command = command;
     }
 
+    public void execute(final Queue<String> commands) {
+        this.command = this.command.execute(commands.poll());
+        if (this.command.isMove()) {
+            this.command = command.ready();
+            Position sourcePosition = Position.from(commands.poll());
+            Position targetPosition = Position.from(commands.poll());
+            moveByTurn(sourcePosition, targetPosition);
+        }
+    }
+
     private void moveByTurn(final Position sourcePosition, final Position targetPosition) {
         if (whitePlayer.isFinish()) {
-            Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
-            Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());
-            blackPlayer.move(source, target, whitePlayer.getState());
-            whitePlayer.toRunningState(blackPlayer.getState());
-            checkPieces(whitePlayer.getState(), target);
+            move(blackPlayer, whitePlayer, sourcePosition, targetPosition);
             return;
         }
-        Source source = Source.valueOf(sourcePosition, whitePlayer.getState());
-        Target target = Target.valueOf(source, targetPosition, whitePlayer.getState());
-        whitePlayer.move(source, target, blackPlayer.getState());
-        blackPlayer.toRunningState(whitePlayer.getState());
-        checkPieces(blackPlayer.getState(), target);
+        move(whitePlayer, blackPlayer, sourcePosition, targetPosition);
+    }
+
+    private void move(final Player currentPlayer, final Player anotherPlayer,
+                      final Position sourcePosition, final Position targetPosition) {
+        Source source = Source.valueOf(sourcePosition, currentPlayer.getState());
+        Target target = Target.valueOf(source, targetPosition, currentPlayer.getState());
+        currentPlayer.move(source, target, anotherPlayer.getState());
+        anotherPlayer.toRunningState(currentPlayer.getState());
+        checkPieces(anotherPlayer.getState(), target);
     }
 
     private void checkPieces(final State state, final Target target) {
         if (state.isKing(target.getPosition())) {
             isEnd = true;
         }
-        if (isEnd) {
-            this.command = command.end();
-            return;
-        }
         if (state.findPiece(target.getPosition()).isPresent()) {
             state.removePiece(target.getPosition());
         }
+        if (isEnd) {
+            changeToEnd();
+        }
+    }
+
+    public void changeToEnd() {
+        this.command = command.end();
     }
 
     public Map<Position, Piece> getBoard() {
-        Map<Position, Piece> board = ChessBoardFactory.initializeBoard();
+        board = ChessBoardFactory.initializeBoard();
         Pieces whitePieces = whitePlayer.getPieces();
         Pieces blackPieces = blackPlayer.getPieces();
 
@@ -69,18 +85,13 @@ public class Round {
         return board;
     }
 
-    public boolean isPlaying() {
-        return !command.isEnd();
+    public Map<Position, Piece> getBoard(final Map<Position, Piece> loadBoard) {
+        board = loadBoard;
+        return board;
     }
 
-    public void execute(final Queue<String> commands) {
-        this.command = this.command.execute(commands.poll());
-        if (this.command.isMove()) {
-            this.command = command.ready();
-            Position sourcePosition = Position.from(commands.poll());
-            Position targetPosition = Position.from(commands.poll());
-            moveByTurn(sourcePosition, targetPosition);
-        }
+    public boolean isPlaying() {
+        return !command.isEnd();
     }
 
     public double calculateScore() {
@@ -113,5 +124,9 @@ public class Round {
 
     public Player getBlackPlayer() {
         return blackPlayer;
+    }
+
+    public Command getCommand() {
+        return command;
     }
 }

@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 class PositionTest {
     @DisplayName("Position 객체를 생성한다.")
@@ -32,5 +31,13 @@ class PositionTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             Position.valueOf("1", file);
         }).withMessage("없는 파일임! 입력 값: %s", file);
+    }
+
+    @DisplayName("문자열에 일치하는 Position 객체를 반환한다.")
+    @Test
+    void findByString() {
+        Position position = Position.findByString("a2");
+
+        assertThat(position).isEqualTo(Position.valueOf("2", "a"));
     }
 }

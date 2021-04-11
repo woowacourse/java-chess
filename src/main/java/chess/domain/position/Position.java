@@ -52,15 +52,15 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
-    public Position findNextPosition(final Direction direction) {
-        int nextRank = this.getRankValue() + direction.getRow();
-        int nextFile = this.getFileValue() + direction.getColumn();
-        return findNextPositionByDirection(direction, nextRank, nextFile);
+    public Position findTargetPosition(final Direction direction) {
+        int targetRank = this.getRankValue() + direction.getRow();
+        int targetFile = this.getFileValue() + direction.getColumn();
+        return findTargetPositionByDirection(direction, targetRank, targetFile);
     }
 
-    private Position findNextPositionByDirection(final Direction direction,
-                                                 final int nextRank, final int nextFile) {
-        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+    private Position findTargetPositionByDirection(final Direction direction,
+                                                   final int targetRank, final int targetFile) {
+        if (isRankInBound(targetRank) && isFileInBound(targetFile)) {
             Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow());
             File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
             return POSITIONS.get(findRank.getRank() + findFile.getFile());
@@ -68,15 +68,15 @@ public class Position {
         return this;
     }
 
-    public Position findNextPosition(final Direction direction, final int index) {
-        int nextRank = this.getRankValue() + direction.getRow() + index;
-        int nextFile = this.getFileValue() + direction.getColumn();
-        return findNextPositionByDirection(direction, nextRank, nextFile, index);
+    public Position findTargetPosition(final Direction direction, final int index) {
+        int targetRank = this.getRankValue() + direction.getRow() + index;
+        int targetFile = this.getFileValue() + direction.getColumn();
+        return findTargetPositionByDirection(direction, targetRank, targetFile, index);
     }
 
-    private Position findNextPositionByDirection(final Direction direction,
-                                                 final int nextRank, final int nextFile, final int index) {
-        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+    private Position findTargetPositionByDirection(final Direction direction,
+                                                   final int targetRank, final int targetFile, final int index) {
+        if (isRankInBound(targetRank) && isFileInBound(targetFile)) {
             Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow() + index);
             File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
             return POSITIONS.get(findRank.getRank() + findFile.getFile());
@@ -84,15 +84,15 @@ public class Position {
         return this;
     }
 
-    public Position findNextPositionByRank(final Direction direction, final int index) {
-        int nextRank = direction.getRow() + index;
-        int nextFile = this.getFileValue() + direction.getColumn();
-        return findNextPositionByRank(direction, nextRank, nextFile, index);
+    public Position findTargetPositionByRank(final Direction direction, final int index) {
+        int targetRank = direction.getRow() + index;
+        int targetFile = this.getFileValue() + direction.getColumn();
+        return findTargetPositionByRank(direction, targetRank, targetFile, index);
     }
 
-    private Position findNextPositionByRank(final Direction direction,
-                                            final int nextRank, final int nextFile, final int index) {
-        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+    private Position findTargetPositionByRank(final Direction direction,
+                                              final int targetRank, final int targetFile, final int index) {
+        if (isRankInBound(targetRank) && isFileInBound(targetFile)) {
             Rank findRank = Rank.findByValue(direction.getRow() + index);
             File findFile = File.findByValue(this.getFileValue() + direction.getColumn());
             return POSITIONS.get(findRank.getRank() + findFile.getFile());
@@ -100,15 +100,15 @@ public class Position {
         return this;
     }
 
-    public Position findNextPositionByFile(final Direction direction, final int index) {
-        int nextRank = this.getRankValue() + direction.getRow();
-        int nextFile = direction.getColumn() + index;
-        return findNextPositionByFile(direction, nextRank, nextFile, index);
+    public Position findTargetPositionByFile(final Direction direction, final int index) {
+        int targetRank = this.getRankValue() + direction.getRow();
+        int targetFile = direction.getColumn() + index;
+        return findTargetPositionByFile(direction, targetRank, targetFile, index);
     }
 
-    private Position findNextPositionByFile(final Direction direction,
-                                            final int nextRank, final int nextFile, final int index) {
-        if (isRankInBound(nextRank) && isFileInBound(nextFile)) {
+    private Position findTargetPositionByFile(final Direction direction,
+                                              final int targetRank, final int targetFile, final int index) {
+        if (isRankInBound(targetRank) && isFileInBound(targetFile)) {
             Rank findRank = Rank.findByValue(this.getRankValue() + direction.getRow());
             File findFile = File.findByValue(direction.getColumn() + index);
             return POSITIONS.get(findRank.getRank() + findFile.getFile());
@@ -139,16 +139,18 @@ public class Position {
         return reversedSource;
     }
 
-    public Rank getRank() {
-        return rank;
-    }
-
-    public int getRankValue() {
-        return rank.getValue();
+    public static Position findByString(final String positionString) {
+        return Position.valueOf(
+                Rank.findByRank(positionString.substring(1, 2)),
+                File.findByFile(positionString.substring(0, 1)));
     }
 
     public File getFile() {
         return file;
+    }
+
+    public int getRankValue() {
+        return rank.getValue();
     }
 
     public int getFileValue() {

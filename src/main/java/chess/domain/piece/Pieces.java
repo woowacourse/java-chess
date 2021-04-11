@@ -21,10 +21,6 @@ public class Pieces {
                 .allMatch(Piece::isBlack);
     }
 
-    public List<Piece> getPieces() {
-        return Collections.unmodifiableList(pieces);
-    }
-
     public Optional<Piece> findPiece(final Position position) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(position))
@@ -48,9 +44,18 @@ public class Pieces {
         return false;
     }
 
+    public boolean isKing() {
+        return pieces.stream()
+                .anyMatch(Piece::isKing);
+    }
+
     public double calculateScore() {
         return this.pieces.stream()
                 .mapToDouble(piece -> piece.score(pieces))
                 .sum();
+    }
+
+    public List<Piece> getPieces() {
+        return Collections.unmodifiableList(pieces);
     }
 }
