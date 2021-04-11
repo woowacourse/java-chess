@@ -9,7 +9,7 @@ public class ConnectionManager {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess_db";
-    private static final String PARAMS = "?useSSL=false&serverTimezone=Asia/Seoul";
+    private static final String PARAMS = "?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=utf8";
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "root";
     private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";

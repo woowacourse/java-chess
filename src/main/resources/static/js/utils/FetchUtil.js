@@ -3,7 +3,7 @@ export async function getData(url = '', params = {}) {
   for (let key in params) {
     urlSearchParams.append(key, params[key])
   }
-  return fetch(`${url}?${urlSearchParams.toString()}`)
+  return await fetch(`${url}?${urlSearchParams.toString()}`)
   .then(response => {
     if (!response.ok) {
       throw new Error(response.status);
@@ -14,7 +14,7 @@ export async function getData(url = '', params = {}) {
 }
 
 export async function postData(url = '', data = {}) {
-  return fetch(url, {
+  return await fetch(url, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -22,9 +22,13 @@ export async function postData(url = '', data = {}) {
     headers: {
       'Content-Type': 'application/json',
     },
+    redirect: 'follow',
     body: JSON.stringify(data)
   })
   .then(response => {
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
     if (!response.ok) {
       throw new Error(response.status);
     }

@@ -1,5 +1,4 @@
 import {getData, postData} from "./utils/FetchUtil.js"
-import {User} from "./user/User.js"
 
 const url = "http://localhost:4567";
 
@@ -9,7 +8,7 @@ window.onload = function () {
   const searchRecordButton = document.querySelector(".search-record")
 
   newGameButton.addEventListener("click", startNewGame);
-  loadGameButton.addEventListener("click", loadGame);
+  // loadGameButton.addEventListener("click", loadGame);
 }
 
 async function startNewGame(e) {
@@ -23,9 +22,13 @@ async function startNewGame(e) {
     return;
   }
 
-  const whiteUser = await getUser(whiteUserName);
-  const blackUser = await getUser(blackUserName);
-  // TODO: /game get
+  try {
+    await createUserIfNotExistent(whiteUserName);
+    await createUserIfNotExistent(blackUserName);
+    await createGame(whiteUserName, blackUserName);
+  } catch (e) {
+    alert(e);
+  }
 }
 
 function validateName(whiteName, blackName) {
@@ -37,12 +40,12 @@ function validateName(whiteName, blackName) {
   }
 }
 
-async function getUser(userName) {
+async function createUserIfNotExistent(userName) {
   const plainObject = await getData(`${url}/api/user/${userName}`);
   if (isEmptyObject(plainObject)) {
-    return await createUser(userName);
+    await createUser(userName);
   }
-  return new User(plainObject);
+  return plainObject;
 }
 
 function isEmptyObject(object) {
@@ -54,10 +57,13 @@ async function createUser(userName) {
     name: userName
   };
 
-  try {
-    await postData(`${url}/api/user`, body);
-  } catch (e) {
-    throw new Error(e);
-  }
-  return new User(await getData(`${url}/api/user/${userName}`));
+  await postData(`${url}/api/user`, body);
+}
+
+async function createGame(whiteUserName, blackUserName) {
+  const body = {
+    whiteName: whiteUserName,
+    blackName: blackUserName
+  };
+  await postData(`${url}/game`, body);
 }
