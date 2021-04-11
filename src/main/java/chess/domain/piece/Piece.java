@@ -8,7 +8,11 @@ import java.util.Map;
 public abstract class Piece {
     private boolean isFirstMove;
 
-    Piece() {
+    public Piece(boolean isFirstMove) {
+        this.isFirstMove = isFirstMove;
+    }
+
+    public Piece() {
         isFirstMove = true;
     }
 

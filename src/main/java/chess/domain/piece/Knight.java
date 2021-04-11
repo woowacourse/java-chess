@@ -7,6 +7,10 @@ import java.util.Map;
 public final class Knight extends Piece {
     private static final int KNIGHT_HASHCODE_AS_UNICODE = 9816;
 
+    public Knight(final boolean isFirstMove) {
+        super(isFirstMove);
+    }
+
     public Knight() {
     }
 

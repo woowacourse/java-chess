@@ -10,6 +10,11 @@ public final class Pawn extends Piece {
 
     private final int direction;
 
+    public Pawn(final boolean isFirstMove, final int direction) {
+        super(isFirstMove);
+        this.direction = direction;
+    }
+
     public Pawn(final int direction) {
         this.direction = direction;
     }

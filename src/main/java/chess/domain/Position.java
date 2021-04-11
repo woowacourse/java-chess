@@ -123,6 +123,13 @@ public final class Position {
         return rightUpPath;
     }
 
+    public String getPositionInitial() {
+        return positionMap.keySet().stream()
+                .filter(initial -> positionMap.get(initial).equals(this))
+                .findFirst()
+                .orElse("");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

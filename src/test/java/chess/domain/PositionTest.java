@@ -54,4 +54,14 @@ public class PositionTest {
 
         assertEquals(expectedPath, resultPath);
     }
+
+    @Test
+    @DisplayName("현재 Position에 대응하는 체스판의 위치를 정상 반환한다.")
+    void position_initial_test() {
+        Position position = new Position(0, 0);
+        assertThat(position.getPositionInitial()).isEqualTo("a1");
+
+        position = new Position(7, 7);
+        assertThat(position.getPositionInitial()).isEqualTo("h8");
+    }
 }

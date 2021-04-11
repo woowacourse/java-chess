@@ -10,7 +10,7 @@ public final class Team {
     private final PieceCaptured pieceCaptured;
     private final Score score;
 
-    private Team(final PiecePosition piecePosition, final PieceCaptured pieceCaptured, final Score score) {
+    public Team(final PiecePosition piecePosition, final PieceCaptured pieceCaptured, final Score score) {
         this.piecePosition = piecePosition;
         this.pieceCaptured = pieceCaptured;
         this.score = score;
