@@ -1,18 +1,20 @@
 package chess.domain.chess;
 
-import java.util.List;
-
-import chess.domain.piece.PieceDTO;
+import chess.domain.board.BoardDTO;
 
 public class ChessDTO {
     private final String status;
     private final String turn;
-    private final List<PieceDTO> pieceDTOS;
+    private final BoardDTO boardDTO;
 
-    public ChessDTO(String status, String turn, List<PieceDTO> pieceDTOS) {
+    public ChessDTO(Chess chess) {
+        this(chess.status(), chess.color(), BoardDTO.from(chess));
+    }
+
+    public ChessDTO(String status, String turn, BoardDTO boardDTO) {
         this.status = status;
         this.turn = turn;
-        this.pieceDTOS = pieceDTOS;
+        this.boardDTO = boardDTO;
     }
 
     public String getStatus() {
@@ -23,7 +25,7 @@ public class ChessDTO {
         return turn;
     }
 
-    public List<PieceDTO> getPieceDTOS() {
-        return pieceDTOS;
+    public BoardDTO getBoardDTO() {
+        return boardDTO;
     }
 }

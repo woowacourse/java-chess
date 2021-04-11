@@ -16,6 +16,11 @@ public class ChessService {
         this.pieceDAO = new PieceDAO();
     }
 
+    public ChessDTO getChessGame(Long chessId) {
+        final Chess chess = chessDAO.findChessById(chessId);
+        return new ChessDTO(chess);
+    }
+
     public Long insert() {
         final Chess chess = Chess.createWithEmptyBoard()
                                  .start();
@@ -27,14 +32,9 @@ public class ChessService {
         return chessId;
     }
 
-    public ChessDTO getChessGame(Long chessId) {
-        return chessDAO.findChessById(chessId);
-    }
-
     public void move(Long chessId, MovePosition movePosition) {
-        final ChessDTO chessDTO = getChessGame(chessId);
-        final Chess chess = Chess.from(chessDTO)
-                                 .move(movePosition);
+        final Chess chess = chessDAO.findChessById(chessId)
+                                    .move(movePosition);
         pieceDAO.move(chessId, movePosition);
         chessDAO.updateChess(chessId, chess.status(), chess.color());
     }

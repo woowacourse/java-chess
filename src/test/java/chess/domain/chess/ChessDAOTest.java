@@ -18,12 +18,14 @@ public class ChessDAOTest {
     void findChessByIdTest() {
 
         // when
-        final ChessDTO chessDTO = chessDAO.findChessById(chessId);
+        final Chess chess = chessDAO.findChessById(chessId);
+        final ChessDTO chessDTO = new ChessDTO(chess);
 
         // then
         assertThat(chessDTO.getStatus()).isEqualTo("RUNNING");
         assertThat(chessDTO.getTurn()).isEqualTo("WHITE");
-        assertThat(chessDTO.getPieceDTOS()).size()
+        assertThat(chessDTO.getBoardDTO()
+                           .getPieceDTOS()).size()
                                            .isEqualTo(64);
     }
 
@@ -46,7 +48,8 @@ public class ChessDAOTest {
         chessDAO.updateChess(chessId, Status.KING_DEAD.name(), Color.BLACK.name());
 
         // then
-        final ChessDTO chessDTO = chessDAO.findChessById(chessId);
+        final Chess chess = chessDAO.findChessById(chessId);
+        final ChessDTO chessDTO = new ChessDTO(chess);
         assertThat(chessDTO.getStatus()).isEqualTo("KING_DEAD");
         assertThat(chessDTO.getTurn()).isEqualTo("BLACK");
     }

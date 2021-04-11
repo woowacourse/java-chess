@@ -1,7 +1,10 @@
 package chess.domain.chess;
 
+import java.util.List;
+
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.PieceDTO;
 import chess.domain.position.MovePosition;
 
 public class Chess {
@@ -26,11 +29,9 @@ public class Chess {
         return new Chess(BoardFactory.EmptyBoard.create(), Status.STOP, Color.WHITE);
     }
 
-    public static Chess from(ChessDTO chessDTO) {
-        Board board = Board.from(chessDTO.getPieceDTOS());
-        final Status status = Status.valueOf(chessDTO.getStatus());
-        final Color turn = Color.valueOf(chessDTO.getTurn());
-        return new Chess(board, status, turn);
+    public static Chess of(List<PieceDTO> pieceDTOS, String status, String turn) {
+        Board board = Board.from(pieceDTOS);
+        return new Chess(board, Status.valueOf(status), Color.valueOf(turn));
     }
 
     public Board getBoard() {

@@ -12,7 +12,7 @@ import chess.domain.ConnectionUtils;
 import chess.domain.piece.PieceDTO;
 
 public class ChessDAO {
-    public ChessDTO findChessById(Long chessId) {
+    public Chess findChessById(Long chessId) {
         String query = "SELECT c.status, c.turn FROM chess c WHERE c.chess_id = (?)";
 
         try (Connection connection = ConnectionUtils.getConnection();
@@ -23,7 +23,7 @@ public class ChessDAO {
                     final String status = resultSet.getString("status");
                     final String turn = resultSet.getString("turn");
                     final List<PieceDTO> pieceDTOS = findPiecesByChessId(chessId);
-                    return new ChessDTO(status, turn, pieceDTOS);
+                    return Chess.of(pieceDTOS, status, turn);
                 }
             }
         } catch (SQLException throwables) {
