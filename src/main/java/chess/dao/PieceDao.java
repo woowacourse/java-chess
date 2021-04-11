@@ -14,23 +14,25 @@ import java.util.Map;
 
 public class PieceDao {
 
-    public long[] savePieces(final Long gameId, final Map<Position, Piece> pieces) {
+    public long[] savePieces(final Connection connection, final Long gameId, final Map<Position, Piece> pieces) {
         final String query =
                 "INSERT INTO piece(gameId, position, symbol) VALUES (?, ?, ?)";
 
-        try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             for (final Map.Entry<Position, Piece> entry : pieces.entrySet()) {
                 pstmt.setInt(1, gameId.intValue());
                 pstmt.setString(2, entry.getKey().parseString());
                 pstmt.setString(3, entry.getValue().getSymbol());
                 pstmt.addBatch();
             }
-
             return pstmt.executeLargeBatch();
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+        } catch (Throwable e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlException) {
+                throw new IllegalStateException(sqlException);
+            }
+            throw new IllegalStateException(e);
         }
     }
 
@@ -56,33 +58,42 @@ public class PieceDao {
         }
     }
 
-    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId) {
-        final String query =
-                "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
-
-        try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);) {
-            pstmt.setString(1, sourcePiece.getSymbol());
-            pstmt.setInt(2, gameId.intValue());
-            pstmt.setString(3, target);
-            return pstmt.executeLargeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
-        }
-    }
-
-    public Long updateSourcePiece(final String source, final Long gameId) {
+    public Long updateSourcePiece(final Connection connection, final String source, final Long gameId) {
         final String query =
                 "UPDATE piece SET symbol = ? WHERE gameId=? && position=?";
 
-        try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);) {
+        try (PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setString(1, ".");
             pstmt.setInt(2, gameId.intValue());
             pstmt.setString(3, source);
             return pstmt.executeLargeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+        } catch (Throwable e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlException) {
+                throw new IllegalStateException(sqlException);
+            }
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Long updateTargetPiece(final Connection connection,
+                                  final String target, final Piece sourcePiece, final Long gameId) {
+        final String query =
+                "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setString(1, sourcePiece.getSymbol());
+            pstmt.setInt(2, gameId.intValue());
+            pstmt.setString(3, target);
+            return pstmt.executeLargeUpdate();
+        } catch (Throwable e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlException) {
+                throw new IllegalStateException(sqlException);
+            }
+            throw new IllegalStateException(e);
         }
     }
 }

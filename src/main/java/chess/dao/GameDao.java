@@ -7,24 +7,25 @@ import java.sql.*;
 
 public class GameDao {
 
-    public Long saveGame(final Game game) {
+    public Long saveGame(final Connection connection, final Game game) {
         final String query =
                 "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
-        try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement pstmt =
-                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
+        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, game.roomName());
             pstmt.setString(2, game.whiteUsername());
             pstmt.setString(3, game.blackUsername());
             pstmt.executeLargeUpdate();
-
             ResultSet resultSet = pstmt.getGeneratedKeys();
             resultSet.next();
             return resultSet.getLong(1);
-        } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage(), e);
+        } catch (Throwable e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlException) {
+                throw new IllegalStateException(sqlException);
+            }
+            throw new IllegalStateException(e);
         }
     }
 

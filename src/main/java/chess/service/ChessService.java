@@ -1,11 +1,9 @@
 package chess.service;
 
-import chess.controller.web.dto.move.MovablePathRequestDto;
 import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.move.PathResponseDto;
 import chess.controller.web.dto.piece.PieceResponseDto;
 import chess.controller.web.dto.game.GameResponseDto;
-import chess.controller.web.dto.game.GameRequestDto;
 import chess.controller.web.dto.history.HistoryResponseDto;
 import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
@@ -19,6 +17,8 @@ import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.util.PieceConverter;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,11 +44,17 @@ public class ChessService {
     public Long saveGame(final Game game) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
-        Long gameId = gameDao.saveGame(game);
-        stateDao.saveState(chessManager, gameId);
-        scoreDao.saveScore(chessManager.gameStatus(), gameId);
-        pieceDao.savePieces(gameId, pieces);
-        return gameId;
+        try (Connection connection = ConnectionProvider.getConnection()){
+            connection.setAutoCommit(false);
+            Long gameId = gameDao.saveGame(connection, game);
+            stateDao.saveState(connection, chessManager, gameId);
+            scoreDao.saveScore(connection, chessManager.gameStatus(), gameId);
+            pieceDao.savePieces(connection, gameId, pieces);
+            connection.commit();
+            return gameId;
+        } catch (SQLException | IllegalStateException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public List<PieceResponseDto> findPiecesById(final Long gameId) {
@@ -71,9 +77,9 @@ public class ChessService {
         return historyDao.findHistoryByGameId(gameId);
     }
 
-    public PathResponseDto movablePath(final MovablePathRequestDto movablePathRequestDto, final Long gameId) {
+    public PathResponseDto movablePath(final String source, final Long gameId) {
         ChessManager chessManager = loadChessManager(gameId);
-        Path path = chessManager.movablePath(Position.of(movablePathRequestDto.getSource()));
+        Path path = chessManager.movablePath(Position.of(source));
         return PathResponseDto.from(path);
     }
 
@@ -83,12 +89,18 @@ public class ChessService {
         HistoryResponseDto historyResponseDto = HistoryResponseDto.from(moveCommand, chessManager);
         Piece sourcePiece = chessManager.pickPiece(Position.of(moveRequestDto.getSource()));
         chessManager.move(Position.of(moveRequestDto.getSource()), Position.of(moveRequestDto.getTarget()));
-        scoreDao.updateScore(chessManager.gameStatus(), gameId);
-        stateDao.updateState(chessManager, gameId);
-        pieceDao.updateTargetPiece(moveRequestDto.getTarget(), sourcePiece, gameId);
-        pieceDao.updateSourcePiece(moveRequestDto.getSource(), gameId);
-        historyDao.saveHistory(historyResponseDto, gameId);
-        return historyResponseDto;
+        try (Connection connection = ConnectionProvider.getConnection()) {
+            connection.setAutoCommit(false);
+            scoreDao.updateScore(connection, chessManager.gameStatus(), gameId);
+            stateDao.updateState(connection, chessManager, gameId);
+            pieceDao.updateTargetPiece(connection, moveRequestDto.getTarget(), sourcePiece, gameId);
+            pieceDao.updateSourcePiece(connection, moveRequestDto.getSource(), gameId);
+            historyDao.saveHistory(connection, historyResponseDto, gameId);
+            connection.commit();
+            return historyResponseDto;
+        } catch (SQLException | IllegalStateException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     private ChessManager loadChessManager(final Long gameId) {
