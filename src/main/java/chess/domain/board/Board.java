@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.HashMap;
+ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.counting;
@@ -30,9 +31,9 @@ public class Board {
         this.board = board;
     }
 
-    public static Board from(BoardDTO boardDTO) {
+    public static Board from(List<PieceDTO> pieceDTOS) {
         final Map<Position, Piece> board = new HashMap<>();
-        for (PieceDTO pieceDTO : boardDTO.getPieceDTOS()) {
+        for (PieceDTO pieceDTO : pieceDTOS) {
             Color color = Color.valueOf(pieceDTO.getColor());
             Position position = Position.from(pieceDTO.getPosition());
             Piece piece = PieceFactory.create(pieceDTO.getName(), color);
