@@ -63,4 +63,37 @@ public class GameDao implements GameDaoInterface {
             )
         );
     }
+
+    @Override
+    public void update(final Game game) {
+        final String query = "UPDATE game SET turn = ?, is_finished = ? WHERE id = ?";
+        try (
+            final Connection connection = createConnection();
+            final PreparedStatement pstmt = JDBCHelper.createPreparedStatement(
+                connection, query, Arrays.asList(
+                    game.getTurnValue(), game.getFinished(), game.getId()
+                )
+            );
+        ) {
+            System.out.println(game);
+            pstmt.executeUpdate();
+        } catch (final SQLException e) {
+            throw new UncheckedSQLException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteById(final Long id) {
+        final String query = "DELETE FROM game WHERE id = ?";
+        try (
+            final Connection connection = createConnection();
+            final PreparedStatement pstm = JDBCHelper.createPreparedStatement(
+                connection, query, Collections.singletonList(id)
+            )
+        ) {
+            pstm.executeUpdate();
+        } catch (final SQLException e) {
+            throw new UncheckedSQLException(e.getMessage());
+        }
+    }
 }

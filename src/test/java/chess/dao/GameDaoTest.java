@@ -7,11 +7,8 @@ import chess.entity.Game;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
-@TestMethodOrder(OrderAnnotation.class)
 class GameDaoTest {
 
     private GameDao gameDao;
@@ -28,9 +25,21 @@ class GameDaoTest {
         final long id = gameDao.insert(game);
 
         // read
-        final Optional<Game> optionalGame = gameDao.selectById(id);
+        Optional<Game> optionalGame = gameDao.selectById(id);
         assertThat(optionalGame).isPresent();
-        final Game readGame = optionalGame.get();
+        Game readGame = optionalGame.get();
         assertThat(id).isEqualTo(readGame.getId());
+
+        // update
+        final Game expectedGame = new Game(id, 1L, 2L, Team.BLACK, true, LocalDateTime.now());
+        gameDao.update(expectedGame);
+        optionalGame = gameDao.selectById(id);
+        readGame = optionalGame.get();
+        assertThat(expectedGame.getTurnValue()).isEqualTo(readGame.getTurnValue());
+        assertThat(expectedGame.getFinished()).isEqualTo(readGame.getFinished());
+
+        // delete
+        gameDao.deleteById(id);
+        assertThat(gameDao.selectById(id)).isEmpty();
     }
 }

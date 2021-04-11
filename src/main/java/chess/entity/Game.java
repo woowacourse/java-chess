@@ -35,8 +35,8 @@ public class Game {
         return blackId;
     }
 
-    public Team getTurn() {
-        return turn;
+    public String getTurnValue() {
+        return turn.getValue();
     }
 
     public Boolean getFinished() {
