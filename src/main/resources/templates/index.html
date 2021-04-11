@@ -2,9 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <style>
+        .container {
+
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .menu_container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: 100px;
+            margin-left: -89px;
+            text-align: center;
+        }
+
+        .main_img {
+            width: 100%;
+            height: 100%;
+            float: contour;
+            margin: 20px auto;
+        }
+
+        input {
+            -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 20px 30px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        input.button {
+            font-weight: bold;
+            color: rgba(30, 22, 54, 0.8);
+            box-shadow: rgba(30, 22, 54, 0.8) 0 0px 0px 2px inset;
+        }
+
+        input.button:hover {
+            color: rgba(255, 255, 255, 0.85);
+            box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+        }
+
+        input.button2 {
+            font-weight: bold;
+            color: rgba(30, 22, 54, 0.8);
+            box-shadow: rgba(30, 22, 54, 0.8) 0 0px 0px 2px inset;
+        }
+
+        input.button2:hover {
+            color: rgba(255, 255, 255, 0.85);
+            box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div class="container">
+    <div class="menu_container">
+        <h1 class="title">CHESS</h1>
+        <div><img class="main_img" src="/img/mainPage.jpg"></div>
+        <div class="wrap">
+            <form onsubmit="return validateName()">
+                <input type="text" id="boardName" name="boardName" placeholder="board name">
+                <input type="submit" class="button" value="새로운 게임시작" formaction="/game">
+                <input type="submit" class="button2" value="게임 계속하기" formaction="/continue">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validateName() {
+        let name = document.getElementById("boardName").value;
+        console.log(name);
+        if (name === "") {
+            alert("보드 이름을 입력해주세요!");
+            return false;
+        } else if (name.length > 30) {
+            console.log(name.length);
+            alert("이름은 영어로 30자 이하, 한글은 10자 이하만 가능합니다.");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

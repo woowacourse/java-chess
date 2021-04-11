@@ -1,7 +1,7 @@
 package chess.domain.piece.moving;
 
 import chess.domain.Position;
-import chess.exception.ImpossibleMoveException;
+import chess.domain.game.ImpossibleMoveException;
 
 import java.util.List;
 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHESS</title>
+    <style>
+        .table_container {
+            height: 1200px;
+            width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            text-align: center;
+            align-content: center;
+            vertical-align: center;
+            margin: 0 auto;
+            background-image: url("/img/board.jpg");
+            background-size: 1200px 1200px;
+        }
+
+        .chessboard {
+            height: 150px;
+            width: 150px;
+        }
+
+        form {
+            display: inline;
+        }
+
+    </style>
+</head>
+<body>
+<h1 text align="center">{{board.currentTeam}}팀 차례</h1>
+
+<div>
+    <div class="table_container">
+        <div id="a8" class="chessboard"></div>
+        <div id="b8" class="chessboard"></div>
+        <div id="c8" class="chessboard"></div>
+        <div id="d8" class="chessboard"></div>
+        <div id="e8" class="chessboard"></div>
+        <div id="f8" class="chessboard"></div>
+        <div id="g8" class="chessboard"></div>
+        <div id="h8" class="chessboard"></div>
+
+        <div id="a7" class="chessboard"></div>
+        <div id="b7" class="chessboard"></div>
+        <div id="c7" class="chessboard"></div>
+        <div id="d7" class="chessboard"></div>
+        <div id="e7" class="chessboard"></div>
+        <div id="f7" class="chessboard"></div>
+        <div id="g7" class="chessboard"></div>
+        <div id="h7" class="chessboard"></div>
+
+        <div id="a6" class="chessboard"></div>
+        <div id="b6" class="chessboard"></div>
+        <div id="c6" class="chessboard"></div>
+        <div id="d6" class="chessboard"></div>
+        <div id="e6" class="chessboard"></div>
+        <div id="f6" class="chessboard"></div>
+        <div id="g6" class="chessboard"></div>
+        <div id="h6" class="chessboard"></div>
+
+        <div id="a5" class="chessboard"></div>
+        <div id="b5" class="chessboard"></div>
+        <div id="c5" class="chessboard"></div>
+        <div id="d5" class="chessboard"></div>
+        <div id="e5" class="chessboard"></div>
+        <div id="f5" class="chessboard"></div>
+        <div id="g5" class="chessboard"></div>
+        <div id="h5" class="chessboard"></div>
+
+        <div id="a4" class="chessboard"></div>
+        <div id="b4" class="chessboard"></div>
+        <div id="c4" class="chessboard"></div>
+        <div id="d4" class="chessboard"></div>
+        <div id="e4" class="chessboard"></div>
+        <div id="f4" class="chessboard"></div>
+        <div id="g4" class="chessboard"></div>
+        <div id="h4" class="chessboard"></div>
+
+        <div id="a3" class="chessboard"></div>
+        <div id="b3" class="chessboard"></div>
+        <div id="c3" class="chessboard"></div>
+        <div id="d3" class="chessboard"></div>
+        <div id="e3" class="chessboard"></div>
+        <div id="f3" class="chessboard"></div>
+        <div id="g3" class="chessboard"></div>
+        <div id="h3" class="chessboard"></div>
+
+        <div id="a2" class="chessboard"></div>
+        <div id="b2" class="chessboard"></div>
+        <div id="c2" class="chessboard"></div>
+        <div id="d2" class="chessboard"></div>
+        <div id="e2" class="chessboard"></div>
+        <div id="f2" class="chessboard"></div>
+        <div id="g2" class="chessboard"></div>
+        <div id="h2" class="chessboard"></div>
+
+        <div id="a1" class="chessboard"></div>
+        <div id="b1" class="chessboard"></div>
+        <div id="c1" class="chessboard"></div>
+        <div id="d1" class="chessboard"></div>
+        <div id="e1" class="chessboard"></div>
+        <div id="f1" class="chessboard"></div>
+        <div id="g1" class="chessboard"></div>
+        <div id="h1" class="chessboard"></div>
+    </div>
+    <div class="row" style="text-align: center">
+        <form name="moveForm" action="/move" method="post" onsubmit="return validateMove()">
+            <input type="text" name="source" placeholder="source ex)a2" style="width:240px;height:60px;font-size:30px;">
+            <input type="text" name="target" placeholder="target ex)a4" style="width:240px;height:60px;font-size:30px;">
+            <input type="hidden" name="boardName" value="{{board.boardName}}">
+            <input type="submit" id="move" value="move" style="width:240px;height:60px;font-size:30px;">
+        </form>
+        <form action="/end" onsubmit="return confirmExit()">
+            <button type="submit" style="width:240px;height:60px;font-size:30px;">end</button>
+        </form>
+        <form action="/status" method="post">
+            <input type="hidden" name="boardName" value="{{board.boardName}}">
+            <button type="submit" id="status" style="width:240px;height:60px;font-size:30px;">status</button>
+        </form>
+    </div>
+</div>
+<div style="text-align: center; font-size: 30px">
+    BLACK팀 점수 : {{result.blackTeamScore}} <br>
+    WHITE팀 점수 : {{result.whiteTeamScore}} <br>
+    승자 : {{result.winner}}
+</div>
+</div>
+
+<script>
+    const pieceNames = {
+        p: 'white-pawn',
+        P: 'black-pawn',
+        r: 'white-rook',
+        R: 'black-rook',
+        b: 'white-bishop',
+        B: 'black-bishop',
+        q: 'white-queen',
+        Q: 'black-queen',
+        k: 'white-king',
+        K: 'black-king',
+        n: 'white-knight',
+        N: 'black-knight'
+    };
+
+    window.onload = function () {
+        let winner = "{{result.winner}}";
+        let move = document.getElementById("move");
+        let status = document.getElementById("status");
+        let checked = "{{board.checked}}";
+        let kingDead = "{{board.kindDead}}";
+        if (!winner) {
+            move.disabled = false;
+            status.disabled = false;
+        } else {
+            move.disabled = true;
+            status.disabled = true;
+        }
+        if (checked == true) {
+            alert("체크!");
+        }
+        if (kingDead == true) {
+            alert("{{result.winner}} 승리!");
+        }
+    }
+
+    function validateMove() {
+        let moveForm = document.moveForm;
+        let source = moveForm.source.value;
+        let target = moveForm.target.value;
+        if (!source || !target) {
+            alert("말과 이동할 위치를 입력해주세요.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function confirmExit() {
+        let exit = confirm("정말 나가시겠습니까?");
+        return exit;
+    }
+
+    {{#board.pieces}}
+    document.getElementById("{{currentPosition}}")
+        .insertAdjacentHTML("beforeend", "<img src=/img/" + pieceNames.{{name}} + ".png height=150px width=150px>");
+    {{/board.pieces}}
+
+</script>
+</body>
+</html>
