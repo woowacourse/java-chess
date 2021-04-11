@@ -27,7 +27,7 @@ public enum CommandRouter {
                 .filter(commandRouter -> commandRouter.command.equalsIgnoreCase(command.get(ORDER_INDEX)))
                 .map(commandRouter -> commandRouter.commandFactory.apply(command))
                 .findAny()
-                .orElseThrow(()-> new CommandValidationException("커맨드를 잘못 입력하셨습니다"));
+                .orElseThrow(()-> new CommandValidationException("커맨드를 잘못 입력하셨습니다.\n입력 커맨드: " + String.join(" ", command)));
 
     }
 }
