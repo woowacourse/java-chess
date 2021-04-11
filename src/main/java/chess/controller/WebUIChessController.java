@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoardFactory;
-import chess.domain.command.Command;
 import chess.domain.command.CommandFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
@@ -18,6 +17,7 @@ import chess.dto.TurnRequestDto;
 import chess.repository.ChessRepositoryImpl;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.*;
@@ -28,12 +28,11 @@ import static spark.Spark.post;
 
 public class WebUIChessController {
     public static final Gson GSON = new Gson();
-    public static final Command START = CommandFactory.initialCommand("start");
     public static final ChessRepositoryImpl CHESS_REPOSITORY = new ChessRepositoryImpl();
-    public static final List<String> TURNS = Arrays.asList("white", "black");
 
     private static Round round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
-            StateFactory.initialization(PiecesFactory.blackPieces()), START);
+            StateFactory.initialization(PiecesFactory.blackPieces()),
+            CommandFactory.initialCommand("start"));
 
     public void run() {
         get("/", (req, res) -> render(new HashMap<>(), "home.html"));
@@ -75,7 +74,8 @@ public class WebUIChessController {
             model.put("jsonFormatChessBoard", jsonFormatChessBoard);
 
             round = new Round(StateFactory.initialization(new Pieces(whitePieces)),
-                    StateFactory.initialization(new Pieces(blackPieces)), START);
+                    StateFactory.initialization(new Pieces(blackPieces)),
+                    CommandFactory.initialCommand("start"));
 
             List<TurnRequestDto> turns = CHESS_REPOSITORY.showCurrentTurn();
             String currentTurn = turns.stream()
@@ -144,12 +144,13 @@ public class WebUIChessController {
         });
     }
 
-    private Object makeNewGame(final spark.Response res) {
+    private Object makeNewGame(final Response res) {
         CHESS_REPOSITORY.removeAllPieces();
         CHESS_REPOSITORY.removeTurn();
 
         round = new Round(StateFactory.initialization(PiecesFactory.whitePieces()),
-                StateFactory.initialization(PiecesFactory.blackPieces()), START);
+                StateFactory.initialization(PiecesFactory.blackPieces()),
+                CommandFactory.initialCommand("start"));
 
         Map<Position, Piece> chessBoard = round.getBoard();
         Map<String, String> filteredChessBoard = new LinkedHashMap<>();
