@@ -6,8 +6,10 @@ import static spark.Spark.staticFiles;
 import chess.controller.web.GameController;
 import chess.controller.web.HomeController;
 import chess.controller.web.UserController;
+import chess.dao.GameDao;
 import chess.dao.UserDao;
 import chess.dao.exception.UncheckedSQLException;
+import chess.service.GameService;
 import chess.service.UserService;
 import chess.service.exception.DataNotFoundException;
 
@@ -17,14 +19,16 @@ public class WebUIChessApplication {
         staticFiles.location("/static");
 
         final UserService userService = new UserService(new UserDao());
-        makeControllers(userService);
+        final GameService gameService = new GameService(new GameDao());
+        makeControllers(userService, gameService);
 
         mapException();
     }
 
-    private static void makeControllers(final UserService userService) {
+    private static void makeControllers(final UserService userService,
+        final GameService gameService) {
         final HomeController homeController = new HomeController();
-        final GameController gameController = new GameController();
+        final GameController gameController = new GameController(gameService, userService);
         final UserController userController = new UserController(userService);
     }
 
