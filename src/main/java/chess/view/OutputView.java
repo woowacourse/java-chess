@@ -94,13 +94,13 @@ public class OutputView {
             System.out.println(MESSAGE_DRAW);
             return;
         }
-        System.out.printf(FORMAT_WINNER, winner.color());
+        System.out.printf(FORMAT_WINNER, winner.name());
     }
 
     public static void printKingIsDead(Color winner) {
         System.out.printf(FORMAT_KING_IS_DEAD, winner.next()
-                                                     .color());
-        System.out.printf(FORMAT_WINNER, winner.color());
+                                                     .name());
+        System.out.printf(FORMAT_WINNER, winner.name());
     }
 
     public static void printGameIsStopped() {

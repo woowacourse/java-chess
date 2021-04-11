@@ -24,10 +24,6 @@ public class MovePosition {
     private final Position sourcePosition;
     private final Position targetPosition;
 
-    public MovePosition(MovePositionDTO movePositionDTO) {
-        this(movePositionDTO.getSource(), movePositionDTO.getTarget());
-    }
-
     public MovePosition(String source, String target) {
         this(Position.from(source), Position.from(target));
     }

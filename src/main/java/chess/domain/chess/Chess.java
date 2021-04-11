@@ -16,10 +16,6 @@ public class Chess {
         this(board, Status.RUNNING, Color.WHITE);
     }
 
-    public Chess(ChessDTO chessDTO) {
-        this(chessDTO.makeBoard(), Status.RUNNING, Color.valueOf(chessDTO.getTurn()));
-    }
-
     public Chess(Board board, Status status, Color turn) {
         this.board = board;
         this.status = status;
@@ -28,6 +24,13 @@ public class Chess {
 
     public static Chess createWithEmptyBoard() {
         return new Chess(BoardFactory.EmptyBoard.create(), Status.STOP, Color.WHITE);
+    }
+
+    public static Chess from(ChessDTO chessDTO) {
+        Board board = Board.from(chessDTO.getPieceDTOS());
+        final Status status = Status.valueOf(chessDTO.getStatus());
+        final Color turn = Color.valueOf(chessDTO.getTurn());
+        return new Chess(board, status, turn);
     }
 
     public Board getBoard() {
@@ -77,5 +80,13 @@ public class Chess {
 
     public boolean isStop() {
         return status.isStop();
+    }
+
+    public String status() {
+        return status.name();
+    }
+
+    public String color() {
+        return turn.name();
     }
 }
