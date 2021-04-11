@@ -12,8 +12,8 @@ import java.util.List;
 
 class DBMovementDaoTest {
     private static final String DUMMY_NAME = "테스트 게임";
-    private final DBMovementDao DBMovementDao = new DBMovementDao();
-    private final DBChessDao DBChessDao = new DBChessDao();
+    private final DBChessDao DBChessDao = new DBChessDao(MemoryConnectionPool.create());
+    private final DBMovementDao DBMovementDao = new DBMovementDao(MemoryConnectionPool.create());
 
     @BeforeEach
     void init() {

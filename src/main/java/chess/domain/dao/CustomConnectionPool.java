@@ -13,7 +13,6 @@ public class CustomConnectionPool implements ConnectionPool {
     private static final String DEFAULT_URL = DEFAULT_SERVER + "/" + DEFAULT_DATABASE + DEFAULT_OPTION; // DATABASE 옵션
     private static final String DEFAULT_USER = "root"; // 서버 아이디
     private static final String DEFAULT_PASSWORD = "root"; // 서버 비밀번호
-
     private static final int INITIAL_POOL_SIZE = 10;
 
     private String url;
@@ -27,6 +26,14 @@ public class CustomConnectionPool implements ConnectionPool {
         this.user = user;
         this.password = password;
         this.connectionPool = connectionPool;
+    }
+
+    public static CustomConnectionPool create(final String url, final String user, final String password) {
+        List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
+        for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
+            pool.add(createConnection(url, user, password));
+        }
+        return new CustomConnectionPool(url, user, password, pool);
     }
 
     public static CustomConnectionPool create() {

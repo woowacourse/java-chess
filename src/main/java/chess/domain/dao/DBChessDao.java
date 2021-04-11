@@ -9,8 +9,8 @@ import java.util.Optional;
 public class DBChessDao implements ChessDao {
     private final ConnectionPool connectionPool;
 
-    public DBChessDao() {
-        this.connectionPool = CustomConnectionPool.create();
+    public DBChessDao(final ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
 
         String query = "CREATE TABLE IF NOT EXISTS chess ( " +
                 "chess_id VARCHAR(36) NOT NULL," +

@@ -10,8 +10,8 @@ import java.util.List;
 public class DBMovementDao implements MovementDao {
     private final ConnectionPool connectionPool;
 
-    public DBMovementDao() {
-        this.connectionPool = CustomConnectionPool.create();
+    public DBMovementDao(final ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
 
         String query = "CREATE TABLE IF NOT EXISTS movement ( " +
                 "movement_id VARCHAR(36) NOT NULL," +
