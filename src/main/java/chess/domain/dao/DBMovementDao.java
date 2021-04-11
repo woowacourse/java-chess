@@ -3,13 +3,16 @@ package chess.domain.dao;
 import chess.domain.entity.Movement;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class DBMovementDao implements MovementDao {
+    private final ConnectionPool connectionPool;
+
     public DBMovementDao() {
+        this.connectionPool = CustomConnectionPool.create();
+
         String query = "CREATE TABLE IF NOT EXISTS movement ( " +
                 "movement_id VARCHAR(36) NOT NULL," +
                 "chess_id VARCHAR(36) NOT NULL," +
@@ -20,7 +23,7 @@ public class DBMovementDao implements MovementDao {
                 "FOREIGN KEY (chess_id) REFERENCES chess(chess_id) ON DELETE CASCADE ON UPDATE CASCADE" +
                 ");";
 
-        Connection connection = ConnectionUtil.getConnection();
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.execute();
@@ -36,8 +39,8 @@ public class DBMovementDao implements MovementDao {
     @Override
     public void save(final Movement movement) {
         String query = "INSERT INTO movement VALUES (?, ?, ?, ?, ?)";
-        Connection connection = ConnectionUtil.getConnection();
 
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, movement.getId());
@@ -60,8 +63,8 @@ public class DBMovementDao implements MovementDao {
                 " JOIN chess as ch on mv.chess_id = ch.chess_id" +
                 " WHERE ch.name = ?" +
                 " ORDER BY mv.created_date";
-        Connection connection = ConnectionUtil.getConnection();
 
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -93,7 +96,7 @@ public class DBMovementDao implements MovementDao {
     }
 
     private void closeResources(Connection connection, PreparedStatement preparedStatement) throws SQLException {
-        ConnectionUtil.closeConnection(connection);
+        connectionPool.releaseConnection(connection);
         preparedStatement.close();
     }
 }

@@ -7,7 +7,11 @@ import java.sql.*;
 import java.util.Optional;
 
 public class DBChessDao implements ChessDao {
+    private final ConnectionPool connectionPool;
+
     public DBChessDao() {
+        this.connectionPool = CustomConnectionPool.create();
+
         String query = "CREATE TABLE IF NOT EXISTS chess ( " +
                 "chess_id VARCHAR(36) NOT NULL," +
                 "name VARCHAR(64) NOT NULL," +
@@ -17,7 +21,7 @@ public class DBChessDao implements ChessDao {
                 "PRIMARY KEY (chess_id)" +
                 ");";
 
-        Connection connection = ConnectionUtil.getConnection();
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.execute();
@@ -38,7 +42,7 @@ public class DBChessDao implements ChessDao {
             throw new IllegalStateException("이미 존재하는 방입니당");
         }
 
-        Connection connection = ConnectionUtil.getConnection();
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, chess.getId());
@@ -60,8 +64,8 @@ public class DBChessDao implements ChessDao {
         String query = "SELECT * FROM chess" +
                 " WHERE name = ?" +
                 " ORDER BY created_date";
-        Connection connection = ConnectionUtil.getConnection();
 
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -95,7 +99,8 @@ public class DBChessDao implements ChessDao {
         String query = "UPDATE chess" +
                 " SET winner_color = ?, is_running = ?" +
                 " WHERE chess_id = ?";
-        Connection connection = ConnectionUtil.getConnection();
+
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, chess.getWinnerColor().toString());
@@ -114,7 +119,8 @@ public class DBChessDao implements ChessDao {
     @Override
     public void deleteByName(final String name) {
         String query = "DELETE FROM chess WHERE name = ?";
-        Connection connection = ConnectionUtil.getConnection();
+
+        Connection connection = connectionPool.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -128,7 +134,7 @@ public class DBChessDao implements ChessDao {
     }
 
     private void closeResources(Connection connection, PreparedStatement preparedStatement) throws SQLException {
-        ConnectionUtil.closeConnection(connection);
+        connectionPool.releaseConnection(connection);
         preparedStatement.close();
     }
 }
