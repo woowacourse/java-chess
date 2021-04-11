@@ -14,7 +14,7 @@ public class CustomConnectionPool implements ConnectionPool {
     private static final String DEFAULT_USER = "root"; // 서버 아이디
     private static final String DEFAULT_PASSWORD = "root"; // 서버 비밀번호
 
-    private static final int INITIAL_POOL_SIZE = 50;
+    private static final int INITIAL_POOL_SIZE = 10;
 
     private String url;
     private String user; // 서버 아이디
