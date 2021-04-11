@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface UserDaoInterface {
 
-    void insertUser(String name);
+    void insert(String name);
 
     Optional<User> selectByName(String name);
 

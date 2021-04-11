@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class UserDao implements UserDaoInterface {
 
-    public void insertUser(final String name) {
+    public void insert(final String name) {
         final String query = "INSERT INTO user(name) VALUES (?)";
         try (
             final Connection connection = createConnection();

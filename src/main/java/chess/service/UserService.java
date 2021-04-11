@@ -14,7 +14,7 @@ public class UserService {
     }
 
     public void add(final UserRequestDto userRequestDto) {
-        userDao.insertUser(userRequestDto.getName());
+        userDao.insert(userRequestDto.getName());
     }
 
     public User find(final String name) {

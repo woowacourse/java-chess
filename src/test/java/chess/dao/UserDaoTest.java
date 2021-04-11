@@ -27,14 +27,14 @@ class UserDaoTest {
 
     @Test
     @Order(1)
-    void addUser() {
-        assertThatCode(() -> userDao.insertUser(TEST_USER_NAME))
+    void insert() {
+        assertThatCode(() -> userDao.insert(TEST_USER_NAME))
             .doesNotThrowAnyException();
     }
 
     @Test
     @Order(2)
-    void findByName() {
+    void selectByName() {
         final Optional<User> optionalUser = userDao.selectByName(TEST_USER_NAME);
         assertThat(optionalUser).isPresent();
         assertThat(optionalUser.get().getName()).isEqualTo(TEST_USER_NAME);
@@ -42,7 +42,7 @@ class UserDaoTest {
 
     @Test
     @Order(3)
-    void removeUser() {
+    void deleteByName() {
         assertThatCode(() -> userDao.deleteByName(TEST_USER_NAME))
             .doesNotThrowAnyException();
     }

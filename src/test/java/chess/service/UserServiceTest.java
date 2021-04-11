@@ -41,7 +41,7 @@ class TestUserDao implements UserDaoInterface {
     private final List<User> users = new ArrayList<>();
 
     @Override
-    public void insertUser(final String name) {
+    public void insert(final String name) {
         users.add(
             new User(users.size(), name, 0, 0, LocalDateTime.now())
         );
