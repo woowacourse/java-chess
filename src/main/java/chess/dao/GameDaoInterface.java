@@ -7,9 +7,9 @@ public interface GameDaoInterface {
 
     long insert(Game game);
 
-    Optional<Game> selectById(Long id);
+    Optional<Game> selectById(long id);
 
     void update(Game game);
 
-    void deleteById(Long id);
+    void deleteById(long id);
 }

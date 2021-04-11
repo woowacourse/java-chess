@@ -33,7 +33,7 @@ public class GameDao implements GameDaoInterface {
     }
 
     @Override
-    public Optional<Game> selectById(final Long id) {
+    public Optional<Game> selectById(final long id) {
         final String query = "SELECT * FROM game WHERE id = ?";
         try (
             final Connection connection = createConnection();
@@ -71,7 +71,7 @@ public class GameDao implements GameDaoInterface {
             final Connection connection = createConnection();
             final PreparedStatement pstmt = JDBCHelper.createPreparedStatement(
                 connection, query, Arrays.asList(
-                    game.getTurnValue(), game.getFinished(), game.getId()
+                    game.getTurnValue(), game.isFinished(), game.getId()
                 )
             );
         ) {
@@ -83,7 +83,7 @@ public class GameDao implements GameDaoInterface {
     }
 
     @Override
-    public void deleteById(final Long id) {
+    public void deleteById(final long id) {
         final String query = "DELETE FROM game WHERE id = ?";
         try (
             final Connection connection = createConnection();

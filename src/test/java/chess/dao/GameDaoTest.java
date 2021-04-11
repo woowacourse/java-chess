@@ -36,7 +36,7 @@ class GameDaoTest {
         optionalGame = gameDao.selectById(id);
         readGame = optionalGame.get();
         assertThat(expectedGame.getTurnValue()).isEqualTo(readGame.getTurnValue());
-        assertThat(expectedGame.getFinished()).isEqualTo(readGame.getFinished());
+        assertThat(expectedGame.isFinished()).isEqualTo(readGame.isFinished());
 
         // delete
         gameDao.deleteById(id);
