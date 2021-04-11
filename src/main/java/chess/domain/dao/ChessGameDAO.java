@@ -21,8 +21,8 @@ public class ChessGameDAO {
 
     public void create(String roomID) {
         String query = "INSERT INTO game(roomID, turn) VALUES(?, ?)";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, roomID);
             preparedStatement.setString(2, "white");
             preparedStatement.executeUpdate();
@@ -33,13 +33,13 @@ public class ChessGameDAO {
 
     public String loadGameTurnByRoomID(String roomID) {
         String query = "SELECT turn FROM game WHERE roomID = ?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, roomID);
             ResultSet rs = preparedStatement.executeQuery();
 
-            if(rs.next()) {
-                 return rs.getString("turn");
+            if (rs.next()) {
+                return rs.getString("turn");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -49,11 +49,11 @@ public class ChessGameDAO {
 
     public Optional<ChessGameEntity> findRoomID(String roomID) {
         String query = "SELECT * FROM game WHERE roomID=?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, roomID);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 return Optional.of(new ChessGameEntity(rs.getString("roomID"), rs.getString("turn")));
             }
         } catch (SQLException throwables) {
@@ -64,8 +64,8 @@ public class ChessGameDAO {
 
     public void update(ChessGame chessGame) {
         String query = "UPDATE game SET turn = ? WHERE roomID = ?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)){
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, chessGame.getStatus());
             preparedStatement.setString(2, chessGame.getRoomID());
             preparedStatement.executeUpdate();
@@ -76,8 +76,8 @@ public class ChessGameDAO {
 
     public void deleteGameByRoomID(String roomID) {
         String query = "DELETE FROM game WHERE roomID = ?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, roomID);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -88,11 +88,11 @@ public class ChessGameDAO {
     public List<String> chessGameNames() {
         List<String> rooms = new ArrayList<>();
         String query = "SELECT roomID FROM game";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)){
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             ResultSet rs = preparedStatement.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 rooms.add(rs.getString("roomID"));
             }
             return rooms;

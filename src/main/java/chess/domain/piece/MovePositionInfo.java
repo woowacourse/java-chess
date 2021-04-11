@@ -24,7 +24,7 @@ public class MovePositionInfo {
     }
 
     public String getRoomID() {
-         return roomID;
+        return roomID;
     }
 
 }

@@ -52,7 +52,7 @@ public class WebUIChessApplication {
         post("/end", (req, res) -> {
             ObjectMapper mapper = new ObjectMapper();
             ChessGameEntity chessGameID = mapper.readValue(req.body(), ChessGameEntity.class);
-            if("".equals(chessGameID.getRoomID())) {
+            if ("".equals(chessGameID.getRoomID())) {
                 return gson.toJson(new MessageDto("진행중인 게임이 없습니다."));
             }
             return gson.toJson(chessGameService.endChessGame(chessGameID.getRoomID()));

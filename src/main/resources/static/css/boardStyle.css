@@ -1,5 +1,5 @@
 .chessboard {
-    float:left;
+    float: left;
     width: 640px;
     height: 640px;
     margin: 20px;
@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 
-.table{
+.table {
     width: 500px;
     height: 500px;
     text-align: center;
@@ -61,7 +61,8 @@
     border-top: 1px solid #ccc;
     margin: 20px 10px;
 }
-.table th{
+
+.table th {
     width: 150px;
     padding: 10px;
     font-weight: bold;
@@ -69,7 +70,8 @@
     border-bottom: 1px solid #ccc;
     background: #efefef;
 }
-.table td{
+
+.table td {
     width: 350px;
     padding: 10px;
     vertical-align: top;

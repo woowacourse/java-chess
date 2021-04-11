@@ -27,7 +27,7 @@ public class ChessGameService {
     public Object createNewChessGame(String roomID) {
         Optional<ChessGameEntity> existChessGame = chessGameDAO.findRoomID(roomID);
 
-        if(existChessGame.isPresent()) {
+        if (existChessGame.isPresent()) {
             return new MessageDto("같은 이름의 게임이 존재합니다.");
         }
 
@@ -44,13 +44,13 @@ public class ChessGameService {
         String roomID = mpi.getRoomID();
         ChessGame chessGame = new ChessGame(pieceDAO.loadPiecesByRoomID(roomID), roomID);
         checkState(chessGame);
-        try{
+        try {
             chessGame.move(mpi.getSource(), mpi.getTarget());
-        }catch(Exception e) {
+        } catch (Exception e) {
             return new MessageDto("이동할 수 없습니다.");
         }
 
-        if(chessGame.isFinished()) {
+        if (chessGame.isFinished()) {
             endChessGame(roomID);
             return new EndGameDto("왕을 잡아 게임이 종료됩니다.");
         }
@@ -94,7 +94,7 @@ public class ChessGameService {
 
     private void checkState(ChessGame chessGame) {
         chessGame.changeState(new WhiteTurn(chessGame));
-        if("black".equals(chessGameDAO.loadGameTurnByRoomID(chessGame.getRoomID()))) {
+        if ("black".equals(chessGameDAO.loadGameTurnByRoomID(chessGame.getRoomID()))) {
             chessGame.changeState(new BlackTurn(chessGame));
         }
     }

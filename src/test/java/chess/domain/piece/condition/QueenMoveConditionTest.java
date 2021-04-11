@@ -26,7 +26,7 @@ class QueenMoveConditionTest {
                 new Position(7, 4));
 
         boolean rightXActual = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 4, 4),
-                new Position(5,5));
+                new Position(5, 5));
 
         boolean falseActual = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
                 new Position(7, 5));

@@ -30,7 +30,7 @@ public class PieceDAO {
         String query = "INSERT INTO pieces(roomID, color, shape, position) VALUES(?,?,?,?)";
         try (Connection con = dbConnection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query)) {
-            preparedStatement.setString(1,roomID);
+            preparedStatement.setString(1, roomID);
             preparedStatement.setString(2, color);
             preparedStatement.setString(3, shape);
             preparedStatement.setString(4, piece.getPosition().toString());
@@ -152,8 +152,8 @@ public class PieceDAO {
 
     public void deleteGameByRoomID(String roomID) {
         String query = "DELETE FROM pieces WHERE roomID = ?";
-        try(Connection con = dbConnection.getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(query)) {
+        try (Connection con = dbConnection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, roomID);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {

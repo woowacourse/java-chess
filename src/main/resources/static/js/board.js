@@ -7,15 +7,15 @@ document.getElementById("start-btn").addEventListener("click", gameStart);
 
 function gameStart() {
     const roomID = prompt("방의 이름을 입력하세요");
-    if(roomID === "") {
+    if (roomID === "") {
         alert("방이름을 입력하세요");
         return;
     }
     axios({
         method: 'post',
         url: '/start',
-        data:{
-            roomID:roomID
+        data: {
+            roomID: roomID
         }
     })
         .then((res) => {
@@ -105,7 +105,7 @@ function endGame() {
         method: 'post',
         url: '/end',
         data: {
-            roomID:roomID
+            roomID: roomID
         }
     }).then((res) => {
         const data = res.data;
@@ -122,7 +122,7 @@ document.getElementById("status-btn").addEventListener("click", status);
 
 function status() {
     const roomID = document.getElementById("room-number").innerHTML;
-    if(roomID === ""){
+    if (roomID === "") {
         alert("진행중인 게임이 없습니다.");
         return;
     }
@@ -130,8 +130,8 @@ function status() {
     axios({
         method: 'post',
         url: '/status',
-        data:{
-            roomID:roomID
+        data: {
+            roomID: roomID
         }
     }).then((res) => {
         const data = res.data;
@@ -145,38 +145,38 @@ function status() {
 }
 
 
-
 document.getElementById("load-btn").addEventListener("click", loadPieces);
+
 function loadPieces() {
     axios({
         method: 'post',
         url: '/load'
-    }).then((res)=> {
+    }).then((res) => {
         const data = res.data;
         const form = document.getElementById("room-name");
         const br = document.createElement('br');
 
-        if(form.childNodes.length > 1){
+        if (form.childNodes.length > 1) {
             return;
         }
-        for(let i=0;i<data.roomIDs.length;i++) {
+        for (let i = 0; i < data.roomIDs.length; i++) {
             const label = document.createElement("label");
             label.innerHTML = data.roomIDs[i];
             form.appendChild(label);
 
             const input = document.createElement("input");
-            input.setAttribute("type","radio");
-            input.setAttribute("name","roomName");
-            input.setAttribute("onclick",'getRoomName');
+            input.setAttribute("type", "radio");
+            input.setAttribute("name", "roomName");
+            input.setAttribute("onclick", 'getRoomName');
             input.value = data.roomIDs[i];
             form.appendChild(input);
         }
         form.appendChild(br);
         const button = document.createElement("input");
         button.setAttribute("type", "button");
-        button.setAttribute("class","button")
+        button.setAttribute("class", "button")
         button.setAttribute("value", "LOAD");
-        button.addEventListener("click",getRoomName);
+        button.addEventListener("click", getRoomName);
         form.appendChild(button);
     });
 
@@ -188,15 +188,15 @@ function getRoomName() {
     let roomID;
     roomNameList.forEach((node) => {
         console.log(node);
-        if(node.checked) {
+        if (node.checked) {
             roomID = node.value;
         }
     })
     axios({
         method: 'post',
         url: '/loadGame',
-        data:{
-            roomID:roomID
+        data: {
+            roomID: roomID
         }
     }).then((res) => {
         const data = res.data;
@@ -216,7 +216,7 @@ function getRoomName() {
 function removeLoadGames() {
     const rooms = document.getElementById("room-name");
 
-    while(rooms.hasChildNodes()) {
+    while (rooms.hasChildNodes()) {
         rooms.removeChild(rooms.firstChild);
     }
 }
