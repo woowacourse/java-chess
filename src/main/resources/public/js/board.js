@@ -1,6 +1,20 @@
 const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const WHITE_SQUARE = "white-square";
 const BLACK_SQUARE = "black-square";
+const PIECES = {
+    BLACK_KING: `<img src="/img/king_black.png" class="piece" alt="king_black"/>`,
+    BLACK_QUEEN: `<img src="/img/queen_black.png" class="piece" alt="queen_black"/>`,
+    BLACK_ROOK: `<img src="/img/rook_black.png" class="piece" alt="rook black"/>`,
+    BLACK_BISHOP: `<img src="/img/bishop_black.png" class="piece" alt="bishop black"/>`,
+    BLACK_KNIGHT: `<img src="/img/knight_black.png" class="piece" alt="knight black"/>`,
+    BLACK_PAWN: `<img src="/img/pawn_black.png" class="piece" alt="pawn black"/>`,
+    WHITE_KING: `<img src="/img/king_white.png" class="piece" alt="king white"/>`,
+    WHITE_QUEEN: `<img src="/img/queen_white.png" class="piece" alt="queen white"/>`,
+    WHITE_ROOK: `<img src="/img/rook_white.png" class="piece" alt="rook_white"/>`,
+    WHITE_BISHOP: `<img src="/img/bishop_white.png" class="piece" alt="bishop white"/>`,
+    WHITE_KNIGHT: `<img src="/img/knight_white.png" class="piece" alt="knight white"/>`,
+    WHITE_PAWN: `<img src="/img/pawn_white.png" class="piece" alt="pawn white"/>`,
+}
 
 document.addEventListener("DOMContentLoaded", buildBoard);
 
@@ -9,16 +23,6 @@ const PATCH = {
     headers: {
         'Content-Type': 'application/json'
     },
-    "body": "",
-}
-
-const DELETE = {
-    method: 'DELETE',
-}
-
-const CHESS_DTO = {
-    "turn": '',
-    "boardDTO": ''
 }
 
 async function buildBoard() {
@@ -30,82 +34,35 @@ async function buildBoard() {
     $board.addEventListener("click", onMove);
     $board.addEventListener("mouseover", onMouseOverSquare);
     $board.addEventListener("mouseout", onRevertSquareColor);
-    color = await getColor();
-    borderTurn(color);
-    await getScore();
+
+    const data = await showChessInfo();
+    const boardDTO = data.boardDTO;
+    inputImageAtBoard(boardDTO.pieceDTOS);
+    $blackScore.textContent = boardDTO.blackScore;
+    $whiteScore.textContent = boardDTO.whiteScore;
 }
 
 const $whiteScore = document.getElementById("white-score");
 const $blackScore = document.getElementById("black-score");
 
-async function getScore() {
+async function showChessInfo() {
     const chessId = getCookie("chessId");
-    const response = await fetch('/chess/' + chessId + '/pieces/score');
-    const data = await response.json();
-    const scores = data.content;
-    $whiteScore.textContent = scores.whiteScore;
-    $blackScore.textContent = scores.blackScore;
-}
-
-async function chessBoard(chessId) {
-    const response = await fetch('/chess/' + chessId + '/pieces');
-    const data = await response.json();
-    return JSON.parse(data.content);
+    const response = await fetch('/chess/' + chessId);
+    return await response.json();
 }
 
 function getCookie(name) {
     return document.cookie.split("; ").find(row => row.startsWith(name)).split("=")[1];
 }
 
-async function chessTurn(chessId) {
-    const response = await fetch('/chess/' + chessId + '/turn');
-    const data = await response.json();
-    return data.content;
-}
-
-async function patchMovePiece(chessId, source, target) {
-    const moveResult = await fetch('/chess/' + chessId + '/pieces/move?source=' + source + '&target=' + target, PATCH);
-    if (moveResult.ok) {
-        await patchChangeTurn(chessId);
-        await getScore();
-        movePiece(source, target);
-        borderTurn();
-        return await moveResult.json();
-    }
-
-    alert("해당 위치로 이동할 수 없습니다.");
-    return "잘못된 위치입니다.";
-}
-
-async function getColor() {
-    const chessId = getCookie("chessId");
-    const response = await fetch('/chess/' + chessId + '/turn');
-    const data = await response.json();
-    return data.content;
-}
-
-let color;
-
-function borderTurn() {
-    if (color === "BLACK") {
-        document.getElementById("black-versus").classList.add("currentTurn");
-        document.getElementById("white-versus").classList.remove("currentTurn");
-        color = "WHITE";
-    } else {
-        document.getElementById("black-versus").classList.remove("currentTurn");
-        document.getElementById("white-versus").classList.add("currentTurn");
-        color = "BLACK";
-    }
-}
-
-async function patchChangeTurn(chessId) {
-    const response = await fetch('/chess/' + chessId + '/turn', PATCH);
-    return await response.json();
-}
-
-async function deleteEndChess(chessId) {
-    await fetch('/chess/' + chessId + '/pieces', DELETE);
-    await fetch('/chess/' + chessId, DELETE);
+function inputImageAtBoard(pieces) {
+    Array.from(pieces)
+        .filter(piece => piece.name !== "BLANK")
+        .forEach(piece => {
+            const position = piece.position;
+            const pieceName = piece.color + "_" + piece.name;
+            document.getElementById(position).innerHTML = PIECES[pieceName];
+        });
 }
 
 async function onMove(event) {
@@ -124,21 +81,25 @@ async function onMove(event) {
     const target = event.target.closest("div").id;
 
     const chessId = getCookie('chessId');
-    const turn = await chessTurn(chessId);
-    const data = await chessBoard(chessId);
-    CHESS_DTO.turn = turn;
-    CHESS_DTO.boardDTO = data;
-    PATCH["body"] = JSON.stringify(CHESS_DTO);
-
-    const moveResult = await patchMovePiece(chessId, source, target);
-    if (moveResult.content === "왕이 죽었습니다.") {
-        alert("왕이 죽었습니다. 게임을 종료합니다.")
-        await deleteEndChess(chessId);
-        window.location.href = "/";
+    const moved = await patchMovePiece(chessId, source, target);
+    revertSquareColor($position);
+    if (!moved) {
+        alert("해당 위치로 이동할 수 없습니다.");
         return;
     }
 
-    revertSquareColor($position);
+    movePiece(source, target);
+
+    const moveResult = await showChessInfo();
+    if (moveResult.status.includes("KING_DEAD")) {
+        alert("왕이 죽었습니다. 게임을 종료합니다.");
+        window.location.href = "/";
+    }
+}
+
+async function patchMovePiece(chessId, source, target) {
+    const response = await fetch('/chess/' + chessId + '?source=' + source + '&target=' + target, PATCH);
+    return response.ok;
 }
 
 function movePiece(source, target) {

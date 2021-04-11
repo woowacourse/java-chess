@@ -8,26 +8,12 @@ const POST = {
     },
 }
 
-const DELETE_OPTION = {
-    "method": 'DELETE',
-    "headers": {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-}
-
-function getCookie(name) {
-    return document.cookie.split("; ").find(row => row.startsWith(name)).split("=")[1];
+const moveToChessView = function () {
+    const chessId = getCookie("chessId");
+    window.location.href = '/chess/' + chessId + "/view";
 }
 
 async function onRestart() {
-    let chessId = getCookie("chessId");
-    await fetch('/chess/' + chessId + '/pieces', DELETE_OPTION);
-    await fetch('/chess/' + chessId, DELETE_OPTION);
-
     await fetch('/chess', POST);
-
-    chessId = getCookie("chessId");
-    await fetch('/chess/' + chessId + '/pieces', POST);
-    window.location.href = '/chess';
+    moveToChessView();
 }

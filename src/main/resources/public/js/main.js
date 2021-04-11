@@ -9,49 +9,33 @@ const POST = {
     },
 }
 
-const DELETE = {
-    "method": 'DELETE',
-    "headers": {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-}
-
-async function insertNewGame() {
-    await fetch('/chess', POST);
-
-    const chessId = getCookie("chessId");
-    await fetch('/chess/' + chessId + '/pieces', POST);
-}
-
 function getCookie(name) {
     return document.cookie.split("; ").find(row => row.startsWith(name)).split("=")[1];
 }
 
-async function removePreviousGame(id) {
-    await fetch('/chess/' + id + '/pieces', DELETE);
-    await fetch('/chess/' + id, DELETE);
+const moveToChessView = function () {
+    const chessId = getCookie("chessId");
+    window.location.href = '/chess/' + chessId + "/view";
 }
 
 async function onNewGame() {
-    const idResponse = await fetch('/chess/ids');
-    const idJson = await idResponse.json();
-    const id = idJson.content;
-    if (id !== 'EMPTY') {
-        await removePreviousGame(id);
-    }
-    await insertNewGame();
-    window.location.href = '/chess';
+    await fetch('/chess', POST);
+    moveToChessView();
 }
 
 async function onContinue() {
-    const idResponse = await fetch('/chess/ids');
-    const idJson = await idResponse.json();
-    const id = idJson.content;
-    if (id === 'EMPTY') {
+    if (!document.cookie.includes("chessId")) {
         alert("진행 중인 게임이 없습니다.");
         return;
     }
 
-    window.location.href = '/chess';
+    const chessId = getCookie("chessId");
+    const response = await fetch("/chess/" + chessId);
+    const data = await response.json();
+    if (!data.status.includes("RUNNING")) {
+        alert("진행 중인 게임이 없습니다.");
+        return;
+    }
+
+    moveToChessView();
 }
