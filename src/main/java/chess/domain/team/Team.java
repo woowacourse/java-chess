@@ -1,8 +1,23 @@
 package chess.domain.team;
 
+import java.util.Arrays;
+
 public enum Team {
-    WHITE,
-    BLACK;
+    WHITE("white"),
+    BLACK("black");
+
+    private final String value;
+
+    Team(final String value) {
+        this.value = value;
+    }
+
+    public static Team from(final String value) {
+        return Arrays.stream(values())
+            .filter(team -> team.value.equals(value))
+            .findAny()
+            .orElseThrow(() -> new TeamNotFoundException(value));
+    }
 
     public boolean isBlack() {
         return this == BLACK;
@@ -17,5 +32,9 @@ public enum Team {
             return BLACK;
         }
         return WHITE;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
