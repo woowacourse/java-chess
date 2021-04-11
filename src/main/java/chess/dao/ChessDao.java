@@ -182,7 +182,7 @@ public class ChessDao {
     }
 
     private Color makeColor(PreparedStatement preparedStatement) throws SQLException {
-        try(ResultSet rs = preparedStatement.executeQuery()) {
+        try (ResultSet rs = preparedStatement.executeQuery()) {
             if (!rs.next()) {
                 return null;
             }

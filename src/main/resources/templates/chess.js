@@ -11,7 +11,7 @@ let globalUserId;
 let user = document.querySelector(".user-name").innerText;
 
 async function makeUser() {
-   await fetch('/userId', {
+    await fetch('/userId', {
         method: 'POST',
         body: user,
         headers: {
@@ -98,7 +98,7 @@ async function move(sourcePoint, targetPoint) {
     const response = await fetch('/move', {
         method: 'PUT',
         body: JSON.stringify({
-            firstInfo: sourcePoint+targetPoint,
+            firstInfo: sourcePoint + targetPoint,
             secondInfo: globalUserId
         }),
         headers: {

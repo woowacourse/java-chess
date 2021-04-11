@@ -70,8 +70,8 @@ public class ChessService {
     }
 
     public int move(RequestDto requestDto) {
-        String source = requestDto.getFirstInfo().substring(0,2);
-        String target = requestDto.getFirstInfo().substring(2,4);
+        String source = requestDto.getFirstInfo().substring(0, 2);
+        String target = requestDto.getFirstInfo().substring(2, 4);
         UserDto userDto = chessDAO.findByUserId(requestDto.getSecondInfo());
         try {
             ChessGame playerGame = matchBoard(userDto);
