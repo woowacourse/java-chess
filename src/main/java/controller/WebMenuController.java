@@ -1,38 +1,39 @@
 package controller;
 
 import dao.GameDao;
+import domain.Board;
 import domain.ChessGame;
+import domain.state.Running;
 import dto.PiecesDto;
 import dto.ResultDto;
 import dto.StatusDto;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class WebMenuController {
     private GameDao gameDao = new GameDao();
 
     public void startNewGame() {
-        gameDao.start();
+        ChessGame game = new ChessGame(new Running(new Board()));
+        gameDao.saveNewGame(game);
     }
 
-    public void startGame(int gameID) {
-        gameDao.start(gameID);
-    }
-
-    public ResultDto move(String source, String target) {
-        ResultDto resultDto;
+    public ResultDto move(int chessId, String source, String target) {
         try {
-            ChessGame game = gameDao.move(source, target);
-            resultDto = toResultDto(game);
+            return toResultDto(gameDao.move(chessId, source, target));
         } catch (RuntimeException e) {
-            resultDto = new ResultDto(null, false, e.getMessage());
+            return new ResultDto(new PiecesDto(new HashMap<>(),
+                    new StatusDto(0, 0), false, true), false, e.getMessage());
         }
-
-        return resultDto;
     }
 
-    public ResultDto status() {
-        return toResultDto(gameDao.status());
+    public ResultDto status(int chessId) {
+        ChessGame chessGame = gameDao.findGameById(chessId);
+        if (chessGame.isEnd()) {
+            gameDao.deleteGame(chessId);
+        }
+        return toResultDto(chessGame);
     }
 
     public int newGameId() {

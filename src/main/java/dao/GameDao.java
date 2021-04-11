@@ -5,6 +5,7 @@ import domain.ChessGame;
 import domain.piece.objects.Piece;
 import domain.piece.objects.PieceFactory;
 import domain.piece.position.Position;
+import domain.state.Finished;
 import domain.state.Running;
 
 import java.sql.*;
@@ -14,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GameDao {
-    private ChessGame game;
-    private int gameID;
 
     public Connection getConnection() {
         Connection con = null;
@@ -43,34 +42,34 @@ public class GameDao {
         return con;
     }
 
-    public void start() {
-        game = new ChessGame(new Running(new Board()));
-        insertNewGameInfo();
-        this.gameID = lastGameID();
-        insertPiecesInfo();
+    public void saveNewGame(ChessGame game) {
+        saveGame(game);
+        int gameId = lastGameID();
+        savePieces(gameId, game);
     }
 
-    public void insertNewGameInfo() {
+    private void saveGame(ChessGame game) {
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("insert into game(blackscore, whitescore, turn) values(?, ?, ?)")) {
+             PreparedStatement pstmt = conn.prepareStatement("insert into game(blackscore, whitescore, turn, isEnd) values(?, ?, ?, ?)")) {
             pstmt.setDouble(1, game.blackScore());
             pstmt.setDouble(2, game.whiteScore());
             pstmt.setBoolean(3, game.getTurn());
+            pstmt.setBoolean(4, game.isEnd());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void insertPiecesInfo() {
+    private void savePieces(int gameId, ChessGame game) {
         Map<Position, Piece> pieceMap = game.getBoard().getPieceMap();
         pieceMap.entrySet()
-                .forEach(entry -> insertPieceInfo(entry.getValue().name(), entry.getKey().toString()));
+                .forEach(entry -> insertPieceInfo(gameId, entry.getValue().name(), entry.getKey().toString()));
     }
 
-    private void insertPieceInfo(String name, String position) {
+    private void insertPieceInfo(int gameId, String name, String position) {
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("insert into piece(gameid, name, position) values(" + gameID + ", ?, ?)")) {
+             PreparedStatement pstmt = conn.prepareStatement("insert into piece(gameid, name, position) values(" + gameId + ", ?, ?)")) {
             pstmt.setString(1, name);
             pstmt.setString(2, position);
             pstmt.executeUpdate();
@@ -79,71 +78,62 @@ public class GameDao {
         }
     }
 
-    public void start(int gameID) {
-        this.gameID = gameID;
-        game = selectGameInfo(gameID);
-    }
-
-    public ChessGame move(String source, String target) {
+    public ChessGame move(int gameId, String source, String target) {
+        ChessGame game = findGameById(gameId);
         game.move(Position.of(source), Position.of(target));
-        updateGameInfo();
-        deleteTargetPiece(target);
-        updateTargetPiece(source, target);
-
-        if (game.isEnd()) {
-            deleteGame(gameID);
-        }
+        updateGameInfo(gameId, game);
+        deleteTargetPiece(gameId, target);
+        updateTargetPiece(gameId, source, target);
         return game;
     }
 
-    private void updateGameInfo() {
+    private void updateGameInfo(int gameId, ChessGame game) {
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("UPDATE game SET blackscore = ?, whitescore=?, turn=? WHERE gameid=?")) {
+             PreparedStatement pstmt = conn.prepareStatement("UPDATE game SET blackscore = ?, whitescore=?, turn=?, isEnd=? WHERE gameid=?")) {
             pstmt.setDouble(1, game.blackScore());
             pstmt.setDouble(2, game.whiteScore());
             pstmt.setBoolean(3, game.getTurn());
-            pstmt.setInt(4, gameID);
+            pstmt.setBoolean(4, game.isEnd());
+            pstmt.setInt(5, gameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateTargetPiece(String source, String target) {
+    private void updateTargetPiece(int gameId, String source, String target) {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement("update piece set position=? where position=? AND gameid=?")) {
             pstmt.setString(1, target);
             pstmt.setString(2, source);
-            pstmt.setInt(3, gameID);
+            pstmt.setInt(3, gameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void deleteTargetPiece(String target) {
+    private void deleteTargetPiece(int gameId, String target) {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement("delete from piece where position=? AND gameid=?");) {
             pstmt.setString(1, target);
-            pstmt.setInt(2, gameID);
+            pstmt.setInt(2, gameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public ChessGame status() {
-        return game;
-    }
-
-    public ChessGame selectGameInfo(int roomNumber) {
+    public ChessGame findGameById(int roomNumber) {
         boolean turn = false;
+        boolean isEnd = false;
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("select turn from game where gameid=?")) {
+             PreparedStatement pstmt = conn.prepareStatement("select turn, isEnd from game where gameid=?")) {
             pstmt.setInt(1, roomNumber);
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) throw new SQLException();
             turn = rs.getBoolean(1);
+            isEnd = rs.getBoolean(2);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -158,6 +148,9 @@ public class GameDao {
             e.printStackTrace();
         }
 
+        if (isEnd) {
+            return new ChessGame(new Finished(new Board(pieces), turn));
+        }
         return new ChessGame(new Running(new Board(pieces), turn));
     }
 

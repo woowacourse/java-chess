@@ -22,28 +22,25 @@
 DROP TABLE IF EXISTS `game`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `game`
-(
-    `gameid`     int(11) NOT NULL AUTO_INCREMENT,
-    `blackscore` double NOT NULL,
-    `whitescore` double NOT NULL,
-    `turn`       tinyint(1) NOT NULL,
-    PRIMARY KEY (`gameid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+CREATE TABLE `game` (
+  `gameid` int(11) NOT NULL AUTO_INCREMENT,
+  `blackscore` double NOT NULL,
+  `whitescore` double NOT NULL,
+  `turn` tinyint(1) NOT NULL,
+  `isEnd` tinyint(1) NOT NULL,
+  PRIMARY KEY (`gameid`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `game`
 --
 
-LOCK
-TABLES `game` WRITE;
+LOCK TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game`
-VALUES (7, 38, 38, 0);
+INSERT INTO `game` VALUES (18,38,38,0,0);
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
-UNLOCK
-TABLES;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +51,4 @@ TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-05 23:48:53
+-- Dump completed on 2021-04-12  4:43:00

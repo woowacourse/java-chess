@@ -29,24 +29,24 @@ public class WebUIChessApplication {
                     put("roomNumber", menuController.newGameId());
                 }}, "start.html");
             }
-            int gameID = Integer.parseInt(input);
-            menuController.startGame(gameID);
             return render(new HashMap<>(), "start.html");
         });
 
         get("/start", (req, res) -> render(new HashMap<>(), "game.html"));
 
-        get("/showData", (req, res) -> gson.toJson(menuController.status()));
+        get("/showData", (req, res) -> {
+            int roomNumber = Integer.parseInt(req.queryParams("roomNumber"));
+            return gson.toJson(menuController.status(roomNumber));
+        });
 
         post("/movedata", (req, res) -> {
             JsonObject jsonObject = gson.fromJson(req.body(), JsonObject.class);
             String source = jsonObject.get("source").getAsString();
             String target = jsonObject.get("target").getAsString();
-            ResultDto resultDto2 = menuController.move(source, target);
-            return gson.toJson(resultDto2);
+            int roomNumber = Integer.parseInt(req.queryParams("roomNumber"));
+            ResultDto resultDto = menuController.move(roomNumber, source, target);
+            return gson.toJson(resultDto);
         });
-
-        get("/status", (req, res) -> gson.toJson(menuController.status()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

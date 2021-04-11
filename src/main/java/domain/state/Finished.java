@@ -10,6 +10,10 @@ public class Finished extends Started {
         super(board);
     }
 
+    public Finished(Board board, boolean turn) {
+        super(board, turn);
+    }
+
     @Override
     public boolean isEnd() {
         return true;

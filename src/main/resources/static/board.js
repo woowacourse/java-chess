@@ -10,8 +10,12 @@ function getPieces() {
     axios({
         method: 'get',
         url: '/showData',
+        params: {
+            roomNumber: getRoomNumber()
+        }
     }).then(function (result) {
         let pieces = result.data.piecesDto;
+        alert("현재 게임 상태 : " + pieces.isEnd);
         if (pieces.isEnd) {
             alert("게임이 끝났습니다!!!\n" + "검은팀 : " + pieces.blackScore + "\n흰색팀 : " + pieces.whiteScore);
             location.href = '/';
@@ -44,16 +48,18 @@ function select(event) {
         data: {
             source: source,
             target: target
+        },
+        params: {
+            roomNumber: getRoomNumber()
         }
-    })
-        .then((result) => {
-            let resultDto = result.data;
-            if (resultDto.success) {
-                location.reload();
-                return;
-            }
-            alert(resultDto.errorMessage);
-        });
+    }).then((result) => {
+        let resultDto = result.data;
+        if (resultDto.success) {
+            location.reload();
+            return;
+        }
+        alert(resultDto.errorMessage);
+    });
 }
 
 function getStatus(blackScore, whiteScore, turn) {
@@ -65,4 +71,10 @@ function getStatus(blackScore, whiteScore, turn) {
         Turn = "WHITE";
     }
     result.innerHTML = "TURN : " + Turn + "<br />Black팀: " + blackScore + "<br />" + "White팀 : " + whiteScore;
+}
+
+function getRoomNumber() {
+    let currentUrl = location.href;
+    let roomNumber = currentUrl.slice(currentUrl.indexOf('?') + 1, currentUrl.length).split('=')[1];
+    return roomNumber;
 }
