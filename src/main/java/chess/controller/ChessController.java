@@ -18,17 +18,17 @@ public class ChessController {
         this.chessService = new ChessService();
     }
 
+    public String get(Request req, Response res) {
+        Long chessId = Long.valueOf(req.params(":chessId"));
+        ChessDTO chessDTO = chessService.getChessGame(chessId);
+        return GSON.toJson(chessDTO);
+    }
+
     public String insert(Request req, Response res) {
         Long chessId = chessService.insert();
         res.cookie("chessId", String.valueOf(chessId));
         res.status(201);
         return GSON.toJson(chessId);
-    }
-
-    public String get(Request req, Response res) {
-        Long chessId = Long.valueOf(req.params(":chessId"));
-        ChessDTO chessDTO = chessService.getChessGame(chessId);
-        return GSON.toJson(chessDTO);
     }
 
     public Response move(Request req, Response res) {
@@ -37,6 +37,7 @@ public class ChessController {
         MovePosition movePosition = new MovePosition(source, target);
         Long chessId = Long.valueOf(req.params(":chessId"));
         chessService.move(chessId, movePosition);
+        res.status(204);
         return res;
     }
 }
