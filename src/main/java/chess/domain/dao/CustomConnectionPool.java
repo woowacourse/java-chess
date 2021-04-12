@@ -13,7 +13,7 @@ public class CustomConnectionPool implements ConnectionPool {
     private static final String DEFAULT_URL = DEFAULT_SERVER + "/" + DEFAULT_DATABASE + DEFAULT_OPTION; // DATABASE 옵션
     private static final String DEFAULT_USER = "root"; // 서버 아이디
     private static final String DEFAULT_PASSWORD = "root"; // 서버 비밀번호
-    private static final int INITIAL_POOL_SIZE = 10;
+    private static final int INITIAL_POOL_SIZE = 15;
 
     private String url;
     private String user; // 서버 아이디
@@ -57,8 +57,21 @@ public class CustomConnectionPool implements ConnectionPool {
 
     @Override
     public Connection getConnection() {
+        if (connectionPool.isEmpty()) {
+            validateSize();
+        }
         Connection connection = connectionPool
                 .remove(connectionPool.size() - 1);
+        try {
+            if (!connection.isValid(1_000)) {
+                connection = createConnection(url, user, password);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("시간 오류" + e.getMessage());
+            e.printStackTrace();
+        }
+
         usedConnections.add(connection);
         return connection;
     }
@@ -67,5 +80,26 @@ public class CustomConnectionPool implements ConnectionPool {
     public boolean releaseConnection(final Connection connection) {
         connectionPool.add(connection);
         return usedConnections.remove(connection);
+    }
+
+    public void shutdown() {
+        usedConnections.forEach(this::releaseConnection);
+        connectionPool.forEach(c -> {
+            try {
+                c.close();
+            } catch (SQLException e) {
+                System.err.println("커넥션 해제 오류" + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        connectionPool.clear();
+    }
+
+    private void validateSize() {
+        if (usedConnections.size() < INITIAL_POOL_SIZE) {
+            connectionPool.add(createConnection(url, user, password));
+            return;
+        }
+        throw new RuntimeException("Pool 사이즈를 넘어섰습니다.");
     }
 }
