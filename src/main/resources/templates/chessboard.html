@@ -157,8 +157,9 @@
 {{color}} Score: {{value}}<br>
 {{/scores}}
 
-<h2>{{turn.color}} TURN </h2>
 <h2>{{error.message}}</h2>
+<h2>차례 : {{turn.color}} </h2>
+<h2>승자 : {{winner.color}}</h2>
 
 <form action="/chess" method="post">
     <label>

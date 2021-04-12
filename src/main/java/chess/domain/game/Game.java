@@ -19,7 +19,18 @@ public class Game {
     }
 
     public void move(Position from, Position to) {
-        board.action(state.color(), from, to);
+        checkGameEnd();
+        board.move(state.color(), from, to);
+        updateState();
+    }
+
+    private void checkGameEnd() {
+        if (isEnd()) {
+            throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        }
+    }
+
+    private void updateState() {
         if (board.isKingDead()) {
             state = state.end();
             return;
@@ -28,7 +39,7 @@ public class Game {
     }
 
     public boolean isEnd() {
-        return state.isEnd();
+        return board.isKingDead();
     }
 
     public boolean isNotEnd() {

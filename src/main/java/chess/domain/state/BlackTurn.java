@@ -24,11 +24,6 @@ public class BlackTurn implements State {
 
     @Override
     public State end() {
-        return End.getInstance();
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        return End.BLACK_WIN;
     }
 }

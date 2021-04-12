@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.controller.ChessController;
-import chess.domain.location.Position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +21,7 @@ public enum Command {
     MOVE(2) {
         @Override
         public void action(ChessController chessController) {
-            chessController.move(options().get(0),options().get(1));
+            chessController.move(options().get(0), options().get(1));
         }
 
     },

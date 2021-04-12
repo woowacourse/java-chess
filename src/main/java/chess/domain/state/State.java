@@ -8,6 +8,4 @@ public interface State {
     State opposite();
 
     State end();
-
-    boolean isEnd();
 }

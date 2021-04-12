@@ -1,7 +1,8 @@
 package chess;
 
-import chess.controller.web.dao.CommandDao;
+import chess.controller.ChessController;
 import chess.controller.web.WebChessController;
+import chess.controller.web.dao.CommandDao;
 import chess.controller.web.dto.ColorDto;
 import chess.controller.web.dto.ErrorDto;
 import chess.controller.web.dto.PieceDto;
@@ -27,17 +28,14 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        post("/", (req, res) -> {
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
                 chessController.init();
-                chessController.action(req.queryParams("start"));
+//                chessController.action(req.queryParams("start"));
             } catch (IllegalArgumentException e) {
                 model.put("error", new ErrorDto("error" + e.getMessage()));
                 return render(model, "index.html");
-            }
-            if (chessController.isFinished()) {
-                return render(model, "end.html");
             }
             commandDAO.deleteAll();
             model = makeBoardModel(chessController);
@@ -63,7 +61,6 @@ public class WebUIChessApplication {
 
         get("/load", (req, res) -> {
             chessController.init();
-            chessController.action("start");
             List<String> commands = commandDAO.selectAll();
             for (String command : commands) {
                 chessController.action(command);
@@ -83,6 +80,9 @@ public class WebUIChessApplication {
         }
         model.put("scores", chessController.score());
         model.put("turn", currentPlayer);
+        if (chessController.isFinished()) {
+            model.put("winner", chessController.currentPlayer());
+        }
         return model;
     }
 

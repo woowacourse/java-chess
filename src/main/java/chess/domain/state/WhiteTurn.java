@@ -24,11 +24,6 @@ public class WhiteTurn implements State {
 
     @Override
     public State end() {
-        return End.getInstance();
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        return End.WHITE_WIN;
     }
 }

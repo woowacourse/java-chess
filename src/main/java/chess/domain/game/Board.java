@@ -18,7 +18,7 @@ public class Board {
         this.pieceByPosition = new HashMap<>(maps);
     }
 
-    public void action(Color color, Position from, Position to) {
+    public void move(Color color, Position from, Position to) {
         Piece fromPiece = pieceByPosition.get(from);
         if (!fromPiece.isSame(color)) {
             throw new IllegalArgumentException("from 잘못 입력");
