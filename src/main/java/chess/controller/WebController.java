@@ -1,74 +1,70 @@
 package chess.controller;
 
-import chess.dao.ChessLogDao;
-import chess.dto.BoardDto;
+import chess.domain.ChessGame;
 import chess.dto.MovablePositionDto;
 import chess.dto.MoveRequestDto;
+import chess.service.ChessService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.ModelAndView;
-import spark.Spark;
+import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-
 public class WebController {
-    public void run() {
-        Spark.staticFileLocation("public");
-        ChessController chessController = new ChessController();
-        ObjectMapper objectMapper = new ObjectMapper();
-        ChessLogDao chessLogDao = new ChessLogDao();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "main.html");
-        });
+    private final ChessService chessService;
+    private ChessGame chessGame;
 
-        post("/start", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("roomId", req.queryParams("room"));
-            return render(model, "index.html");
-        });
+    public WebController() {
+        this.chessService = new ChessService();
+    }
 
-        get("/create/:room", (req, res) -> {
-            String roomNumber = req.params(":room");
-            List<String> commands = chessLogDao.applyCommand(roomNumber);
-            BoardDto boardDto = chessController.start(commands);
-            return objectMapper.writeValueAsString(boardDto);
-        });
+    public String mainPage(Request request, Response response) {
+        Map<String, Object> model = new HashMap<>();
+        return render(model, "main.html");
+    }
 
-        post("/move", (req, res) -> {
-            try {
-                MoveRequestDto moveRequestDto = objectMapper.readValue(req.body(), MoveRequestDto.class);
-                BoardDto boardDto =
-                        chessController.move(moveRequestDto.getTarget(), moveRequestDto.getDestination());
-                chessLogDao.addLog(
-                        moveRequestDto.getRoomId(), moveRequestDto.getTarget(), moveRequestDto.getDestination());
-                return objectMapper.writeValueAsString(boardDto);
-            } catch (Exception e) {
-                return objectMapper.writeValueAsString(chessController.boardDto());
-            }
-        });
+    public String startGame(Request request, Response response) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("roomId", request.queryParams("room"));
+        return render(model, "index.html");
+    }
 
-        post("/movable", (req, res) -> {
-            MovablePositionDto movablePositionDto = objectMapper.readValue(req.body(), MovablePositionDto.class);
-            return objectMapper.writeValueAsString(chessController.movablePosition(movablePositionDto.getTarget()));
-        });
+    public String createRoom(Request request, Response response) throws JsonProcessingException, SQLException {
+        chessGame = new ChessGame();
+        String roomNumber = request.params(":room");
+        return OBJECT_MAPPER.writeValueAsString(chessService.loadRoom(chessGame, roomNumber));
+    }
 
-        post("/score", (req, res) -> {
-            return objectMapper.writeValueAsString(chessController.boardStatusDto());
-        });
+    public String move(Request request, Response response) throws JsonProcessingException {
+        try {
+            MoveRequestDto moveRequestDto = OBJECT_MAPPER.readValue(request.body(), MoveRequestDto.class);
+            return OBJECT_MAPPER.writeValueAsString(chessService.movePiece(chessGame, moveRequestDto));
+        } catch (Exception e) {
+            return OBJECT_MAPPER.writeValueAsString(chessService.boardDto(chessGame));
+        }
+    }
 
-        get("/clear/:room", (req, res) -> {
-            String roomNumber = req.params(":room");
-            chessLogDao.deleteLog(roomNumber);
-            res.redirect("/");
-            return null;
-        });
+    public String movablePosition(Request request, Response response) throws JsonProcessingException {
+        MovablePositionDto movablePositionDto = OBJECT_MAPPER.readValue(request.body(), MovablePositionDto.class);
+        return OBJECT_MAPPER.writeValueAsString(chessService.movablePosition(chessGame, movablePositionDto.getTarget()));
+    }
+
+    public String score(Request request, Response response) throws JsonProcessingException {
+        return OBJECT_MAPPER.writeValueAsString(chessService.boardStatusDto(chessGame));
+    }
+
+    public String clear(Request request, Response response) throws SQLException {
+        String roomNumber = request.params(":room");
+        chessService.deleteRoom(roomNumber);
+        response.redirect("/");
+        return null;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
