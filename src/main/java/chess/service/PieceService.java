@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.dto.piece.PieceDto;
 import chess.entity.PieceEntity;
+import chess.service.exception.DataNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,5 +37,25 @@ public class PieceService {
         return pieceEntities.stream()
             .map(PieceDto::from)
             .collect(Collectors.toList());
+    }
+
+    public void updateLocation(final long gameId, final int sourceX, final int sourceY,
+        final int targetX, final int targetY) {
+
+        final PieceEntity pieceEntity = pieceDao.selectByLocation(gameId, sourceX, sourceY)
+            .orElseThrow(() -> new DataNotFoundException(PieceEntity.class));
+
+        pieceDao.update(new PieceEntity(
+            pieceEntity.getId(),
+            pieceEntity.getGameId(),
+            pieceEntity.getPieceType(),
+            pieceEntity.getTeam(),
+            targetX,
+            targetY
+        ));
+    }
+
+    public void deleteByLocation(final long gameId, final int x, final int y) {
+        pieceDao.deleteByLocation(gameId, x, y);
     }
 }
