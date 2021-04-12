@@ -164,4 +164,8 @@ public class Position {
         result = 31 * result + (column != null ? column.hashCode() : 0);
         return result;
     }
+
+    public String positionName() {
+        return this.column.column() + this.row.row();
+    }
 }

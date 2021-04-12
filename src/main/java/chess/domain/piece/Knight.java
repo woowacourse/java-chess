@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
-import chess.exception.InvalidMethodCallException;
 
 import java.util.Collections;
 import java.util.List;

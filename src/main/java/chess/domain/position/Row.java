@@ -36,4 +36,8 @@ public enum Row {
                 .findAny()
                 .orElseThrow(InvalidRowException::new);
     }
+
+    public String row() {
+        return Integer.toString(this.value);
+    }
 }

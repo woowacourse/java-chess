@@ -1,8 +1,8 @@
 package chess.domain.gamestate;
 
-import chess.domain.Board;
 import chess.domain.Score;
 import chess.domain.Side;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 

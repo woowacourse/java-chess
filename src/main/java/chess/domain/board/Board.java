@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Side;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -9,6 +10,7 @@ import chess.domain.position.Row;
 import chess.exception.InvalidCommandException;
 import chess.exception.InvalidMovementException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,5 +151,9 @@ public class Board {
             return Side.BLACK;
         }
         return Side.WHITE;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

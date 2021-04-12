@@ -40,15 +40,15 @@ public abstract class Piece {
 
     public boolean isBlank() {
         return false;
-    };
+    }
 
     public boolean isPawn() {
         return false;
-    };
+    }
 
     public boolean isKing() {
         return false;
-    };
+    }
 
     public abstract double score();
 
@@ -80,5 +80,9 @@ public abstract class Piece {
 
     public boolean forward(Position from, Position to) {
         throw new InvalidMethodCallException();
+    }
+
+    public Side side() {
+        return this.side;
     }
 }
