@@ -1,11 +1,11 @@
 package chess;
 
-import chess.controller.CommandDAO;
+import chess.controller.web.dao.CommandDao;
 import chess.controller.web.WebChessController;
-import chess.controller.web.dto.ColorDTO;
-import chess.controller.web.dto.ErrorDTO;
-import chess.controller.web.dto.PieceDTO;
-import chess.controller.web.dto.PositionDTO;
+import chess.controller.web.dto.ColorDto;
+import chess.controller.web.dto.ErrorDto;
+import chess.controller.web.dto.PieceDto;
+import chess.controller.web.dto.PositionDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,7 +20,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         WebChessController chessController = new WebChessController();
-        CommandDAO commandDAO = new CommandDAO();
+        CommandDao commandDAO = new CommandDao();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -33,7 +33,7 @@ public class WebUIChessApplication {
                 chessController.init();
                 chessController.action(req.queryParams("start"));
             } catch (IllegalArgumentException e) {
-                model.put("error", new ErrorDTO("error" + e.getMessage()));
+                model.put("error", new ErrorDto("error" + e.getMessage()));
                 return render(model, "index.html");
             }
             if (chessController.isFinished()) {
@@ -51,12 +51,12 @@ public class WebUIChessApplication {
                 chessController.action(command);
             } catch (IllegalArgumentException e) {
                 model = makeBoardModel(chessController);
-                model.put("error", new ErrorDTO(e.getMessage()));
+                model.put("error", new ErrorDto(e.getMessage()));
                 return render(model, "chessboard.html");
             }
 
             model = makeBoardModel(chessController);
-            model.put("error", new ErrorDTO(""));
+            model.put("error", new ErrorDto(""));
             commandDAO.insert(command);
             return render(model, "chessboard.html");
         });
@@ -75,10 +75,10 @@ public class WebUIChessApplication {
 
     private static Map<String, Object> makeBoardModel(WebChessController chessController) {
         Map<String, Object> model = new HashMap<>();
-        Map<PositionDTO, PieceDTO> board = chessController.board()
+        Map<PositionDto, PieceDto> board = chessController.board()
                                                           .getMaps();
-        ColorDTO currentPlayer = chessController.currentPlayer();
-        for (PositionDTO positionDTO : board.keySet()) {
+        ColorDto currentPlayer = chessController.currentPlayer();
+        for (PositionDto positionDTO : board.keySet()) {
             model.put(positionDTO.getKey(), board.get(positionDTO));
         }
         model.put("scores", chessController.score());

@@ -1,9 +1,9 @@
 package chess.controller.web.dto;
 
-public class ErrorDTO {
+public class ErrorDto {
     private final String message;
 
-    public ErrorDTO(String message) {
+    public ErrorDto(String message) {
         this.message = message;
     }
 

@@ -2,10 +2,10 @@ package chess.controller.web.dto;
 
 import chess.domain.piece.Color;
 
-public class ColorDTO {
+public class ColorDto {
     String color;
 
-    public ColorDTO(Color color) {
+    public ColorDto(Color color) {
         this.color = color.name();
     }
 

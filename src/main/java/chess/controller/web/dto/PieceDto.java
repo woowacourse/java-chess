@@ -2,10 +2,10 @@ package chess.controller.web.dto;
 
 import chess.domain.piece.Piece;
 
-public class PieceDTO {
+public class PieceDto {
     private String display;
 
-    public PieceDTO(Piece piece) {
+    public PieceDto(Piece piece) {
         this.display = piece.display();
     }
 

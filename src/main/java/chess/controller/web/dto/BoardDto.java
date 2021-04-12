@@ -6,17 +6,17 @@ import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardDTO {
-    private final Map<PositionDTO, PieceDTO> maps;
+public class BoardDto {
+    private final Map<PositionDto, PieceDto> maps;
 
-    public BoardDTO(Map<Position, Piece> board) {
+    public BoardDto(Map<Position, Piece> board) {
         maps = new HashMap<>();
         for (Position position : board.keySet()) {
-            maps.put(new PositionDTO(position), new PieceDTO(board.get(position)));
+            maps.put(new PositionDto(position), new PieceDto(board.get(position)));
         }
     }
 
-    public Map<PositionDTO, PieceDTO> getMaps() {
+    public Map<PositionDto, PieceDto> getMaps() {
         return maps;
     }
 }

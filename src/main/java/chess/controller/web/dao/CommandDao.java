@@ -1,10 +1,10 @@
-package chess.controller;
+package chess.controller.web.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandDAO {
+public class CommandDao {
 
     public Connection getConnection() {
         Connection con = null;

@@ -2,10 +2,10 @@ package chess.controller.web.dto;
 
 import chess.domain.location.Position;
 
-public class PositionDTO {
+public class PositionDto {
     private String key;
 
-    public PositionDTO(Position position) {
+    public PositionDto(Position position) {
         this.key = position.toKey();
     }
 

@@ -1,8 +1,8 @@
 package chess.controller.web;
 
-import chess.controller.web.dto.BoardDTO;
-import chess.controller.web.dto.ColorDTO;
-import chess.controller.web.dto.ScoreDTO;
+import chess.controller.web.dto.BoardDto;
+import chess.controller.web.dto.ColorDto;
+import chess.controller.web.dto.ScoreDto;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Command;
 import chess.domain.game.Game;
@@ -24,23 +24,23 @@ public class WebChessController {
                .action(game);
     }
 
-    public ColorDTO currentPlayer() {
-        return new ColorDTO(game.currentPlayer());
+    public ColorDto currentPlayer() {
+        return new ColorDto(game.currentPlayer());
     }
 
-    public BoardDTO board() {
-        return new BoardDTO(game.allBoard());
+    public BoardDto board() {
+        return new BoardDto(game.allBoard());
     }
 
     public boolean isFinished() {
         return game.isFinished();
     }
 
-    public List<ScoreDTO> score() {
-        List<ScoreDTO> scores = new ArrayList<>();
+    public List<ScoreDto> score() {
+        List<ScoreDto> scores = new ArrayList<>();
         Map<Color, Double> score = game.score();
         for (Color color : score.keySet()) {
-            scores.add(new ScoreDTO(color, score.get(color)));
+            scores.add(new ScoreDto(color, score.get(color)));
         }
         return scores;
     }
