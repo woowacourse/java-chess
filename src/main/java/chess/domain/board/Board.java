@@ -1,14 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.dto.PieceDTO;
-import chess.domain.dto.TurnDTO;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.dto.PieceDTO;
 import chess.domain.piece.strategy.MoveDirection;
 
 import java.util.Locale;
