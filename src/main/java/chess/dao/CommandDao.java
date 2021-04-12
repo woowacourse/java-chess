@@ -1,34 +1,14 @@
 package chess.dao;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.dao.DBConnection.getConnection;
+
 public class CommandDao {
-
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:13306";
-        String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-        return con;
-    }
-
     public void insert(String command) throws SQLException {
         String query = "INSERT INTO command VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);

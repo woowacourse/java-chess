@@ -1,12 +1,12 @@
 package chess.dao;
 
-import chess.dao.CommandDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static chess.dao.DBConnection.getConnection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CommandDaoTest {
@@ -20,7 +20,7 @@ public class CommandDaoTest {
 
     @Test
     public void connection() {
-        Connection con = commandDAO.getConnection();
+        Connection con = getConnection();
         assertNotNull(con);
     }
 
