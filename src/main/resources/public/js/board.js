@@ -40,6 +40,18 @@ async function buildBoard() {
     inputImageAtBoard(boardDTO.pieceDTOS);
     $blackScore.textContent = boardDTO.blackScore;
     $whiteScore.textContent = boardDTO.whiteScore;
+    borderCurrentTurn(data.turn);
+}
+
+function borderCurrentTurn(turn) {
+    if (turn === 'BLACK') {
+        document.getElementById("black-versus").classList.add("currentTurn");
+        document.getElementById("white-versus").classList.remove("currentTurn");
+        return;
+    }
+
+    document.getElementById("white-versus").classList.add("currentTurn");
+    document.getElementById("black-versus").classList.remove("currentTurn");
 }
 
 const $whiteScore = document.getElementById("white-score");
@@ -91,6 +103,7 @@ async function onMove(event) {
     movePiece(source, target);
 
     const moveResult = await showChessInfo();
+    borderCurrentTurn(moveResult.turn);
     if (moveResult.status.includes("KING_DEAD")) {
         alert("왕이 죽었습니다. 게임을 종료합니다.");
         window.location.href = "/";
