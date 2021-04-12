@@ -34,7 +34,7 @@ public class ChessController {
 
     private void confirmKingDead(ChessGame chessGame) {
         if (chessGame.isEnd()) {
-            OutputView.printWinner(chessGame.winner().get());
+            OutputView.printWinner(chessGame.winner());
         }
     }
 }

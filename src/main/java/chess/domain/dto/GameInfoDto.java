@@ -10,7 +10,7 @@ public class GameInfoDto {
     private List<SquareDto> squares;
     private Team turn;
     private ScoresDto scores;
-    private Optional<Team> winner;
+    private Team winner;
 
     public GameInfoDto(ChessGame chessGame) {
         this.squares = new SquaresDto(chessGame.board()).squares();
@@ -32,9 +32,9 @@ public class GameInfoDto {
     }
 
     public Team winner() {
-        if (!winner.isPresent()) {
+        if (winner == null) {
             throw new IllegalArgumentException("[ERROR] 승자가 결정되지 않았습니다.");
         }
-        return winner.get();
+        return winner;
     }
 }
