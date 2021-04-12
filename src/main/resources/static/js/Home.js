@@ -8,7 +8,7 @@ window.onload = function () {
   const searchRecordButton = document.querySelector(".search-record")
 
   newGameButton.addEventListener("click", startNewGame);
-  // loadGameButton.addEventListener("click", loadGame);
+  loadGameButton.addEventListener("click", loadGame);
 }
 
 async function startNewGame(e) {
@@ -67,3 +67,9 @@ async function createGame(whiteUserName, blackUserName) {
   };
   await postData(`${url}/game`, body);
 }
+
+function loadGame() {
+  const gameId = prompt("이동할 방번호를 입력하세요.");
+  window.location.href = `${url}/game/${gameId}`
+}
+
