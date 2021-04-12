@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.controller.web.dto.history.HistoryResponseDto;
+import chess.domain.History;
 import chess.exception.DataAccessException;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class HistoryDao {
 
-    public Long saveHistory(final HistoryResponseDto history, final Long gameId) {
+    public Long saveHistory(final History history, final Long gameId) {
         final String query =
                 "INSERT INTO history(game_id, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
 
@@ -20,9 +21,9 @@ public class HistoryDao {
              PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, gameId.intValue());
-            pstmt.setString(2, history.getMoveCommand());
-            pstmt.setString(3, history.getTurnOwner());
-            pstmt.setInt(4, history.getTurnNumber());
+            pstmt.setString(2, history.moveCommand());
+            pstmt.setString(3, history.turnOwner());
+            pstmt.setInt(4, history.turnNumber());
             pstmt.setBoolean(5, history.isPlaying());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {

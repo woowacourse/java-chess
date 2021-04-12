@@ -2,28 +2,24 @@ package chess.service;
 
 import chess.controller.web.dto.game.GameResponseDto;
 import chess.controller.web.dto.history.HistoryResponseDto;
-import chess.controller.web.dto.move.MoveRequestDto;
 import chess.controller.web.dto.move.PathResponseDto;
 import chess.controller.web.dto.piece.PieceResponseDto;
+import chess.controller.web.dto.piece.PieceResponseDtos;
 import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
 import chess.dao.*;
-import chess.domain.board.Board;
+import chess.domain.History;
+import chess.domain.MoveCommand;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
 import chess.domain.game.Game;
 import chess.domain.manager.ChessManager;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
-import chess.util.PieceConverter;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChessService {
-
-    private static final String MOVE_COMMAND_FORMAT = "move %s %s";
 
     private final GameDao gameDao;
     private final HistoryDao historyDao;
@@ -41,11 +37,10 @@ public class ChessService {
 
     public Long saveGame(final Game game) {
         ChessManager chessManager = new ChessManager();
-        Map<Position, Piece> pieces = chessManager.boardToMap();
         Long gameId = gameDao.saveGame(game);
         stateDao.saveState(chessManager, gameId);
         scoreDao.saveScore(chessManager.gameStatus(), gameId);
-        pieceDao.savePieces(gameId, pieces);
+        pieceDao.savePieces(gameId, chessManager.boardToMap());
         return gameId;
 
     }
@@ -76,29 +71,28 @@ public class ChessService {
         return PathResponseDto.from(path);
     }
 
-    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
-        String moveCommand = String.format(MOVE_COMMAND_FORMAT, moveRequestDto.getSource(), moveRequestDto.getTarget());
+    public HistoryResponseDto move(final MoveCommand moveCommand, final Long gameId) {
         ChessManager chessManager = loadChessManager(gameId);
-        HistoryResponseDto historyResponseDto = HistoryResponseDto.from(moveCommand, chessManager);
-        Piece sourcePiece = chessManager.pickPiece(Position.of(moveRequestDto.getSource()));
-        chessManager.move(Position.of(moveRequestDto.getSource()), Position.of(moveRequestDto.getTarget()));
+        History history = History.of(moveCommand, chessManager);
+        Piece sourcePiece = chessManager.pickPiece(Position.of(moveCommand.source()));
+        chessManager.move(Position.of(moveCommand.source()), Position.of(moveCommand.target()));
         scoreDao.updateScore(chessManager.gameStatus(), gameId);
         stateDao.updateState(chessManager, gameId);
-        pieceDao.updateTargetPiece(moveRequestDto.getTarget(), sourcePiece, gameId);
-        pieceDao.updateSourcePiece(moveRequestDto.getSource(), gameId);
-        historyDao.saveHistory(historyResponseDto, gameId);
-        return historyResponseDto;
+        this.updatePieceByMove(moveCommand, sourcePiece, gameId);
+        historyDao.saveHistory(history, gameId);
+        return HistoryResponseDto.from(history);
+    }
+
+    private void updatePieceByMove(MoveCommand moveCommand, Piece sourcePiece, Long gameId) {
+        pieceDao.updateTargetPiece(moveCommand.target(), sourcePiece, gameId);
+        pieceDao.updateSourcePiece(moveCommand.source(), gameId);
     }
 
     private ChessManager loadChessManager(final Long gameId) {
-        List<PieceResponseDto> pieceResponseDtos = pieceDao.findPiecesByGameId(gameId);
+        PieceResponseDtos pieceResponseDtos = new PieceResponseDtos(pieceDao.findPiecesByGameId(gameId));
         StateResponseDto stateResponseDto = stateDao.findStateByGameId(gameId);
-        Map<Position, Piece> pieces = new HashMap<>();
-        for (PieceResponseDto pieceResponseDto : pieceResponseDtos) {
-            pieces.put(Position.of(pieceResponseDto.getPosition()), PieceConverter.parsePiece(pieceResponseDto.getSymbol()));
-        }
         return new ChessManager(
-                new Board(pieces),
+                pieceResponseDtos.toBoard(),
                 Owner.valueOf(stateResponseDto.getTurnOwner()),
                 stateResponseDto.getTurnNumber(),
                 stateResponseDto.isPlaying());

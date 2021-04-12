@@ -25,7 +25,7 @@ public class WebChessController {
     }
 
     public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
-        return chessService.move(moveRequestDto, gameId);
+        return chessService.move(moveRequestDto.toMoveCommand(), gameId);
     }
 
     public Long newGame(final GameRequestDto gameRequestDto) {

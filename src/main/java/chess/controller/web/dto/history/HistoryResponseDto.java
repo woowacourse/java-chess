@@ -1,6 +1,6 @@
 package chess.controller.web.dto.history;
 
-import chess.domain.manager.ChessManager;
+import chess.domain.History;
 
 public class HistoryResponseDto {
 
@@ -16,12 +16,12 @@ public class HistoryResponseDto {
         this.isPlaying = isPlaying;
     }
 
-    public static HistoryResponseDto from(final String moveCommand, final ChessManager chessManager) {
+    public static HistoryResponseDto from(final History history) {
         return new HistoryResponseDto(
-                moveCommand,
-                chessManager.turnOwner().name(),
-                chessManager.turnNumber(),
-                chessManager.isPlaying()
+                history.moveCommand(),
+                history.turnOwner(),
+                history.turnNumber(),
+                history.isPlaying()
         );
     }
 
