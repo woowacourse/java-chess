@@ -3,6 +3,14 @@ package chess.domain.state;
 import chess.domain.piece.Color;
 
 public class WhiteTurn implements State {
+    private static final WhiteTurn WHITE_TURN = new WhiteTurn();
+
+    public static WhiteTurn getInstance() {
+        return WHITE_TURN;
+    }
+
+    private WhiteTurn() {
+    }
 
     @Override
     public Color color() {
@@ -11,17 +19,16 @@ public class WhiteTurn implements State {
 
     @Override
     public State opposite() {
-        return new BlackTurn();
+        return BlackTurn.getInstance();
     }
 
     @Override
     public State end() {
-        return new End();
+        return End.getInstance();
     }
 
     @Override
     public boolean isEnd() {
         return false;
     }
-
 }

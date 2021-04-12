@@ -15,7 +15,7 @@ public class Game {
 
     public Game(Board board) {
         this.board = board;
-        state = new BlackTurn();
+        state = BlackTurn.getInstance();
     }
 
     public void move(Position from, Position to) {
