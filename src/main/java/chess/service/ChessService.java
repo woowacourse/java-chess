@@ -1,13 +1,14 @@
 package chess.service;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
 import chess.domain.command.Commands;
 import chess.domain.dao.CommandDao;
 import chess.domain.dao.HistoryDao;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.GameInfoDto;
 import chess.domain.dto.HistoryDto;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.utils.PieceInitializer;
 import spark.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -23,26 +24,28 @@ public class ChessService {
         this.commandDao = commandDao;
         this.historyDao = historyDao;
     }
-    ////
 
     public GameInfoDto initialGameInfo() {
-        return new GameInfoDto(new ChessGame(BoardInitializer.init()));
+        return new GameInfoDto(new ChessGame(Board.of(PieceInitializer.pieceInfo())));
     }
 
     public GameInfoDto continuedGameInfo(String id) throws SQLException {
-        ChessGame chessGame = new ChessGame(BoardInitializer.init());
-        chessGame.makeBoardStateOf(lastState(id));
+        ChessGame chessGame = gameStateOf(id);
         return new GameInfoDto(chessGame);
     }
 
-    public void move(String id, String command, Commands commands) throws SQLException {
-        ChessGame chessGame = new ChessGame(BoardInitializer.init());
+    private ChessGame gameStateOf(String id) throws SQLException {
+        ChessGame chessGame = new ChessGame(Board.of(PieceInitializer.pieceInfo()));
         chessGame.makeBoardStateOf(lastState(id));
+        return chessGame;
+    }
+
+    public void move(String id, String command, Commands commands) throws SQLException {
+        ChessGame chessGame = gameStateOf(id);
         chessGame.moveAs(commands);
         updateMoveInfo(command, id, chessGame.isEnd());
     }
 
-    ////
     public List<HistoryDto> loadHistory() throws SQLException {
         return histories();
     }

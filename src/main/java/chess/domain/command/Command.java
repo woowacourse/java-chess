@@ -1,7 +1,8 @@
 package chess.domain.command;
 
 import chess.domain.ChessGame;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.board.Board;
+import chess.domain.utils.PieceInitializer;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
@@ -44,7 +45,7 @@ public enum Command {
     }
 
     private static void start(ChessGame chessGame, Commands commands) {
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
     }
 
     private static void move(ChessGame chessGame, Commands commands) {

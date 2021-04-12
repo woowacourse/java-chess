@@ -4,7 +4,6 @@ import chess.domain.ChessGame;
 import chess.domain.board.Team;
 
 import java.util.List;
-import java.util.Optional;
 
 public class GameInfoDto {
     private List<SquareDto> squares;

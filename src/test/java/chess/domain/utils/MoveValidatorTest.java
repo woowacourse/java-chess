@@ -13,7 +13,7 @@ class MoveValidatorTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardInitializer.init();
+        board = Board.of(PieceInitializer.pieceInfo());
     }
 
     @Test

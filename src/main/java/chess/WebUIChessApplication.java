@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.WebController;
-import chess.domain.ChessGame;
 import chess.domain.dao.CommandDao;
 import chess.domain.dao.HistoryDao;
 import chess.service.ChessService;
@@ -22,6 +21,6 @@ public class WebUIChessApplication {
     }
 
     private static WebController initWebController(CommandDao commandDao, HistoryDao historyDao) {
-        return new WebController(new ChessService(commandDao, historyDao), new ChessGame());
+        return new WebController(new ChessService(commandDao, historyDao));
     }
 }

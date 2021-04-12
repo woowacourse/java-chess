@@ -3,15 +3,18 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.utils.PointCalculator;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
 
-    public Board(Map<Position, Piece> chessBoard) {
+    private Board(Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
+    }
+
+    public static Board of(Map<Position, Piece> pieceInfo) {
+        return new Board(pieceInfo);
     }
 
     public boolean containsPosition(Position position) {
