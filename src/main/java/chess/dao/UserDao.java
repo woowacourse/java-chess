@@ -9,11 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
 public class UserDao implements UserDaoInterface {
 
+    @Override
     public void insert(final String name) {
         final String query = "INSERT INTO user(name) VALUES (?)";
         try (
@@ -44,6 +46,7 @@ public class UserDao implements UserDaoInterface {
         }
     }
 
+    @Override
     public Optional<User> selectByName(final String name) {
         final String query = "SELECT * FROM user WHERE name = ?";
         try (
@@ -74,6 +77,27 @@ public class UserDao implements UserDaoInterface {
         );
     }
 
+    @Override
+    public void updateResult(final long winnerId, final long loserId) {
+        final String query = "UPDATE user SET "
+            + "win_count = (CASE WHEN id = ? THEN win_count+1 ELSE win_count END), "
+            + "lose_count = (CASE WHEN id = ? THEN lose_count+1 ELSE lose_count END) "
+            + "WHERE id = ? OR id = ?";
+        try (
+            final Connection connection = createConnection();
+            final PreparedStatement pstmt = JDBCHelper.createPreparedStatement(
+                connection, query, Arrays.asList(
+                    winnerId, loserId, winnerId, loserId
+                )
+            )
+        ) {
+            pstmt.executeUpdate();
+        } catch (final SQLException e) {
+            throw new UncheckedSQLException(e.getMessage());
+        }
+    }
+
+    @Override
     public void deleteByName(final String name) {
         final String query = "DELETE FROM user WHERE name = ?";
         try (

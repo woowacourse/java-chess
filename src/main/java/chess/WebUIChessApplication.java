@@ -41,7 +41,7 @@ public class WebUIChessApplication {
 
     private static void mapException() {
         exception(DataNotFoundException.class, (exception, request, response) -> {
-            response.status(200);
+            response.status(500);
             response.type("application/json");
             response.body("{}");
         });

@@ -81,6 +81,7 @@ public class ChessService {
         board.move(source, target, team);
         final boolean isFinished = !board.isKingAlive(team.reverse());
         updateGame(game, isFinished);
+        updateWinLose(game, isFinished);
         return new MoveResponseDto(isFinished, getWinnerName(game, isFinished));
     }
 
@@ -105,6 +106,18 @@ public class ChessService {
             new GamePutRequestDto(game.getId(), nextTeam.getValue(), isFinished);
 
         gameService.update(gamePutRequestDto);
+    }
+
+    private void updateWinLose(final Game game, final boolean isFinished) {
+        if (!isFinished) {
+            return;
+        }
+        final Team winTeam = game.getTurn();
+        if (winTeam.isWhite()) {
+            userService.updateResult(game.getWhiteId(), game.getBlackId());
+            return;
+        }
+        userService.updateResult(game.getBlackId(), game.getWhiteId());
     }
 
     private String getWinnerName(final Game game, final boolean isFinished) {

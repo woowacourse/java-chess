@@ -73,7 +73,7 @@ public class GameDao implements GameDaoInterface {
                 connection, query, Arrays.asList(
                     game.getTurnValue(), game.isFinished(), game.getId()
                 )
-            );
+            )
         ) {
             pstmt.executeUpdate();
         } catch (final SQLException e) {

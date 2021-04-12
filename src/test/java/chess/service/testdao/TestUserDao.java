@@ -40,6 +40,11 @@ public class TestUserDao implements UserDaoInterface {
     }
 
     @Override
+    public void updateResult(final long winnerId, final long loserId) {
+
+    }
+
+    @Override
     public void deleteByName(final String name) {
 
     }

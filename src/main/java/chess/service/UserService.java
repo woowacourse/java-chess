@@ -17,6 +17,10 @@ public class UserService {
         userDao.insert(userRequestDto.getName());
     }
 
+    public void updateResult(final long winnerId, final long loserId) {
+        userDao.updateResult(winnerId, loserId);
+    }
+
     public User findByName(final String name) {
         return userDao.selectByName(name)
             .orElseThrow(() -> new DataNotFoundException(User.class));

@@ -11,5 +11,7 @@ public interface UserDaoInterface {
 
     Optional<User> selectByName(String name);
 
+    void updateResult(long winnerId, long loserId);
+
     void deleteByName(String name);
 }
