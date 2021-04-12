@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
+import chess.domain.location.Direction;
 import chess.domain.location.Position;
-import chess.domain.location.Vector;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class SingleMove implements MoveStrategy {
     private final Color color;
-    private final List<Vector> directions;
+    private final List<Direction> directions;
 
-    public SingleMove(Color color, List<Vector> directions) {
+    public SingleMove(Color color, List<Direction> directions) {
         this.color = color;
         this.directions = directions;
     }

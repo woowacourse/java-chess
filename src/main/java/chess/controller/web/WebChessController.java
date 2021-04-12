@@ -1,12 +1,12 @@
 package chess.controller.web;
 
+import chess.controller.web.dto.BoardDTO;
+import chess.controller.web.dto.ColorDTO;
+import chess.controller.web.dto.ScoreDTO;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Command;
 import chess.domain.game.Game;
 import chess.domain.piece.Color;
-import chess.controller.web.dto.BoardDTO;
-import chess.controller.web.dto.ColorDTO;
-import chess.controller.web.dto.ScoreDTO;
 
 import java.util.ArrayList;
 import java.util.List;

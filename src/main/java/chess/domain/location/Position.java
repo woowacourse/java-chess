@@ -45,16 +45,16 @@ public class Position {
         return cache.values();
     }
 
-    public boolean canMove(Vector vector) {
-        return column.canMove(vector.column()) && row.canMove(vector.row());
+    public boolean canMove(Direction direction) {
+        return column.canMove(direction.column()) && row.canMove(direction.row());
     }
 
     public boolean canMove(int column, int row) {
         return this.column.canMove(column) && this.row.canMove(row);
     }
 
-    public Position move(Vector vector) {
-        return Position.of(column.move(vector.column()), row.move(vector.row()));
+    public Position move(Direction direction) {
+        return Position.of(column.move(direction.column()), row.move(direction.row()));
     }
 
     public Position move(int column, int row) {
