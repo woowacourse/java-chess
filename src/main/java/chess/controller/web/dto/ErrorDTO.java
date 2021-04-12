@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.controller.web.dto;
 
 public class ErrorDTO {
     private final String message;

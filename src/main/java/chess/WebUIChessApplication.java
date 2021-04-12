@@ -1,11 +1,11 @@
 package chess;
 
-import chess.controller.ChessControllerForUI;
+import chess.controller.web.WebChessController;
 import chess.controller.CommandDAO;
-import chess.dto.ColorDTO;
-import chess.dto.ErrorDTO;
-import chess.dto.PieceDTO;
-import chess.dto.PositionDTO;
+import chess.controller.web.dto.ColorDTO;
+import chess.controller.web.dto.ErrorDTO;
+import chess.controller.web.dto.PieceDTO;
+import chess.controller.web.dto.PositionDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -19,7 +19,7 @@ import static spark.Spark.post;
 public class WebUIChessApplication {
 
     public static void main(String[] args) {
-        ChessControllerForUI chessController = new ChessControllerForUI();
+        WebChessController chessController = new WebChessController();
         CommandDAO commandDAO = new CommandDAO();
 
         get("/", (req, res) -> {
@@ -73,7 +73,7 @@ public class WebUIChessApplication {
         });
     }
 
-    private static Map<String, Object> makeBoardModel(ChessControllerForUI chessController) {
+    private static Map<String, Object> makeBoardModel(WebChessController chessController) {
         Map<String, Object> model = new HashMap<>();
         Map<PositionDTO, PieceDTO> board = chessController.board()
                                                           .getMaps();
