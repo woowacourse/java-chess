@@ -1,8 +1,10 @@
 package domain.menu;
 
+import domain.Board;
 import domain.ChessGame;
-import domain.dto.BoardDto;
 import domain.exception.AlreadyStartException;
+import domain.state.Wait;
+import dto.BoardDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,7 @@ class StartTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(new Wait(new Board()));
     }
 
     @DisplayName("start 메뉴를 실행하면, 첫 시작된 보드판을 출력한다.")

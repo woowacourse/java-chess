@@ -2,7 +2,7 @@ package domain;
 
 import domain.piece.objects.*;
 import domain.piece.position.Position;
-import domain.score.Score;
+import domain.state.Wait;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,15 +16,15 @@ class ChessGameTest {
     @DisplayName("king이 잡히면, 게임이 끝난다.")
     @Test
     void game_over_if_king_dead() {
-        ChessGame chessGame = new ChessGame();
-        chessGame.start(PieceFactory.createPieces());
+        ChessGame chessGame = new ChessGame(new Wait(new Board()));
+        chessGame.start();
         chessGame.move(Position.of("e2"), Position.of("e4"));
         chessGame.move(Position.of("e7"), Position.of("e5"));
         chessGame.move(Position.of("e1"), Position.of("e2"));
         chessGame.move(Position.of("f8"), Position.of("c5"));
         chessGame.move(Position.of("e2"), Position.of("e3"));
         chessGame.move(Position.of("c5"), Position.of("e3"));
-        assertThat(chessGame.isRunning()).isFalse();
+        assertThat(chessGame.isEnd()).isTrue();
     }
 
     @DisplayName("체스 판의 말들을 통해 점수를 계산한다.")
@@ -48,10 +48,9 @@ class ChessGameTest {
             put(Position.of("e1"), Rook.of("r", false));
             put(Position.of("f1"), King.of("k", false));
         }};
-        ChessGame chessGame = new ChessGame();
-        chessGame.start(pieces);
-        Map<Boolean, Score> result = chessGame.piecesScore();
-        assertThat(result.get(true)).isEqualTo(Score.of(20));
-        assertThat(result.get(false)).isEqualTo(Score.of(19.5));
+        ChessGame chessGame = new ChessGame(new Wait(new Board(pieces)));
+        chessGame.start();
+        assertThat(chessGame.blackScore()).isEqualTo(20);
+        assertThat(chessGame.whiteScore()).isEqualTo(19.5);
     }
 }

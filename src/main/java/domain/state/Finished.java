@@ -1,19 +1,26 @@
 package domain.state;
 
+import domain.Board;
 import domain.exception.AlreadyFinishedException;
 import domain.exception.GameNotStartException;
-import domain.piece.objects.Piece;
 import domain.piece.position.Position;
 
-import java.util.Map;
-
 public class Finished extends Started {
-    public Finished(Map<Position, Piece> pieces) {
-        super(pieces);
+    public Finished(Board board) {
+        super(board);
+    }
+
+    public Finished(Board board, boolean turn) {
+        super(board, turn);
     }
 
     @Override
-    public State run(Map<Position, Piece> pieces) {
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
+    public State run() {
         throw new GameNotStartException();
     }
 
@@ -25,10 +32,5 @@ public class Finished extends Started {
     @Override
     public State finish() {
         throw new AlreadyFinishedException();
-    }
-
-    @Override
-    public boolean isRunning() {
-        return false;
     }
 }

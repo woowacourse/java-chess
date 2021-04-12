@@ -1,39 +1,44 @@
 package domain;
 
-import domain.piece.objects.Piece;
 import domain.piece.position.Position;
-import domain.score.Score;
 import domain.state.State;
-import domain.state.Wait;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChessGame {
-    private State state = new Wait(new HashMap<>());
+    private State state;
 
-    public void start(Map<Position, Piece> pieces) {
-        state = state.run(pieces);
+    public ChessGame(State state) {
+        this.state = state;
+    }
+
+    public void start() {
+        state = state.run();
     }
 
     public void move(Position start, Position end) {
         state = state.move(start, end);
     }
 
-    public Map<Boolean, Score> piecesScore() {
-        return state.pieceScore();
-
+    public void finish() {
+        state = state.finish();
     }
 
     public Board getBoard() {
         return state.getBoard();
     }
 
-    public void finish() {
-        state = state.finish();
+    public double blackScore() {
+        return state.blackScore().getValue();
     }
 
-    public boolean isRunning() {
-        return state.isRunning();
+    public double whiteScore() {
+        return state.whiteScore().getValue();
+    }
+
+    public boolean getTurn() {
+        return state.getTurn();
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
     }
 }

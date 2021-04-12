@@ -1,5 +1,7 @@
 package domain.piece.objects;
 
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
@@ -27,17 +29,36 @@ public class Rook extends Piece {
         }};
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
-        if (!isLinear(start, end)) {
-            return false;
-        }
+    private boolean movablePosition(Position start, Position end) {
         Direction direction = getLinearDirection(start, end);
-        do {
-            start = start.move(direction);
-        } while (!start.equals(end) && start.notEmptyPosition() && isEmptyPiecePosition(board, start));
+        Position temp = start.move(direction);
+        while (!temp.equals(end) && temp.validPosition()) {
+            temp = temp.move(direction);
+        }
+        return temp.equals(end) && temp.validPosition();
+    }
 
-        return start.equals(end) && start.notEmptyPosition()
-                && (isEmptyPiecePosition(board, end) || !this.isSameColor(board.get(end)));
+    @Override
+    public void checkMovable(Position start, Position end, boolean turn) {
+        if (!isSameColor(turn)) {
+            throw new InvalidTurnException();
+        }
+
+        if (!movablePosition(start, end)) {
+            throw new PieceCannotMoveException(name());
+        }
+    }
+
+    @Override
+    public Direction direction(Position start, Position end) {
+        if (!isLinear(start, end)) {
+            throw new RuntimeException("올바른 방향이 아닙니다!");
+        }
+        return getLinearDirection(start, end);
+    }
+
+    @Override
+    public boolean existPath() {
+        return false;
     }
 }

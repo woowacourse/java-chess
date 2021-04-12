@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
 </head>
 <body>
-Hello World!!
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="loadRoom.js"></script>
+<h1>체스 게임</h1>
+<form action="/startClick" method="get">
+    <select name="roomNumber" id="room-number">
+        <option value="new">새 게임</option>
+    </select>
+    <br/>
+    <button type="submit" formmethod="get">시작하기</button>
+</form>
 </body>
 </html>

@@ -5,17 +5,18 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 
 public class Name {
-    private final char value;
-    private static final Map<Character, Name> CACHE = new WeakHashMap<>();
+    public static final int CHARACTER_LENGTH = 1;
 
+    private static final Map<Character, Name> CACHE = new WeakHashMap<>();
     public static final Name EMPTY = new Name('.');
+    private final char value;
 
     private Name(char value) {
         this.value = value;
     }
 
     public static Name of(String name, boolean isUpperCase) {
-        if (invalidLength(name)) {
+        if (name.length() != CHARACTER_LENGTH) {
             throw new IllegalArgumentException("기물의 이름은 한자리만 가능합니다.");
         }
 
@@ -36,10 +37,6 @@ public class Name {
         return Character.isLowerCase(name);
     }
 
-    private static boolean invalidLength(String name) {
-        return name.length() != 1;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,5 +49,4 @@ public class Name {
     public int hashCode() {
         return Objects.hash(value);
     }
-
 }

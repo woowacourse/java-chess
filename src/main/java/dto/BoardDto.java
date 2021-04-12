@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.Board;
 import domain.piece.position.Position;
@@ -20,7 +20,7 @@ public class BoardDto implements MenuDto {
                 .flatMap(row -> IntStream.range(0, 8)
                         .mapToObj(column -> Position.valueOf(row, column)))
                 .forEach(position -> {
-                    result.add(board.getPiece(position).getName());
+                    result.add(board.getPiece(position).name());
                     if (count.incrementAndGet() % 8 == 0) {
                         result.add("\n");
                     }

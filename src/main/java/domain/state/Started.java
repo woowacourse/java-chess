@@ -1,35 +1,44 @@
 package domain.state;
 
 import domain.Board;
-import domain.piece.objects.Piece;
-import domain.piece.position.Position;
 import domain.score.Score;
 import domain.score.ScoreMachine;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class Started implements State {
     protected Board board;
-    protected boolean turn = false;
+    protected boolean turn;
 
-    public Started(Map<Position, Piece> pieces) {
-        this.board = new Board(pieces);
+    public Started(Board board) {
+        this.board = board;
     }
 
-    public boolean isRunning() {
-        return true;
+    public Started(Board board, boolean turn) {
+        this(board);
+        this.turn = turn;
     }
 
-    public Map<Boolean, Score> pieceScore() {
-        Map<Boolean, Score> result = new HashMap<>();
-        result.put(true, ScoreMachine.blackPiecesScore(board));
-        result.put(false, ScoreMachine.whitePiecesScore(board));
-        return result;
+    @Override
+    public Score blackScore() {
+        return ScoreMachine.blackPiecesScore(board);
+    }
+
+    @Override
+    public Score whiteScore() {
+        return ScoreMachine.whitePiecesScore(board);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 
     @Override
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public boolean getTurn() {
+        return turn;
     }
 }

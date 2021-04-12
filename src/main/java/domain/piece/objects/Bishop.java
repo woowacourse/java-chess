@@ -1,5 +1,7 @@
 package domain.piece.objects;
 
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
@@ -27,17 +29,36 @@ public class Bishop extends Piece {
         }};
     }
 
+    private boolean movablePosition(Position start, Position end) {
+        Direction direction = getDiagonalDirection(start, end);
+        Position temp = start.move(direction);
+        while (!temp.equals(end) && temp.validPosition()) {
+            temp = temp.move(direction);
+        }
+        return temp.equals(end) && temp.validPosition();
+    }
+
     @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
-        if (!isDiagonal(start, end)) {
-            return false;
+    public void checkMovable(Position start, Position end, boolean turn) {
+        if (!isSameColor(turn)) {
+            throw new InvalidTurnException();
         }
 
-        Direction direction = getDiagonalDirection(start, end);
-        do {
-            start = start.move(direction);
-        } while (!start.equals(end) && start.notEmptyPosition() && isEmptyPiecePosition(board, start));
+        if (!movablePosition(start, end)) {
+            throw new PieceCannotMoveException(name());
+        }
+    }
 
-        return start.equals(end) && (isEmptyPiecePosition(board, start) || !this.isSameColor(board.get(end)));
+    @Override
+    public boolean existPath() {
+        return false;
+    }
+
+    @Override
+    public Direction direction(Position start, Position end) {
+        if (!isDiagonal(start, end)) {
+            throw new RuntimeException("비숍은 대각선 방향만 가질 수 있습니다!");
+        }
+        return getDiagonalDirection(start, end);
     }
 }

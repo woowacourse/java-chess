@@ -1,13 +1,15 @@
 package controller;
 
 import domain.ChessGame;
-import domain.dto.BoardDto;
-import domain.dto.MenuDto;
-import domain.dto.StatusDto;
 import domain.menu.Menu;
+import dto.BoardDto;
+import dto.MenuDto;
+import dto.StatusDto;
 import view.OutputView;
 
 public class MenuController {
+    String errorMessage = "";
+
     public void run(String command, ChessGame game) {
         String menuButton = command.split(" ")[0];
         Menu menu = Menu.findMenu(menuButton);
@@ -18,9 +20,15 @@ public class MenuController {
         try {
             MenuDto menuDto = menu.execute(command, game);
             selectOutputView(menuDto);
+            errorMessage = "";
         } catch (RuntimeException e) {
+            errorMessage = e.getMessage();
             OutputView.printError(e.getMessage());
         }
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     private void selectOutputView(MenuDto menuDto) {

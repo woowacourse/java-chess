@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Position {
     public static final int POSITION_INPUT_LENGTH = 2;
-    private static final Position EMPTY_POSITION = new Position(null, null);
 
+    public static final Position EMPTY_POSITION = new Position(null, null);
     private final Row row;
     private final Column column;
 
@@ -49,8 +49,13 @@ public class Position {
         }
     }
 
-    public boolean notEmptyPosition() {
+    public boolean validPosition() {
         return !this.equals(EMPTY_POSITION);
+    }
+
+    @Override
+    public String toString() {
+        return column.toString() + row.toString();
     }
 
     @Override

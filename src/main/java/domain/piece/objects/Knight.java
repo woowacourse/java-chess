@@ -1,5 +1,7 @@
 package domain.piece.objects;
 
+import domain.exception.InvalidTurnException;
+import domain.exception.PieceCannotMoveException;
 import domain.piece.position.Direction;
 import domain.piece.position.Position;
 import domain.score.Score;
@@ -28,12 +30,26 @@ public class Knight extends Piece {
         }};
     }
 
-    @Override
-    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
+    private boolean movablePosition(Position start, Position end) {
         List<Direction> directions = Direction.knightDirection();
         return directions.stream()
                 .map(direction -> start.move(direction))
-                .filter(nextPosition -> nextPosition.notEmptyPosition() && nextPosition.equals(end))
-                .anyMatch(nextPosition -> isEmptyPiecePosition(board, nextPosition) || !this.isSameColor(board.get(nextPosition)));
+                .anyMatch(nextPosition -> nextPosition.validPosition() && nextPosition.equals(end));
+    }
+
+    @Override
+    public void checkMovable(Position start, Position end, boolean turn) {
+        if (!isSameColor(turn)) {
+            throw new InvalidTurnException();
+        }
+
+        if (!movablePosition(start, end)) {
+            throw new PieceCannotMoveException(name());
+        }
+    }
+
+    @Override
+    public boolean existPath() {
+        return true;
     }
 }
