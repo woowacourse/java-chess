@@ -23,8 +23,8 @@ export class Tile {
   }
 
   #convert(id) {
-    this.#x = id.charCodeAt(0) - "a".charCodeAt(0);
-    this.#y = parseInt(id.charAt(1)) - 1;
+    this.#x = id.charCodeAt(0) - "a".charCodeAt(0) + 1;
+    this.#y = parseInt(id.charAt(1));
   }
 
   highlight(isMovable) {

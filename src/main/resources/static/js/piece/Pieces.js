@@ -2,20 +2,15 @@ import {Piece} from "./Piece.js";
 
 export class Pieces {
   #pieces = []
-  #components
 
-  constructor() {
-    this.#components = document.querySelectorAll(".piece");
-    this.#components.forEach(
-        component => this.#pieces.push(new Piece(component)))
+  constructor(pieceDtos) {
+    for (let i = 0; i < pieceDtos.length; i++) {
+      this.#pieces.push(new Piece(pieceDtos[i], i));
+    }
   }
 
   get pieces() {
     return this.#pieces;
-  }
-
-  get components() {
-    return this.#components;
   }
 
   move(piece, tile) {
@@ -24,7 +19,7 @@ export class Pieces {
   }
 
   #removeIfExistent(tile) {
-    const targetPiece = this.#findByPosition(tile.x, tile.y);
+    const targetPiece = this.findByPosition(tile.x, tile.y);
     if (targetPiece) {
       const index = this.#pieces.indexOf(targetPiece);
       this.#pieces = this.#pieces.slice(0, index).concat(
@@ -33,7 +28,7 @@ export class Pieces {
     }
   }
 
-  #findByPosition(x, y) {
+  findByPosition(x, y) {
     for (const piece of this.#pieces) {
       if (piece.x === x && piece.y === y) {
         return piece;
@@ -41,12 +36,10 @@ export class Pieces {
     }
   }
 
-  findById(pieceId) {
-    for (const piece of this.#pieces) {
-      if (Object.is(piece.component.id, pieceId)) {
-        return piece;
-      }
-    }
+  findBySourcePosition(sourcePosition) {
+    const x = parseInt(sourcePosition[0]);
+    const y = parseInt(sourcePosition[1]);
+    return this.findByPosition(x, y);
   }
 
   findByComponent(component) {

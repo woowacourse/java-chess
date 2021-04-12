@@ -32,4 +32,10 @@ export class Tiles {
       }
     }
   }
+
+  findById(id) {
+    const x = id.charCodeAt(0) - "a".charCodeAt(0) + 1;
+    const y = parseInt(id.charAt(1));
+    return this.findByPosition(x, y);
+  }
 }

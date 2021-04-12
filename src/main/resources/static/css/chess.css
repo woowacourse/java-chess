@@ -23,6 +23,7 @@ body {
 .grid div {
     font-size: calc(5vw);
     text-align: center;
+    position: relative;
 }
 
 .grid div:nth-child(-n+8):nth-child(even) {
@@ -61,4 +62,6 @@ body {
     width: 100%;
     height: 100%;
     transition: 0s;
+    position: absolute;
+    z-index: 100;
 }

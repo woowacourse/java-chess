@@ -10,9 +10,9 @@ export class Board {
   #component
   #sourceTile
 
-  constructor() {
+  constructor(pieceDtos) {
     this.#tiles = new Tiles();
-    this.#pieces = new Pieces();
+    this.#pieces = new Pieces(pieceDtos);
     this.#component = document.querySelector(".grid");
     this.#sourceTile = null;
     this.#addEvent()
@@ -69,13 +69,15 @@ export class Board {
         !e.target.classList.contains("piece")) {
       return;
     }
-    let targetTile = this.#getTargetTile(e.target, board);
-    if (board.#sourceTile.same(targetTile)) {
+    const targetTile = this.#getTargetTile(e.target, board);
+    const sourceTile = board.#sourceTile;
+    if (sourceTile.same(targetTile)) {
       return;
     }
     const params = {
       source: board.#sourceTile.component.id,
-      target: targetTile.component.id
+      target: targetTile.component.id,
+      team: this.#pieces.findByPosition(sourceTile.x, sourceTile.y).team
     }
 
     const gameId = this.#findGameIdInUri();
@@ -85,7 +87,7 @@ export class Board {
       );
       targetTile.highlight(response["isMovable"]);
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -105,12 +107,13 @@ export class Board {
   }
 
   #leavePiece(e, board) {
-    board.#unhighlight(e.target)
+    const copy = e.target;
+    board.#unhighlight(copy);
   }
 
   async #dropPiece(e, board) {
-    const pieceId = e.dataTransfer.getData("pieceId");
-    const piece = board.#pieces.findById(pieceId);
+    const sourcePosition = e.dataTransfer.getData("sourcePosition");
+    const piece = board.#pieces.findBySourcePosition(sourcePosition);
     const sourceTile = board.#tiles.findByPosition(piece.x, piece.y);
     const targetTile = this.#getTargetTile(e.target, board);
     if (sourceTile.same(targetTile)) {
@@ -120,7 +123,8 @@ export class Board {
 
     const params = {
       source: sourceTile.component.id,
-      target: targetTile.component.id
+      target: targetTile.component.id,
+      team: piece.team
     }
     const gameId = this.#findGameIdInUri();
     const response = await getData(
@@ -137,26 +141,33 @@ export class Board {
   async #requestMove(piece, targetTile, body, gameId) {
     const response = await postData(
         `${url}/game/${gameId}/piece`, body);
-    const isSuccessful = response["isSuccessful"];
-    if (isSuccessful) {
-      this.#pieces.move(piece, targetTile)
-    } else {
-      console.error(response["message"]);
+    this.#pieces.move(piece, targetTile)
+    const isFinished = response["isFinished"]
+    if (isFinished) {
+      const winner = response["winner"];
+      const back = confirm(`${winner}가 이겼습니다. 확인을 누르면 홈으로 돌아갑니다.`)
+      if (back) {
+        window.location.href = "/";
+      }
     }
   }
 
   #unhighlight(target) {
     if (target.classList.contains("tile")) {
-      const tile = this.#tiles.findByComponent(target);
-      tile.unhighlight();
+      const tile = this.#tiles.findById(target.id);
+      window.setTimeout(function () {
+        tile.unhighlight.call(tile);
+      }, 50);
     }
     if (target.classList.contains("piece")) {
       const tile = this.#findTileByPieceComponent(target);
-      tile.unhighlight();
+      window.setTimeout(function () {
+        tile.unhighlight.call(tile);
+      }, 50);
     }
   }
 
-  findPieceById(pieceId) {
-    return this.#pieces.findById(pieceId);
+  findPieceBySourcePosition(sourcePosition) {
+    return this.#pieces.findBySourcePosition(sourcePosition);
   }
 }
