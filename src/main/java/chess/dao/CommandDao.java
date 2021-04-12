@@ -9,30 +9,37 @@ import java.util.List;
 import static chess.dao.DBConnection.getConnection;
 
 public class CommandDao {
-    public void insert(String command) throws SQLException {
+    public void insert(String command) {
         String query = "INSERT INTO command VALUES (?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, command);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, command);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("insert Error");
+        }
     }
 
-    public List<String> selectAll() throws SQLException {
+    public List<String> selectAll() {
         String query = "SELECT * FROM command";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-
         List<String> commands = new ArrayList<>();
-        while (rs.next()) {
-            commands.add(rs.getString("command"));
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                commands.add(rs.getString("command"));
+            }
+        } catch (SQLException e) {
+            System.err.println("select All Error");
         }
-
         return commands;
     }
 
 
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         String query = "DELETE FROM command";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("select All Error");
+        }
     }
 }
