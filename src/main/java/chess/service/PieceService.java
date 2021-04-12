@@ -30,4 +30,11 @@ public class PieceService {
             .collect(Collectors.toList());
         pieceDao.insertBatch(gameId, pieceEntities);
     }
+
+    public List<PieceDto> findAll(final long gameId) {
+        final List<PieceEntity> pieceEntities = pieceDao.selectAll(gameId);
+        return pieceEntities.stream()
+            .map(PieceDto::from)
+            .collect(Collectors.toList());
+    }
 }

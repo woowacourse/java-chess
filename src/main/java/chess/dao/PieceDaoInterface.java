@@ -6,4 +6,6 @@ import java.util.List;
 public interface PieceDaoInterface {
 
     void insertBatch(long gameId, List<PieceEntity> pieceEntities);
+
+    List<PieceEntity> selectAll(long gameId);
 }
