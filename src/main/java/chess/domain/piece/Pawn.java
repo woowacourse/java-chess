@@ -5,13 +5,13 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Division {
+    public static final String PAWN_MOVE_ERROR = "폰이 이동할 수 없는 위치입니다";
+    public static final String CANT_KILL_ERROR = "해당 위치의 말은 잡을 수 없습니다";
+    public static final String EXIST_PIECE_BETWEEN_ERROR = "중간에 기물이 있어 이동할 수 없습니다.";
     private static final String PAWN_DISPLAYNAME = "p";
     private static final int PAWN_SCORE = 1;
     private static final int SINGLE_MOVEMENT = 1;
     private static final int DOUBLE_MOVEMENTS = 2;
-    public static final String PAWN_MOVE_ERROR = "폰이 이동할 수 없는 위치입니다";
-    public static final String CANT_KILL_ERROR = "해당 위치의 말은 잡을 수 없습니다";
-    public static final String EXIST_PIECE_BETWEEN_ERROR = "중간에 기물이 있어 이동할 수 없습니다.";
 
     public Pawn(final Color color, final Position position) {
         super(color, PAWN_DISPLAYNAME, position);
@@ -45,7 +45,7 @@ public class Pawn extends Division {
     private void validateNoneBetween(final Position to, final Pieces pieces) {
         final List<Position> positions = position.getBetween(to);
         if (positions.stream()
-                     .anyMatch(pieces::hasPieceOf)) {
+                .anyMatch(pieces::hasPieceOf)) {
             throw new IllegalArgumentException(EXIST_PIECE_BETWEEN_ERROR);
         }
     }

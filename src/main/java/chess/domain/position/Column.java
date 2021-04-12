@@ -15,10 +15,10 @@ public enum Column {
     H("h");
 
     public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
+    private static final Column[] columns = values();
     private final String value;
-    private static Column[] columns = values();
 
-    Column(String value) {
+    Column(final String value) {
         this.value = value;
     }
 
@@ -38,7 +38,7 @@ public enum Column {
         final int end = Math.max(this.ordinal(), to.ordinal());
         final List<Column> betweenColumns = new ArrayList<>();
         IntStream.range(start + 1, end)
-                 .forEach(x -> betweenColumns.add(columns[x]));
+                .forEach(x -> betweenColumns.add(columns[x]));
         return betweenColumns;
     }
 

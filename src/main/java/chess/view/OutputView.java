@@ -50,7 +50,7 @@ public class OutputView {
         for (final Row row : rows) {
             for (final Column column : Column.values()) {
                 System.out.print(pieces.getPieceOf(Position.of(column, row))
-                                       .display());
+                        .display());
             }
             System.out.println();
         }

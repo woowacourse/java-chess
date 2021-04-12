@@ -1,0 +1,99 @@
+h1 {
+    color:#333D79;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.turnMessage {
+    color:#333D79;
+    font-size: 1.1em;
+    display: flex;
+    margin-left: 16vw;
+    margin-top: 0.5vw;
+}
+
+body {
+    background-color:#FCF6F5;
+}
+
+button {
+    background:#333D79;
+    color:#FCF6F5;
+    border:none;
+    position:relative;
+    height:40px;
+    font-size:1.3em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: -2vw;
+    margin-left: 57vw;
+}
+
+button:hover{
+    background:#FCF6F5;
+    color:#333D79;
+}
+
+button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #333D79;
+    transition:400ms ease all;
+}
+
+button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.chessBoard {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #7b9acc;
+    margin: auto;
+    width: 35vw;
+    height: 35vw;
+}
+
+.chessRow {
+    width: 100%;
+    height: 12.5%;
+    display: flex;
+    flex-direction: row;
+}
+
+.chessColumn {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.chessRow > .chessColumn > img {
+    width: 100%;
+    height: 100%;
+}
+
+.clicked {
+    background-color: #FCE77D !important;
+}

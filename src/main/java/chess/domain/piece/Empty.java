@@ -4,8 +4,8 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class Empty extends Basis {
-    private static final String EMPTY_DISPLAYNAME = ".";
     public static final String EMPTY_MOVE_ERROR = "해당 위치에 움직일 말이 없습니다";
+    private static final String EMPTY_DISPLAYNAME = ".";
 
     public Empty() {
         super(EMPTY_DISPLAYNAME);
@@ -17,7 +17,8 @@ public class Empty extends Basis {
     }
 
     @Override
-    public void moveForKill(final Position to, final Pieces pieces) {}
+    public void moveForKill(final Position to, final Pieces pieces) {
+    }
 
     @Override
     public boolean hasPosition(final Position position) {

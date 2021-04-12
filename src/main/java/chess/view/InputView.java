@@ -26,7 +26,7 @@ public class InputView {
         final String userInput = scanner.nextLine();
         final List<String> inputs = Arrays.asList(userInput.split(" "));
         if (inputs.size() == 3 && "move".equals(inputs.get(0))) {
-            return inputs.subList(1,3);
+            return inputs.subList(1, 3);
         }
         throw new IllegalArgumentException("잘못된 입력입니다.");
     }

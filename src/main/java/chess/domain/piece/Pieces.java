@@ -4,23 +4,23 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import java.util.*;
 
 public class Pieces {
-    private final List<Piece> pieces = new ArrayList<>();
+    private static final String WRONG_CHESS_ERROR = "잘못된 체스 이름입니다.";
+    private final List<Piece> pieces;
 
     public Pieces(final Piece... pieces) {
+        this.pieces = new ArrayList<>();
         this.pieces.addAll(Arrays.asList(pieces));
     }
 
+    public Pieces(final List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
     public Pieces() {
+        this.pieces = new ArrayList<>();
     }
 
     public void init() {
@@ -57,14 +57,14 @@ public class Pieces {
 
     public Piece getPieceOf(final Position position) {
         return pieces.stream()
-                     .filter(piece -> piece.hasPosition(position))
-                     .findFirst()
-                     .orElse(new Empty());
+                .filter(piece -> piece.hasPosition(position))
+                .findFirst()
+                .orElse(new Empty());
     }
 
     public boolean hasPieceOf(final Position position) {
         return pieces.stream()
-                     .anyMatch(piece -> piece.hasPosition(position));
+                .anyMatch(piece -> piece.hasPosition(position));
     }
 
     public List<Piece> toList() {
@@ -77,5 +77,33 @@ public class Pieces {
 
     public List<Piece> getPieces() {
         return pieces;
+    }
+
+    public Piece findPieceByName(final String name) {
+        if ("B".equals(name.substring(0, 1))) {
+            return findPieceByColor(Color.BLACK, name.substring(1, 2));
+        } else {
+            return findPieceByColor(Color.WHITE, name.substring(1, 2));
+        }
+    }
+
+    private Piece findPieceByColor(final Color color, final String symbol) {
+        for (final Piece piece : pieces) {
+            if (piece.isSameColor(color) && piece.getClass() == findPieceBySymbol(symbol)) {
+                return piece;
+            }
+        }
+        throw new IllegalArgumentException(WRONG_CHESS_ERROR);
+    }
+
+    private Object findPieceBySymbol(final String key) {
+        final Map<String, Object> symbolOfPieces = new HashMap<>();
+        symbolOfPieces.put("R", Rook.class);
+        symbolOfPieces.put("N", Knight.class);
+        symbolOfPieces.put("B", Bishop.class);
+        symbolOfPieces.put("Q", Queen.class);
+        symbolOfPieces.put("K", King.class);
+        symbolOfPieces.put("P", Pawn.class);
+        return symbolOfPieces.get(key);
     }
 }

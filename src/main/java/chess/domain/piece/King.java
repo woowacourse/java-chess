@@ -3,9 +3,9 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class King extends Division {
+    public static final String KING_MOVE_ERROR = "킹이 이동할 수 없는 위치입니다";
     private static final String KING_DISPLAYNAME = "k";
     private static final int KING_SCORE = 0;
-    public static final String KING_MOVE_ERROR = "킹이 이동할 수 없는 위치입니다";
 
     public King(final Color color, final Position position) {
         super(color, KING_DISPLAYNAME, position);
