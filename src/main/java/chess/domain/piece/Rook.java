@@ -15,7 +15,7 @@ public class Rook extends Division {
             new Vector(0, -1));
 
     public Rook(Color color) {
-        super(color, Unicode.ROOK.of(color), new MultipleMove(color, DIRECTIONS));
+        super(color, ROOK_SCORE, Unicode.ROOK.of(color), new MultipleMove(color, DIRECTIONS));
     }
 
     @Override
@@ -26,10 +26,5 @@ public class Rook extends Division {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    @Override
-    public double score() {
-        return ROOK_SCORE;
     }
 }

@@ -15,9 +15,8 @@ public class Bishop extends Division {
             new Vector(-1, -1)
     );
 
-
     public Bishop(Color color) {
-        super(color, Unicode.BISHOP.of(color), new MultipleMove(color, DIRECTIONS));
+        super(color, BISHOP_SCORE, Unicode.BISHOP.of(color), new MultipleMove(color, DIRECTIONS));
     }
 
     @Override
@@ -30,8 +29,4 @@ public class Bishop extends Division {
         return false;
     }
 
-    @Override
-    public double score() {
-        return BISHOP_SCORE;
-    }
 }

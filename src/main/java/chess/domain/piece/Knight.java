@@ -21,7 +21,7 @@ public class Knight extends Division {
     );
 
     public Knight(Color color) {
-        super(color, Unicode.KNIGHT.of(color), new SingleMove(color, DIRECTIONS));
+        super(color, KNIGHT_SCORE, Unicode.KNIGHT.of(color), new SingleMove(color, DIRECTIONS));
     }
 
     @Override
@@ -32,10 +32,5 @@ public class Knight extends Division {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    @Override
-    public double score() {
-        return KNIGHT_SCORE;
     }
 }

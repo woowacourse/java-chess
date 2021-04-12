@@ -20,7 +20,7 @@ public class Queen extends Division {
     );
 
     public Queen(Color color) {
-        super(color, Unicode.QUEEN.of(color), new MultipleMove(color, DIRECTIONS));
+        super(color, QUEEN_SCORE, Unicode.QUEEN.of(color), new MultipleMove(color, DIRECTIONS));
     }
 
     @Override
@@ -33,8 +33,4 @@ public class Queen extends Division {
         return false;
     }
 
-    @Override
-    public double score() {
-        return QUEEN_SCORE;
-    }
 }

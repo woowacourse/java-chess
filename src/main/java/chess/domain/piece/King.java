@@ -21,7 +21,7 @@ public class King extends Division {
     );
 
     public King(Color color) {
-        super(color, Unicode.KING.of(color), new SingleMove(color, DIRECTIONS));
+        super(color, KING_SCORE, Unicode.KING.of(color), new SingleMove(color, DIRECTIONS));
     }
 
     @Override
@@ -32,10 +32,5 @@ public class King extends Division {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    @Override
-    public double score() {
-        return KING_SCORE;
     }
 }
