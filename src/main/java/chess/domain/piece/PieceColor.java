@@ -23,7 +23,7 @@ public enum PieceColor {
     }
 
     public static PieceColor translateTurnColor(String rawColor) {
-        if (rawColor.equals("white")){
+        if (rawColor.equals("WHITE")){
             return WHITE;
         }
         return BLACK;

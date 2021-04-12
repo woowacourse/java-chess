@@ -22,8 +22,7 @@ public class Piece {
         this.pieceColor = pieceColor;
     }
 
-    public Piece(PieceDTO pieceDTO) {
-        String rawKind = pieceDTO.getPieceKind();
+    public Piece(String rawKind) {
         String regularKind = rawKind.toUpperCase(Locale.ROOT);
         this.pieceKind = PieceKind.matchPieceKind(regularKind);
         this.pieceColor = judgePieceColor(rawKind);

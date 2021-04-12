@@ -12,7 +12,7 @@ public class PieceDao {
 
     private DBConnector dbConnector = new DBConnector();
 
-    public void addPiece(PieceDTO pieceDTO) throws SQLException {
+    public void addPiece(PieceDTO pieceDTO) {
         String query = "INSERT INTO piece(board_id, piece_kind, piece_location) VALUES(?, ?, ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -25,7 +25,7 @@ public class PieceDao {
         }
     }
 
-    public void deletePiece(String location, int boardNumber) throws SQLException {
+    public void deletePiece(String location, int boardNumber) {
         String query = "DELETE FROM piece WHERE (board_id = ?) AND (piece_location = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -37,7 +37,7 @@ public class PieceDao {
         }
     }
 
-    public void resetPiece(int boardNumber) throws SQLException {
+    public void resetPiece(int boardNumber) {
         String query = "DELETE FROM piece WHERE board_id = ?";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -48,7 +48,7 @@ public class PieceDao {
         }
     }
 
-    public PieceDTO pieceOnLocation(String location, int boardNumber) throws SQLException {
+    public PieceDTO pieceOnLocation(String location, int boardNumber) {
         String query = "SELECT * FROM piece WHERE (board_id = ?) AND (piece_location = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {

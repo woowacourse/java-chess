@@ -4,8 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.RequestedBoard;
 import chess.domain.board.Point;
 import chess.domain.board.Position;
-import chess.domain.dto.PieceDTO;
-import chess.domain.dto.TurnDTO;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import java.util.Map;
 
@@ -30,11 +29,11 @@ public class Game {
         this.turnColor = PieceColor.WHITE;
     }
 
-    public void loadGame(Map<Position, PieceDTO> pieceDTOMap, TurnDTO turnDTO) {
-        this.board = Board.loadBoard(pieceDTOMap);
+    public void loadGame(Map<Position, Piece> loadedMap, PieceColor turnColor) {
+        this.board = new Board(loadedMap);
         this.point = new Point(board);
         this.gameState = GameState.START;
-        this.turnColor = turnDTO.getPieceColor();
+        this.turnColor = turnColor;
     }
 
     public void end() {

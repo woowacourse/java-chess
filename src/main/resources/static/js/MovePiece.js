@@ -20,7 +20,7 @@ const sendMoveCommand = (firstSlot, secondSlot) => {
 const isValidMove = (response) => {
     const data = response.data;
     console.log(data);
-    if (data["isSuccess"] == "true") {
+    if (data["isSuccess"] == "Success") {
         movePiece(data);
         isEnd(data);
         return;
@@ -35,7 +35,7 @@ const initializedMove = () => {
 }
 
 const isEnd = (data) => {
-    if (data["winner"]) {
+    if (data["winner"] !== "None") {
         alert("게임이 끝났습니다." + data["winner"] + "의 승리입니다.");
     }
 }

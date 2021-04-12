@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 public class TurnDao {
 
-    private static final String INITIAL_TURN_COLOR = "white";
+    private static final String INITIAL_TURN_COLOR = "WHITE";
     private static final int SINGLE_BOARD_NUMBER  = 1;
 
     private DBConnector dbConnector = new DBConnector();
 
-    public void initTurn() throws SQLException {
+    public void initTurn() {
         String query = "INSERT INTO turn(board_id, turn_color) VALUES(?, WHITE)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -28,7 +28,7 @@ public class TurnDao {
         }
     }
 
-    public void updateTurn(String color) throws SQLException {
+    public void updateTurn(String color) {
         String query = "UPDATE turn SET turn_color = ? WHERE board_id = ?";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -40,7 +40,7 @@ public class TurnDao {
         }
     }
 
-    public TurnDTO loadTurnDTO(int boardNumber) throws SQLException {
+    public TurnDTO loadTurnDTO(int boardNumber) {
         String query = "SELECT * FROM turn WHERE (board_id = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
