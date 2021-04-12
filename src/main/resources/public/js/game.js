@@ -27,7 +27,8 @@ function postFetchMove(url) {
 
 function postFetchPath(url) {
     return postFetch(url, JSON.stringify({
-        "target": $target,
+        "roomId": $roomId,
+        "target": $target
     }));
 }
 
@@ -49,8 +50,8 @@ function postFetch(url, bodyData) {
 async function moveBoard() {
     await postFetchMove("move").then(data => {
         $board = data;
-        clearBoard();
         refreshBoard();
+        createBoard();
     });
 }
 

@@ -40,8 +40,12 @@ public class Board {
     public boolean movePiece(Position target, Position destination) {
         Piece targetPiece = findPieceFromPosition(target);
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
-        checkMovable(targetMovablePositions, destination);
-        return move(target, destination, targetPiece);
+        try {
+            checkMovable(targetMovablePositions, destination);
+            return move(target, destination, targetPiece);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public List<String> movablePositions(Position target) {
@@ -75,8 +79,7 @@ public class Board {
     }
 
     private void checkDeadKing(Piece piece) {
-        if (Objects.isNull(piece)) {
-            gameOver = false;
+        if (Objects.isNull(piece) && !gameOver) {
             return;
         }
         gameOver = piece.isKing();
