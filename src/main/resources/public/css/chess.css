@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 1000px;
+    height: 100%;
+    background-color: #191930;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    border-radius: 10px;
+    color: white;
+    font-size: 55px;
+    font-weight: bold;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -250%);
+}
+
+.main-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    font-weight: bold;
+}
+
+.game-button {
+    width: 300px;
+    height: 100px;
+    border: 5px solid #191930;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 15px;
+}
+
+.game-button:hover {
+    border: 5px solid white;
+    background-color: #191930;
+    color: white;
+}
+
+#new-game {
+    margin-top: 50px;
+}
+
+#continue {
+    margin-top: 30px;
+}
+
+#board {
+    border: 4px solid slategrey;
+
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+
+    position: absolute;
+    top: 50%;
+    left: 28%;
+    transform: translate(-50%, -50%);
+}
+
+.white-square {
+    background-color: slategrey;
+    color: white;
+}
+
+.black-square {
+    background-color: white;
+    color: slategrey;
+}
+
+.selected {
+    background-color: darkseagreen;
+}
+
+.piece {
+    width: 100%;
+    height: 100%;
+}
+
+.screen {
+    width: 600px;
+    height: 606px;
+
+    text-align: center;
+    position: absolute;
+    top: 8%;
+    left: 54%;
+}
+
+.status {
+    display: inline-block;
+    width: 480px;
+    height: 110px;
+    font-size: 40px;
+    border: 3px solid black;
+    padding: 25px;
+}
+
+#black-status {
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+}
+
+#white-status {
+    color: black;
+    font-weight: bold;
+}
+
+#versus {
+    display: inline-block;
+    width: 600px;
+    height: 200px;
+    font-size: 20px;
+}
+
+.versus-piece {
+    width: 160px;
+    height: 160px;
+    margin: 20px;
+}
+
+#black-versus {
+    position: absolute;
+    left: 20px;
+}
+
+.currentTurn {
+    border-spacing: 10px;
+    border: 3px solid black;
+}
+
+#white-versus {
+    position: absolute;
+    left: 380px;
+}
+
+#VS {
+    position: absolute;
+    left: 240px;
+    top: 230px;
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.game-menu {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.game-option {
+    margin: 10px;
+    width: 260px;
+    height: 80px;
+    border: 3px solid #19181A;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+    left: 500px
+}
+
+.game-option:hover {
+    background-color: black;
+    color: white;
+}
