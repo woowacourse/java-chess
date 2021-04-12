@@ -12,7 +12,7 @@ class FileTest {
     @ValueSource(strings = {"i", "z", "0"})
     void whenFileOutOfBound(String testString) {
         assertThatThrownBy(() -> File.from(testString))
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당하는 문자의 File이 없습니다.");
     }
 }

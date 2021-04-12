@@ -1,10 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chessboard using Pure CSS and HTML</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <script src="/js/index.js" type="module"></script>
 </head>
 <body>
-Hello World!!
+<div id="main-frame">
+    <div class="chessboard" id="chessboard">
+        <!-- 1st -->
+        <div class="cell white" id="a8"></div>
+        <div class="cell black" id="b8"></div>
+        <div class="cell white" id="c8"></div>
+        <div class="cell black" id="d8"></div>
+        <div class="cell white" id="e8"></div>
+        <div class="cell black" id="f8"></div>
+        <div class="cell white" id="g8"></div>
+        <div class="cell black" id="h8"></div>
+        <!-- 2nd -->
+        <div class="cell black" id="a7"></div>
+        <div class="cell white" id="b7"></div>
+        <div class="cell black" id="c7"></div>
+        <div class="cell white" id="d7"></div>
+        <div class="cell black" id="e7"></div>
+        <div class="cell white" id="f7"></div>
+        <div class="cell black" id="g7"></div>
+        <div class="cell white" id="h7"></div>
+        <!-- 3th -->
+        <div class="cell white" id="a6"></div>
+        <div class="cell black" id="b6"></div>
+        <div class="cell white" id="c6"></div>
+        <div class="cell black" id="d6"></div>
+        <div class="cell white" id="e6"></div>
+        <div class="cell black" id="f6"></div>
+        <div class="cell white" id="g6"></div>
+        <div class="cell black" id="h6"></div>
+        <!-- 4st -->
+        <div class="cell black" id="a5"></div>
+        <div class="cell white" id="b5"></div>
+        <div class="cell black" id="c5"></div>
+        <div class="cell white" id="d5"></div>
+        <div class="cell black" id="e5"></div>
+        <div class="cell white" id="f5"></div>
+        <div class="cell black" id="g5"></div>
+        <div class="cell white" id="h5"></div>
+        <!-- 5th -->
+        <div class="cell white" id="a4"></div>
+        <div class="cell black" id="b4"></div>
+        <div class="cell white" id="c4"></div>
+        <div class="cell black" id="d4"></div>
+        <div class="cell white" id="e4"></div>
+        <div class="cell black" id="f4"></div>
+        <div class="cell white" id="g4"></div>
+        <div class="cell black" id="h4"></div>
+        <!-- 6th -->
+        <div class="cell black" id="a3"></div>
+        <div class="cell white" id="b3"></div>
+        <div class="cell black" id="c3"></div>
+        <div class="cell white" id="d3"></div>
+        <div class="cell black" id="e3"></div>
+        <div class="cell white" id="f3"></div>
+        <div class="cell black" id="g3"></div>
+        <div class="cell white" id="h3"></div>
+        <!-- 7th -->
+        <div class="cell white" id="a2"></div>
+        <div class="cell black" id="b2"></div>
+        <div class="cell white" id="c2"></div>
+        <div class="cell black" id="d2"></div>
+        <div class="cell white" id="e2"></div>
+        <div class="cell black" id="f2"></div>
+        <div class="cell white" id="g2"></div>
+        <div class="cell black" id="h2"></div>
+        <!-- 8th -->
+        <div class="cell black" id="a1"></div>
+        <div class="cell white" id="b1"></div>
+        <div class="cell black" id="c1"></div>
+        <div class="cell white" id="d1"></div>
+        <div class="cell black" id="e1"></div>
+        <div class="cell white" id="f1"></div>
+        <div class="cell black" id="g1"></div>
+        <div class="cell white" id="h1"></div>
+    </div>
+    <div>
+        <ul id="games"></ul>
+    </div>
+</div>
+<br/>
+<div class="center">
+    <button class="btn third" id="startBtn" type="button">Start</button>
+    <button class="btn third" id="loadBtn" type="button">Load</button>
+    <button class="btn third" id="resetBtn" style="display:none;" type="button">Reset</button>
+    <button class="btn third" id="saveBtn" type="button">Save</button>
+</div>
+<br/>
+<div class="center">
+    <div id="status"></div>
+    <br/>
+    <lable>white 점수 :</lable>
+    <div id="whiteScore"></div>
+    <br/>
+    <lable>black 점수 :</lable>
+    <div id="blackScore"></div>
+    <br/>
+</div>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class Blank extends Piece {
         }, new Score(ZERO_SCORE));
     }
 
-    public static Blank getInstance(){
+    public static Blank getInstance() {
         return BLANK;
     }
 }

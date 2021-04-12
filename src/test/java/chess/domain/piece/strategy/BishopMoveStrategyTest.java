@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ public class BishopMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = DefaultBoardInitializer.getBoard();
+        board = InitBoardInitializer.getBoard();
     }
 
     private static Stream<Arguments> bishopCanMoveTest() {

@@ -25,7 +25,7 @@ public enum MatchResult {
                 .orElseThrow(() -> new IllegalArgumentException("조건에 맞는 승패 결과가 없습니다."));
     }
 
-    public static MatchResult generateMatchResultByColor(Color color) {
+    public static MatchResult generateMatchResultByKingAliveColor(Color color) {
         if (color == Color.WHITE) {
             return WHITE_WIN;
         }

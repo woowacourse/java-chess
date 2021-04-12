@@ -12,7 +12,7 @@ class RankTest {
     @ValueSource(strings = {"0", "9", "a"})
     void whenFileOutOfBound(String testString) {
         assertThatThrownBy(() -> Rank.from(testString))
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당하는 문자의 Rank가 없습니다.");
     }
 }

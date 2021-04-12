@@ -1,9 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
-import chess.domain.order.MoveResult;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -20,19 +20,21 @@ public class Square {
         this.piece = piece;
     }
 
-    public MoveResult move(MoveOrder moveOrder) {
+    public void move(MoveOrder moveOrder) {
         if (hasNotPiece()) {
             throw new NoSuchElementException("해당 위치엔 말이 없습니다.");
         }
 
         if (piece.canMove(moveOrder)) {
-            Piece removedPiece = moveOrder.getTo().piece;
             moveOrder.getTo().piece = this.piece;
             this.piece = Blank.getInstance();
-            return new MoveResult(removedPiece);
+            return;
         }
-
         throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
+    }
+
+    public boolean kindOf(Class<? extends Piece> kind) {
+        return kind.isInstance(getPiece());
     }
 
     public Piece getPiece() {
@@ -51,15 +53,19 @@ public class Square {
         return position;
     }
 
-    public String getNotationText(){
+    public Color getColor() {
+        return getPiece().getColor();
+    }
+
+    public String getNotationText() {
         return piece.getNotationText();
     }
 
-    public boolean isSameRank(Rank rank){
+    public boolean isSameRank(Rank rank) {
         return this.position.isSameRank(rank);
     }
 
-    public boolean isSamePosition(Position position){
+    public boolean isSamePosition(Position position) {
         return this.position.equals(position);
     }
 

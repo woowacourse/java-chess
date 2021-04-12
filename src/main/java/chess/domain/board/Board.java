@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
-import chess.domain.order.MoveResult;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
@@ -17,16 +17,20 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class Board {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
+    public static final int ALL_KING_ALIVE_COUNT = 2;
 
     private final List<Square> board;
 
-    protected Board(List<Square> board) {
+    private Board(List<Square> board) {
         this.board = board;
+    }
+
+    protected static Board of(List<Square> board) {
+        return new Board(board);
     }
 
     public Square findByPosition(Position position) {
@@ -36,9 +40,20 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 포지션을 찾을 수 없습니다."));
     }
 
-    public MoveResult move(Position from, Position to) {
+    public List<Square> getAliveSquares() {
+        return board.stream()
+                .filter(square -> square.getPiece().isNotBlank())
+                .collect(toList());
+    }
+
+    public Color findColorByPosition(Position position) {
+        Piece colorablePiece = findByPosition(position).getPiece();
+        return colorablePiece.getColor();
+    }
+
+    public void move(Position from, Position to) {
         Square fromSquare = this.findByPosition(from);
-        return fromSquare.move(createMoveOrder(from, to));
+        fromSquare.move(createMoveOrder(from, to));
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {
@@ -59,9 +74,31 @@ public class Board {
                 .collect(toList());
     }
 
+    public boolean isKingDead() {
+        return board.stream()
+                .filter(Square::hasPiece)
+                .filter(square -> square.kindOf(King.class))
+                .count() != ALL_KING_ALIVE_COUNT;
+    }
+
+    public Color kingAliveColor() {
+        return board.stream()
+                .filter(square -> square.kindOf(King.class))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("왕이 남아있는 색깔이 없습니다."))
+                .getColor();
+    }
+
     public Map<Color, Double> getScoreMap() {
         return Color.getUserColors().stream()
                 .collect(toMap(Function.identity(), this::getScore));
+    }
+
+    public Map<Color, List<Piece>> getColoredPieces() {
+        return board.stream()
+                .map(Square::getPiece)
+                .filter(Piece::isNotBlank)
+                .collect(groupingBy(Piece::getColor));
     }
 
     private double getScore(Color color) {

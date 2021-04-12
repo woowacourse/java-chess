@@ -19,12 +19,11 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessGameStatisticsTest {
+class ChessGameManagerStatisticsTest {
     @DisplayName("기본 점수 38점이 잘 계산되는지 확인")
     @Test
     void defaultScoreTest() {
         Map<Color, Double> colorsScore = ChessGameStatistics.createNotStartGameResult().getColorsScore();
-        System.out.println(colorsScore);
         assertThat(colorsScore.get(Color.BLACK)).isEqualTo(38.0);
         assertThat(colorsScore.get(Color.WHITE)).isEqualTo(38.0);
     }
@@ -46,7 +45,7 @@ class ChessGameStatisticsTest {
                 new Square(Position.of("c4"), new Pawn(Color.BLACK)), // 1
                 new Square(Position.of("b5"), new Knight(Color.BLACK)) // 2.5
         );
-        Board board = TestBoardInitializer.createBoard(squares);
+        Board board = TestBoardInitializer.createTestBoard(squares);
         assertThat(board.getScoreMap().get(Color.WHITE)).isEqualTo(1 + 3 + 5 + 9);
         assertThat(board.getScoreMap().get(Color.BLACK)).isEqualTo((0.5 * 4) + 1 + 2.5);
     }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public class TestBoardInitializer implements BoardInitializer {
-    public static Board createBoard(List<Square> testCases){
+    public static Board createTestBoard(List<Square> testCases) {
         List<Square> board = createBlankSquare();
         List<Square> replaceable = board.stream()
                 .filter(blank -> testCases.stream()
@@ -22,12 +22,12 @@ public class TestBoardInitializer implements BoardInitializer {
         board.removeAll(replaceable);
         board.addAll(testCases);
 
-        return new Board(board);
+        return Board.of(board);
     }
 
     @Override
-    public Board createBoard() {
-        return DefaultBoardInitializer.getBoard();
+    public Board createBoard(List<Square> squares) {
+        return InitBoardInitializer.getBoard();
     }
 
     private static List<Square> createBlankSquare() {
@@ -39,5 +39,6 @@ public class TestBoardInitializer implements BoardInitializer {
                 )
                 .collect(Collectors.collectingAndThen(toList(), ArrayList::new));
     }
+
 
 }

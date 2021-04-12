@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.InitBoardInitializer;
 import chess.domain.board.Square;
 import chess.domain.board.TestBoardInitializer;
 import chess.domain.order.MoveOrder;
@@ -23,7 +23,7 @@ class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = DefaultBoardInitializer.getBoard();
+        board = InitBoardInitializer.getBoard();
     }
 
     @DisplayName("행마에 대한 검증 - 직선")
@@ -46,16 +46,19 @@ class PawnMoveStrategyTest {
         Square fromSquare = new Square(fromPosition, new Pawn(color));
         Square toSquare = new Square(toPosition, oppositePawn);
 
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(fromSquare, toSquare));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(fromSquare, toSquare));
+        testBoard.move(fromPosition, toPosition);
 
-        assertThat(testBoard.move(fromPosition, toPosition).getCapturedPiece()).isEqualTo(oppositePawn);
+        boolean hasPiece = testBoard.getAliveSquares().stream()
+                .anyMatch(square -> square.isSamePosition(fromPosition));
+        assertThat(hasPiece).isFalse();
     }
 
     @DisplayName("첫 움직임일 때 폰이 2칸을 이동할 수 있는지")
     @ParameterizedTest
     @CsvSource({"c2, c4, WHITE", "g7, g5, BLACK"})
     void pawnMoveOverTwoSquaresAtFirstTurn(String from, String to, Color color) {
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
         assertThatCode(() -> testBoard.move(Position.of(from), Position.of(to)))
                 .doesNotThrowAnyException();
@@ -63,7 +66,7 @@ class PawnMoveStrategyTest {
 
     @DisplayName("대각선에 말이 없을 때 대각선으로 이동하려하면 예외가 발생하는지")
     @Test
-    void throwExceptionWhenDiagonalIsEmpty(){
+    void throwExceptionWhenDiagonalIsEmpty() {
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");
@@ -84,7 +87,7 @@ class PawnMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"c3, c5, WHITE", "g6, g4, BLACK"})
     void throwExceptionWhenMoveOverTwoSquaresNotFirstTurn(String from, String to, Color color) {
-        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
+        Board testBoard = TestBoardInitializer.createTestBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
         assertThatThrownBy(() -> testBoard.move(Position.of(from), Position.of(to)))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -23,21 +23,17 @@ import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static java.util.stream.Collectors.toList;
 
-public class DefaultBoardInitializer implements BoardInitializer {
-    private static DefaultBoardInitializer boardInitializer = new DefaultBoardInitializer();
+public class InitBoardInitializer implements BoardInitializer {
+    private static InitBoardInitializer boardInitializer = new InitBoardInitializer();
 
-    private DefaultBoardInitializer(){
+    private InitBoardInitializer() {
     }
 
-    public static Board getBoard(){
-        return boardInitializer.createBoard();
-    }
-    @Override
-    public Board createBoard() {
-        return new Board(initialize());
+    public static Board getBoard() {
+        return boardInitializer.createBoard(initialize());
     }
 
-    private List<Square> initialize() {
+    private static List<Square> initialize() {
         List<Square> board = createBlankSquare();
 
         board.addAll(createColoredExceptPawn(ONE, WHITE));
@@ -51,7 +47,7 @@ public class DefaultBoardInitializer implements BoardInitializer {
         return board;
     }
 
-    private List<Square> createBlankSquare() {
+    private static List<Square> createBlankSquare() {
         return Rank.getBlankRanks().stream()
                 .flatMap(rank ->
                         Arrays.stream(File.values())
@@ -61,7 +57,7 @@ public class DefaultBoardInitializer implements BoardInitializer {
                 .collect(Collectors.collectingAndThen(toList(), ArrayList::new));
     }
 
-    private List<Square> createColoredExceptPawn(Rank rank, Color color) {
+    private static List<Square> createColoredExceptPawn(Rank rank, Color color) {
         return Arrays.asList(
                 new Square(Position.of(A, rank), new Rook(color)),
                 new Square(Position.of(B, rank), new Knight(color)),
@@ -74,11 +70,16 @@ public class DefaultBoardInitializer implements BoardInitializer {
         );
     }
 
-    private List<Square> createPawns(Rank rank, Color color) {
+    private static List<Square> createPawns(Rank rank, Color color) {
         return Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
                 .map(position -> new Square(position, new Pawn(color)))
                 .collect(toList());
+    }
+
+    @Override
+    public Board createBoard(List<Square> squares) {
+        return Board.of(squares);
     }
 }
 

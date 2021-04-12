@@ -76,14 +76,6 @@ public enum Direction {
         return Arrays.asList(SOUTHWEST, SOUTHEAST).contains(direction);
     }
 
-    public int getXDegree() {
-        return xDegree;
-    }
-
-    public int getYDegree() {
-        return yDegree;
-    }
-
     public static List<Direction> linearDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
@@ -105,5 +97,13 @@ public enum Direction {
             return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
         }
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public int getYDegree() {
+        return yDegree;
     }
 }
