@@ -3,18 +3,23 @@ package chess.domain.grid;
 import chess.domain.grid.gridStrategy.GridStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public final class Grid {
     private final Lines lines;
     private final Score score;
 
     public Grid(final GridStrategy gridStrategy) {
-        List<Line> lineGroup = gridStrategy.LinesInInitGrid();
+        List<Line> lineGroup = gridStrategy.linesInInitGrid();
         lines = new Lines(lineGroup);
         score = new Score(lines);
     }
@@ -27,30 +32,41 @@ public final class Grid {
         return lines.piece(position);
     }
 
+    public final void assign(final Piece piece, final Position position) {
+        lines.assign(position, piece);
+    }
+
     public final double score(final Color color) {
         return score.score(color);
     }
 
-    public final void move(final Piece sourcePiece, final Piece targetPiece) {
-        sourcePiece.validateRoute(targetPiece, lines);
-        update(sourcePiece, targetPiece);
-    }
-
-    private void update(final Piece sourcePiece, final Piece targetPiece) {
+    public void update(final Piece sourcePiece, final Piece targetPiece) {
         Position sourcePosition = sourcePiece.position();
         Position targetPosition = targetPiece.position();
         lines.assign(sourcePosition, new Empty(sourcePosition));
         lines.assign(targetPosition, sourcePiece);
     }
 
-    public final boolean kingSurvived(Color color) {
+    public Map<String, String> pieceMap() {
         return lines
                 .lines()
                 .stream()
-                .flatMap(line -> line.pieces()
+                .flatMap(line -> line
+                        .pieces()
                         .stream()
-                        .filter(piece -> piece instanceof King && piece.color() == color))
-                .findAny()
-                .isPresent();
+                        .map(piece -> new SimpleEntry<>(piece.position().positionToString(),
+                                Character.toString(piece.name()))))
+                .collect(toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public String stringify() {
+        return lines
+                .lines()
+                .stream()
+                .flatMap(line -> line
+                        .pieces()
+                        .stream()
+                        .map(piece -> piece.name() + piece.position().positionToString()))
+                .collect(Collectors.joining());
     }
 }

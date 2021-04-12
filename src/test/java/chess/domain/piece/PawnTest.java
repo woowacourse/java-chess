@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.grid.ChessGame;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.grid.gridStrategy.TestGridStrategy;
@@ -71,9 +72,10 @@ public class PawnTest {
     @DisplayName("Pawn이 움직인 적이 있을 때 앞으로 전진하면 예외 발생하는 지 테스트")
     public void validateMove_GoTwoStep_ThrowException() {
         Grid grid = new Grid(new NormalGridStrategy());
-        Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
-
-        grid.move(pawn, new Empty('b', '3'));
+        ChessGame game = new ChessGame(grid);
+        Pawn pawn = (Pawn) grid.piece(new Position("b2"));
+        game.start();
+        game.move(pawn, new Empty('b', '3'));
 
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '5'), grid.lines());

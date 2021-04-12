@@ -26,6 +26,10 @@ public final class Empty extends Piece {
         super(Color.BLACK, column, row);
     }
 
+    public Empty(final Color color, final Position position) {
+        super(Color.BLACK, position);
+    }
+
     @Override
     public final Color color() {
         throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");

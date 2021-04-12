@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.grid.Column;
 import chess.domain.grid.Row;
 import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -26,6 +27,10 @@ public final class Bishop extends Piece {
 
     public Bishop(final Color color, final Column column, final Row row) {
         super(color, column, row);
+    }
+
+    public Bishop(final Color color, final Position position) {
+        super(color, position.column(), position.row());
     }
 
     @Override

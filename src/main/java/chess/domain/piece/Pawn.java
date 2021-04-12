@@ -32,6 +32,10 @@ public final class Pawn extends Piece {
         super(color, column, row);
     }
 
+    public Pawn(final Color color, final Position position) {
+        super(color, position.column(), position.row());
+    }
+
     public final boolean hasMoved() {
         return moved;
     }
