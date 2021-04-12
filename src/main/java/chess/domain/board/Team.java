@@ -10,7 +10,7 @@ public enum Team {
         this.team = team;
     }
 
-    public static Team turnOver(Team team) {
+    public static Team opposite(Team team) {
         if (team == BLACK) {
             return WHITE;
         }

@@ -20,7 +20,7 @@ public class ChessGame {
 
     private Board board;
     private State state;
-    private Optional<Team> winner = Optional.empty();
+//    private Optional<Team> winner = Optional.empty();
     private Team turn;
 
     public ChessGame() {
@@ -66,7 +66,7 @@ public class ChessGame {
 
     private void confirmKingCaptured(Path path) {
         if (board.isKingAt(path.target())) {
-            winner = Optional.of(turn);
+//            winner = Optional.of(turn);
             state = state.next();
         }
     }
@@ -101,11 +101,14 @@ public class ChessGame {
     }
 
     public Optional<Team> winner() {
-        return winner;
+        if (!isEnd()) {
+            return Optional.empty();
+        }
+        return Optional.of(Team.opposite(turn));
     }
 
     private void turnOver() {
-        turn = Team.turnOver(turn);
+        turn = Team.opposite(turn);
     }
 
     public Board board() {
