@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.controller.web.dto.history.HistoryResponseDto;
+import chess.exception.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public class HistoryDao {
 
-    public Long saveHistory(final HistoryResponseDto history, final Long gameId) throws SQLException {
+    public Long saveHistory(final HistoryResponseDto history, final Long gameId) {
         final String query =
-                "INSERT INTO history(gameId, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
+                "INSERT INTO history(gameID, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -25,13 +26,13 @@ public class HistoryDao {
             pstmt.setBoolean(5, history.isPlaying());
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("체스게임의 기록을 저장하는데 실패했습니다.", e);
+            throw new DataAccessException("체스게임의 기록을 저장하는데 실패했습니다.", e);
         }
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) throws SQLException {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
         final String query =
-                "SELECT * from history where gameId = ? ORDER BY id ASC";
+                "SELECT * from history where gameID = ? ORDER BY id ASC";
 
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
@@ -49,7 +50,7 @@ public class HistoryDao {
                 return historyResponseDtos;
             }
         } catch (SQLException e) {
-            throw new SQLException("해당 GameID의 기록들을 검색하는데 실패했습니다.", e);
+            throw new DataAccessException("해당 GameID의 기록들을 검색하는데 실패했습니다.", e);
         }
     }
 }

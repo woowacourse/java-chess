@@ -2,12 +2,13 @@ package chess.dao;
 
 import chess.controller.web.dto.game.GameResponseDto;
 import chess.domain.game.Game;
+import chess.exception.DataAccessException;
 
 import java.sql.*;
 
 public class GameDao {
 
-    public Long saveGame(final Game game) throws SQLException {
+    public Long saveGame(final Game game) {
         final String query =
                 "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
@@ -21,11 +22,11 @@ public class GameDao {
             resultSet.next();
             return resultSet.getLong(1);
         } catch (SQLException e) {
-            throw new SQLException("체스 게임을 저장하는데 실패했습니다.", e);
+            throw new DataAccessException("체스 게임을 저장하는데 실패했습니다.", e);
         }
     }
 
-    public GameResponseDto findGameById(final Long gameId) throws SQLException {
+    public GameResponseDto findGameById(final Long gameId) {
         final String query =
                 "SELECT * from game where id = ?";
         try (Connection connection = ConnectionProvider.getConnection();
@@ -42,7 +43,7 @@ public class GameDao {
                         resultSet.getString("room_name"));
             }
         } catch (SQLException e) {
-            throw new SQLException("해당 ID의 체스게임을 검색하는데 실패했습니다.", e);
+            throw new DataAccessException("해당 ID의 체스게임을 검색하는데 실패했습니다.", e);
         }
     }
 }

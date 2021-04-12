@@ -3,6 +3,7 @@ package chess.dao;
 import chess.controller.web.dto.piece.PieceResponseDto;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
+import chess.exception.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public class PieceDao {
 
-    public long[] savePieces(final Long gameId, final Map<Position, Piece> pieces) throws SQLException {
+    public long[] savePieces(final Long gameId, final Map<Position, Piece> pieces) {
         final String query =
                 "INSERT INTO piece(gameId, position, symbol) VALUES (?, ?, ?)";
 
@@ -28,11 +29,11 @@ public class PieceDao {
             }
             return pstmt.executeLargeBatch();
         } catch (SQLException e) {
-            throw new SQLException("체스말을 저장하는데 실패했습니다.", e);
+            throw new DataAccessException("체스말을 저장하는데 실패했습니다.", e);
         }
     }
 
-    public Long updateSourcePiece(final String source, final Long gameId) throws SQLException {
+    public Long updateSourcePiece(final String source, final Long gameId) {
         final String query =
                 "UPDATE piece SET symbol = ? WHERE gameId=? && position=?";
 
@@ -43,11 +44,11 @@ public class PieceDao {
             pstmt.setString(3, source);
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("선택한 위치의 체스말을 수정하는데 실패했습니다.", e);
+            throw new DataAccessException("선택한 위치의 체스말을 수정하는데 실패했습니다.", e);
         }
     }
 
-    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId) throws SQLException{
+    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId){
         final String query =
                 "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
 
@@ -58,11 +59,11 @@ public class PieceDao {
             pstmt.setString(3, target);
             return pstmt.executeLargeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("이동하려는 위치의 체스말을 수정하는데 실패했습니다.", e);
+            throw new DataAccessException("이동하려는 위치의 체스말을 수정하는데 실패했습니다.", e);
         }
     }
 
-    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) throws SQLException {
+    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
         final String query =
                 "SELECT * from piece where gameId = ?";
 
@@ -79,7 +80,7 @@ public class PieceDao {
                 return pieceResponseDtos;
             }
         } catch (SQLException e) {
-            throw new SQLException("해당 GameID에 해당하는 체스말들을 검색하는데 실패했습니다.", e);
+            throw new DataAccessException("해당 GameID에 해당하는 체스말들을 검색하는데 실패했습니다.", e);
         }
     }
 }

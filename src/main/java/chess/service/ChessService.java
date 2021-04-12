@@ -40,7 +40,7 @@ public class ChessService {
         this.stateDao = new StateDao();
     }
 
-    public Long saveGame(final Game game) throws SQLException{
+    public Long saveGame(final Game game) {
         ChessManager chessManager = new ChessManager();
         Map<Position, Piece> pieces = chessManager.boardToMap();
         Long gameId = gameDao.saveGame(game);
@@ -51,33 +51,33 @@ public class ChessService {
 
     }
 
-    public List<PieceResponseDto> findPiecesById(final Long gameId) throws SQLException {
+    public List<PieceResponseDto> findPiecesById(final Long gameId) {
         return pieceDao.findPiecesByGameId(gameId);
     }
 
-    public GameResponseDto findGameByGameId(final Long gameId) throws SQLException {
+    public GameResponseDto findGameByGameId(final Long gameId) {
         return gameDao.findGameById(gameId);
     }
 
-    public ScoreResponseDto findScoreByGameId(final Long gameId) throws SQLException {
+    public ScoreResponseDto findScoreByGameId(final Long gameId) {
         return scoreDao.findScoreByGameId(gameId);
     }
 
-    public StateResponseDto findStateByGameId(final Long gameId) throws SQLException {
+    public StateResponseDto findStateByGameId(final Long gameId) {
         return stateDao.findStateByGameId(gameId);
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) throws SQLException {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
         return historyDao.findHistoryByGameId(gameId);
     }
 
-    public PathResponseDto movablePath(final String source, final Long gameId) throws SQLException {
+    public PathResponseDto movablePath(final String source, final Long gameId) {
         ChessManager chessManager = loadChessManager(gameId);
         Path path = chessManager.movablePath(Position.of(source));
         return PathResponseDto.from(path);
     }
 
-    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) throws SQLException {
+    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
         String moveCommand = String.format(MOVE_COMMAND_FORMAT, moveRequestDto.getSource(), moveRequestDto.getTarget());
         ChessManager chessManager = loadChessManager(gameId);
         HistoryResponseDto historyResponseDto = HistoryResponseDto.from(moveCommand, chessManager);
@@ -91,7 +91,7 @@ public class ChessService {
         return historyResponseDto;
     }
 
-    private ChessManager loadChessManager(final Long gameId) throws SQLException {
+    private ChessManager loadChessManager(final Long gameId) {
         List<PieceResponseDto> pieceResponseDtos = pieceDao.findPiecesByGameId(gameId);
         StateResponseDto stateResponseDto = stateDao.findStateByGameId(gameId);
         Map<Position, Piece> pieces = new HashMap<>();

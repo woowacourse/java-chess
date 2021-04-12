@@ -36,6 +36,7 @@ function startGame(event) {
         })
         .catch(error => {
             console.log(error);
+            alert(error)
         })
 
     function exceptionHandling(error) {

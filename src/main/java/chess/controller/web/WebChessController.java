@@ -10,7 +10,6 @@ import chess.controller.web.dto.score.ScoreResponseDto;
 import chess.controller.web.dto.state.StateResponseDto;
 import chess.service.ChessService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class WebChessController {
@@ -21,35 +20,35 @@ public class WebChessController {
         this.chessService = new ChessService();
     }
 
-    public PathResponseDto movablePath(final String source, final Long gameId) throws SQLException {
+    public PathResponseDto movablePath(final String source, final Long gameId) {
         return chessService.movablePath(source, gameId);
     }
 
-    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) throws SQLException {
+    public HistoryResponseDto move(final MoveRequestDto moveRequestDto, final Long gameId) {
         return chessService.move(moveRequestDto, gameId);
     }
 
-    public Long newGame(final GameRequestDto gameRequestDto) throws SQLException {
+    public Long newGame(final GameRequestDto gameRequestDto) {
         return chessService.saveGame(gameRequestDto.toGame());
     }
 
-    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) throws SQLException {
+    public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
         return chessService.findPiecesById(gameId);
     }
 
-    public GameResponseDto findGameByGameId(final Long gameId) throws SQLException {
+    public GameResponseDto findGameByGameId(final Long gameId) {
         return chessService.findGameByGameId(gameId);
     }
 
-    public ScoreResponseDto findScoreByGameId(final Long gameId) throws SQLException {
+    public ScoreResponseDto findScoreByGameId(final Long gameId) {
         return chessService.findScoreByGameId(gameId);
     }
 
-    public StateResponseDto findStateByGameId(final Long gameId) throws SQLException {
+    public StateResponseDto findStateByGameId(final Long gameId) {
         return chessService.findStateByGameId(gameId);
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) throws SQLException {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
         return chessService.findHistoryByGameId(gameId);
     }
 }
