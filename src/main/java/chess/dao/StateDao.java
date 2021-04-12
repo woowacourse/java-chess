@@ -12,8 +12,7 @@ import java.sql.SQLException;
 public class StateDao {
 
     public Long saveState(final ChessManager chessManager, final Long gameId) {
-        final String query =
-                "INSERT INTO state(gameId, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?)";
+        final String query = "INSERT INTO state(game_id, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?)";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -28,8 +27,7 @@ public class StateDao {
     }
 
     public Long updateState(final ChessManager chessManager, final Long gameId) {
-        final String query =
-                "UPDATE state SET turn_owner=?, turn_number=?, playing=? WHERE gameId=?";
+        final String query = "UPDATE state SET turn_owner=?, turn_number=?, playing=? WHERE game_id=?";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -44,8 +42,7 @@ public class StateDao {
     }
 
     public StateResponseDto findStateByGameId(final Long gameId) {
-        final String query =
-                "SELECT * from state where gameId = ?";
+        final String query = "SELECT * from state where game_id = ?";
 
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {

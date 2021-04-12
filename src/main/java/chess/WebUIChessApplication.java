@@ -2,15 +2,14 @@ package chess;
 
 import chess.controller.web.WebChessController;
 import chess.controller.web.dto.ExceptionMessageResponseDto;
+import chess.controller.web.dto.game.GameRequestDto;
 import chess.controller.web.dto.game.GameResponseDto;
 import chess.controller.web.dto.move.MoveRequestDto;
-import chess.controller.web.dto.game.GameRequestDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 

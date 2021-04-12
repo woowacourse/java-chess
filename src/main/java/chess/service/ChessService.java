@@ -17,7 +17,6 @@ import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.util.PieceConverter;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

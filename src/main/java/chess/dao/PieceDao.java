@@ -16,8 +16,7 @@ import java.util.Map;
 public class PieceDao {
 
     public long[] savePieces(final Long gameId, final Map<Position, Piece> pieces) {
-        final String query =
-                "INSERT INTO piece(gameId, position, symbol) VALUES (?, ?, ?)";
+        final String query = "INSERT INTO piece(game_id, position, symbol) VALUES (?, ?, ?)";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -34,8 +33,7 @@ public class PieceDao {
     }
 
     public Long updateSourcePiece(final String source, final Long gameId) {
-        final String query =
-                "UPDATE piece SET symbol = ? WHERE gameId=? && position=?";
+        final String query = "UPDATE piece SET symbol = ? WHERE game_id=? && position=?";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -48,9 +46,8 @@ public class PieceDao {
         }
     }
 
-    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId){
-        final String query =
-                "UPDATE piece SET symbol = ? where gameId = ? && position = ?";
+    public Long updateTargetPiece(final String target, final Piece sourcePiece, final Long gameId) {
+        final String query = "UPDATE piece SET symbol = ? where game_id = ? && position = ?";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -64,8 +61,7 @@ public class PieceDao {
     }
 
     public List<PieceResponseDto> findPiecesByGameId(final Long gameId) {
-        final String query =
-                "SELECT * from piece where gameId = ?";
+        final String query = "SELECT * from piece where game_id = ?";
 
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {

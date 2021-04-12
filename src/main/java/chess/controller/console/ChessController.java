@@ -1,8 +1,8 @@
 package chess.controller.console;
 
 import chess.controller.console.dto.board.BoardResponseDto;
-import chess.controller.console.dto.result.GameResultResponseDto;
 import chess.controller.console.dto.position.MovablePathResponseDto;
+import chess.controller.console.dto.result.GameResultResponseDto;
 import chess.domain.command.Command;
 import chess.domain.command.CommandMenu;
 import chess.domain.command.Show;

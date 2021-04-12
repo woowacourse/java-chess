@@ -9,8 +9,7 @@ import java.sql.*;
 public class GameDao {
 
     public Long saveGame(final Game game) {
-        final String query =
-                "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
+        final String query = "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -27,8 +26,8 @@ public class GameDao {
     }
 
     public GameResponseDto findGameById(final Long gameId) {
-        final String query =
-                "SELECT * from game where id = ?";
+        final String query = "SELECT * from game where id = ?";
+
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {
             pstmt.setInt(1, gameId.intValue());

@@ -14,7 +14,7 @@ public class HistoryDao {
 
     public Long saveHistory(final HistoryResponseDto history, final Long gameId) {
         final String query =
-                "INSERT INTO history(gameID, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
+                "INSERT INTO history(game_id, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
 
         try (final Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -31,8 +31,7 @@ public class HistoryDao {
     }
 
     public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
-        final String query =
-                "SELECT * from history where gameID = ? ORDER BY id ASC";
+        final String query = "SELECT * from history where game_id = ? ORDER BY id ASC";
 
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);) {

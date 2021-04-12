@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Path;
-import chess.domain.board.position.Position;
 import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.king.King;
 import chess.domain.piece.knight.Knight;
@@ -14,9 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
