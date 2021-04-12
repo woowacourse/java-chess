@@ -38,6 +38,7 @@ public class BoardInitializer {
         );
     }
 
+    // TODO init도 캐싱되도록 수정하기
     public static Board init() {
         Map<Position, Piece> board = new HashMap<>();
         initPawn(board);

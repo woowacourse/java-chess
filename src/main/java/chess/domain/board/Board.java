@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.utils.PointCalculator;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 

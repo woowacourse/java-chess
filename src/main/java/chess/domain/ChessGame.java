@@ -26,6 +26,14 @@ public class ChessGame {
         state = new Ready();
     }
 
+    //
+    public ChessGame(Board board) {
+        this.board = board;
+        state = new Ready();
+        turn = Team.WHITE;
+    }
+    //
+
     public void initBoard(Board board) {
         this.board = board;
         state = state.init();
