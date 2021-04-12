@@ -18,7 +18,7 @@ async function startNewGame(e) {
   try {
     validateName(whiteUserName, blackUserName);
   } catch (e) {
-    alert(e);
+    alert("이름이 비어있거나, 같은 이름을 입력했습니다.");
     return;
   }
 

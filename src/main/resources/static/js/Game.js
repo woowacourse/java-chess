@@ -6,6 +6,7 @@ const url = "http://localhost:4567";
 window.onload = async function () {
   const response = await requestData();
   initBoard(response);
+  fillInformation(response)
 }
 
 async function requestData() {
@@ -21,12 +22,27 @@ function findGameIdInUri() {
 
 function initBoard(response) {
   const pieceDtos = response["pieceDtos"]
-  const whiteUserDto = response["whiteUserDto"];
-  const blackUserDto = response["blackUserDto"];
+  const board = new Board(pieceDtos);
   const turn = response["turn"];
   const isFinished = response["isFinished"];
-  const board = new Board(pieceDtos);
   addEvent(board);
+}
+
+function fillInformation(response) {
+  const whiteUserDto = response["whiteUserDto"];
+  const blackUserDto = response["blackUserDto"];
+
+  const blackNameTag = document.querySelector(".name-tag.black");
+  blackNameTag.innerHTML = blackUserDto["name"];
+  const blackRecordTag = document.querySelector(".record-tag.black");
+  blackRecordTag.innerHTML =
+      `${blackUserDto["winCount"]}승 ${blackUserDto["loseCount"]}패`;
+
+  const whiteNameTag = document.querySelector(".name-tag.white");
+  whiteNameTag.innerHTML = whiteUserDto["name"];
+  const whiteRecordTag = document.querySelector(".record-tag.white");
+  whiteRecordTag.innerHTML =
+      `${whiteUserDto["winCount"]}승 ${whiteUserDto["loseCount"]}패`;
 }
 
 function addEvent(board) {

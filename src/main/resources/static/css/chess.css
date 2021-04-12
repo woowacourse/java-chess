@@ -1,18 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
 :root {
     --black-tile-color: rgba(30, 30, 30, 0.5);
 }
 
 body {
     font-family: Helvetica, sans-serif;
-    text-align: center;
 }
 
 .grid {
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(8, [col] 10vw);
-    grid-template-rows: repeat(8, [row] 10vw);
-    width: 80vw;
+    grid-template-columns: repeat(8, [col] 6vw);
+    grid-template-rows: repeat(8, [row] 6vw);
+    width: 48vw;
     border: 3px solid #000;
     box-shadow: 0 5px 8px #777;
     justify-content: center;
@@ -64,4 +65,67 @@ body {
     transition: 0s;
     position: absolute;
     z-index: 100;
+}
+
+.outer-container {
+    display: flex;
+    padding-top: 2vh;
+    padding-left: 2vh;
+}
+
+.grid-container {
+    display: flex;
+}
+
+.info-container {
+    padding-left: 5vw;
+    width: 40vw;
+    display: block;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.name-container {
+    height: 12vw;
+    display: flex;
+    align-items: center;
+}
+
+.name-container.black {
+    justify-content: flex-end;
+}
+
+.name-container.white {
+    justify-content: flex-start;
+}
+
+.name-tag {
+    font-size: 5vw;
+}
+
+.bear-piece {
+    height: 100%;
+}
+
+.bear-piece.black {
+    padding-left: 2vw;
+}
+
+.bear-piece.white {
+    padding-right: 2vw;
+}
+
+.record-tag {
+    font-size: 3vw;
+}
+
+.record-tag.black {
+    text-align: right;
+}
+
+.chat-box {
+    width: 100%;
+    height: 24vw;
+    resize: none;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
