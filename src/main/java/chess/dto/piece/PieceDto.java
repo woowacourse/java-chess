@@ -1,7 +1,9 @@
 package chess.dto.piece;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.team.Team;
+import chess.entity.PieceEntity;
 
 public class PieceDto {
 
@@ -18,8 +20,17 @@ public class PieceDto {
     }
 
     public static PieceDto from(final Piece piece) {
-        return new PieceDto(piece.getTeam(), piece.getPieceType().getValue(), piece.getX(),
-            piece.getY());
+        return new PieceDto(piece.getTeam(), piece.getPieceType().getValue(),
+            piece.getX(), piece.getY());
+    }
+
+    public static PieceDto from(final PieceEntity pieceEntity) {
+        return new PieceDto(pieceEntity.getTeam(), pieceEntity.getPieceType().getValue(),
+            pieceEntity.getX(), pieceEntity.getY());
+    }
+
+    public PieceEntity toEntity(final long gameId) {
+        return new PieceEntity(0L, gameId, PieceType.from(pieceLetter), team, x, y);
     }
 
     public Team getTeam() {
