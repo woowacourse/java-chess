@@ -80,7 +80,7 @@ public class Wait implements State {
         Location target = Location.convert(words[TARGET_LOCATION_INDEX].trim());
 
         try {
-            board.validate(source, target, team);
+            board.validateMove(source, target, team);
             return true;
         } catch (RuntimeException e) {
             return false;

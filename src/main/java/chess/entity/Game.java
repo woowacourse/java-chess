@@ -2,7 +2,6 @@ package chess.entity;
 
 import chess.domain.team.Team;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Game {
 
@@ -34,6 +33,10 @@ public class Game {
 
     public Long getBlackId() {
         return blackId;
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 
     public String getTurnValue() {

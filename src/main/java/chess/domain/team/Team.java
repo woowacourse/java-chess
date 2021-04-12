@@ -14,7 +14,7 @@ public enum Team {
 
     public static Team from(final String value) {
         return Arrays.stream(values())
-            .filter(team -> team.value.equals(value))
+            .filter(team -> team.value.equals(value.toLowerCase()))
             .findAny()
             .orElseThrow(() -> new TeamNotFoundException(value));
     }
