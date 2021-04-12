@@ -7,11 +7,12 @@ import java.sql.*;
 
 public class GameDao {
 
-    public Long saveGame(final Connection connection, final Game game) {
+    public Long saveGame(final Game game) throws SQLException {
         final String query =
                 "INSERT INTO game(room_name, white_username, black_username) VALUES (?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (final Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, game.roomName());
             pstmt.setString(2, game.whiteUsername());
             pstmt.setString(3, game.blackUsername());
@@ -19,17 +20,12 @@ public class GameDao {
             ResultSet resultSet = pstmt.getGeneratedKeys();
             resultSet.next();
             return resultSet.getLong(1);
-        } catch (Throwable e) {
-            try {
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                throw new IllegalStateException(sqlException);
-            }
-            throw new IllegalStateException("체스 게임을 저장하는데 실패했습니다.", e);
+        } catch (SQLException e) {
+            throw new SQLException("체스 게임을 저장하는데 실패했습니다.", e);
         }
     }
 
-    public GameResponseDto findGameById(final Long gameId) {
+    public GameResponseDto findGameById(final Long gameId) throws SQLException {
         final String query =
                 "SELECT * from game where id = ?";
         try (Connection connection = ConnectionProvider.getConnection();
@@ -46,7 +42,7 @@ public class GameDao {
                         resultSet.getString("room_name"));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("해당 ID의 체스게임을 검색하는데 실패했습니다.", e);
+            throw new SQLException("해당 ID의 체스게임을 검색하는데 실패했습니다.", e);
         }
     }
 }

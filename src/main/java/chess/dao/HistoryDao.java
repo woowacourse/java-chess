@@ -11,11 +11,12 @@ import java.util.List;
 
 public class HistoryDao {
 
-    public Long saveHistory(final Connection connection, final HistoryResponseDto history, final Long gameId) {
+    public Long saveHistory(final HistoryResponseDto history, final Long gameId) throws SQLException {
         final String query =
                 "INSERT INTO history(gameId, move_command, turn_owner, turn_number, playing) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, gameId.intValue());
             pstmt.setString(2, history.getMoveCommand());
@@ -23,17 +24,12 @@ public class HistoryDao {
             pstmt.setInt(4, history.getTurnNumber());
             pstmt.setBoolean(5, history.isPlaying());
             return pstmt.executeLargeUpdate();
-        } catch (Throwable e) {
-            try {
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                throw new IllegalStateException("체스게임의 기록을 저장하는데 실패했습니다.", sqlException);
-            }
-            throw new IllegalStateException("체스게임의 기록을 저장하는데 실패했습니다.", e);
+        } catch (SQLException e) {
+            throw new SQLException("체스게임의 기록을 저장하는데 실패했습니다.", e);
         }
     }
 
-    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) {
+    public List<HistoryResponseDto> findHistoryByGameId(final Long gameId) throws SQLException {
         final String query =
                 "SELECT * from history where gameId = ? ORDER BY id ASC";
 
@@ -53,7 +49,7 @@ public class HistoryDao {
                 return historyResponseDtos;
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("해당 GameID의 기록들을 검색하는데 실패했습니다.", e);
+            throw new SQLException("해당 GameID의 기록들을 검색하는데 실패했습니다.", e);
         }
     }
 }

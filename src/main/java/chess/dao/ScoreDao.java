@@ -10,44 +10,37 @@ import java.sql.SQLException;
 
 public class ScoreDao {
 
-    public Long saveScore(final Connection connection, final GameStatus gameStatus, final Long gameId) {
+    public Long saveScore(final GameStatus gameStatus, final Long gameId) throws SQLException {
         final String query =
                 "INSERT INTO score(gameId, white_score, black_score) VALUES (?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, gameId.intValue());
             pstmt.setDouble(2, gameStatus.whiteScore());
             pstmt.setDouble(3, gameStatus.blackScore());
             return pstmt.executeLargeUpdate();
-        } catch (Throwable e) {
-            try {
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                throw new IllegalStateException("체스 게임의 점수를 저장하는데 실패했습니다.", sqlException);
-            }
-            throw new IllegalStateException("체스 게임의 점수를 저장하는데 실패했습니다.", e);
+        } catch (SQLException e) {
+            throw new SQLException("체스 게임의 점수를 저장하는데 실패했습니다.", e);
         }
     }
-    public Long updateScore(final Connection connection, final GameStatus gameStatus, final Long gameId) {
+
+    public Long updateScore(final GameStatus gameStatus, final Long gameId) throws SQLException {
         final String query =
                 "UPDATE score SET white_score=?, black_score=? WHERE gameId=?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query);) {
+        try (final Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setDouble(1, gameStatus.whiteScore());
             pstmt.setDouble(2, gameStatus.blackScore());
             pstmt.setInt(3, gameId.intValue());
             return pstmt.executeLargeUpdate();
-        } catch (Throwable e) {
-            try {
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                throw new IllegalStateException("체스 게임의 점수를 업데이트하는데 실패했습니다.", sqlException);
-            }
-            throw new IllegalStateException("체스 게임의 점수를 업데이트하는데 실패했습니다.", e);
+        } catch (SQLException e) {
+            throw new SQLException("체스 게임의 점수를 업데이트하는데 실패했습니다.", e);
         }
     }
 
-    public ScoreResponseDto findScoreByGameId(final Long gameId) {
+    public ScoreResponseDto findScoreByGameId(final Long gameId) throws SQLException {
         final String query =
                 "SELECT * from score where gameId = ?";
 
@@ -63,7 +56,7 @@ public class ScoreDao {
                         resultSet.getDouble("black_score"));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("해당 GameID의 점수를 검색하는데 실패했습니다.", e);
+            throw new SQLException("해당 GameID의 점수를 검색하는데 실패했습니다.", e);
         }
     }
 }
