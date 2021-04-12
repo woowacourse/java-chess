@@ -20,27 +20,7 @@ public class WhiteTurn implements State {
     }
 
     @Override
-    public State status() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
     public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public State start() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public State finish() {
-        return null;
-    }
-
-    @Override
-    public boolean isFinished() {
         return false;
     }
 

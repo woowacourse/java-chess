@@ -16,12 +16,7 @@ public class End implements State {
 
     @Override
     public State end() {
-        return new Finished();
-    }
-
-    @Override
-    public State status() {
-        return new Status();
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -29,18 +24,4 @@ public class End implements State {
         return true;
     }
 
-    @Override
-    public State start() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public State finish() {
-        return new Finished();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }

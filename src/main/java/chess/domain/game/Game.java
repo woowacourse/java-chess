@@ -3,9 +3,8 @@ package chess.domain.game;
 import chess.domain.location.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.state.Init;
+import chess.domain.state.BlackTurn;
 import chess.domain.state.State;
-import chess.domain.state.Status;
 
 import java.util.Map;
 
@@ -16,28 +15,16 @@ public class Game {
 
     public Game(Board board) {
         this.board = board;
-        state = new Init();
+        state = new BlackTurn();
     }
 
     public void move(Position from, Position to) {
         board.action(state.color(), from, to);
         if (board.isKingDead()) {
-            end();
+            state = state.end();
             return;
         }
         state = state.opposite();
-    }
-
-    public void start() {
-        state = state.start();
-    }
-
-    public void end() {
-        state = state.end();
-    }
-
-    public void status() {
-        state = state.status();
     }
 
     public boolean isEnd() {
@@ -46,10 +33,6 @@ public class Game {
 
     public boolean isNotEnd() {
         return !isEnd();
-    }
-
-    public boolean isStatus() {
-        return state instanceof Status;
     }
 
     public Color currentPlayer() {
@@ -66,13 +49,5 @@ public class Game {
 
     public Map<Position, Piece> allBoard() {
         return board.allPieces();
-    }
-
-    public boolean isFinished() {
-        return state.isFinished();
-    }
-
-    public State finish() {
-        return state.finish();
     }
 }

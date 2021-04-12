@@ -9,13 +9,5 @@ public interface State {
 
     State end();
 
-    State status();
-
     boolean isEnd();
-
-    State start();
-
-    State finish();
-
-    boolean isFinished();
 }

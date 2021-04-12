@@ -19,27 +19,7 @@ public class BlackTurn implements State {
     }
 
     @Override
-    public State status() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
     public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public State start() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public State finish() {
-        return new Finished();
-    }
-
-    @Override
-    public boolean isFinished() {
         return false;
     }
 }
