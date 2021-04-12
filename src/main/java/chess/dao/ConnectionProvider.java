@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionProvider {
 
-    private static final String DriverName = "com.mysql.cj.jdbc.Driver";
+    private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private static final String SERVER = "localhost:3306";
     private static final String DATABASE = "chessdb";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
@@ -17,7 +17,7 @@ public class ConnectionProvider {
         Connection con = null;
 
         try {
-            Class.forName(DriverName);
+            Class.forName(DRIVER_NAME);
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
