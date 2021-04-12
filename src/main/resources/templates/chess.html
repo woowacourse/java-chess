@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>샐리의 체스 게임</title>
+    <link href="chess.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h3><b class="user-name">{{user.name}}</b>님 환영합니다.</h3>
+<h4 id="notice">게임을 시작합니다!</h4>
+<table>
+    <tr>
+        <td class="black-box" id="a8"></td>
+        <td class="white-box" id="b8"></td>
+        <td class="black-box" id="c8"></td>
+        <td class="white-box" id="d8"></td>
+        <td class="black-box" id="e8"></td>
+        <td class="white-box" id="f8"></td>
+        <td class="black-box" id="g8"></td>
+        <td class="white-box" id="h8"></td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a7"></td>
+        <td class="black-box" id="b7"></td>
+        <td class="white-box" id="c7"></td>
+        <td class="black-box" id="d7"></td>
+        <td class="white-box" id="e7"></td>
+        <td class="black-box" id="f7"></td>
+        <td class="white-box" id="g7"></td>
+        <td class="black-box" id="h7"></td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a6"></td>
+        <td class="white-box" id="b6"></td>
+        <td class="black-box" id="c6"></td>
+        <td class="white-box" id="d6"></td>
+        <td class="black-box" id="e6"></td>
+        <td class="white-box" id="f6"></td>
+        <td class="black-box" id="g6"></td>
+        <td class="white-box" id="h6"></td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a5"></td>
+        <td class="black-box" id="b5"></td>
+        <td class="white-box" id="c5"></td>
+        <td class="black-box" id="d5"></td>
+        <td class="white-box" id="e5"></td>
+        <td class="black-box" id="f5"></td>
+        <td class="white-box" id="g5"></td>
+        <td class="black-box" id="h5"></td>
+        <td>
+            흑
+            <button class="black-score" id="BLACK">점수 보기</button>
+        </td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a4"></td>
+        <td class="white-box" id="b4"></td>
+        <td class="black-box" id="c4"></td>
+        <td class="white-box" id="d4"></td>
+        <td class="black-box" id="e4"></td>
+        <td class="white-box" id="f4"></td>
+        <td class="black-box" id="g4"></td>
+        <td class="white-box" id="h4"></td>
+        <td>
+            백
+            <button class="white-score" id="WHITE">점수 보기</button>
+        </td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a3"></td>
+        <td class="black-box" id="b3"></td>
+        <td class="white-box" id="c3"></td>
+        <td class="black-box" id="d3"></td>
+        <td class="white-box" id="e3"></td>
+        <td class="black-box" id="f3"></td>
+        <td class="white-box" id="g3"></td>
+        <td class="black-box" id="h3"></td>
+    </tr>
+    <tr>
+        <td class="black-box" id="a2"></td>
+        <td class="white-box" id="b2"></td>
+        <td class="black-box" id="c2"></td>
+        <td class="white-box" id="d2"></td>
+        <td class="black-box" id="e2"></td>
+        <td class="white-box" id="f2"></td>
+        <td class="black-box" id="g2"></td>
+        <td class="white-box" id="h2"></td>
+    </tr>
+    <tr>
+        <td class="white-box" id="a1"></td>
+        <td class="black-box" id="b1"></td>
+        <td class="white-box" id="c1"></td>
+        <td class="black-box" id="d1"></td>
+        <td class="white-box" id="e1"></td>
+        <td class="black-box" id="f1"></td>
+        <td class="white-box" id="g1"></td>
+        <td class="black-box" id="h1"></td>
+    </tr>
+</table>
+<button id="exit">나가기</button>
+</body>
+<script src="chess.js"></script>
+</html>

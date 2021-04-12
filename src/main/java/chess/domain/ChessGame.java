@@ -17,14 +17,19 @@ public final class ChessGame {
     private Color currentColor = WHITE;
 
     public ChessGame() {
-        this.board = initialize(new HashMap<>());
+        this.board = new Board(initialize(new HashMap<>()));
     }
 
-    private Board initialize(Map<Point, Piece> boardMap) {
+    public ChessGame(Map<Point, Piece> boardInfo, Color color) {
+        this.board = new Board(boardInfo);
+        currentColor = color;
+    }
+
+    private Map<Point, Piece> initialize(Map<Point, Piece> boardMap) {
         for (int i = 0; i < BOARD_SIZE; i++) {
             initializeColumn(boardMap, i);
         }
-        return new Board(boardMap);
+        return boardMap;
     }
 
     private void initializeColumn(Map<Point, Piece> boardMap, int i) {
@@ -35,10 +40,10 @@ public final class ChessGame {
 
     public void playTurn(Point source, Point target) {
         board.movePiece(source, target, currentColor);
-        this.currentColor = switchTurn();
+        this.currentColor = nextTurn();
     }
 
-    private Color switchTurn() {
+    public Color nextTurn() {
         if (this.currentColor.equals(WHITE)) {
             return BLACK;
         }
@@ -55,5 +60,9 @@ public final class ChessGame {
 
     public Map<Point, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    public String color() {
+        return currentColor.name();
     }
 }

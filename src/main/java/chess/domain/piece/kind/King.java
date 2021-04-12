@@ -4,8 +4,8 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 
 public final class King extends Piece {
+    public static final String KING_NAME = "k";
     private static final int KING_SCORE = 0;
-    private static final String KING_NAME = "k";
 
     public King(Color color) {
         super(KING_NAME, color);

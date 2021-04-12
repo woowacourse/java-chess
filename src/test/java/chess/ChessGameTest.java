@@ -11,7 +11,7 @@ public class ChessGameTest {
     @DisplayName("게임 생성 확인")
     @Test
     void create() {
-        assertDoesNotThrow(ChessGame::new);
+        assertDoesNotThrow(() -> new ChessGame());
     }
 
     @DisplayName("게임 진행 시 isEnd 거짓 확인")

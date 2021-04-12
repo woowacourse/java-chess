@@ -9,8 +9,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
 public final class Bishop extends Piece {
-    private static final String BISHOP_NAME = "b";
-    private static final int BISHOP_SCORE = 3;
+    public static final String BISHOP_NAME = "b";
+    public static final int BISHOP_SCORE = 3;
 
     private static final List<Direction> bishopDirection = Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST,
         NORTH_WEST);

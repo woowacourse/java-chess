@@ -54,10 +54,15 @@ public final class Point {
     }
 
     private static int makeIndex(int row, int column) {
-        if(row < MINIMUM_INDEX || row  > MAXIMUM_INDEX || column < MINIMUM_INDEX || column > MAXIMUM_INDEX) {
+        checkAvailableIndex(row);
+        checkAvailableIndex(column);
+        return BOARD_SIZE * column + (MAXIMUM_INDEX - row);
+    }
+
+    private static void checkAvailableIndex(int value) {
+        if (value < MINIMUM_INDEX || value > MAXIMUM_INDEX) {
             throw new IllegalArgumentException("옳지 않은 좌표입니다.");
         }
-        return BOARD_SIZE * column + (MAXIMUM_INDEX - row);
     }
 
     private static int convertLetterToIndex(char letter) {
@@ -73,7 +78,7 @@ public final class Point {
     }
 
     private int makeDoubleNumber(int subtract) {
-        return (int) Math.pow(subtract, 2);
+        return (int)Math.pow(subtract, 2);
     }
 
     public Direction makeDirection(Point point) {

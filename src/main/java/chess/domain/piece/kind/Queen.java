@@ -4,8 +4,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
 public final class Queen extends Piece {
+    public static final String QUEEN_NAME = "q";
     private static final int QUEEN_SCORE = 9;
-    private static final String QUEEN_NAME = "q";
 
     public Queen(Color color) {
         super(QUEEN_NAME, color);

@@ -28,6 +28,7 @@ public final class Board {
         validateTargetPieceColor(currentColor, targetPiece);
 
         if (sourcePiece.isKnight()) {
+            sourcePiece.checkCorrectDistance(source, target, targetPiece);
             replacePiece(source, target);
             return;
         }

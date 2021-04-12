@@ -5,7 +5,7 @@ public enum Color {
     BLACK("흑"),
     NOTHING("NOTHING");
 
-    private String name;
+    private final String name;
 
     Color(String name) {
         this.name = name;

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 방 입장</title>
+</head>
+<body>
+<h1>체스 게임을 시작하시겠습니까?</h1>
+<form action="/user" method="post" name="login">
+    이름: <input id="name" name="name" type="text">
+    <br><br>
+    비밀번호: <input id="password" name="password" type="text">
+    <br><br>
+    <input type="submit" value="입장하기">
+</form>
+<br>
+<button id="signup">회원가입</button>
+</body>
+<div id="loginSuccess">{{fail}}</div>
+<script src="user.js"></script>
+</html>
