@@ -25,7 +25,7 @@ public class UserServiceTest {
         assertThatCode(() -> userService.add(userRequestDto))
             .doesNotThrowAnyException();
 
-        assertThat(userService.find(name).getName())
+        assertThat(userService.findByName(name).getName())
             .isEqualTo(name);
     }
 }

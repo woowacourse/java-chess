@@ -28,6 +28,22 @@ public class UserDao implements UserDaoInterface {
         }
     }
 
+    @Override
+    public Optional<User> selectById(final long id) {
+        final String query = "SELECT * FROM user WHERE id = ?";
+        try (
+            final Connection connection = createConnection();
+            final PreparedStatement pstmt = JDBCHelper.createPreparedStatement(
+                connection, query, Collections.singletonList(id)
+            );
+            final ResultSet resultSet = pstmt.executeQuery()
+        ) {
+            return makeUser(resultSet);
+        } catch (final SQLException e) {
+            throw new UncheckedSQLException(e.getMessage());
+        }
+    }
+
     public Optional<User> selectByName(final String name) {
         final String query = "SELECT * FROM user WHERE name = ?";
         try (

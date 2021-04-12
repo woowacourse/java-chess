@@ -26,6 +26,13 @@ public class TestUserDao implements UserDaoInterface {
     }
 
     @Override
+    public Optional<User> selectById(final long id) {
+        return users.stream()
+            .filter(user -> Objects.equals(user.getId(), id))
+            .findAny();
+    }
+
+    @Override
     public Optional<User> selectByName(final String name) {
         return users.stream()
             .filter(user -> Objects.equals(user.getName(), name))

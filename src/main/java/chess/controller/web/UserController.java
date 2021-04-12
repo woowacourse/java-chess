@@ -22,7 +22,7 @@ public class UserController {
         get("api/user/:name", (req, res) -> {
             final String name = req.params("name");
             res.type("application/json");
-            return UserResponseDto.from(userService.find(name));
+            return UserResponseDto.from(userService.findByName(name));
         }, JsonConverter::toJson);
 
         post("api/user", (req, res) -> {

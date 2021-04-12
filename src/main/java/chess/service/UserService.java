@@ -17,8 +17,13 @@ public class UserService {
         userDao.insert(userRequestDto.getName());
     }
 
-    public User find(final String name) {
+    public User findByName(final String name) {
         return userDao.selectByName(name)
+            .orElseThrow(() -> new DataNotFoundException(User.class));
+    }
+
+    public User findById(final long id) {
+        return userDao.selectById(id)
             .orElseThrow(() -> new DataNotFoundException(User.class));
     }
 }
