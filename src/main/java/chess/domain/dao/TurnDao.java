@@ -13,16 +13,29 @@ public class TurnDao {
 
     private DBConnector dbConnector = new DBConnector();
 
-    public void initTurn() {
-        String query = "INSERT INTO turn(board_id, turn_color) VALUES(?, WHITE)";
+    public boolean isExistedTurn() {
+        String query = "SELECT * FROM turn WHERE (board_id = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            try {
-                pstmt.setInt(1, SINGLE_BOARD_NUMBER);
-                pstmt.executeUpdate();
-            } catch (SQLException existedBoardException) {
-                updateTurn(INITIAL_TURN_COLOR);
-            }
+            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            ResultSet rs = pstmt.executeQuery();
+            if (!rs.next()) return false;
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void initTurn() {
+        if (isExistedTurn()){
+            updateTurn(INITIAL_TURN_COLOR);
+        }
+        String query = "INSERT INTO turn(board_id, turn_color) VALUES(?, WHITE)";
+        try (Connection connection = dbConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
