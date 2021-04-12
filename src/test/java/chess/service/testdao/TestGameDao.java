@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class TestGameDao implements GameDaoInterface {
 
-    private long generatedKey;
     private final List<Game> games;
+    private long generatedKey;
 
     public TestGameDao() {
         this.generatedKey = 1;

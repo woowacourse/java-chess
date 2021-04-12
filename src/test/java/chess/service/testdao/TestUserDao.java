@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class TestUserDao implements UserDaoInterface {
 
-    private long generatedKey;
     private final List<User> users;
+    private long generatedKey;
 
     public TestUserDao() {
         this.generatedKey = 1;

@@ -75,7 +75,6 @@ public class GameDao implements GameDaoInterface {
                 )
             );
         ) {
-            System.out.println(game);
             pstmt.executeUpdate();
         } catch (final SQLException e) {
             throw new UncheckedSQLException(e.getMessage());
