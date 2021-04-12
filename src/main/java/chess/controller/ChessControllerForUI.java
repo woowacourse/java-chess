@@ -36,8 +36,7 @@ public class ChessControllerForUI {
         return game.isFinished();
     }
 
-    public List<ScoreDTO> score()
-    {
+    public List<ScoreDTO> score() {
         List<ScoreDTO> scores = new ArrayList<>();
         Map<Color, Double> score = game.score();
         for (Color color : score.keySet()) {

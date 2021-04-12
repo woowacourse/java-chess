@@ -1,6 +1,5 @@
 package chess.domain.moveStrategy;
 
-import chess.domain.game.Board;
 import chess.domain.location.Position;
 import chess.domain.piece.Piece;
 

@@ -1,8 +1,8 @@
 package chess.domain.game;
 
+import chess.domain.location.Position;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.location.Position;
 
 import java.util.HashMap;
 import java.util.Map;

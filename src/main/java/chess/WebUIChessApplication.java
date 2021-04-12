@@ -1,7 +1,11 @@
 package chess;
 
-import chess.controller.*;
-import chess.dto.*;
+import chess.controller.ChessControllerForUI;
+import chess.controller.CommandDAO;
+import chess.dto.ColorDTO;
+import chess.dto.ErrorDTO;
+import chess.dto.PieceDTO;
+import chess.dto.PositionDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

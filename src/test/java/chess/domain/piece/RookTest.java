@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.game.EmptyBoardMap;
 import chess.domain.location.Position;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

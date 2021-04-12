@@ -1,9 +1,9 @@
 package chess.domain.game;
 
-import chess.domain.piece.*;
 import chess.domain.location.Column;
 import chess.domain.location.Position;
 import chess.domain.location.Row;
+import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;

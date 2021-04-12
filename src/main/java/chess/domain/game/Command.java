@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.location.Position;
-import chess.domain.state.State;
 
 import java.util.Arrays;
 import java.util.List;

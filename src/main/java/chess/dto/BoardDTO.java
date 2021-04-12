@@ -2,8 +2,6 @@ package chess.dto;
 
 import chess.domain.location.Position;
 import chess.domain.piece.Piece;
-import chess.dto.PieceDTO;
-import chess.dto.PositionDTO;
 
 import java.util.HashMap;
 import java.util.Map;

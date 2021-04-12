@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.piece.Color;
 
-public class Finished implements State{
+public class Finished implements State {
 
     @Override
     public Color color() {

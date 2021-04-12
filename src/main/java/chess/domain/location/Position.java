@@ -1,6 +1,8 @@
 package chess.domain.location;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Position {
     private final Column column;

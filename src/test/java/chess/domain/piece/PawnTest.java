@@ -1,15 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.game.BoardFactory;
 import chess.domain.game.EmptyBoardMap;
 import chess.domain.location.Position;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {

@@ -26,7 +26,7 @@ public class Game {
             return;
         }
         state = state.opposite();
-}
+    }
 
     public void start() {
         state = state.start();
