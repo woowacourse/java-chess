@@ -1,6 +1,6 @@
-package chess.controller;
+package chess.dao;
 
-import chess.controller.web.dao.CommandDao;
+import chess.dao.CommandDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

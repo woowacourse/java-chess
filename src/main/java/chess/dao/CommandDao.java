@@ -1,4 +1,4 @@
-package chess.controller.web.dao;
+package chess.dao;
 
 import java.sql.*;
 import java.util.ArrayList;

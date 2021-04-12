@@ -1,8 +1,7 @@
 package chess;
 
-import chess.controller.ChessController;
 import chess.controller.web.WebChessController;
-import chess.controller.web.dao.CommandDao;
+import chess.dao.CommandDao;
 import chess.controller.web.dto.ColorDto;
 import chess.controller.web.dto.ErrorDto;
 import chess.controller.web.dto.PieceDto;
