@@ -25,10 +25,14 @@ public final class Bishop extends AbstractPiece {
 
     @Override
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
-        final List<Direction> directions = Direction.diagonalDirection();
-        Direction direction = findDirection(position, directions, ABLE_LENGTH);
+        validateMove(position, pieces);
+        return new Bishop(color, position);
+    }
 
-        validateObstacle(position, direction, pieces);
-        return new Rook(color, position);
+    @Override
+    public List<Position> movablePositions(final Map<Position, Piece> pieces) {
+        final List<Direction> directions = Direction.diagonalDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
     }
 }

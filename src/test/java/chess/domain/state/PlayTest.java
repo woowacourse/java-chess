@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.PlayGame;
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +28,7 @@ class PlayTest {
     @Test
     @DisplayName("우승자 확인 테스트")
     void winner() {
-        assertThat(play.winner()).isEqualTo(Color.BLANK);
+        assertThat(play.winner()).isNull();
     }
 
     @Test

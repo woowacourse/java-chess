@@ -43,7 +43,7 @@ public final class Position {
         return of(x, y);
     }
 
-    private static void validateValue(String value) {
+    private static void validateValue(final String value) {
         if (value.length() != POSITION_VALUE_SIZE) {
             throw new IllegalArgumentException("a1 과 h8 사이여야 합니다.");
         }
@@ -54,7 +54,7 @@ public final class Position {
         return positions[asIndex(x, y)];
     }
 
-    private static void validate(int x, int y) {
+    private static void validate(final int x, final int y) {
         Point.validate(x);
         Point.validate(y);
     }
@@ -79,7 +79,7 @@ public final class Position {
         return this.x.isAdd(x) && this.y.isAdd(y);
     }
 
-    public Position add(final int x, int y) {
+    public Position addedPosition(final int x, int y) {
         return Position.of(this.x.add(x), this.y.add(y));
     }
 
@@ -106,5 +106,11 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public String changedPositionToString() {
+        char valueX = (char) (x.point() + CORRECTION_X);
+        char valueY = (char) (y.point() + CORRECTION_Y);
+        return valueY + Character.toString(valueX);
     }
 }

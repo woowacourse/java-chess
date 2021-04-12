@@ -18,7 +18,7 @@ public class QueenTest {
 
     @BeforeEach
     void setUp() {
-        queen = new Queen(Color.BLANK, Position.of("e5"));
+        queen = new Queen(Color.BLACK, Position.of("e5"));
 
         Pieces pieces = new Pieces();
         pieces.init();
@@ -44,8 +44,8 @@ public class QueenTest {
     @Test
     @DisplayName("이동 에러 검사")
     void validate() {
-        pieces.put(Position.of("d7"), new Blank());
-        pieces.put(Position.of("f7"), new Blank());
+        pieces.put(Position.of("d7"), null);
+        pieces.put(Position.of("f7"), null);
 
         assertThatThrownBy(() -> queen.move(Position.of("d7"), pieces)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> queen.move(Position.of("f7"), pieces)).isInstanceOf(IllegalArgumentException.class);

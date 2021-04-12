@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Pieces;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -89,6 +91,13 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("2칸 이동하는 위치에 기물이 있는 경우 예외 발생")
+    void moveTwoTargetPositionObstacleException() {
+        pieces.put(Position.of("b4"), new Pawn(Color.BLACK, Position.of("b4")));
+        assertThatThrownBy(() -> whitePawn.move(Position.of("b4"), pieces)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("1칸 대각선에 있는 상대방 기물 잡기 테스트")
     void moveDiagonal() {
         pieces.put(Position.of("c3"), new Pawn(Color.BLACK ,Position.of("c3")));
@@ -150,5 +159,36 @@ class PawnTest {
     void blackSymbol() {
         Piece piece = new Pawn(Color.BLACK, Position.of("a1"));
         assertThat(piece.symbol()).isEqualTo("P");
+    }
+
+    @Test
+    @DisplayName("이동이 가능한 위치 테스트 - 초기위치")
+    void movablePositions() {
+        List<Position> movablePositions = Arrays.asList(
+            Position.of("b4"),
+            Position.of("b3")
+        );
+
+        List<Position> positions = whitePawn.movablePositions(pieces);
+        assertThat(positions).hasSize(movablePositions.size());
+        for (Position position : positions) {
+            assertThat(positions).contains(position);
+        }
+    }
+    
+    @Test
+    @DisplayName("이동이 가능한 위치 테스트 - 초기위치 X")
+    void movablePositions2() {
+        pieces.put(Position.of("b5"), new Pawn(Color.WHITE, Position.of("b5")));
+        List<Position> movablePositions = Arrays.asList(
+            Position.of("b5"),
+            Position.of("c5")
+        );
+        blackPawn = blackPawn.move(Position.of("c6"), pieces);
+        List<Position> positions = blackPawn.movablePositions(pieces);
+        assertThat(positions).hasSize(movablePositions.size());
+        for (Position position : positions) {
+            assertThat(positions).contains(position);
+        }
     }
 }

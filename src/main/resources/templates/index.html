@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+  <meta charset="utf-8" />
+  <title>우아한 체스</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
-Hello World!!
+  <div class="chess"></div>
+  <div style="display:inline-flex; width: 1000px; height: 1000px; margin-left: 30px; margin-top: 30px;">
+    <div id="board">
+      <div id="a8" class="square square1"></div>
+      <div id="b8" class="square square2"></div>
+      <div id="c8" class="square square1"></div>
+      <div id="d8" class="square square2"></div>
+      <div id="e8" class="square square1"></div>
+      <div id="f8" class="square square2"></div>
+      <div id="g8" class="square square1"></div>
+      <div id="h8" class="square square2"></div>
+      <br/>
+      <div id="a7" class="square square2"></div>
+      <div id="b7" class="square square1"></div>
+      <div id="c7" class="square square2"></div>
+      <div id="d7" class="square square1"></div>
+      <div id="e7" class="square square2"></div>
+      <div id="f7" class="square square1"></div>
+      <div id="g7" class="square square2"></div>
+      <div id="h7" class="square square1"></div>
+      <br/>
+      <div id="a6" class="square square1"></div>
+      <div id="b6" class="square square2"></div>
+      <div id="c6" class="square square1"></div>
+      <div id="d6" class="square square2"></div>
+      <div id="e6" class="square square1"></div>
+      <div id="f6" class="square square2"></div>
+      <div id="g6" class="square square1"></div>
+      <div id="h6" class="square square2"></div>
+      <br/>
+      <div id="a5" class="square square2"></div>
+      <div id="b5" class="square square1"></div>
+      <div id="c5" class="square square2"></div>
+      <div id="d5" class="square square1"></div>
+      <div id="e5" class="square square2"></div>
+      <div id="f5" class="square square1"></div>
+      <div id="g5" class="square square2"></div>
+      <div id="h5" class="square square1"></div>
+      <br/>
+      <div id="a4" class="square square1"></div>
+      <div id="b4" class="square square2"></div>
+      <div id="c4" class="square square1"></div>
+      <div id="d4" class="square square2"></div>
+      <div id="e4" class="square square1"></div>
+      <div id="f4" class="square square2"></div>
+      <div id="g4" class="square square1"></div>
+      <div id="h4" class="square square2"></div>
+      <br/>
+      <div id="a3" class="square square2"></div>
+      <div id="b3" class="square square1"></div>
+      <div id="c3" class="square square2"></div>
+      <div id="d3" class="square square1"></div>
+      <div id="e3" class="square square2"></div>
+      <div id="f3" class="square square1"></div>
+      <div id="g3" class="square square2"></div>
+      <div id="h3" class="square square1"></div>
+      <br/>
+      <div id="a2" class="square square1"></div>
+      <div id="b2" class="square square2"></div>
+      <div id="c2" class="square square1"></div>
+      <div id="d2" class="square square2"></div>
+      <div id="e2" class="square square1"></div>
+      <div id="f2" class="square square2"></div>
+      <div id="g2" class="square square1"></div>
+      <div id="h2" class="square square2"></div>
+      <br/>
+      <div id="a1" class="square square2"></div>
+      <div id="b1" class="square square1"></div>
+      <div id="c1" class="square square2"></div>
+      <div id="d1" class="square square1"></div>
+      <div id="e1" class="square square2"></div>
+      <div id="f1" class="square square1"></div>
+      <div id="g1" class="square square2"></div>
+      <div id="h1" class="square square1"></div>
+      <br/>
+    </div>
+    <div style="min-width: 370px; height: 590px; padding-top: 225px;">
+      <div style="border: 5px solid brown; margin: 30px; padding: 10px">
+        <div style="display:inline-flex; width: 100%; justify-content: center; align-items: center;">
+          <h1>방 번호:ㅤ</h1>
+          <h1 id="room-number">{{boardId}}</h1>
+        </div>
+        <div style="display:inline-flex; width: 100%; justify-content: center; align-items: center;">
+          <h1 id="view-type">현재 턴 :ㅤ</h1>
+          <h1 id="current-player"></h1>
+        </div>
+      </div>
+      <div style="display:inline-flex; width: 100%; justify-content: center; align-items: center;">
+        <button id="exit-button" type="button" class="btn btn-primary">나가기</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
+<script src="./function.js"></script>
 </html>

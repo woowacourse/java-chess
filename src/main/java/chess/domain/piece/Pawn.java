@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Pawn extends AbstractPiece {
 
@@ -27,20 +29,8 @@ public final class Pawn extends AbstractPiece {
 
     @Override
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
-        final List<Direction> directions = findPawnDirection();
-        Direction direction = findDirection(position, directions, ABLE_LENGTH);
-        validate(position, pieces, direction);
+        validateMove(position, pieces);
         return new Pawn(color, position);
-    }
-
-    private void validate(Position position, Map<Position, Piece> pieces, Direction direction) {
-        if (isForward(direction) && !(pieces.get(position) instanceof Blank)) {
-            throw new IllegalArgumentException("폰은 전진하는 위치에 기물이 있으면 안됩니다.");
-        }
-        if (!isForward(direction) && pieces.get(position) instanceof Blank) {
-            throw new IllegalArgumentException("폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.");
-        }
-        validateObstacle(position, direction, pieces);
     }
 
     private boolean isForward(final Direction direction) {
@@ -51,24 +41,7 @@ public final class Pawn extends AbstractPiece {
         if (color.isBlack()) {
             return Direction.blackPawnDirection();
         }
-
         return Direction.whitePawnDirection();
-    }
-
-    @Override
-    protected Direction findDirection(final Position position, final List<Direction> directions,
-        final int ableLength) {
-        return directions.stream()
-            .filter(direction -> this.position.canMove(position, direction, ableLength))
-            .findAny()
-            .orElseGet(() -> forWordTwoMove(position, ableLength));
-    }
-
-    private Direction forWordTwoMove(final Position position, final int ableLength) {
-        if (isFirst() && this.position.canMove(position, forward(), ableLength + 1)) {
-            return forward();
-        }
-        throw new IllegalArgumentException(ERROR_CAN_NOT_MOVE);
     }
 
     private Direction forward() {
@@ -86,5 +59,59 @@ public final class Pawn extends AbstractPiece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public List<Position> movablePositions(final Map<Position, Piece> pieces) {
+        final List<Direction> directions = findPawnDirection();
+
+        return positions(pieces, directions, ABLE_LENGTH);
+    }
+
+    @Override
+    protected List<Position> positions(final Map<Position, Piece> pieces,
+        final List<Direction> directions, final int ableLength) {
+        List<Position> positions = new ArrayList<>();
+        for (Direction direction : directions) {
+            addMovableDirectionPositions(pieces, positions, direction);
+        }
+
+        return positions;
+    }
+
+    private void addMovableDirectionPositions(final Map<Position, Piece> pieces,
+        final List<Position> positions, final Direction direction) {
+        int dx = direction.getXDegree();
+        int dy = direction.getYDegree();
+        if (!position.isAdd(dx, dy)) {
+            return;
+        }
+        Position movablePosition = position.addedPosition(dx, dy);
+        Piece targetPiece = pieces.get(movablePosition);
+        if (isForward(direction)) {
+            addOneTwoForwardPosition(pieces, positions, dx, dy, movablePosition, targetPiece);
+            return;
+        }
+        if (Objects.isNull(targetPiece) || targetPiece.isSameColor(color)) {
+            return;
+        }
+        positions.add(movablePosition);
+    }
+
+    private void addOneTwoForwardPosition(final Map<Position, Piece> pieces, final List<Position> positions,
+        final int dx, final int dy, final Position movablePosition, Piece targetPiece) {
+        if (!Objects.isNull(targetPiece)) {
+            return;
+        }
+        positions.add(movablePosition);
+        if (!isFirst() || !position.isAdd(dx * 2, dy * 2)) {
+            return;
+        }
+        Position twoForwardMovePosition = position.addedPosition(dx * 2, dy * 2);
+        targetPiece = pieces.get(twoForwardMovePosition);
+        if (!Objects.isNull(targetPiece)) {
+            return;
+        }
+        positions.add(twoForwardMovePosition);
     }
 }

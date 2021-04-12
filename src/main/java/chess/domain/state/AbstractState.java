@@ -4,6 +4,7 @@ import chess.domain.board.Pieces;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractState implements State {
@@ -49,5 +50,16 @@ public abstract class AbstractState implements State {
     @Override
     public Color winner() {
         return color;
+    }
+
+    @Override
+    public Color turn() {
+        return color;
+    }
+
+    @Override
+    public List<Position> movablePositions(final String source) {
+        Position sourcePosition = Position.of(source);
+        return pieces.movablePositions(sourcePosition);
     }
 }

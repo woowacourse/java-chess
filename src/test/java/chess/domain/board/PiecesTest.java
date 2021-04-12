@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -84,7 +83,7 @@ class PiecesTest {
         State state = new Ready();
         state = state.init();
         pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
-        assertThat(pieces.pieces().get(Position.of("b2"))).isInstanceOf(Blank.class);
+        assertThat(pieces.pieces().get(Position.of("b2"))).isNull();
 
         Map<Position, Piece> pieces = this.pieces.pieces();
         assertThat(pieces.get(Position.of("b4"))).isInstanceOf(Pawn.class);
@@ -141,6 +140,13 @@ class PiecesTest {
     void validateAttackPiece() {
         pieces.movePiece(Position.of("a2"), Position.of("a3"), whiteState);
         assertThatThrownBy(() -> pieces.movePiece(Position.of("b2"), Position.of("a3"), whiteState))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("빈공간을 이동하려 할때 테스트")
+    void name() {
+        assertThatThrownBy(() -> pieces.movablePositions(Position.of("b3")))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

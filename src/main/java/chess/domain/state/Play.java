@@ -4,7 +4,7 @@ import chess.domain.board.Pieces;
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
-public class Play extends WinnerBlank {
+public final class Play extends WinnerBlank {
 
     public Play(final Color color, final Pieces pieces) {
         super(color, pieces);

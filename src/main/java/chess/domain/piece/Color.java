@@ -11,11 +11,6 @@ public enum Color {
         public Color next() {
             return BLACK;
         }
-    }, BLANK("우승자가 존재하지 않습니다.") {
-        @Override
-        public Color next() {
-            throw new IllegalStateException("잘못된 상태입니다.");
-        }
     };
     
     private final String color;

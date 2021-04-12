@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -15,6 +14,7 @@ import chess.domain.state.State;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Pieces {
@@ -25,20 +25,29 @@ public final class Pieces {
     private static final int BLACK_PAWN_ROW = 6;
     private static final int WHITE_PAWN_ROW = 1;
     private static final int WHITE_GENERAL_ROW = 0;
-    private static final int MAX_BLANK_ROW = 5;
-    private static final int MIN_BLANK_ROW = 1;
     private static final int DUPLICATE_COUNT = 2;
     private static final int TOTAL_KING_SIZE = 2;
     private static final double DUPLICATE_PAWN_SCORE = 0.5;
 
-    private final Map<Position, Piece> pieces = new LinkedHashMap<>();
+    private final Map<Position, Piece> pieces;
 
-    public void init() {
-        initGeneral(BLACK_GENERAL_ROW, Color.BLACK);
-        initPawn(BLACK_PAWN_ROW, Color.BLACK);
-        for (int x = MAX_BLANK_ROW; x > MIN_BLANK_ROW; x--) {
+    public Pieces() {
+        this(new LinkedHashMap<>());
+        for (int x = MAX_INDEX; x >= MIN_INDEX; x--) {
             initBlank(x);
         }
+    }
+
+    public Pieces(final Map<Position, Piece> pieces) {
+        this.pieces = new LinkedHashMap<>(pieces);
+    }
+
+    public void init() {
+        for (int x = MAX_INDEX; x >= MIN_INDEX; x--) {
+            initBlank(x);
+        }
+        initGeneral(BLACK_GENERAL_ROW, Color.BLACK);
+        initPawn(BLACK_PAWN_ROW, Color.BLACK);
         initPawn(WHITE_PAWN_ROW, Color.WHITE);
         initGeneral(WHITE_GENERAL_ROW, Color.WHITE);
     }
@@ -62,7 +71,7 @@ public final class Pieces {
 
     private void initBlank(final int x) {
         for (int y = MIN_INDEX; y <= MAX_INDEX; y++) {
-            pieces.put(Position.of(x, y), new Blank());
+            pieces.put(Position.of(x, y), null);
         }
     }
 
@@ -74,16 +83,22 @@ public final class Pieces {
         validateAttackPiece(sourcePiece, targetPiece);
 
         pieces.put(targetPosition, sourcePiece.move(targetPosition, pieces()));
-        pieces.put(sourcePosition, new Blank());
+        pieces.put(sourcePosition, null);
     }
 
     private void validateSourcePiece(final Piece sourcePiece, final State state) {
+        if (Objects.isNull(sourcePiece)) {
+            throw new IllegalArgumentException("빈공간을 움직일 수 없습니다.");
+        }
         if (!state.isSameColor(sourcePiece)) {
             throw new IllegalArgumentException("움직이려 하는 기물은 상대방의 기물입니다.");
         }
     }
 
     private void validateAttackPiece(final Piece sourcePiece, final Piece targetPiece) {
+        if (Objects.isNull(targetPiece)) {
+            return;
+        }
         if (sourcePiece.isSameColor(targetPiece)) {
             throw new IllegalArgumentException("공격하려는 기물은 자신의 기물입니다.");
         }
@@ -92,6 +107,7 @@ public final class Pieces {
     public double score(final Color color) {
         double score = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::score)
             .sum();
@@ -103,6 +119,7 @@ public final class Pieces {
         long count = 0;
         List<Piece> pawns = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(piece -> piece.isSameColor(color))
             .filter(Piece::isPawn)
             .collect(Collectors.toList());
@@ -110,6 +127,7 @@ public final class Pieces {
         for (int column = MIN_INDEX; column <= MAX_INDEX; column++) {
             Point point = Point.from(column);
             long pawnCount = pawns.stream()
+                .filter(piece -> !Objects.isNull(piece))
                 .filter(piece -> piece.isSameColumn(point))
                 .count();
             count += duplicateCount(pawnCount);
@@ -131,9 +149,18 @@ public final class Pieces {
     public boolean isKillKing() {
         long kingCount = pieces.values()
             .stream()
+            .filter(piece -> !Objects.isNull(piece))
             .filter(Piece::isKing)
             .count();
 
         return kingCount != TOTAL_KING_SIZE;
+    }
+
+    public List<Position> movablePositions(final Position sourcePosition) {
+        Piece piece = pieces.get(sourcePosition);
+        if (Objects.isNull(piece)) {
+            throw new IllegalArgumentException("빈 공간은 이동경로가 없습니다.");
+        }
+        return piece.movablePositions(pieces());
     }
 }

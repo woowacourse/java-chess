@@ -1,0 +1,63 @@
+.square {
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+}
+
+.square:hover {
+  background-color: blueviolet;
+  cursor: pointer;
+}
+
+.square1 {
+  background-color: wheat;
+}
+
+.square:hover {
+  background-color: blueviolet;
+  cursor: pointer;
+ }
+
+.square2 {
+  background-color: thistle;
+}
+
+#board {
+  min-width: 620px;
+  height: 620px;
+  text-align: center;
+  font-size: 0px;
+  border: 10px solid gray;
+}
+
+.movable {
+  animation-name: flash;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-duration: 2.5s;
+}
+
+tr:hover {
+  background-color: lightskyblue;
+  cursor: pointer;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.chess {
+  width: 100%;
+  height: 100%;
+  background: url("./image/chessBackground.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 0.5;
+  position: absolute;
+  z-index: -1;
+}

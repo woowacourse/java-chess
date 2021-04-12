@@ -31,8 +31,8 @@ class KnightTest {
     @Test
     @DisplayName("이동검사")
     void move() {
-        pieces.put(Position.of("d7"), new Blank());
-        pieces.put(Position.of("f7"), new Blank());
+        pieces.put(Position.of("d7"), null);
+        pieces.put(Position.of("f7"), null);
 
         assertThatCode(() -> knight.move(Position.of("d7"), pieces)).doesNotThrowAnyException();
         assertThatCode(() -> knight.move(Position.of("f7"), pieces)).doesNotThrowAnyException();
