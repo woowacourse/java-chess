@@ -23,7 +23,7 @@ public class ChessController {
 
     private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
-        List<String> input = InputView.InputString();
+        List<String> input = InputView.inputString();
         validateStartCommand(chessGame, input);
     }
 
@@ -48,28 +48,25 @@ public class ChessController {
     private void start(ChessGame chessGame) {
         while (chessGame.isRunning()) {
             OutputView.printChessBoard(boardDto(chessGame));
-            List<String> input = InputView.InputString();
+            List<String> input = InputView.inputString();
             validateCommand(chessGame, input);
         }
-        OutputView.printGameOverInfo();
+        OutputView.printGameOverInfo(chessGame.winner());
     }
 
     private void validateCommand(ChessGame chessGame, List<String> input) {
         try {
             Command command = Command.getByInput(input.get(0));
             command.execute(chessGame, input);
-            printScoreIfStatus(chessGame, command);
         } catch (Exception e) {
             OutputView.printMessage(e.getMessage());
             start(chessGame);
         }
     }
 
-    private void printScoreIfStatus(ChessGame chessGame, Command command) {
-        if (command == Command.STATUS) {
+    public static void printScoreIfStatus(ChessGame chessGame) {
             OutputView.printTeamScore(chessGame.score(Team.WHITE), Team.WHITE);
             OutputView.printTeamScore(chessGame.score(Team.BLACK), Team.BLACK);
-        }
     }
 
     public BoardDto boardDto(ChessGame chessGame) {

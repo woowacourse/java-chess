@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.contoller.ChessController;
 import chess.domain.ChessGame;
 
 import java.util.Arrays;
@@ -29,6 +30,9 @@ public enum Command {
     }
 
     public void execute(ChessGame chessGame, List<String> arguments) {
+        if (this.equals(STATUS)) {
+            ChessController.printScoreIfStatus(chessGame);
+        }
         commander.accept(chessGame, arguments);
     }
 }

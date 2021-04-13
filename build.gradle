@@ -2,7 +2,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 version = '1.0.0'
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -14,6 +13,8 @@ dependencies {
     compile('ch.qos.logback:logback-classic:1.2.3')
     testCompile('org.junit.jupiter:junit-jupiter:5.6.0')
     testCompile('org.assertj:assertj-core:3.15.0')
+    implementation("mysql:mysql-connector-java:8.0.16")
+
 }
 
 test {

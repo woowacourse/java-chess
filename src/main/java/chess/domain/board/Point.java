@@ -86,4 +86,8 @@ public class Point {
     private int newX(Vector vector) {
         return x.index() + vector.getX();
     }
+
+    public String getPoint() {
+        return x.xCoordinate() + y.yCoordinate();
+    }
 }

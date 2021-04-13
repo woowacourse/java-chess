@@ -84,6 +84,10 @@ public class Square {
         return piece.score();
     }
 
+    public String team() {
+        return this.team.teamName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

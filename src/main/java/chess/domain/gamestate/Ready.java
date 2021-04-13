@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Row;
+import chess.domain.board.Team;
 import chess.domain.piece.Piece;
 
 import java.util.*;
@@ -51,7 +52,7 @@ public class Ready implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState move(Point source, Point destination, Team turn) {
         throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
     }
 
@@ -68,5 +69,10 @@ public class Ready implements GameState {
     @Override
     public boolean isRunning() {
         return board.isRunning();
+    }
+
+    @Override
+    public String winner() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않습니다.");
     }
 }
