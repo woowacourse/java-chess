@@ -158,7 +158,7 @@ public class WebChessService {
         if (!checkExistedPlayerResult) {
             playerDao.addPlayer(rawPlayer);
         }
-        return checkExistedPlayerResult;
+        return !checkExistedPlayerResult;
     }
 
     private boolean checkExistedPlayer(String rawPlayer) {

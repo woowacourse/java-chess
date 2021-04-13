@@ -29,8 +29,13 @@ public class ChessWebController {
 
         get("/", (req, res) -> {
            Map<String, Object> submitData = new HashMap<>();
-           submitData.put("players", webChessService.loadPlayers());
            return render(submitData, "Index.html");
+        });
+
+        get("/allPlayer", (req, res) -> {
+            Map<String, Object> submitData = new HashMap<>();
+            submitData.put("players", webChessService.loadPlayers());
+            return GSON.toJson(submitData);
         });
 
         get("/", (req, res) -> {

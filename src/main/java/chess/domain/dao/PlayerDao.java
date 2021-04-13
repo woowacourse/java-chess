@@ -30,7 +30,7 @@ public class PlayerDao {
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, playerName);
-            ResultSet rs = pstmt.executeQuery();
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
