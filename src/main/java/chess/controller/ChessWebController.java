@@ -68,6 +68,14 @@ public class ChessWebController {
             webChessService.end();
             return GSON.toJson(submitData);
         });
+
+        post("/addPlayer", (req, res)-> {
+            Map<String, Object> submitData = new HashMap<>();
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
+            String rawPlayerName = (String) requestBody.get("name");
+            submitData.put("result", webChessService.addPlayer(rawPlayerName));
+            return GSON.toJson(submitData);
+        });
     }
 
     private Map<String, String> submitLoadBoard(WebChessService webChessService) {

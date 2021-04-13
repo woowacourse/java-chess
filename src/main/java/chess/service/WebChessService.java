@@ -152,7 +152,15 @@ public class WebChessService {
         turnDao.updateTurn(switchTurnColor);
     }
 
-    public boolean checkExistedPlayer(String rawPlayer) {
+    public boolean addPlayer(String rawPlayer) {
+        boolean checkExistedPlayerResult = checkExistedPlayer(rawPlayer);
+        if (!checkExistedPlayerResult) {
+            playerDao.addPlayer(rawPlayer);
+        }
+        return checkExistedPlayerResult;
+    }
+
+    private boolean checkExistedPlayer(String rawPlayer) {
         return playerDao.isExistedPlayer(rawPlayer);
     }
 }
