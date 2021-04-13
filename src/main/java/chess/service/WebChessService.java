@@ -8,6 +8,7 @@ import chess.domain.board.YPosition;
 import chess.domain.command.Command;
 import chess.domain.command.Move;
 import chess.domain.dao.PieceDao;
+import chess.domain.dao.PlayerDao;
 import chess.domain.dao.TurnDao;
 import chess.domain.dto.PieceDTO;
 import chess.domain.dto.TurnDTO;
@@ -22,10 +23,12 @@ import java.util.Map;
 public class WebChessService {
     private final PieceDao pieceDao;
     private final TurnDao turnDao;
+    private final PlayerDao playerDao;
 
     public WebChessService() {
         this.pieceDao = new PieceDao();
         this.turnDao = new TurnDao();
+        this.playerDao = new PlayerDao();
     }
 
     public Map<Position, Piece> loadBoard() {
@@ -147,5 +150,9 @@ public class WebChessService {
         PieceColor thisColor = PieceColor.translateTurnColor(getTurn());
         String switchTurnColor = thisColor.oppositeColor().name();
         turnDao.updateTurn(switchTurnColor);
+    }
+
+    public boolean checkExistedPlayer(String rawPlayer) {
+        return playerDao.isExistedPlayer(rawPlayer);
     }
 }
