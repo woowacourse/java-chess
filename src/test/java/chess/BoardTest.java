@@ -2,14 +2,18 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.Point;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import static chess.domain.ChessGame.BOARD_SIZE;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,17 +21,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BoardTest {
-    @DisplayName("보드 생성")
-    @Test
-    void create() {
-        assertDoesNotThrow(Board::new);
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = new Board(initializeBoard());
+    }
+
+    private Map<Point, Piece> initializeBoard() {
+        Map<Point, Piece> initialBoard = new HashMap<>();
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            initializeColumn(i, initialBoard);
+        }
+        return initialBoard;
+    }
+
+    private void initializeColumn(int i, Map<Point, Piece> initialBoard) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            initialBoard.put(Point.of(i, j), PieceType.findPiece(i, j));
+        }
     }
 
     @DisplayName("초기화된 보드 확인")
     @ParameterizedTest
     @ValueSource(ints = {0, 7})
     void initialize(int value) {
-        Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
         assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Rook.class);
@@ -44,7 +62,6 @@ public class BoardTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 6})
     void initializePawn(int value) {
-        Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
         assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Pawn.class);
@@ -61,7 +78,6 @@ public class BoardTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void initializeNull(int value) {
-        Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
         assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Empty.class);
@@ -77,21 +93,18 @@ public class BoardTest {
     @DisplayName("유저로부터 입력받은 대로 기물 이동 확인")
     @Test
     void movePiece() {
-        Board board = new Board();
         assertDoesNotThrow(() -> board.movePiece(Point.of("a2"), Point.of("a4"), WHITE));
     }
 
     @DisplayName("두 왕이 모두 살아있는 지 확인")
     @Test
     void checkBothKingsAlive() {
-        Board board = new Board();
         assertTrue(board.hasBothKings());
     }
 
     @DisplayName("왕이 죽은 경우 확인")
     @Test
     void checkOneKingDead() {
-        Board board = new Board();
         board.movePiece(Point.of("e2"), Point.of("e4"), WHITE);
         board.movePiece(Point.of("f7"), Point.of("f5"), BLACK);
         board.movePiece(Point.of("e4"), Point.of("f5"), WHITE);

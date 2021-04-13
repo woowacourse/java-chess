@@ -2,34 +2,19 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Piece;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    public static final int BOARD_SIZE = 8;
     private static final int KINGS_COUNT_TO_PLAY = 2;
 
-    private final Map<Point, Piece> board = new HashMap<>();
+    private final Map<Point, Piece> board;
 
-    public Board() {
-        initialize();
-    }
-
-    private void initialize() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            initializeColumn(i);
-        }
-    }
-
-    private void initializeColumn(int i) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            board.put(Point.of(i, j), PieceType.findPiece(i, j));
-        }
+    public Board(Map<Point, Piece> board) {
+        this.board = board;
     }
 
     public void movePiece(Point source, Point target, Color currentColor) {
@@ -85,8 +70,8 @@ public class Board {
                 .count() == KINGS_COUNT_TO_PLAY;
     }
 
-    public Score makeScore() {
-        return new Score(this.board);
+    public Result makeResult() {
+        return new Result(this.board);
     }
 
     private void validateSourcePieceNotEmpty(Piece piece) {

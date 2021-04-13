@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.ChessGame;
 import chess.domain.Point;
-import chess.domain.Score;
+import chess.domain.Result;
 import chess.domain.piece.kind.Piece;
 
 import java.util.Map;
@@ -45,10 +45,10 @@ public class OutputView {
         return pieces.get(point).getName();
     }
 
-    public static void printScore(Score score) {
-        System.out.println(WHITE + " 점수: " + score.getWhiteScore());
-        System.out.println(BLACK + " 점수: " + score.getBlackScore());
-        System.out.println("게임 결과: " + score.getWinner());
+    public static void printScore(Result result) {
+        System.out.println(WHITE + " 점수: " + result.getWhiteScore());
+        System.out.println(BLACK + " 점수: " + result.getBlackScore());
+        System.out.println("게임 결과: " + result.getWinner());
     }
 
     public static void noticeGameFinished() {
