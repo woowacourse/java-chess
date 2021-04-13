@@ -11,6 +11,7 @@ import chess.domain.dao.PieceDao;
 import chess.domain.dao.PlayerDao;
 import chess.domain.dao.TurnDao;
 import chess.domain.dto.PieceDto;
+import chess.domain.dto.PlayerDto;
 import chess.domain.dto.TurnDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
@@ -162,5 +163,9 @@ public class WebChessService {
 
     private boolean checkExistedPlayer(String rawPlayer) {
         return playerDao.isExistedPlayer(rawPlayer);
+    }
+
+    public List<PlayerDto> loadPlayers() {
+        return playerDao.allPlayers();
     }
 }

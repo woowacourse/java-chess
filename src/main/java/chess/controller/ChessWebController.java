@@ -28,6 +28,12 @@ public class ChessWebController {
         staticFiles.location("/static");
 
         get("/", (req, res) -> {
+           Map<String, Object> submitData = new HashMap<>();
+           submitData.put("players", webChessService.loadPlayers());
+           return render(submitData, "Index.html");
+        });
+
+        get("/", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
 
             return render(submitData, "Chess.html");
