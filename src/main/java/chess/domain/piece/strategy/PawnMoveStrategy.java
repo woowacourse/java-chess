@@ -65,5 +65,8 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
         if (moveRoute.getPieceAtToPosition().isSameColor(this.color)) {
             throw new DomainException("아군 말이 있어 대각선으로 움직일 수 없습니다.");
         }
+        if (moveRoute.length() == PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
+            throw new DomainException("폰이 움직일 수 있는 범위를 벗어났습니다.");
+        }
     }
 }
