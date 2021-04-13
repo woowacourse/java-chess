@@ -21,4 +21,15 @@ public class PlayerDao {
         }
         return false;
     }
+
+    public void addPlayer(String playerName) {
+        String query = "INSERT INTO player(player_name) VALUES(?)";
+        try (Connection connection = dbConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, playerName);
+            ResultSet rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
