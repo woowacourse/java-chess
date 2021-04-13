@@ -12,46 +12,47 @@ public class Path {
 
     private final List<Position> path;
 
-    private Path(List<Position> path) {
+    private Path(final List<Position> path) {
         this.path = path;
     }
 
-    public static Path of(List<Position> path) {
+    public static Path of(final List<Position> path) {
         return new Path(path);
     }
 
-    public static Path of(List<Path> paths, Position source, Board board) {
-        return new Path(
-                filterPaths(paths, source, board).stream()
-                        .flatMap(Path::stream)
-                        .collect(Collectors.toList())
-        );
+    public static Path filterPaths(final List<Path> paths, final Position source, final Board board) {
+        return Path.of(paths.stream()
+                .flatMap(path -> path.filterPathBySourcePieceAndOtherPiece(source, board).stream())
+                .collect(Collectors.toList()));
     }
 
-    private static List<Path> filterPaths(List<Path> paths, Position source, Board board) {
-        return paths.stream()
-                .map(path -> path.filterPieceRules(source, board))
-                .collect(Collectors.toList());
-    }
+    private Path filterPathBySourcePieceAndOtherPiece(final Position source, final Board board) {
+        boolean isPrePositionMovable = true;
+        int pathSize = this.path.size();
+        Path filterPaths = new Path(new ArrayList<>());
 
-    private Path filterPieceRules(Position source, Board board) {
-        Piece sourcePiece = board.of(source);
-        List<Position> filterPaths = new ArrayList<>();
-        for (Position target : this.path) {
-            if (sourcePiece.isSameTeam(board.of(target))) {
-                break;
-            }
-            if (sourcePiece.isReachable(source, target, board.of(target))) {
-                filterPaths.add(target);
-            }
-            if (sourcePiece.isEnemy(board.of(target))) {
-                break;
-            }
+        for (int i = 0; i < pathSize && isMovablePosition(source, path.get(i), board, isPrePositionMovable); i++) {
+            Position target = path.get(i);
+            filterPaths.add(target);
+            isPrePositionMovable = board.pickPiece(target).isEmptyPiece();
         }
-        return new Path(filterPaths);
+        return filterPaths;
     }
 
-    public boolean contains(Position position) {
+    private boolean isMovablePosition(
+            final Position source, final Position target, final Board board, final boolean isPrePositionMovable) {
+        Piece sourcePiece = board.pickPiece(source);
+        Piece targetPiece = board.pickPiece(target);
+        return sourcePiece.isDifferentTeam(targetPiece)
+                && isPrePositionMovable
+                && sourcePiece.isReachable(source, target, targetPiece);
+    }
+
+    private void add(final Position position) {
+        this.path.add(position);
+    }
+
+    public boolean contains(final Position position) {
         return path.contains(position);
     }
 

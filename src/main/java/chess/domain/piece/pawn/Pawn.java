@@ -1,9 +1,8 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
 import chess.domain.direction.Direction;
-import chess.domain.piece.MaxDistance;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
@@ -12,44 +11,30 @@ import java.util.List;
 
 public abstract class Pawn extends Piece {
 
-    private Pawn(final Owner owner, final Score score, final List<Direction> directions, MaxDistance maxDistance) {
-        super(owner, score, directions, maxDistance);
-    }
+    private static final int MAX_DISTANCE = 2;
 
-    protected Pawn(final Owner owner, final Score score, final List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.PAWN);
+    private Pawn(final Owner owner, final Score score, final List<Direction> directions) {
+        super(owner, score, directions);
     }
 
     protected Pawn(final Owner owner, final List<Direction> directions) {
-        this(owner, new Score(1.0d), directions);
+        this(owner, Score.PAWN_SCORE, directions);
     }
 
-    public static Pawn getInstanceOf(Owner owner) {
-        if (owner.isSameTeam(Owner.BLACK)) {
+    public static Pawn getInstanceOf(final Owner owner) {
+        if (owner.isSame(Owner.BLACK)) {
             return BlackPawn.getInstance();
         }
-        if (owner.isSameTeam(Owner.WHITE)) {
+        if (owner.isSame(Owner.WHITE)) {
             return WhitePawn.getInstance();
         }
-
-        throw new IllegalArgumentException("체스말은 색깔이 있어야 합니다.");
-    }
-
-    protected abstract boolean isFirstLine(final Horizontal horizontal);
-
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        if (source.isStraight(target) && targetPiece.isEmpty()) {
-            return this.isValidStraightMove(source, target);
-        }
-
-        return this.isValidDiagonalMove(source, target, this.isEnemy(targetPiece));
+        throw new IllegalArgumentException("Invalid Pawn");
     }
 
     private boolean isValidStraightMove(final Position source, final Position target) {
-        if (this.isFirstLine(source.getHorizontal())) {
+        if (this.isFirstLine(source.getVertical())) {
             return true;
         }
-
         return source.getDistance(target) == 1;
     }
 
@@ -61,7 +46,22 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
+    public int maxDistance() {
+        return MAX_DISTANCE;
+    }
+
+    @Override
+    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
+        if (source.isStraight(target) && targetPiece.isEmptyPiece()) {
+            return this.isValidStraightMove(source, target);
+        }
+        return this.isValidDiagonalMove(source, target, this.isEnemy(targetPiece));
+    }
+
+    @Override
     public boolean isPawn() {
         return true;
     }
+
+    protected abstract boolean isFirstLine(final Vertical vertical);
 }

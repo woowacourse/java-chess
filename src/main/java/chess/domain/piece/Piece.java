@@ -12,26 +12,20 @@ public abstract class Piece {
     private final Owner owner;
     private final Score score;
     private final List<Direction> directions;
-    private final MaxDistance maxDistance;
 
-    public Piece(Owner owner, Score score, List<Direction> directions, MaxDistance maxDistance) {
+    public Piece(final Owner owner, final Score score, final List<Direction> directions) {
         this.owner = owner;
         this.directions = directions;
         this.score = score;
-        this.maxDistance = maxDistance;
     }
 
-    public Piece(Owner owner, Score score, List<Direction> directions) {
-        this(owner, score, directions, MaxDistance.EMPTY);
-    }
-
-    public List<Path> ableToPath(final Position source) {
+    public List<Path> movablePath(final Position source) {
         return directions.stream()
-                .map(direction -> ableToPathDirection(source, direction))
+                .map(direction -> movablePathDirection(source, direction))
                 .collect(Collectors.toList());
     }
 
-    public Path ableToPathDirection(Position source, Direction direction) {
+    private Path movablePathDirection(final Position source, final Direction direction) {
         List<Position> path = new ArrayList<>();
         Position target = source;
         while (target.isValidPosition(direction) && isValidDistance(source, target.next(direction))) {
@@ -41,31 +35,27 @@ public abstract class Piece {
         return Path.of(path);
     }
 
-    private boolean isValidDistance(Position source, Position target) {
-        return source.getDistance(target) <= this.maxDistanceValue();
+    private boolean isValidDistance(final Position source, final Position target) {
+        return source.getDistance(target) <= this.maxDistance();
     }
 
-    public final boolean isSameTeam(final Piece other) {
-        return this.owner.isSameTeam(other.owner);
+    public boolean isDifferentTeam(final Piece other) {
+        return this.owner.isDifferent(other.owner);
     }
 
     public boolean isSameOwner(final Owner owner) {
-        return this.owner.isSameTeam(owner);
+        return this.owner.isSame(owner);
     }
 
-    public boolean isSameOwnerPawn(Owner owner) {
-        return this.isPawn() && this.owner.isSameTeam(owner);
-    }
-
-    public boolean isKing() {
-        return false;
+    public boolean isSameOwnerPawn(final Owner owner) {
+        return this.isPawn() && this.owner.isSame(owner);
     }
 
     public boolean isPawn() {
         return false;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
@@ -77,9 +67,7 @@ public abstract class Piece {
         return this.score;
     }
 
-    public int maxDistanceValue() {
-        return this.maxDistance.value();
-    }
+    public abstract int maxDistance();
 
     public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 

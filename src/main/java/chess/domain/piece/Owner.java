@@ -16,10 +16,23 @@ public enum Owner {
     }
 
     public boolean isEnemy(final Owner other) {
-        return this.reverse().equals(other);
+        if (this.equals(BLACK)) {
+            return WHITE.equals(other);
+        }
+        if (this.equals(WHITE)) {
+            return BLACK.equals(other);
+        }
+        if (this.equals(NONE)) {
+            throw new IllegalArgumentException("적이 존재하지 않는 색입니다.");
+        }
+        return false;
     }
 
-    public boolean isSameTeam(final Owner other) {
+    public boolean isSame(final Owner other) {
         return this.equals(other);
+    }
+
+    public boolean isDifferent(final Owner other) {
+        return !this.equals(other);
     }
 }

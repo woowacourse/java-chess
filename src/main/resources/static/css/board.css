@@ -1,0 +1,290 @@
+:root {
+    --chess-bg-color: #2ac0bb;
+    --chessman-color: #e34234;
+}
+
+body {
+    font-family: 'Yeon Sung', cursive;
+    text-align: center;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+#name-container {
+    font-size: 2.5vw;
+    margin-left: 7vw;
+    margin-top: 1vw;
+}
+
+#game {
+    float: left;
+}
+
+#room-name {
+    float: left;
+}
+
+#chessTitle {
+    font-size: 4vw;
+}
+
+#input-container {
+    font-size: 1.5vw;
+    height: 12vw;
+}
+
+.game {
+    height: 3vw;
+}
+
+.game-input {
+    float: right;
+    height: 2vw;
+    right: 7vw;
+    position: relative;
+    width: 15vw;
+    padding-left: 10px;
+    font-size: 1.5vw;
+}
+
+#main-container {
+    position: absolute;
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+#board-container {
+    display: inline-table;
+    float: left;
+    width: 40%;
+    box-sizing: content-box;
+    margin-top: 3vw;
+    margin-left: 7vw;
+}
+
+#menu-container {
+    display: block;
+    float: left;
+    width: 40%;
+}
+
+
+#top {
+    font-size: 2vw;
+    margin-left: 5vw;
+}
+
+.flag {
+    float: left;
+    margin-left: 1.5vw;
+    margin-top: 0.5vw;
+    padding-right: 1.5vw;
+    border-right: 2px solid;
+}
+
+.score {
+    float: right;
+    margin-top: 0.7vw;
+    margin-right: 1.5vw;
+    padding-left: 1.5vw;
+    border-left: 2px solid;
+    width: 3.5vw;
+}
+
+.user {
+    height: 3.5vw;
+    border: 5px solid dimgrey;
+    border-radius: 10px;
+}
+
+.user-name {
+    float: left;
+    margin-top: 0.2vw;
+    margin-left: 1.5vw;
+}
+
+#black-userName {
+    border-top: none;
+}
+
+#history {
+    margin-left: 5vw;
+    border: 5px solid dimgray;
+    border-radius: 10px;
+    border-top: none;
+}
+
+#historyList {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    height: 100%;
+    max-height: 18vw;
+}
+
+#historyList ol li {
+    display: block;
+}
+
+#historyList ol dl {
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 1px solid;
+    height: 3.5vw;
+}
+
+#historyList ol dl dt {
+    width: 10%;
+    margin: 0.5vw 0 0;
+    display: block;
+    float: left;
+}
+
+#historyList ol dl dd {
+    width: 85%;
+    float: left;
+    display: contents;
+}
+
+#historyList ol {
+    margin: 0.3vw;
+    padding: 0;
+}
+
+#bottom {
+    margin-left: 5vw;
+}
+
+.grid {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(8, [col] 5vw);
+    grid-template-rows: repeat(8, [row] 5vw);
+    width: 40vw;
+    border: 25px solid burlywood;
+    border-radius: 15px;
+    box-shadow: 0 5px 8px #777;
+    justify-content: center;
+    align-content: center;
+    margin: 0 auto;
+}
+
+.grid img {
+    width: 5vw;
+}
+
+.grid .onboard {
+    background-color: aquamarine;
+    opacity: 0.5;
+}
+
+.grid div {
+    font-size: calc(5vw);
+    text-align: center;
+    position: relative;
+}
+
+.grid div {
+    color: var(--chessman-color);
+}
+
+.grid div:nth-child(-n+8):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+8):nth-child(-n+16):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+17):nth-child(-n+24):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+25):nth-child(-n+32):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+33):nth-child(-n+40):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+41):nth-child(-n+48):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+49):nth-child(-n+56):nth-child(even) {
+    background: var(--chess-bg-color);
+}
+
+.grid div:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
+    background: var(--chess-bg-color);
+}
+
+@supports not ((background: var(--chess-bg-color)) or (display: grid)) {
+    .warning {
+        display: block !important;
+    }
+}
+
+.warning {
+    color: crimson;
+    display: none;
+}
+
+.piece {
+    position: relative;
+}
+
+.highlight {
+    position: absolute;
+    left: 0vw;
+}
+
+#start-btn {
+    background: #1AAB8A;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 60px;
+    font-size: 1.6em;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+}
+
+#start-btn:hover {
+    background: #fff;
+    color: #1AAB8A;
+}
+
+#start-btn:before, #start-btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #1AAB8A;
+    transition: 400ms ease all;
+}
+
+#start-btn:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+#start-btn:hover:before, #start-btn:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
+}
+
+#score-container {
+    font-size: 2vw;
+}

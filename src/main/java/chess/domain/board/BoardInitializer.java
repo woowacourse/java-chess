@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
@@ -26,21 +26,21 @@ public class BoardInitializer {
         return new Board(map);
     }
 
-    public static void resetBoard(Map<Position, Piece> board) {
-        putLineInMap(board, Horizontal.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
-        putLineInMap(board, Horizontal.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
-        putLineInMap(board, Horizontal.SIX, getEmptyLine());
-        putLineInMap(board, Horizontal.FIVE, getEmptyLine());
-        putLineInMap(board, Horizontal.FOUR, getEmptyLine());
-        putLineInMap(board, Horizontal.THREE, getEmptyLine());
-        putLineInMap(board, Horizontal.TWO, getPiecesOfSecondLine(Owner.WHITE));
-        putLineInMap(board, Horizontal.ONE, getPiecesOfFirstLine(Owner.WHITE));
+    public static void resetBoard(final Map<Position, Piece> board) {
+        putLineInMap(board, Vertical.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
+        putLineInMap(board, Vertical.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
+        putLineInMap(board, Vertical.SIX, getEmptyLine());
+        putLineInMap(board, Vertical.FIVE, getEmptyLine());
+        putLineInMap(board, Vertical.FOUR, getEmptyLine());
+        putLineInMap(board, Vertical.THREE, getEmptyLine());
+        putLineInMap(board, Vertical.TWO, getPiecesOfSecondLine(Owner.WHITE));
+        putLineInMap(board, Vertical.ONE, getPiecesOfFirstLine(Owner.WHITE));
     }
 
-    private static void putLineInMap(final Map<Position, Piece> map, final Horizontal horizontal, final Piece[] pieces) {
-        final Vertical[] verticals = Vertical.values();
+    private static void putLineInMap(final Map<Position, Piece> map, final Vertical vertical, final Piece[] pieces) {
+        final Horizontal[] horizontals = Horizontal.values();
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            map.put(Position.of(verticals[i], horizontal), pieces[i]);
+            map.put(Position.of(horizontals[i], vertical), pieces[i]);
         }
     }
 
@@ -64,8 +64,8 @@ public class BoardInitializer {
     }
 
     private static Piece[] getEmptyLine() {
-        final Piece[] pieces = new Empty[BOARD_LENGTH];
-        Arrays.fill(pieces, Empty.getInstance());
+        final Piece[] pieces = new EmptyPiece[BOARD_LENGTH];
+        Arrays.fill(pieces, EmptyPiece.getInstance());
         return pieces;
     }
 }
