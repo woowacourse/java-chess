@@ -23,7 +23,7 @@ const assemblePlayers = (response) => {
 const foamOnePlayer = ($playerList, receivePlayer) => {
     let packedPlayerButton = document.createElement("button");
     packedPlayerButton.setAttribute("id", receivePlayer.playerIndex);
-    packedPlayerButton.setAttribute("class", receivePlayer.playerName);
+    packedPlayerButton.setAttribute("class", "playerLink " + receivePlayer.playerName);
     packedPlayerButton.innerText = receivePlayer.playerName;
     $playerList.appendChild(packedPlayerButton);
 }

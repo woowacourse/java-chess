@@ -38,9 +38,8 @@ public class ChessWebController {
             return GSON.toJson(submitData);
         });
 
-        get("/", (req, res) -> {
+        get("/play/:index", (req, res) -> {
             Map<String, Object> submitData = new HashMap<>();
-
             return render(submitData, "Chess.html");
         });
 
