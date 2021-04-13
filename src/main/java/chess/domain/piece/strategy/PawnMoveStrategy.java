@@ -18,6 +18,8 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
 
     @Override
     public boolean canMove(MoveRoute moveRoute) {
+        super.canMove(moveRoute);
+
         if (moveRoute.length() > PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
             throw new DomainException("폰이 움직일 수 있는 범위를 벗어났습니다.");
         }
@@ -35,7 +37,7 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
             throw new DomainException("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");
         }
 
-        return super.canMove(moveRoute);
+        return true;
     }
 
     private void validateFirstMove(MoveRoute moveRoute) {
@@ -61,9 +63,6 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
     private void validateKillMove(MoveRoute moveRoute) {
         if (!Direction.isDiagonal(moveRoute.getDirection())) {
             throw new DomainException("폰은 직선으로 상대 말을 잡을 수 없습니다.");
-        }
-        if (moveRoute.getPieceAtToPosition().isSameColor(this.color)) {
-            throw new DomainException("아군 말이 있어 대각선으로 움직일 수 없습니다.");
         }
         if (moveRoute.length() == PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
             throw new DomainException("폰이 움직일 수 있는 범위를 벗어났습니다.");
