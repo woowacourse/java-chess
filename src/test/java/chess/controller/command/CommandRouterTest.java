@@ -1,5 +1,7 @@
 package chess.controller.command;
 
+import chess.exception.CommandValidationException;
+import chess.exception.HandledException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -35,7 +37,7 @@ class CommandRouterTest {
     @ValueSource(strings = {"start dd", "end asd", "status a2 a3"})
     void throwExceptionWhenNotProperInputCommand(String test){
         assertThatThrownBy(() -> CommandRouter.findByInputCommand(Arrays.asList(test.split(" "))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(CommandValidationException.class)
                 .hasMessageContaining("유효하지 않은");
     }
 
@@ -44,7 +46,7 @@ class CommandRouterTest {
     @CsvSource(value = {"move a2, a3:위치 형식에 맞는 입력이 아닙니다.","move 123213:유효하지 않은 이동 명령입니다."}, delimiter = ':')
     void throwExceptionWhenNotProperInputMoveCommand(String test, String errorMsg){
         assertThatThrownBy(() -> CommandRouter.findByInputCommand(Arrays.asList(test.split(" "))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(HandledException.class)
                 .hasMessage(errorMsg);
     }
 }

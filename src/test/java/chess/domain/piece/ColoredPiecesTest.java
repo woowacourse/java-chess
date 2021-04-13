@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.exception.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class ColoredPiecesTest {
     @Test
     void throwExceptionWhenOtherColorRemove() {
         assertThatThrownBy(() -> coloredPieces.remove(new Rook(Color.WHITE)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("진영이 다른 피스를 제거할 수 없습니다");
     }
 }

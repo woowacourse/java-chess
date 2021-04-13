@@ -4,6 +4,7 @@ import chess.domain.order.MoveRoute;
 import chess.domain.piece.Color;
 import chess.domain.position.Direction;
 import chess.domain.position.Rank;
+import chess.exception.DomainException;
 
 public class PawnMoveStrategy extends DefaultMoveStrategy {
     public static final int PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH = 3;
@@ -17,29 +18,26 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
 
     @Override
     public boolean canMove(MoveRoute moveRoute) {
-        if (Direction.isDiagonal(moveRoute.getDirection())) {
-            validateKillMove(moveRoute);
-            return true;
-        }
+        super.canMove(moveRoute);
 
         if (moveRoute.length() > PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
-            throw new IllegalArgumentException("폰이 움직일 수 있는 범위를 벗어났습니다.");
+            throw new DomainException("폰이 움직일 수 있는 범위를 벗어났습니다.");
         }
 
         if (moveRoute.length() == PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
             validateFirstMove(moveRoute);
         }
 
-        return super.canMove(moveRoute);
-    }
+        if (moveRoute.hasPieceAtToPosition()) {
+            validateKillMove(moveRoute);
+            return true;
+        }
 
-    private void validateKillMove(MoveRoute moveRoute) {
-        if (!moveRoute.hasPieceAtToPosition()) {
-            throw new IllegalArgumentException("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");
+        if (Direction.isDiagonal(moveRoute.getDirection()) && !moveRoute.hasPieceAtToPosition()) {
+            throw new DomainException("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");
         }
-        if (moveRoute.getPieceAtToPosition().isSameColor(this.color)) {
-            throw new IllegalArgumentException("아군 말이 있어 대각선으로 움직일 수 없습니다.");
-        }
+
+        return true;
     }
 
     private void validateFirstMove(MoveRoute moveRoute) {
@@ -52,13 +50,22 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
 
     private void validateFirstMoveOfWhite(MoveRoute moveRoute) {
         if (!moveRoute.getFromPosition().isRankOf(Rank.TWO)) {
-            throw new IllegalArgumentException("폰은 첫 행마가 아니라면 2칸 전진할 수 없습니다.");
+            throw new DomainException("폰은 첫 행마가 아니라면 2칸 전진할 수 없습니다.");
         }
     }
 
     private void validateFirstMoveOfBlack(MoveRoute moveRoute) {
         if (!moveRoute.getFromPosition().isRankOf(Rank.SEVEN)) {
-            throw new IllegalArgumentException("폰은 첫 행마가 아니라면 2칸 전진할 수 없습니다.");
+            throw new DomainException("폰은 첫 행마가 아니라면 2칸 전진할 수 없습니다.");
+        }
+    }
+
+    private void validateKillMove(MoveRoute moveRoute) {
+        if (!Direction.isDiagonal(moveRoute.getDirection())) {
+            throw new DomainException("폰은 직선으로 상대 말을 잡을 수 없습니다.");
+        }
+        if (moveRoute.length() == PAWN_MAXIMUM_MOVABLE_ROUTE_LENGTH) {
+            throw new DomainException("폰이 움직일 수 있는 범위를 벗어났습니다.");
         }
     }
 }

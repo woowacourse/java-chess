@@ -2,10 +2,9 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.exception.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.NoSuchElementException;
 
 import static chess.domain.piece.Fixture.mockChessBoard;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +21,7 @@ public class ChessBoardTest {
     @Test
     void throwExceptionWhenSquareHasNotPiece() {
         assertThatThrownBy(() -> mockChessBoard.move(mockChessBoard.createMoveRoute(Position.of("a3"), Position.of("b3"))))
-                .isInstanceOf(NoSuchElementException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("해당 위치에는 말이 없습니다.");
     }
 

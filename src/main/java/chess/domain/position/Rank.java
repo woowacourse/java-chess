@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.exception.DomainException;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -41,7 +43,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.coordinate == coordinate)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 좌표의 Rank가 없습니다."));
+                .orElseThrow(() -> new DomainException("해당하는 좌표의 Rank가 없습니다."));
     }
 
     public static List<Rank> getBlankRanks() {

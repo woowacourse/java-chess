@@ -9,15 +9,10 @@ public class RealPiece extends Piece {
     private final Color color;
     private final MoveStrategy moveStrategy;
 
-    public RealPiece(Color color, String notation, MoveStrategy moveStrategy) {
-        super(notation);
+    public RealPiece(Color color, String name, MoveStrategy moveStrategy) {
+        super(name);
         this.color = color;
         this.moveStrategy = moveStrategy;
-    }
-
-    @Override
-    public String getNotation() {
-        return color.changeNotation(super.getNotation());
     }
 
     @Override

@@ -7,11 +7,9 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.*;
 import chess.domain.statistics.ScoreTable;
+import chess.exception.DomainException;
 
 import java.util.*;
 import java.util.function.Function;
@@ -29,6 +27,14 @@ public class ChessBoard {
         this.board = board;
     }
 
+    public static ChessBoard from(Map<Position, Piece> realPiecesMap) {
+        Map<Position, Piece> board = new HashMap<>(realPiecesMap);
+        for (Position position: PositionRepository.positions()) {
+            board.merge(position, new Blank(), (existPiece, newPiece) -> existPiece);
+        }
+        return new ChessBoard(board);
+    }
+
     public Piece getPieceByPosition(Position position) {
         return this.board.get(position);
     }
@@ -39,21 +45,28 @@ public class ChessBoard {
 
     public MoveResult move(MoveRoute moveRoute) {
         Position fromPosition = moveRoute.getFromPosition();
-        if (!this.hasPiece(fromPosition)) {
-            throw new NoSuchElementException("해당 위치에는 말이 없습니다.");
-        }
-
-        Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
         Position toPosition = moveRoute.getToPosition();
+        Piece pieceToMove = this.getPieceByPosition(moveRoute.getFromPosition());
 
-        if (pieceToMove.canMove(moveRoute)) {
-            Piece piece = this.board.get(toPosition);
-            this.board.put(toPosition, pieceToMove);
-            this.board.put(fromPosition, new Blank());
-            return new MoveResult(piece);
+        validateRealPieceHasBeenChosen(fromPosition);
+        validateProperMoveStrategy(pieceToMove, moveRoute);
+
+        Piece pieceAtToPosition = this.board.get(toPosition);
+        this.board.put(toPosition, pieceToMove);
+        this.board.put(fromPosition, new Blank());
+        return new MoveResult(pieceAtToPosition);
+    }
+
+    private void validateRealPieceHasBeenChosen(Position fromPosition) {
+        if (!this.hasPiece(fromPosition)) {
+            throw new DomainException("해당 위치에는 말이 없습니다.");
         }
+    }
 
-        throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
+    private void validateProperMoveStrategy(Piece pieceToMove, MoveRoute moveRoute) {
+        if (!pieceToMove.canMove(moveRoute)) {
+            throw new DomainException("기물이 움직일 수 없는 상황입니다.");
+        }
     }
 
     public MoveRoute createMoveRoute(Position from, Position to) {
@@ -113,5 +126,9 @@ public class ChessBoard {
     private Stream<Position> positionStreamPerFiles(File file) {
         return Arrays.stream(Rank.values())
                 .map(rank -> Position.of(file, rank));
+    }
+
+    public Map<Position, Piece> board() {
+        return Collections.unmodifiableMap(this.board);
     }
 }

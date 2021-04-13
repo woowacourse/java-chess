@@ -3,6 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import chess.exception.DomainException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ public class QueenMoveStrategyTest {
     @CsvSource({"c3,e4", "h2, g5"})
     void throwExceptionWhenWrongDirection(String from, String to) {
         assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
 
@@ -56,7 +57,7 @@ public class QueenMoveStrategyTest {
     @Test
     void whenBlockedThrowTest() {
         assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of("d1"), Position.of("d3"))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
 
@@ -65,7 +66,7 @@ public class QueenMoveStrategyTest {
     @CsvSource({"d1, e1", "d1, d2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
         assertThatThrownBy(() -> whiteQueen.canMove(chessBoard.createMoveRoute(Position.of(from), Position.of(to))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DomainException.class)
                 .hasMessage("동일한 진영의 말이 있어서 행마할 수 없습니다.");
     }
 }
