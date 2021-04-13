@@ -8,12 +8,22 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final char SIGNATURE = 'n';
+
     private Knight(final Location location, final Team team) {
         super(location, team);
     }
 
+    private Knight(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Knight of(final Location location, final Team team) {
         return new Knight(location, team);
+    }
+
+    public static Knight of(long id, long roomId, Team team, Location location) {
+        return new Knight(id, roomId, team, location);
     }
 
     @Override
@@ -43,5 +53,10 @@ public class Knight extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }

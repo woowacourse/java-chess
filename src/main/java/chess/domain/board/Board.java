@@ -6,15 +6,15 @@ import chess.domain.team.Team;
 import chess.domain.team.Winner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int NUM_OF_KING = 2;
     private final List<Piece> pieces;
 
     private Board(final List<Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new ArrayList<>(pieces);
     }
 
     public static Board of(final List<Piece> pieces) {
@@ -66,20 +66,15 @@ public class Board {
     private double scoreExceptionPawn(Team team) {
         return pieces
             .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> !piece.isPawn())
+            .filter(piece -> piece.isSameTeam(team) && !piece.isPawn())
             .mapToDouble(piece -> piece.pieceScore().score())
             .sum();
     }
 
     private double scorePawn(Team team) {
-        Map<Integer, Long> frequencyPerX = pieces
-            .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> piece.isPawn())
-            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()));
-
-        return frequencyPerX
+        return pieces.stream()
+            .filter(piece -> piece.isSameTeam(team) && piece.isPawn())
+            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()))
             .values()
             .stream()
             .mapToDouble(count -> count <= 1 ? count : count * 0.5)
@@ -87,10 +82,10 @@ public class Board {
     }
 
     public Winner judgeWinner() {
-        if (isBlackKingDead()) {
+        if (isKingDead(Team.BLACK)) {
             return Winner.WHITE;
         }
-        if (isWhiteKingDead()) {
+        if (isKingDead(Team.WHITE)) {
             return Winner.BLACK;
         }
         return judgeWinnerByScore();
@@ -108,18 +103,11 @@ public class Board {
         return Winner.DRAW;
     }
 
-    public boolean isBlackKingDead() {
+    public boolean isKingDead(Team team) {
         return !pieces
             .stream()
             .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameTeam(Team.BLACK));
-    }
-
-    public boolean isWhiteKingDead() {
-        return !pieces
-            .stream()
-            .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameTeam(Team.WHITE));
+            .anyMatch(piece -> piece.isSameTeam(team));
     }
 
     public List<Piece> toList() {
@@ -130,6 +118,10 @@ public class Board {
         return pieces
             .stream()
             .filter(Piece::isKing)
-            .count() != 2;
+            .count() != NUM_OF_KING;
+    }
+
+    public List<Piece> getPieces() {
+        return new ArrayList<>(pieces);
     }
 }

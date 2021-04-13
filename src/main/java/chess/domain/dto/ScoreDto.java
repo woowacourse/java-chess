@@ -19,10 +19,10 @@ public class ScoreDto {
     public static ScoreDto of(Board board) {
         double blackScore = 0.0;
         double whiteScore = 0.0;
-        if (board.isBlackKingDead()) {
+        if (board.isKingDead(Team.BLACK)) {
             whiteScore = board.score(Team.WHITE);
         }
-        if (board.isWhiteKingDead()) {
+        if (board.isKingDead(Team.WHITE)) {
             blackScore = board.score(Team.BLACK);
         }
         if (!board.isAnyKingDead()) {

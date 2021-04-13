@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final char SIGNATURE = 'p';
+
     private static final int BLACK_PAWN_INITIAL_Y = 7;
     private static final int WHITE_PAWN_INITIAL_Y = 2;
 
@@ -16,13 +18,21 @@ public class Pawn extends Piece {
         super(location, team);
     }
 
+    private Pawn(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Pawn of(Location location, Team team) {
         return new Pawn(location, team);
     }
 
+    public static Pawn of(long id, long roomId, Team team, Location location) {
+        return new Pawn(id, roomId, team, location);
+    }
+
     @Override
     public void validateMovingAbilityToTarget(Location target) {
-        List<Location> movableNextLocations = getNextLocations(target);
+        List<Location> movableNextLocations = getNextLocations();
 
         boolean isMovable = movableNextLocations.stream()
             .anyMatch(location -> location.equals(target));
@@ -31,7 +41,7 @@ public class Pawn extends Piece {
         }
     }
 
-    private List<Location> getNextLocations(Location target) {
+    private List<Location> getNextLocations() {
         List<Location> locations = new ArrayList<>();
         int dy = 1;
         if (team.isBlack()) {
@@ -88,5 +98,10 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }

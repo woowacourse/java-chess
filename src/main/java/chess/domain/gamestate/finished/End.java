@@ -1,8 +1,6 @@
 package chess.domain.gamestate.finished;
 
 import chess.domain.board.Board;
-import chess.domain.dto.ResponseDto;
-import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.AbstractState;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
@@ -25,11 +23,6 @@ public class End extends AbstractState {
     }
 
     @Override
-    public ResponseDto getProcessResult() {
-        return ResponseDto.withScore(ScoreDto.of(board));
-    }
-
-    @Override
     public void processMove(String input, Team currentTeam) {
         throw new IllegalArgumentException("[ERROR] 현재 move 상태가 아닙니다.");
     }
@@ -37,5 +30,10 @@ public class End extends AbstractState {
     @Override
     public boolean isMove() {
         return false;
+    }
+
+    @Override
+    public String getValue() {
+        return "end";
     }
 }

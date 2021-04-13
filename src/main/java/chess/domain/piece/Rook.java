@@ -6,12 +6,22 @@ import chess.domain.team.Team;
 
 public class Rook extends Piece {
 
+    private static final char SIGNATURE = 'r';
+
     private Rook(final Location location, final Team team) {
         super(location, team);
     }
 
+    private Rook(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Rook of(final Location location, final Team team) {
         return new Rook(location, team);
+    }
+
+    public static Rook of(long id, long roomId, Team team, Location location) {
+        return new Rook(id, roomId, team, location);
     }
 
     @Override
@@ -34,5 +44,10 @@ public class Rook extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }

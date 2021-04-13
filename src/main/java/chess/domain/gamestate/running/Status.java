@@ -1,8 +1,6 @@
 package chess.domain.gamestate.running;
 
 import chess.domain.board.Board;
-import chess.domain.dto.ResponseDto;
-import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.finished.End;
@@ -35,12 +33,12 @@ public class Status extends Running {
     }
 
     @Override
-    public ResponseDto getProcessResult() {
-        return ResponseDto.withScore(ScoreDto.of(board));
+    public boolean isMove() {
+        return false;
     }
 
     @Override
-    public boolean isMove() {
-        return false;
+    public String getValue() {
+        return "status";
     }
 }

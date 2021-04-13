@@ -10,12 +10,46 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    private static final int NON_ENTITY_SIGNATURE = -1;
+
+    protected final long id;
+    protected final long roomId;
     protected final Team team;
     protected Location location;
 
-    protected Piece(final Location location, final Team team) {
-        this.location = location;
-        this.team = team;
+    protected Piece(Location location, Team team) {
+        this(NON_ENTITY_SIGNATURE, NON_ENTITY_SIGNATURE, team, location);
+    }
+
+    protected Piece(long id, long roomId, Team team, Location location) {
+        this.id = id;
+        this.roomId = roomId;
+        this.team = Team.of(team.getValue());
+        this.location = Location.of(location.getX(), location.getY());
+    }
+
+    public static Piece generatePiece(long id, long roomId, char signature, String team, String location) {
+        Team pieceTeam = Team.of(team);
+        Location pieceLocation = Location.of(location);
+        if (signature == 'r') {
+            return Rook.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        if (signature == 'k') {
+            return King.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        if (signature == 'q') {
+            return Queen.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        if (signature == 'p') {
+            return Pawn.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        if (signature == 'n') {
+            return Knight.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        if (signature == 'b') {
+            return Bishop.of(id, roomId, pieceTeam, pieceLocation);
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
     }
 
     public void moveTo(Location target, Board board) {
@@ -55,10 +89,12 @@ public abstract class Piece {
     }
 
     protected final void validateNotExistObjectInPath(List<Location> path, Board board) {
-        for (Location location : path) {
-            if (board.isPieceExistIn(location)) {
-                throw new IllegalArgumentException("[ERROR] 이동 경로에 말이 존재하므로 이동할 수 없습니다.");
-            }
+        boolean isPieceExistInPath = path
+            .stream()
+            .anyMatch(oneStep -> board.isPieceExistIn(oneStep));
+
+        if (isPieceExistInPath) {
+            throw new IllegalArgumentException("[ERROR] 이동 경로에 말이 존재하므로 이동할 수 없습니다.");
         }
     }
 
@@ -105,6 +141,24 @@ public abstract class Piece {
     public int getY() {
         return location.getY();
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getRoomId() {
+        return roomId;
+    }
+
+    public Team getTeam() {
+        return Team.of(team.getValue());
+    }
+
+    public Location getLocation() {
+        return Location.of(location.getX(), location.getY());
+    }
+
+    public abstract char getSignature();
 
     @Override
     public boolean equals(Object o) {

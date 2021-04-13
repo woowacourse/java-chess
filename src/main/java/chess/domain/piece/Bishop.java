@@ -6,12 +6,22 @@ import chess.domain.team.Team;
 
 public class Bishop extends Piece {
 
+    private static final char SIGNATURE = 'b';
+
     private Bishop(final Location location, final Team team) {
         super(location, team);
     }
 
+    private Bishop(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Bishop of(final Location location, final Team team) {
         return new Bishop(location, team);
+    }
+
+    public static Bishop of(long id, long roomId, Team team, Location location) {
+        return new Bishop(id, roomId, team, location);
     }
 
     @Override
@@ -34,5 +44,10 @@ public class Bishop extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }

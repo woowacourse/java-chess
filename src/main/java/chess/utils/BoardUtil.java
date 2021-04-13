@@ -40,14 +40,22 @@ public class BoardUtil {
     public static Board convertToBoard(char[][] board) {
         List<Piece> pieces = new ArrayList<>();
         for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                char pieceLetter = board[y][x];
-                if (isNotEmpty(pieceLetter)) {
-                    pieces.add(generatePiece(pieceLetter, x, y));
-                }
-            }
+            generateColumnPiece(board[y], pieces, y);
         }
         return Board.of(pieces);
+    }
+
+    private static void generateColumnPiece(char[] column, List<Piece> pieces, int y) {
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            char pieceLetter = column[x];
+            addIfNotEmpty(pieceLetter, x, y, pieces);
+        }
+    }
+
+    private static void addIfNotEmpty(char pieceLetter, int x, int y, List<Piece> pieces) {
+        if (isNotEmpty(pieceLetter)) {
+            pieces.add(generatePiece(pieceLetter, x, y));
+        }
     }
 
     private static boolean isNotEmpty(char pieceLetter) {
@@ -57,20 +65,23 @@ public class BoardUtil {
     private static Piece generatePiece(char pieceLetter, int x, int y) {
         Location convertedLocation = convertLocation(x, y);
         Team team = findOutTeam(pieceLetter);
-        switch (Character.toLowerCase(pieceLetter)) {
-            case 'r':
-                return Rook.of(convertedLocation, team);
-            case 'n':
-                return Knight.of(convertedLocation, team);
-            case 'b':
-                return Bishop.of(convertedLocation, team);
-            case 'q':
-                return Queen.of(convertedLocation, team);
-            case 'k':
-                return King.of(convertedLocation, team);
-            default:
-                return Pawn.of(convertedLocation, team);
+        char lowerPieceLetter = Character.toLowerCase(pieceLetter);
+        if (lowerPieceLetter == 'r') {
+            return Rook.of(convertedLocation, team);
         }
+        if (lowerPieceLetter == 'n') {
+            return Knight.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'b') {
+            return Bishop.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'q') {
+            return Queen.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'k') {
+            return King.of(convertedLocation, team);
+        }
+        return Pawn.of(convertedLocation, team);
     }
 
     private static Location convertLocation(int x, int y) {
@@ -100,11 +111,15 @@ public class BoardUtil {
     private static char[][] generateEmptyBoard() {
         char[][] viewBoard = new char[BOARD_SIZE][BOARD_SIZE];
         for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                viewBoard[y][x] = EMPTY;
-            }
+            generateEmptyColumn(viewBoard, y);
         }
         return viewBoard;
+    }
+
+    private static void generateEmptyColumn(char[][] viewBoard, int y) {
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            viewBoard[y][x] = EMPTY;
+        }
     }
 
     private static char generatePieceLetter(Piece piece) {

@@ -6,12 +6,22 @@ import chess.domain.team.Team;
 
 public class King extends Piece {
 
+    private static final char SIGNATURE = 'k';
+
     private King(final Location location, final Team team) {
         super(location, team);
     }
 
+    private King(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static King of(final Location location, final Team team) {
         return new King(location, team);
+    }
+
+    public static King of(long id, long roomId, Team team, Location location) {
+        return new King(id, roomId, team, location);
     }
 
     @Override
@@ -34,5 +44,10 @@ public class King extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }

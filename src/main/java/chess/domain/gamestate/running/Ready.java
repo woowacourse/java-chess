@@ -1,10 +1,8 @@
 package chess.domain.gamestate.running;
 
 import chess.domain.board.Board;
-import chess.domain.dto.ResponseDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
-import chess.domain.gamestate.finished.End;
 import chess.domain.team.Team;
 
 public class Ready extends Running {
@@ -15,17 +13,10 @@ public class Ready extends Running {
 
     @Override
     public State changeCommand(CommandType command) {
-        validateCommand(command);
         if (command == CommandType.START) {
             return new Start(board);
         }
-        return new End(board);
-    }
-
-    private void validateCommand(CommandType command) {
-        if (command != CommandType.START && command != CommandType.END) {
-            throw new IllegalArgumentException("[ERROR] start 혹은 end만 가능합니다.");
-        }
+        throw new IllegalArgumentException("[ERROR] 게임을 시작해주세요.");
     }
 
     @Override
@@ -34,12 +25,12 @@ public class Ready extends Running {
     }
 
     @Override
-    public ResponseDto getProcessResult() {
-        throw new IllegalArgumentException("[ERROR] 게임 시작 전 입니다.");
+    public boolean isMove() {
+        return false;
     }
 
     @Override
-    public boolean isMove() {
-        return false;
+    public String getValue() {
+        return "ready";
     }
 }

@@ -6,12 +6,22 @@ import chess.domain.team.Team;
 
 public class Queen extends Piece {
 
+    private static final char SIGNATURE = 'q';
+
     private Queen(final Location location, final Team team) {
         super(location, team);
     }
 
+    private Queen(long id, long roomId, Team team, Location location) {
+        super(id, roomId, team, location);
+    }
+
     public static Queen of(Location location, Team team) {
         return new Queen(location, team);
+    }
+
+    public static Queen of(long id, long roomId, Team team, Location location) {
+        return new Queen(id, roomId, team, location);
     }
 
     @Override
@@ -34,5 +44,10 @@ public class Queen extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public char getSignature() {
+        return SIGNATURE;
     }
 }
