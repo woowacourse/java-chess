@@ -6,7 +6,7 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.service.WebChessService;
+import chess.service.WebChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;

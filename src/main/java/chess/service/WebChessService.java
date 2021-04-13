@@ -1,4 +1,4 @@
-package chess.domain.service;
+package chess.service;
 
 import chess.domain.Game;
 import chess.domain.board.Board;
