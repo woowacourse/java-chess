@@ -1,11 +1,11 @@
 package chess.domain.dto;
 
-public class PieceDTO {
+public class PieceDto {
 
     private String location;
     private String pieceKind;
 
-    public PieceDTO(String location, String pieceKind) {
+    public PieceDto(String location, String pieceKind) {
         this.location = location;
         this.pieceKind = pieceKind;
     }

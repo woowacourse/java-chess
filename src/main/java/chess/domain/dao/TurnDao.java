@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.domain.dto.TurnDTO;
+import chess.domain.dto.TurnDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,14 +53,14 @@ public class TurnDao {
         }
     }
 
-    public TurnDTO loadTurnDTO(int boardNumber) {
+    public TurnDto loadTurnDTO(int boardNumber) {
         String query = "SELECT * FROM turn WHERE (board_id = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, SINGLE_BOARD_NUMBER);
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) return null;
-            return new TurnDTO(
+            return new TurnDto(
                 rs.getString("turn_color")
             );
         } catch (SQLException e) {

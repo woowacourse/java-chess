@@ -10,8 +10,8 @@ import chess.domain.command.Move;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PlayerDao;
 import chess.domain.dao.TurnDao;
-import chess.domain.dto.PieceDTO;
-import chess.domain.dto.TurnDTO;
+import chess.domain.dto.PieceDto;
+import chess.domain.dto.TurnDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 
@@ -43,7 +43,7 @@ public class WebChessService {
         XPosition xPosition){
         for (YPosition yPosition : YPosition.values()) {
             Position position = Position.of(xPosition, yPosition);
-            PieceDTO pieceDTO = pieceDao.pieceOnLocation(position.symbol(), 1);
+            PieceDto pieceDTO = pieceDao.pieceOnLocation(position.symbol(), 1);
             String rawKind = pieceDTO.getPieceKind();
             Piece piece = new Piece(rawKind);
             loadBoard.put(position, piece);
@@ -65,13 +65,13 @@ public class WebChessService {
         for (Map.Entry<Position, Piece> elem : rawBoard.entrySet()) {
             Position position = elem.getKey();
             Piece piece = elem.getValue();
-            PieceDTO pieceDTO = processedPieceDTO(position, piece);
+            PieceDto pieceDTO = processedPieceDTO(position, piece);
             pieceDao.addPiece(pieceDTO);
         }
     }
 
-    private PieceDTO processedPieceDTO(Position position, Piece piece) {
-        return new PieceDTO(position.symbol(), piece.symbol());
+    private PieceDto processedPieceDTO(Position position, Piece piece) {
+        return new PieceDto(position.symbol(), piece.symbol());
     }
 
     public Map<String, String> move(String moveRawCommand) {
@@ -110,7 +110,7 @@ public class WebChessService {
     }
 
     public String getTurn() {
-        TurnDTO turnDTO = turnDao.loadTurnDTO(1);
+        TurnDto turnDTO = turnDao.loadTurnDTO(1);
         PieceColor pieceColor = turnDTO.getPieceColor();
         return pieceColor.name();
     }
@@ -136,9 +136,9 @@ public class WebChessService {
 
     public void moveOnDB(String rawMoveCommand) {
         List<String> moveSourceTarget = Arrays.asList(rawMoveCommand.split(" "));
-        PieceDTO pieceDTO = pieceDao.pieceOnLocation(moveSourceTarget.get(1),1);
+        PieceDto pieceDTO = pieceDao.pieceOnLocation(moveSourceTarget.get(1),1);
         pieceDTO.setLocation(moveSourceTarget.get(2));
-        PieceDTO voidPiece = new PieceDTO(moveSourceTarget.get(1), ".");
+        PieceDto voidPiece = new PieceDto(moveSourceTarget.get(1), ".");
         pieceDao.deletePiece(moveSourceTarget.get(1),1);
         pieceDao.deletePiece(moveSourceTarget.get(2),1);
         pieceDao.addPiece(pieceDTO);

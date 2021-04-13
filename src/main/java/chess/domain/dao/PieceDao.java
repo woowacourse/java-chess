@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.domain.dto.PieceDTO;
+import chess.domain.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ public class PieceDao {
 
     private DBConnector dbConnector = new DBConnector();
 
-    public void addPiece(PieceDTO pieceDTO) {
+    public void addPiece(PieceDto pieceDTO) {
         String query = "INSERT INTO piece(board_id, piece_kind, piece_location) VALUES(?, ?, ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -48,7 +48,7 @@ public class PieceDao {
         }
     }
 
-    public PieceDTO pieceOnLocation(String location, int boardNumber) {
+    public PieceDto pieceOnLocation(String location, int boardNumber) {
         String query = "SELECT * FROM piece WHERE (board_id = ?) AND (piece_location = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -56,7 +56,7 @@ public class PieceDao {
             pstmt.setString(2, location);
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) return null;
-            return new PieceDTO(
+            return new PieceDto(
                 rs.getString("piece_location"),
                 rs.getString("piece_kind")
             );
