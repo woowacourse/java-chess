@@ -1,16 +1,24 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
 public class ChessGame {
 
-    private final Board board;
+    private String roomID;
+    private Board board;
     private State state;
 
     public ChessGame(final Board board) {
         this.board = board;
         this.state = new Ready(this);
+    }
+
+    public ChessGame(final Board board, String roomID) {
+        this.board = board;
+        this.state = new Ready(this);
+        this.roomID = roomID;
     }
 
     public void changeState(State state) {
@@ -27,6 +35,15 @@ public class ChessGame {
 
     public void start() {
         state.start();
+    }
+
+    public void ready() {
+        board = new Board(PieceFactory.createPieces());
+        state = new Ready(this);
+    }
+
+    public boolean isReady() {
+        return state instanceof Ready;
     }
 
     public boolean isFinished() {
@@ -47,5 +64,13 @@ public class ChessGame {
 
     public double getBlackScore() {
         return board.getBlackScore();
+    }
+
+    public String getStatus() {
+        return state.toString();
+    }
+
+    public String getRoomID() {
+        return roomID;
     }
 }

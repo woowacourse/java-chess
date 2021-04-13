@@ -11,6 +11,7 @@ public class NormalBlackPawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
                 isNotExistPieceOnPath(board, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 

@@ -16,6 +16,7 @@ public class KingMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
                 isNotExistSameColorPieceOnPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 

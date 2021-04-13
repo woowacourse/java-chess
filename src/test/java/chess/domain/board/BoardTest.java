@@ -19,7 +19,7 @@ class BoardTest {
         Board board = new Board(Arrays.asList(Piece.createPawn(Color.BLACK, 0, 0)));
 
         assertThatThrownBy(() -> {
-            board.movePiece(Color.WHITE, new Position(0, 0), new Position(1, 0));
+            board.moveAndCatchPiece(Color.WHITE, new Position(0, 0), new Position(1, 0));
         }).isExactlyInstanceOf(NoSuchPermittedChessPieceException.class);
     }
 }

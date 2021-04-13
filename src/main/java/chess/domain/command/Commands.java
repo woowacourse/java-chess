@@ -1,20 +1,25 @@
 package chess.domain.command;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Commands {
 
-    private final List<Command> commands;
+    private final Map<String, Command> commands;
 
-    public Commands(final List<Command> commands) {
+    public Commands(final HashMap<String, Command> commands) {
         this.commands = commands;
     }
 
     public Command getAppropriateCommand(String input) {
-        return commands.stream()
-                .filter(command -> command.isAppropriateCommand(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("알 수 없는 커맨드입니다."));
+        String[] key = input.split(" ");
+        if (!commands.containsKey(key[0])) {
+            throw new IllegalArgumentException("커맨드 입력을 확인하세요.");
+        }
+        Command command = commands.get(key[0]);
+        command.handle(input);
+        return command;
     }
 
 }

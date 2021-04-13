@@ -13,4 +13,11 @@ public abstract class MoveCondition {
                 0 <= target.getColumn() && target.getColumn() < board.getColumn();
     }
 
+    protected boolean isNotSameColorOnTarget(Board board, Piece source, Position target) {
+        return board.getPieces().stream()
+                .noneMatch(pieceOnBoard ->
+                        pieceOnBoard.isSamePosition(target) &&
+                                pieceOnBoard.isSameColor(source.getColor())
+                );
+    }
 }

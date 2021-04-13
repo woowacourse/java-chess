@@ -12,13 +12,14 @@ public class BlackTurn extends Running {
 
     @Override
     public void move(final Position source, final Position target) {
-        chessGame.getBoard().movePiece(COLOR, source, target);
-        chessGame.getBoard().catchPiece(COLOR);
-        chessGame.changeState(new WhiteTurn(chessGame));
+        chessGame.getBoard()
+                .moveAndCatchPiece(COLOR, source, target);
 
-        if(chessGame.isKingCatch()) {
+        if (chessGame.isKingCatch()) {
             chessGame.changeState(new End(chessGame));
+            return;
         }
+        chessGame.changeState(new WhiteTurn(chessGame));
     }
 
     @Override
@@ -31,4 +32,8 @@ public class BlackTurn extends Running {
         chessGame.changeState(new End(chessGame));
     }
 
+    @Override
+    public String toString() {
+        return "black";
+    }
 }

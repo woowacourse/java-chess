@@ -14,6 +14,7 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isNotExistPieceOnPath(board, piece, target) &&
+                isNotSameColorOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(board, target);
     }
 
@@ -31,7 +32,7 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
 
     private Predicate<Piece> isExistInMoveArea(final Piece piece, final Position target) {
         return pieceOnBoard -> pieceOnBoard.getColumn() == piece.getColumn() &&
-                piece.getRow() <= pieceOnBoard.getRow() && pieceOnBoard.getRow() <= target.getRow();
+                piece.getRow() < pieceOnBoard.getRow() && pieceOnBoard.getRow() < target.getRow();
     }
 
 }

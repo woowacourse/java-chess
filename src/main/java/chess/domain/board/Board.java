@@ -21,13 +21,9 @@ public class Board {
         this(new Pieces(pieces));
     }
 
-    public void movePiece(Color color, Position source, Position target) {
+    public void moveAndCatchPiece(Color color, Position source, Position target) {
         Piece sourcePiece = pieces.findPieceByPosition(color, source);
-
         sourcePiece.move(target, this);
-    }
-
-    public void catchPiece(final Color color) {
         pieces.catchPiece(color);
     }
 
