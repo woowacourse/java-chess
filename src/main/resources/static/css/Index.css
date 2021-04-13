@@ -1,0 +1,7 @@
+.entire {
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-direction: center;
+    align-items: center;
+}
