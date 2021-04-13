@@ -9,8 +9,10 @@ const moveCommand = () => {
 };
 
 const sendMoveCommand = (firstSlot, secondSlot) => {
-    axios.post("/move", {
-            move: "move " + firstSlot + " " + secondSlot
+    const index = window.location.href.split("/")[4];
+    axios.post("move", {
+            move: "move " + firstSlot + " " + secondSlot,
+            index : index
             }
         )
         .then(response => isValidMove(response))
@@ -19,7 +21,6 @@ const sendMoveCommand = (firstSlot, secondSlot) => {
 
 const isValidMove = (response) => {
     const data = response.data;
-    console.log(data);
     if (data["isSuccess"] == "Success") {
         movePiece(data);
         isEnd(data);

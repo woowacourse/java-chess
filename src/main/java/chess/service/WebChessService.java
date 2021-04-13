@@ -32,42 +32,42 @@ public class WebChessService {
         this.playerDao = new PlayerDao();
     }
 
-    public Map<Position, Piece> loadBoard() {
+    public Map<Position, Piece> loadBoard(int index) {
         Map<Position, Piece> loadBoard = new HashMap<>();
         for (XPosition xPosition : XPosition.values()) {
-            putPieceOnXPosition(loadBoard, xPosition);
+            putPieceOnXPosition(loadBoard, xPosition, index);
         }
         return loadBoard;
     }
 
     private void putPieceOnXPosition(Map<Position, Piece> loadBoard,
-        XPosition xPosition){
+        XPosition xPosition, int index){
         for (YPosition yPosition : YPosition.values()) {
             Position position = Position.of(xPosition, yPosition);
-            PieceDto pieceDTO = pieceDao.pieceOnLocation(position.symbol(), 1);
+            PieceDto pieceDTO = pieceDao.pieceOnLocation(position.symbol(), index);
             String rawKind = pieceDTO.getPieceKind();
             Piece piece = new Piece(rawKind);
             loadBoard.put(position, piece);
         }
     }
 
-    public void initiateGame() {
+    public void initiateGame(int index) {
         Game game = new Game();
         game.init();
-        turnDao.initTurn();
+        turnDao.initTurn(index);
 
         Board board = game.getBoard();
-        saveInitialBoard(board);
+        saveInitialBoard(board, index);
     }
 
-    private void saveInitialBoard(Board board) {
+    private void saveInitialBoard(Board board,int index) {
         Map<Position, Piece> rawBoard = board.recentBoard();
-        pieceDao.resetPiece(1);
+        pieceDao.resetPiece(index);
         for (Map.Entry<Position, Piece> elem : rawBoard.entrySet()) {
             Position position = elem.getKey();
             Piece piece = elem.getValue();
             PieceDto pieceDTO = processedPieceDTO(position, piece);
-            pieceDao.addPiece(pieceDTO);
+            pieceDao.addPiece(pieceDTO, index);
         }
     }
 
@@ -75,49 +75,49 @@ public class WebChessService {
         return new PieceDto(position.symbol(), piece.symbol());
     }
 
-    public Map<String, String> move(String moveRawCommand) {
+    public Map<String, String> move(String moveRawCommand, int index) {
         Map<String, String> moveResult = new HashMap<>();
-        Game game = loadGame();
-        String movePieceResult = movePieceResult(game, moveRawCommand);
-        String winner = winner(game);
+        Game game = loadGame(index);
+        String movePieceResult = movePieceResult(game, moveRawCommand, index);
+        String winner = winner(game, index);
         moveResult.put("isSuccess", movePieceResult);
         moveResult.put("winner", winner);
-        moveResult.put("turn", getTurn());
+        moveResult.put("turn", getTurn(index));
         return moveResult;
     }
 
-    private String movePieceResult(Game game, String moveRawCommand) {
+    private String movePieceResult(Game game, String moveRawCommand, int index) {
         Move move = new Move();
         try {
             Command command = move.run(game, moveRawCommand);
-            moveOnDB(moveRawCommand);
+            moveOnDB(moveRawCommand, index);
             return "Success";
         } catch (RuntimeException runtimeException) {
             return runtimeException.getMessage();
         }
     }
 
-    private String winner(Game game) {
+    private String winner(Game game, int index) {
         if (game.isEnd()) {
             PieceColor winnerColor = game.winnerColor();
-            end();
+            end(index);
             return winnerColor.getName();
         }
         return "None";
     }
 
-    public void end() {
-        pieceDao.resetPiece(1);
+    public void end(int index) {
+        pieceDao.resetPiece(index);
     }
 
-    public String getTurn() {
-        TurnDto turnDTO = turnDao.loadTurnDTO(1);
+    public String getTurn(int index) {
+        TurnDto turnDTO = turnDao.loadTurnDTO(index);
         PieceColor pieceColor = turnDTO.getPieceColor();
         return pieceColor.name();
     }
 
-    public Map<String, String> scores() {
-        Game game = loadGame();
+    public Map<String, String> scores(int index) {
+        Game game = loadGame(index);
         String whitePoint = String.valueOf(game.computeWhitePoint());
         String blackPoint = String.valueOf(game.computeBlackPoint());
 
@@ -127,30 +127,30 @@ public class WebChessService {
         return scoreMap;
     }
 
-    public Game loadGame() {
-        String rawTurnColor = getTurn();
+    public Game loadGame(int index) {
+        String rawTurnColor = getTurn(index);
         PieceColor turnColor = PieceColor.translateTurnColor(rawTurnColor);
         Game game = new Game();
-        game.loadGame(loadBoard(), turnColor);
+        game.loadGame(loadBoard(index), turnColor);
         return game;
     }
 
-    public void moveOnDB(String rawMoveCommand) {
+    public void moveOnDB(String rawMoveCommand, int index) {
         List<String> moveSourceTarget = Arrays.asList(rawMoveCommand.split(" "));
-        PieceDto pieceDTO = pieceDao.pieceOnLocation(moveSourceTarget.get(1),1);
+        PieceDto pieceDTO = pieceDao.pieceOnLocation(moveSourceTarget.get(1),index);
         pieceDTO.setLocation(moveSourceTarget.get(2));
         PieceDto voidPiece = new PieceDto(moveSourceTarget.get(1), ".");
-        pieceDao.deletePiece(moveSourceTarget.get(1),1);
-        pieceDao.deletePiece(moveSourceTarget.get(2),1);
-        pieceDao.addPiece(pieceDTO);
-        pieceDao.addPiece(voidPiece);
-        switchTurn();
+        pieceDao.deletePiece(moveSourceTarget.get(1),index);
+        pieceDao.deletePiece(moveSourceTarget.get(2),index);
+        pieceDao.addPiece(pieceDTO, index);
+        pieceDao.addPiece(voidPiece, index);
+        switchTurn(index);
     }
 
-    private void switchTurn() {
-        PieceColor thisColor = PieceColor.translateTurnColor(getTurn());
+    private void switchTurn(int index) {
+        PieceColor thisColor = PieceColor.translateTurnColor(getTurn(index));
         String switchTurnColor = thisColor.oppositeColor().name();
-        turnDao.updateTurn(switchTurnColor);
+        turnDao.updateTurn(switchTurnColor, index);
     }
 
     public boolean addPlayer(String rawPlayer) {

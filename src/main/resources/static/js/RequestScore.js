@@ -1,5 +1,8 @@
 export const requestScore = () => {
-    axios.post("/grade")
+    const index = window.location.href.split("/")[4];
+    axios.post("grade" ,{
+        index : index
+    })
         .then(response => gradeScore(response))
         .catch(error => console.log(error))
 }

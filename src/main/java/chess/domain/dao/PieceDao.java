@@ -8,15 +8,13 @@ import java.sql.SQLException;
 
 public class PieceDao {
 
-    private static final int SINGLE_BOARD_NUMBER  = 1;
-
     private DBConnector dbConnector = new DBConnector();
 
-    public void addPiece(PieceDto pieceDTO) {
+    public void addPiece(PieceDto pieceDTO, int index) {
         String query = "INSERT INTO piece(board_id, piece_kind, piece_location) VALUES(?, ?, ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.setInt(1, index);
             pstmt.setString(2, pieceDTO.getPieceKind());
             pstmt.setString(3, pieceDTO.getLocation());
             pstmt.executeUpdate();
@@ -25,11 +23,11 @@ public class PieceDao {
         }
     }
 
-    public void deletePiece(String location, int boardNumber) {
+    public void deletePiece(String location, int index) {
         String query = "DELETE FROM piece WHERE (board_id = ?) AND (piece_location = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.setInt(1, index);
             pstmt.setString(2, location);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -37,22 +35,22 @@ public class PieceDao {
         }
     }
 
-    public void resetPiece(int boardNumber) {
+    public void resetPiece(int index) {
         String query = "DELETE FROM piece WHERE board_id = ?";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.setInt(1, index);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public PieceDto pieceOnLocation(String location, int boardNumber) {
+    public PieceDto pieceOnLocation(String location, int index) {
         String query = "SELECT * FROM piece WHERE (board_id = ?) AND (piece_location = ?)";
         try (Connection connection = dbConnector.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, SINGLE_BOARD_NUMBER);
+            pstmt.setInt(1, index);
             pstmt.setString(2, location);
             ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) return null;

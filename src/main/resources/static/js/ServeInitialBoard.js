@@ -13,8 +13,10 @@ const requestInitialBoard = () => {
     Array.from(pieces).forEach(function(element) {
         element.remove();
     });
-
-    axios.post("/initial")
+    const index = window.location.href.split("/")[4];
+    axios.post("initial", {
+        index : index
+    })
     .then(response => allocatePiece(response))
     .catch(error => console.log(error)); 
 }

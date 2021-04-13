@@ -5,7 +5,7 @@ export const packedImage = (key, pieceKind) => {
     image.setAttribute("alt", "chess piece");
     image.setAttribute("class", "ChessPieceImage");
     pieceKind = voidTranslate(pieceKind);
-    image.src = "ChessPiece/"+pieceKind +".png";
+    image.src = "../ChessPiece/"+pieceKind +".png";
     packedImageDiv.appendChild(image);
     return packedImageDiv;
 }
@@ -27,7 +27,7 @@ export const voidImage = () => {
     let image =document.createElement("img");
     image.setAttribute("alt", "chess piece");
     image.setAttribute("class", "ChessPieceImage");
-    image.src = "ChessPiece/void.png";
+    image.src = "../ChessPiece/void.png";
     packedImageDiv.appendChild(image);
     return packedImageDiv;
 }

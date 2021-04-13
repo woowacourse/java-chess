@@ -16,6 +16,6 @@ const changeColor = (turn) => {
     let image = document.createElement("img");
     image.setAttribute("alt", "turn-color");
     image.setAttribute("class", "turn");
-    image.src = "src/"+turn +".jpg";
+    image.src = "../src/"+turn +".jpg";
     $turnSpace.appendChild(image);
 }

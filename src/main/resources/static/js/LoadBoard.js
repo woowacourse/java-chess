@@ -13,8 +13,10 @@ const requestBoard = () => {
     Array.from(pieces).forEach(function(element) {
         element.remove();
     });
-
-    axios.post("/load")
+    const index = window.location.href.split("/")[4];
+    axios.post("load", {
+        index : index
+    })
     .then(response => allocatePiece(response))
     .catch(error => console.log(error)); 
 }

@@ -43,39 +43,53 @@ public class ChessWebController {
             return render(submitData, "Chess.html");
         });
 
-        post("/load", (req,res) -> {
-            webChessService.loadBoard();
-            Map<String, Object> submitData = new HashMap<>();
-
-            submitData.put("turn", webChessService.getTurn());
-            submitData.put("chessBoard", submitLoadBoard(webChessService));
-            return GSON.toJson(submitData);
-        });
-
-        post("/initial", (req, res) -> {
-            webChessService.initiateGame();
-            Map<String, Object> submitData = new HashMap<>();
-
-            submitData.put("turn", webChessService.getTurn());
-            submitData.put("chessBoard", submitLoadBoard(webChessService));
-            return GSON.toJson(submitData);
-        });
-
-        post("/move", (req, res) -> {
+        post("/play/load", (req,res) -> {
             Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
-            String moveRawCommand = (String) requestBody.get("move");
-            Map<String, String> submitData = webChessService.move(moveRawCommand);
-            return GSON.toJson(submitData);
-        });
+            int gameNumber = Integer.parseInt((String) requestBody.get("index"));
 
-        post("/grade", (req, res) -> {
-            Map<String, String> submitData = webChessService.scores();
-            return GSON.toJson(submitData);
-        });
-
-        post("/end", (req, res) -> {
+            webChessService.loadBoard(gameNumber);
             Map<String, Object> submitData = new HashMap<>();
-            webChessService.end();
+
+            submitData.put("turn", webChessService.getTurn(gameNumber));
+            submitData.put("chessBoard", submitLoadBoard(webChessService, gameNumber));
+            return GSON.toJson(submitData);
+        });
+
+        post("/play/initial", (req, res) -> {
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
+            int gameNumber = Integer.parseInt((String) requestBody.get("index"));
+
+            webChessService.initiateGame(gameNumber);
+            Map<String, Object> submitData = new HashMap<>();
+
+            submitData.put("turn", webChessService.getTurn(gameNumber));
+            submitData.put("chessBoard", submitLoadBoard(webChessService, gameNumber));
+            return GSON.toJson(submitData);
+        });
+
+        post("/play/move", (req, res) -> {
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
+            int gameNumber = Integer.parseInt((String) requestBody.get("index"));
+            String moveRawCommand = (String) requestBody.get("move");
+
+            Map<String, String> submitData = webChessService.move(moveRawCommand, gameNumber);
+            return GSON.toJson(submitData);
+        });
+
+        post("/play/grade", (req, res) -> {
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
+            int gameNumber = Integer.parseInt((String) requestBody.get("index"));
+
+            Map<String, String> submitData = webChessService.scores(gameNumber);
+            return GSON.toJson(submitData);
+        });
+
+        post("/play/end", (req, res) -> {
+            Map<String, Object> requestBody = GSON.fromJson(req.body(), HashMap.class);
+            int gameNumber = Integer.parseInt((String) requestBody.get("index"));
+
+            Map<String, Object> submitData = new HashMap<>();
+            webChessService.end(gameNumber);
             return GSON.toJson(submitData);
         });
 
@@ -88,9 +102,9 @@ public class ChessWebController {
         });
     }
 
-    private Map<String, String> submitLoadBoard(WebChessService webChessService) {
+    private Map<String, String> submitLoadBoard(WebChessService webChessService, int index) {
         Map<String, String> submitBoard = new HashMap<>();
-        Map<Position, Piece> loadBoard = webChessService.loadBoard();
+        Map<Position, Piece> loadBoard = webChessService.loadBoard(index);
         for (Map.Entry<Position, Piece> elem : loadBoard.entrySet()) {
             Position position = elem.getKey();
             Piece piece = elem.getValue();

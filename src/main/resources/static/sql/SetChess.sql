@@ -27,7 +27,7 @@ CREATE TABLE piece (
     piece_kind VARCHAR(64) NOT NULL,
     piece_location VARCHAR(64) NOT NULL,
     PRIMARY KEY (piece_id),
-    FOREIGN KEY (piece_id) REFERENCES player(player_id)
+    FOREIGN KEY (board_id) REFERENCES player(player_id)
 );
 
 
