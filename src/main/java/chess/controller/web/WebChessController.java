@@ -1,36 +1,59 @@
 package chess.controller.web;
 
 import chess.controller.ChessController;
-import chess.controller.web.dto.BoardDto;
-import chess.controller.web.dto.ColorDto;
-import chess.controller.web.dto.ScoreDto;
-import chess.domain.piece.Color;
+import chess.service.LoadService;
+import chess.service.MoveService;
+import chess.service.StartService;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebChessController extends ChessController {
 
-    public ColorDto currentPlayer() {
-        return new ColorDto(game.currentPlayer());
+    private final StartService startService;
+    private final MoveService moveService;
+    private final LoadService loadService;
+
+    public WebChessController(StartService startService, MoveService moveService, LoadService loadService) {
+        this.startService = startService;
+        this.moveService = moveService;
+        this.loadService = loadService;
     }
 
-    public BoardDto board() {
-        return new BoardDto(game.allBoard());
+    public void run() {
+        get("/", this::welcomePage);
+        get("/start", this::start);
+        post("/chess", this::move);
+        get("/load", this::load);
     }
 
-    public boolean isFinished() {
-        return game.isEnd();
+    private Object welcomePage(Request request, Response response) {
+        Map<String, Object> model = new HashMap<>();
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
     }
 
-    public List<ScoreDto> score() {
-        List<ScoreDto> scores = new ArrayList<>();
-        Map<Color, Double> score = game.score();
-        for (Color color : score.keySet()) {
-            scores.add(new ScoreDto(color, score.get(color)));
-        }
-        return scores;
+    private Object start(Request request, Response response) {
+        init();
+        return startService.start(game);
+    }
+
+    private Object move(Request request, Response response) {
+        String command = request.queryParams("command");
+
+        return moveService.move(game, command);
+    }
+
+    private Object load(Request request, Response response) {
+        init();
+
+        return loadService.load(game);
     }
 
     @Override

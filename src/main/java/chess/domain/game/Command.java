@@ -23,7 +23,6 @@ public enum Command {
         public void action(ChessController chessController) {
             chessController.move(options().get(0), options().get(1));
         }
-
     },
     STATUS(0) {
         @Override
