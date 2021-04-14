@@ -6,11 +6,11 @@ import chess.domain.game.Result;
 import chess.domain.game.WebChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.dto.PositionDTO;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -39,14 +39,14 @@ public class WebController {
 
     public JsonObject move(Request req, Response res) throws SQLException {
         int gameId = Integer.parseInt(req.params("id"));
-        Map<String, String> body = gson.fromJson(req.body(), HashMap.class);
+        PositionDTO positionDTO = gson.fromJson(res.body(), PositionDTO.class);
         WebChessGame chessGame = chessGameDAO.loadGame(gameId);
-        if (chessGame.moved(body.get("source"), body.get("target"))) {
+        if (chessGame.moved(positionDTO.getSource(), positionDTO.getTarget())) {
             JsonObject response = new JsonObject();
-            JsonObject movedSource = boardToJSON(Position.of(body.get("source")),
-                chessGame.getPiece(Position.of(body.get("source"))));
-            JsonObject movedTarget = boardToJSON(Position.of(body.get("target")),
-                chessGame.getPiece(Position.of(body.get("target"))));
+            JsonObject movedSource = boardToJSON(positionDTO.getSource(),
+                chessGame.getPiece(positionDTO.getSource()));
+            JsonObject movedTarget = boardToJSON(positionDTO.getTarget(),
+                chessGame.getPiece(positionDTO.getTarget()));
             response.add("source", movedSource);
             response.add("target", movedTarget);
 

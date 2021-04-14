@@ -75,10 +75,7 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public void move(String source, String target) {
-        Position sourcePosition = getPosition(Position.of(source));
-        Position targetPosition = getPosition(Position.of(target));
-
+    public void move(Position sourcePosition, Position targetPosition) {
         validateMove(sourcePosition, targetPosition);
 
         Piece sourcePiece = chessBoard.get(sourcePosition);
@@ -89,6 +86,13 @@ public class ChessBoard {
             return;
         }
         throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+    }
+
+    public void move(String source, String target) {
+        Position sourcePosition = getPosition(Position.of(source));
+        Position targetPosition = getPosition(Position.of(target));
+
+        move(sourcePosition, targetPosition);
     }
 
     private void validateMove(Position sourcePosition, Position targetPosition) {

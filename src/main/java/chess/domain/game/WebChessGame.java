@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.dto.PositionDTO;
 import java.util.Collections;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class WebChessGame {
         this.turn = turn;
     }
 
-    public boolean moved(String source, String target) {
+    public boolean moved(Position source, Position target) {
         if (validTurn(source) && movable(source, target)) {
             turn = turn.getOppositeColor();
             return true;
@@ -34,7 +35,7 @@ public class WebChessGame {
         return chessBoard.isOver();
     }
 
-    public boolean movable(String source, String target) {
+    public boolean movable(Position source, Position target) {
         try {
             chessBoard.move(source, target);
         } catch (Exception e) {
@@ -43,8 +44,8 @@ public class WebChessGame {
         return true;
     }
 
-    public boolean validTurn(String source) {
-        if (turn != chessBoard.getPiece(Position.of(source)).getColor()) {
+    public boolean validTurn(Position source) {
+        if (turn != chessBoard.getPiece(source).getColor()) {
             throw new IllegalArgumentException();
         }
         return true;
