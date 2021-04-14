@@ -1,7 +1,7 @@
 let source = null;
 let target = null;
 const url = window.location;
-const baseUrl = url .protocol + "//" + url.host;
+const baseUrl = url.protocol + "//" + url.host;
 
 const squares = document.getElementsByClassName("square");
 for (let i = 0; i < squares.length; i++) {
