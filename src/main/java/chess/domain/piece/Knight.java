@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.moveStrategy.KnightMovement;
 import chess.domain.piece.moveStrategy.SpecifiedLocationStrategy;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class Knight extends Piece {
 
     @Override
     public List<Position> searchMovablePositions(Position target) {
-        KnightMovement knightMovement = new KnightMovement();
-        return knightMovement.searchMovablePositions(target);
+        return movablePositions(target, Direction.knight());
     }
 }

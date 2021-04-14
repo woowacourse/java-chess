@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+body {
+    font-family: 'Jua', sans-serif;
+    background-image: url('../images/background.png');
+}
+
+.chess-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tile {
+    width: 80px;
+    height: 80px;
+}
+
+.start-white > .tile:nth-of-type(odd) {
+    background-color: mediumpurple;
+}
+
+.start-black > .tile:nth-of-type(even) {
+    background-color: mediumpurple;
+}
+
+.start-white > .tile:hover {
+    background-color: palevioletred;
+}
+
+.start-black > .tile:hover {
+    background-color: palevioletred;
+}
+
+.base-background {
+    background-color: plum;
+}
+
+.title {
+    width: 500px;
+    height: 300px;
+    font-size: 50px;
+    color: violet;
+    position: absolute;
+    top: 42%;
+    left: 9%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title-shadow {
+    width: 500px;
+    height: 300px;
+    font-size: 50px;
+    color: purple;
+    position: absolute;
+    top: 42.4%;
+    left: 9.25%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.player {
+    width: 250px;
+    height: 500px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.player-score {
+    width: 100px;
+    height: 400px;
+    position: absolute;
+    top: 18%;
+    left: 20%;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.turn {
+    animation: turn-bg 2.5s linear;
+    animation-iteration-count: infinite;
+}
+
+div#board-frame {
+    position: absolute;
+    left: 30%;
+}
+
+.board-container {
+    /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+}
+
+.board {
+    width: 640px;
+    height: 640px;
+}
+
+.rainbow-bg {
+    animation: rainbow-bg 2.5s linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rainbow-bg {
+    100%, 0% {
+        background-color: rgb(255, 0, 0);
+    }
+    8% {
+        background-color: rgb(255, 127, 0);
+    }
+    16% {
+        background-color: rgb(255, 255, 0);
+    }
+    25% {
+        background-color: rgb(127, 255, 0);
+    }
+    33% {
+        background-color: rgb(0, 255, 0);
+    }
+    41% {
+        background-color: rgb(0, 255, 127);
+    }
+    50% {
+        background-color: rgb(0, 255, 255);
+    }
+    58% {
+        background-color: rgb(0, 127, 255);
+    }
+    66% {
+        background-color: rgb(0, 0, 255);
+    }
+    75% {
+        background-color: rgb(127, 0, 255);
+    }
+    83% {
+        background-color: rgb(255, 0, 255);
+    }
+    91% {
+        background-color: rgb(255, 0, 127);
+    }
+}
+
+@keyframes turn-bg {
+    100%, 0% {
+        background-color: rgb(255, 218, 185);
+    }
+    8% {
+        background-color: rgb(255, 208, 169);
+    }
+    16% {
+        background-color: rgb(255, 198, 156);
+    }
+    25% {
+        background-color: rgb(255, 188, 143);
+    }
+    33% {
+        background-color: rgb(255, 178, 129);
+    }
+    41% {
+        background-color: rgb(255, 168, 115);
+    }
+    50% {
+        background-color: rgb(255, 158, 100);
+    }
+    58% {
+        background-color: rgb(255, 168, 115);
+    }
+    66% {
+        background-color: rgb(255, 178, 129);
+    }
+    75% {
+        background-color: rgb(255, 188, 143);
+    }
+    83% {
+        background-color: rgb(255, 198, 169);
+    }
+    91% {
+        background-color: rgb(255, 208, 185);
+    }
+}

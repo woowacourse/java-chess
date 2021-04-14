@@ -6,7 +6,7 @@ import chess.domain.piece.Piece;
 
 import java.util.Objects;
 
-public class SpecifiedLocationStrategy implements CanMoveStrategy {
+public class SpecifiedLocationStrategy extends MoveStrategy {
     @Override
     public boolean canMove(Position target, Position destination, Board board) {
         Piece destinationPiece = board.findPieceFromPosition(destination);

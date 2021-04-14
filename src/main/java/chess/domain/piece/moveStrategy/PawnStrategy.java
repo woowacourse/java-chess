@@ -7,7 +7,8 @@ import chess.domain.piece.Piece;
 
 import java.util.Objects;
 
-public class PawnStrategy implements CanMoveStrategy {
+public class PawnStrategy extends MoveStrategy {
+
     @Override
     public boolean canMove(Position target, Position destination, Board board) {
         Direction direction = target.directionToDestination(destination);
@@ -30,6 +31,9 @@ public class PawnStrategy implements CanMoveStrategy {
 
         if (Objects.nonNull(movedPositionPiece)) {
             return false;
+        }
+        if (destination == movedPosition) {
+            return true;
         }
         movedPosition = movedPosition.moveTowardDirection(target.directionToDestination(destination));
         movedPositionPiece = board.findPieceFromPosition(movedPosition);

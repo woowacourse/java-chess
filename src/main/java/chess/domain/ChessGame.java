@@ -4,6 +4,8 @@ import chess.domain.board.*;
 import chess.domain.piece.Team;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessGame {
     private static final int HORIZONTAL_INDEX = 0;
     private static final int VERTICAL_INDEX = 1;
@@ -33,6 +35,20 @@ public class ChessGame {
         board.movePiece(convertStringToPosition(splitInput[TARGET_INDEX])
                 , convertStringToPosition(splitInput[DESTINATION_INDEX]));
         board.applyStatus();
+
+        end = board.isGameOver();
+    }
+
+    public void move(String target, String destination) {
+        board.movePiece(convertStringToPosition(target)
+                , convertStringToPosition(destination));
+        board.applyStatus();
+
+        end = board.isGameOver();
+    }
+
+    public List<String> findMovablePosition(String target) {
+        return board.movablePositions(convertStringToPosition(target));
     }
 
     public void status() {
@@ -48,14 +64,27 @@ public class ChessGame {
                 Vertical.find(input.substring(VERTICAL_INDEX, OPTION_FINISH)));
     }
 
-    public boolean isBeforeEnd() {
-        return !board.isGameOver() && !end;
+    public void changeEnd() {
+        end = !end;
     }
+
+    public boolean isBeforeEnd() {
+        return !end;
+    }
+
     public boolean isBeforeStart() {
         return !start;
     }
 
+    public Team turn() {
+        return board.turn();
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public BoardStatus boardStatus() {
+        return board.getBoardStatus();
     }
 }

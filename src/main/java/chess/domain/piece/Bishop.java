@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.moveStrategy.BishopMovement;
 import chess.domain.piece.moveStrategy.ToEndOfLineStrategy;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> searchMovablePositions(Position target) {
-        BishopMovement bishopMovement = new BishopMovement();
-        return bishopMovement.searchMovablePositions(target);
+        return movablePositions(target, Direction.diagonal());
     }
 }

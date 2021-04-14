@@ -33,6 +33,14 @@ public class Position {
                 .orElseThrow(RuntimeException::new);
     }
 
+    public int movedHorizontalWeight(int value) {
+        return this.horizontal.getWeight() + value;
+    }
+
+    public int movedVerticalWeight(int value) {
+        return this.vertical.getWeight() + value;
+    }
+
     public boolean isSameVertical(Vertical vertical) {
         return this.vertical == vertical;
     }
@@ -73,8 +81,7 @@ public class Position {
                 Vertical.findFromWeight(getVerticalWeight() + direction.getY()));
     }
 
-    public boolean isDeadLine() {
-        Vertical vertical = getVertical();
-        return vertical == Vertical.ONE || vertical == Vertical.EIGHT;
+    public String convertToString() {
+        return horizontal.getValue() + vertical.getValue();
     }
 }

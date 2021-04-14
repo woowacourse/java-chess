@@ -7,6 +7,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     public static final int MIN_BORDER = 1;
@@ -39,8 +40,22 @@ public class Board {
     public boolean movePiece(Position target, Position destination) {
         Piece targetPiece = findPieceFromPosition(target);
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
-        checkMovable(targetMovablePositions, destination);
-        return move(target, destination, targetPiece);
+        try {
+            checkMovable(targetMovablePositions, destination);
+            return move(target, destination, targetPiece);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public List<String> movablePositions(Position target) {
+        Piece targetPiece = findPieceFromPosition(target);
+        List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
+
+        return targetMovablePositions.stream()
+                .filter(destination -> board.get(target).isMovable(target, destination, this))
+                .map(Position::convertToString)
+                .collect(Collectors.toList());
     }
 
     private boolean move(Position target, Position destination, Piece targetPiece) {
@@ -60,12 +75,11 @@ public class Board {
         if (targetPiece.isSameTeam(boardStatus.getLastTurn())) {
             throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
         }
-        boardStatus.changeTurn();
+        boardStatus.nextTurn();
     }
 
     private void checkDeadKing(Piece piece) {
-        if (Objects.isNull(piece)) {
-            gameOver = false;
+        if (Objects.isNull(piece) && !gameOver) {
             return;
         }
         gameOver = piece.isKing();
@@ -131,7 +145,15 @@ public class Board {
         return gameOver;
     }
 
+    public Team turn() {
+        return boardStatus.getLastTurn();
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public BoardStatus getBoardStatus() {
+        return boardStatus;
     }
 }

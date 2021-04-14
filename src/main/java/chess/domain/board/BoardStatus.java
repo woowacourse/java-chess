@@ -18,12 +18,15 @@ public class BoardStatus {
         whiteScore = new Score(TOTAL_SCORE);
     }
 
-    public void changeTurn() {
+    public void nextTurn() {
+        lastTurn = changeTurn();
+    }
+
+    private Team changeTurn() {
         if (isWhiteTurn()) {
-            lastTurn = Team.WHITE;
-            return;
+            return Team.WHITE;
         }
-        lastTurn = Team.BLACK;
+        return Team.BLACK;
     }
 
     public void calculateScore(Map<Team, Double> deadPieceByTeam
@@ -49,5 +52,13 @@ public class BoardStatus {
 
     public Team getLastTurn() {
         return lastTurn;
+    }
+
+    public Score getBlackScore() {
+        return blackScore;
+    }
+
+    public Score getWhiteScore() {
+        return whiteScore;
     }
 }

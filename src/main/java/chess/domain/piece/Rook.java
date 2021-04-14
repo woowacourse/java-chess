@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.moveStrategy.RookMovement;
 import chess.domain.piece.moveStrategy.ToEndOfLineStrategy;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class Rook extends Piece {
 
     @Override
     public List<Position> searchMovablePositions(Position target) {
-        RookMovement rookMovement = new RookMovement();
-        return rookMovement.searchMovablePositions(target);
+        return movablePositions(target, Direction.straight());
     }
 }

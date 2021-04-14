@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RookTest {
     Board board;
     Map<Position, Piece> testBoard = new LinkedHashMap<>();
+
     @BeforeEach
     void setUp() {
         for (Position position : Position.getPositions()) {
@@ -38,20 +39,23 @@ class RookTest {
         List<Position> positions = rook.searchMovablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
         assertThat(positions).containsExactly(
-                Position.of(Horizontal.A, Vertical.ONE),
+                Position.of(Horizontal.B, Vertical.TWO),
+
+                Position.of(Horizontal.B, Vertical.THREE),
+                Position.of(Horizontal.B, Vertical.FOUR),
+                Position.of(Horizontal.B, Vertical.FIVE),
+                Position.of(Horizontal.B, Vertical.SIX),
+                Position.of(Horizontal.B, Vertical.SEVEN),
+                Position.of(Horizontal.B, Vertical.EIGHT),
+
                 Position.of(Horizontal.C, Vertical.ONE),
                 Position.of(Horizontal.D, Vertical.ONE),
                 Position.of(Horizontal.E, Vertical.ONE),
                 Position.of(Horizontal.F, Vertical.ONE),
                 Position.of(Horizontal.G, Vertical.ONE),
                 Position.of(Horizontal.H, Vertical.ONE),
-                Position.of(Horizontal.B, Vertical.EIGHT),
-                Position.of(Horizontal.B, Vertical.SEVEN),
-                Position.of(Horizontal.B, Vertical.SIX),
-                Position.of(Horizontal.B, Vertical.FIVE),
-                Position.of(Horizontal.B, Vertical.FOUR),
-                Position.of(Horizontal.B, Vertical.THREE),
-                Position.of(Horizontal.B, Vertical.TWO)
+
+                Position.of(Horizontal.A, Vertical.ONE)
         );
     }
 

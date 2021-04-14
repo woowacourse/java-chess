@@ -7,19 +7,14 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    private static final String STATUS = "status";
-    private static final String END = "end";
-
     public void run(ChessGame chessGame) {
-        boolean isPlaying = true;
-
         OutputView.printManual();
-        while (isPlaying) {
-            isPlaying = playGame(chessGame);
+        while (chessGame.isBeforeEnd()) {
+            playGame(chessGame);
         }
     }
 
-    public boolean playGame(ChessGame chessGame) {
+    public void playGame(ChessGame chessGame) {
         try {
             String inputCommand = InputView.inputCommand();
             Command.findCommand(inputCommand).execute(chessGame, inputCommand);
@@ -28,7 +23,6 @@ public class ChessController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return chessGame.isBeforeEnd();
     }
 
     private void checkGameStart(ChessGame chessGame) {
