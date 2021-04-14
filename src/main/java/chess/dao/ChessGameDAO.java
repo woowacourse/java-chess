@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.controller.WebChessGame;
+import chess.domain.game.WebChessGame;
 import chess.domain.piece.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
