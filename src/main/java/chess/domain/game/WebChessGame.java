@@ -2,10 +2,8 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.dto.PositionDTO;
 import java.util.Collections;
 import java.util.Map;
 

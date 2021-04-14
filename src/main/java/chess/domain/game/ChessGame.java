@@ -15,10 +15,12 @@ public class ChessGame {
 
     private final ChessBoard chessBoard;
     private Color turn;
+    private boolean finished;
 
     public ChessGame(ChessBoard chessBoard, Color turn) {
         this.chessBoard = chessBoard;
         this.turn = turn;
+        this.finished = false;
     }
 
     public void start() {
@@ -49,7 +51,11 @@ public class ChessGame {
     }
 
     public boolean isOver() {
-        return chessBoard.isOver();
+        return chessBoard.isOver() || finished;
+    }
+
+    public void end() {
+        finished = true;
     }
 
     public Result gameResult() {
