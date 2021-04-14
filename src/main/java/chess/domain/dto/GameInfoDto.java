@@ -31,9 +31,6 @@ public class GameInfoDto {
     }
 
     public Team winner() {
-        if (winner == null) {
-            throw new IllegalArgumentException("[ERROR] 승자가 결정되지 않았습니다.");
-        }
         return winner;
     }
 }

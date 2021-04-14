@@ -8,6 +8,7 @@ import chess.domain.dto.BoardDto;
 import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
+import chess.domain.state.Running;
 import chess.domain.state.State;
 import chess.view.OutputView;
 
@@ -26,7 +27,7 @@ public class ChessGame {
 
     public ChessGame(Board board) {
         this.board = board;
-        state = new Ready();
+        state = new Running();
         turn = Team.WHITE;
     }
 
@@ -64,7 +65,6 @@ public class ChessGame {
             confirmKingCaptured(path);
         }
         board.movePiece(path);
-        OutputView.printBoard(boardDto());
         turnOver();
     }
 
@@ -82,7 +82,6 @@ public class ChessGame {
     }
 
     private void calculateEachTeamPoint(EnumMap<Team, Double> result, Team team) {
-        OutputView.printBoard(boardDto());
         double totalPoint = board.calculateTotalPoint(team);
         totalPoint -= board.updatePawnPoint(team);
         result.put(team, totalPoint);

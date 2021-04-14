@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessService {
+
     private CommandDao commandDao;
     private HistoryDao historyDao;
 
@@ -31,6 +32,9 @@ public class ChessService {
 
     public GameInfoDto continuedGameInfo(String id) throws SQLException {
         ChessGame chessGame = gameStateOf(id);
+        if (chessGame.isEnd()) {
+            updateDB(id);
+        }
         return new GameInfoDto(chessGame);
     }
 
@@ -68,9 +72,6 @@ public class ChessService {
     public void updateMoveInfo(String command, String historyId, boolean isEnd) throws SQLException {
         if (!StringUtils.isEmpty(historyId)) {
             flushCommands(command, historyId);
-        }
-        if (isEnd && historyId != null) {
-            updateDB(historyId);
         }
     }
 

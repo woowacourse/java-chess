@@ -47,11 +47,9 @@ public class ModelView {
 
     public static Map<String, Object> moveResponse(GameInfoDto gameInfoDto, String id) {
         Map<String, Object> model = commonResponseForm(gameInfoDto, id);
-        try {
-            final Team winner = gameInfoDto.winner();
+        final Team winner = gameInfoDto.winner();
+        if (winner != null) {
             model.put("winner", winner);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
         }
         return model;
     }
