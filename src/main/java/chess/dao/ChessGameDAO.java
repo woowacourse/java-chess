@@ -2,17 +2,14 @@ package chess.dao;
 
 import chess.controller.WebChessGame;
 import chess.domain.piece.Color;
-import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ChessGameDAO {
 
-    private final Gson gson = new Gson();
     private final BoardSerializer boardSerializer = new BoardSerializer();
 
     public Connection getConnection() {
@@ -62,39 +59,47 @@ public class ChessGameDAO {
         }
     }
 
-    public void addGame(WebChessGame chessGame) throws SQLException {
+    public void addGame(WebChessGame chessGame) {
         String query = "INSERT INTO chess_game (turn, finished, board) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGame.getTurn());
-        pstmt.setBoolean(2, chessGame.isOver());
-        pstmt.setString(
-            3,
-            boardSerializer.boardSerialize(chessGame.getChessBoardMap())
-        );
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, chessGame.getTurn());
+            pstmt.setBoolean(2, chessGame.isOver());
+            pstmt.setString(
+                3,
+                boardSerializer.boardSerialize(chessGame.getChessBoardMap())
+            );
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public int recentGame() throws SQLException {
         String query = "SELECT MAX(id) FROM chess_game";
-        Statement statement = getConnection().createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        if (rs.next()) {
-            return rs.getInt("MAX(id)");
+        try (ResultSet rs = getConnection().createStatement().executeQuery(query)) {
+            if (rs.next()) {
+                return rs.getInt("MAX(id)");
+            }
+            return -1;
         }
-        return -1;
     }
 
-    public void saveGame(int gameId, WebChessGame chessGame) throws SQLException {
+    public void saveGame(int gameId, WebChessGame chessGame) {
         String query = "UPDATE chess_game SET turn = ?, finished = ?, board = ? WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, chessGame.getTurn());
-        pstmt.setBoolean(2, chessGame.isOver());
-        pstmt.setString(
-            3,
-            boardSerializer.boardSerialize(chessGame.getChessBoardMap())
-        );
-        pstmt.setInt(4, gameId);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, chessGame.getTurn());
+            pstmt.setBoolean(2, chessGame.isOver());
+            pstmt.setString(
+                3,
+                boardSerializer.boardSerialize(chessGame.getChessBoardMap())
+            );
+            pstmt.setInt(4, gameId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public WebChessGame loadGame(int gameId) throws SQLException {
@@ -102,14 +107,15 @@ public class ChessGameDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return null;
+        try (pstmt; rs) {
+            if (!rs.next()) {
+                return null;
+            }
+            return new WebChessGame(
+                boardSerializer.boardDeserialize(rs.getString("board")),
+                Color.of(rs.getString("turn"))
+            );
         }
-        return new WebChessGame(
-            boardSerializer.boardDeserialize(rs.getString("board")),
-            Color.of(rs.getString("turn"))
-        );
     }
 
     public Color turn(int gameId) throws SQLException {
@@ -117,19 +123,24 @@ public class ChessGameDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return null;
+        try (pstmt; rs) {
+            if (!rs.next()) {
+                return null;
+            }
+            return Color.of(rs.getString("turn"));
         }
-        return Color.of(rs.getString("turn"));
     }
 
-    public void finish(int gameId) throws SQLException {
+    public void finish(int gameId) {
         String query = "UPDATE chess_game SET finished = ? WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setBoolean(1, true);
-        pstmt.setInt(2, gameId);
-        pstmt.executeUpdate();
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setBoolean(1, true);
+            pstmt.setInt(2, gameId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public boolean finished(int gameId) throws SQLException {
@@ -137,11 +148,11 @@ public class ChessGameDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setInt(1, gameId);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return false;
+        try (pstmt; rs) {
+            if (!rs.next()) {
+                return false;
+            }
+            return rs.getBoolean("finished");
         }
-
-        return rs.getBoolean("finished");
     }
 }
