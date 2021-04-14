@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.*;
+import java.util.Arrays;
 
 public enum PieceKind {
 
@@ -13,6 +14,8 @@ public enum PieceKind {
     PAWN("P", 1, new PawnMoveStrategy()),
     VOID(".", 0, new VoidMoveStrategy());
 
+    public static final String INVALID_MATCH_PIECE = "맞는 말의 종류가 없습니다.";
+
     private final String symbol;
     private final double point;
     private final MoveStrategy moveStrategy;
@@ -23,13 +26,23 @@ public enum PieceKind {
         this.moveStrategy = moveStrategy;
     }
 
-
     public String getName(final PieceColor pieceColor) {
         if (pieceColor == PieceColor.WHITE) {
             return symbol.toLowerCase();
         }
 
         return symbol;
+    }
+
+    public boolean isSameKind(String rawPieceKind) {
+        return symbol.equals(rawPieceKind);
+    }
+
+    public static PieceKind matchPieceKind(String rawPieceKind) {
+        return Arrays.stream(values())
+            .filter(element -> element.isSameKind(rawPieceKind))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_MATCH_PIECE));
     }
 
     public double point() {

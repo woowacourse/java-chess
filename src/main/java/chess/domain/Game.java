@@ -4,7 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.RequestedBoard;
 import chess.domain.board.Point;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import java.util.Map;
 
 public class Game {
 
@@ -24,6 +26,14 @@ public class Game {
         this.board = new Board(RequestedBoard.board());
         this.point = new Point(board);
         this.gameState = GameState.START;
+        this.turnColor = PieceColor.WHITE;
+    }
+
+    public void loadGame(Map<Position, Piece> loadedMap, PieceColor turnColor) {
+        this.board = new Board(loadedMap);
+        this.point = new Point(board);
+        this.gameState = GameState.START;
+        this.turnColor = turnColor;
     }
 
     public void end() {
@@ -45,7 +55,6 @@ public class Game {
         if (board.kingIsDead()) {
             gameState = GameState.END;
         }
-
         this.turnColor = turnColor.oppositeColor();
     }
 
@@ -63,5 +72,9 @@ public class Game {
 
     public PieceColor winnerColor() {
         return board.winnerColor();
+    }
+
+    public String turn() {
+        return this.turnColor.name();
     }
 }

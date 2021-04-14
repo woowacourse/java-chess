@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.MoveDirection;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Piece {
@@ -18,6 +19,12 @@ public class Piece {
     public Piece(PieceKind pieceKind, PieceColor pieceColor) {
         this.pieceKind = pieceKind;
         this.pieceColor = pieceColor;
+    }
+
+    public Piece(String rawKind) {
+        String regularKind = rawKind.toUpperCase(Locale.ROOT);
+        this.pieceKind = PieceKind.matchPieceKind(regularKind);
+        this.pieceColor = judgePieceColor(rawKind);
     }
 
     public boolean isSameColor(final Piece piece) {
@@ -59,6 +66,19 @@ public class Piece {
 
     public PieceColor color() {
         return this.pieceColor;
+    }
+
+    public PieceColor judgePieceColor(String rawKind) {
+        if (rawKind.equals(".")){
+            return PieceColor.VOID;
+        }
+
+        try {
+            PieceKind.matchPieceKind(rawKind);
+            return PieceColor.BLACK;
+        } catch (IllegalArgumentException illegalArgumentException) {
+            return PieceColor.WHITE;
+        }
     }
 
     @Override

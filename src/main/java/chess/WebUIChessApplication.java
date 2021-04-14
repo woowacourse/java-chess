@@ -1,14 +1,12 @@
 package chess;
 
-import chess.controller.ChessController;
+
+import chess.controller.ChessWebController;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        try {
-            ChessController chessController = new ChessController();
-            chessController.run();
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+        ChessWebController chessWebController = new ChessWebController();
+        chessWebController.run();
     }
+
 }

@@ -1,0 +1,94 @@
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.entire {
+    background-image: url('../src/background.jpeg');
+    width : 100%;
+    height : 100%;
+    background-size: 100% 100%;
+}
+
+.Game {
+    position : relative;
+    left : 28%;
+}
+
+.GameSet {
+    height : 50%;
+    display : flex;
+    flex-direction: row;
+}
+
+.GameBoard {
+    display : flex;
+    flex-direction: column;
+    width : 35%;
+    height : 300px;
+}
+
+.start { 
+    background-color: #b96318;
+}
+
+.end {
+    background-color: #fbd996;
+}
+
+.slot-row {
+    display : flex;
+    flex-direction: row;
+}
+
+.one-slot {
+    border : 0.05px solid #979797;
+    width : 12.5%;
+    display : flex;
+    justify-content: center;
+    flex-direction: center;
+}
+
+.one-slot:after {
+    content : "";
+    display : block;
+    padding-bottom: 100%;
+}
+
+.yellow-slot {
+    background-color: #fbd996;
+}
+
+.brown-slot {
+    background-color: #b96318;
+}
+
+
+.PackedPiece {
+    width : 80%;
+    display: flex;
+    align-content: center;
+    vertical-align: center;
+    border : 0;
+    margin : 0;
+}
+
+.PackedPiece:after {
+    content : "";
+    display : block;
+    padding-bottom: 100%;
+}
+
+.ChessPieceImage{
+    width: 100%;
+    height: auto;
+}
+
+#turn {
+    height :30%;
+    width : 100%;
+}
+
+.class {
+    width : 100%;
+}
