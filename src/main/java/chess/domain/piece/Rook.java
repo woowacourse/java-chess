@@ -11,6 +11,10 @@ public class Rook extends Piece {
         this.type = Type.ROOK;
     }
 
+    public Rook(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         return Direction.linearDirection();

@@ -11,6 +11,10 @@ public class Pawn extends Piece {
         this.type = Type.PAWN;
     }
 
+    public Pawn(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         if (isBlack()) {

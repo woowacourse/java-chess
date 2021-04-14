@@ -23,14 +23,14 @@ public class ChessBoard {
     private static final String NOT_MOVABLE_POSITION = "[ERROR] 이동할 수 없는 위치입니다.";
     private static final String SAME_POSITION = "[ERROR] 같은 위치로 이동할 수 없습니다.";
 
-    private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
+    private Map<Position, Piece> chessBoard = new LinkedHashMap<>();
+
+    public ChessBoard(Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
+    }
 
     public ChessBoard() {
         initBlank();
-        initBoard();
-    }
-
-    public void initBoard() {
         initBlack();
         initWhite();
     }

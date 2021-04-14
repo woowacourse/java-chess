@@ -4,6 +4,7 @@ import chess.controller.WebChessGame;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import com.google.gson.Gson;
+import com.sun.prism.impl.ps.CachingEllipseRep;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.Statement;
 public class ChessGameDAO {
 
     private final Gson gson = new Gson();
+    private final BoardSerializer boardSerializer = new BoardSerializer();
 
     public Connection getConnection() {
         Connection con = null;
@@ -61,7 +63,10 @@ public class ChessGameDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, chessGame.getTurn());
         pstmt.setBoolean(2, chessGame.isOver());
-        pstmt.setString(3, gson.toJson(chessGame.getChessBoardMap()));
+        pstmt.setString(
+            3,
+            boardSerializer.boardSerialize(chessGame.getChessBoardMap())
+        );
         pstmt.executeUpdate();
     }
 
@@ -80,7 +85,10 @@ public class ChessGameDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, chessGame.getTurn());
         pstmt.setBoolean(2, chessGame.isOver());
-        pstmt.setString(3, gson.toJson(chessGame.getChessBoardMap()));
+        pstmt.setString(
+            3,
+            boardSerializer.boardSerialize(chessGame.getChessBoardMap())
+        );
         pstmt.setInt(4, gameId);
         pstmt.executeUpdate();
     }
@@ -95,8 +103,9 @@ public class ChessGameDAO {
             return null;
         }
 
+        ChessBoard chessBoard = boardSerializer.boardDeserialize(rs.getString("board"));
         return new WebChessGame(
-            gson.fromJson(rs.getString("board"), ChessBoard.class),
+            chessBoard,
             gson.fromJson(rs.getString("turn"), Color.class)
         );
     }

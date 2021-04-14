@@ -22,7 +22,6 @@ public class ChessGame {
     }
 
     public void start() {
-        chessBoard.initBoard();
     }
 
     public void run(List<String> input) {

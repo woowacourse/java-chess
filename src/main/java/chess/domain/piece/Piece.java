@@ -19,6 +19,12 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
+    public Piece(Color color, char piece) {
+        this.color = color;
+        this.type = Type.of(piece);
+        this.moveStrategy = type.getMoveStrategy();
+    }
+
     public boolean isMovable(
         ChessBoard chessBoard,
         Position sourcePosition,

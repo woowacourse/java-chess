@@ -21,6 +21,13 @@ public enum Color {
         throw new IllegalArgumentException();
     }
 
+    public static Color of(char name) {
+        if (Character.isLowerCase(name)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
     @Override
     public String toString() {
         return this.name();

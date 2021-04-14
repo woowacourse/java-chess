@@ -11,6 +11,10 @@ public class Bishop extends Piece {
         this.type = Type.BISHOP;
     }
 
+    public Bishop(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         return Direction.diagonalDirection();

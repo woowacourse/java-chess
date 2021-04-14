@@ -11,6 +11,10 @@ public class King extends Piece {
         this.type = Type.KING;
     }
 
+    public King(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         return Direction.everyDirection();
