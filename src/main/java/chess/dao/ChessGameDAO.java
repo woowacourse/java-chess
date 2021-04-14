@@ -4,7 +4,6 @@ import chess.controller.WebChessGame;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import com.google.gson.Gson;
-import com.sun.prism.impl.ps.CachingEllipseRep;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,15 +24,13 @@ public class ChessGameDAO {
         String userName = "root"; //  MySQL 서버 아이디
         String password = "root"; // MySQL 서버 비밀번호
 
-        // 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
+        driverLoad();
+        con = driverConnect(con, server, database, option, userName, password);
+        return con;
+    }
 
-        // 드라이버 연결
+    private Connection driverConnect(Connection con, String server, String database, String option,
+        String userName, String password) {
         try {
             con = DriverManager
                 .getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
@@ -43,8 +40,16 @@ public class ChessGameDAO {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
         return con;
+    }
+
+    private void driverLoad() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // 드라이버 연결해제
