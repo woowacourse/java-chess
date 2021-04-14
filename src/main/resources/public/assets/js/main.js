@@ -18,7 +18,7 @@ async function init() {
 
 async function getBoard() {
   return await fetch(
-    `/chessboard/${this.gameId}`
+      `/chessboard/${this.gameId}`
   )
   .then(res => res.json())
   .then(data => data);
@@ -29,13 +29,13 @@ async function setBoard() {
   this.chessBoard = await getBoard();
   this.chessBoard.map((board) => {
     this.$chessBoard.insertAdjacentHTML('beforeend',
-      boardTemplate(board.position, board.piece))
+        boardTemplate(board.position, board.piece))
   })
 }
 
 async function checkFinished() {
   const finished = await fetch(
-    `${this.gameId}/finished`
+      `${this.gameId}/finish`
   ).then(res => res.json())
   .then(data => data)
   if (finished === true) {
@@ -46,7 +46,7 @@ async function checkFinished() {
 
 async function getTurn() {
   return await fetch(
-    `/${this.gameId}/turn`
+      `/${this.gameId}/turn`
   )
   .then(res => res.json())
   .then(data => data)
@@ -104,18 +104,18 @@ function move(response) {
 
 async function movable(source, target) {
   return await fetch(
-    `/${this.gameId}/move`,
-    {
-      method: 'PUT',
-      body: JSON.stringify({
-        source: source.id,
-        target: target.id
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json'
+      `/${this.gameId}/move`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          source: source.id,
+          target: target.id
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        }
       }
-    }
   ).then(res => res.json()).then(data => data).catch(err => err)
 }
 
@@ -127,7 +127,7 @@ function boardTemplate(position, piece) {
 
 function squareTemplate(position, piece) {
   return `<div id=${position} class='square ${positionColor(
-    position)} ${piece.color} ${piece.type}'>
+      position)} ${piece.color} ${piece.type}'>
     <img class='piece' src=${pieceImage(piece)} alt=${piece}/>
     </div>`
 }
@@ -142,27 +142,27 @@ function positionColor(position) {
 function pieceImage(piece) {
   if (piece.type === 'r' || piece.type === 'R') {
     return piece.color === 'WHITE' ? './images/rook_white.png'
-      : './images/rook_black.png'
+        : './images/rook_black.png'
   }
   if (piece.type === 'n' || piece.type === 'N') {
     return piece.color === 'WHITE' ? './images/knight_white.png'
-      : './images/knight_black.png'
+        : './images/knight_black.png'
   }
   if (piece.type === 'b' || piece.type === 'B') {
     return piece.color === 'WHITE' ? './images/bishop_white.png'
-      : './images/bishop_black.png'
+        : './images/bishop_black.png'
   }
   if (piece.type === 'q' || piece.type === 'Q') {
     return piece.color === 'WHITE' ? './images/queen_white.png'
-      : './images/queen_black.png'
+        : './images/queen_black.png'
   }
   if (piece.type === 'k' || piece.type === 'K') {
     return piece.color === 'WHITE' ? './images/king_white.png'
-      : './images/king_black.png'
+        : './images/king_black.png'
   }
   if (piece.type === 'p' || piece.type === 'P') {
     return piece.color === 'WHITE' ? './images/pawn_white.png'
-      : './images/pawn_black.png'
+        : './images/pawn_black.png'
   }
   return './images/blank.png'
 }
@@ -182,35 +182,35 @@ function changeTurn(turn) {
 
 async function result() {
   const result = await fetch(
-    `/${this.gameId}/result`
+      `/${this.gameId}/result`
   ).then(res => res.json()).then(data => data)
 
   const blackResult = result.black
   const whiteResult = result.white
 
   this.$blackResult.getElementsByClassName(
-    'score')[0].innerHTML = `<span>${blackResult.score}</span>`
+      'score')[0].innerHTML = `<span>${blackResult.score}</span>`
   this.$whiteResult.getElementsByClassName(
-    'score')[0].innerHTML = `<span>${whiteResult.score}</span>`
+      'score')[0].innerHTML = `<span>${whiteResult.score}</span>`
 
   if (blackResult.outcome === '승') {
     this.$blackResult.getElementsByTagName(
-      'img')[0].src = "./images/player_win.png"
+        'img')[0].src = "./images/player_win.png"
     this.$whiteResult.getElementsByTagName(
-      'img')[0].src = "./images/player_lose.png"
+        'img')[0].src = "./images/player_lose.png"
     return
   }
   if (blackResult.outcome === '패') {
     this.$blackResult.getElementsByTagName(
-      'img')[0].src = "./images/player_lose.png"
+        'img')[0].src = "./images/player_lose.png"
     this.$whiteResult.getElementsByTagName(
-      'img')[0].src = "./images/player_win.png"
+        'img')[0].src = "./images/player_win.png"
     return
   }
   this.$blackResult.getElementsByTagName(
-    'img')[0].src = "./images/player_lose.png"
+      'img')[0].src = "./images/player_lose.png"
   this.$whiteResult.getElementsByTagName(
-    'img')[0].src = "./images/player_lose.png"
+      'img')[0].src = "./images/player_lose.png"
 }
 
 function displayResult(val) {
@@ -238,7 +238,10 @@ async function finish() {
   const url = window.location.href.split('/')
   const gameId = url[url.length - 1]
   return await fetch(
-    `${gameId}/finish`
+      `${gameId}/finish`,
+      {
+        method: 'POST'
+      }
   ).then(res => res.json())
 }
 

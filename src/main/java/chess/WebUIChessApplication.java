@@ -3,6 +3,7 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.put;
+import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.WebChessGame;
@@ -90,12 +91,12 @@ public class WebUIChessApplication {
             return response;
         });
 
-        get("/:id/finish", (req, res) -> {
+        post("/:id/finish", (req, res) -> {
             chessGameDAO.finish(Integer.parseInt(req.params("id")));
             return HttpStatus.ACCEPTED_202;
         });
 
-        get("/:id/finished", (req, res) -> {
+        get("/:id/finish", (req, res) -> {
             return chessGameDAO.finished(Integer.parseInt(req.params("id")));
         });
     }
