@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.controller.WebChessGame;
-import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import com.google.gson.Gson;
 import java.sql.Connection;
@@ -107,11 +106,9 @@ public class ChessGameDAO {
         if (!rs.next()) {
             return null;
         }
-
-        ChessBoard chessBoard = boardSerializer.boardDeserialize(rs.getString("board"));
         return new WebChessGame(
-            chessBoard,
-            gson.fromJson(rs.getString("turn"), Color.class)
+            boardSerializer.boardDeserialize(rs.getString("board")),
+            Color.of(rs.getString("turn"))
         );
     }
 
@@ -124,8 +121,7 @@ public class ChessGameDAO {
         if (!rs.next()) {
             return null;
         }
-
-        return gson.fromJson(rs.getString("turn"), Color.class);
+        return Color.of(rs.getString("turn"));
     }
 
     public void finish(int gameId) throws SQLException {
