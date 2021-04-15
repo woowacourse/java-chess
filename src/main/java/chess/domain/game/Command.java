@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.controller.ChessController;
+import chess.controller.console.ConsoleChessController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,25 +8,25 @@ import java.util.List;
 public enum Command {
     START(0) {
         @Override
-        public void action(ChessController chessController) {
+        public void action(ConsoleChessController chessController) {
             chessController.init();
         }
     },
     END(0) {
         @Override
-        public void action(ChessController chessController) {
+        public void action(ConsoleChessController chessController) {
             chessController.end();
         }
     },
     MOVE(2) {
         @Override
-        public void action(ChessController chessController) {
+        public void action(ConsoleChessController chessController) {
             chessController.move(options().get(0), options().get(1));
         }
     },
     STATUS(0) {
         @Override
-        public void action(ChessController chessController) {
+        public void action(ConsoleChessController chessController) {
             chessController.status();
         }
     };
@@ -69,5 +69,5 @@ public enum Command {
         return options;
     }
 
-    public abstract void action(ChessController chessController);
+    public abstract void action(ConsoleChessController chessController);
 }

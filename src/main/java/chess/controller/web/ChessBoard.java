@@ -15,13 +15,13 @@ import java.util.Map;
 public class ChessBoard {
     private final Map<PositionDto, PieceDto> board;
     private final List<ScoreDto> score;
-    private final String color;
+    private final ColorDto color;
     private final boolean isFinished;
 
     public ChessBoard(Game game) {
         this.board = new BoardDto(game.allBoard()).getMaps();
         this.score = new ScoreDtos(game.score()).getScoreDtos();
-        this.color = new ColorDto(game.currentPlayer()).getColor();
+        this.color = new ColorDto(game.currentPlayer());
         this.isFinished = game.isEnd();
     }
 
