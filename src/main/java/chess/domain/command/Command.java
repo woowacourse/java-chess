@@ -1,7 +1,8 @@
 package chess.domain.command;
 
 import chess.domain.ChessGame;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.board.Board;
+import chess.domain.utils.PieceInitializer;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
@@ -44,14 +45,14 @@ public enum Command {
     }
 
     private static void start(ChessGame chessGame, Commands commands) {
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
     }
 
     private static void move(ChessGame chessGame, Commands commands) {
         if (chessGame.isReady() || chessGame.isEnd()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았거나, 종료되지 않았습니다.");
         }
-        chessGame.move(commands);
+        chessGame.moveAs(commands);
     }
 
     private static void status(ChessGame chessGame, Commands commands) {

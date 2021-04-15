@@ -6,11 +6,12 @@ import chess.domain.board.Team;
 
 public class Bishop extends AbstractPiece {
 
+    private static final String NAME = "bishop";
     public static final double POINT = 3;
     private static final int MOVE_RANGE = 8;
 
     public Bishop(Team team) {
-        super(team);
+        super(team, NAME);
     }
 
     @Override

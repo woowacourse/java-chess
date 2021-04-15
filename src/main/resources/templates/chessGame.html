@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/chess.css" rel="stylesheet" type="text/css"/>
+    <title>Play Chess!</title>
+    <link rel="icon" href="/images/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="mainGame">
+    <h1 id="title">Play Chess!</h1>
+    <div id="chessBoard">
+        {{#squares}}
+        <div id="{{position}}" class="square">
+            {{#if piece}}
+            <img alt="position" class="squareImage" src="/images/{{piece}}.png"/>
+            {{else}}
+            <img alt="empty" src="/images/blank.png"/>
+            {{/if}}
+        </div>
+        {{/squares}}
+    </div>
+
+    <div id="InfoUI">
+        <div id="teamInfoUI">
+            <div id="turn">{{turn}}팀의 차례입니다.</div>
+            <div id="score">
+                {{#scores}}
+                <div id="{{team}}">{{team}} 점수 | {{score}}점</div>
+                {{/scores}}
+            </div>
+        </div>
+        <div id="btnInfoUI">
+            <p> 🗣 종료하기를 누르면, 게임이 종료되며 메인 화면으로 이동합니다 🚀</p>
+            <form action="/play" method="get" class="btn" onsubmit="return endMessage();">
+                <button>종료하기</button>
+            </form>
+        </div>
+    </div>
+    {{#gameId}}
+    <div id="gameId" style="display: none">{{gameId}}</div>
+    {{/gameId}}
+</div>
+</body>
+<script type="text/javascript" src="/js/move.js"></script>
+</html>

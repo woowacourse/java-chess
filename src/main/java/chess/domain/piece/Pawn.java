@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Pawn extends AbstractPiece {
 
+    private static final String NAME = "pawn";
     public static final double POINT = 1;
     public static final int BLACK_PAWN_START_LINE = 7;
     public static final int WHITE_PAWN_START_LINE = 2;
@@ -16,7 +17,7 @@ public class Pawn extends AbstractPiece {
     private static final int DIAGONAL_MOVE_RANGE = 2;
 
     public Pawn(Team team) {
-        super(team);
+        super(team, NAME);
     }
 
     @Override
@@ -71,4 +72,5 @@ public class Pawn extends AbstractPiece {
         }
         return super.generatePaths(path, direction, distance + 2);
     }
+
 }

@@ -1,9 +1,10 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.board.Team;
 import chess.domain.command.Commands;
 import chess.domain.dto.PointDto;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.utils.PieceInitializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,7 @@ class ChessGameTest {
 
     @Test
     void isRunning() {
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         assertThat(chessGame.isRunning()).isTrue();
     }
 
@@ -46,7 +47,7 @@ class ChessGameTest {
     @Test
     void move1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a2"));
@@ -59,7 +60,7 @@ class ChessGameTest {
     @Test
     void move_pawn() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a4"));
@@ -72,7 +73,7 @@ class ChessGameTest {
     @Test
     void move_pawn2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a3"));
@@ -89,7 +90,7 @@ class ChessGameTest {
     @Test
     void move_pawn3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when - then
         chessGame.move(new Commands("move a2 a3"));
@@ -102,7 +103,7 @@ class ChessGameTest {
     @Test
     void move_pawn4() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a3"));
@@ -118,7 +119,7 @@ class ChessGameTest {
     @Test
     void move_pawn5() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when - then
         chessGame.move(new Commands("move a2 b3"));
@@ -129,7 +130,7 @@ class ChessGameTest {
     @Test
     void move_pawn6() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a4"));
@@ -144,7 +145,7 @@ class ChessGameTest {
     @Test
     void move_knight1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move b1 c3"));
@@ -157,7 +158,7 @@ class ChessGameTest {
     @Test
     void move_knight2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move b1 c4"));
@@ -170,7 +171,7 @@ class ChessGameTest {
     @Test
     void move_knight3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move b1 c3"));
@@ -183,7 +184,7 @@ class ChessGameTest {
     @Test
     void move_knight4() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move b1 d5"));
@@ -196,7 +197,7 @@ class ChessGameTest {
     @Test
     void move_rook1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a1 a2"));
@@ -209,7 +210,7 @@ class ChessGameTest {
     @Test
     void move_rook2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a4"));
@@ -224,7 +225,7 @@ class ChessGameTest {
     @Test
     void move_rook3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a4"));
@@ -243,7 +244,7 @@ class ChessGameTest {
     @Test
     void move_rook4() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move a2 a4"));
@@ -260,7 +261,7 @@ class ChessGameTest {
     @Test
     void move_bishop1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move c1 b2"));
@@ -273,7 +274,7 @@ class ChessGameTest {
     @Test
     void move_bishop2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move b2 b3"));
         chessGame.move(new Commands("move b7 b6"));
 
@@ -291,7 +292,7 @@ class ChessGameTest {
     @Test
     void move_bishop3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move b2 b3"));
         chessGame.move(new Commands("move b7 b6"));
         chessGame.move(new Commands("move c1 a3"));
@@ -308,7 +309,7 @@ class ChessGameTest {
     @Test
     void move_queen1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move d1 d2"));
@@ -321,7 +322,7 @@ class ChessGameTest {
     @Test
     void move_queen2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move d7 d5"));
 
@@ -343,7 +344,7 @@ class ChessGameTest {
     @Test
     void move_queen3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move e7 e5"));
         chessGame.move(new Commands("move h2 h3"));
@@ -362,7 +363,7 @@ class ChessGameTest {
     @Test
     void move_queen4() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move e7 e5"));
         chessGame.move(new Commands("move h2 h3"));
@@ -381,7 +382,7 @@ class ChessGameTest {
     @Test
     void move_king1() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move e1 e2"));
@@ -394,7 +395,7 @@ class ChessGameTest {
     @Test
     void move_king2() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         chessGame.move(new Commands("move e2 e4"));
         chessGame.move(new Commands("move e7 e5"));
         chessGame.move(new Commands("move e1 e2"));
@@ -418,7 +419,7 @@ class ChessGameTest {
     @Test
     void move_king3() {
         // given
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
 
         // when
         chessGame.move(new Commands("move e2 e4"));
@@ -437,7 +438,7 @@ class ChessGameTest {
 
         PointDto resultDto = new PointDto(result);
 
-        chessGame.initBoard(BoardInitializer.init());
+        chessGame.initBoard(Board.of(PieceInitializer.pieceInfo()));
         assertThat(chessGame.pointDto()).isEqualTo(resultDto);
     }
 }

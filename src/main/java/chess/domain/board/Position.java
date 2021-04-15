@@ -2,16 +2,14 @@ package chess.domain.board;
 
 import chess.domain.piece.Pawn;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
 
     static {
-        for (final File file : File.values()) {
-            makePositionWith(file);
+        for (final Rank rank : Rank.values()) {
+            makePositionWith(rank);
         }
     }
 
@@ -23,10 +21,14 @@ public class Position {
         this.rank = rank;
     }
 
-    private static void makePositionWith(File file) {
-        for (final Rank rank : Rank.values()) {
+    private static void makePositionWith(Rank rank) {
+        for (final File file : File.values()) {
             POSITIONS.put(makeKey(file, rank), new Position(file, rank));
         }
+    }
+
+    public static List<Position> getAllPositions() {
+        return new ArrayList<>(POSITIONS.values());
     }
 
     public static Position of(String position) {
@@ -120,5 +122,18 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return file.getFile() + rank.getRank();
+    }
+
+    public String getFile() {
+        return file.getFile();
+    }
+
+    public String getRank() {
+        return String.valueOf(rank.getRank());
     }
 }

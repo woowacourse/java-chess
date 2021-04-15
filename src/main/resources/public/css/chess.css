@@ -1,0 +1,82 @@
+#mainGame {
+    width: 100%;
+    margin: 40px;
+    text-align: center;
+}
+
+h1 {
+    padding-bottom: 20px;
+}
+
+p {
+    padding-bottom: 0px;
+}
+
+#chessBoard {
+    display: inline-block;
+    width: 500px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#chessBoard div {
+    display: inline-block;
+    margin: -3px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+}
+
+#InfoUI {
+    display: inline-block;
+    width: 30%;
+    margin: 30px;
+}
+
+#teamInfoUI {
+    margin: 10px;
+    padding-bottom: 50px;
+}
+
+#teamInfoUI div {
+    margin: 10px;
+}
+
+#btnInfoUI {
+    padding-top: 50px;
+    margin: 10px 10px 0;
+}
+
+#btnInfoUI .btn {
+    display: inline-block;
+}
+
+.square {
+    background-color: #fce9c2;
+}
+
+.square:nth-child(-2n+7),
+.square:nth-child(8) ~ .square:nth-child(-2n+16),
+.square:nth-child(16) ~ .square:nth-child(-2n+23),
+.square:nth-child(25) ~ .square:nth-child(-2n+32),
+.square:nth-child(32) ~ .square:nth-child(-2n+39),
+.square:nth-child(41) ~ .square:nth-child(-2n+48),
+.square:nth-child(47) ~ .square:nth-child(-2n+55),
+.square:nth-child(57) ~ .square:nth-child(-2n+64) {
+    background-color: #855e42;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+}
+
+img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    filter: drop-shadow(0 3px 2px #000000);
+}

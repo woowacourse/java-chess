@@ -1,8 +1,8 @@
 package chess.domain.board;
 
 public enum Team {
-    BLACK("흑"),
-    WHITE("백");
+    BLACK("black"),
+    WHITE("white");
 
     private final String team;
 
@@ -10,7 +10,7 @@ public enum Team {
         this.team = team;
     }
 
-    public static Team turnOver(Team team) {
+    public static Team opposite(Team team) {
         if (team == BLACK) {
             return WHITE;
         }
@@ -23,5 +23,10 @@ public enum Team {
 
     public boolean isBlack(Team team) {
         return team == BLACK;
+    }
+
+    @Override
+    public String toString() {
+        return team;
     }
 }

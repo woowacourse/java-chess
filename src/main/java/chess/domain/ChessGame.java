@@ -5,36 +5,36 @@ import chess.domain.board.Path;
 import chess.domain.board.Team;
 import chess.domain.command.Commands;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.CommandDto;
 import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
+import chess.domain.state.Running;
 import chess.domain.state.State;
 import chess.view.OutputView;
 
 import java.util.EnumMap;
+import java.util.List;
 
 public class ChessGame {
 
     private Board board;
     private State state;
-    private Team winner;
     private Team turn;
 
     public ChessGame() {
         state = new Ready();
+    }
+
+    public ChessGame(Board board) {
+        this.board = board;
+        state = new Running();
         turn = Team.WHITE;
     }
 
     public void initBoard(Board board) {
         this.board = board;
         state = state.init();
-    }
-
-    public BoardDto boardDto() {
-        return new BoardDto(board, turn);
-    }
-
-    public PointDto pointDto() {
-        return new PointDto(calculatePoint());
+        turn = Team.WHITE;
     }
 
     public void move(Commands command) {
@@ -47,6 +47,19 @@ public class ChessGame {
         }
     }
 
+    public void makeBoardStateOf(List<CommandDto> commands) {
+        for (CommandDto commandInDB : commands) {
+            final Path path = new Path(new Commands(commandInDB.data()).path());
+            movePiece(path);
+        }
+    }
+
+    public void moveAs(Commands command) {
+        final Path path = new Path(command.path());
+        board.move(path, turn);
+        movePiece(path);
+    }
+
     private void movePiece(Path path) {
         if (board.containsPosition(path.target())) {
             confirmKingCaptured(path);
@@ -57,7 +70,6 @@ public class ChessGame {
 
     private void confirmKingCaptured(Path path) {
         if (board.isKingAt(path.target())) {
-            winner = turn;
             state = state.next();
         }
     }
@@ -92,10 +104,29 @@ public class ChessGame {
     }
 
     public Team winner() {
-        return winner;
+        if (!isEnd()) {
+            return null;
+        }
+        return Team.opposite(turn);
     }
 
     private void turnOver() {
-        turn = Team.turnOver(turn);
+        turn = Team.opposite(turn);
+    }
+
+    public Board board() {
+        return board;
+    }
+
+    public Team turn() {
+        return turn;
+    }
+
+    public BoardDto boardDto() {
+        return new BoardDto(board, turn);
+    }
+
+    public PointDto pointDto() {
+        return new PointDto(calculatePoint());
     }
 }

@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class PointCalculator {
     public static double calculate(Map<Position, Piece> chessBoard, Team team) {
         return chessBoard.values().stream()
-                .filter(piece -> piece.getTeam() == team)
+                .filter(piece -> piece != null && piece.getTeam() == team)
                 .mapToDouble(Piece::getPoint)
                 .sum();
     }
@@ -34,7 +34,7 @@ public class PointCalculator {
     private static Map<Integer, Long> groupFileAndPawnCount(Map<Position, Piece> chessBoard,
                                                             Team team) {
         return chessBoard.entrySet().stream()
-                .filter(entry -> entry.getValue().getTeam() == team)
+                .filter(entry -> entry != null && entry.getValue().getTeam() == team)
                 .filter(entry -> entry.getValue().isPawn())
                 .map(entry -> entry.getKey().getX())
                 .collect(groupingBy(Function.identity(), counting()));

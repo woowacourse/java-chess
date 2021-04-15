@@ -9,8 +9,12 @@ import java.util.Map;
 public class Board {
     private final Map<Position, Piece> chessBoard;
 
-    public Board(Map<Position, Piece> chessBoard) {
+    private Board(Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
+    }
+
+    public static Board of(Map<Position, Piece> pieceInfo) {
+        return new Board(pieceInfo);
     }
 
     public boolean containsPosition(Position position) {
@@ -70,6 +74,13 @@ public class Board {
     }
 
     public boolean isKingAt(Position target) {
+        if (pieceAt(target) == null) {
+            return false;
+        }
         return pieceAt(target).isKing();
+    }
+
+    public Map<Position, Piece> board() {
+        return chessBoard;
     }
 }

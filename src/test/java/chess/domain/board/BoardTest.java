@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Rook;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.utils.PieceInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,15 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardInitializer.init();
+        board = Board.of(PieceInitializer.pieceInfo());
     }
 
     @DisplayName("보드 초기화")
     @Test
     void init() {
-        assertThatCode(BoardInitializer::init).doesNotThrowAnyException();
+        assertThatCode(() -> {
+            Board.of(PieceInitializer.pieceInfo());
+        }).doesNotThrowAnyException();
     }
 
     @DisplayName("보드에 말이 있는지 확인")

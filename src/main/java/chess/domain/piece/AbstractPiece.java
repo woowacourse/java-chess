@@ -9,9 +9,11 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractPiece implements Piece {
     private final Team team;
+    private final String name;
 
-    protected AbstractPiece(Team team) {
+    protected AbstractPiece(Team team, String name) {
         this.team = team;
+        this.name = name;
     }
 
     protected boolean isBlackTeam() {
@@ -47,5 +49,10 @@ public abstract class AbstractPiece implements Piece {
 
     protected List<Position> generatePaths(Path path, Direction direction, int distance) {
         return IntStream.range(1, distance - 1).mapToObj(i -> path.move(direction, i)).collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return name + "_" + team.toString();
     }
 }

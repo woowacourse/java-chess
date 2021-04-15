@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/start.css" rel="stylesheet" type="text/css"/>
+    <title>Play Chess!</title>
+    <link rel="icon" href="/images/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Play Chess!</h1>
+<div class="container">
+    <button onclick="playNewGame()">새 게임 시작하기</button>
+    <div>
+        <div class="gameList">완료되지 않은 게임 목록 👇🏻</div>
+        <div id="historyList">
+            {{#history}}
+            <div id="history">
+                <a class="{{name}}" href="/play/continue?name={{name}}">{{name}}</a>
+            </div>
+            {{/history}}
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    const playNewGame = function () {
+        const name = prompt("게임 저장 시 이용할 이름을 입력해주세요!\n 취소 시 게임은 가능하지만, 저장이 되지 않아 이어하기가 불가합니다.😱");
+        if (name == null) {
+            window.location = "/play/new";
+        } else {
+            window.location = `/play/${name}/new`;
+        }
+    }
+
+    const gameHistory = document.getElementById("historyList");
+    if ($("#history").length === 0)
+        gameHistory.innerText = "비어있습니다 - 텅!";
+</script>
+</html>
