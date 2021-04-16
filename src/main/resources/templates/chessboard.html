@@ -161,7 +161,7 @@
 <h2>차례 : {{turn.color}} </h2>
 <h2>승자 : {{winner.color}}</h2>
 
-<form action="/chess" method="post">
+<form action="/game/{{room.id}}/move" method="post">
     <label>
         > 게임 이동 : move source 위치 target 위치 - 예. move b2 b3 <br>
         <input type="text" name="command">

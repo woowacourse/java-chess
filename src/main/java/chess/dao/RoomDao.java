@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.controller.web.dto.RoomDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,41 +11,49 @@ import java.util.List;
 
 import static chess.dao.DBConnection.getConnection;
 
-public class CommandDao {
-    public void insert(Long roomId, String command) {
-        String query = "INSERT INTO command (room_id, content) VALUES (?, ?)";
+public class RoomDao {
+    public void insert(String roomName) {
+        String query = "INSERT INTO room (room_name) VALUES (?)";
 
         try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, roomId);
-            pstmt.setString(2, command);
+            pstmt.setString(1, roomName);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("insert Error");
         }
     }
 
-    public List<String> selectAll(Long roomId) {
-        String query = "SELECT * FROM command WHERE room_id = (?)";
-        List<String> commands = new ArrayList<>();
+    public List<RoomDto> selectAll() {
+        String query = "SELECT * FROM room";
+        List<RoomDto> roomDtos = new ArrayList<>();
         try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, roomId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                commands.add(rs.getString("content"));
+                roomDtos.add(new RoomDto(rs.getLong("room_id"), rs.getString("room_name")));
             }
         } catch (SQLException e) {
             System.err.println("select All Error");
         }
-        return commands;
+        return roomDtos;
     }
 
 
+    public void delete(Long roomId) {
+        String query = "DELETE FROM room WHERE room_id = (?)";
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setLong(1, roomId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("delete Error");
+        }
+    }
+
     public void deleteAll() {
-        String query = "DELETE FROM command";
+        String query = "DELETE FROM room";
         try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("delete All Error");
+            System.err.println("select All Error");
         }
     }
 }

@@ -1,7 +1,8 @@
 package chess.controller.web;
 
-import chess.domain.game.Game;
+import chess.controller.web.dto.RoomDto;
 import chess.service.ChessService;
+import chess.service.RoomService;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,33 +16,54 @@ import static spark.Spark.post;
 
 public class WebChessController {
     private final ChessService chessService;
+    private final RoomService roomService;
 
-    public WebChessController(ChessService chessService) {
+    public WebChessController(ChessService chessService, RoomService roomService) {
         this.chessService = chessService;
+        this.roomService = roomService;
     }
 
     public void run() {
-        get("/", this::welcomePage);
-        get("/start", this::start);
-        post("/chess", this::move);
-        get("/load", this::load);
+        get("/", this::mainPage);
+        get("/create", this::createRoom);
+        get("/delete/:roomId", this::deleteRoom);
+        get("/game/:roomId", this::loadGame);
+        post("/game/:roomId/move", this::move);
     }
 
-    private Object welcomePage(Request request, Response response) {
+    private Object mainPage(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.html"));
+        model.put("roomList", roomService.load());
+        return render(model, "index.html");
     }
 
-    private Object start(Request request, Response response) {
-        return chessService.start();
+    private Object createRoom(Request request, Response response) {
+        roomService.create(request.queryParams("roomName"));
+        return mainPage(request, response);
+    }
+
+    private Object deleteRoom(Request request, Response response) {
+        Long roomId = Long.parseLong(request.params(":roomId"));
+        roomService.delete(roomId);
+        return mainPage(request, response);
+    }
+
+
+    private Object loadGame(Request request, Response response) {
+        Long roomId = Long.parseLong(request.params(":roomId"));
+        Map<String, Object> model = chessService.load(roomId);
+        model.put("room", new RoomDto(roomId, ""));
+        return render(model, "chessboard.html");
     }
 
     private Object move(Request request, Response response) {
-        String command = request.queryParams("command");
-        return chessService.move(command);
+        Long roomId = Long.parseLong(request.params(":roomId"));
+        Map<String, Object> model = chessService.move(roomId, request.queryParams("command"));
+        model.put("room", new RoomDto(roomId, ""));
+        return render(model, "chessboard.html");
     }
 
-    private Object load(Request request, Response response) {
-        return chessService.load();
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

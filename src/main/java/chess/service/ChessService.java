@@ -1,29 +1,26 @@
 package chess.service;
 
-import chess.controller.web.ChessBoard;
+import chess.controller.web.dto.*;
 import chess.dao.CommandDao;
 import chess.domain.game.BoardFactory;
 import chess.domain.game.Command;
 import chess.domain.game.Game;
 import chess.domain.location.Position;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessService {
     private final CommandDao commandDao;
-    private Game game;
 
     public ChessService(CommandDao commandDao) {
         this.commandDao = commandDao;
     }
 
-    public Object start() {
-        init();
-        commandDao.deleteAll();
-        return new ChessBoard(game).html();
-    }
+    public Map<String, Object> move(Long roomId, String command) {
+        Game game = newGame(roomId);
 
-    public Object move(String command) {
         try {
             String[] commands = command.split(Command.SPACE_REGEX);
             String from = commands[1];
@@ -31,22 +28,25 @@ public class ChessService {
 
             game.move(Position.from(from), Position.from(to));
         } catch (IllegalArgumentException e) {
-            return new ChessBoard(game).html(e.getMessage());
+            return makeBoardModel(game, e.getMessage());
         }
 
-        commandDao.insert(command);
-        return new ChessBoard(game).html();
+        commandDao.insert(roomId, command);
+        return makeBoardModel(game,"");
     }
 
+    public Map<String, Object> load(Long roomId) {
+        Game game = newGame(roomId);
+        return makeBoardModel(game, "");
+    }
 
-    public Object load() {
-        init();
-        List<String> commands = commandDao.selectAll();
+    private Game newGame(Long roomId) {
+        Game game = new Game(BoardFactory.create());
+        List<String> commands = commandDao.selectAll(roomId);
         for (String command : commands) {
             action(game, command);
         }
-
-        return new ChessBoard(game).html();
+        return game;
     }
 
     private void action(Game game, String command) {
@@ -57,7 +57,25 @@ public class ChessService {
         game.move(Position.from(from), Position.from(to));
     }
 
-    public void init() {
-        game = new Game(BoardFactory.create());
+    private Map<String, Object> makeBoardModel(Game game, String errorMessage) {
+        Map<PositionDto, PieceDto> board = new BoardDto(game.allBoard()).getMaps();
+        List<ScoreDto> score = new ScoreDtos(game.score()).getScoreDtos();
+        ColorDto color = new ColorDto(game.currentPlayer());
+        boolean isFinished = game.isEnd();
+        Map<String, Object> model = new HashMap<>();
+
+        for (PositionDto positionDTO : board.keySet()) {
+            model.put(positionDTO.getKey(), board.get(positionDTO));
+        }
+
+        model.put("scores", score);
+        model.put("turn", color);
+        model.put("error", new ErrorDto(errorMessage));
+
+        if (isFinished) {
+            model.put("winner", color);
+        }
+
+        return model;
     }
 }

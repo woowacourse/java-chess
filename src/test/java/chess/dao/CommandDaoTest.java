@@ -13,7 +13,7 @@ public class CommandDaoTest {
     private CommandDao commandDAO;
 
     @BeforeEach
-    public void setup() throws SQLException {
+    public void setup() {
         commandDAO = new CommandDao();
         commandDAO.deleteAll();
     }
@@ -25,7 +25,7 @@ public class CommandDaoTest {
     }
 
     @Test
-    void insert() throws SQLException {
-        commandDAO.insert("move a7 a6");
+    void insert() {
+        commandDAO.insert(1L, "move a7 a6");
     }
 }
