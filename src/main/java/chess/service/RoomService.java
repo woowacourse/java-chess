@@ -13,8 +13,7 @@ public class RoomService {
     }
 
     public Long create(String roomName) {
-        roomDao.insert(roomName);
-        return roomDao.findIdByName(roomName);
+        return roomDao.insert(roomName);
     }
 
     public void delete(Long roomId) {

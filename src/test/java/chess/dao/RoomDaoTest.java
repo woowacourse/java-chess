@@ -3,7 +3,7 @@ package chess.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RoomDaoTest {
     private RoomDao roomDao;
@@ -11,16 +11,16 @@ class RoomDaoTest {
     @BeforeEach
     public void setup() {
         roomDao = new RoomDao();
-        roomDao.deleteAll();
     }
 
     @Test
     void insert() {
-        roomDao.insert("newName");
+        assertThat(roomDao.insert("asd")).isNotEqualTo(0L);
     }
 
     @Test
     void delete() {
         roomDao.delete(1L);
     }
+
 }

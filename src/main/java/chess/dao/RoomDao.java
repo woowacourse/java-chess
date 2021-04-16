@@ -12,15 +12,24 @@ import java.util.List;
 import static chess.dao.DBConnection.getConnection;
 
 public class RoomDao {
-    public void insert(String roomName) {
+    public long insert(String roomName) {
         String query = "INSERT INTO room (room_name) VALUES (?)";
+        String query2 = "SELECT last_insert_id();";
+        long last_inserted_id = 0L;
 
-        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);
+             PreparedStatement pstmt2 = connection.prepareStatement(query2)) {
             pstmt.setString(1, roomName);
             pstmt.executeUpdate();
+            ResultSet rs = pstmt2.executeQuery();
+            if (rs.next()) {
+                last_inserted_id = rs.getLong(1);
+            }
         } catch (SQLException e) {
-            System.err.println("insert Error");
+            throw new IllegalArgumentException();
         }
+        return last_inserted_id;
     }
 
     public List<RoomDto> selectAll() {
