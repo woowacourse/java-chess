@@ -18,26 +18,25 @@ public class ChessService {
         this.commandDao = commandDao;
     }
 
-    public Map<String, Object> move(Long roomId, String command) {
+    public void move(Long roomId, String command) {
         Game game = newGame(roomId);
 
         try {
             String[] commands = command.split(Command.SPACE_REGEX);
             String from = commands[1];
             String to = commands[2];
-
             game.move(Position.from(from), Position.from(to));
         } catch (IllegalArgumentException e) {
-            return makeBoardModel(game, e.getMessage());
+            System.out.println(e.getMessage());
         }
-
         commandDao.insert(roomId, command);
-        return makeBoardModel(game,"");
     }
 
     public Map<String, Object> load(Long roomId) {
         Game game = newGame(roomId);
-        return makeBoardModel(game, "");
+        Map<String, Object> model = makeBoardModel(game, "");
+        model.put("room", new RoomDto(roomId, ""));
+        return model;
     }
 
     private Game newGame(Long roomId) {

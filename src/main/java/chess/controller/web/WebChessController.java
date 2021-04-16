@@ -38,29 +38,29 @@ public class WebChessController {
     }
 
     private Object createRoom(Request request, Response response) {
-        roomService.create(request.queryParams("roomName"));
-        return mainPage(request, response);
+        Long roomId = roomService.create(request.queryParams("roomName"));
+        response.redirect("/game/" + roomId);
+        return null;
     }
 
     private Object deleteRoom(Request request, Response response) {
         Long roomId = Long.parseLong(request.params(":roomId"));
         roomService.delete(roomId);
-        return mainPage(request, response);
+        response.redirect("/");
+        return null;
     }
-
 
     private Object loadGame(Request request, Response response) {
         Long roomId = Long.parseLong(request.params(":roomId"));
         Map<String, Object> model = chessService.load(roomId);
-        model.put("room", new RoomDto(roomId, ""));
         return render(model, "chessboard.html");
     }
 
     private Object move(Request request, Response response) {
         Long roomId = Long.parseLong(request.params(":roomId"));
-        Map<String, Object> model = chessService.move(roomId, request.queryParams("command"));
-        model.put("room", new RoomDto(roomId, ""));
-        return render(model, "chessboard.html");
+        chessService.move(roomId, request.queryParams("command"));
+        response.redirect("/game/" + roomId);
+        return null;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -12,8 +12,9 @@ public class RoomService {
         this.roomDao = roomDao;
     }
 
-    public void create(String roomName) {
+    public Long create(String roomName) {
         roomDao.insert(roomName);
+        return roomDao.findIdByName(roomName);
     }
 
     public void delete(Long roomId) {
