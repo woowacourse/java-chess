@@ -1,13 +1,13 @@
 package chess.dao;
 
 import chess.controller.web.dto.MoveDto;
+import chess.exception.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static chess.dao.DBConnection.getConnection;
@@ -24,7 +24,7 @@ public class CommandDao {
             pstmt.setString(3, move_to);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("insert Error");
+            throw new DataAccessException(e);
         }
     }
 
@@ -38,10 +38,8 @@ public class CommandDao {
             ResultSet rs = pstmt.executeQuery();
             return collectMoves(rs);
         } catch (SQLException e) {
-            System.err.println("select All Error");
+            throw new DataAccessException(e);
         }
-
-        return Collections.emptyList();
     }
 
     private List<MoveDto> collectMoves(ResultSet rs) throws SQLException {

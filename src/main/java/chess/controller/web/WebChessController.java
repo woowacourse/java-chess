@@ -1,6 +1,6 @@
 package chess.controller.web;
 
-import chess.controller.web.dto.RoomDto;
+import chess.exception.DataAccessException;
 import chess.service.ChessService;
 import chess.service.RoomService;
 import spark.ModelAndView;
@@ -11,8 +11,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebChessController {
     private final ChessService chessService;
@@ -29,6 +28,8 @@ public class WebChessController {
         get("/delete/:roomId", this::deleteRoom);
         get("/game/:roomId", this::loadGame);
         post("/game/:roomId/move", this::move);
+        exception(IllegalArgumentException.class, this::handleException);
+        exception(DataAccessException.class, this::handleException);
     }
 
     private Object mainPage(Request request, Response response) {
@@ -62,6 +63,12 @@ public class WebChessController {
         response.redirect("/game/" + roomId);
         return null;
     }
+
+    private void handleException(RuntimeException e, Request req, Response res) {
+        res.status(404);
+        res.body(e.getMessage());
+    }
+
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

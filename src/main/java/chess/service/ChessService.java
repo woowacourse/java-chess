@@ -19,19 +19,13 @@ public class ChessService {
 
     public void move(Long roomId, String from, String to) {
         Game game = newGame(roomId);
-
-        try {
-            game.move(Position.from(from), Position.from(to));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-
+        game.move(Position.from(from), Position.from(to));
         commandDao.insert(roomId, from, to);
     }
 
     public Map<String, Object> load(Long roomId) {
         Game game = newGame(roomId);
-        Map<String, Object> model = makeBoardModel(game, "");
+        Map<String, Object> model = makeChessModel(game);
         model.put("room", new RoomDto(roomId, ""));
         return model;
     }
@@ -45,46 +39,28 @@ public class ChessService {
         return game;
     }
 
-    private Map<String, Object> makeBoardModel(Game game, String errorMessage) {
-        return setModel(
-                errorMessage,
-                new BoardDto(game.allBoard()).getMaps(),
-                new ScoreDtos(game.score()).getScoreDtos(),
-                new ColorDto(game.currentPlayer()),
-                game.isEnd()
-        );
-    }
-
-    private Map<String, Object> setModel(String errorMessage,
-                                         Map<PositionDto, PieceDto> board,
-                                         List<ScoreDto> score,
-                                         ColorDto color,
-                                         boolean isFinished) {
+    private Map<String, Object> makeChessModel(Game game) {
         Map<String, Object> model = new HashMap<>();
-
-        setBoard(board, model);
-        setGameInformation(errorMessage, score, color, isFinished, model);
-
+        setBoard(new BoardDto(game.allBoard()).getMaps(), model);
+        setGameInformation(new ScoreDtos(game.score()).getScoreDtos(), new ColorDto(game.currentPlayer()), game.isEnd(), model);
         return model;
-    }
-
-    private void setGameInformation(String errorMessage,
-                                    List<ScoreDto> score,
-                                    ColorDto color,
-                                    boolean isFinished,
-                                    Map<String, Object> model) {
-        model.put("scores", score);
-        model.put("turn", color);
-        model.put("error", new ErrorDto(errorMessage));
-
-        if (isFinished) {
-            model.put("winner", color);
-        }
     }
 
     private void setBoard(Map<PositionDto, PieceDto> board, Map<String, Object> model) {
         for (PositionDto positionDTO : board.keySet()) {
             model.put(positionDTO.getKey(), board.get(positionDTO));
+        }
+    }
+
+    private void setGameInformation(List<ScoreDto> score,
+                                    ColorDto color,
+                                    boolean isFinished,
+                                    Map<String, Object> model) {
+        model.put("scores", score);
+        model.put("turn", color);
+
+        if (isFinished) {
+            model.put("winner", color);
         }
     }
 }
