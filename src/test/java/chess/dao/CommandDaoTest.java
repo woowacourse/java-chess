@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import static chess.dao.DBConnection.getConnection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,6 +25,6 @@ public class CommandDaoTest {
 
     @Test
     void insert() {
-        commandDAO.insert(1L, "move a7 a6");
+        commandDAO.insert(1L, "a7", "a6");
     }
 }

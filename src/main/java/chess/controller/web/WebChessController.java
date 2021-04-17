@@ -58,7 +58,7 @@ public class WebChessController {
 
     private Object move(Request request, Response response) {
         Long roomId = Long.parseLong(request.params(":roomId"));
-        chessService.move(roomId, request.queryParams("command"));
+        chessService.move(roomId, request.queryParams("from"), request.queryParams("to"));
         response.redirect("/game/" + roomId);
         return null;
     }

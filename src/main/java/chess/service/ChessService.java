@@ -3,7 +3,6 @@ package chess.service;
 import chess.controller.web.dto.*;
 import chess.dao.CommandDao;
 import chess.domain.game.BoardFactory;
-import chess.domain.game.Command;
 import chess.domain.game.Game;
 import chess.domain.location.Position;
 
@@ -18,19 +17,16 @@ public class ChessService {
         this.commandDao = commandDao;
     }
 
-    public void move(Long roomId, String command) {
+    public void move(Long roomId, String from, String to) {
         Game game = newGame(roomId);
 
         try {
-            String[] commands = command.split(Command.SPACE_REGEX);
-            String from = commands[1];
-            String to = commands[2];
             game.move(Position.from(from), Position.from(to));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
 
-        commandDao.insert(roomId, command);
+        commandDao.insert(roomId, from, to);
     }
 
     public Map<String, Object> load(Long roomId) {
@@ -42,19 +38,11 @@ public class ChessService {
 
     private Game newGame(Long roomId) {
         Game game = new Game(BoardFactory.create());
-        List<String> commands = commandDao.selectAll(roomId);
-        for (String command : commands) {
-            action(game, command);
+        List<MoveDto> moves = commandDao.selectOf(roomId);
+        for (MoveDto move : moves) {
+            game.move(Position.from(move.getFrom()), Position.from(move.getTo()));
         }
         return game;
-    }
-
-    private void action(Game game, String command) {
-        String[] commands = command.split(Command.SPACE_REGEX);
-        String from = commands[1];
-        String to = commands[2];
-
-        game.move(Position.from(from), Position.from(to));
     }
 
     private Map<String, Object> makeBoardModel(Game game, String errorMessage) {

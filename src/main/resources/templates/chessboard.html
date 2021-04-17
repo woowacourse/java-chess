@@ -162,11 +162,11 @@
 <h2>승자 : {{winner.color}}</h2>
 
 <form action="/game/{{room.id}}/move" method="post">
-    <label>
-        > 게임 이동 : move source 위치 target 위치 - 예. move b2 b3 <br>
-        <input type="text" name="command">
-    </label>
-    <input type="submit" value="입력">
+    <label for="from">From: </label>
+    <input type="text" name="from" id="from">
+    <label for="to">To: </label>
+    <input type="text" name="to" id="to">
+    <input type="submit" value="이동">
 </form>
 
 
