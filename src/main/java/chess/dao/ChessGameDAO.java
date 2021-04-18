@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ChessGameDAO {
 
@@ -48,7 +49,6 @@ public class ChessGameDAO {
         }
     }
 
-    // 드라이버 연결해제
     public void closeConnection(Connection con) {
         try {
             if (con != null) {
@@ -61,7 +61,10 @@ public class ChessGameDAO {
 
     public void addGame(WebChessGame chessGame) {
         String query = "INSERT INTO chess_game (turn, finished, board) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)
+        ) {
             pstmt.setString(1, chessGame.getTurn());
             pstmt.setBoolean(2, chessGame.isOver());
             pstmt.setString(
@@ -77,7 +80,11 @@ public class ChessGameDAO {
 
     public int recentGame() throws SQLException {
         String query = "SELECT MAX(id) FROM chess_game";
-        try (ResultSet rs = getConnection().createStatement().executeQuery(query)) {
+        try (
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query)
+        ) {
             if (rs.next()) {
                 return rs.getInt("MAX(id)");
             }
@@ -87,7 +94,10 @@ public class ChessGameDAO {
 
     public void saveGame(int gameId, WebChessGame chessGame) {
         String query = "UPDATE chess_game SET turn = ?, finished = ?, board = ? WHERE id = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)
+        ) {
             pstmt.setString(1, chessGame.getTurn());
             pstmt.setBoolean(2, chessGame.isOver());
             pstmt.setString(
@@ -104,10 +114,12 @@ public class ChessGameDAO {
 
     public WebChessGame loadGame(int gameId) throws SQLException {
         String query = "SELECT * FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-        try (pstmt; rs) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
+            pstmt.setInt(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
                 return null;
             }
@@ -120,10 +132,12 @@ public class ChessGameDAO {
 
     public Color turn(int gameId) throws SQLException {
         String query = "SELECT turn FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-        try (pstmt; rs) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
+            pstmt.setInt(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
                 return null;
             }
@@ -133,7 +147,10 @@ public class ChessGameDAO {
 
     public void finish(int gameId) {
         String query = "UPDATE chess_game SET finished = ? WHERE id = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)
+        ) {
             pstmt.setBoolean(1, true);
             pstmt.setInt(2, gameId);
             pstmt.executeUpdate();
@@ -145,10 +162,12 @@ public class ChessGameDAO {
 
     public boolean finished(int gameId) throws SQLException {
         String query = "SELECT finished FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-        try (pstmt; rs) {
+        try (
+            Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
+            pstmt.setInt(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
             if (!rs.next()) {
                 return false;
             }
