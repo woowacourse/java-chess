@@ -8,14 +8,4 @@ public interface State {
     State opposite();
 
     State end();
-
-    State status();
-
-    boolean isEnd();
-
-    State start();
-
-    State finish();
-
-    boolean isFinished();
 }

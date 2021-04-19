@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Basis implements Piece {
-    private final String displayName;
+    protected final char displayName;
 
-    public Basis(String displayName) {
+    public Basis(char displayName) {
         this.displayName = displayName;
     }
 
@@ -29,6 +29,6 @@ public abstract class Basis implements Piece {
 
     @Override
     public String display() {
-        return displayName;
+        return String.valueOf(displayName);
     }
 }

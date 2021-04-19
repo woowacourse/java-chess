@@ -8,21 +8,14 @@ import java.util.Map;
 
 public abstract class Division extends Basis {
     protected final Color color;
+    private final double score;
     private final MoveStrategy moveStrategy;
 
-    public Division(Color color, String displayName, MoveStrategy moveStrategy) {
+    public Division(Color color, double score, char displayName, MoveStrategy moveStrategy) {
         super(displayName);
+        this.score = score;
         this.color = color;
         this.moveStrategy = moveStrategy;
-    }
-
-    @Override
-    public String display() {
-        if (Color.BLACK.equals(color)) {
-            return super.display()
-                        .toUpperCase();
-        }
-        return super.display();
     }
 
     @Override
@@ -40,14 +33,18 @@ public abstract class Division extends Basis {
         return false;
     }
 
-    public abstract boolean isKing();
+    @Override
+    public double score() {
+        return score;
+    }
 
-    public abstract boolean isPawn();
-
-    public abstract double score();
-
+    @Override
     public List<Position> movablePositions(Position from, Map<Position, Piece> pieceByPosition) {
         return moveStrategy.movablePositions(from, pieceByPosition);
     }
+
+    public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 
 }

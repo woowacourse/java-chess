@@ -1,6 +1,8 @@
 package chess.domain.location;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Position {
     private final Column column;
@@ -43,16 +45,16 @@ public class Position {
         return cache.values();
     }
 
-    public boolean canMove(Vector vector) {
-        return column.canMove(vector.column()) && row.canMove(vector.row());
+    public boolean canMove(Direction direction) {
+        return column.canMove(direction.column()) && row.canMove(direction.row());
     }
 
     public boolean canMove(int column, int row) {
         return this.column.canMove(column) && this.row.canMove(row);
     }
 
-    public Position move(Vector vector) {
-        return Position.of(column.move(vector.column()), row.move(vector.row()));
+    public Position move(Direction direction) {
+        return Position.of(column.move(direction.column()), row.move(direction.row()));
     }
 
     public Position move(int column, int row) {
@@ -61,5 +63,9 @@ public class Position {
 
     public boolean hasRow(Row row) {
         return this.row.equals(row);
+    }
+
+    public String toKey() {
+        return column.value() + row.value();
     }
 }

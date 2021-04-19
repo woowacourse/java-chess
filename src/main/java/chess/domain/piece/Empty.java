@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Empty extends Basis {
     public Empty() {
-        super(".");
+        super(' ');
     }
 
     @Override

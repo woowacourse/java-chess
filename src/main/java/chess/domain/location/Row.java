@@ -11,7 +11,7 @@ public enum Row {
     EIGHT("8");
 
     private final String value;
-    private static Row[] rows = values();
+    private static final Row[] rows = values();
 
     Row(String value) {
         this.value = value;

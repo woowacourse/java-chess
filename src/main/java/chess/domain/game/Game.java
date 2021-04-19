@@ -3,9 +3,8 @@ package chess.domain.game;
 import chess.domain.location.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.state.Init;
+import chess.domain.state.BlackTurn;
 import chess.domain.state.State;
-import chess.domain.state.Status;
 
 import java.util.Map;
 
@@ -16,40 +15,35 @@ public class Game {
 
     public Game(Board board) {
         this.board = board;
-        state = new Init();
+        state = BlackTurn.getInstance();
     }
 
     public void move(Position from, Position to) {
-        board.action(state.color(), from, to);
+        checkGameEnd();
+        board.move(state.color(), from, to);
+        updateState();
+    }
+
+    private void checkGameEnd() {
+        if (isEnd()) {
+            throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        }
+    }
+
+    private void updateState() {
         if (board.isKingDead()) {
-            end();
+            state = state.end();
             return;
         }
         state = state.opposite();
-}
-
-    public void start() {
-        state = state.start();
-    }
-
-    public void end() {
-        state = state.end();
-    }
-
-    public void status() {
-        state = state.status();
     }
 
     public boolean isEnd() {
-        return state.isEnd();
+        return board.isKingDead();
     }
 
     public boolean isNotEnd() {
         return !isEnd();
-    }
-
-    public boolean isStatus() {
-        return state instanceof Status;
     }
 
     public Color currentPlayer() {
@@ -60,15 +54,11 @@ public class Game {
         return calculator.scoreByColor(board.allPieces());
     }
 
+    public double score(Color color) {
+        return calculator.score(color, board.allPieces());
+    }
+
     public Map<Position, Piece> allBoard() {
         return board.allPieces();
-    }
-
-    public boolean isFinished() {
-        return state.isFinished();
-    }
-
-    public State finish() {
-        return state.finish();
     }
 }

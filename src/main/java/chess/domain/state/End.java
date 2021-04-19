@@ -3,10 +3,18 @@ package chess.domain.state;
 import chess.domain.piece.Color;
 
 public class End implements State {
+    public static final End BLACK_WIN = new End(Color.BLACK);
+    public static final End WHITE_WIN = new End(Color.WHITE);
+
+    private final Color winner;
+
+    private End(Color color) {
+        this.winner = color;
+    }
 
     @Override
     public Color color() {
-        throw new IllegalArgumentException();
+        return winner;
     }
 
     @Override
@@ -16,31 +24,7 @@ public class End implements State {
 
     @Override
     public State end() {
-        return new Finished();
-    }
-
-    @Override
-    public State status() {
-        return new Status();
-    }
-
-    @Override
-    public boolean isEnd() {
-        return true;
-    }
-
-    @Override
-    public State start() {
         throw new IllegalArgumentException();
     }
 
-    @Override
-    public State finish() {
-        return new Finished();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }

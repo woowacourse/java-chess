@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        .chess-board {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .chess-board th {
+            padding: .5em;
+        }
+
+        .chess-board th + th {
+            border-bottom: 1px solid #000;
+        }
+
+        .chess-board th:first-child,
+        .chess-board td:last-child {
+            border-right: 1px solid #000;
+        }
+
+        .chess-board tr:last-child td {
+            border-bottom: 1px solid;
+        }
+
+        .chess-board th:empty {
+            border: none;
+        }
+
+        .chess-board td {
+            width: 1.5em;
+            height: 1.5em;
+            text-align: center;
+            font-size: 32px;
+            line-height: 0;
+        }
+
+        .chess-board .light {
+            background: #eee;
+        }
+
+        .chess-board .dark {
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+<table class="chess-board">
+    <tbody>
+    <tr>
+        <th></th>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+        <th>e</th>
+        <th>f</th>
+        <th>g</th>
+        <th>h</th>
+    </tr>
+    <tr>
+        <th>8</th>
+        <td class="light">{{a8.display}}</td>
+        <td class="dark">{{b8.display}}</td>
+        <td class="light">{{c8.display}}</td>
+        <td class="dark">{{d8.display}}</td>
+        <td class="light">{{e8.display}}</td>
+        <td class="dark">{{f8.display}}</td>
+        <td class="light">{{g8.display}}</td>
+        <td class="dark">{{h8.display}}</td>
+    </tr>
+    <tr>
+        <th>7</th>
+        <td class="dark">{{a7.display}}</td>
+        <td class="light">{{b7.display}}</td>
+        <td class="dark">{{c7.display}}</td>
+        <td class="light">{{d7.display}}</td>
+        <td class="dark">{{e7.display}}</td>
+        <td class="light">{{f7.display}}</td>
+        <td class="dark">{{g7.display}}</td>
+        <td class="light">{{h7.display}}</td>
+    </tr>
+    <tr>
+        <th>6</th>
+        <td class="light">{{a6.display}}</td>
+        <td class="dark">{{b6.display}}</td>
+        <td class="light">{{c6.display}}</td>
+        <td class="dark">{{d6.display}}</td>
+        <td class="light">{{e6.display}}</td>
+        <td class="dark">{{f6.display}}</td>
+        <td class="light">{{g6.display}}</td>
+        <td class="dark">{{h6.display}}</td>
+    </tr>
+    <tr>
+        <th>5</th>
+        <td class="dark">{{a5.display}}</td>
+        <td class="light">{{b5.display}}</td>
+        <td class="dark">{{c5.display}}</td>
+        <td class="light">{{d5.display}}</td>
+        <td class="dark">{{e5.display}}</td>
+        <td class="light">{{f5.display}}</td>
+        <td class="dark">{{g5.display}}</td>
+        <td class="light">{{h5.display}}</td>
+    </tr>
+    <tr>
+        <th>4</th>
+        <td class="light">{{a4.display}}</td>
+        <td class="dark">{{b4.display}}</td>
+        <td class="light">{{c4.display}}</td>
+        <td class="dark">{{d4.display}}</td>
+        <td class="light">{{e4.display}}</td>
+        <td class="dark">{{f4.display}}</td>
+        <td class="light">{{g4.display}}</td>
+        <td class="dark">{{h4.display}}</td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td class="dark">{{a3.display}}</td>
+        <td class="light">{{b3.display}}</td>
+        <td class="dark">{{c3.display}}</td>
+        <td class="light">{{d3.display}}</td>
+        <td class="dark">{{e3.display}}</td>
+        <td class="light">{{f3.display}}</td>
+        <td class="dark">{{g3.display}}</td>
+        <td class="light">{{h3.display}}</td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <td class="light">{{a2.display}}</td>
+        <td class="dark">{{b2.display}}</td>
+        <td class="light">{{c2.display}}</td>
+        <td class="dark">{{d2.display}}</td>
+        <td class="light">{{e2.display}}</td>
+        <td class="dark">{{f2.display}}</td>
+        <td class="light">{{g2.display}}</td>
+        <td class="dark">{{h2.display}}</td>
+    </tr>
+    <tr>
+        <th>1</th>
+        <td class="dark">{{a1.display}}</td>
+        <td class="light">{{b1.display}}</td>
+        <td class="dark">{{c1.display}}</td>
+        <td class="light">{{d1.display}}</td>
+        <td class="dark">{{e1.display}}</td>
+        <td class="light">{{f1.display}}</td>
+        <td class="dark">{{g1.display}}</td>
+        <td class="light">{{h1.display}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>점수 판</h2>
+{{#scores}}
+{{color}} Score: {{value}}<br>
+{{/scores}}
+
+<h2>{{error.message}}</h2>
+<h2>차례 : {{turn.color}} </h2>
+<h2>승자 : {{winner.color}}</h2>
+
+<form action="/game/{{room.id}}/move" method="post">
+    <label for="from">From: </label>
+    <input type="text" name="from" id="from">
+    <label for="to">To: </label>
+    <input type="text" name="to" id="to">
+    <input type="submit" value="이동">
+</form>
+
+
+<form action="/" method="get">
+    <input type="submit" value="초기화면">
+</form>
+</body>
+</html>

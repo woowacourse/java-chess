@@ -11,7 +11,7 @@ public enum Column {
     H("h");
 
     private final String value;
-    private static Column[] columns = values();
+    private static final Column[] columns = values();
 
     Column(String value) {
         this.value = value;

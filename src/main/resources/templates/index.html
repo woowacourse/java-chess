@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko-kr">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<h1>체스 게임을 시작합니다</h1>
+<h2>{{error.message}}</h2>
+
+<form action="/create">
+    <label>
+        방 추가(이름 추가) 왜 영어만 될까? <br>
+    </label>
+    <input type="text" name="roomName">
+    <input type="submit" value="시작">
+</form>
+
+<h2>진행 게임 목록</h2>
+{{#roomList}}
+<tr>
+    <th>{{id}}</th>
+    <th><a href="/game/{{id}}">{{name}}</a></th>
+    <th><a href="/delete/{{id}}">delete</a></th>
+    <br>
+</tr>
+{{/roomList}}
+
 </body>
 </html>

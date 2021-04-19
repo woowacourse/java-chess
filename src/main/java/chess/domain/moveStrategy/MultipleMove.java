@@ -1,7 +1,7 @@
 package chess.domain.moveStrategy;
 
+import chess.domain.location.Direction;
 import chess.domain.location.Position;
-import chess.domain.location.Vector;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MultipleMove implements MoveStrategy {
-    private Color color;
-    private List<Vector> directions;
+    private final Color color;
+    private final List<Direction> directions;
 
-    public MultipleMove(Color color, List<Vector> directions) {
+    public MultipleMove(Color color, List<Direction> directions) {
         this.color = color;
         this.directions = directions;
     }
@@ -27,16 +27,21 @@ public class MultipleMove implements MoveStrategy {
                          .collect(Collectors.toList());
     }
 
-    private Stream<Position> movablePositionsOf(Vector direction, Position from, Map<Position, Piece> pieceByPosition) {
-        List<Position> positions = new ArrayList<>();
-        Position temp = from;
-        while (pieceByPosition.get(temp).isEmpty() && temp.canMove(direction)) {
-            temp = temp.move(direction);
-            positions.add(temp);
+    private Stream<Position> movablePositionsOf(Direction direction, Position from, Map<Position, Piece> pieceByPosition) {
+        if (!from.canMove(direction)) {
+            return Stream.empty();
         }
 
+        List<Position> positions = new ArrayList<>();
+        Position temp = from;
+        do {
+            temp = temp.move(direction);
+            positions.add(temp);
+        } while (pieceByPosition.get(temp)
+                                .isEmpty() && temp.canMove(direction));
+
         if (pieceByPosition.get(temp)
-                            .isOpposite(color)) {
+                           .isOpposite(color)) {
             positions.add(temp);
         }
         return positions.stream();

@@ -31,7 +31,7 @@ public class PositionTest {
     @MethodSource("positions")
     void moveBy(int column, int row, Position expected) {
         Position position = Position.of(Column.D, Row.SIX);
-        assertThat(position.move(new Vector(column, row))).isEqualTo(expected);
+        assertThat(position.move(column, row)).isEqualTo(expected);
     }
 
     @Test
@@ -39,5 +39,12 @@ public class PositionTest {
         Position position1 = Position.from("a1");
         Position position2 = Position.of(Column.A, Row.ONE);
         assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    void toKey() {
+        assertThat(Position.from("c2")
+                           .toKey()).isEqualTo("c2");
+
     }
 }

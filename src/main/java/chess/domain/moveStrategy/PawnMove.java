@@ -33,7 +33,7 @@ public class PawnMove implements MoveStrategy {
         if (isEmptyPieceBy(1, from, pieceByPosition)) {
             positions.add(from.move(0, moveUnit));
         }
-        if (from.hasRow(color.initPawnRow()) && isEmptyPieceBy(2, from, pieceByPosition)) {
+        if (canMoveDouble(from, pieceByPosition)) {
             positions.add(from.move(0, 2 * moveUnit));
         }
         return positions;
@@ -48,12 +48,19 @@ public class PawnMove implements MoveStrategy {
         return false;
     }
 
+    private boolean canMoveDouble(Position from, Map<Position, Piece> pieceByPosition) {
+        return from.hasRow(color.initPawnRow()) && isEmptyPieceBy(2, from, pieceByPosition);
+    }
+
     private List<Position> positionsToKill(Position from, Map<Position, Piece> pieceByPosition) {
         return COLUMN_DIFFS_TO_KILL.stream()
-                                   .filter(column ->
-                                           from.canMove(column, moveUnit) && pieceByPosition.get(from.move(column, moveUnit))
-                                                                                            .isOpposite(color))
+                                   .filter(column -> canKill(from, pieceByPosition, column))
                                    .map(column -> from.move(column, moveUnit))
                                    .collect(Collectors.toList());
+    }
+
+    private boolean canKill(Position from, Map<Position, Piece> pieceByPosition, Integer column) {
+        return from.canMove(column, moveUnit) && pieceByPosition.get(from.move(column, moveUnit))
+                                                                .isOpposite(color);
     }
 }
