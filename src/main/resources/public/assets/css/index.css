@@ -1,0 +1,187 @@
+/* black #34495E
+white #CCCCCC
+more black #263238
+more white #95A5A6
+gold #FFCA28
+pink #ef9eba
+more pink #d2849e
+*/
+
+html {
+  background-color: #7A9E7E;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70rem;
+  margin-top: 2rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.title span {
+  font-size: 5rem;
+  -wwebkit-text-stroke: px #DF59F6;
+  color: #95d2d7;
+  font-style: italic;
+  text-shadow: 7px 7px 0 #DF59F6,
+  -1px -1px 0 #DF59F6,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  animation: title 5s infinite;
+}
+
+@keyframes title {
+  0% {
+    color: #00ecff;
+  }
+  35% {
+    color: #f3db53;
+  }
+  70% {
+    color: #e1ff36;
+  }
+  100% {
+    color: #00ecff;
+  }
+}
+
+.chessBoard {
+  display: grid;
+  grid-template-rows: repeat(8, 5rem);
+  grid-template-columns: repeat(8, 5rem);
+  border: 5px solid #e8a32d;
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square.b-black {
+  background-color: #FFF3E0;
+}
+
+.square.b-white {
+  background-color: #af8b7e;
+}
+
+.square img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 12rem;
+  height: 30rem;
+  padding: 1rem;
+  background-color: #FFF3E0;
+  border: 5px solid #e8a32d;
+}
+
+.b-turn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.player {
+  width: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player img {
+  margin: 1rem;
+  max-width: 4rem;
+}
+
+.player .score {
+  font-size: 3rem;
+  color: #7A9E7E;
+  text-shadow: 0 2px 2px #5c8360;
+}
+
+.control-btn {
+  appearance: none;
+  box-sizing: border-box;
+  padding: 7px;
+  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #935471;
+  background: #cc7ba0;
+  border-radius: 50px;
+  border: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 1px 1px #f389ba;
+  cursor: pointer;
+  margin: 6px 6px;
+  letter-spacing: .1em;
+  transition: all 200ms ease;
+  box-shadow: 1px 1px 1px #95667b,
+  0 0 0 4px #be829d,
+  1px 1px 1px white,
+  inset -2px -2px 2px #7b3e5a,
+  inset -0.5rem -0.5rem 0.25rem -0.2rem #b26788
+}
+
+.control-btn::-moz-focus-inner {
+  outline: none;
+  border: none;
+}
+
+.control-btn::-moz-focus-inner {
+  outline: none;
+  border: none;
+}
+
+.control-btn:hover {
+  color: #f389ba;
+  text-shadow: 1px 1px #935471;
+}
+
+.control-btn:active {
+  color: #935471;
+  text-shadow: 1px 1px #f389ba;
+  box-shadow: -1px -1px 1px #95667b,
+  0 0 0 4px #be829d,
+  1px 1px 1px white,
+  inset 2px 2px 2px #7b3e5a,
+  inset 0.5rem 0.5rem 0.25rem #b26788;
+}
+
+.control-btn:disabled {
+  color: #646464;
+  background: #959595;
+  text-shadow: 1px 1px #acacac;
+  box-shadow: -1px -1px 1px #6a6a6a,
+  0 0 0 4px #6c6c6c, 1px 1px 1px white,
+  inset 2px 2px 2px #4f4e4e,
+  inset 0.5rem 0.5rem 0.25rem #7d7d7d;
+}

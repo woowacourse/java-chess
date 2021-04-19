@@ -38,4 +38,8 @@ public enum Column {
     public int getIndex() {
         return index;
     }
+
+    public Character getString() {
+        return column;
+    }
 }

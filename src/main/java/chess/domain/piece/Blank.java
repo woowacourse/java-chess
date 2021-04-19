@@ -21,6 +21,10 @@ public class Blank extends Piece {
         this.type = Type.BLANK;
     }
 
+    public Blank(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         throw new UnsupportedOperationException(BLANK_ERROR);

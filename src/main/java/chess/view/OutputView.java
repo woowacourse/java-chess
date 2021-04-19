@@ -13,8 +13,6 @@ public class OutputView {
     public static final String START_COMMAND = "> 게임 시작 : start";
     public static final String END_COMMAND = "> 게임 종료: end";
     public static final String MOVE_COMMAND = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    public static final String GAME_END = "> 체스 게임이 종료되었습니다.";
-    public static final String STATUS_COMMAND = "> 결과 확인: status";
     public static final String RESULT_FORMAT = "%s: %.1f점 - %s";
     public static final int BOARD_MAXIMUM_INDEX = 7;
 
@@ -44,18 +42,13 @@ public class OutputView {
     public static void printResult(Result result) {
         String blackResult = String.format(RESULT_FORMAT,
             Color.BLACK.name(),
-            result.score(Color.BLACK),
+            result.getScore(Color.BLACK),
             result.winOrLose(Color.BLACK));
         String whiteResult = String.format(RESULT_FORMAT,
             Color.WHITE.name(),
-            result.score(Color.WHITE),
+            result.getScore(Color.WHITE),
             result.winOrLose(Color.WHITE));
         System.out.println(blackResult);
         System.out.println(whiteResult);
-    }
-
-    public static void gameEnd() {
-        System.out.println(GAME_END);
-        System.out.println(STATUS_COMMAND);
     }
 }

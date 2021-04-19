@@ -15,14 +15,15 @@ public class ChessGame {
 
     private final ChessBoard chessBoard;
     private Color turn;
+    private boolean finished;
 
     public ChessGame(ChessBoard chessBoard, Color turn) {
         this.chessBoard = chessBoard;
         this.turn = turn;
+        this.finished = false;
     }
 
     public void start() {
-        chessBoard.initBoard();
     }
 
     public void run(List<String> input) {
@@ -50,11 +51,18 @@ public class ChessGame {
     }
 
     public boolean isOver() {
-        return chessBoard.isOver();
+        return chessBoard.isOver() || finished;
+    }
+
+    public void end() {
+        finished = true;
     }
 
     public Result gameResult() {
-        return new Result(chessBoard.getChessBoard());
+        Result result = new Result();
+        result.add(Color.BLACK, chessBoard.score(Color.BLACK));
+        result.add(Color.WHITE, chessBoard.score(Color.WHITE));
+        return result;
     }
 
     public ChessBoard getChessBoard() {

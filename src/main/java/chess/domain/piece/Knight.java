@@ -11,6 +11,10 @@ public class Knight extends Piece {
         this.type = Type.KNIGHT;
     }
 
+    public Knight(Color color, char piece) {
+        super(color, piece);
+    }
+
     @Override
     public List<Direction> direction() {
         return Direction.knightDirection();
