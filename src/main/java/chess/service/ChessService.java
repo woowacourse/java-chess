@@ -1,17 +1,17 @@
 package chess.service;
 
 import chess.domain.board.Board;
+import chess.domain.game.Game;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
+import chess.domain.user.User;
 import chess.dto.chess.ChessDto;
 import chess.dto.chess.MoveRequestDto;
 import chess.dto.chess.MoveResponseDto;
 import chess.dto.game.GamePutRequestDto;
 import chess.dto.piece.PieceDto;
 import chess.dto.user.UserResponseDto;
-import chess.entity.Game;
-import chess.entity.User;
 import chess.utils.PieceConverter;
 import java.util.List;
 import java.util.stream.Collectors;

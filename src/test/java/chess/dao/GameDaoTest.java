@@ -2,8 +2,8 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.game.Game;
 import chess.domain.team.Team;
-import chess.entity.Game;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

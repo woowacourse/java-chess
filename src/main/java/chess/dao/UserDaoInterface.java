@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.entity.User;
+import chess.domain.user.User;
 import java.util.Optional;
 
 public interface UserDaoInterface {

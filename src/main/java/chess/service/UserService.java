@@ -1,8 +1,8 @@
 package chess.service;
 
 import chess.dao.UserDaoInterface;
+import chess.domain.user.User;
 import chess.dto.user.UserRequestDto;
-import chess.entity.User;
 import chess.service.exception.DataNotFoundException;
 
 public class UserService {

@@ -1,8 +1,8 @@
 package chess.service.testdao;
 
 import chess.dao.GameDaoInterface;
+import chess.domain.game.Game;
 import chess.domain.team.Team;
-import chess.entity.Game;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.game.Game;
 import chess.dto.game.GamePutRequestDto;
-import chess.entity.Game;
 import chess.service.testdao.TestGameDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

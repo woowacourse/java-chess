@@ -1,7 +1,7 @@
 package chess.service.testdao;
 
 import chess.dao.UserDaoInterface;
-import chess.entity.User;
+import chess.domain.user.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

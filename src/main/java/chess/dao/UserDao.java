@@ -4,7 +4,7 @@ import static chess.dao.utils.ConnectionManager.createConnection;
 
 import chess.dao.exception.UncheckedSQLException;
 import chess.dao.utils.JDBCHelper;
-import chess.entity.User;
+import chess.domain.user.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

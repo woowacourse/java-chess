@@ -1,9 +1,9 @@
 package chess.service;
 
 import chess.dao.GameDaoInterface;
+import chess.domain.game.Game;
 import chess.domain.team.Team;
 import chess.dto.game.GamePutRequestDto;
-import chess.entity.Game;
 import chess.service.exception.DataNotFoundException;
 import java.time.LocalDateTime;
 

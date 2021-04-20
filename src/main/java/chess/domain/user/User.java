@@ -1,4 +1,4 @@
-package chess.entity;
+package chess.domain.user;
 
 import java.time.LocalDateTime;
 
