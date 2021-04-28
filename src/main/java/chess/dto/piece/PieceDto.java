@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.piece;
 
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
@@ -18,8 +18,8 @@ public class PieceDto {
     }
 
     public static PieceDto from(final Piece piece) {
-        return new PieceDto(piece.getTeam(), piece.getPieceType().getValue(), piece.getX(),
-            piece.getY());
+        return new PieceDto(piece.getTeam(), piece.getPieceType().getValue(),
+            piece.getX(), piece.getY());
     }
 
     public Team getTeam() {

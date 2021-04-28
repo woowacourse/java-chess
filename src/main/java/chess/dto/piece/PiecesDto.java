@@ -1,6 +1,7 @@
-package chess.dto;
+package chess.dto.piece;
 
 import chess.domain.result.BoardResult;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,10 @@ public class PiecesDto {
 
     private PiecesDto(final List<PieceDto> pieces) {
         this.pieces = pieces;
+    }
+
+    public static PiecesDto createEmpty() {
+        return new PiecesDto(Collections.emptyList());
     }
 
     public static PiecesDto from(final BoardResult boardResult) {

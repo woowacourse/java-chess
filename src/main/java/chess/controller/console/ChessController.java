@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.console;
 
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printBoard;
@@ -10,7 +10,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.result.BoardResult;
 import chess.domain.result.ScoreResult;
 import chess.domain.state.ResultType;
-import chess.dto.PiecesDto;
+import chess.dto.piece.PiecesDto;
 import chess.view.OutputView;
 
 public class ChessController {

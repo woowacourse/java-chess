@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+html {
+    background-color: #1e1e1e;
+}
+
+.title-wrapper {
+    text-align: center;
+}
+
+.title {
+    color: #ffffff;
+    margin: 0;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 1;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 10vw;
+    animation: glow 2s ease-in-out infinite alternate;
+    text-align: center;
+    letter-spacing: 0.5vw;
+}
+
+.subtitle {
+    color: #ffffff;
+    margin: 0;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 1;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 10vw;
+    animation: glow 2s ease-in-out infinite alternate;
+    text-align: center;
+    letter-spacing: 0.5vw;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 3vw #ddef06;
+    }
+    to {
+        text-shadow: 0 0 5vw #e0c306, 0 0 1.5vw #e3cd03;
+    }
+}
+
+button,
+button::after {
+    font-family: 'Do Hyeon', sans-serif;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+button {
+    letter-spacing: 0.5vw;
+    background: none;
+    border: 3px solid #fff;
+    border-radius: 0.4vw;
+    color: #fff;
+    display: block;
+    font-size: 3vw;
+    font-weight: bold;
+    padding: 2vh 4vw;
+    position: relative;
+    text-transform: uppercase;
+}
+
+button::before,
+button::after {
+    background: #fff;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 0;
+}
+
+button:hover {
+    color: #000000;
+}
+
+button:hover:after {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.black-bear-piece, .white-bear-piece {
+    width: 15%;
+    padding: 2vh 6vw;
+}
+
+.middle-wrapper {
+    display: flex;
+}
+
+.button-wrapper {
+    padding-top: 2vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.img-wrapper {
+    display: flex;
+    justify-content: center;
+}

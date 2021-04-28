@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+:root {
+    --black-tile-color: rgba(30, 30, 30, 0.5);
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(8, [col] 6vw);
+    grid-template-rows: repeat(8, [row] 6vw);
+    width: 48vw;
+    border: 3px solid #000;
+    box-shadow: 0 5px 8px #777;
+    justify-content: center;
+    align-content: center;
+    margin: 0 auto;
+}
+
+.grid div {
+    font-size: calc(5vw);
+    text-align: center;
+    position: relative;
+}
+
+.grid div:nth-child(-n+8):nth-child(even) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+8):nth-child(-n+16):nth-child(odd) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+17):nth-child(-n+24):nth-child(even) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+25):nth-child(-n+32):nth-child(odd) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+33):nth-child(-n+40):nth-child(even) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+41):nth-child(-n+48):nth-child(odd) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+49):nth-child(-n+56):nth-child(even) {
+    background: var(--black-tile-color);
+}
+
+.grid div:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
+    background: var(--black-tile-color);
+}
+
+.piece {
+    width: 100%;
+    height: 100%;
+    transition: 0s;
+    position: absolute;
+    z-index: 100;
+}
+
+.outer-container {
+    display: flex;
+    padding-top: 2vh;
+    padding-left: 2vh;
+}
+
+.grid-container {
+    display: flex;
+}
+
+.info-container {
+    padding-left: 5vw;
+    width: 40vw;
+    display: block;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.name-container {
+    height: 12vw;
+    display: flex;
+    align-items: center;
+}
+
+.name-container.black {
+    justify-content: flex-end;
+}
+
+.name-container.white {
+    justify-content: flex-start;
+}
+
+.name-tag {
+    font-size: 5vw;
+}
+
+.bear-piece {
+    height: 100%;
+}
+
+.bear-piece.black {
+    padding-left: 2vw;
+}
+
+.bear-piece.white {
+    padding-right: 2vw;
+}
+
+.record-tag {
+    font-size: 3vw;
+}
+
+.record-tag.black {
+    text-align: right;
+}
+
+.chat-box {
+    width: 100%;
+    height: 24vw;
+    resize: none;
+    margin: 0 auto;
+    box-sizing: border-box;
+}

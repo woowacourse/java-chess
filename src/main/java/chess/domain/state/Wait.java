@@ -1,12 +1,17 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.location.Location;
 import chess.domain.result.Result;
 import chess.domain.state.command.CommandType;
 import chess.domain.state.exception.UnsupportedCommandException;
 import chess.domain.team.Team;
 
 public class Wait implements State {
+
+    private static final String BLANK = " ";
+    private static final int SOURCE_LOCATION_INDEX = 1;
+    private static final int TARGET_LOCATION_INDEX = 2;
 
     private final Board board;
     private final Team team;
@@ -66,5 +71,19 @@ public class Wait implements State {
     @Override
     public boolean needsParam() {
         return true;
+    }
+
+    @Override
+    public boolean isMovable() {
+        String[] words = command.split(BLANK);
+        Location source = Location.convert(words[SOURCE_LOCATION_INDEX].trim());
+        Location target = Location.convert(words[TARGET_LOCATION_INDEX].trim());
+
+        try {
+            board.validateMove(source, target, team);
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 }

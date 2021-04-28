@@ -36,17 +36,30 @@ public class Board {
     }
 
     public void move(final Location source, final Location target, final Team team) {
+        validateMove(source, target, team);
+        final Piece sourcePiece = find(source);
+        removeIfExistent(target);
+        sourcePiece.move(target);
+    }
+
+    public boolean isMovable(final Location source, final Location target, final Team team) {
+        try {
+            validateMove(source, target, team);
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
+    public void validateMove(final Location source, final Location target, final Team team) {
         validateSameLocation(source, target);
-        Piece sourcePiece = find(source);
+        final Piece sourcePiece = find(source);
         validateTeam(sourcePiece, team);
 
         validateMoveCapable(target, sourcePiece);
         validateIsNotSameTeam(target, sourcePiece);
         validateNotExistentInPath(sourcePiece.findPath(target));
         validatePawnMovable(sourcePiece, source, target);
-
-        removeIfExistent(target);
-        sourcePiece.move(target);
     }
 
     private void validateTeam(final Piece piece, final Team team) {
