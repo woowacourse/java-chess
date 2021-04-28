@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -13,7 +14,7 @@ public class ChessBoardFactory {
     public static ChessBoard initializeBoard() {
         Map<String, Position> positions = Position.getPositions();
         Map<Position, Piece> board = new LinkedHashMap<>();
-        positions.values().forEach(value -> board.put(value, null));
+        positions.values().forEach(value -> board.put(value, new Blank(value)));
         return new ChessBoard(board);
     }
 }

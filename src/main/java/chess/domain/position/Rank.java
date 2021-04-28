@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Rank {
     EMPTY(0, ""),
@@ -47,5 +46,9 @@ public enum Rank {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean isEmpty() {
+        return this == EMPTY;
     }
 }

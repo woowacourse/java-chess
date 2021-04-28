@@ -51,4 +51,8 @@ public enum File {
     public int getValue() {
         return value;
     }
+
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
 }

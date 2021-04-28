@@ -6,15 +6,13 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ChessBoard {
     private final Map<Position, Piece> boards;
 
     public ChessBoard(final Map<Position, Piece> boards) {
-        this.boards = new HashMap<>(boards);
+        this.boards = new LinkedHashMap<>(boards);
     }
 
     public void addPieces(final Pieces pieces) {

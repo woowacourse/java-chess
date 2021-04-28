@@ -2,12 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.piece.direction.*;
 import chess.domain.position.Position;
-import chess.domain.position.Target;
 
 import java.util.List;
 
 public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
+    private static final String BLACK = "black";
     private static final double SCORE = 5;
 
     private Rook(final String piece, final Color color, final Position position) {
@@ -17,7 +17,7 @@ public class Rook extends Piece {
     public static Rook from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new Rook(piece, Color.BLACK, position);
+            return new Rook(BLACK + piece, Color.BLACK, position);
         }
         return new Rook(piece, Color.WHITE, position);
     }
