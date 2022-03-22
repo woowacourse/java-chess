@@ -13,4 +13,8 @@ public class Command {
             throw new IllegalArgumentException("start 또는 end만 입력해주세요.");
         }
     }
+
+    public boolean isEnd() {
+        return value.equals("end");
+    }
 }
