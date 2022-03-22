@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board.coordinate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,4 +27,6 @@ public class Coordinate {
 		String key = column.getValue() + row.getValue();
 		return CACHE.get(key);
 	}
+
+
 }
