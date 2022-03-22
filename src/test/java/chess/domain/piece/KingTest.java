@@ -15,7 +15,7 @@ public class KingTest {
     @CsvSource(value = {"BLACK:K", "WHITE:k"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        King king = new King(new Position(PositionX.A, PositionY.RANK_2), color);
+        King king = new King(color);
 
         assertThat(king.signature()).isEqualTo(pieceName);
     }

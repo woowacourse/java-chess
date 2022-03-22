@@ -15,7 +15,7 @@ public class BishopTest {
     @CsvSource(value = {"BLACK:B", "WHITE:b"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Bishop bishop = new Bishop(new Position(PositionX.A, PositionY.RANK_2), color);
+        Bishop bishop = new Bishop(color);
 
         assertThat(bishop.signature()).isEqualTo(pieceName);
     }

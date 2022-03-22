@@ -15,7 +15,7 @@ public class PawnTest {
     @CsvSource(value = {"BLACK:P", "WHITE:p"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Pawn pawn = new Pawn(new Position(PositionX.A, PositionY.RANK_2), color);
+        Pawn pawn = new Pawn(color);
 
         assertThat(pawn.signature()).isEqualTo(pieceName);
     }

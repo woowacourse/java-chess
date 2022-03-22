@@ -15,7 +15,7 @@ public class KnightTest {
     @CsvSource(value = {"BLACK:N", "WHITE:n"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Knight knight = new Knight(new Position(PositionX.A, PositionY.RANK_2), color);
+        Knight knight = new Knight(color);
 
         assertThat(knight.signature()).isEqualTo(pieceName);
     }

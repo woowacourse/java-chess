@@ -15,7 +15,7 @@ public class RookTest {
     @CsvSource(value = {"BLACK:R", "WHITE:r"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Rook rook = new Rook(new Position(PositionX.A, PositionY.RANK_2), color);
+        Rook rook = new Rook(color);
 
         assertThat(rook.signature()).isEqualTo(pieceName);
     }

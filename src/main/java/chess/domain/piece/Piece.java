@@ -1,14 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.position.Position;
 
 public abstract class Piece {
-    private final Position position;
     private final Color color;
 
-    public Piece(Position position, Color color) {
-        this.position = position;
+    public Piece(Color color) {
         this.color = color;
     }
 

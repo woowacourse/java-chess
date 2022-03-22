@@ -15,7 +15,7 @@ public class QueenTest {
     @CsvSource(value = {"BLACK:Q", "WHITE:q"}, delimiter = ':')
     @DisplayName("기물의 색깔에 맞는 이름을 반환하는지")
     void checkNameByColor(Color color, String pieceName) {
-        Queen queen = new Queen(new Position(PositionX.A, PositionY.RANK_2), color);
+        Queen queen = new Queen(color);
 
         assertThat(queen.signature()).isEqualTo(pieceName);
     }
