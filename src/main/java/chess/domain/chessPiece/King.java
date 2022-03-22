@@ -1,5 +1,7 @@
 package chess.domain.chessPiece;
 
+import java.util.List;
+
 public class King implements ChessPiece {
 
     private static final String NAME = "K";
@@ -12,4 +14,8 @@ public class King implements ChessPiece {
         return INSTANCE;
     }
 
+    @Override
+    public List<String> getInitPosition() {
+        return List.of("e1","e8");
+    }
 }

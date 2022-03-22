@@ -1,5 +1,7 @@
 package chess.domain.chessPiece;
 
+import java.util.List;
+
 public class Bishop implements ChessPiece {
 
     private static final String NAME = "B";
@@ -10,5 +12,10 @@ public class Bishop implements ChessPiece {
 
     public static Bishop getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    public List<String> getInitPosition() {
+        return List.of("c1","f1","c8","f8");
     }
 }
