@@ -19,4 +19,18 @@ public class ChessBoardTest {
         //then
         assertThat(size).isEqualTo(64);
     }
+
+    @DisplayName("체스판 초기 세팅 테스트")
+    @Test
+    public void init() {
+        //given
+        ChessBoard chessBoard = new ChessBoard();
+
+        //when
+        int size = chessBoard.init();
+
+        //then
+        assertThat(size).isEqualTo(32);
+    }
+
 }
