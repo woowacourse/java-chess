@@ -20,4 +20,12 @@ class RowTest {
 
         assertThat(values).doesNotContain(9);
     }
+
+    @Test
+    @DisplayName("정렬된 전체 로우를 가지고 옴")
+    void allRows_sortedByDescending() {
+        List<Integer> orderedValues = Row.valuesByDescending();
+
+        assertThat(orderedValues).containsExactly(8, 7, 6, 5, 4, 3, 2, 1);
+    }
 }
