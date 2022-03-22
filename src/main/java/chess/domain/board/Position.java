@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.board;
 
 import java.util.Objects;
 
