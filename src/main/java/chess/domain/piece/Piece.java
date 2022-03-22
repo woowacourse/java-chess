@@ -12,8 +12,11 @@ public abstract class Piece {
 		this.team = team;
 	}
 
-	public Symbol getSymbol() {
-		return symbol;
+	public String getSymbol() {
+		if (team.equals(Team.BLACK)) {
+			return symbol.getBlack();
+		}
+		return symbol.getWhite();
 	}
 
 	@Override

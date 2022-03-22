@@ -25,7 +25,7 @@ public enum InitialBoard {
 	BLACK_KING(Arrays.asList(Column.E), Arrays.asList(Row.EIGHT), new King(Symbol.KING, Team.BLACK)),
 	WHITE_KING(Arrays.asList(Column.E), Arrays.asList(Row.ONE), new King(Symbol.KING, Team.WHITE)),
 	BLACK_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.EIGHT), new Knight(Symbol.KNIGHT, Team.BLACK)),
-	WHITE_KNIGHT(Arrays.asList(Column.B,Column.G), Arrays.asList(Row.ONE), new Bishop(Symbol.KNIGHT, Team.BLACK)),
+	WHITE_KNIGHT(Arrays.asList(Column.B,Column.G), Arrays.asList(Row.ONE), new Bishop(Symbol.KNIGHT, Team.WHITE)),
 	BLACK_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.SEVEN), new Pawn(Symbol.PAWN, Team.BLACK)),
 	WHITE_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.TWO), new Pawn(Symbol.PAWN, Team.WHITE)),
 	BLACK_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.EIGHT), new Queen(Symbol.QUEEN, Team.BLACK)),
@@ -47,8 +47,8 @@ public enum InitialBoard {
 
 	public static Map<Coordinate, Piece> init() {
 		Map<Coordinate, Piece> map = new HashMap<>();
-		for (Column column : Column.values()) {
-			for (Row row : Row.values()) {
+		for (Row row : Row.values()) {
+			for (Column column : Column.values()) {
 				map.put(Coordinate.of(column, row), findPiece(column, row));
 			}
 		}
