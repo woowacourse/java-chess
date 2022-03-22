@@ -20,21 +20,26 @@
       - 룩 2개, 나이트 2개, 비숍 2개, 퀸 1개, 킹 1개, 폰 8개
     - [x] 체스 초기 모습
       - ![체스 초기 모습](./img/init_chess_board.png)
+    
+  - 뷰
+    - [x] start 명령어를 통해 체스 게임 시작
+    - [x] end 명령어를 통해 체스 게임 종료
 
-- 키워드
-  - 행 (Row) 
-  - 열 (Col)
-  - 플레이어 (BlackTeam, WhiteTeam)
-  - 기물
-    - 룩 (Rook)
-    - 퀸 (Queen)
-    - 나이트 (Knight)
-    - 비숍 (Bishop)
-    - 킹 (King)
-    - 폰 (Pawn)
-  - 체스판 (ChessBoard)
-  - 체스 (Chess)
+  - 1단계 키워드
+    - 행 (Row) 
+    - 열 (Col)
+    - 플레이어 (BlackTeam, WhiteTeam)
+    - 기물
+      - 룩 (Rook)
+      - 퀸 (Queen)
+      - 나이트 (Knight)
+      - 비숍 (Bishop)
+      - 킹 (King)
+      - 폰 (Pawn)
+    - 체스판 (ChessBoard)
+    - 체스 (Chess)
 
 - 2단계
+  
 
 - 3단계

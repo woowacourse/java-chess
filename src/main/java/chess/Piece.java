@@ -67,4 +67,16 @@ public class Piece {
     public static Piece rook(Color color, Position position) {
         return new Piece(color, ROOK, position);
     }
+
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
 }
