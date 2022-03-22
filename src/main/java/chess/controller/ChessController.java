@@ -15,8 +15,4 @@ public class ChessController {
             command = InputView.requestCommand();
         }
     }
-
-//    public ChessBoard initChessBoard() {
-//        ChessBoard chessBoard = new ChessBoard();
-//    }
 }
