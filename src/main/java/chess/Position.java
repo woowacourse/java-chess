@@ -11,6 +11,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

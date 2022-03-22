@@ -38,5 +38,9 @@ public class Board {
     public String getPiece(Position position) {
         return board.get(position);
     }
+
+    public Map<Position, String> getBoard() {
+        return board;
+    }
 }
 
