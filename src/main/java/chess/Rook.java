@@ -3,7 +3,7 @@ package chess;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Rook {
+public class Rook extends AbstractPiece {
 
     private static final List<Position> INIT_POSITIONS = List.of(
             new Position(0, 0),
@@ -12,19 +12,13 @@ public class Rook {
             new Position(7, 0)
     );
 
-    private final Position position;
-
-    public Rook(final Position position) {
-        this.position = position;
+    private Rook(final Position position) {
+        super(position);
     }
 
-    public static List<Rook> init() {
+    public static List<Rook> createRooks() {
         return INIT_POSITIONS.stream()
                 .map(Rook::new)
                 .collect(Collectors.toList());
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }

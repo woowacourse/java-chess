@@ -12,7 +12,7 @@ class KingTest {
     @Test
     @DisplayName("킹의 좌표는 (0,4), (7,3)로 생성된다.")
     void createKing() {
-        final List<King> kings = King.init();
+        final List<King> kings = King.createKings();
 
         assertThat(kings).extracting(King::getPosition)
                 .usingRecursiveFieldByFieldElementComparator()

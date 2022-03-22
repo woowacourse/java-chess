@@ -3,7 +3,7 @@ package chess;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Bishop {
+public class Bishop extends AbstractPiece {
 
     private static final List<Position> INIT_POSITIONS = List.of(
             new Position(0, 2),
@@ -12,19 +12,13 @@ public class Bishop {
             new Position(7, 5)
     );
 
-    private final Position position;
-
-    public Bishop(final Position position) {
-        this.position = position;
+    private Bishop(final Position position) {
+        super(position);
     }
 
-    public static List<Bishop> init() {
+    public static List<Bishop> createBishops() {
         return INIT_POSITIONS.stream()
                 .map(Bishop::new)
                 .collect(Collectors.toList());
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }

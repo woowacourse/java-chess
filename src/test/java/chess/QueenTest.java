@@ -12,7 +12,7 @@ public class QueenTest {
     @Test
     @DisplayName("퀸의 좌표는 (0,3), (7,4)로 생성된다.")
     void createQueen() {
-        final List<Queen> queens = Queen.init();
+        final List<Queen> queens = Queen.createQueens();
 
         assertThat(queens).extracting(Queen::getPosition)
                 .usingRecursiveFieldByFieldElementComparator()

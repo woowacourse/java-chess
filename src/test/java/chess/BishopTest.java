@@ -12,7 +12,7 @@ public class BishopTest {
     @Test
     @DisplayName("비숍의 좌표는 (0,2), (0,5), (7,2), (7,5)로 생성된다.")
     void createBishop() {
-        final List<Bishop> bishops = Bishop.init();
+        final List<Bishop> bishops = Bishop.createBishops();
 
         assertThat(bishops).extracting(Bishop::getPosition)
                 .usingRecursiveFieldByFieldElementComparator()

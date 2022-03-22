@@ -12,7 +12,7 @@ public class RookTest {
     @Test
     @DisplayName("룩의 좌표는 (0,0), (0,7), (7,0), (7,7)로 생성된다.")
     void createRook() {
-        final List<Rook> rooks = Rook.init();
+        final List<Rook> rooks = Rook.createRooks();
 
         assertThat(rooks).extracting(Rook::getPosition)
                 .usingRecursiveFieldByFieldElementComparator()

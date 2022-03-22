@@ -12,7 +12,7 @@ public class PawnTest {
     @Test
     @DisplayName("폰의 좌표는 1번과 6번 행에서 생성된다.")
     void createPawn() {
-        final List<Pawn> pawns = Pawn.init();
+        final List<Pawn> pawns = Pawn.createPawns();
 
         assertThat(pawns).extracting(Pawn::getPosition)
                 .usingRecursiveFieldByFieldElementComparator()
@@ -24,6 +24,7 @@ public class PawnTest {
                         new Position(1, 4),
                         new Position(1, 5),
                         new Position(1, 6),
+                        new Position(1, 7),
 
                         new Position(6, 0),
                         new Position(6, 1),
@@ -31,7 +32,8 @@ public class PawnTest {
                         new Position(6, 3),
                         new Position(6, 4),
                         new Position(6, 5),
-                        new Position(6, 6)
+                        new Position(6, 6),
+                        new Position(6, 7)
                 );
     }
 }

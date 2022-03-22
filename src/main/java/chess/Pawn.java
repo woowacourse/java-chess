@@ -3,7 +3,7 @@ package chess;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Pawn {
+public class Pawn extends AbstractPiece {
 
     private static final List<Position> INIT_POSITIONS = List.of(
             new Position(1, 0),
@@ -13,6 +13,7 @@ public class Pawn {
             new Position(1, 4),
             new Position(1, 5),
             new Position(1, 6),
+            new Position(1, 7),
 
             new Position(6, 0),
             new Position(6, 1),
@@ -20,22 +21,17 @@ public class Pawn {
             new Position(6, 3),
             new Position(6, 4),
             new Position(6, 5),
-            new Position(6, 6)
+            new Position(6, 6),
+            new Position(6, 7)
     );
 
-    private final Position position;
-
-    public Pawn(final Position position) {
-        this.position = position;
+    private Pawn(final Position position) {
+        super(position);
     }
 
-    public static List<Pawn> init() {
+    public static List<Pawn> createPawns() {
         return INIT_POSITIONS.stream()
                 .map(Pawn::new)
                 .collect(Collectors.toList());
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }
