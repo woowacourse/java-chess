@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
@@ -47,6 +48,19 @@ class ChessBoardGeneratorTest {
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
+    private static Stream<Arguments> columns(){
+        return Stream.of(
+                Arguments.of(Column.A),
+                Arguments.of(Column.B),
+                Arguments.of(Column.C),
+                Arguments.of(Column.D),
+                Arguments.of(Column.E),
+                Arguments.of(Column.F),
+                Arguments.of(Column.G),
+                Arguments.of(Column.H)
+        );
+    }
+
 /*
 rook
 queen
@@ -81,16 +95,30 @@ knight
         assertThat(leftRook).isInstanceOf(Rook.class);
         assertThat(rightRook).isInstanceOf(Rook.class);
     }
-    private static Stream<Arguments> columns(){
-        return Stream.of(
-                Arguments.of(Column.A),
-                Arguments.of(Column.B),
-                Arguments.of(Column.C),
-                Arguments.of(Column.D),
-                Arguments.of(Column.E),
-                Arguments.of(Column.F),
-                Arguments.of(Column.G),
-                Arguments.of(Column.H)
-        );
+
+    @Test
+    @DisplayName("검은색 플레이어의 초기 Knight 위치는 Row 8, Column b, g이다.")
+    void checkPositionBlackKnight(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftKnight = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.B));
+        Piece rightKnight = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.G));
+
+        assertThat(leftKnight.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(rightKnight.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftKnight).isInstanceOf(Knight.class);
+        assertThat(rightKnight).isInstanceOf(Knight.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 Knight 위치는 Row 1, Column b, g이다.")
+    void checkPositionWhiteKnight(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftKnight = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.B));
+        Piece rightKnight = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.G));
+
+        assertThat(leftKnight.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(rightKnight.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftKnight).isInstanceOf(Knight.class);
+        assertThat(rightKnight).isInstanceOf(Knight.class);
     }
 }

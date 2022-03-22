@@ -2,6 +2,7 @@ package domain;
 
 import static domain.piece.Player.*;
 
+import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
@@ -40,6 +41,7 @@ public class ChessBoardGenerator implements BoardGenerator{
     private void createTeamBoard(final Map<Position, Piece> board, final Player player) {
         createInitPawn(board, player);
         createInitRook(board, player);
+        createInitKnight(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -58,5 +60,15 @@ public class ChessBoardGenerator implements BoardGenerator{
         }
         board.put(new Position(Row.ONE, Column.A), new Rook(WHITE));
         board.put(new Position(Row.ONE, Column.H), new Rook(WHITE));
+    }
+
+    private void createInitKnight(Map<Position, Piece> board, Player player) {
+        if (player == BLACK){
+            board.put(new Position(Row.EIGHT, Column.B), new Knight(BLACK));
+            board.put(new Position(Row.EIGHT, Column.G), new Knight(BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.B), new Knight(WHITE));
+        board.put(new Position(Row.ONE, Column.G), new Knight(WHITE));
     }
 }
