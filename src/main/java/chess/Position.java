@@ -19,26 +19,26 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    private static final List<Position> KING = List.of(valueOf(0, 4), valueOf(7, 3));
-    private static final List<Position> QUEEN = List.of(valueOf(0, 3), valueOf(7, 4));
-    private static final List<Position> KNIGHT = List.of(
+    public static final List<Position> KING = List.of(valueOf(0, 4), valueOf(7, 3));
+    public static final List<Position> QUEEN = List.of(valueOf(0, 3), valueOf(7, 4));
+    public static final List<Position> KNIGHT = List.of(
             valueOf(0, 1),
             valueOf(0, 6),
             valueOf(7, 6),
             valueOf(7, 1));
-    private static final List<Position> Rook = List.of(
+    public static final List<Position> Rook = List.of(
             valueOf(0, 0),
             valueOf(0, 7),
             valueOf(7, 7),
             valueOf(7, 0)
     );
-    private static final List<Position> BISHOP = List.of(
+    public static final List<Position> BISHOP = List.of(
             valueOf(0, 2),
             valueOf(0, 5),
             valueOf(7, 2),
             valueOf(7, 5)
     );
-    private static final List<Position> PAWN = List.of(
+    public static final List<Position> PAWN = List.of(
             valueOf(1, 0),
             valueOf(1, 1),
             valueOf(1, 2),
@@ -103,6 +103,14 @@ public class Position {
                     MessageFormat.format("체스판 범위에서 벗어났습니다. row: {0}, column: {1}", row, column)
             );
         }
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
     @Override

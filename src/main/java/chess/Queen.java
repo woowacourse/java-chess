@@ -12,4 +12,9 @@ public class Queen extends AbstractPiece {
             throw new IllegalArgumentException(position.toString() + "는 퀸의 초기 위치가 아닙니다.");
         }
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return new PieceType(Name.QUEEN);
+    }
 }
