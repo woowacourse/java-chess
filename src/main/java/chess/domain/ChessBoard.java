@@ -1,27 +1,29 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 
 public class ChessBoard {
 
-    private final List<Piece> pieces;
+    private final Map<Position, Piece> pieces;
 
-    private ChessBoard(List<Piece> pieces) {
+    private ChessBoard(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
 
     public static ChessBoard createNewChessBoard() {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(PieceFactory.createNewBlackPieces());
-        pieces.addAll(PieceFactory.createNewWhitePieces());
+        Map<Position, Piece> pieces = new HashMap<>();
+        PieceFactory.createNewBlackPieces()
+                .forEach(piece -> pieces.put(piece.getPosition(), piece));
+        PieceFactory.createNewWhitePieces()
+                .forEach(piece -> pieces.put(piece.getPosition(), piece));
         return new ChessBoard(pieces);
     }
 
-    public List<Piece> getPieces() {
-        return List.copyOf(pieces);
+    public Map<Position, Piece> getPieces() {
+        return Map.copyOf(pieces);
     }
 }
