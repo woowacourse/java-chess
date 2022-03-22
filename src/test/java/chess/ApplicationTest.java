@@ -14,7 +14,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("게임 시작 시 체스판 초기화")
     void initializeChessBoard() {
         assertSimpleTest(() -> {
-            run("start");
+            run("start", "end");
             assertThat(output()).contains(String.format("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s",
                     "RKBQKBKR",
                     "PPPPPPPP",
