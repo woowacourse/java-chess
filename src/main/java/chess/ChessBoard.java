@@ -14,10 +14,6 @@ public class ChessBoard {
     public ChessBoard() {
     }
 
-    public int getSize() {
-        return 64;
-    }
-
     public int init() {
         List<Position> positions = stream(File.values())
                 .flatMap(file -> stream(Rank.values())
