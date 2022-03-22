@@ -25,12 +25,19 @@ public class Board {
     }
 
     private static String checkPiece(Rank rank, int i) {
-        List<String> piece = List.of("R", "N", "B", "Q", "K", "B", "N", "R");
-        if (rank == Rank.EIGHT || rank == Rank.ONE) {
-            return piece.get(i);
+        List<String> blackPiece = List.of("R", "N", "B", "Q", "K", "B", "N", "R");
+        List<String> whitePiece = List.of("r", "n", "b", "q", "k", "b", "n", "r");
+        if (rank == Rank.EIGHT) {
+            return blackPiece.get(i);
         }
-        if (rank == Rank.SEVEN || rank == Rank.TWO) {
+        if( rank == Rank.ONE){
+            return whitePiece.get(i);
+        }
+        if (rank == Rank.SEVEN) {
             return "P";
+        }
+        if (rank == Rank.TWO){
+            return "p";
         }
         return ".";
     }
