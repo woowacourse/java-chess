@@ -1,4 +1,7 @@
 package chess.domain.piece;
 
-public class Night implements Piece {
+public class Night extends AbstractPiece {
+    Night(PieceColor pieceColor) {
+        super(pieceColor);
+    }
 }

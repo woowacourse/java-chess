@@ -1,4 +1,7 @@
 package chess.domain.piece;
 
-public class King implements Piece {
+public class King extends AbstractPiece {
+    King(PieceColor pieceColor) {
+        super(pieceColor);
+    }
 }
