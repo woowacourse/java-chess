@@ -4,10 +4,6 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static void main(String[] args) {
-        requestCommand();
-    }
-
     private static String input() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
