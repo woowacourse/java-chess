@@ -2,10 +2,10 @@ package chess;
 
 public class Position  {
 
-    private final String column;
-    private final String row;
+    private final Column column;
+    private final Row row;
 
-    public Position(String column, String row) {
+    public Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
