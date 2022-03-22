@@ -2,10 +2,11 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
 
-    private static final Map<String, Position> cache = new HashMap<>();
+    private static final Map<PositionKey, Position> cache = new HashMap<>();
 
     private static final int RANK_INDEX = 0;
     private static final int FILE_INDEX = 1;
@@ -23,6 +24,11 @@ public class Position {
         this(File.from(file), Rank.from(rank));
     }
 
+    public static Position of(final File file, final Rank rank) {
+        final PositionKey positionKey = new PositionKey(file, rank);
+        return cache.computeIfAbsent(positionKey, ignored -> cache.put(positionKey, new Position(file, rank)));
+    }
+
     public static Position from(final String positionValue) {
         validatePositionValue(positionValue);
 
@@ -30,12 +36,43 @@ public class Position {
         final String rank = rankAndFile[RANK_INDEX];
         final String file = rankAndFile[FILE_INDEX];
 
-        return cache.computeIfAbsent(positionValue, ignored -> cache.put(positionValue, new Position(rank, file)));
+        return of(File.from(file), Rank.from(rank));
     }
 
     private static void validatePositionValue(final String positionValue) {
         if (positionValue.length() != 2) {
             throw new IllegalArgumentException("위치 정보가 유효하지 않습니다.");
+        }
+    }
+
+    static class PositionKey {
+        private final File file;
+        private final Rank rank;
+
+        private PositionKey(final File file, final Rank rank) {
+            this.file = file;
+            this.rank = rank;
+        }
+
+        private PositionKey(final String file, final String rank) {
+            this(File.from(file), Rank.from(rank));
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            final PositionKey that = (PositionKey) o;
+            return file == that.file && rank == that.rank;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(file, rank);
         }
     }
 }
