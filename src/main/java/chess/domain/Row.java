@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public enum Row {
@@ -27,5 +28,9 @@ public enum Row {
             .filter(row -> row.value.equals(value))
             .findAny()
             .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
+    }
+
+    public static List<Row> initialRows() {
+        return List.of(EIGHT, SEVEN, TWO, ONE);
     }
 }

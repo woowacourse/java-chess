@@ -4,6 +4,7 @@ package chess.domain;
 import java.util.Objects;
 
 public class Position {
+
     private static final int FROM_FOR_ROW = 0;
     private static final int TO_FOR_ROW = 1;
     private static final int START_INDEX_FOR_COLUMN = 1;
@@ -16,10 +17,14 @@ public class Position {
         this.column = column;
     }
 
-    public static Position of(String input){
+    public static Position of(String input) {
         return new Position(
             Row.of(input.substring(START_INDEX_FOR_COLUMN)),
-            Column.of(input.substring(FROM_FOR_ROW,TO_FOR_ROW)));
+            Column.of(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));
+    }
+
+    public static Position of(Row row, Column column) {
+        return new Position(row, column);
     }
 
     @Override
