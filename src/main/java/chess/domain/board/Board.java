@@ -51,4 +51,8 @@ public class Board {
         Piece piece = board.get(position);
         return piece.isSameType(type) && piece.isSameColor(color);
     }
+
+    public Piece get(Position position) {
+        return board.get(position);
+    }
 }
