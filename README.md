@@ -8,8 +8,8 @@
     - King, Queen : 1개
     - Rook, Bishop, Knight : 2개
     - Pawn : 8개
-
-
+  
+  
 - [ ] 검은색 진영은 기물이 대문자로 저장된다.
 - [ ] 흰색 진영은 기물이 소문자로 저장된다.
 
@@ -31,3 +31,10 @@ rnbqkbnr  1
 
 abcdefgh
 ```
+- 출력 형태
+- King : k
+- Queen : q
+- Rook : r
+- Bishop  b
+- Knight : n
+- Pawn : p
