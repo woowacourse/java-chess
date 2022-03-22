@@ -1,4 +1,6 @@
-package chess;
+package chess.view;
+
+import chess.controller.BoardDto;
 
 public class OutputView {
 
