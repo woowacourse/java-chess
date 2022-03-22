@@ -19,6 +19,9 @@
 - [x] 열(File)은 a~h까지 있다.
     - [ ] [ERROR] a~h이외의 값이 오면 예외 처리를 한다.
 
+### Position
+- [ ] 행과 열을 가진다.
+
 ### Piece
 - [x] Color와 Type를 가진다.
 - [x] Color에 따라 Type의 대소문자를 표시한다.
