@@ -2,5 +2,12 @@ package chess;
 
 public enum Row {
 
-    ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT
+    EIGHT,
+    SEVEN,
+    SIX,
+    FIVE,
+    FOUR,
+    THREE,
+    TWO,
+    ONE
 }
