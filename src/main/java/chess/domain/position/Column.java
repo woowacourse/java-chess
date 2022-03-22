@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum Column {
 	ONE("1"),
@@ -23,5 +25,11 @@ public enum Column {
 			.filter(it -> it.value.equalsIgnoreCase(value))
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+	}
+
+	public static List<Column> reverseColumns() {
+		List<Column> columns = Arrays.asList(values());
+		columns.sort(Collections.reverseOrder());
+		return columns;
 	}
 }

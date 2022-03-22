@@ -46,4 +46,8 @@ public class Board {
 			board.put(new Position(row, column), string);
 		}
 	}
+
+	public Map<Position, String> getBoard() {
+		return board;
+	}
 }

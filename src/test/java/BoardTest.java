@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.Board;
+import chess.view.OutputView;
 
 public class BoardTest {
 
@@ -11,5 +12,12 @@ public class BoardTest {
 	@Test
 	void create() {
 		assertThat(new Board()).isNotNull();
+	}
+
+	@Test
+	void tesT() {
+		Board board = new Board();
+		board.initBoard();
+		OutputView.printBoard(board.getBoard());
 	}
 }
