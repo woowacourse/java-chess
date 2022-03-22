@@ -3,16 +3,12 @@ package chess.domain.chessPiece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn implements ChessPiece {
+public class Pawn extends ChessPiece {
 
     private static final String NAME = "P";
-    private static final Pawn INSTANCE = new Pawn();
 
-    private Pawn() {
-    }
-
-    public static Pawn getInstance() {
-        return INSTANCE;
+    public Pawn(Color color) {
+        super(color, NAME);
     }
 
     @Override
@@ -33,8 +29,4 @@ public class Pawn implements ChessPiece {
         return list;
     }
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
 }

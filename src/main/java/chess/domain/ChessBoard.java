@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ChessBoard {
 
-    private Map<String, String> chessBoard;
+    private Map<String, ChessPiece> chessBoard;
 
     public ChessBoard() {
         chessBoard = new HashMap<>();
@@ -17,26 +17,30 @@ public class ChessBoard {
     }
 
     private void init() {
-        List<ChessPiece> pieces = List.of(
-                Rook.getInstance(),
-                King.getInstance(),
-                Knight.getInstance(),
-                Bishop.getInstance(),
-                Queen.getInstance(),
-                Pawn.getInstance());
+        for (Color value : Color.values()) {
+            List<ChessPiece> pieces = List.of(
+                    new King(value),
+                    new Queen(value),
+                    new Pawn(value),
+                    new Rook(value),
+                    new Bishop(value),
+                    new Knight(value));
 
-        for (ChessPiece chessPiece : pieces) {
-            initByPiece(chessPiece);
+            for (ChessPiece chessPiece : pieces) {
+                initByPiece(chessPiece);
+            }
         }
     }
 
     private void initByPiece(ChessPiece chessPiece) {
-        for (String position : chessPiece.getInitBlackPosition()) {
-            chessBoard.put(position, chessPiece.getName());
+        if (chessPiece.isBlack()) {
+            for (String position : chessPiece.getInitBlackPosition()) {
+                chessBoard.put(position, chessPiece);
+            }
+            return;
         }
-
         for (String position : chessPiece.getInitWhitePosition()) {
-            chessBoard.put(position, chessPiece.getName().toLowerCase());
+            chessBoard.put(position, chessPiece);
         }
     }
 
@@ -44,9 +48,8 @@ public class ChessBoard {
         return chessBoard.size();
     }
 
-    public Optional<String> findPiece(String position) {
-
-        String piece = chessBoard.get(position);
+    public Optional<ChessPiece> findPiece(String position) {
+        ChessPiece piece = chessBoard.get(position);
         if (piece == null) {
             return Optional.empty();
         }

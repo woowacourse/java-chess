@@ -2,16 +2,12 @@ package chess.domain.chessPiece;
 
 import java.util.List;
 
-public class Rook implements ChessPiece {
+public class Rook extends ChessPiece {
 
     private static final String NAME = "R";
-    private static final Rook INSTANCE = new Rook();
 
-    private Rook() {
-    }
-
-    public static Rook getInstance() {
-        return INSTANCE;
+    public Rook(Color color) {
+        super(color, NAME);
     }
 
     @Override
@@ -24,8 +20,4 @@ public class Rook implements ChessPiece {
         return List.of("a8", "h8");
     }
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
 }

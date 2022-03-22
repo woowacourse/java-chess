@@ -2,18 +2,13 @@ package chess.domain.chessPiece;
 
 import java.util.List;
 
-public class Queen implements ChessPiece {
+public class Queen extends ChessPiece {
 
     private static final String NAME = "Q";
-    private static final Queen INSTANCE = new Queen();
 
-    private Queen() {
+    public Queen(Color color) {
+        super(color, NAME);
     }
-
-    public static Queen getInstance() {
-        return INSTANCE;
-    }
-
 
     @Override
     public List<String> getInitWhitePosition() {
@@ -25,8 +20,4 @@ public class Queen implements ChessPiece {
         return List.of("d8");
     }
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
 }

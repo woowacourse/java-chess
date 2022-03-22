@@ -32,9 +32,9 @@ public class OutputView {
         for (int i = RANK_START; i <= RANK_END; i++) {
             String position = (char) i + String.valueOf(j);
 
-            Optional<String> possiblePiece = chessBoard.findPiece(position);
+            Optional<ChessPiece> possiblePiece = chessBoard.findPiece(position);
             possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.print(piece),
+                    (piece) -> System.out.print(piece.getName()),
                     () -> System.out.print(EMPTY));
         }
         System.out.println();
