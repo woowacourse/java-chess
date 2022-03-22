@@ -1,19 +1,15 @@
 package chess;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class King extends AbstractPiece {
 
-    private static final List<Position> INIT_POSITIONS = List.of(new Position(0, 4), new Position(7, 3));
-
-    private King(final Position position) {
+    public King(final Position position) {
         super(position);
+        validateInitPosition(position);
     }
 
-    public static List<King> createKings() {
-        return INIT_POSITIONS.stream()
-                .map(King::new)
-                .collect(Collectors.toList());
+    private static void validateInitPosition(final Position position) {
+        if (!position.isKingPosition(position)) {
+            throw new IllegalArgumentException(position.toString() + "는 킹의 초기 위치가 아닙니다.");
+        }
     }
 }

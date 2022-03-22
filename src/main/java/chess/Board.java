@@ -13,15 +13,7 @@ public class Board {
     }
 
     public static Board init() {
-        final List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(King.createKings());
-        pieces.addAll(Queen.createQueens());
-        pieces.addAll(Bishop.createBishops());
-        pieces.addAll(Knight.createKnights());
-        pieces.addAll(Rook.createRooks());
-        pieces.addAll(Pawn.createPawns());
-        System.out.println(pieces.size());
-        return new Board(pieces);
+        return null;
     }
 
     private void validateSize(final List<Piece> pieces) {

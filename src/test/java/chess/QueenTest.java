@@ -1,24 +1,21 @@
 package chess;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class QueenTest {
 
-    @Test
-    @DisplayName("퀸의 좌표는 (0,3), (7,4)로 생성된다.")
-    void createQueen() {
-        final List<Queen> queens = Queen.createQueens();
+    @ParameterizedTest(name = "row {0}, column {1}")
+    @CsvSource(value = {"0, 2", "0, 4", "1, 3", "6, 4", "7, 3", "7, 5"})
+    @DisplayName("퀸의 초기 좌표가 (0,3), (7,4) 아닐 경우 예외를 발생한다.")
+    void initialKingPositionException(int row, int column) {
+        final Position position = new Position(row, column);
 
-        assertThat(queens).extracting(Queen::getPosition)
-                .usingRecursiveFieldByFieldElementComparator()
-                .contains(
-                        new Position(0, 3),
-                        new Position(7, 4)
-                );
+        assertThatThrownBy(() -> new Queen(position))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(position.toString() + "는 퀸의 초기 위치가 아닙니다.");
     }
 }

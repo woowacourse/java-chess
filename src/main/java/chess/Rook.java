@@ -1,24 +1,15 @@
 package chess;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Rook extends AbstractPiece {
 
-    private static final List<Position> INIT_POSITIONS = List.of(
-            new Position(0, 0),
-            new Position(0, 7),
-            new Position(7, 7),
-            new Position(7, 0)
-    );
-
-    private Rook(final Position position) {
+    public Rook(final Position position) {
         super(position);
+        validateInitPosition(position);
     }
 
-    public static List<Rook> createRooks() {
-        return INIT_POSITIONS.stream()
-                .map(Rook::new)
-                .collect(Collectors.toList());
+    private static void validateInitPosition(final Position position) {
+        if (!position.isRookPosition(position)) {
+            throw new IllegalArgumentException(position.toString() + "는 룩의 초기 위치가 아닙니다.");
+        }
     }
 }
