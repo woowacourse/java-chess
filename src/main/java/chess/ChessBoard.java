@@ -1,8 +1,5 @@
 package chess;
 
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,20 +8,17 @@ public class ChessBoard {
 
     private final Map<Position, Piece> cells = new HashMap<>();
 
-    public ChessBoard() {
-        init();
+    public ChessBoard(List<Piece> blackPieces, List<Piece> whitePieces) {
+        init(blackPieces, whitePieces);
     }
 
-    private void init() {
-        List<Position> positions = stream(File.values())
-                .flatMap(file -> stream(Rank.values())
-                        .map(rank -> new Position(rank, file)))
-                                .collect(toList());
+    private void init(List<Piece> blackPieces, List<Piece> whitePieces) {
+        for (Piece piece : blackPieces) {
+            cells.put(piece.getPosition(), piece);
+        }
 
-        for (Position position : positions) {
-            if (position.isInitPosition()) {
-                cells.put(position, new Piece(Type.BISHOP));
-            }
+        for (Piece piece : whitePieces) {
+            cells.put(piece.getPosition(), piece);
         }
     }
 

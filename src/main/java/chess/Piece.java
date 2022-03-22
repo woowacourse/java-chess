@@ -8,4 +8,8 @@ public class Piece {
         this.type = type;
         this.position = position;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

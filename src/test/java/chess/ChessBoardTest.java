@@ -10,7 +10,7 @@ public class ChessBoardTest {
     @Test
     public void init() {
         //given
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.blackPieces(), PieceFactory.whitePieces());
 
         //when
         int size = chessBoard.countPieces();

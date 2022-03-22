@@ -1,5 +1,7 @@
 package chess;
 
+import static chess.File.*;
+import static chess.Rank.*;
 import static chess.Type.PAWN;
 
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +13,7 @@ public class PieceTest {
     @Test
     public void piece() {
         //given & when & then
-        Assertions.assertDoesNotThrow(() -> new Piece(PAWN));
+        Assertions.assertDoesNotThrow(() -> new Piece(PAWN.getSymbol(), new Position(A, ONE)));
     }
 
 }
