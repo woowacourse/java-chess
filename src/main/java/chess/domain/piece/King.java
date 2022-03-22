@@ -1,14 +1,17 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
+import chess.domain.PieceType;
+
 public class King extends Piece {
 
-    private static final String KING_NAME = "K";
+    private static final PieceType KING_TYPE = PieceType.KING;
 
-    private King(String name) {
-        super(name);
+    private King(Color color) {
+        super(color, KING_TYPE);
     }
 
-    public static King create() {
-        return new King(KING_NAME);
+    public static King create(Color color) {
+        return new King(color);
     }
 }
