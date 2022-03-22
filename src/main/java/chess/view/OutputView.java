@@ -20,15 +20,17 @@ public class OutputView {
         for (char i = '8'; i >= '1'; i--) {
             for (char j = 'a'; j <= 'h'; j++) {
                 Position position = new Position(j, i);
-                if (pieces.containsKey(position)) {
-                    Piece piece = pieces.get(position);
-                    System.out.print(piece.convertedName());
-                }
-                else {
-                    System.out.print(".");
-                }
+                System.out.print(piecePrintName(pieces, position));
             }
             System.out.println();
         }
+    }
+
+    private static String piecePrintName(Map<Position, Piece> pieces, Position position) {
+        if (pieces.containsKey(position)) {
+            Piece piece = pieces.get(position);
+            return piece.convertedName();
+        }
+        return ".";
     }
 }
