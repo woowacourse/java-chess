@@ -15,24 +15,24 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Piece> value) {
-        this.value = Map.copyOf(value);
+    public Board(final Map<Position, Piece> board) {
+        this.board = Map.copyOf(board);
     }
 
     public static Board create() {
         List<Position> positions = Position.init();
-        Map<Position, Piece> value = initEmptyBoard(positions);
+        Map<Position, Piece> emptyBoard = initEmptyBoard(positions);
 
-        initFirstLine(Color.BLACK, Row.EIGHT, value);
-        initPawn(Color.BLACK, Row.SEVEN, value);
-        initFirstLine(Color.WHITE, Row.ONE, value);
-        initPawn(Color.WHITE, Row.TWO, value);
-        return new Board(value);
+        initFirstLine(Color.BLACK, Row.EIGHT, emptyBoard);
+        initPawn(Color.BLACK, Row.SEVEN, emptyBoard);
+        initFirstLine(Color.WHITE, Row.ONE, emptyBoard);
+        initPawn(Color.WHITE, Row.TWO, emptyBoard);
+        return new Board(emptyBoard);
     }
 
-    private static Map<Position, Piece> initEmptyBoard(List<Position> positions) {
+    private static Map<Position, Piece> initEmptyBoard(final List<Position> positions) {
         Map<Position, Piece> value = new HashMap<>();
         for (Position position : positions) {
             value.put(position, new Blank(Color.NONE));
@@ -40,7 +40,7 @@ public class Board {
         return value;
     }
 
-    private static void initFirstLine(final Color color, Row row, final Map<Position, Piece> value) {
+    private static void initFirstLine(final Color color, Row row, final Map<Position, Piece> board) {
         List<Piece> pieces = List.of(
                 new Rock(color),
                 new Knight(color),
@@ -53,14 +53,18 @@ public class Board {
                 );
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            value.replace(new Position(columns[i], row), pieces.get(i));
+            board.replace(new Position(columns[i], row), pieces.get(i));
         }
     }
 
-    private static void initPawn(final Color color, Row row, final Map<Position, Piece> value) {
+    private static void initPawn(final Color color, Row row, final Map<Position, Piece> board) {
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            value.replace(new Position(columns[i], row), new Pawn(color));
+            board.replace(new Position(columns[i], row), new Pawn(color));
         }
+    }
+
+    public Piece getPiece(final Position position) {
+        return board.get(position);
     }
 }
