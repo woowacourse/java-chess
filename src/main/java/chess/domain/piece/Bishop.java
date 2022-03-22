@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.piece.vo.TeamColor;
 
 public class Bishop extends Piece {
 

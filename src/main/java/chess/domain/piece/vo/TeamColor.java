@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece.vo;
 
 public enum TeamColor {
     BLACK,
