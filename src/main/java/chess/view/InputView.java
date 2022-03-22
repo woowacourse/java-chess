@@ -9,7 +9,16 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String requestCommand() {
+    public static String getCommand() {
+        try {
+            return requestCommand();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] : " + e.getMessage());
+            return getCommand();
+        }
+    }
+
+    private static String requestCommand() {
         String command = input().toLowerCase();
         validateNull(command);
         validateCommand(command);
