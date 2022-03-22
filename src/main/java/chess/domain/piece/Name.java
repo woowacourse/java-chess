@@ -6,7 +6,8 @@ public enum Name {
     KNIGHT("n"),
     BISHOP("b"),
     QUEEN("q"),
-    KING("k");
+    KING("k"),
+    NONE(".");
 
     private final String name;
 
