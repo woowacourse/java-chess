@@ -5,6 +5,7 @@ import static domain.piece.Player.*;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
+import domain.piece.Rook;
 import domain.position.Row;
 import domain.position.Position;
 import domain.position.Column;
@@ -38,6 +39,7 @@ public class ChessBoardGenerator implements BoardGenerator{
 
     private void createTeamBoard(final Map<Position, Piece> board, final Player player) {
         createInitPawn(board, player);
+        createInitRook(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -46,5 +48,15 @@ public class ChessBoardGenerator implements BoardGenerator{
             return;
         }
         Arrays.stream(Column.values()).forEach(column -> board.put(new Position(Row.TWO, column), new Pawn(WHITE)));
+    }
+
+    private void createInitRook(Map<Position, Piece> board, Player player) {
+        if (player == BLACK){
+            board.put(new Position(Row.EIGHT, Column.A), new Rook(BLACK));
+            board.put(new Position(Row.EIGHT, Column.H), new Rook(BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.A), new Rook(WHITE));
+        board.put(new Position(Row.ONE, Column.H), new Rook(WHITE));
     }
 }

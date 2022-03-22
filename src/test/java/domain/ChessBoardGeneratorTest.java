@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
+import domain.piece.Rook;
 import domain.position.Row;
 import domain.position.Position;
 import domain.position.Column;
@@ -46,26 +47,40 @@ class ChessBoardGeneratorTest {
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
-///*
-//rook
-//queen
-//king
-//bishop
-//knight
-//// pawn
-// */
-//
-//    @Test
-//    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
-//    void checkPositionBlackRook(){
-//        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-//        Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.A));
-//
-//        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
-//        assertThat(piece).isInstanceOf(Rook.class);
-//    }
+/*
+rook
+queen
+king
+bishop
+knight
+// pawn
+ */
 
+    @Test
+    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
+    void checkPositionBlackRook(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.A));
+        Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.H));
 
+        assertThat(leftRook.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(rightRook.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftRook).isInstanceOf(Rook.class);
+        assertThat(rightRook).isInstanceOf(Rook.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
+    void checkPositionWhiteRook(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.A));
+        Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.H));
+
+        assertThat(leftRook.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(rightRook.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftRook).isInstanceOf(Rook.class);
+        assertThat(rightRook).isInstanceOf(Rook.class);
+    }
     private static Stream<Arguments> columns(){
         return Stream.of(
                 Arguments.of(Column.A),
