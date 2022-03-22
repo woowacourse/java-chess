@@ -30,7 +30,7 @@ public class PawnTest {
 
     @DisplayName("같은 색과 위치의 Pawn 인스턴스의 해쉬코드 값은 서로 같다.")
     @Test
-    void hashCode_sameOnSameColor() {
+    void hashCode_sameOnSameColorAndPosition() {
         int actual = new Pawn(BLACK, Position.of("a2")).hashCode();
         int expected = new Pawn(BLACK, Position.of("a2")).hashCode();
 

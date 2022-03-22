@@ -13,8 +13,8 @@ public class KnightTest {
     @DisplayName("색과 위치가 동일한 Knight 인스턴스는 서로 동일하다고 간주된다.")
     @Test
     void equals_sameOnSameColorAndPosition() {
-        Knight actual = new Knight(BLACK, Position.of("a2"));
-        Knight expected = new Knight(BLACK, Position.of("a2"));
+        Knight actual = new Knight(BLACK, Position.of("b1"));
+        Knight expected = new Knight(BLACK, Position.of("b1"));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -30,9 +30,9 @@ public class KnightTest {
 
     @DisplayName("같은 색과 위치의 Knight 인스턴스의 해쉬코드 값은 서로 같다.")
     @Test
-    void hashCode_sameOnSameColor() {
-        int actual = new Knight(BLACK, Position.of("a2")).hashCode();
-        int expected = new Knight(BLACK, Position.of("a2")).hashCode();
+    void hashCode_sameOnSameColorAndPosition() {
+        int actual = new Knight(BLACK, Position.of("b1")).hashCode();
+        int expected = new Knight(BLACK, Position.of("b1")).hashCode();
 
         assertThat(actual).isEqualTo(expected);
     }
