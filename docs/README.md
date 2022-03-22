@@ -13,3 +13,5 @@
   - Piece
     - Color(Black, White)
     - Position(row, column)
+    - King, Queen, Knight, Bishop, Rook, Pawn
+- PieceInitializer
