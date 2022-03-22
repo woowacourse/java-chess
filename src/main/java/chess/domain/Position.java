@@ -19,13 +19,15 @@ public class Position {
 
     private void validateRowInRange(char row) {
         if (row < MIN_ROW || row > MAX_ROW) {
-            throw new IllegalArgumentException("가로 위치는 a~h 범위에 포함되어야 합니다.");
+            throw new IllegalArgumentException(
+                    String.format("가로 위치는 %s~%s 범위에 포함되어야 합니다.", MIN_ROW, MAX_ROW));
         }
     }
 
     private void validateColumnInRange(char column) {
         if (column < MIN_COLUMN || column > MAX_COLUMN) {
-            throw new IllegalArgumentException("세로 위치는 1~8 범위에 포함되어야 합니다.");
+            throw new IllegalArgumentException(
+                    String.format("세로 위치는 %s~%s 범위에 포함되어야 합니다.", MIN_COLUMN, MAX_COLUMN));
         }
     }
 }
