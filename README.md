@@ -14,4 +14,16 @@
 - [ ] end를 입력받으면 게임을 종료한다. 
 
 ## 예외 처리 목록
-- [ ] start 또는 end가 아닌 입력
+- [ ] start 또는 end가 아닌 입력 
+
+## 객체 목록
+- Piece: 체스 기물
+  - King
+  - Queen
+  - Rook
+  - Bishop
+  - Knight
+  - Pawn
+- Board: 체스판
+- Position: 기물의 위치
+- Color: 기물의 색깔이 저장된 enum
