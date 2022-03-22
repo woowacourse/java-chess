@@ -1,6 +1,6 @@
 package chess.domain.square;
 
-public class Empty implements Square{
+public class Empty implements Square {
 
     private static final String DISPLAY = ".";
 
