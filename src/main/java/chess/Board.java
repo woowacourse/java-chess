@@ -9,7 +9,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rock;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Piece> board) {
+    private Board(final Map<Position, Piece> board) {
         this.board = Map.copyOf(board);
     }
 
@@ -33,7 +33,7 @@ public class Board {
     }
 
     private static Map<Position, Piece> initEmptyBoard(final List<Position> positions) {
-        Map<Position, Piece> value = new HashMap<>();
+        Map<Position, Piece> value = new LinkedHashMap<>();
         for (Position position : positions) {
             value.put(position, new Blank(Color.NONE));
         }
