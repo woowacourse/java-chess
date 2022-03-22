@@ -40,6 +40,6 @@ public class Pawn implements Square {
 
     @Override
     public String toString() {
-        return "Pawn{" + "color=" + color + '}';
+        return color + " PAWN";
     }
 }
