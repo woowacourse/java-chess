@@ -22,10 +22,5 @@ public class ChessBoard {
             return ".";
         }
         return piece.getSymbol();
-
-//        if(piece.getPlayer().equals(Player.BLACK)){
-//            return piece.getInitial().toUpperCase(Locale.ROOT);
-//        }
-        // private String initial;  getInitial() {return initial;}
     }
 }
