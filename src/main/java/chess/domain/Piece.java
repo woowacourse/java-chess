@@ -1,6 +1,6 @@
 package chess.domain;
 
-public class Piece {
+public abstract class Piece {
     private Position position;
     private Color color;
 

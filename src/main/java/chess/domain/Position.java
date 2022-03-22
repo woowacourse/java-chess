@@ -1,8 +1,13 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Position {
     private File file;
     private Rank rank;
+
+    private static Map<String, Position> pool = new HashMap<>();
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -10,6 +15,6 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
-        return new Position(file, rank);
+        return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 }
