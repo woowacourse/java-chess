@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 
 import domain.piece.Bishop;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -62,15 +63,6 @@ class ChessBoardGeneratorTest {
                 Arguments.of(Column.H)
         );
     }
-
-/*
-rook
-queen
-king
-bishop
-knight
-// pawn
- */
 
     @Test
     @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
@@ -168,5 +160,25 @@ knight
 
         assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
         assertThat(piece).isInstanceOf(Queen.class);
+    }
+
+    @Test
+    @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
+    void checkPositionBlackKing(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.E));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece).isInstanceOf(King.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
+    void checkPositionWhiteKing(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.E));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece).isInstanceOf(King.class);
     }
 }

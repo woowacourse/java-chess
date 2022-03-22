@@ -3,6 +3,7 @@ package domain;
 import static domain.piece.Player.*;
 
 import domain.piece.Bishop;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -46,6 +47,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         createInitKnight(board, player);
         createInitBishop(board, player);
         createInitQueen(board, player);
+        createInitKing(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -92,5 +94,13 @@ public class ChessBoardGenerator implements BoardGenerator{
             return;
         }
         board.put(new Position(Row.ONE, Column.D), new Queen(WHITE));
+    }
+
+    private void createInitKing(Map<Position, Piece> board, Player player) {
+        if (player == BLACK){
+            board.put(new Position(Row.EIGHT, Column.E), new King(BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.E), new King(WHITE));
     }
 }
