@@ -2,10 +2,20 @@ package chess.domain;
 
 public enum Type {
 
-    KING,
-    QUEEN,
-    BISHOP,
-    KNIGHT,
-    ROOK,
-    PAWN
+    KING("K"),
+    QUEEN("Q"),
+    BISHOP("B"),
+    KNIGHT("N"),
+    ROOK("R"),
+    PAWN("P");
+
+    private final String type;
+
+    Type(final String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 }
