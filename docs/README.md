@@ -15,3 +15,6 @@
     - Position(row, column)
     - King, Queen, Knight, Bishop, Rook, Pawn
 - PieceInitializer
+
+- InputView
+- OutputView
