@@ -10,7 +10,7 @@ class PositionTest {
     @Test
     @DisplayName("열과 행을 갖는 Position을 생성")
     void position_createWithColumnAndRow() {
-        final var positon = new Position(Column.A, Row.FIVE);
+        final var positon = Position.of("a5");
         assertThat(positon).isInstanceOf(Position.class);
     }
 

@@ -27,6 +27,13 @@ public enum Row {
                 .collect(Collectors.toList());
     }
 
+    public static Row of(final int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 로우입니다."));
+    }
+
     public int getValue() {
         return value;
     }
