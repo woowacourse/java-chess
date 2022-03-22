@@ -1,5 +1,13 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.FullPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,7 +39,7 @@ public class Board {
             .collect(Collectors.toList());
 
         for (Position position : positions) {
-            board.put(position, null);
+            board.put(position, new EmptyPiece());
         }
     }
 
@@ -45,20 +53,20 @@ public class Board {
 
     private static void initialPiecesWithoutPawn(Map<Position, Piece> board, final Rank rank,
         final Color color) {
-        board.put(new Position(rank, File.A), new Piece(color, Type.ROOK));
-        board.put(new Position(rank, File.B), new Piece(color, Type.KNIGHT));
-        board.put(new Position(rank, File.C), new Piece(color, Type.BISHOP));
-        board.put(new Position(rank, File.D), new Piece(color, Type.QUEEN));
-        board.put(new Position(rank, File.E), new Piece(color, Type.KING));
-        board.put(new Position(rank, File.F), new Piece(color, Type.BISHOP));
-        board.put(new Position(rank, File.G), new Piece(color, Type.KNIGHT));
-        board.put(new Position(rank, File.H), new Piece(color, Type.ROOK));
+        board.put(new Position(rank, File.A), new FullPiece(color, Type.ROOK));
+        board.put(new Position(rank, File.B), new FullPiece(color, Type.KNIGHT));
+        board.put(new Position(rank, File.C), new FullPiece(color, Type.BISHOP));
+        board.put(new Position(rank, File.D), new FullPiece(color, Type.QUEEN));
+        board.put(new Position(rank, File.E), new FullPiece(color, Type.KING));
+        board.put(new Position(rank, File.F), new FullPiece(color, Type.BISHOP));
+        board.put(new Position(rank, File.G), new FullPiece(color, Type.KNIGHT));
+        board.put(new Position(rank, File.H), new FullPiece(color, Type.ROOK));
     }
 
     private static void initialPawns(Map<Position, Piece> board, final Rank rank,
         final Color color) {
         for (File file : File.values()) {
-            board.put(new Position(rank, file), new Piece(color, Type.PAWN));
+            board.put(new Position(rank, file), new FullPiece(color, Type.PAWN));
         }
     }
 

@@ -3,6 +3,12 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.FullPiece;
+import chess.domain.piece.Type;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -32,7 +38,7 @@ public class BoardTest {
     @ParameterizedTest
     @MethodSource("initialPieces")
     @DisplayName("Piece들이 규칙에 맞게 잘 들어갔는지 확인한다.")
-    void initialPieces(Position position, Piece piece) {
+    void initialPieces(Position position, FullPiece piece) {
         Board board = Board.create();
 
         assertThat(board.getBoard().get(position)).isEqualTo(piece);
@@ -40,41 +46,41 @@ public class BoardTest {
 
     private static Stream<Arguments> initialPieces() {
         return Stream.of(
-            Arguments.of(new Position(Rank.EIGHT, File.A), new Piece(Color.BLACK, Type.ROOK)),
-            Arguments.of(new Position(Rank.EIGHT, File.B), new Piece(Color.BLACK, Type.KNIGHT)),
-            Arguments.of(new Position(Rank.EIGHT, File.C), new Piece(Color.BLACK, Type.BISHOP)),
-            Arguments.of(new Position(Rank.EIGHT, File.D), new Piece(Color.BLACK, Type.QUEEN)),
-            Arguments.of(new Position(Rank.EIGHT, File.E), new Piece(Color.BLACK, Type.KING)),
-            Arguments.of(new Position(Rank.EIGHT, File.F), new Piece(Color.BLACK, Type.BISHOP)),
-            Arguments.of(new Position(Rank.EIGHT, File.G), new Piece(Color.BLACK, Type.KNIGHT)),
-            Arguments.of(new Position(Rank.EIGHT, File.H), new Piece(Color.BLACK, Type.ROOK)),
+            Arguments.of(new Position(Rank.EIGHT, File.A), new FullPiece(Color.BLACK, Type.ROOK)),
+            Arguments.of(new Position(Rank.EIGHT, File.B), new FullPiece(Color.BLACK, Type.KNIGHT)),
+            Arguments.of(new Position(Rank.EIGHT, File.C), new FullPiece(Color.BLACK, Type.BISHOP)),
+            Arguments.of(new Position(Rank.EIGHT, File.D), new FullPiece(Color.BLACK, Type.QUEEN)),
+            Arguments.of(new Position(Rank.EIGHT, File.E), new FullPiece(Color.BLACK, Type.KING)),
+            Arguments.of(new Position(Rank.EIGHT, File.F), new FullPiece(Color.BLACK, Type.BISHOP)),
+            Arguments.of(new Position(Rank.EIGHT, File.G), new FullPiece(Color.BLACK, Type.KNIGHT)),
+            Arguments.of(new Position(Rank.EIGHT, File.H), new FullPiece(Color.BLACK, Type.ROOK)),
 
-            Arguments.of(new Position(Rank.SEVEN, File.A), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.B), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.C), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.D), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.E), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.F), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.G), new Piece(Color.BLACK, Type.PAWN)),
-            Arguments.of(new Position(Rank.SEVEN, File.H), new Piece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.A), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.B), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.C), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.D), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.E), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.F), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.G), new FullPiece(Color.BLACK, Type.PAWN)),
+            Arguments.of(new Position(Rank.SEVEN, File.H), new FullPiece(Color.BLACK, Type.PAWN)),
 
-            Arguments.of(new Position(Rank.ONE, File.A), new Piece(Color.WHITE, Type.ROOK)),
-            Arguments.of(new Position(Rank.ONE, File.B), new Piece(Color.WHITE, Type.KNIGHT)),
-            Arguments.of(new Position(Rank.ONE, File.C), new Piece(Color.WHITE, Type.BISHOP)),
-            Arguments.of(new Position(Rank.ONE, File.D), new Piece(Color.WHITE, Type.QUEEN)),
-            Arguments.of(new Position(Rank.ONE, File.E), new Piece(Color.WHITE, Type.KING)),
-            Arguments.of(new Position(Rank.ONE, File.F), new Piece(Color.WHITE, Type.BISHOP)),
-            Arguments.of(new Position(Rank.ONE, File.G), new Piece(Color.WHITE, Type.KNIGHT)),
-            Arguments.of(new Position(Rank.ONE, File.H), new Piece(Color.WHITE, Type.ROOK)),
+            Arguments.of(new Position(Rank.ONE, File.A), new FullPiece(Color.WHITE, Type.ROOK)),
+            Arguments.of(new Position(Rank.ONE, File.B), new FullPiece(Color.WHITE, Type.KNIGHT)),
+            Arguments.of(new Position(Rank.ONE, File.C), new FullPiece(Color.WHITE, Type.BISHOP)),
+            Arguments.of(new Position(Rank.ONE, File.D), new FullPiece(Color.WHITE, Type.QUEEN)),
+            Arguments.of(new Position(Rank.ONE, File.E), new FullPiece(Color.WHITE, Type.KING)),
+            Arguments.of(new Position(Rank.ONE, File.F), new FullPiece(Color.WHITE, Type.BISHOP)),
+            Arguments.of(new Position(Rank.ONE, File.G), new FullPiece(Color.WHITE, Type.KNIGHT)),
+            Arguments.of(new Position(Rank.ONE, File.H), new FullPiece(Color.WHITE, Type.ROOK)),
 
-            Arguments.of(new Position(Rank.TWO, File.A), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.B), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.C), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.D), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.E), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.F), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.G), new Piece(Color.WHITE, Type.PAWN)),
-            Arguments.of(new Position(Rank.TWO, File.H), new Piece(Color.WHITE, Type.PAWN))
+            Arguments.of(new Position(Rank.TWO, File.A), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.B), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.C), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.D), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.E), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.F), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.G), new FullPiece(Color.WHITE, Type.PAWN)),
+            Arguments.of(new Position(Rank.TWO, File.H), new FullPiece(Color.WHITE, Type.PAWN))
         );
     }
 
