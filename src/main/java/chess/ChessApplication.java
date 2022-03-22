@@ -1,10 +1,11 @@
 package chess;
 
-import chess.view.InputView;
+import chess.controller.ChessController;
 
 public class ChessApplication {
 
     public static void main(String[] args) {
-        Command command = InputView.inputCommand();
-   }
+        ChessController chessController = new ChessController();
+        chessController.run();
+    }
 }

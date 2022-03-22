@@ -18,7 +18,6 @@ public class ChessApplicationTest extends NsTest {
             assertThatThrownBy(() -> runException("not found command"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Command.NOT_FOUND_COMMAND_EXCEPTION));
-
     }
 
     @Test
