@@ -18,7 +18,7 @@ public abstract class Piece {
         return position;
     }
 
-    public final String value() {
+    public final String convertedName() {
         return color.convertToCase(name);
     }
 }
