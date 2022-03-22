@@ -15,12 +15,18 @@ public class King implements ChessPiece {
     }
 
     @Override
-    public List<String> getInitPosition() {
-        return List.of("e1","e8");
+    public List<String> getInitWhitePosition() {
+        return List.of("e1");
+    }
+
+    @Override
+    public List<String> getInitBlackPosition() {
+        return List.of("e8");
     }
 
     @Override
     public String getName() {
         return NAME;
     }
+
 }

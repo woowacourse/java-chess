@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ChessBoard {
 
-    private Map<String, ChessPiece> chessBoard;
+    private Map<String, String> chessBoard;
 
     public ChessBoard() {
         chessBoard = new HashMap<>();
@@ -31,8 +31,12 @@ public class ChessBoard {
     }
 
     private void initByPiece(ChessPiece chessPiece) {
-        for (String position : chessPiece.getInitPosition()) {
-            chessBoard.put(position, chessPiece);
+        for (String position : chessPiece.getInitBlackPosition()) {
+            chessBoard.put(position, chessPiece.getName());
+        }
+
+        for (String position : chessPiece.getInitWhitePosition()) {
+            chessBoard.put(position, chessPiece.getName().toLowerCase());
         }
     }
 
@@ -40,9 +44,9 @@ public class ChessBoard {
         return chessBoard.size();
     }
 
-    public Optional<ChessPiece> findPiece(String position) {
+    public Optional<String> findPiece(String position) {
 
-        ChessPiece piece = chessBoard.get(position);
+        String piece = chessBoard.get(position);
         if (piece == null) {
             return Optional.empty();
         }

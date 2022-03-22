@@ -15,8 +15,13 @@ public class Bishop implements ChessPiece {
     }
 
     @Override
-    public List<String> getInitPosition() {
-        return List.of("c1","f1","c8","f8");
+    public List<String> getInitWhitePosition() {
+        return List.of("c1","f1");
+    }
+
+    @Override
+    public List<String> getInitBlackPosition() {
+        return List.of("c8","f8");
     }
 
     @Override

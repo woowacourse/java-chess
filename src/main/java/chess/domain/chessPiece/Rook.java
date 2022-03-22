@@ -15,8 +15,13 @@ public class Rook implements ChessPiece {
     }
 
     @Override
-    public List<String> getInitPosition() {
-        return List.of("a1", "h1", "a8", "h8");
+    public List<String> getInitWhitePosition() {
+        return List.of("a1", "h1");
+    }
+
+    @Override
+    public List<String> getInitBlackPosition() {
+        return List.of("a8", "h8");
     }
 
     @Override

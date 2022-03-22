@@ -14,9 +14,15 @@ public class Queen implements ChessPiece {
         return INSTANCE;
     }
 
+
     @Override
-    public List<String> getInitPosition() {
-        return List.of("d1", "d8");
+    public List<String> getInitWhitePosition() {
+        return List.of("d1");
+    }
+
+    @Override
+    public List<String> getInitBlackPosition() {
+        return List.of("d8");
     }
 
     @Override

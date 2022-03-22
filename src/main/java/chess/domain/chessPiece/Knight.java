@@ -15,8 +15,13 @@ public class Knight implements ChessPiece {
     }
 
     @Override
-    public List<String> getInitPosition() {
-        return List.of("b1","g1","b8","g8");
+    public List<String> getInitWhitePosition() {
+        return List.of("b1","g1");
+    }
+
+    @Override
+    public List<String> getInitBlackPosition() {
+        return List.of("b8","g8");
     }
 
     @Override
