@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class Knight extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'n';
-    private static final char BLACK_SIGNATURE = 'N';
+    private static final String WHITE_SIGNATURE = "n";
+    private static final String BLACK_SIGNATURE = "N";
 
-    private Knight(Position position, char signature) {
+    private Knight(Position position, String signature) {
         super(position, signature);
     }
 

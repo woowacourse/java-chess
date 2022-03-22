@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class King extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'k';
-    private static final char BLACK_SIGNATURE = 'K';
+    private static final String WHITE_SIGNATURE = "k";
+    private static final String BLACK_SIGNATURE = "K";
 
-    private King(Position position, char signature) {
+    private King(Position position, String signature) {
         super(position, signature);
     }
 

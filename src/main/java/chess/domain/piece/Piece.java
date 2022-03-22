@@ -3,14 +3,14 @@ package chess.domain.piece;
 public abstract class Piece {
 
     private Position position;
-    private final char signature;
+    private final String signature;
 
-    protected Piece(Position position, char signature) {
+    protected Piece(Position position, String signature) {
         this.position = position;
         this.signature = signature;
     }
 
-    public char getSignature() {
+    public String getSignature() {
         return signature;
     }
 }

@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Position;
-import chess.domain.piece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +12,7 @@ public class QueenTest {
     void createWhite_Queen_q() {
         Queen queen = Queen.createWhite(new Position("a1"));
 
-        assertThat(queen.getSignature()).isEqualTo('q');
+        assertThat(queen.getSignature()).isEqualTo("q");
     }
 
     @DisplayName("흑팀 퀸 기물이 생성되었을 때 대문자 시그니처로 표시된다.")
@@ -22,6 +20,6 @@ public class QueenTest {
     void createBlack_Queen_Q() {
         Queen queen = Queen.createBlack(new Position("a1"));
 
-        assertThat(queen.getSignature()).isEqualTo('Q');
+        assertThat(queen.getSignature()).isEqualTo("Q");
     }
 }

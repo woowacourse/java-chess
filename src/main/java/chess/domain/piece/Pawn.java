@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class Pawn extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'p';
-    private static final char BLACK_SIGNATURE = 'P';
+    private static final String WHITE_SIGNATURE = "p";
+    private static final String BLACK_SIGNATURE = "P";
 
-    private Pawn(Position position, char signature) {
+    private Pawn(Position position, String signature) {
         super(position, signature);
     }
 

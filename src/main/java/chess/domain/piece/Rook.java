@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class Rook extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'r';
-    private static final char BLACK_SIGNATURE = 'R';
+    private static final String WHITE_SIGNATURE = "r";
+    private static final String BLACK_SIGNATURE = "R";
 
-    private Rook(Position position, char signature) {
+    private Rook(Position position, String signature) {
         super(position, signature);
     }
 

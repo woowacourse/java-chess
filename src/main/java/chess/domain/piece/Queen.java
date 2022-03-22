@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class Queen extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'q';
-    private static final char BLACK_SIGNATURE = 'Q';
+    private static final String WHITE_SIGNATURE = "q";
+    private static final String BLACK_SIGNATURE = "Q";
 
-    private Queen(Position position, char signature) {
+    private Queen(Position position, String signature) {
         super(position, signature);
     }
 

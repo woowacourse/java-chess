@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 public class Bishop extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'b';
-    private static final char BLACK_SIGNATURE = 'B';
+    private static final String WHITE_SIGNATURE = "b";
+    private static final String BLACK_SIGNATURE = "B";
 
-    private Bishop(Position position, char signature) {
+    private Bishop(Position position, String signature) {
         super(position, signature);
     }
 

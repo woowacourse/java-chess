@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Position;
-import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +12,7 @@ public class RookTest {
     void createWhite_Rook_r() {
         Rook rook = Rook.createWhite(new Position("a1"));
 
-        assertThat(rook.getSignature()).isEqualTo('r');
+        assertThat(rook.getSignature()).isEqualTo("r");
     }
 
     @DisplayName("흑팀 룩 기물이 생성되었을 때 대문자 시그니처로 표시된다.")
@@ -22,6 +20,6 @@ public class RookTest {
     void createBlack_Rook_R() {
         Rook rook = Rook.createBlack(new Position("a1"));
 
-        assertThat(rook.getSignature()).isEqualTo('R');
+        assertThat(rook.getSignature()).isEqualTo("R");
     }
 }

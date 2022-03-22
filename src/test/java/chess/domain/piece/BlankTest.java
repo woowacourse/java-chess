@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Blank;
-import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +12,6 @@ public class BlankTest {
     void constructor() {
         Blank blank = new Blank(new Position("a1"));
 
-        assertThat(blank.getSignature()).isEqualTo('.');
+        assertThat(blank.getSignature()).isEqualTo(".");
     }
 }
