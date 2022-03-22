@@ -1,10 +1,15 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.Color;
+import chess.domain.File;
+import chess.domain.Position;
+import chess.domain.Rank;
 
 public class PieceTest {
     @Test

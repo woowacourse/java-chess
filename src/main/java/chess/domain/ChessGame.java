@@ -3,6 +3,14 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Night;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+
 public class ChessGame {
     private final Map<Position, Piece> board = new HashMap<>();
 
