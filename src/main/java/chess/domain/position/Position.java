@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.YAxis;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
