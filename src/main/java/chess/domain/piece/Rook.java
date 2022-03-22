@@ -4,9 +4,9 @@ import chess.domain.Position;
 
 public final class Rook extends Piece {
 
-    private static final PieceType ROOK_TYPE = PieceType.ROOK;
+    private static final String ROOK_NAME = "R";
 
     public Rook(Color color, Position position) {
-        super(color, ROOK_TYPE, position);
+        super(color, ROOK_NAME, position);
     }
 }

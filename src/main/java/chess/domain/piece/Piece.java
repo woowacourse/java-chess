@@ -5,12 +5,20 @@ import chess.domain.Position;
 public abstract class Piece {
 
     private final Color color;
-    private final PieceType pieceType;
+    private final String name;
     private final Position position;
 
-    protected Piece(Color color, PieceType pieceType, Position position) {
+    protected Piece(Color color, String name, Position position) {
         this.color = color;
-        this.pieceType = pieceType;
+        this.name = name;
         this.position = position;
+    }
+
+    public final Position getPosition() {
+        return position;
+    }
+
+    public final String value() {
+        return color.convertToCase(name);
     }
 }

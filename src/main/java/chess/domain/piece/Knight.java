@@ -4,9 +4,9 @@ import chess.domain.Position;
 
 public final class Knight extends Piece {
 
-    private static final PieceType KNIGHT_TYPE = PieceType.KNIGHT;
+    private static final String KNIGHT_NAME = "K";
 
     public Knight(Color color, Position position) {
-        super(color, KNIGHT_TYPE, position);
+        super(color, KNIGHT_NAME, position);
     }
 }

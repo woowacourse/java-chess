@@ -4,9 +4,9 @@ import chess.domain.Position;
 
 public final class Bishop extends Piece {
 
-    private static final PieceType BISHOP_TYPE = PieceType.BISHOP;
+    private static final String BISHOP_NAME  = "B";
 
     public Bishop(Color color, Position position) {
-        super(color, BISHOP_TYPE, position);
+        super(color, BISHOP_NAME, position);
     }
 }
