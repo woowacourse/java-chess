@@ -2,8 +2,8 @@ package chess.domain;
 
 public class Knight extends Piece {
 
-    private static final char WHITE_SIGNATURE = 'k';
-    private static final char BLACK_SIGNATURE = 'K';
+    private static final char WHITE_SIGNATURE = 'n';
+    private static final char BLACK_SIGNATURE = 'N';
 
     private Knight(Position position, char signature) {
         super(position, signature);
