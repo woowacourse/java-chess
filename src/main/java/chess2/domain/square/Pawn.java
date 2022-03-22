@@ -4,10 +4,21 @@ import java.util.Objects;
 
 public class Pawn implements Square {
 
+    private static final String BLACK_PAWN_DISPLAY = "♗";
+    private static final String WHITE_PAWN_DISPLAY = "♝";
+
     private final Color color;
 
     public Pawn(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public String display() {
+        if (color == Color.BLACK) {
+            return BLACK_PAWN_DISPLAY;
+        }
+        return WHITE_PAWN_DISPLAY;
     }
 
     @Override
