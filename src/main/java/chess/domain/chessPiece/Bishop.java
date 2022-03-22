@@ -18,4 +18,9 @@ public class Bishop implements ChessPiece {
     public List<String> getInitPosition() {
         return List.of("c1","f1","c8","f8");
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }

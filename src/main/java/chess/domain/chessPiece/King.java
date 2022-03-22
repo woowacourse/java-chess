@@ -18,4 +18,9 @@ public class King implements ChessPiece {
     public List<String> getInitPosition() {
         return List.of("e1","e8");
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }

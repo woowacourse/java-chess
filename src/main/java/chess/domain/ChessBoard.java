@@ -5,6 +5,7 @@ import chess.domain.chessPiece.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoard {
 
@@ -37,5 +38,15 @@ public class ChessBoard {
 
     public int countPiece() {
         return chessBoard.size();
+    }
+
+    public Optional<ChessPiece> findPiece(String position) {
+
+        ChessPiece piece = chessBoard.get(position);
+        if (piece == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(piece);
     }
 }

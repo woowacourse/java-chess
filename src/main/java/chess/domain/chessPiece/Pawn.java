@@ -25,4 +25,9 @@ public class Pawn implements ChessPiece {
 
         return list;
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }

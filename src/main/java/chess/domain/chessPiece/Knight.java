@@ -18,4 +18,9 @@ public class Knight implements ChessPiece {
     public List<String> getInitPosition() {
         return List.of("b1","g1","b8","g8");
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }

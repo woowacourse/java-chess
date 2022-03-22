@@ -18,4 +18,9 @@ public class Rook implements ChessPiece {
     public List<String> getInitPosition() {
         return List.of("a1", "h1", "a8", "h8");
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }

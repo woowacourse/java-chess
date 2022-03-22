@@ -18,4 +18,9 @@ public class Queen implements ChessPiece {
     public List<String> getInitPosition() {
         return List.of("d1", "d8");
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
 }
