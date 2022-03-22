@@ -18,7 +18,10 @@ public enum Column {
 		this.value = value;
 	}
 
-	public static boolean contains(String string) {
-		return Arrays.stream(Column.values()).anyMatch(column -> column.value.equals(string));
+	public static Column of(final String value) {
+		return Arrays.stream(values())
+			.filter(it -> it.value.equalsIgnoreCase(value))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
 	}
 }

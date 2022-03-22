@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public enum Row {
 	A("a"),
@@ -19,8 +18,10 @@ public enum Row {
 		this.value = value;
 	}
 
-	public static boolean contains(String string) {
-		return Arrays.stream(Row.values())
-			.anyMatch(row -> row.value.equalsIgnoreCase(string));
+	public static Row of(final String value) {
+		return Arrays.stream(values())
+			.filter(it -> it.value.equalsIgnoreCase(value))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
 	}
 }
