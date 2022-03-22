@@ -9,8 +9,8 @@ import java.util.Map;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-    public static final int FILE_SIZE = 8;
-    public static final int FILE_END_NUMBER = 7;
+    private static final int FILE_SIZE = 8;
+    private static final int FILE_END_NUMBER = 7;
 
     public static void printStartMessage() {
         System.out.println("체스 게임을 시작합니다." + NEW_LINE +
