@@ -1,9 +1,11 @@
 package chess;
 
 public class Piece {
-    private final Type type;
+    private final String type;
+    private final Position position;
 
-    public Piece(Type type) {
+    public Piece(String type, Position position) {
         this.type = type;
+        this.position = position;
     }
 }
