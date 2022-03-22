@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.piece.Bishop;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -120,5 +121,31 @@ knight
         assertThat(rightKnight.getPlayer()).isEqualTo(Player.WHITE);
         assertThat(leftKnight).isInstanceOf(Knight.class);
         assertThat(rightKnight).isInstanceOf(Knight.class);
+    }
+
+    @Test
+    @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Row 8, Column c, f이다.")
+    void checkPositionBlackBishop(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftBishop = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.C));
+        Piece rightBishop = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.F));
+
+        assertThat(leftBishop.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(rightBishop.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftBishop).isInstanceOf(Bishop.class);
+        assertThat(rightBishop).isInstanceOf(Bishop.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Row 1, Column c, f이다.")
+    void checkPositionWhiteBishop(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftBishop = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.C));
+        Piece rightBishop = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.F));
+
+        assertThat(leftBishop.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(rightBishop.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftBishop).isInstanceOf(Bishop.class);
+        assertThat(rightBishop).isInstanceOf(Bishop.class);
     }
 }
