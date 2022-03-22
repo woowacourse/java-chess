@@ -41,13 +41,13 @@ public class PositionUtil {
                 .collect(Collectors.toList());
     }
 
-    public static int rankToInt(char rank) {
+    public static int rankToIdx(char rank) {
         Integer intValue = rankMap.get(rank);
         validateRange(intValue);
         return intValue;
     }
 
-    public static int fileToInt(char file) {
+    public static int fileToIdx(char file) {
         Integer intValue = fileMap.get(file);
         validateRange(intValue);
         return intValue;
