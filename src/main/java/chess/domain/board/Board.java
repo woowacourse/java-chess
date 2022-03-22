@@ -1,6 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.square.Color;
+import static chess.domain.square.Color.BLACK;
+import static chess.domain.square.Color.WHITE;
+
 import java.util.List;
 
 public class Board {
@@ -8,14 +10,15 @@ public class Board {
     private final List<Row> rows;
 
     public Board() {
-        this.rows = List.of(Row.ofEmpty(),
-                Row.ofPawn(Color.BLACK),
+        this.rows = List.of(
+                Row.ofMainPieces(BLACK),
+                Row.ofPawn(BLACK),
                 Row.ofEmpty(),
                 Row.ofEmpty(),
                 Row.ofEmpty(),
                 Row.ofEmpty(),
-                Row.ofPawn(Color.WHITE),
-                Row.ofEmpty());
+                Row.ofPawn(WHITE),
+                Row.ofMainPieces(WHITE));
     }
 
     public List<Row> getRows() {
