@@ -12,4 +12,12 @@ public class Board {
 	public Board() {
 		this.pieces = PieceInitializer.generate();
 	}
+
+	public String findSymbolAt(int row, int column) {
+		return pieces.stream()
+			.filter(piece -> piece.isSamePosition(row, column))
+			.findAny()
+			.orElseThrow(IllegalArgumentException::new)
+			.getSymbol();
+	}
 }

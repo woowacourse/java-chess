@@ -13,11 +13,11 @@ public class Pawn extends Piece {
 	}
 
 	public static Pawn createWhite(int row, int column) {
-		return new Pawn(Color.WHITE, new Position(row, column), "♜");
+		return new Pawn(Color.WHITE, new Position(row, column), "♟");
 	}
 
 	public static Pawn createBlack(int row, int column) {
-		return new Pawn(Color.BLACK, new Position(row, column), "♖");
+		return new Pawn(Color.BLACK, new Position(row, column), "♙");
 	}
 
 	@Override
