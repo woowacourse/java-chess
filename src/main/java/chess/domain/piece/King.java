@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class King extends Piece {
+public final class King extends Piece {
 
     private static final PieceType KING_TYPE = PieceType.KING;
 

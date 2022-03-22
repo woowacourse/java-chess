@@ -8,7 +8,7 @@ public abstract class Piece {
     private final PieceType pieceType;
     private final Position position;
 
-    public Piece(Color color, PieceType pieceType, Position position) {
+    protected Piece(Color color, PieceType pieceType, Position position) {
         this.color = color;
         this.pieceType = pieceType;
         this.position = position;
