@@ -5,7 +5,7 @@ public abstract class Piece {
     private final Player player;
     private final Unit unit;
 
-    public Piece(final Player player, Unit unit) {
+    public Piece(final Player player, final Unit unit) {
         this.player = player;
         this.unit = unit;
     }
@@ -16,5 +16,13 @@ public abstract class Piece {
 
     public String getSymbol() {
         return unit.getSymbol(player);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "player=" + player +
+                ", unit=" + unit +
+                '}';
     }
 }

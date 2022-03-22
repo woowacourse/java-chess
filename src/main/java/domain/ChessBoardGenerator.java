@@ -50,7 +50,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         createInitKing(board, player);
     }
 
-    private void createInitPawn(Map<Position, Piece> board, Player player) {
+    private void createInitPawn(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             Arrays.stream(Column.values()).forEach(column -> board.put(new Position(Row.SEVEN, column), new Pawn(BLACK)));
             return;
@@ -58,7 +58,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         Arrays.stream(Column.values()).forEach(column -> board.put(new Position(Row.TWO, column), new Pawn(WHITE)));
     }
 
-    private void createInitRook(Map<Position, Piece> board, Player player) {
+    private void createInitRook(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             board.put(new Position(Row.EIGHT, Column.A), new Rook(BLACK));
             board.put(new Position(Row.EIGHT, Column.H), new Rook(BLACK));
@@ -68,7 +68,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         board.put(new Position(Row.ONE, Column.H), new Rook(WHITE));
     }
 
-    private void createInitKnight(Map<Position, Piece> board, Player player) {
+    private void createInitKnight(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             board.put(new Position(Row.EIGHT, Column.B), new Knight(BLACK));
             board.put(new Position(Row.EIGHT, Column.G), new Knight(BLACK));
@@ -78,7 +78,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         board.put(new Position(Row.ONE, Column.G), new Knight(WHITE));
     }
 
-    private void createInitBishop(Map<Position, Piece> board, Player player) {
+    private void createInitBishop(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             board.put(new Position(Row.EIGHT, Column.C), new Bishop(BLACK));
             board.put(new Position(Row.EIGHT, Column.F), new Bishop(BLACK));
@@ -88,7 +88,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         board.put(new Position(Row.ONE, Column.F), new Bishop(WHITE));
     }
 
-    private void createInitQueen(Map<Position, Piece> board, Player player) {
+    private void createInitQueen(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             board.put(new Position(Row.EIGHT, Column.D), new Queen(BLACK));
             return;
@@ -96,7 +96,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         board.put(new Position(Row.ONE, Column.D), new Queen(WHITE));
     }
 
-    private void createInitKing(Map<Position, Piece> board, Player player) {
+    private void createInitKing(final Map<Position, Piece> board, final Player player) {
         if (player == BLACK){
             board.put(new Position(Row.EIGHT, Column.E), new King(BLACK));
             return;

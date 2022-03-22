@@ -1,6 +1,7 @@
 package domain.position;
 
 public enum Row {
+
     ONE(1),
     TWO(2),
     THREE(3),
@@ -14,5 +15,12 @@ public enum Row {
 
     Row(final int column) {
         this.column = column;
+    }
+
+    @Override
+    public String toString() {
+        return "Row{" +
+                "column=" + column +
+                '}';
     }
 }

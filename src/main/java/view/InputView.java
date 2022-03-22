@@ -16,19 +16,19 @@ public class InputView {
         return input;
     }
 
-    private static void validateUserCommand(String input) {
+    private static void validateUserCommand(final String input) {
         validateNullCheck(input);
         validateNotAllowCommand(input);
     }
 
-    private static void validateNullCheck(String input) {
-        if(input == null || input.isEmpty()){
+    private static void validateNullCheck(final String input) {
+        if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 게임 명령에 공백을 입력할 수 없습니다.");
         }
     }
 
-    private static void validateNotAllowCommand(String input) {
-        if(!(input.equals(START) || input.equals(END))){
+    private static void validateNotAllowCommand(final String input) {
+        if (!(input.equals(START) || input.equals(END))) {
             throw new IllegalArgumentException("[ERROR] start, end 이외의 문자는 입력할 수 없습니다.");
         }
     }

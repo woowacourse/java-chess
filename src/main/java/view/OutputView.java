@@ -9,7 +9,7 @@ import java.util.Collections;
 
 public class OutputView {
 
-    public static void printBoard(ChessBoard chessBoard) {
+    public static void printBoard(final ChessBoard chessBoard) {
         Row[] rows = Row.values();
         Arrays.sort(rows, Collections.reverseOrder());
         for (Row row : rows) {

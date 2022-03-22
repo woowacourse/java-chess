@@ -1,6 +1,8 @@
 package controller;
 
-import static view.InputView.*;
+import static view.InputView.END;
+import static view.InputView.START;
+import static view.InputView.responseUserCommand;
 
 import domain.ChessBoard;
 import domain.ChessBoardGenerator;
@@ -10,13 +12,13 @@ public class ChessController {
 
     public void play() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
-        String input = responseUserCommand();
+        final String input = responseUserCommand();
 
-        if (input.equals(START)){
+        if (input.equals(START)) {
             OutputView.printBoard(chessBoard);
         }
 
-        if (input == END){
+        if (input.equals(END)) {
         }
     }
 }

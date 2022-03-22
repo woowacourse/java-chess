@@ -2,7 +2,8 @@ package domain.position;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
+
     private final Row row;
     private final Column column;
 
@@ -26,5 +27,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
     }
 }

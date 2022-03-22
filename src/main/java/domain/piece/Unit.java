@@ -1,6 +1,7 @@
 package domain.piece;
 
 public enum Unit {
+
     King("K"),
     Queen("Q"),
     Bishop("B"),
@@ -14,9 +15,17 @@ public enum Unit {
         this.symbol = symbol;
     }
 
-    public String getSymbol(Player player) {
-        if (player == Player.BLACK)
+    public String getSymbol(final Player player) {
+        if (player == Player.BLACK) {
             return symbol;
+        }
         return symbol.toLowerCase();
+    }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "symbol='" + symbol + '\'' +
+                '}';
     }
 }
