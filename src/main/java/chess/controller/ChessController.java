@@ -1,8 +1,11 @@
-package chess;
+package chess.controller;
 
 import chess.model.Board;
+import chess.model.GameStartCommand;
 import chess.model.Piece;
 import chess.model.Square;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class ChessController {
     }
 
     private String toDto(Piece piece) {
-        String pieceDto = piece.value().getValue();
+        String pieceDto = piece.getName().getValue();
         if (piece.isBlack()) {
             return pieceDto.toUpperCase();
         }

@@ -22,23 +22,6 @@ public class Board {
         initPawns(Rank.TWO, Color.BLACK);
     }
 
-    private void initWhite() {
-        initPawns(Rank.SEVEN, Color.WHITE);
-        initBaseLine(Rank.EIGHT, Color.WHITE);
-    }
-
-    private void initEmpty() {
-        for (Rank rank : Rank.emptyBaseLine()) {
-            initByFiles(rank, Color.NOTHING, Name.NOTHING);
-        }
-    }
-
-    private void initByFiles(Rank rank, Color color, Name name) {
-        for (File file : File.values()) {
-            board.put(new Square(file, rank), new Piece(name, color));
-        }
-    }
-
     private void initBaseLine(Rank rank, Color color) {
         Iterator<File> files = Arrays.stream(File.values()).iterator();
         Iterator<Name> names = Name.getBaseLineNames().iterator();
@@ -49,6 +32,23 @@ public class Board {
 
     private void initPawns(Rank rank, Color color) {
         initByFiles(rank, color, Name.PAWN);
+    }
+
+    private void initByFiles(Rank rank, Color color, Name name) {
+        for (File file : File.values()) {
+            board.put(new Square(file, rank), new Piece(name, color));
+        }
+    }
+
+    private void initEmpty() {
+        for (Rank rank : Rank.emptyBaseLine()) {
+            initByFiles(rank, Color.NOTHING, Name.NOTHING);
+        }
+    }
+
+    private void initWhite() {
+        initPawns(Rank.SEVEN, Color.WHITE);
+        initBaseLine(Rank.EIGHT, Color.WHITE);
     }
 
     public Set<Square> keySet() {

@@ -10,8 +10,8 @@ public class Piece {
         this.color = color;
     }
 
-    public String value() {
-        return name.getValue();
+    public Name getName() {
+        return name;
     }
 
     public boolean isBlack() {

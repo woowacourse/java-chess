@@ -20,8 +20,8 @@ public class BoardTest {
         Piece h8Piece = board.get(new Square(File.H, Rank.EIGHT));
 
         assertAll(
-                () -> assertThat(a1Piece.value()).isEqualTo(Name.ROOK),
-                () -> assertThat(h8Piece.value()).isEqualTo(Name.ROOK)
+                () -> assertThat(a1Piece.getName()).isEqualTo(Name.ROOK),
+                () -> assertThat(h8Piece.getName()).isEqualTo(Name.ROOK)
         );
     }
 }
