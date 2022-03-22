@@ -8,6 +8,4 @@ public class Board {
     public Board(Pieces pieces) {
         this.pieces = pieces;
     }
-
-
 }

@@ -57,5 +57,4 @@ public final class Pieces {
         pieces.put(new Knight(Color.BLACK), new Position(PositionX.A, PositionY.RANK_8));
         pieces.put(new Rook(Color.BLACK), new Position(PositionX.A, PositionY.RANK_8));
     }
-
 }
