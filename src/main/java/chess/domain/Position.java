@@ -1,7 +1,5 @@
 package chess.domain;
 
-import java.util.Objects;
-
 public class Position {
 
 	private static final String INVALID_RANGE_ERROR = "유효한 범위가 아닙니다.";
