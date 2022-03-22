@@ -10,12 +10,26 @@ public class PieceTest {
     @DisplayName("Piece의 Rank와 File의 동일 여부를 검증한다.")
     void piece_equal() {
         //given
-        Piece piece = new Piece(Rank.ONE, File.A);
+        Piece piece = new Piece(PieceType.PAWN, Rank.ONE, File.A);
 
         //when
-        boolean actual = piece.isSamePosition(new Piece(Rank.ONE, File.A));
+        boolean actual = piece.isSamePosition(new Piece(PieceType.PAWN, Rank.ONE, File.A));
 
         //then
         Assertions.assertThat(actual).isTrue();
     }
+
+    @Test
+    @DisplayName("Piece의 타입이 일치하는지 검증한다.")
+    void piece_type() {
+        //given
+        Piece piece = new Piece(PieceType.PAWN, Rank.ONE, File.A);
+
+        //when
+        boolean actual = piece.isSameType(PieceType.PAWN);
+
+        //then
+        Assertions.assertThat(actual).isTrue();
+    }
+
 }
