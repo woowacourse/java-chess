@@ -21,4 +21,8 @@ public class Rank {
             throw new IllegalArgumentException(SIZE_EXCEPTION_MESSAGE);
         }
     }
+
+    public List<Piece> getPieces() {
+        return pieces;
+    }
 }
