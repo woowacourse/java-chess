@@ -1,6 +1,7 @@
 package chess;
 
 public enum PieceType {
+    EMPTY("."),
     PAWN("P"),
     KNIGHT("N"),
     ROOK("R"),

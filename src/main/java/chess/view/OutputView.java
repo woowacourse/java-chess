@@ -1,23 +1,29 @@
 package chess.view;
 
-public class OutputView {
+import static java.lang.System.*;
 
-    private static String NEXT_LINE = System.lineSeparator();
+import java.util.Map;
+
+import chess.File;
+import chess.Piece;
+import chess.PieceType;
+import chess.Position;
+import chess.Rank;
+
+public class OutputView {
 
     public static void printInitMessage() {
         System.out.println("체스 게임을 시작합니다.");
     }
 
-    public static void printChessGameBoard() {
-        String pieces =
-            "RNBQKBNR" + NEXT_LINE
-                + "PPPPPPPP" + NEXT_LINE
-                + "........" + NEXT_LINE
-                + "........" + NEXT_LINE
-                + "........" + NEXT_LINE
-                + "........" + NEXT_LINE
-                + "pppppppp" + NEXT_LINE
-                + "rnbqkbnr";
-        System.out.println(pieces);
+    public static void printChessGameBoard(Map<Position, Piece> piecesByPositions) {
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                Position searchPosition = new Position(rank, file);
+                Piece piece = piecesByPositions.getOrDefault(searchPosition, new Piece(PieceType.EMPTY, searchPosition));
+                out.print(piece.getPieceType().getName());
+            }
+            out.println();
+        }
     }
 }
