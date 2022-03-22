@@ -7,9 +7,9 @@
 ## 도메인
 
 ### Board
-- [ ] 체스판은 8행 X 8열로 총 64개의 칸을 가진다.
-- [ ] 흑기물의 첫 째줄은 RNBQKBNR, 둘 째줄은 PPPPPPPP로 세팅되어 있다.
-- [ ] 백기물의 첫 째줄은 rnbqkbnr, 둘 째줄은 pppppppp로 세팅되어 있다.
+- [x] 체스판은 8행 X 8열로 총 64개의 칸을 가진다.
+- [x] 흑기물의 첫 째줄은 RNBQKBNR, 둘 째줄은 PPPPPPPP로 세팅되어 있다.
+- [x] 백기물의 첫 째줄은 rnbqkbnr, 둘 째줄은 pppppppp로 세팅되어 있다.
 
 ### Rank
 - [x] 행(Rank)은 1~8까지 있다.
