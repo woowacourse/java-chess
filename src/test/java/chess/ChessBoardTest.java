@@ -13,7 +13,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
 
         //when
-        int size = chessBoard.init();
+        int size = chessBoard.countPieces();
 
         //then
         assertThat(size).isEqualTo(32);

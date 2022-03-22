@@ -12,9 +12,10 @@ public class ChessBoard {
     private final Map<Position, Piece> cells = new HashMap<>();
 
     public ChessBoard() {
+        init();
     }
 
-    public int init() {
+    private void init() {
         List<Position> positions = stream(File.values())
                 .flatMap(file -> stream(Rank.values())
                         .map(rank -> new Position(rank, file)))
@@ -22,10 +23,12 @@ public class ChessBoard {
 
         for (Position position : positions) {
             if (position.isInitPosition()) {
-                cells.put(position, new Piece());
+                cells.put(position, new Piece(Type.BISHOP));
             }
         }
+    }
 
+    public int countPieces() {
         return cells.size();
     }
 }
