@@ -15,4 +15,11 @@ class PieceFactoryTest {
         List<Piece> blackPieces = PieceFactory.createNewBlackPieces();
         assertThat(blackPieces).hasSize(16);
     }
+
+    @Test
+    @DisplayName("새로운 화이트 기물 목록 생성")
+    void createNewWhitePieces() {
+        List<Piece> whitePieces = PieceFactory.createNewWhitePieces();
+        assertThat(whitePieces).hasSize(16);
+    }
 }
