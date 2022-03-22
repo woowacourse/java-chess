@@ -8,6 +8,12 @@ import java.util.List;
 
 public class ChessController {
     public void game() {
+        OutputView.startGame();
+        String commandLine = InputView.inputStartOrEndGame();
+        GameStartCommand.findCommand(commandLine).execute(this::initGame);
+    }
+
+    private void initGame() {
         Board board = new Board();
         OutputView.startGameBoard(new BoardDto(toDto(board)));
     }
@@ -21,7 +27,7 @@ public class ChessController {
     }
 
     private String toDto(Piece piece) {
-        String pieceDto = piece.value();
+        String pieceDto = piece.value().getValue();
         if (piece.isBlack()) {
             return pieceDto.toUpperCase();
         }
