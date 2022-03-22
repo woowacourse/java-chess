@@ -7,6 +7,7 @@ import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
+import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.Row;
 import domain.position.Position;
@@ -147,5 +148,25 @@ knight
         assertThat(rightBishop.getPlayer()).isEqualTo(Player.WHITE);
         assertThat(leftBishop).isInstanceOf(Bishop.class);
         assertThat(rightBishop).isInstanceOf(Bishop.class);
+    }
+
+    @Test
+    @DisplayName("검은색 플레이어의 초기 Queen 위치는 Row 8, Column d이다.")
+    void checkPositionBlackQueen(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.D));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece).isInstanceOf(Queen.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 Queen 위치는 Row 1, Column d이다.")
+    void checkPositionWhiteQueen(){
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.D));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece).isInstanceOf(Queen.class);
     }
 }

@@ -7,6 +7,7 @@ import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Player;
+import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.Row;
 import domain.position.Position;
@@ -44,6 +45,7 @@ public class ChessBoardGenerator implements BoardGenerator{
         createInitRook(board, player);
         createInitKnight(board, player);
         createInitBishop(board, player);
+        createInitQueen(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -82,5 +84,13 @@ public class ChessBoardGenerator implements BoardGenerator{
         }
         board.put(new Position(Row.ONE, Column.C), new Bishop(WHITE));
         board.put(new Position(Row.ONE, Column.F), new Bishop(WHITE));
+    }
+
+    private void createInitQueen(Map<Position, Piece> board, Player player) {
+        if (player == BLACK){
+            board.put(new Position(Row.EIGHT, Column.D), new Queen(BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.D), new Queen(WHITE));
     }
 }
