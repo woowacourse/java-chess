@@ -1,7 +1,7 @@
-package chess.domain.board;
+package chess.domain.piece.position;
 
-import static chess.domain.board.util.PositionUtil.fileToIdx;
-import static chess.domain.board.util.PositionUtil.rankToIdx;
+import static chess.domain.piece.position.PositionUtil.fileToIdx;
+import static chess.domain.piece.position.PositionUtil.rankToIdx;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +24,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "rankIdx=" + rankIdx +
-                ", fileIdx=" + fileIdx +
+                "fileIdx=" + fileIdx +
+                ", rankIdx=" + rankIdx +
                 '}';
     }
 

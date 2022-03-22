@@ -1,9 +1,9 @@
-package chess.board.util;
+package chess.piece.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import chess.domain.board.util.PositionUtil;
+import chess.domain.piece.position.PositionUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
