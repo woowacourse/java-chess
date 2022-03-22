@@ -1,7 +1,8 @@
-import chess.Finish;
-import chess.Play;
-import chess.Ready;
-import chess.State;
+import chess.Chessboard;
+import chess.state.Finish;
+import chess.state.Play;
+import chess.state.Ready;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,6 @@ public class StateTest {
     void playToFinish() {
         Play play = new Play();
 
-        assertThat(play.move()).isInstanceOf(Finish.class);
+        //assertThat(play.move(Pair.of(0,0), Pair.of(1,1))).isInstanceOf(Finish.class);
     }
 }
