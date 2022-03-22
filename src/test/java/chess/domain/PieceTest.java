@@ -12,4 +12,11 @@ public class PieceTest {
         assertThatCode(() -> new Piece(Position.of(File.a, Rank.One)))
             .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("체스말은 흑팀과 백팀으로 나뉜다.")
+    void team() {
+        assertThatCode(() -> new Piece(Position.of(File.a, Rank.One), Color.Black))
+            .doesNotThrowAnyException();
+    }
 }
