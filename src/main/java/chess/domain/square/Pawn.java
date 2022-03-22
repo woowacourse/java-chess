@@ -2,15 +2,13 @@ package chess.domain.square;
 
 import java.util.Objects;
 
-public class Pawn implements Square {
+public class Pawn extends Piece {
 
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
 
-    private final Color color;
-
     public Pawn(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
