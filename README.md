@@ -1,7 +1,8 @@
-# java-chess
+# java-chess 기능 요구사항
 
-체스 미션 저장소
-
-## 우아한테크코스 코드리뷰
-
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 1단계
+1. 게임 상태 생성
+2. 채스판 초기화
+   1. 가로 위치 a~h (왼쪽부터 오른쪽)
+   2. 세로 위치 1~8 (아래부터 위)
+3. 각 진영은 대소문자로 구별(대문자-흑, 소문자-백)
