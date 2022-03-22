@@ -2,9 +2,9 @@ package chess.piece;
 
 public abstract class Piece {
 
-    private final String color;
+    private final Color color;
 
-    protected Piece(final String color) {
+    protected Piece(final Color color) {
         this.color = color;
     }
 }

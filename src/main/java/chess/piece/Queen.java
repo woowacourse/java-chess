@@ -2,7 +2,7 @@ package chess.piece;
 
 public class Queen extends Piece {
 
-    public Queen(final String color) {
+    public Queen(final Color color) {
         super(color);
     }
 }
