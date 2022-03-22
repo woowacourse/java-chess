@@ -1,7 +1,7 @@
-package chess2.view;
+package chess.view;
 
-import chess2.dto.BoardDto;
-import chess2.dto.RowDto;
+import chess.dto.BoardDto;
+import chess.dto.RowDto;
 import java.util.stream.Collectors;
 
 public class OutputView {

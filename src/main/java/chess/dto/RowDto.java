@@ -1,7 +1,7 @@
-package chess2.dto;
+package chess.dto;
 
-import chess2.domain.board.Row;
-import chess2.domain.square.Square;
+import chess.domain.board.Row;
+import chess.domain.square.Square;
 import java.util.stream.Collectors;
 
 public class RowDto {

@@ -1,9 +1,9 @@
-package chess2.domain.board;
+package chess.domain.board;
 
-import chess2.domain.square.Color;
-import chess2.domain.square.Empty;
-import chess2.domain.square.Pawn;
-import chess2.domain.square.Square;
+import chess.domain.square.Color;
+import chess.domain.square.Empty;
+import chess.domain.square.Pawn;
+import chess.domain.square.Square;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

@@ -1,6 +1,6 @@
-package chess2.dto;
+package chess.dto;
 
-import chess2.domain.board.Board;
+import chess.domain.board.Board;
 import java.util.List;
 import java.util.stream.Collectors;
 

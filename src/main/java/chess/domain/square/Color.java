@@ -1,3 +1,3 @@
-package chess2.domain.square;
+package chess.domain.square;
 
 public enum Color { WHITE, BLACK }

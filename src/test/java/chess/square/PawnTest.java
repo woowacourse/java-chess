@@ -1,9 +1,9 @@
-package chess2.square;
+package chess.square;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess2.domain.square.Color;
-import chess2.domain.square.Pawn;
+import chess.domain.square.Color;
+import chess.domain.square.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

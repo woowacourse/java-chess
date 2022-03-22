@@ -1,12 +1,12 @@
-package chess2.board;
+package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess2.domain.board.Row;
-import chess2.domain.square.Color;
-import chess2.domain.square.Empty;
-import chess2.domain.square.Pawn;
-import chess2.domain.square.Square;
+import chess.domain.board.Row;
+import chess.domain.square.Color;
+import chess.domain.square.Empty;
+import chess.domain.square.Pawn;
+import chess.domain.square.Square;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

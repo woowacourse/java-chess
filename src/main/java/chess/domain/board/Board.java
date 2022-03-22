@@ -1,6 +1,6 @@
-package chess2.domain.board;
+package chess.domain.board;
 
-import chess2.domain.square.Color;
+import chess.domain.square.Color;
 import java.util.List;
 
 public class Board {
