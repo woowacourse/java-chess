@@ -14,7 +14,7 @@ class KingTest {
     @EnumSource(Color.class)
     @DisplayName("킹 기물 생성")
     void createKing(Color color) {
-        Piece king = King.create(color);
+        Piece king = new King(color);
         assertThat(king).isInstanceOf(King.class);
     }
 }
