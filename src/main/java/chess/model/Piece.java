@@ -9,4 +9,12 @@ public class Piece {
         this.name = name;
         this.color = color;
     }
+
+    public String value() {
+        return name.getValue();
+    }
+
+    public boolean isBlack() {
+        return color.isBlack();
+    }
 }
