@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.pieces.Type;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public final class Piece {
@@ -11,6 +12,13 @@ public final class Piece {
     public Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
+    }
+
+    public String symbol() {
+        if (color == Color.WHITE) {
+            return type.getSymbol().toLowerCase();
+        }
+        return type.getSymbol();
     }
 
     @Override

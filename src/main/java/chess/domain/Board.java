@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public final class Board {
 
@@ -81,7 +82,10 @@ public final class Board {
         pieces.put(Position.of(column + "8"), new Piece(Color.BLACK, type));
     }
 
-    public Piece piece(Position position) {
-        return pieces.get(position);
+    public Optional<Piece> piece(Position position) {
+        if (pieces.containsKey(position)) {
+            return Optional.of(pieces.get(position));
+        }
+        return Optional.empty();
     }
 }
