@@ -2,20 +2,11 @@ package chess;
 
 public class Piece {
     private final PieceType pieceType;
-    private final Position position;
+    private final PieceColor pieceColor;
 
-    public Piece(PieceType pieceType, Rank rank, File file) {
+    public Piece(PieceType pieceType, PieceColor pieceColor) {
         this.pieceType = pieceType;
-        this.position = new Position(rank, file);
-    }
-
-    public Piece(PieceType pieceType, Position position) {
-        this.pieceType = pieceType;
-        this.position = position;
-    }
-
-    public boolean isSamePosition(Piece other) {
-        return this.position == other.position;
+        this.pieceColor = pieceColor;
     }
 
     public boolean isSameType(PieceType pieceType) {

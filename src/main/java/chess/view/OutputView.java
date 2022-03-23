@@ -6,6 +6,7 @@ import java.util.Map;
 
 import chess.File;
 import chess.Piece;
+import chess.PieceColor;
 import chess.PieceType;
 import chess.Position;
 import chess.Rank;
@@ -20,7 +21,7 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Position searchPosition = new Position(rank, file);
-                Piece piece = piecesByPositions.getOrDefault(searchPosition, new Piece(PieceType.EMPTY, searchPosition));
+                Piece piece = piecesByPositions.getOrDefault(searchPosition, new Piece(PieceType.EMPTY, PieceColor.EMPTY));
                 out.print(piece.getPieceType().getName());
             }
             out.println();
