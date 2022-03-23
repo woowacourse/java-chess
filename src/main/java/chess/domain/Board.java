@@ -11,4 +11,8 @@ public class Board {
     public Board(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
+    }
 }
