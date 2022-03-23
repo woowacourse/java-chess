@@ -8,8 +8,8 @@ public class Piece {
         this.pieceSymbol = pieceSymbol;
     }
 
-    public Player getPlayer() {
-        return player;
+    public boolean isSamePlayer(Player player) {
+        return this.player == player;
     }
 
     public String symbol() {

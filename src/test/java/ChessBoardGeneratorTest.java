@@ -23,7 +23,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.SEVEN, column));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
@@ -34,7 +34,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.TWO, column));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
@@ -45,8 +45,8 @@ public class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.A));
         Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.H));
 
-        assertThat(leftRook.getPlayer()).isEqualTo(Player.BLACK);
-        assertThat(rightRook.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftRook.isSamePlayer(Player.BLACK)).isEqualTo(true);
+        assertThat(rightRook.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(leftRook).isInstanceOf(Rook.class);
         assertThat(rightRook).isInstanceOf(Rook.class);
     }
@@ -58,8 +58,8 @@ public class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.A));
         Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.H));
 
-        assertThat(leftRook.getPlayer()).isEqualTo(Player.WHITE);
-        assertThat(rightRook.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftRook.isSamePlayer(Player.WHITE)).isEqualTo(true);
+        assertThat(rightRook.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(leftRook).isInstanceOf(Rook.class);
         assertThat(rightRook).isInstanceOf(Rook.class);
     }
@@ -71,8 +71,8 @@ public class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.B));
         Piece rightKnight = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.G));
 
-        assertThat(leftKnight.getPlayer()).isEqualTo(Player.BLACK);
-        assertThat(rightKnight.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftKnight.isSamePlayer(Player.BLACK)).isEqualTo(true);
+        assertThat(rightKnight.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(leftKnight).isInstanceOf(Knight.class);
         assertThat(rightKnight).isInstanceOf(Knight.class);
     }
@@ -84,8 +84,8 @@ public class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.B));
         Piece rightKnight = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.G));
 
-        assertThat(leftKnight.getPlayer()).isEqualTo(Player.WHITE);
-        assertThat(rightKnight.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftKnight.isSamePlayer(Player.WHITE)).isEqualTo(true);
+        assertThat(rightKnight.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(leftKnight).isInstanceOf(Knight.class);
         assertThat(rightKnight).isInstanceOf(Knight.class);
     }
@@ -97,8 +97,8 @@ public class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.C));
         Piece rightBishop = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.F));
 
-        assertThat(leftBishop.getPlayer()).isEqualTo(Player.BLACK);
-        assertThat(rightBishop.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftBishop.isSamePlayer(Player.BLACK)).isEqualTo(true);
+        assertThat(rightBishop.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(leftBishop).isInstanceOf(Bishop.class);
         assertThat(rightBishop).isInstanceOf(Bishop.class);
     }
@@ -110,8 +110,8 @@ public class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.C));
         Piece rightBishop = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.F));
 
-        assertThat(leftBishop.getPlayer()).isEqualTo(Player.WHITE);
-        assertThat(rightBishop.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftBishop.isSamePlayer(Player.WHITE)).isEqualTo(true);
+        assertThat(rightBishop.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(leftBishop).isInstanceOf(Bishop.class);
         assertThat(rightBishop).isInstanceOf(Bishop.class);
     }
@@ -122,7 +122,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.D));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
@@ -132,7 +132,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.D));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
@@ -142,7 +142,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.E));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece.isSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
     }
 
@@ -152,7 +152,7 @@ public class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.E));
 
-        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece.isSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
     }
 
