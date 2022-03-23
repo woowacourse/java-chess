@@ -27,6 +27,18 @@ public class Position {
         return isOneStepHorizontalOrVertical(position) || isOneStepDiagonal(position);
     }
 
+    public boolean isKnightDirection(Position position) {
+        return isTwoFileOneRankStep(position) || isOneFileTwoRankStep(position);
+    }
+
+    private boolean isOneFileTwoRankStep(Position position) {
+        return rank.absMinus(position.rank) == 2 && file.absMinus(position.file) == 1;
+    }
+
+    private boolean isTwoFileOneRankStep(Position position) {
+        return file.absMinus(position.file) == 2 && rank.absMinus(position.rank) == 1;
+    }
+
     private boolean isOneStepHorizontalOrVertical(Position position) {
         return rank.absMinus(position.rank) + file.absMinus(position.file) == 1;
     }
@@ -55,5 +67,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
-
 }
