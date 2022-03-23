@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 public class OutputView {
 
     private static final OutputView OUTPUT_VIEW = new OutputView();
-    private static final String CHESS_GAME_INITIAL_MESSAGE = "체스 게임을 시작합니다.%n게임 시작은 start, 종료는 end 명령을 입력하세요.%n";
     private static final int ONE_LINE_AMOUNT = 8;
     private static final int LINE_SEPARATE_CRITERIA = 7;
 
@@ -27,7 +26,10 @@ public class OutputView {
     }
 
     public void initialPrint() {
-        System.out.printf(CHESS_GAME_INITIAL_MESSAGE);
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
     public void printBoard(BoardDto boardDto) {

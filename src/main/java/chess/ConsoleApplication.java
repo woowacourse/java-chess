@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.domain.InitialExecution;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -12,12 +12,8 @@ public class ConsoleApplication {
         InputView inputView = InputView.getInstance();
         OutputView outputView = OutputView.getInstance();
 
-        String command;
-        do {
-            outputView.initialPrint();
-            command = inputView.scanCommand();
-        } while (!command.equalsIgnoreCase(START));
-
-        new ChessController().start();
+        outputView.initialPrint();
+        InitialExecution execution = InitialExecution.of(inputView.scanCommand());
+        execution.run();
     }
 }
