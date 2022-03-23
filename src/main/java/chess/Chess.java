@@ -11,6 +11,11 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Chess {
+	private final Board board;
+
+	public Chess(final Board board) {
+		this.board = board;
+	}
 
     public void run(final Board board) {
         OutputView.printStartMessage();
