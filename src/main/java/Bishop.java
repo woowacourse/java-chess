@@ -1,6 +1,6 @@
 public class Bishop extends Piece {
 
-    public Bishop(Player player) {
+    public Bishop(final Player player) {
         super(player, PieceSymbol.Bishop);
     }
 }

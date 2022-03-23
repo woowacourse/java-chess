@@ -4,11 +4,11 @@ public class ChessBoard {
 
     Map<Position, Piece> board;
 
-    public ChessBoard(BoardGenerator boardGenerator) {
+    public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
     }
 
-    public String getSymbol(Position position) {
+    public String getSymbol(final Position position) {
         Piece piece = board.get(position);
         if (piece == null) {
             return ".";

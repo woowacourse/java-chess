@@ -1,6 +1,6 @@
 public class Rook extends Piece {
 
-    public Rook(Player player) {
+    public Rook(final Player player) {
         super(player, PieceSymbol.Rook);
     }
 }

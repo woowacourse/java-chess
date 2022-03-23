@@ -1,6 +1,6 @@
 public class King extends Piece {
 
-    public King(Player player) {
+    public King(final Player player) {
         super(player, PieceSymbol.King);
     }
 }

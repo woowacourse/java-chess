@@ -8,7 +8,7 @@ public class ChessController {
             OutputView.printBoard(chessBoard);
         }
 
-        if (input == InputView.END) {
+        if (input.equals(InputView.END)) {
         }
     }
 }
