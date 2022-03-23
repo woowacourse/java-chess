@@ -24,16 +24,15 @@ public class Knight extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
-        int rankDistance = from.rankDistance(to);
-        int fileDistance = from.fileDistance(to);
+        int fileDistance = Math.abs(from.fileDistance(to));
+        int rankDistance = Math.abs(from.rankDistance(to));
 
-        if(rankDistance + fileDistance != 3){
+        if (rankDistance + fileDistance != 3) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
 
-        if(from.isSameFile(to) || from.isSameRank(to)){
+        if (from.isSameFile(to) || from.isSameRank(to)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
     }
-
 }

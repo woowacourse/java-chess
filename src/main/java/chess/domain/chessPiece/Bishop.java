@@ -24,8 +24,8 @@ public class Bishop extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
-        int rankDistance = from.rankDistance(to);
-        int fileDistance = from.fileDistance(to);
+        int rankDistance = Math.abs(from.rankDistance(to));
+        int fileDistance = Math.abs(from.fileDistance(to));
 
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");

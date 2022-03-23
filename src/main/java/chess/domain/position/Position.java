@@ -12,16 +12,21 @@ public class Position {
     }
 
     public int fileDistance(Position target){
-        return Math.abs(file.calculateDistance(target.file));
+        return file.calculateDistance(target.file);
     }
 
     public int rankDistance(Position target){
-        return Math.abs(rank.calculateDistance(target.rank));
+        return rank.calculateDistance(target.rank);
     }
 
     public boolean isSameFile(Position target) {
         return file.equals(target.file);
     }
+
+    public boolean isSameFile(String target){
+        return file.equals(File.of(target));
+    }
+
 
     public boolean isSameRank(Position target) {
         return rank.equals(target.rank);

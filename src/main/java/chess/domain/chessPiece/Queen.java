@@ -24,8 +24,8 @@ public class Queen extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
-        int rankDistance = from.rankDistance(to);
-        int fileDistance = from.fileDistance(to);
+        int fileDistance = Math.abs(from.fileDistance(to));
+        int rankDistance = Math.abs(from.rankDistance(to));
 
         boolean sameFile = from.isSameFile(to);
         boolean sameRank = from.isSameRank(to);
