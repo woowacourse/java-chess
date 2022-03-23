@@ -9,6 +9,6 @@ public class Pawn extends Piece {
     public static List<String> WHITE_INIT_LOCATIONS = List.of("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2");
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PieceName.PAWN);
     }
 }

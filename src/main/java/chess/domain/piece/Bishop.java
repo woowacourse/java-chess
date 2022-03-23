@@ -9,6 +9,6 @@ public class Bishop extends Piece {
     public static List<String> WHITE_INIT_LOCATIONS = List.of("c1", "f1");
 
     public Bishop(Color color) {
-        super(color);
+        super(color, PieceName.BISHOP);
     }
 }

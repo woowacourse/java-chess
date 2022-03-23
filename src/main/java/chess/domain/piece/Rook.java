@@ -9,6 +9,6 @@ public class Rook extends Piece {
     public static List<String> WHITE_INIT_LOCATIONS = List.of("a1", "h1");
 
     public Rook(Color color) {
-        super(color);
+        super(color, PieceName.ROOK);
     }
 }

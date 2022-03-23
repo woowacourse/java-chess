@@ -12,10 +12,18 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
+        fillEmptyPieceIfAbsent();
+    }
+
+    private void fillEmptyPieceIfAbsent() {
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                this.pieces.computeIfAbsent(new Position(column, row), value -> EmptyPiece.getInstance());
-            }
+            fillEmptyPieceInColumn(column);
+        }
+    }
+
+    private void fillEmptyPieceInColumn(Column column) {
+        for (Row row : Row.values()) {
+            this.pieces.computeIfAbsent(new Position(column, row), value -> EmptyPiece.getInstance());
         }
     }
 

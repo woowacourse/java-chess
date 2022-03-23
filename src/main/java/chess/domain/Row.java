@@ -1,6 +1,9 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Row {
 
@@ -24,5 +27,13 @@ public enum Row {
                 .filter(row -> row.value.equals(targetValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 행 이름이 들어왔습니다."));
+    }
+
+    public static List<Row> getRowsReverseOrder() {
+        Row[] values = Row.values();
+        List<Row> reverse = Arrays.stream(values)
+                .collect(Collectors.toList());
+        Collections.reverse(reverse);
+        return reverse;
     }
 }

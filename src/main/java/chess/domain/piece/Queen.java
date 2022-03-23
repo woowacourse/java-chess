@@ -8,6 +8,6 @@ public class Queen extends Piece {
     public static String WHITE_INIT_LOCATION = "d1";
 
     public Queen(Color color) {
-        super(color);
+        super(color, PieceName.QUEEN);
     }
 }

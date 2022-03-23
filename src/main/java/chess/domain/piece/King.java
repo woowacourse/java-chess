@@ -8,6 +8,6 @@ public class King extends Piece {
     public static String WHITE_INIT_LOCATION = "e1";
 
     public King(Color color) {
-        super(color);
+        super(color, PieceName.KING);
     }
 }
