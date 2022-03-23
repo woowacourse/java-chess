@@ -19,7 +19,7 @@ public class Pawn {
         if (position.isFirstTurnOfPawn()) {
             validateFirstTurnMove(currentPosition, destinationPosition);
         }
-        validateDefaultMoveCount(currentPosition.calculateDistance(destinationPosition));
+        validateDefaultMoveDistance(currentPosition.calculateDistance(destinationPosition));
         return position = destinationPosition;
     }
 
@@ -30,7 +30,7 @@ public class Pawn {
         }
     }
 
-    private void validateDefaultMoveCount(final int distance) {
+    private void validateDefaultMoveDistance(final int distance) {
         if (distance != PAWN_DEFAULT_MOVE_DISTANCE) {
             throw new IllegalArgumentException("폰은 앞으로 1칸만 이동할 수 있습니다.");
         }
