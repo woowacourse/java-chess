@@ -8,6 +8,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
+        runByCommend();
+    }
+
+    private void runByCommend() {
         while (true) {
             String commend = InputView.inputCommend();
             if (commend.equals("end")) {
