@@ -36,6 +36,14 @@ public class Position {
         }
     }
 
+    public Position move(int x, int y) {
+        return new Position(column.move(x), row.move(y));
+    }
+
+    public boolean isStartRow(Row rank) {
+        return row == rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
