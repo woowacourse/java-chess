@@ -25,6 +25,10 @@ public class ChessBoard {
         return new ChessBoard(pieces);
     }
 
+    public boolean isPositionEmpty(Position position) {
+        return !pieces.containsKey(position);
+    }
+
     public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
