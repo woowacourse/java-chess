@@ -18,4 +18,18 @@ public class PositionTest {
     void init() {
         assertThat(Position.init()).hasSize(64);
     }
+
+    @Test
+    @DisplayName("동일한 row에서 크기 비교에 성공한다.")
+    void compareToSameRow() {
+        Position position = new Position(Column.A, Row.EIGHT);
+        assertThat(position).isGreaterThan(new Position(Column.C, Row.EIGHT));
+    }
+
+    @Test
+    @DisplayName("크기 비교에 성공한다.")
+    void compareTo() {
+        Position position = new Position(Column.A, Row.EIGHT);
+        assertThat(position).isGreaterThan(new Position(Column.A, Row.SEVEN));
+    }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Position  {
+public class Position implements Comparable<Position> {
 
     private final Column column;
     private final Row row;
@@ -40,5 +40,13 @@ public class Position  {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public int compareTo(Position position) {
+        if (this.row.getValue() == position.row.getValue()) {
+            return position.column.getValue() - this.column.getValue();
+        }
+        return this.row.getValue() - position.row.getValue();
     }
 }
