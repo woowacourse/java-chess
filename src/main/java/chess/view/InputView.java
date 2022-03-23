@@ -14,7 +14,7 @@ public class InputView {
         return inputOption();
     }
 
-    private static InputOption inputOption() {
+    public static InputOption inputOption() {
         return InputOption.from(SCANNER.nextLine());
     }
 }
