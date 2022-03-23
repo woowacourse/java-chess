@@ -23,10 +23,21 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    private List<Piece> generateOf(Rank rank) {
+    private List<Piece> generateOf(final Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Piece.create(file, rank))
                 .collect(Collectors.toList());
     }
 
+    public boolean hasPieceInPosition(final File file, final Rank rank) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.hasPosition(file, rank));
+    }
+
+    public Piece findPieceInPosition(final File file, final Rank rank) {
+        return pieces.stream()
+                .filter(piece -> piece.hasPosition(file, rank))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+    }
 }
