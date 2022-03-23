@@ -1,10 +1,14 @@
 package chess.domain;
 
+import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.FullPiece;
+import chess.domain.piece.KingPiece;
+import chess.domain.piece.KnightPiece;
+import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Type;
+import chess.domain.piece.QueenPiece;
+import chess.domain.piece.RookPiece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -53,20 +57,20 @@ public class Board {
 
     private static void initialPiecesWithoutPawn(Map<Position, Piece> board, final Rank rank,
         final Color color) {
-        board.put(new Position(File.A, rank), new FullPiece(color, Type.ROOK));
-        board.put(new Position(File.B, rank), new FullPiece(color, Type.KNIGHT));
-        board.put(new Position(File.C, rank), new FullPiece(color, Type.BISHOP));
-        board.put(new Position(File.D, rank), new FullPiece(color, Type.QUEEN));
-        board.put(new Position(File.E, rank), new FullPiece(color, Type.KING));
-        board.put(new Position(File.F, rank), new FullPiece(color, Type.BISHOP));
-        board.put(new Position(File.G, rank), new FullPiece(color, Type.KNIGHT));
-        board.put(new Position(File.H, rank), new FullPiece(color, Type.ROOK));
+        board.put(new Position(File.A, rank), new RookPiece(color));
+        board.put(new Position(File.B, rank), new KnightPiece(color));
+        board.put(new Position(File.C, rank), new BishopPiece(color));
+        board.put(new Position(File.D, rank), new QueenPiece(color));
+        board.put(new Position(File.E, rank), new KingPiece(color));
+        board.put(new Position(File.F, rank), new BishopPiece(color));
+        board.put(new Position(File.G, rank), new KnightPiece(color));
+        board.put(new Position(File.H, rank), new RookPiece(color));
     }
 
     private static void initialPawns(Map<Position, Piece> board, final Rank rank,
         final Color color) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), new FullPiece(color, Type.PAWN));
+            board.put(new Position(file, rank), new PawnPiece(color));
         }
     }
 

@@ -2,14 +2,12 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
-public class FullPiece implements Piece {
+public abstract class FullPiece implements Piece {
 
     private final Color color;
-    private final Type type;
 
-    public FullPiece(final Color color, final Type type) {
+    public FullPiece(final Color color) {
         this.color = color;
-        this.type = type;
     }
 
     @Override
@@ -20,20 +18,15 @@ public class FullPiece implements Piece {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        FullPiece piece = (FullPiece) o;
-        return color == piece.color && type == piece.type;
+        FullPiece fullPiece = (FullPiece) o;
+        return color == fullPiece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, type);
+        return Objects.hash(color);
     }
 
     @Override
-    public String getName() {
-        if (color.equals(Color.WHITE)) {
-            return type.getType().toLowerCase();
-        }
-        return type.getType();
-    }
+    public abstract String getName();
 }
