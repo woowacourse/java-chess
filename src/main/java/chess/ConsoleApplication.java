@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.Board;
+import chess.domain.BoardInitiator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -14,7 +15,7 @@ public class ConsoleApplication {
                 return;
             }
             if (command.trim().equals("start")) {
-                Board board = new Board();
+                Board board = new Board(new BoardInitiator());
                 OutputView.printBoard(board);
             }
         }

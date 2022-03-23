@@ -1,9 +1,7 @@
 package chess.domain;
 
 import chess.domain.pieces.*;
-import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,12 +15,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 
+    @Test
+    @DisplayName("보드는 체스판을 입력받는다")
+    void board_createdByGenerator() {
+        Board board = new Board(new BoardInitiator());
+        assertThat(board).isNotNull();
+    }
+
     @ParameterizedTest
     @MethodSource("rookPositions")
     @DisplayName("rook의 초기 위치를 확인")
     void rooks_initialPosition(final Position position, final Color color) {
-        Board board = new Board();
-        assertThat(board.piece(position)).isEqualTo(new Piece(color, new Rook()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(position).get()).isEqualTo(new Piece(color, new Rook()));
     }
 
     private static Stream<Arguments> rookPositions() {
@@ -46,8 +51,8 @@ class BoardTest {
     @MethodSource("knightPositions")
     @DisplayName("knight의 초기 위치를 확인")
     void knights_initialPosition(final Position position, final Color color) {
-        Board board = new Board();
-        assertThat(board.piece(position)).isEqualTo(new Piece(color, new Knight()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(position).get()).isEqualTo(new Piece(color, new Knight()));
     }
 
     private static Stream<Arguments> knightPositions() {
@@ -71,8 +76,8 @@ class BoardTest {
     @MethodSource("bishopPositions")
     @DisplayName("bishop의 초기 위치를 확인")
     void bishops_initialPosition(final Position position, final Color color) {
-        Board board = new Board();
-        assertThat(board.piece(position)).isEqualTo(new Piece(color, new Bishop()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(position).get()).isEqualTo(new Piece(color, new Bishop()));
     }
 
     private static Stream<Arguments> bishopPositions() {
@@ -96,8 +101,8 @@ class BoardTest {
     @MethodSource("queenPositions")
     @DisplayName("queen의 초기 위치를 확인")
     void queens_initialPosition(final Position position, final Color color) {
-        Board board = new Board();
-        assertThat(board.piece(position)).isEqualTo(new Piece(color, new Queen()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(position).get()).isEqualTo(new Piece(color, new Queen()));
     }
 
     private static Stream<Arguments> queenPositions() {
@@ -115,8 +120,8 @@ class BoardTest {
     @MethodSource("kingPositions")
     @DisplayName("king의 초기 위치를 확인")
     void king_initialPosition(final Position position, final Color color) {
-        Board board = new Board();
-        assertThat(board.piece(position)).isEqualTo(new Piece(color, new King()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(position).get()).isEqualTo(new Piece(color, new King()));
     }
 
     private static Stream<Arguments> kingPositions() {
@@ -134,16 +139,16 @@ class BoardTest {
     @ValueSource(strings = {"a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"})
     @DisplayName("흰색 pawn의 초기 위치를 확인")
     void whitePawn_initialPosition(final String rawPosition) {
-        Board board = new Board();
-        assertThat(board.piece(Position.of(rawPosition))).isEqualTo(new Piece(Color.WHITE, new Pawn()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(Position.of(rawPosition)).get()).isEqualTo(new Piece(Color.WHITE, new Pawn()));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"})
     @DisplayName("검은색 pawn의 초기 위치를 확인")
     void blackPawn_initialPosition(final String rawPosition) {
-        Board board = new Board();
-        assertThat(board.piece(Position.of(rawPosition))).isEqualTo(new Piece(Color.BLACK, new Pawn()));
+        Board board = new Board(new BoardInitiator());
+        assertThat(board.piece(Position.of(rawPosition)).get()).isEqualTo(new Piece(Color.BLACK, new Pawn()));
     }
 
 }
