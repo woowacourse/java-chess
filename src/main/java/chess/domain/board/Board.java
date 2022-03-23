@@ -13,8 +13,8 @@ import java.util.Optional;
 public class Board {
     private final Map<Position, AbstractPiece> value;
 
-    private Board(Map<Position, Piece> value) {
-        this.value = value;
+    private Board(Map<Position, AbstractPiece> value) {
+        this.value = Map.copyOf(value);
     }
 
     public static Board createInitializedBoard() {
