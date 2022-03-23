@@ -35,6 +35,6 @@ public class PositionParser {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
 
-        return Pair.of(files.get(x), files.get(y));
+        return Pair.of(files.get(x), ranks.get(y));
     }
 }
