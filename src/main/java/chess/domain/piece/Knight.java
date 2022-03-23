@@ -17,17 +17,25 @@ public final class Knight extends Piece {
     }
 
     public Knight move(Position position, ChessBoard chessBoard) {
+        validateMovablePosition(position);
+        validateSameColor(position, chessBoard);
+        return new Knight(this, position);
+    }
+
+    private void validateMovablePosition(final Position position) {
         if (!isPossibleToMove(position)) {
             throw new IllegalStateException("나이트는 L자 형태로만 움직일 수 있습니다.");
         }
-        if (!chessBoard.isPositionEmpty(position) && isEqualColor(chessBoard.pieceByPosition(position))) {
-            throw new IllegalStateException("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
-        }
-        return new Knight(this, position);
     }
 
     private boolean isPossibleToMove(Position position) {
         return !position.equalsColumnOrRow(getPosition())
                 && position.calculateDistance(getPosition()) == KNIGHT_MOVABLE_DISTANCE;
+    }
+
+    private void validateSameColor(final Position position, final ChessBoard chessBoard) {
+        if (!chessBoard.isPositionEmpty(position) && isEqualColor(chessBoard.pieceByPosition(position))) {
+            throw new IllegalStateException("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
+        }
     }
 }
