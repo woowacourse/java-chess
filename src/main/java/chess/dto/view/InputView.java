@@ -1,11 +1,12 @@
-package chess.view;
+package chess.dto.view;
 
-import static camp.nextstep.edu.missionutils.Console.readLine;
+import static camp.nextstep.edu.missionutils.Console.*;
+
+import java.util.List;
 
 import chess.Command;
 import chess.Position;
 import chess.dto.MoveRequest;
-import java.util.List;
 
 public class InputView {
 

@@ -1,12 +1,12 @@
 package chess.controller;
 
-import static chess.Command.END;
+import static chess.Command.*;
 
 import chess.Board;
 import chess.Command;
 import chess.dto.MoveRequest;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.dto.view.InputView;
+import chess.dto.view.OutputView;
 
 public class ChessController {
 

@@ -17,7 +17,7 @@ public enum Command {
 
     static final String NOT_FOUND_COMMAND_EXCEPTION = "[ERROR] 이 명령문은 존재하지 않습니다.";
 
-    private String name;
+    private final String name;
 
     Command(String name) {
         this.name = name;
@@ -25,17 +25,17 @@ public enum Command {
 
     public static Command startEnd(String input) {
         return Arrays.stream(values())
-                .filter(value -> PATTERN_START_END.matcher(input).matches())
-                .filter(value -> input.equals(value.name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
+            .filter(value -> PATTERN_START_END.matcher(input).matches())
+            .filter(value -> input.equals(value.name))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
     }
 
     public static Command endMove(String input) {
         return Arrays.stream(values())
-                .filter(value -> PATTERN_END_MOVE.matcher(input).matches())
-                .filter(value -> input.startsWith(value.name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
+            .filter(value -> PATTERN_END_MOVE.matcher(input).matches())
+            .filter(value -> input.startsWith(value.name))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
     }
 }

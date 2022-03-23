@@ -23,9 +23,9 @@ public enum Rank {
 
     public static Rank of(String input) {
         return Arrays.stream(values())
-                .filter(rank -> rank.value == Integer.parseInt(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
+            .filter(rank -> rank.value == Integer.parseInt(input))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
     }
 
     public static List<Rank> reverseValues() {

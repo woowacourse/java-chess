@@ -1,18 +1,19 @@
 package chess;
 
 import static chess.Board.*;
-import static chess.PieceType.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.piece.Pawn;
+import chess.piece.Piece;
 
 public class BoardTest {
 
@@ -44,7 +45,7 @@ public class BoardTest {
 
         // when & then
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Piece(PieceType.PAWN, PieceColor.WHITE))
+            .map(value -> new Pawn(PieceColor.WHITE))
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
@@ -59,16 +60,14 @@ public class BoardTest {
     void init_Except_Pawn() {
         //given
         Map<Position, Piece> piecesByPositions = board.getValues();
-        ListIterator<PieceType> pieceTypeListIterator = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT,
-            ROOK).listIterator();
 
         //when
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Piece(pieceTypeListIterator.next(), PieceColor.WHITE))
+            .map(value -> new Pawn(PieceColor.WHITE))
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(Rank.ONE, file)))
+            .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
             .collect(Collectors.toList());
 
         //then
@@ -91,6 +90,6 @@ public class BoardTest {
         Map<Position, Piece> piecesByPositions = board.getValues();
 
         //then
-        assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Piece(PAWN, PieceColor.WHITE));
+        assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Pawn(PieceColor.WHITE));
     }
 }

@@ -1,29 +1,32 @@
 package chess;
 
-import static chess.PieceColor.BLACK;
-import static chess.PieceColor.WHITE;
-import static chess.PieceType.BISHOP;
-import static chess.PieceType.KING;
-import static chess.PieceType.KNIGHT;
-import static chess.PieceType.PAWN;
-import static chess.PieceType.QUEEN;
-import static chess.PieceType.ROOK;
-import static chess.Rank.EIGHT;
-import static chess.Rank.ONE;
-import static chess.Rank.SEVEN;
-import static chess.Rank.TWO;
+import static chess.PieceColor.*;
+import static chess.Rank.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.function.Function;
+
+import chess.piece.Bishop;
+import chess.piece.EmptyPiece;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Queen;
+import chess.piece.Rook;
 
 public class Board {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
     private final Map<Position, Piece> values;
-    private static final List<PieceType> BACK_LINE_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT,
-            ROOK);
+
+    private static final Function<PieceColor, List<Piece>> createPieceFunction = (PieceColor pieceColor) -> List.of(
+        new Rook(pieceColor), new Knight(pieceColor), new Bishop(pieceColor),
+        new Queen(pieceColor), new King(pieceColor), new Bishop(pieceColor),
+        new Knight(pieceColor), new Rook(pieceColor));
 
     public Board() {
         this.values = initBoard();
@@ -42,7 +45,7 @@ public class Board {
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                result.put(new Position(rank, file), new Piece(PieceType.EMPTY, PieceColor.EMPTY));
+                result.put(new Position(rank, file), new EmptyPiece(PieceColor.EMPTY));
             }
         }
     }
@@ -58,17 +61,16 @@ public class Board {
     }
 
     private void putRemainPiecesExceptPawn(Map<Position, Piece> result, PieceColor color, Rank rank) {
-
-        ListIterator<PieceType> pieceTypeListIterator = BACK_LINE_PIECES.listIterator();
+        ListIterator<Piece> piecesIterator = createPieceFunction.apply(color).listIterator();
 
         for (File file : File.values()) {
-            result.put(new Position(rank, file), new Piece(pieceTypeListIterator.next(), color));
+            result.put(new Position(rank, file), piecesIterator.next());
         }
     }
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(rank, file), new Piece(PAWN, color));
+            result.put(new Position(rank, file), new Pawn(color));
         }
     }
 
@@ -79,11 +81,11 @@ public class Board {
 
     private void changePieces(Position source, Position target) {
         values.put(target, values.get(source));
-        values.put(source, new Piece(PieceType.EMPTY, PieceColor.EMPTY));
+        values.put(source, new EmptyPiece(PieceColor.EMPTY));
     }
 
     private void validateSourceNotEmpty(Position source) {
-        if (values.get(source).equals(new Piece(PieceType.EMPTY, PieceColor.EMPTY))) {
+        if (values.get(source).equals(new EmptyPiece(PieceColor.EMPTY))) {
             throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
     }

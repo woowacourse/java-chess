@@ -1,7 +1,6 @@
 package chess;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,8 +19,8 @@ class CommandTest {
     @ValueSource(strings = {"starttt", "", " "})
     void startEnd_exception(String input) {
         assertThatThrownBy(() -> Command.startEnd(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Command.NOT_FOUND_COMMAND_EXCEPTION);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(Command.NOT_FOUND_COMMAND_EXCEPTION);
     }
 
     @ParameterizedTest
@@ -35,7 +34,7 @@ class CommandTest {
     @ValueSource(strings = {"move a1 a9", "move a9 b1", "move B1 b2", "move a1 a2 a3"})
     void endMove_exception(String input) {
         assertThatThrownBy(() -> Command.endMove(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Command.NOT_FOUND_COMMAND_EXCEPTION);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage(Command.NOT_FOUND_COMMAND_EXCEPTION);
     }
 }

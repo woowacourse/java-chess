@@ -20,8 +20,8 @@ public enum File {
 
     public static File of(String input) {
         return Arrays.stream(values())
-                .filter(file -> file.value.equals(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
+            .filter(file -> file.value.equals(input))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
     }
 }

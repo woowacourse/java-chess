@@ -1,12 +1,13 @@
-package chess.view;
+package chess.dto.view;
 
-import static java.lang.System.out;
+import static java.lang.System.*;
+
+import java.util.Map;
 
 import chess.File;
-import chess.Piece;
 import chess.Position;
 import chess.Rank;
-import java.util.Map;
+import chess.piece.Piece;
 
 public class OutputView {
 
@@ -15,10 +16,10 @@ public class OutputView {
     public static void printInitMessage() {
 
         out.println(
-                "> 체스 게임을 시작합니다." + NEXT_LINE +
-                        "> 게임 시작 : start" + NEXT_LINE +
-                        "> 게임 종료 : end" + NEXT_LINE +
-                        "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"
+            "> 체스 게임을 시작합니다." + NEXT_LINE +
+                "> 게임 시작 : start" + NEXT_LINE +
+                "> 게임 종료 : end" + NEXT_LINE +
+                "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"
         );
     }
 
