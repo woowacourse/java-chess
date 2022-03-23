@@ -14,4 +14,11 @@ public enum Color {
         }
         return name.toLowerCase();
     }
+
+    public Color toOpposite() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
