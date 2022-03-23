@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum Menu {
 
     START("start"),
+    MOVE("move"),
     END("end");
 
     private final String value;
@@ -22,5 +23,13 @@ public enum Menu {
 
     public boolean isEnd() {
         return this == END;
+    }
+
+
+    public boolean isStart() {
+        return this == START;
+    }
+    public boolean isMove() {
+        return this == MOVE;
     }
 }
