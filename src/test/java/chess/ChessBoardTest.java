@@ -148,4 +148,66 @@ class ChessBoardTest {
             Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, ONE))
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideMoveSidePawn")
+    @DisplayName("폰이 양옆으로 움직이려고 할 경우 예외 발생")
+    void throwExceptionPawnMoveSide(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(Color.WHITE, from)));
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(pawn(Color.WHITE, from));
+        });
+    }
+
+    private static Stream<Arguments> provideMoveSidePawn() {
+        return Stream.of(
+            Arguments.of(new Position(A, TWO), new Position(B, THREE)),
+            Arguments.of(new Position(A, TWO), new Position(B, TWO)),
+            Arguments.of(new Position(B, TWO), new Position(A, TWO))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideMoveCollinearRook")
+    @DisplayName("룩은 동일선상으로 제한 없이 이동")
+    void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(rook(Color.BLACK, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(rook(Color.BLACK, to));
+    }
+
+    private static Stream<Arguments> provideMoveCollinearRook() {
+        return Stream.of(
+            Arguments.of(new Position(A, EIGHT), new Position(A, FIVE)),
+            Arguments.of(new Position(H, EIGHT), new Position(C, EIGHT)),
+            Arguments.of(new Position(H, ONE), new Position(H, THREE)),
+            Arguments.of(new Position(A, ONE), new Position(A, FOUR))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidMoveRook")
+    @DisplayName("룩이 전후양옆외의 방향으로 이동 시 예외 발생")
+    void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(rook(Color.BLACK, from)));
+
+        assertAll(()->{
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(rook(Color.BLACK, from));
+        });
+    }
+
+    private static Stream<Arguments> provideInvalidMoveRook() {
+        return Stream.of(
+            Arguments.of(new Position(A, EIGHT), new Position(B, FIVE)),
+            Arguments.of(new Position(H, EIGHT), new Position(C, SEVEN)),
+            Arguments.of(new Position(H, ONE), new Position(B, THREE))
+        );
+    }
 }

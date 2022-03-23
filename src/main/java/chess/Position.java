@@ -1,8 +1,5 @@
 package chess;
 
-import static chess.Direction.DOWN;
-import static chess.Direction.UP;
-
 import java.util.Objects;
 
 public class Position {
@@ -13,6 +10,18 @@ public class Position {
     public Position(Row row, Col col) {
         this.row = row;
         this.col = col;
+    }
+
+    public boolean isSameRow(Position other) {
+        return this.row == other.row;
+    }
+
+    public boolean isCollinear(Position other) {
+        return (isSameRow(other) || isSameCol(other));
+    }
+
+    private boolean isSameCol(Position other) {
+        return this.col == other.col;
     }
 
     public int getDistance(Position other) {

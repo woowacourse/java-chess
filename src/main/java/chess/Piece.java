@@ -20,21 +20,30 @@ public class Piece {
     }
 
     public void move(Position to) {
-        Direction direction = position.getDirection(to);
-
-        if (color.isBackward(direction)) {
-            throw new IllegalArgumentException();
+        if (type == ROOK) {
+            if (!position.isCollinear(to)) {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            if (isInvalidMovement(to)) {
+                throw new IllegalArgumentException();
+            }
+            this.isFirstMove = false;
         }
-
-        if (isInvalidRange(to) || isMoveOverOneSpaceAfterFirstMove(to)) {
-            throw new IllegalArgumentException();
-        }
-
         this.position = to;
-        this.isFirstMove = false;
     }
 
-    private boolean isInvalidRange(Position to) {
+    private boolean isInvalidMovement(Position to) {
+        return isInvalidDirection(to) || isInvalidDistance(to) ||
+            isMoveOverOneSpaceAfterFirstMove(to);
+    }
+
+    private boolean isInvalidDirection(Position to) {
+        Direction direction = position.getDirection(to);
+        return !position.isSameRow(to) || color.isBackward(direction);
+    }
+
+    private boolean isInvalidDistance(Position to) {
         return position.getDistance(to) > 2;
     }
 
