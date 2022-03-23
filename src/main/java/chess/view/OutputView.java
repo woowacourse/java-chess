@@ -15,11 +15,15 @@ public class OutputView {
 
     public static void printBoard(final Board board) {
         for (int row : Row.valuesByDescending()) {
-            for (Column column : Column.values()) {
-                Position position = Position.of(column.name() + row);
-                printSymbol(board, position);
-            }
+            printRow(board, row);
             System.out.println();
+        }
+    }
+
+    private static void printRow(Board board, int row) {
+        for (Column column : Column.values()) {
+            Position position = Position.of(column.name() + row);
+            printSymbol(board, position);
         }
     }
 

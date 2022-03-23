@@ -1,12 +1,22 @@
 package chess;
 
 import chess.domain.Board;
+import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        Board board = new Board();
-        OutputView.printBoard(board);
+        InputView.announceStart();
+        while (true) {
+            String command = InputView.requestCommand();
+            if (command.trim().equals("end")) {
+                return;
+            }
+            if (command.trim().equals("start")) {
+                Board board = new Board();
+                OutputView.printBoard(board);
+            }
+        }
     }
 }
