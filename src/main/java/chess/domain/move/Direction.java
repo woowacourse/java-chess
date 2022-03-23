@@ -12,11 +12,11 @@ public enum Direction {
     SOUTHWEST(-1, -1)
     ;
 
-    private final int column;
-    private final int row;
+    private final int vertical;
+    private final int horizon;
 
-    Direction(int column, int row) {
-        this.column = column;
-        this.row = row;
+    Direction(int vertical, int horizon) {
+        this.vertical = vertical;
+        this.horizon = horizon;
     }
 }
