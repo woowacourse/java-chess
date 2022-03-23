@@ -1,6 +1,7 @@
 package domain.piece;
 
-import domain.position.Position;
+import domain.utils.Direction;
+import java.util.List;
 
 public final class King extends Piece {
 
@@ -9,7 +10,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean availableMove(Position position, Position position1) {
-        return false;
+    protected List<Direction> directions() {
+        return null;
     }
 }

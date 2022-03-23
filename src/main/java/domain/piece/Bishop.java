@@ -1,15 +1,22 @@
 package domain.piece;
 
-import domain.position.Position;
+import domain.utils.Direction;
+import java.util.List;
 
 public final class Bishop extends Piece {
+
+    private static final List<Direction> directions;
+
+    static {
+        directions = Direction.crossDirection();
+    }
 
     public Bishop(final Player player) {
         super(player, Unit.Bishop);
     }
 
     @Override
-    public boolean availableMove(Position position, Position position1) {
-        return false;
+    protected List<Direction> directions() {
+        return directions;
     }
 }

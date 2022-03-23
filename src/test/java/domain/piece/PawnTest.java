@@ -8,7 +8,7 @@ class PawnTest {
     @Test
     @DisplayName("Pawn은 앞으로 한칸 이동할 수 있다.")
     void movePawnOneSpace(){
-        Piece piece = new Pawn(Player.WHITE);
+//        Piece piece = new Pawn(Player.WHITE);
 
         // target == null
 //        assertThat(((Pawn)piece).avaliableMove(new Position(Row.TWO, Column.B), new Position(Row.THREE, Column.B)))
