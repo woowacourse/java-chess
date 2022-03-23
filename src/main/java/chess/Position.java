@@ -12,16 +12,31 @@ public class Position {
         this.col = col;
     }
 
+    public Row getRow() {
+        return row;
+    }
+
+    public Col getCol() {
+        return col;
+    }
+
     public boolean isSameRow(Position other) {
         return this.row == other.row;
     }
 
-    public boolean isCollinear(Position other) {
-        return (isSameRow(other) || isSameCol(other));
+    public boolean isSameRowOrCol(Position other) {
+        return isSameRow(other) || isSameCol(other);
     }
 
     private boolean isSameCol(Position other) {
         return this.col == other.col;
+    }
+
+    public boolean isCross(Position other) {
+        int colDiff = Math.abs(col.getValue() - other.col.getValue());
+        int rowDiff = Math.abs(row.getValue() - other.row.getValue());
+
+        return colDiff == rowDiff;
     }
 
     public int getDistance(Position other) {

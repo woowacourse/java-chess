@@ -20,8 +20,12 @@ public class Piece {
     }
 
     public void move(Position to) {
-        if (type == ROOK) {
-            if (!position.isCollinear(to)) {
+        if (type == BISHOP) {
+            if (!position.isCross(to)) {
+                throw new IllegalArgumentException();
+            }
+        } else if (type == ROOK) {
+            if (!position.isSameRowOrCol(to)) {
                 throw new IllegalArgumentException();
             }
         } else {

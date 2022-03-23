@@ -20,6 +20,10 @@ public enum Row {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public static List<Row> orderedValues() {
         return Arrays.stream(values())
             .sorted(Comparator.<Row>comparingInt(row -> row.value).reversed())

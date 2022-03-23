@@ -23,6 +23,10 @@ public enum Col {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public static List<Col> orderedValues() {
         return Arrays.stream(values())
             .sorted(Comparator.<Col>comparingInt(col -> col.value).reversed())

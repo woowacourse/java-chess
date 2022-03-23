@@ -210,4 +210,46 @@ class ChessBoardTest {
             Arguments.of(new Position(H, ONE), new Position(B, THREE))
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidMoveBishop")
+    @DisplayName("비숍은 대각선외에는 움직일 수 없다.")
+    void throwExceptionInvalidMoveBishop(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(bishop(Color.BLACK, from)));
+
+        assertAll(()->{
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(bishop(Color.BLACK, from));
+        });
+    }
+
+    private static Stream<Arguments> provideInvalidMoveBishop() {
+        return Stream.of(
+            Arguments.of(new Position(C, EIGHT), new Position(D, THREE)),
+            Arguments.of(new Position(C, EIGHT), new Position(G, FIVE)),
+            Arguments.of(new Position(C, ONE), new Position(B, FIVE)),
+            Arguments.of(new Position(C, ONE), new Position(F, SIX))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideCrossMoveBishop")
+    @DisplayName("비숍은 대각선으로 이동할 수 있다.")
+    void moveCrossBishop(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(bishop(Color.BLACK, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(bishop(Color.BLACK, to));
+    }
+
+    private static Stream<Arguments> provideCrossMoveBishop() {
+        return Stream.of(
+            Arguments.of(new Position(C, EIGHT), new Position(F, FIVE)),
+            Arguments.of(new Position(C, EIGHT), new Position(A, SIX)),
+            Arguments.of(new Position(C, ONE), new Position(B, TWO)),
+            Arguments.of(new Position(C, ONE), new Position(E, THREE))
+        );
+    }
 }
