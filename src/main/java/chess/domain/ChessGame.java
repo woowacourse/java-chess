@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
 
+    private static final int TOTAL_KING_COUNT = 2;
+
     private final List<Piece> chessmen = new ArrayList<>(32);
 
     public ChessGame() {
@@ -93,7 +95,11 @@ public class ChessGame {
     }
 
     public boolean isEnd() {
-        return false;
+        int kingCount = (int) chessmen.stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return kingCount < TOTAL_KING_COUNT;
     }
 
     public List<Piece> getChessmen() {
