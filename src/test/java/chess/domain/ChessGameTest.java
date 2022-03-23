@@ -1,7 +1,8 @@
-package chess;
+package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,6 @@ public class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         //when
         //then
-        assertThat(chessGame.initializeBoard()).isInstanceOf(ChessBoard.class);
+        assertThat(chessGame.initializeBoard()).isInstanceOf(Board.class);
     }
 }

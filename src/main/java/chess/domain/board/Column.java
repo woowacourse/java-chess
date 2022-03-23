@@ -1,8 +1,8 @@
-package chess;
+package chess.domain.board;
 
 import java.util.Arrays;
 
-public enum ChessBoardColumn {
+public enum Column {
     A(0),
     B(1),
     C(2),
@@ -15,12 +15,12 @@ public enum ChessBoardColumn {
 
     private final int value;
 
-    ChessBoardColumn(final int value) {
+    Column(final int value) {
         this.value = value;
     }
 
-    public ChessBoardColumn flip() {
-        return Arrays.stream(ChessBoardColumn.values())
+    public Column flip() {
+        return Arrays.stream(Column.values())
                 .filter( it -> it.value == (7 - this.value))
                 .findFirst()
                 .orElseThrow();

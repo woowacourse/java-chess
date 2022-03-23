@@ -1,4 +1,6 @@
-package chess;
+package chess.domain.piece;
+
+import chess.domain.Camp;
 
 public abstract class Piece {
     private final Camp camp;
