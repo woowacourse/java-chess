@@ -33,6 +33,10 @@ public class Position {
         }
     }
 
+    public boolean equalsRow(final Position position) {
+        return this.row == position.row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
