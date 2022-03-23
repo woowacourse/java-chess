@@ -41,4 +41,8 @@ public abstract class Piece {
     }
 
     abstract String getSymbol();
+
+    public final boolean hasPosition(final File file, final Rank rank) {
+        return position == Position.of(file, rank);
+    }
 }

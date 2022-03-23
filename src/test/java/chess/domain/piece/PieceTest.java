@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceTest {
@@ -44,5 +45,17 @@ class PieceTest {
                 Arguments.of(H, ONE, Rook.class),
                 Arguments.of(A, TWO, Pawn.class)
         );
+    }
+
+    @ParameterizedTest
+    @DisplayName("Rank, File을 받아 자신의 위치와 동일한지 반환한다.")
+    @CsvSource({"A, ONE, true", "A, TWO, false"})
+    void hasPosition(final File file, final Rank rank, final boolean expected) {
+        // given
+        final Piece piece = Piece.create(A, ONE);
+        // when
+        final boolean actual = piece.hasPosition(file, rank);
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }
