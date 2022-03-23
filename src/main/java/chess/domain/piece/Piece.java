@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.position.Position;
 
 public abstract class Piece {
-    private final Color color;
+    protected final Color color;
 
     public Piece(Color color) {
         this.color = color;
@@ -16,4 +17,6 @@ public abstract class Piece {
     protected abstract String baseSignature();
 
     public abstract boolean isBlank();
+
+    public abstract boolean isMovable(Position source, Position target);
 }

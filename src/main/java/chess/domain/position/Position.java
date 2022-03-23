@@ -9,6 +9,14 @@ public final class Position {
         this.positionY = positionY;
     }
 
+    public int calculateDistanceX(Position position) {
+        return position.getPositionX().getCoordination() - positionX.getCoordination();
+    }
+
+    public int calculateDistanceY(Position position) {
+        return position.getPositionY().getCoordination() - positionY.getCoordination();
+    }
+
     public PositionX getPositionX() {
         return positionX;
     }
