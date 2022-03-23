@@ -5,13 +5,15 @@ import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import java.util.Objects;
 
 public class ChessBoard {
 
     private final Map<Position, Piece> pieces;
 
-    private ChessBoard(Map<Position, Piece> pieces) {
-        this.pieces = pieces;
+    public ChessBoard(Map<Position, Piece> pieces) {
+        Objects.requireNonNull(pieces, "pieces는 null이 들어올 수 없습니다.");
+        this.pieces = new HashMap<>(pieces);
     }
 
     public static ChessBoard createNewChessBoard() {
