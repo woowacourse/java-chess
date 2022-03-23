@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Rank {
@@ -17,6 +18,17 @@ public enum Rank {
 
     Rank(int col) {
         this.col = col;
+    }
+
+    public static Rank of(int col) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.col == col)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다"));
+    }
+
+    public Rank add(int col) {
+        return Rank.of(this.col + col);
     }
 
     public static List<Rank> emptyBaseLine() {

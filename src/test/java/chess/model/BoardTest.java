@@ -17,8 +17,8 @@ public class BoardTest {
     @Test
     void getTest() {
         Board board = new Board();
-        Piece a1Piece = board.get(new Square(File.A, Rank.ONE));
-        Piece h8Piece = board.get(new Square(File.H, Rank.EIGHT));
+        Piece a1Piece = board.findPieceBySquare(new Square(File.A, Rank.ONE));
+        Piece h8Piece = board.findPieceBySquare(new Square(File.H, Rank.EIGHT));
 
         assertAll(
                 () -> assertThat(a1Piece.getLetter()).isEqualTo("r"),

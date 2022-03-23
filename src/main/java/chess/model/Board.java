@@ -8,55 +8,62 @@ import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public final class Board {
 
-    private final Map<Square, Piece> board;
+    private final List<Piece> board;
 
     public Board() {
-        this.board = new LinkedHashMap<>();
+        this.board = new ArrayList<>();
         initBlack();
         initEmpty();
         initWhite();
     }
 
     private void initBlack() {
-        initBaseLine(Rank.ONE, Color.BLACK);
+        initBaseLine(Rank.EIGHT, Color.BLACK);
         initPawns(Rank.TWO, Color.BLACK);
     }
 
     private void initBaseLine(Rank rank, Color color) {
-        Iterator<File> files = Arrays.stream(File.values()).iterator();
-        Iterator<Piece> pieces = lineUp(color).iterator();
-        while (files.hasNext() && pieces.hasNext()) {
-            board.put(new Square(files.next(), rank), pieces.next());
+        Iterator<Piece> pieces = lineUp(color, rank).iterator();
+        while (pieces.hasNext()) {
+            board.add(pieces.next());
         }
     }
 
-    private List<Piece> lineUp(Color color) {
-        return List.of(new Rook(color), new Knight(color), new Bishop(color), new Queen(color), new King(color),
-                new Bishop(color), new Knight(color), new Rook(color));
+    private List<Piece> lineUp(Color color, Rank rank) {
+        return List.of(
+                new Rook(color, new Square(File.A, rank)),
+                new Knight(color, new Square(File.B, rank)),
+                new Bishop(color, new Square(File.C, rank)),
+                new Queen(color, new Square(File.D, rank)), 
+                new King(color, new Square(File.E, rank)),
+                new Bishop(color, new Square(File.F, rank)), 
+                new Knight(color, new Square(File.G, rank)), 
+                new Rook(color, new Square(File.F, rank))
+        );
     }
 
     private void initPawns(Rank rank, Color color) {
-        initByFiles(rank, new Pawn(color));
-    }
-
-    private void initByFiles(Rank rank, Piece piece) {
         for (File file : File.values()) {
-            board.put(new Square(file, rank), piece);
+            board.add(new Pawn(color, new Square(file, rank)));
         }
     }
 
     private void initEmpty() {
         for (Rank rank : Rank.emptyBaseLine()) {
-            initByFiles(rank, new Empty());
+            initEmptiesInRank(rank);
+        }
+    }
+
+    private void initEmptiesInRank(Rank rank) {
+        for (File file : File.values()) {
+            board.add(new Empty(new Square(file, rank)));
         }
     }
 
@@ -65,11 +72,14 @@ public final class Board {
         initBaseLine(Rank.EIGHT, Color.WHITE);
     }
 
-    public Set<Square> keySet() {
-        return board.keySet();
+    public List<Piece> getBoard() {
+        return board;
     }
 
-    public Piece get(final Square square) {
-        return board.get(square);
+    public Piece findPieceBySquare(Square square) {
+        return board.stream()
+                .filter(piece -> piece.isAt(square))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치의 값을 찾을 수 없습니다."));
     }
 }

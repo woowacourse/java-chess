@@ -1,15 +1,16 @@
 package chess.model.piece;
 
 import chess.model.Color;
+import chess.model.Square;
 
 public class Empty extends Piece {
 
-    public Empty() {
-        super(Color.NOTHING);
+    public Empty(Square square) {
+        super(Color.NOTHING, square);
     }
 
     @Override
-    public boolean movable() {
+    public boolean movable(Piece targetPiece) {
         return false;
     }
 

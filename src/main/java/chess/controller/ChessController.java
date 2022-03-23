@@ -23,8 +23,8 @@ public final class ChessController {
 
     private List<String> toDto(final Board board) {
         List<String> boardDto = new ArrayList<>();
-        for (Square square : board.keySet()) {
-            boardDto.add(toDto(board.get(square)));
+        for (Piece piece : board.getBoard()) {
+            boardDto.add(toDto(piece));
         }
         return boardDto;
     }

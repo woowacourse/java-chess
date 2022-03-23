@@ -27,4 +27,18 @@ public final class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+//    public boolean canMove(Direction direction, Square targetSquare) {
+//        return this.move(direction).equals(targetSquare)
+//    }
+
+    public boolean isPawnFirstSquare(Color color) {
+        if (color.isBlack()) {
+            return rank.equals(Rank.SEVEN);
+        }
+        return rank.equals(Rank.TWO);
+    }
+    public Square moveDirection(Direction direction) {
+        return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
+    }
 }

@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.Arrays;
+
 public enum File {
     A(1),
     B(2),
@@ -15,5 +17,16 @@ public enum File {
 
     File(int row) {
         this.row = row;
+    }
+
+    public static File of(int row) {
+        return Arrays.stream(values())
+                .filter(file -> file.row == row)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다"));
+    }
+
+    public File add(int row) {
+        return File.of(this.row + row);
     }
 }
