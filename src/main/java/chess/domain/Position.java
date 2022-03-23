@@ -37,6 +37,10 @@ public class Position {
         return this.column == position.column || this.row == position.row;
     }
 
+    public int calculateDistance(Position position) {
+        return Math.abs(this.column - position.column) + Math.abs(this.row - position.row);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

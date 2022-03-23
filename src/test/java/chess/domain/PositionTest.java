@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -36,5 +37,15 @@ public class PositionTest {
         Position otherPosition = new Position(row, col);
 
         assertThat(position.equalsColumnOrRow(otherPosition)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,2,1", "b,2,2", "c,4,5"})
+    @DisplayName("거리 계산")
+    void calculateDistance(char row, char col, int expected) {
+        Position position = new Position('a', '1');
+        Position otherPosition = new Position(row, col);
+
+        assertThat(position.calculateDistance(otherPosition)).isEqualTo(expected);
     }
 }
