@@ -19,7 +19,7 @@ public class BishopTest {
         Position source = new Position(Row.TWO, Column.B);
         Position target = new Position(Row.THREE, Column.C);
         List<Position> positions = piece.availableMovePositions(source);
-        System.out.println(positions);
+
         assertThat(positions.contains(target)).isEqualTo(true);
     }
 }
