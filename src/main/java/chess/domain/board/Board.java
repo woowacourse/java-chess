@@ -5,6 +5,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -23,7 +24,7 @@ public class Board {
     }
 
     public void initialize() {
-        this.ranks.put(1, new Rank(List.of(
+        this.ranks.put(0, new Rank(List.of(
                 Rook.createWhite(new Position("a1")),
                 Knight.createWhite(new Position("b1")),
                 Bishop.createWhite(new Position("c1")),
@@ -33,7 +34,7 @@ public class Board {
                 Knight.createWhite(new Position("g1")),
                 Rook.createWhite(new Position("h1"))
         )));
-        this.ranks.put(2, new Rank(List.of(
+        this.ranks.put(1, new Rank(List.of(
                 Pawn.createWhite(new Position("a2")),
                 Pawn.createWhite(new Position("b2")),
                 Pawn.createWhite(new Position("c2")),
@@ -44,7 +45,7 @@ public class Board {
                 Pawn.createWhite(new Position("h2"))
         )));
         for (int i = 3; i < 7; i++) {
-            this.ranks.put(i, new Rank(List.of(
+            this.ranks.put(i - 1, new Rank(List.of(
                     new Blank(new Position("a" + i)),
                     new Blank(new Position("b" + i)),
                     new Blank(new Position("c" + i)),
@@ -55,7 +56,7 @@ public class Board {
                     new Blank(new Position("h" + i))
             )));
         }
-        this.ranks.put(7, new Rank(List.of(
+        this.ranks.put(6, new Rank(List.of(
                 Pawn.createBlack(new Position("a7")),
                 Pawn.createBlack(new Position("b7")),
                 Pawn.createBlack(new Position("c7")),
@@ -65,7 +66,7 @@ public class Board {
                 Pawn.createBlack(new Position("g7")),
                 Pawn.createBlack(new Position("h7"))
         )));
-        this.ranks.put(8, new Rank(List.of(
+        this.ranks.put(7, new Rank(List.of(
                 Rook.createBlack(new Position("a8")),
                 Knight.createBlack(new Position("b8")),
                 Bishop.createBlack(new Position("c8")),
@@ -79,5 +80,27 @@ public class Board {
 
     public Rank getRank(int rankLine) {
         return ranks.get(rankLine);
+    }
+
+    public void move(Position start, Position target) {
+        Piece selected = getPiece(start);
+        Piece targetPiece = getPiece(target);
+
+        if (selected.move(targetPiece)) {
+            updatePiece(target, selected);
+            updatePiece(start, new Blank(start));
+        }
+    }
+
+    private void updatePiece(Position position, Piece piece) {
+        ranks.get(position.getY())
+                .getPieces()
+                .set(position.getX(), piece);
+    }
+
+    public Piece getPiece(Position position) {
+        return ranks.get(position.getY())
+                .getPieces()
+                .get(position.getX());
     }
 }

@@ -17,7 +17,7 @@ public class Rook extends Piece {
         return new Rook(position, BLACK_SIGNATURE);
     }
 
-    public void move(Piece piece) {
-
+    public boolean move(Piece piece) {
+        return false;
     }
 }

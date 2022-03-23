@@ -20,12 +20,12 @@ public class Knight extends Piece {
         return new Knight(position, BLACK_SIGNATURE);
     }
 
-    public void move(Piece piece) {
+    public boolean move(Piece piece) {
         if (isInRange(piece) && isValidPosition(piece)) {
             position = piece.getPosition();
-            return;
+            return true;
         }
-        throw new IllegalArgumentException("이동이 불가능한 위치입니다.");
+        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
     }
 
     private boolean isInRange(Piece piece) {

@@ -17,7 +17,7 @@ public class Bishop extends Piece {
         return new Bishop(position, BLACK_SIGNATURE);
     }
 
-    public void move(Piece piece) {
-
+    public boolean move(Piece piece) {
+        return false;
     }
 }

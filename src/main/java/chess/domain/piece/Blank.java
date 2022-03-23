@@ -8,7 +8,7 @@ public class Blank extends Piece {
         super(position, SIGNATURE);
     }
 
-    public void move(Piece piece) {
+    public boolean move(Piece piece) {
         throw new IllegalStateException("빈 칸은 이동할 수 없습니다.");
     }
 
