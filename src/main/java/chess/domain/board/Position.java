@@ -43,7 +43,7 @@ public class Position implements Comparable<Position> {
     }
 
     private String createKey() {
-        return column.getValue() + row.getValue();
+        return column.getName() + row.getValue();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (this.row.getValue() == position.row.getValue()) {
-            return position.column.getValue().charAt(0) - this.column.getValue().charAt(0);
+            return position.column.getName().charAt(0) - this.column.getName().charAt(0);
         }
         return position.row.getValue() - this.row.getValue();
     }

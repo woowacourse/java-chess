@@ -36,7 +36,7 @@ public class Board {
         Map<Position, Piece> emptyBoard = new TreeMap<>();
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
-                emptyBoard.put(Position.valueOf(column.getValue() + row.getValue()),
+                emptyBoard.put(Position.valueOf(column.getName() + row.getValue()),
                         new Blank());
             }
         }
@@ -56,14 +56,14 @@ public class Board {
                 );
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            board.replace(Position.valueOf(columns[i].getValue() + row.getValue()), pieces.get(i));
+            board.replace(Position.valueOf(columns[i].getName() + row.getValue()), pieces.get(i));
         }
     }
 
     private static void initPawn(final Color color, Row row, final Map<Position, Piece> board) {
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            board.replace(Position.valueOf(columns[i].getValue() + row.getValue()), new Pawn(color));
+            board.replace(Position.valueOf(columns[i].getName() + row.getValue()), new Pawn(color));
         }
     }
 
