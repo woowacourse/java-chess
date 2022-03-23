@@ -5,8 +5,8 @@ import chess.domain.Position;
 
 public abstract class Piece {
 
-	private final Color color;
-	private final Position position;
+	protected final Color color;
+	protected Position position;
 
 	protected Piece(Color color, Position position) {
 		this.color = color;

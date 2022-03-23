@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Objects;
+import java.util.function.IntUnaryOperator;
 
 public class Position {
 
@@ -25,6 +26,35 @@ public class Position {
 
 	public Position change(int row, int column) {
 		return new Position(row, column);
+	}
+
+	public Position change(IntUnaryOperator rowOperator, IntUnaryOperator columnOperator) {
+		try {
+			return new Position(rowOperator.applyAsInt(this.row), columnOperator.applyAsInt(this.column));
+		} catch (IllegalArgumentException exception) {
+			return new Position(this.row, this.column);
+		}
+	}
+
+	public boolean isDifferentRow(int row) {
+		return this.row != row;
+	}
+
+	public boolean isDifferentColumn(int column) {
+		return this.column != column;
+	}
+
+	public boolean isNotAbsoluteSlopeOne(int row, int column) {
+		return Math.abs(column - this.column) != Math.abs(row - this.row);
+	}
+
+	public boolean isNotAbsoluteDifferenceOne(int row, int column) {
+		return Math.abs(column - this.column) > 1 || Math.abs(row - this.row) > 1;
+	}
+
+	public boolean isNotAbsoluteSlopeTwoOrHalf(int row, int column) {
+		return !((Math.abs(this.row - row) == 1 && Math.abs(this.column - column) == 2) ||
+			(Math.abs(this.row - row) == 2 && Math.abs(this.column - column) == 1));
 	}
 
 	@Override

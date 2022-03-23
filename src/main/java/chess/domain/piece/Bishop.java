@@ -20,6 +20,17 @@ public class Bishop extends Piece {
 		return new Bishop(Color.BLACK, new Position(row, column) , "♗");
 	}
 
+	public void move(int row, int column) {
+		validatePosition(row, column);
+		this.position = this.position.change(row, column);
+	}
+
+	private void validatePosition(int row, int column) {
+		if (this.position.isNotAbsoluteSlopeOne(row, column)) {
+			throw new IllegalArgumentException();
+		}
+	}
+
 	@Override
 	public String getSymbol() {
 		return this.symbol;

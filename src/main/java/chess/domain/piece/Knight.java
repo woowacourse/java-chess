@@ -24,4 +24,15 @@ public class Knight extends Piece {
 	public String getSymbol() {
 		return this.symbol;
 	}
+
+	public void move(int row, int column) {
+		validatePosition(row, column);
+		this.position = this.position.change(row, column);
+	}
+
+	private void validatePosition(int row, int column) {
+		if (this.position.isNotAbsoluteSlopeTwoOrHalf(row, column)) {
+			throw new IllegalArgumentException();
+		}
+	}
 }
