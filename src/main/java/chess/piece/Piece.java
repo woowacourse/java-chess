@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.File;
-import chess.Rank;
+import chess.board.File;
+import chess.board.Rank;
 
 public class Piece {
     private final Color color;
@@ -13,4 +13,6 @@ public class Piece {
     public static Piece from(File file, Rank rank){
         return PieceGenerator.generatePiece(file, rank);
     }
+
+    abstract public String getEmoji();
 }

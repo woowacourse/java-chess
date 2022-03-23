@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-import chess.File;
-import chess.Rank;
+import chess.board.File;
+import chess.board.Rank;
 
 public enum PieceGenerator {
     KING((file, rank) -> new PieceCondition(file,rank).isKing(), rank -> new King(getColor(rank))),
@@ -24,7 +24,7 @@ public enum PieceGenerator {
         this.of = of;
     }
 
-    public static Piece generatePiece(File file, Rank rank) {
+    static Piece generatePiece(File file, Rank rank) {
         return Arrays.stream(PieceGenerator.values())
                 .filter(piece -> piece.condition.test(file, rank))
                 .map(piece -> piece.of.apply(rank))

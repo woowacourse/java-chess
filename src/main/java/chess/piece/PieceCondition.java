@@ -1,35 +1,35 @@
 package chess.piece;
 
-import chess.File;
-import chess.Rank;
+import chess.board.File;
+import chess.board.Rank;
 
 public class PieceCondition {
 
     private final File file;
     private final Rank rank;
 
-    public PieceCondition(File file, Rank rank) {
+    PieceCondition(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public boolean isKing() {
+    boolean isKing() {
         return file == File.E && isNotPawnOrNone();
     }
 
-    public boolean isQueen() {
+    boolean isQueen() {
         return file == File.D && isNotPawnOrNone();
     }
 
-    public boolean isRook() {
+    boolean isRook() {
         return (file == File.A || file == File.H) && isNotPawnOrNone();
     }
 
-    public boolean isBishop() {
+    boolean isBishop() {
         return (file == File.C || file == File.F) && isNotPawnOrNone();
     }
 
-    public boolean isKnight() {
+    boolean isKnight() {
         return (file == File.B || file == File.G) && isNotPawnOrNone();
     }
 

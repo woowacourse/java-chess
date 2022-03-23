@@ -1,18 +1,12 @@
-package chess;
+package chess.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.None;
-import chess.piece.Pawn;
-import chess.piece.PieceGenerator;
-import chess.piece.Queen;
-import chess.piece.Rook;
+import chess.board.File;
+import chess.board.Rank;
 
 public class PieceGeneratorTest {
 

@@ -1,7 +1,14 @@
 package chess.piece;
 
-public class None extends Piece {
-    protected None(Color color){
+public final class None extends Piece {
+    private static final String NONE = "·";
+
+    None (Color color) {
         super(color);
+    }
+
+    @Override
+    public String getEmoji() {
+        return NONE;
     }
 }
