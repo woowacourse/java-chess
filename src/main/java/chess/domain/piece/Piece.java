@@ -14,6 +14,10 @@ public abstract class Piece {
         this.position = position;
     }
 
+    protected Piece(Piece piece, Position position) {
+        this(piece.color, piece.name, position);
+    }
+
     public final Position getPosition() {
         return position;
     }
