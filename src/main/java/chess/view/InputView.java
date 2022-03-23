@@ -9,7 +9,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String requestCommand() {
+    public static String[] requestCommand() {
         try {
             return getCommand();
         } catch (IllegalArgumentException e) {
@@ -18,12 +18,24 @@ public class InputView {
         }
     }
 
-    private static String getCommand() {
-        String command = input().toLowerCase();
-        validateNull(command);
-        validateCommand(command);
+    private static String[] getCommand() {
+        String text = input().toLowerCase();
+        validateNull(text);
+        String[] inputList = text.split(" ");
 
-        return command;
+        Command.validate(inputList[0]);
+
+        return inputList;
+
+//        Command command = Command.of(inputList[0]);
+//        if(command.isMove){
+//            return inputList;
+//        }
+//
+//        return
+//        // validateCommand(command);
+//
+//        return command;
     }
 
     private static void validateNull(String text) {
