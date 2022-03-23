@@ -17,4 +17,9 @@ public class Running extends Started {
     public GameState finish() {
         return new Finished(board);
     }
+
+    @Override
+    public boolean isRunnable() {
+        return true;
+    }
 }

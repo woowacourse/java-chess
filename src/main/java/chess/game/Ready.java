@@ -2,7 +2,6 @@ package chess.game;
 
 import chess.board.Board;
 import chess.board.BoardGenerator;
-import chess.piece.Piece;
 
 public class Ready extends Started {
 
@@ -18,5 +17,10 @@ public class Ready extends Started {
     @Override
     public GameState finish() {
         return new Finished(board);
+    }
+
+    @Override
+    public boolean isRunnable() {
+        return true;
     }
 }
