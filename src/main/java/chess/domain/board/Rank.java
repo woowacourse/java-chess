@@ -18,4 +18,8 @@ public enum Rank {
         this.value = value;
         this.condition = condition;
     }
+
+    public String getCondition() {
+        return condition;
+    }
 }

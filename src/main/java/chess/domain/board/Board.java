@@ -23,10 +23,10 @@ public class Board {
         Map<Position, Piece> squares = new HashMap<>();
 
         initEmptyPieces(squares);
-        initNotPawnSqaures(squares, Rank.ONE, Color.WHITE);
-        initPawnPieces(squares, Rank.TWO, Color.WHITE);
-        initNotPawnSqaures(squares, Rank.SEVEN, Color.BLACK);
-        initPawnPieces(squares, Rank.EIGHT, Color.BLACK);
+        initNotPawnSqaures(squares, Rank.ONE, Color.BLACK);
+        initPawnPieces(squares, Rank.TWO, Color.BLACK);
+        initPawnPieces(squares, Rank.SEVEN, Color.WHITE);
+        initNotPawnSqaures(squares, Rank.EIGHT, Color.WHITE);
 
         return squares;
     }

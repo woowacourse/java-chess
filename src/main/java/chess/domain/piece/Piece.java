@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Locale;
+
 public abstract class Piece {
 
     private final Name name;
@@ -12,6 +14,13 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public String getName() {
+        if (color.equals(Color.WHITE)) {
+            return name.getValue().toLowerCase(Locale.ROOT);
+        }
+        return name.getValue();
     }
 
     protected boolean isEmpty() {
