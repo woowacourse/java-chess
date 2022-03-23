@@ -42,8 +42,4 @@ public class Pawn {
         }
         return position = destinationPosition;
     }
-
-    public Position getPosition() {
-        return position;
-    }
 }
