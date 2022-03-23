@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.List;
+
 public enum Direction {
 
     NORTH(0,1),
@@ -26,5 +28,9 @@ public enum Direction {
 
     public int getY() {
         return y;
+    }
+
+    public static List<Direction> getPawnDirections() {
+        return List.of(NORTH);
     }
 }
