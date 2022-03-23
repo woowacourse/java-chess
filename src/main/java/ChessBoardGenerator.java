@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,8 @@ public class ChessBoardGenerator implements BoardGenerator {
     public Map<Position, Piece> generate() {
         Map<Position, Piece> board = new HashMap<>();
         createInitialize(board);
+        createTeamBoard(board, Player.BLACK);
+        createTeamBoard(board, Player.WHITE);
         return board;
     }
 
@@ -21,5 +24,20 @@ public class ChessBoardGenerator implements BoardGenerator {
         for (Column column : Column.values()) {
             board.put(new Position(row, column), null);
         }
+    }
+
+    private void createTeamBoard(final Map<Position, Piece> board, final Player player) {
+        createInitPawn(board, player);
+    }
+
+    private void createInitPawn(Map<Position, Piece> board, Player player) {
+        if (player == Player.BLACK) {
+            Arrays.stream(Column.values())
+                .forEach(
+                    column -> board.put(new Position(Row.SEVEN, column), new Pawn(Player.BLACK)));
+            return;
+        }
+        Arrays.stream(Column.values())
+            .forEach(column -> board.put(new Position(Row.TWO, column), new Pawn(Player.WHITE)));
     }
 }
