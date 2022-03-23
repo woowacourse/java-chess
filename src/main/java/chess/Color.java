@@ -13,4 +13,11 @@ public enum Color {
     public boolean isBackward(Direction direction) {
         return backward == direction;
     }
+
+    public Color reverse() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

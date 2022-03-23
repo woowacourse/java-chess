@@ -1,7 +1,6 @@
 package chess;
 
 import static chess.Col.*;
-import static chess.piece.Piece.*;
 import static chess.Row.*;
 
 import chess.piece.*;
@@ -10,6 +9,7 @@ import java.util.*;
 public class ChessBoard {
 
     private final List<Piece> pieces;
+    private Color currentColor;
 
     public ChessBoard() {
         pieces = List.of(
@@ -45,10 +45,12 @@ public class ChessBoard {
             new Pawn(Color.WHITE, new Position(F, TWO)),
             new Pawn(Color.WHITE, new Position(G, TWO)),
             new Pawn(Color.WHITE, new Position(H, TWO)));
+        this.currentColor = Color.WHITE;
     }
 
-    public ChessBoard(List<Piece> pieces) {
+    public ChessBoard(List<Piece> pieces, Color color) {
         this.pieces = pieces;
+        this.currentColor = color;
     }
 
     public void move(Position from, Position to) {
@@ -56,20 +58,21 @@ public class ChessBoard {
             throw new IllegalArgumentException();
         }
 
-        Optional<Piece> optionalPiece = findPieceByPosition(from);
+        Piece piece = findPieceByPosition(from);
 
-        if (optionalPiece.isEmpty()) {
+        if (!piece.isSameColor(currentColor)) {
             throw new IllegalArgumentException();
         }
 
-        Piece piece = optionalPiece.get();
         piece.move(to);
+        currentColor = currentColor.reverse();
     }
 
-    private Optional<Piece> findPieceByPosition(Position from) {
+    private Piece findPieceByPosition(Position from) {
         return pieces.stream()
             .filter(piece -> piece.isSamePosition(from))
-            .findFirst();
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public List<Piece> getPieces() {

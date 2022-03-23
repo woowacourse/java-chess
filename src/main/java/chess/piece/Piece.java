@@ -19,6 +19,10 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public Color getColor() {
         return color;
     }

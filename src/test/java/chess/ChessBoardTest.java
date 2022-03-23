@@ -2,6 +2,7 @@ package chess;
 
 import static chess.Col.*;
 import static chess.Row.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -78,7 +79,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("from과 to 위치가 동일한 경우 예외발생")
     void selectSameFromAndToPosition() {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))));
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, SEVEN)))
             .isInstanceOf(IllegalArgumentException.class);
@@ -88,7 +90,7 @@ class ChessBoardTest {
     @MethodSource("provideFirstMoveForwardPawn")
     @DisplayName("폰을 처음에 앞으로 한칸 또는 두칸을 움직일 수 있다.")
     void movePawn(Color color, Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(color, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(color, from)), color);
 
         chessBoard.move(from, to);
 
@@ -107,26 +109,30 @@ class ChessBoardTest {
     @Test
     @DisplayName("폰은 처음에는 3칸 이상 이동 시 예외가 발생한다.")
     void throwExceptionMovePawnOverTwoSpaceWhenFirstMove() {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))));
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, FOUR)))
                 .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).contains(new Pawn(Color.BLACK, new Position(A, SEVEN)));
+            assertThat(chessBoard.getPieces())
+                .contains(new Pawn(Color.BLACK, new Position(A, SEVEN)));
         });
     }
 
     @Test
     @DisplayName("폰이 처음 움직인 이후 부터는 두칸 이상 이동시 예외 발생")
     void throwExceptionMovePawnOverOneSpaceAfterFirstMove() {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))));
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         chessBoard.move(new Position(A, SEVEN), new Position(A, SIX));
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(A, SIX), new Position(A, FOUR)))
                 .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).contains(new Pawn(Color.BLACK, new Position(A, SIX)));
+            assertThat(chessBoard.getPieces())
+                .contains(new Pawn(Color.BLACK, new Position(A, SIX)));
         });
     }
 
@@ -134,7 +140,7 @@ class ChessBoardTest {
     @MethodSource("provideMoveBackwardPawn")
     @DisplayName("폰은 뒤로 움직일 경우 예외가 발생한다.")
     void throwExceptionMovePawnBackward(Color color, Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(color, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(color, from)), color);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
@@ -154,7 +160,7 @@ class ChessBoardTest {
     @MethodSource("provideMoveSidePawn")
     @DisplayName("폰이 양옆으로 움직이려고 할 경우 예외 발생")
     void throwExceptionPawnMoveSide(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.WHITE, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.WHITE, from)), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
@@ -175,7 +181,7 @@ class ChessBoardTest {
     @MethodSource("provideMoveCollinearRook")
     @DisplayName("룩은 동일선상으로 제한 없이 이동")
     void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Rook(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Rook(Color.BLACK, from)), Color.BLACK);
 
         chessBoard.move(from, to);
 
@@ -195,9 +201,9 @@ class ChessBoardTest {
     @MethodSource("provideInvalidMoveRook")
     @DisplayName("룩이 전후양옆외의 방향으로 이동 시 예외 발생")
     void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Rook(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Rook(Color.BLACK, from)), Color.BLACK);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).contains(new Rook(Color.BLACK, from));
@@ -216,9 +222,9 @@ class ChessBoardTest {
     @MethodSource("provideInvalidMoveBishop")
     @DisplayName("비숍은 대각선외에는 움직일 수 없다.")
     void throwExceptionInvalidMoveBishop(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Bishop(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Bishop(Color.BLACK, from)), Color.BLACK);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).contains(new Bishop(Color.BLACK, from));
@@ -238,7 +244,7 @@ class ChessBoardTest {
     @MethodSource("provideCrossMoveBishop")
     @DisplayName("비숍은 대각선으로 이동할 수 있다.")
     void moveCrossBishop(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Bishop(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Bishop(Color.BLACK, from)), Color.BLACK);
 
         chessBoard.move(from, to);
 
@@ -258,9 +264,9 @@ class ChessBoardTest {
     @MethodSource("provideInvalidMoveQueen")
     @DisplayName("퀸은 동일선상외에는 이동 시 예외 발생")
     void moveInvalidMoveQueen(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)), Color.BLACK);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).contains(new Queen(Color.BLACK, from));
@@ -280,7 +286,7 @@ class ChessBoardTest {
     @MethodSource("provideValidMoveQueen")
     @DisplayName("퀸은 동일선상으로 이동")
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)), Color.BLACK);
 
         chessBoard.move(from, to);
 
@@ -304,9 +310,9 @@ class ChessBoardTest {
     @MethodSource("provideInvalidMoveKing")
     @DisplayName("킹이 2칸 이상 이동 시 예외 발생")
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)), Color.BLACK);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).contains(new King(Color.BLACK, from));
@@ -326,7 +332,7 @@ class ChessBoardTest {
     @MethodSource("provideValidMoveKing")
     @DisplayName("킹은 인접한 칸으로만 이동할 수 있다.")
     void moveKingOneSquareToAdjacent(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)), Color.BLACK);
 
         chessBoard.move(from, to);
 
@@ -349,12 +355,14 @@ class ChessBoardTest {
     @Test
     @DisplayName("나이트가 이동할 수 없는 위치로 이동 시 예외 발생")
     void moveKnightToInvalidPosition() {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.BLACK, new Position(G,EIGHT))));
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Knight(Color.BLACK, new Position(G, EIGHT))), Color.BLACK);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(G, EIGHT), new Position(F, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).contains(new Knight(Color.BLACK, new Position(G, EIGHT)));
+            assertThat(chessBoard.getPieces())
+                .contains(new Knight(Color.BLACK, new Position(G, EIGHT)));
         });
     }
 
@@ -362,7 +370,7 @@ class ChessBoardTest {
     @MethodSource("provideValidMoveKnight")
     @DisplayName("나이트는 직선으로 1칸 이동 후 대각선으로 1칸 움직인다.")
     void moveKnightToValidPosition(Position from, Position to) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.BLACK, from)));
+        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.BLACK, from)), Color.BLACK);
 
         chessBoard.move(from, to);
 
@@ -380,5 +388,37 @@ class ChessBoardTest {
             Arguments.of(new Position(E, FIVE), new Position(F, SEVEN)),
             Arguments.of(new Position(E, FIVE), new Position(G, SIX))
         );
+    }
+
+    @Test
+    @DisplayName("같은 플레이어가 연속해서 기물을 움직일 경우 예외 발생")
+    void throwExceptionWhenMoveSameColorPieceSubsequently() {
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.WHITE, new Position(E, FIVE)),
+            new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
+
+        chessBoard.move(new Position(E, FIVE), new Position(E, SIX));
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(new Position(E, SIX), new Position(E, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(E, SIX)),
+                new King(Color.BLACK, new Position(B, FIVE)));
+        });
+
+    }
+
+    @Test
+    @DisplayName("플레이어가 번갈아가며 기물을 움직인다.")
+    void moveEachColorPieceSubsequently() {
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.WHITE, new Position(E, FIVE)),
+            new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
+
+        assertThatCode(() -> {
+            chessBoard.move(new Position(E, FIVE), new Position(E, SIX));
+            chessBoard.move(new Position(B, FIVE), new Position(B, SIX));
+            chessBoard.move(new Position(E, SIX), new Position(E, FIVE));
+            chessBoard.move(new Position(B, SIX), new Position(B, FIVE));
+        }).doesNotThrowAnyException();
     }
 }
