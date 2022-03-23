@@ -67,12 +67,29 @@ public class ChessGame {
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
-        Piece sourcePiece = chessmen.stream()
-                .filter(piece -> piece.getPosition() == Position.of(dto.source()))
+        Piece sourcePiece = extractPiece(Position.of(dto.source()));
+        Position toPosition = Position.of(dto.target());
+
+        if (checkOccupied(toPosition)) {
+            Piece targetPiece = extractPiece(toPosition);
+            sourcePiece.kill(targetPiece);
+            chessmen.remove(targetPiece);
+            return;
+        }
+
+        sourcePiece.move(toPosition);
+    }
+
+    private Piece extractPiece(Position position) {
+        return chessmen.stream()
+                .filter(piece -> piece.getPosition() == position)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(""));
-        Position toPosition = Position.of(dto.target());
-        sourcePiece.move(toPosition);
+    }
+
+    private boolean checkOccupied(Position position) {
+        return chessmen.stream()
+                .anyMatch(piece -> piece.getPosition() == position);
     }
 
     public boolean isEnd() {
