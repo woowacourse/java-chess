@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -37,5 +38,18 @@ class BoardTest {
         Board board = new Board();
 
         assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    @DisplayName("체스판의 말을 이동할 수 있다.")
+    void movePiece() {
+        Board board = new Board();
+
+        board.move(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
+
+        assertAll(
+                () -> assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(EmptyPiece.class),
+                () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE))).isInstanceOf(Pawn.class)
+        );
     }
 }

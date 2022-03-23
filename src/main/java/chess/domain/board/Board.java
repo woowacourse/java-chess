@@ -59,4 +59,12 @@ public class Board {
     public Piece findByPosition(Position position) {
         return squares.get(position);
     }
+
+
+    public void move(Position source, Position target) {
+        Piece sourcePiece = squares.get(source);
+
+        squares.replace(target, sourcePiece);
+        squares.replace(source, new EmptyPiece());
+    }
 }
