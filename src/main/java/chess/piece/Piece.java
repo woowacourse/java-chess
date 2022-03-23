@@ -3,8 +3,9 @@ package chess.piece;
 import chess.board.File;
 import chess.board.Rank;
 
-public class Piece {
-    private final Color color;
+public abstract class Piece {
+
+    protected final Color color;
 
     protected Piece(Color color) {
         this.color = color;
