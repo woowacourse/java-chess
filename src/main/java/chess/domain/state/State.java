@@ -1,8 +1,6 @@
 package chess.domain.state;
 
-import chess.domain.Location;
-import chess.domain.piece.Piece;
-import java.util.Map;
+import chess.domain.Board;
 
 public interface State {
 
@@ -12,5 +10,7 @@ public interface State {
 
     boolean isRunning();
 
-    Map<Location, Piece> getBoard();
+    Board getBoard();
+
+    State move();
 }

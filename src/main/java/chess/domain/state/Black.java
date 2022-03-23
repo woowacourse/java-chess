@@ -2,14 +2,13 @@ package chess.domain.state;
 
 import chess.domain.Board;
 
-public class White extends Running {
-
-    public White(Board board) {
+public class Black extends Running {
+    public Black(Board board) {
         super(board);
     }
 
     @Override
     public State move() {
-        return new Black(getBoard());
+        return new White(getBoard());
     }
 }
