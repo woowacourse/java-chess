@@ -8,6 +8,8 @@ public class Knight extends Piece {
     private static final int MAIN_DIRECTION_MOVE_COUNT = 2;
     private static final int SUB_DIRECTION_MOVE_COUNT = 1;
 
+    private static final double SCORE = 2.5;
+
     private static final String BLACK_DISPLAY = "♘";
     private static final String WHITE_DISPLAY = "♞";
 
@@ -43,6 +45,11 @@ public class Knight extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     @Override

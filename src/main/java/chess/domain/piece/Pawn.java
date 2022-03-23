@@ -10,6 +10,8 @@ public final class Pawn extends Piece {
     public static final char BLACK_INIT_RANK = '7';
     public static final char WHITE_INIT_RANK = '2';
 
+    private static final double DEFAULT_SCORE = 1;
+
     private static final int MOVE_FILE_COUNT = 0;
     private static final int FORWARD_RANK_COUNT = 1;
     private static final int JUMP_RANK_COUNT = 2;
@@ -91,6 +93,11 @@ public final class Pawn extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double score() {
+        return DEFAULT_SCORE;
     }
 
     @Override

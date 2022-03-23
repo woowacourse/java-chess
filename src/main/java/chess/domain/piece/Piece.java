@@ -28,6 +28,8 @@ public abstract class Piece {
 
     abstract public boolean isKing();
 
+    abstract public double score();
+
     abstract public String display();
 
     public Position getPosition() {

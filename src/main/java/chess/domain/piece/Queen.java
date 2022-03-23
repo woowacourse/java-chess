@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Queen extends Piece {
 
+    private static final double SCORE = 9;
+
     private static final String BLACK_DISPLAY = "♕";
     private static final String WHITE_DISPLAY = "♛";
 
@@ -38,6 +40,11 @@ public class Queen extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     @Override

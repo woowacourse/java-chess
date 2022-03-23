@@ -9,6 +9,8 @@ public class King extends Piece {
     private static final String WHITE_DISPLAY = "♚";
     private static final int MAX_MOVE_DIFFERENCE = 1;
 
+    private static final double SCORE = 0;
+
     public King(Color color, Position position) {
         super(color, position);
     }
@@ -41,6 +43,11 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     @Override
