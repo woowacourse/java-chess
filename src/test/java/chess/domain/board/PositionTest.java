@@ -28,9 +28,25 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("캐싱된 포지션을 가져온다")
+    @DisplayName("캐싱된 포지션을 가져온다.")
     void valueOf() {
         Position position = Position.valueOf("a1");
         assertThat(position).isEqualTo(Position.valueOf("a1"));
+    }
+
+    @Test
+    @DisplayName("Column 의 value 차이를 구한다.")
+    void subtractColumn() {
+        Position source = Position.valueOf("a1");
+        Position target = Position.valueOf("b2");
+        assertThat(source.subtractColumn(target)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Row 의 value 차이를 구한다.")
+    void subtractRow() {
+        Position source = Position.valueOf("a1");
+        Position target = Position.valueOf("b2");
+        assertThat(source.subtractRow(target)).isEqualTo(1);
     }
 }

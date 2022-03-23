@@ -42,6 +42,14 @@ public class Position implements Comparable<Position> {
         return CACHE.get(rawPosition);
     }
 
+    public int subtractColumn(final Position position) {
+        return this.column.subtract(position.column);
+    }
+
+    public int subtractRow(final Position position) {
+        return this.row.subtract(position.row);
+    }
+
     private String createKey() {
         return column.getName() + row.getValue();
     }
