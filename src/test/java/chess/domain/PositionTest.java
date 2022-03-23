@@ -10,19 +10,19 @@ public class PositionTest {
 
     @ParameterizedTest
     @ValueSource(chars = {'`', 'A', 'i'})
-    @DisplayName("가로 위치가 범위를 벗어나면 예외발생")
-    void outOfRawRangeException(char row) {
-        assertThatThrownBy(() -> new Position(row, '1'))
+    @DisplayName("열 위치가 범위를 벗어나면 예외발생")
+    void outOfRawRangeException(char column) {
+        assertThatThrownBy(() -> new Position(column, '1'))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("가로 위치는 a~h 범위에 포함되어야 합니다.");
+                .hasMessage("열 위치는 a~h 범위에 포함되어야 합니다.");
     }
 
     @ParameterizedTest
     @ValueSource(chars = {'a', '0', '9'})
-    @DisplayName("세로 위치가 범위를 벗어나면 예외발생")
-    void outOfColumnRangeException(char column) {
-        assertThatThrownBy(() -> new Position('a', column))
+    @DisplayName("행 위치가 범위를 벗어나면 예외발생")
+    void outOfColumnRangeException(char row) {
+        assertThatThrownBy(() -> new Position('a', row))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("세로 위치는 1~8 범위에 포함되어야 합니다.");
+                .hasMessage("행 위치는 1~8 범위에 포함되어야 합니다.");
     }
 }
