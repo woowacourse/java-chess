@@ -23,7 +23,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.row == row)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다 : " + row));
     }
 
     public File add(int row) {

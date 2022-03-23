@@ -34,4 +34,12 @@ public abstract class Piece {
     protected Color color() {
         return this.color;
     }
+
+    protected Square square() {
+        return this.square;
+    }
+
+    protected boolean isEnemy(Piece targetPiece) {
+        return color.isEnemy(targetPiece.color);
+    }
 }

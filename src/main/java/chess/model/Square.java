@@ -28,17 +28,29 @@ public final class Square {
         return Objects.hash(file, rank);
     }
 
-//    public boolean canMove(Direction direction, Square targetSquare) {
-//        return this.move(direction).equals(targetSquare)
-//    }
-
     public boolean isPawnFirstSquare(Color color) {
         if (color.isBlack()) {
             return rank.equals(Rank.SEVEN);
         }
         return rank.equals(Rank.TWO);
     }
-    public Square moveDirection(Direction direction) {
+    public Square tryToMove(Direction direction) {
+        if (canMove(direction)) {
+            return move(direction);
+        }
+        return this;
+    }
+
+    private Square move(Direction direction) {
         return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
+    }
+
+    private boolean canMove(Direction direction) {
+        try {
+            move(direction);
+            return true;
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
     }
 }
