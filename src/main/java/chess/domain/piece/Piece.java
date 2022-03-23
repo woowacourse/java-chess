@@ -20,6 +20,10 @@ public abstract class Piece {
         return Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(signature.charAt(0));
     }
 
+    public boolean isKnight() {
+        return false;
+    }
+
     public Position getPosition() {
         return position;
     }

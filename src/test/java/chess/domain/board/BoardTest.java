@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Knight;
@@ -49,5 +50,16 @@ public class BoardTest {
                 .isInstanceOf(Blank.class);
         assertThat(board.getPiece(new Position("a6")))
                 .isInstanceOf(Knight.class);
+    }
+
+    @DisplayName("직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @Test
+    void straightMove_Obstacle_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("b8"), new Position("a6")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 기물이 존재합니다.");
     }
 }

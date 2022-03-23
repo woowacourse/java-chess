@@ -84,6 +84,28 @@ public class Board {
     }
 
     public void move(Position start, Position target) {
+        if (getPiece(start).isKnight()) {
+            jump(start, target);
+            return;
+        }
+        moveStraight(start, target);
+    }
+
+    public void jump(Position start, Position target) {
+        Piece selected = getPiece(start);
+        Piece targetPiece = getPiece(target);
+
+        if (selected.isMovable(targetPiece)) {
+            updatePiece(target, selected);
+            updatePiece(start, new Blank(start));
+            selected.updatePosition(targetPiece.getPosition());
+            return;
+        }
+
+        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
+    }
+
+    public void moveStraight(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
 

@@ -42,4 +42,9 @@ public class Knight extends Piece {
     private boolean isValidPosition(Piece piece) {
         return piece.isBlank() || piece.isEnemy(getSignature());
     }
+
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
 }

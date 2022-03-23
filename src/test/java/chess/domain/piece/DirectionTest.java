@@ -37,4 +37,13 @@ class DirectionTest {
 
         assertThat(Direction.getBishopDirections()).isEqualTo(bishopDirections);
     }
+
+    @DisplayName("이동 가능한 경로일 경우 방향을 반환한다.")
+    @Test
+    void findDirection() {
+        assertThat(Direction.findDirection(
+                new Position("a1"),
+                new Position("h8")
+        )).isEqualTo(Direction.NORTHEAST);
+    }
 }
