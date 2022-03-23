@@ -40,8 +40,8 @@ public abstract class Piece {
                 .apply(teamColor, Position.of(file, rank));
     }
 
-    public final boolean hasPosition(final File file, final Rank rank) {
-        return position == Position.of(file, rank);
+    public final boolean hasPosition(final Position position) {
+        return this.position == position;
     }
 
     public final boolean isBlackTeam() {

@@ -29,15 +29,19 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public boolean hasPieceInPosition(final File file, final Rank rank) {
+    public boolean hasPieceInPosition(final Position position) {
         return pieces.stream()
-                .anyMatch(piece -> piece.hasPosition(file, rank));
+                .anyMatch(piece -> piece.hasPosition(position));
     }
 
-    public Piece findPieceInPosition(final File file, final Rank rank) {
+    public Piece findPieceInPosition(final Position position) {
         return pieces.stream()
-                .filter(piece -> piece.hasPosition(file, rank))
+                .filter(piece -> piece.hasPosition(position))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+    }
+
+    public void move(final Position currentPosition, final Position movingPosition) {
+
     }
 }

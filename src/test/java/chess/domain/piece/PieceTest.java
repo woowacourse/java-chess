@@ -13,6 +13,7 @@ import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.File;
+import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +55,7 @@ class PieceTest {
         // given
         final Piece piece = Piece.create(A, ONE);
         // when
-        final boolean actual = piece.hasPosition(file, rank);
+        final boolean actual = piece.hasPosition(Position.of(file, rank));
         // then
         assertThat(actual).isEqualTo(expected);
     }

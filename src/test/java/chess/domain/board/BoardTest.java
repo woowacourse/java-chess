@@ -12,9 +12,9 @@ class BoardTest {
     void findPieceInPositionException() {
         //given
         final Board board = new Board();
-        final Rank invalidRank = Rank.FOUR;
+        final Position invalidPosition = Position.of(File.A, Rank.FOUR);
         //when, then
-        assertThatThrownBy(() -> board.findPieceInPosition(File.A, invalidRank))
+        assertThatThrownBy(() -> board.findPieceInPosition(invalidPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 기물이 없습니다.");
     }
