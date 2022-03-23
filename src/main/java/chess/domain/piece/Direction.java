@@ -65,6 +65,14 @@ public enum Direction {
         return List.of(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST);
     }
 
+    public static List<Direction> getBlackPawnAttackDirections() {
+        return List.of(SOUTHWEST, SOUTHEAST);
+    }
+
+    public static List<Direction> getWhitePawnAttackDirections() {
+        return List.of(NORTHWEST, NORTHEAST);
+    }
+
     public int getXDegree() {
         return xDegree;
     }

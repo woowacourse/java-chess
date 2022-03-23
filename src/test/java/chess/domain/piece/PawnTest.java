@@ -22,4 +22,40 @@ public class PawnTest {
 
         assertThat(pawn.getSignature()).isEqualTo("P");
     }
+
+    @DisplayName("타겟 위치가 빈칸일 경우 이동에 성공한다.")
+    @Test
+    void move_Blank() {
+        Pawn pawn = Pawn.createBlack(new Position("a7"));
+
+        assertThat(pawn.isMovable(new Blank(new Position("a6"))))
+                .isTrue();
+    }
+
+    @DisplayName("타겟 위치가 적 기물일 경우 공격에 성공한다.")
+    @Test
+    void move_Enemy() {
+        Pawn pawn = Pawn.createBlack(new Position("a7"));
+
+        assertThat(pawn.isMovable(Pawn.createWhite(new Position("b6"))))
+                .isTrue();
+    }
+
+    @DisplayName("타겟 위치가 같은 팀 기물일 경우 이동에 실패한다.")
+    @Test
+    void move_Ally() {
+        Pawn pawn = Pawn.createBlack(new Position("a7"));
+
+        assertThat(pawn.isMovable(Pawn.createBlack(new Position("a6"))))
+                .isFalse();
+    }
+
+    @DisplayName("폰 기물은 첫번째 이동일 경우에 두칸을 전진할 수 있다.")
+    @Test
+    void firstMove_CanMoveTwice() {
+        Pawn pawn = Pawn.createBlack(new Position("a7"));
+
+        assertThat(pawn.isMovable(new Blank(new Position("a5"))))
+                .isTrue();
+    }
 }
