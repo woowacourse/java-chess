@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.position.Position;
+
 public abstract class Piece {
 
     private final Player player;
