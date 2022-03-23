@@ -35,22 +35,22 @@ public class Position {
     }
 
     public int countMoveForward(final Position destination) {
-        if (file != destination.getFile()) {
+        if (file != destination.file) {
             throw new IllegalArgumentException("전진이 아닌 다른 방향으로 이동했습니다.");
         }
-        if (destination.getRank() - rank < 0) {
+        if (destination.rank - rank < 0) {
             throw new IllegalArgumentException("후진하였습니다.");
         }
-        return destination.getRank() - rank;
+        return destination.rank - rank;
     }
 
     public int countMoveDiagonal(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.getFile());
-        final int rankDistance = Math.abs(rank - destination.getRank());
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException("대각선이 아닌 방향으로 이동했습니다.");
         }
-        return destination.getRank() - rank;
+        return destination.rank - rank;
     }
 
     @Override
@@ -68,13 +68,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public char getFile() {
-        return file;
     }
 }
