@@ -29,22 +29,12 @@ public class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,2,true", "b,1,false", "b,2,false"})
-    @DisplayName("열 일치 여부 확인")
-    void equalsColumn(char row, char col, boolean expected) {
+    @CsvSource(value = {"b,2,false", "b,1,true", "a,2,true"})
+    @DisplayName("행 또는 열 일치 여부 확인")
+    void equalsColumnOrRow(char row, char col, boolean expected) {
         Position position = new Position('a', '1');
         Position otherPosition = new Position(row, col);
 
-        assertThat(position.equalsColumn(otherPosition)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"a,2,false", "b,1,true", "b,2,false"})
-    @DisplayName("행 일치 여부 확인")
-    void equalsRow(char row, char col, boolean expected) {
-        Position position = new Position('a', '1');
-        Position otherPosition = new Position(row, col);
-
-        assertThat(position.equalsRow(otherPosition)).isEqualTo(expected);
+        assertThat(position.equalsColumnOrRow(otherPosition)).isEqualTo(expected);
     }
 }

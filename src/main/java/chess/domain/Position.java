@@ -33,12 +33,8 @@ public class Position {
         }
     }
 
-    public boolean equalsColumn(Position position) {
-        return this.column == position.column;
-    }
-
-    public boolean equalsRow(Position position) {
-        return this.row == position.row;
+    public boolean equalsColumnOrRow(Position position) {
+        return this.column == position.column || this.row == position.row;
     }
 
     @Override
