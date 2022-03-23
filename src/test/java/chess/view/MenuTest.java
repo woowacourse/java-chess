@@ -6,13 +6,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-class CommandTest {
+class MenuTest {
 	@DisplayName("생성 확인")
 	@Test
 	void create() {
+		// given
 		String input = "start";
 
-		assertDoesNotThrow(() -> Command.of(input));
 		// then
+		assertDoesNotThrow(() -> Menu.of(input));
 	}
 }
