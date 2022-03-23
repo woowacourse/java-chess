@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
+import chess.domain.piece.Direction;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -17,6 +18,7 @@ public class Board {
 
     public static final int RANK_CAPACITY = 8;
     private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
+    private static final String OBSTACLE_EXCEPTION_MESSAGE = "경로에 기물이 존재합니다.";
 
     private final Map<Integer, Rank> ranks;
 
@@ -79,10 +81,6 @@ public class Board {
         )));
     }
 
-    public Rank getRank(int rankLine) {
-        return ranks.get(rankLine);
-    }
-
     public void move(Position start, Position target) {
         if (getPiece(start).isKnight()) {
             jump(start, target);
@@ -96,9 +94,7 @@ public class Board {
         Piece targetPiece = getPiece(target);
 
         if (selected.isMovable(targetPiece)) {
-            updatePiece(target, selected);
-            updatePiece(start, new Blank(start));
-            selected.updatePosition(targetPiece.getPosition());
+            updateBoard(target, selected, start, targetPiece);
             return;
         }
 
@@ -108,15 +104,46 @@ public class Board {
     public void moveStraight(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
+        Direction direction = Direction.findDirection(start, target);
+
+        checkPath(start, target, direction);
 
         if (selected.isMovable(targetPiece)) {
-            updatePiece(target, selected);
-            updatePiece(start, new Blank(start));
-            selected.updatePosition(targetPiece.getPosition());
+            updateBoard(target, selected, start, targetPiece);
             return;
         }
 
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
+    }
+
+    private void updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
+        updatePiece(target, selected);
+        updatePiece(start, new Blank(start));
+        selected.updatePosition(targetPiece.getPosition());
+    }
+
+    private void checkPath(Position start, Position target, Direction direction) {
+        Position beforeTarget = new Position(
+                target.getX() - direction.getXDegree(),
+                target.getY() - direction.getYDegree());
+
+        for (Position position = start;
+             !position.equals(beforeTarget);
+             position = createNextPosition(direction, position)) {
+            validateCollision(position);
+        }
+    }
+
+    private Position createNextPosition(Direction direction, Position position) {
+        return new Position(
+                position.getX() + direction.getXDegree(),
+                position.getY() + direction.getYDegree());
+    }
+
+    private void validateCollision(Position position) {
+        if (!getPiece(position).isBlank()) {
+            throw new IllegalArgumentException(OBSTACLE_EXCEPTION_MESSAGE);
+        }
     }
 
     private void updatePiece(Position position, Piece piece) {
@@ -129,5 +156,9 @@ public class Board {
         return ranks.get(position.getY())
                 .getPieces()
                 .get(position.getX());
+    }
+
+    public Rank getRank(int rankLine) {
+        return ranks.get(rankLine);
     }
 }

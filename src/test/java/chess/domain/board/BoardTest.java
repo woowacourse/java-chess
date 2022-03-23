@@ -58,8 +58,19 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("b8"), new Position("a6")))
+        assertThatThrownBy(() -> board.moveStraight(new Position("c8"), new Position("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
+    }
+
+    @DisplayName("직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @Test
+    void straightMove_Obstacle_Fail() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("c8"), new Position("b7")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능한 위치입니다.");
     }
 }
