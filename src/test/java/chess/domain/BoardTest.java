@@ -160,4 +160,13 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 말이 존재하지 않습니다.");
     }
+
+    @Test
+    @DisplayName("출발지와 목적지가 같으면 예외를 발생한다")
+    void thrown_sourceEqualsTarget() {
+        Board board = new Board(new BoardInitiator());
+        assertThatThrownBy(() -> board.move("a3", "a3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
+    }
 }
