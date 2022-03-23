@@ -5,6 +5,7 @@ import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.position.PositionUtil.VALID_FILES;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -12,6 +13,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.position.Position;
+import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +102,21 @@ public class ChessGame {
                 .count();
 
         return kingCount < TOTAL_KING_COUNT;
+    }
+
+
+    public GameResultDto getGameResult() {
+        double whiteScore = calculateScore(WHITE);
+        double blackScore = calculateScore(BLACK);
+
+        return new GameResultDto(whiteScore, blackScore);
+    }
+
+    private Double calculateScore(Color color) {
+        return chessmen.stream()
+                .filter(piece -> piece.getColor() == color)
+                .map(Piece::score)
+                .reduce(0.0, Double::sum);
     }
 
     public List<Piece> getChessmen() {

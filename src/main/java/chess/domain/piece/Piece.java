@@ -35,4 +35,8 @@ public abstract class Piece {
     public Position getPosition() {
         return position;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }
