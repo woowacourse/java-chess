@@ -18,7 +18,7 @@ public enum Row {
         this.value = value;
     }
 
-    public static Row find(final int value) {
+    public static Row of(final int value) {
         return Arrays.stream(values())
                 .filter(it -> it.value == value)
                 .findFirst()

@@ -2,14 +2,9 @@ package chess.piece;
 
 public abstract class AbstractPiece implements Piece {
 
-    private final Position position;
+    private final Color color;
 
-    AbstractPiece(final Position position) {
-        this.position = position;
-    }
-
-    @Override
-    public Position getPosition() {
-        return position;
+    AbstractPiece(final Color color) {
+        this.color = color;
     }
 }

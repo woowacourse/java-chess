@@ -6,7 +6,7 @@ public enum Column {
 
     A, B, C, D, E, F, G, H;
 
-    public static Column find(final String value) {
+    public static Column of(final String value) {
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(value))
                 .findFirst()
