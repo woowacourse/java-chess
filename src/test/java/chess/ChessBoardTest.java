@@ -421,4 +421,20 @@ class ChessBoardTest {
             chessBoard.move(new Position(B, SIX), new Position(B, FIVE));
         }).doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("같은 색깔의 기물이 있는 위치로 이동 시 예외 발생")
+    void throwExceptionWhenMovePieceToSameColorPiecePosition() {
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.WHITE, new Position(E, FIVE)),
+            new Pawn(Color.WHITE, new Position(E, SIX))), Color.WHITE);
+        
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(new Position(E, FIVE), new Position(E, SIX)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(E, FIVE)),
+                new Pawn(Color.WHITE, new Position(E, SIX)));
+        });
+
+    }
 }

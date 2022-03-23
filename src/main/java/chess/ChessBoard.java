@@ -64,6 +64,16 @@ public class ChessBoard {
             throw new IllegalArgumentException();
         }
 
+        Optional<Piece> toPiece = pieces.stream()
+            .filter(p -> p.isSamePosition(to))
+            .findFirst();
+
+        if (toPiece.isPresent()) {
+            if (toPiece.get().isSameColor(piece)) {
+                throw new IllegalArgumentException();
+            }
+        }
+
         piece.move(to);
         currentColor = currentColor.reverse();
     }
