@@ -1,32 +1,28 @@
 package chess;
 
-import static chess.view.InputView.requestValidMoveInput;
-import static chess.view.InputView.requestStartOrEndInput;
 import static chess.view.InputView.requestStatusOrEndInput;
+import static chess.view.InputView.requestValidMoveInput;
 import static chess.view.OutputView.printBoard;
-import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
+import chess.controller.GameController;
 import chess.domain.ChessGame;
 import chess.dto.BoardDto;
 
 public class Application {
 
-    public static void main(String[] args) {
-        printGameInstructions();
-        if (!requestStartOrEndInput()) {
-            return;
-        }
+    private static final GameController controller = new GameController();
 
-        ChessGame game = new ChessGame();
+    public static void main(String[] args) {
+        ChessGame game = controller.startGame();
         printBoard(new BoardDto(game));
-        while(!game.isEnd()) {
+        while (!game.isEnd()) {
             game.moveChessmen(requestValidMoveInput());
             printBoard(new BoardDto(game));
         }
         printGameOverInstructions();
-        while(requestStatusOrEndInput()) {
+        while (requestStatusOrEndInput()) {
             printStatus(game.getGameResult());
         }
     }
