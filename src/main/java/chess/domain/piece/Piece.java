@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
 public abstract class Piece {
@@ -18,5 +19,11 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public final boolean isSameColor(Piece piece) {
+        return this.color == piece.color;
+    }
+
     public abstract boolean canMove(Position src, Position dest);
+
+    public abstract Direction findDirection(Position src, Position dest);
 }

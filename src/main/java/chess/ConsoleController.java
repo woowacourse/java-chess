@@ -8,7 +8,7 @@ public class ConsoleController {
 
     public void run() {
         OutputView.printStartMessage();
-        Board board = new Board();
+        Board board = Board.getInstance();
 
         String input;
         do {
