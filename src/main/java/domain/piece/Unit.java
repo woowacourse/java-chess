@@ -15,7 +15,7 @@ public enum Unit {
         this.symbol = symbol;
     }
 
-    public String getSymbol(final Player player) {
+    public String symbol(final Player player) {
         if (player == Player.BLACK) {
             return symbol;
         }

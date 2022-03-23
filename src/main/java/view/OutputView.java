@@ -1,20 +1,21 @@
 package view;
 
 import domain.ChessBoard;
-import domain.position.Column;
+import domain.position.XPosition;
 import domain.position.Position;
-import domain.position.Row;
+import domain.position.YPosition;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class OutputView {
 
     public static void printBoard(final ChessBoard chessBoard) {
-        Row[] rows = Row.values();
-        Arrays.sort(rows, Collections.reverseOrder());
-        for (Row row : rows) {
-            for (Column column : Column.values()) {
-                System.out.print(chessBoard.symbol(new Position(row,column)));
+        YPosition[] yPositions = YPosition.values();
+        Arrays.sort(yPositions, Collections.reverseOrder());
+
+        for (YPosition y : yPositions) {
+            for (XPosition x : XPosition.values()) {
+                System.out.print(chessBoard.symbol(new Position(x, y)));
             }
             System.out.println();
         }

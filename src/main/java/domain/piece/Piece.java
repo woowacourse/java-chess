@@ -16,8 +16,10 @@ public abstract class Piece {
         return this.player == player;
     }
 
+    public abstract boolean availableMove(Position position, Position position1);
+
     public String symbol() {
-        return unit.getSymbol(player);
+        return unit.symbol(player);
     }
 
     @Override
