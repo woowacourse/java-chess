@@ -21,4 +21,18 @@ public class SquareTest {
 
         assertThat(square.getName()).isEqualTo("h3");
     }
+
+    @Test
+    @DisplayName("같은 파일과 같은 랭크를 가진 스퀘어들은 동등하다")
+    void equals() {
+        Square square1 = new Square(File.H, Rank.THREE);
+        Square square2 = new Square(File.H, Rank.THREE);
+        assertThat(square1.equals(square2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("String으로 생성된 스퀘어가 올바른 파일과 랭크를 가진다")
+    void makeSquareFromString(){
+        assertThat(new Square("h3")).isEqualTo(new Square(File.H, Rank.THREE));
+    }
 }
