@@ -18,11 +18,15 @@ public abstract class Piece {
         this(piece.color, piece.name, position);
     }
 
-    public final Position getPosition() {
-        return position;
+    public final boolean isEqualColor(Piece piece) {
+        return this.color == piece.color;
     }
 
     public final String convertedName() {
         return color.convertToCase(name);
+    }
+
+    public final Position getPosition() {
+        return position;
     }
 }
