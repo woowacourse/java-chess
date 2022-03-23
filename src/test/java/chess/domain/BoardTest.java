@@ -1,14 +1,18 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.FullPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
 import chess.domain.piece.PawnPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
 import chess.domain.position.File;
@@ -17,6 +21,7 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,11 +30,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BoardTest {
 
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = Board.create();
+    }
+
     @Test
     @DisplayName("Position값이 순서대로 들어가 있는지 확인한다.")
     void create() {
-        Board board = Board.create();
-
         List<Position> positions = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
@@ -44,8 +54,6 @@ public class BoardTest {
     @MethodSource("initialPieces")
     @DisplayName("Piece들이 규칙에 맞게 잘 들어갔는지 확인한다.")
     void initialPieces(Position position, FullPiece piece) {
-        Board board = Board.create();
-
         assertThat(board.getBoard().get(position)).isEqualTo(piece);
     }
 
@@ -87,5 +95,42 @@ public class BoardTest {
             Arguments.of(new Position(File.G, Rank.TWO), new PawnPiece(Color.WHITE)),
             Arguments.of(new Position(File.H, Rank.TWO), new PawnPiece(Color.WHITE))
         );
+    }
+
+    @Test
+    @DisplayName("기물이 이동하는지 확인한다.")
+    void move() {
+        Position from = Position.create("a2");
+        Position to = Position.create("a3");
+        Piece source = board.getBoard().get(from);
+
+        board.move(from, to);
+
+        assertAll(
+            () -> assertThat(board.getBoard().get(from)).isEqualTo(new EmptyPiece()),
+            () -> assertThat(board.getBoard().get(to)).isEqualTo(source)
+        );
+    }
+
+    @Test
+    @DisplayName("source 위치와 target 위치가 같은 경우 예외를 발생시킨다.")
+    void exceptionSamePosition() {
+        Position from = Position.create("c2");
+        Position to = Position.create("c2");
+
+        assertThatThrownBy(() -> board.move(from, to))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("source 위치에 기물이 없는 경우 예외를 발생시킨다.")
+    void exceptionEmptySource() {
+        Position from = Position.create("a3");
+        Position to = Position.create("a4");
+
+        assertThatThrownBy(() -> board.move(from, to))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] source 위치에 기물이 존재하지 않습니다.");
     }
 }

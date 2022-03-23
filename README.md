@@ -11,8 +11,9 @@
 - [x] 체스판은 8행 X 8열로 총 64개의 칸을 가진다.
 - [x] 흑기물의 첫 째줄은 RNBQKBNR, 둘 째줄은 PPPPPPPP로 세팅되어 있다.
 - [x] 백기물의 첫 째줄은 rnbqkbnr, 둘 째줄은 pppppppp로 세팅되어 있다.
-- [ ] Source 위치의 Piece를 target 위치로 이동시킨다.
-  - [ ] [ERROR] Source 위치에 Piece가 없는 경우
+- [x] Source 위치의 Piece를 target 위치로 이동시킨다.
+  - [x] [ERROR] Source 위치와 Target 위치가 같은 경우
+  - [x] [ERROR] Source 위치에 Piece가 없는 경우
 
 ### Rank
 - [x] 행(Rank)은 1~8까지 있다.

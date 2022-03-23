@@ -77,4 +77,19 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(board));
     }
+
+    public void move(final Position from, final Position to) {
+        final Piece source = board.get(from);
+
+        if (from.equals(to)) {
+            throw new IllegalStateException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
+        }
+
+        if (source.equals(new EmptyPiece())) {
+            throw new IllegalStateException("[ERROR] source 위치에 기물이 존재하지 않습니다.");
+        }
+
+        board.put(from, new EmptyPiece());
+        board.put(to, source);
+    }
 }
