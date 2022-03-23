@@ -14,9 +14,13 @@ public class ChessGame {
     }
 
     public void move(final String rawSource, final String rawTarget) {
-        Position target = Position.valueOf(rawTarget);
         Piece sourcePiece = board.getPiece(Position.valueOf(rawSource));
-        if (sourcePiece instanceof Blank) {
+        validateSourceBlank(sourcePiece);
+        Position target = Position.valueOf(rawTarget);
+    }
+
+    private void validateSourceBlank(final Piece sourcePiece) {
+        if (sourcePiece.isBlank()) {
             throw new IllegalStateException("[ERROR] source에 Piece가 존재하지 않습니다.");
         }
     }

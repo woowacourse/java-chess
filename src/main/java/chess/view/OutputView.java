@@ -29,7 +29,7 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private static int appendNewLine(StringBuilder stringBuilder, int unit) {
+    private static int appendNewLine(final StringBuilder stringBuilder, int unit) {
         if (unit % LINE_BREAK_UNIT == 0) {
             stringBuilder.append("\n");
             return 1;
