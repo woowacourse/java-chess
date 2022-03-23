@@ -14,7 +14,20 @@ public class Queen extends Piece {
 
     @Override
     public void move(Position position) {
-        // TODO: should be implemented
+        validateMovable(position);
+        this.position = position;
+    }
+
+    private void validateMovable(Position toPosition) {
+        if (!isMovablePosition(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean isMovablePosition(Position toPosition) {
+        return position.isHorizontal(toPosition)
+                || position.isVertical(toPosition)
+                || position.isDiagonal(toPosition);
     }
 
     @Override
