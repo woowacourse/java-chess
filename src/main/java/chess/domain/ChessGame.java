@@ -24,7 +24,7 @@ public class ChessGame {
         }
         this.state = state.start();
 
-        Map<Location, Piece> board = state.getBoard();
+        Map<Location, Piece> board = state.getBoard().getBoard();
 
         for (Rank rank : Rank.reverseValues()) {
             StringBuilder stringBuilder = new StringBuilder();

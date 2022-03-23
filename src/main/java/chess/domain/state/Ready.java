@@ -23,7 +23,12 @@ public class Ready implements State {
     }
 
     @Override
-    public Map<Location, Piece> getBoard() {
+    public Board getBoard() {
+        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public State move() {
         throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
     }
 }
