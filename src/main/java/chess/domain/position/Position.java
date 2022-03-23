@@ -31,4 +31,12 @@ public final class Position {
     public int hashCode() {
         return Objects.hash(column, row);
     }
+
+    public boolean isVertical(Position target) {
+        return column.isSame(target.column);
+    }
+
+    public boolean isHorizontal(Position target) {
+        return row.isSame(target.row);
+    }
 }

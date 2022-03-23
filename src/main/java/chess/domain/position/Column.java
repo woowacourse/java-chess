@@ -20,4 +20,7 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 컬럼입니다."));
     }
 
+    public boolean isSame(Column column) {
+        return this == column;
+    }
 }

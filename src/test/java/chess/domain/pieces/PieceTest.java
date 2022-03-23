@@ -1,5 +1,7 @@
 package chess.domain.pieces;
 
+import chess.domain.Board;
+import chess.domain.BoardInitiator;
 import chess.domain.Color;
 import chess.domain.Piece;
 import org.junit.jupiter.api.DisplayName;
@@ -50,4 +52,5 @@ class PieceTest {
         final var piece = new Piece(Color.WHITE, new King());
         assertThat(piece).isInstanceOf(Piece.class);
     }
+
 }

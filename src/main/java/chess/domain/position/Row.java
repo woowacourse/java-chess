@@ -38,4 +38,8 @@ public enum Row {
     public int getValue() {
         return value;
     }
+
+    public boolean isSame(Row row) {
+        return this == row;
+    }
 }
