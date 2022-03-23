@@ -47,6 +47,14 @@ public class Position {
         return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
     }
 
+    public boolean isInitPawnPosition(Rank rank) {
+        return this.rank.equals(rank);
+    }
+
+    public boolean isStepForward(Position position, int direction, int distance) {
+        return position.rank.minus(rank) == direction*distance && file.absMinus(position.file) == 0;
+    }
+
     public File getFile() {
         return file;
     }
