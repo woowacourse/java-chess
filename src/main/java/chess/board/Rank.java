@@ -1,4 +1,4 @@
-package chess;
+package chess.board;
 
 public enum Rank {
     ONE("1"),

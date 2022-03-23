@@ -1,4 +1,7 @@
-package chess;
+package chess.board;
+
+import chess.board.File;
+import chess.board.Rank;
 
 public class Square {
     private final File file;
