@@ -4,12 +4,24 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
+
+    public static Map<Position, Piece> getInitialPieces() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.putAll(getInitialBishops());
+        pieces.putAll(getInitialKings());
+        pieces.putAll(getInitialKnights());
+        pieces.putAll(getInitialPawns());
+        pieces.putAll(getInitialRooks());
+        pieces.putAll(getInitialQueens());
+        return pieces;
+    }
 
     public Map<Position, Pawn> getInitialPawns() {
         Map<Position, Pawn> pawns = new HashMap<>();

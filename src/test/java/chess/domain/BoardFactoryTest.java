@@ -26,8 +26,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("폰들을 생성해서 매핑해준다.")
     void initPawnPosition() {
-        Map<Position, Pawn> pawns = boardFactory.getInitialPawns();
-
         List<Position> expected = new ArrayList<>();
         for (Abscissa value : Abscissa.values()) {
             expected.add(Position.valueOf(value + Ordinate.TWO.getValue()));
@@ -40,8 +38,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("룩들을 생성해서 매핑해준다.")
     void initRookPosition() {
-        Map<Position, Rook> pawns = boardFactory.getInitialRooks();
-
         List<Position> expected = new ArrayList<>();
         expected.add(Position.valueOf("a1"));
         expected.add(Position.valueOf("h1"));
@@ -54,8 +50,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("나이트들을 생성해서 매핑해준다.")
     void initKnightPosition() {
-        Map<Position, Knight> knights = boardFactory.getInitialKnights();
-
         List<Position> expected = new ArrayList<>();
         expected.add(Position.valueOf("b1"));
         expected.add(Position.valueOf("g1"));
@@ -68,8 +62,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("비숍들을 생성해서 매핑해준다.")
     void initBishopPosition() {
-        Map<Position, Bishop> bishops = boardFactory.getInitialBishops();
-
         List<Position> expected = new ArrayList<>();
         expected.add(Position.valueOf("c1"));
         expected.add(Position.valueOf("f1"));
@@ -82,8 +74,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("킹들을 생성해서 매핑해준다.")
     void initKingPosition() {
-        Map<Position, King> kings = boardFactory.getInitialKings();
-
         List<Position> expected = new ArrayList<>();
         expected.add(Position.valueOf("e1"));
         expected.add(Position.valueOf("e8"));
@@ -94,8 +84,6 @@ public class BoardFactoryTest {
     @Test
     @DisplayName("퀸들을 생성해서 매핑해준다.")
     void initQueenPosition() {
-        Map<Position, Queen> queens = boardFactory.getInitialQueens();
-
         List<Position> expected = new ArrayList<>();
         expected.add(Position.valueOf("d1"));
         expected.add(Position.valueOf("d8"));
