@@ -47,4 +47,12 @@ public abstract class Piece {
     public final boolean isBlackTeam() {
         return teamColor.isBlack();
     }
+
+    public Piece move(Position targetPosition) {
+        return null;
+    }
+
+    public final boolean isSameTeam(final Piece anotherPiece) {
+        return this.teamColor == anotherPiece.teamColor;
+    }
 }
