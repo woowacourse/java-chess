@@ -1,6 +1,7 @@
 package console.view;
 
 import chess.*;
+import chess.piece.Piece;
 import java.util.*;
 
 public class OutputView {

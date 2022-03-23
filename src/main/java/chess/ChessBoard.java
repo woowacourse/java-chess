@@ -1,9 +1,10 @@
 package chess;
 
 import static chess.Col.*;
-import static chess.Piece.*;
+import static chess.piece.Piece.*;
 import static chess.Row.*;
 
+import chess.piece.*;
 import java.util.*;
 
 public class ChessBoard {
@@ -12,38 +13,38 @@ public class ChessBoard {
 
     public ChessBoard() {
         pieces = List.of(
-            rook(Color.BLACK, new Position(A, EIGHT)),
+            new Rook(Color.BLACK, new Position(A, EIGHT)),
             knight(Color.BLACK, new Position(B, EIGHT)),
-            bishop(Color.BLACK, new Position(C, EIGHT)),
+            new Bishop(Color.BLACK, new Position(C, EIGHT)),
             queen(Color.BLACK, new Position(D, EIGHT)),
             king(Color.BLACK, new Position(E, EIGHT)),
-            bishop(Color.BLACK, new Position(F, EIGHT)),
+            new Bishop(Color.BLACK, new Position(F, EIGHT)),
             knight(Color.BLACK, new Position(G, EIGHT)),
-            rook(Color.BLACK, new Position(H, EIGHT)),
-            pawn(Color.BLACK, new Position(A, SEVEN)),
-            pawn(Color.BLACK, new Position(B, SEVEN)),
-            pawn(Color.BLACK, new Position(C, SEVEN)),
-            pawn(Color.BLACK, new Position(D, SEVEN)),
-            pawn(Color.BLACK, new Position(E, SEVEN)),
-            pawn(Color.BLACK, new Position(F, SEVEN)),
-            pawn(Color.BLACK, new Position(G, SEVEN)),
-            pawn(Color.BLACK, new Position(H, SEVEN)),
-            rook(Color.WHITE, new Position(A, ONE)),
+            new Rook(Color.BLACK, new Position(H, EIGHT)),
+            new Pawn(Color.BLACK, new Position(A, SEVEN)),
+            new Pawn(Color.BLACK, new Position(B, SEVEN)),
+            new Pawn(Color.BLACK, new Position(C, SEVEN)),
+            new Pawn(Color.BLACK, new Position(D, SEVEN)),
+            new Pawn(Color.BLACK, new Position(E, SEVEN)),
+            new Pawn(Color.BLACK, new Position(F, SEVEN)),
+            new Pawn(Color.BLACK, new Position(G, SEVEN)),
+            new Pawn(Color.BLACK, new Position(H, SEVEN)),
+            new Rook(Color.WHITE, new Position(A, ONE)),
             knight(Color.WHITE, new Position(B, ONE)),
-            bishop(Color.WHITE, new Position(C, ONE)),
+            new Bishop(Color.WHITE, new Position(C, ONE)),
             queen(Color.WHITE, new Position(D, ONE)),
             king(Color.WHITE, new Position(E, ONE)),
-            bishop(Color.WHITE, new Position(F, ONE)),
+            new Bishop(Color.WHITE, new Position(F, ONE)),
             knight(Color.WHITE, new Position(G, ONE)),
-            rook(Color.WHITE, new Position(H, ONE)),
-            pawn(Color.WHITE, new Position(A, TWO)),
-            pawn(Color.WHITE, new Position(B, TWO)),
-            pawn(Color.WHITE, new Position(C, TWO)),
-            pawn(Color.WHITE, new Position(D, TWO)),
-            pawn(Color.WHITE, new Position(E, TWO)),
-            pawn(Color.WHITE, new Position(F, TWO)),
-            pawn(Color.WHITE, new Position(G, TWO)),
-            pawn(Color.WHITE, new Position(H, TWO)));
+            new Rook(Color.WHITE, new Position(H, ONE)),
+            new Pawn(Color.WHITE, new Position(A, TWO)),
+            new Pawn(Color.WHITE, new Position(B, TWO)),
+            new Pawn(Color.WHITE, new Position(C, TWO)),
+            new Pawn(Color.WHITE, new Position(D, TWO)),
+            new Pawn(Color.WHITE, new Position(E, TWO)),
+            new Pawn(Color.WHITE, new Position(F, TWO)),
+            new Pawn(Color.WHITE, new Position(G, TWO)),
+            new Pawn(Color.WHITE, new Position(H, TWO)));
     }
 
     public ChessBoard(List<Piece> pieces) {
