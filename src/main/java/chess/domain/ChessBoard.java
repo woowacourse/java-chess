@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -41,5 +42,9 @@ public class ChessBoard {
 
     private void fillPiece(Piece piece, Position position) {
         board.get(position.getRankIndex()).set(position.getFileIndex(), piece);
+    }
+
+    public List<List<Piece>> getBoard() {
+        return Collections.unmodifiableList(board);
     }
 }
