@@ -48,4 +48,22 @@ public class PositionTest {
 
         assertThat(position.calculateDistance(otherPosition)).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("입력받은 거리만큼 이동")
+    void move() {
+        Position actual = new Position('a', '1').move(1, 1);
+        Position expected = new Position('b', '2');
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,1,true", "-1,-1,false", "1,-1,false", "-1,1,false"})
+    @DisplayName("입력받은 거리만큼 이동 가능 여부 확인")
+    void movable(int columnAmount, int rowAmount, boolean expected) {
+        Position position = new Position('a', '1');
+
+        assertThat(position.isMovable(columnAmount, rowAmount)).isEqualTo(expected);
+    }
 }

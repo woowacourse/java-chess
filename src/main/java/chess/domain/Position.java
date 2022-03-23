@@ -20,17 +20,25 @@ public class Position {
     }
 
     private void validateColumnInRange(char column) {
-        if (column < MIN_COLUMN || column > MAX_COLUMN) {
+        if (!isColumnInRange(column)) {
             throw new IllegalArgumentException(
                     String.format("열 위치는 %s~%s 범위에 포함되어야 합니다.", MIN_COLUMN, MAX_COLUMN));
         }
     }
 
+    private boolean isColumnInRange(char column) {
+        return MIN_COLUMN <= column && column <= MAX_COLUMN;
+    }
+
     private void validateRowInRange(char row) {
-        if (row < MIN_ROW || row > MAX_ROW) {
+        if (!isRowInRange(row)) {
             throw new IllegalArgumentException(
                     String.format("행 위치는 %s~%s 범위에 포함되어야 합니다.", MIN_ROW, MAX_ROW));
         }
+    }
+
+    private boolean isRowInRange(char row) {
+        return MIN_ROW <= row && row <= MAX_ROW;
     }
 
     public boolean equalsColumnOrRow(Position position) {
@@ -39,6 +47,14 @@ public class Position {
 
     public int calculateDistance(Position position) {
         return Math.abs(this.column - position.column) + Math.abs(this.row - position.row);
+    }
+
+    public Position move(int columnAmount, int rowAmount) {
+        return new Position((char) (column + columnAmount), (char) (row + rowAmount));
+    }
+
+    public boolean isMovable(int columnAmount, int rowAmount) {
+        return isColumnInRange((char) (column + columnAmount)) && isRowInRange((char) (row + rowAmount));
     }
 
     @Override
