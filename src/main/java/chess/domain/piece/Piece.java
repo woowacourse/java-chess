@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
+import chess.domain.board.Position;
+
 public abstract class Piece {
 
 	private final String name;
@@ -11,6 +13,8 @@ public abstract class Piece {
 		this.name = name;
 		this.color = color;
 	}
+
+	public abstract Direction findValidDirection(Position current, Position target);
 
 	public String getName() {
 		return name;

@@ -25,4 +25,8 @@ public enum Row {
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
 	}
+
+	public int calculateDifference(Row target) {
+		return this.value - target.value;
+	}
 }

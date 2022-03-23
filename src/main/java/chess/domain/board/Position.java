@@ -7,9 +7,17 @@ public class Position {
 	private final Row row;
 	private final Column column;
 
-	public Position(Row row, Column column) {
+	public Position(final Row row, final Column column) {
 		this.row = row;
 		this.column = column;
+	}
+
+	public int calculateRowDifference(final Position target) {
+		return row.calculateDifference(target.row);
+	}
+
+	public int calculateColumnDifference(final Position target) {
+		return column.calculateDifference(target.column);
 	}
 
 	@Override
