@@ -24,4 +24,17 @@ class DirectionTest {
 
         assertThat(Direction.getKnightDirections()).isEqualTo(knightDirections);
     }
+
+    @DisplayName("비숍의 이동 벡터 리스트를 반환한다.")
+    @Test
+    void getBishopDirections() {
+        List<Direction> bishopDirections = List.of(
+                Direction.NORTHEAST,
+                Direction.SOUTHEAST,
+                Direction.SOUTHWEST,
+                Direction.NORTHWEST
+        );
+
+        assertThat(Direction.getBishopDirections()).isEqualTo(bishopDirections);
+    }
 }
