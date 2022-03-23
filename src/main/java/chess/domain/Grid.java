@@ -9,8 +9,8 @@ public class Grid {
         this.piece = piece;
     }
 
-    public boolean isBlank(){
-        return piece.isBlank();
+    public boolean hasPieceOf(Color color){
+        return piece.isSameColor(color);
     }
 
     public Piece getPiece() {

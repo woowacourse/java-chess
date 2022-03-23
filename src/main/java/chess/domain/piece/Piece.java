@@ -14,6 +14,10 @@ public abstract class Piece {
         return color.correctSignature(baseSignature());
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     protected abstract String baseSignature();
 
     public abstract boolean isBlank();
