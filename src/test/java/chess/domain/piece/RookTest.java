@@ -1,9 +1,13 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.ChessBoard;
 import chess.domain.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +17,17 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RookTest {
 
     private Rook rook;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUp() {
-        rook = new Rook(Color.WHITE, new Position('b', '2'));
+        rook = new Rook(Color.WHITE, new Position('c', '3'));
+
+        Piece whietePiece = new Rook(WHITE, new Position('a', '3'));
+        Piece darkPiece = new Rook(BLACK, new Position('c', '3'));
+        chessBoard = new ChessBoard(Map.of(
+                whietePiece.getPosition(), whietePiece,
+                darkPiece.getPosition(), darkPiece));
     }
 
     @Test
@@ -26,7 +37,7 @@ class RookTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,3", "a,1", "c,1", "c,3"})
+    @CsvSource(value = {"b,4", "b,2", "d,2", "d,4"})
     @DisplayName("룩 위치 이동 불가 예외발생")
     void moveException(char row, char col) {
         Position movePosition = new Position(row, col);
@@ -35,4 +46,16 @@ class RookTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("룩은 상하좌우 방향으로만 움직일 수 있습니다.");
     }
+
+    @Test
+    @DisplayName("해당 위치에 같은 색상의 기물 존재시 예외발생")
+    void moveExceptionByExistEqualsColorPiece() {
+        Position position = new Position('a', '3');
+
+//        assertThatThrownBy(() -> rook.move(position, chessBoard))
+//                .isInstanceOf(IllegalStateException.class)
+//                .hasMessage("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
+    }
+
+
 }
