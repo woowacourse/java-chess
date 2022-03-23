@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.Position;
 
 public final class Knight extends Piece {
@@ -15,10 +16,21 @@ public final class Knight extends Piece {
         super(knight, position);
     }
 
-    public Knight move(Position position) {
+    public Knight move(Position position, ChessBoard chessBoard) {
         if (!isPossibleToMove(position)) {
             throw new IllegalStateException("나이트는 L자 형태로만 움직일 수 있습니다.");
         }
+        if (!chessBoard.isPositionEmpty(position)) {
+            Piece chessPiece = chessBoard.pieceByPosition(position);
+
+            if (isEqualColor(chessPiece)) {
+                throw new IllegalStateException("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
+            }
+        }
+
+        // 그 기물이 다른 기물인지
+        // 다른 기물이 있으면 먹고 해당 위치 이동 반환
+
         return new Knight(this, position);
     }
 
