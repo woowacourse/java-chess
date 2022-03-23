@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Piece;
 
 public class ChessGame {
 
@@ -12,7 +14,10 @@ public class ChessGame {
     }
 
     public void move(final String rawSource, final String rawTarget) {
-        Position source = Position.valueOf(rawSource);
         Position target = Position.valueOf(rawTarget);
+        Piece sourcePiece = board.getPiece(Position.valueOf(rawSource));
+        if (sourcePiece instanceof Blank) {
+            throw new IllegalStateException("[ERROR] source에 Piece가 존재하지 않습니다.");
+        }
     }
 }

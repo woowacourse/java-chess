@@ -12,8 +12,8 @@
 
 
 - ChessGame - 말 이동 기능
-- [ ] Position 생성
-  - [ ] 범위를 초과하는 Column, Row 받을 시 에러 발생
+- [x] Position 생성
+  - [x] 범위를 초과하는 Column, Row 받을 시 에러 발생
 
   
 - [ ] Game
