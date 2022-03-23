@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.model.Board;
 import chess.model.GameStartCommand;
-import chess.model.Piece;
+import chess.model.piece.Piece;
 import chess.model.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -30,7 +30,7 @@ public final class ChessController {
     }
 
     private String toDto(final Piece piece) {
-        String pieceDto = piece.getName().getValue();
+        String pieceDto = piece.getLetter();
         if (piece.isBlack()) {
             return pieceDto.toUpperCase();
         }
