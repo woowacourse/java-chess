@@ -29,17 +29,17 @@ public class PieceFactory {
 
     public static List<Piece> whitePieces() {
         List<Piece> pieces = Arrays.stream(Rank.values())
-                .map(rank -> new Pawn(WHITE, new Position(rank, TWO)))
+                .map(rank -> new Pawn(WHITE, "p", new Position(rank, TWO)))
                 .collect(toList());
 
-        pieces.add(new Rook(WHITE, new Position(A, ONE)));
-        pieces.add(new Knight(WHITE, new Position(B, ONE)));
-        pieces.add(new Bishop(WHITE, new Position(C, ONE)));
-        pieces.add(new Queen(WHITE, new Position(D, ONE)));
-        pieces.add(new King(WHITE, new Position(E, ONE)));
-        pieces.add(new Bishop(WHITE, new Position(F, ONE)));
-        pieces.add(new Knight(WHITE, new Position(G, ONE)));
-        pieces.add(new Rook(WHITE, new Position(H, ONE)));
+        pieces.add(new Rook(WHITE, "r", new Position(A, ONE)));
+        pieces.add(new Knight(WHITE, "n", new Position(B, ONE)));
+        pieces.add(new Bishop(WHITE, "b", new Position(C, ONE)));
+        pieces.add(new Queen(WHITE, "q", new Position(D, ONE)));
+        pieces.add(new King(WHITE, "k", new Position(E, ONE)));
+        pieces.add(new Bishop(WHITE, "b", new Position(F, ONE)));
+        pieces.add(new Knight(WHITE, "n", new Position(G, ONE)));
+        pieces.add(new Rook(WHITE, "r", new Position(H, ONE)));
 
         return pieces;
     }
@@ -47,18 +47,18 @@ public class PieceFactory {
     public static List<Piece> blackPieces() {
         List<Piece> pieces = new ArrayList<>();
 
-        pieces.add(new Rook(BLACK, new Position(A, EIGHT)));
-        pieces.add(new Knight(BLACK, new Position(B, EIGHT)));
-        pieces.add(new Bishop(BLACK, new Position(C, EIGHT)));
-        pieces.add(new Queen(BLACK, new Position(D, EIGHT)));
-        pieces.add(new King(BLACK, new Position(E, EIGHT)));
-        pieces.add(new Bishop(BLACK, new Position(F, EIGHT)));
-        pieces.add(new Knight(BLACK, new Position(G, EIGHT)));
-        pieces.add(new Rook(BLACK, new Position(H,  EIGHT)));
+        pieces.add(new Rook(BLACK, "R", new Position(A, EIGHT)));
+        pieces.add(new Knight(BLACK, "N", new Position(B, EIGHT)));
+        pieces.add(new Bishop(BLACK, "B", new Position(C, EIGHT)));
+        pieces.add(new Queen(BLACK, "Q", new Position(D, EIGHT)));
+        pieces.add(new King(BLACK, "K", new Position(E, EIGHT)));
+        pieces.add(new Bishop(BLACK, "B", new Position(F, EIGHT)));
+        pieces.add(new Knight(BLACK, "N", new Position(G, EIGHT)));
+        pieces.add(new Rook(BLACK, "R", new Position(H,  EIGHT)));
 
         pieces.addAll(
                 Arrays.stream(Rank.values())
-                .map(rank -> new Pawn(BLACK, new Position(rank, SEVEN)))
+                .map(rank -> new Pawn(BLACK, "P", new Position(rank, SEVEN)))
                 .collect(toList())
         );
 

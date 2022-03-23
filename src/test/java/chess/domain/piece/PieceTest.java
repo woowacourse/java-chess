@@ -13,6 +13,6 @@ public class PieceTest {
     @Test
     public void piece() {
         //given & when & then
-        Assertions.assertDoesNotThrow(() -> new Pawn(Team.WHITE, new Position(A, ONE)));
+        Assertions.assertDoesNotThrow(() -> new Pawn(Team.WHITE, "p", new Position(A, ONE)));
     }
 }

@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.position;
 
-import chess.domain.piece.File;
-import chess.domain.piece.Rank;
 import java.util.Objects;
 
 public class Position {

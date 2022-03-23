@@ -4,11 +4,11 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.ChessBoard;
-import chess.domain.Position;
-import chess.domain.piece.File;
+import chess.domain.position.Position;
+import chess.domain.position.File;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Rank;
+import chess.domain.position.Rank;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ChessController {
         for (Position position : positions) {
             if (cellsKeySet.contains(position)) {
                 Piece piece = cells.get(position);
-                String type = piece.getType();
+                String type = piece.getSymbol();
 
                 symbols.add(type);
             } else {
