@@ -22,6 +22,14 @@ public class Position {
         return PositionCache.getCache(value);
     }
 
+    public int fileDifference(Position targetPosition) {
+        return Math.abs(fileIdx - targetPosition.fileIdx);
+    }
+
+    public int rankDifference(Position targetPosition) {
+        return Math.abs(rankIdx - targetPosition.rankIdx);
+    }
+
     public Position movedBy(int fileDiff, int rankDiff) {
         int toFileIdx = fileIdx + fileDiff;
         int toRankIdx = rankIdx + rankDiff;

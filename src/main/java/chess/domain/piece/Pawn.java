@@ -22,9 +22,9 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void move(Position toPosition) {
-        validateMovable(toPosition);
-        position = toPosition;
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
     }
 
     private void validateMovable(Position toPosition) {
