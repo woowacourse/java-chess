@@ -1,12 +1,7 @@
 package chess;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
-import chess.domain.File;
-import chess.domain.Location;
-import chess.domain.Rank;
-import chess.domain.piece.Piece;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
@@ -17,7 +12,7 @@ public class Application {
         ChessGame chessGame = new ChessGame();
         do {
             String inputValue = scanner.nextLine();
-            chessGame.execute(GameCommand.of(inputValue));
-        } while (chessGame.isStarted());
+            chessGame.execute(List.of(inputValue.split(" ")));
+        } while (chessGame.isRunning());
     }
 }
