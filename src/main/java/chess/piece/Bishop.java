@@ -1,5 +1,7 @@
 package chess.piece;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 public class Bishop extends Piece {
 
     public Bishop(Color color) {
@@ -7,7 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean isMovable(int x, int y, int toX, int toY) {
+    boolean isMovable(Pair<Integer,Integer> source, Pair<Integer,Integer> target) {
         return false;
     }
 }

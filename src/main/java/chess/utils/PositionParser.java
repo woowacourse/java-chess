@@ -30,7 +30,7 @@ public class PositionParser {
         ranks.put('1', 7);
     }
 
-    public static Pair<Integer, Integer> getPosition(char x, char y) {
+    public static Pair<Integer, Integer> parse(char x, char y) {
         if (!files.containsKey(x) || !ranks.containsKey(y)) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }

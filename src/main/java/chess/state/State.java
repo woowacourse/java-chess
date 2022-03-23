@@ -10,4 +10,6 @@ public interface State {
     State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target);
 
     Chessboard getChessboard();
+
+    boolean isFinished();
 }

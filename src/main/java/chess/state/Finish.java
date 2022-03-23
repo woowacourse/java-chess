@@ -25,4 +25,10 @@ public class Finish implements State {
     public Chessboard getChessboard() {
         return chessboard;
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+
 }

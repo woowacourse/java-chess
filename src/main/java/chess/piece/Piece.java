@@ -1,5 +1,7 @@
 package chess.piece;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 public abstract class Piece {
     Type type;
     Color color;
@@ -9,7 +11,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract boolean isMovable(int x, int y, int toX, int toY);
+    abstract boolean isMovable(Pair<Integer,Integer> source, Pair<Integer,Integer> target);
 
     public String getType() {
         return type.getSymbol(color);
