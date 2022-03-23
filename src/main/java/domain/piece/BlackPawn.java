@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.BlackPawnDirections;
+import domain.directions.BlackPawnDirections;
 import domain.Player;
 
 public class BlackPawn extends Pawn {

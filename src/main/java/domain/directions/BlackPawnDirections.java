@@ -1,4 +1,4 @@
-package domain;
+package domain.directions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ public class BlackPawnDirections implements DirectionsGenerator {
 
     public List<Direction> generate() {
         directions.add(Direction.SOUTHWEST);
-        directions.add(Direction.SOUTH);
         directions.add(Direction.SOUTHEAST);
         directions.add(Direction.SOUTH);
         return directions;

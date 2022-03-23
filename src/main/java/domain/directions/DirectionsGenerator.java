@@ -1,4 +1,4 @@
-package domain;
+package domain.directions;
 
 import java.util.List;
 

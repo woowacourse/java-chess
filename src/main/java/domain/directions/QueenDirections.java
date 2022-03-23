@@ -1,14 +1,15 @@
-package domain.piece;
+package domain.directions;
 
-import domain.Direction;
-import domain.DirectionsGenerator;
+import domain.directions.Direction;
+import domain.directions.DirectionsGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BishopDirections implements DirectionsGenerator {
+public class QueenDirections implements DirectionsGenerator {
+
     private List<Direction> directions;
 
-    public BishopDirections() {
+    public QueenDirections() {
         this.directions = new ArrayList<>();
     }
 
@@ -17,6 +18,10 @@ public class BishopDirections implements DirectionsGenerator {
         directions.add(Direction.NORTHWEST);
         directions.add(Direction.SOUTHEAST);
         directions.add(Direction.SOUTHWEST);
+        directions.add(Direction.EAST);
+        directions.add(Direction.WEST);
+        directions.add(Direction.SOUTH);
+        directions.add(Direction.NORTH);
         return directions;
     }
 }

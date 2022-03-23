@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.Direction;
-import domain.DirectionsGenerator;
+import domain.directions.Direction;
+import domain.directions.DirectionsGenerator;
 import domain.Player;
 import domain.position.Position;
 import java.util.List;

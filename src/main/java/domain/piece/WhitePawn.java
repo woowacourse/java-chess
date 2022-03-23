@@ -1,7 +1,7 @@
 package domain.piece;
 
 import domain.Player;
-import domain.WhitePawnDirections;
+import domain.directions.WhitePawnDirections;
 
 public class WhitePawn extends Pawn {
 

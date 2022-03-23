@@ -1,7 +1,8 @@
 package domain.piece;
 
-import domain.Direction;
+import domain.directions.Direction;
 import domain.Player;
+import domain.directions.RookDirections;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;

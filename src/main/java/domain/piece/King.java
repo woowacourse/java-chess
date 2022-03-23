@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.Direction;
-import domain.KingDirections;
+import domain.directions.Direction;
+import domain.directions.KingDirections;
 import domain.Player;
 import domain.position.Column;
 import domain.position.Position;

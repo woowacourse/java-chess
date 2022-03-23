@@ -1,9 +1,8 @@
 package domain.piece;
 
-import domain.Direction;
+import domain.directions.Direction;
 import domain.Player;
-import domain.piece.Piece;
-import domain.piece.PieceSymbol;
+import domain.directions.QueenDirections;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
