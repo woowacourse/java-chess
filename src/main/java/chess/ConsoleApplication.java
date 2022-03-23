@@ -1,5 +1,9 @@
 package chess;
 
+import chess.piece.Piece;
+import chess.piece.PieceType;
+import chess.piece.Position;
+
 import java.util.Arrays;
 import java.util.List;
 

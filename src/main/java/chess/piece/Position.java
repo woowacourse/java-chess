@@ -1,4 +1,4 @@
-package chess;
+package chess.piece;
 
 import java.text.MessageFormat;
 import java.util.List;

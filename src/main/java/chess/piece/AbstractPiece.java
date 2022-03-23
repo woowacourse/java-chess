@@ -1,4 +1,4 @@
-package chess;
+package chess.piece;
 
 public abstract class AbstractPiece implements Piece {
 
