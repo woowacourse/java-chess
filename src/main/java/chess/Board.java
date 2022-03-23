@@ -40,7 +40,7 @@ public class Board {
     }
 
     private void putAllEmptyPieces(Map<Position, Piece> result) {
-        for (Rank rank : Rank.values()) {
+        for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
                 result.put(new Position(rank, file), new Piece(PieceType.EMPTY, PieceColor.EMPTY));
             }
