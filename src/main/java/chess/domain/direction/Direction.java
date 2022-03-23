@@ -37,9 +37,12 @@ public enum Direction {
         return position.move(columnAmount, rowAmount);
     }
 
-    public boolean isDirection(Position position, Position wantPosition) {
+    public boolean isDirection(Position position, Position wantPosition, boolean singleMovable) {
         if (position.equals(wantPosition)) {
             return false;
+        }
+        if (singleMovable) {
+            return position.isMovable(columnAmount, rowAmount) && wantPosition.equals(move(position));
         }
         return isMovableToWantPosition(position, wantPosition);
     }

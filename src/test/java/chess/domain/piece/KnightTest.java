@@ -39,7 +39,7 @@ class KnightTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,2", "b,3", "b,4", "c,1", "c,2", "d,3"})
+    @CsvSource(value = {"b,2", "b,3", "b,4", "c,1", "c,2", "d,3", "c,5"})
     @DisplayName("기물이 갈 수 없는 지점 경로 확인 시 예외 발생")
     void exceptionFindRoute(char col, char row) {
         Position startPosition = new Position('b', '1');
