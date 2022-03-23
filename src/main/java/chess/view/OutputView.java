@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.board.LineNumber;
-import chess.board.Point;
-import chess.piece.Piece;
+import chess.domain.board.LineNumber;
+import chess.domain.board.Point;
+import chess.domain.piece.Piece;
 
 import java.util.Map;
 

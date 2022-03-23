@@ -1,0 +1,22 @@
+package chess.domain.board;
+
+import chess.domain.piece.Piece;
+
+import java.util.Map;
+
+public class Board {
+
+    private final Map<Point, Piece> pointPieces;
+
+    private Board(Map<Point, Piece> pointPieces) {
+        this.pointPieces = pointPieces;
+    }
+
+    public static Board of(BoardGenerator generator) {
+        return new Board(generator.generate());
+    }
+
+    public Map<Point, Piece> getPointPieces() {
+        return Map.copyOf(pointPieces);
+    }
+}

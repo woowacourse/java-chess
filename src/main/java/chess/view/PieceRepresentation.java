@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.piece.Color;
-import chess.piece.Piece;
-import chess.piece.PieceType;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 import java.util.Arrays;
 
