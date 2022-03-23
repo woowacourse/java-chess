@@ -43,5 +43,4 @@ class TeamColorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("팀 컬러를 식별할 수 있는 Rank는 1,2,7,8 입니다.");
     }
-
 }
