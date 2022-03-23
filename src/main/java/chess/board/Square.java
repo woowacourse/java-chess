@@ -15,6 +15,12 @@ public class Square {
         this.rank = rank;
     }
 
+    public Direction getGap(Square target) {
+        int gapOfFile = file.getGap(target.file);
+        int gapOfRank = rank.getGap(target.rank);
+        return new Direction(gapOfFile, gapOfRank);
+    }
+
     public String getName() {
         return file.getValue() + rank.getValue();
     }

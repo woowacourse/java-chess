@@ -4,14 +4,13 @@ import chess.board.File;
 import chess.board.Rank;
 
 public abstract class Piece {
-
     protected final Color color;
 
-    protected Piece(Color color) {
+    Piece(Color color) {
         this.color = color;
     }
 
-    public static Piece from(File file, Rank rank){
+    public static Piece from(File file, Rank rank) {
         return PieceGenerator.generatePiece(file, rank);
     }
 

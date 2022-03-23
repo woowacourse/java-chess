@@ -27,6 +27,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 체스판 범위를 벗어났습니다."));
     }
 
+    public int getGap(File target) {
+        return target.index - this.index;
+    }
+
     public String getValue() {
         return value;
     }
