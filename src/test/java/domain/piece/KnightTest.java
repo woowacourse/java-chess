@@ -21,7 +21,7 @@ public class KnightTest {
         Piece piece = new Knight(Player.WHITE);
         Position source = new Position(Row.FOUR, Column.C);
         List<Position> positions = piece.availableMovePositions(source);
-        
+
         assertThat(positions.contains(target)).isEqualTo(true);
     }
 
