@@ -28,6 +28,7 @@ public class ChessBoardGenerator implements BoardGenerator {
 
     private void createTeamBoard(final Map<Position, Piece> board, final Player player) {
         createInitPawn(board, player);
+        createInitRook(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -39,5 +40,15 @@ public class ChessBoardGenerator implements BoardGenerator {
         }
         Arrays.stream(Column.values())
             .forEach(column -> board.put(new Position(Row.TWO, column), new Pawn(Player.WHITE)));
+    }
+
+    private void createInitRook(Map<Position, Piece> board, Player player) {
+        if (player == Player.BLACK) {
+            board.put(new Position(Row.EIGHT, Column.A), new Rook(Player.BLACK));
+            board.put(new Position(Row.EIGHT, Column.H), new Rook(Player.BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.A), new Rook(Player.WHITE));
+        board.put(new Position(Row.ONE, Column.H), new Rook(Player.WHITE));
     }
 }

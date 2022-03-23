@@ -38,6 +38,32 @@ public class ChessBoardGeneratorTest {
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
+    @Test
+    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
+    void checkPositionBlackRook() {
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.A));
+        Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.H));
+
+        assertThat(leftRook.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(rightRook.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(leftRook).isInstanceOf(Rook.class);
+        assertThat(rightRook).isInstanceOf(Rook.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
+    void checkPositionWhiteRook() {
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece leftRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.A));
+        Piece rightRook = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.H));
+
+        assertThat(leftRook.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(rightRook.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(leftRook).isInstanceOf(Rook.class);
+        assertThat(rightRook).isInstanceOf(Rook.class);
+    }
+
     private static Stream<Column> columns() {
         return Stream.of(
             Column.A,
