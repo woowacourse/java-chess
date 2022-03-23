@@ -7,7 +7,12 @@ public class Queen extends Piece {
 
     private static final String SYMBOL = "q";
 
-    public Queen(final TeamColor teamColor) {
-        super(teamColor, SYMBOL);
+    public Queen(final TeamColor teamColor, final Position position) {
+        super(teamColor, position);
+    }
+
+    @Override
+    public String getSymbol() {
+        return teamColor.convertSymbolByTeamColor(SYMBOL);
     }
 }

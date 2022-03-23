@@ -7,7 +7,12 @@ public class King extends Piece {
 
     private static final String SYMBOL = "k";
 
-    public King(final TeamColor teamColor) {
-        super(teamColor, SYMBOL);
+    public King(final TeamColor teamColor, final Position position) {
+        super(teamColor, position);
+    }
+
+    @Override
+    public String getSymbol() {
+        return teamColor.convertSymbolByTeamColor(SYMBOL);
     }
 }
