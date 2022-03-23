@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 
 public class ChessGame {
