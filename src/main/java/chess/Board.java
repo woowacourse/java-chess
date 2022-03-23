@@ -50,7 +50,6 @@ public class Board {
     private void putWhitePieces(Map<Position, Piece> result) {
         putPawns(result, WHITE, TWO);
         putRemainPiecesExceptPawn(result, WHITE, ONE);
-
     }
 
     private void putBlackPieces(Map<Position, Piece> result) {

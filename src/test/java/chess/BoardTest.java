@@ -10,12 +10,18 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
 
-    private static final Board board = new Board();
+    private static Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = new Board();
+    }
 
     @Test
     @DisplayName("체스 보드 생성 테스트 : 개수")
@@ -77,10 +83,14 @@ public class BoardTest {
             .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
     }
 
-    // "a0" 보드의 밖을 위치로 지정할 수 없다
-    // Board(String ..)
+    @Test
+    @DisplayName("체스 말이 입력한 target으로 정상 이동했는지 확인한다.")
+    void move_test() {
+        //when
+        board.move(new Position(Rank.TWO, File.A), new Position(Rank.THREE, File.A));
+        Map<Position, Piece> piecesByPositions = board.getValues();
 
-
-    // move
-    // validateSourceNotEmpty
+        //then
+        assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Piece(PAWN, PieceColor.WHITE));
+    }
 }

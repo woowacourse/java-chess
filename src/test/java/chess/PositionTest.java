@@ -16,4 +16,6 @@ public class PositionTest {
         //then
         assertThat(position).isEqualTo(new Position(Rank.ONE, File.A));
     }
+
+    // TODO 문자열로 된 포지션 예외 테스트
 }
