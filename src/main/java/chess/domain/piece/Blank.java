@@ -11,4 +11,9 @@ public class Blank extends Piece{
     public String baseSignature() {
         return ".";
     }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
 }

@@ -11,5 +11,10 @@ public class Pawn extends Piece {
     protected String baseSignature() {
         return "p";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }
 

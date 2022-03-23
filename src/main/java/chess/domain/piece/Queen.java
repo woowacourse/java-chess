@@ -11,4 +11,9 @@ public class Queen extends Piece {
     protected String baseSignature() {
         return "q";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

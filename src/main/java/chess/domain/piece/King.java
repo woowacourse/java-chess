@@ -11,4 +11,9 @@ public class King extends Piece {
     protected String baseSignature() {
         return "k";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

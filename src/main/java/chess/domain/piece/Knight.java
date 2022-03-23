@@ -11,4 +11,9 @@ public class Knight extends Piece {
     protected String baseSignature() {
         return "n";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

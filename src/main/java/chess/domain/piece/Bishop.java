@@ -11,4 +11,9 @@ public class Bishop extends Piece {
     protected String baseSignature() {
         return "b";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

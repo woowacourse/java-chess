@@ -11,4 +11,9 @@ public class Rook extends Piece {
     protected String baseSignature() {
         return "r";
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

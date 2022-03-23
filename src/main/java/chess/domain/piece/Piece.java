@@ -14,4 +14,6 @@ public abstract class Piece {
     }
 
     protected abstract String baseSignature();
+
+    public abstract boolean isBlank();
 }
