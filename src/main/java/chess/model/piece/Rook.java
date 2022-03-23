@@ -1,11 +1,9 @@
 package chess.model.piece;
 
 import chess.model.Color;
-import chess.model.File;
 import chess.model.Square;
 
-public final class Rook extends Piece{
-
+public final class Rook extends Piece {
 
     public Rook(Color color, Square square) {
         super(color, square);

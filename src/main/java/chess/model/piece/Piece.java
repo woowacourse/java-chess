@@ -42,4 +42,8 @@ public abstract class Piece {
     protected boolean isEnemy(Piece targetPiece) {
         return color.isEnemy(targetPiece.color);
     }
+
+    protected boolean isAlly(Piece targetPiece) {
+        return color.isAlly(targetPiece.color);
+    }
 }

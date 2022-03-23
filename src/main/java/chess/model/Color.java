@@ -17,4 +17,8 @@ public enum Color {
         }
         return true;
     }
+
+    public boolean isAlly(Color other) {
+        return this.equals(other);
+    }
 }
