@@ -25,6 +25,7 @@ public class Queen extends Piece {
 		return this.symbol;
 	}
 
+	@Override
 	public void move(int row, int column) {
 		validatePosition(row, column);
 		this.position = this.position.change(row, column);

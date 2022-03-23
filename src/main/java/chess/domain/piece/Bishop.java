@@ -20,6 +20,7 @@ public class Bishop extends Piece {
 		return new Bishop(Color.BLACK, new Position(row, column) , "♗");
 	}
 
+	@Override
 	public void move(int row, int column) {
 		validatePosition(row, column);
 		this.position = this.position.change(row, column);

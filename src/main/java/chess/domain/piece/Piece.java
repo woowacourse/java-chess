@@ -17,5 +17,7 @@ public abstract class Piece {
 		return this.position.equals(new Position(row, column));
 	}
 
+	public abstract void move(int row, int column);
+
 	public abstract String getSymbol();
 }
