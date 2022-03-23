@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.board.MovingOrder;
 import java.util.Locale;
 
 public abstract class Piece {
@@ -11,6 +13,8 @@ public abstract class Piece {
         this.name = name;
         this.color = color;
     }
+
+    public abstract void checkValidMove(Board board, MovingOrder movingOrder);
 
     public Color getColor() {
         return color;
