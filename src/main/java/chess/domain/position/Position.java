@@ -39,4 +39,10 @@ public final class Position {
     public boolean isHorizontal(Position target) {
         return row.isSame(target.row);
     }
+
+    public boolean isDiagonal(Position target) {
+        int columnGap = column.gap(target.column);
+        int rowGap = row.gap(target.row);
+        return columnGap == rowGap;
+    }
 }

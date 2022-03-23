@@ -42,4 +42,8 @@ public enum Row {
     public boolean isSame(Row row) {
         return this == row;
     }
+
+    public int gap(Row row) {
+        return Math.abs(this.value - row.value);
+    }
 }

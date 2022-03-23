@@ -4,14 +4,20 @@ import java.util.Arrays;
 
 public enum Column {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H;
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
+
+    private final int value;
+
+    Column(int value) {
+        this.value = value;
+    }
 
     public static Column of(final String value) {
         return Arrays.stream(values())
@@ -22,5 +28,9 @@ public enum Column {
 
     public boolean isSame(Column column) {
         return this == column;
+    }
+
+    public int gap(Column column) {
+        return Math.abs(this.value - column.value);
     }
 }

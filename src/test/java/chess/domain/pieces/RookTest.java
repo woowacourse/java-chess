@@ -16,7 +16,7 @@ class RookTest {
     @MethodSource("rookVerticalMovement")
     @DisplayName("룩은 상하 직진한다")
     void move_goVertical(Position source, Position target, boolean result) {
-        Rook rook = new Rook();
+        Type rook = new Rook();
         assertThat(rook.isMovable(source, target)).isEqualTo(result);
     }
 

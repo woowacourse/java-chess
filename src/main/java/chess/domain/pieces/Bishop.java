@@ -11,6 +11,6 @@ public class Bishop implements Type {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return source.isDiagonal(target);
     }
 }
