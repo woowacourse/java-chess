@@ -30,6 +30,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         createInitPawn(board, player);
         createInitRook(board, player);
         createInitKnight(board, player);
+        createInitBishop(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -61,5 +62,15 @@ public class ChessBoardGenerator implements BoardGenerator {
         }
         board.put(new Position(Row.ONE, Column.B), new Knight(Player.WHITE));
         board.put(new Position(Row.ONE, Column.G), new Knight(Player.WHITE));
+    }
+
+    private void createInitBishop(Map<Position, Piece> board, Player player) {
+        if (player == Player.BLACK) {
+            board.put(new Position(Row.EIGHT, Column.C), new Bishop(Player.BLACK));
+            board.put(new Position(Row.EIGHT, Column.F), new Bishop(Player.BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.C), new Bishop(Player.WHITE));
+        board.put(new Position(Row.ONE, Column.F), new Bishop(Player.WHITE));
     }
 }
