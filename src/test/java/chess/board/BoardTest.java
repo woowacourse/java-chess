@@ -1,9 +1,13 @@
-package chess;
+package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.piece.Color;
-import chess.piece.Rook;
+import chess.domain.board.Board;
+import chess.domain.board.Column;
+import chess.domain.board.Position;
+import chess.domain.board.Row;
+import chess.domain.piece.Color;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

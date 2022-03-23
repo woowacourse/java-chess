@@ -1,4 +1,4 @@
-import chess.Board;
+import chess.domain.board.Board;
 import chess.GameSwitch;
 import chess.view.InputView;
 import chess.view.OutputView;
