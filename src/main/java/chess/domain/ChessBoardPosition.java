@@ -35,6 +35,14 @@ public class ChessBoardPosition {
         }
     }
 
+    public char getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

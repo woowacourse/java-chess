@@ -1,5 +1,7 @@
 package chess.domain;
 
+import javax.swing.JTable.DropLocation;
+
 public class ChessPiece {
     private final Team team;
     private final Type type;
@@ -9,5 +11,13 @@ public class ChessPiece {
         this.team = team;
         this.type = type;
         this.chessBoardPosition = chessBoardPosition;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public ChessBoardPosition getPosition() {
+        return chessBoardPosition;
     }
 }

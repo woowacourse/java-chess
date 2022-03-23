@@ -43,4 +43,12 @@ public class ChessGame {
         chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition(column, row)));
         chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition((char)('a' + 'h' - column), row)));
     }
+
+    public ChessMen getBlackChessMen() {
+        return blackChessMen;
+    }
+
+    public ChessMen getWhiteChessMen() {
+        return whiteChessMen;
+    }
 }
