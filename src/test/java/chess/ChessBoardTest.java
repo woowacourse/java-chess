@@ -71,6 +71,30 @@ public class ChessBoardTest {
                 .isInstanceOf(Queen.class);
     }
 
+    @MethodSource("provideKingPosition")
+    @ParameterizedTest(name = "{0}에 킹이 있다")
+    void check_king_positions(ChessBoardPosition expectedPosition) {
+        //given
+        ChessBoard chessBoard = new ChessBoard();
+        //when
+        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
+        //then
+        assertThat(boardValue.get(expectedPosition))
+                .isInstanceOf(King.class);
+    }
+
+    @MethodSource("providePawnPosition")
+    @ParameterizedTest(name = "{0}에 폰이 있다")
+    void check_pawn_positions(ChessBoardPosition expectedPosition) {
+        //given
+        ChessBoard chessBoard = new ChessBoard();
+        //when
+        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
+        //then
+        assertThat(boardValue.get(expectedPosition))
+                .isInstanceOf(Pawn.class);
+    }
+
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.ONE)),
@@ -102,6 +126,34 @@ public class ChessBoardTest {
         return Stream.of(
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.D, ChessBoardRow.ONE)),
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.D, ChessBoardRow.EIGHT))
+        );
+    }
+
+    private static Stream<Arguments> provideKingPosition() {
+        return Stream.of(
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.E, ChessBoardRow.ONE)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.E, ChessBoardRow.EIGHT))
+        );
+    }
+
+    private static Stream<Arguments> providePawnPosition() {
+        return Stream.of(
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.B, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.C, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.D, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.E, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.F, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.G, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.TWO)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.B, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.C, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.D, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.E, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.F, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.G, ChessBoardRow.SEVEN)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.SEVEN))
         );
     }
 }
