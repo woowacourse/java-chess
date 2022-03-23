@@ -20,7 +20,8 @@ public class PositionTest {
                 .doesNotThrowAnyException();
     }
 
-    @ParameterizedTest(name = "범위 벗어난 경우, 예외를 발생시킨다.")
+    @ParameterizedTest
+    @DisplayName("범위를 벗어난 경우, 예외를 발생시킨다.")
     @MethodSource("provideInvalidPosition")
     void createPositionException(final int rank, final char file) {
         assertThatThrownBy(() -> new Position(rank, file))
