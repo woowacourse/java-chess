@@ -37,7 +37,7 @@ public class Board {
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
                 emptyBoard.put(Position.valueOf(column.getValue() + row.getValue()),
-                        new Blank(Color.NONE));
+                        new Blank());
             }
         }
         return emptyBoard;

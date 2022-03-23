@@ -14,6 +14,8 @@ public abstract class Piece {
         return color;
     }
 
+    public abstract boolean isBlank();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
