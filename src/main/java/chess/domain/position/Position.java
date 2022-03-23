@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -13,6 +14,12 @@ public class Position {
 
     public Position(String value) {
         this(Row.of(value.substring(0, 1)), Column.of(value.substring(1, 2)));
+    }
+
+    public Direction calculateGap(Position position) {
+        int x = row.calculateIndex(position.row);
+        int y = column.calculateIndex(position.column);
+        return Direction.of(x, y);
     }
 
     @Override
