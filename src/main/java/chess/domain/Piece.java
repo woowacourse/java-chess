@@ -1,20 +1,22 @@
 package chess.domain;
 
+import chess.view.PieceSymbolMapper;
+
 public abstract class Piece {
 
-    private String team;
+    private Team team;
     private final String name;
 
-    public Piece(String team, String name) {
+    public Piece(Team team, String name) {
         this.team = team;
         this.name = name;
     }
 
-    public boolean isBlackTeam() {
-        return team.equals("Black");
-    }
-
     public String getName() {
         return name;
+    }
+
+    public boolean isBlackTeam() {
+        return team == Team.BLACK;
     }
 }

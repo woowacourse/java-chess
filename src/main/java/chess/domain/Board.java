@@ -16,16 +16,16 @@ public class Board {
 
     private List<Piece> createRank(int i) {
         if (i == 0) {
-            return createFirstRank("Black");
+            return createFirstRank(Team.BLACK);
         }
         if (i == 1) {
-            return createPawn("Black");
+            return createPawn(Team.BLACK);
         }
         if (i == 6) {
-            return createPawn("White");
+            return createPawn(Team.WHITE);
         }
         if (i == 7) {
-            return createFirstRank("White");
+            return createFirstRank(Team.WHITE);
         }
         return createBlank();
     }
@@ -33,12 +33,12 @@ public class Board {
     private List<Piece> createBlank() {
         List<Piece> pieces = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
-            pieces.add(new Blank("None"));
+            pieces.add(new Blank(Team.NONE));
         }
         return pieces;
     }
 
-    private List<Piece> createPawn(String team) {
+    private List<Piece> createPawn(Team team) {
         List<Piece> pieces = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
             pieces.add(new Pawn(team));
@@ -46,7 +46,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> createFirstRank(String team) {
+    private List<Piece> createFirstRank(Team team) {
         List<Piece> pieces = new ArrayList<>();
         pieces.add(new Rook(team));
         pieces.add(new Knight(team));

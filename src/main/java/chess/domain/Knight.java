@@ -2,7 +2,7 @@ package chess.domain;
 
 public class Knight extends Piece {
 
-    public Knight(String team) {
+    public Knight(Team team) {
         super(team, Knight.class.getSimpleName());
     }
 }
