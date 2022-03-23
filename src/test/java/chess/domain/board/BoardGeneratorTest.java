@@ -1,8 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.BoardGenerator;
-import chess.domain.board.LineNumber;
-import chess.domain.board.Point;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

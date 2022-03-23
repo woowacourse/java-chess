@@ -1,9 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.game.Finished;
-import chess.domain.game.GameState;
-import chess.domain.game.Ready;
-import chess.domain.game.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

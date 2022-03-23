@@ -1,14 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
-import chess.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 public class BoardGenerator {
 
