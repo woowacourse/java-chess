@@ -13,9 +13,14 @@ public class Application {
 
         String startOrEndInput = inputView.getStartOrEndInput(outputView);
         if (startOrEndInput.equals("start")) {
-            ChessGame game = new ChessGame();
-            outputView.printBoard(game.getBoard());
+            startGame(outputView);
         }
         inputView.terminate();
+    }
+
+    private static void startGame(OutputView outputView) {
+        ChessGame game = new ChessGame();
+        outputView.printBoard(game.getBoard());
+        
     }
 }
