@@ -1,9 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import java.util.List;
+import java.util.Map;
 
 public interface PiecesGenerator {
 
-    List<Piece> generate();
+    Map<Position, Piece> generate();
 }

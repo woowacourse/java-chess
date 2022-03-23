@@ -16,48 +16,42 @@ public class PieceTest {
     @Test
     @DisplayName("폰을 생성한다.")
     void constructPawn() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new Pawn(position))
+        assertThatCode(() -> new Pawn(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("룩을 생성한다.")
     void constructRook() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new Rook(position))
+        assertThatCode(() -> new Rook(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("나이트를 생성한다.")
     void constructKnight() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new Knight(position))
+        assertThatCode(() -> new Knight(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("비숍을 생성한다.")
     void constructBishop() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new Bishop(position))
+        assertThatCode(() -> new Bishop(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("퀸을 생성한다.")
     void constructQueen() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new Queen(position))
+        assertThatCode(() -> new Queen(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("킹을 생성한다.")
     void constructKing() {
-        Position position = new Position(Column.A, Row.ONE);
-        assertThatCode(() -> new King(position))
+        assertThatCode(() -> new King(Color.BLACK))
                 .doesNotThrowAnyException();
     }
 }
