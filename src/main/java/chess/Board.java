@@ -12,7 +12,8 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> values;
-    private static final List<PieceType> BACK_LINE_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
+    private static final List<PieceType> BACK_LINE_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT,
+        ROOK);
 
     public Board() {
         this.values = initBoard();

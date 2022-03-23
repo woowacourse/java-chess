@@ -21,8 +21,9 @@ public class OutputView {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Position searchPosition = new Position(rank, file);
-                Piece piece = piecesByPositions.getOrDefault(searchPosition, new Piece(PieceType.EMPTY, PieceColor.EMPTY));
-                out.print(piece.getPieceType().getName());
+                Piece piece = piecesByPositions.getOrDefault(searchPosition,
+                    new Piece(PieceType.EMPTY, PieceColor.EMPTY));
+                out.print(piece.getEmblem());
             }
             out.println();
         }

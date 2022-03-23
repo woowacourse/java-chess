@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Locale;
+
 public enum PieceType {
     EMPTY("."),
     PAWN("P"),
@@ -15,7 +17,10 @@ public enum PieceType {
         this.name = name;
     }
 
-    public String getName() {
+    public String getName(PieceColor pieceColor) {
+        if (pieceColor == PieceColor.WHITE) {
+            return name.toLowerCase(Locale.ENGLISH);
+        }
         return name;
     }
 }

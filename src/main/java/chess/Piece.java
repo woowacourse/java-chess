@@ -13,7 +13,7 @@ public class Piece {
         return this.pieceType == pieceType;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+    public String getEmblem() {
+        return pieceType.getName(pieceColor);
     }
 }

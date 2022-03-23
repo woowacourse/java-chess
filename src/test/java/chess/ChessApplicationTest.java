@@ -11,6 +11,8 @@ import camp.nextstep.edu.missionutils.test.NsTest;
 
 public class ChessApplicationTest extends NsTest {
 
+    private static final String NEXT_LINE = System.lineSeparator();
+
     @Test
     @DisplayName("입력 명령어가 예외일 경우")
     void command_exception() {
@@ -34,6 +36,23 @@ public class ChessApplicationTest extends NsTest {
         assertSimpleTest(() ->
             Assertions.assertDoesNotThrow(() -> runException("end"))
         );
+    }
+
+    @Test
+    @DisplayName("체스판 초기화 출력 검증")
+    void board() {
+        assertSimpleTest(() -> {
+            runException("start");
+            assertThat(output()).contains(
+                "RNBQKBNR" + NEXT_LINE
+                    + "PPPPPPPP" + NEXT_LINE
+                    + "........" + NEXT_LINE
+                    + "........" + NEXT_LINE
+                    + "........" + NEXT_LINE
+                    + "........" + NEXT_LINE
+                    + "pppppppp" + NEXT_LINE
+                    + "rnbqkbnr");
+        });
     }
 
     @Override
