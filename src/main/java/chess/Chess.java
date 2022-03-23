@@ -41,5 +41,4 @@ public class Chess {
         return new Start(move);
     }
 
-
 }
