@@ -24,7 +24,11 @@ public class King extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
+        int fileDistance = from.fileDistance(to);
+        int rankDistance = from.rankDistance(to);
 
+        if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        }
     }
-
 }
