@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 
 class MenuTest {
-	@DisplayName("생성 확인")
-	@Test
-	void create() {
-		// given
-		String input = "start";
+    @DisplayName("생성 확인")
+    @Test
+    void create() {
+        // given
+        String input = "start";
 
-		// then
-		assertDoesNotThrow(() -> Menu.of(input));
-	}
+        // then
+        assertDoesNotThrow(() -> Menu.of(input));
+    }
 }
