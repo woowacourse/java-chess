@@ -10,6 +10,10 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public final Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

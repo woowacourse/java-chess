@@ -47,6 +47,6 @@ public class Position implements Comparable<Position> {
         if (this.row.getValue() == position.row.getValue()) {
             return position.column.getValue() - this.column.getValue();
         }
-        return this.row.getValue() - position.row.getValue();
+        return position.row.getValue() - this.row.getValue();
     }
 }

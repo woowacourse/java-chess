@@ -30,6 +30,6 @@ public class PositionTest {
     @DisplayName("크기 비교에 성공한다.")
     void compareTo() {
         Position position = new Position(Column.A, Row.EIGHT);
-        assertThat(position).isGreaterThan(new Position(Column.A, Row.SEVEN));
+        assertThat(position).isLessThan(new Position(Column.A, Row.SEVEN));
     }
 }

@@ -14,15 +14,16 @@ public class OutputView {
     }
 
     public static void printBoard(final Map<Position, Piece> board) {
-        System.out.println(appendBoard(board));
+        System.out.println(loadBoard(board));
     }
 
-    private static String appendBoard(final Map<Position, Piece> board) {
+    private static String loadBoard(final Map<Position, Piece> board) {
         StringBuilder stringBuilder = new StringBuilder();
         Set<Position> keys = board.keySet();
         int unit = 1;
         for (Position position : keys) {
-            stringBuilder.append(board.get(position));
+            Piece piece = board.get(position);
+            stringBuilder.append(PieceSymbol.getSymbol(piece));
             unit = appendNewLine(stringBuilder, unit);
         }
         return stringBuilder.toString();
