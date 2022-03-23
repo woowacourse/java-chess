@@ -4,12 +4,18 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(final Rank rank, final File file) {
-        this.rank = rank;
+    public Position(final File file, final Rank rank) {
         this.file = file;
+        this.rank = rank;
+    }
+
+    public static Position create(final String position) {
+        final File file = File.of(position.substring(0, 1));
+        final Rank rank = Rank.of(position.substring(1));
+        return new Position(file, rank);
     }
 
     @Override

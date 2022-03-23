@@ -24,7 +24,7 @@
 
 ### Position
 - [x] 행과 열을 가진다.
-- [ ] Source와 target 위치를 Position으로 변경한다.
+- [x] Source와 target 위치를 Position으로 변경한다.
 
 ### Piece
 - [x] 기물의 이름을 반환한다.

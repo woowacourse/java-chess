@@ -35,7 +35,7 @@ public class Board {
     private static void initialPositions(Map<Position, Piece> board) {
         List<Position> positions = Stream.of(Rank.values())
             .flatMap(rank ->
-                Stream.of(File.values()).map(file -> new Position(rank, file)))
+                Stream.of(File.values()).map(file -> new Position(file, rank)))
             .collect(Collectors.toList());
 
         for (Position position : positions) {
@@ -53,20 +53,20 @@ public class Board {
 
     private static void initialPiecesWithoutPawn(Map<Position, Piece> board, final Rank rank,
         final Color color) {
-        board.put(new Position(rank, File.A), new FullPiece(color, Type.ROOK));
-        board.put(new Position(rank, File.B), new FullPiece(color, Type.KNIGHT));
-        board.put(new Position(rank, File.C), new FullPiece(color, Type.BISHOP));
-        board.put(new Position(rank, File.D), new FullPiece(color, Type.QUEEN));
-        board.put(new Position(rank, File.E), new FullPiece(color, Type.KING));
-        board.put(new Position(rank, File.F), new FullPiece(color, Type.BISHOP));
-        board.put(new Position(rank, File.G), new FullPiece(color, Type.KNIGHT));
-        board.put(new Position(rank, File.H), new FullPiece(color, Type.ROOK));
+        board.put(new Position(File.A, rank), new FullPiece(color, Type.ROOK));
+        board.put(new Position(File.B, rank), new FullPiece(color, Type.KNIGHT));
+        board.put(new Position(File.C, rank), new FullPiece(color, Type.BISHOP));
+        board.put(new Position(File.D, rank), new FullPiece(color, Type.QUEEN));
+        board.put(new Position(File.E, rank), new FullPiece(color, Type.KING));
+        board.put(new Position(File.F, rank), new FullPiece(color, Type.BISHOP));
+        board.put(new Position(File.G, rank), new FullPiece(color, Type.KNIGHT));
+        board.put(new Position(File.H, rank), new FullPiece(color, Type.ROOK));
     }
 
     private static void initialPawns(Map<Position, Piece> board, final Rank rank,
         final Color color) {
         for (File file : File.values()) {
-            board.put(new Position(rank, file), new FullPiece(color, Type.PAWN));
+            board.put(new Position(file, rank), new FullPiece(color, Type.PAWN));
         }
     }
 
