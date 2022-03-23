@@ -18,4 +18,14 @@ public class BlankTest {
         assertThatThrownBy(() -> blank.isMovable(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("Blank 경로를 찾는 경우 예외를 발생시키는지")
+    void findRoute() {
+        Blank blank = new Blank();
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.D, PositionY.RANK_7);
+        assertThatThrownBy(() -> blank.findRoute(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

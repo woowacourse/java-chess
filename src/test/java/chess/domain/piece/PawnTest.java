@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
@@ -55,5 +57,15 @@ public class PawnTest {
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.C, PositionY.RANK_4);
         assertThat(pawn.isMovable(source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Pawn 이 움직이는 경로를 얻어오는지")
+    void findRoute() {
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.C, PositionY.RANK_4);
+        List<Position> route = pawn.findRoute(source, target);
+        assertThat(route).isEmpty();
     }
 }

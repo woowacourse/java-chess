@@ -3,6 +3,9 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pawn extends Piece {
     public Pawn(Color color) {
         super(color);
@@ -47,6 +50,11 @@ public class Pawn extends Piece {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Position> findRoute(Position source, Position target) {
+        return new ArrayList<>();
     }
 }
 

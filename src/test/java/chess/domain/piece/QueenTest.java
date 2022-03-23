@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QueenTest {
@@ -37,5 +39,15 @@ public class QueenTest {
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.H, PositionY.RANK_7);
         assertThat(queen.isMovable(source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Queen 이 움직이는 경로를 얻어오는지")
+    void findRoute() {
+        Queen queen = new Queen(Color.BLACK);
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.F, PositionY.RANK_5);
+        List<Position> route = queen.findRoute(source, target);
+        assertThat(route).containsExactly(new Position(PositionX.D, PositionY.RANK_5), new Position(PositionX.E, PositionY.RANK_5));
     }
 }

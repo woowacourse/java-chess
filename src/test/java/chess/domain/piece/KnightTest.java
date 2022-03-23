@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KnightTest {
@@ -37,5 +39,15 @@ public class KnightTest {
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.F, PositionY.RANK_2);
         assertThat(knight.isMovable(source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Knight 이 움직이는 경로를 얻어오는지")
+    void findRoute() {
+        Knight knight = new Knight(Color.BLACK);
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.E, PositionY.RANK_4);
+        List<Position> route = knight.findRoute(source, target);
+        assertThat(route).isEmpty();
     }
 }

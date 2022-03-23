@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RookTest {
@@ -37,5 +39,15 @@ public class RookTest {
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.H, PositionY.RANK_8);
         assertThat(rook.isMovable(source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Rook 이 움직이는 경로를 얻어오는지")
+    void findRoute() {
+        Rook rook = new Rook(Color.BLACK);
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.C, PositionY.RANK_8);
+        List<Position> route = rook.findRoute(source, target);
+        assertThat(route).containsExactly(new Position(PositionX.C, PositionY.RANK_6), new Position(PositionX.C, PositionY.RANK_7));
     }
 }

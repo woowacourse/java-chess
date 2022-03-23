@@ -27,6 +27,13 @@ public enum PositionX {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않는 좌표입니다."));
     }
 
+    public static PositionX of(int coordination) {
+        return Arrays.stream(values())
+                .filter(positionX -> positionX.coordination == coordination)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
+    }
+
     public String getName() {
         return name;
     }

@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
+import java.util.List;
+
 public abstract class Piece {
     protected final Color color;
 
@@ -23,4 +25,6 @@ public abstract class Piece {
     public abstract boolean isBlank();
 
     public abstract boolean isMovable(Position source, Position target);
+
+    public abstract List<Position> findRoute(Position source, Position target);
 }

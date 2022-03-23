@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
@@ -37,5 +39,15 @@ public class BishopTest {
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.G, PositionY.RANK_6);
         assertThat(bishop.isMovable(source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Bishop 이 움직이는 경로를 얻어오는지")
+    void findRoute() {
+        Bishop bishop = new Bishop(Color.BLACK);
+        Position source = new Position(PositionX.C, PositionY.RANK_5);
+        Position target = new Position(PositionX.F, PositionY.RANK_2);
+        List<Position> route = bishop.findRoute(source, target);
+        assertThat(route).containsExactly(new Position(PositionX.D, PositionY.RANK_4), new Position(PositionX.E, PositionY.RANK_3));
     }
 }
