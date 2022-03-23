@@ -59,4 +59,8 @@ public class Board {
     public Piece getPiece(File file, Rank rank) {
         return chessBoard.get(Location.of(file, rank));
     }
+
+    public Map<Location, Piece>  getBoard() {
+        return chessBoard;
+    }
 }
