@@ -20,7 +20,13 @@ public class PieceTest {
                 Arguments.of(new Queen(Color.BLACK), "Q"),
                 Arguments.of(new Queen(Color.WHITE), "q"),
                 Arguments.of(new Bishop(Color.BLACK), "B"),
-                Arguments.of(new Bishop(Color.WHITE), "b")
+                Arguments.of(new Bishop(Color.WHITE), "b"),
+                Arguments.of(new Knight(Color.BLACK), "N"),
+                Arguments.of(new Knight(Color.WHITE), "n"),
+                Arguments.of(new Rook(Color.BLACK), "R"),
+                Arguments.of(new Rook(Color.WHITE), "r"),
+                Arguments.of(new Pawn(Color.BLACK), "P"),
+                Arguments.of(new Pawn(Color.WHITE), "p")
         );
     }
 

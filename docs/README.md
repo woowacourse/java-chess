@@ -42,9 +42,9 @@
 - [x] King
 - [x] Queen
 - [x] Bishop
-- [ ] Knight
-- [ ] Rook
-- [ ] Pawn
+- [x] Knight
+- [x] Rook
+- [x] Pawn
 
 - [x] 각 기물은 진영에 대한 정보를 가지고 있다. (Color)
 - [x] 각 기물은 기물 타입에 대한 정보를 가지고 있다. 
