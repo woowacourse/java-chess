@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class BishopTest {
+class QueenTest {
 
     Position initialPosition = new Position("d5");
 
@@ -17,25 +17,25 @@ class BishopTest {
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     void canMove_cantGo() {
         // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
+        ChessPiece queen = new Queen(Color.BLACK);
 
         // when
         // then
-        assertThatThrownBy(() -> bishop.canMove(initialPosition, new Position("d6")))
+        assertThatThrownBy(() -> queen.canMove(initialPosition, new Position("c2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"b7", "f7", "f3", "b3"})
+    @ValueSource(strings = {"b7","b5","d7","f7","f5","f3","d3","b3"})
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
-    void canMove_canGo() {
+    void canMove_canGo(String target) {
         // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
+        ChessPiece queen = new Queen(Color.BLACK);
 
         // when
         // then
-        Assertions.assertThatCode(() -> bishop.canMove(initialPosition, new Position("c4")))
+        Assertions.assertThatCode(() -> queen.canMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
 
     }

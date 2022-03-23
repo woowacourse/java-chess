@@ -24,7 +24,16 @@ public class Queen extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
+        // bishop
+        int rankDistance = from.rankDistance(to);
+        int fileDistance = from.fileDistance(to);
+        // rook
+        boolean sameFile = from.isSameFile(to);
+        boolean sameRank = from.isSameRank(to);
 
+        // rook                         bishop
+        if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        }
     }
-
 }
