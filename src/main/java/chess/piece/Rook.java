@@ -5,7 +5,7 @@ import chess.*;
 public class Rook extends Piece{
 
     public Rook(Color color, Position position) {
-        super(color, PieceType.ROOK, position);
+        super(color, position);
     }
 
     @Override
@@ -13,6 +13,6 @@ public class Rook extends Piece{
         if (!position.isSameRowOrCol(to)) {
             throw new IllegalArgumentException();
         }
-        this.position = to;
+        position = to;
     }
 }

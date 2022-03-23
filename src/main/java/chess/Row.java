@@ -20,10 +20,6 @@ public enum Row {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public int getDistance(Row other) {
         return Math.abs(this.value - other.value);
     }

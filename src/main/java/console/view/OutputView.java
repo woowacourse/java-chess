@@ -1,17 +1,17 @@
 package console.view;
 
 import chess.*;
-import chess.piece.Piece;
+import chess.piece.*;
 import java.util.*;
 
 public class OutputView {
 
-    private static final Map<PieceType, String> PIECE_SYMBOL = Map.of(PieceType.KING, "K",
-            PieceType.QUEEN, "Q",
-            PieceType.ROOK, "R",
-            PieceType.BISHOP, "B",
-            PieceType.PAWN, "P",
-            PieceType.KNIGHT, "N");
+    private static final Map<Class<? extends Piece>, String> PIECE_SYMBOL = Map.of(King.class, "K",
+            Queen.class, "Q",
+            Rook.class, "R",
+            Bishop.class, "B",
+            Pawn.class, "P",
+            Knight.class, "N");
 
     public static void printInitChessGameMessage() {
         System.out.println("체스 게임을 시작합니다.");
@@ -48,8 +48,8 @@ public class OutputView {
 
     private static String pieceSymbol(Piece piece) {
         if (piece.getColor() == Color.WHITE) {
-            return PIECE_SYMBOL.get(piece.getType()).toLowerCase(Locale.ROOT);
+            return PIECE_SYMBOL.get(piece.getClass()).toLowerCase(Locale.ROOT);
         }
-        return PIECE_SYMBOL.get(piece.getType());
+        return PIECE_SYMBOL.get(piece.getClass());
     }
 }

@@ -12,14 +12,6 @@ public class Position {
         this.col = col;
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Col getCol() {
-        return col;
-    }
-
     public boolean isSameRow(Position other) {
         return this.row == other.row;
     }

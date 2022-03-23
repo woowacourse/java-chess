@@ -5,7 +5,7 @@ import chess.*;
 public class Knight extends Piece{
 
     public Knight(Color color, Position position) {
-        super(color, PieceType.KNIGHT, position);
+        super(color, position);
     }
 
     @Override

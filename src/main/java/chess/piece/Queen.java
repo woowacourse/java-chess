@@ -5,7 +5,7 @@ import chess.*;
 public class Queen extends Piece {
 
     public Queen(Color color, Position position) {
-        super(color, PieceType.QUEEN, position);
+        super(color, position);
     }
 
     @Override

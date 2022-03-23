@@ -1,19 +1,15 @@
 package chess.piece;
 
-import static chess.PieceType.*;
-
 import chess.*;
 import java.util.Objects;
 
 public abstract class Piece {
 
     protected final Color color;
-    protected final PieceType type;
     protected Position position;
 
-    public Piece(Color color, PieceType type, Position position) {
+    public Piece(Color color, Position position) {
         this.color = color;
-        this.type = type;
         this.position = position;
     }
 
@@ -27,10 +23,6 @@ public abstract class Piece {
         return color;
     }
 
-    public PieceType getType() {
-        return type;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,20 +32,19 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color && type == piece.type && Objects
-            .equals(position, piece.position);
+        return color == piece.color && Objects.equals(position, piece.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, type, position);
+        return Objects.hash(color, position);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
             "color=" + color +
-            ", type=" + type +
+            ", type=" + getClass().getSimpleName() +
             ", position=" + position +
             '}';
     }

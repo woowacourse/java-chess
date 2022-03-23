@@ -5,7 +5,7 @@ import chess.*;
 public class Bishop extends Piece {
 
     public Bishop(Color color, Position position) {
-        super(color, PieceType.BISHOP, position);
+        super(color, position);
     }
 
     @Override
@@ -13,6 +13,6 @@ public class Bishop extends Piece {
         if (!position.isCross(to)) {
             throw new IllegalArgumentException();
         }
-        this.position = to;
+        position = to;
     }
 }
