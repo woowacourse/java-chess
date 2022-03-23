@@ -24,7 +24,11 @@ public class Rook extends ChessPiece {
 
     @Override
     public void canMove(Position from, Position to) {
+        boolean sameFile = from.isSameFile(to);
+        boolean sameRank = from.isSameRank(to);
 
+        if (!sameFile && !sameRank) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        }
     }
-
 }

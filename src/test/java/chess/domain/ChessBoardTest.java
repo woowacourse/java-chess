@@ -28,8 +28,8 @@ class ChessBoardTest {
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     void findPiece(String position, String expected) {
         Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
-        String actual = possiblePiece.get().getName();
-        assertThat(actual).isEqualTo(expected);
+        ChessPiece actual = possiblePiece.get();
+        assertThat(actual.getName()).isEqualTo(expected);
     }
 
     @Test
