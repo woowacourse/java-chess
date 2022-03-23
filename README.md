@@ -31,6 +31,9 @@
 - [x] 행과 열을 가진다.
 - [x] Source와 target 위치를 Position으로 변경한다.
 
+### Direction
+- [x] 상하좌우, 대각선으로 Position을 이동한다.
+
 ### Piece
 - [x] 기물의 이름을 반환한다.
 

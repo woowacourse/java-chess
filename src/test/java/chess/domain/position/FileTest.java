@@ -18,19 +18,19 @@ public class FileTest {
     @Test
     @DisplayName("FIle에 a~h값이 있는지 확인한다.")
     void containValue() {
-        assertThat(File.A.getValue()).isEqualTo("a");
+        assertThat(File.A.getValue()).isEqualTo('a');
     }
 
     @Test
     @DisplayName("값을 이용해 File을 찾는다.")
     void findFile() {
-        assertThat(File.of("c")).isEqualTo(File.C);
+        assertThat(File.of('c')).isEqualTo(File.C);
     }
 
     @Test
     @DisplayName("a~h 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
-        assertThatThrownBy(() -> File.of("i"))
+        assertThatThrownBy(() -> File.of('i'))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
     }

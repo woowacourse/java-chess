@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.position.diraction.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -24,6 +25,10 @@ public class Position {
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다.");
         }
+    }
+
+    public Position move(final Direction direction) {
+        return direction.move(file, rank);
     }
 
     @Override
