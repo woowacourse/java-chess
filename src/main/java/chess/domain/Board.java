@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board {
 
-    private List<List<Piece>> board;
+    private List<Rank> board;
 
     public Board() {
         board = new ArrayList<>();
@@ -14,7 +14,7 @@ public class Board {
         }
     }
 
-    private List<Piece> createRank(int i) {
+    private Rank createRank(int i) {
         if (i == 0) {
             return createFirstRank(Team.BLACK);
         }
@@ -30,23 +30,23 @@ public class Board {
         return createBlank();
     }
 
-    private List<Piece> createBlank() {
+    private Rank createBlank() {
         List<Piece> pieces = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
             pieces.add(new Blank(Team.NONE));
         }
-        return pieces;
+        return new Rank(pieces);
     }
 
-    private List<Piece> createPawn(Team team) {
+    private Rank createPawn(Team team) {
         List<Piece> pieces = new ArrayList<>();
         for (int j = 0; j < 8; j++) {
             pieces.add(new Pawn(team));
         }
-        return pieces;
+        return new Rank(pieces);
     }
 
-    private List<Piece> createFirstRank(Team team) {
+    private Rank createFirstRank(Team team) {
         List<Piece> pieces = new ArrayList<>();
         pieces.add(new Rook(team));
         pieces.add(new Knight(team));
@@ -56,16 +56,16 @@ public class Board {
         pieces.add(new Bishop(team));
         pieces.add(new Knight(team));
         pieces.add(new Rook(team));
-        return pieces;
+        return new Rank(pieces);
     }
 
     public Piece getPiece(String position) {
         int x = position.charAt(0) - 'a';
         int y = Character.getNumericValue(position.charAt(1)) - 1;
-        return board.get(y).get(x);
+        return board.get(y).getPieces().get(x);
     }
 
-    public List<List<Piece>> getBoard() {
+    public List<Rank> getBoard() {
         return new ArrayList<>(board);
     }
 }

@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.view.PieceSymbolMapper;
-
 public abstract class Piece {
 
     private Team team;
