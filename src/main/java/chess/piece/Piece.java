@@ -12,6 +12,5 @@ public abstract class Piece {
         this.team = team;
     }
 
-
-    public abstract void move(Position position);
+    public abstract boolean isMovable(Position position);
 }
