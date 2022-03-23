@@ -13,20 +13,20 @@ public enum File {
     G("g"),
     H("h");
 
-    private final String file;
+    private final String value;
 
-    File(String file) {
-        this.file = file;
+    File(String value) {
+        this.value = value;
     }
 
-    public static File of(final String file) {
+    public static File of(final String value) {
         return Arrays.stream(File.values())
-            .filter(value -> value.getFile().equals(file))
+            .filter(file -> file.getValue().equals(value))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 File 값 입니다."));
     }
 
-    public String getFile() {
-        return file;
+    public String getValue() {
+        return value;
     }
 }

@@ -13,4 +13,16 @@ public class RankTest {
         assertThat(Rank.values()).containsOnly(Rank.ONE, Rank.TWO, Rank.THREE, Rank.FOUR,
             Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT);
     }
+
+    @Test
+    @DisplayName("Rank에 1~8값이 있는지 확인한다.")
+    void containValue() {
+        assertThat(Rank.ONE.getValue()).isEqualTo("1");
+    }
+
+    @Test
+    @DisplayName("값을 이용해 Rank를 찾는다.")
+    void findRank() {
+        assertThat(Rank.of("7")).isEqualTo(Rank.SEVEN);
+    }
 }

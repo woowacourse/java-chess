@@ -17,7 +17,7 @@ public class FileTest {
     @Test
     @DisplayName("FIle에 a~h값이 있는지 확인한다.")
     void containValue() {
-        assertThat(File.A.getFile()).isEqualTo("a");
+        assertThat(File.A.getValue()).isEqualTo("a");
     }
 
     @Test
