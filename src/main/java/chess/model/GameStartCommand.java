@@ -9,19 +9,19 @@ public enum GameStartCommand {
     private final String commandLine;
     private final Consumer<Runnable> executor;
 
-    GameStartCommand(String commandLine, Consumer<Runnable> executor) {
+    GameStartCommand(final String commandLine, final Consumer<Runnable> executor) {
         this.commandLine = commandLine;
         this.executor = executor;
     }
 
-    public static GameStartCommand findCommand(String commandLine) {
+    public static GameStartCommand findCommand(final String commandLine) {
         return Arrays.stream(values())
                 .filter(gameStartCommand -> gameStartCommand.commandLine.equals(commandLine))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", commandLine)));
     }
 
-    public void execute(Runnable runnable) {
+    public void execute(final Runnable runnable) {
         executor.accept(runnable);
     }
 }

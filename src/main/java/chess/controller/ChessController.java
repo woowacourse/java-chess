@@ -9,7 +9,7 @@ import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessController {
+public final class ChessController {
     public void game() {
         OutputView.startGame();
         String commandLine = InputView.inputStartOrEndGame();
@@ -21,7 +21,7 @@ public class ChessController {
         OutputView.startGameBoard(new BoardDto(toDto(board)));
     }
 
-    private List<String> toDto(Board board) {
+    private List<String> toDto(final Board board) {
         List<String> boardDto = new ArrayList<>();
         for (Square square : board.keySet()) {
             boardDto.add(toDto(board.get(square)));
@@ -29,7 +29,7 @@ public class ChessController {
         return boardDto;
     }
 
-    private String toDto(Piece piece) {
+    private String toDto(final Piece piece) {
         String pieceDto = piece.getName().getValue();
         if (piece.isBlack()) {
             return pieceDto.toUpperCase();

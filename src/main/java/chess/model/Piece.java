@@ -5,7 +5,7 @@ public class Piece {
     private final Name name;
     private final Color color;
 
-    public Piece(Name name, Color color) {
+    public Piece(final Name name, final Color color) {
         this.name = name;
         this.color = color;
     }

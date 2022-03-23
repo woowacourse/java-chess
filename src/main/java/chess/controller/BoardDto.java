@@ -1,16 +1,17 @@
 package chess.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BoardDto {
+public final class BoardDto {
 
-    private List<String> pieces;
+    private final List<String> pieces;
 
-    public BoardDto(List<String> pieces) {
-        this.pieces = pieces;
+    public BoardDto(final List<String> pieces) {
+        this.pieces = new ArrayList<>(pieces);
     }
 
     public List<String> getPieces() {
-        return pieces;
+        return new ArrayList<>(pieces);
     }
 }

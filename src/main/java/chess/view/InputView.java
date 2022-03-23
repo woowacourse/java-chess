@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -13,7 +13,7 @@ public class InputView {
         return command;
     }
 
-    private static void checkCommandValue(String inputCommand) {
+    private static void checkCommandValue(final String inputCommand) {
         if (!inputCommand.equals("start") && !inputCommand.equals("end")) {
             throw new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", inputCommand));
         }

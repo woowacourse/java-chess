@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Board {
+public final class Board {
 
     private final Map<Square, Piece> board;
 
@@ -55,7 +55,7 @@ public class Board {
         return board.keySet();
     }
 
-    public Piece get(Square square) {
+    public Piece get(final Square square) {
         return board.get(square);
     }
 }

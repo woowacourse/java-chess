@@ -2,17 +2,17 @@ package chess.model;
 
 import java.util.Objects;
 
-public class Square {
+public final class Square {
     private final File file;
     private final Rank rank;
 
-    public Square(File file, Rank rank) {
+    public Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
