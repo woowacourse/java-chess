@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputTest {
 
-    @DisplayName("명령어 입력 시 빈 값을 입력할 경우 예외 발생")
     @Test
+    @DisplayName("명령어 입력 시 빈 값을 입력할 경우 예외 발생")
     void command_empty() {
         Enterable enterable = () -> "";
 
@@ -17,8 +17,8 @@ class InputTest {
                 .hasMessage("값을 입력해주세요!");
     }
 
-    @DisplayName("명령어 입력 시 null 값을 입력할 경우 예외 발생")
     @Test
+    @DisplayName("명령어 입력 시 null 값을 입력할 경우 예외 발생")
     void command_null() {
         Enterable enterable = () -> null;
 

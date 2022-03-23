@@ -5,13 +5,14 @@ public final class Input {
     private Input() {
     }
 
-    public static void inputCommand(final Enterable enterable) {
-        final String raw = enterable.enter();
-        checkBlank(raw);
+    public static String inputCommand(final Enterable enterable) {
+        final String command = enterable.enter();
+        checkBlank(command);
+        return command;
     }
 
-    private static void checkBlank(final String raw) {
-        if (raw == null || raw.isBlank()) {
+    private static void checkBlank(final String command) {
+        if (command == null || command.isBlank()) {
             throw new IllegalArgumentException("값을 입력해주세요!");
         }
     }
