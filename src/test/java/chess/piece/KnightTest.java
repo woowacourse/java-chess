@@ -8,7 +8,7 @@ public class KnightTest {
 
     @Test
     void createPiece() {
-        Piece piece = new Knight();
+        Piece piece = new Knight(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }

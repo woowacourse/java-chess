@@ -8,7 +8,7 @@ public class RookTest {
 
     @Test
     void createPiece() {
-        Piece piece = new Rook();
+        Piece piece = new Rook(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }

@@ -8,7 +8,7 @@ public class BishopTest {
 
     @Test
     void createPiece() {
-        Piece piece = new Bishop();
+        Piece piece = new Bishop(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }

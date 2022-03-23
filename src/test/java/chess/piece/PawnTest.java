@@ -8,7 +8,7 @@ public class PawnTest {
 
     @Test
     void createPiece() {
-        Piece piece = new Pawn();
+        Piece piece = new Pawn(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }

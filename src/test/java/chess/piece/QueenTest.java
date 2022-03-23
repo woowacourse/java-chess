@@ -8,7 +8,7 @@ public class QueenTest {
 
     @Test
     void createPiece() {
-        Piece piece = new Queen();
+        Piece piece = new Queen(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }

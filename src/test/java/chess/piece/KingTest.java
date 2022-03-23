@@ -8,7 +8,7 @@ public class KingTest {
 
     @Test
     void createPiece() {
-        Piece piece = new King();
+        Piece piece = new King(Color.WHITE);
 
         assertThat(piece).isNotNull();
     }
