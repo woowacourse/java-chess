@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,13 @@ public class Position implements Comparable<Position> {
 
     public int subtractRow(final Position position) {
         return this.row.subtract(position.row);
+    }
+
+    public boolean isPawnStartPosition(final Color color) {
+         if (color == Color.BLACK && row == Row.SEVEN) {
+             return true;
+         }
+         return color == Color.WHITE && row == Row.TWO;
     }
 
     private String createKey() {

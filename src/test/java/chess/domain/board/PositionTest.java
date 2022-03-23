@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,5 +49,17 @@ public class PositionTest {
         Position source = Position.valueOf("a1");
         Position target = Position.valueOf("b2");
         assertThat(source.subtractRow(target)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("흰 팀의 경우 pawn의 시작지점을 확인한다.")
+    void isStartPositionWhite() {
+        assertThat(Position.valueOf("a2").isPawnStartPosition(Color.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("검정 팀의 경우 pawn의 시작지점을 확인한다.")
+    void isStartPositionBlack() {
+        assertThat(Position.valueOf("a7").isPawnStartPosition(Color.BLACK)).isTrue();
     }
 }
