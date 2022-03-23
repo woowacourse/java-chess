@@ -16,4 +16,8 @@ public class Pawn extends Piece {
     public static Pawn createBlack(Position position) {
         return new Pawn(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+
+    }
 }

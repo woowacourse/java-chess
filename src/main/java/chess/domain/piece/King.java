@@ -16,4 +16,8 @@ public class King extends Piece {
     public static King createBlack(Position position) {
         return new King(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+
+    }
 }

@@ -16,4 +16,8 @@ public class Knight extends Piece {
     public static Knight createBlack(Position position) {
         return new Knight(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+        piece.isBlank() || piece.isEnemy();
+    }
 }

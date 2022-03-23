@@ -7,4 +7,8 @@ public class Blank extends Piece {
     public Blank(Position position) {
         super(position, SIGNATURE);
     }
+
+    public void move(Piece piece) {
+        throw new IllegalStateException("빈 칸은 이동할 수 없습니다.");
+    }
 }

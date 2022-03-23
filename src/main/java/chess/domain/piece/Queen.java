@@ -16,4 +16,8 @@ public class Queen extends Piece {
     public static Queen createBlack(Position position) {
         return new Queen(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+
+    }
 }

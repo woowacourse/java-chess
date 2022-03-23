@@ -16,4 +16,8 @@ public class Rook extends Piece {
     public static Rook createBlack(Position position) {
         return new Rook(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+
+    }
 }

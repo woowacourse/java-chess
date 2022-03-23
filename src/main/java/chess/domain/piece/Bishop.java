@@ -16,4 +16,8 @@ public class Bishop extends Piece {
     public static Bishop createBlack(Position position) {
         return new Bishop(position, BLACK_SIGNATURE);
     }
+
+    public void move(Piece piece) {
+
+    }
 }

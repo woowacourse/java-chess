@@ -13,4 +13,6 @@ public abstract class Piece {
     public String getSignature() {
         return signature;
     }
+
+    public abstract void move(Piece piece);
 }
