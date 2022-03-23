@@ -5,6 +5,11 @@ public final class Pawn extends Piece {
     private static final String PAWN_NAME = "P";
 
     public Pawn(Color color) {
-        super(color, PAWN_NAME);
+        super(color, PAWN_NAME, null);
+    }
+
+    @Override
+    public boolean isSingleMove() {
+        return true;
     }
 }
