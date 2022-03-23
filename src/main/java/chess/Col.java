@@ -40,7 +40,7 @@ public enum Col {
         return DOWN;
     }
 
-    public int getDiff(Col col) {
+    public int getDistance(Col col) {
         return Math.abs(this.value - col.value);
     }
 }

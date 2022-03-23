@@ -24,6 +24,10 @@ public enum Row {
         return value;
     }
 
+    public int getDistance(Row other) {
+        return Math.abs(this.value - other.value);
+    }
+
     public static List<Row> orderedValues() {
         return Arrays.stream(values())
             .sorted(Comparator.<Row>comparingInt(row -> row.value).reversed())

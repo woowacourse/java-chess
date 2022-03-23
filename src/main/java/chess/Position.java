@@ -12,14 +12,6 @@ public class Position {
         this.col = col;
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Col getCol() {
-        return col;
-    }
-
     public boolean isSameRow(Position other) {
         return this.row == other.row;
     }
@@ -33,18 +25,31 @@ public class Position {
     }
 
     public boolean isCross(Position other) {
-        int colDiff = Math.abs(col.getValue() - other.col.getValue());
-        int rowDiff = Math.abs(row.getValue() - other.row.getValue());
-
-        return colDiff == rowDiff;
+        return getDistanceOfCol(other) == getDistanceOfRow(other);
     }
 
-    public int getDistance(Position other) {
-        return col.getDiff(other.col);
+    public boolean isAdjacent(Position other) {
+        if (isCross(other)) {
+            return getDistanceOfCol(other) == 1 && getDistanceOfRow(other) == 1;
+        }
+
+        if (isSameRowOrCol(other)) {
+            return getDistanceOfCol(other) == 1 || getDistanceOfRow(other) == 1;
+        }
+
+        return false;
     }
 
-    public Direction getDirection(Position to) {
-        return col.getDirection(to.col);
+    public int getDistanceOfCol(Position other) {
+        return col.getDistance(other.col);
+    }
+
+    private int getDistanceOfRow(Position other) {
+        return row.getDistance(other.row);
+    }
+
+    public Direction getDirectionTo(Position other) {
+        return col.getDirection(other.col);
     }
 
     @Override

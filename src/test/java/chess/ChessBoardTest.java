@@ -36,7 +36,7 @@ class ChessBoardTest {
             knight(Color.BLACK, new Position(B, EIGHT)),
             new Bishop(Color.BLACK, new Position(C, EIGHT)),
             new Queen(Color.BLACK, new Position(D, EIGHT)),
-            king(Color.BLACK, new Position(E, EIGHT)),
+            new King(Color.BLACK, new Position(E, EIGHT)),
             new Bishop(Color.BLACK, new Position(F, EIGHT)),
             knight(Color.BLACK, new Position(G, EIGHT)),
             new Rook(Color.BLACK, new Position(H, EIGHT)),
@@ -52,7 +52,7 @@ class ChessBoardTest {
             knight(Color.WHITE, new Position(B, ONE)),
             new Bishop(Color.WHITE, new Position(C, ONE)),
             new Queen(Color.WHITE, new Position(D, ONE)),
-            king(Color.WHITE, new Position(E, ONE)),
+            new King(Color.WHITE, new Position(E, ONE)),
             new Bishop(Color.WHITE, new Position(F, ONE)),
             knight(Color.WHITE, new Position(G, ONE)),
             new Rook(Color.WHITE, new Position(H, ONE)),
@@ -297,6 +297,52 @@ class ChessBoardTest {
             Arguments.of(new Position(D, ONE), new Position(D, FOUR)),
             Arguments.of(new Position(D, ONE), new Position(F, THREE)),
             Arguments.of(new Position(D, ONE), new Position(A, FOUR))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidMoveKing")
+    @DisplayName("킹이 2칸 이상 이동 시 예외 발생")
+    void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)));
+
+        assertAll(()->{
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(new King(Color.BLACK, from));
+        });
+    }
+
+    private static Stream<Arguments> provideInvalidMoveKing() {
+        return Stream.of(
+            Arguments.of(new Position(E, FIVE), new Position(E, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(G, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(C, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(D, THREE))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValidMoveKing")
+    @DisplayName("킹은 인접한 칸으로만 이동할 수 있다.")
+    void moveKingOneSquareToAdjacent(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(new King(Color.BLACK, to));
+    }
+
+    private static Stream<Arguments> provideValidMoveKing() {
+        return Stream.of(
+            Arguments.of(new Position(E, FIVE), new Position(E, FOUR)),
+            Arguments.of(new Position(E, FIVE), new Position(F, SIX)),
+            Arguments.of(new Position(E, FIVE), new Position(F, FIVE)),
+            Arguments.of(new Position(E, FIVE), new Position(F, FOUR)),
+            Arguments.of(new Position(E, FIVE), new Position(D, FOUR)),
+            Arguments.of(new Position(E, FIVE), new Position(D, FIVE)),
+            Arguments.of(new Position(E, FIVE), new Position(D, SIX)),
+            Arguments.of(new Position(E, FIVE), new Position(E, SIX))
         );
     }
 }
