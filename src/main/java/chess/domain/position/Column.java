@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Column {
+
     A,
     B,
     C,

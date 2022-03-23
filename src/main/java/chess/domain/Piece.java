@@ -2,10 +2,10 @@ package chess.domain;
 
 import chess.domain.pieces.Type;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public final class Piece {
+
     private final Color color;
     private final Type type;
 

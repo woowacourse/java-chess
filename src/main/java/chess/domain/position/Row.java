@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Row {
+
     ONE(1),
     TWO(2),
     THREE(3),

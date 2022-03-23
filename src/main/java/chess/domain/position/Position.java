@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Objects;
 
 public final class Position {
+
     private final Column column;
     private final Row row;
 
