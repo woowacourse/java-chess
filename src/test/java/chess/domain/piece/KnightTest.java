@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
-import java.util.Arrays;
+import chess.domain.direction.Direction;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
-    private Knight knight;
+    private Piece knight;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +33,7 @@ class KnightTest {
     void findRoute() {
         Position startPosition = new Position('b', '1');
         Position targetPosition = new Position('a', '3');
-        List<Position> expected = Collections.singletonList(targetPosition);
+        List<Direction> expected = Collections.singletonList(Direction.UP_UP_LEFT);
 
         assertThat(knight.findRoute(startPosition, targetPosition)).isEqualTo(expected);
     }

@@ -1,6 +1,9 @@
 package chess.domain.direction;
 
 import chess.domain.Position;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public enum Direction {
 
@@ -37,23 +40,38 @@ public enum Direction {
         return position.move(columnAmount, rowAmount);
     }
 
-    public boolean isDirection(Position position, Position wantPosition, boolean singleMovable) {
+    public List<Direction> route(Position position, Position targetPosition, boolean singleMovable) {
+        if (!isMovable(position, targetPosition, singleMovable)) {
+            return Collections.emptyList();
+        }
+        return calculateRoute(position, targetPosition, new ArrayList<>());
+    }
+
+    private boolean isMovable(Position position, Position wantPosition, boolean singleMovable) {
         if (position.equals(wantPosition)) {
             return false;
         }
         if (singleMovable) {
             return position.isMovable(columnAmount, rowAmount) && wantPosition.equals(move(position));
         }
-        return isMovableToWantPosition(position, wantPosition);
+        return isMovableByMultipleMovable(position, wantPosition);
     }
 
-    private boolean isMovableToWantPosition(Position position, Position wantPosition) {
+    private boolean isMovableByMultipleMovable(Position position, Position wantPosition) {
         if (position.equals(wantPosition)) {
             return true;
         }
         if (position.isMovable(columnAmount, rowAmount)) {
-            return isMovableToWantPosition(move(position), wantPosition);
+            return isMovableByMultipleMovable(move(position), wantPosition);
         }
         return false;
+    }
+
+    private List<Direction> calculateRoute(Position position, Position targetPosition, List<Direction> route) {
+        if (position.equals(targetPosition)) {
+            return route;
+        }
+        route.add(this);
+        return calculateRoute(move(position), targetPosition, route);
     }
 }

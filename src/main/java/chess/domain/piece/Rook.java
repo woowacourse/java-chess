@@ -16,7 +16,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean isSingleMove() {
+    public boolean isSingleMovable() {
         return false;
     }
 }

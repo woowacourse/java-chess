@@ -17,7 +17,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean isSingleMove() {
+    public boolean isSingleMovable() {
         return false;
     }
 }
