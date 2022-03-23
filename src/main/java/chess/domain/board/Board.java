@@ -16,8 +16,12 @@ public class Board {
 
     private final List<Piece> pieces;
 
+    private Board(final List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
     public Board() {
-        pieces = INITIAL_PIECES_RANKS.stream()
+        this.pieces = INITIAL_PIECES_RANKS.stream()
                 .map(this::generateOf)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -41,7 +45,25 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
     }
 
-    public void move(final Position currentPosition, final Position movingPosition) {
+    public Board move(final Position sourcePosition, final Position targetPosition) {
+        final Piece sourcePiece = findPieceInPosition(sourcePosition);
+        if (hasPieceInPosition(targetPosition)) {
+            return moveToNotEmptyPosition(sourcePiece, targetPosition);
+        }
+        return moveToEmptyPosition(sourcePiece, targetPosition);
+    }
 
+    private Board moveToNotEmptyPosition(final Piece sourcePiece, final Position targetPosition) {
+        final Piece targetPositionPiece = findPieceInPosition(targetPosition);
+        if (sourcePiece.isSameTeam(targetPositionPiece)) {
+            throw new IllegalArgumentException("이동하려는 위치에 같은 팀 기물이 있습니다.");
+        }
+        pieces.remove(targetPositionPiece);
+        return moveToEmptyPosition(sourcePiece, targetPosition);
+    }
+
+    private Board moveToEmptyPosition(final Piece sourcePiece, final Position targetPosition) {
+        pieces.set(pieces.indexOf(sourcePiece), sourcePiece.move(targetPosition));
+        return new Board(pieces);
     }
 }
