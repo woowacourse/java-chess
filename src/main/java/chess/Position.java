@@ -11,6 +11,19 @@ public class Position {
         this.rank = rank;
     }
 
+
+    public boolean isHorizontal(Position position) {
+        return position.isSameRank(this.rank);
+    }
+
+    public boolean isVertical(Position position) {
+        return false;
+    }
+
+    private boolean isSameRank(Rank rank) {
+        return this.rank == rank;
+    }
+
     public File getFile() {
         return file;
     }
