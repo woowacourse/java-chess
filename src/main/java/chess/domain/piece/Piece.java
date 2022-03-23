@@ -17,11 +17,12 @@ public abstract class Piece {
     }
 
     public List<Direction> findRoute(Position startPosition, Position targetPosition) {
-        return directions.stream()
-                .map(direction -> direction.route(startPosition, targetPosition, isSingleMovable()))
-                .filter(route -> !route.isEmpty())
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("해당 기물이 갈 수 없는 지점입니다."));
+        return null;
+//        return directions.stream()
+//                .map(direction -> direction.route(startPosition, targetPosition, isSingleMovable()))
+//                .filter(route -> !route.isEmpty())
+//                .findAny()
+//                .orElseThrow(() -> new IllegalStateException("해당 기물이 갈 수 없는 지점입니다."));
     }
 
     public final String convertedName() {
