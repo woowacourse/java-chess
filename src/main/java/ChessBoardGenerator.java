@@ -31,6 +31,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         createInitRook(board, player);
         createInitKnight(board, player);
         createInitBishop(board, player);
+        createInitQueen(board, player);
     }
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
@@ -72,5 +73,13 @@ public class ChessBoardGenerator implements BoardGenerator {
         }
         board.put(new Position(Row.ONE, Column.C), new Bishop(Player.WHITE));
         board.put(new Position(Row.ONE, Column.F), new Bishop(Player.WHITE));
+    }
+
+    private void createInitQueen(Map<Position, Piece> board, Player player) {
+        if (player == Player.BLACK){
+            board.put(new Position(Row.EIGHT, Column.D), new Queen(Player.BLACK));
+            return;
+        }
+        board.put(new Position(Row.ONE, Column.D), new Queen(Player.WHITE));
     }
 }
