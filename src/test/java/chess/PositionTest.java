@@ -25,4 +25,13 @@ class PositionTest {
 
         assertThat(source.isVertical(target)).isTrue();
     }
+
+    @Test
+    @DisplayName("position끼리 대각선이면 true를 반환한다.")
+    void isDiagonal() {
+        Position source = new Position(File.A, Rank.ONE);
+        Position target = new Position(File.F, Rank.SIX);
+
+        assertThat(source.isDiagonal(target)).isTrue();
+    }
 }

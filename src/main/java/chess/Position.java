@@ -12,19 +12,15 @@ public class Position {
     }
 
     public boolean isHorizontal(Position position) {
-        return position.isSameRank(this.rank);
+        return this.rank == position.rank;
     }
 
     public boolean isVertical(Position position) {
-        return position.isSameFile(this.file);
+        return this.file == position.file;
     }
 
-    private boolean isSameRank(Rank rank) {
-        return this.rank == rank;
-    }
-
-    private boolean isSameFile(File file) {
-        return this.file == file;
+    public boolean isDiagonal(Position position) {
+        return rank.absMinus(position.rank) == file.absMinus(position.file);
     }
 
     public File getFile() {

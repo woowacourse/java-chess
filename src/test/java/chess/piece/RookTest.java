@@ -18,5 +18,4 @@ class RookTest {
 
         assertThat(rook.isMovable(new Position(File.F, Rank.ONE))).isTrue();
     }
-
 }

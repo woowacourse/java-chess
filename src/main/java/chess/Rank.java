@@ -15,4 +15,8 @@ public enum Rank {
     Rank(int index) {
         this.index = index;
     }
+
+    public int absMinus(Rank rank) {
+        return Math.abs(index - rank.index);
+    }
 }

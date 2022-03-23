@@ -1,6 +1,8 @@
 package chess;
 
 
+import chess.piece.Piece;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +18,16 @@ public class Board {
     public static Board create() {
         Map<Position, String> board = new LinkedHashMap<>(64);
         for (Rank rank : Rank.values()) {
-            for (int i=0; i<8; i++) {
-                board.put(new Position(File.valueOf(i), rank), checkPiece(rank, i));
-            }
+            initPosition(board, rank);
         }
 
         return new Board(board);
+    }
+
+    private static void initPosition(Map<Position, String> board, Rank rank) {
+        for (int i=0; i<8; i++) {
+            board.put(new Position(File.valueOf(i+1), rank), checkPiece(rank, i+1));
+        }
     }
 
     private static String checkPiece(Rank rank, int i) {
@@ -42,6 +48,13 @@ public class Board {
         return ".";
     }
 
+//    public void move(Position source, Position target){
+//        Piece piece = board.get(source);
+//        if (piece.isMovable(target) && board.hasNotBlock(source, target)) {
+//
+//        }
+//    }
+//
     public String getPiece(Position position) {
         return board.get(position);
     }
