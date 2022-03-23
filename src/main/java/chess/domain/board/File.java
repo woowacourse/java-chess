@@ -15,17 +15,21 @@ public enum File {
     ;
 
     private final String letter;
-    private final int value;
+    private final int number;
 
-    File(String letter, int value) {
+    File(String letter, int number) {
         this.letter = letter;
-        this.value = value;
+        this.number = number;
     }
 
-    public static File valueOf(int value) {
+    public static File letterOf(String letter) {
         return Arrays.stream(File.values())
-                .filter(file -> file.value == value)
+                .filter(file -> file.letter.equals(letter))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 값을 찾을 수 없습니다."));
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
