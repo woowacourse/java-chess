@@ -1,8 +1,8 @@
-package chess.domain;
+package chess;
 
-import chess.domain.piece.Pieces;
-import chess.domain.view.InputView;
-import chess.domain.view.OutputView;
+import chess.domain.ChessGame;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
@@ -13,9 +13,9 @@ public class Application {
 
         String startOrEndInput = inputView.getStartOrEndInput(outputView);
         if (startOrEndInput.equals("start")) {
-            Board board = new Board(new Pieces());
+            ChessGame game = new ChessGame();
+            outputView.printBoard(game.getBoard());
         }
-
         inputView.terminate();
     }
 }

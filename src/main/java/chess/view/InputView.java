@@ -1,4 +1,4 @@
-package chess.domain.view;
+package chess.view;
 
 import java.util.Scanner;
 
@@ -14,7 +14,6 @@ public class InputView {
             String input = scanner.nextLine();
             validateStartOrEndInput(input);
             return input;
-
         } catch (IllegalArgumentException e) {
             return getStartOrEndInput(outputView);
         }

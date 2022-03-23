@@ -3,12 +3,12 @@ package chess.domain;
 import java.util.Locale;
 
 public enum Color {
-    BLACK, WHITE;
+    BLACK, WHITE, NONE;
 
-    public String correctSignature(String name) {
-        if(this == BLACK) {
-            return name.toUpperCase(Locale.ROOT);
+    public String correctSignature(String signature) {
+        if (this == BLACK) {
+            return signature.toUpperCase(Locale.ROOT);
         }
-        return name;
+        return signature;
     }
 }

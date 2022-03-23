@@ -8,4 +8,12 @@ public final class Position {
         this.positionX = positionX;
         this.positionY = positionY;
     }
+
+    public PositionX getPositionX() {
+        return positionX;
+    }
+
+    public PositionY getPositionY() {
+        return positionY;
+    }
 }

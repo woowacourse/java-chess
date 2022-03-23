@@ -1,11 +1,13 @@
 package chess.domain;
 
-import chess.domain.piece.*;
-
 public class Board {
-    private final Pieces pieces;
+    private final Grid[][] board;
 
-    public Board(Pieces pieces) {
-        this.pieces = pieces;
+    public Board(Grid[][] board) {
+        this.board = board;
+    }
+
+    public Grid[][] getBoard() {
+        return board;
     }
 }
