@@ -38,4 +38,8 @@ public class Position {
         }
         return position;
     }
+
+    public static Position valueOf(final Abscissa abscissa, final Ordinate ordinate) {
+        return valueOf(makeKey(abscissa,ordinate));
+    }
 }
