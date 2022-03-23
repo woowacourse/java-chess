@@ -26,12 +26,11 @@ public abstract class Piece {
 
     abstract protected void attack(Position enemyPosition);
 
+    abstract public boolean isKing();
+
     abstract public String display();
 
     public Position getPosition() {
         return position;
     }
-
-
-
 }

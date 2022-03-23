@@ -36,6 +36,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String display() {
         if (color == Color.BLACK) {
             return BLACK_DISPLAY;
