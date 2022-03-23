@@ -1,13 +1,12 @@
 package chess;
 
-import chess.piece.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 import static chess.piece.Position.of;
+
+import chess.piece.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
