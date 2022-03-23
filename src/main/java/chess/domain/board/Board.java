@@ -64,6 +64,8 @@ public class Board {
     public void move(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
 
+        sourcePiece.checkValidMove(this, new MovingOrder(source, target));
+
         squares.replace(target, sourcePiece);
         squares.replace(source, new EmptyPiece());
     }
