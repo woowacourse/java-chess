@@ -31,10 +31,10 @@ class PieceFactoryTest {
     @Test
     void createNight_withBlackColor() {
         // given
-        Night blackNight = PieceFactory.createNight(PieceColor.BLACK);
+        Knight blackKnight = PieceFactory.createNight(PieceColor.BLACK);
 
         // when & then
-        assertThat(blackNight).isInstanceOf(Night.class);
+        assertThat(blackKnight).isInstanceOf(Knight.class);
     }
 
     @DisplayName("검정색 진영의 Bishop 인스턴스를 생성한다.")

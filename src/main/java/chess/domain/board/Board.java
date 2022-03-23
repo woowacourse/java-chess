@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Board {
-    private final Map<Position, Piece> value;
+    private final Map<Position, AbstractPiece> value;
 
     private Board(Map<Position, Piece> value) {
         this.value = value;
@@ -21,25 +21,26 @@ public class Board {
         return new Board(initBoard());
     }
 
-    private static Map<Position, Piece> initBoard() {
-        Map<Position, Piece> value = new HashMap<>();
+    private static Map<Position, AbstractPiece> initBoard() {
+        Map<Position, AbstractPiece> value = new HashMap<>();
 
-        initializeSpecialPieces(value, YAxis.ONE, PieceColor.WHITE);
-        initializeSpecialPieces(value, YAxis.EIGHT, PieceColor.BLACK);
+        initializeSpecialPieces(value, YAxis.ONE, PieceColor.BLACK);
+        initializeSpecialPieces(value, YAxis.EIGHT, PieceColor.WHITE);
 
-        initializePawns(value, YAxis.TWO, PieceColor.WHITE);
+        initializePawns(value, YAxis.TWO, PieceColor.BLACK);
         initializePawns(value, YAxis.SEVEN, PieceColor.WHITE);
 
         return value;
     }
 
-    private static void initializePawns(Map<Position, Piece> value, YAxis yAxis, PieceColor pieceColor) {
+    private static void initializePawns(Map<Position, AbstractPiece> value, YAxis yAxis, PieceColor pieceColor) {
         for (XAxis xAxis : XAxis.values()) {
             value.put(Position.from(xAxis, yAxis), PieceFactory.createPawn(pieceColor));
         }
     }
 
-    private static void initializeSpecialPieces(Map<Position, Piece> value, YAxis yAxis, PieceColor pieceColor) {
+    private static void initializeSpecialPieces(Map<Position, AbstractPiece> value, YAxis yAxis,
+                                                PieceColor pieceColor) {
         value.put(Position.from(XAxis.A, yAxis), PieceFactory.createRook(pieceColor));
         value.put(Position.from(XAxis.B, yAxis), PieceFactory.createNight(pieceColor));
         value.put(Position.from(XAxis.C, yAxis), PieceFactory.createBishop(pieceColor));
@@ -50,7 +51,7 @@ public class Board {
         value.put(Position.from(XAxis.H, yAxis), PieceFactory.createRook(pieceColor));
     }
 
-    public Optional<Piece> find(Position position) {
+    public Optional<AbstractPiece> find(Position position) {
         return Optional.ofNullable(value.get(position));
     }
 }

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public abstract class AbstractPiece implements Piece {
+public abstract class AbstractPiece {
 
     private final PieceColor pieceColor;
 

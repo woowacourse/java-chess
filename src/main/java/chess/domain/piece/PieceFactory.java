@@ -10,8 +10,8 @@ public class PieceFactory {
         return new Rook(pieceColor);
     }
 
-    public static Night createNight(PieceColor pieceColor) {
-        return new Night(pieceColor);
+    public static Knight createNight(PieceColor pieceColor) {
+        return new Knight(pieceColor);
     }
 
     public static Bishop createBishop(PieceColor pieceColor) {

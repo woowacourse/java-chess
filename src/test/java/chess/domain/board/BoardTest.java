@@ -2,8 +2,8 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -30,7 +30,7 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
+        Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
         Class<Pawn> expected = Pawn.class;
 
         // when & then
@@ -44,8 +44,8 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
-        Optional<Piece> expected = Optional.empty();
+        Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
+        Optional<AbstractPiece> expected = Optional.empty();
 
         // when & then
         assertThat(actual).isEqualTo(expected);
