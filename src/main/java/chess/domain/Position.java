@@ -42,4 +42,20 @@ public class Position {
     public static Position valueOf(final Abscissa abscissa, final Ordinate ordinate) {
         return valueOf(makeKey(abscissa,ordinate));
     }
+
+    public boolean isSameAbscissa(Position position) {
+        return abscissa == position.abscissa;
+    }
+
+    public boolean isSameOrdinate(Position position) {
+        return ordinate == position.ordinate;
+    }
+
+    public int getOrdinateDifference(Position position) {
+        return ordinate.getCoordinate() - position.ordinate.getCoordinate();
+    }
+
+    public int getAbscissaDifference(Position position) {
+        return abscissa.getCoordinate() - position.abscissa.getCoordinate();
+    }
 }

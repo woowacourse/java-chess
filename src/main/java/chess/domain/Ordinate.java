@@ -20,4 +20,8 @@ public enum Ordinate {
     public String getValue() {
         return value;
     }
+
+    public int getCoordinate() {
+        return Integer.parseInt(value);
+    }
 }
