@@ -40,9 +40,11 @@ public abstract class Piece {
                 .apply(teamColor, Position.of(file, rank));
     }
 
-    abstract String getSymbol();
-
     public final boolean hasPosition(final File file, final Rank rank) {
         return position == Position.of(file, rank);
+    }
+
+    public final boolean isBlackTeam() {
+        return teamColor.isBlack();
     }
 }
