@@ -1,8 +1,11 @@
 package chess;
 
+import static chess.Camp.*;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class ChessBoard {
@@ -18,7 +21,7 @@ public final class ChessBoard {
             new ChessBoardPosition(ChessBoardColumn.E, ChessBoardRow.ONE);
     private static final ChessBoardRow PAWN_INITIAL_ROW = ChessBoardRow.TWO;
 
-    private Map<ChessBoardPosition, Piece> value;
+    private final Map<ChessBoardPosition, Piece> value;
 
     public ChessBoard() {
         this.value = new HashMap<>();
@@ -32,16 +35,17 @@ public final class ChessBoard {
         initializePawn();
     }
 
-    private void initializeFourPiecesOf(ChessBoardPosition pieceInitialPosition, Supplier<Piece> pieceSupplier) {
-        value.put(pieceInitialPosition, pieceSupplier.get());
-        value.put(pieceInitialPosition.flipHorizontally(), pieceSupplier.get());
-        value.put(pieceInitialPosition.flipVertically(), pieceSupplier.get());
-        value.put(pieceInitialPosition.flipDiagonally(), pieceSupplier.get());
+    private void initializeFourPiecesOf(ChessBoardPosition pieceInitialPosition,
+                                         Function<Camp, Piece> pieceConstructor) {
+        value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
+        value.put(pieceInitialPosition.flipHorizontally(), pieceConstructor.apply(WHITE));
+        value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
+        value.put(pieceInitialPosition.flipDiagonally(), pieceConstructor.apply(BLACK));
     }
 
-    private void initializeTwoPiecesOf(ChessBoardPosition pieceInitialPosition, Supplier<Piece> pieceSupplier) {
-        value.put(pieceInitialPosition, pieceSupplier.get());
-        value.put(pieceInitialPosition.flipVertically(), pieceSupplier.get());
+    private void initializeTwoPiecesOf(ChessBoardPosition pieceInitialPosition, Function<Camp, Piece> pieceConstructor) {
+        value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
+        value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
     }
 
     private void initializePawn() {

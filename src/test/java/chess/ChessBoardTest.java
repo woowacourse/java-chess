@@ -95,6 +95,30 @@ public class ChessBoardTest {
                 .isInstanceOf(Pawn.class);
     }
 
+    @MethodSource("provideWhiteRow")
+    @ParameterizedTest(name = "{0}행의 모든 말은 white이다.")
+    void check_camp_white(ChessBoardRow row) {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
+        for (ChessBoardColumn column : ChessBoardColumn.values()) {
+            Piece piece = boardValue.get(new ChessBoardPosition(column, row));
+            assertThat(piece.isBlack()).isFalse();
+        }
+    }
+
+    @MethodSource("provideBlackRow")
+    @ParameterizedTest(name = "{0}행의 모든 말은 black이다.")
+    void check_camp_black(ChessBoardRow row) {
+        ChessBoard chessBoard = new ChessBoard();
+
+        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
+        for (ChessBoardColumn column : ChessBoardColumn.values()) {
+            Piece piece = boardValue.get(new ChessBoardPosition(column, row));
+            assertThat(piece.isBlack()).isTrue();
+        }
+    }
+
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.ONE)),
@@ -154,6 +178,20 @@ public class ChessBoardTest {
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.F, ChessBoardRow.SEVEN)),
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.G, ChessBoardRow.SEVEN)),
                 Arguments.of(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.SEVEN))
+        );
+    }
+
+    private static Stream<Arguments> provideWhiteRow() {
+        return Stream.of(
+                Arguments.of(ChessBoardRow.ONE),
+                Arguments.of(ChessBoardRow.TWO)
+        );
+    }
+
+    private static Stream<Arguments> provideBlackRow() {
+        return Stream.of(
+                Arguments.of(ChessBoardRow.SEVEN),
+                Arguments.of(ChessBoardRow.EIGHT)
         );
     }
 }
