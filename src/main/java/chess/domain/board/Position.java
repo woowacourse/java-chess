@@ -26,7 +26,7 @@ public class Position {
 
     public static Position of(final File file, final Rank rank) {
         final PositionKey positionKey = new PositionKey(file, rank);
-        return cache.computeIfAbsent(positionKey, ignored -> cache.put(positionKey, new Position(file, rank)));
+        return cache.computeIfAbsent(positionKey, ignored -> new Position(file, rank));
     }
 
     public static Position from(final String positionValue) {
