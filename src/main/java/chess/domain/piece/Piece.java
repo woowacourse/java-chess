@@ -10,9 +10,21 @@ public abstract class Piece {
         this.signature = signature;
     }
 
+    public abstract void move(Piece piece);
+
+    public boolean isBlank() {
+        return false;
+    }
+
+    public boolean isEnemy(String signature) {
+        return Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(signature.charAt(0));
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
     public String getSignature() {
         return signature;
     }
-
-    public abstract void move(Piece piece);
 }
