@@ -29,5 +29,9 @@ public abstract class Piece {
         return color.convertToCase(name);
     }
 
+    public final boolean isSameColor(Piece piece) {
+        return this.color == piece.color;
+    }
+
     abstract boolean isSingleMovable();
 }
