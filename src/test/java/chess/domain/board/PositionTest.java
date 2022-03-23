@@ -62,4 +62,10 @@ public class PositionTest {
     void isStartPositionBlack() {
         assertThat(Position.valueOf("a7").isPawnStartPosition(Color.BLACK)).isTrue();
     }
+
+    @Test
+    @DisplayName("Position을 이동한다.")
+    void move() {
+        assertThat(Position.valueOf("a7").move(0, -1)).isEqualTo(Position.valueOf("a6"));
+    }
 }

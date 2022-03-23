@@ -58,6 +58,12 @@ public class Position implements Comparable<Position> {
          return color == Color.WHITE && row == Row.TWO;
     }
 
+    public Position move(int horizon, int vertical) {
+        String column = this.column.move(horizon).getName();
+        int row = this.row.move(vertical).getValue();
+        return Position.valueOf(column + row);
+    }
+
     private String createKey() {
         return column.getName() + row.getValue();
     }
