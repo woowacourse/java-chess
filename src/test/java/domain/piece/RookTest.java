@@ -14,7 +14,7 @@ public class RookTest {
 
     @Test
     @DisplayName("Rook 은 상하좌우로 이동할 수 있다.")
-    void moveRookOneSpace() {
+    void moveRookUpDownRightLeft() {
         Piece piece = new Rook(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
         Position target = new Position(Row.THREE, Column.B);
