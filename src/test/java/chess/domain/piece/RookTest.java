@@ -23,8 +23,8 @@ class RookTest {
     void setUp() {
         rook = new Rook(Color.WHITE, new Position('c', '3'));
 
-        Piece whietePiece = new Rook(WHITE, new Position('a', '3'));
-        Piece darkPiece = new Rook(BLACK, new Position('c', '3'));
+        Piece whietePiece = new Rook(WHITE, new Position('c', '5'));
+        Piece darkPiece = new Rook(BLACK, new Position('e', '3'));
         chessBoard = new ChessBoard(Map.of(
                 whietePiece.getPosition(), whietePiece,
                 darkPiece.getPosition(), darkPiece));
@@ -42,7 +42,7 @@ class RookTest {
     void moveException(char row, char col) {
         Position movePosition = new Position(row, col);
 
-        assertThatThrownBy(() -> rook.move(movePosition))
+        assertThatThrownBy(() -> rook.move(movePosition, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("룩은 상하좌우 방향으로만 움직일 수 있습니다.");
     }
@@ -50,12 +50,10 @@ class RookTest {
     @Test
     @DisplayName("해당 위치에 같은 색상의 기물 존재시 예외발생")
     void moveExceptionByExistEqualsColorPiece() {
-        Position position = new Position('a', '3');
+        Position position = new Position('c', '5');
 
-//        assertThatThrownBy(() -> rook.move(position, chessBoard))
-//                .isInstanceOf(IllegalStateException.class)
-//                .hasMessage("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
+        assertThatThrownBy(() -> rook.move(position, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("해당 위치에 같은 색상의 기물이 존재하여 움직일 수 없습니다.");
     }
-
-
 }
