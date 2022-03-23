@@ -16,7 +16,15 @@ public class Command {
         }
     }
 
-    public boolean isMove() {
-        return menu.isMove();
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Position getBeforePosition() {
+        return beforePosition;
+    }
+
+    public Position getAfterPosition() {
+        return afterPosition;
     }
 }

@@ -9,13 +9,13 @@ public class InputView {
     private InputView() {
     }
 
-    public static Menu inputMenu() {
+    public static Command inputCommand() {
         try {
-            String input = scanner.nextLine();
-            return Menu.of(input);
+            return new Command(scanner.nextLine());
+
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return inputMenu();
+            return inputCommand();
         }
     }
 }
