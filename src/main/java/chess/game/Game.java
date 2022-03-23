@@ -1,6 +1,7 @@
 package chess.game;
 
 import chess.board.Point;
+import chess.controller.api.Request;
 import chess.piece.Piece;
 
 import java.util.Map;
@@ -13,8 +14,9 @@ public class Game {
         state = new Ready();
     }
 
-    public void execute(Command command) {
-        state = command.execute(state);
+    public void execute(Request request) {
+        Command command = Command.find(request.getCommand());
+        state = command.execute(state, request.getArguments());
     }
 
     public boolean isRunnable() {

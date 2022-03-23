@@ -1,19 +1,30 @@
 package chess.game;
 
-import java.util.function.Function;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiFunction;
 
 public enum Command {
 
-    START(GameState::start),
-    FINISH(GameState::finish);
+    START("start", (GameState state, List<String> ignored) -> state.start()),
+    FINISH("end", (GameState state, List<String> ignored) -> state.finish());
 
-    private final Function<GameState, GameState> function;
+    private final String input;
+    private final BiFunction<GameState, List<String>, GameState> executor;
 
-    Command(Function<GameState, GameState> function) {
-        this.function = function;
+    Command(String input, BiFunction<GameState, List<String>, GameState> executor) {
+        this.input = input;
+        this.executor = executor;
     }
 
-    public GameState execute(GameState state) {
-        return this.function.apply(state);
+    public static Command find(String input) {
+        return Arrays.stream(values())
+                .filter(value -> value.input.equals(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다."));
+    }
+
+    public GameState execute(GameState state, List<String> arguments) {
+        return this.executor.apply(state, arguments);
     }
 }

@@ -1,5 +1,6 @@
 package chess.game;
 
+import chess.controller.api.Request;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class GameTest {
     void testStartCommand() {
         Game game = new Game();
 
-        game.execute(Command.START);
+        game.execute(Request.of("start"));
 
         assertThat(game.isRunnable()).isTrue();
     }
@@ -36,7 +37,7 @@ class GameTest {
     @DisplayName("게임 종료 명령 후에 게임은 진행은 불가능하다.")
     void testFinishCommand() {
         Game game = new Game();
-        game.execute(Command.FINISH);
+        game.execute(Request.of("end"));
         assertThat(game.isRunnable()).isFalse();
     }
 }
