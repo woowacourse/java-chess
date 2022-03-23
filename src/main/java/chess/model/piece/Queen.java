@@ -10,7 +10,6 @@ public final class Queen extends Piece {
         super(color, square);
     }
 
-
     @Override
     public boolean movable(Piece targetPiece) {
         Square nowSquare;
