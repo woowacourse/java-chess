@@ -66,7 +66,7 @@ public class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (this.row.getValue() == position.row.getValue()) {
-            return position.column.getName().charAt(0) - this.column.getName().charAt(0);
+            return position.column.getValue() - this.column.getValue();
         }
         return position.row.getValue() - this.row.getValue();
     }

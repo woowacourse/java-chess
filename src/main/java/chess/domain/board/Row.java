@@ -13,8 +13,12 @@ public enum Row {
 
     private final int value;
 
-    Row(int value) {
+    Row(final int value) {
         this.value = value;
+    }
+
+    public int subtract(final Row row) {
+        return row.value - this.value;
     }
 
     public int getValue() {
