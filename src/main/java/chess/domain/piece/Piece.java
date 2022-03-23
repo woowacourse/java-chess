@@ -4,6 +4,8 @@ import chess.domain.piece.position.Position;
 
 public abstract class Piece {
 
+    protected static final String INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE = "이동할 수 없는 위치입니다.";
+
     protected final Color color;
     protected Position position;
 

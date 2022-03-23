@@ -18,7 +18,7 @@ public class PositionUtil {
     private static final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
     private static final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
 
-    private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션 입니다. (a1~h8)";
+    private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
 
     static {
         IntStream.rangeClosed(0, 7)
@@ -49,6 +49,10 @@ public class PositionUtil {
         Integer intValue = rankMap.get(rank);
         validateRange(intValue);
         return intValue;
+    }
+
+    public static boolean isMappedRankIdx(char rank, int idx) {
+        return rankMap.get(rank) == idx;
     }
 
     public static int fileToIdx(char file) {
