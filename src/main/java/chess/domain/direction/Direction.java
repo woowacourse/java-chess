@@ -27,10 +27,19 @@ public enum Direction {
     }
 
     public boolean isDirection(Position position, Position wantPosition) {
-        Position value = position;
-        while (!value.equals(wantPosition) && value.isMovable(columnAmount, rowAmount)) {
-            value = move(value);
+        if (position.equals(wantPosition)) {
+            return false;
         }
-        return value.equals(wantPosition);
+        return isMovableToWantPosition(position, wantPosition);
+    }
+
+    private boolean isMovableToWantPosition(Position position, Position wantPosition) {
+        if (position.equals(wantPosition)) {
+            return true;
+        }
+        if (position.isMovable(columnAmount, rowAmount)) {
+            return isMovableToWantPosition(move(position), wantPosition);
+        }
+        return false;
     }
 }
