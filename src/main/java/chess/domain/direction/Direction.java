@@ -40,7 +40,7 @@ public enum Direction {
         return position.move(columnAmount, rowAmount);
     }
 
-    public List<Direction> route(Position position, Position targetPosition) {
+    public List<Position> route(Position position, Position targetPosition) {
         if (!isMovable(position, targetPosition)) {
             return Collections.emptyList();
         }
@@ -64,11 +64,12 @@ public enum Direction {
         return false;
     }
 
-    private List<Direction> calculateRoute(Position position, Position targetPosition, List<Direction> route) {
+    private List<Position> calculateRoute(Position position, Position targetPosition, List<Position> route) {
         if (position.equals(targetPosition)) {
             return route;
         }
-        route.add(this);
-        return calculateRoute(move(position), targetPosition, route);
+        Position movePosition = move(position);
+        route.add(movePosition);
+        return calculateRoute(movePosition, targetPosition, route);
     }
 }
