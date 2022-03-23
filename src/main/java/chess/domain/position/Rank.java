@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE("1"),
     TWO("2"),
@@ -11,9 +13,16 @@ public enum Rank {
     EIGHT("8")
     ;
 
-    private final String rank;
+    private final String notation;
 
-    Rank(String rank) {
-        this.rank = rank;
+    Rank(String notation) {
+        this.notation = notation;
+    }
+
+    public static Rank of(String value) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.notation.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
     }
 }

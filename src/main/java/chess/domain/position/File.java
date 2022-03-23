@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum File {
     A("a"),
     B("b"),
@@ -11,9 +13,16 @@ public enum File {
     H("h")
     ;
 
-    private final String file;
+    private final String notation;
 
-    File(String file) {
-        this.file = file;
+    File(String notation) {
+        this.notation = notation;
+    }
+
+    public static File of(String value) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.notation.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
     }
 }
