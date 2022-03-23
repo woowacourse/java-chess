@@ -18,7 +18,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isSingleMove() {
+    public boolean isSingleMovable() {
         return true;
     }
 }
