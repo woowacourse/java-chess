@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+
 public class Queen extends Piece {
 
 	public Queen(final Team team) {
@@ -13,6 +15,14 @@ public class Queen extends Piece {
 		}
 		return "q";
 	}
+
+	@Override
+	public void validateMovement(final Position source, final Position target) {
+		if (target.isDifferentDiagonal(source) && target.isDifferentRow(source) && target.isDifferentColumn(source)) {
+			throw new IllegalArgumentException(MOVEMENT_ERROR);
+		}
+	}
+
 
 	@Override
 	public boolean isBlank() {

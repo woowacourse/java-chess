@@ -32,6 +32,22 @@ public class Position {
 		return positions;
 	}
 
+	public Position addDirection(Direction direction) {
+		return Position.of(direction.addRow(row), direction.addColumn(column));
+	}
+
+	public boolean isDifferentRow(Position position) {
+		return this.row != position.row;
+	}
+
+	public boolean isDifferentColumn(Position position) {
+		return this.column != position.column;
+	}
+
+	public boolean isDifferentDiagonal(Position position) {
+		return this.row - position.row != this.column - position.column;
+	}
+
 	private static List<Position> createRowPositions(final int row) {
 		List<Position> rowPositions = new ArrayList<>();
 		for (int j = 1; j < 9; j++) {

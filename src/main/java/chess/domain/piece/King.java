@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
+import java.util.List;
+
 public class King extends Piece {
 
 	public King(final Team team) {
@@ -12,6 +16,19 @@ public class King extends Piece {
 			return "K";
 		}
 		return "k";
+	}
+
+	@Override
+	public void validateMovement(final Position source, final Position target) {
+		List<Direction> directions = Direction.getKingDirection();
+
+		for (Direction direction : directions) {
+			Position position = source.addDirection(direction);
+			if (position == target) {
+				return;
+			}
+		}
+		throw new IllegalArgumentException(MOVEMENT_ERROR);
 	}
 
 	@Override

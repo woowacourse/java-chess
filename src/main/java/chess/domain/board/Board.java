@@ -29,14 +29,14 @@ public class Board {
 			board.put(position, new Blank());
 		}
 
-		List<Piece> blackSpecials = initSpecialBuilder(Team.Black);
-		List<Piece> whiteSpecials = initSpecialBuilder(Team.White);
+		List<Piece> blackSpecials = initSpecialBuilder(Team.BLACK);
+		List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
 		for (int i = 0; i < 8; i++) {
 			board.put(Position.of(8, i + 1), blackSpecials.get(i));
-			board.put(Position.of(7, i + 1), new Pawn(Team.Black));
+			board.put(Position.of(7, i + 1), new Pawn(Team.BLACK));
 
 			board.put(Position.of(1, i + 1), whiteSpecials.get(i));
-			board.put(Position.of(2, i + 1), new Pawn(Team.White));
+			board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
 		}
 	}
 

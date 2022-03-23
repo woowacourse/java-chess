@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+
 public class Rook extends Piece {
 
 	public Rook(final Team team) {
@@ -12,6 +14,13 @@ public class Rook extends Piece {
 			return "R";
 		}
 		return "r";
+	}
+
+	@Override
+	public void validateMovement(final Position source, final Position target) {
+		if (target.isDifferentRow(source) && target.isDifferentColumn(source)) {
+			throw new IllegalArgumentException(MOVEMENT_ERROR);
+		}
 	}
 
 	@Override

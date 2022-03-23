@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 public enum Team {
-	White,
-	Black,
+	WHITE,
+	BLACK,
 	NEUTRALITY;
-	
+
 	public boolean isBlack() {
-		return this == Team.Black;
+		return this == Team.BLACK;
 	}
 }

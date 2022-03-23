@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+
 public class Bishop extends Piece {
 
 	public Bishop(final Team team) {
@@ -12,6 +14,13 @@ public class Bishop extends Piece {
 			return "B";
 		}
 		return "b";
+	}
+
+	@Override
+	public void validateMovement(final Position source, final Position target) {
+		if (target.isDifferentDiagonal(source)) {
+			throw new IllegalArgumentException(MOVEMENT_ERROR);
+		}
 	}
 
 	@Override
