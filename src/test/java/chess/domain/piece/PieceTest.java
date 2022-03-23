@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class KingTest {
+public class PieceTest {
 
     @DisplayName("King을 생성한다.")
     @Test
@@ -20,9 +20,9 @@ public class KingTest {
     @DisplayName("진영에 맞는 표기 정보를 반환한다")
     @ParameterizedTest
     @CsvSource(value = {"BLACK,K", "WHITE,k"})
-    void 진영에_맞는_표기_정보를_반환한다(Color color, String notation){
-        King king = new King(color);
+    void 진영에_맞는_표기_정보를_반환한다(Color color, String notation) {
+        Piece piece = new King(color);
 
-        assertThat(king.getNotation()).isEqualTo(notation);
+        assertThat(piece.getNotation()).isEqualTo(notation);
     }
 }

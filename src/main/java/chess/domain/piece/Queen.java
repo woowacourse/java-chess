@@ -2,11 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 
-public class King extends Piece {
+public class Queen extends Piece {
 
-    private static final String NOTATION = "K";
+    private static final String NOTATION = "Q";
 
-    public King(Color color) {
+    public Queen(Color color) {
         super(color);
     }
 
