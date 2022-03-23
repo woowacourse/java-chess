@@ -44,6 +44,17 @@ public class Position {
         return destination.rank - rank;
     }
 
+    public int countMoveLinear(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+
+        if (fileDistance > 0 && rankDistance > 0) {
+            throw new IllegalArgumentException("상하좌우 중 한 방향으로만 이동해야 합니다.");
+        }
+
+        return fileDistance + rankDistance;
+    }
+
     public int countMoveDiagonal(final Position destination) {
         final int fileDistance = Math.abs(file - destination.file);
         final int rankDistance = Math.abs(rank - destination.rank);
