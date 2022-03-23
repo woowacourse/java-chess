@@ -40,4 +40,8 @@ public class OutputView {
         }
         System.out.println();
     }
+
+    public static void printError(String errorMessage) {
+        System.out.println("[ERROR] : " + errorMessage);
+    }
 }

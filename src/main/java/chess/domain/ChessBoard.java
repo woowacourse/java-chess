@@ -34,7 +34,7 @@ public class ChessBoard {
         }
     }
 
-    private void move(Position from, Position to) {
+    public void move(Position from, Position to) {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다."));
 
@@ -56,17 +56,19 @@ public class ChessBoard {
     }
 
     private void movePawn(Position from, Position to, Pawn me) {
-        if (from.isSameFile(to)) {
+        if (from.isSameRank(to)) {
             me.canMove(from, to);
-            if (findPiece(to).isEmpty()) {
-                chessBoard.put(to, me);
-                chessBoard.remove(from);
-                currentTurn = currentTurn.toOpposite();
-                return;
+            if (findPiece(to).isPresent()) {
+                throw new IllegalArgumentException("이동할 수 없습니다.");
             }
+
+            chessBoard.put(to, me);
+            chessBoard.remove(from);
+            currentTurn = currentTurn.toOpposite();
+            return;
         }
 
-        if (!from.isSameFile(to)) {
+        if (!from.isSameRank(to)) {
             me.checkCrossMove(from, to);
             if (enemyExist(me, to)) {
                 chessBoard.put(to, me);
@@ -89,7 +91,6 @@ public class ChessBoard {
         }
     }
 
-    // move명령 받고 -> findPiece -> canMove -> (for findPiece) -> enemyExist -> move 한다음에 -> 턴 변환
     public int countPiece() {
         return chessBoard.size();
     }
@@ -106,10 +107,14 @@ public class ChessBoard {
     public boolean enemyExist(ChessPiece me, Position to) {
         Optional<ChessPiece> possiblePiece = findPiece(to);
         if (possiblePiece.isEmpty()) {
-            return false;
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
 
         ChessPiece piece = possiblePiece.get();
-        return !piece.isSameColor(me);
+        if (piece.isSameColor(me)) {
+            throw new IllegalArgumentException("이동할 수 없습니다.");
+        }
+
+        return true;
     }
 }
