@@ -10,19 +10,11 @@ import java.util.List;
 
 public class Rook extends Piece {
 
-    private static final List<Direction> directions;
     private List<Position> positions = new ArrayList<>();
 
-    static {
-        directions = new ArrayList<>();
-        directions.add(Direction.EAST);
-        directions.add(Direction.WEST);
-        directions.add(Direction.SOUTH);
-        directions.add(Direction.NORTH);
-    }
 
     public Rook(final Player player) {
-        super(player, PieceSymbol.Rook);
+        super(player, PieceSymbol.Rook, new RookDirections());
     }
 
     @Override

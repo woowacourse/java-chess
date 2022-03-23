@@ -7,7 +7,7 @@ import java.util.List;
 public class Knight extends Piece {
 
     public Knight(final Player player) {
-        super(player, PieceSymbol.Knight);
+        super(player, PieceSymbol.Knight, new BishopDirections());
     }
 
     @Override

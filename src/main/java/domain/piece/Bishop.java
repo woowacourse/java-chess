@@ -10,19 +10,10 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    private static final List<Direction> directions;
     private List<Position> positions = new ArrayList<>();
 
-    static {
-        directions = new ArrayList<>();
-        directions.add(Direction.NORTHEAST);
-        directions.add(Direction.NORTHWEST);
-        directions.add(Direction.SOUTHEAST);
-        directions.add(Direction.SOUTHWEST);
-    }
-
     public Bishop(final Player player) {
-        super(player, PieceSymbol.Bishop);
+        super(player, PieceSymbol.Bishop, new BishopDirections());
     }
 
     @Override

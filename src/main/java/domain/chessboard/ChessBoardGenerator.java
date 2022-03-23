@@ -2,12 +2,14 @@ package domain.chessboard;
 
 import domain.Player;
 import domain.piece.Bishop;
+import domain.piece.BlackPawn;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.WhitePawn;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
@@ -52,11 +54,11 @@ public class ChessBoardGenerator implements BoardGenerator {
         if (player == Player.BLACK) {
             Arrays.stream(Column.values())
                 .forEach(
-                    column -> board.put(new Position(Row.SEVEN, column), new Pawn(Player.BLACK)));
+                    column -> board.put(new Position(Row.SEVEN, column), new BlackPawn(Player.BLACK)));
             return;
         }
         Arrays.stream(Column.values())
-            .forEach(column -> board.put(new Position(Row.TWO, column), new Pawn(Player.WHITE)));
+            .forEach(column -> board.put(new Position(Row.TWO, column), new WhitePawn(Player.WHITE)));
     }
 
     private void createInitRook(Map<Position, Piece> board, Player player) {

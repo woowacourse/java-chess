@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.Direction;
+import domain.DirectionsGenerator;
 import domain.Player;
 import domain.position.Position;
 import java.util.List;
@@ -8,10 +10,12 @@ public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
+    final List<Direction> directions;
 
-    public Piece(final Player player, final PieceSymbol pieceSymbol) {
+    public Piece(final Player player, final PieceSymbol pieceSymbol, DirectionsGenerator directionsGenerator) {
         this.player = player;
         this.pieceSymbol = pieceSymbol;
+        this.directions = directionsGenerator.generate();
     }
 
     public boolean isSamePlayer(Player player) {
@@ -22,5 +26,5 @@ public abstract class Piece {
         return pieceSymbol.symbol(player);
     }
 
-    public abstract List<Position> availableMovePositions(Position currentPosition);
+    public abstract List<Position> availableMovePositions(Position source);
 }

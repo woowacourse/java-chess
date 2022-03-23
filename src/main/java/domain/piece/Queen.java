@@ -12,24 +12,12 @@ import java.util.List;
 
 public class Queen extends Piece {
 
-    private static final List<Direction> directions;
     private List<Position> positions = new ArrayList<>();
 
     public Queen(final Player player) {
-        super(player, PieceSymbol.Queen);
+        super(player, PieceSymbol.Queen, new QueenDirections());
     }
 
-    static {
-        directions = new ArrayList<>();
-        directions.add(Direction.NORTHEAST);
-        directions.add(Direction.NORTHWEST);
-        directions.add(Direction.SOUTHEAST);
-        directions.add(Direction.SOUTHWEST);
-        directions.add(Direction.EAST);
-        directions.add(Direction.WEST);
-        directions.add(Direction.SOUTH);
-        directions.add(Direction.NORTH);
-    }
 
     @Override
     public List<Position> availableMovePositions(Position source) {
