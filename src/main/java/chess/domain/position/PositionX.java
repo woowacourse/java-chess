@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum PositionX {
     A("a", 0),
     B("b", 1),
@@ -16,6 +18,13 @@ public enum PositionX {
     PositionX(final String name, final int coordination) {
         this.name = name;
         this.coordination = coordination;
+    }
+
+    public static PositionX of(String name) {
+        return Arrays.stream(values())
+                .filter(positionX -> positionX.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않는 좌표입니다."));
     }
 
     public String getName() {

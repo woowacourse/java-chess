@@ -16,7 +16,7 @@ public class OutputView {
             for (int column = 0; column < 8; column++) {
                 System.out.print(board[rank][column].getPiece().signature());
             }
-            System.out.println("\t(" + PositionY.find(rank).getName() + ")");
+            System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
         }
         System.out.println();
         for (PositionX positionX : PositionX.values()) {
