@@ -49,4 +49,12 @@ public final class Position {
         int rowGap = row.gap(target.row);
         return columnGap == rowGap;
     }
+
+    public int columnGap(Position target) {
+        return column.gap(target.column);
+    }
+
+    public int rowGap(Position target) {
+        return row.gap(target.row);
+    }
 }
