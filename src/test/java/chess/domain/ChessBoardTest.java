@@ -2,9 +2,14 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.NormalPiecesGenerator;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PiecesGenerator;
+import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -32,5 +37,14 @@ public class ChessBoardTest {
         ));
         ChessBoard chessBoard = new ChessBoard(pieces);
         assertThat(chessBoard.getPieces()).contains(Map.entry(new Position("a3"), EmptyPiece.getInstance()));
+    }
+
+    @Test
+    @DisplayName("위치가 들어왔을 때 해당 위치의 말이 어떤 말인지 확인한다.")
+    void selectPiece() {
+        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+        ChessBoard chessBoard = new ChessBoard(piecesGenerator.generate());
+        Piece piece = chessBoard.selectPiece(new Position("a1"));
+        assertThat(piece).isInstanceOf(Rook.class);
     }
 }

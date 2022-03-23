@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.Objects;
 
@@ -16,7 +16,7 @@ public class Position {
         validateBlank(value);
         validateLength(value);
         this.column = Column.of(value.substring(0, 1));
-        this.row = Row.of(value.substring(1, 2));
+        this.row = Row.of(Integer.parseInt(value.substring(1, 2)));
     }
 
     private void validateBlank(String value) {
@@ -30,6 +30,10 @@ public class Position {
             throw new IllegalArgumentException("포지션은 두 글자입니다.");
         }
     }
+
+//    public Position toDirection(Direction direction) {
+//        column.
+//    }
 
     @Override
     public boolean equals(Object o) {

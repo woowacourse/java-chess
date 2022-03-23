@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import java.util.Locale;
 
 public abstract class Piece {

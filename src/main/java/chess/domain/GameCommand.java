@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,10 @@ public class GameCommand {
 
     public boolean isEnd() {
         return command == CommandType.END;
+    }
+
+    public boolean isMove() {
+        return command == CommandType.MOVE;
     }
 
     public Position getFromPosition() {

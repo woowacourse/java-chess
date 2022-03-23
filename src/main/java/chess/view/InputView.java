@@ -9,7 +9,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputCommand() {
-        return scanner.nextLine();
+    public static String[] inputCommand() {
+        return scanner.nextLine().split(" ");
     }
 }
