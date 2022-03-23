@@ -22,6 +22,12 @@ public class Position {
         return PositionCache.getCache(value);
     }
 
+    public Position movedBy(int fileDiff, int rankDiff) {
+        int toFileIdx = fileIdx + fileDiff;
+        int toRankIdx = rankIdx + rankDiff;
+        return PositionCache.getCache(toFileIdx, toRankIdx);
+    }
+
     public int getFileIdx() {
         return fileIdx;
     }
@@ -41,6 +47,11 @@ public class Position {
     private static class PositionCache {
 
         static Map<String, Position> cache = new HashMap<>(64);
+
+        static Position getCache(int fileIdx, int rankIdx) {
+            String key = fileIdx + "" + rankIdx;
+            return cache.computeIfAbsent(key, (val) -> new Position(key));
+        }
 
         static Position getCache(String value) {
             String key = toKey(value);

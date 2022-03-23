@@ -10,6 +10,10 @@ public final class Pawn extends Piece {
     public static final char BLACK_INIT_RANK = '7';
     public static final char WHITE_INIT_RANK = '2';
 
+    private static final int MOVE_FILE_COUNT = 0;
+    private static final int FORWARD_RANK_COUNT = 1;
+    private static final int JUMP_RANK_COUNT = 2;
+
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
 
@@ -18,47 +22,34 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovablePosition(position);
-        this.position = position;
+    public void move(Position toPosition) {
+        validateMovable(toPosition);
+        position = toPosition;
     }
 
-    private void validateMovablePosition(Position position) {
-        if (!isMovablePosition(position)) {
+    private void validateMovable(Position toPosition) {
+        if (!canMoveForwardOrJump(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
     }
 
-    private boolean isMovablePosition(Position position) {
-        if (!isSameFile(position) || !isForward(position)) {
-            return false;
+    private boolean canMoveForwardOrJump(Position toPosition) {
+        if (canJump() && toPosition == getMovablePosition(JUMP_RANK_COUNT)) {
+            return true;
         }
-        return canMoveForwardOrJump(position.getRankIdx());
+        Position forwardPosition = getMovablePosition(FORWARD_RANK_COUNT);
+        return toPosition == forwardPosition;
     }
 
-    private boolean canMoveForwardOrJump(int toRankIdx) {
-        int moveCount = Math.abs(currentRankIdx() - toRankIdx);
-        if (moveCount == 2) {
-            return canJump();
+    private Position getMovablePosition(int moveRankDiff) {
+        return position.movedBy(MOVE_FILE_COUNT, moveRankDifference(moveRankDiff));
+    }
+
+    private int moveRankDifference(int moveCount) {
+        if (color == Color.BLACK) {
+            return moveCount * -1;
         }
-        return moveCount == 1;
-    }
-
-    private boolean isSameFile(Position position) {
-        return this.position.getFileIdx() == position.getFileIdx();
-    }
-
-    private boolean isForward(Position position) {
-        int toRankIdx = position.getRankIdx();
-        return isWhiteForward(toRankIdx) || isBlackForward(toRankIdx);
-    }
-
-    private boolean isWhiteForward(int toRankIdx) {
-        return color == Color.WHITE && currentRankIdx() < toRankIdx;
-    }
-
-    private boolean isBlackForward(int toRankIdx) {
-        return color == Color.BLACK && currentRankIdx() > toRankIdx;
+        return moveCount;
     }
 
     private boolean canJump() {
@@ -72,10 +63,6 @@ public final class Pawn extends Piece {
 
     private boolean isBlackJump(int curRankIdx) {
         return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
-    }
-
-    private int currentRankIdx() {
-        return position.getRankIdx();
     }
 
     @Override
