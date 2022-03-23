@@ -22,4 +22,9 @@ public class King extends ChessPiece {
         return List.of(new Position("e8"));
     }
 
+    @Override
+    public void canMove(Position from, Position to) {
+
+    }
+
 }

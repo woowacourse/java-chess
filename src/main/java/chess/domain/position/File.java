@@ -25,6 +25,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
+    public int calculateDistance(File target) {
+        return Integer.parseInt(value) - Integer.parseInt(target.value);
+    }
+
     public String getValue() {
         return value;
     }

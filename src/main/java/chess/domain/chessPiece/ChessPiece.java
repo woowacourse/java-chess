@@ -25,4 +25,6 @@ public abstract class ChessPiece {
     public String getName() {
         return name;
     }
+
+    public abstract void canMove(Position from, Position to);
 }

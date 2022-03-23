@@ -25,6 +25,9 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
+    public int calculateDistance(Rank target) {
+        return value.charAt(0) - target.value.charAt(0);
+    }
     public String getValue() {
         return value;
     }

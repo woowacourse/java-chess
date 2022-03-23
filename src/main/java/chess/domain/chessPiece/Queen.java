@@ -22,4 +22,9 @@ public class Queen extends ChessPiece {
         return List.of(new Position("d8"));
     }
 
+    @Override
+    public void canMove(Position from, Position to) {
+
+    }
+
 }

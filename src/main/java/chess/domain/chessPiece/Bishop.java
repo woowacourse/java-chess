@@ -22,5 +22,13 @@ public class Bishop extends ChessPiece {
         return List.of(new Position("c8"), new Position("f8"));
     }
 
+    @Override
+    public void canMove(Position from, Position to) {
+        int rankDistance = from.rankDistance(to);
+        int fileDistance = from.fileDistance(to);
 
+        if (fileDistance != rankDistance) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        }
+    }
 }

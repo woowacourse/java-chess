@@ -8,4 +8,12 @@ public class Position {
         this.rank = Rank.of(String.valueOf(text.charAt(0)));
         this.file = File.of(String.valueOf(text.charAt(1)));
     }
+
+    public int fileDistance(Position target){
+        return file.calculateDistance(target.file);
+    }
+
+    public int rankDistance(Position target){
+        return rank.calculateDistance(target.rank);
+    }
 }

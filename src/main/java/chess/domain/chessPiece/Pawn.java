@@ -31,4 +31,9 @@ public class Pawn extends ChessPiece {
         return list;
     }
 
+    @Override
+    public void canMove(Position from, Position to) {
+
+    }
+
 }

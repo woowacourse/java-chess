@@ -22,4 +22,9 @@ public class Rook extends ChessPiece {
         return List.of(new Position("a8"), new Position("h8"));
     }
 
+    @Override
+    public void canMove(Position from, Position to) {
+
+    }
+
 }
