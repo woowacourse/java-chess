@@ -21,7 +21,6 @@ public class OutputView {
     private static final String WINNER_ANNOUNCEMENT_TEXT = " 플레이어가 승리하였습니다!" + BLANK_LINE;
     private static final String SCORE_DISPLAY_FORMAT = "%s 플레이어 점수 : %2.1f점" + BLANK_LINE;
 
-
     public static void printGameInstructions() {
         String instructionMessage = GAME_START_MESSAGE + BLANK_LINE
                 + START_COMMAND_MESSAGE + BLANK_LINE
@@ -60,7 +59,7 @@ public class OutputView {
         print(statusText);
     }
 
-    private static void print(String value) {
+    public static void print(String value) {
         System.out.println(value);
     }
 }
