@@ -13,6 +13,11 @@ public class King extends Piece {
     }
 
     @Override
+    public void move(Position position) {
+        // TODO: should be implemented
+    }
+
+    @Override
     public String display() {
         if (color == Color.BLACK) {
             return BLACK_DISPLAY;

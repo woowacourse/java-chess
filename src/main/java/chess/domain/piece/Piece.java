@@ -12,6 +12,8 @@ public abstract class Piece {
         this.position = position;
     }
 
+    abstract public void move(Position position);
+
     abstract public String display();
 
     public Position getPosition() {
