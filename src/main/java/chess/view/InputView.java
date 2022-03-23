@@ -6,9 +6,10 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String START = "start";
+    private static final String STATUS = "status";
     private static final String END = "end";
     private static final String INVALID_START_OR_END_INPUT_EXCEPTION_MESSAGE = "start 혹은 end만 입력하셔야 합니다.";
-    private static final int EXIT_STATUS_CODE = 0;
+    private static final String INVALID_STATUS_OR_END_INPUT_EXCEPTION_MESSAGE = "status 혹은 end만 입력하셔야 합니다.";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -24,11 +25,22 @@ public class InputView {
         }
     }
 
-    public static MovePositionCommandDto requestMoveOrEndInput() {
+    public static MovePositionCommandDto requestMoveInput() {
         String input = scanner.nextLine();
-        if (input.equals(END)) {
-            System.exit(EXIT_STATUS_CODE);
-        }
         return new MovePositionCommandDto(input);
     }
+
+    public static boolean requestStatusOrEndInput() {
+        String input = scanner.nextLine();
+        validateStatusOrEnd(input);
+        return input.equals(STATUS);
+    }
+
+    private static void validateStatusOrEnd(String input) {
+        if (!input.equals(STATUS) && !input.equals(END)) {
+            throw new IllegalArgumentException(INVALID_STATUS_OR_END_INPUT_EXCEPTION_MESSAGE);
+        }
+    }
 }
+
+

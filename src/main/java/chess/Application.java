@@ -1,9 +1,12 @@
 package chess;
 
-import static chess.view.InputView.requestMoveOrEndInput;
+import static chess.view.InputView.requestMoveInput;
 import static chess.view.InputView.requestStartOrEndInput;
+import static chess.view.InputView.requestStatusOrEndInput;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printGameInstructions;
+import static chess.view.OutputView.printGameOverInstructions;
+import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessGame;
 import chess.dto.BoardDto;
@@ -17,9 +20,14 @@ public class Application {
         }
 
         ChessGame game = new ChessGame();
+        printBoard(new BoardDto(game));
         while(!game.isEnd()) {
+            game.moveChessmen(requestMoveInput());
             printBoard(new BoardDto(game));
-            game.moveChessmen(requestMoveOrEndInput());
+        }
+        printGameOverInstructions();
+        while(requestStatusOrEndInput()) {
+            printStatus(game.getGameResult());
         }
     }
 }
