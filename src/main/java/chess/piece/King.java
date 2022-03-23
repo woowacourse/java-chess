@@ -6,4 +6,8 @@ public class King extends Piece {
         super(color);
     }
 
+    @Override
+    public PieceType getType() {
+        return PieceType.KING;
+    }
 }
