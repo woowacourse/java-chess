@@ -3,8 +3,10 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Position;
 
-public class King extends Piece {
+public final class King extends Piece {
+    private static final String NAME = "k";
+
     public King(Position position, Color color) {
-        super(position, color);
+        super(position, color, NAME);
     }
 }

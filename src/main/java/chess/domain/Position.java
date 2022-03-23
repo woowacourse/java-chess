@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Position {
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
-    private static Map<String, Position> pool = new HashMap<>();
+    private static final Map<String, Position> pool = new HashMap<>();
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -16,5 +16,13 @@ public class Position {
 
     public static Position of(File file, Rank rank) {
         return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

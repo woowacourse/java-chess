@@ -13,22 +13,12 @@ import chess.domain.Rank;
 
 public class PieceTest {
     @Test
-    @DisplayName("체스말은 생성될때 위치를 가진다.")
+    @DisplayName("체스말은 생성될때 위치, 색, 이름을 가진다.")
     void pieceTest() {
         assertThatCode(() -> mock(Piece.class,
             withSettings()
-            .useConstructor(Position.of(File.a, Rank.One))
+            .useConstructor(Position.of(File.a, Rank.One), Color.Black, "k")
             .defaultAnswer(CALLS_REAL_METHODS)))
-            .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("체스말은 흑팀과 백팀으로 나뉜다.")
-    void team() {
-        assertThatCode(() -> mock(Piece.class,
-            withSettings()
-                .useConstructor(Position.of(File.a, Rank.One), Color.Black)
-                .defaultAnswer(CALLS_REAL_METHODS)))
             .doesNotThrowAnyException();
     }
 }

@@ -3,8 +3,10 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Position;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
+    private static final String NAME = "b";
+
     public Bishop(Position position, Color color) {
-        super(position, color);
+        super(position, color, NAME);
     }
 }
