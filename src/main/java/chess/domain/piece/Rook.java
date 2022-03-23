@@ -10,6 +10,6 @@ public class Rook extends Piece{
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return false;
+        return fromPosition.isSameAbscissa(toPosition) || fromPosition.isSameOrdinate(toPosition);
     }
 }
