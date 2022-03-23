@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
+    public static final String BLACK_PAWN_INIT_RANK = "7";
+    public static final String WHITE_PAWN_INIT_RANK = "2";
+
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
 

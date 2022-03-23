@@ -1,9 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

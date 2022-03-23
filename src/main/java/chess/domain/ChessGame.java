@@ -2,6 +2,8 @@ package chess.domain;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.domain.piece.Pawn.BLACK_PAWN_INIT_RANK;
+import static chess.domain.piece.Pawn.WHITE_PAWN_INIT_RANK;
 import static chess.domain.piece.position.PositionUtil.VALID_FILES;
 
 import chess.domain.piece.Bishop;
@@ -41,14 +43,14 @@ public class ChessGame {
 
     private List<Piece> initBlackPawns() {
         return VALID_FILES.chars()
-                .mapToObj(file -> (char) file + "7")
+                .mapToObj(rank -> (char) rank + BLACK_PAWN_INIT_RANK)
                 .map(positionKey -> new Pawn(BLACK, Position.of(positionKey)))
                 .collect(Collectors.toList());
     }
 
     private List<Piece> initWhitePawns() {
         return VALID_FILES.chars()
-                .mapToObj(file -> (char) file + "2")
+                .mapToObj(rank -> (char) rank + WHITE_PAWN_INIT_RANK)
                 .map(positionKey -> new Pawn(WHITE, Position.of(positionKey)))
                 .collect(Collectors.toList());
     }

@@ -1,8 +1,6 @@
 package chess.view;
 
 import chess.dto.BoardDto;
-import chess.dto.RowDto;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -15,11 +13,12 @@ public class OutputView {
     }
 
     public static void printBoard(BoardDto dto) {
-        final String boardDisplay = dto.getDisplay()
-                .stream()
-                .map(RowDto::getDisplay)
-                .collect(Collectors.joining(BLANK_LINE));
-        print(boardDisplay + BLANK_LINE);
+        StringBuilder builder = new StringBuilder();
+        for (String rowDisplay : dto.getDisplay()) {
+            builder.append(rowDisplay)
+                    .append(BLANK_LINE);
+        }
+        print(builder.toString());
     }
 
     private static void print(String value) {
