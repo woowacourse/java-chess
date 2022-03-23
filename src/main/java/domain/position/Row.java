@@ -1,5 +1,7 @@
 package domain.position;
 
+import java.util.Arrays;
+
 public enum Row {
     ONE(1),
     TWO(2),
@@ -14,5 +16,20 @@ public enum Row {
 
     Row(final int index) {
         this.index = index;
+    }
+
+    public static Row of(int index) {
+        return Arrays.stream(values())
+            .filter(value -> value.index == index)
+            .findFirst()
+            .orElse(null);
+    }
+
+    public static boolean isRowRange(int index) {
+        return ONE.index < index && index < EIGHT.index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

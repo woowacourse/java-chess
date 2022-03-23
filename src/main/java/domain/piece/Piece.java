@@ -1,8 +1,10 @@
 package domain.piece;
 
 import domain.Player;
+import domain.position.Position;
+import java.util.List;
 
-public class Piece {
+public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
@@ -19,4 +21,6 @@ public class Piece {
     public String symbol() {
         return pieceSymbol.symbol(player);
     }
+
+    public abstract List<Position> availableMovePositions(Position currentPosition);
 }

@@ -1,5 +1,6 @@
 package domain.position;
 
+import domain.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -22,6 +23,14 @@ public class Position {
         }
         final Position position = (Position) o;
         return row == position.row && column == position.column;
+    }
+
+    public int getRow() {
+        return row.getIndex();
+    }
+
+    public int getColumn() {
+        return column.getIndex();
     }
 
     @Override
