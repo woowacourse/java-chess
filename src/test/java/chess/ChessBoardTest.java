@@ -35,7 +35,7 @@ class ChessBoardTest {
             new Rook(Color.BLACK, new Position(A, EIGHT)),
             knight(Color.BLACK, new Position(B, EIGHT)),
             new Bishop(Color.BLACK, new Position(C, EIGHT)),
-            queen(Color.BLACK, new Position(D, EIGHT)),
+            new Queen(Color.BLACK, new Position(D, EIGHT)),
             king(Color.BLACK, new Position(E, EIGHT)),
             new Bishop(Color.BLACK, new Position(F, EIGHT)),
             knight(Color.BLACK, new Position(G, EIGHT)),
@@ -51,7 +51,7 @@ class ChessBoardTest {
             new Rook(Color.WHITE, new Position(A, ONE)),
             knight(Color.WHITE, new Position(B, ONE)),
             new Bishop(Color.WHITE, new Position(C, ONE)),
-            queen(Color.WHITE, new Position(D, ONE)),
+            new Queen(Color.WHITE, new Position(D, ONE)),
             king(Color.WHITE, new Position(E, ONE)),
             new Bishop(Color.WHITE, new Position(F, ONE)),
             knight(Color.WHITE, new Position(G, ONE)),
@@ -251,6 +251,52 @@ class ChessBoardTest {
             Arguments.of(new Position(C, EIGHT), new Position(A, SIX)),
             Arguments.of(new Position(C, ONE), new Position(B, TWO)),
             Arguments.of(new Position(C, ONE), new Position(E, THREE))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidMoveQueen")
+    @DisplayName("퀸은 동일선상외에는 이동 시 예외 발생")
+    void moveInvalidMoveQueen(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)));
+
+        assertAll(()->{
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(new Queen(Color.BLACK, from));
+        });
+    }
+
+    private static Stream<Arguments> provideInvalidMoveQueen() {
+        return Stream.of(
+            Arguments.of(new Position(D, EIGHT), new Position(F, FOUR)),
+            Arguments.of(new Position(D, EIGHT), new Position(A, SIX)),
+            Arguments.of(new Position(D, ONE), new Position(E, FIVE)),
+            Arguments.of(new Position(D, ONE), new Position(B, TWO))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValidMoveQueen")
+    @DisplayName("퀸은 동일선상으로 이동")
+    void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.BLACK, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(new Queen(Color.BLACK, to));
+    }
+
+    private static Stream<Arguments> provideValidMoveQueen() {
+        return Stream.of(
+            Arguments.of(new Position(D, EIGHT), new Position(D, FOUR)),
+            Arguments.of(new Position(D, EIGHT), new Position(H, EIGHT)),
+            Arguments.of(new Position(D, EIGHT), new Position(A, EIGHT)),
+            Arguments.of(new Position(D, EIGHT), new Position(F, SIX)),
+            Arguments.of(new Position(D, EIGHT), new Position(A, FIVE)),
+            Arguments.of(new Position(D, ONE), new Position(D, FOUR)),
+            Arguments.of(new Position(D, ONE), new Position(F, THREE)),
+            Arguments.of(new Position(D, ONE), new Position(A, FOUR))
         );
     }
 }

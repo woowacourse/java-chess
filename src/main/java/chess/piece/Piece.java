@@ -66,14 +66,6 @@ public abstract class Piece {
         };
     }
 
-    public static Piece queen(Color color, Position position) {
-        return new Piece(color, QUEEN, position) {
-            @Override
-            public void move(Position to) {
-            }
-        };
-    }
-
     public static Piece knight(Color color, Position position) {
         return new Piece(color, KNIGHT, position) {
             @Override
