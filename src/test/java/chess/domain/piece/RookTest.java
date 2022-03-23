@@ -1,14 +1,36 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-import chess.domain.piece.Rook;
 import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RookTest {
+
+    @DisplayName("룩은 상하좌우 방향으로 이동할 수 있다.")
+    @Test
+    void move() {
+        Rook rook = new Rook(WHITE, Position.of("a1"));
+        rook.move(Position.of("a8"));
+
+        Rook expected = new Rook(WHITE, Position.of("a8"));
+
+        assertThat(rook).isEqualTo(expected);
+    }
+
+    @DisplayName("룩은 상하좌우가 방향으로 이동하려는 경우 예외가 발생한다.")
+    @Test
+    void move_exception() {
+        Rook rook = new Rook(WHITE, Position.of("a1"));
+
+        assertThatCode(() -> rook.move(Position.of("b3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다.");
+    }
 
     @DisplayName("색과 위치가 동일한 Rook 인스턴스는 서로 동일하다고 간주된다.")
     @Test

@@ -19,16 +19,9 @@ public class Bishop extends Piece {
     }
 
     private void validateMovable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
+        if (!position.isDiagonal(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
-    }
-
-    private boolean isMovablePosition(Position toPosition) {
-        int fileDifference = position.fileDifference(toPosition);
-        int rankDifference = position.rankDifference(toPosition);
-
-        return fileDifference == rankDifference;
     }
 
     @Override

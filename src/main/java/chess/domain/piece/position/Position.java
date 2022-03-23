@@ -30,6 +30,20 @@ public class Position {
         return Math.abs(rankIdx - targetPosition.rankIdx);
     }
 
+    public boolean isHorizontal(Position toPosition) {
+        return fileDifference(toPosition) == 0
+                && rankDifference(toPosition) > 0;
+    }
+
+    public boolean isVertical(Position toPosition) {
+        return fileDifference(toPosition) > 0
+                && rankDifference(toPosition) == 0;
+    }
+
+    public boolean isDiagonal(Position toPosition) {
+        return fileDifference(toPosition) == rankDifference(toPosition);
+    }
+
     public Position movedBy(int fileDiff, int rankDiff) {
         int toFileIdx = fileIdx + fileDiff;
         int toRankIdx = rankIdx + rankDiff;
