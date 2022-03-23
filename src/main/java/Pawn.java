@@ -1,6 +1,6 @@
-public class Pawn extends Piece{
+public class Pawn extends Piece {
 
     public Pawn(Player player) {
-        super(player);
+        super(player, PieceSymbol.Pawn);
     }
 }
