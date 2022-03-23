@@ -32,11 +32,15 @@ public final class Position {
         return Objects.hash(column, row);
     }
 
-    public boolean isVertical(Position target) {
+    public boolean isStraight(Position target) {
+        return isVertical(target) || isHorizontal(target);
+    }
+
+    private boolean isVertical(Position target) {
         return column.isSame(target.column);
     }
 
-    public boolean isHorizontal(Position target) {
+    private boolean isHorizontal(Position target) {
         return row.isSame(target.row);
     }
 

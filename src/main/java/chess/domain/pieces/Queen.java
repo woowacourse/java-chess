@@ -11,6 +11,6 @@ public class Queen implements Type {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return source.isStraight(target) || source.isDiagonal(target);
     }
 }
