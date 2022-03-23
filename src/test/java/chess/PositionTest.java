@@ -18,6 +18,11 @@ class PositionTest {
     }
 
     @Test
+    @DisplayName("position끼리 수직이면 true를 반환한다.")
     void isVertical() {
+        Position source = new Position(File.A, Rank.ONE);
+        Position target = new Position(File.A, Rank.THREE);
+
+        assertThat(source.isVertical(target)).isTrue();
     }
 }
