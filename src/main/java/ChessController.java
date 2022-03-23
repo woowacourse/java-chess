@@ -2,6 +2,13 @@ public class ChessController {
 
     public void play() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
-        OutputView.printBoard(chessBoard);
+        String input = InputView.responseUserCommand();
+
+        if (input.equals(InputView.START)) {
+            OutputView.printBoard(chessBoard);
+        }
+
+        if (input == InputView.END) {
+        }
     }
 }
