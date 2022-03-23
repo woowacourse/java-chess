@@ -43,7 +43,7 @@ PPPPPPPP  7
 ........  4
 ........  3
 pppppppp  2
-rnbqkbnr  1 (rank 1)
+rnbbqknr  1 (rank 1)
 
 abcdefgh
 
@@ -72,8 +72,8 @@ end
 ## 기능 목록
 
 - [ ] 체스판과 체스 기물이 있다.
-- [ ] 체스판은 8x8 형식이다.
-    - [ ] 가로는 왼쪽부터 a~h이고, 세로는 아래부터 위로 1~8이다
+- [x] 체스판은 8x8 형식이다.
+    - [x] 가로는 왼쪽부터 a~h이고, 세로는 아래부터 위로 1~8이다
 
 체스판을 준비하는 방법:  [Home - ChessKid.com](https://www.chesskid.com/ko/learn/articles/how-to-play-chess-ko_KR#board)
 
