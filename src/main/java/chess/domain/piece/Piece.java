@@ -12,4 +12,9 @@ public abstract class Piece {
     public String getName() {
         return name.getName(team);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
