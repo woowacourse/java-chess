@@ -15,7 +15,7 @@ class KnightTest {
     private final Position currentPosition = new Position(3, 'c');
     private final Knight knight = new Knight(currentPosition);
 
-    @ParameterizedTest(name = "{0},{1} 방향으로 이동")
+    @ParameterizedTest
     @DisplayName("상하좌우 방향으로 1칸 이동 후 대각선 방향으로 1칸 이동 가능하다.")
     @MethodSource("provideDestinationPosition")
     void move(final Position expected) {
