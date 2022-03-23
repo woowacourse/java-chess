@@ -27,7 +27,11 @@ public class Position {
     }
 
     public int rankDifference(Position targetPosition) {
-        return Math.abs(rankIdx - targetPosition.rankIdx);
+        return Math.abs(rankRawDifference(targetPosition));
+    }
+
+    public int rankRawDifference(Position targetPosition) {
+        return targetPosition.rankIdx - rankIdx;
     }
 
     public boolean isHorizontal(Position toPosition) {

@@ -17,6 +17,8 @@ public final class Pawn extends Piece {
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
 
+    private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
+
     public Pawn(Color color, Position position) {
         super(color, position);
     }
@@ -25,11 +27,6 @@ public final class Pawn extends Piece {
     public void move(Position position) {
         validateMovable(position);
         this.position = position;
-    }
-
-    @Override
-    protected void attack(Position enemyPosition) {
-       // TODO: implemnnt attack logic
     }
 
     private void validateMovable(Position toPosition) {
@@ -68,6 +65,27 @@ public final class Pawn extends Piece {
 
     private boolean isBlackJump(int curRankIdx) {
         return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+    }
+
+    @Override
+    protected void attack(Position enemyPosition) {
+        validateAttackable(enemyPosition);
+        this.position = enemyPosition;
+    }
+
+    private void validateAttackable(Position enemyPosition) {
+        if (!canAttack(enemyPosition)) {
+            throw new IllegalArgumentException(INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean canAttack(Position enemyPosition) {
+        int fileDifference = position.fileDifference(enemyPosition);
+        int rankRawDifference = position.rankRawDifference(enemyPosition);
+
+        return position.isDiagonal(enemyPosition) &&
+                fileDifference == 1
+                && rankRawDifference == moveRankDifference(1);
     }
 
     @Override
