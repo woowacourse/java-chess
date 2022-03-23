@@ -1,14 +1,15 @@
 package chess.domain;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class BoardTest {
-    @Test
-    @DisplayName("특정 위치에 말의 종류를 조회한다.")
-    void findPiece() {
+
+    @ParameterizedTest
+    @CsvSource(value = {"a1:Rook", "b1:Knight", "c1:Bishop", "d1:Queen", "e1:King", "a2:Pawn", "a3:Blank"}, delimiter = ':')
+    void findPiece(String position, String symbol) {
         Board board = new Board();
-        Assertions.assertThat(board.getPiece("a1").getSymbol()).isEqualTo("Rook");
+        Assertions.assertThat(board.getPiece(position).getClass().getSimpleName()).isEqualTo(symbol);
     }
 }
