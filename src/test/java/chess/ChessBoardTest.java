@@ -3,8 +3,12 @@ package chess;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class ChessBoardTest {
 
@@ -19,51 +23,45 @@ public class ChessBoardTest {
         assertThat(chessBoard.getValue()).hasSize(32);
     }
 
-    @DisplayName("처음 초기화된 체스판의 A1에는 Rook이 있다.")
-    @Test
-    void check_rook_a1() {
+    @MethodSource("provideRookPosition")
+    @ParameterizedTest(name = "{0}에 룩이 있다")
+    void check_rook_positions(ChessBoardPosition expectedPosition) {
         //given
         ChessBoard chessBoard = new ChessBoard();
         //when
         Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
         //then
-        assertThat(boardValue.get(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.ONE)))
+        assertThat(boardValue.get(expectedPosition))
                 .isInstanceOf(Rook.class);
     }
 
-    @DisplayName("처음 초기화된 체스판의 H1에는 Rook이 있다.")
-    @Test
-    void check_rook_h1() {
+    @MethodSource("provideBishopPosition")
+    @ParameterizedTest(name = "{0}에 비숍이 있다")
+    void check_bishop_positions(ChessBoardPosition expectedPosition) {
         //given
         ChessBoard chessBoard = new ChessBoard();
         //when
         Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
         //then
-        assertThat(boardValue.get(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.ONE)))
-                .isInstanceOf(Rook.class);
+        assertThat(boardValue.get(expectedPosition))
+                .isInstanceOf(Bishop.class);
     }
 
-    @DisplayName("처음 초기화된 체스판의 A8에는 Rook이 있다.")
-    @Test
-    void check_rook_A8() {
-        //given
-        ChessBoard chessBoard = new ChessBoard();
-        //when
-        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
-        //then
-        assertThat(boardValue.get(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.EIGHT)))
-                .isInstanceOf(Rook.class);
+    private static Stream<Arguments> provideRookPosition() {
+        return Stream.of(
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.ONE)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.ONE)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.A, ChessBoardRow.EIGHT)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.EIGHT))
+        );
     }
 
-    @DisplayName("처음 초기화된 체스판의 H8에는 Rook이 있다.")
-    @Test
-    void check_rook_h8() {
-        //given
-        ChessBoard chessBoard = new ChessBoard();
-        //when
-        Map<ChessBoardPosition, Piece> boardValue = chessBoard.getValue();
-        //then
-        assertThat(boardValue.get(new ChessBoardPosition(ChessBoardColumn.H, ChessBoardRow.EIGHT)))
-                .isInstanceOf(Rook.class);
+    private static Stream<Arguments> provideBishopPosition() {
+        return Stream.of(
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.C, ChessBoardRow.ONE)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.F, ChessBoardRow.ONE)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.C, ChessBoardRow.EIGHT)),
+                Arguments.of(new ChessBoardPosition(ChessBoardColumn.F, ChessBoardRow.EIGHT))
+        );
     }
 }

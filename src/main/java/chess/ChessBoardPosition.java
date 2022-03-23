@@ -39,4 +39,9 @@ public class ChessBoardPosition {
     public ChessBoardPosition flipDiagonally() {
         return new ChessBoardPosition(this.column.flip(), this.row.flip());
     }
+
+    @Override
+    public String toString() {
+        return "" + column + row;
+    }
 }
