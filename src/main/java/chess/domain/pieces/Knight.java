@@ -4,8 +4,8 @@ import chess.domain.position.Position;
 
 public class Knight implements Type {
 
-    private static final int FIRST_GAP = 2;
-    private static final int SECOND_GAP = 1;
+    private static final int FIRST_MOVEMENT_LIMIT = 2;
+    private static final int SECOND_MOVEMENT_LIMIT = 1;
 
     @Override
     public String getSymbol() {
@@ -20,10 +20,10 @@ public class Knight implements Type {
     }
 
     private boolean moveHorizontal(int columnGap, int rowGap) {
-        return rowGap == FIRST_GAP && columnGap == SECOND_GAP;
+        return rowGap == FIRST_MOVEMENT_LIMIT && columnGap == SECOND_MOVEMENT_LIMIT;
     }
 
     private boolean moveVertical(int columnGap, int rowGap) {
-        return columnGap == FIRST_GAP && rowGap == SECOND_GAP;
+        return columnGap == FIRST_MOVEMENT_LIMIT && rowGap == SECOND_MOVEMENT_LIMIT;
     }
 }
