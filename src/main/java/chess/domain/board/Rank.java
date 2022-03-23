@@ -25,4 +25,8 @@ public enum Rank {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 rank 값입니다."));
     }
+
+    public static boolean isPawnRank(final Rank rank) {
+        return rank == TWO || rank == SEVEN;
+    }
 }

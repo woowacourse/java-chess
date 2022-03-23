@@ -1,9 +1,12 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RankTest {
 
@@ -16,5 +19,15 @@ class RankTest {
         assertThatThrownBy(() -> Rank.from(invalidValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유효하지 않은 rank 값입니다.");
+    }
+
+    @ParameterizedTest
+    @DisplayName("Rank 값을 받아 폰의 초기 Rank인지 반환한다.")
+    @CsvSource({"TWO, true", "SEVEN, true", "ONE, false"})
+    void isPawnRank(final Rank rank, final boolean expected) {
+        // when
+        final boolean actual = Rank.isPawnRank(rank);
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }
