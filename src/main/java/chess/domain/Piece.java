@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.pieces.Type;
+import chess.domain.position.Position;
 
 import java.util.Objects;
 
@@ -32,5 +33,9 @@ public final class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(color, type);
+    }
+
+    public boolean isMovable(Position source, Position target) {
+        return type.isMovable(source, target);
     }
 }

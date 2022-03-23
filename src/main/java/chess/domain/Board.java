@@ -23,15 +23,20 @@ public final class Board {
     public void move(String source, String target) {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
-        Optional<Piece> wrappedPiece = piece(sourcePosition);
         validateNotEquals(sourcePosition, targetPosition);
-        validatePieceExists(wrappedPiece);
+        Piece piece = findPiece(sourcePosition);
+        if (piece.isMovable(sourcePosition, targetPosition)) {
+            pieces.remove(sourcePosition);
+            pieces.put(targetPosition, piece);
+        }
     }
 
-    private void validatePieceExists(final Optional<Piece> wrappedPiece) {
+    private Piece findPiece(Position sourcePosition) {
+        Optional<Piece> wrappedPiece = piece(sourcePosition);
         if (wrappedPiece.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
         }
+        return wrappedPiece.get();
     }
 
     private void validateNotEquals(Position sourcePosition, Position targetPosition) {

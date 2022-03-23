@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -169,4 +171,80 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("룩을 목적지로 옮길 수 있다")
+    void moveRook_sourceAndTargetGiven() {
+        Piece piece = new Piece(Color.WHITE, new Rook());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("a1"), piece);
+            return pieces;
+        });
+
+        board.move("a1", "a8");
+
+        assertThat(board.piece(Position.of("a8")).get()).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("비숍을 목적지로 옮길 수 있다")
+    void moveBishop_sourceAndTargetGiven() {
+        Piece piece = new Piece(Color.WHITE, new Bishop());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("a1"), piece);
+            return pieces;
+        });
+
+        board.move("a1", "e5");
+
+        assertThat(board.piece(Position.of("e5")).get()).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("퀸을 목적지로 옮길 수 있다")
+    void moveQueen_sourceAndTargetGiven() {
+        Piece piece = new Piece(Color.WHITE, new Queen());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("f5"), piece);
+            return pieces;
+        });
+
+        board.move("f5", "e4");
+
+        assertThat(board.piece(Position.of("e4")).get()).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("나이트를 목적지로 옮길 수 있다")
+    void moveKnight_sourceAndTargetGiven() {
+        Piece piece = new Piece(Color.WHITE, new Knight());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("f5"), piece);
+            return pieces;
+        });
+
+        board.move("f5", "d4");
+
+        assertThat(board.piece(Position.of("d4")).get()).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("킹을 목적지로 옮길 수 있다")
+    void moveKing_sourceAndTargetGiven() {
+        Piece piece = new Piece(Color.WHITE, new King());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("f5"), piece);
+            return pieces;
+        });
+
+        board.move("f5", "g4");
+
+        assertThat(board.piece(Position.of("g4")).get()).isEqualTo(piece);
+    }
+
 }
