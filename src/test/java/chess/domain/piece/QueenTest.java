@@ -14,7 +14,7 @@ class QueenTest {
     @EnumSource(Color.class)
     @DisplayName("퀸 기물 생성")
     void createQueen(Color color) {
-        Piece queen = new Queen(color, new Position('a', '1'));
+        Piece queen = new Queen(color);
         assertThat(queen).isInstanceOf(Queen.class);
     }
 }

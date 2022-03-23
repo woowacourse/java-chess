@@ -16,14 +16,14 @@ class ApplicationTest extends NsTest {
         assertSimpleTest(() -> {
             run("start", "end");
             assertThat(output()).contains(String.format("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s",
-                    "RKBQKBKR",
+                    "RNBQKBNR",
                     "PPPPPPPP",
                     "........",
                     "........",
                     "........",
                     "........",
                     "pppppppp",
-                    "rkbqkbkr"
+                    "rnbqkbnr"
             ));
         });
     }

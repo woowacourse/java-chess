@@ -36,7 +36,7 @@ class ChessBoardTest {
     @DisplayName("해당 위치가 비어있는지 확인")
     void isPositionEmpty(char col, char row, boolean expected) {
         Position position = new Position('a', '1');
-        Piece piece = new Knight(WHITE, position);
+        Piece piece = new Knight(WHITE);
         ChessBoard chessBoard = new ChessBoard(Map.of(position, piece));
 
         assertThat(chessBoard.isPositionEmpty(new Position(col, row))).isEqualTo(expected);
@@ -57,7 +57,7 @@ class ChessBoardTest {
     @DisplayName("입력 위치에 기물 반환")
     void pieceByPosition() {
         Position position = new Position('a', '1');
-        Piece piece = new Knight(WHITE, position);
+        Piece piece = new Knight(WHITE);
         ChessBoard chessBoard = new ChessBoard(Map.of(position, piece));
 
         assertThat(chessBoard.pieceByPosition(position)).isEqualTo(piece);

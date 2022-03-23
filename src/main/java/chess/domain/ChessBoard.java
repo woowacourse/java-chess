@@ -18,12 +18,7 @@ public class ChessBoard {
     }
 
     public static ChessBoard createNewChessBoard() {
-        Map<Position, Piece> pieces = new HashMap<>();
-        PieceFactory.createNewBlackPieces()
-                .forEach(piece -> pieces.put(piece.getPosition(), piece));
-        PieceFactory.createNewWhitePieces()
-                .forEach(piece -> pieces.put(piece.getPosition(), piece));
-        return new ChessBoard(pieces);
+        return new ChessBoard(PieceFactory.createNewChessBoard());
     }
 
     public boolean isPositionEmpty(Position position) {
