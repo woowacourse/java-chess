@@ -21,7 +21,7 @@ class PawnTest {
 
         assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("전진이 아닌 다른 방향으로 이동했습니다.");
+                .hasMessage("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
     }
 
     @Test

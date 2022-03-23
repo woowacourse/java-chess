@@ -31,14 +31,6 @@ public class RookTest {
 
         assertThatThrownBy(() -> rook.move(currentPosition, nextDiagonalPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("상하좌우 중 한 방향으로만 이동해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("움직이지 않은 경우, 예외를 발생시킨다.")
-    void notMoveException() {
-        assertThatThrownBy(() -> rook.move(currentPosition, currentPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("룩은 1칸 이상 이동해야 합니다.");
+                .hasMessage("룩은 상하좌우 중 한 방향으로만 이동해야 합니다.");
     }
 }

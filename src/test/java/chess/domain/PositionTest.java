@@ -39,25 +39,35 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("전진으로 몇 칸 이동하는지 확인한다.")
+    @DisplayName("전진으로 이동하는지 확인한다.")
     void checkMoveForward() {
         final Position currentPosition = new Position(2, 'b');
         final Position destinationPosition = new Position(3, 'b');
-        final int expected = 1;
 
-        final int actual = currentPosition.countMoveForward(destinationPosition);
+        final boolean actual = currentPosition.isMoveForward(destinationPosition);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @Test
-    @DisplayName("대각선으로 몇 칸 이동하는지 확인한다.")
+    @DisplayName("대각선으로 이동하는지 확인한다.")
     void checkMoveDiagonal() {
         final Position currentPosition = new Position(2, 'a');
         final Position destinationPosition = new Position(4, 'c');
-        final int expected = 2;
 
-        final int actual = currentPosition.countMoveDiagonal(destinationPosition);
+        final boolean actual = currentPosition.isMoveDiagonal(destinationPosition);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("목적지까지의 거리를 구한다.")
+    void calculateDistance() {
+        final Position currentPosition = new Position(2, 'a');
+        final Position destinationPosition = new Position(4, 'c');
+        final int expected = 4;
+
+        final int actual = currentPosition.calculateDistance(destinationPosition);
 
         assertThat(actual).isEqualTo(expected);
     }

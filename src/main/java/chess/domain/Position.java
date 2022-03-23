@@ -35,34 +35,23 @@ public class Position {
         return rank == WHITE_PAWN_FIRST_RANK || rank == BLACK_PAWN_FIRST_RANK;
     }
 
-    public int countMoveForward(final Position destination) {
+    public boolean isMoveForward(final Position destination) {
         if (file != destination.file) {
-            throw new IllegalArgumentException("전진이 아닌 다른 방향으로 이동했습니다.");
+            return false;
         }
-        if (destination.rank - rank < 0) {
-            throw new IllegalArgumentException("후진하였습니다.");
-        }
-        return destination.rank - rank;
+        return destination.rank - rank > 0;
     }
 
-    public int countMoveLinear(final Position destination) {
+    public boolean isMoveLinear(final Position destination) {
         final int fileDistance = Math.abs(file - destination.file);
         final int rankDistance = Math.abs(rank - destination.rank);
-
-        if (fileDistance > 0 && rankDistance > 0) {
-            throw new IllegalArgumentException("상하좌우 중 한 방향으로만 이동해야 합니다.");
-        }
-
-        return fileDistance + rankDistance;
+        return fileDistance == 0 && rankDistance > 0 || fileDistance > 0 && rankDistance == 0;
     }
 
-    public int countMoveDiagonal(final Position destination) {
+    public boolean isMoveDiagonal(final Position destination) {
         final int fileDistance = Math.abs(file - destination.file);
         final int rankDistance = Math.abs(rank - destination.rank);
-        if (fileDistance != rankDistance) {
-            throw new IllegalArgumentException("대각선이 아닌 방향으로 이동했습니다.");
-        }
-        return destination.rank - rank;
+        return fileDistance + rankDistance != 0 && fileDistance == rankDistance;
     }
 
     public boolean isMoveOfKnight(final Position destination) {
@@ -72,6 +61,12 @@ public class Position {
             return false;
         }
         return fileDistance != 0 && rankDistance != 0;
+    }
+
+    public int calculateDistance(Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        return fileDistance + rankDistance;
     }
 
     @Override

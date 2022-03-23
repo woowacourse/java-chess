@@ -31,14 +31,6 @@ class BishopTest {
 
         assertThatThrownBy(() -> bishop.move(currentPosition, nextLinearPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("대각선이 아닌 방향으로 이동했습니다.");
-    }
-
-    @Test
-    @DisplayName("움직이지 않은 경우, 예외를 발생시킨다.")
-    void notMoveException() {
-        assertThatThrownBy(() -> bishop.move(currentPosition, currentPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("비숍은 1칸 이상 이동해야 합니다.");
+                .hasMessage("비숍은 대각선으로 이동해야 합니다.");
     }
 }
