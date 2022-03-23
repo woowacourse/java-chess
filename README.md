@@ -54,7 +54,7 @@
 ### Command
 - [x] start와 end를 가진다.
     - [x] [ERROR] start와 end 이외의 값이 오면 예외 처리를 한다.
-- [ ] move를 가진다.
+- [x] move를 가진다.
     
 ## 페어프로그래밍 규칙
 - 최대한 모든 코드를 TDD를 이용하여 작성한다.
