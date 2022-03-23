@@ -15,7 +15,7 @@ public class PawnMoveStrategyTest {
     void isMovableException() {
         Board board = Board.create();
         Position source = Position.valueOf("a7");
-        Position target = Position.valueOf("a4");
+        Position target = Position.valueOf("a8");
 
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy();
         assertThatThrownBy(() -> pawnMoveStrategy.isMovable(board, source, target))

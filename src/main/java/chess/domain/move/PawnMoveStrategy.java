@@ -8,14 +8,18 @@ import java.util.List;
 
 public class PawnMoveStrategy {
 
-    private final static List<MovePattern> PAWN_MOVE_PATTERN = List.of(MovePattern.NORTH,
+    private final static List<MovePattern> BLACK_PAWN_MOVE_PATTERN = List.of(
             MovePattern.SOUTH,
-            MovePattern.NORTHEAST,
-            MovePattern.NORTHWEST,
             MovePattern.SOUTHEAST,
             MovePattern.SOUTHWEST,
-            MovePattern.PAWN_START_MOVE_WHITE,
-            MovePattern.PAWN_START_MOVE_BLACK);
+            MovePattern.PAWN_START_MOVE_BLACK
+    );
+    private final static List<MovePattern> WHITE_PAWN_MOVE_PATTERN = List.of(
+            MovePattern.NORTH,
+            MovePattern.NORTHEAST,
+            MovePattern.NORTHWEST,
+            MovePattern.PAWN_START_MOVE_WHITE
+    );
 
 
     public boolean isMovable(final Board board, final Position source, final Position target) {
@@ -23,11 +27,21 @@ public class PawnMoveStrategy {
         Color color = piece.getColor();
 
         Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
-        int vertical = distance.getVertical();
         int horizon = distance.getHorizon();
+        int vertical = distance.getVertical();
+        MovePattern movePattern = MovePattern.of(horizon, vertical);
+
         if (color == Color.BLACK) {
-             validateStartMoveStrategy(source, color, vertical, horizon);
+            if (!BLACK_PAWN_MOVE_PATTERN.contains(movePattern)) {
+                throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
+            }
+            if (movePattern == MovePattern.PAWN_START_MOVE_BLACK) {
+                if (!source.isPawnStartPosition(color)) {
+                    throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
+                }
+            }
         }
+
         // 색깔 & 처음이면 거리가 버티컬 2인지
         // 색깔 & 처음 아니면 거리가 버티컬 1인지
         // 색깔 & 대각일경우 거리가 ++ or --
@@ -36,13 +50,4 @@ public class PawnMoveStrategy {
 
         return true;
     }
-
-    private void validateStartMoveStrategy(final Position source, final Color color, final int vertical, final int horizon) {
-        if (!(source.isPawnStartPosition(color) && vertical >= -2 && vertical < 0 && horizon == 0)) {
-            throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
-        }
-    }
-
-
-
 }
