@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
-public class Piece {
-    private final String type;
+public abstract class Piece {
     private final Position position;
 
-    public Piece(String type, Position position) {
-        this.type = type;
+    public Piece(Position position) {
         this.position = position;
     }
 
@@ -15,7 +13,5 @@ public class Piece {
         return position;
     }
 
-    public String getType() {
-        return type;
-    }
+    public abstract String getSymbol();
 }
