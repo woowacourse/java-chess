@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class Board {
 
+    static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
     private final Map<Position, Piece> values;
     private static final List<PieceType> BACK_LINE_PIECES = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT,
             ROOK);
@@ -84,7 +85,7 @@ public class Board {
 
     private void validateSourceNotEmpty(Position source) {
         if (values.get(source).equals(new Piece(PieceType.EMPTY, PieceColor.EMPTY))) {
-            throw new IllegalArgumentException("[ERROR] 출발 위치에는 말이 있어야 합니다.");
+            throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
     }
 
