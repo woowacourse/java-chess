@@ -4,6 +4,8 @@ import chess.domain.board.Position;
 import java.util.List;
 import java.util.Objects;
 
+import chess.domain.board.Position;
+
 public abstract class Piece {
 
     protected static final String INVALID_DIRECTION = "진행할 수 없는 방향입니다.";
@@ -97,5 +99,5 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(pieceType);
     }
-
 }
+
