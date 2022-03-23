@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class Board {
     private static final int COLOR_CRITERIA = 15;
     private static final String PIECE_ORDER = "RNBQKBNRPPPPPPPPpppppppprnbqkbnr";
-    private static final Map<Position, Piece> startBoard = new HashMap<>();
+    private static final Map<Position, Piece> startBoard = new LinkedHashMap<>();
 
     private final Map<Position, Piece> board;
 
@@ -47,6 +47,10 @@ public class Board {
     }
 
     public Board() {
-        this.board = new HashMap<>(startBoard);
+        this.board = new LinkedHashMap<>(startBoard);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new LinkedHashMap<>(board);
     }
 }
