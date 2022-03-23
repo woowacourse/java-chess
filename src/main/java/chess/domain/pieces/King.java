@@ -4,6 +4,8 @@ import chess.domain.position.Position;
 
 public class King implements Type {
 
+    public static final int MOVEMENT_LIMIT = 1;
+
     @Override
     public String getSymbol() {
         return "K";
@@ -11,6 +13,6 @@ public class King implements Type {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return source.columnGap(target) <= MOVEMENT_LIMIT && source.rowGap(target) <= MOVEMENT_LIMIT;
     }
 }
