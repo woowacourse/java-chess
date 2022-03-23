@@ -1,3 +1,5 @@
+package domain;
+
 public enum Column {
     A(1, "a"),
     B(2, "b"),

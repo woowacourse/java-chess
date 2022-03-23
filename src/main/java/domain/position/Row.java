@@ -1,3 +1,5 @@
+package domain;
+
 public enum Row {
     ONE(1),
     TWO(2),

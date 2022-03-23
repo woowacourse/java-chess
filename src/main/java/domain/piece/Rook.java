@@ -1,3 +1,5 @@
+package domain;
+
 public class Rook extends Piece {
 
     public Rook(final Player player) {

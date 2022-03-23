@@ -1,3 +1,5 @@
+package domain;
+
 public class Piece {
 
     private final Player player;

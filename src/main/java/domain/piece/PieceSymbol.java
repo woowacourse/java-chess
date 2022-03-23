@@ -1,3 +1,5 @@
+package domain;
+
 public enum PieceSymbol {
     King("K"),
     Queen("Q"),

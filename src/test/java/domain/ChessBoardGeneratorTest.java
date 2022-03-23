@@ -1,5 +1,17 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Bishop;
+import domain.ChessBoardGenerator;
+import domain.Column;
+import domain.King;
+import domain.Knight;
+import domain.Pawn;
+import domain.Piece;
+import domain.Player;
+import domain.Position;
+import domain.Queen;
+import domain.Rook;
+import domain.Row;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
