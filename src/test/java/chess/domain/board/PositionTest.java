@@ -11,7 +11,7 @@ class PositionTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "1aa", "a"})
     @DisplayName("유효하지 않은 값으로 생성하려 할 때 예외를 발생시킨다.")
-    void a_Test(final String invalidValue) {
+    void createException(final String invalidValue) {
         //when, then
         assertThatThrownBy(() -> Position.from(invalidValue))
                 .isInstanceOf(IllegalArgumentException.class)
