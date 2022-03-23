@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -151,4 +152,12 @@ class BoardTest {
         assertThat(board.piece(Position.of(rawPosition)).get()).isEqualTo(new Piece(Color.BLACK, new Pawn()));
     }
 
+    @Test
+    @DisplayName("존재하지 않는 source를 움직이면 예외를 발생한다")
+    void thrown_sourceNotExist() {
+        Board board = new Board(new BoardInitiator());
+        assertThatThrownBy(() -> board.move("a3", "a4"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 말이 존재하지 않습니다.");
+    }
 }
