@@ -23,6 +23,18 @@ public class Position {
         return rank.absMinus(position.rank) == file.absMinus(position.file);
     }
 
+    public boolean isOneStepAway(Position position) {
+        return isOneStepHorizontalOrVertical(position) || isOneStepDiagonal(position);
+    }
+
+    private boolean isOneStepHorizontalOrVertical(Position position) {
+        return rank.absMinus(position.rank) + file.absMinus(position.file) == 1;
+    }
+
+    private boolean isOneStepDiagonal(Position position) {
+        return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
+    }
+
     public File getFile() {
         return file;
     }
@@ -43,4 +55,5 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
 }

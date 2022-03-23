@@ -3,7 +3,7 @@ package chess.piece;
 import chess.Position;
 import chess.Team;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece {
 
     public Bishop(Position position, Team team) {
         super(position, team);
