@@ -8,17 +8,18 @@ import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
-import chess.piece.Rock;
-import java.util.LinkedHashMap;
+import chess.piece.Rook;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Board {
 
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
-        this.board = Map.copyOf(board);
+        this.board = new TreeMap<>(board);
     }
 
     public static Board create() {
@@ -33,7 +34,7 @@ public class Board {
     }
 
     private static Map<Position, Piece> initEmptyBoard(final List<Position> positions) {
-        Map<Position, Piece> value = new LinkedHashMap<>();
+        Map<Position, Piece> value = new TreeMap<>();
         for (Position position : positions) {
             value.put(position, new Blank(Color.NONE));
         }
@@ -42,14 +43,14 @@ public class Board {
 
     private static void initFirstLine(final Color color, Row row, final Map<Position, Piece> board) {
         List<Piece> pieces = List.of(
-                new Rock(color),
+                new Rook(color),
                 new Knight(color),
                 new Bishop(color),
                 new King(color),
                 new Queen(color),
                 new Bishop(color),
                 new Knight(color),
-                new Rock(color)
+                new Rook(color)
                 );
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
@@ -66,5 +67,9 @@ public class Board {
 
     public Piece getPiece(final Position position) {
         return board.get(position);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

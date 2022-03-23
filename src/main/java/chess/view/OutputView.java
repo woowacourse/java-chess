@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.Board;
 import chess.Position;
-import chess.dto.PositionResponseDto;
-import java.util.List;
+import chess.piece.Piece;
+import java.util.Map;
+import java.util.Set;
 
 public class OutputView {
 
@@ -13,22 +13,26 @@ public class OutputView {
         System.out.println("체스 게임을 시작합니다.");
     }
 
-    public static void printBoard(final PositionResponseDto positionResponseDto, Board board) {
-        System.out.println(appendBoard(board, positionResponseDto.getPositions()));
+    public static void printBoard(final Map<Position, Piece> board) {
+        System.out.println(appendBoard(board));
     }
 
-    private static String appendBoard(Board board, List<Position> positions) {
+    private static String appendBoard(final Map<Position, Piece> board) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < positions.size(); i++) {
-            appendNewLine(stringBuilder, i);
-            stringBuilder.append(board.getPiece(positions.get(i)));
+        Set<Position> keys = board.keySet();
+        int unit = 1;
+        for (Position position : keys) {
+            stringBuilder.append(board.get(position));
+            unit = appendNewLine(stringBuilder, unit);
         }
         return stringBuilder.toString();
     }
 
-    private static void appendNewLine(StringBuilder stringBuilder, int i) {
-        if (i % LINE_BREAK_UNIT == 0) {
+    private static int appendNewLine(StringBuilder stringBuilder, int unit) {
+        if (unit % LINE_BREAK_UNIT == 0) {
             stringBuilder.append("\n");
+            return 1;
         }
+        return ++unit;
     }
 }
