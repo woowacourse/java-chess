@@ -13,4 +13,8 @@ public abstract class Piece {
     }
 
     abstract public String display();
+
+    public Position getPosition() {
+        return position;
+    }
 }
