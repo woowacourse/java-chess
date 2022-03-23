@@ -8,11 +8,15 @@ import java.util.stream.IntStream;
 
 public class PositionUtil {
 
-    private static final List<Character> ranks = toCharacters("abcdefgh");
-    private static final List<Character> files = toCharacters("12345678");
+    public static final String VALID_FILES = "abcdefgh";
+    public static final int RANKS_TOTAL_SIZE = 8;
+    public static final int FILES_TOTAL_SIZE = 8;
 
-    private static final Map<Character, Integer> rankMap = new HashMap<>(8);
-    private static final Map<Character, Integer> fileMap = new HashMap<>(8);
+    private static final List<Character> ranks = toCharacters("12345678" );
+    private static final List<Character> files = toCharacters(VALID_FILES);
+
+    private static final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
+    private static final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
 
     private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션 입니다. (a1~h8)";
 
