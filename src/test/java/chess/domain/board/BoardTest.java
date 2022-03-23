@@ -2,10 +2,6 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Board;
-import chess.domain.board.Column;
-import chess.domain.board.Position;
-import chess.domain.board.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +19,6 @@ public class BoardTest {
     @DisplayName("Position을 입력하면 piece를 반환한다.")
     void getPiece() {
         Board board = Board.create();
-        assertThat(board.getPiece(new Position(Column.A, Row.EIGHT))).isEqualTo(new Rook(Color.BLACK));
+        assertThat(board.getPiece(Position.valueOf("a8"))).isEqualTo(new Rook(Color.BLACK));
     }
 }

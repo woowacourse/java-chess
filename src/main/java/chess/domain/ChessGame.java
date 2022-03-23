@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 
 public class ChessGame {
 
@@ -10,9 +11,8 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void move(String source, String target) {
-        if (source.equals("z1")) {
-            throw new IllegalArgumentException("[ERROR] 범위를 초과하였습니다.");
-        }
+    public void move(final String rawSource, final String rawTarget) {
+        Position source = Position.valueOf(rawSource);
+        Position target = Position.valueOf(rawTarget);
     }
 }

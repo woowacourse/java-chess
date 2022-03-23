@@ -23,8 +23,7 @@ public class Board {
     }
 
     public static Board create() {
-        List<Position> positions = Position.init();
-        Map<Position, Piece> emptyBoard = initEmptyBoard(positions);
+        Map<Position, Piece> emptyBoard = initEmptyBoard();
 
         initFirstLine(Color.BLACK, Row.EIGHT, emptyBoard);
         initPawn(Color.BLACK, Row.SEVEN, emptyBoard);
@@ -33,12 +32,15 @@ public class Board {
         return new Board(emptyBoard);
     }
 
-    private static Map<Position, Piece> initEmptyBoard(final List<Position> positions) {
-        Map<Position, Piece> value = new TreeMap<>();
-        for (Position position : positions) {
-            value.put(position, new Blank(Color.NONE));
+    private static Map<Position, Piece> initEmptyBoard() {
+        Map<Position, Piece> emptyBoard = new TreeMap<>();
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
+                emptyBoard.put(Position.valueOf(column.getValue() + row.getValue()),
+                        new Blank(Color.NONE));
+            }
         }
-        return value;
+        return emptyBoard;
     }
 
     private static void initFirstLine(final Color color, Row row, final Map<Position, Piece> board) {
@@ -54,14 +56,14 @@ public class Board {
                 );
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            board.replace(new Position(columns[i], row), pieces.get(i));
+            board.replace(Position.valueOf(columns[i].getValue() + row.getValue()), pieces.get(i));
         }
     }
 
     private static void initPawn(final Color color, Row row, final Map<Position, Piece> board) {
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
-            board.replace(new Position(columns[i], row), new Pawn(color));
+            board.replace(Position.valueOf(columns[i].getValue() + row.getValue()), new Pawn(color));
         }
     }
 
