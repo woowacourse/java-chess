@@ -10,6 +10,7 @@ public class Position {
     private static final char MAX_FILE_RANGE = 'h';
     private static final int WHITE_PAWN_FIRST_RANK = 2;
     private static final int BLACK_PAWN_FIRST_RANK = 7;
+    private static final int KNIGHT_MOVE_DISTANCE = 3;
 
     private final int rank;
     private final char file;
@@ -62,6 +63,15 @@ public class Position {
             throw new IllegalArgumentException("대각선이 아닌 방향으로 이동했습니다.");
         }
         return destination.rank - rank;
+    }
+
+    public boolean isMoveOfKnight(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        if (fileDistance + rankDistance != KNIGHT_MOVE_DISTANCE) {
+            return false;
+        }
+        return fileDistance != 0 && rankDistance != 0;
     }
 
     @Override
