@@ -53,8 +53,12 @@ public enum Direction {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
-    public static List<Direction> getBishopDirections() {
+    public static List<Direction> getDiagonalDirections() {
         return List.of(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    }
+
+    public static List<Direction> getPerpendicularDirections() {
+        return List.of(NORTH, EAST, SOUTH, WEST);
     }
 
     public static List<Direction> getEightStraightDirections() {

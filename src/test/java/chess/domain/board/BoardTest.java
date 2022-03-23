@@ -52,9 +52,9 @@ public class BoardTest {
                 .isInstanceOf(Knight.class);
     }
 
-    @DisplayName("직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @DisplayName("대각선 직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
     @Test
-    void straightMove_Obstacle_Fails() {
+    void diagonalStraightMove_Obstacle_Fails() {
         Board board = new Board();
         board.initialize();
 
@@ -63,13 +63,57 @@ public class BoardTest {
                 .hasMessage("경로에 기물이 존재합니다.");
     }
 
-    @DisplayName("직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @DisplayName("대각선으로 이동하려는 위치에 아군 말이 존재하면 예외가 발생한다.")
     @Test
-    void straightMove_Obstacle_Fail() {
+    void diagonalStraightMove_ObstacleAlly_Fails() {
         Board board = new Board();
         board.initialize();
 
         assertThatThrownBy(() -> board.moveStraight(new Position("c8"), new Position("b7")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능한 위치입니다.");
+    }
+
+    @DisplayName("세로로 직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @Test
+    void verticalStraightMove_Obstacle_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("a6")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 기물이 존재합니다.");
+    }
+
+    @DisplayName("세로로 이동하려는 위치에 아군 말이 존재하면 예외가 발생한다.")
+    @Test
+    void verticalStraightMove_ObstacleAlly_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("a7")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능한 위치입니다.");
+    }
+
+    @DisplayName("가로로 직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")
+    @Test
+    void horizontalStraightMove_Obstacle_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("c8")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 기물이 존재합니다.");
+    }
+
+    @DisplayName("가로로 이동하려는 위치에 아군 말이 존재하면 예외가 발생한다.")
+    @Test
+    void horizontalStraightMove_ObstacleAlly_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("b8")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }

@@ -31,7 +31,7 @@ public class Bishop extends Piece {
     private boolean isInRange(Position targetPosition) {
         List<Position> inRangePosition = new ArrayList<>();
 
-        for (Direction direction : Direction.getBishopDirections()) {
+        for (Direction direction : Direction.getDiagonalDirections()) {
             List<Position> directionPositions = IntStream.rangeClosed(1, Board.RANK_CAPACITY)
                     .mapToObj(product -> new Position(
                             position.getX() + direction.getXDegree() * product,

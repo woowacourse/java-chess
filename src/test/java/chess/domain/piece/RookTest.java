@@ -22,4 +22,33 @@ public class RookTest {
 
         assertThat(rook.getSignature()).isEqualTo("R");
     }
+
+    @DisplayName("타겟 위치가 빈칸일 경우 이동에 성공한다.")
+    @Test
+    void move_Blank() {
+        Rook rook = Rook.createBlack(new Position("a8"));
+
+        assertThat(rook.isMovable(new Blank(new Position("a1"))))
+                .isTrue();
+        assertThat(rook.isMovable(new Blank(new Position("h8"))))
+                .isTrue();
+    }
+
+    @DisplayName("타겟 위치가 적 기물일 경우 공격에 성공한다.")
+    @Test
+    void move_Enemy() {
+        Rook rook = Rook.createBlack(new Position("a8"));
+
+        assertThat(rook.isMovable(Rook.createWhite(new Position("a1"))))
+                .isTrue();
+    }
+
+    @DisplayName("타겟 위치가 같은 팀 기물일 경우 이동에 실패한다.")
+    @Test
+    void move_Ally() {
+        Rook rook = Rook.createBlack(new Position("a8"));
+
+        assertThat(rook.isMovable(Rook.createBlack(new Position("a1"))))
+                .isFalse();
+    }
 }
