@@ -2,7 +2,7 @@ package chess;
 
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
-import static chess.piece.Position.of;
+import static chess.Position.of;
 
 import chess.piece.*;
 import java.util.HashMap;
@@ -40,22 +40,22 @@ public class Board {
 
     private static void createBishop(final Map<Position, Piece> board) {
         board.put(of("c", 1), new Bishop(WHITE));
-        board.put(of("c", 8), new Bishop(WHITE));
-        board.put(of("f", 1), new Bishop(BLACK));
+        board.put(of("f", 1), new Bishop(WHITE));
+        board.put(of("c", 8), new Bishop(BLACK));
         board.put(of("f", 8), new Bishop(BLACK));
     }
 
     private static void createKnight(final Map<Position, Piece> board) {
         board.put(of("b", 1), new Knight(WHITE));
-        board.put(of("b", 8), new Knight(WHITE));
-        board.put(of("g", 1), new Knight(BLACK));
+        board.put(of("g", 1), new Knight(WHITE));
+        board.put(of("b", 8), new Knight(BLACK));
         board.put(of("g", 8), new Knight(BLACK));
     }
 
     private static void createRook(final Map<Position, Piece> board) {
         board.put(of("a", 1), new Rook(WHITE));
-        board.put(of("a", 8), new Rook(WHITE));
-        board.put(of("h", 1), new Rook(BLACK));
+        board.put(of("h", 1), new Rook(WHITE));
+        board.put(of("a", 8), new Rook(BLACK));
         board.put(of("h", 8), new Rook(BLACK));
     }
 
@@ -64,6 +64,10 @@ public class Board {
             board.put(of(column, Row.of(2)), new Pawn(WHITE));
             board.put(of(column, Row.of(7)), new Pawn(BLACK));
         }
+    }
+
+    public Map<Position, Piece> getValue() {
+        return value;
     }
 
     @Override

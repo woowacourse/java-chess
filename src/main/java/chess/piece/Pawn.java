@@ -3,11 +3,7 @@ package chess.piece;
 public class Pawn extends AbstractPiece {
 
     public Pawn(final Color color) {
-        super(color);
+        super(Name.PAWN, color);
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return new PieceType(Name.PAWN);
-    }
 }

@@ -2,5 +2,7 @@ package chess.piece;
 
 public interface Piece {
 
-    PieceType getPieceType();
+    Name getName();
+
+    Color getColor();
 }
