@@ -28,6 +28,10 @@ public class Position {
         this.y = y;
     }
 
+    public static boolean isValidPosition(int x, int y) {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    }
+
     private void validate(String charPosition) {
         validateLength(charPosition);
         validateAlphabetRange(charPosition);

@@ -33,6 +33,10 @@ public enum Direction {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
+    public static List<Direction> getBishopDirections() {
+        return List.of(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    }
+
     public int getXDegree() {
         return xDegree;
     }

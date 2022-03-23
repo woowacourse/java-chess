@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +28,8 @@ public class KnightTest {
     void move_Blank() {
         Knight knight = Knight.createBlack(new Position("b8"));
 
-        knight.move(new Blank(new Position("a6")));
-
-        assertThat(knight.getPosition()).isEqualTo(new Position("a6"));
+        assertThat(knight.isMovable(new Blank(new Position("a6"))))
+                .isTrue();
     }
 
     @DisplayName("타겟 위치가 적 기물일 경우 공격에 성공한다.")
@@ -39,9 +37,8 @@ public class KnightTest {
     void move_Enemy() {
         Knight knight = Knight.createBlack(new Position("b8"));
 
-        knight.move(Knight.createWhite(new Position("a6")));
-
-        assertThat(knight.getPosition()).isEqualTo(new Position("a6"));
+        assertThat(knight.isMovable(Knight.createWhite(new Position("a6"))))
+                .isTrue();
     }
 
     @DisplayName("타겟 위치가 같은 팀 기물일 경우 이동에 실패한다.")
@@ -49,8 +46,7 @@ public class KnightTest {
     void move_Ally() {
         Knight knight = Knight.createBlack(new Position("b8"));
 
-        assertThatThrownBy(() -> knight.move(Knight.createBlack(new Position("a6"))))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동이 불가능한 위치입니다.");
+        assertThat(knight.isMovable(Knight.createBlack(new Position("a6"))))
+                .isFalse();
     }
 }

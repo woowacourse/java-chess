@@ -15,7 +15,8 @@ import java.util.Map;
 
 public class Board {
 
-    private static final int RANK_CAPACITY = 8;
+    public static final int RANK_CAPACITY = 8;
+    private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
 
     private final Map<Integer, Rank> ranks;
 
@@ -86,10 +87,14 @@ public class Board {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
 
-        if (selected.move(targetPiece)) {
+        if (selected.isMovable(targetPiece)) {
             updatePiece(target, selected);
             updatePiece(start, new Blank(start));
+            selected.updatePosition(targetPiece.getPosition());
+            return;
         }
+
+        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
     }
 
     private void updatePiece(Position position, Piece piece) {

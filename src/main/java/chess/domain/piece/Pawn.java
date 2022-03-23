@@ -17,7 +17,7 @@ public class Pawn extends Piece {
         return new Pawn(position, BLACK_SIGNATURE);
     }
 
-    public boolean move(Piece piece) {
+    public boolean isMovable(Piece piece) {
         return false;
     }
 }

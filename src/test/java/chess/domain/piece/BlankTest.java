@@ -21,7 +21,7 @@ public class BlankTest {
     void move_Blank_Fails() {
         Blank blank = new Blank(new Position("a3"));
 
-        assertThatThrownBy(() -> blank.move(new Blank(new Position("a4"))))
+        assertThatThrownBy(() -> blank.isMovable(new Blank(new Position("a4"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("빈 칸은 이동할 수 없습니다.");
     }

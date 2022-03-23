@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 public abstract class Piece {
-    protected static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
 
     protected Position position;
     private final String signature;
@@ -11,7 +10,7 @@ public abstract class Piece {
         this.signature = signature;
     }
 
-    public abstract boolean move(Piece piece);
+    public abstract boolean isMovable(Piece piece);
 
     public boolean isBlank() {
         return false;
@@ -27,5 +26,9 @@ public abstract class Piece {
 
     public String getSignature() {
         return signature;
+    }
+
+    public void updatePosition(Position position) {
+        this.position = position;
     }
 }

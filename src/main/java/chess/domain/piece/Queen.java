@@ -17,7 +17,7 @@ public class Queen extends Piece {
         return new Queen(position, BLACK_SIGNATURE);
     }
 
-    public boolean move(Piece piece) {
+    public boolean isMovable(Piece piece) {
         return false;
     }
 }

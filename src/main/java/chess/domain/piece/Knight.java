@@ -20,18 +20,17 @@ public class Knight extends Piece {
         return new Knight(position, BLACK_SIGNATURE);
     }
 
-    public boolean move(Piece piece) {
-        if (isInRange(piece) && isValidPosition(piece)) {
-            position = piece.getPosition();
-            return true;
-        }
-        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
+    @Override
+    public boolean isMovable(Piece piece) {
+        return isInRange(piece.getPosition()) && isValidPosition(piece);
     }
 
-    private boolean isInRange(Piece piece) {
-        Position targetPosition = piece.getPosition();
+    private boolean isInRange(Position targetPosition) {
         List<Position> inRangePosition = Direction.getKnightDirections()
                 .stream()
+                .filter(direction -> Position.isValidPosition(
+                        position.getX() + direction.getXDegree(),
+                        position.getY() +direction.getYDegree()))
                 .map(direction -> new Position(
                         position.getX() + direction.getXDegree(),
                         position.getY() + direction.getYDegree()))
