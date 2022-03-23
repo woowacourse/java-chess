@@ -1,7 +1,7 @@
 package chess;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ public class ChessTest {
     @Test
     void command_exception() {
         assertThatThrownBy(() ->
-            Command.of("not found command")
+            Command.startEnd("not found command")
         ).isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining(Command.NOT_FOUND_COMMAND_EXCEPTION);
     }
@@ -23,6 +23,6 @@ public class ChessTest {
     @ParameterizedTest
     @ValueSource(strings = {"start", "end"})
     void command_normal(String input) {
-        assertDoesNotThrow(() -> Command.of(input));
+        assertDoesNotThrow(() -> Command.startEnd(input));
     }
 }
