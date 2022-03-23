@@ -9,12 +9,49 @@ public class Piece {
 
     private final Color color;
     private final PieceType type;
-    private final Position position;
+    private Position position;
+    private boolean isFirstMove;
 
     public Piece(Color color, PieceType type, Position position) {
         this.color = color;
         this.type = type;
         this.position = position;
+        this.isFirstMove = true;
+    }
+
+    public void move(Position to) {
+        Direction direction = position.getDirection(to);
+
+        if (color.isBackward(direction)) {
+            throw new IllegalArgumentException();
+        }
+
+        if (isInvalidRange(to) || isMoveOverOneSpaceAfterFirstMove(to)) {
+            throw new IllegalArgumentException();
+        }
+
+        this.position = to;
+        this.isFirstMove = false;
+    }
+
+    private boolean isInvalidRange(Position to) {
+        return position.getDistance(to) > 2;
+    }
+
+    private boolean isMoveOverOneSpaceAfterFirstMove(Position to) {
+        return !isFirstMove && position.getDistance(to) >= 2;
+    }
+
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public PieceType getType() {
+        return type;
     }
 
     @Override
@@ -66,17 +103,5 @@ public class Piece {
 
     public static Piece rook(Color color, Position position) {
         return new Piece(color, ROOK, position);
-    }
-
-    public boolean isSamePosition(Position position) {
-        return this.position.equals(position);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public PieceType getType() {
-        return type;
     }
 }

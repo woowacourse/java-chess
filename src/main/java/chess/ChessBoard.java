@@ -4,12 +4,14 @@ import static chess.Col.*;
 import static chess.Piece.*;
 import static chess.Row.*;
 
-import java.util.List;
+import java.util.*;
 
 public class ChessBoard {
 
-    public List<Piece> getPieces() {
-        return List.of(
+    private final List<Piece> pieces;
+
+    public ChessBoard() {
+        pieces = List.of(
             rook(Color.BLACK, new Position(A, EIGHT)),
             knight(Color.BLACK, new Position(B, EIGHT)),
             bishop(Color.BLACK, new Position(C, EIGHT)),
@@ -42,5 +44,34 @@ public class ChessBoard {
             pawn(Color.WHITE, new Position(F, TWO)),
             pawn(Color.WHITE, new Position(G, TWO)),
             pawn(Color.WHITE, new Position(H, TWO)));
+    }
+
+    public ChessBoard(List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public void move(Position from, Position to) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException();
+        }
+
+        Optional<Piece> optionalPiece = findPieceByPosition(from);
+
+        if (optionalPiece.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Piece piece = optionalPiece.get();
+        piece.move(to);
+    }
+
+    private Optional<Piece> findPieceByPosition(Position from) {
+        return pieces.stream()
+            .filter(piece -> piece.isSamePosition(from))
+            .findFirst();
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 }

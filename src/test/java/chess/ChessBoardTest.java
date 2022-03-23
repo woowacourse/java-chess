@@ -3,12 +3,16 @@ package chess;
 import static chess.Col.*;
 import static chess.Piece.*;
 import static chess.Row.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessBoardTest {
 
@@ -23,10 +27,9 @@ class ChessBoardTest {
             assertThat(pieces).hasSize(32);
             assertPieces(pieces);
         });
-
     }
 
-    private void assertPieces(List<Piece> pieces) {
+    private static void assertPieces(List<Piece> pieces) {
         assertThat(pieces).contains(
             rook(Color.BLACK, new Position(A, EIGHT)),
             knight(Color.BLACK, new Position(B, EIGHT)),
@@ -60,5 +63,89 @@ class ChessBoardTest {
             pawn(Color.WHITE, new Position(F, TWO)),
             pawn(Color.WHITE, new Position(G, TWO)),
             pawn(Color.WHITE, new Position(H, TWO)));
+    }
+
+    @Test
+    @DisplayName("움직이려는 위치에 기물이 존재하지 않으면 예외 발생")
+    void selectedNotFoundPieces() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThatThrownBy(() -> chessBoard.move(new Position(D, FIVE), new Position(F, SIX)))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("from과 to 위치가 동일한 경우 예외발생")
+    void selectSameFromAndToPosition() {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(Color.BLACK, new Position(A, SEVEN))));
+
+        assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, SEVEN)))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFirstMoveForwardPawn")
+    @DisplayName("폰을 처음에 앞으로 한칸 또는 두칸을 움직일 수 있다.")
+    void movePawn(Color color, Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(color, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(pawn(color, to));
+    }
+
+    private static Stream<Arguments> provideFirstMoveForwardPawn() {
+        return Stream.of(
+            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, SIX)),
+            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, THREE)),
+            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, FIVE)),
+            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, FOUR))
+        );
+    }
+
+    @Test
+    @DisplayName("폰은 처음에는 3칸 이상 이동 시 예외가 발생한다.")
+    void throwExceptionMovePawnOverTwoSpaceWhenFirstMove() {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(Color.BLACK, new Position(A, SEVEN))));
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, FOUR)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(pawn(Color.BLACK, new Position(A, SEVEN)));
+        });
+    }
+
+    @Test
+    @DisplayName("폰이 처음 움직인 이후 부터는 두칸 이상 이동시 예외 발생")
+    void throwExceptionMovePawnOverOneSpaceAfterFirstMove() {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(Color.BLACK, new Position(A, SEVEN))));
+
+        chessBoard.move(new Position(A, SEVEN), new Position(A, SIX));
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(new Position(A, SIX), new Position(A, FOUR)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(pawn(Color.BLACK, new Position(A, SIX)));
+        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideMoveBackwardPawn")
+    @DisplayName("폰은 뒤로 움직일 경우 예외가 발생한다.")
+    void throwExceptionMovePawnBackward(Color color, Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(pawn(color, from)));
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(pawn(color, from));
+        });
+    }
+
+    private static Stream<Arguments> provideMoveBackwardPawn() {
+        return Stream.of(
+            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, EIGHT)),
+            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, ONE))
+        );
     }
 }

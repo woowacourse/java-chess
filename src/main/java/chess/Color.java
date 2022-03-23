@@ -2,5 +2,15 @@ package chess;
 
 public enum Color {
 
-    BLACK, WHITE;
+    BLACK(Direction.UP), WHITE(Direction.DOWN);
+
+    private final Direction backward;
+
+    Color(Direction backward) {
+        this.backward = backward;
+    }
+
+    public boolean isBackward(Direction direction) {
+        return backward == direction;
+    }
 }

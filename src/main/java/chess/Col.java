@@ -1,5 +1,8 @@
 package chess;
 
+import static chess.Direction.DOWN;
+import static chess.Direction.UP;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,5 +27,16 @@ public enum Col {
         return Arrays.stream(values())
             .sorted(Comparator.<Col>comparingInt(col -> col.value).reversed())
             .collect(Collectors.toList());
+    }
+
+    public Direction getDirection(Col other) {
+        if (value < other.value) {
+            return UP;
+        }
+        return DOWN;
+    }
+
+    public int getDiff(Col col) {
+        return Math.abs(this.value - col.value);
     }
 }

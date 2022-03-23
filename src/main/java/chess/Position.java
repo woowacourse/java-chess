@@ -1,5 +1,8 @@
 package chess;
 
+import static chess.Direction.DOWN;
+import static chess.Direction.UP;
+
 import java.util.Objects;
 
 public class Position {
@@ -10,6 +13,14 @@ public class Position {
     public Position(Row row, Col col) {
         this.row = row;
         this.col = col;
+    }
+
+    public int getDistance(Position other) {
+        return col.getDiff(other.col);
+    }
+
+    public Direction getDirection(Position to) {
+        return col.getDirection(to.col);
     }
 
     @Override
@@ -27,5 +38,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, col);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+            "row=" + row +
+            ", col=" + col +
+            '}';
     }
 }
