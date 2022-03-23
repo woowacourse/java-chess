@@ -13,4 +13,9 @@ public class Queen implements Type {
     public boolean isMovable(Position source, Position target) {
         return source.isStraight(target) || source.isDiagonal(target);
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

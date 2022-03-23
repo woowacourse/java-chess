@@ -46,4 +46,12 @@ public enum Row {
     public int gap(Row row) {
         return Math.abs(this.value - row.value);
     }
+
+    public boolean isGreaterThan(Row row) {
+        return row.value < this.value;
+    }
+
+    public boolean isSmallerThan(Row row) {
+        return this.value < row.value;
+    }
 }

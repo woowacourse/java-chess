@@ -19,6 +19,11 @@ public class Knight implements Type {
         return moveVertical(columnGap, rowGap) || moveHorizontal(columnGap, rowGap);
     }
 
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
     private boolean moveHorizontal(int columnGap, int rowGap) {
         return rowGap == FIRST_MOVEMENT_LIMIT && columnGap == SECOND_MOVEMENT_LIMIT;
     }

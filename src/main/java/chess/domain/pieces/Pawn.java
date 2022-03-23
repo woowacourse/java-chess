@@ -18,4 +18,9 @@ public final class Pawn implements Type {
         int columnGap = source.columnGap(target);
         return rowGap == VERTICAL_MOVEMENT_LIMIT && columnGap == HORIZONTAL_MOVEMENT_LIMIT;
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

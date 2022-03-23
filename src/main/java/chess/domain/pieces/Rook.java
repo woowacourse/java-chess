@@ -13,4 +13,9 @@ public class Rook implements Type {
     public boolean isMovable(Position source, Position target) {
         return source.isStraight(target);
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

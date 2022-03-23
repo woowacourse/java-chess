@@ -36,6 +36,17 @@ public final class Piece {
     }
 
     public boolean isMovable(Position source, Position target) {
-        return type.isMovable(source, target);
+        boolean movable = type.isMovable(source, target);
+        if (movable && type.isPawn()) {
+            return checkPawnDirection(source, target);
+        }
+        return movable;
+    }
+
+    private boolean checkPawnDirection(Position source, Position target) {
+        if (color.isBlack()) {
+            return source.isAbove(target);
+        }
+        return source.isBelow(target);
     }
 }

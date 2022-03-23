@@ -19,19 +19,6 @@ public final class Position {
         return new Position(column, row);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Position)) return false;
-        Position position = (Position) o;
-        return column == position.column && row == position.row;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(column, row);
-    }
-
     public boolean isStraight(Position target) {
         return isVertical(target) || isHorizontal(target);
     }
@@ -56,5 +43,26 @@ public final class Position {
 
     public int rowGap(Position target) {
         return row.gap(target.row);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position position = (Position) o;
+        return column == position.column && row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
+    }
+
+    public boolean isAbove(Position target) {
+        return row.isGreaterThan(target.row);
+    }
+
+    public boolean isBelow(Position target) {
+        return row.isSmallerThan(target.row);
     }
 }
