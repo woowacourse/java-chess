@@ -2,7 +2,9 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -36,5 +38,27 @@ class MovingOrderTest {
         );
 
         assertThat(movingOrder.isSameDirection(direction)).isTrue();
+    }
+
+    @Test
+    @DisplayName("White Pawn이 시작지점에서 움직이는지 확인할 수 있다.")
+    void isInitLineOfWhitePawn() {
+        MovingOrder movingOrder = new MovingOrder(
+                new Position(File.A, Rank.TWO),
+                new Position(File.A, Rank.THREE)
+        );
+
+        assertThat(movingOrder.isInitLineOfPawn(Color.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Black Pawn이 시작지점에서 움직이는지 확인할 수 있다.")
+    void isInitLineOfBlackPawn() {
+        MovingOrder movingOrder = new MovingOrder(
+                new Position(File.A, Rank.SEVEN),
+                new Position(File.A, Rank.SIX)
+        );
+
+        assertThat(movingOrder.isInitLineOfPawn(Color.BLACK)).isTrue();
     }
 }
