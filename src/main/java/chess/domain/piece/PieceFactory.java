@@ -21,6 +21,7 @@ import static chess.domain.piece.Type.ROOK;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.Position;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,9 +48,7 @@ public class PieceFactory {
     }
 
     public static List<Piece> blackPieces() {
-        List<Piece> pieces = Arrays.stream(Rank.values())
-                .map(rank -> new Piece(PAWN.getSymbol().toUpperCase(), new Position(rank, SEVEN)))
-                .collect(toList());
+        List<Piece> pieces = new ArrayList<>();
 
         pieces.add(new Piece(ROOK.getSymbol().toUpperCase(), new Position(A, EIGHT)));
         pieces.add(new Piece(KNIGHT.getSymbol().toUpperCase(), new Position(B, EIGHT)));
@@ -59,6 +58,12 @@ public class PieceFactory {
         pieces.add(new Piece(BISHOP.getSymbol().toUpperCase(), new Position(F, EIGHT)));
         pieces.add(new Piece(KNIGHT.getSymbol().toUpperCase(), new Position(G, EIGHT)));
         pieces.add(new Piece(ROOK.getSymbol().toUpperCase(), new Position(H,  EIGHT)));
+
+        pieces.addAll(
+                Arrays.stream(Rank.values())
+                .map(rank -> new Piece(PAWN.getSymbol().toUpperCase(), new Position(rank, SEVEN)))
+                .collect(toList())
+        );
 
         return pieces;
     }

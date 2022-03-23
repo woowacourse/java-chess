@@ -14,4 +14,8 @@ public class Piece {
     public Position getPosition() {
         return position;
     }
+
+    public String getType() {
+        return type;
+    }
 }
