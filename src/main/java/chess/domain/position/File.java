@@ -27,11 +27,20 @@ public enum File {
     }
 
     public File plus() {
-        return of((char) (value + (char) 1));
+        try {
+            return of((char) (value + (char) 1));
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
     }
 
     public File minus() {
-        return of((char) (value - (char) 1));
+        try {
+            return of((char) (value - (char) 1));
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
+
     }
 
     public char getValue() {

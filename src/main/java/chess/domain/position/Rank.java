@@ -27,11 +27,19 @@ public enum Rank {
     }
 
     public Rank plus() {
-        return of(value + 1);
+        try {
+            return of(value + 1);
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
     }
 
     public Rank minus() {
-        return of(value - 1);
+        try {
+            return of(value - 1);
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
     }
 
     public int getValue() {

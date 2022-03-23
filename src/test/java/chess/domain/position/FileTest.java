@@ -49,4 +49,19 @@ public class FileTest {
         assertThat(file.minus()).isEqualTo(File.A);
     }
 
+    @Test
+    @DisplayName("File을 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
+    void plusOutOfBounds() {
+        File file = File.of('h');
+
+        assertThat(file.plus()).isNull();
+    }
+
+    @Test
+    @DisplayName("File을 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
+    void minusOutOfBounds() {
+        File file = File.of('a');
+
+        assertThat(file.minus()).isNull();
+    }
 }
