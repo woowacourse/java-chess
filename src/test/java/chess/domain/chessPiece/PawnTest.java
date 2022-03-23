@@ -55,16 +55,16 @@ class PawnTest {
                 .doesNotThrowAnyException();
     }
 
-//    @ParameterizedTest
-//    @ValueSource(strings = {"b7", "f7", "f3", "b3"})
-//    @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
-//    void canCatch_canCatch() {
-//        // given
-//        ChessPiece pawn = new Pawn(Color.BLACK);
-//
-//        // when
-//        // then
-//        Assertions.assertThatCode(() -> pawn.canMove(initialPosition, new Position("c4")))
-//                .doesNotThrowAnyException();
-//    }
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK:e4","BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
+    @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
+    void canCatch_canCatch(Color color, String target) {
+        // given
+        ChessPiece pawn = new Pawn(color);
+
+        // when
+        // then
+        Assertions.assertThatCode(() -> ((Pawn) pawn).checkCrossMove(initialPosition, new Position(target)))
+                .doesNotThrowAnyException();
+    }
 }

@@ -49,12 +49,26 @@ public class Pawn extends ChessPiece {
 
     private boolean checkMove(Position from, Position to, int movableDistance, String initFile) {
         int fileDistance = from.fileDistance(to);
-        if (movableDistance == fileDistance) {
+        if (movableDistance == fileDistance && from.isSameRank(to)) {
             return true;
         }
         if (from.isSameFile(initFile)) {
             return fileDistance == movableDistance * 2;
         }
         return false;
+    }
+
+    public void checkCrossMove(Position from, Position to) {
+        int fileDistance = from.fileDistance(to);
+        if (Math.abs(from.rankDistance(to)) == 1) {
+            if (isBlack() && fileDistance == 1) {
+                return;
+            }
+            if (!isBlack() && fileDistance == -1) {
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
 }
