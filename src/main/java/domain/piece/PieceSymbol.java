@@ -1,6 +1,6 @@
 package domain.piece;
 
-public enum Unit {
+public enum PieceSymbol {
 
     King("K"),
     Queen("Q"),
@@ -11,7 +11,7 @@ public enum Unit {
 
     private String symbol;
 
-    Unit(final String symbol) {
+    PieceSymbol(final String symbol) {
         this.symbol = symbol;
     }
 

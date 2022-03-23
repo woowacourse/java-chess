@@ -11,9 +11,9 @@ public abstract class Piece {
 
     private List<Position> positions;
     private final Player player;
-    private final Unit unit;
+    private final PieceSymbol unit;
 
-    public Piece(final Player player, final Unit unit) {
+    public Piece(final Player player, final PieceSymbol unit) {
         this.player = player;
         this.unit = unit;
     }

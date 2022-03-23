@@ -12,6 +12,14 @@ public final class Position {
         this.y = y;
     }
 
+    public int getX() {
+        return x.getX();
+    }
+
+    public int getY() {
+        return y.getY();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -27,14 +35,6 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(y, x);
-    }
-
-    public int getX() {
-        return x.getX();
-    }
-
-    public int getY() {
-        return y.getY();
     }
 
     @Override

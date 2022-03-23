@@ -1,7 +1,6 @@
 package domain.position;
 
 import java.util.Arrays;
-import javax.xml.xpath.XPath;
 
 public enum XPosition {
 
@@ -27,14 +26,6 @@ public enum XPosition {
                 .filter(value -> value.x == x)
                 .findFirst()
                 .orElse(null);
-
-
-//        for(XPosition xPosition : XPosition.values()){
-//            if(xPosition.x == x){
-//                return xPosition;
-//            }
-//        }
-
     }
 
     public int getX() {

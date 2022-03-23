@@ -6,7 +6,7 @@ import java.util.List;
 public final class Pawn extends Piece {
 
     public Pawn(final Player player) {
-        super(player, Unit.Pawn);
+        super(player, PieceSymbol.Pawn);
     }
 
     @Override

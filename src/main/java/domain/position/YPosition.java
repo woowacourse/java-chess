@@ -19,11 +19,6 @@ public enum YPosition {
         this.y = y;
     }
 
-    @Override
-    public String toString() {
-        return "YPosition{" + "y=" + y + '}';
-    }
-
     public static YPosition of(int y) {
         return Arrays.stream(values())
                 .filter(value -> value.y == y)
@@ -33,5 +28,10 @@ public enum YPosition {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return "YPosition{" + "y=" + y + '}';
     }
 }

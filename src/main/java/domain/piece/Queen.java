@@ -6,7 +6,7 @@ import java.util.List;
 public final class Queen extends Piece {
 
     public Queen(final Player player) {
-        super(player, Unit.Queen);
+        super(player, PieceSymbol.Queen);
     }
 
     @Override
