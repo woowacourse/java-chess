@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import java.util.List;
 
 public final class Knight extends Piece{
     public Knight(Color color) {
@@ -8,7 +9,10 @@ public final class Knight extends Piece{
     }
 
     @Override
-    boolean movable(String position, Piece target) {
-        return false;
+    public boolean movable(List<Integer> distances, Piece target) {
+        boolean isMovableDistance = isMovableDistance(distances);
+        boolean isOpponent = isOpponent(target);
+
+        return isMovableDistance && isOpponent;
     }
 }
