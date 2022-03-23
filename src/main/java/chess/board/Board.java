@@ -15,4 +15,8 @@ public class Board {
     public static Board of(BoardGenerator generator) {
         return new Board(generator.generate());
     }
+
+    public Map<Point, Piece> getPointPieces() {
+        return Map.copyOf(pointPieces);
+    }
 }

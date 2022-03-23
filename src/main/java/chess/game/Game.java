@@ -1,5 +1,10 @@
 package chess.game;
 
+import chess.board.Point;
+import chess.piece.Piece;
+
+import java.util.Map;
+
 public class Game {
 
     private GameState state;
@@ -14,5 +19,9 @@ public class Game {
 
     public boolean isRunnable() {
         return state.isRunnable();
+    }
+
+    public Map<Point, Piece> getPointPieces() {
+        return state.getPointPieces();
     }
 }
