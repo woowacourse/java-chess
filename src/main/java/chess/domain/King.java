@@ -3,6 +3,6 @@ package chess.domain;
 public class King extends Piece {
 
     public King(String team) {
-        super(team);
+        super(team, King.class.getSimpleName());
     }
 }
