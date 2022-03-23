@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
+
 public abstract class AbstractPiece {
 
     private final PieceColor pieceColor;

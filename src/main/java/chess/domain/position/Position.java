@@ -21,6 +21,14 @@ public class Position {
                 .orElseThrow(() -> new NoSuchElementException("좌표가 존재하지 않습니다."));
     }
 
+    public boolean isSameXAxis(Position other) {
+        return this.xAxis.equals(other.xAxis);
+    }
+
+    public boolean isSameYAxis(Position other) {
+        return this.yAxis.equals(other.yAxis);
+    }
+
     @Override
     public String toString() {
         return "Position{" +
