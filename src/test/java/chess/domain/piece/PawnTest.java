@@ -14,7 +14,7 @@ class PawnTest {
     @EnumSource(Color.class)
     @DisplayName("폰 기물 생성")
     void createPawn(Color color) {
-        Piece pawn = new Pawn(color, new Position('a', '1'));
+        Piece pawn = new Pawn(color);
         assertThat(pawn).isInstanceOf(Pawn.class);
     }
 }
