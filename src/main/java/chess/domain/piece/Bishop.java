@@ -10,6 +10,8 @@ public class Bishop extends Piece{
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return false;
+        int height = fromPosition.getOrdinateDifference(toPosition);
+        int width = fromPosition.getAbscissaDifference(toPosition);
+        return Math.pow(height,2) == Math.pow(width,2);
     }
 }
