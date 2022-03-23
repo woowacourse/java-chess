@@ -21,6 +21,10 @@ public abstract class AbstractPiece {
     }
 
     public boolean isMovable(Position from, Position to) {
+        if (from == to) {
+            return false;
+        }
+
         return pieceType.isMovable(from, to);
     }
 }

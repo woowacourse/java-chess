@@ -29,6 +29,30 @@ public class Position {
         return this.yAxis.equals(other.yAxis);
     }
 
+    public boolean isOnDiagonal(Position other) {
+        int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
+        int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());
+
+        return xAxisDelta == yAxisDelta;
+    }
+
+    public boolean isFarFromMoreThanOne(Position other) {
+        int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
+        int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());
+
+        return xAxisDelta > 1 || yAxisDelta > 1;
+    }
+
+    public boolean isOnSevenShape(Position other) {
+        boolean condition1 = Math.abs(this.xAxis.ordinal() - other.xAxis.ordinal()) == 2
+                && Math.abs(this.yAxis.ordinal() - other.yAxis.ordinal()) == 1;
+
+        boolean condition2 = Math.abs(this.xAxis.ordinal() - other.xAxis.ordinal()) == 1
+                && Math.abs(this.yAxis.ordinal() - other.yAxis.ordinal()) == 2;
+
+        return condition1 || condition2;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
