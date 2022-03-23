@@ -12,12 +12,12 @@ public class ChessBoard {
         this.board = boardGenerator.generate();
     }
 
-    public String getSymbol(final Position position) {
+    public String symbol(final Position position) {
         final Piece piece = board.get(position);
         if (piece == null) {
             return ".";
         }
-        return piece.getSymbol();
+        return piece.symbol();
     }
 
     @Override

@@ -14,7 +14,7 @@ public class OutputView {
         Arrays.sort(rows, Collections.reverseOrder());
         for (Row row : rows) {
             for (Column column : Column.values()) {
-                System.out.print(chessBoard.getSymbol(new Position(row,column)));
+                System.out.print(chessBoard.symbol(new Position(row,column)));
             }
             System.out.println();
         }

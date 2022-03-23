@@ -10,11 +10,11 @@ public abstract class Piece {
         this.unit = unit;
     }
 
-    public Player getPlayer() {
-        return player;
+    public boolean checkSamePlayer(Player player) {
+        return this.player == player;
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return unit.getSymbol(player);
     }
 
