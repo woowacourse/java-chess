@@ -12,6 +12,14 @@ public abstract class Piece {
 		this.color = color;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof Piece)) {
