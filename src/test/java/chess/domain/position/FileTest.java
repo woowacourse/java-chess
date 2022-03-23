@@ -35,4 +35,18 @@ public class FileTest {
             .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
     }
 
+    @Test
+    @DisplayName("File을 1 증가시킨다.")
+    void plus() {
+        File file = File.of('b');
+        assertThat(file.plus()).isEqualTo(File.C);
+    }
+
+    @Test
+    @DisplayName("File을 1 감소시킨다.")
+    void minus() {
+        File file = File.of('b');
+        assertThat(file.minus()).isEqualTo(File.A);
+    }
+
 }

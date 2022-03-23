@@ -18,20 +18,34 @@ public class RankTest {
     @Test
     @DisplayName("Rank에 1~8값이 있는지 확인한다.")
     void containValue() {
-        assertThat(Rank.ONE.getValue()).isEqualTo("1");
+        assertThat(Rank.ONE.getValue()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("값을 이용해 Rank를 찾는다.")
     void findRank() {
-        assertThat(Rank.of("7")).isEqualTo(Rank.SEVEN);
+        assertThat(Rank.of(7)).isEqualTo(Rank.SEVEN);
     }
 
     @Test
     @DisplayName("1~8 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
-        assertThatThrownBy(() -> Rank.of("9"))
+        assertThatThrownBy(() -> Rank.of(9))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 존재하지 않는 Rank 값 입니다.");
+    }
+
+    @Test
+    @DisplayName("Rank를 1 증가시킨다.")
+    void plus() {
+        Rank rank = Rank.of(5);
+        assertThat(rank.plus()).isEqualTo(Rank.SIX);
+    }
+
+    @Test
+    @DisplayName("Rank를 1 감소시킨다.")
+    void minus() {
+        Rank rank = Rank.of(5);
+        assertThat(rank.minus()).isEqualTo(Rank.FOUR);
     }
 }

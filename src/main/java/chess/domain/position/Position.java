@@ -13,9 +13,17 @@ public class Position {
     }
 
     public static Position create(final String position) {
-        final File file = File.of(position.substring(0, 1));
-        final Rank rank = Rank.of(position.substring(1));
+        final File file = File.of(position.charAt(0));
+        final Rank rank = Rank.of(toRankValue(position.substring(1)));
         return new Position(file, rank);
+    }
+
+    private static int toRankValue(final String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다.");
+        }
     }
 
     @Override
