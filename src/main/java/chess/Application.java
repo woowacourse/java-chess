@@ -1,6 +1,6 @@
 package chess;
 
-import static chess.view.InputView.requestMoveInput;
+import static chess.view.InputView.requestValidMoveInput;
 import static chess.view.InputView.requestStartOrEndInput;
 import static chess.view.InputView.requestStatusOrEndInput;
 import static chess.view.OutputView.printBoard;
@@ -22,7 +22,7 @@ public class Application {
         ChessGame game = new ChessGame();
         printBoard(new BoardDto(game));
         while(!game.isEnd()) {
-            game.moveChessmen(requestMoveInput());
+            game.moveChessmen(requestValidMoveInput());
             printBoard(new BoardDto(game));
         }
         printGameOverInstructions();

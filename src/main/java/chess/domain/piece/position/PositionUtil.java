@@ -12,11 +12,11 @@ public class PositionUtil {
     public static final int RANKS_TOTAL_SIZE = 8;
     public static final int FILES_TOTAL_SIZE = 8;
 
-    private static final List<Character> ranks = toCharacters("12345678" );
     private static final List<Character> files = toCharacters(VALID_FILES);
+    private static final List<Character> ranks = toCharacters("12345678");
 
-    private static final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
     private static final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
+    private static final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
 
     private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
     private static final int ASCII_DIFFERENCE = 48;
@@ -44,6 +44,16 @@ public class PositionUtil {
         return value.chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.toList());
+    }
+
+    public static void validatePosition(String position) {
+        char[] positionInfo = position.toCharArray();
+        boolean isInvalidFile = fileMap.get(positionInfo[0]) == null;
+        boolean isInvalidRank = rankMap.get(positionInfo[1]) == null;
+
+        if (isInvalidFile || isInvalidRank) {
+           throw new IllegalArgumentException(INVALID_POSITION_RANGE_EXCEPTION_MESSAGE);
+        }
     }
 
     public static int rankToIdx(char rank) {

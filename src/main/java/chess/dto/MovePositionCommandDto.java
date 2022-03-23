@@ -2,22 +2,19 @@ package chess.dto;
 
 public class MovePositionCommandDto {
 
-    private static final String COMMAND_INPUT_DELIMITER = " ";
+    private final String from;
+    private final String to;
 
-    private final String source;
-    private final String target;
-
-    public MovePositionCommandDto(String command) {
-        String[] commandInput = command.split(COMMAND_INPUT_DELIMITER);
-        this.source = commandInput[1];
-        this.target = commandInput[2];
+    public MovePositionCommandDto(String from, String to) {
+        this.from = from;
+        this.to = to;
     }
 
     public String source() {
-        return source;
+        return from;
     }
 
     public String target() {
-        return target;
+        return to;
     }
 }
