@@ -4,6 +4,9 @@ import chess.domain.position.Position;
 
 public final class Pawn implements Type {
 
+    public static final int VERTICAL_MOVEMENT_LIMIT = 1;
+    public static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
+
     @Override
     public String getSymbol() {
         return "P";
@@ -11,6 +14,8 @@ public final class Pawn implements Type {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        int rowGap = source.rowGap(target);
+        int columnGap = source.columnGap(target);
+        return rowGap == VERTICAL_MOVEMENT_LIMIT && columnGap == HORIZONTAL_MOVEMENT_LIMIT;
     }
 }
