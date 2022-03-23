@@ -12,6 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.position.Position;
+import chess.dto.MovePositionCommandDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +64,19 @@ public class ChessGame {
                 new Bishop(WHITE, Position.of("f1")),
                 new Knight(WHITE, Position.of("g1")),
                 new Rook(WHITE, Position.of("h1")));
+    }
+
+    public void moveChessmen(MovePositionCommandDto dto) {
+        Piece sourcePiece = chessmen.stream()
+                .filter(piece -> piece.getPosition() == Position.of(dto.source()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(""));
+        Position toPosition = Position.of(dto.target());
+        sourcePiece.move(toPosition);
+    }
+
+    public boolean isEnd() {
+        return false;
     }
 
     public List<Piece> getChessmen() {
