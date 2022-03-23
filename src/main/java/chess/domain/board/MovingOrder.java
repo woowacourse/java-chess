@@ -20,4 +20,9 @@ public class MovingOrder {
         return (color == Color.BLACK && from.isEqualRank(Rank.SEVEN) ||
                 (color == Color.WHITE && from.isEqualRank(Rank.TWO)));
     }
+
+    public boolean isPawnInitDirectionOf(Direction direction) {
+        return from.getXDistance(to) == direction.getX()
+                && direction.getY() * from.getYDistance(to) <= 2;
+    }
 }

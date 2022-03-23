@@ -12,6 +12,18 @@ public class Position {
         this.rank = rank;
     }
 
+    public int getXDistance(Position to) {
+        return to.file.getNumber()-this.file.getNumber();
+    }
+
+    public int getYDistance(Position to) {
+        return to.rank.getNumber() - this.rank.getNumber();
+    }
+
+    public boolean isEqualRank(Rank rank) {
+        return this.rank == rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
