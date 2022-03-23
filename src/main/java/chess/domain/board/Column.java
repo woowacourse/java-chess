@@ -39,4 +39,11 @@ public enum Column {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }
+
+    @Override
+    public String toString() {
+        return "Column{" +
+                "x=" + x +
+                '}';
+    }
 }

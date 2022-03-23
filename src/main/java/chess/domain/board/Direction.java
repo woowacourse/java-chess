@@ -33,4 +33,12 @@ public enum Direction {
     public static List<Direction> getPawnDirections() {
         return List.of(NORTH);
     }
+
+    @Override
+    public String toString() {
+        return "Direction{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
