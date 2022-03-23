@@ -2,12 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BoardFactoryTest {
-    private BoardFactory boardFactory;
+
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void init() {
-        boardFactory = new BoardFactory();
+        board = BoardFactory.getInitialPieces();
     }
 
     @Test
@@ -32,7 +28,7 @@ public class BoardFactoryTest {
             expected.add(Position.valueOf(value + Ordinate.SEVEN.getValue()));
         }
 
-        assertThat(pawns.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 
     @Test
@@ -44,7 +40,7 @@ public class BoardFactoryTest {
         expected.add(Position.valueOf("a8"));
         expected.add(Position.valueOf("h8"));
 
-        assertThat(pawns.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 
     @Test
@@ -56,7 +52,7 @@ public class BoardFactoryTest {
         expected.add(Position.valueOf("b8"));
         expected.add(Position.valueOf("g8"));
 
-        assertThat(knights.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 
     @Test
@@ -68,7 +64,7 @@ public class BoardFactoryTest {
         expected.add(Position.valueOf("c8"));
         expected.add(Position.valueOf("f8"));
 
-        assertThat(bishops.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 
     @Test
@@ -78,7 +74,7 @@ public class BoardFactoryTest {
         expected.add(Position.valueOf("e1"));
         expected.add(Position.valueOf("e8"));
 
-        assertThat(kings.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 
     @Test
@@ -88,6 +84,6 @@ public class BoardFactoryTest {
         expected.add(Position.valueOf("d1"));
         expected.add(Position.valueOf("d8"));
 
-        assertThat(queens.keySet()).containsAll(expected);
+        assertThat(board.keySet()).containsAll(expected);
     }
 }

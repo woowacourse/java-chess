@@ -23,7 +23,7 @@ public class BoardFactory {
         return pieces;
     }
 
-    public Map<Position, Pawn> getInitialPawns() {
+    private static Map<Position, Pawn> getInitialPawns() {
         Map<Position, Pawn> pawns = new HashMap<>();
         for (Abscissa value : Abscissa.values()) {
             pawns.put(Position.valueOf(value, Ordinate.TWO), new Pawn());
@@ -32,7 +32,7 @@ public class BoardFactory {
         return pawns;
     }
 
-    public Map<Position, Rook> getInitialRooks() {
+    private static Map<Position, Rook> getInitialRooks() {
         Map<Position, Rook> rooks = new HashMap<>();
         rooks.put(Position.valueOf(Abscissa.a, Ordinate.ONE), new Rook());
         rooks.put(Position.valueOf(Abscissa.a, Ordinate.EIGHT), new Rook());
@@ -41,16 +41,16 @@ public class BoardFactory {
         return rooks;
     }
 
-    public Map<Position, Knight> getInitialKnights() {
-        Map<Position, Knight> kinghts = new HashMap<>();
-        kinghts.put(Position.valueOf(Abscissa.b, Ordinate.ONE), new Knight());
-        kinghts.put(Position.valueOf(Abscissa.b, Ordinate.EIGHT), new Knight());
-        kinghts.put(Position.valueOf(Abscissa.g, Ordinate.ONE), new Knight());
-        kinghts.put(Position.valueOf(Abscissa.g, Ordinate.EIGHT), new Knight());
-        return kinghts;
+    private static Map<Position, Knight> getInitialKnights() {
+        Map<Position, Knight> knight = new HashMap<>();
+        knight.put(Position.valueOf(Abscissa.b, Ordinate.ONE), new Knight());
+        knight.put(Position.valueOf(Abscissa.b, Ordinate.EIGHT), new Knight());
+        knight.put(Position.valueOf(Abscissa.g, Ordinate.ONE), new Knight());
+        knight.put(Position.valueOf(Abscissa.g, Ordinate.EIGHT), new Knight());
+        return knight;
     }
 
-    public Map<Position, Bishop> getInitialBishops() {
+    private static Map<Position, Bishop> getInitialBishops() {
         Map<Position, Bishop> bishops = new HashMap<>();
         bishops.put(Position.valueOf(Abscissa.c, Ordinate.ONE), new Bishop());
         bishops.put(Position.valueOf(Abscissa.c, Ordinate.EIGHT), new Bishop());
@@ -60,7 +60,7 @@ public class BoardFactory {
         return bishops;
     }
 
-    public Map<Position, Queen> getInitialQueens() {
+    private static Map<Position, Queen> getInitialQueens() {
         Map<Position, Queen> queen = new HashMap<>();
         queen.put(Position.valueOf(Abscissa.d, Ordinate.ONE), new Queen());
         queen.put(Position.valueOf(Abscissa.d, Ordinate.EIGHT), new Queen());
@@ -68,7 +68,7 @@ public class BoardFactory {
         return queen;
     }
 
-    public Map<Position, King> getInitialKings() {
+    private static Map<Position, King> getInitialKings() {
         Map<Position, King> king =new HashMap<>();
         king.put(Position.valueOf(Abscissa.e, Ordinate.ONE), new King());
         king.put(Position.valueOf(Abscissa.e, Ordinate.EIGHT), new King());
