@@ -104,4 +104,29 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 다른 기물이 있습니다.");
     }
+
+    @DisplayName("폰이 성공적으로 이동한다")
+    @ParameterizedTest(name = "{displayName} : {arguments}")
+    @MethodSource("pawnMoveTestSet")
+    void whitePawnOneMove(Position src, Position dest, Color color) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        Piece piece = new Pawn(color);
+        value.put(src, piece);
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+    }
+
+    static Stream<Arguments> pawnMoveTestSet() {
+        return Stream.of(
+                Arguments.of(Position.of("a2"), Position.of("a3"), Color.WHITE),
+                Arguments.of(Position.of("a7"), Position.of("a6"), Color.BLACK),
+                Arguments.of(Position.of("a2"), Position.of("a4"), Color.WHITE),
+                Arguments.of(Position.of("a7"), Position.of("a5"), Color.BLACK)
+        );
+    }
 }
