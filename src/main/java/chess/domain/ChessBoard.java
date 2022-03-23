@@ -57,4 +57,14 @@ public class ChessBoard {
 
         return Optional.of(piece);
     }
+
+    public boolean enemyExist(ChessPiece me, Position to) {
+        Optional<ChessPiece> possiblePiece = findPiece(to);
+        if (possiblePiece.isEmpty()) {
+            return false;
+        }
+
+        ChessPiece piece = possiblePiece.get();
+        return !piece.isSameColor(me);
+    }
 }

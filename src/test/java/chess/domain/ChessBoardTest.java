@@ -1,6 +1,9 @@
 package chess.domain;
 
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.chessPiece.Color;
+import chess.domain.chessPiece.Pawn;
+import chess.domain.chessPiece.Queen;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,5 +40,19 @@ class ChessBoardTest {
     void findPiece_Null() {
         Optional<ChessPiece> actual = chessBoard.findPiece(new Position("a3"));
         assertThat(actual.isEmpty()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("기물이 적인지 확인한다.")
+    void enemyExist() {
+        // given
+        ChessPiece me = new Pawn(Color.BLACK);
+        Position to = new Position("a1");
+
+        // when
+        boolean actual = chessBoard.enemyExist(me, to);
+
+        // then
+        assertThat(actual).isTrue();
     }
 }
