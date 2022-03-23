@@ -21,6 +21,11 @@ public class Knight extends Piece {
         this.position = position;
     }
 
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
+    }
+
     private void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);

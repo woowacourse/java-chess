@@ -27,6 +27,11 @@ public final class Pawn extends Piece {
         this.position = position;
     }
 
+    @Override
+    protected void attack(Position enemyPosition) {
+       // TODO: implemnnt attack logic
+    }
+
     private void validateMovable(Position toPosition) {
         if (!canMoveForwardOrJump(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);

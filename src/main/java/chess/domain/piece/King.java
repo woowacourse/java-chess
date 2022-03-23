@@ -19,6 +19,11 @@ public class King extends Piece {
         this.position = position;
     }
 
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
+    }
+
     private void validateMovable(Position toPosition) {
         if (!canMoveOneStep(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);

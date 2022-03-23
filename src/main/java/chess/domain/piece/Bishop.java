@@ -18,6 +18,11 @@ public class Bishop extends Piece {
         this.position = position;
     }
 
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
+    }
+
     private void validateMovable(Position toPosition) {
         if (!position.isDiagonal(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
