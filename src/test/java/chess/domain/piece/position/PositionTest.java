@@ -22,6 +22,6 @@ public class PositionTest {
     void of_exceptionOnInvalidRange() {
         assertThatCode(() -> Position.of("z0"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 포지션 입니다. (a1~h8)");
+                .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
     }
 }

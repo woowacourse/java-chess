@@ -1,5 +1,6 @@
 package chess.domain.piece.position;
 
+import static chess.domain.piece.position.PositionUtil.charToMatchingInt;
 import static chess.domain.piece.position.PositionUtil.fileToIdx;
 import static chess.domain.piece.position.PositionUtil.rankToIdx;
 
@@ -13,8 +14,8 @@ public class Position {
 
     private Position(String value) {
         char[] positionInfo = value.toCharArray();
-        this.fileIdx = fileToIdx(positionInfo[0]); //a / 2 => 2행 BUT 2열
-        this.rankIdx = rankToIdx(positionInfo[1]); //2 / a => 1열 BUT 1행
+        this.fileIdx = charToMatchingInt(positionInfo[0]);
+        this.rankIdx = charToMatchingInt(positionInfo[1]);
     }
 
     public static Position of(String value) {
@@ -42,7 +43,15 @@ public class Position {
         static Map<String, Position> cache = new HashMap<>(64);
 
         static Position getCache(String value) {
-            return cache.computeIfAbsent(value, Position::new);
+            String key = toKey(value);
+            return cache.computeIfAbsent(key, (val) -> new Position(key));
+        }
+
+        static String toKey(String value) {
+            char[] positionInfo = value.toCharArray();
+            int fileIdx = fileToIdx(positionInfo[0]);
+            int rankIdx = rankToIdx(positionInfo[1]);
+            return fileIdx + "" + rankIdx;
         }
     }
 }

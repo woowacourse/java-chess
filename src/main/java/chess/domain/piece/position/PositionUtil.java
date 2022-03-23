@@ -19,6 +19,7 @@ public class PositionUtil {
     private static final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
 
     private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
+    private static final int ASCII_DIFFERENCE = 48;
 
     static {
         IntStream.rangeClosed(0, 7)
@@ -59,6 +60,10 @@ public class PositionUtil {
         Integer intValue = fileMap.get(file);
         validateRange(intValue);
         return intValue;
+    }
+
+    public static int charToMatchingInt(char value) {
+        return value - ASCII_DIFFERENCE;
     }
 
     private static void validateRange(Integer intValue) {
