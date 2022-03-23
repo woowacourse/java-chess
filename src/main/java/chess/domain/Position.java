@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 public class Position {
 
 	private static final String INVALID_RANGE_ERROR = "유효한 범위가 아닙니다.";
@@ -21,7 +23,22 @@ public class Position {
 		}
 	}
 
-	public boolean isSame(int row, int column) {
-		return this.row == row && this.column == column;
+	public Position change(int row, int column) {
+		return new Position(row, column);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Position position = (Position)o;
+		return row == position.row && column == position.column;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(row, column);
 	}
 }

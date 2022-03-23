@@ -18,3 +18,13 @@
 
 - InputView
 - OutputView
+
+### 말 이동
+- Position
+  - 이동
+    - 8x8 검증
+- Piece
+  - 자기가 갈 수 있는 범위를 확인
+- Board
+  - 이 말을 여기서 저기로 이동시켜라
+    - 다른 말이 있는지 확인

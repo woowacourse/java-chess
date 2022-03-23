@@ -14,7 +14,7 @@ public abstract class Piece {
 	}
 
 	public boolean isSamePosition(int row, int column) {
-		return this.position.isSame(row, column);
+		return this.position.equals(new Position(row, column));
 	}
 
 	public abstract String getSymbol();
