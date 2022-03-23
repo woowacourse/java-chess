@@ -26,6 +26,8 @@ public abstract class Piece {
 
     abstract protected void attack(Position enemyPosition);
 
+    abstract public boolean isPawn();
+
     abstract public boolean isKing();
 
     abstract public double score();
