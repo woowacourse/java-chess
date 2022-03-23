@@ -20,4 +20,12 @@ public class Position {
             throw new IllegalArgumentException("위치는 두자리여야 합니다.");
         }
     }
+
+    public int getFileIndex() {
+        return file.getIndex();
+    }
+
+    public int getRankIndex() {
+        return rank.getIndex();
+    }
 }
