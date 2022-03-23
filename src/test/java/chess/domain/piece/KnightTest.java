@@ -30,4 +30,15 @@ class KnightTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("나이트는 L자 형태로만 움직일 수 있습니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"b,3", "c,2"})
+    @DisplayName("나이트 위치 이동")
+    void move(char row, char col) {
+        Knight knight = new Knight(Color.WHITE, new Position('a', '1'));
+        Position expected = new Position(row, col);
+
+        Knight actual = knight.move(expected);
+        assertThat(actual.getPosition()).isEqualTo(expected);
+    }
 }
