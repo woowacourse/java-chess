@@ -35,7 +35,7 @@
 
 #### 진영 Color
 
-- [ ] 진영은 Black과 White로 나뉜다.
+- [x] 진영은 Black과 White로 나뉜다.
 
 #### 기물 Piece
 
