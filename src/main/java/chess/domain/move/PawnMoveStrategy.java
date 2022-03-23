@@ -23,30 +23,35 @@ public class PawnMoveStrategy {
 
 
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        Piece piece = board.getPiece(source);
-        Color color = piece.getColor();
+        final Piece sourcePiece = board.getPiece(source);
+        final Piece targetPiece = board.getPiece(target);
 
-        Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
-        int horizon = distance.getHorizon();
-        int vertical = distance.getVertical();
+        final Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
+        final int horizon = distance.getHorizon();
+        final int vertical = distance.getVertical();
+
+        Color color = sourcePiece.getColor();
         MovePattern movePattern = MovePattern.of(horizon, vertical);
-
         if (color == Color.BLACK) {
             if (!BLACK_PAWN_MOVE_PATTERN.contains(movePattern)) {
-                throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
+                return false;
             }
+            // 2칸이동
             if (movePattern == MovePattern.PAWN_START_MOVE_BLACK) {
                 if (!source.isPawnStartPosition(color)) {
-                    throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
+                    return false;
                 }
+                return board.getPiece(source.move(0, -1)).isBlank() && targetPiece.isBlank();
+            }
+            // 1칸 전진
+            if (movePattern == MovePattern.SOUTH) {
+                return targetPiece.isBlank();
+            }
+            // 대각이동
+            if (movePattern == MovePattern.SOUTHEAST || movePattern == MovePattern.SOUTHWEST) {
+                return !targetPiece.isBlank() && targetPiece.getColor() == Color.WHITE;
             }
         }
-
-        // 색깔 & 처음이면 거리가 버티컬 2인지
-        // 색깔 & 처음 아니면 거리가 버티컬 1인지
-        // 색깔 & 대각일경우 거리가 ++ or --
-        // 타겟이 없는지
-        // 대각 타겟일 경우 타겟이 존재하는지
 
         return true;
     }
