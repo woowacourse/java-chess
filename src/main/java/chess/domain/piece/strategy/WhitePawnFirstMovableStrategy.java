@@ -17,8 +17,17 @@ public class WhitePawnFirstMovableStrategy implements PieceMovableStrategy {
     private static final List<Direction> MOVE_DIRECTION_TO_ENEMY = Arrays.asList(UP_RIGHT, UP_LEFT);
 
     @Override
-    public boolean isMovable(final Position start, final Position target, final ChessBoard chessBoard) {
-        List<Direction> route = MOVE_DIRECTION.route(start, target);
+    public boolean isMovable(Position start, Position target, ChessBoard chessBoard) {
+        List<Position> route = MOVE_DIRECTION.route(start, target);
+        return existMovablePosition(route) && isClearRoute(route, chessBoard);
+    }
+
+    private boolean existMovablePosition(List<Position> route) {
         return !route.isEmpty() && route.size() <= MOVABLE_COUNT;
+    }
+
+    private boolean isClearRoute(List<Position> route, ChessBoard chessBoard) {
+        return route.stream()
+                .allMatch(chessBoard::isPositionEmpty);
     }
 }
