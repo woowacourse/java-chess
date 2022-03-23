@@ -136,6 +136,26 @@ public class ChessBoardGeneratorTest {
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
+    @Test
+    @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
+    void checkPositionBlackKing() {
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.EIGHT, Column.E));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.BLACK);
+        assertThat(piece).isInstanceOf(King.class);
+    }
+
+    @Test
+    @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
+    void checkPositionWhiteKing() {
+        ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
+        Piece piece = chessBoardGenerator.generate().get(new Position(Row.ONE, Column.E));
+
+        assertThat(piece.getPlayer()).isEqualTo(Player.WHITE);
+        assertThat(piece).isInstanceOf(King.class);
+    }
+
     private static Stream<Column> columns() {
         return Stream.of(
             Column.A,
