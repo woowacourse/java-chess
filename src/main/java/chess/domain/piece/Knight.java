@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class Knight extends Piece {
 
+    private static final int MAIN_DIRECTION_MOVE_COUNT = 2;
+    private static final int SUB_DIRECTION_MOVE_COUNT = 1;
+
     private static final String BLACK_DISPLAY = "♘";
     private static final String WHITE_DISPLAY = "♞";
 
@@ -14,7 +17,22 @@ public class Knight extends Piece {
 
     @Override
     public void move(Position position) {
-        // TODO: should be implemented
+        validateMovable(position);
+        this.position = position;
+    }
+
+    private void validateMovable(Position toPosition) {
+        if (!isMovablePosition(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private boolean isMovablePosition(Position toPosition) {
+        int fileDifference = position.fileDifference(toPosition);
+        int rankDifference = position.rankDifference(toPosition);
+
+        return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
+                || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
     }
 
     @Override
