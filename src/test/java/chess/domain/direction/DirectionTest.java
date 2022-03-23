@@ -17,7 +17,7 @@ class DirectionTest {
         Position position = new Position('d', '4');
         Position movePosition = new Position(column, row);
 
-        List<Direction> directions = Direction.UP.route(position, movePosition);
+        List<Position> directions = Direction.UP.route(position, movePosition);
         assertThat(directions).hasSize(expected);
     }
 }
