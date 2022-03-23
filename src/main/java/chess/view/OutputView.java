@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.ChessBoard;
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.position.Position;
 
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class OutputView {
         for (int i = RANK_START; i <= RANK_END; i++) {
             String position = (char) i + String.valueOf(j);
 
-            Optional<ChessPiece> possiblePiece = chessBoard.findPiece(position);
+            Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
             possiblePiece.ifPresentOrElse(
                     (piece) -> System.out.print(piece.getName()),
                     () -> System.out.print(EMPTY));

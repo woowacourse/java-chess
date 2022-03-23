@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.chessPiece.*;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 public class ChessBoard {
 
-    private Map<String, ChessPiece> chessBoard;
+    private Map<Position, ChessPiece> chessBoard;
 
     public ChessBoard() {
         chessBoard = new HashMap<>();
@@ -34,12 +35,12 @@ public class ChessBoard {
 
     private void initByPiece(ChessPiece chessPiece) {
         if (chessPiece.isBlack()) {
-            for (String position : chessPiece.getInitBlackPosition()) {
+            for (Position position : chessPiece.getInitBlackPosition()) {
                 chessBoard.put(position, chessPiece);
             }
             return;
         }
-        for (String position : chessPiece.getInitWhitePosition()) {
+        for (Position position : chessPiece.getInitWhitePosition()) {
             chessBoard.put(position, chessPiece);
         }
     }
@@ -48,7 +49,7 @@ public class ChessBoard {
         return chessBoard.size();
     }
 
-    public Optional<ChessPiece> findPiece(String position) {
+    public Optional<ChessPiece> findPiece(Position position) {
         ChessPiece piece = chessBoard.get(position);
         if (piece == null) {
             return Optional.empty();

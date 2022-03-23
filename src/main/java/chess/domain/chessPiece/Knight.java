@@ -1,5 +1,7 @@
 package chess.domain.chessPiece;
 
+import chess.domain.position.Position;
+
 import java.util.List;
 
 public class Knight extends ChessPiece {
@@ -11,13 +13,13 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public List<String> getInitWhitePosition() {
-        return List.of("b1", "g1");
+    public List<Position> getInitWhitePosition() {
+        return List.of(new Position("b1"), new Position("g1"));
     }
 
     @Override
-    public List<String> getInitBlackPosition() {
-        return List.of("b8", "g8");
+    public List<Position> getInitBlackPosition() {
+        return List.of(new Position("b8"), new Position("g8"));
     }
 
 }

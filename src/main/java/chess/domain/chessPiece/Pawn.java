@@ -1,5 +1,7 @@
 package chess.domain.chessPiece;
 
+import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +14,19 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public List<String> getInitWhitePosition() {
-        List<String> list = new ArrayList<>();
+    public List<Position> getInitWhitePosition() {
+        List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
-            list.add((char) i + "2");
+            list.add(new Position((char) i + "2"));
         }
         return list;
     }
 
     @Override
-    public List<String> getInitBlackPosition() {
-        List<String> list = new ArrayList<>();
+    public List<Position> getInitBlackPosition() {
+        List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
-            list.add((char) i + "7");
+            list.add(new Position((char) i + "7"));
         }
         return list;
     }

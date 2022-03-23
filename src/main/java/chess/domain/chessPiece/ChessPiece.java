@@ -1,5 +1,7 @@
 package chess.domain.chessPiece;
 
+import chess.domain.position.Position;
+
 import java.util.List;
 
 public abstract class ChessPiece {
@@ -12,9 +14,9 @@ public abstract class ChessPiece {
         this.name = color.convertByColor(name);
     }
 
-    public abstract List<String> getInitWhitePosition();
+    public abstract List<Position> getInitWhitePosition();
 
-    public abstract List<String> getInitBlackPosition();
+    public abstract List<Position> getInitBlackPosition();
 
     public boolean isBlack() {
         return color.isBlack();

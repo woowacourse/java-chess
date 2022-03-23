@@ -1,11 +1,11 @@
 package chess.domain;
 
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.Optional;
 
@@ -27,15 +27,15 @@ class ChessBoardTest {
     @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     void findPiece(String position, String expected) {
-        Optional<ChessPiece> possiblePiece = chessBoard.findPiece(position);
+        Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
         String actual = possiblePiece.get().getName();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("위치에 기물이 있는지 확인한다.")
-    void findPiece_Null(){
-        Optional<ChessPiece> actual = chessBoard.findPiece("a3");
+    void findPiece_Null() {
+        Optional<ChessPiece> actual = chessBoard.findPiece(new Position("a3"));
         assertThat(actual.isEmpty()).isEqualTo(true);
     }
 }
