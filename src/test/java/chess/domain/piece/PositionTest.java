@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,6 @@ public class PositionTest {
 
         assertThat(position.getX()).isEqualTo(0);
         assertThat(position.getY()).isEqualTo(0);
-        assertThat(position.getCharPosition()).isEqualTo("a1");
     }
 
     @DisplayName("입력 문자열이 두 글자가 아닌 경우 예외가 발생한다.")

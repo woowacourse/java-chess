@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Knight extends Piece {
 
     private static final String WHITE_SIGNATURE = "n";
@@ -18,6 +21,26 @@ public class Knight extends Piece {
     }
 
     public void move(Piece piece) {
-        piece.isBlank() || piece.isEnemy();
+        if (isInRange(piece) && isValidPosition(piece)) {
+            position = piece.getPosition();
+            return;
+        }
+        throw new IllegalArgumentException("이동이 불가능한 위치입니다.");
+    }
+
+    private boolean isInRange(Piece piece) {
+        Position targetPosition = piece.getPosition();
+        List<Position> inRangePosition = Direction.getKnightDirections()
+                .stream()
+                .map(direction -> new Position(
+                        position.getX() + direction.getXDegree(),
+                        position.getY() + direction.getYDegree()))
+                .collect(Collectors.toList());
+
+        return inRangePosition.contains(targetPosition);
+    }
+
+    private boolean isValidPosition(Piece piece) {
+        return piece.isBlank() || piece.isEnemy(getSignature());
     }
 }

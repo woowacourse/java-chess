@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 public abstract class Piece {
 
-    private Position position;
+    protected Position position;
     private final String signature;
 
     protected Piece(Position position, String signature) {
