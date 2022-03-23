@@ -1,4 +1,6 @@
-package chess;
+package chess.domain.piece;
+
+import chess.domain.Position;
 
 public class Piece {
     private final String type;

@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public enum Rank {
     A("a"),

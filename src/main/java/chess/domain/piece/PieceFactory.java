@@ -1,25 +1,26 @@
-package chess;
+package chess.domain.piece;
 
-import static chess.File.EIGHT;
-import static chess.File.ONE;
-import static chess.File.SEVEN;
-import static chess.File.TWO;
-import static chess.Rank.A;
-import static chess.Rank.B;
-import static chess.Rank.C;
-import static chess.Rank.D;
-import static chess.Rank.E;
-import static chess.Rank.F;
-import static chess.Rank.G;
-import static chess.Rank.H;
-import static chess.Type.BISHOP;
-import static chess.Type.KING;
-import static chess.Type.KNIGHT;
-import static chess.Type.PAWN;
-import static chess.Type.QUEEN;
-import static chess.Type.ROOK;
+import static chess.domain.piece.File.EIGHT;
+import static chess.domain.piece.File.ONE;
+import static chess.domain.piece.File.SEVEN;
+import static chess.domain.piece.File.TWO;
+import static chess.domain.piece.Rank.A;
+import static chess.domain.piece.Rank.B;
+import static chess.domain.piece.Rank.C;
+import static chess.domain.piece.Rank.D;
+import static chess.domain.piece.Rank.E;
+import static chess.domain.piece.Rank.F;
+import static chess.domain.piece.Rank.G;
+import static chess.domain.piece.Rank.H;
+import static chess.domain.piece.Type.BISHOP;
+import static chess.domain.piece.Type.KING;
+import static chess.domain.piece.Type.KNIGHT;
+import static chess.domain.piece.Type.PAWN;
+import static chess.domain.piece.Type.QUEEN;
+import static chess.domain.piece.Type.ROOK;
 import static java.util.stream.Collectors.toList;
 
+import chess.domain.Position;
 import java.util.Arrays;
 import java.util.List;
 

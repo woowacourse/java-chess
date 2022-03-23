@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public enum File {
     ONE("1"),

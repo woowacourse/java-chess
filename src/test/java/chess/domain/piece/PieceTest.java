@@ -1,9 +1,11 @@
-package chess;
+package chess.domain.piece;
 
-import static chess.File.*;
-import static chess.Rank.*;
-import static chess.Type.PAWN;
+import static chess.domain.piece.File.*;
+import static chess.domain.piece.Rank.*;
+import static chess.domain.piece.Type.PAWN;
 
+import chess.domain.Position;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

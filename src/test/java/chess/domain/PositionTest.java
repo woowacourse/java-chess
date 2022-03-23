@@ -1,7 +1,7 @@
-package chess;
+package chess.domain;
 
-import static chess.File.ONE;
-import static chess.Rank.A;
+import static chess.domain.piece.File.ONE;
+import static chess.domain.piece.Rank.A;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

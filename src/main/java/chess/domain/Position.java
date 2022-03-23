@@ -1,4 +1,7 @@
-package chess;
+package chess.domain;
+
+import chess.domain.piece.File;
+import chess.domain.piece.Rank;
 
 public class Position {
     private final Rank rank;

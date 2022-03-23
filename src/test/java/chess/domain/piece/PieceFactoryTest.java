@@ -1,7 +1,9 @@
-package chess;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
