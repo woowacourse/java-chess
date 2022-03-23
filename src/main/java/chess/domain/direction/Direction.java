@@ -40,19 +40,16 @@ public enum Direction {
         return position.move(columnAmount, rowAmount);
     }
 
-    public List<Direction> route(Position position, Position targetPosition, boolean singleMovable) {
-        if (!isMovable(position, targetPosition, singleMovable)) {
+    public List<Direction> route(Position position, Position targetPosition) {
+        if (!isMovable(position, targetPosition)) {
             return Collections.emptyList();
         }
         return calculateRoute(position, targetPosition, new ArrayList<>());
     }
 
-    private boolean isMovable(Position position, Position wantPosition, boolean singleMovable) {
+    private boolean isMovable(Position position, Position wantPosition) {
         if (position.equals(wantPosition)) {
             return false;
-        }
-        if (singleMovable) {
-            return position.isMovable(columnAmount, rowAmount) && wantPosition.equals(move(position));
         }
         return isMovableByMultipleMovable(position, wantPosition);
     }
