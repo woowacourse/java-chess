@@ -1,5 +1,16 @@
-package domain;
+package domain.chessboard;
 
+import domain.Player;
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Piece;
+import domain.piece.Queen;
+import domain.piece.Rook;
+import domain.position.Column;
+import domain.position.Position;
+import domain.position.Row;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

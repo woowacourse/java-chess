@@ -1,4 +1,8 @@
-package domain;
+package domain.piece;
+
+import domain.Player;
+import domain.piece.Piece;
+import domain.piece.PieceSymbol;
 
 public class Queen extends Piece {
 

@@ -1,3 +1,10 @@
+package controller;
+
+import domain.chessboard.ChessBoard;
+import domain.chessboard.ChessBoardGenerator;
+import view.InputView;
+import view.OutputView;
+
 public class ChessController {
 
     public void play() {

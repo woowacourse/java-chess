@@ -1,4 +1,6 @@
-package domain;
+package domain.piece;
+
+import domain.Player;
 
 public enum PieceSymbol {
     King("K"),

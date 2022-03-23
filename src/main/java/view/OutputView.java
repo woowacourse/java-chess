@@ -1,3 +1,9 @@
+package view;
+
+import domain.chessboard.ChessBoard;
+import domain.position.Column;
+import domain.position.Position;
+import domain.position.Row;
 import java.util.Arrays;
 import java.util.Collections;
 

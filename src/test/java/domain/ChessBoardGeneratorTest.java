@@ -1,17 +1,18 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Bishop;
-import domain.ChessBoardGenerator;
-import domain.Column;
-import domain.King;
-import domain.Knight;
-import domain.Pawn;
-import domain.Piece;
-import domain.Player;
-import domain.Position;
-import domain.Queen;
-import domain.Rook;
-import domain.Row;
+import domain.chessboard.ChessBoardGenerator;
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Piece;
+import domain.piece.Queen;
+import domain.piece.Rook;
+import domain.position.Column;
+import domain.position.Position;
+import domain.position.Row;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
