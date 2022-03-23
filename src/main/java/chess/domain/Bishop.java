@@ -2,8 +2,6 @@ package chess.domain;
 
 public class Bishop {
 
-    private static final int NOT_MOVE_COUNT = 0;
-
     private Position position;
 
     public Bishop(Position position) {
@@ -12,7 +10,7 @@ public class Bishop {
 
     public Position move(final Position currentPosition, final Position destinationPosition) {
         final int count = currentPosition.countMoveDiagonal(destinationPosition);
-        if (count == NOT_MOVE_COUNT) {
+        if (count == 0) {
             throw new IllegalArgumentException("비숍은 1칸 이상 이동해야 합니다.");
         }
         return position = destinationPosition;
