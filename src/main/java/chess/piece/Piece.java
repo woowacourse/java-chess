@@ -57,12 +57,4 @@ public abstract class Piece {
             ", position=" + position +
             '}';
     }
-
-    public static Piece knight(Color color, Position position) {
-        return new Piece(color, KNIGHT, position) {
-            @Override
-            public void move(Position to) {
-            }
-        };
-    }
 }

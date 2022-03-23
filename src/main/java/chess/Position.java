@@ -12,6 +12,14 @@ public class Position {
         this.col = col;
     }
 
+    public Row getRow() {
+        return row;
+    }
+
+    public Col getCol() {
+        return col;
+    }
+
     public boolean isSameRow(Position other) {
         return this.row == other.row;
     }
@@ -44,7 +52,7 @@ public class Position {
         return col.getDistance(other.col);
     }
 
-    private int getDistanceOfRow(Position other) {
+    public int getDistanceOfRow(Position other) {
         return row.getDistance(other.row);
     }
 

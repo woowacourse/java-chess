@@ -33,12 +33,12 @@ class ChessBoardTest {
     private static void assertPieces(List<Piece> pieces) {
         assertThat(pieces).contains(
             new Rook(Color.BLACK, new Position(A, EIGHT)),
-            knight(Color.BLACK, new Position(B, EIGHT)),
+            new Knight(Color.BLACK, new Position(B, EIGHT)),
             new Bishop(Color.BLACK, new Position(C, EIGHT)),
             new Queen(Color.BLACK, new Position(D, EIGHT)),
             new King(Color.BLACK, new Position(E, EIGHT)),
             new Bishop(Color.BLACK, new Position(F, EIGHT)),
-            knight(Color.BLACK, new Position(G, EIGHT)),
+            new Knight(Color.BLACK, new Position(G, EIGHT)),
             new Rook(Color.BLACK, new Position(H, EIGHT)),
             new Pawn(Color.BLACK, new Position(A, SEVEN)),
             new Pawn(Color.BLACK, new Position(B, SEVEN)),
@@ -49,12 +49,12 @@ class ChessBoardTest {
             new Pawn(Color.BLACK, new Position(G, SEVEN)),
             new Pawn(Color.BLACK, new Position(H, SEVEN)),
             new Rook(Color.WHITE, new Position(A, ONE)),
-            knight(Color.WHITE, new Position(B, ONE)),
+            new Knight(Color.WHITE, new Position(B, ONE)),
             new Bishop(Color.WHITE, new Position(C, ONE)),
             new Queen(Color.WHITE, new Position(D, ONE)),
             new King(Color.WHITE, new Position(E, ONE)),
             new Bishop(Color.WHITE, new Position(F, ONE)),
-            knight(Color.WHITE, new Position(G, ONE)),
+            new Knight(Color.WHITE, new Position(G, ONE)),
             new Rook(Color.WHITE, new Position(H, ONE)),
             new Pawn(Color.WHITE, new Position(A, TWO)),
             new Pawn(Color.WHITE, new Position(B, TWO)),
@@ -343,6 +343,42 @@ class ChessBoardTest {
             Arguments.of(new Position(E, FIVE), new Position(D, FIVE)),
             Arguments.of(new Position(E, FIVE), new Position(D, SIX)),
             Arguments.of(new Position(E, FIVE), new Position(E, SIX))
+        );
+    }
+
+    @Test
+    @DisplayName("나이트가 이동할 수 없는 위치로 이동 시 예외 발생")
+    void moveKnightToInvalidPosition() {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.BLACK, new Position(G,EIGHT))));
+
+        assertAll(()->{
+            assertThatThrownBy(() -> chessBoard.move(new Position(G, EIGHT), new Position(F, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).contains(new Knight(Color.BLACK, new Position(G, EIGHT)));
+        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideValidMoveKnight")
+    @DisplayName("나이트는 직선으로 1칸 이동 후 대각선으로 1칸 움직인다.")
+    void moveKnightToValidPosition(Position from, Position to) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.BLACK, from)));
+
+        chessBoard.move(from, to);
+
+        assertThat(chessBoard.getPieces()).contains(new Knight(Color.BLACK, to));
+    }
+
+    private static Stream<Arguments> provideValidMoveKnight() {
+        return Stream.of(
+            Arguments.of(new Position(E, FIVE), new Position(G, FOUR)),
+            Arguments.of(new Position(E, FIVE), new Position(F, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(D, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(C, FOUR)),
+            Arguments.of(new Position(E, FIVE), new Position(C, SIX)),
+            Arguments.of(new Position(E, FIVE), new Position(D, SEVEN)),
+            Arguments.of(new Position(E, FIVE), new Position(F, SEVEN)),
+            Arguments.of(new Position(E, FIVE), new Position(G, SIX))
         );
     }
 }
