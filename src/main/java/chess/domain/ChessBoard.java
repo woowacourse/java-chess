@@ -1,13 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    private final Map<Position, Piece> cells = new HashMap<>();
+    private final Map<Position, Piece> cells = new LinkedHashMap<>();
 
     public ChessBoard(List<Piece> blackPieces, List<Piece> whitePieces) {
         init(blackPieces, whitePieces);
@@ -25,5 +25,9 @@ public class ChessBoard {
 
     public int countPieces() {
         return cells.size();
+    }
+
+    public Map<Position, Piece> getCells() {
+        return cells;
     }
 }
