@@ -4,7 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 
 import chess.domain.piece.position.Position;
 
-public abstract class Piece {
+public abstract class Piece implements Chessmen {
 
     private static final int BLACK_FIRST_RANK = 7;
     private static final int WHITE_FIRST_RANK = 0;
@@ -20,29 +20,22 @@ public abstract class Piece {
         this.position = position;
     }
 
-    abstract public void move(Position position);
-
-    public void kill(Piece targetPiece) {
-        if (color == targetPiece.color) {
+    @Override
+    public void kill(Chessmen targetPiece) {
+        if (color == targetPiece.getColor()) {
             throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
         }
-        attack(targetPiece.position);
+        attack(targetPiece.getPosition());
     }
 
     abstract protected void attack(Position enemyPosition);
 
-    abstract public boolean isPawn();
-
-    abstract public boolean isKing();
-
-    abstract public double score();
-
-    abstract public String display();
-
+    @Override
     public final Position getPosition() {
         return position;
     }
 
+    @Override
     public final Color getColor() {
         return color;
     }

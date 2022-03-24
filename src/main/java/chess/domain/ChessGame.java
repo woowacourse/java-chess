@@ -9,7 +9,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Chessmen;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.position.Position;
@@ -26,7 +26,7 @@ public class ChessGame {
     private static final int BLACK_FIRST_RANK = 7;
     private static final int WHITE_FIRST_RANK = 0;
 
-    private final List<Piece> chessmen = new ArrayList<>(32);
+    private final List<Chessmen> chessmen = new ArrayList<>(32);
 
     public ChessGame() {
         chessmen.addAll(initStrongMen(BLACK, BLACK_FIRST_RANK));
@@ -35,13 +35,13 @@ public class ChessGame {
         chessmen.addAll(initStrongMen(WHITE, WHITE_FIRST_RANK));
     }
 
-    private List<Piece> initPawnsOf(Color color) {
+    private List<Chessmen> initPawnsOf(Color color) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
                 .mapToObj(fileIdx -> Pawn.of(color, fileIdx))
                 .collect(Collectors.toList());
     }
 
-    private List<Piece> initStrongMen(Color color, int initFileIdx) {
+    private List<Chessmen> initStrongMen(Color color, int initFileIdx) {
         return List.of(
                 Rook.ofLeft(color),
                 Knight.ofLeft(color),
@@ -54,11 +54,11 @@ public class ChessGame {
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
-        Piece sourcePiece = extractPiece(Position.of(dto.source()));
+        Chessmen sourcePiece = extractPiece(Position.of(dto.source()));
         Position toPosition = Position.of(dto.target());
 
         if (checkOccupied(toPosition)) {
-            Piece targetPiece = extractPiece(toPosition);
+            Chessmen targetPiece = extractPiece(toPosition);
             sourcePiece.kill(targetPiece);
             chessmen.remove(targetPiece);
             return;
@@ -67,7 +67,7 @@ public class ChessGame {
         sourcePiece.move(toPosition);
     }
 
-    private Piece extractPiece(Position position) {
+    private Chessmen extractPiece(Position position) {
         return chessmen.stream()
                 .filter(piece -> piece.getPosition() == position)
                 .findFirst()
@@ -81,7 +81,7 @@ public class ChessGame {
 
     public boolean isEnd() {
         int kingCount = (int) chessmen.stream()
-                .filter(Piece::isKing)
+                .filter(Chessmen::isKing)
                 .count();
 
         return kingCount < TOTAL_KING_COUNT;
@@ -95,11 +95,11 @@ public class ChessGame {
     }
 
     private double calculateScore(Color color) {
-        List<Piece> sameColorPieces = extractPiecesOf(color);
+        List<Chessmen> sameColorPieces = extractPiecesOf(color);
         List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
 
         double defaultScore = sameColorPieces.stream()
-                .map(Piece::score)
+                .map(Chessmen::score)
                 .reduce(0.0, Double::sum);
 
         return defaultScore - (calculateSameFilePawnCount(pawnPositions) / 2);
@@ -112,16 +112,16 @@ public class ChessGame {
                 .reduce(0, Integer::sum);
     }
 
-    private List<Piece> extractPiecesOf(Color color) {
+    private List<Chessmen> extractPiecesOf(Color color) {
         return chessmen.stream()
                 .filter(piece -> piece.getColor() == color)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> extractPawnPositions(List<Piece> sameColorPieces) {
+    private List<Position> extractPawnPositions(List<Chessmen> sameColorPieces) {
         return sameColorPieces.stream()
-                .filter(Piece::isPawn)
-                .map(Piece::getPosition)
+                .filter(Chessmen::isPawn)
+                .map(Chessmen::getPosition)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -131,7 +131,7 @@ public class ChessGame {
                 .count();
     }
 
-    public List<Piece> getChessmen() {
+    public List<Chessmen> getChessmen() {
         return chessmen;
     }
 
