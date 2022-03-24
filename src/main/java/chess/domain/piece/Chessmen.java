@@ -18,7 +18,7 @@ public abstract class Chessmen implements Piece {
     @Override
     public void kill(Piece targetPiece) {
         validateIsEnemy(targetPiece);
-        attack(targetPiece.getPosition());
+        attack(targetPiece.position());
     }
 
     private void validateIsEnemy(Piece targetPiece) {
@@ -30,12 +30,17 @@ public abstract class Chessmen implements Piece {
     abstract protected void attack(Position enemyPosition);
 
     @Override
-    public final Position getPosition() {
-        return position;
+    public final boolean hasColorOf(Color color) {
+        return this.color == color;
     }
 
     @Override
-    public final boolean hasColorOf(Color color) {
-        return this.color == color;
+    public final boolean isAt(Position position) {
+        return this.position == position;
+    }
+
+    @Override
+    public final Position position() {
+        return position;
     }
 }

@@ -45,14 +45,14 @@ public class BoardDto {
     }
 
     private static int toRowIdx(Piece piece) {
-        Position position = piece.getPosition();
+        Position position = piece.position();
         int rankIdx = position.getRankIdx();
 
         return RANKS_TOTAL_SIZE - rankIdx - 1;
     }
 
     private static int extractFileIdx(Piece piece) {
-        Position position = piece.getPosition();
+        Position position = piece.position();
         return position.getFileIdx();
     }
 

@@ -62,14 +62,14 @@ public class ChessGame {
 
     private Piece extractPiece(Position position) {
         return chessmen.stream()
-                .filter(piece -> piece.getPosition() == position)
+                .filter(piece -> piece.isAt(position))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(""));
     }
 
     private boolean checkOccupied(Position position) {
         return chessmen.stream()
-                .anyMatch(piece -> piece.getPosition() == position);
+                .anyMatch(piece -> piece.isAt(position));
     }
 
     public boolean isEnd() {
@@ -114,7 +114,7 @@ public class ChessGame {
     private List<Position> extractPawnPositions(List<Piece> sameColorPieces) {
         return sameColorPieces.stream()
                 .filter(Piece::isPawn)
-                .map(Piece::getPosition)
+                .map(Piece::position)
                 .collect(Collectors.toUnmodifiableList());
     }
 

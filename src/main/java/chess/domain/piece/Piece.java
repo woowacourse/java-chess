@@ -14,9 +14,11 @@ public interface Piece {
 
     double score();
 
-    String display();
-
-    Position getPosition();
-
     boolean hasColorOf(Color color);
+
+    boolean isAt(Position position);
+
+    Position position();
+
+    String display();
 }
