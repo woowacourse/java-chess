@@ -38,6 +38,18 @@ public class Position {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
     }
 
+    public static Position of(final String position) {
+        return cachedPositions.stream()
+                .filter(cachedPositions -> isExist(position, cachedPositions))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
+    }
+
+    private static boolean isExist(final String position, final Position cachedPositions) {
+        return cachedPositions.column == Column.of(position.substring(0, 1)) &&
+                cachedPositions.row == Row.of(position.substring(1, 2));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

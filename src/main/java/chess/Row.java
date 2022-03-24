@@ -24,4 +24,11 @@ public enum Row {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
+
+    public static Row of(final String value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value == Integer.parseInt(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
+    }
 }
