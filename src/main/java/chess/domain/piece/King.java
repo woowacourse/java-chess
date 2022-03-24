@@ -1,12 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.board.Position;
 
 public final class King extends Piece {
     public King(Camp camp) {
         super(camp);
     }
 
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        int columnDistance = beforePosition.columnDistance(afterPosition);
+        int rowDistance = beforePosition.rowDistance(afterPosition);
+        if (columnDistance + rowDistance == 1) {
+            return true;
+        }
+        return columnDistance == 1 && rowDistance == 1;
+    }
 
     @Override
     public boolean isBishop() {
@@ -37,5 +46,4 @@ public final class King extends Piece {
     public boolean isRook() {
         return false;
     }
-
 }

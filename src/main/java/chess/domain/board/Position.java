@@ -12,6 +12,14 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
+    public int columnDistance(Position otherPosition) {
+        return this.column.distance(otherPosition.column);
+    }
+
+    public int rowDistance(Position otherPosition) {
+        return this.row.distance(otherPosition.row);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

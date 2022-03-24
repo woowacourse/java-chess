@@ -155,7 +155,7 @@ public class BoardTest {
         assertThat(board.getValue().get(a4)).isEqualTo(piece);
     }
 
-    @DisplayName("")
+    @DisplayName("이동하려는 위치에 반대 진영 기물이 있으면 잡을 수 있다.")
     @Test
     void attack_opposite_piece() {
         Board board = new Board();

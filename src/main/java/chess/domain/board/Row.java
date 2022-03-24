@@ -26,7 +26,7 @@ public enum Row {
                 .orElseThrow();
     }
 
-    public int getValue() {
-        return value;
+    public int distance(Row otherRow) {
+        return Math.abs(this.value - otherRow.value);
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.board.Position;
 
 public abstract class Piece {
     private final Camp camp;

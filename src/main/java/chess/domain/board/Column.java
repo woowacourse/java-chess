@@ -25,4 +25,8 @@ public enum Column {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public int distance(Column otherColumn) {
+        return Math.abs(this.value - otherColumn.value);
+    }
 }
