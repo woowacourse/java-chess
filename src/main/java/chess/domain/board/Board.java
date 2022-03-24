@@ -6,15 +6,9 @@ import chess.domain.piece.Position;
 
 public class Board {
 
-    private static final int RANK_CAPACITY = 8;
-
     private BoardState state;
 
     public Board() {
-        this.state = BoardInitializer.initBoard();
-    }
-
-    public void initialize() {
         this.state = BoardInitializer.initBoard();
     }
 
@@ -24,5 +18,17 @@ public class Board {
 
     public void move(Position start, Position target) {
         state = state.move(start, target);
+    }
+
+    public boolean isBlackTurn() {
+        return state.isBlackTurn();
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
+    }
+
+    public void terminate() {
+        this.state = state.terminate();
     }
 }

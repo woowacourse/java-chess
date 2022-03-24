@@ -9,9 +9,11 @@ public interface BoardState {
 
     boolean isBlackTurn();
 
-    boolean isBlackWin();
+    Winner findWinner();
 
     BoardState move(Position start, Position target);
 
     Rank getRank(int rankLine);
+
+    BoardState terminate();
 }

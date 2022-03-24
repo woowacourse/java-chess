@@ -10,7 +10,7 @@ public final class WhiteWin extends End {
     }
 
     @Override
-    public boolean isBlackWin() {
-        return false;
+    public Winner findWinner() {
+        return Winner.WHITE;
     }
 }

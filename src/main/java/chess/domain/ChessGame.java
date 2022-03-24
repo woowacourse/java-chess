@@ -10,26 +10,29 @@ public class ChessGame {
 
     public void run() {
         OutputView.printStartView();
-        Command command = Command.from(InputView.requestCommand());
-        Board board = new Board();
-        board.initialize();
-        Turn turn = new Turn();
-        while (!command.equals(Command.END)) {
-            OutputView.printBoard(board, turn);
+        if (Command.firstCommand(InputView.requestCommand()) == Command.END) {
+            return;
+        }
 
-            command = executeCommand(board, turn);
+        Board board = new Board();
+
+        while (!board.isEnd()) {
+            OutputView.printBoard(board);
+            executeCommand(board);
         }
     }
 
-    private Command executeCommand(Board board, Turn turn) {
+    private void executeCommand(Board board) {
         List<String> input = List.of(InputView.requestCommand().split(" "));
+
+        if (Command.from(input.get(0)) == Command.END) {
+            board.terminate();
+            return;
+        }
 
         if (input.size() == 3) {
             board.move(new Position(input.get(1)),
                     new Position(input.get(2)));
-            turn.countTurn();
         }
-
-        return Command.from(input.get(0));
     }
 }

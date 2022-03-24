@@ -17,7 +17,7 @@ class BlackWinTest {
         Map<Integer, Rank> ranks = new HashMap<>();
         BlackWin blackWin = new BlackWin(ranks);
 
-        assertThat(blackWin.isBlackWin()).isTrue();
+        assertThat(blackWin.findWinner()).isEqualTo(Winner.BLACK);
     }
 
     @DisplayName("흑팀이 백팀의 킹을 잡을 경우 흑팀이 승리한다.")

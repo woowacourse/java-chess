@@ -23,7 +23,7 @@ public abstract class Playing extends GameStarted {
     }
 
     @Override
-    public boolean isBlackWin() {
+    public Winner findWinner() {
         throw new IllegalStateException("게임이 아직 진행 중 입니다.");
     }
 
@@ -124,5 +124,10 @@ public abstract class Playing extends GameStarted {
         return ranks.get(position.getY())
                 .getPieces()
                 .get(position.getX());
+    }
+
+    @Override
+    public BoardState terminate() {
+        return new Terminate(ranks);
     }
 }

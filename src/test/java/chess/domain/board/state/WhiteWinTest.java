@@ -17,7 +17,7 @@ class WhiteWinTest {
         Map<Integer, Rank> ranks = new HashMap<>();
         WhiteWin whiteWin = new WhiteWin(ranks);
 
-        assertThat(whiteWin.isBlackWin()).isFalse();
+        assertThat(whiteWin.findWinner()).isEqualTo(Winner.WHITE);
     }
 
     @DisplayName("백팀이 흑팀의 킹을 잡을 경우 백팀이 승리한다.")
