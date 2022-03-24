@@ -1,13 +1,21 @@
 package chess.domain.state;
 
+import chess.domain.ChessBoard;
 import chess.domain.Command;
 
-// 1. 사용자가 end 입력했을 때
-// 2. 킹이 잡혔을 때
 public class End implements State {
+    @Override
+    public State start() {
+        throw new IllegalArgumentException();
+    }
 
     @Override
-    public State changeTurn(Command command) {
+    public State stop() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public State changeTurn(Command command, ChessBoard chessBoard) {
         throw new IllegalArgumentException();
     }
 }

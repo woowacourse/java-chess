@@ -17,6 +17,13 @@ public enum File {
         this.file = file;
     }
 
+    public static File toFile(char candidate) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.getFile() == candidate)
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public char getFile() {
         return file;
     }

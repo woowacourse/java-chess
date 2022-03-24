@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
@@ -11,7 +12,9 @@ public class ChessBoard {
 
     private final Map<Position, Piece> cells = new LinkedHashMap<>();
 
-    public ChessBoard(List<Piece> blackPieces, List<Piece> whitePieces) {
+    public ChessBoard() {
+        List<Piece> blackPieces = PieceFactory.blackPieces();
+        List<Piece> whitePieces = PieceFactory.whitePieces();
         init(blackPieces, whitePieces);
     }
 
@@ -25,44 +28,28 @@ public class ChessBoard {
         }
     }
 
-    public int countPieces() {
-        return cells.size();
-    }
-
     public Map<Position, Piece> getCells() {
         return cells;
     }
 
-    public void movePiece(Position source, Position target) {
-        Piece piece = cells.get(source);
+    public Team findTeam(Position position) {
+        Piece piece = cells.get(position);
 
-        isInPath(source, target);
-
-        piece.canMove(source, target);
-
-        move(source, target, piece);
+        return piece.getTeam();
     }
 
-    private void isInPath(Position source, Position target) {
+    public void move(Command command) {
+        Map<String, Position> positions = command.makePosition();
+
+        Position source = positions.get("source");
+
+        Position target = positions.get("target");
+
         Piece piece = cells.get(source);
-        Team team = piece.getTeam();
 
-        Piece targetPiece = cells.get(target);
-        Team targetTeam = targetPiece.getTeam();
-
-        if (team == targetTeam) {
-            throw new IllegalArgumentException();
-        }
-
-        if (team != targetTeam) {
-            cells.remove(target);
-        }
-
-        // "target" 까지 가는 경로 상에는 상대 팀이든 같은 팀이든 기물이 있으면 안됌
-    }
-
-    private void move(Position source, Position target, Piece piece) {
         cells.remove(source);
+
         cells.put(target, piece);
+
     }
 }

@@ -1,15 +1,21 @@
 package chess.domain.state;
 
+import chess.domain.ChessBoard;
 import chess.domain.Command;
 
 public final class Ready implements State {
+    @Override
+    public State start() {
+        return new White();
+    }
 
     @Override
-    public State changeTurn(Command command) {
-        if (command.isEnd()) {
-            return new End();
-        }
+    public State stop() {
+        return new End();
+    }
 
-        return new White();
+    @Override
+    public State changeTurn(Command command, ChessBoard chessBoard) {
+        return new Ready();
     }
 }

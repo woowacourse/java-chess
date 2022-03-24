@@ -4,10 +4,9 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
-import chess.domain.position.File;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
+import chess.domain.position.File;
+import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -35,7 +34,7 @@ public class ChessController {
     }
 
     public void start() {
-        ChessBoard chessBoard = new ChessBoard(PieceFactory.blackPieces(), PieceFactory.whitePieces());
+        ChessBoard chessBoard = new ChessBoard();
 
         List<String> symbols = new ArrayList<>();
 

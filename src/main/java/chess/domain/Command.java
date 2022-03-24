@@ -1,9 +1,15 @@
 package chess.domain;
 
 import chess.domain.position.File;
+import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Command {
+
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     private final String command;
 
@@ -62,5 +68,44 @@ public class Command {
         }
 
         return false;
+    }
+
+    public boolean isStart() {
+        if (command.equals("start")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public Map<String, Position> makePosition() {
+        Map<String, Position> positions = new HashMap<>();
+
+        checkMoveCommand();
+
+        String[] token = command.split(" ");
+
+        Position sourcePosition = makePosition(token, SOURCE_INDEX);
+
+        positions.put("source", sourcePosition);
+
+        Position targetPosition = makePosition(token, TARGET_INDEX);
+
+        positions.put("target", targetPosition);
+
+        return positions;
+    }
+
+    private Position makePosition(String[] token, int index) {
+        File file = File.toFile(token[index].charAt(0));
+        Rank rank = Rank.toRank(token[index].charAt(1));
+
+        return new Position(file, rank);
+    }
+
+    private void checkMoveCommand() {
+        if (!isMoveCommand()) {
+            throw new IllegalStateException();
+        }
     }
 }

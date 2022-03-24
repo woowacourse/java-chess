@@ -18,6 +18,13 @@ public enum Rank {
         this.rank = rank;
     }
 
+    public static Rank toRank(char candidate) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.getRank() == Character.getNumericValue(candidate))
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public static boolean isRank(int candidate) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getRank() == candidate)
