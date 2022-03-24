@@ -8,7 +8,6 @@ import java.util.List;
 
 public final class PawnMoveStrategy extends MoveStrategy{
 
-    private static final int NO_HORIZONTAL_MOVE = 0;
     private static final int FORWARD_UNIT_BLACK = -1;
     private static final int FORWARD_UNIT_WHITE = 1;
 
@@ -74,7 +73,7 @@ public final class PawnMoveStrategy extends MoveStrategy{
         if (!source.isPawnStartPosition(color)) {
             return false;
         }
-        return board.getPiece(source.move(NO_HORIZONTAL_MOVE, findForward(color))).isBlank() && targetPiece.isBlank();
+        return board.getPiece(source.move(NO_MOVE, findForward(color))).isBlank() && targetPiece.isBlank();
     }
 
     private int findForward(final Color color) {

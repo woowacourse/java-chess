@@ -5,12 +5,15 @@ import chess.domain.board.Position;
 
 public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
 
+    private static final int ADD_START_UNIT = 1;
+    private static final int REVERSE_DIRECTION = -1;
+
     protected int countPiecesWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
         int pieceCounts = 0;
         int horizon = distance.getHorizon();
-        for (int i = 1; i < Math.abs(horizon); i++) {
-            Position amongPosition = smallerPosition.move(i, 0);
-            pieceCounts = countPieces(board, amongPosition, pieceCounts);
+        for (int i = ADD_START_UNIT; i < Math.abs(horizon); i++) {
+            Position amongPosition = smallerPosition.move(i, NO_MOVE);
+            pieceCounts += countPieces(board, amongPosition);
         }
         return pieceCounts;
     }
@@ -18,18 +21,18 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
     protected int countPiecesWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
         int pieceCounts = 0;
         int vertical = distance.getVertical();
-        for (int i = 1; i < Math.abs(vertical); i++) {
-            Position amongPosition = smallerPosition.move(0, i * -1);
-            pieceCounts = countPieces(board, amongPosition, pieceCounts);
+        for (int i = ADD_START_UNIT; i < Math.abs(vertical); i++) {
+            Position amongPosition = smallerPosition.move(NO_MOVE, i * REVERSE_DIRECTION);
+            pieceCounts += countPieces(board, amongPosition);
         }
         return pieceCounts;
     }
 
-    protected int countPieces(final Board board, final Position amongPosition, int pieceCounts) {
+    protected int countPieces(final Board board, final Position amongPosition) {
         if (!board.getPiece(amongPosition).isBlank()) {
-            pieceCounts++;
+            return 1;
         }
-        return pieceCounts;
+        return 0;
     }
 
 
