@@ -31,12 +31,14 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
     }
 
     @Override
-    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition,
+                                                  final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition,
+                                                  final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

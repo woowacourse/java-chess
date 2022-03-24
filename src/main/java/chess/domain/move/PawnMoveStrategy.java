@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public final class PawnMoveStrategy extends MoveStrategy{
+public final class PawnMoveStrategy extends MoveStrategy {
 
     private static final int FORWARD_UNIT_BLACK = -1;
     private static final int FORWARD_UNIT_WHITE = 1;
@@ -37,7 +37,8 @@ public final class PawnMoveStrategy extends MoveStrategy{
         return isWhiteMovePattern(movePattern, board, source, targetPiece, color);
     }
 
-    private boolean isBlackMovePattern(final MovePattern movePattern, final Board board, final Position source, final Piece targetPiece, final Color color) {
+    private boolean isBlackMovePattern(final MovePattern movePattern, final Board board, final Position source,
+                                       final Piece targetPiece, final Color color) {
         if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
@@ -53,7 +54,8 @@ public final class PawnMoveStrategy extends MoveStrategy{
         return false;
     }
 
-    private boolean isWhiteMovePattern(final MovePattern movePattern, final Board board, final Position source, final Piece targetPiece, final Color color) {
+    private boolean isWhiteMovePattern(final MovePattern movePattern, final Board board, final Position source,
+                                       final Piece targetPiece, final Color color) {
         if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }

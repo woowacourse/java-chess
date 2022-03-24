@@ -20,8 +20,7 @@ public enum MovePattern {
     SSE(1, -2),
     SSW(-1, -2),
     WWS(-2, -1),
-    WWN(-2, 1)
-    ;
+    WWN(-2, 1);
 
     private final int horizon;
     private final int vertical;

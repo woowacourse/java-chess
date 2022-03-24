@@ -11,14 +11,14 @@ public class Position implements Comparable<Position> {
 
     private final static Map<String, Position> CACHE;
 
-    private final Column column;
-    private final Row row;
-
     static {
         CACHE = createAll().stream()
                 .collect(Collectors.toMap(Position::createKey,
                         position -> position));
     }
+
+    private final Column column;
+    private final Row row;
 
     private Position(final Column column, final Row row) {
         this.column = column;
@@ -52,10 +52,10 @@ public class Position implements Comparable<Position> {
     }
 
     public boolean isPawnStartPosition(final Color color) {
-         if (color == Color.BLACK && row == Row.SEVEN) {
-             return true;
-         }
-         return color == Color.WHITE && row == Row.TWO;
+        if (color == Color.BLACK && row == Row.SEVEN) {
+            return true;
+        }
+        return color == Color.WHITE && row == Row.TWO;
     }
 
     public Position move(int horizon, int vertical) {

@@ -15,10 +15,12 @@ public class ChessGameProgressor {
 
     private final ChessGame chessGame;
     private final GameSwitch gameSwitch;
+    private final Turn turn;
 
     public ChessGameProgressor() {
         this.chessGame = new ChessGame(Board.create());
         this.gameSwitch = new GameSwitch();
+        this.turn = new Turn();
     }
 
     public Map<Position, Piece> getCurrentBoard() {
@@ -34,6 +36,7 @@ public class ChessGameProgressor {
             gameSwitch.turnOff();
             return;
         }
-        chessGame.move(Position.valueOf(inputs.get(SOURCE_INDEX)), Position.valueOf(inputs.get(TARGET_INDEX)));
+        chessGame.move(Position.valueOf(inputs.get(SOURCE_INDEX)), Position.valueOf(inputs.get(TARGET_INDEX)), turn);
+        turn.nextTurn();
     }
 }

@@ -53,7 +53,7 @@ public class Board {
                 new Bishop(color),
                 new Knight(color),
                 new Rook(color)
-                );
+        );
         Column[] columns = Column.values();
         for (int i = 0; i < 8; i++) {
             board.replace(Position.valueOf(columns[i].getName() + row.getValue()), pieces.get(i));

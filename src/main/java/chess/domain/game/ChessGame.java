@@ -14,17 +14,17 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void move(final Position source, final Position target) {
+    public void move(final Position source, final Position target, final Turn turn) {
         Piece sourcePiece = board.getPiece(source);
-        validateSourceBlank(sourcePiece);
+        validateTurn(turn, sourcePiece);
         MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
         validateMove(source, target, moveStrategy);
         board.movePiece(source, target);
     }
 
-    private void validateSourceBlank(final Piece sourcePiece) {
-        if (sourcePiece.isBlank()) {
-            throw new IllegalStateException("[ERROR] source에 Piece가 존재하지 않습니다.");
+    private void validateTurn(final Turn turn, final Piece sourcePiece) {
+        if (!turn.isRightTurn(sourcePiece.getColor())) {
+            throw new IllegalStateException("[ERROR] 당신의 차례가 아닙니다.");
         }
     }
 
