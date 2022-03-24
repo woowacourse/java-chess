@@ -1,6 +1,10 @@
 package chess.domain.position;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public final class Position {
     private final PositionX positionX;
@@ -9,6 +13,12 @@ public final class Position {
     public Position(PositionX positionX, PositionY positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    public static Map<PositionY, List<Position>> groupByPositionY(List<Position> pawnPositions) {
+        return pawnPositions.stream()
+                .collect(groupingBy(position->position.positionY));
+
     }
 
     public int calculateDistanceX(Position position) {
@@ -33,10 +43,6 @@ public final class Position {
 
     public Position shift(int xShift, int yShift) {
         return new Position(positionX.shift(xShift), positionY.shift(yShift));
-    }
-
-    public PositionY getPositionY() {
-        return positionY;
     }
 
     @Override

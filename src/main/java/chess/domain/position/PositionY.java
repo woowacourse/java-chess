@@ -45,8 +45,4 @@ public enum PositionY {
     public String getName() {
         return name;
     }
-
-    public int getCoordination() {
-        return coordination;
-    }
 }

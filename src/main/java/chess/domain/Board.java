@@ -3,11 +3,11 @@ package chess.domain;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.position.PositionY;
 
 import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.groupingBy;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> board;
@@ -47,20 +47,25 @@ public class Board {
                 .mapToDouble(Piece::score)
                 .sum();
 
-        return score - 0.5 * getDuplicatedPawns(color);
+        return score - 0.5 * countSameRankPawnsOf(color);
     }
 
-    private long getDuplicatedPawns(Color color) {
-        Map<Integer, List<Position>> pawnGroup = board.keySet().stream()
-                .filter(position -> board.get(position).isSameColor(color))
-                .filter(position -> board.get(position).isPawn())
-                .collect(groupingBy(position -> position.getPositionY().getCoordination()));
+    private long countSameRankPawnsOf(Color color) {
+        List<Position> pawnPositions = findPawnPositionsOf(color);
+        Map<PositionY, List<Position>> pawnGroup = Position.groupByPositionY(pawnPositions);
 
         return pawnGroup.values()
                 .stream()
                 .filter(list -> list.size() > 1)
                 .mapToInt(List::size)
                 .sum();
+    }
+
+    private List<Position> findPawnPositionsOf(Color color) {
+        return board.keySet().stream()
+                .filter(position -> board.get(position).isSameColor(color))
+                .filter(position -> board.get(position).isPawn())
+                .collect(Collectors.toList());
     }
 
     public boolean hasAliveBothKings() {
