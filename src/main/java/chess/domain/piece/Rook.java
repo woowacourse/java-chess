@@ -7,29 +7,22 @@ public class Rook extends Piece {
 
 	private final String symbol;
 
-	private Rook(Color color, Position position, String symbol) {
-		super(color, position);
+	private Rook(Color color, String symbol) {
+		super(color);
 		this.symbol = symbol;
 	}
 
-	public static Rook createWhite(int row, int column) {
-		return new Rook(Color.WHITE, new Position(row, column), "♜");
+	public static Rook createWhite() {
+		return new Rook(Color.WHITE, "♜");
 	}
 
-	public static Rook createBlack(int row, int column) {
-		return new Rook(Color.BLACK, new Position(row, column) , "♖");
+	public static Rook createBlack() {
+		return new Rook(Color.BLACK, "♖");
 	}
 
 	@Override
-	public void move(int row, int column) {
-		validatePosition(row, column);
-		this.position = this.position.change(row, column);
-	}
-
-	private void validatePosition(int row, int column) {
-		if (position.isDifferentRow(row) && position.isDifferentColumn(column)) {
-			throw new IllegalArgumentException();
-		}
+	public boolean isMovable(Position from, Position to) {
+		return new RookMovingStrategy().check(from, to);
 	}
 
 	@Override

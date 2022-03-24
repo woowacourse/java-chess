@@ -3,7 +3,6 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.IntUnaryOperator;
 
 public class Position {
 
@@ -28,10 +27,6 @@ public class Position {
 
 	public int subtractRow(Position position) {
 		return this.row - position.row;
-	}
-
-	public int calculateDistance(Position position) {
-		return Math.abs(this.subtractRow(position)) + Math.abs(this.subtractColumn(position));
 	}
 
 	public boolean canReach(Position to, UnitPosition unit, int threshold) {

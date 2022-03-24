@@ -6,23 +6,29 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.domain.Position;
+
 public class RookTest {
 
+	private final Piece rook = Rook.createBlack();
+
 	@ParameterizedTest
-	@CsvSource(value = {"1:3", "8:3", "1:1"}, delimiter = ':')
+	@CsvSource(value = {"1:4", "8:4", "6:4"}, delimiter = ':')
 	@DisplayName("Rook을 이동시킨다.")
 	void moveRook(int row, int column) {
-		Rook rook = Rook.createBlack(1, 3);
-		rook.move(row, column);
-		assertThat(rook.isSamePosition(row, column)).isTrue();
+		assertThat(rook.isMovable(
+			new Position(4, 4),
+			new Position(row, column))
+		).isTrue();
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {"2:4", "3:5"}, delimiter = ':')
 	@DisplayName("Rook은 대각선으로 이동할 수 없다.")
 	void moveRookInvalid(int row, int column) {
-		Rook rook = Rook.createBlack(1, 3);
-		assertThatThrownBy(() -> rook.move(row, column))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThat(rook.isMovable(
+			new Position(4, 4),
+			new Position(row, column))
+		).isFalse();
 	}
 }
