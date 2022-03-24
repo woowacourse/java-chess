@@ -11,6 +11,11 @@ public class Position {
     private final File file;
     private final Rank rank;
 
+    private Position(int fileIndex, int rankIndex) {
+        this.file = File.of(fileIndex);
+        this.rank = Rank.of(rankIndex);
+    }
+
     public Position(String position) {
         validateLength(position);
         this.file = File.of(position.substring(FILE_INDEX, RANK_INDEX));
@@ -21,6 +26,12 @@ public class Position {
         if (position.length() != POSITION_LENGTH) {
             throw new IllegalArgumentException("위치는 두자리여야 합니다.");
         }
+    }
+
+    public Position add(Direction direction) {
+        int fileIndex = file.getIndex() + direction.getCol();
+        int rankIndex = rank.getIndex() + direction.getRow();
+        return new Position(fileIndex, rankIndex);
     }
 
     public int getFileIndex() {

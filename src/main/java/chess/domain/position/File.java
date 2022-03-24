@@ -28,6 +28,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
     }
 
+    public static File of(int index) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
+    }
+
     public int getIndex() {
         return index;
     }

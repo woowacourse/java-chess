@@ -28,6 +28,13 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
     }
 
+    public static Rank of(int index) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
+    }
+
     public int getIndex() {
         return index;
     }

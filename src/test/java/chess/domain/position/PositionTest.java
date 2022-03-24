@@ -1,9 +1,11 @@
 package chess.domain.position;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -31,5 +33,13 @@ public class PositionTest {
     void 잘못된_위치_정보로_생성에_실패한다(String position) {
         assertThatThrownBy(() -> new Position(position))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("방향 정보를 기반으로 이동한 위치를 반환한다.")
+    @Test
+    void 방향_정보를_기반으로_이동한_위치를_반환한다() {
+        Position position = new Position("a1");
+
+        assertThat(position.add(Direction.RIGHT)).isEqualTo(new Position("b1"));
     }
 }

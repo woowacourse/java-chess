@@ -33,14 +33,14 @@ public enum Direction {
     }
 
     private static int calculateWeight(int value) {
-        if (value < 0) {
-            return 1;
-        }
+        return Integer.compare(0, value);
+    }
 
-        if (value == 0) {
-            return 0;
-        }
+    public int getRow() {
+        return row;
+    }
 
-        return -1;
+    public int getCol() {
+        return col;
     }
 }
