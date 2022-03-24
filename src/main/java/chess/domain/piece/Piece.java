@@ -14,6 +14,8 @@ public abstract class Piece {
         return this.camp == Camp.BLACK;
     }
 
+    public abstract boolean canMove(Position beforePosition, Position afterPosition);
+
     public abstract boolean isBishop();
 
     public abstract boolean isKing();

@@ -8,6 +8,7 @@ public final class Queen extends Piece{
         super(camp);
     }
 
+    @Override
     public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);

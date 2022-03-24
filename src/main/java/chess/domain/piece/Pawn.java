@@ -1,10 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.board.Position;
 
 public final class Pawn extends Piece {
     public Pawn(Camp camp) {
         super(camp);
+    }
+
+    @Override
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        return false;
     }
 
     @Override
