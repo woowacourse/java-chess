@@ -3,22 +3,19 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.strategy.PieceMovableStrategy;
 
 public abstract class Piece {
 
     private final Color color;
     private final String name;
-    private final PieceMovableStrategy pieceMovableStrategy;
 
-    protected Piece(Color color, String name, PieceMovableStrategy pieceMovableStrategy) {
+    protected Piece(Color color, String name) {
         this.color = color;
         this.name = name;
-        this.pieceMovableStrategy = pieceMovableStrategy;
     }
 
     public Piece move(Position source, Position target, ChessBoard chessBoard) {
-        if (!pieceMovableStrategy.isMovable(source, target, chessBoard)) {
+        if (!isMovable(source, target, chessBoard)) {
             throw new IllegalStateException("움직일 수 없는 곳입니다.");
         }
         return this;
@@ -35,6 +32,8 @@ public abstract class Piece {
     public final boolean isSameTeamPiece(Piece piece) {
         return isSameColor(piece.color);
     }
+
+    abstract public boolean isMovable(Position source, Position target, ChessBoard chessBoard);
 
     abstract public double score();
 
