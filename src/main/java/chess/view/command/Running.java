@@ -43,9 +43,9 @@ public abstract class Running implements Command {
 
     private void movePieceByCommand(final String command) {
         List<String> values = Arrays.asList(command.split(" "));
-        Position start = position(values.get(START_POSITION_INDEX));
+        Position source = position(values.get(START_POSITION_INDEX));
         Position target = position(values.get(TARGET_POSITION_INDEX));
-        chessBoard.movePiece(start, target, color);
+        chessBoard.movePiece(source, target, color);
     }
 
     private Position position(String command) {

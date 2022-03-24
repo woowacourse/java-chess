@@ -15,18 +15,18 @@ public class BishopMovableStrategy implements PieceMovableStrategy {
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
     @Override
-    public boolean isMovable(Position start, Position target, ChessBoard chessBoard) {
-        List<Position> route = calculateRoute(start, target);
+    public boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
+        List<Position> route = calculateRoute(source, target);
         if (route.isEmpty()) {
             return false;
         }
         return isEmptyRouteWithoutTargetPosition(target, chessBoard, route)
-                && !isTargetSameColor(start, target, chessBoard);
+                && !isTargetSameColor(source, target, chessBoard);
     }
 
-    private List<Position> calculateRoute(final Position start, final Position target) {
+    private List<Position> calculateRoute(Position source, Position target) {
         return MOVE_DIRECTIONS.stream()
-                .map(direction -> direction.route(start, target))
+                .map(direction -> direction.route(source, target))
                 .filter(route -> !route.isEmpty())
                 .findAny()
                 .orElse(Collections.emptyList());
@@ -38,8 +38,8 @@ public class BishopMovableStrategy implements PieceMovableStrategy {
                 .allMatch(chessBoard::isPositionEmpty);
     }
 
-    private boolean isTargetSameColor(Position start, Position target, ChessBoard chessBoard) {
-        Piece piece = chessBoard.pieceByPosition(start);
+    private boolean isTargetSameColor(Position source, Position target, ChessBoard chessBoard) {
+        Piece piece = chessBoard.pieceByPosition(source);
         return !chessBoard.isPositionEmpty(target) && chessBoard.pieceByPosition(target).isSameTeamPiece(piece);
     }
 }

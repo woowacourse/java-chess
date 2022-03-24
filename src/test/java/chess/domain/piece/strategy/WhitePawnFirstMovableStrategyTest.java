@@ -19,12 +19,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 class WhitePawnFirstMovableStrategyTest {
 
     private PieceMovableStrategy whitePawnFirstMovableStrategy;
-    private Position start;
+    private Position source;
 
     @BeforeEach
     void setUp() {
         whitePawnFirstMovableStrategy = new WhitePawnFirstMovableStrategy();
-        start = new Position('b', '1');
+        source = new Position('b', '1');
     }
 
     @ParameterizedTest
@@ -32,9 +32,9 @@ class WhitePawnFirstMovableStrategyTest {
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new WhiteFirstPawn()));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new WhiteFirstPawn()));
 
-        assertThat(whitePawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(whitePawnFirstMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -42,10 +42,10 @@ class WhitePawnFirstMovableStrategyTest {
     @DisplayName("기물이 가로막을 경우의 전진 불가능")
     void cannotMoveToPiecePosition(Position target, Piece piece) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new WhiteFirstPawn(),
+                source, new WhiteFirstPawn(),
                 target, piece));
 
-        assertThat(whitePawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+        assertThat(whitePawnFirstMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
     }
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
@@ -62,10 +62,10 @@ class WhitePawnFirstMovableStrategyTest {
     @DisplayName("대각선 방향에 적이 있으면 전진 가능")
     void canMoveToEnemyPiecePosition(Position target, Piece piece, boolean expected) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new WhiteFirstPawn(),
+                source, new WhiteFirstPawn(),
                 target, piece));
 
-        assertThat(whitePawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(whitePawnFirstMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {

@@ -16,12 +16,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 class KingMovableStrategyTest {
 
     private PieceMovableStrategy kingMovableStrategy;
-    private Position start;
+    private Position source;
 
     @BeforeEach
     void setUp() {
         kingMovableStrategy = new KingMovableStrategy();
-        start = new Position('a', '1');
+        source = new Position('a', '1');
     }
 
     @ParameterizedTest
@@ -29,9 +29,9 @@ class KingMovableStrategyTest {
     @DisplayName("킹의 빈곳 이동 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new King(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new King(WHITE)));
 
-        assertThat(kingMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(kingMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -40,10 +40,10 @@ class KingMovableStrategyTest {
     void isMovableToDifferentPiecePosition(Color color, boolean expected) {
         Position target = new Position('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new King(WHITE),
+                source, new King(WHITE),
                 target, new King(color)
         ));
 
-        assertThat(kingMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(kingMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 }

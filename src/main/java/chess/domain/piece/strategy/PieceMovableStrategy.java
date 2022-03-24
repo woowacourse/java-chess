@@ -5,5 +5,5 @@ import chess.domain.Position;
 
 public interface PieceMovableStrategy {
 
-    boolean isMovable(Position start, Position target, ChessBoard chessBoard);
+    boolean isMovable(Position source, Position target, ChessBoard chessBoard);
 }
