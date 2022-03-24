@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    public static final char BLACK_PAWN_INIT_RANK = 6;
-    public static final char WHITE_PAWN_INIT_RANK = 1;
+    private static final int BLACK_INIT_RANK = 6;
+    private static final int WHITE_INIT_RANK = 1;
 
     private static final double DEFAULT_SCORE = 1;
 
@@ -22,17 +22,24 @@ public final class Pawn extends Piece {
 
     private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
 
-    public Pawn(Color color, Position position) {
+    Pawn(Color color, Position position) {
         super(color, position);
     }
 
-    public static Pawn ofBlack(int fileIdx) {
-        Position position = Position.of(fileIdx, BLACK_PAWN_INIT_RANK);
+    public static Pawn of(Color color, int fileIdx) {
+        if (color == BLACK) {
+            return Pawn.ofBlack(fileIdx);
+        }
+        return Pawn.ofWhite(fileIdx);
+    }
+
+    static Pawn ofBlack(int fileIdx) {
+        Position position = Position.of(fileIdx, BLACK_INIT_RANK);
         return new Pawn(BLACK, position);
     }
 
-    public static Pawn ofWhite(int fileIdx) {
-        Position position = Position.of(fileIdx, WHITE_PAWN_INIT_RANK);
+    static Pawn ofWhite(int fileIdx) {
+        Position position = Position.of(fileIdx, WHITE_INIT_RANK);
         return new Pawn(WHITE, position);
     }
 
@@ -73,11 +80,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color == WHITE && WHITE_PAWN_INIT_RANK == curRankIdx;
+        return color == WHITE && WHITE_INIT_RANK == curRankIdx;
     }
 
     private boolean isBlackJump(int curRankIdx) {
-        return color == BLACK && BLACK_PAWN_INIT_RANK == curRankIdx;
+        return color == BLACK && BLACK_INIT_RANK == curRankIdx;
     }
 
     @Override
