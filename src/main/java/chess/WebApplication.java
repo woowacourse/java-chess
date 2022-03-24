@@ -11,7 +11,7 @@ public class WebApplication {
         // });
 
         Chess chess = new Chess(new Board(new CreateBoard()));
-        chess.start();
+        chess.run();
     }
 
     // private static String render(Map<String, Object> model, String templatePath) {

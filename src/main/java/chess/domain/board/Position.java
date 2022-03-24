@@ -14,6 +14,19 @@ public class Position {
         this.column = column;
     }
 
+    public Position(String rowString, String columnString) {
+        this(Row.from(rowString), Column.valueOf(columnString));
+    }
+
+    public static Position from(String rawPosition) {
+        if (rawPosition.length() != 2) {
+            throw new IllegalArgumentException("올바르지 않은 위치 입력입니다.");
+        }
+        Row row = Row.from(rawPosition.substring(1, 2));
+        Column column = Column.valueOf(rawPosition.substring(0, 1));
+        return new Position(row, column);
+    }
+
     public int calculateRowDifference(final Position target) {
         return row.calculateDifference(target.row);
     }

@@ -26,6 +26,14 @@ public enum Row {
             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
+    public static Row from(String row) {
+        try {
+            return from(Integer.parseInt(row));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("행은 숫자여야 합니다.");
+        }
+    }
+
     public int calculateDifference(Row target) {
         return this.value - target.value;
     }
