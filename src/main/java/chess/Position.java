@@ -44,8 +44,12 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isSameRank(Rank otherRank) {
+    public boolean isRankOf(Rank otherRank) {
         return rank == otherRank;
+    }
+
+    public boolean isSameRank(Position other) {
+        return other.isRankOf(rank);
     }
 
     public int rankDistance(Position other) {

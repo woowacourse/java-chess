@@ -15,14 +15,14 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(Position source, Position target) {
         if (pieceColor == PieceColor.WHITE) {
-            if (source.isSameRank(Rank.TWO)) {
+            if (source.isRankOf(Rank.TWO)) {
                 return isForward(source, target, 2);
             }
 
             return isForward(source, target, 1);
         }
 
-        if (source.isSameRank(Rank.SEVEN)) {
+        if (source.isRankOf(Rank.SEVEN)) {
             return isForward(target, source, 2);
         }
 
