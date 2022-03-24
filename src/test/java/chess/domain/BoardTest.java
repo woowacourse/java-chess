@@ -189,4 +189,21 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
     }
+
+    @Test
+    @DisplayName("나이트는 이동경로에 다른 기물이 있어도 이동할 수 있다")
+    void knightCanMove_anotherPiecesExistOnPath() {
+        Piece piece = new Piece(Color.BLACK, new Knight());
+
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b8"), piece);
+            pieces.put(Position.of("c8"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("d7"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        board.move("b8", "d7");
+        assertThat(board.piece(Position.of("d7")).get()).isEqualTo(piece);
+    }
 }
