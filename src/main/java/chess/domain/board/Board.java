@@ -88,6 +88,17 @@ public class Board {
         value.remove(src);
     }
 
+    public void move(Position src, Position dest, Color color) {
+        Piece piece = findPieceBy(src)
+                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
+
+        if (!piece.isSameColor(color)) {
+            throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다");
+        }
+
+        move(src, dest);
+    }
+
     private void checkSameColorInDestination(Piece piece, Position dest) {
         Optional<Piece> optionalPiece = findPieceBy(dest);
         if (optionalPiece.isPresent() && piece.isSameColor(optionalPiece.get())) {
