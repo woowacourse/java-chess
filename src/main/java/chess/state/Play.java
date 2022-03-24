@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class Play implements State {
 
-    Chessboard chessboard;
+    private final Chessboard chessboard;
 
     public Play() {
         this.chessboard = Chessboard.initializedChessboard();

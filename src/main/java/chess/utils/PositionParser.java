@@ -7,34 +7,35 @@ import java.util.Map;
 
 public class PositionParser {
     private static final String WRONG_POSITION = "올바르지 않은 위치 정보입니다.";
-    static Map<Character, Integer> files = new HashMap<>();
     static Map<Character, Integer> ranks = new HashMap<>();
+    static Map<Character, Integer> files = new HashMap<>();
 
     static {
-        files.put('a', 0);
-        files.put('b', 1);
-        files.put('c', 2);
-        files.put('d', 3);
-        files.put('e', 4);
-        files.put('f', 5);
-        files.put('g', 6);
-        files.put('h', 7);
 
-        ranks.put('8', 0);
-        ranks.put('7', 1);
-        ranks.put('6', 2);
-        ranks.put('5', 3);
-        ranks.put('4', 4);
-        ranks.put('3', 5);
-        ranks.put('2', 6);
-        ranks.put('1', 7);
+        ranks.put('a', 0);
+        ranks.put('b', 1);
+        ranks.put('c', 2);
+        ranks.put('d', 3);
+        ranks.put('e', 4);
+        ranks.put('f', 5);
+        ranks.put('g', 6);
+        ranks.put('h', 7);
+
+        files.put('8', 0);
+        files.put('7', 1);
+        files.put('6', 2);
+        files.put('5', 3);
+        files.put('4', 4);
+        files.put('3', 5);
+        files.put('2', 6);
+        files.put('1', 7);
     }
 
     public static Pair<Integer, Integer> parse(char x, char y) {
-        if (!files.containsKey(x) || !ranks.containsKey(y)) {
+        if (!ranks.containsKey(x) || !files.containsKey(y)) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
 
-        return Pair.of(files.get(x), ranks.get(y));
+        return Pair.of(files.get(y), ranks.get(x));
     }
 }

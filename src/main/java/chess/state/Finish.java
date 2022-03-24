@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class Finish implements State {
 
-    Chessboard chessboard;
+    private final Chessboard chessboard;
 
     public Finish(Chessboard chessboard) {
         this.chessboard = chessboard;

@@ -9,16 +9,15 @@ import static chess.view.OutputView.printStartMessage;
 
 public class ChessController {
 
-
-    public void run(){
+    public void run() {
         ChessGame chessGame = new ChessGame();
         printStartMessage();
-        while(!chessGame.isFinished()){
+        while (!chessGame.isFinished()) {
             playTurn(chessGame);
-         }
+        }
     }
 
-    private void playTurn(ChessGame chessGame){
+    private void playTurn(ChessGame chessGame) {
         String input = inputCommand();
         StringTokenizer commands = new StringTokenizer(input);
         String command = commands.nextToken();
@@ -34,7 +33,7 @@ public class ChessController {
         if (command.contains("move")) {
             String source = commands.nextToken();
             String target = commands.nextToken();
-            chessGame.move(source,target);
+            chessGame.move(source, target);
             OutputView.printBoard(chessGame.getChessBoard());
         }
     }

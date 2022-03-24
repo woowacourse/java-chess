@@ -9,7 +9,12 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean isMovable(Pair<Integer,Integer> source, Pair<Integer,Integer> target) {
-        return false;
+    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        return Math.abs(source.getRight() - target.getRight()) == Math.abs(source.getLeft() - target.getLeft())
+                || isSameLine(source, target);
+    }
+
+    private boolean isSameLine(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        return (source.getRight() == target.getRight() || source.getLeft() == target.getLeft());
     }
 }

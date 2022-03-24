@@ -9,7 +9,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    boolean isMovable(Pair<Integer,Integer> source, Pair<Integer,Integer> target) {
-        return false;
+    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        return source.getRight() == target.getRight() || source.getLeft() == target.getLeft();
     }
 }
+:q

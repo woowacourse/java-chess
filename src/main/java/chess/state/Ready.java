@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class Ready implements State {
 
-    Chessboard chessboard;
+    private final Chessboard chessboard;
 
     public Ready() {
         chessboard = Chessboard.emptyChessboard();

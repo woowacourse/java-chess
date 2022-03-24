@@ -44,7 +44,7 @@ public class ChessboardTest {
     void checkPiece(int x, int y, Type type, Color color) {
         Piece piece = board.get(x).get(y);
 
-        assertThat(piece.getType()).isEqualTo(type);
+        assertThat(piece.getType()).isEqualTo(type.getSymbol(color));
         assertThat(piece.getColor()).isEqualTo(color);
     }
 
