@@ -12,7 +12,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -75,5 +74,15 @@ public final class Board {
 
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
+    }
+
+    public boolean move(Position beforePosition, Position afterPosition) {
+        if (value.get(afterPosition) == null) {
+            return true;
+        }
+        if (value.get(beforePosition).isBlack() == value.get(afterPosition).isBlack()) {
+            return false;
+        }
+        return true;
     }
 }

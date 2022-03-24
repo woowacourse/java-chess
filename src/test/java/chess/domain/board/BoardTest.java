@@ -9,7 +9,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -20,15 +19,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BoardTest {
 
-    @DisplayName("체스판은 32개의 체스 기물을 생성한다.")
+    @DisplayName("체스판은 64칸이다.")
     @Test
-    void chess_board_create_pieces() {
+    void chess_board_size_64() {
         //given
         //when
         Board board = new Board();
 
         //then
-        assertThat(board.getValue()).hasSize(32);
+        assertThat(board.getValue()).hasSize(64);
     }
 
     @MethodSource("provideRookPosition")
@@ -125,6 +124,32 @@ public class BoardTest {
             Piece piece = boardValue.get(new Position(column, row));
             assertThat(piece.isBlack()).isTrue();
         }
+    }
+
+    @DisplayName("이동하려는 위치에 같은 팀 기물이 있으면 갈 수 없다")
+    @Test
+    void move_b2_h2() {
+        Board board = new Board();
+
+        Position b2 = new Position(Column.B, Row.TWO);
+        Position h2 = new Position(Column.H, Row.TWO);
+
+        boolean actual = board.move(b2, h2);
+
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("이동하려는 위치가 빈 칸이면 이동할 수 있다.")
+    @Test
+    void move_a2_a4() {
+        Board board = new Board();
+
+        Position a2 = new Position(Column.A, Row.TWO);
+        Position a4 = new Position(Column.A, Row.FOUR);
+
+        boolean actual = board.move(a2, a4);
+
+        assertThat(actual).isTrue();
     }
 
     private static Stream<Arguments> provideRookPosition() {
