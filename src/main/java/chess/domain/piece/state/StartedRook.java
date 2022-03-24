@@ -7,7 +7,7 @@ import chess.domain.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 
-public class StartedRook implements State{
+public class StartedRook extends Started{
 
     private final Continuous continuous = new Continuous();
 
@@ -19,11 +19,6 @@ public class StartedRook implements State{
         }
 
         return movablePositions;
-    }
-
-    @Override
-    public State killed() {
-        return new Dead();
     }
 
     @Override

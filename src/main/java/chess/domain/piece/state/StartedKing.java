@@ -5,14 +5,9 @@ import java.util.List;
 import chess.domain.ChessBoard;
 import chess.domain.piece.position.Position;
 
-public class StartedKing implements State {
+public class StartedKing extends Started{
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return null;
-    }
-
-    @Override
-    public State killed() {
         return null;
     }
 
