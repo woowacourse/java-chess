@@ -48,7 +48,7 @@ public class ChessBoard {
     }
 
     private double calculateColorScore(Color color) {
-        return calculateColorDefaultScore(color) - 0.5 * countDuplicatedPawn(color);
+        return calculateColorDefaultScore(color) - 0.5 * countDuplicatedColumnPawn(color);
     }
 
     private double calculateColorDefaultScore(Color color) {
@@ -59,19 +59,27 @@ public class ChessBoard {
                 .sum();
     }
 
-    private int countDuplicatedPawn(Color color) {
+    private int countDuplicatedColumnPawn(Color color) {
         return (int) pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameColor(color) && entry.getValue().isPawn())
-                .filter(entry -> isSameColumnPawn(entry.getKey()))
+                .filter(entry -> isSameColorPawn(color, entry.getValue()))
+                .filter(entry -> existSameColorPawnInColumn(entry.getKey(), color))
                 .count();
     }
 
-    private boolean isSameColumnPawn(Position position) {
+    private boolean isSameColorPawn(final Color color, Piece piece) {
+        return piece.isSameColor(color) && piece.isPawn();
+    }
+
+    private boolean existSameColorPawnInColumn(Position position, Color color) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isPawn())
-                .anyMatch(entry -> !entry.getKey().equals(position) && entry.getKey().equalsColumn(position));
+                .filter(entry -> isSameColorPawn(color, entry.getValue()))
+                .anyMatch(entry -> existOtherPawnInColumn(position, entry.getKey()));
+    }
+
+    private boolean existOtherPawnInColumn(final Position position, Position comparePosition) {
+        return !position.equals(comparePosition) && position.equalsColumn(comparePosition);
     }
 
     public Map<Position, Piece> getPieces() {
