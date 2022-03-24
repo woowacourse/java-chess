@@ -46,4 +46,8 @@ public enum Rank {
     public String toString() {
         return String.valueOf(rank);
     }
+
+    public int computeDiff(Rank origin) {
+        return rank - origin.rank;
+    }
 }

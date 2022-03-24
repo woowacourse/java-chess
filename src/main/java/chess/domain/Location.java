@@ -29,9 +29,16 @@ public class Location {
         return CACHE.get(toKey(file, rank));
     }
 
-    public static Location of(String source) {
-        String file = source.substring(0, 1);
-        String rank = source.substring(1, 2);
+    public static Location of(String location) {
+        String file = location.substring(0, 1);
+        String rank = location.substring(1);
         return CACHE.get(toKey(File.of(file), Rank.of(rank)));
+    }
+
+    public LocationDiff computeDiff(Location origin) {
+        int diffFile = file.computeDiff(origin.file);
+        int diffRank = rank.computeDiff(origin.rank);
+
+        return new LocationDiff(diffFile, diffRank);
     }
 }

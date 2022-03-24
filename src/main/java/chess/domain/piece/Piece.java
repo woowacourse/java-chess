@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.state.Direction;
+import java.util.List;
+import java.util.Map;
+
 public abstract class Piece {
     private final Team team;
     private final Name name;
@@ -25,4 +29,6 @@ public abstract class Piece {
     public boolean isWhite() {
         return team.isWhite();
     }
+
+    public abstract boolean isMovableDirection(Direction direction);
 }
