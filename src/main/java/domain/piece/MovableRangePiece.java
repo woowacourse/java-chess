@@ -11,23 +11,14 @@ import java.util.List;
 
 public class MovableRangePiece extends Piece {
 
-    private List<Position> positions = new ArrayList<>();
-
     public MovableRangePiece(Player player, PieceSymbol pieceSymbol,
         DirectionsGenerator directionsGenerator) {
         super(player, pieceSymbol, directionsGenerator);
     }
 
     @Override
-    public List<Position> availableMovePositions(Position source) {
-        positions = new ArrayList<>();
-        for (Direction direction : directions) {
-            calculateAvailablePosition(source, direction);
-        }
-        return positions;
-    }
-
-    private void calculateAvailablePosition(final Position source, final Direction direction) {
+    List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
+        List<Position> positions = new ArrayList<>();
         int row = source.getRow() + direction.getRow();
         int column = source.getColumn() + direction.getColumn();
 
@@ -36,9 +27,6 @@ public class MovableRangePiece extends Piece {
             row += direction.getRow();
             column += direction.getColumn();
         }
-    }
-
-    private boolean checkOverRange(final int row, final int column) {
-        return Row.isRowRange(row) && Column.isColumnRange(column);
+        return positions;
     }
 }
