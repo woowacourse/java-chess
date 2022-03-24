@@ -2,34 +2,28 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.strategy.BishopMovingStrategy;
 
 public class Bishop extends Piece {
 
 	private final String symbol;
 
-	private Bishop(Color color, Position position, String symbol) {
-		super(color, position);
+	private Bishop(Color color, String symbol) {
+		super(color);
 		this.symbol = symbol;
 	}
 
-	public static Bishop createWhite(int row, int column) {
-		return new Bishop(Color.WHITE, new Position(row, column), "♝");
+	public static Bishop createWhite() {
+		return new Bishop(Color.WHITE, "♝");
 	}
 
-	public static Bishop createBlack(int row, int column) {
-		return new Bishop(Color.BLACK, new Position(row, column) , "♗");
+	public static Bishop createBlack() {
+		return new Bishop(Color.BLACK , "♗");
 	}
 
 	@Override
-	public void move(int row, int column) {
-		validatePosition(row, column);
-		this.position = this.position.change(row, column);
-	}
-
-	private void validatePosition(int row, int column) {
-		if (this.position.isNotAbsoluteSlopeOne(row, column)) {
-			throw new IllegalArgumentException();
-		}
+	public boolean isMovable(Position from, Position to) {
+		return new BishopMovingStrategy().check(from, to);
 	}
 
 	@Override

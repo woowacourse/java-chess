@@ -1,6 +1,8 @@
 package chess.domain.direction;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import chess.domain.Position;
 
@@ -28,5 +30,11 @@ public class DirectionGenerator {
 			.filter(direction -> direction.confirm(from, to))
 			.findAny()
 			.orElseThrow(IllegalArgumentException::new);
+	}
+
+	public static Optional<? extends Direction> generateOfBishop(Position from, Position to) {
+		return Arrays.stream(DiagonalDirection.values())
+			.filter(direction -> direction.confirm(from, to))
+			.findAny();
 	}
 }
