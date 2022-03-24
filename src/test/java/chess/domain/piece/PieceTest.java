@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.position.File.ONE;
-import static chess.domain.position.Rank.A;
+import static chess.domain.position.File.A;
+import static chess.domain.position.Rank.ONE;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.Assertions;

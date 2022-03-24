@@ -21,7 +21,7 @@ public class Command {
     }
 
     private static void checkStartOrEnd(String command) {
-        if (!command.equals("start") || !command.equals("end")) {
+        if (!command.equals("start") && !command.equals("end")) {
             checkMove(command);
         }
     }
@@ -33,8 +33,8 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        if (!File.isFile(token[1].charAt(0)) || !Rank.isRank(token[1].charAt(1))
-        || !File.isFile(token[2].charAt(0)) || !Rank.isRank(token[2].charAt(1))) {
+        if (!Rank.isRank(token[1].charAt(0)) || !File.isFile(token[1].charAt(1))
+        || !Rank.isRank(token[2].charAt(0)) || !File.isFile(token[2].charAt(1))) {
             throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
         }
 

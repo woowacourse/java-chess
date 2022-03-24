@@ -6,9 +6,9 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public boolean isSameRank(Position position) {
@@ -32,7 +32,7 @@ public class Position {
     }
 
     public boolean isReductionRank(Position position) {
-        if (rank.calculateRank(rank) > 0) {
+        if (rank.calculateRank(position.getRank()) > 0) {
             return true;
         }
 
@@ -40,7 +40,7 @@ public class Position {
     }
 
     public boolean isIncreaseRank(Position position) {
-        if (rank.calculateRank(rank) < 0) {
+        if (rank.calculateRank(position.getRank()) < 0) {
             return true;
         }
 

@@ -3,19 +3,22 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum File {
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8);
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
+    private final char file;
 
-    private final int file;
-
-    File(int file) {
+    File(char file) {
         this.file = file;
+    }
+
+    public char getFile() {
+        return file;
     }
 
     public static boolean isFile(char candidate) {
@@ -23,10 +26,6 @@ public enum File {
                 .map(file -> file.equals(candidate))
                 .findFirst()
                 .orElse(false);
-    }
-
-    public int getFile() {
-        return file;
     }
 
     public int calculateAbsoluteValue(File other) {

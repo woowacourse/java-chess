@@ -43,7 +43,7 @@ public class ChessController {
 
         List<Position> positions = stream(File.values())
                 .flatMap(file -> stream(Rank.values())
-                        .map(rank -> new Position(rank, file)))
+                        .map(rank -> new Position(file, rank)))
                 .collect(toList());
 
         Collections.reverse(positions);

@@ -7,16 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RankTest {
-    @DisplayName("랭크는 a~h 까지를 갖는다.")
+    @DisplayName("랭크는 1~8 까지를 갖는다.")
     @Test
     public void rank() {
         //given
-        Rank rank = Rank.A;
+        Rank rank = Rank.ONE;
 
         //when
-        char rankName = rank.getRank();
+        int rankName = rank.getRank();
 
         //then
-        assertThat(rankName).isEqualTo('a');
+        assertThat(rankName).isEqualTo(1);
     }
 }
