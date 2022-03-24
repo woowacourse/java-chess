@@ -4,7 +4,7 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
 public class Bishop implements ChessPiece {
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 비숍은 대각선으로만 이동 할 수 있습니다.";
+    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 비숍이 이동할 수 없는 위치입니다.";
 
     private final Team team;
     private ChessBoardPosition position;

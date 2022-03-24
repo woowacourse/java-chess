@@ -4,6 +4,8 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
 public class Knight implements ChessPiece {
+    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 나이트가 이동할 수 없는 위치입니다.";
+
     private final Team team;
     private ChessBoardPosition position;
 
@@ -17,7 +19,7 @@ public class Knight implements ChessPiece {
         int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
         int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
         if (!((rowDistance == 2 && columnDistance == 1) || (rowDistance == 1 && columnDistance == 2))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
         }
         position = targetPosition;
     }
