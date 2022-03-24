@@ -15,18 +15,22 @@ public class ChessController {
     }
 
     private void playTurn(ChessBoard chessBoard) {
-        String[] command = InputView.requestCommand();
-        if (command[0].equals(Command.END.getValue())) {
+        String text = InputView.requestCommand();
+        Command command = Command.splitCommand(text);
+        if (command == Command.END) {
             return;
         }
 
-        if (command[0].equals(Command.START.getValue())) {
+        if (command == Command.START) {
             chessBoard = checkGameStatus(chessBoard);
             playTurn(chessBoard);
         }
 
-        if (command[0].equals(Command.MOVE.getValue())) {
-            runMoveCommand(command, chessBoard);
+        if (command == Command.MOVE) {
+            String from = Command.getFromPosition(text);
+            String to = Command.getToPosition(text);
+
+            runMoveCommand(from, to, chessBoard);
             playTurn(chessBoard);
         }
     }
@@ -49,12 +53,12 @@ public class ChessController {
         }
     }
 
-    private void runMoveCommand(String[] command, ChessBoard chessBoard) {
+    private void runMoveCommand(String from, String to, ChessBoard chessBoard) {
         try {
             if (chessBoard == null) {
                 throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
             }
-            chessBoard.move(new Position(command[1]), new Position(command[2]));
+            chessBoard.move(new Position(from), new Position(to));
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
