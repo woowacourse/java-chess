@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.piece.Piece;
+import domain.piece.unit.Piece;
 import domain.piece.property.TeamColor;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.King;

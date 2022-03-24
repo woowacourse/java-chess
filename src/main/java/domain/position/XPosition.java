@@ -21,7 +21,7 @@ public enum XPosition {
         this.x = x;
     }
 
-    public static XPosition of(int x) {
+    public static XPosition of(final int x) {
         return Arrays.stream(values())
                 .filter(value -> value.x == x)
                 .findFirst()

@@ -1,7 +1,6 @@
 package domain;
 
-import domain.piece.CommonMovablePiece;
-import domain.piece.Piece;
+import domain.piece.unit.Piece;
 import domain.position.Position;
 import java.util.Map;
 

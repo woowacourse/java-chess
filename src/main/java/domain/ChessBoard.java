@@ -1,12 +1,12 @@
 package domain;
 
-import domain.piece.Piece;
+import domain.piece.unit.Piece;
 import domain.position.Position;
 import java.util.Map;
 
-public class ChessBoard {
+public final class ChessBoard {
 
-    Map<Position, Piece> board;
+    private Map<Position, Piece> board;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();

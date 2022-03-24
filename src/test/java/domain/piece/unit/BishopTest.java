@@ -1,9 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.CommonMovablePiece;
-import domain.piece.Piece;
 import domain.piece.property.TeamColor;
-import domain.piece.unit.Bishop;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -26,10 +23,10 @@ class BishopTest {
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-            new Position(XPosition.A, YPosition.ONE),
-            new Position(XPosition.H, YPosition.EIGHT),
-            new Position(XPosition.C, YPosition.ONE),
-            new Position(XPosition.A, YPosition.THREE)
+                new Position(XPosition.A, YPosition.ONE),
+                new Position(XPosition.H, YPosition.EIGHT),
+                new Position(XPosition.C, YPosition.ONE),
+                new Position(XPosition.A, YPosition.THREE)
         );
     }
 }

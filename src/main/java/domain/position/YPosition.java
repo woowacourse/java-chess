@@ -19,14 +19,14 @@ public enum YPosition {
         this.y = y;
     }
 
-    public static YPosition of(int y) {
+    public static YPosition of(final int y) {
         return Arrays.stream(values())
                 .filter(value -> value.y == y)
                 .findFirst()
                 .orElse(null);
     }
 
-    public static boolean checkRange(int y) {
+    public static boolean checkRange(final int y) {
         return ONE.getY() <= y && y <= EIGHT.getY();
     }
 

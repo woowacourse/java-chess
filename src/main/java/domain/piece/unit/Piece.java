@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.TeamColor;
@@ -21,28 +21,32 @@ public abstract class Piece {
         this.unit = unit;
     }
 
-    public void initializePosition() {
+    protected void initializePosition() {
         positions = new ArrayList<>();
     }
 
-    public boolean checkSameTeamColor(TeamColor teamColor) {
-        return this.teamColor == teamColor;
-    }
-
-    public boolean checkOverRange(final int x, final int y) {
+    protected boolean checkOverRange(final int x, final int y) {
         return XPosition.checkRange(x) && YPosition.checkRange(y);
     }
 
-    public boolean availableMove(Position source, Position target) {
+    public boolean checkSameTeamColor(final TeamColor teamColor) {
+        return this.teamColor == teamColor;
+    }
+
+    public boolean availableMove(final Position source, final Position target) {
         calculateAvailablePositions(source);
         return containsTarget(target);
+    }
+
+    public void positionAdd(final Position position) {
+        positions.add(position);
     }
 
     protected boolean containsTarget(final Position target) {
         return positions.contains(target);
     }
 
-    public void calculateAvailablePositions(final Position source) {
+    protected void calculateAvailablePositions(final Position source) {
         initializePosition();
         for (Direction direction : directions()) {
             calculateAvailablePosition(source, direction);
@@ -51,14 +55,10 @@ public abstract class Piece {
 
     protected abstract void calculateAvailablePosition(final Position source, final Direction direction);
 
-    public abstract List<Direction> directions();
+    protected abstract List<Direction> directions();
 
     public String symbol() {
         return unit.symbol(teamColor);
-    }
-
-    public void positionAdd(Position position) {
-        positions.add(position);
     }
 
     @Override

@@ -2,7 +2,6 @@ package domain.piece.unit;
 
 import static domain.utils.Direction.allDirections;
 
-import domain.piece.CommonMovablePiece;
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.TeamColor;
 import domain.utils.Direction;
@@ -21,7 +20,7 @@ public final class Queen extends CommonMovablePiece {
     }
 
     @Override
-    public List<Direction> directions() {
+    protected List<Direction> directions() {
         return directions;
     }
 }

@@ -1,9 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.CommonMovablePiece;
-import domain.piece.Piece;
 import domain.piece.property.TeamColor;
-import domain.piece.unit.Rook;
 import domain.position.XPosition;
 import domain.position.Position;
 import domain.position.YPosition;

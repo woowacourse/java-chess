@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.TeamColor;
@@ -9,7 +9,7 @@ import domain.utils.Direction;
 
 public abstract class SpecificMovablePiece extends Piece {
 
-    public SpecificMovablePiece(TeamColor teamColor, PieceSymbol unit) {
+    public SpecificMovablePiece(final TeamColor teamColor, final PieceSymbol unit) {
         super(teamColor, unit);
     }
 

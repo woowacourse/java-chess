@@ -1,6 +1,5 @@
 package domain.piece.unit;
 
-import domain.piece.Piece;
 import domain.piece.property.TeamColor;
 import domain.position.Position;
 import domain.position.XPosition;
