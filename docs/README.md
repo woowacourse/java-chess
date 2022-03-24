@@ -112,3 +112,8 @@ abcdefgh (file)
 - ROOK
     - [ ] `target`의 `index`가 `File`이나 `Rank` 둘 중에 하나와 같아야 한다.
     - [ ] 경로에 기물이 존재할 경우 이동 불가능하다.
+
+#### Direction
+
+- [x] 방향 정보를 관리하기 위한 열거형이다.
+- [x] `source` 위치와 `target` 위치를 기반으로 `이동할 방향`을 반환한다.
