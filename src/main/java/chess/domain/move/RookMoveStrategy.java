@@ -13,24 +13,43 @@ public class RookMoveStrategy extends FirstRowMoveStrategy {
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
 
-        if (distance.isHorizontalMovement()) {
-            int horizon = distance.getHorizon();
-            for (int i = 1; i < Math.abs(horizon); i++) {
-                Position amongPosition = source.compareSmaller(target).move(i, 0);
-                if (!board.getPiece(amongPosition).isBlank()) {
-                    return false;
-                }
-            }
+        if (!distance.isHorizontalMovement() && !distance.isVerticalMovement()) {
+            return false;
         }
-        if (distance.isVerticalMovement()) {
-            int vertical = distance.getVertical();
-            for (int i = 1; i < Math.abs(vertical); i++) {
-                Position amongPosition = source.compareSmaller(target).move(0, i * -1);
-                if (!board.getPiece(amongPosition).isBlank()) {
-                    return false;
-                }
-            }
+        if (distance.isHorizontalMovement() && countPiecesWhenHorizon(board, source, target, distance) > 0) {
+            return false;
         }
+        if (distance.isVerticalMovement() && countPiecesWhenVertical(board, source, target, distance) > 0) {
+            return false;
+        }
+
         return isTargetPositionMovable(targetPiece, color);
+    }
+
+    private int countPiecesWhenHorizon(final Board board, final Position source, final Position target, final Distance distance) {
+        int pieceCounts = 0;
+        int horizon = distance.getHorizon();
+        for (int i = 1; i < Math.abs(horizon); i++) {
+            Position amongPosition = source.compareSmaller(target).move(i, 0);
+            pieceCounts = countPieces(board, amongPosition, pieceCounts);
+        }
+        return pieceCounts;
+    }
+
+    private int countPiecesWhenVertical(final Board board, final Position source, final Position target, final Distance distance) {
+        int pieceCounts = 0;
+        int vertical = distance.getVertical();
+        for (int i = 1; i < Math.abs(vertical); i++) {
+            Position amongPosition = source.compareSmaller(target).move(0, i * -1);
+            pieceCounts = countPieces(board, amongPosition, pieceCounts);
+        }
+        return pieceCounts;
+    }
+
+    private int countPieces(final Board board, final Position amongPosition, int pieceCounts) {
+        if (!board.getPiece(amongPosition).isBlank()) {
+            pieceCounts++;
+        }
+        return pieceCounts;
     }
 }
