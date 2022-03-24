@@ -42,6 +42,6 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     private boolean isValidDirection(Position from, Position to, List<Direction> directions) {
         return directions.stream()
-                .anyMatch(direction -> direction.isSameDirection(from, to));
+                .anyMatch(direction -> direction.isSameDistance(from, to));
     }
 }

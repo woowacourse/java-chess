@@ -36,6 +36,10 @@ public enum Direction {
         return getColorDirections(color, List.of(TOP, TOPLEFT, TOPRIGHT));
     }
 
+    public static List<Direction> rookDirection(Color color) {
+        return getColorDirections(color, List.of(TOP, DOWN, LEFT, RIGHT));
+    }
+
     private static List<Direction> getColorDirections(Color color, List<Direction> directions) {
         if (color == Color.WHITE) {
             return directions;
@@ -46,8 +50,19 @@ public enum Direction {
     }
 
     public boolean isSameDirection(Position from, Position to) {
-        return from.getXDistance(to) == x &&
-                from.getYDistance(to) == y;
+        return isSameXDirection(from,to) && isSameYDirection(from,to);
+    }
+
+    private boolean isSameXDirection(Position from, Position to) {
+        return (x == 0 && from.getXDistance(to) == 0) || from.getXDistance(to) * x > 0;
+    }
+
+    private boolean isSameYDirection(Position from, Position to) {
+        return (y == 0 && from.getYDistance(to) == 0) || from.getYDistance(to) * y > 0;
+    }
+
+    public boolean isSameDistance(Position from, Position to) {
+        return from.getXDistance(to) == x && from.getYDistance(to) == y;
     }
 
     private Direction toReversed() {

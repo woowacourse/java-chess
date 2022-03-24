@@ -30,7 +30,7 @@ class DirectionTest {
     @DisplayName("체스 말이 거리가 같은지 확인할 수 있다.")
     void isSameDirection(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
 
-        assertThat(direction.isSameDirection(
+        assertThat(direction.isSameDistance(
                 new Position(fileA, rankA),
                 new Position(fileB, rankB)))
                 .isTrue();
