@@ -15,7 +15,7 @@ public class Position implements Comparable<Position> {
     private final Row row;
 
     static {
-        CACHE = init().stream()
+        CACHE = createAll().stream()
                 .collect(Collectors.toMap(Position::createKey,
                         position -> position));
     }
@@ -25,7 +25,7 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    private static List<Position> init() {
+    private static List<Position> createAll() {
         List<Position> positions = new ArrayList<>();
 
         for (Row row : Row.values()) {

@@ -1,14 +1,16 @@
 package chess.view;
 
-import chess.Command;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static Command inputStartOrEnd() {
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-        return Command.of(scanner.nextLine());
+    public static List<String> inputCommand() {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .collect(Collectors.toList());
     }
 }

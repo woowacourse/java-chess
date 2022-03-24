@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -34,5 +35,9 @@ public class ChessGame {
         if (!moveStrategy.isMovable(board, source, target)) {
             throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
         }
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }
