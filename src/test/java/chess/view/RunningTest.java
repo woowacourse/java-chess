@@ -1,12 +1,14 @@
 package chess.view;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.view.command.Command;
-import chess.view.command.Ready;
+import chess.view.command.End;
 import chess.view.command.Running;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -20,5 +22,12 @@ class RunningTest {
         assertThatThrownBy(() -> command.run(inputLine))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 진행상태에서 불가능한 명령어입니다.");
+    }
+
+    @Test
+    @DisplayName("end커맨드 입력 시 End 상태로 변경")
+    void runToEnd() {
+        Command command = new Running(ChessBoard.createNewChessBoard()).run("end");
+        assertThat(command).isInstanceOf(End.class);
     }
 }
