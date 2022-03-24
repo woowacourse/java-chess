@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.board.strategy.CreateBoard;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -26,7 +27,7 @@ class BoardTest {
 	@ParameterizedTest(name = "{index} {displayName} piece={0} count={1}")
 	@MethodSource("providePieceAndExpectedCount")
 	void valid_Count(final Piece piece, final int expected) {
-		Board board = Board.createInitialBoard();
+		Board board = new Board(new CreateBoard());
 		Map<Position, Piece> pieces = board.getPieces();
 		final int actual = (int)pieces.values()
 			.stream()
@@ -46,4 +47,5 @@ class BoardTest {
 			Arguments.of(new Queen(Color.BLACK), 1)
 		);
 	}
+
 }
