@@ -27,9 +27,9 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
     }
 
-    public static List<File> traceGroup(File sourceFile, File targetFile) {
+    public static List<File> traceGroup(File source, File target) {
         return Arrays.stream(values())
-            .filter(file -> file.isBetween(sourceFile, targetFile))
+            .filter(file -> file.isBetween(source, target))
             .collect(Collectors.toList());
     }
 
