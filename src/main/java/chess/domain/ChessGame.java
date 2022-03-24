@@ -14,11 +14,8 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void move(final String rawSource, final String rawTarget) {
-        Position source = Position.valueOf(rawSource);
-        Position target = Position.valueOf(rawTarget);
-        Piece sourcePiece = board.getPiece(Position.valueOf(rawSource));
-
+    public void move(final Position source, final Position target) {
+        Piece sourcePiece = board.getPiece(source);
         validateSourceBlank(sourcePiece);
         MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
         validateMove(source, target, moveStrategy);
