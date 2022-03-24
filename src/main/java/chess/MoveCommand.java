@@ -24,4 +24,8 @@ public class MoveCommand {
             throw new IllegalArgumentException("현재 위치와 이동할 위치가 같을 수 없습니다.");
         }
     }
+
+    public Position getFrom() {
+        return from;
+    }
 }

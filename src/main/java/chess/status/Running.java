@@ -30,7 +30,7 @@ public class Running implements State {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-        System.out.println(moveCommand + "말 움직임");
+
     }
 
     @Override

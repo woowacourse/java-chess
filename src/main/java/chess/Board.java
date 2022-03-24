@@ -76,4 +76,11 @@ public class Board {
                 "value=" + value +
                 '}';
     }
+
+    public void move(final MoveCommand moveCommand) {
+        final Position from = moveCommand.getFrom();
+        if (!value.containsKey(from)) {
+            throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+        }
+    }
 }
