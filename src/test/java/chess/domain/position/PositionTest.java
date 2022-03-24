@@ -1,3 +1,5 @@
+package chess.domain.position;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Direction;
