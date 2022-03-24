@@ -14,6 +14,7 @@ public class ChessGameController {
             printCurrentBoard(chessGameProgress);
             progressChessGame(chessGameProgress);
         }
+        OutputView.printEndMessage();
     }
 
     private void progressChessGame(final ChessGameProgress chessGameProgress) {

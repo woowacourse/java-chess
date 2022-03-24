@@ -39,4 +39,8 @@ public class OutputView {
         }
         return ++unit;
     }
+
+    public static void printEndMessage() {
+        System.out.println("게임이 종료됐습니다.");
+    }
 }
