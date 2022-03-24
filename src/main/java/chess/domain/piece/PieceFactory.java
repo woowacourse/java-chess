@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.pawn.BlackFirstPawn;
-import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class PieceFactory {
                 new Position('h', '8'), new Rook(Color.BLACK)
         ));
         for (char i = 0; i < 8; i++) {
-            blackPieces.put(new Position((char) ('a' + i), '7'), new BlackFirstPawn());
+            blackPieces.put(new Position((char) ('a' + i), '7'), new BlackPawn());
         }
         return blackPieces;
     }
@@ -48,7 +48,7 @@ public class PieceFactory {
                 new Position('h', '1'), new Rook(Color.WHITE)
         ));
         for (char i = 0; i < 8; i++) {
-            whitePieces.put(new Position((char) ('a' + i), '2'), new WhiteFirstPawn());
+            whitePieces.put(new Position((char) ('a' + i), '2'), new WhitePawn());
         }
         return whitePieces;
     }

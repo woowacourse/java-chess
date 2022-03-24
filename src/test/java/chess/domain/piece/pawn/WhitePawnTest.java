@@ -1,13 +1,10 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.pawn.BlackFirstPawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.pawn.WhiteFirstPawn;
-import chess.domain.piece.pawn.WhitePawn;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,25 +14,27 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class WhitePawnMovableStrategyTest {
+class WhitePawnTest {
 
-    private PieceMovableStrategy whitePawnMovableStrategy;
+    private Piece pawn;
     private Position source;
 
     @BeforeEach
     void setUp() {
-        whitePawnMovableStrategy = new WhitePawnMovableStrategy();
-        source = new Position('b', '1');
+        source = new Position('b', '2');
+        pawn = new WhitePawn().move(new Position('b', '1'), source, new ChessBoard(Map.of(
+                new Position('b', '1'), new WhitePawn()
+        )));
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,2,true", "b,3,false", "b,1,false", "a,1,false", "a,2,false"})
+    @CsvSource(value = {"b,3,true", "b,4,false", "b,2,false", "a,2,false", "a,3,false"})
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
         ChessBoard chessBoard = new ChessBoard(Map.of(source, new WhitePawn()));
 
-        assertThat(whitePawnMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -46,13 +45,13 @@ class WhitePawnMovableStrategyTest {
                 source, new WhitePawn(),
                 target, piece));
 
-        assertThat(whitePawnMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
+        assertThat(pawn.isMovable(source, target, chessBoard)).isFalse();
     }
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('b', '2'), new WhiteFirstPawn()),
-                Arguments.of(new Position('b', '2'), new BlackFirstPawn())
+                Arguments.of(new Position('b', '3'), new WhitePawn()),
+                Arguments.of(new Position('b', '3'), new BlackPawn())
         );
     }
 
@@ -64,15 +63,16 @@ class WhitePawnMovableStrategyTest {
                 source, new WhitePawn(),
                 target, piece));
 
-        assertThat(whitePawnMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('a', '2'), new BlackFirstPawn(), true),
-                Arguments.of(new Position('c', '2'), new BlackFirstPawn(), true),
-                Arguments.of(new Position('a', '2'), new WhiteFirstPawn(), false),
-                Arguments.of(new Position('c', '2'), new WhiteFirstPawn(), false)
+                Arguments.of(new Position('a', '3'), new BlackPawn(), true),
+                Arguments.of(new Position('c', '3'), new BlackPawn(), true),
+                Arguments.of(new Position('a', '3'), new WhitePawn(), false),
+                Arguments.of(new Position('c', '3'), new WhitePawn(), false)
         );
     }
+
 }

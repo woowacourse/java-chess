@@ -11,7 +11,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhiteFirstPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,8 +101,8 @@ class ChessBoardTest {
     @DisplayName("각 플레이어의 점수 반환")
     void calcualteScoreStaus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                new Position('a', '2'), new WhiteFirstPawn(),
-                new Position('a', '3'), new WhiteFirstPawn(),
+                new Position('a', '2'), new WhitePawn(),
+                new Position('a', '3'), new WhitePawn(),
                 new Position('c', '3'), new WhitePawn(),
                 new Position('b', '1'), new Knight(Color.WHITE),
                 new Position('d', '1'), new Queen(Color.WHITE),
