@@ -17,20 +17,37 @@ public class Board {
     }
 
     public void validateMovement(Color turnColor, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
+        validatePieceChoice(turnColor, source);
+        validateTargetChoice(source, target);
+        validateRoute(source, target);
+    }
 
+    private void validatePieceChoice(Color turnColor, Position source) {
+        Piece sourcePiece = board.get(source);
         if (!sourcePiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
+    }
+
+    private void validateTargetChoice(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
         if (!sourcePiece.isMovable(source, target)) {
             throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
         }
+    }
+
+    private void validateRoute(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
         List<Position> route = sourcePiece.findRoute(source, target);
         for (Position node : route) {
-            Piece nodePiece = board.get(node);
-            if (!nodePiece.isBlank()) {
-                throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
-            }
+            validateRouteNode(node);
+        }
+    }
+
+    private void validateRouteNode(Position node) {
+        Piece nodePiece = board.get(node);
+        if (!nodePiece.isBlank()) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
     }
 
@@ -68,7 +85,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public boolean hasAliveBothKings() {
+    public boolean isBothKingsAlive() {
         long kingCount = board.values()
                 .stream()
                 .filter(Piece::isKing)

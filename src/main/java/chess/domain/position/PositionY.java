@@ -34,12 +34,12 @@ public enum PositionY {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
 
-    public int distanceFrom(PositionY positionY) {
+    public int displacementFrom(PositionY positionY) {
         return positionY.coordination - coordination;
     }
 
-    public PositionY shift(int shiftValue) {
-        return PositionY.of(coordination + shiftValue);
+    public PositionY displace(int displacement) {
+        return PositionY.of(coordination + displacement);
     }
 
     public String getName() {

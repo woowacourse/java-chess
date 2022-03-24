@@ -18,31 +18,30 @@ public final class Position {
     public static Map<PositionY, List<Position>> groupByPositionY(List<Position> pawnPositions) {
         return pawnPositions.stream()
                 .collect(groupingBy(position->position.positionY));
-
     }
 
-    public int calculateDistanceX(Position position) {
-        return positionX.distanceFrom(position.positionX);
+    public int calculateDisplacementX(Position position) {
+        return positionX.displacementFrom(position.positionX);
     }
 
-    public int calculateDistanceY(Position position) {
-        return positionY.distanceFrom(position.positionY);
+    public int calculateDisplacementY(Position position) {
+        return positionY.displacementFrom(position.positionY);
     }
 
-    public int calculateDistanceFrom(Position position) {
-        return Math.max(Math.abs(calculateDistanceY(position)), Math.abs(calculateDistanceX(position)));
+    public int calculateDisplacementFrom(Position position) {
+        return Math.max(Math.abs(calculateDisplacementY(position)), Math.abs(calculateDisplacementX(position)));
     }
 
     public int calculateXSlope(Position target, int routeLength) {
-        return calculateDistanceX(target) / routeLength;
+        return calculateDisplacementX(target) / routeLength;
     }
 
     public int calculateYSlope(Position target, int routeLength) {
-        return calculateDistanceY(target) / routeLength;
+        return calculateDisplacementY(target) / routeLength;
     }
 
-    public Position shift(int xShift, int yShift) {
-        return new Position(positionX.shift(xShift), positionY.shift(yShift));
+    public Position displacement(int xDisplacement, int yDisplacement) {
+        return new Position(positionX.displace(xDisplacement), positionY.displace(yDisplacement));
     }
 
     @Override

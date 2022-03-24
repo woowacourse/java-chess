@@ -18,8 +18,8 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int distanceX = Math.abs(source.calculateDistanceX(target));
-        int distanceY = Math.abs(source.calculateDistanceY(target));
+        int distanceX = Math.abs(source.calculateDisplacementX(target));
+        int distanceY = Math.abs(source.calculateDisplacementY(target));
 
         if (distanceY >= 1 && distanceX == distanceY) {
             return true;
@@ -29,17 +29,7 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-
-        int routeLength = source.calculateDistanceFrom(target);
-        int xSlope = source.calculateXSlope(target, routeLength);
-        int ySlope = source.calculateYSlope(target, routeLength);
-
-        for (int step = 1; step < routeLength; step++) {
-            Position routeNode = source.shift(xSlope * step, ySlope * step);
-            route.add(routeNode);
-        }
-        return route;
+        return findLinearRoute(source, target);
     }
 
     @Override
@@ -59,6 +49,11 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isRook() {
         return false;
     }
 }

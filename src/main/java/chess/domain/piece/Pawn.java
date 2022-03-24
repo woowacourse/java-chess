@@ -3,12 +3,14 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private boolean isNeverDisplaced;
+
     public Pawn(Color color) {
         super(color);
+        isNeverDisplaced = false;
     }
 
     @Override
@@ -18,38 +20,45 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int distanceX = source.calculateDistanceX(target);
-        int distanceY = source.calculateDistanceY(target);
+        int displacementX = source.calculateDisplacementX(target);
+        int displacementY = source.calculateDisplacementY(target);
 
         if (color == Color.BLACK) {
-            return isBlackMovable(distanceX, distanceY);
+            return isBlackMovable(displacementX, displacementY);
         }
-        return isWhiteMovable(distanceX, distanceY);
+        return isWhiteMovable(displacementX, displacementY);
     }
 
-    private boolean isBlackMovable(int distanceX, int distanceY) {
-        if (distanceY == 0 && Math.abs(distanceX) == 1) {
+    private boolean isBlackMovable(int displacementX, int displacementY) {
+        if (displacementY == 0 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (distanceY == 1 && distanceX == 0) {
+        if (displacementY == 1 && displacementX == 0) {
             return true;
+        }
+        if (displacementY == 2 && displacementX == 0){
+            return isNeverDisplaced;
         }
         return false;
     }
 
-    private boolean isWhiteMovable(int distanceX, int distanceY) {
-        if (distanceY == 0 && Math.abs(distanceX) == 1) {
+    private boolean isWhiteMovable(int displacementX, int displacementY) {
+        if (displacementY == 0 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (distanceY == -1 && distanceX == 0) {
+        if (displacementY == -1 && displacementX == 0) {
             return true;
+        }
+        if (displacementY == -2 && displacementX == 0){
+            return isNeverDisplaced;
         }
         return false;
     }
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        return new ArrayList<>();
+        isNeverDisplaced = true;
+        return findLinearRoute(source, target);
     }
 
     @Override
@@ -69,6 +78,11 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isRook() {
         return false;
     }
 }

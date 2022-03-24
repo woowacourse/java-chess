@@ -18,8 +18,8 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int distanceX = Math.abs(source.calculateDistanceX(target));
-        int distanceY = Math.abs(source.calculateDistanceY(target));
+        int distanceX = Math.abs(source.calculateDisplacementX(target));
+        int distanceY = Math.abs(source.calculateDisplacementY(target));
 
         if (distanceY == 1 && distanceX == 2) {
             return true;
@@ -52,6 +52,11 @@ public class Knight extends Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isRook() {
         return false;
     }
 }

@@ -7,7 +7,6 @@ import chess.domain.piece.Queen;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +52,7 @@ public class BoardTest {
 
         Board board = new Board(pieces);
 
-        assertThat(board.hasAliveBothKings()).isTrue();
+        assertThat(board.isBothKingsAlive()).isTrue();
     }
 
     @Test
@@ -71,6 +70,6 @@ public class BoardTest {
 
         Board board = new Board(pieces);
 
-        assertThat(board.hasAliveBothKings()).isFalse();
+        assertThat(board.isBothKingsAlive()).isFalse();
     }
 }

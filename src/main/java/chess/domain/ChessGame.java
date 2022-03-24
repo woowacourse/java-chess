@@ -51,7 +51,7 @@ public final class ChessGame {
     }
 
     public boolean isRunning() {
-        return board.hasAliveBothKings();
+        return board.isBothKingsAlive();
     }
 
     public Map<Color, Double> calculateScore() {

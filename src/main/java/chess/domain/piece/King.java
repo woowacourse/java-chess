@@ -18,8 +18,8 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int distanceX = Math.abs(source.calculateDistanceX(target));
-        int distanceY = Math.abs(source.calculateDistanceY(target));
+        int distanceX = Math.abs(source.calculateDisplacementX(target));
+        int distanceY = Math.abs(source.calculateDisplacementY(target));
 
         if (distanceY == 1 && distanceX == 0) {
             return true;
@@ -35,7 +35,7 @@ public class King extends Piece {
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        return new ArrayList<>();
+        return findLinearRoute(source, target);
     }
 
     @Override
@@ -56,5 +56,10 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public boolean isRook() {
+        return false;
     }
 }
