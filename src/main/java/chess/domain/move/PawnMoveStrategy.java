@@ -83,13 +83,7 @@ public class PawnMoveStrategy {
     }
 
     private boolean isCatchable(final Piece targetPiece, final Color color) {
-        return !targetPiece.isBlank() && targetPiece.getColor() == oppositeColor(color);
+        return !targetPiece.isBlank() && targetPiece.getColor() == color.oppositeColor();
     }
 
-    private Color oppositeColor(final Color color) {
-        if (color == Color.BLACK) {
-            return Color.WHITE;
-        }
-        return Color.BLACK;
-    }
 }
