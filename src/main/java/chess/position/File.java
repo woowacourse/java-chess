@@ -2,6 +2,7 @@ package chess.position;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public enum File {
 
@@ -26,7 +27,16 @@ public enum File {
 
     public static List<File> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.<File>comparingInt(row -> row.value).reversed())
+            .sorted(Comparator.comparingInt(row -> row.value))
+            .collect(Collectors.toList());
+    }
+
+    public List<File> getPath(File to) {
+        int start = Math.min(this.value, to.value);
+        int end = Math.max(this.value, to.value);
+
+        return orderedValues().stream()
+            .filter(file -> start < file.value && file.value < end)
             .collect(Collectors.toList());
     }
 }

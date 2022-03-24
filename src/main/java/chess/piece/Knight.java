@@ -9,7 +9,7 @@ public class Knight extends Piece{
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         int horizontalDistance = getPosition().getVerticalDistance(to);
         int verticalDistance = getPosition().getHorizontalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||

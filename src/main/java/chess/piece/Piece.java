@@ -1,12 +1,13 @@
 package chess.piece;
 
+import chess.exception.UnmovableException;
 import chess.position.Position;
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
-    protected Position position;
+    private Position position;
 
     public Piece(Color color, Position position) {
         this.color = color;
@@ -15,7 +16,8 @@ public abstract class Piece {
 
     public void move(Position to) {
         if (!isMovablePosition(to)) {
-            throw new IllegalArgumentException();
+            throw new UnmovableException(String.format(
+                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
         }
         position = to;
     }
@@ -26,10 +28,6 @@ public abstract class Piece {
 
     public boolean isSameColor(Color color) {
         return this.color == color;
-    }
-
-    public boolean isSameColor(Piece piece) {
-        return isSameColor(piece.color);
     }
 
     public Color getColor() {
@@ -66,5 +64,5 @@ public abstract class Piece {
             '}';
     }
 
-    protected abstract boolean isMovablePosition(Position to);
+    public abstract boolean isMovablePosition(Position to);
 }

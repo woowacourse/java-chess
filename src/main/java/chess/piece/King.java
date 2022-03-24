@@ -9,7 +9,7 @@ public class King extends Piece{
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         return getPosition().isAdjacent(to);
     }
 }

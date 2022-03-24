@@ -9,7 +9,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         return isVerticalWay(to) || isHorizontalWay(to);
     }
 

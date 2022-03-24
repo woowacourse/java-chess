@@ -9,7 +9,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         return isVerticalWay(to) && isForward(to) && isValidDistance(to);
     }
 
@@ -22,9 +22,17 @@ public class Pawn extends Piece {
     }
 
     private boolean isValidDistance(Position to) {
-        if (getColor().isFirstMove(getPosition())) {
-            return getPosition().getVerticalDistance(to) <= 2;
+        return getPosition().getVerticalDistance(to) <= movableDistance();
+    }
+
+    private int movableDistance() {
+        if (isStartPawnPosition()) {
+            return 2;
         }
-        return getPosition().getVerticalDistance(to) == 1;
+        return 1;
+    }
+
+    private boolean isStartPawnPosition() {
+        return getColor().isStartPawnPosition(getPosition());
     }
 }

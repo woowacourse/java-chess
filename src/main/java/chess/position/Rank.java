@@ -37,4 +37,13 @@ public enum Rank {
     public int getDistance(Rank rank) {
         return Math.abs(this.value - rank.value);
     }
+
+    public List<Rank> getPath(Rank to) {
+        int start = Math.min(this.value, to.value);
+        int end = Math.max(this.value, to.value);
+
+        return orderedValues().stream()
+            .filter(rank -> start < rank.value && rank.value < end)
+            .collect(Collectors.toList());
+    }
 }

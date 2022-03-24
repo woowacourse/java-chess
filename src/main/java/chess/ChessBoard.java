@@ -3,6 +3,8 @@ package chess;
 import static chess.position.Rank.*;
 import static chess.position.File.*;
 
+import chess.exception.HasObstacleException;
+import chess.exception.UnmovableException;
 import chess.piece.*;
 import chess.position.Position;
 import java.util.*;
@@ -55,35 +57,70 @@ public class ChessBoard {
     }
 
     public void move(Position from, Position to) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException();
+        if (isSamePosition(from, to)) {
+            throw new IllegalArgumentException(String.format(
+                "같은 위치(%s)로 기물을 이동할 수 없습니다.", from));
         }
 
-        Piece piece = findPieceByPosition(from);
-
-        if (!piece.isSameColor(currentColor)) {
-            throw new IllegalArgumentException();
+        if (isNotMovablePieceColor(from)) {
+            throw new IllegalArgumentException(String.format(
+                "%s에 위치한 기물은 %s 색깔이 아닙니다.", from, currentColor));
         }
 
-        Optional<Piece> toPiece = pieces.stream()
-            .filter(p -> p.isSamePosition(to))
-            .findFirst();
+        if (isSameColorPiecesByPosition(from, to)) {
+            throw new IllegalArgumentException(String.format(
+                "%s에서 %s로 기물을 이동할 수 없습니다.", from, to));
+        }
 
-        if (toPiece.isPresent()) {
-            if (toPiece.get().isSameColor(piece)) {
-                throw new IllegalArgumentException();
-            }
+        Piece piece = pickPieceByPosition(from);
+
+        if (!piece.isMovablePosition(to)) {
+            throw new UnmovableException(String.format(
+                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", piece.getClass().getSimpleName(), from, to));
+        }
+
+        if (HasObstacleBetweenPositions(from, to)) {
+            throw new HasObstacleException(String.format("%s에서 %s로 기물을 이동할 수 없습니다.", from, to));
         }
 
         piece.move(to);
         currentColor = currentColor.reverse();
     }
 
-    private Piece findPieceByPosition(Position from) {
+    private boolean HasObstacleBetweenPositions(Position from, Position to) {
+        return from.getPath(to).stream()
+            .anyMatch(this::hasPieceByPosition);
+    }
+
+    private boolean isSamePosition(Position from, Position to) {
+        return from.equals(to);
+    }
+
+    private boolean isNotMovablePieceColor(Position from) {
+        Piece piece = pickPieceByPosition(from);
+        return !piece.isSameColor(currentColor);
+    }
+
+    private boolean isSameColorPiecesByPosition(Position from, Position to) {
+        if (hasPieceByPosition(to)) {
+            Piece fromPiece = pickPieceByPosition(from);
+            Piece toPiece = pickPieceByPosition(to);
+            return fromPiece.isSameColor(toPiece.getColor());
+        }
+        return false;
+    }
+
+    private Piece pickPieceByPosition(Position position) {
         return pieces.stream()
-            .filter(piece -> piece.isSamePosition(from))
+            .filter(piece -> piece.isSamePosition(position))
             .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(
+                () -> new IllegalArgumentException(String.format("%s에는 기물이 없습니다.", position)));
+    }
+
+    private boolean hasPieceByPosition(Position position) {
+        return pieces.stream()
+            .anyMatch(piece -> piece.isSamePosition(position));
     }
 
     public List<Piece> getPieces() {

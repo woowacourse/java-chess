@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.exception.HasObstacleException;
+import chess.exception.UnmovableException;
 import chess.piece.*;
 import chess.position.Position;
 import java.util.List;
@@ -115,7 +117,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, FOUR)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces())
                 .contains(new Pawn(Color.BLACK, new Position(A, SEVEN)));
         });
@@ -130,7 +132,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Pawn(color, from));
         });
     }
@@ -150,7 +152,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Pawn(color, from));
         });
     }
@@ -170,7 +172,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Pawn(Color.WHITE, from));
         });
     }
@@ -211,7 +213,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Rook(Color.BLACK, from));
         });
     }
@@ -232,7 +234,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Bishop(Color.BLACK, from));
         });
     }
@@ -274,7 +276,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new Queen(Color.BLACK, from));
         });
     }
@@ -314,13 +316,13 @@ class ChessBoardTest {
 
     @ParameterizedTest
     @MethodSource("provideInvalidMoveKing")
-    @DisplayName("킹이 2칸 이상 이동 시 예외 발생")
+    @DisplayName("킹이 인접한 칸 외에 이동 시 예외 발생")
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
         ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.BLACK, from)), Color.BLACK);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces()).contains(new King(Color.BLACK, from));
         });
     }
@@ -330,7 +332,8 @@ class ChessBoardTest {
             Arguments.of(new Position(E, FIVE), new Position(E, THREE)),
             Arguments.of(new Position(E, FIVE), new Position(G, THREE)),
             Arguments.of(new Position(E, FIVE), new Position(C, THREE)),
-            Arguments.of(new Position(E, FIVE), new Position(D, THREE))
+            Arguments.of(new Position(E, FIVE), new Position(D, THREE)),
+            Arguments.of(new Position(E, FIVE), new Position(G, FIVE))
         );
     }
 
@@ -366,7 +369,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(G, EIGHT), new Position(F, FIVE)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnmovableException.class);
             assertThat(chessBoard.getPieces())
                 .contains(new Knight(Color.BLACK, new Position(G, EIGHT)));
         });
@@ -441,6 +444,58 @@ class ChessBoardTest {
                 new King(Color.WHITE, new Position(E, FIVE)),
                 new Pawn(Color.WHITE, new Position(E, SIX)));
         });
+    }
 
+    @ParameterizedTest
+    @MethodSource("provideHasObstacleVerticalAndHorizontalWay")
+    @DisplayName("움직일 때 장애물이 있을 경우 예외 발생")
+    void throwExceptionWhenHasObstacleMoveToDestination(Position from, Position to, Position obstacle) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.WHITE, from),
+            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(HasObstacleException.class);
+            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                    new Queen(Color.WHITE, from),
+                    new Pawn(Color.BLACK, obstacle));
+        });
+    }
+
+    private static Stream<Arguments> provideHasObstacleVerticalAndHorizontalWay() {
+        return Stream.of(
+            Arguments.of(new Position(E, ONE), new Position(E, SEVEN), new Position(E, SIX)),
+            Arguments.of(new Position(E, SEVEN), new Position(E, ONE), new Position(E, SIX)),
+            Arguments.of(new Position(A, FIVE), new Position(F, FIVE), new Position(E, FIVE)),
+            Arguments.of(new Position(F, FIVE), new Position(A, FIVE), new Position(E, FIVE)),
+            Arguments.of(new Position(A, EIGHT), new Position(D, FIVE), new Position(C, SIX)),
+            Arguments.of(new Position(D, FOUR), new Position(B, SIX), new Position(C, FIVE)),
+            Arguments.of(new Position(D, FOUR), new Position(F, SIX), new Position(E, FIVE)),
+            Arguments.of(new Position(D, FOUR), new Position(B, TWO), new Position(C, THREE))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideOverObstacle")
+    @DisplayName("나이트는 기물을 넘어서 이동 할 수 있다.")
+    void moveKnightOverObstacle(Position from, Position to, Position obstacle) {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.WHITE, from),
+            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
+
+        assertAll(()->{
+            assertThatCode(() -> chessBoard.move(from, to)).doesNotThrowAnyException();
+            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new Knight(Color.WHITE, to),
+                new Pawn(Color.BLACK, obstacle));
+        });
+    }
+
+    private static Stream<Arguments> provideOverObstacle() {
+        return Stream.of(
+            Arguments.of(new Position(E, FIVE), new Position(C, FOUR), new Position(D, FIVE)),
+            Arguments.of(new Position(E, FIVE), new Position(D, SEVEN), new Position(E, SIX)),
+            Arguments.of(new Position(E, FIVE), new Position(G, SIX), new Position(F, FIVE)),
+            Arguments.of(new Position(E, FIVE), new Position(D, THREE), new Position(E, FOUR))
+        );
     }
 }

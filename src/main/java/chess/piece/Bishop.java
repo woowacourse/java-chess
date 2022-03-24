@@ -9,7 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         return getPosition().isDiagonalWay(to);
     }
 }

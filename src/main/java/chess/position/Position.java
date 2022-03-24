@@ -1,12 +1,7 @@
 package chess.position;
 
-import java.util.Objects;
-
-/*
-abcdefgh -> col
-12345678 -> row
- */
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
 
@@ -16,6 +11,14 @@ public class Position {
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     public boolean isVerticalWay(Position other) {
@@ -31,19 +34,7 @@ public class Position {
     }
 
     public boolean isAdjacent(Position other) {
-        if (isDiagonalWay(other)) {
-            return getVerticalDistance(other) == 1 && getHorizontalDistance(other) == 1;
-        }
-
-        if (isVerticalWay(other)) {
-            return getHorizontalDistance(other) == 0 && getVerticalDistance(other) == 1;
-        }
-
-        if (isHorizontalWay(other)) {
-            return getHorizontalDistance(other) == 1 && getVerticalDistance(other) == 0;
-        }
-
-        return false;
+        return (getVerticalDistance(other) | getHorizontalDistance(other)) == 1;
     }
 
     public boolean isUpward(Position other) {
@@ -64,6 +55,42 @@ public class Position {
 
     public int getHorizontalDistance(Position other) {
         return file.getDistance(other.file);
+    }
+
+    public Collection<Position> getPath(Position to) {
+        if (isVerticalWay(to)) {
+            return getVerticalPath(to);
+        }
+        if (isHorizontalWay(to)) {
+            return getHorizontalPath(to);
+        }
+        if (isDiagonalWay(to)) {
+            return getDiagonalPath(to);
+        }
+        return List.of();
+    }
+
+    private List<Position> getVerticalPath(Position to) {
+        return rank.getPath(to.rank).stream()
+            .map(rank -> new Position(file, rank))
+            .collect(Collectors.toList());
+    }
+
+    private List<Position> getHorizontalPath(Position to) {
+        return file.getPath(to.file).stream()
+            .map(file -> new Position(file, rank))
+            .collect(Collectors.toList());
+    }
+
+    private Collection<Position> getDiagonalPath(Position to) {
+        List<Rank> ranks = rank.getPath(to.rank);
+        List<File> files = file.getPath(to.file);
+
+        Collection<Position> result = new ArrayList<>();
+        for (int i = 0; i < ranks.size(); i++) {
+            result.add(new Position(files.get(i), ranks.get(i)));
+        }
+        return result;
     }
 
     @Override

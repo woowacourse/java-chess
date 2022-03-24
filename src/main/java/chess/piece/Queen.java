@@ -9,7 +9,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isMovablePosition(Position to) {
+    public boolean isMovablePosition(Position to) {
         return isDiagonalWay(to) || isVerticalWay(to) || isHorizontalWay(to);
     }
 
