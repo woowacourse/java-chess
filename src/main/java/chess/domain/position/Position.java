@@ -67,12 +67,13 @@ public class Position {
         return rankIdx;
     }
 
+    public boolean hasRankIdxOf(int rankIdx) {
+        return this.rankIdx == rankIdx;
+    }
+
     @Override
     public String toString() {
-        return "Position{" +
-                "fileIdx=" + fileIdx +
-                ", rankIdx=" + rankIdx +
-                '}';
+        return "Position{" + fileIdx + "" + rankIdx + '}';
     }
 
     private static class PositionCache {

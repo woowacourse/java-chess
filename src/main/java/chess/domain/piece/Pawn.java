@@ -75,16 +75,10 @@ public final class Pawn extends Chessmen {
     }
 
     private boolean canJump() {
-        int curRankIdx = position.getRankIdx();
-        return isWhiteJump(curRankIdx) || isBlackJump(curRankIdx);
-    }
+        boolean isWhiteJump = color == WHITE && position.hasRankIdxOf(WHITE_INIT_RANK);
+        boolean isBlackJump = color == BLACK && position.hasRankIdxOf(BLACK_INIT_RANK);
 
-    private boolean isWhiteJump(int curRankIdx) {
-        return color == WHITE && WHITE_INIT_RANK == curRankIdx;
-    }
-
-    private boolean isBlackJump(int curRankIdx) {
-        return color == BLACK && BLACK_INIT_RANK == curRankIdx;
+        return isWhiteJump || isBlackJump;
     }
 
     @Override
