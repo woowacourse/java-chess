@@ -27,7 +27,6 @@ public class Position {
         return file.equals(File.of(target));
     }
 
-
     public boolean isSameRank(Position target) {
         return rank.equals(target.rank);
     }
@@ -40,27 +39,22 @@ public class Position {
     }
 
     private int calculateRankGap(Position target) {
-        int rankDistance = rankDistance(target);
-        if (rankDistance > 0) {
-            rankDistance = 1;
-        }
-
-        if (rankDistance < 0) {
-            rankDistance = -1;
-        }
-        return rankDistance;
+        return toGap(rankDistance(target));
     }
 
     private int calculateFileGap(Position target) {
-        int fileDistance = fileDistance(target);
-        if (fileDistance > 0) {
-            fileDistance = 1;
+        return toGap(fileDistance(target));
+    }
+
+    private int toGap(int distance) {
+        if (distance > 0) {
+            distance = 1;
         }
 
-        if (fileDistance < 0) {
-            fileDistance = -1;
+        if (distance < 0) {
+            distance = -1;
         }
-        return fileDistance;
+        return distance;
     }
 
     public Position toNextPosition(Direction direction) {
