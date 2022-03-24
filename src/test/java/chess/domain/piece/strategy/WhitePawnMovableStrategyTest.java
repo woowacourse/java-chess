@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,5 +32,17 @@ public class WhitePawnMovableStrategyTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(start, new Pawn(WHITE)));
 
         assertThat(whitePawnMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"b,2,WHITE", "b,2,BLACK"})
+    @DisplayName("기물이 가로막을 경우의 전진 불가능")
+    void cannotMoveToPiecePosition(char col, char row, Color color) {
+        Position target = new Position(col, row);
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                start, new Pawn(WHITE),
+                target, new Pawn(color)));
+
+        assertThat(whitePawnMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
 }

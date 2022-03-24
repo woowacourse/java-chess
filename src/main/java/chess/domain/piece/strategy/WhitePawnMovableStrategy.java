@@ -13,8 +13,17 @@ public class WhitePawnMovableStrategy implements PieceMovableStrategy {
     private static final Direction MOVE_DIRECTION = UP;
 
     @Override
-    public boolean isMovable(final Position start, final Position target, final ChessBoard chessBoard) {
+    public boolean isMovable(Position start, Position target, ChessBoard chessBoard) {
         List<Position> route = MOVE_DIRECTION.route(start, target);
+        return existMovablePosition(route) && isClearRoute(route, chessBoard);
+    }
+
+    private boolean existMovablePosition(List<Position> route) {
         return route.size() == MOVABLE_COUNT;
+    }
+
+    private boolean isClearRoute(List<Position> route, ChessBoard chessBoard) {
+        return route.stream()
+                .allMatch(chessBoard::isPositionEmpty);
     }
 }
