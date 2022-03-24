@@ -13,7 +13,7 @@ public class Position {
     }
 
     public int getXDistance(Position to) {
-        return to.file.getNumber()-this.file.getNumber();
+        return to.file.getNumber() - this.file.getNumber();
     }
 
     public int getYDistance(Position to) {

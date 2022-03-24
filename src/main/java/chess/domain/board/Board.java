@@ -45,7 +45,7 @@ public class Board {
         }
     }
 
-    private void initNotPawnSqaures(Map<Position, Piece> squares, Rank rank, Color color) {
+    private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Color color) {
         squares.replace(new Position(File.A, rank), new Rook(color));
         squares.replace(new Position(File.B, rank), new Knight(color));
         squares.replace(new Position(File.C, rank), new Bishop(color));
@@ -61,12 +61,12 @@ public class Board {
     }
 
 
-    public void move(Position source, Position target) {
-        Piece sourcePiece = squares.get(source);
+    public void move(Position from, Position to) {
+        Piece sourcePiece = squares.get(from);
 
-        sourcePiece.checkValidMove(this, new MovingOrder(source, target));
+        sourcePiece.canMove(this, from, to);
 
-        squares.replace(target, sourcePiece);
-        squares.replace(source, new EmptyPiece());
+        squares.replace(to, sourcePiece);
+        squares.replace(from, new EmptyPiece());
     }
 }

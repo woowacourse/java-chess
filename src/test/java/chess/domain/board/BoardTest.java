@@ -48,8 +48,10 @@ class BoardTest {
         board.move(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
 
         assertAll(
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(EmptyPiece.class),
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE))).isInstanceOf(Pawn.class)
+                () -> assertThat(board.findByPosition(new Position(File.A, Rank.TWO)))
+                        .isInstanceOf(EmptyPiece.class),
+                () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE)))
+                        .isInstanceOf(Pawn.class)
         );
     }
 }

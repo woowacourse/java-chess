@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.MovingOrder;
+import chess.domain.board.Position;
 
 public class Bishop extends Piece {
 
@@ -9,9 +9,8 @@ public class Bishop extends Piece {
         super(new Name("B"), color);
     }
 
-
     @Override
-    public void checkValidMove(Board board, MovingOrder movingOrder) {
+    public void canMove(Board board, Position from, Position to) {
 
     }
 }

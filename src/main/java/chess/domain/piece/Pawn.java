@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.MovingOrder;
+import chess.domain.board.Position;
+import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.piece.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
 
@@ -10,7 +12,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void checkValidMove(Board board, MovingOrder movingOrder) {
-
+    public void canMove(Board board, Position from, Position to) {
+        MoveStrategy moveStrategy = new PawnMoveStrategy();
+        moveStrategy.canMove(color, from, to);
     }
 }

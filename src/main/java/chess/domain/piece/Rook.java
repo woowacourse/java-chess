@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.MovingOrder;
+import chess.domain.board.Position;
 
 public class Rook extends Piece {
     public Rook(Color color) {
@@ -9,7 +9,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void checkValidMove(Board board, MovingOrder movingOrder) {
+    public void canMove(Board board, Position from, Position to) {
 
     }
 }

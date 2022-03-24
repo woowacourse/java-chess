@@ -16,6 +16,7 @@ public enum Rank {
     private final int number;
 
     private final String condition;
+
     Rank(int number, String condition) {
         this.number = number;
         this.condition = condition;

@@ -1,20 +1,20 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.MovingOrder;
+import chess.domain.board.Position;
 import java.util.Locale;
 
 public abstract class Piece {
 
-    private final Name name;
-    private final Color color;
+    protected final Name name;
+    protected final Color color;
 
     public Piece(Name name, Color color) {
         this.name = name;
         this.color = color;
     }
 
-    public abstract void checkValidMove(Board board, MovingOrder movingOrder);
+    public abstract void canMove(Board board, Position from, Position to);
 
     public Color getColor() {
         return color;
