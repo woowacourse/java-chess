@@ -80,6 +80,12 @@ public class Board {
     }
 
     private void changePieces(Position source, Position target) {
+
+        Piece sourcePiece = values.get(source);
+        if (!sourcePiece.isMovable(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+        }
+
         values.put(target, values.get(source));
         values.put(source, new EmptyPiece(PieceColor.EMPTY));
     }

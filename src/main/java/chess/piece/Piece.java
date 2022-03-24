@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.Position;
 import java.util.Objects;
 
 import chess.PieceColor;
@@ -20,6 +21,8 @@ public abstract class Piece {
     }
 
     public abstract String getConcreteEmblem();
+
+    public abstract boolean isMovable(Position source, Position target);
 
     @Override
     public boolean equals(Object o) {

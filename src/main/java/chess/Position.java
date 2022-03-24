@@ -12,12 +12,17 @@ public class Position {
         this.file = file;
     }
 
-    /**
-     * a1
-     */
     public Position(String rankFile) {
         this.rank = Rank.of(rankFile.substring(1, 2));
         this.file = File.of(rankFile.substring(0, 1));
+    }
+
+    public int displacement(Position other) {
+        return rank.displacement(other.rank);
+    }
+
+    public boolean isSameFile(Position other) {
+        return this.file == other.file;
     }
 
     @Override
@@ -33,5 +38,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public boolean isSameRank(Rank otherRank) {
+        return rank == otherRank;
     }
 }

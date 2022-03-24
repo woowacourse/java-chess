@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.PieceColor;
+import chess.Position;
 
 public class EmptyPiece extends Piece {
     private static final String emblem = ".";
@@ -12,5 +13,10 @@ public class EmptyPiece extends Piece {
     @Override
     public String getConcreteEmblem() {
         return emblem;
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position target) {
+        return false;
     }
 }

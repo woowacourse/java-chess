@@ -15,15 +15,15 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
-    private final int value;
+    private final int index;
 
-    Rank(int value) {
-        this.value = value;
+    Rank(int index) {
+        this.index = index;
     }
 
     public static Rank of(String input) {
         return Arrays.stream(values())
-            .filter(rank -> rank.value == Integer.parseInt(input))
+            .filter(rank -> rank.index == Integer.parseInt(input))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
     }
@@ -32,5 +32,9 @@ public enum Rank {
         List<Rank> list = new ArrayList<>(List.of(values()));
         Collections.reverse(list);
         return list;
+    }
+
+    public int displacement(Rank other) {
+        return other.index - this.index;
     }
 }
