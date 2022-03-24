@@ -3,6 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
@@ -49,5 +50,55 @@ class BoardTest {
 
         // when & then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("이동할 위치가 빈 칸인 경우 말을 이동시킨다.")
+    @Test
+    void movePiece_toEmptyPlace() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when & then
+        assertThat(board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE))).isTrue();
+    }
+
+    @DisplayName("이동할 위치에 적이 있는 경우 말을 이동시킨다.")
+    @Test
+    void movePiece_toEnemyPlace() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when & then
+        board.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
+        board.move(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
+
+        assertThat(board.move(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN))).isTrue();
+    }
+
+    @DisplayName("이동할 위치에 적이 있는 경우 적을 제거한다.")
+    @Test
+    void movePiece_toEnemyPlaceAndRemoveEnemy() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when & then
+        board.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
+        board.move(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
+        board.move(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN));
+
+        assertThat(board.find(Position.from(XAxis.E, YAxis.SEVEN)).get()).isInstanceOf(Knight.class);
+    }
+
+    @DisplayName("이동할 위치에 아군이 있는 경우 이동이 불가능하다.")
+    @Test
+    void movePiece_toSameTeamPlaceIsNotAbleToMove() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO));
+
+        // then
+        assertThat(actual).isFalse();
     }
 }

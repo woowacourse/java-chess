@@ -8,13 +8,14 @@ import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Board {
     private final Map<Position, AbstractPiece> value;
 
     private Board(Map<Position, AbstractPiece> value) {
-        this.value = Map.copyOf(value);
+        this.value = value;
     }
 
     public static Board createInitializedBoard() {
@@ -24,11 +25,11 @@ public class Board {
     private static Map<Position, AbstractPiece> initBoard() {
         Map<Position, AbstractPiece> value = new HashMap<>();
 
-        initializeSpecialPieces(value, YAxis.ONE, PieceColor.BLACK);
-        initializeSpecialPieces(value, YAxis.EIGHT, PieceColor.WHITE);
+        initializeSpecialPieces(value, YAxis.ONE, PieceColor.WHITE);
+        initializeSpecialPieces(value, YAxis.EIGHT, PieceColor.BLACK);
 
-        initializePawns(value, YAxis.TWO, PieceColor.BLACK);
-        initializePawns(value, YAxis.SEVEN, PieceColor.WHITE);
+        initializePawns(value, YAxis.TWO, PieceColor.WHITE);
+        initializePawns(value, YAxis.SEVEN, PieceColor.BLACK);
 
         return value;
     }
@@ -53,5 +54,22 @@ public class Board {
 
     public Optional<AbstractPiece> find(Position position) {
         return Optional.ofNullable(value.get(position));
+    }
+
+    public boolean move(Position from, Position to) {
+        AbstractPiece piece = value.get(from);
+        AbstractPiece otherPiece = value.get(to);
+
+        if (piece.isMovable(from, to) && !isExistingSameTeam(piece, otherPiece)) {
+            value.put(to, piece);
+            value.remove(from);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isExistingSameTeam(AbstractPiece piece, AbstractPiece otherPiece) {
+        return !Objects.isNull(otherPiece) && otherPiece.isSameTeam(piece);
     }
 }

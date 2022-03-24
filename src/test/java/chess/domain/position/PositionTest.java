@@ -71,4 +71,74 @@ class PositionTest {
         // then
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("isUpperThan 은 현재 위치가 다른 위치보다 위쪽에 있다면 true 를 반환한다.")
+    @Test
+    void isUpperThan_returnsTrue() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.THREE);
+        Position position2 = Position.from(XAxis.A, YAxis.ONE);
+
+        // when
+        boolean actual = position1.isUpperThan(position2);
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("isUpperThan 은 현재 위치가 다른 위치보다 아래쪽에 있다면 false 를 반환한다.")
+    @Test
+    void isUpperThan_returnsFalse() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.ONE);
+        Position position2 = Position.from(XAxis.A, YAxis.TWO);
+
+        // when
+        boolean actual = position1.isUpperThan(position2);
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("isLowerThan 은 현재 위치가 다른 위치보다 아래쪽에 있다면 true 를 반환한다.")
+    @Test
+    void isLowerThan_returnsTrue() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.ONE);
+        Position position2 = Position.from(XAxis.A, YAxis.THREE);
+
+        // when
+        boolean actual = position1.isLowerThan(position2);
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("isLowerThan 은 현재 위치가 다른 위치보다 위쪽에 있다면 false 를 반환한다.")
+    @Test
+    void isLowerThan_returnsFalse() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.TWO);
+        Position position2 = Position.from(XAxis.A, YAxis.ONE);
+
+        // when
+        boolean actual = position1.isLowerThan(position2);
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("isInVerticalRange는 현재 위치가 다른 위치보다 주어진 거리 안에 있는지 체크한다.")
+    @Test
+    void isInRange_returnsTrue() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.TWO);
+        Position position2 = Position.from(XAxis.A, YAxis.ONE);
+
+        // when
+        boolean actual = position1.isInVerticalRange(position2, 2);
+
+        // then
+        assertThat(actual).isTrue();
+    }
 }

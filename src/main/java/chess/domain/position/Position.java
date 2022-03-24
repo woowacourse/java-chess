@@ -29,11 +29,35 @@ public class Position {
         return this.yAxis.equals(other.yAxis);
     }
 
+    public boolean isSameYAxis(YAxis yAxis) {
+        return this.yAxis == yAxis;
+    }
+
+    public int subtractYAxis(Position other) {
+        return this.yAxis.subtract(other.yAxis);
+    }
+
+    public int subtractXAxis(Position other) {
+        return this.xAxis.subtract(other.xAxis);
+    }
+
     public boolean isOnDiagonal(Position other) {
         int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
         int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());
 
         return xAxisDelta == yAxisDelta;
+    }
+
+    public boolean isUpperThan(Position other) {
+        return this.subtractYAxis(other) > 0;
+    }
+
+    public boolean isLowerThan(Position other) {
+        return this.subtractYAxis(other) < 0;
+    }
+
+    public boolean isInVerticalRange(Position other, int range) {
+        return Math.abs(this.yAxis.subtract(other.yAxis)) <= range;
     }
 
     public boolean isFarFromMoreThanOne(Position other) {

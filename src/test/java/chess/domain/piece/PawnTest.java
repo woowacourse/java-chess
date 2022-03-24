@@ -6,37 +6,103 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PawnTest {
-    @DisplayName("폰은 아래로 한칸 전진할 수 있다.")
+
+    @DisplayName("폰은 같은 위치로 이동할 수 없다.")
     @Test
-    void isMovable_moveDown() {
+    void movePiece_returnsFalseWithSameFromAndTo() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> pawn = board.find(Position.from(XAxis.A, YAxis.SEVEN));
 
         // when
-        boolean actual = pawn.get().isMovable(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("흰색 진영의 폰이 처음 이동하는 경우 두칸을 전진할 수 있다.")
+    @Test
+    void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInWhiteTeam() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
 
         // then
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("폰은 위로 한칸 전진할 수 있다.")
+    @DisplayName("흰색 진영의 폰이 처음 이동하는 경우가 아니라면 한칸을 전진할 수 있다.")
     @Test
-    void isMovable_moveUp() {
+    void movePiece_ifPieceIsPawnMoveForwardOnceInWhiteTeam() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> pawn = board.find(Position.from(XAxis.A, YAxis.TWO));
 
         // when
-        boolean actual = pawn.get().isMovable(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
+        board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FOUR));
 
         // then
         assertThat(actual).isTrue();
     }
 
+    @DisplayName("흰색 진영의 폰이 처음 이동하는 경우가 아니라면 두 칸을 전진할 수 없다.")
+    @Test
+    void movePiece_ifPieceIsPawnMoveForwardTwiceWhenNotInitialInWhiteTeam() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FIVE));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("검정색 진영의 폰이 처음 이동하는 경우 두칸을 전진할 수 있다.")
+    @Test
+    void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInBlackTeam() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("검정색 진영의 폰이 처음 이동하는 경우가 아니라면 한칸을 전진할 수 있다.")
+    @Test
+    void movePiece_ifPieceIsPawnMoveForwardOnceInBlackTeam() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FIVE));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("검정색 진영의 폰이 처음 이동하는 경우가 아니라면 두 칸을 전진할 수 없다.")
+    @Test
+    void movePiece_ifPieceIsPawnMoveForwardTwiceWhenNotInitialInBlackTeam() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.move(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FOUR));
+
+        // then
+        assertThat(actual).isFalse();
+    }
 }
