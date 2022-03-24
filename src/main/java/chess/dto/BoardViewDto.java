@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class BoardDto {
+public class BoardViewDto {
 
     private static final String EMPTY_SQUARE_DISPLAY = ".";
 
     private final List<String> boardDisplay;
 
-    public BoardDto(ChessGame game) {
+    public BoardViewDto(ChessGame game) {
         boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
                 .mapToObj(rowIdx -> extractCurrentRowChessmen(game, rowIdx))
-                .map(BoardDto::initRowDisplay)
+                .map(BoardViewDto::initRowDisplay)
                 .collect(Collectors.toList());
     }
 

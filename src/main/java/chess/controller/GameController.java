@@ -9,7 +9,7 @@ import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.game.ChessGame;
-import chess.dto.BoardDto;
+import chess.dto.BoardViewDto;
 
 public class GameController {
 
@@ -24,10 +24,10 @@ public class GameController {
     }
 
     public void playGame(ChessGame game) {
-        printBoard(new BoardDto(game));
+        printBoard(new BoardViewDto(game));
         while (!game.isEnd()) {
             game.moveChessmen(requestValidMoveInput());
-            printBoard(new BoardDto(game));
+            printBoard(new BoardViewDto(game));
         }
     }
 

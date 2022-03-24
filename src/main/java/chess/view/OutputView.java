@@ -4,7 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.piece.Color;
-import chess.dto.BoardDto;
+import chess.dto.BoardViewDto;
 import chess.dto.GameResultDto;
 
 public class OutputView {
@@ -30,7 +30,7 @@ public class OutputView {
         print(instructionMessage);
     }
 
-    public static void printBoard(BoardDto dto) {
+    public static void printBoard(BoardViewDto dto) {
         StringBuilder builder = new StringBuilder();
         for (String rowDisplay : dto.getDisplay()) {
             builder.append(rowDisplay)
