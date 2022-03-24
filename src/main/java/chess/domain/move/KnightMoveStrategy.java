@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import java.util.List;
 
-public class KnightMoveStrategy extends FirstRowMoveStrategy {
+public final class KnightMoveStrategy extends FirstRowMoveStrategy {
 
     private static final List<MovePattern> MOVE_PATTERNS = List.of(
             MovePattern.NNW,

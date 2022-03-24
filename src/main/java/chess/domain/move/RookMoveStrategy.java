@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
-public class RookMoveStrategy extends FirstRowMoveStrategy {
+public final class RookMoveStrategy extends LinearMoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
@@ -26,30 +26,4 @@ public class RookMoveStrategy extends FirstRowMoveStrategy {
         return isTargetPositionMovable(targetPiece, color);
     }
 
-    private int countPiecesWhenHorizon(final Board board, final Position source, final Position target, final Distance distance) {
-        int pieceCounts = 0;
-        int horizon = distance.getHorizon();
-        for (int i = 1; i < Math.abs(horizon); i++) {
-            Position amongPosition = source.compareSmaller(target).move(i, 0);
-            pieceCounts = countPieces(board, amongPosition, pieceCounts);
-        }
-        return pieceCounts;
-    }
-
-    private int countPiecesWhenVertical(final Board board, final Position source, final Position target, final Distance distance) {
-        int pieceCounts = 0;
-        int vertical = distance.getVertical();
-        for (int i = 1; i < Math.abs(vertical); i++) {
-            Position amongPosition = source.compareSmaller(target).move(0, i * -1);
-            pieceCounts = countPieces(board, amongPosition, pieceCounts);
-        }
-        return pieceCounts;
-    }
-
-    private int countPieces(final Board board, final Position amongPosition, int pieceCounts) {
-        if (!board.getPiece(amongPosition).isBlank()) {
-            pieceCounts++;
-        }
-        return pieceCounts;
-    }
 }
