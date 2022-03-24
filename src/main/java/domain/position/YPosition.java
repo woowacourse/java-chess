@@ -26,6 +26,10 @@ public enum YPosition {
                 .orElse(null);
     }
 
+    public static boolean checkRange(int y) {
+        return ONE.getY() <= y && y <= EIGHT.getY();
+    }
+
     public int getY() {
         return y;
     }

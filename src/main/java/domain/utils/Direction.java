@@ -21,12 +21,16 @@ public enum Direction {
         this.y = y;
     }
 
-    public static List<Direction> upDownLeftRight() {
+    public static List<Direction> upDownLeftRightDirections() {
         return List.of(EAST, WEST, SOUTH, NORTH);
     }
 
-    public static List<Direction> crossDirection() {
+    public static List<Direction> crossDirections() {
         return List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    public static List<Direction> allDirections() {
+        return List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
 
     public int getX() {

@@ -5,12 +5,12 @@ import static domain.utils.Direction.*;
 import domain.utils.Direction;
 import java.util.List;
 
-public final class Rook extends Piece {
+public final class Rook extends CommonMovablePiece {
 
     private static final List<Direction> directions;
 
     static {
-        directions = upDownLeftRight();
+        directions = upDownLeftRightDirections();
     }
 
     public Rook(final Player player) {

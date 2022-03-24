@@ -1,9 +1,17 @@
 package domain.piece;
 
+import static domain.utils.Direction.allDirections;
+
 import domain.utils.Direction;
 import java.util.List;
 
-public final class Queen extends Piece {
+public final class Queen extends CommonMovablePiece {
+
+    private static final List<Direction> directions;
+
+    static {
+        directions = allDirections();
+    }
 
     public Queen(final Player player) {
         super(player, PieceSymbol.Queen);
@@ -11,6 +19,6 @@ public final class Queen extends Piece {
 
     @Override
     protected List<Direction> directions() {
-        return null;
+        return directions;
     }
 }

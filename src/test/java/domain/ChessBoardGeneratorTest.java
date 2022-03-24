@@ -6,7 +6,7 @@ import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
-import domain.piece.Piece;
+import domain.piece.CommonMovablePiece;
 import domain.piece.Player;
 import domain.piece.Queen;
 import domain.piece.Rook;
@@ -34,7 +34,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Pawn의 row 위치는 7이다")
     void checkPositionBlackPawn(XPosition x){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.SEVEN));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.SEVEN));
 
         assertThat(piece.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
@@ -45,7 +45,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Pawn의 row 위치는 2이다")
     void checkPositionWhitePawn(XPosition x){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.TWO));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.TWO));
 
         assertThat(piece.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
@@ -68,8 +68,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
     void checkPositionBlackRook(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.EIGHT));
-        Piece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.EIGHT));
+        CommonMovablePiece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.EIGHT));
+        CommonMovablePiece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.EIGHT));
 
         assertThat(leftRook.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(rightRook.checkSamePlayer(Player.BLACK)).isEqualTo(true);
@@ -81,8 +81,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
     void checkPositionWhiteRook(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.ONE));
-        Piece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.ONE));
+        CommonMovablePiece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.ONE));
+        CommonMovablePiece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.ONE));
 
         assertThat(leftRook.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(rightRook.checkSamePlayer(Player.WHITE)).isEqualTo(true);
@@ -94,8 +94,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Knight 위치는 Row 8, Column b, g이다.")
     void checkPositionBlackKnight(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.EIGHT));
-        Piece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.EIGHT));
+        CommonMovablePiece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.EIGHT));
+        CommonMovablePiece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.EIGHT));
 
         assertThat(leftKnight.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(rightKnight.checkSamePlayer(Player.BLACK)).isEqualTo(true);
@@ -107,8 +107,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Knight 위치는 Row 1, Column b, g이다.")
     void checkPositionWhiteKnight(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.ONE));
-        Piece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.ONE));
+        CommonMovablePiece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.ONE));
+        CommonMovablePiece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.ONE));
 
         assertThat(leftKnight.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(rightKnight.checkSamePlayer(Player.WHITE)).isEqualTo(true);
@@ -120,8 +120,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Row 8, Column c, f이다.")
     void checkPositionBlackBishop(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.EIGHT));
-        Piece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.EIGHT));
+        CommonMovablePiece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.EIGHT));
+        CommonMovablePiece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.EIGHT));
 
         assertThat(leftBishop.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(rightBishop.checkSamePlayer(Player.BLACK)).isEqualTo(true);
@@ -133,8 +133,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Row 1, Column c, f이다.")
     void checkPositionWhiteBishop(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.ONE));
-        Piece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.ONE));
+        CommonMovablePiece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.ONE));
+        CommonMovablePiece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.ONE));
 
         assertThat(leftBishop.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(rightBishop.checkSamePlayer(Player.WHITE)).isEqualTo(true);
@@ -146,7 +146,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Queen 위치는 Row 8, Column d이다.")
     void checkPositionBlackQueen(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.EIGHT));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.EIGHT));
 
         assertThat(piece.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
@@ -156,7 +156,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Queen 위치는 Row 1, Column d이다.")
     void checkPositionWhiteQueen(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.ONE));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.ONE));
 
         assertThat(piece.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
@@ -166,7 +166,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
     void checkPositionBlackKing(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.EIGHT));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.EIGHT));
 
         assertThat(piece.checkSamePlayer(Player.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
@@ -176,7 +176,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
     void checkPositionWhiteKing(){
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.ONE));
+        CommonMovablePiece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.ONE));
 
         assertThat(piece.checkSamePlayer(Player.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);

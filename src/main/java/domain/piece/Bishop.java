@@ -3,12 +3,12 @@ package domain.piece;
 import domain.utils.Direction;
 import java.util.List;
 
-public final class Bishop extends Piece {
+public final class Bishop extends CommonMovablePiece {
 
     private static final List<Direction> directions;
 
     static {
-        directions = Direction.crossDirection();
+        directions = Direction.crossDirections();
     }
 
     public Bishop(final Player player) {

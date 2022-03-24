@@ -14,8 +14,8 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("availablePositions")
     @DisplayName("Rook 은 상하좌우로 이동할 수 있다.")
-    void movePawnOneSpace(Position target) {
-        Piece piece = new Rook(Player.WHITE);
+    void moveRookUpDownRightLeft(Position target) {
+        CommonMovablePiece piece = new Rook(Player.WHITE);
 
         Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
