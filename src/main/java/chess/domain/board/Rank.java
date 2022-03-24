@@ -6,14 +6,14 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public enum Rank {
-    EIGHT("8", 8),
-    SEVEN("7", 7),
-    SIX("6", 6),
-    FIVE("5", 5),
-    FOUR("4", 4),
-    THREE("3", 3),
-    TWO("2", 2),
     ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
     ;
 
     private static final String INVALID_RANGE = "유효하지 않은 범위입니다.";
@@ -43,7 +43,7 @@ public enum Rank {
         Rank minOrder = getLowerOrder(from, to);
 
         return Arrays.stream(values())
-                .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
+                .filter(column -> column.order < maxOrder.order && column.order > minOrder.order)
                 .collect(Collectors.toList());
     }
 

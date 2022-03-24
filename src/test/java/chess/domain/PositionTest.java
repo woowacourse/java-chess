@@ -1,5 +1,15 @@
 package chess.domain;
 
+import static chess.domain.PositionFixture.A1;
+import static chess.domain.PositionFixture.A2;
+import static chess.domain.PositionFixture.B1;
+import static chess.domain.PositionFixture.B2;
+import static chess.domain.PositionFixture.B3;
+import static chess.domain.PositionFixture.B4;
+import static chess.domain.PositionFixture.C2;
+import static chess.domain.PositionFixture.C3;
+import static chess.domain.PositionFixture.D2;
+import static chess.domain.PositionFixture.D4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,5 +51,35 @@ class PositionTest {
 
         // then
         assertThat(distance).containsExactly(1, 2);
+    }
+
+    @Test
+    @DisplayName("세로로 나열된 중간좌표 계산")
+    void getPositionBetweenVertical() {
+        // given & when
+        List<Position> distance = B1.getPositionBetween(B4);
+
+        // then
+        assertThat(distance).containsExactly(B2, B3);
+    }
+
+    @Test
+    @DisplayName("가로로 나열된 중간좌표 계산")
+    void getPositionBetweenHorizontal() {
+        // given & when
+        List<Position> distance = A2.getPositionBetween(D2);
+
+        // then
+        assertThat(distance).containsExactly(B2, C2);
+    }
+
+    @Test
+    @DisplayName("대각선 중간 좌표 계산")
+    void getPositionBetweenDiagonal() {
+        // given & when
+        List<Position> distance = A1.getPositionBetween(D4);
+
+        // then
+        assertThat(distance).containsExactly(B2, C3);
     }
 }

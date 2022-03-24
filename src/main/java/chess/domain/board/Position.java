@@ -1,11 +1,12 @@
 package chess.domain.board;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position {
-
     private static final int FROM_FOR_ROW = 0;
     private static final int TO_FOR_ROW = 1;
     private static final int START_INDEX_FOR_COLUMN = 1;
@@ -36,13 +37,40 @@ public class Position {
     }
 
     public List<Position> getPositionBetween(Position target) {
-        // Position이 다른 Position을 받아서, 중간 좌표를 List로 묶기 좋음
-        // 이때 대각선, 세로, 가로방식은 distance 구해서 확인
-        // List<Position>을 board가 모두 찾아서 있는지 여부 확인 좋음
+        List<File> fileBetween = File.getBetween(this.file, target.file);
+        List<Rank> rankBetween = Rank.getBetween(this.rank, target.rank);
 
-        List<File> columnsBetween = File.getBetween(this.file, target.file);
+        if (fileBetween.isEmpty()) {
+            return getVerticalPositions(rankBetween);
+        }
 
-        return null;
+        if (rankBetween.isEmpty()) {
+            return getHorizontalPositions(fileBetween);
+        }
+
+        return getDiagonalPositions(fileBetween, rankBetween);
+    }
+
+    private List<Position> getVerticalPositions(List<Rank> rankBetween) {
+        return rankBetween.stream()
+                .map(rank -> Position.of(rank, this.file))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> getHorizontalPositions(List<File> fileBetween) {
+        return fileBetween.stream()
+                .map(file -> Position.of(this.rank, file))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> getDiagonalPositions(List<File> fileBetween, List<Rank> rankBetween) {
+        List<Position> positions = new ArrayList<>();
+
+        for (int i = 0; i < fileBetween.size(); i++) {
+            positions.add(Position.of(rankBetween.get(i), fileBetween.get(i)));
+        }
+
+        return positions;
     }
 
     @Override

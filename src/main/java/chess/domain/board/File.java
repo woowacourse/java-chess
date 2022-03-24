@@ -38,7 +38,7 @@ public enum File {
         File minOrder = getLowerOrder(from, to);
 
         return Arrays.stream(values())
-                .filter(file -> file.order < maxOrder.order && file.order < minOrder.order)
+                .filter(file -> file.order < maxOrder.order && file.order > minOrder.order)
                 .collect(Collectors.toList());
     }
 
