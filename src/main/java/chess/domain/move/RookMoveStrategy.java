@@ -5,6 +5,8 @@ import chess.domain.board.Position;
 
 public final class RookMoveStrategy extends LinearMoveStrategy {
 
+    private static final String UNSUPPORTED_MOVE_PATTERN_MESSAGE = "[ERROR] 룩에서 지원하지 않는 이동전략입니다.";
+
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
@@ -22,5 +24,15 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
         }
 
         return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+    }
+
+    @Override
+    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
+    }
+
+    @Override
+    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

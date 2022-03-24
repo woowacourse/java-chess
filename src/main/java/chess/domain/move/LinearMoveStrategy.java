@@ -28,6 +28,26 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
         return pieceCounts;
     }
 
+    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+        int pieceCounts = 0;
+        int vertical = distance.getVertical();
+        for (int i = ADD_START_UNIT; i < Math.abs(vertical); i++) {
+            Position amongPosition = smallerPosition.move(REVERSE_DIRECTION * i, REVERSE_DIRECTION * i);
+            pieceCounts += countPieces(board, amongPosition);
+        }
+        return pieceCounts;
+    }
+
+    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
+        int pieceCounts = 0;
+        int vertical = distance.getVertical();
+        for (int i = ADD_START_UNIT; i < Math.abs(vertical); i++) {
+            Position amongPosition = smallerPosition.move(i, REVERSE_DIRECTION * i);
+            pieceCounts += countPieces(board, amongPosition);
+        }
+        return pieceCounts;
+    }
+
     protected int countPieces(final Board board, final Position amongPosition) {
         if (!board.getPiece(amongPosition).isBlank()) {
             return 1;

@@ -3,7 +3,9 @@ package chess.domain.move;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
-public class BishopMoveStrategy extends FirstRowMoveStrategy {
+public class BishopMoveStrategy extends LinearMoveStrategy {
+
+    private static final String UNSUPPORTED_MOVE_PATTERN_MESSAGE = "[ERROR] 비숍에서 지원하지 않는 이동전략입니다.";
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
@@ -24,30 +26,13 @@ public class BishopMoveStrategy extends FirstRowMoveStrategy {
         return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
     }
 
-    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
-        int pieceCounts = 0;
-        int vertical = distance.getVertical();
-        for (int i = 1; i < Math.abs(vertical); i++) {
-            Position amongPosition = smallerPosition.move(-1 * i, -1 * i);
-            pieceCounts += countPieces(board, amongPosition);
-        }
-        return pieceCounts;
+    @Override
+    protected int countPiecesWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
-    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition, final Distance distance) {
-        int pieceCounts = 0;
-        int vertical = distance.getVertical();
-        for (int i = 1; i < Math.abs(vertical); i++) {
-            Position amongPosition = smallerPosition.move(i, -1 * i);
-            pieceCounts += countPieces(board, amongPosition);
-        }
-        return pieceCounts;
-    }
-
-    protected int countPieces(final Board board, final Position amongPosition) {
-        if (!board.getPiece(amongPosition).isBlank()) {
-            return 1;
-        }
-        return 0;
+    @Override
+    protected int countPiecesWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }
