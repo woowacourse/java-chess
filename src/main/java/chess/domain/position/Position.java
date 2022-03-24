@@ -16,10 +16,21 @@ public class Position {
         this(Row.of(value.substring(0, 1)), Column.of(value.substring(1, 2)));
     }
 
-    public Direction calculateGap(Position position) {
+    public Direction findDirection(Position position) {
         int x = row.calculateIndex(position.row);
         int y = column.calculateIndex(position.column);
+
+        x = convertCompactValue(x);
+        y = convertCompactValue(y);
+
         return Direction.of(x, y);
+    }
+
+    private int convertCompactValue(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 
     @Override

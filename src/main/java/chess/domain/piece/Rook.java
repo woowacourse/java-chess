@@ -3,20 +3,20 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class King extends Piece {
-    private static final String name = "K";
+public class Rook extends Piece {
+    private static final String name = "R";
 
     private final List<Direction> directions;
 
-    public King() {
+    public Rook() {
         super(name);
-        directions = Direction.pullAllBasicDirections();
+        directions = Direction.pullStraightDirections();
     }
 
     @Override
     public boolean movable(Position from, Position to) {
-        Direction direction = from.findDirection(to);
-        return directions.contains(direction);
+        Direction gap = from.findDirection(to);
+        return directions.contains(gap);
     }
 
     @Override
