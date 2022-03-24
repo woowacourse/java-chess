@@ -87,5 +87,4 @@ public class PawnMoveStrategy implements MoveStrategy{
     private boolean isCatchable(final Piece targetPiece, final Color color) {
         return !targetPiece.isBlank() && targetPiece.getColor() == color.oppositeColor();
     }
-
 }

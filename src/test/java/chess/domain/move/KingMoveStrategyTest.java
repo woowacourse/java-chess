@@ -40,4 +40,13 @@ public class KingMoveStrategyTest {
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
     }
+
+    @Test
+    @DisplayName("Target 에 우리편 기물이 있을 때 false")
+    void isMovableWhenTargetColorSame() {
+        Position source = Position.valueOf("e8");
+        Position target = Position.valueOf("e7");
+
+        assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
 }

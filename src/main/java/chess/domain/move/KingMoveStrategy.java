@@ -26,15 +26,16 @@ public class KingMoveStrategy implements MoveStrategy {
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
 
-        // movepattern에 있는지
         if (!MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
+        return isTargetPositionMovable(targetPiece, color);
+    }
 
-        // 존재가 없는지
-        // 타겟이 있다면 상대편인지
-
-
-        return true;
+    private boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
+        if (!targetPiece.isBlank()) {
+            return targetPiece.getColor() == color.oppositeColor();
+        }
+        return targetPiece.isBlank();
     }
 }
