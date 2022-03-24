@@ -424,4 +424,46 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
     }
+
+    @DisplayName("화이트 폰이 상대 기물을 잡는다")
+    @Test
+    void testWhitePawnCatch() {
+
+        Piece pawn = new Pawn(Color.WHITE);
+        Piece target = new Pawn(Color.BLACK);
+        Position src = Position.of("a2");
+        Position dest = Position.of("b3");
+
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(src, pawn);
+        value.put(dest, target);
+
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(pawn);
+    }
+
+    @DisplayName("블랙 폰이 상대 기물을 잡는다")
+    @Test
+    void testBlackPawnCatch() {
+
+        Piece pawn = new Pawn(Color.BLACK);
+        Piece target = new Pawn(Color.WHITE);
+        Position src = Position.of("a7");
+        Position dest = Position.of("b6");
+
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(src, pawn);
+        value.put(dest, target);
+
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(pawn);
+    }
 }

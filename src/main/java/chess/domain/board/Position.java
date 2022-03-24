@@ -60,6 +60,20 @@ public class Position {
         return moveToNextPositionCheckingDestination(nextPosition, dest, x, y);
     }
 
+    public boolean canMoveByTime(Direction direction, Position dest, int time) {
+        int x = direction.getX();
+        int y = direction.getY();
+
+        Position nextPosition = this;
+        for (int i = 0; i < time; i++) {
+            if (!nextPosition.canMove(x, y)) {
+                return false;
+            }
+            nextPosition = nextPosition.move(x, y);
+        }
+        return dest.equals(nextPosition);
+    }
+
     private boolean canMove(int x, int y) {
         return column.canMove(x) && row.canMove(y);
     }

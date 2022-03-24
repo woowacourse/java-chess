@@ -82,6 +82,9 @@ public class Board {
         }
         // 도착지 아군 체크
         checkSameColorInDestination(piece, dest);
+//        if (piece.isSameType(Pawn.class)) {
+//            폰만을위한다른체크메서드
+//        }
         // 장애물/아군 체크
         checkObstacleInPath(src, dest);
         // 이동 또는 먹힘
@@ -106,13 +109,15 @@ public class Board {
     }
 
     private void checkObstacle(Position src, Position dest, Direction direction) {
-        while (!src.equals(dest)) {
-            src = src.move(direction.getX(), direction.getY());
-            checkIsOccupied(src);
+        Position nextPosition = src.move(direction.getX(), direction.getY());
+
+        while (!nextPosition.equals(dest)) {
+            checkObstacleIn(nextPosition);
+            nextPosition = nextPosition.move(direction.getX(), direction.getY());
         }
     }
 
-    private void checkIsOccupied(Position src) {
+    private void checkObstacleIn(Position src) {
         if (findPieceBy(src).isPresent()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
