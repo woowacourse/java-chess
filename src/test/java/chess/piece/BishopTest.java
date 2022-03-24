@@ -1,19 +1,19 @@
 package chess.piece;
 
-import static chess.File.C;
-import static chess.Rank.THREE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static chess.File.*;
+import static chess.Rank.*;
+import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.File;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
-
 
     @DisplayName("비숍은 오로지 대각선 방향으로만 이동이 가능하다")
     @ParameterizedTest

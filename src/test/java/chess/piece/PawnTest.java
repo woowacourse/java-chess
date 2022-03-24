@@ -1,18 +1,17 @@
 package chess.piece;
 
-import static chess.File.A;
-import static chess.Rank.FOUR;
-import static chess.Rank.SIX;
-import static chess.Rank.TWO;
-import static org.assertj.core.api.Assertions.assertThat;
+import static chess.File.*;
+import static chess.Rank.*;
+import static org.assertj.core.api.Assertions.*;
 
-import chess.PieceColor;
-import chess.Position;
-import chess.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import chess.PieceColor;
+import chess.Position;
+import chess.Rank;
 
 class PawnTest {
 

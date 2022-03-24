@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -72,5 +73,9 @@ public class Position {
         return this.isDiagonal(other) || this.isCross(other);
     }
 
-
+    public List<Position> traceGroup(Position other) {
+        List<File> traceFileGroup = File.traceGroup(this.file, other.file);
+        List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
+        return null;
+    }
 }
