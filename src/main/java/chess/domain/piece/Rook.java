@@ -37,8 +37,12 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        Direction direction = source.getGap(target);
+    public boolean canMove(Direction direction) {
         return direction.hasMultiple(DIRECTIONS);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

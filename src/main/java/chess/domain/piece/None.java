@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Square;
 
 public final class None extends Piece {
@@ -15,7 +16,12 @@ public final class None extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(Direction direction) {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
         return false;
     }
 }

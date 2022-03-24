@@ -5,41 +5,42 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Square;
 
 public class KingTest {
     @Test
-    @DisplayName("A1에 있는 킹을 A2로 이동 가능하다")
+    @DisplayName("킹을 오른쪽으로 한칸 움직일 수 있다")
     void canMove_a1_a2() {
         King king = new King(Color.BLACK);
-        Boolean canMove = king.canMove(new Square("a1"), new Square("a2"));
+        Boolean canMove = king.canMove(new Direction(0, 1));
 
         assertThat(canMove).isTrue();
     }
 
     @Test
-    @DisplayName("A1에 있는 킹을 B1로 이동 가능하다")
+    @DisplayName("킹을 위쪽으로 한칸 이동 가능하다")
     void canMove_a1_b1() {
         King king = new King(Color.BLACK);
-        Boolean canMove = king.canMove(new Square("a1"), new Square("b1"));
+        Boolean canMove = king.canMove(new Direction(1, 0));
 
         assertThat(canMove).isTrue();
     }
 
     @Test
-    @DisplayName("A1에 있는 킹을 B2로 이동 가능하다")
+    @DisplayName("킹을 오른쪽으로 한칸, 위쪽으로 한칸 이동 가능하다")
     void canMove_a1_b2() {
         King king = new King(Color.BLACK);
-        Boolean canMove = king.canMove(new Square("a1"), new Square("b2"));
+        Boolean canMove = king.canMove(new Direction(1, 1));
 
         assertThat(canMove).isTrue();
     }
 
     @Test
-    @DisplayName("A1에 있는 킹을 C3로 이동 가능하다")
+    @DisplayName("킹을 오른쪽으로 두칸, 위쪽으로 두칸 이동 불가능하다")
     void canMove_a1_c3() {
         King king = new King(Color.BLACK);
-        Boolean canMove = king.canMove(new Square("a1"), new Square("c3"));
+        Boolean canMove = king.canMove(new Direction(2, 2));
 
         assertThat(canMove).isFalse();
     }

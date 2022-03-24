@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -17,7 +18,9 @@ public abstract class Piece {
 
     abstract public String getEmoji();
 
-    abstract public boolean canMove(Square source, Square target);
+    abstract public boolean canMove(Direction direction);
+
+    abstract public boolean isPawn();
 
     public boolean isSameTeam(Piece otherPiece) {
         return this.color == otherPiece.color;

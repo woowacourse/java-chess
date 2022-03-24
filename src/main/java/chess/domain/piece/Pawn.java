@@ -37,8 +37,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        Direction direction = source.getGap(target);
+    public boolean canMove(Direction direction) {
         if (start) {
             this.start = false;
             return canMoveAtStart(direction);
@@ -46,9 +45,16 @@ public final class Pawn extends Piece {
         return direction.hasSame(DIRECTIONS);
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
     private boolean canMoveAtStart(Direction direction) {
         List<Direction> startDirections = new ArrayList<>(DIRECTIONS);
         startDirections.add(new Direction(0, 2));
         return direction.hasSame(startDirections);
     }
+
+
 }

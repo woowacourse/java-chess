@@ -41,8 +41,12 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        Direction direction = source.getGap(target);
+    public boolean canMove(Direction direction) {
         return direction.hasSame(DIRECTIONS);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }
