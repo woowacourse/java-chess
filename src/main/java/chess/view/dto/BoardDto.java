@@ -7,6 +7,9 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
@@ -52,8 +55,9 @@ public class BoardDto {
 
     public String getBoardText() {
         StringBuilder stringBuilder = new StringBuilder();
-
-        for (YAxis yAxis : YAxis.values()) {
+        List<YAxis> yAxisValues = Arrays.asList(YAxis.values());
+        Collections.reverse(yAxisValues);
+        for (YAxis yAxis : yAxisValues) {
             generateRowText(stringBuilder, yAxis);
         }
 

@@ -56,21 +56,7 @@ public class Board {
         return Optional.ofNullable(value.get(position));
     }
 
-//    public boolean executeCommand(Position from, Position to) {
-//        AbstractPiece piece = value.get(from);
-//        AbstractPiece otherPiece = value.get(to);
-//
-//        if (piece.isMovable(from, to) && !isExistingSameTeam(piece, otherPiece)) {
-//            value.put(to, piece);
-//            value.remove(from);
-//            return true;
-//        }
-//
-//        return false;
-//    }
-
     public boolean executeCommand(Position from, Position to) {
-        AbstractPiece piece = value.get(from);
         AbstractPiece otherPiece = value.get(to);
 
         if (otherPiece == null) {
