@@ -28,7 +28,7 @@ public class KingTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"FIVE:B", "ONE:B"}, delimiter = ':')
+    @CsvSource(value = {"FIVE:B", "ONE:B", "ONE:C"}, delimiter = ':')
     @DisplayName("킹은 좌우, 대각선 방향으로 한 칸 이동이 아니라면 이동이 불가하다")
     void cantMovable(Rank rank, File file) {
         //given
