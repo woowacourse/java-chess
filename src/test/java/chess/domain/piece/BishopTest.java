@@ -28,7 +28,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Camp.WHITE);
 
         Position d1 = new Position(Column.D, Row.ONE);
-        Position d6 = new Position(Column.D, Row.SEVEN);
+        Position d6 = new Position(Column.D, Row.SIX);
 
         assertThat(bishop.canMove(d1, d6)).isFalse();
     }

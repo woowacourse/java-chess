@@ -16,7 +16,7 @@ class QueenTest {
         Queen queen = new Queen(Camp.WHITE);
 
         Position d1 = new Position(Column.D, Row.ONE);
-        Position d6 = new Position(Column.D, Row.SEVEN);
+        Position d6 = new Position(Column.D, Row.SIX);
 
         assertThat(queen.canMove(d1, d6)).isTrue();
     }
@@ -26,7 +26,7 @@ class QueenTest {
     void move_d6_d1() {
         Queen queen = new Queen(Camp.WHITE);
 
-        Position d6 = new Position(Column.D, Row.SEVEN);
+        Position d6 = new Position(Column.D, Row.SIX);
         Position d1 = new Position(Column.D, Row.ONE);
 
         assertThat(queen.canMove(d6, d1)).isTrue();

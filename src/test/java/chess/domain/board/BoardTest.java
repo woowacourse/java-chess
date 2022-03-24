@@ -22,8 +22,7 @@ public class BoardTest {
     @DisplayName("체스판은 64칸이다.")
     @Test
     void chess_board_size_64() {
-        //given
-        //when
+        //given & when
         Board board = new Board();
 
         //then
@@ -133,8 +132,8 @@ public class BoardTest {
 
         Position b2 = new Position(Column.B, Row.TWO);
         Position h2 = new Position(Column.H, Row.TWO);
-
         Piece piece = board.getValue().get(b2);
+
         board.move(b2, h2);
 
         assertThat(board.getValue().get(b2)).isEqualTo(piece);
@@ -147,7 +146,6 @@ public class BoardTest {
 
         Position a2 = new Position(Column.A, Row.TWO);
         Position a4 = new Position(Column.A, Row.FOUR);
-
         Piece piece = board.getValue().get(a2);
 
         board.move(a2, a4);
@@ -164,7 +162,7 @@ public class BoardTest {
         Position h7 = new Position(Column.H, Row.SEVEN);
         Piece attackingPiece = board.getValue().get(h1);
 
-        board.move(h1,h7);
+        board.move(h1, h7);
 
         assertThat(board.getValue().get(h7)).isEqualTo(attackingPiece);
     }

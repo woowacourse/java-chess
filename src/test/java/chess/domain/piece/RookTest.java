@@ -16,7 +16,7 @@ public class RookTest {
         Rook rook = new Rook(Camp.WHITE);
 
         Position d1 = new Position(Column.D, Row.ONE);
-        Position d6 = new Position(Column.D, Row.SEVEN);
+        Position d6 = new Position(Column.D, Row.SIX);
 
         assertThat(rook.canMove(d1, d6)).isTrue();
     }
@@ -26,7 +26,7 @@ public class RookTest {
     void move_d6_d1() {
         Rook rook = new Rook(Camp.WHITE);
 
-        Position d6 = new Position(Column.D, Row.SEVEN);
+        Position d6 = new Position(Column.D, Row.SIX);
         Position d1 = new Position(Column.D, Row.ONE);
 
         assertThat(rook.canMove(d6, d1)).isTrue();
