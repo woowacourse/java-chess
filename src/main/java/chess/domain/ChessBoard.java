@@ -26,6 +26,7 @@ public class ChessBoard {
     public void movePiece(Position source, Position target, Color color) {
         validateFinishedGame();
         validateMovableColor(source, color);
+
         Piece movedPiece = pieceByPosition(source).move(source, target, this);
         pieces.remove(source);
         pieces.put(target, movedPiece);
