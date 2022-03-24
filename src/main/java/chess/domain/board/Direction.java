@@ -69,6 +69,10 @@ public enum Direction {
         return List.of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     }
 
+    public static List<Direction> getQueenDirections() {
+        return List.of(NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    }
+
     @Override
     public String toString() {
         return "Direction{" +

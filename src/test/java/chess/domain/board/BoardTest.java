@@ -355,4 +355,73 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
     }
+
+    @DisplayName("퀸이 성공적으로 이동한다")
+    @ParameterizedTest(name = "{displayName}")
+    @MethodSource("queenMoveTestSet")
+    void queenMove(Position src, Position dest) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        Piece piece = new Queen(Color.BLACK);
+        value.put(src, piece);
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+    }
+
+    static Stream<Arguments> queenMoveTestSet() {
+        return Stream.of(
+                Arguments.of(Position.of("d5"), Position.of("e5")), // 동
+                Arguments.of(Position.of("d5"), Position.of("h5")), // 동
+                Arguments.of(Position.of("d5"), Position.of("c5")), // 서
+                Arguments.of(Position.of("d5"), Position.of("a5")), // 서
+                Arguments.of(Position.of("d5"), Position.of("d4")), // 남
+                Arguments.of(Position.of("d5"), Position.of("d1")), // 남
+                Arguments.of(Position.of("d5"), Position.of("d6")), // 북
+                Arguments.of(Position.of("d5"), Position.of("d8")), // 북
+                Arguments.of(Position.of("d5"), Position.of("e6")), // 북동
+                Arguments.of(Position.of("d5"), Position.of("g8")), // 북동
+                Arguments.of(Position.of("d5"), Position.of("c6")), // 북서
+                Arguments.of(Position.of("d5"), Position.of("a8")), // 북서
+                Arguments.of(Position.of("d5"), Position.of("e4")), // 남동
+                Arguments.of(Position.of("d5"), Position.of("h1")), // 남동
+                Arguments.of(Position.of("d5"), Position.of("c4")), // 남서
+                Arguments.of(Position.of("d5"), Position.of("a2"))  // 남서
+        );
+    }
+
+    @DisplayName("퀸은 이동할 위치에 아군이 있으면 이동할 수 없다.")
+    @Test
+    void queenCannotMove() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("d5"), new Queen(Color.WHITE));
+        value.put(Position.of("g8"), new Pawn(Color.WHITE));
+        Board board = new Board(value);
+
+        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("아군");
+    }
+
+    @DisplayName("퀸은 이동경로에 다른 기물이 있는 경우 예외를 던진다")
+    @Test
+    void queenCheckObstacleInPath() {
+
+        Piece queen = new Queen(Color.WHITE);
+        Piece obstacle = new Pawn(Color.BLACK);
+        Map<Position, Piece> value = new HashMap<>();
+        Position src = Position.of("d3");
+        value.put(src, queen);
+        value.put(Position.of("f5"), obstacle);
+        Board board = new Board(value);
+
+        Position dest = Position.of("g6");
+
+        assertThatThrownBy(() -> board.move(src, dest))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("다른 기물");
+    }
 }
