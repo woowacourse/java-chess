@@ -16,4 +16,9 @@ public class Ready implements Command {
         OutputView.printChessBoard(chessBoard.getPieces());
         return new Running(chessBoard);
     }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }
