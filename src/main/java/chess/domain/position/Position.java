@@ -63,9 +63,18 @@ public class Position {
         return fileDistance;
     }
 
+    public Position toNextPosition(Direction direction) {
+        this.file = file.add(direction.fileGap());
+        this.rank = rank.add(direction.rankGap());
+        return new Position(rank.getValue() + file.getValue());
+    }
+
+    public String getValue() {
+        return rank.getValue() + file.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;

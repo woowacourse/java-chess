@@ -1,8 +1,10 @@
 package chess.domain.chessPiece;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Stack;
 
 public abstract class ChessPiece {
 
@@ -28,7 +30,24 @@ public abstract class ChessPiece {
 
     public abstract void canMove(Position from, Position to);
 
-    public abstract List<Position> findRoute(Position from, Position to);
+    public Stack<Position> findRoute(Position from, Position to) {
+        Stack<Position> routes = new Stack<>();
+        Direction direction = to.findDirection(from);
+
+        Position newFrom = from;
+
+        while (!newFrom.equals(to)) {
+
+            Position nextPosition = newFrom.toNextPosition(direction);
+            routes.add(new Position(nextPosition.getValue()));
+            newFrom = nextPosition;
+
+        }
+
+        routes.pop();
+
+        return routes;
+    }
 
     public boolean isSameColor(ChessPiece chessPiece) {
         return this.color == chessPiece.color;

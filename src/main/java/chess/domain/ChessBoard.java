@@ -3,10 +3,7 @@ package chess.domain;
 import chess.domain.chessPiece.*;
 import chess.domain.position.Position;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ChessBoard {
 
@@ -44,6 +41,14 @@ public class ChessBoard {
         }
 
         me.canMove(from, to);
+        Stack<Position> routes = me.findRoute(from, to);
+
+        while (!routes.isEmpty()) {
+            Position position = routes.pop();
+            if (findPiece(position).isPresent()) {
+                throw new IllegalArgumentException("히히 못가");
+            }
+        }
 
         if (findPiece(to).isEmpty() || enemyExist(me, to)) {
             chessBoard.put(to, me);

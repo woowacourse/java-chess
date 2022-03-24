@@ -27,4 +27,12 @@ public enum Direction {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
+
+    public int fileGap() {
+        return fileGap;
+    }
+
+    public int rankGap() {
+        return rankGap;
+    }
 }
