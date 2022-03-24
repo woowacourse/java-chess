@@ -42,4 +42,14 @@ public class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("source 위치의 기물이 본인의 기물이 아닙니다.");
     }
+
+    @DisplayName("source와 target이 동일한 경우 예외를 던진다.")
+    @Test
+    void source와_target이_동일한_경우_예외를_던진다() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThatThrownBy(() -> chessBoard.move("b8", "b8"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("source 위치와 target 위치는 같을 수 없습니다.");
+    }
 }

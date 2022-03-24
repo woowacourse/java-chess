@@ -49,11 +49,18 @@ public class ChessBoard {
     public void move(String source, String target) {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
+        validateSamePosition(sourcePosition, targetPosition);
 
         Piece sourcePiece = findPiece(sourcePosition);
         validateTurn(sourcePiece);
 
         turn = turn.change();
+    }
+
+    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("source 위치와 target 위치는 같을 수 없습니다.");
+        }
     }
 
     private Piece findPiece(Position sourcePosition) {
