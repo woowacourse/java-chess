@@ -7,7 +7,7 @@ import domain.piece.property.TeamColor;
 import domain.utils.Direction;
 import java.util.List;
 
-public final class Knight extends CommonMovablePiece {
+public final class Knight extends SpecificMovablePiece {
 
     private static final List<Direction> directions;
 

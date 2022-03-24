@@ -6,15 +6,16 @@ import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
 import domain.utils.Direction;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
 
     private final TeamColor teamColor;
     private final PieceSymbol unit;
 
-    private List<Position> positions;
+    private Map<Direction, List<Position>> directionalPositions;
 
     public Piece(final TeamColor teamColor, final PieceSymbol unit) {
         this.teamColor = teamColor;
@@ -22,7 +23,7 @@ public abstract class Piece {
     }
 
     protected void initializePosition() {
-        positions = new ArrayList<>();
+        directionalPositions = new HashMap<>();
     }
 
     protected boolean checkOverRange(final int x, final int y) {
@@ -35,15 +36,25 @@ public abstract class Piece {
 
     public boolean availableMove(final Position source, final Position target) {
         calculateAvailablePositions(source);
-        return containsTarget(target);
+        return containsPosition(target);
     }
 
-    public void positionAdd(final Position position) {
-        positions.add(position);
+    public void addDirectionalPosition(final Direction direction, final List<Position> positions) {
+        directionalPositions.put(direction, positions);
     }
 
-    protected boolean containsTarget(final Position target) {
-        return positions.contains(target);
+    public List<Position> calculateRoute(Position target) {
+        return directions().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .filter(positions -> positions.contains(target))
+                .findFirst()
+                .orElse(null);
+    }
+
+    protected boolean containsPosition(final Position position) {
+        return directions().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .anyMatch(positions -> positions.contains(position));
     }
 
     protected void calculateAvailablePositions(final Position source) {

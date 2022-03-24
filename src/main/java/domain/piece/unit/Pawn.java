@@ -29,7 +29,7 @@ public final class Pawn extends SpecificMovablePiece {
             return true;
         }
         calculateAvailablePositions(source);
-        return containsTarget(target);
+        return containsPosition(target);
     }
 
     private boolean availableFirstStartPosition(final Position source, final Position target) {

@@ -6,6 +6,8 @@ import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
 import domain.utils.Direction;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SpecificMovablePiece extends Piece {
 
@@ -15,11 +17,14 @@ public abstract class SpecificMovablePiece extends Piece {
 
     @Override
     protected void calculateAvailablePosition(final Position source, final Direction direction) {
+        List<Position> positions = new ArrayList<>();
         int x = source.getX() + direction.getX();
         int y = source.getY() + direction.getY();
 
         if (checkOverRange(x, y)) {
-            positionAdd(new Position(XPosition.of(x), YPosition.of(y)));
+            positions.add(new Position(XPosition.of(x), YPosition.of(y)));;
         }
+
+        addDirectionalPosition(direction, positions);
     }
 }
