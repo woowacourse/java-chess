@@ -49,4 +49,5 @@ public class KingMoveStrategyTest {
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
     }
+
 }
