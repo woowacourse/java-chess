@@ -60,11 +60,17 @@ public class Position {
         return Math.abs(file.displacement(other.file));
     }
 
-    public boolean isDiagonal(Position target) {
-        return this.fileDistance(target) == this.rankDistance(target);
+    public boolean isDiagonal(Position other) {
+        return this.fileDistance(other) == this.rankDistance(other);
     }
 
     public boolean isCross(Position other) {
         return this.isSameRank(other) || this.isSameFile(other);
     }
+
+    public boolean isAllDirectional(Position other) {
+        return this.isDiagonal(other) || this.isCross(other);
+    }
+
+
 }

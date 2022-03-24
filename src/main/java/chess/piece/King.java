@@ -17,6 +17,6 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return (source.isAllDirectional(target) && source.fileDistance(target) <= 1);
     }
 }

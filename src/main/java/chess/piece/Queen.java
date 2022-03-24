@@ -18,6 +18,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.isDiagonal(target) || source.isCross(target);
+        return source.isAllDirectional(target);
     }
 }
