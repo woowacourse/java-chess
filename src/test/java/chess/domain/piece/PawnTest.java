@@ -89,4 +89,12 @@ class PawnTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 앞으로 1칸만 이동할 수 있습니다.");
     }
+
+    @Test
+    @DisplayName("위치가 주어질 때, 해당 위치에 자신이 존재하는지 확인한다.")
+    void checkMyPosition() {
+        final Position checkingPosition = new Position(2, 'g');
+
+        assertThat(pawn.exist(checkingPosition)).isTrue();
+    }
 }

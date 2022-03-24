@@ -47,4 +47,12 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 상하좌우, 대각선 중 한 방향으로 이동해야 합니다.");
     }
+
+    @Test
+    @DisplayName("위치가 주어질 때, 해당 위치에 자신이 존재하는지 확인한다.")
+    void checkMyPosition() {
+        final Position checkingPosition = new Position(3, 'c');
+
+        assertThat(queen.exist(checkingPosition)).isTrue();
+    }
 }

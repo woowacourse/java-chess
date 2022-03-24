@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class Pawn {
+public class Pawn implements Piece {
 
     private static final int PAWN_DEFAULT_MOVE_DISTANCE = 1;
     private static final int PAWN_FIRST_MOVE_DISTANCE = 2;
@@ -14,6 +14,7 @@ public class Pawn {
         this.position = position;
     }
 
+    @Override
     public Position move(final Position currentPosition, final Position destinationPosition) {
         if (!currentPosition.isMoveForward(destinationPosition)) {
             throw new IllegalArgumentException("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
@@ -38,6 +39,7 @@ public class Pawn {
         }
     }
 
+    @Override
     public Position capture(final Position currentPosition, final Position destinationPosition) {
         final boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
         final int moveDistance = currentPosition.calculateDistance(destinationPosition);
@@ -46,5 +48,10 @@ public class Pawn {
             throw new IllegalArgumentException("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
         }
         return position = destinationPosition;
+    }
+
+    @Override
+    public boolean exist(final Position checkingPosition) {
+        return position.equals(checkingPosition);
     }
 }

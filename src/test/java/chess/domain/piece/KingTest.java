@@ -58,4 +58,12 @@ class KingTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 1칸만 이동할 수 있습니다.");
     }
+
+    @Test
+    @DisplayName("위치가 주어질 때, 해당 위치에 자신이 존재하는지 확인한다.")
+    void checkMyPosition() {
+        final Position checkingPosition = new Position(3, 'c');
+
+        assertThat(king.exist(checkingPosition)).isTrue();
+    }
 }

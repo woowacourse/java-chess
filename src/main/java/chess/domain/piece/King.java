@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class King {
+public class King implements Piece {
 
     private static final int KING_LINEAR_MOVE_DISTANCE = 1;
     private static final int KING_DIAGONAL_MOVE_DISTANCE = 2;
@@ -13,6 +13,7 @@ public class King {
         this.position = position;
     }
 
+    @Override
     public Position move(Position currentPosition, Position destinationPosition) {
         boolean isMoveLinear = currentPosition.isMoveLinear(destinationPosition);
         boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
@@ -31,5 +32,10 @@ public class King {
                 || isMoveDiagonal && distance != KING_DIAGONAL_MOVE_DISTANCE) {
             throw new IllegalArgumentException("킹은 1칸만 이동할 수 있습니다.");
         }
+    }
+
+    @Override
+    public boolean exist(final Position checkingPosition) {
+        return position.equals(checkingPosition);
     }
 }
