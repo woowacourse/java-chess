@@ -11,6 +11,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.pawn.BlackFirstPawn;
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhiteFirstPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
@@ -81,11 +82,12 @@ class ChessBoardTest {
                 new Position('d', '1'), new Queen(Color.WHITE),
                 new Position('e', '1'), new King(Color.WHITE),
 
+                new Position('a', '7'), new BlackPawn(),
                 new Position('c', '8'), new Bishop(Color.BLACK),
                 new Position('h', '8'), new Rook(Color.BLACK),
                 new Position('e', '8'), new King(Color.BLACK)
         ));
-        Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 8.0);
+        Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 9.0);
 
         assertThat(chessBoard.calcualteScoreStatus()).isEqualTo(expected);
     }
