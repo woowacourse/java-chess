@@ -11,18 +11,19 @@ public class Position {
     private final int fileIdx;
     private final int rankIdx;
 
-    private Position(String value) {
-        char[] positionInfo = value.toCharArray();
-        this.fileIdx = PositionUtil.charToMatchingInt(positionInfo[0]);
-        this.rankIdx = PositionUtil.charToMatchingInt(positionInfo[1]);
+    private Position(int fileIdx, int rankIdx) {
+        this.fileIdx = fileIdx;
+        this.rankIdx = rankIdx;
     }
 
     public static Position of(int fileIdx, int rankIdx) {
         return PositionCache.getCache(fileIdx, rankIdx);
     }
 
-    public static Position of(String value) {
-        return PositionCache.getCache(value);
+    public static Position of(String positionKey) {
+        int fileIdx = PositionUtil.toFileIdx(positionKey);
+        int rankIdx = PositionUtil.toRankIdx(positionKey);
+        return Position.of(fileIdx, rankIdx);
     }
 
     public boolean hasSameFileIdx(int fileIdx) {
@@ -75,7 +76,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" + fileIdx + "" + rankIdx + '}';
+        return "Position{fileIdx=" + fileIdx + ", rankIdx=" + rankIdx + '}';
     }
 
     private static class PositionCache {
@@ -83,19 +84,11 @@ public class Position {
         static Map<String, Position> cache = new HashMap<>(64);
 
         static Position getCache(int fileIdx, int rankIdx) {
-            String key = fileIdx + "" + rankIdx;
-            return cache.computeIfAbsent(key, (val) -> new Position(key));
+            String key = toKey(fileIdx, rankIdx);
+            return cache.computeIfAbsent(key, (k) -> new Position(fileIdx, rankIdx));
         }
 
-        static Position getCache(String value) {
-            String key = toKey(value);
-            return cache.computeIfAbsent(key, (val) -> new Position(key));
-        }
-
-        static String toKey(String value) {
-            char[] positionInfo = value.toCharArray();
-            int fileIdx = PositionUtil.fileToIdx(positionInfo[0]);
-            int rankIdx = PositionUtil.rankToIdx(positionInfo[1]);
+        private static String toKey(int fileIdx, int rankIdx) {
             return fileIdx + "" + rankIdx;
         }
     }

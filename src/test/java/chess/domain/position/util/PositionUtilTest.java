@@ -10,46 +10,37 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class PositionUtilTest {
 
-    @DisplayName("fileToIdx 메서드는 a~h의 값을 받아 0~7로 변환하여 반환한다.")
+    @DisplayName("toFileIdx 메서드는 문자열의 첫번째 값이 a~h인 경우 0~7로 변환하여 반환한다.")
     @ParameterizedTest(name = "rank {0}: index {1}")
-    @CsvSource(value = {"a,0", "b,1", "c,2", "d,3", "e,4", "f,5", "g,6", "h,7"})
-    void fileToIdx_ok(char rank, int expected) {
-        int actual = PositionUtil.fileToIdx(rank);
+    @CsvSource(value = {"a1,0", "b2,1", "c1,2", "d5,3", "e2,4", "f4,5", "g2,6", "h4,7"})
+    void toFileIdx_ok(String positionKey, int expected) {
+        int actual = PositionUtil.toFileIdx(positionKey);
 
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("fileToIdx 메서드는 a~h 이외의 값을 입력하는 경우 예외를 발생시킨다.")
+    @DisplayName("toFileIdx 메서드는 문자열의 첫번째 값이 a~h이 아닌 경우 예외를 발생시킨다.")
     @Test
-    void fileToIdx_exceptionOnInvalidRange() {
-        assertThatCode(() -> PositionUtil.fileToIdx('z'))
+    void toFileIdx_exceptionOnInvalidRange() {
+        assertThatCode(() -> PositionUtil.toFileIdx("z1"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
     }
 
-    @DisplayName("rankToIdx 메서드는 1~8의 값을 받아 0~7로 변환하여 반환한다.")
+    @DisplayName("toRankIdx 메서드는 문자열의 두번째 값이 1~8인 경우 0~7로 변환하여 반환한다.")
     @ParameterizedTest(name = "file {0}: index {1}")
-    @CsvSource(value = {"1,0", "2,1", "3,2", "4,3", "5,4", "6,5", "7,6", "8,7"})
-    void rankToIdx_ok(char file, int expected) {
-        int actual = PositionUtil.rankToIdx(file);
+    @CsvSource(value = {"a1,0", "b2,1", "a3,2", "f4,3", "h5,4", "a6,5", "c7,6", "e8,7"})
+    void toRankIdx_ok(String positionKey, int expected) {
+        int actual = PositionUtil.toRankIdx(positionKey);
 
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("rankToIdx 메서드는 1~8 이외의 값을 입력하는 경우 예외를 발생시킨다.")
+    @DisplayName("toRankIdx 메서드는 문자열의 두번째 값이 1~8이 아닌 경우 예외를 발생시킨다.")
     @Test
-    void rankToIdx_exceptionOnInvalidRange() {
-        assertThatCode(() -> PositionUtil.rankToIdx('0'))
+    void toRankIdx_exceptionOnInvalidRange() {
+        assertThatCode(() -> PositionUtil.toRankIdx("a0"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
-    }
-
-    @DisplayName("charToMatchingInt 메서드는 0~7의 문자 타입 값을 받아 대응되는 숫자 값으로 변환하여 반환한다.")
-    @ParameterizedTest(name = "char {0}: int {1}")
-    @CsvSource(value = {"0,0", "1,1", "2,2", "3,3", "4,4", "5,5", "6,6", "7,7"})
-    void charToMatchingInt(char input, int expected) {
-        int actual = PositionUtil.charToMatchingInt(input);
-
-        assertThat(actual).isEqualTo(expected);
     }
 }
