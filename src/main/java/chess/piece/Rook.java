@@ -18,6 +18,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.isSameRank(target) || source.isSameFile(target);
+        return source.isCross(target);
     }
 }

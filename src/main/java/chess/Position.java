@@ -63,4 +63,8 @@ public class Position {
     public boolean isDiagonal(Position target) {
         return this.fileDistance(target) == this.rankDistance(target);
     }
+
+    public boolean isCross(Position other) {
+        return this.isSameRank(other) || this.isSameFile(other);
+    }
 }
