@@ -32,12 +32,16 @@ public final class ChessGame {
         return new Board(pieces);
     }
 
-    public void movePiece(String source, String target) {
-        Position sourcePosition = new Position(PositionX.of(source.substring(0, 1)), PositionY.of(source.substring(1)));
-        Position targetPosition = new Position(PositionX.of(target.substring(0, 1)), PositionY.of(target.substring(1)));
+    public void movePiece(String sourceCommand, String targetCommand) {
+        Position sourcePosition = parseToPosition(sourceCommand);
+        Position targetPosition = parseToPosition(targetCommand);
         board.validateMovement(currentTurnColor, sourcePosition, targetPosition);
         board.movePiece(sourcePosition, targetPosition);
         changeTurn();
+    }
+
+    private Position parseToPosition(String command) {
+        return new Position(PositionX.of(command.substring(0, 1)), PositionY.of(command.substring(1)));
     }
 
     private void changeTurn() {
