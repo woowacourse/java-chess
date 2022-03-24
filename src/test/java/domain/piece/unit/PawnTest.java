@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.unit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

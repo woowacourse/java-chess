@@ -7,9 +7,9 @@ import domain.position.XPosition;
 import domain.position.YPosition;
 import domain.utils.Direction;
 
-public abstract class CommonMovablePiece extends Piece {
+public abstract class SpecificMovablePiece extends Piece {
 
-    public CommonMovablePiece(TeamColor teamColor, PieceSymbol unit) {
+    public SpecificMovablePiece(TeamColor teamColor, PieceSymbol unit) {
         super(teamColor, unit);
     }
 
@@ -18,10 +18,8 @@ public abstract class CommonMovablePiece extends Piece {
         int x = source.getX() + direction.getX();
         int y = source.getY() + direction.getY();
 
-        while (checkOverRange(x, y)) {
+        if (checkOverRange(x, y)) {
             positionAdd(new Position(XPosition.of(x), YPosition.of(y)));
-            x += direction.getX();
-            y += direction.getY();
         }
     }
 }

@@ -1,19 +1,19 @@
 package domain;
 
-import domain.piece.CommonMovablePiece;
+import domain.piece.Piece;
 import domain.position.Position;
 import java.util.Map;
 
 public class ChessBoard {
 
-    Map<Position, CommonMovablePiece> board;
+    Map<Position, Piece> board;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
     }
 
     public String symbol(final Position position) {
-        final CommonMovablePiece piece = board.get(position);
+        final Piece piece = board.get(position);
         if (piece == null) {
             return ".";
         }
