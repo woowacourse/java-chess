@@ -24,15 +24,23 @@ public class ChessBoard {
     }
 
     public void movePiece(Position start, Position target, Color color) {
-        if (isFinished()) {
-            throw new IllegalStateException("게임이 종료되어 기물을 움직일 수 없습니다.");
-        }
-        if (!pieceByPosition(start).isSameColor(color)) {
-            throw new IllegalStateException("상대 진영의 기물을 움직일 수 없습니다.");
-        }
+        validateFinishedGame();
+        validateMovableColor(start, color);
         Piece movedPiece = pieceByPosition(start).move(start, target, this);
         pieces.remove(start);
         pieces.put(target, movedPiece);
+    }
+
+    private void validateFinishedGame() {
+        if (isFinished()) {
+            throw new IllegalStateException("게임이 종료되어 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateMovableColor(final Position start, final Color color) {
+        if (!pieceByPosition(start).isSameColor(color)) {
+            throw new IllegalStateException("상대 진영의 기물을 움직일 수 없습니다.");
+        }
     }
 
     public boolean isPositionEmpty(Position position) {
