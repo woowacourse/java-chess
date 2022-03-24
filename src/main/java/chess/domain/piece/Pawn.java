@@ -1,10 +1,10 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.board.Direction;
-import chess.board.Square;
+import chess.domain.position.Direction;
+import chess.domain.position.Square;
 
 public final class Pawn extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";

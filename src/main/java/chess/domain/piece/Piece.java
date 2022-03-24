@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.board.File;
-import chess.board.Rank;
-import chess.board.Square;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
+import chess.domain.position.Square;
 
 public abstract class Piece {
     protected final Color color;

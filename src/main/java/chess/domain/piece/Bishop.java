@@ -1,29 +1,25 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.board.Direction;
-import chess.board.Square;
+import chess.domain.position.Direction;
+import chess.domain.position.Square;
 
-public final class Queen extends Piece {
-    private final static String BUG_MESSAGE_COLOR = "[BUG] 퀸은 색상을 가져야합니다.";
-    private static final String BLACK_QUEEN = "♛";
-    private static final String WHITE_QUEEN = "♕";
+public final class Bishop extends Piece {
+    private final static String BUG_MESSAGE_COLOR = "[BUG] 비숍은 색상을 가져야합니다.";
+    private static final String BLACK_BISHOP = "♝";
+    private static final String WHITE_BISHOP = "♗";
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
 
     static {
-        DIRECTIONS.add(new Direction(0, 1));
-        DIRECTIONS.add(new Direction(0, -1));
-        DIRECTIONS.add(new Direction(1, 0));
-        DIRECTIONS.add(new Direction(1, -1));
         DIRECTIONS.add(new Direction(1, 1));
-        DIRECTIONS.add(new Direction(-1, 0));
+        DIRECTIONS.add(new Direction(1, -1));
         DIRECTIONS.add(new Direction(-1, -1));
         DIRECTIONS.add(new Direction(-1, 1));
     }
 
-    Queen (Color color) {
+    Bishop(Color color) {
         super(color);
     }
 
@@ -34,10 +30,10 @@ public final class Queen extends Piece {
         }
 
         if(color==Color.BLACK){
-            return BLACK_QUEEN;
+            return BLACK_BISHOP;
         }
 
-        return WHITE_QUEEN;
+        return WHITE_BISHOP;
     }
 
     @Override

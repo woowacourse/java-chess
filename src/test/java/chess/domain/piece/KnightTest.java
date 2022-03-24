@@ -1,11 +1,13 @@
-package chess.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.board.Square;
+import chess.domain.position.Square;
+import chess.domain.piece.Color;
+import chess.domain.piece.Knight;
 
 public class KnightTest {
     @Test

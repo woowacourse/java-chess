@@ -1,10 +1,10 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.board.Direction;
-import chess.board.Square;
+import chess.domain.position.Direction;
+import chess.domain.position.Square;
 
 public final class Rook extends Piece {
     private static final String BUG_MESSAGE_COLOR = "[BUG] 룩은 색상을 가져야합니다.";

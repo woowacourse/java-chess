@@ -1,11 +1,11 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-import chess.board.File;
-import chess.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 
 public enum PieceGenerator {
     KING((file, rank) -> new PieceCondition(file,rank).isKing(), rank -> new King(getColor(rank))),

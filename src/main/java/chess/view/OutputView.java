@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.List;
 
-import chess.piece.Piece;
+import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String MESSAGE_START = "체스 게임을 시작합니다.";

@@ -1,7 +1,7 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.board.File;
-import chess.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 
 public class PieceCondition {
 
