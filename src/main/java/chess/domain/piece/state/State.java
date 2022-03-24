@@ -6,7 +6,7 @@ import chess.domain.ChessBoard;
 import chess.domain.piece.position.Position;
 
 public interface State {
-    List<Position> getMovablePaths(Position source, ChessBoard board);
+    List<Position> getMovablePositions(Position source, ChessBoard board);
 
     State killed();
 

@@ -20,7 +20,7 @@ public abstract class Piece {
     }
 
     public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        return state.getMovablePaths(source, board);
+        return state.getMovablePositions(source, board);
     }
 
     public boolean isSameColor(Piece piece) {

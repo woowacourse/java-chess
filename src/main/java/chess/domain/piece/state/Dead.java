@@ -7,7 +7,7 @@ import chess.domain.piece.position.Position;
 
 public class Dead implements State {
     @Override
-    public List<Position> getMovablePaths(Position source, ChessBoard board) {
+    public List<Position> getMovablePositions(Position source, ChessBoard board) {
         throw new IllegalArgumentException("죽은 체스말 입니다.");
     }
 

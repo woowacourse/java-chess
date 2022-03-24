@@ -7,7 +7,7 @@ import chess.domain.piece.position.Position;
 
 public class StartedPawn implements State {
     @Override
-    public List<Position> getMovablePaths(Position source, ChessBoard board) {
+    public List<Position> getMovablePositions(Position source, ChessBoard board) {
         return null;
     }
 
