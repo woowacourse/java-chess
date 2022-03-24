@@ -4,21 +4,23 @@ import java.util.Arrays;
 
 public enum InputOption {
 
-    START("start"),
-    END("end");
+    START("^start$"),
+    END("^end$"),
+    MOVE("^move\\s[a-h][1-8]\\s[a-h][1-8]$");
 
-    private static final String NOT_EXIST_OPTION = "[ERROR] start나 end만 입력할 수 있습니다.";
+    private static final String NOT_EXIST_OPTION = "[ERROR] 지원하지 않는 옵션입니다";
 
-    private final String option;
+    private final String regex;
 
-    InputOption(final String option) {
-        this.option = option;
+    InputOption(final String regex) {
+        this.regex = regex;
     }
 
     public static InputOption from(String input) {
         return Arrays.stream(InputOption.values())
-            .filter(inputOption -> inputOption.option.equals(input))
+            .filter(inputOption -> input.matches(inputOption.regex))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION));
     }
 }
+
