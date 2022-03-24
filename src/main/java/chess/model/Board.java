@@ -93,7 +93,7 @@ public final class Board {
         Square tempSquare = sourceSquare;
         while (!tempSquare.equals(targetSquare)) {
             tempSquare = tempSquare.tryToMove(direction);
-            if (!findPieceBySquare(tempSquare).isEmpty()) {
+            if (!findPieceBySquare(tempSquare).isEmpty() && !tempSquare.equals(targetSquare)) {
                 throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
             }
         }
@@ -103,9 +103,9 @@ public final class Board {
     }
 
     private Direction findDirection(Square sourceSquare, Square targetSquare) {
-        Square tempSquare = sourceSquare;
-        Square nowSquare;
         for (Direction direction : Direction.getNonKnightDirection()) {
+            Square tempSquare = sourceSquare;
+            Square nowSquare;
             do {
                 nowSquare = tempSquare;
                 tempSquare = nowSquare.tryToMove(direction);

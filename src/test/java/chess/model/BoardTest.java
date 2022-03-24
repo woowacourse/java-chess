@@ -39,6 +39,9 @@ public class BoardTest {
         Board board = new Board();
         board.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
         Piece a3Piece = board.findPieceBySquare(new Square(File.A, Rank.THREE));
+        board.move(Square.of("e2"), Square.of("e3"));
+        Piece e3 = board.findPieceBySquare(Square.of("e3"));
         assertThat(a3Piece).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.THREE)));
+        assertThat(e3).isEqualTo(new Pawn(Color.WHITE, Square.of("e3")));
     }
 }
