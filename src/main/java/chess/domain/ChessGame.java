@@ -41,16 +41,16 @@ public class ChessGame {
                 .collect(Collectors.toList());
     }
 
-    private List<Piece> initStrongMen(Color color, int initRankIdx) {
+    private List<Piece> initStrongMen(Color color, int initFileIdx) {
         return List.of(
-                new Rook(color, Position.of(0, initRankIdx)),
-                new Knight(color, Position.of(1, initRankIdx)),
-                new Bishop(color, Position.of(2, initRankIdx)),
-                new Queen(color, Position.of(3, initRankIdx)),
-                new King(color, Position.of(4, initRankIdx)),
-                new Bishop(color, Position.of(5, initRankIdx)),
-                new Knight(color, Position.of(6, initRankIdx)),
-                new Rook(color, Position.of(7, initRankIdx)));
+                Rook.ofLeft(color),
+                new Knight(color, Position.of(1, initFileIdx)),
+                new Bishop(color, Position.of(2, initFileIdx)),
+                new Queen(color, Position.of(3, initFileIdx)),
+                new King(color, Position.of(4, initFileIdx)),
+                new Bishop(color, Position.of(5, initFileIdx)),
+                new Knight(color, Position.of(6, initFileIdx)),
+                Rook.ofRight(color));
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {

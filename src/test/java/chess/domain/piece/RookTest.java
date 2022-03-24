@@ -11,6 +11,26 @@ import org.junit.jupiter.api.Test;
 
 public class RookTest {
 
+    @DisplayName("ofLeft 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 왼쪽 룩을 생성한다.")
+    @Test
+    void ofLeft() {
+        Rook actual =  Rook.ofLeft(BLACK);
+
+        Rook expected = new Rook(BLACK, Position.of("a8"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("ofRight 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 오른쪽 룩을 생성한다.")
+    @Test
+    void ofRight() {
+        Rook actual =  Rook.ofRight(WHITE);
+
+        Rook expected = new Rook(WHITE, Position.of("h1"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("룩은 상하좌우 방향으로 이동할 수 있다.")
     @Test
     void move() {

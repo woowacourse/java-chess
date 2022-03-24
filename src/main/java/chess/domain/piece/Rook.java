@@ -5,13 +5,26 @@ import java.util.Objects;
 
 public class Rook extends Piece {
 
+    private static final int LEFT_INIT_FILE = 0;
+    private static final int RIGHT_INIT_FILE = 7;
+
     private static final double SCORE = 5;
 
     private static final String BLACK_DISPLAY = "♖";
     private static final String WHITE_DISPLAY = "♜";
 
-    public Rook(Color color, Position position) {
+    Rook(Color color, Position position) {
         super(color, position);
+    }
+
+    public static Rook ofLeft(Color color) {
+        Position position = Position.of(LEFT_INIT_FILE, firstRankOf(color));
+        return new Rook(color, position);
+    }
+
+    public static Rook ofRight(Color color) {
+        Position position = Position.of(RIGHT_INIT_FILE, firstRankOf(color));
+        return new Rook(color, position);
     }
 
     @Override
