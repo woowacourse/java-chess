@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.board.Point;
+
 public class Empty extends Piece {
 
     public Empty(Color color) {
@@ -9,5 +12,15 @@ public class Empty extends Piece {
     @Override
     public PieceType getType() {
         return PieceType.EMPTY;
+    }
+
+    @Override
+    public boolean move(Board board, Point from, Point to) {
+        throw new UnsupportedOperationException("[ERROR] 빈 칸은 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 }
