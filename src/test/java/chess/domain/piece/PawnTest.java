@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +12,7 @@ public class PawnTest {
 
     @DisplayName("흰색 팀일 때 이동 가능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e2,d3", "e2,e3", "e2,f3"})
+    @CsvSource(value = {"e2,d3", "e2,e3", "e2,f3", "a2,a4"})
     void movable_while(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);
@@ -26,11 +25,12 @@ public class PawnTest {
     }
 
     @DisplayName("흰색 팀일 때 이동 불가 확인")
-    @Test
-    void movable_while_x() {
+    @ParameterizedTest
+    @CsvSource(value = {"a2,a1", "a7,a5", "a3,a5"})
+    void movable_while_x(String toValue, String fromValue) {
         // given
-        Position to = new Position("a2");
-        Position from = new Position("a1");
+        Position to = new Position(toValue);
+        Position from = new Position(fromValue);
 
         Pawn pawn = new Pawn(Team.WHITE);
 
@@ -40,7 +40,7 @@ public class PawnTest {
 
     @DisplayName("검은 팀일 때 이동 가능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6"})
+    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6", "a7,a5"})
     void movable_black(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);

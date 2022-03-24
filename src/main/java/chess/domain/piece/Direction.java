@@ -13,6 +13,8 @@ public enum Direction {
     EAST(1, 0),
     WEST(-1, 0),
 
+    NORTH_NORTH(0,2),
+    SOUTH_SOUTH(0,-2),
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
@@ -61,10 +63,10 @@ public enum Direction {
     }
 
     public static List<Direction> pullBlackPawnDirections() {
-        return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+        return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST, SOUTH_SOUTH);
     }
 
     public static List<Direction> pullWhitePawnDirections() {
-        return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+        return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST, NORTH_NORTH);
     }
 }

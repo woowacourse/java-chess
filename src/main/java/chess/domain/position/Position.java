@@ -61,4 +61,8 @@ public class Position {
     public int hashCode() {
         return Objects.hash(row, column);
     }
+
+    public boolean isNotSameColumn(Column column) {
+        return this.column != column;
+    }
 }
