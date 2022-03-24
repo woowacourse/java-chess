@@ -6,14 +6,18 @@ import java.util.List;
 
 public enum Direction {
 
+    NONE(Integer.MAX_VALUE, Integer.MAX_VALUE),
+
     NORTH(0, 1),
     SOUTH(0, -1),
     EAST(1, 0),
     WEST(-1, 0),
+
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
     SOUTH_WEST(-1, -1),
+
     NNE(1, 2),
     NNW(-1, 2),
     WWN(-2, 1),
@@ -35,7 +39,12 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(it -> it.row == row && it.column == column)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+                .orElse(NONE);
+    }
+
+    public static boolean hasDirection(int row, int column) {
+        return Arrays.stream(Direction.values())
+                .anyMatch(it -> it.row == row && it.column == column);
     }
 
     public static List<Direction> pullKnightDirections() {

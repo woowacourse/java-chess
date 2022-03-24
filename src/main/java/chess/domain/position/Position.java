@@ -4,6 +4,7 @@ import chess.domain.piece.Direction;
 import java.util.Objects;
 
 public class Position {
+
     private final Row row;
     private final Column column;
 
@@ -20,17 +21,25 @@ public class Position {
         int x = row.calculateIndex(position.row);
         int y = column.calculateIndex(position.column);
 
-        x = convertCompactValue(x);
-        y = convertCompactValue(y);
+        int nx = convertCompactValue(x, y);
+        int ny = convertCompactValue(y, x);
 
-        return Direction.of(x, y);
+        return Direction.of(nx, ny);
     }
 
-    private int convertCompactValue(int value) {
-        if (value == 0) {
+
+    private int convertCompactValue(int target, int other) {
+        if (target == 0) {
             return 0;
         }
-        return value / Math.abs(value);
+        if (check((float) other / Math.abs(target))) {
+            return target / Math.abs(target);
+        }
+        return target;
+    }
+
+    private boolean check(float target) {
+        return target == 0 || target == 1 || target == -1;
     }
 
     @Override
