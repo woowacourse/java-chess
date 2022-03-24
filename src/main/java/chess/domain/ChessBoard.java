@@ -12,11 +12,13 @@ import java.util.stream.IntStream;
 public class ChessBoard {
 
     private final List<List<Piece>> board;
+    private final Color turn;
 
     public ChessBoard() {
         this.board = IntStream.rangeClosed(0, 7)
                 .mapToObj(ignored -> generatePieces())
                 .collect(toList());
+        this.turn = Color.WHITE;
     }
 
     private List<Piece> generatePieces() {
@@ -44,11 +46,12 @@ public class ChessBoard {
         board.get(position.getRankIndex()).set(position.getFileIndex(), piece);
     }
 
-    public List<List<Piece>> getBoard() {
-        return Collections.unmodifiableList(board);
+    public void move(String source, String target) {
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
     }
 
-    public void move(String source, String target) {
-
+    public List<List<Piece>> getBoard() {
+        return Collections.unmodifiableList(board);
     }
 }
