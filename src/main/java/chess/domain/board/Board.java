@@ -108,9 +108,13 @@ public class Board {
     private void checkObstacle(Position src, Position dest, Direction direction) {
         while (!src.equals(dest)) {
             src = src.move(direction.getX(), direction.getY());
-            if (findPieceBy(src).isPresent()) {
-                throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
-            }
+            checkIsOccupied(src);
+        }
+    }
+
+    private void checkIsOccupied(Position src) {
+        if (findPieceBy(src).isPresent()) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
     }
 }
