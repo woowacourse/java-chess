@@ -26,14 +26,20 @@ public class Position {
     }
 
     private void validateLength(String value) {
-        if(value.length() != 2){
+        if (value.length() != 2) {
             throw new IllegalArgumentException("포지션은 두 글자입니다.");
         }
     }
 
-//    public Position toDirection(Direction direction) {
-//        column.
-//    }
+    public Position toDirection(Direction direction) {
+        try {
+            Column movedColumn = column.move(direction.getColumnValue());
+            Row movedRow = row.move(direction.getRowValue());
+            return new Position(movedColumn, movedRow);
+        } catch (IndexOutOfBoundsException exception) {
+            return this;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
