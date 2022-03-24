@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -37,8 +38,20 @@ public enum File {
         File maxOrder = getHigherOrder(from, to);
         File minOrder = getLowerOrder(from, to);
 
-        return Arrays.stream(values())
+        List<File> files = Arrays.stream(values())
                 .filter(file -> file.order < maxOrder.order && file.order > minOrder.order)
+                .collect(Collectors.toList());
+
+        if (maxOrder == from) {
+            return reverseFiles(files);
+        }
+
+        return files;
+    }
+
+    private static List<File> reverseFiles(List<File> files) {
+        return files.stream()
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 

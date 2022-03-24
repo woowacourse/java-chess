@@ -27,7 +27,6 @@ public enum Rank {
         this.order = order;
     }
 
-
     public static Rank of(String value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(value))
@@ -43,8 +42,19 @@ public enum Rank {
         Rank maxOrder = getHigherOrder(from, to);
         Rank minOrder = getLowerOrder(from, to);
 
-        return Arrays.stream(values())
+        List<Rank> ranks = Arrays.stream(values())
                 .filter(column -> column.order < maxOrder.order && column.order > minOrder.order)
+                .collect(Collectors.toList());
+
+        if (minOrder == from) {
+            return reverseRanks(ranks);
+        }
+
+        return ranks;
+    }
+
+    private static List<Rank> reverseRanks(List<Rank> ranks) {
+        return ranks.stream()
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
