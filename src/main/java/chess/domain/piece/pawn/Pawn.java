@@ -4,10 +4,11 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public abstract class Pawn extends Piece {
+public abstract class Pawn extends AbstractPiece {
 
     private static final String PAWN_NAME = "P";
     private static final double PAWN_SCORE = 1;
