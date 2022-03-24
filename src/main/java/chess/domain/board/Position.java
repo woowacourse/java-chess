@@ -20,6 +20,10 @@ public class Position {
 		return column.calculateDifference(target.column);
 	}
 
+	public Row getRow() {
+		return row;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || !(o instanceof Position)) {
