@@ -8,6 +8,8 @@ import chess.domain.position.PositionY;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class ChessGame {
     private final Board board;
@@ -50,6 +52,11 @@ public final class ChessGame {
 
     public boolean isRunning() {
         return board.hasAliveBothKings();
+    }
+
+    public Map<Color, Double> getStatus() {
+        return Stream.of(Color.BLACK, Color.WHITE)
+                .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
     }
 
     public Map<Position, Piece> getBoard() {

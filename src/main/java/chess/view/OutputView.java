@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
@@ -34,5 +35,11 @@ public class OutputView {
 
     public void printErrorMessage(String message) {
         System.out.println(message);
+    }
+
+    public void printStatus(Map<Color, Double> scores) {
+        for (Color color : scores.keySet()) {
+            System.out.println(color.name() + ": " + scores.get(color) + "점");
+        }
     }
 }

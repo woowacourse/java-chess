@@ -1,8 +1,11 @@
 package chess;
 
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.Map;
 
 public class Application {
     public static void main(String[] args) {
@@ -22,19 +25,33 @@ public class Application {
         ChessGame game = new ChessGame();
         outputView.printBoard(game.getBoard());
         while (game.isRunning()) {
-            playTurn(inputView, outputView, game);
+            play(inputView, outputView, game);
             outputView.printBoard(game.getBoard());
         }
     }
 
-    private static void playTurn(InputView inputView, OutputView outputView, ChessGame game) {
+    private static void play(InputView inputView, OutputView outputView, ChessGame game) {
         try {
-            String moveCommand = inputView.getMoveCommand();
-            String[] commands = moveCommand.split(" ");
-            game.movePiece(commands[1], commands[2]);
+            String command = inputView.getCommand();
+            if (command.startsWith("move")) {
+                playTurn(command, game);
+            }
+            if (command.startsWith("status")) {
+                showStatus(outputView, game);
+            }
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
-            playTurn(inputView, outputView, game);
+            play(inputView, outputView, game);
         }
+    }
+
+    private static void playTurn(String moveCommand, ChessGame game) {
+        String[] commands = moveCommand.split(" ");
+        game.movePiece(commands[1], commands[2]);
+    }
+
+    private static void showStatus(OutputView outputView, ChessGame game) {
+        Map<Color, Double> scores = game.getStatus();
+        outputView.printStatus(scores);
     }
 }
