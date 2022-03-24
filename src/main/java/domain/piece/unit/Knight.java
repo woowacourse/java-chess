@@ -1,5 +1,6 @@
 package domain.piece.unit;
 
+import static domain.utils.Direction.*;
 import static domain.utils.Direction.knightDirections;
 
 import domain.piece.CommonMovablePiece;
@@ -12,7 +13,7 @@ public final class Knight extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = Direction.knightDirections();
+        directions = knightDirections();
     }
     public Knight(final TeamColor teamColor) {
         super(teamColor, PieceSymbol.Knight);

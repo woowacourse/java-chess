@@ -35,6 +35,10 @@ public abstract class Piece {
 
     public boolean availableMove(Position source, Position target) {
         calculateAvailablePositions(source);
+        return containsTarget(target);
+    }
+
+    protected boolean containsTarget(final Position target) {
         return positions.contains(target);
     }
 
@@ -45,7 +49,7 @@ public abstract class Piece {
         }
     }
 
-    abstract void calculateAvailablePosition(final Position source, final Direction direction);
+    protected abstract void calculateAvailablePosition(final Position source, final Direction direction);
 
     public abstract List<Direction> directions();
 

@@ -1,7 +1,6 @@
 package domain.utils;
 
 import java.util.List;
-import java.util.Vector;
 
 public enum Direction {
 
@@ -45,6 +44,14 @@ public enum Direction {
     public static List<Direction> knightDirections() {
         return List.of(EAST_NORTHEAST, EAST_SOUTHEAST, WEST_NORTHWEST, WEST_SOUTHWEST, NORTH_NORTHEAST, NORTH_NORTHWEST,
                 SOUTH_SOUTHEAST, SOUTH_SOUTHWEST);
+    }
+
+    public static List<Direction> oneSpaceForwardUpDirections() {
+        return List.of(NORTH, NORTHEAST, NORTHWEST);
+    }
+
+    public static List<Direction> oneSpaceForwardDownDirections() {
+        return List.of(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
     public int getX() {
