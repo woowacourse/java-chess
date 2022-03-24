@@ -34,6 +34,11 @@ public class KnightPiece extends FullPiece {
         return movableDirections.contains(direction);
     }
 
+    @Override
+    public boolean isJumpable() {
+        return true;
+    }
+
     private String decideName(final Color color) {
         if (color == Color.WHITE) {
             return WHITE_NAME;

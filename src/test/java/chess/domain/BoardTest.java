@@ -166,4 +166,15 @@ public class BoardTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("이동 경로에 기물이 있으면 예외를 발생시킨다.")
+    void exceptionBlockedMove() {
+        Position from = Position.create("a1");
+        Position to = Position.create("a7");
+
+        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
+    }
 }

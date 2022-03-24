@@ -8,6 +8,8 @@ public interface Piece {
 
     boolean isSameColor(final Color color);
 
+    boolean isJumpable();
+
     String getName();
 
 }

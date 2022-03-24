@@ -9,6 +9,7 @@ import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
+import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -82,32 +83,73 @@ public class Board {
         final Piece source = board.get(from);
         final Piece target = board.get(to);
 
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
-        }
+        final int fileDistance = to.calculateFileDistance(from);
+        final int rankDistance = to.calculateRankDistance(from);
 
-        if (source.equals(new EmptyPiece())) {
-            throw new IllegalStateException("[ERROR] source 위치에 기물이 존재하지 않습니다.");
-        }
+        final Direction direction = Direction.of(fileDistance, rankDistance);
 
-        if (!source.isSameColor(color)) {
-            throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
-        }
-
-        // 행마법
-        if (!source.isMovable(from, to, target.equals(new EmptyPiece()))) {
-            throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
-        }
-
-        // target 위치 기물 확인
-        // 색상 확인
-        if (target.isSameColor(color)) {
-            throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
-        }
-
-        // 이동 경로에 기물이 있는지 확인
+        checkMove(from, to, color, source, target, direction);
 
         board.put(from, new EmptyPiece());
         board.put(to, source);
+    }
+
+    private void checkMove(final Position from, final Position to, final Color color,
+        final Piece source, final Piece target, final Direction direction) {
+        checkSamePosition(from, to);
+        checkEmptySource(source);
+        checkTurn(color, source);
+        checkMovement(from, to, source, target);
+        checkTargetColor(color, target);
+        checkBlocked(from, to, source, direction);
+    }
+
+    private void checkSamePosition(final Position from, final Position to) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
+        }
+    }
+
+    private void checkEmptySource(final Piece source) {
+        if (source.equals(new EmptyPiece())) {
+            throw new IllegalStateException("[ERROR] source 위치에 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private void checkTurn(final Color color, final Piece source) {
+        if (!source.isSameColor(color)) {
+            throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
+        }
+    }
+
+    private void checkMovement(final Position from, final Position to, final Piece source,
+        final Piece target) {
+        if (!source.isMovable(from, to, target.equals(new EmptyPiece()))) {
+            throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
+        }
+    }
+
+    private void checkTargetColor(final Color color, final Piece target) {
+        if (target.isSameColor(color)) {
+            throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
+        }
+    }
+
+    private void checkBlocked(final Position from, final Position to, final Piece source,
+        final Direction direction) {
+        if (!source.isJumpable() && isBlocked(direction, from, to)) {
+            throw new IllegalStateException("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean isBlocked(final Direction direction, final Position from, final Position to) {
+        final Position next = direction.move(from);
+        if (next.equals(to)) {
+            return false;
+        }
+        if (board.get(next).equals(new EmptyPiece())) {
+            return true;
+        }
+        return isBlocked(direction, next, to);
     }
 }
