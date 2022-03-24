@@ -49,4 +49,12 @@ public enum Direction {
 		}
 		return Direction.of(rowDifference, columnDifference);
 	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
 }

@@ -29,4 +29,8 @@ public enum Row {
 	public int calculateDifference(Row target) {
 		return this.value - target.value;
 	}
+
+	public Row move(int rowDifference) {
+		return of(value + rowDifference);
+	}
 }

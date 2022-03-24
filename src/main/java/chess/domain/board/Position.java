@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import java.util.Objects;
 
+import chess.domain.piece.Direction;
+
 public class Position {
 
 	private final Row row;
@@ -18,6 +20,10 @@ public class Position {
 
 	public int calculateColumnDifference(final Position target) {
 		return column.calculateDifference(target.column);
+	}
+
+	public Position move(final Direction direction) {
+		return new Position(row.move(direction.getRow()), column.move(direction.getColumn()));
 	}
 
 	public Row getRow() {

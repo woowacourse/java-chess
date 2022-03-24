@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -70,6 +71,14 @@ public class Board {
 		singleLine.put(new Position(row, Column.g), new Knight(color));
 		singleLine.put(new Position(row, Column.h), new Rook(color));
 		return singleLine;
+	}
+
+	public void move(final Position current, final Position target) {
+		final Piece targetPiece = pieces.get(current);
+		if (targetPiece == null) {
+			throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다");
+		}
+		final Direction direction = targetPiece.findValidDirection(current, target);
 	}
 
 	public Map<Position, Piece> getPieces() {

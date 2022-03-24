@@ -3,9 +3,12 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import chess.domain.piece.Direction;
 
 @DisplayName("Position 테스트")
 class PositionTest {
@@ -35,5 +38,30 @@ class PositionTest {
 		int actual = current.calculateColumnDifference(target);
 
 		assertThat(actual).isEqualTo(-1);
+	}
+
+	@DisplayName("방향이 정해졌을 때 ")
+	@Nested
+	class MovingTest {
+		@Test
+		@DisplayName("체스판의 범위를 벗어났으면 예외를 반환한다")
+		void outOfBound() {
+			Position current = new Position(Row.FIRST, Column.a);
+			assertThatThrownBy(
+				() -> current.move(Direction.SW)
+			).isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("올바르지 않은 위치입니다.");
+
+		}
+
+		@Test
+		@DisplayName("체스판의 범위내면 위치로 이동한다")
+		void successMove() {
+			Position current = new Position(Row.FIRST, Column.a);
+			final Position expected = new Position(Row.SECOND, Column.a);
+
+			assertThat(current.move(Direction.N)).isEqualTo(expected);
+
+		}
 	}
 }
