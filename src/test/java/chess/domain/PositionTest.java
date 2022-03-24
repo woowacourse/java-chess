@@ -46,7 +46,7 @@ public class PositionTest {
         Position position = new Position('a', '1');
         Position otherPosition = new Position(row, col);
 
-        assertThat(position.equalsColumnOrRow(otherPosition)).isEqualTo(expected);
+        assertThat(position.equalsColumn(otherPosition)).isEqualTo(expected);
     }
 
     @ParameterizedTest
