@@ -31,4 +31,6 @@ public abstract class Piece {
     public final boolean isSameColor(Piece piece) {
         return this.color == piece.color;
     }
+
+    abstract public double score();
 }
