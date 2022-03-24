@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 public enum ChessExecution {
     END("end"),
+    MOVE("move"),
     ;
 
     private static final String NO_COMMAND_FIND = "게임 실행중 명령어는 end만 입력할 수 있습니다.";
@@ -17,7 +18,7 @@ public enum ChessExecution {
 
     public static ChessExecution from(String value) {
         return Arrays.stream(values())
-                .filter(execution -> execution.value.equalsIgnoreCase(value))
+                .filter(execution -> execution.value.equalsIgnoreCase(value.trim()))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(NO_COMMAND_FIND));
     }
