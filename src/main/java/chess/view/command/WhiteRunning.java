@@ -1,11 +1,12 @@
 package chess.view.command;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 
 public class WhiteRunning extends Running {
 
     public WhiteRunning(final ChessBoard chessBoard) {
-        super(chessBoard);
+        super(chessBoard, Color.WHITE);
     }
 
     @Override

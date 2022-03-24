@@ -1,6 +1,7 @@
 package chess.view.command;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.view.OutputView;
 import java.util.Arrays;
@@ -15,9 +16,15 @@ public abstract class Running implements Command {
     private static final int TARGET_POSITION_INDEX = 2;
 
     private final ChessBoard chessBoard;
+    private final Color color;
 
-    public Running(ChessBoard chessBoard) {
+    protected Running(ChessBoard chessBoard, Color color) {
         this.chessBoard = chessBoard;
+        this.color = color;
+    }
+
+    public static Running createFirstTurnRunning(ChessBoard chessBoard) {
+        return new WhiteRunning(chessBoard);
     }
 
     @Override
@@ -38,7 +45,7 @@ public abstract class Running implements Command {
         List<String> values = Arrays.asList(command.split(" "));
         Position start = position(values.get(START_POSITION_INDEX));
         Position target = position(values.get(TARGET_POSITION_INDEX));
-        chessBoard.movePiece(start, target);
+        chessBoard.movePiece(start, target, color);
     }
 
     private Position position(String command) {

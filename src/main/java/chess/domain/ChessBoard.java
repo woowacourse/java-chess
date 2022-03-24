@@ -23,9 +23,12 @@ public class ChessBoard {
         return new ChessBoard(PieceFactory.createNewChessBoard());
     }
 
-    public void movePiece(Position start, Position target) {
+    public void movePiece(Position start, Position target, Color color) {
         if (isFinished()) {
             throw new IllegalStateException("게임이 종료되어 기물을 움직일 수 없습니다.");
+        }
+        if (!pieceByPosition(start).isSameColor(color)) {
+            throw new IllegalStateException("상대 진영의 기물을 움직일 수 없습니다.");
         }
         Piece movedPiece = pieceByPosition(start).move(start, target, this);
         pieces.remove(start);

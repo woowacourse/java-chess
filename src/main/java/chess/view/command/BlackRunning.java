@@ -1,11 +1,12 @@
 package chess.view.command;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 
 public class BlackRunning extends Running {
 
     public BlackRunning(final ChessBoard chessBoard) {
-        super(chessBoard);
+        super(chessBoard, Color.BLACK);
     }
 
     @Override
