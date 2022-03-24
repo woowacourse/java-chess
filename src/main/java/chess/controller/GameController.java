@@ -8,7 +8,7 @@ import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.dto.BoardDto;
 
 public class GameController {

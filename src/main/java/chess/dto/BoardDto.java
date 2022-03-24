@@ -3,7 +3,7 @@ package chess.dto;
 import static chess.domain.position.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
 
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.List;

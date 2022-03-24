@@ -1,7 +1,7 @@
 package chess;
 
 import chess.controller.GameController;
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 
 public class Application {
 
