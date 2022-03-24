@@ -40,6 +40,16 @@ public class PositionTest {
     }
 
     @ParameterizedTest
+    @CsvSource(value = {"b,2,false", "b,1,false", "a,2,true"})
+    @DisplayName("열 일치 여부 확인")
+    void equalsColumn(char row, char col, boolean expected) {
+        Position position = new Position('a', '1');
+        Position otherPosition = new Position(row, col);
+
+        assertThat(position.equalsColumnOrRow(otherPosition)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
     @CsvSource(value = {"a,2,1", "b,2,2", "c,4,5"})
     @DisplayName("거리 계산")
     void calculateDistance(char row, char col, int expected) {
