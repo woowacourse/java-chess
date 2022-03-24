@@ -11,5 +11,4 @@ public interface Piece {
     boolean isJumpable();
 
     String getName();
-
 }
