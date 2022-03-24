@@ -15,7 +15,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
+    public void move(Board board, Point from, Point to) {
         throw new UnsupportedOperationException("[ERROR] 빈 칸은 이동할 수 없습니다.");
     }
 

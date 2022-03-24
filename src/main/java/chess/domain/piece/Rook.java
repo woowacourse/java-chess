@@ -11,7 +11,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
+    public void move(Board board, Point from, Point to) {
         Direction direction = findDirection(from, to);
 
         Point next = from.next(direction);
@@ -19,7 +19,6 @@ public class Rook extends Piece {
             validateEmpty(board, next);
             next = next.next(direction);
         }
-        return next.equals(to);
     }
 
     private Direction findDirection(Point from, Point to) {
