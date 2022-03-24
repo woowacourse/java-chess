@@ -13,6 +13,24 @@ public class RookMoveStrategy extends FirstRowMoveStrategy {
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
 
-        return false;
+        if (distance.isHorizontalMovement()) {
+            int horizon = distance.getHorizon();
+            for (int i = 1; i < Math.abs(horizon); i++) {
+                Position amongPosition = source.compareSmaller(target).move(i, 0);
+                if (!board.getPiece(amongPosition).isBlank()) {
+                    return false;
+                }
+            }
+        }
+        if (distance.isVerticalMovement()) {
+            int vertical = distance.getVertical();
+            for (int i = 1; i < Math.abs(vertical); i++) {
+                Position amongPosition = source.compareSmaller(target).move(0, i * -1);
+                if (!board.getPiece(amongPosition).isBlank()) {
+                    return false;
+                }
+            }
+        }
+        return isTargetPositionMovable(targetPiece, color);
     }
 }

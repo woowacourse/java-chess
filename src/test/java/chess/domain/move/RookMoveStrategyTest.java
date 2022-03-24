@@ -29,4 +29,22 @@ public class RookMoveStrategyTest {
 
         assertThat(rookMoveStrategy.isMovable(board, source, target)).isTrue();
     }
+
+    @Test
+    @DisplayName("수직이동시 중간에 다른 기물이 존재하면 false")
+    void isMovableVerticalIfExistOtherPiece() {
+        Position source = Position.valueOf("a8");
+        Position target = Position.valueOf("a4");
+
+        assertThat(rookMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("수평이동시 중간에 다른 기물이 존재하면 false")
+    void isMovableHorizontalIfExistOtherPiece() {
+        Position source = Position.valueOf("a8");
+        Position target = Position.valueOf("h8");
+
+        assertThat(rookMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
 }

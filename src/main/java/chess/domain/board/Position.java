@@ -68,6 +68,13 @@ public class Position implements Comparable<Position> {
         return column.getName() + row.getValue();
     }
 
+    public Position compareSmaller(Position position) {
+        if (compareTo(position) > 0) {
+            return position;
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,7 +95,7 @@ public class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (this.row.getValue() == position.row.getValue()) {
-            return position.column.getValue() - this.column.getValue();
+            return this.column.getValue() - position.column.getValue();
         }
         return position.row.getValue() - this.row.getValue();
     }

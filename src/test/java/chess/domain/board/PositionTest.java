@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -67,5 +68,18 @@ public class PositionTest {
     @DisplayName("Position을 이동한다.")
     void move() {
         assertThat(Position.valueOf("a7").move(0, -1)).isEqualTo(Position.valueOf("a6"));
+    }
+
+    @Test
+    @DisplayName("더 작은 포지션을 반환한다.")
+    void compareSmaller() {
+        assertAll(
+                () -> assertThat(Position.valueOf("a8")
+                        .compareSmaller(Position.valueOf("a3")))
+                        .isEqualTo(Position.valueOf("a8")),
+                () -> assertThat(Position.valueOf("a8")
+                        .compareSmaller(Position.valueOf("h8")))
+                        .isEqualTo(Position.valueOf("a8"))
+        );
     }
 }

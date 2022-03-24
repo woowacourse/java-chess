@@ -48,8 +48,8 @@ public class Board {
                 new Rook(color),
                 new Knight(color),
                 new Bishop(color),
-                new King(color),
                 new Queen(color),
+                new King(color),
                 new Bishop(color),
                 new Knight(color),
                 new Rook(color)
