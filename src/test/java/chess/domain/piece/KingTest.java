@@ -11,6 +11,16 @@ import org.junit.jupiter.api.Test;
 
 public class KingTest {
 
+    @DisplayName("매개변수에 해당되는 색깔의 위치에 킹을 생성한다.")
+    @Test
+    void init() {
+        King actual = new King(BLACK);
+
+        King expected = new King(BLACK, Position.of("e8"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("킹은 상하좌우 혹은 대각선 방향으로 한칸 이동할 수 있다.")
     @Test
     void move() {

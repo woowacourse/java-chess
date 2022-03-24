@@ -47,7 +47,7 @@ public class ChessGame {
                 Knight.ofLeft(color),
                 Bishop.ofLeft(color),
                 new Queen(color, Position.of(3, initFileIdx)),
-                new King(color, Position.of(4, initFileIdx)),
+                new King(color),
                 Bishop.ofRight(color),
                 Knight.ofRight(color),
                 Rook.ofRight(color));

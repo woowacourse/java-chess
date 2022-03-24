@@ -5,14 +5,21 @@ import java.util.Objects;
 
 public class King extends Strongmen {
 
+    private static final int INIT_FILE = 4;
+
+    private static final int MAX_MOVE_DIFFERENCE = 1;
+
     private static final String BLACK_DISPLAY = "♔";
     private static final String WHITE_DISPLAY = "♚";
-    private static final int MAX_MOVE_DIFFERENCE = 1;
 
     private static final double SCORE = 0;
 
-    public King(Color color, Position position) {
+    King(Color color, Position position) {
         super(color, position);
+    }
+
+    public King(Color color) {
+        this(color, Position.of(INIT_FILE, firstRankOf(color)));
     }
 
     @Override
@@ -74,7 +81,6 @@ public class King extends Strongmen {
         King king = (King) o;
         return color == king.color
                 && position == king.position;
-
     }
 
     @Override
@@ -84,10 +90,6 @@ public class King extends Strongmen {
 
     @Override
     public String toString() {
-        return "King{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "King{" + "color=" + color + ", position=" + position + '}';
     }
 }
-
