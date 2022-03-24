@@ -16,15 +16,22 @@
   - [x `move source위치 target위치` 형식으로 입력받는다.
   - [x] 이동된 기물을 옮기고, 잡힌 기물은 제거한다.
   - [x] 이동된 결과 보드를 출력한다.
-- [x] end 를 입력받으면 게임을 종료한다. 
+- [ ] King이 잡히면 게임을 종료한다. 
+- [ ] status를 입력하면 각 진영의 점수를 계산한다. 
+  - [ ] 각 진영의 점수를 출력한다.  
+  - [ ] 어느 진영이 이겼는지 출력한다.
+- [x] end 를 입력받으면 게임을 종료한다.
 
 ## 예외 처리 목록
-- [x] start 또는 end 가 아닌 입력
+- [x] start 또는 end 를 입력했는지
 - [x] 기물 이동
+  - [x] `move source target` 형식에 맞는 입력인지 
   - [x] 유효힌 좌표값인지
   - [x] source 위치에 기물이 존재하는지
   - [x] 기물에 적합한 움직임인지
   - [x] 경로상 장애물이 없는지
+- [ ] 점수 계산
+  - [ ] status 명령을 입력했는지
 
 ## 객체 목록
 - Piece: 체스 기물
@@ -34,8 +41,12 @@
   - Bishop
   - Knight
   - Pawn 
+  - Blank : 기물이 없음을 뜻하는 기물
+- InitialPiece: 기물들의 초기 정보 enum
 - Board: 체스판 
+- Grid: 체스판의 한 칸
 - Position: 기물의 위치 
 - PositionX: 가로 위치 enum 
 - PositionY: 세로 위치 enum 
 - Color: 기물의 색깔이 저장된 enum 
+- ChessGame: 체스 게임
