@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.position.Position;
 import java.util.Objects;
 
-public class King extends Piece {
+public class King extends Strongmen {
 
     private static final String BLACK_DISPLAY = "♔";
     private static final String WHITE_DISPLAY = "♚";

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.position.Position;
 import java.util.Objects;
 
-public class Knight extends Piece {
+public class Knight extends Strongmen {
 
     private static final int LEFT_INIT_FILE = 1;
     private static final int RIGHT_INIT_FILE = 6;

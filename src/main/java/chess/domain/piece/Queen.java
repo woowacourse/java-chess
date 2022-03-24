@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.position.Position;
 import java.util.Objects;
 
-public class Queen extends Piece {
+public class Queen extends Strongmen {
 
     private static final double SCORE = 9;
 
