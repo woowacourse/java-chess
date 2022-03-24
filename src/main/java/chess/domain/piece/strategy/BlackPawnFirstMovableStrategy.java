@@ -1,6 +1,8 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.direction.Direction.*;
+import static chess.domain.direction.Direction.DOWN;
+import static chess.domain.direction.Direction.DOWN_LEFT;
+import static chess.domain.direction.Direction.DOWN_RIGHT;
 
 import chess.domain.direction.Direction;
 import java.util.Arrays;

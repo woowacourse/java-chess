@@ -37,6 +37,8 @@ public abstract class Piece {
     }
 
     abstract public double score();
+
     abstract public boolean isPawn();
+
     abstract public boolean isKing();
 }

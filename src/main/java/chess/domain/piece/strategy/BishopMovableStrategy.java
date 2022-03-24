@@ -1,6 +1,9 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.direction.Direction.*;
+import static chess.domain.direction.Direction.DOWN_LEFT;
+import static chess.domain.direction.Direction.DOWN_RIGHT;
+import static chess.domain.direction.Direction.UP_LEFT;
+import static chess.domain.direction.Direction.UP_RIGHT;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
