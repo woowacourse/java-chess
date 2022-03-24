@@ -97,4 +97,8 @@ public class Position {
     public boolean isLessRankThan(Position position) {
         return this.rank.isLessThan(position.rank);
     }
+
+    public boolean isLastFile() {
+        return file.equals(File.H);
+    }
 }

@@ -2,18 +2,21 @@ package chess.view;
 
 import chess.piece.Piece;
 
+import java.util.Collections;
 import java.util.List;
 
 public class OutputView {
-
-    //    1. rank..는 내림차순
-//    2. fil..은 오름차순
     public static void printBoard(List<Piece> board) {
+        Collections.sort(board);
+        for (Piece piece : board) {
+            System.out.print(piece.getName());
+            makeNewLine(piece);
+        }
+    }
 
-
-        board.stream()
-                .sorted()
-                .forEach(piece -> System.out.println(piece.getName()));
-
+    private static void makeNewLine(Piece piece) {
+        if (piece.isLastFile()) {
+            System.out.println();
+        }
     }
 }

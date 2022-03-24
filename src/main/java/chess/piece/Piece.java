@@ -28,4 +28,8 @@ public abstract class Piece implements Comparable<Piece>{
     }
 
     public abstract String getName();
+
+    public boolean isLastFile() {
+        return position.isLastFile();
+    }
 }

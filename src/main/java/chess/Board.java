@@ -4,9 +4,7 @@ package chess;
 import chess.piece.*;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Board {
 
@@ -17,17 +15,32 @@ public class Board {
     }
 
     public static Board create() {
+        char[] files = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         List<Piece> pieces = new ArrayList<>();
         pieces.addAll(makePieces('8', Team.BLACK));
-        pieces.addAll(makePawns('7', Team.BLACK));
-        pieces.addAll(makePawns('2',Team.WHITE));
-        pieces.addAll(makePieces('1',Team.WHITE));
+        pieces.addAll(makePawns(files, '7', Team.BLACK));
+        pieces.addAll(makeEmpty(files));
+        pieces.addAll(makePawns(files, '2', Team.WHITE));
+        pieces.addAll(makePieces('1', Team.WHITE));
 
         return new Board(pieces);
     }
 
-    private static List<Piece> makePawns(char rank, Team team) {
-        char[] files = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    private static List<Piece> makeEmpty(char[] files) {
+        List<Piece> emptys = new ArrayList<>();
+        for (char c = '6'; c > '2'; c--) {
+            createEmpty(files, emptys, c);
+        }
+        return emptys;
+    }
+
+    private static void createEmpty(char[] files, List<Piece> emptys, char c) {
+        for (char file : files) {
+            emptys.add(new Empty(Position.of(file, c)));
+        }
+    }
+
+    private static List<Piece> makePawns(char[] files, char rank, Team team) {
         List<Piece> pawns = new ArrayList<>();
         for (char file : files) {
             pawns.add(new Pawn(Position.of(file, rank), team));
