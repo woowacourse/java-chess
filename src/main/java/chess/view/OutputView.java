@@ -37,9 +37,16 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void printStatus(Map<Color, Double> scores) {
+    public void printStatus(Map<Color, Double> scores, Color winningColor) {
         for (Color color : scores.keySet()) {
             System.out.println(color.name() + ": " + scores.get(color) + "점");
         }
+
+        if(winningColor == Color.NONE){
+            System.out.println("동점입니다.");
+            return;
+        }
+        System.out.println(winningColor.name()+"진영이 이기고 있습니다.");
+        System.out.println();
     }
 }
