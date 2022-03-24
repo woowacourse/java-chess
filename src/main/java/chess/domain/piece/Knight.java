@@ -19,4 +19,9 @@ public final class Knight extends Piece {
 
         return isMovableDistance && isOpponent;
     }
+
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
 }
