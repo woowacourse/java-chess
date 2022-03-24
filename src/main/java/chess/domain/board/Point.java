@@ -30,7 +30,7 @@ public class Point {
     }
 
     public static Point of(String argument) {
-        return Point.of(argument.charAt(0) - 'a',
+        return Point.of(argument.charAt(0) - 'a' + 1,
                 Integer.parseInt(argument.substring(1, 2)));
     }
 
