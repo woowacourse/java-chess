@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Column {
 

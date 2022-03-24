@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.Bishop;
@@ -11,6 +12,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -65,11 +67,4 @@ public class PieceTest {
                     .doesNotThrowAnyException();
         }
     }
-    
-//    @Test
-//    @DisplayName("해당 말이 갈 수있는 방향으로 위치리스트를 반환한다.")
-//    void getMovablePositions{
-//        Rook rook = new Rook(Color.BLACK);
-//        Map<Direction, List<Position>> positions = rook.getMovablePositions(new Position("d4"));
-//    }
 }

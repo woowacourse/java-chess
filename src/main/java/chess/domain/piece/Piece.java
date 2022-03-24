@@ -1,6 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -11,6 +15,8 @@ public abstract class Piece {
         this.color = color;
         this.name = name;
     }
+
+    public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
     public String getName() {
         String symbol = name.getSymbol();

@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import java.util.List;
+import java.util.Map;
 
 public class Pawn extends Piece {
 
@@ -9,5 +12,10 @@ public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color, PieceName.PAWN);
+    }
+
+    @Override
+    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+        return null;
     }
 }

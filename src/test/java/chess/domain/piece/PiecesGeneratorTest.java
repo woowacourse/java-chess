@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import chess.domain.piece.NormalPiecesGenerator;
 import chess.domain.piece.Piece;
