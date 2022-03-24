@@ -3,7 +3,10 @@ package chess.domain.piece;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 
-public final class Knight extends Piece{
+public final class Knight extends Piece {
+    private static final int FIRST_MOVABLE_DISTANCE = 2;
+    private static final int SECOND_MOVABLE_DISTANCE = 1;
+
     public Knight(Camp camp) {
         super(camp);
     }
@@ -12,10 +15,10 @@ public final class Knight extends Piece{
     public boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
-        if (columnDistance == 1 && rowDistance == 2) {
+        if (rowDistance == FIRST_MOVABLE_DISTANCE && columnDistance == SECOND_MOVABLE_DISTANCE) {
             return true;
         }
-        return columnDistance == 2 && rowDistance == 1;
+        return columnDistance == FIRST_MOVABLE_DISTANCE && rowDistance == SECOND_MOVABLE_DISTANCE;
     }
 
     @Override
