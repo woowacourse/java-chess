@@ -25,4 +25,8 @@ public enum File {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 축은 없습니다."));
     }
+
+    public int computeDiff(File origin) {
+        return (int) file.charAt(0) - (int) origin.file.charAt(0);
+    }
 }
