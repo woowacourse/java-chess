@@ -48,6 +48,7 @@ public class Rook extends Piece {
         return route;
     }
 
+    @Override
     public double score() {
         return 5;
     }

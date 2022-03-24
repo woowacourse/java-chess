@@ -39,12 +39,4 @@ public final class Position {
     public int hashCode() {
         return Objects.hash(positionX, positionY);
     }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "positionX=" + positionX +
-                ", positionY=" + positionY +
-                '}';
-    }
 }

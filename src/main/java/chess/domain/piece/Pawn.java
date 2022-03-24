@@ -52,6 +52,7 @@ public class Pawn extends Piece {
         return new ArrayList<>();
     }
 
+    @Override
     public double score() {
         return 1;
     }

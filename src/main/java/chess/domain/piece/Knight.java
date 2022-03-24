@@ -35,6 +35,7 @@ public class Knight extends Piece {
         return new ArrayList<>();
     }
 
+    @Override
     public double score() {
         return 2.5;
     }

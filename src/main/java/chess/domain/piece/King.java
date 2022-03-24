@@ -38,6 +38,7 @@ public class King extends Piece {
         return new ArrayList<>();
     }
 
+    @Override
     public double score() {
         return 0;
     }

@@ -51,6 +51,7 @@ public class Queen extends Piece {
         return route;
     }
 
+    @Override
     public double score() {
         return 9;
     }
@@ -59,7 +60,6 @@ public class Queen extends Piece {
     public boolean isBlank() {
         return false;
     }
-
 
     @Override
     public boolean isPawn() {
