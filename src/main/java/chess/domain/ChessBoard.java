@@ -11,6 +11,7 @@ import java.util.Objects;
 public class ChessBoard {
 
     private static final int FINISHED_GAME_KING_COUNT = 1;
+    private static final double PAWN_PENALTY_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
 
@@ -65,7 +66,7 @@ public class ChessBoard {
     }
 
     private double calculateColorScore(Color color) {
-        return calculateColorDefaultScore(color) - 0.5 * countDuplicatedColumnPawn(color);
+        return calculateColorDefaultScore(color) - PAWN_PENALTY_SCORE * countDuplicatedColumnPawn(color);
     }
 
     private double calculateColorDefaultScore(Color color) {
