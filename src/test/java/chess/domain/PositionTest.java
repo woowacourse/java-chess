@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class PositionTest {
+class PositionTest {
 
     @ParameterizedTest
     @ValueSource(chars = {'`', 'A', 'i'})
