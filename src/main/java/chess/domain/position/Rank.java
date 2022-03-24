@@ -1,6 +1,7 @@
 package chess.domain.position;
 
-import java.util.Arrays;import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,9 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8),
     ;
+
+    private static final int FORWARD = 1;
+    private static final int BACK = -1;
 
     private final int rank;
 
@@ -36,7 +40,15 @@ public enum Rank {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private int getRank() {
+    public static boolean isForward(final Rank from, final Rank to) {
+        return to.rank - from.rank == FORWARD;
+    }
+
+    public static boolean isBack(final Rank from, final Rank to) {
+        return to.rank - from.rank == BACK;
+    }
+
+    public int getRank() {
         return rank;
     }
 }

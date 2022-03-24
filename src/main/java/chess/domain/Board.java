@@ -21,11 +21,18 @@ public class Board {
     }
 
     public void move(final Position from, final Position to) {
-
+        Piece piece = value.get(from);
+        Piece target = value.get(to);
+        piece.checkPieceMoveRange(target, from, to);
+        value.put(to, piece);
     }
 
     public boolean isMatchingColor(final Position from, final Color color) {
         Piece piece = value.get(from);
         return piece.isSameColor(color);
+    }
+
+    public Piece getPiece(final Position position) {
+        return value.get(position);
     }
 }

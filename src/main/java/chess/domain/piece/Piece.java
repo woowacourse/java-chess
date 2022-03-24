@@ -1,11 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
+
 import java.util.Locale;
 
 public abstract class Piece {
 
     private final String name;
-    private final Color color;
+    protected final Color color;
 
     protected Piece(final Color color, final String name) {
         this.color = color;
@@ -19,7 +21,11 @@ public abstract class Piece {
         return name;
     }
 
-    public boolean isSameColor(Color other) {
+    public boolean isSameColor(final Color other) {
         return color == other;
     }
+
+    public void checkPieceMoveRange(final Piece target, final Position from, final Position to){
+
+    };
 }
