@@ -3,6 +3,8 @@ package chess.domain.board;
 import chess.domain.piece.Direction;
 import java.util.Objects;
 
+import chess.domain.piece.Direction;
+
 public class Position {
 
     private static final String WRONG_POSITION = "올바르지 않은 위치 입력입니다.";
