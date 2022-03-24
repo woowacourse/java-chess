@@ -8,12 +8,16 @@ import java.util.List;
 
 public class PawnMoveStrategy {
 
+    private static final int FORWARD_UNIT_BLACK = -1;
+    private static final int FORWARD_UNIT_WHITE = 1;
+
     private final static List<MovePattern> BLACK_MOVE_PATTERN = List.of(
             MovePattern.SOUTH,
             MovePattern.SOUTHEAST,
             MovePattern.SOUTHWEST,
             MovePattern.PAWN_START_MOVE_BLACK
     );
+
     private final static List<MovePattern> WHITE_MOVE_PATTERN = List.of(
             MovePattern.NORTH,
             MovePattern.NORTHEAST,
@@ -77,9 +81,9 @@ public class PawnMoveStrategy {
 
     private int findForward(final Color color) {
         if (color == Color.BLACK) {
-            return -1;
+            return FORWARD_UNIT_BLACK;
         }
-        return 1;
+        return FORWARD_UNIT_WHITE;
     }
 
     private boolean isCatchable(final Piece targetPiece, final Color color) {
