@@ -44,4 +44,9 @@ public class Running implements Command {
     private Position position(String command) {
         return new Position(command.charAt(0), command.charAt(1));
    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }
