@@ -42,4 +42,13 @@ public class King extends Piece {
     public List<Position> findRoute(Position source, Position target) {
         return new ArrayList<>();
     }
+
+    public double score() {
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

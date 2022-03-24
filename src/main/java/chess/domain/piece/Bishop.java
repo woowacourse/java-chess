@@ -49,4 +49,14 @@ public class Bishop extends Piece {
         }
         return route;
     }
+
+    @Override
+    public double score() {
+        return 3;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

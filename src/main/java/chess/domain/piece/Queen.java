@@ -55,4 +55,13 @@ public class Queen extends Piece {
         }
         return route;
     }
+
+    public double score() {
+        return 9;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

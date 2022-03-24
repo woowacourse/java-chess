@@ -39,4 +39,13 @@ public class Knight extends Piece {
     public List<Position> findRoute(Position source, Position target) {
         return new ArrayList<>();
     }
+
+    public double score() {
+        return 2.5;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

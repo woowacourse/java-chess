@@ -7,6 +7,8 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.groupingBy;
+
 public class Board {
     private final Map<Position, Piece> board;
 
@@ -36,6 +38,29 @@ public class Board {
         Piece sourcePiece = board.get(source);
         board.replace(source, new Blank());
         board.replace(target, sourcePiece);
+    }
+
+    public double calculateScoreOf(Color color) {
+        double score = board.values()
+                .stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::score)
+                .sum();
+
+        return score - 0.5 * getDuplicatedPawns(color);
+    }
+
+    private long getDuplicatedPawns(Color color) {
+        Map<Integer, List<Position>> pawnGroup = board.keySet().stream()
+                .filter(position -> board.get(position).isSameColor(color))
+                .filter(position -> board.get(position).isPawn())
+                .collect(groupingBy(position -> position.getPositionY().getCoordination()));
+
+        return pawnGroup.values()
+                .stream()
+                .filter(list -> list.size() > 1)
+                .mapToInt(List::size)
+                .sum();
     }
 
     public Map<Position, Piece> getBoard() {

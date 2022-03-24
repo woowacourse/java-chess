@@ -52,4 +52,13 @@ public class Rook extends Piece {
         }
         return route;
     }
+
+    public double score() {
+        return 5;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

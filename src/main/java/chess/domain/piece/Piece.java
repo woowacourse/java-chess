@@ -27,4 +27,8 @@ public abstract class Piece {
     public abstract boolean isMovable(Position source, Position target);
 
     public abstract List<Position> findRoute(Position source, Position target);
+
+    public abstract double score();
+
+    public abstract boolean isPawn();
 }

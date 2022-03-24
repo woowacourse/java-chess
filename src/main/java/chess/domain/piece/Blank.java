@@ -29,4 +29,14 @@ public class Blank extends Piece {
     public List<Position> findRoute(Position source, Position target) {
         throw new IllegalArgumentException("기물이 없는 위치입니다.");
     }
+
+    @Override
+    public double score() {
+        throw new IllegalArgumentException("기물이 없는 위치입니다.");
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
