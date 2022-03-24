@@ -3,6 +3,7 @@ package chess.domain.chessPiece;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Stack;
 
 public class Knight extends ChessPiece {
 
@@ -34,5 +35,10 @@ public class Knight extends ChessPiece {
         if (from.isSameFile(to) || from.isSameRank(to)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public Stack<Position> findRoute(final Position from, Position to) {
+        return new Stack<>();
     }
 }

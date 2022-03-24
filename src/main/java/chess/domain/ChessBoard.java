@@ -31,9 +31,21 @@ public class ChessBoard {
         }
     }
 
+    private void initByPiece(ChessPiece chessPiece) {
+        if (chessPiece.isBlack()) {
+            for (Position position : chessPiece.getInitBlackPosition()) {
+                chessBoard.put(position, chessPiece);
+            }
+            return;
+        }
+        for (Position position : chessPiece.getInitWhitePosition()) {
+            chessBoard.put(position, chessPiece);
+        }
+    }
+
     public void move(Position from, Position to) {
         ChessPiece me = findPiece(from)
-                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
         if (me instanceof Pawn) {
             movePawn(from, to, (Pawn) me);
@@ -54,7 +66,7 @@ public class ChessBoard {
         while (!routes.isEmpty()) {
             Position position = routes.pop();
             if (findPiece(position).isPresent()) {
-                throw new IllegalArgumentException("히히 못가");
+                throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
             }
         }
     }
@@ -69,7 +81,7 @@ public class ChessBoard {
         if (from.isSameRank(to)) {
             me.canMove(from, to);
             if (findPiece(to).isPresent()) {
-                throw new IllegalArgumentException("이동할 수 없습니다.");
+                throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
             }
 
             movePiece(from, to, me);
@@ -84,16 +96,18 @@ public class ChessBoard {
         }
     }
 
-    private void initByPiece(ChessPiece chessPiece) {
-        if (chessPiece.isBlack()) {
-            for (Position position : chessPiece.getInitBlackPosition()) {
-                chessBoard.put(position, chessPiece);
-            }
-            return;
+    public boolean enemyExist(ChessPiece me, Position to) {
+        Optional<ChessPiece> possiblePiece = findPiece(to);
+        if (possiblePiece.isEmpty()) {
+            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
         }
-        for (Position position : chessPiece.getInitWhitePosition()) {
-            chessBoard.put(position, chessPiece);
+
+        ChessPiece piece = possiblePiece.get();
+        if (piece.isSameColor(me)) {
+            throw new IllegalArgumentException("같은색 기물입니다.");
         }
+
+        return true;
     }
 
     public int countPiece() {
@@ -107,19 +121,5 @@ public class ChessBoard {
         }
 
         return Optional.of(piece);
-    }
-
-    public boolean enemyExist(ChessPiece me, Position to) {
-        Optional<ChessPiece> possiblePiece = findPiece(to);
-        if (possiblePiece.isEmpty()) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
-
-        ChessPiece piece = possiblePiece.get();
-        if (piece.isSameColor(me)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
-
-        return true;
     }
 }
