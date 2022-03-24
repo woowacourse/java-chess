@@ -2,8 +2,6 @@ package chess.domain.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import java.util.List;
 
 public class KingMoveStrategy extends FirstRowMoveStrategy {
