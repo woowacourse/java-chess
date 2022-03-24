@@ -20,10 +20,11 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        if (sourcePiece.isSameColor(turnColor) && isCastablePieces(sourcePiece, targetPiece) && isEmptyBetween(source, target)) {
-            return sourcePiece.isNeverDisplaced() && targetPiece.isNeverDisplaced();
-        }
-        return false;
+        return sourcePiece.isSameColor(turnColor)
+                && isCastablePieces(sourcePiece, targetPiece)
+                && isEmptyBetween(source, target)
+                && sourcePiece.isNeverDisplaced()
+                && targetPiece.isNeverDisplaced();
     }
 
     private boolean isCastablePieces(Piece sourcePiece, Piece targetPiece) {
@@ -39,12 +40,11 @@ public class Board {
     }
 
     public void castle(Position source, Position target) {
-
         if(source.calculateDisplacementXTo(target) > 0){
             castleToKingSide(source, target);
+            return;
         }
         castleToQueenSide(source, target);
-
     }
 
     private void castleToKingSide(Position source, Position target) {
@@ -70,14 +70,15 @@ public class Board {
     }
 
     public void validateMovement(Color turnColor, Position source, Position target) {
-        validatePieceChoice(turnColor, source);
+        validatePieceChoice(turnColor, source, target);
         validateTargetChoice(source, target);
         validateRoute(source, target);
     }
 
-    private void validatePieceChoice(Color turnColor, Position source) {
+    private void validatePieceChoice(Color turnColor, Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isSameColor(turnColor)) {
+        Piece targetPiece = board.get(target);
+        if (!sourcePiece.isSameColor(turnColor) || targetPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
     }

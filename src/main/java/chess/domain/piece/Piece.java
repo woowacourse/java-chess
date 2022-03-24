@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class Piece {
     protected final Color color;
-    protected boolean isNeverDisplaced;
+    protected boolean isDisplaced;
 
     public Piece(Color color) {
         this.color = color;
-        this.isNeverDisplaced = false;
+        this.isDisplaced = false;
     }
 
     public String signature() {
@@ -24,11 +24,11 @@ public abstract class Piece {
     }
 
     public boolean isNeverDisplaced() {
-        return isNeverDisplaced;
+        return !isDisplaced;
     }
 
     public Piece displaced() {
-        this.isNeverDisplaced = true;
+        this.isDisplaced = true;
         return this;
     }
 
