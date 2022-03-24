@@ -31,9 +31,9 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
     }
 
     private boolean isQueenMovePattern(final Distance distance) {
-        return !distance.isHorizontalMovement()
-                && !distance.isVerticalMovement()
-                && !distance.isPositiveDiagonal()
-                && !distance.isNegativeDiagonal();
+        return distance.isHorizontalMovement()
+                || distance.isVerticalMovement()
+                || distance.isPositiveDiagonal()
+                || distance.isNegativeDiagonal();
     }
 }
