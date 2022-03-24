@@ -91,9 +91,7 @@ public class PositionTest {
                         "상하좌우"),
                 Arguments.of(new Position(1, 'a'),
                         List.of(new Position(2, 'b'), new Position(3, 'c')),
-                        "대각선"),
-                Arguments.of(new Position(3, 'f'), List.of(new Position(4, 'e')),
-                        "나이트")
+                        "대각선")
         );
     }
 }

@@ -37,13 +37,6 @@ public class Position {
         return rank == WHITE_PAWN_FIRST_RANK || rank == BLACK_PAWN_FIRST_RANK;
     }
 
-    public boolean isMoveForward(final Position destination) {
-        if (file != destination.file) {
-            return false;
-        }
-        return destination.rank - rank > 0;
-    }
-
     public List<Position> findAllBetweenPosition(final Position destination) {
         if (isMoveLinear(destination)) {
             return findBetweenLinearPosition(destination);
@@ -51,10 +44,35 @@ public class Position {
         if (isMoveDiagonal(destination)) {
             return findBetweenDiagonalPosition(destination);
         }
-        if (isMoveOfKnight(destination)) {
-            return findBetweenKnightPosition(destination);
-        }
         throw new IllegalArgumentException("올바른 이동이 아닙니다.");
+    }
+
+    public boolean isMoveLinear(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        return fileDistance == 0 && rankDistance > 0 || fileDistance > 0 && rankDistance == 0;
+    }
+
+    public boolean isMoveDiagonal(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        return fileDistance + rankDistance != 0 && fileDistance == rankDistance;
+    }
+
+    public boolean isMoveOfKnight(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        if (fileDistance + rankDistance != KNIGHT_MOVE_DISTANCE) {
+            return false;
+        }
+        return fileDistance != 0 && rankDistance != 0;
+    }
+
+    public boolean isMoveForward(final Position destination) {
+        if (file != destination.file) {
+            return false;
+        }
+        return destination.rank - rank > 0;
     }
 
     private List<Position> findBetweenLinearPosition(final Position destination) {
@@ -97,64 +115,6 @@ public class Position {
         for (int i = startRank + 1, j = startFile + 1; i < end; i++, j++) {
             positions.add(new Position(i, (char) j));
         }
-    }
-
-    private List<Position> findBetweenKnightPosition(final Position destination) {
-        final List<Position> positions = new ArrayList<>();
-
-        final int[] rankDifferenceDirection = {2, -2, 0, 0};
-        final int[] fileDifferenceDirection = {0, 0, -2, 2};
-        final int directionCount = 4;
-        for (int index = 0; index < directionCount; index++) {
-            checkKnightPosition(destination, positions, rankDifferenceDirection, fileDifferenceDirection, index);
-        }
-        return positions;
-    }
-
-    private void checkKnightPosition(final Position destination, final List<Position> betweenPosition,
-            final int[] rankDifferenceDirection, final int[] fileDifferenceDirection, final int directionIndex) {
-        final int nextRank = rank + rankDifferenceDirection[directionIndex];
-        final char nextFile = (char) (file + fileDifferenceDirection[directionIndex]);
-
-        if (isValidBetweenPosition(nextRank, nextFile, destination)) {
-            final int checkingRank = this.rank + rankDifferenceDirection[directionIndex] / 2;
-            final char checkingFile = (char) (this.file + fileDifferenceDirection[directionIndex] / 2);
-            betweenPosition.add(new Position(checkingRank, checkingFile));
-        }
-    }
-
-    private boolean isValidBetweenPosition(final int rank, final char file, final Position destinationPosition) {
-        if (new Position(rank + 1, file).equals(destinationPosition)) {
-            return true;
-        }
-        if (new Position(rank - 1, file).equals(destinationPosition)) {
-            return true;
-        }
-        if (new Position(rank, (char) (file - 1)).equals(destinationPosition)) {
-            return true;
-        }
-        return new Position(rank, (char) (file + 1)).equals(destinationPosition);
-    }
-
-    public boolean isMoveLinear(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
-        return fileDistance == 0 && rankDistance > 0 || fileDistance > 0 && rankDistance == 0;
-    }
-
-    public boolean isMoveDiagonal(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
-        return fileDistance + rankDistance != 0 && fileDistance == rankDistance;
-    }
-
-    public boolean isMoveOfKnight(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
-        if (fileDistance + rankDistance != KNIGHT_MOVE_DISTANCE) {
-            return false;
-        }
-        return fileDistance != 0 && rankDistance != 0;
     }
 
     public int calculateDistance(Position destination) {
