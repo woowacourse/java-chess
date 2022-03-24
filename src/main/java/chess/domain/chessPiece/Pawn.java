@@ -4,6 +4,7 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Pawn extends ChessPiece {
 
@@ -33,18 +34,20 @@ public class Pawn extends ChessPiece {
         return list;
     }
 
-
     @Override
     public void canMove(Position from, Position to) {
-        if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
-            return;
+        if (from.isSameRank(to)) {
+            if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
+                return;
+            }
+
+            if (!isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
+                return;
+            }
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
 
-        if (!isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
-            return;
-        }
-
-        throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        checkCrossMove(from, to);
     }
 
     private boolean checkMove(Position from, Position to, int movableDistance, String initFile) {

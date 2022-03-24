@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.chessPiece.*;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.*;
@@ -47,29 +48,52 @@ public class ChessBoard {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
-        if (me instanceof Pawn) {
-            movePawn(from, to, (Pawn) me);
+        checkMove(from, to, me);
+
+        if (findPiece(to).isEmpty()) {
+            checkPawnStraightMove(from, to, me);
+            movePiece(from, to, me);
             return;
         }
 
-        checkMove(from, to, me);
-
-        if (findPiece(to).isEmpty() || enemyExist(me, to)) {
+        if (enemyExist(me, to)) {
+            checkPawnCrossMove(from, to, me);
             movePiece(from, to, me);
         }
     }
 
-    // movePawn(직진,대각선), checkMove, enemyExist 예외
+    private void checkPawnStraightMove(Position from, Position to, ChessPiece me) {
+        if (me instanceof Pawn && isCross(from, to)) {
+            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
+        }
+    }
 
-    private void checkMove(Position from, Position to, ChessPiece me){
+    private boolean isCross(Position from, Position to) {
+        return to.findDirection(from) != Direction.N && to.findDirection(from) != Direction.S;
+    }
+
+    private void checkPawnCrossMove(Position from, Position to, ChessPiece me) {
+        if (me instanceof Pawn && isStraight(from, to)) {
+            throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
+        }
+    }
+
+    private boolean isStraight(Position from, Position to){
+        return to.findDirection(from) == Direction.N && to.findDirection(from) == Direction.S;
+    }
+
+    private void checkMove(Position from, Position to, ChessPiece me) {
         me.canMove(from, to);
         Stack<Position> routes = me.findRoute(from, to);
 
         while (!routes.isEmpty()) {
-            Position position = routes.pop();
-            if (findPiece(position).isPresent()) {
-                throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
-            }
+            checkHurdle(routes.pop());
+        }
+    }
+
+    private void checkHurdle(Position position){
+        if (findPiece(position).isPresent()) {
+            throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
         }
     }
 
@@ -79,23 +103,17 @@ public class ChessBoard {
         currentTurn = currentTurn.toOpposite();
     }
 
-    private void movePawn(Position from, Position to, Pawn me) {
-        if (from.isSameRank(to)) {
-            me.canMove(from, to);
-            if (findPiece(to).isPresent()) {
-                throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
-            }
+    public int countPiece() {
+        return chessBoard.size();
+    }
 
-            movePiece(from, to, me);
-            return;
+    public Optional<ChessPiece> findPiece(Position position) {
+        ChessPiece piece = chessBoard.get(position);
+        if (piece == null) {
+            return Optional.empty();
         }
 
-        if (!from.isSameRank(to)) {
-            me.checkCrossMove(from, to);
-            if (enemyExist(me, to)) {
-                movePiece(from, to, me);
-            }
-        }
+        return Optional.of(piece);
     }
 
     public boolean enemyExist(ChessPiece me, Position to) {
@@ -110,18 +128,5 @@ public class ChessBoard {
         }
 
         return true;
-    }
-
-    public int countPiece() {
-        return chessBoard.size();
-    }
-
-    public Optional<ChessPiece> findPiece(Position position) {
-        ChessPiece piece = chessBoard.get(position);
-        if (piece == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(piece);
     }
 }
