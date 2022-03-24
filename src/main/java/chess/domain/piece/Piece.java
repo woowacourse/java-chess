@@ -6,13 +6,19 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Color color;
+    private final double point;
 
-    protected Piece(final Color color) {
+    protected Piece(final Color color, final double point) {
         this.color = color;
+        this.point = point;
     }
 
     public final Color getColor() {
         return color;
+    }
+
+    public double getPoint() {
+        return point;
     }
 
     public abstract boolean isBlank();

@@ -3,10 +3,12 @@ package chess.domain.piece;
 import chess.domain.move.KnightMoveStrategy;
 import chess.domain.move.MoveStrategy;
 
-public class Knight extends ValidPiece {
+public final class Knight extends ValidPiece {
+
+    private static final double POINT = 2.5;
 
     public Knight(final Color color) {
-        super(color);
+        super(color, POINT);
     }
 
     @Override

@@ -2,10 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.move.MoveStrategy;
 
-public class Blank extends Piece {
+public final class Blank extends Piece {
+
+    private static final double POINT = 0;
 
     public Blank() {
-        super(Color.NONE);
+        super(Color.NONE, POINT);
     }
 
     @Override

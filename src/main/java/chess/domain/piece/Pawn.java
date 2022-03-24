@@ -3,10 +3,12 @@ package chess.domain.piece;
 import chess.domain.move.MoveStrategy;
 import chess.domain.move.PawnMoveStrategy;
 
-public class Pawn extends ValidPiece {
+public final class Pawn extends ValidPiece {
+
+    private static final double POINT = 1;
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, POINT);
     }
 
     @Override

@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 public abstract class ValidPiece extends Piece {
 
-    protected ValidPiece(Color color) {
-        super(color);
+    protected ValidPiece(final Color color, final double point) {
+        super(color, point);
     }
 
     @Override

@@ -3,10 +3,12 @@ package chess.domain.piece;
 import chess.domain.move.BishopMoveStrategy;
 import chess.domain.move.MoveStrategy;
 
-public class Bishop extends ValidPiece {
+public final class Bishop extends ValidPiece {
+
+    private static final double POINT = 3;
 
     public Bishop(final Color color) {
-        super(color);
+        super(color, POINT);
     }
 
     @Override

@@ -3,10 +3,12 @@ package chess.domain.piece;
 import chess.domain.move.MoveStrategy;
 import chess.domain.move.RookMoveStrategy;
 
-public class Rook extends ValidPiece {
+public final class Rook extends ValidPiece {
+
+    private static final double POINT = 5;
 
     public Rook(final Color color) {
-        super(color);
+        super(color, POINT);
     }
 
     @Override
