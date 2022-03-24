@@ -44,7 +44,7 @@ public enum Direction {
         return getColorDirections(color, List.of(TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
     }
 
-    public static List<Direction> kingDirection(Color color) {
+    public static List<Direction> everyDirection(Color color) {
         return getColorDirections(color, List.of(TOP, LEFT, DOWN, RIGHT,
                 TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
     }
