@@ -28,7 +28,7 @@ public class PawnTest {
     void isBlackMovable() {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.D, PositionY.RANK_5);
+        Position target = new Position(PositionX.C, PositionY.RANK_4);
         assertThat(pawn.isMovable(source, target)).isTrue();
     }
 
@@ -46,7 +46,7 @@ public class PawnTest {
     void isWhiteMovable() {
         Pawn pawn = new Pawn(Color.WHITE);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.B, PositionY.RANK_5);
+        Position target = new Position(PositionX.C, PositionY.RANK_6);
         assertThat(pawn.isMovable(source, target)).isTrue();
     }
 

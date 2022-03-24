@@ -32,8 +32,6 @@ public abstract class Piece {
         return this;
     }
 
-    protected abstract String baseSignature();
-
     protected List<Position> findLinearRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
 
@@ -47,6 +45,8 @@ public abstract class Piece {
         }
         return route;
     }
+
+    protected abstract String baseSignature();
 
     public abstract boolean isMovable(Position source, Position target);
 

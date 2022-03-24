@@ -28,10 +28,10 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackMovable(int displacementX, int displacementY) {
-        if (displacementY == 0 && Math.abs(displacementX) == 1) {
+        if (displacementY == 1 && displacementX == 0) {
             return true;
         }
-        if (displacementY == 1 && displacementX == 0) {
+        if(displacementY == 1 && Math.abs(displacementX) == 1){
             return true;
         }
         if (displacementY == 2 && displacementX == 0){
@@ -41,10 +41,10 @@ public class Pawn extends Piece {
     }
 
     private boolean isWhiteMovable(int displacementX, int displacementY) {
-        if (displacementY == 0 && Math.abs(displacementX) == 1) {
+        if (displacementY == -1 && displacementX == 0) {
             return true;
         }
-        if (displacementY == -1 && displacementX == 0) {
+        if(displacementY == -1 && Math.abs(displacementX) == 1){
             return true;
         }
         if (displacementY == -2 && displacementX == 0){
