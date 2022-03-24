@@ -9,7 +9,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Chessmen;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
@@ -24,7 +24,7 @@ public class ChessGame {
 
     private static final int TOTAL_KING_COUNT = 2;
 
-    private final List<Chessmen> chessmen = new ArrayList<>(32);
+    private final List<Piece> chessmen = new ArrayList<>(32);
 
     public ChessGame() {
         chessmen.addAll(initStrongmen(BLACK));
@@ -33,13 +33,13 @@ public class ChessGame {
         chessmen.addAll(initStrongmen(WHITE));
     }
 
-    private List<Chessmen> initPawnsOf(Color color) {
+    private List<Piece> initPawnsOf(Color color) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
                 .mapToObj(fileIdx -> Pawn.of(color, fileIdx))
                 .collect(Collectors.toList());
     }
 
-    private List<Chessmen> initStrongmen(Color color) {
+    private List<Piece> initStrongmen(Color color) {
         return List.of(new King(color), new Queen(color),
                 Rook.ofLeft(color), Rook.ofRight(color),
                 Bishop.ofLeft(color), Bishop.ofRight(color),
@@ -47,11 +47,11 @@ public class ChessGame {
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
-        Chessmen sourcePiece = extractPiece(Position.of(dto.source()));
+        Piece sourcePiece = extractPiece(Position.of(dto.source()));
         Position toPosition = Position.of(dto.target());
 
         if (checkOccupied(toPosition)) {
-            Chessmen targetPiece = extractPiece(toPosition);
+            Piece targetPiece = extractPiece(toPosition);
             sourcePiece.kill(targetPiece);
             chessmen.remove(targetPiece);
             return;
@@ -60,7 +60,7 @@ public class ChessGame {
         sourcePiece.move(toPosition);
     }
 
-    private Chessmen extractPiece(Position position) {
+    private Piece extractPiece(Position position) {
         return chessmen.stream()
                 .filter(piece -> piece.getPosition() == position)
                 .findFirst()
@@ -74,7 +74,7 @@ public class ChessGame {
 
     public boolean isEnd() {
         int kingCount = (int) chessmen.stream()
-                .filter(Chessmen::isKing)
+                .filter(Piece::isKing)
                 .count();
 
         return kingCount < TOTAL_KING_COUNT;
@@ -88,11 +88,11 @@ public class ChessGame {
     }
 
     private double calculateScore(Color color) {
-        List<Chessmen> sameColorPieces = extractPiecesOf(color);
+        List<Piece> sameColorPieces = extractPiecesOf(color);
         List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
 
         double defaultScore = sameColorPieces.stream()
-                .map(Chessmen::score)
+                .map(Piece::score)
                 .reduce(0.0, Double::sum);
 
         return defaultScore - (calculateSameFilePawnCount(pawnPositions) / 2);
@@ -105,16 +105,16 @@ public class ChessGame {
                 .reduce(0, Integer::sum);
     }
 
-    private List<Chessmen> extractPiecesOf(Color color) {
+    private List<Piece> extractPiecesOf(Color color) {
         return chessmen.stream()
                 .filter(piece -> piece.getColor() == color)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> extractPawnPositions(List<Chessmen> sameColorPieces) {
+    private List<Position> extractPawnPositions(List<Piece> sameColorPieces) {
         return sameColorPieces.stream()
-                .filter(Chessmen::isPawn)
-                .map(Chessmen::getPosition)
+                .filter(Piece::isPawn)
+                .map(Piece::getPosition)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -124,7 +124,7 @@ public class ChessGame {
                 .count();
     }
 
-    public List<Chessmen> getChessmen() {
+    public List<Piece> getChessmen() {
         return chessmen;
     }
 

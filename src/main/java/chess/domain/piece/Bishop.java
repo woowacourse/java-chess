@@ -5,7 +5,7 @@ import static chess.domain.piece.Strongmen.firstRankOf;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class Bishop extends Piece {
+public class Bishop extends Chessmen {
 
     private static final int LEFT_INIT_FILE = 2;
     private static final int RIGHT_INIT_FILE = 5;

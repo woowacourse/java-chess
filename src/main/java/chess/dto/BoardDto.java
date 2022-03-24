@@ -4,7 +4,7 @@ import static chess.domain.position.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.Chessmen;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,35 +23,35 @@ public class BoardDto {
                 .collect(Collectors.toList());
     }
 
-    private static String initRowDisplay(List<Chessmen> existingChessMen) {
+    private static String initRowDisplay(List<Piece> existingChessMEN) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
-                .mapToObj(fileIdx -> squareView(existingChessMen, fileIdx))
+                .mapToObj(fileIdx -> squareView(existingChessMEN, fileIdx))
                 .collect(Collectors.joining());
     }
 
-    private static List<Chessmen> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
+    private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
                 .stream()
                 .filter(piece -> toRowIdx(piece) == rowIdx)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static String squareView(List<Chessmen> currentRowChessMen, int fileIdx) {
-        return currentRowChessMen.stream()
+    private static String squareView(List<Piece> currentRowChessMEN, int fileIdx) {
+        return currentRowChessMEN.stream()
                 .filter(piece -> extractFileIdx(piece) == fileIdx)
-                .map(Chessmen::display)
+                .map(Piece::display)
                 .findFirst()
                 .orElse(EMPTY_SQUARE_DISPLAY);
     }
 
-    private static int toRowIdx(Chessmen piece) {
+    private static int toRowIdx(Piece piece) {
         Position position = piece.getPosition();
         int rankIdx = position.getRankIdx();
 
         return RANKS_TOTAL_SIZE - rankIdx - 1;
     }
 
-    private static int extractFileIdx(Chessmen piece) {
+    private static int extractFileIdx(Piece piece) {
         Position position = piece.getPosition();
         return position.getFileIdx();
     }

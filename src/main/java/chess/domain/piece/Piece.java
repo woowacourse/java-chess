@@ -2,36 +2,21 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public abstract class Piece implements Chessmen {
+public interface Piece {
 
-    protected static final String INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE = "이동할 수 없는 위치입니다.";
-    private static final String INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE = "이동하려는 위치에 아군이 있습니다.";
+    void move(Position position);
 
-    protected final Color color;
-    protected Position position;
+    void kill(Piece targetPiece);
 
-    protected Piece(Color color, Position position) {
-        this.color = color;
-        this.position = position;
-    }
+    boolean isPawn();
 
-    @Override
-    public void kill(Chessmen targetPiece) {
-        if (color == targetPiece.getColor()) {
-            throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
-        }
-        attack(targetPiece.getPosition());
-    }
+    boolean isKing();
 
-    abstract protected void attack(Position enemyPosition);
+    double score();
 
-    @Override
-    public final Position getPosition() {
-        return position;
-    }
+    String display();
 
-    @Override
-    public final Color getColor() {
-        return color;
-    }
+    Position getPosition();
+
+    Color getColor();
 }

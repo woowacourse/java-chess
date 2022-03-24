@@ -4,7 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 
 import chess.domain.position.Position;
 
-public abstract class Strongmen extends Piece {
+public abstract class Strongmen extends Chessmen {
 
     private static final int BLACK_FIRST_RANK = 7;
     private static final int WHITE_FIRST_RANK = 0;

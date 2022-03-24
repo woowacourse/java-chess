@@ -6,7 +6,7 @@ import static chess.domain.piece.Color.WHITE;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public final class Pawn extends Piece {
+public final class Pawn extends Chessmen {
 
     private static final int BLACK_INIT_RANK = 6;
     private static final int WHITE_INIT_RANK = 1;
