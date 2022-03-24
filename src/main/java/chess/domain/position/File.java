@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum File {
     ONE(1),
     TWO(2),
@@ -14,6 +16,13 @@ public enum File {
 
     File(int file) {
         this.file = file;
+    }
+
+    public static boolean isFile(char candidate) {
+        return Arrays.stream(File.values())
+                .map(file -> file.equals(candidate))
+                .findFirst()
+                .orElse(false);
     }
 
     public int getFile() {

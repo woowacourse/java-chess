@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+
 public enum Rank {
     A('a'),
     B('b'),
@@ -17,6 +19,13 @@ public enum Rank {
 
     public char getRank() {
         return rank;
+    }
+
+    public static boolean isRank(char candidate) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> rank.equals(candidate))
+                .findFirst()
+                .orElse(false);
     }
 
     public int calculateRank(Rank other) {
