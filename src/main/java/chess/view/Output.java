@@ -6,10 +6,17 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Output {
 
+    private static final String EXCEPTION_PREFIX = "[ERROR] ";
+
     private Output() {
+    }
+
+    public static void printExceptionMessage(final String exceptionMessage) {
+        System.out.println(EXCEPTION_PREFIX + exceptionMessage);
     }
 
     public static void printChessGameStart() {

@@ -15,7 +15,24 @@ public class ChessController {
         Output.printChessGameStart();
 
         ChessGame chessGame = new ChessGame();
-        Command.execute(Input.inputCommand(enterable), chessGame);
-        Output.printBoard(chessGame.getBoard());
+
+        while (chessGame.isRunning()) {
+            command(chessGame);
+        }
+    }
+
+    private void command(final ChessGame chessGame) {
+        try {
+            Command.execute(Input.inputCommand(enterable), chessGame);
+            printBoard(chessGame);
+        } catch (IllegalStateException exception) {
+            Output.printExceptionMessage(exception.getMessage());
+        }
+    }
+
+    private void printBoard(final ChessGame chessGame) {
+        if (chessGame.isRunning()) {
+            Output.printBoard(chessGame.getBoard());
+        }
     }
 }

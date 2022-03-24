@@ -1,10 +1,10 @@
 package chess.domain.state;
 
-public class Ready extends State {
+public class Black extends State {
 
     @Override
     public State start() {
-        return new White();
+        throw new IllegalStateException("게임이 이미 시작되었습니다.");
     }
 
     @Override

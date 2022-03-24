@@ -10,7 +10,13 @@ public abstract class State {
 
     private final Board board = new Board();
 
+    public abstract State start();
+
+    public abstract State end();
+
     public final Map<Position, Piece> getBoard() {
         return board.toMap();
     }
+
+    public abstract boolean isRunning();
 }

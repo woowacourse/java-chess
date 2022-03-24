@@ -12,12 +12,18 @@ public class ChessGame {
     private State state = new Ready();
 
     public void start() {
+        state = state.start();
     }
 
     public void end() {
+        state = state.end();
     }
 
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
+    }
+
+    public boolean isRunning() {
+        return state.isRunning();
     }
 }

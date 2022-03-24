@@ -9,19 +9,19 @@ public enum Command {
     END("end", (input, chessGame) -> chessGame.end()),
     ;
 
-    private final String name;
+    private final String command;
     private final BiConsumer<String, ChessGame> operate;
 
-    Command(final String name, final BiConsumer<String, ChessGame> operate) {
-        this.name = name;
+    Command(final String command, final BiConsumer<String, ChessGame> operate) {
+        this.command = command;
         this.operate = operate;
     }
 
     public static void execute(final String input, final ChessGame chessGame) {
         Arrays.stream(Command.values())
-                .filter(command -> input.contains(command.name))
+                .filter(command -> input.contains(command.command))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어"))
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어 입니다."))
                 .operate
                 .accept(input, chessGame);
     }
