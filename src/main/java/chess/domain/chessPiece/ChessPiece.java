@@ -28,6 +28,8 @@ public abstract class ChessPiece {
 
     public abstract void canMove(Position from, Position to);
 
+    public abstract List<Position> findRoute(Position from, Position to);
+
     public boolean isSameColor(ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }

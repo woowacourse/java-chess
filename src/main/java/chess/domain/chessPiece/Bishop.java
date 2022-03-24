@@ -2,6 +2,7 @@ package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends ChessPiece {
@@ -30,5 +31,16 @@ public class Bishop extends ChessPiece {
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public List<Position> findRoute(Position from, Position to) {
+
+
+
+        List<Position> routes = new ArrayList<>();
+
+
+        return routes;
     }
 }

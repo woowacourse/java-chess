@@ -45,8 +45,6 @@ public class ChessBoard {
 
         me.canMove(from, to);
 
-        // todo gullimdol exist?
-
         if (findPiece(to).isEmpty() || enemyExist(me, to)) {
             chessBoard.put(to, me);
             chessBoard.remove(from);
