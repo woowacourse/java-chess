@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Rank {
     EIGHT(8),
     SEVEN(7),
@@ -22,5 +24,16 @@ public enum Rank {
 
     public int minus(Rank rank) {
         return this.index - rank.index;
+    }
+
+    public static Rank valueOf(int index) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
+    }
+
+    public boolean isLessThan(Rank rank) {
+        return this.index < rank.index;
     }
 }

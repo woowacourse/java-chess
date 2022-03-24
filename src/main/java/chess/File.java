@@ -28,4 +28,8 @@ public enum File {
     public int absMinus(File file) {
         return Math.abs(index - file.index);
     }
+
+    boolean isBiggerThan(File file){
+        return index > file.index;
+    }
 }

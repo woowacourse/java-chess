@@ -4,6 +4,8 @@ import chess.Position;
 import chess.Team;
 
 public class King extends Piece {
+    private static final String BLACK_NAME = "K";
+    private static final String WHITE_NAME = "k";
 
     public King(Position position, Team team) {
         super(position, team);
@@ -22,5 +24,13 @@ public class King extends Piece {
 
     private boolean isCorrectDistance(Position position) {
         return this.position.isOneStepAway(position);
+    }
+
+    @Override
+    public String getName() {
+        if (Team.BLACK.equals(team)) {
+            return BLACK_NAME;
+        }
+        return WHITE_NAME;
     }
 }

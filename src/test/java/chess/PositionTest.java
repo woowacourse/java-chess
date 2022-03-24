@@ -11,8 +11,8 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 수평이면 true를 반환한다.")
     void isHorizontal() {
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.D, Rank.ONE);
+        Position source = Position.of("a1");
+        Position target = Position.of("d1");
 
         assertThat(source.isHorizontal(target)).isTrue();
     }
@@ -20,8 +20,8 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 수직이면 true를 반환한다.")
     void isVertical() {
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.A, Rank.THREE);
+        Position source = Position.of("a1");
+        Position target = Position.of("a3");
 
         assertThat(source.isVertical(target)).isTrue();
     }
@@ -29,8 +29,8 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 대각선이면 true를 반환한다.")
     void isDiagonal() {
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.F, Rank.SIX);
+        Position source = Position.of("a1");
+        Position target = Position.of("f6");
 
         assertThat(source.isDiagonal(target)).isTrue();
     }

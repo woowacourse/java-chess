@@ -1,65 +1,62 @@
 package chess;
 
 
-import chess.piece.Piece;
+import chess.piece.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, String> board;
+    private final List<Piece> board;
 
-    private Board(Map<Position, String> board) {
-        this.board = board;
+    private Board(List<Piece> board) {
+        this.board = new ArrayList<>(board);
     }
 
     public static Board create() {
-        Map<Position, String> board = new LinkedHashMap<>(64);
-        for (Rank rank : Rank.values()) {
-            initPosition(board, rank);
-        }
+        List<Piece> pieces = new ArrayList<>();
+        pieces.addAll(makePieces('8', Team.BLACK));
+        pieces.addAll(makePawns('7', Team.BLACK));
+        pieces.addAll(makePawns('2',Team.WHITE));
+        pieces.addAll(makePieces('1',Team.WHITE));
 
-        return new Board(board);
+        return new Board(pieces);
     }
 
-    private static void initPosition(Map<Position, String> board, Rank rank) {
-        for (int i=0; i<8; i++) {
-            board.put(new Position(File.valueOf(i+1), rank), checkPiece(rank, i+1));
+    private static List<Piece> makePawns(char rank, Team team) {
+        char[] files = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+        List<Piece> pawns = new ArrayList<>();
+        for (char file : files) {
+            pawns.add(new Pawn(Position.of(file, rank), team));
         }
+        return pawns;
     }
 
-    private static String checkPiece(Rank rank, int i) {
-        List<String> blackPiece = List.of("R", "N", "B", "Q", "K", "B", "N", "R");
-        List<String> whitePiece = List.of("r", "n", "b", "q", "k", "b", "n", "r");
-        if (rank == Rank.EIGHT) {
-            return blackPiece.get(i);
-        }
-        if( rank == Rank.ONE){
-            return whitePiece.get(i);
-        }
-        if (rank == Rank.SEVEN) {
-            return "P";
-        }
-        if (rank == Rank.TWO){
-            return "p";
-        }
-        return ".";
+    private static List<Piece> makePieces(char rank, Team team) {
+        return List.of(new Rook(Position.of('a', rank), team), new Knight(Position.of('b', rank), team),
+                new Bishop(Position.of('c', rank), team), new Queen(Position.of('d', rank), team),
+                new King(Position.of('e', rank), team), new Bishop(Position.of('f', rank), team),
+                new Knight(Position.of('g', rank), team), new Rook(Position.of('h', rank), team));
     }
 
-//    public void move(Position source, Position target){
+//    public void move(Position source, Position target) {
 //        Piece piece = board.get(source);
 //        if (piece.isMovable(target) && board.hasNotBlock(source, target)) {
 //
 //        }
 //    }
-//
-    public String getPiece(Position position) {
-        return board.get(position);
-    }
 
-    public Map<Position, String> getBoard() {
+//    public Piece getPiece(Position position) {
+//        return board.stream()
+//                .filter(piece -> piece.findPosition(position))
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말"))
+//    }
+
+    public List<Piece> getBoard() {
         return board;
     }
 }

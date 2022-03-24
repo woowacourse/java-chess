@@ -3,12 +3,21 @@ package chess;
 import java.util.Objects;
 
 public class Position {
+    private static final int ASCII_TO_INT = 96;
     private final Rank rank;
     private final File file;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
+        //validate()
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(char... position){
+        File file = File.valueOf(position[0] - ASCII_TO_INT);
+        Rank rank = Rank.valueOf(Character.getNumericValue(position[1]));
+
+        return new Position(file, rank);
     }
 
     public boolean isHorizontal(Position position) {
@@ -59,6 +68,15 @@ public class Position {
         return file;
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
+
+    public boolean isBiggerFileThan(Position position){
+        return this.file.isBiggerThan(position.file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -74,5 +92,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public boolean isLessRankThan(Position position) {
+        return this.rank.isLessThan(position.rank);
     }
 }

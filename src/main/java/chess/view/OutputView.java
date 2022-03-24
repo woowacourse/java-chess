@@ -1,20 +1,19 @@
 package chess.view;
 
-import chess.File;
-import chess.Position;
-import chess.Rank;
+import chess.piece.Piece;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 public class OutputView {
 
-    public static void printBoard(Map<Position, String> board) {
-        board.forEach((position, piece) -> {
-            System.out.print(piece);
-            if (position.getFile() == File.H) {
-                System.out.println();
-            }
-        });
+    //    1. rank..는 내림차순
+//    2. fil..은 오름차순
+    public static void printBoard(List<Piece> board) {
+
+
+        board.stream()
+                .sorted()
+                .forEach(piece -> System.out.println(piece.getName()));
+
     }
 }
