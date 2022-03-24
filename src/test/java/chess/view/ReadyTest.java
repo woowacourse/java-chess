@@ -1,9 +1,11 @@
 package chess.view;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.view.command.Command;
 import chess.view.command.Ready;
+import chess.view.command.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,5 +30,12 @@ class ReadyTest {
         assertThatThrownBy(() -> command.run(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("command는 null이 들어올 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("run 실행 시 Running상태로 변경")
+    void changeStateByRun() {
+        Command command = new Ready().run("start");
+        assertThat(command).isInstanceOf(Running.class);
     }
 }
