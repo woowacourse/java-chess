@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.PieceConvertor;
 import chess.domain.piece.InvalidPiece;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
@@ -33,16 +35,16 @@ public class Board {
     }
 
     private static List<Position> getInitialPositions() {
-        return Row.initialRows()
+        return Rank.initialRows()
                 .stream()
                 .flatMap(getPositionStream())
                 .collect(Collectors.toList());
     }
 
-    private static Function<Row, Stream<? extends Position>> getPositionStream() {
-        return row ->
-                Arrays.stream(Column.values())
-                        .map(column -> Position.of(row, column));
+    private static Function<Rank, Stream<? extends Position>> getPositionStream() {
+        return rank ->
+                Arrays.stream(File.values())
+                        .map(file -> Position.of(rank, file));
     }
 
     private static Color checkColor(int index) {

@@ -1,7 +1,7 @@
 package chess.dto;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
 

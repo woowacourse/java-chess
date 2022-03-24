@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 
 import java.util.List;
@@ -10,27 +10,27 @@ public class Position {
     private static final int TO_FOR_ROW = 1;
     private static final int START_INDEX_FOR_COLUMN = 1;
 
-    private final Row row;
-    private final Column column;
+    private final Rank rank;
+    private final File file;
 
-    private Position(Row row, Column column) {
-        this.row = row;
-        this.column = column;
+    private Position(Rank rank, File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
     public static Position of(String input) {
         return new Position(
-                Row.of(input.substring(START_INDEX_FOR_COLUMN)),
-                Column.of(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));
+                Rank.of(input.substring(START_INDEX_FOR_COLUMN)),
+                File.of(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));
     }
 
-    public static Position of(Row row, Column column) {
-        return new Position(row, column);
+    public static Position of(Rank rank, File file) {
+        return new Position(rank, file);
     }
 
     public List<Integer> calculateDistance(Position another) {
-        int columnDistance = this.column.calculate(another.column);
-        int rowDistance = this.row.calculate(another.row);
+        int columnDistance = this.file.calculate(another.file);
+        int rowDistance = this.rank.calculate(another.rank);
 
         return List.of(columnDistance, rowDistance);
     }
@@ -40,7 +40,7 @@ public class Position {
         // 이때 대각선, 세로, 가로방식은 distance 구해서 확인
         // List<Position>을 board가 모두 찾아서 있는지 여부 확인 좋음
 
-        List<Column> columnsBetween = Column.getBetween(this.column, target.column);
+        List<File> columnsBetween = File.getBetween(this.file, target.file);
 
         return null;
     }
@@ -54,11 +54,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return row == position.row && column == position.column;
+        return rank == position.rank && file == position.file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(rank, file);
     }
 }

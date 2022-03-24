@@ -2,15 +2,10 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import java.util.HashMap;
-import java.util.Map;
+import chess.domain.board.Board;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
 

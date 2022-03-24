@@ -1,11 +1,11 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public enum Row {
+public enum Rank {
     EIGHT("8", 8),
     SEVEN("7", 7),
     SIX("6", 6),
@@ -21,47 +21,47 @@ public enum Row {
     private final String value;
     private final int order;
 
-    Row(String value, int order) {
+    Rank(String value, int order) {
         this.value = value;
         this.order = order;
     }
 
 
-    public static Row of(String value) {
+    public static Rank of(String value) {
         return Arrays.stream(values())
-                .filter(row -> row.value.equals(value))
+                .filter(rank -> rank.value.equals(value))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
     }
 
-    public static List<Row> initialRows() {
+    public static List<Rank> initialRows() {
         return List.of(EIGHT, SEVEN, TWO, ONE);
     }
 
-    public static List<Row> getBetween(Row from, Row to) {
-        Row maxOrder = getHigherOrder(from, to);
-        Row minOrder = getLowerOrder(from, to);
+    public static List<Rank> getBetween(Rank from, Rank to) {
+        Rank maxOrder = getHigherOrder(from, to);
+        Rank minOrder = getLowerOrder(from, to);
 
         return Arrays.stream(values())
                 .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
                 .collect(Collectors.toList());
     }
 
-    private static Row getHigherOrder(Row from, Row to) {
+    private static Rank getHigherOrder(Rank from, Rank to) {
         if (from.order > to.order) {
             return from;
         }
         return to;
     }
 
-    private static Row getLowerOrder(Row from, Row to) {
+    private static Rank getLowerOrder(Rank from, Rank to) {
         if (from.order < to.order) {
             return from;
         }
         return to;
     }
 
-    public int calculate(Row other) {
+    public int calculate(Rank other) {
         return Math.abs(order - other.order);
     }
 }

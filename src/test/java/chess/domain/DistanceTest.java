@@ -1,7 +1,6 @@
 package chess.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
 class DistanceTest {
@@ -11,7 +10,6 @@ class DistanceTest {
         Position c3 = Position.of("c3");
 
 //        Distance distance = Distance.of(b1, c3);
-
 
     }
 }

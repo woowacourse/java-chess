@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import java.util.Arrays;
@@ -25,10 +25,10 @@ public class OutputView {
         return OUTPUT_VIEW;
     }
 
-    private static Function<Row, Stream<? extends Position>> getPositionStream() {
-        return row ->
-                Arrays.stream(Column.values())
-                        .map(column -> Position.of(row, column));
+    private static Function<Rank, Stream<? extends Position>> getPositionStream() {
+        return rank ->
+                Arrays.stream(File.values())
+                        .map(file -> Position.of(rank, file));
     }
 
     public void initialPrint() {
@@ -41,7 +41,7 @@ public class OutputView {
     public void printBoard(BoardDto boardDto) {
         Map<Position, Piece> board = boardDto.getBoard();
 
-        List<Position> collect = Arrays.stream(Row.values())
+        List<Position> collect = Arrays.stream(Rank.values())
                 .flatMap(getPositionStream())
                 .collect(Collectors.toList());
 
