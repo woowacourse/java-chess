@@ -1,6 +1,7 @@
 package chess.domain.player;
 
 import chess.domain.Position;
+import chess.domain.generator.Generator;
 import chess.domain.piece.Piece;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,10 @@ public class Player {
 
     public Player(List<Piece> pieces) {
         this.pieces = new HashSet<>(pieces);
+    }
+
+    public Player(Generator generator) {
+        this(generator.generate());
     }
 
     public boolean hasPiece(final Position position) {
