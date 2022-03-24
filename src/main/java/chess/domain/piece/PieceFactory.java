@@ -28,7 +28,7 @@ public class PieceFactory {
                 new Position('h', '8'), new Rook(Color.BLACK)
         ));
         for (char i = 0; i < 8; i++) {
-            blackPieces.put(new Position((char) ('a' + i), '7'), new Pawn(Color.BLACK));
+            blackPieces.put(new Position((char) ('a' + i), '7'), new BlackFirstPawn());
         }
         return blackPieces;
     }
@@ -45,7 +45,7 @@ public class PieceFactory {
                 new Position('h', '1'), new Rook(Color.WHITE)
         ));
         for (char i = 0; i < 8; i++) {
-            whitePieces.put(new Position((char) ('a' + i), '2'), new Pawn(Color.WHITE));
+            whitePieces.put(new Position((char) ('a' + i), '2'), new WhiteFirstPawn());
         }
         return whitePieces;
     }

@@ -1,17 +1,20 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.BlackFirstPawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.WhiteFirstPawn;
 import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackPawnFirstMovableStrategyTest {
 
@@ -29,32 +32,48 @@ class BlackPawnFirstMovableStrategyTest {
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Pawn(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(start, new BlackFirstPawn()));
 
         assertThat(blackPawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,7,WHITE", "b,6,WHITE", "b,7,BLACK", "b,6,BLACK"})
+    @MethodSource("cannotMoveToPiecePosition")
     @DisplayName("기물이 가로막을 경우의 전진 불가능")
-    void cannotMoveToPiecePosition(char col, char row, Color color) {
-        Position target = new Position(col, row);
+    void cannotMoveToPiecePosition(Position target, Piece piece) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                target, new Pawn(color)));
+                start, new WhiteFirstPawn(),
+                target, piece));
 
         assertThat(blackPawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
 
+    private static Stream<Arguments> cannotMoveToPiecePosition() {
+        return Stream.of(
+                Arguments.of(new Position('b', '7'), new WhiteFirstPawn()),
+                Arguments.of(new Position('b', '6'), new WhiteFirstPawn()),
+                Arguments.of(new Position('b', '7'), new BlackFirstPawn()),
+                Arguments.of(new Position('b', '6'), new BlackFirstPawn())
+        );
+    }
+
     @ParameterizedTest
-    @CsvSource(value = {"a,7,BLACK,true", "c,7,BLACK,true", "a,7,WHITE,false", "c,7,WHITE,false"})
+    @MethodSource("canMoveToEnemyPiecePosition")
     @DisplayName("대각선 방향에 적이 있으면 전진 가능")
-    void canMoveToEnemyPiecePosition(char col, char row, Color color, boolean expected) {
-        Position target = new Position(col, row);
+    void canMoveToEnemyPiecePosition(Position target, Piece piece, boolean expected) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                target, new Pawn(color)));
+                start, new WhiteFirstPawn(),
+                target, piece));
 
         assertThat(blackPawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> canMoveToEnemyPiecePosition() {
+        return Stream.of(
+                Arguments.of(new Position('a', '7'), new BlackFirstPawn(), true),
+                Arguments.of(new Position('c', '7'), new BlackFirstPawn(), true),
+                Arguments.of(new Position('a', '7'), new WhiteFirstPawn(), false),
+                Arguments.of(new Position('c', '7'), new WhiteFirstPawn(), false)
+        );
     }
 }

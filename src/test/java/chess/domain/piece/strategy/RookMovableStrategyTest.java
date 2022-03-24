@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Rook;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +41,7 @@ class RookMovableStrategyTest {
     @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
     void isMovableToClearEmptyPosition() {
         Position target = new Position('d', '8');
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Pawn(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Rook(WHITE)));
 
         assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isTrue();
     }
@@ -53,8 +52,8 @@ class RookMovableStrategyTest {
     void isMovableToClearPiecePosition(Color color, boolean expected) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                target, new Pawn(color)));
+                start, new Rook(WHITE),
+                target, new Rook(color)));
 
         assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
@@ -64,8 +63,8 @@ class RookMovableStrategyTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                new Position('d', '7'), new Pawn(BLACK)));
+                start, new Rook(WHITE),
+                new Position('d', '7'), new Rook(BLACK)));
 
         assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
@@ -76,9 +75,9 @@ class RookMovableStrategyTest {
     void isMovableToNotClearPiecePosition(Color color) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                new Position('d', '7'), new Pawn(BLACK),
-                target, new Pawn(color)));
+                start, new Rook(WHITE),
+                new Position('d', '7'), new Rook(BLACK),
+                target, new Rook(color)));
 
         assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
