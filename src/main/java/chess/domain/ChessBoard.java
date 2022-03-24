@@ -1,30 +1,19 @@
 package chess.domain;
 
-import static java.util.stream.Collectors.toList;
-
-import chess.domain.piece.EmptyPiece;
+import chess.domain.generator.BoardGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class ChessBoard {
 
     private final List<List<Piece>> board;
     private Color turn;
 
-    public ChessBoard() {
-        this.board = IntStream.rangeClosed(0, 7)
-                .mapToObj(ignored -> generatePieces())
-                .collect(toList());
+    public ChessBoard(BoardGenerator boardGenerator) {
+        this.board = boardGenerator.generate();
         this.turn = Color.WHITE;
-    }
-
-    private List<Piece> generatePieces() {
-        return IntStream.rangeClosed(0, 7)
-                .mapToObj(ignored -> new EmptyPiece())
-                .collect(toList());
     }
 
     public void init() {

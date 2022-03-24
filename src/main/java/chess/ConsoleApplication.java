@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.generator.EmptyBoardGenerator;
 import chess.dto.CommandRequest;
 import chess.view.Command;
 import chess.view.InputView;
@@ -9,7 +10,7 @@ import chess.view.OutputView;
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
 
         OutputView.printStartMessage();
         startChess(chessBoard);
