@@ -1,8 +1,10 @@
 package chess.domain.board.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Rank;
+import chess.domain.piece.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -17,5 +19,26 @@ class BlackTurnTest {
         BlackTurn blackTurn = new BlackTurn(ranks);
 
         assertThat(blackTurn.isBlackTurn()).isTrue();
+    }
+
+    @DisplayName("흑팀 차례 이후에 백팀 차례가 된다.")
+    @Test
+    void isBlackTurnAfterWhiteTurn() {
+        BoardState whiteTurn = BoardInitializer.initBoard();
+        BoardState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+        BoardState whiteTurn2 = blackTurn.move(new Position("b7"), new Position("b6"));
+
+        assertThat(whiteTurn2).isInstanceOf(WhiteTurn.class);
+    }
+
+    @DisplayName("흑팀 차례에 백팀 말을 움직이면 예외가 발생한다.")
+    @Test
+    void moveBlackPieceInWhiteTurn() {
+        BoardState whiteTurn = BoardInitializer.initBoard();
+        BoardState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+
+        assertThatThrownBy(() -> blackTurn.move(new Position("c2"), new Position("c4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("본인의 기물이 아닙니다.");
     }
 }

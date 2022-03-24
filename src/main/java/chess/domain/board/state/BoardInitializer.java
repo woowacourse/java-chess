@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardInitializer {
+
     private static final int RANK_CAPACITY = 8;
 
     public static BoardState initBoard() {
