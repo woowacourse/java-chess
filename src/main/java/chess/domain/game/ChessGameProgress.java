@@ -36,7 +36,15 @@ public class ChessGameProgress {
             gameSwitch.turnOff();
             return;
         }
-        chessGame.move(Position.valueOf(inputs.get(SOURCE_INDEX)), Position.valueOf(inputs.get(TARGET_INDEX)), turn);
+        final Piece targetPiece = chessGame.move(Position.valueOf(inputs.get(SOURCE_INDEX)),
+                Position.valueOf(inputs.get(TARGET_INDEX)), turn);
+        turnOffWhenKingDie(targetPiece);
         turn.nextTurn();
+    }
+
+    private void turnOffWhenKingDie(final Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            gameSwitch.turnOff();
+        }
     }
 }
