@@ -7,21 +7,24 @@ import java.util.List;
 
 public final class Rook extends Piece {
 
+    private final AbstractStraightMovePattern pattern = new AbstractStraightMovePattern() {
+        @Override
+        public List<Direction> getDirections() {
+            return Direction.getRookDirections();
+        }
+    };
+
     public Rook(Color color) {
         super(color);
     }
 
     @Override
     public boolean canMove(Position src, Position dest) {
-        return findDirection(src, dest) != null;
+        return pattern.canMove(src, dest);
     }
 
     @Override
     public Direction findDirection(Position src, Position dest) {
-        List<Direction> directions = Direction.getRookDirections();
-        return directions.stream()
-                .filter(direction -> src.canCrossMovingStraight(direction, dest))
-                .findFirst()
-                .orElse(null);
+        return pattern.findDirection(src, dest);
     }
 }
