@@ -46,9 +46,9 @@ public class OutputView {
     }
 
     private static void printByColor(final Name value, final Color color) {
-        String name = value.name().substring(0, 1);
+        String name = value.getName();
         if (color.isBlack()) {
-            System.out.print(name.toUpperCase());
+            System.out.print(name);
             return;
         }
         System.out.print(name.toLowerCase());
