@@ -13,15 +13,29 @@ public class ChessGame {
         chessBoard = new ChessBoard();
     }
 
-    public void start() {
+    private void start() {
         state = state.start();
     }
 
-    public void stop() {
+    private void stop() {
         state = state.stop();
     }
 
-    public void move(Command command) {
-        state.changeTurn(command, chessBoard);
+    public void progress(Command command) {
+        if (command.isStart()) {
+            start();
+            return;
+        }
+
+        if (command.isEnd()) {
+            stop();
+            return;
+        }
+
+        state = state.changeTurn(command, chessBoard);
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }
