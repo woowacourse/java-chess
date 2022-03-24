@@ -9,11 +9,15 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PiecesGenerator;
 import chess.domain.piece.Rook;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChessBoardTest {
 
@@ -46,5 +50,14 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(piecesGenerator.generate());
         Piece piece = chessBoard.selectPiece(new Position("a1"));
         assertThat(piece).isInstanceOf(Rook.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a2, true", "a3, false", "h7, true", "h8, false"})
+    @DisplayName("해당 위치에 움직이지 않은 폰이 있는지 확인한다.")
+    void isFirstMovePawn(String position, boolean expected) {
+        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+        ChessBoard chessBoard = new ChessBoard(piecesGenerator.generate());
+        assertThat(chessBoard.isFirstMovePawn(new Position(position))).isEqualTo(expected);
     }
 }

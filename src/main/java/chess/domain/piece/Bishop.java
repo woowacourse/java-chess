@@ -12,8 +12,10 @@ public class Bishop extends Piece {
     public final static List<Direction> DIRECTIONS = List.of(
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static List<String> BLACK_INIT_LOCATIONS = List.of("c8", "f8");
-    public static List<String> WHITE_INIT_LOCATIONS = List.of("c1", "f1");
+    public static List<Position> BLACK_INIT_LOCATIONS = List.of(
+            new Position("c8"), new Position("f8"));
+    public static List<Position> WHITE_INIT_LOCATIONS = List.of(
+            new Position("c1"), new Position("f1"));
 
     public Bishop(Color color) {
         super(color, PieceName.BISHOP);

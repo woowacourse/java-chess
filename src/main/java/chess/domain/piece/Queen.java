@@ -13,8 +13,8 @@ public class Queen extends Piece {
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static String BLACK_INIT_LOCATION = "d8";
-    public static String WHITE_INIT_LOCATION = "d1";
+    public static Position BLACK_INIT_LOCATION = new Position("d8");
+    public static Position WHITE_INIT_LOCATION = new Position("d1");
 
     public Queen(Color color) {
         super(color, PieceName.QUEEN);

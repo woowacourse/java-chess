@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,8 @@ public class King extends Piece {
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static String BLACK_INIT_LOCATION = "e8";
-    public static String WHITE_INIT_LOCATION = "e1";
+    public static Position BLACK_INIT_LOCATION = new Position("e8");
+    public static Position WHITE_INIT_LOCATION = new Position("e1");
 
     public King(Color color) {
         super(color, PieceName.KING);

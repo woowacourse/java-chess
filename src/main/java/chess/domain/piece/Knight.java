@@ -13,8 +13,10 @@ public class Knight extends Piece {
             Direction.SSE, Direction.SSW, Direction.NNE, Direction.NNW,
             Direction.EES, Direction.EEN, Direction.WWS, Direction.WWN);
 
-    public static List<String> BLACK_INIT_LOCATIONS = List.of("b8", "g8");
-    public static List<String> WHITE_INIT_LOCATIONS = List.of("b1", "g1");
+    public static List<Position> BLACK_INIT_LOCATIONS = List.of(
+            new Position("b8"), new Position("g8"));
+    public static List<Position> WHITE_INIT_LOCATIONS = List.of(
+            new Position("b1"), new Position("g1"));
 
     public Knight(Color color) {
         super(color, PieceName.KNIGHT);

@@ -20,52 +20,52 @@ public class NormalPiecesGenerator implements PiecesGenerator {
     }
 
     private void createKing(Map<Position, Piece> pieces) {
-        pieces.put(new Position(King.BLACK_INIT_LOCATION), new King(Color.BLACK));
-        pieces.put(new Position(King.WHITE_INIT_LOCATION), new King(Color.WHITE));
+        pieces.put(King.BLACK_INIT_LOCATION, new King(Color.BLACK));
+        pieces.put(King.WHITE_INIT_LOCATION, new King(Color.WHITE));
     }
 
     private void createQueen(Map<Position, Piece> pieces) {
-        pieces.put(new Position(Queen.BLACK_INIT_LOCATION), new Queen(Color.BLACK));
-        pieces.put(new Position(Queen.WHITE_INIT_LOCATION), new Queen(Color.WHITE));
+        pieces.put(Queen.BLACK_INIT_LOCATION, new Queen(Color.BLACK));
+        pieces.put(Queen.WHITE_INIT_LOCATION, new Queen(Color.WHITE));
     }
 
     private void createRook(Map<Position, Piece> pieces) {
-        for (String location : Rook.BLACK_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Rook(Color.BLACK));
+        for (Position position : Rook.BLACK_INIT_LOCATIONS) {
+            pieces.put(position, new Rook(Color.BLACK));
         }
 
-        for (String location : Rook.WHITE_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Rook(Color.WHITE));
+        for (Position position : Rook.WHITE_INIT_LOCATIONS) {
+            pieces.put(position, new Rook(Color.WHITE));
         }
     }
 
     private void createBishop(Map<Position, Piece> pieces) {
-        for (String location : Bishop.BLACK_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Bishop(Color.BLACK));
+        for (Position position : Bishop.BLACK_INIT_LOCATIONS) {
+            pieces.put(position, new Bishop(Color.BLACK));
         }
 
-        for (String location : Bishop.WHITE_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Bishop(Color.WHITE));
+        for (Position position : Bishop.WHITE_INIT_LOCATIONS) {
+            pieces.put(position, new Bishop(Color.WHITE));
         }
     }
 
     private void createKnight(Map<Position, Piece> pieces) {
-        for (String location : Knight.BLACK_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Knight(Color.BLACK));
+        for (Position position : Knight.BLACK_INIT_LOCATIONS) {
+            pieces.put(position, new Knight(Color.BLACK));
         }
 
-        for (String location : Knight.WHITE_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Knight(Color.WHITE));
+        for (Position position : Knight.WHITE_INIT_LOCATIONS) {
+            pieces.put(position, new Knight(Color.WHITE));
         }
     }
 
     private void createPawn(Map<Position, Piece> pieces) {
-        for (String location : Pawn.BLACK_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Pawn(Color.BLACK));
+        for (Position position : Pawn.BLACK_INIT_LOCATIONS) {
+            pieces.put(position, new Pawn(Color.BLACK));
         }
 
-        for (String location : Pawn.WHITE_INIT_LOCATIONS) {
-            pieces.put(new Position(location), new Pawn(Color.WHITE));
+        for (Position position : Pawn.WHITE_INIT_LOCATIONS) {
+            pieces.put(position, new Pawn(Color.WHITE));
         }
     }
 }
