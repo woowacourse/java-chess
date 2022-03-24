@@ -40,6 +40,10 @@ public enum Direction {
         return getColorDirections(color, List.of(TOP, DOWN, LEFT, RIGHT));
     }
 
+    public static List<Direction> bishopDirection(Color color) {
+        return getColorDirections(color, List.of(TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
+    }
+
     private static List<Direction> getColorDirections(Color color, List<Direction> directions) {
         if (color == Color.WHITE) {
             return directions;
@@ -50,15 +54,10 @@ public enum Direction {
     }
 
     public boolean isSameDirection(Position from, Position to) {
-        return isSameXDirection(from,to) && isSameYDirection(from,to);
-    }
-
-    private boolean isSameXDirection(Position from, Position to) {
-        return (x == 0 && from.getXDistance(to) == 0) || from.getXDistance(to) * x > 0;
-    }
-
-    private boolean isSameYDirection(Position from, Position to) {
-        return (y == 0 && from.getYDistance(to) == 0) || from.getYDistance(to) * y > 0;
+        if (y == 0) {
+            return from.getYDistance(to) == 0 && from.getXDistance(to) * x > 0;
+        }
+        return (double) from.getXDistance(to) / from.getYDistance(to) == (double) x / y;
     }
 
     public boolean isSameDistance(Position from, Position to) {
