@@ -24,4 +24,8 @@ public enum File {
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
     }
+
+    public int displacement(File other) {
+        return other.value.compareTo(this.value);
+    }
 }

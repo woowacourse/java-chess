@@ -18,6 +18,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return source.rankDistance(target) == 2 && source.fileDistance(target) == 1 ||
+            source.rankDistance(target) == 1 && source.fileDistance(target) == 2;
     }
 }

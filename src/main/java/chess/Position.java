@@ -17,8 +17,12 @@ public class Position {
         this.file = File.of(rankFile.substring(0, 1));
     }
 
-    public int displacement(Position other) {
+    public int rankDisplacement(Position other) {
         return rank.displacement(other.rank);
+    }
+
+    public int fileDisplacement(Position other) {
+        return file.displacement(other.file);
     }
 
     public boolean isSameFile(Position other) {
@@ -42,5 +46,13 @@ public class Position {
 
     public boolean isSameRank(Rank otherRank) {
         return rank == otherRank;
+    }
+
+    public int rankDistance(Position other) {
+        return Math.abs(rank.displacement(other.rank));
+    }
+
+    public int fileDistance(Position other) {
+        return Math.abs(file.displacement(other.file));
     }
 }
