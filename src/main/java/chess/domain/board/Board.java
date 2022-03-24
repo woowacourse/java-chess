@@ -76,7 +76,16 @@ public final class Board {
         return Collections.unmodifiableMap(value);
     }
 
-    public boolean move(Position beforePosition, Position afterPosition) {
+    public void move(Position beforePosition, Position afterPosition) {
+        if (!isMovable(beforePosition, afterPosition)) {
+            return;
+        }
+        Piece piece = this.value.get(beforePosition);
+        this.value.put(afterPosition, piece);
+        this.value.put(beforePosition, null);
+    }
+
+    private boolean isMovable(Position beforePosition, Position afterPosition) {
         if (value.get(afterPosition) == null) {
             return true;
         }

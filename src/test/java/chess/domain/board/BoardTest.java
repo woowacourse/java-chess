@@ -134,9 +134,10 @@ public class BoardTest {
         Position b2 = new Position(Column.B, Row.TWO);
         Position h2 = new Position(Column.H, Row.TWO);
 
-        boolean actual = board.move(b2, h2);
+        Piece piece = board.getValue().get(b2);
+        board.move(b2, h2);
 
-        assertThat(actual).isFalse();
+        assertThat(board.getValue().get(b2)).isEqualTo(piece);
     }
 
     @DisplayName("이동하려는 위치가 빈 칸이면 이동할 수 있다.")
@@ -147,9 +148,25 @@ public class BoardTest {
         Position a2 = new Position(Column.A, Row.TWO);
         Position a4 = new Position(Column.A, Row.FOUR);
 
-        boolean actual = board.move(a2, a4);
+        Piece piece = board.getValue().get(a2);
 
-        assertThat(actual).isTrue();
+        board.move(a2, a4);
+
+        assertThat(board.getValue().get(a4)).isEqualTo(piece);
+    }
+
+    @DisplayName("")
+    @Test
+    void attack_opposite_piece() {
+        Board board = new Board();
+
+        Position h1 = new Position(Column.H, Row.ONE);
+        Position h7 = new Position(Column.H, Row.SEVEN);
+        Piece attackingPiece = board.getValue().get(h1);
+
+        board.move(h1,h7);
+
+        assertThat(board.getValue().get(h7)).isEqualTo(attackingPiece);
     }
 
     private static Stream<Arguments> provideRookPosition() {
