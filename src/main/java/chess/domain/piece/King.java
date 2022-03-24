@@ -15,7 +15,7 @@ public class King extends Piece {
 
     @Override
     public boolean movable(Position from, Position to) {
-        Direction direction = from.findDirection(to);
+        Direction direction = from.findDirection(to, true);
         return directions.contains(direction);
     }
 

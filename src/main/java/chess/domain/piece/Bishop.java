@@ -14,7 +14,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean movable(Position from, Position to) {
-        Direction gap = from.findDirection(to);
+        Direction gap = from.findDirection(to, false);
         return directions.contains(gap);
     }
 
