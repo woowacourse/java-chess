@@ -1,11 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.board.Position;
 
 public final class Rook extends Piece {
 
     public Rook(Camp camp) {
         super(camp);
+    }
+
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        int columnDistance = beforePosition.columnDistance(afterPosition);
+        int rowDistance = beforePosition.rowDistance(afterPosition);
+        if (columnDistance == 0) {
+            return true;
+        }
+        return rowDistance == 0;
     }
 
     @Override
