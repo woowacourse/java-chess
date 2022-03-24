@@ -238,4 +238,52 @@ class BoardTest {
         board.move("b8", "d7");
         assertThat(board.piece(Position.of("d7")).get()).isEqualTo(piece);
     }
+
+    @Test
+    @DisplayName("퀸은 수직이동 할 때 이동경로에 다른 기물이 있으면 이동할 수 없다")
+    void queenCanNotMoveVertically_anotherPiecesExistOnPath() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Queen()));
+            pieces.put(Position.of("b5"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("b8"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("b3", "b8"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
+
+    @Test
+    @DisplayName("퀸은 평행이동 할 때 이동경로에 다른 기물이 있으면 이동할 수 없다")
+    void queenCanNotMoveHorizontally_anotherPiecesExistOnPath() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Queen()));
+            pieces.put(Position.of("e3"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("f3"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("b3", "f3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
+
+    @Test
+    @DisplayName("퀸은 대각선 이동경로에 다른 기물이 있으면 움직일 수 없다")
+    void queenCannotMoveDiagonally_anotherPiecesExistOnPath() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new Queen()));
+            pieces.put(Position.of("d4"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("b2"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("g7", "b2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
 }
