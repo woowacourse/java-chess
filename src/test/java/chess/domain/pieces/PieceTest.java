@@ -1,7 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.Board;
-import chess.domain.BoardInitiator;
 import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.position.Position;
@@ -99,6 +97,31 @@ class PieceTest {
                 ),
                 Arguments.of(
                         Position.of("a4"), Position.of("a2"), false
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("pawnFirstMovement")
+    @DisplayName("폰은 초기에만 두 칸 움직일 수 있다")
+    void pawn_firstMove_allowTwoSteps() {
+        Piece piece = new Piece(Color.WHITE, new Pawn());
+        assertThat(piece.isMovable(Position.of("a3"), Position.of("a5"))).isFalse();
+    }
+
+    private static Stream<Arguments> pawnFirstMovement() {
+        return Stream.of(
+                Arguments.of(
+                        Color.WHITE, Position.of("a2"), Position.of("a4"), true
+                ),
+                Arguments.of(
+                        Color.WHITE, Position.of("a7"), Position.of("a5"), false
+                ),
+                Arguments.of(
+                        Color.BLACK, Position.of("a7"), Position.of("a5"), true
+                ),
+                Arguments.of(
+                        Color.BLACK, Position.of("a2"), Position.of("a4"), false
                 )
         );
     }

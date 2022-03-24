@@ -49,4 +49,5 @@ public final class Piece {
         }
         return source.isBelow(target);
     }
+
 }

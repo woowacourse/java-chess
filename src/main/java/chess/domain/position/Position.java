@@ -65,4 +65,8 @@ public final class Position {
     public boolean isBelow(Position target) {
         return row.isSmallerThan(target.row);
     }
+
+    public boolean isSameRow(Row row) {
+        return this.row.isSame(row);
+    }
 }
