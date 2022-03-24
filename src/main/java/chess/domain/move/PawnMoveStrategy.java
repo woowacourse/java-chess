@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public class PawnMoveStrategy {
+public class PawnMoveStrategy implements MoveStrategy{
 
     private static final int NO_HORIZONTAL_MOVE = 0;
     private static final int FORWARD_UNIT_BLACK = -1;
