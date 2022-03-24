@@ -18,5 +18,5 @@ public interface Piece {
 
     Position getPosition();
 
-    Color getColor();
+    boolean hasColorOf(Color color);
 }

@@ -107,7 +107,7 @@ public class ChessGame {
 
     private List<Piece> extractPiecesOf(Color color) {
         return chessmen.stream()
-                .filter(piece -> piece.getColor() == color)
+                .filter(piece -> piece.hasColorOf(color))
                 .collect(Collectors.toUnmodifiableList());
     }
 

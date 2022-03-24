@@ -17,10 +17,14 @@ public abstract class Chessmen implements Piece {
 
     @Override
     public void kill(Piece targetPiece) {
-        if (color == targetPiece.getColor()) {
+        validateIsEnemy(targetPiece);
+        attack(targetPiece.getPosition());
+    }
+
+    private void validateIsEnemy(Piece targetPiece) {
+        if (targetPiece.hasColorOf(color)) {
             throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
         }
-        attack(targetPiece.getPosition());
     }
 
     abstract protected void attack(Position enemyPosition);
@@ -31,7 +35,7 @@ public abstract class Chessmen implements Piece {
     }
 
     @Override
-    public final Color getColor() {
-        return color;
+    public final boolean hasColorOf(Color color) {
+        return this.color == color;
     }
 }
