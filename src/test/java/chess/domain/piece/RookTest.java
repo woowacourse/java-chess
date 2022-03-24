@@ -18,7 +18,7 @@ class RookTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Rook rook = new Rook();
+        Rook rook = new Rook(Team.BLACK);
 
         // then
         assertThat(rook.movable(to, from)).isTrue();
@@ -31,9 +31,20 @@ class RookTest {
         Position to = new Position("a1");
         Position from = new Position("b3");
 
-        Rook rook = new Rook();
+        Rook rook = new Rook(Team.BLACK);
 
         // then
         assertThat(rook.movable(to, from)).isFalse();
+    }
+
+    @DisplayName("이름")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK,R", "WHITE,r"})
+    void name(Team team, String expect) {
+        // given
+        Rook rook = new Rook(team);
+
+        // then
+        assertThat(rook.getName()).isEqualTo(expect);
     }
 }

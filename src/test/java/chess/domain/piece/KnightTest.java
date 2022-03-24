@@ -16,7 +16,7 @@ public class KnightTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Knight knight = new Knight();
+        Knight knight = new Knight(Team.BLACK);
 
         // then
         assertThat(knight.movable(to, from)).isTrue();
@@ -29,9 +29,20 @@ public class KnightTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Knight knight = new Knight();
+        Knight knight = new Knight(Team.BLACK);
 
         // then
         assertThat(knight.movable(to, from)).isFalse();
+    }
+
+    @DisplayName("이름")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK,N", "WHITE,n"})
+    void name(Team team, String expect) {
+        // given
+        Knight knight = new Knight(team);
+
+        // then
+        assertThat(knight.getName()).isEqualTo(expect);
     }
 }

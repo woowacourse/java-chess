@@ -1,12 +1,9 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
-
 import org.junit.jupiter.api.DisplayName;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -20,7 +17,7 @@ public class BishopTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Team.BLACK);
 
         // then
         assertThat(bishop.movable(to, from)).isTrue();
@@ -33,9 +30,20 @@ public class BishopTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Team.BLACK);
 
         // then
         assertThat(bishop.movable(to, from)).isFalse();
+    }
+
+    @DisplayName("이름")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK,B", "WHITE,b"})
+    void name(Team team, String expect) {
+        // given
+        Bishop bishop = new Bishop(team);
+
+        // then
+        assertThat(bishop.getName()).isEqualTo(expect);
     }
 }

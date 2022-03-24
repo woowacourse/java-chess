@@ -3,12 +3,16 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Bishop extends Piece {
-    private static final String name = "B";
-    private final List<Direction> directions;
+public class Bishop implements Piece {
 
-    public Bishop() {
-        super(name);
+    private static final String name = "B";
+
+    private final List<Direction> directions;
+    private final Team team;
+
+
+    public Bishop(Team team) {
+        this.team = team;
         directions = Direction.pullDiagonalDirections();
     }
 
@@ -20,6 +24,6 @@ public class Bishop extends Piece {
 
     @Override
     public String getName() {
-        return null;
+        return team.convert(name);
     }
 }

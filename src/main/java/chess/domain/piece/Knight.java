@@ -3,14 +3,15 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight implements Piece {
 
     private static final String name = "N";
 
     private final List<Direction> directions;
+    private final Team team;
 
-    public Knight() {
-        super(name);
+    public Knight(Team team) {
+        this.team = team;
         directions = Direction.pullKnightDirections();
     }
 
@@ -22,6 +23,6 @@ public class Knight extends Piece {
 
     @Override
     public String getName() {
-        return name;
+        return team.convert(name);
     }
 }

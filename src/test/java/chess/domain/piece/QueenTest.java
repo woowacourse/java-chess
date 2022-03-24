@@ -18,7 +18,7 @@ class QueenTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Queen queen = new Queen();
+        Queen queen = new Queen(Team.BLACK);
 
         // then
         assertThat(queen.movable(to, from)).isTrue();
@@ -31,9 +31,20 @@ class QueenTest {
         Position to = new Position("a1");
         Position from = new Position("b3");
 
-        Queen queen = new Queen();
+        Queen queen = new Queen(Team.BLACK);
 
         // then
         assertThat(queen.movable(to, from)).isFalse();
+    }
+
+    @DisplayName("이름")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK,Q", "WHITE,q"})
+    void name(Team team, String expect) {
+        // given
+        Queen queen = new Queen(team);
+
+        // then
+        assertThat(queen.getName()).isEqualTo(expect);
     }
 }

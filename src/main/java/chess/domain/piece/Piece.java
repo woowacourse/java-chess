@@ -2,18 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public abstract class Piece {
-    private String team;
+public interface Piece {
 
-    public Piece(String team) {
-        this.team = team;
-    }
+    boolean movable(Position to, Position from);
 
-    public abstract boolean movable(Position to, Position from);
-
-    public abstract String getName();
-
-    public String getTeam() {
-        return this.team;
-    }
+    String getName();
 }
