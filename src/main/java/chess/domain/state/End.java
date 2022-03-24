@@ -16,6 +16,6 @@ public class End implements State {
 
     @Override
     public State changeTurn(Command command, ChessBoard chessBoard) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("게임을 종료합니다.");
     }
 }
