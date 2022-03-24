@@ -12,15 +12,27 @@ public final class Position {
     }
 
     public int calculateDistanceX(Position position) {
-        return position.getPositionX().getCoordination() - positionX.getCoordination();
+        return positionX.distanceFrom(position.positionX);
     }
 
     public int calculateDistanceY(Position position) {
-        return position.getPositionY().getCoordination() - positionY.getCoordination();
+        return positionY.distanceFrom(position.positionY);
     }
 
-    public PositionX getPositionX() {
-        return positionX;
+    public int calculateDistanceFrom(Position position) {
+        return Math.max(Math.abs(calculateDistanceY(position)), Math.abs(calculateDistanceX(position)));
+    }
+
+    public int calculateXSlope(Position target, int routeLength) {
+        return calculateDistanceX(target) / routeLength;
+    }
+
+    public int calculateYSlope(Position target, int routeLength) {
+        return calculateDistanceY(target) / routeLength;
+    }
+
+    public Position shift(int xShift, int yShift) {
+        return new Position(positionX.shift(xShift), positionY.shift(yShift));
     }
 
     public PositionY getPositionY() {

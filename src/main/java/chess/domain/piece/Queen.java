@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +36,14 @@ public class Queen extends Piece {
     @Override
     public List<Position> findRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
-        int sourcePositionX = source.getPositionX().getCoordination();
-        int sourcePositionY = source.getPositionY().getCoordination();
 
-        int routeLength = Math.max(Math.abs(source.calculateDistanceY(target)), Math.abs(source.calculateDistanceX(target)));
-        int xSlope = source.calculateDistanceX(target) / routeLength;
-        int ySlope = source.calculateDistanceY(target) / routeLength;
+        int routeLength = source.calculateDistanceFrom(target);
+        int xSlope = source.calculateXSlope(target, routeLength);
+        int ySlope = source.calculateYSlope(target, routeLength);
 
         for (int step = 1; step < routeLength; step++) {
-            route.add(new Position(PositionX.of(sourcePositionX + xSlope * step), PositionY.of(sourcePositionY + ySlope * step)));
+            Position routeNode = source.shift(xSlope * step, ySlope * step);
+            route.add(routeNode);
         }
         return route;
     }
