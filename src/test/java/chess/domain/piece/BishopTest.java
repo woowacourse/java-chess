@@ -11,6 +11,26 @@ import org.junit.jupiter.api.Test;
 
 public class BishopTest {
 
+    @DisplayName("ofLeft 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 왼쪽 비숍을 생성한다.")
+    @Test
+    void ofLeft() {
+        Bishop actual = Bishop.ofLeft(BLACK);
+
+        Bishop expected = new Bishop(BLACK, Position.of("c8"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("ofRight 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 오른쪽 비숍을 생성한다.")
+    @Test
+    void ofRight() {
+        Bishop actual = Bishop.ofRight(WHITE);
+
+        Bishop expected = new Bishop(WHITE, Position.of("f1"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("비숍은 대각선 방향으로 이동할 수 있다.")
     @Test
     void move() {

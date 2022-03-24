@@ -45,10 +45,10 @@ public class ChessGame {
         return List.of(
                 Rook.ofLeft(color),
                 new Knight(color, Position.of(1, initFileIdx)),
-                new Bishop(color, Position.of(2, initFileIdx)),
+                Bishop.ofLeft(color),
                 new Queen(color, Position.of(3, initFileIdx)),
                 new King(color, Position.of(4, initFileIdx)),
-                new Bishop(color, Position.of(5, initFileIdx)),
+                Bishop.ofRight(color),
                 new Knight(color, Position.of(6, initFileIdx)),
                 Rook.ofRight(color));
     }

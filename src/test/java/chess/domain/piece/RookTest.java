@@ -14,7 +14,7 @@ public class RookTest {
     @DisplayName("ofLeft 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 왼쪽 룩을 생성한다.")
     @Test
     void ofLeft() {
-        Rook actual =  Rook.ofLeft(BLACK);
+        Rook actual = Rook.ofLeft(BLACK);
 
         Rook expected = new Rook(BLACK, Position.of("a8"));
 
@@ -24,7 +24,7 @@ public class RookTest {
     @DisplayName("ofRight 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 오른쪽 룩을 생성한다.")
     @Test
     void ofRight() {
-        Rook actual =  Rook.ofRight(WHITE);
+        Rook actual = Rook.ofRight(WHITE);
 
         Rook expected = new Rook(WHITE, Position.of("h1"));
 
