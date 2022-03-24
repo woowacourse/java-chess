@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.piece.strategy.BishopMovableStrategy;
 
 public final class Bishop extends Piece {
