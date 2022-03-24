@@ -26,6 +26,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isBlack() {
+        return Character.isUpperCase(signature.charAt(0));
+    }
+
     public Position getPosition() {
         return position;
     }

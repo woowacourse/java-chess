@@ -3,6 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Turn;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
@@ -44,12 +45,25 @@ public class BoardTest {
     void move() {
         Board board = new Board();
         board.initialize();
-        board.move(new Position("b8"), new Position("a6"));
+        Turn turn = new Turn();
+        turn.countTurn();
+        board.move(new Position("b8"), new Position("a6"), turn);
 
         assertThat(board.getPiece(new Position("b8")))
                 .isInstanceOf(Blank.class);
         assertThat(board.getPiece(new Position("a6")))
                 .isInstanceOf(Knight.class);
+    }
+
+    @DisplayName("상대방 말을 선택할 시 예외가 발생한다.")
+    @Test
+    void moveWrongPiece_Fails() {
+        Board board = new Board();
+        board.initialize();
+
+        assertThatThrownBy(() -> board.move(new Position("b8"), new Position("a6"), new Turn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("본인의 기물이 아닙니다.");
     }
 
     @DisplayName("대각선 직선 이동 시 중간에 기물이 존재한다면 이동할 수 없다.")

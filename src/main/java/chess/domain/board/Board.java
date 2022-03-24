@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Turn;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Direction;
@@ -19,6 +20,7 @@ public class Board {
     private static final int RANK_CAPACITY = 8;
     private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
     private static final String OBSTACLE_EXCEPTION_MESSAGE = "경로에 기물이 존재합니다.";
+    private static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
 
     private final Map<Integer, Rank> ranks;
 
@@ -81,8 +83,14 @@ public class Board {
         )));
     }
 
-    public void move(Position start, Position target) {
-        if (getPiece(start).isKnight()) {
+    public void move(Position start, Position target, Turn turn) {
+        Piece selected = getPiece(start);
+
+        if (selected.isBlack() != turn.isBlackTurn()) {
+            throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
+        }
+
+        if (selected.isKnight()) {
             jump(start, target);
             return;
         }
