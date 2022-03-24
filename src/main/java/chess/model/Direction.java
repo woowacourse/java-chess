@@ -11,11 +11,17 @@ public enum Direction {
     SOUTHWEST(-1, -1),
     WEST(-1, 0),
     NORTHWEST(-1, 1),
-    ;
+    NNE(1, 2),
+    NNW(-1, 2),
+    SSE(1, -2),
+    SSW(-1, -2),
+    EEN(2, 1),
+    EES(2, -1),
+    WWN(-2, 1),
+    WWS(-2, -1);
 
     private int row;
     private int col;
-
     Direction(int row, int col) {
         this.row = row;
         this.col = col;
@@ -27,5 +33,9 @@ public enum Direction {
 
     public int getCol() {
         return col;
+    }
+
+    public static List<Direction> getKnightDirection() {
+        return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 }
