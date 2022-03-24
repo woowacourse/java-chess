@@ -8,7 +8,7 @@ public class Position {
 
     private final File file;
     private final Rank rank;
-    
+
     private static final List<Position> TOTAL = new ArrayList<>();
 
     private Position(final File file, final Rank rank) {
