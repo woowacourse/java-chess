@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 import java.util.Objects;
 
 public final class Pawn extends Piece {

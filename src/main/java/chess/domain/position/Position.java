@@ -1,9 +1,6 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
-import static chess.domain.piece.position.PositionUtil.charToMatchingInt;
-import static chess.domain.piece.position.PositionUtil.fileToIdx;
-import static chess.domain.piece.position.PositionUtil.rankToIdx;
-
+import chess.domain.position.util.PositionUtil;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +11,8 @@ public class Position {
 
     private Position(String value) {
         char[] positionInfo = value.toCharArray();
-        this.fileIdx = charToMatchingInt(positionInfo[0]);
-        this.rankIdx = charToMatchingInt(positionInfo[1]);
+        this.fileIdx = PositionUtil.charToMatchingInt(positionInfo[0]);
+        this.rankIdx = PositionUtil.charToMatchingInt(positionInfo[1]);
     }
 
     public static Position of(int fileIdx, int rankIdx) {
@@ -94,8 +91,8 @@ public class Position {
 
         static String toKey(String value) {
             char[] positionInfo = value.toCharArray();
-            int fileIdx = fileToIdx(positionInfo[0]);
-            int rankIdx = rankToIdx(positionInfo[1]);
+            int fileIdx = PositionUtil.fileToIdx(positionInfo[0]);
+            int rankIdx = PositionUtil.rankToIdx(positionInfo[1]);
             return fileIdx + "" + rankIdx;
         }
     }

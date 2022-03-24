@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 
 public abstract class Strongmen extends Piece {
 

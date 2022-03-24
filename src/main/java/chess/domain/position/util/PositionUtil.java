@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.position.util;
 
 import java.util.HashMap;
 import java.util.List;

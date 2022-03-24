@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Strongmen.firstRankOf;
 
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 import java.util.Objects;
 
 public class Bishop extends Piece {

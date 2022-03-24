@@ -2,7 +2,7 @@ package chess.domain;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.domain.piece.position.PositionUtil.FILES_TOTAL_SIZE;
+import static chess.domain.position.util.PositionUtil.FILES_TOTAL_SIZE;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -12,7 +12,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Chessmen;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.ArrayList;

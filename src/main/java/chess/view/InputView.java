@@ -1,6 +1,6 @@
 package chess.view;
 
-import static chess.domain.piece.position.PositionUtil.validatePosition;
+import static chess.domain.position.util.PositionUtil.validatePosition;
 import static chess.view.OutputView.print;
 
 import chess.dto.MovePositionCommandDto;

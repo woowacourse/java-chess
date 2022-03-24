@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 import java.util.Objects;
 
 public class King extends Strongmen {
