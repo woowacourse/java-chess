@@ -19,12 +19,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 class RookMovableStrategyTest {
 
     private PieceMovableStrategy rookMovableStrategy;
-    private Position start;
+    private Position source;
 
     @BeforeEach
     void setUp() {
         rookMovableStrategy = new RookMovableStrategy();
-        start = new Position('d', '4');
+        source = new Position('d', '4');
     }
 
     @ParameterizedTest
@@ -32,18 +32,18 @@ class RookMovableStrategyTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어났는지에 따른 이동 가능여부")
     void emptyDirection(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Rook(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Rook(WHITE)));
 
-        assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(rookMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
     void isMovableToClearEmptyPosition() {
         Position target = new Position('d', '8');
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Rook(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Rook(WHITE)));
 
-        assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isTrue();
+        assertThat(rookMovableStrategy.isMovable(source, target, chessBoard)).isTrue();
     }
 
     @ParameterizedTest
@@ -52,10 +52,10 @@ class RookMovableStrategyTest {
     void isMovableToClearPiecePosition(Color color, boolean expected) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Rook(WHITE),
+                source, new Rook(WHITE),
                 target, new Rook(color)));
 
-        assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(rookMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @Test
@@ -63,10 +63,10 @@ class RookMovableStrategyTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Rook(WHITE),
+                source, new Rook(WHITE),
                 new Position('d', '7'), new Rook(BLACK)));
 
-        assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+        assertThat(rookMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
     }
 
     @ParameterizedTest
@@ -75,10 +75,10 @@ class RookMovableStrategyTest {
     void isMovableToNotClearPiecePosition(Color color) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Rook(WHITE),
+                source, new Rook(WHITE),
                 new Position('d', '7'), new Rook(BLACK),
                 target, new Rook(color)));
 
-        assertThat(rookMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+        assertThat(rookMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
     }
 }

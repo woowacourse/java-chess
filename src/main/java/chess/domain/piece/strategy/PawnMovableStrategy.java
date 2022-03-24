@@ -21,26 +21,26 @@ public abstract class PawnMovableStrategy implements PieceMovableStrategy {
     }
 
     @Override
-    public boolean isMovable(Position start, Position target, ChessBoard chessBoard) {
-        if (existDirectionToEnemyPiecePosition(start, target, chessBoard)) {
-            return isMovableToEnemyPosition(start, target);
+    public boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
+        if (existDirectionToEnemyPiecePosition(source, target, chessBoard)) {
+            return isMovableToEnemyPosition(source, target);
         }
-        return isMovableToPosition(start, target, chessBoard);
+        return isMovableToPosition(source, target, chessBoard);
     }
 
-    private boolean existDirectionToEnemyPiecePosition(Position start, Position target, ChessBoard chessBoard) {
-        Piece piece = chessBoard.pieceByPosition(start);
+    private boolean existDirectionToEnemyPiecePosition(Position source, Position target, ChessBoard chessBoard) {
+        Piece piece = chessBoard.pieceByPosition(source);
         return !chessBoard.isPositionEmpty(target) && !piece.isSameTeamPiece(chessBoard.pieceByPosition(target));
     }
 
-    private boolean isMovableToEnemyPosition(final Position start, final Position target) {
+    private boolean isMovableToEnemyPosition(Position source, Position target) {
         return moveDirectionToEnemy.stream()
-                .map(direction -> direction.route(start, target))
+                .map(direction -> direction.route(source, target))
                 .anyMatch(positions -> positions.size() == MOVABLE_TO_ENEMY_COUNT);
     }
 
-    private boolean isMovableToPosition(final Position start, final Position target, final ChessBoard chessBoard) {
-        List<Position> route = moveDirection.route(start, target);
+    private boolean isMovableToPosition(Position source, Position target, ChessBoard chessBoard) {
+        List<Position> route = moveDirection.route(source, target);
         return existMovablePosition(route) && isClearRoute(route, chessBoard);
     }
 

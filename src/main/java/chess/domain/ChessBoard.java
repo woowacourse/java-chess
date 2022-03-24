@@ -23,11 +23,11 @@ public class ChessBoard {
         return new ChessBoard(PieceFactory.createNewChessBoard());
     }
 
-    public void movePiece(Position start, Position target, Color color) {
+    public void movePiece(Position source, Position target, Color color) {
         validateFinishedGame();
-        validateMovableColor(start, color);
-        Piece movedPiece = pieceByPosition(start).move(start, target, this);
-        pieces.remove(start);
+        validateMovableColor(source, color);
+        Piece movedPiece = pieceByPosition(source).move(source, target, this);
+        pieces.remove(source);
         pieces.put(target, movedPiece);
     }
 
@@ -37,8 +37,8 @@ public class ChessBoard {
         }
     }
 
-    private void validateMovableColor(final Position start, final Color color) {
-        if (!pieceByPosition(start).isSameColor(color)) {
+    private void validateMovableColor(Position source, Color color) {
+        if (!pieceByPosition(source).isSameColor(color)) {
             throw new IllegalStateException("상대 진영의 기물을 움직일 수 없습니다.");
         }
     }

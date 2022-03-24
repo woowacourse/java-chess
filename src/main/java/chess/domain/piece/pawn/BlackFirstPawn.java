@@ -12,8 +12,8 @@ public final class BlackFirstPawn extends AbstractBlackPawn {
     }
 
     @Override
-    public Piece move(Position start, Position target, ChessBoard chessBoard) {
-        super.move(start, target, chessBoard);
+    public Piece move(Position source, Position target, ChessBoard chessBoard) {
+        super.move(source, target, chessBoard);
         return new BlackPawn();
     }
 }

@@ -17,8 +17,8 @@ public abstract class Piece {
         this.pieceMovableStrategy = pieceMovableStrategy;
     }
 
-    public Piece move(Position start, Position target, ChessBoard chessBoard) {
-        if (!pieceMovableStrategy.isMovable(start, target, chessBoard)) {
+    public Piece move(Position source, Position target, ChessBoard chessBoard) {
+        if (!pieceMovableStrategy.isMovable(source, target, chessBoard)) {
             throw new IllegalStateException("움직일 수 없는 곳입니다.");
         }
         return this;

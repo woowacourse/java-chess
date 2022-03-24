@@ -19,12 +19,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 class QueenMovableStrategyTest {
 
     private PieceMovableStrategy queenMovableStrategy;
-    private Position start;
+    private Position source;
 
     @BeforeEach
     void setUp() {
         queenMovableStrategy = new QueenMovableStrategy();
-        start = new Position('d', '4');
+        source = new Position('d', '4');
     }
 
     @ParameterizedTest
@@ -32,18 +32,18 @@ class QueenMovableStrategyTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어났는지에 따른 이동 가능여부")
     void emptyDirection(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Queen(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Queen(WHITE)));
 
-        assertThat(queenMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(queenMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
     void isMovableToClearEmptyPosition() {
         Position target = new Position('d', '8');
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Queen(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Queen(WHITE)));
 
-        assertThat(queenMovableStrategy.isMovable(start, target, chessBoard)).isTrue();
+        assertThat(queenMovableStrategy.isMovable(source, target, chessBoard)).isTrue();
     }
 
     @ParameterizedTest
@@ -52,10 +52,10 @@ class QueenMovableStrategyTest {
     void isMovableToClearPiecePosition(Color color, boolean expected) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Queen(WHITE),
+                source, new Queen(WHITE),
                 target, new Queen(color)));
 
-        assertThat(queenMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+        assertThat(queenMovableStrategy.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
     @Test
@@ -63,10 +63,10 @@ class QueenMovableStrategyTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Queen(WHITE),
+                source, new Queen(WHITE),
                 new Position('d', '7'), new Queen(BLACK)));
 
-        assertThat(queenMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+        assertThat(queenMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
     }
 
     @ParameterizedTest
@@ -75,10 +75,10 @@ class QueenMovableStrategyTest {
     void isMovableToNotClearPiecePosition(Color color) {
         Position target = new Position('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Queen(WHITE),
+                source, new Queen(WHITE),
                 new Position('d', '7'), new Queen(BLACK),
                 target, new Queen(color)));
 
-        assertThat(queenMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+        assertThat(queenMovableStrategy.isMovable(source, target, chessBoard)).isFalse();
     }
 }
