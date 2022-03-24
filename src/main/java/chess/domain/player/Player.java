@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Player {
 
@@ -19,9 +20,19 @@ public class Player {
                 .anyMatch(piece -> piece.exist(position));
     }
 
+    public List<Piece> findAll() {
+        return pieces.stream()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public Position move(final Position current, final Position destination) {
         return findPiece(current)
                 .move(current, destination);
+    }
+
+    public Position capture(final Position current, final Position destination) {
+        return findPiece(current)
+                .capture(current, destination);
     }
 
     public void remove(final Position position) {
