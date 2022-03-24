@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.piece.position.Position;
 import java.util.Objects;
 
@@ -21,6 +24,16 @@ public final class Pawn extends Piece {
 
     public Pawn(Color color, Position position) {
         super(color, position);
+    }
+
+    public static Pawn ofBlack(int fileIdx) {
+        Position position = Position.of(fileIdx, BLACK_PAWN_INIT_RANK);
+        return new Pawn(BLACK, position);
+    }
+
+    public static Pawn ofWhite(int fileIdx) {
+        Position position = Position.of(fileIdx, WHITE_PAWN_INIT_RANK);
+        return new Pawn(WHITE, position);
     }
 
     @Override
@@ -48,7 +61,7 @@ public final class Pawn extends Piece {
     }
 
     private int moveRankDifference(int moveCount) {
-        if (color == Color.BLACK) {
+        if (color == BLACK) {
             return moveCount * -1;
         }
         return moveCount;
@@ -60,11 +73,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color == Color.WHITE && WHITE_PAWN_INIT_RANK == curRankIdx;
+        return color == WHITE && WHITE_PAWN_INIT_RANK == curRankIdx;
     }
 
     private boolean isBlackJump(int curRankIdx) {
-        return color == Color.BLACK && BLACK_PAWN_INIT_RANK == curRankIdx;
+        return color == BLACK && BLACK_PAWN_INIT_RANK == curRankIdx;
     }
 
     @Override
@@ -105,7 +118,7 @@ public final class Pawn extends Piece {
 
     @Override
     public String display() {
-        if (color == Color.BLACK) {
+        if (color == BLACK) {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;

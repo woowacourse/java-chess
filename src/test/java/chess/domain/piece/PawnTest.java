@@ -11,6 +11,26 @@ import org.junit.jupiter.api.Test;
 
 public class PawnTest {
 
+    @DisplayName("ofBlack 정적 팩토리 메서드는 매개변수에 해당되는 열에 흑색 폰을 생성한다.")
+    @Test
+    void ofBlack() {
+        Pawn actual =  Pawn.ofBlack(0);
+
+        Pawn expected = new Pawn(BLACK, Position.of("a7"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("ofWhite 정적 팩토리 메서드는 매개변수에 해당되는 열에 백색 폰을 생성한다.")
+    @Test
+    void ofWhite() {
+        Pawn actual =  Pawn.ofWhite(2);
+
+        Pawn expected = new Pawn(WHITE, Position.of("c2"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("백색 폰은 앞으로 한칸 전진할 수 있다.")
     @Test
     void move_whiteForward() {
