@@ -33,6 +33,15 @@ public enum Row {
         return findY(this.y + y);
     }
 
+    public boolean canMove(int y) {
+        try {
+            findY(this.y + y);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     private Row findY(int input) {
         return Arrays.stream(Row.values())
                 .filter(row -> row.y == input)

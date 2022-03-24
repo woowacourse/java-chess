@@ -32,4 +32,31 @@ class PositionTest {
 
         assertThat(position1).isEqualTo(position2);
     }
+
+    @DisplayName("출발 위치와 도착 위치가 직선상에 존재하면 true를 반환한다 (북)")
+    @Test
+    void testCanCrossMovingStraightNorth() {
+        Position src = Position.of("d3");
+        Position dest = Position.of("d5");
+
+        assertThat(src.canCrossMovingStraight(Direction.NORTH, dest)).isTrue();
+    }
+
+    @DisplayName("출발 위치와 도착 위치가 직선상에 존재하면 true를 반환한다 (북동)")
+    @Test
+    void testCanCrossMovingStraightCross() {
+        Position src = Position.of("d5");
+        Position dest = Position.of("g8");
+
+        assertThat(src.canCrossMovingStraight(Direction.NORTH_EAST, dest)).isTrue();
+    }
+
+    @DisplayName("출발 위치와 도착 위치가 직선상에 존재하지 않으면 false를 반환한다")
+    @Test
+    void testCanCrossMovingStraight() {
+        Position src = Position.of("d3");
+        Position dest = Position.of("d1");
+
+        assertThat(src.canCrossMovingStraight(Direction.NORTH, dest)).isFalse();
+    }
 }

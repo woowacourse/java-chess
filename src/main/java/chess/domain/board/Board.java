@@ -2,7 +2,9 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class Board {
 

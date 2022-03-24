@@ -33,6 +33,15 @@ public enum Column {
         return findX(this.x + x);
     }
 
+    public boolean canMove(int x) {
+        try {
+            findX(this.x + x);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     private Column findX(int input) {
         return Arrays.stream(Column.values())
                 .filter(column -> column.x == input)

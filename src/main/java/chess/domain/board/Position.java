@@ -45,6 +45,25 @@ public class Position {
         return row == rank;
     }
 
+    public boolean canCrossMovingStraight(Direction direction, Position dest) {
+        return moveToNextPositionCheckingDestination(this, dest, direction.getX(), direction.getY());
+    }
+
+    private boolean moveToNextPositionCheckingDestination(Position start, Position dest, int x, int y) {
+        if (!start.canMove(x, y)) {
+            return false;
+        }
+        Position nextPosition = start.move(x, y);
+        if (nextPosition.equals(dest)) {
+            return true;
+        }
+        return moveToNextPositionCheckingDestination(nextPosition, dest, x, y);
+    }
+
+    private boolean canMove(int x, int y) {
+        return column.canMove(x) && row.canMove(y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
