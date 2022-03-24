@@ -1,15 +1,33 @@
 package chess.domain.piece;
 
-public class RookPiece extends FullPiece{
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RookPiece extends FullPiece {
 
     private static final String WHITE_NAME = "r";
     private static final String BLACK_NAME = "R";
 
     private final String name;
+    private final List<Direction> movableDirections;
 
     public RookPiece(final Color color) {
         super(color);
         this.name = decideName(color);
+        this.movableDirections = new ArrayList<>(
+            List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH));
+    }
+
+    @Override
+    public boolean isMovable(Position from, Position to) {
+        final int fileDistance = to.calculateFileDistance(from);
+        final int rankDistance = to.calculateRankDistance(from);
+
+        final Direction direction = Direction.of(fileDistance, rankDistance);
+
+        return movableDirections.contains(direction);
     }
 
     private String decideName(final Color color) {
