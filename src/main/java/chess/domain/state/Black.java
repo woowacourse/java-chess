@@ -16,7 +16,7 @@ public class Black implements State {
 
     @Override
     public State stop() {
-        throw new IllegalArgumentException();
+        return new End();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Black implements State {
 
         chessBoard.move(command);
 
-        return new Black();
+        return new White();
     }
 
     private void checkTeam(Command command, ChessBoard chessBoard) {

@@ -17,7 +17,7 @@ public class White implements State {
 
     @Override
     public State stop() {
-        throw new IllegalArgumentException();
+        return new End();
     }
 
     @Override
