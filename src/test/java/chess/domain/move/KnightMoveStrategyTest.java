@@ -27,4 +27,13 @@ public class KnightMoveStrategyTest {
 
         assertThat(knightMoveStrategy.isMovable(board, source, target)).isTrue();
     }
+
+    @Test
+    @DisplayName("나이트 이동 패턴이 아니다.")
+    void isMovableNotKnightMovePattern() {
+        Position source = Position.valueOf("b8");
+        Position target = Position.valueOf("c7");
+
+        assertThat(knightMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
 }
