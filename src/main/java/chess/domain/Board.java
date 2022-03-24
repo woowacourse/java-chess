@@ -86,21 +86,21 @@ public class Board {
             throw new IllegalArgumentException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
         }
 
-        if (!source.isSameColor(color)){
-            throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
-        }
-
         if (source.equals(new EmptyPiece())) {
             throw new IllegalStateException("[ERROR] source 위치에 기물이 존재하지 않습니다.");
         }
 
+        if (!source.isSameColor(color)) {
+            throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
+        }
+
         // 행마법
-        if (!source.isMovable(from, to)){
+        if (!source.isMovable(from, to, target.equals(new EmptyPiece()))) {
             throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
         }
 
         // target 위치 기물 확인
-        // 1. 색상 확인
+        // 색상 확인
         if (target.isSameColor(color)) {
             throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
         }

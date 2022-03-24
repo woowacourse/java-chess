@@ -24,7 +24,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to));
+        assertTrue(pawn.isMovable(from, to, false));
     }
 
     @ParameterizedTest
@@ -35,7 +35,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to));
+        assertTrue(pawn.isMovable(from, to, false));
     }
 
     @Test
@@ -45,7 +45,7 @@ class PawnPieceTest {
         Position from = Position.create("a2");
         Position to = Position.create("a4");
 
-        assertTrue(pawn.isMovable(from, to));
+        assertTrue(pawn.isMovable(from, to, false));
     }
 
     @Test
@@ -55,7 +55,7 @@ class PawnPieceTest {
         Position from = Position.create("a7");
         Position to = Position.create("a5");
 
-        assertTrue(pawn.isMovable(from, to));
+        assertTrue(pawn.isMovable(from, to, false));
     }
 
     @ParameterizedTest
@@ -66,7 +66,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertFalse(pawn.isMovable(from, to));
+        assertFalse(pawn.isMovable(from, to, false));
     }
 
     @ParameterizedTest
@@ -77,7 +77,16 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertFalse(pawn.isMovable(from, to));
+        assertFalse(pawn.isMovable(from, to, false));
     }
 
+    @Test
+    @DisplayName("폰은 target 위치에 기물이 없을 때 대각선으로 이동할 수 없다.")
+    void cantMoveDiagonalWhenEmptyTarget() {
+        Piece pawn = new PawnPiece(Color.BLACK);
+        Position from = Position.create("b7");
+        Position to = Position.create("c6");
+
+        assertFalse(pawn.isMovable(from, to, true));
+    }
 }

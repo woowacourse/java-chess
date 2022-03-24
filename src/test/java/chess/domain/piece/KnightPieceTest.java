@@ -18,7 +18,7 @@ class KnightPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(knight.isMovable(from, to));
+        assertTrue(knight.isMovable(from, to, false));
     }
 
     @ParameterizedTest
@@ -29,6 +29,6 @@ class KnightPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertFalse(knight.isMovable(from, to));
+        assertFalse(knight.isMovable(from, to, false));
     }
 }

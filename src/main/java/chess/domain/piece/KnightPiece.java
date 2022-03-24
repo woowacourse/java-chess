@@ -25,7 +25,7 @@ public class KnightPiece extends FullPiece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 

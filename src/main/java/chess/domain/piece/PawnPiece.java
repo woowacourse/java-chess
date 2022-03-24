@@ -20,6 +20,13 @@ public class PawnPiece extends FullPiece {
         this.movableDirections = decideMovableDirections(color);
     }
 
+    private String decideName(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE_NAME;
+        }
+        return BLACK_NAME;
+    }
+
     private List<Direction> decideMovableDirections(final Color color) {
         if (color == Color.WHITE) {
             return new ArrayList<>(
@@ -30,7 +37,7 @@ public class PawnPiece extends FullPiece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to) {
+    public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 
@@ -40,22 +47,22 @@ public class PawnPiece extends FullPiece {
             return true;
         }
 
+        if (direction != Direction.NORTH && direction != Direction.SOUTH && isEmptyTarget) {
+            return false;
+        }
+
         return movableDirections.contains(direction) &&
             Math.abs(fileDistance) < 2 && Math.abs(rankDistance) < 2;
     }
 
-    private boolean isInitialPositionAndMoveTwice(final Position from, final int fileDistance, final int rankDistance) {
-        if (super.getColor() == Color.BLACK && from.isSameRank(Rank.SEVEN) && fileDistance == 0 && rankDistance == -2) {
+    private boolean isInitialPositionAndMoveTwice(final Position from, final int fileDistance,
+        final int rankDistance) {
+        if (super.getColor() == Color.BLACK && from.isSameRank(Rank.SEVEN) && fileDistance == 0
+            && rankDistance == -2) {
             return true;
         }
-        return super.getColor() == Color.WHITE && from.isSameRank(Rank.TWO) && fileDistance == 0 && rankDistance == 2;
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
+        return super.getColor() == Color.WHITE && from.isSameRank(Rank.TWO) && fileDistance == 0
+            && rankDistance == 2;
     }
 
     @Override
