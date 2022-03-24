@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.piece.Piece;
 import java.util.Map;
+>>>>>>> refactor(Board.java): 체스판 생성을 별도의 전략으로 분리
 
 public class WebApplication {
 
