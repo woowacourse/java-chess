@@ -1,4 +1,4 @@
-package chess.view.command;
+package chess.command;
 
 public class End implements Command {
 

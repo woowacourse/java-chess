@@ -2,8 +2,8 @@ package chess;
 
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.command.Command;
-import chess.view.command.Ready;
+import chess.command.Command;
+import chess.command.Ready;
 
 public class ChessGame {
 
