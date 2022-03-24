@@ -23,14 +23,20 @@
     * 룩(Rook)
     * 퀸(Queen)
     * 킹(King)
-    
 
-- 게임의 상태에 대해서
-    - ready
-    - blackTurn
-    - whiteTurn
-    - blackWin
-    - whiteWin
+## 게임 진행 기능 구현 목록
+
+- [x] 각 턴마다 기물을 움직일 수 있다.
+    - [x] 첫 수는 화이트 턴이 둔다.
+    - [x] 블랙 턴에 기물을 움직이면 화이트 턴이 된다.
+    - [x] 화이트 턴에 기물을 움직이면 블랙 턴이 된다.
+    - [x] 자기 턴에 상대방의 기물을 이동할 수 없다.
+
+- State
+    - Ready
+        - Running
+            - WhiteTurn
+            - BlackTurn
 
 ## 기물 이동 기능 구현 목록
 
