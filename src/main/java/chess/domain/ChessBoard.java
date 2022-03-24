@@ -10,6 +10,8 @@ import java.util.Objects;
 
 public class ChessBoard {
 
+    private static final int FINISHED_GAME_KING_COUNT = 1;
+
     private final Map<Position, Piece> pieces;
 
     public ChessBoard(Map<Position, Piece> pieces) {
@@ -22,6 +24,9 @@ public class ChessBoard {
     }
 
     public void movePiece(Position start, Position target) {
+        if (isFinished()) {
+            throw new IllegalStateException("게임이 종료되어 기물을 움직일 수 없습니다.");
+        }
         Piece movedPiece = pieceByPosition(start).move(start, target, this);
         pieces.remove(start);
         pieces.put(target, movedPiece);
@@ -83,7 +88,7 @@ public class ChessBoard {
     }
 
     public boolean isFinished() {
-        return countKing() != 2;
+        return countKing() == FINISHED_GAME_KING_COUNT;
     }
 
     private int countKing() {

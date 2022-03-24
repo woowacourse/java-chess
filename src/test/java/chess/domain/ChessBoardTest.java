@@ -41,6 +41,19 @@ class ChessBoardTest {
         assertThat(chessBoard.getPieces()).hasSize(32);
     }
 
+    @Test
+    @DisplayName("게임 종료 후 기물 이동 시 예외발생")
+    void movePieceException() {
+        Position position = new Position('a', '1');
+        Position target = new Position('a', '2');
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE)));
+
+        assertThatThrownBy(() -> chessBoard.movePiece(position, target))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료되어 기물을 움직일 수 없습니다.");
+
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"a,1,false", "a,2,true"})
     @DisplayName("해당 위치가 비어있는지 확인")
