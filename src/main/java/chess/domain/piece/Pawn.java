@@ -1,30 +1,26 @@
 package chess.domain.piece;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.strategy.BlackPawnMovingStrategy;
+import chess.domain.piece.strategy.MovingStrategy;
+import chess.domain.piece.strategy.WhitePawnMovingStrategy;
 
 public class Pawn extends Piece {
 
-	private static final int BLACK_PAWN_INITIAL_ROW = 7;
-	private static final int WHITE_PAWN_INITIAL_ROW = 2;
-
 	private final String symbol;
 
-	public Pawn(Color color, Position position, String symbol) {
-		super(color, position);
+	public Pawn(Color color, String symbol) {
+		super(color);
 		this.symbol = symbol;
 	}
 
-	public static Pawn createWhite(int row, int column) {
-		return new Pawn(Color.WHITE, new Position(row, column), "♟");
+	public static Pawn createWhite() {
+		return new Pawn(Color.WHITE, "♟");
 	}
 
-	public static Pawn createBlack(int row, int column) {
-		return new Pawn(Color.BLACK, new Position(row, column), "♙");
+	public static Pawn createBlack() {
+		return new Pawn(Color.BLACK, "♙");
 	}
 
 	@Override
@@ -33,48 +29,19 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void move(int row, int column) {
-		validatePosition(row, column);
-		this.position = this.position.change(row, column);
-	}
-
-	private void validatePosition(int row, int column) {
-		Set<Position> positions = generateMovablePosition();
-		if (!positions.contains(new Position(row, column))) {
-			throw new IllegalArgumentException();
+	public boolean isMovable(Position from, Position to) {
+		MovingStrategy movingStrategy = findStrategy();
+		try {
+			return movingStrategy.check(from, to);
+		} catch (IllegalArgumentException exception) {
+			return false;
 		}
 	}
 
-	private Set<Position> generateMovablePosition() {
-		if (this.color == Color.BLACK) {
-			return generateBlackMovablePosition();
+	private MovingStrategy findStrategy() {
+		if (this.color == Color.WHITE) {
+			return new WhitePawnMovingStrategy();
 		}
-		return generateWhiteMovablePosition();
-	}
-
-	private Set<Position> generateBlackMovablePosition() {
-		Set<Position> positions = new HashSet<>(List.of(
-			this.position.change(row -> row - 1, column -> column),
-			this.position.change(row -> row - 1, column -> column - 1),
-			this.position.change(row -> row - 1, column -> column + 1)
-		));
-
-		if (!this.position.isDifferentRow(BLACK_PAWN_INITIAL_ROW)) {
-			positions.add(this.position.change(row -> row - 2, column -> column));
-		}
-		return positions;
-	}
-
-	private Set<Position> generateWhiteMovablePosition() {
-		Set<Position> positions = new HashSet<>(List.of(
-			this.position.change(row -> row + 1, column -> column),
-			this.position.change(row -> row + 1, column -> column - 1),
-			this.position.change(row -> row + 1, column -> column + 1)
-		));
-
-		if (!this.position.isDifferentRow(WHITE_PAWN_INITIAL_ROW)) {
-			positions.add(this.position.change(row -> row + 2, column -> column));
-		}
-		return positions;
+		return new BlackPawnMovingStrategy();
 	}
 }

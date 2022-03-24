@@ -1,68 +1,58 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import chess.domain.Position;
 
 public class PieceInitializer {
 
-	public static List<Piece> generate() {
-		List<Piece> pieces = new ArrayList<>();
-		pieces.addAll(generateKings());
-		pieces.addAll(generateQueens());
-		pieces.addAll(generateBishops());
-		pieces.addAll(generateKnights());
-		pieces.addAll(generateRooks());
-		pieces.addAll(generatePawns());
-		return pieces;
+	public static Map<Position, Piece> generate() {
+		Map<Position, Piece> board = new HashMap<>();
+		generateKings(board);
+		generateQueens(board);
+		generateBishops(board);
+		generateKnights(board);
+		generateRooks(board);
+		generatePawns(board);
+		return board;
 	}
 
-	private static List<King> generateKings() {
-		return List.of(
-			King.createWhite(1, 5),
-			King.createBlack(8, 5)
-		);
+	private static void generateKings(Map<Position, Piece> board) {
+		board.put(new Position(1, 5), King.createWhite());
+		board.put(new Position(8, 5), King.createBlack());
 	}
 
-	private static List<Queen> generateQueens() {
-		return List.of(
-			Queen.createWhite(1, 4),
-			Queen.createBlack(8, 4)
-		);
+	private static void generateQueens(Map<Position, Piece> board) {
+		board.put(new Position(1, 4), Queen.createWhite());
+		board.put(new Position(8, 4), Queen.createBlack());
 	}
 
-	private static List<Bishop> generateBishops() {
-		return List.of(
-			Bishop.createWhite(1, 3),
-			Bishop.createWhite(1, 6),
-			Bishop.createBlack(8, 3),
-			Bishop.createBlack(8, 6)
-		);
+	private static void generateBishops(Map<Position, Piece> board) {
+		board.put(new Position(1, 3), Bishop.createWhite());
+		board.put(new Position(1, 6), Bishop.createWhite());
+		board.put(new Position(8, 3), Bishop.createBlack());
+		board.put(new Position(8, 6), Bishop.createBlack());
 	}
 
-	private static List<Knight> generateKnights() {
-		return List.of(
-			Knight.createWhite(1, 2),
-			Knight.createWhite(1, 7),
-			Knight.createBlack(8, 2),
-			Knight.createBlack(8, 7)
-		);
+	private static void generateKnights(Map<Position, Piece> board) {
+		board.put(new Position(1, 2), Knight.createWhite());
+		board.put(new Position(1, 7), Knight.createWhite());
+		board.put(new Position(8, 2), Knight.createBlack());
+		board.put(new Position(8, 7), Knight.createBlack());
 	}
 
-	private static List<Rook> generateRooks() {
-		return List.of(
-			Rook.createWhite(1, 1),
-			Rook.createWhite(1, 8),
-			Rook.createBlack(8, 1),
-			Rook.createBlack(8, 8)
-		);
+	private static void generateRooks(Map<Position, Piece> board) {
+		board.put(new Position(1, 1), Rook.createWhite());
+		board.put(new Position(1, 8), Rook.createWhite());
+		board.put(new Position(8, 1), Rook.createBlack());
+		board.put(new Position(8, 8), Rook.createBlack());
 	}
 
-	private static List<Pawn> generatePawns() {
-		List<Pawn> pawns = new ArrayList<>();
+	private static void generatePawns(Map<Position, Piece> board) {
 		for (int i = 1; i <= 8; i++) {
-			pawns.add(Pawn.createWhite(2, i));
-			pawns.add(Pawn.createBlack(7, i));
+			board.put(new Position(7, i), Pawn.createBlack());
+			board.put(new Position(2, i), Pawn.createWhite());
 		}
-		return pawns;
 	}
 }

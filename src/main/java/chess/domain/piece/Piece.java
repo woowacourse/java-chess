@@ -6,18 +6,12 @@ import chess.domain.Position;
 public abstract class Piece {
 
 	protected final Color color;
-	protected Position position;
 
-	protected Piece(Color color, Position position) {
+	protected Piece(Color color) {
 		this.color = color;
-		this.position = position;
 	}
 
-	public boolean isSamePosition(int row, int column) {
-		return this.position.equals(new Position(row, column));
-	}
-
-	public abstract void move(int row, int column);
+	public abstract boolean isMovable(Position from, Position to);
 
 	public abstract String getSymbol();
 }

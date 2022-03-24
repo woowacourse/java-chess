@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.Position;
 
 public class OutputView {
 
@@ -19,7 +20,7 @@ public class OutputView {
 
 	private void displaySymbol(Board board, int i, int j) {
 		try {
-			System.out.print(board.findSymbolAt(i, j));
+			System.out.print(board.findPiece(new Position(i, j)).getSymbol());
 		} catch (IllegalArgumentException exception) {
 			System.out.print("ꕤ");
 		}

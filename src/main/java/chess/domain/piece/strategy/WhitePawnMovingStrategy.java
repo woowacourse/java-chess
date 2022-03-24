@@ -5,14 +5,15 @@ import chess.domain.direction.BasicDirection;
 import chess.domain.direction.Direction;
 import chess.domain.direction.DirectionGenerator;
 
-public class BlackPawnMovingStrategy implements MovingStrategy {
+public class WhitePawnMovingStrategy implements MovingStrategy {
 
-	private static final int BLACK_PAWN_INITIAL_ROW = 7;
+	private static final int WHITE_PAWN_INITIAL_ROW = 2;
 
 	@Override
 	public boolean check(Position from, Position to) {
-		Direction direction = DirectionGenerator.generateOfBlackPawn(from, to);
+		Direction direction = DirectionGenerator.generateOfWhitePawn(from, to);
 		int distance = from.calculateDistance(to);
+
 		if (isFirstStartWithTwoStep(from, direction, distance)) {
 			return true;
 		}
@@ -23,12 +24,12 @@ public class BlackPawnMovingStrategy implements MovingStrategy {
 	}
 
 	private boolean isDiagonalStep(Direction direction, int distance) {
-		return distance == 2 && direction != BasicDirection.SOUTH;
+		return distance == 2 && direction != BasicDirection.NORTH;
 	}
 
 	private boolean isFirstStartWithTwoStep(Position from, Direction direction, int distance) {
 		return distance == 2
-			&& direction == BasicDirection.SOUTH
-			&& from.isSameRow(BLACK_PAWN_INITIAL_ROW);
+			&& direction == BasicDirection.NORTH
+			&& from.isSameRow(WHITE_PAWN_INITIAL_ROW);
 	}
 }

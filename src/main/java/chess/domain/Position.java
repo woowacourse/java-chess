@@ -24,37 +24,20 @@ public class Position {
 		}
 	}
 
-	public Position change(int row, int column) {
-		return new Position(row, column);
+	public int subtractRow(Position position) {
+		return this.row - position.row;
 	}
 
-	public Position change(IntUnaryOperator rowOperator, IntUnaryOperator columnOperator) {
-		try {
-			return new Position(rowOperator.applyAsInt(this.row), columnOperator.applyAsInt(this.column));
-		} catch (IllegalArgumentException exception) {
-			return new Position(this.row, this.column);
-		}
+	public int calculateDistance(Position position) {
+		return Math.abs(this.subtractRow(position)) + Math.abs(this.subtractColumn(position));
 	}
 
-	public boolean isDifferentRow(int row) {
-		return this.row != row;
+	public int subtractColumn(Position position) {
+		return this.column - position.column;
 	}
 
-	public boolean isDifferentColumn(int column) {
-		return this.column != column;
-	}
-
-	public boolean isNotAbsoluteSlopeOne(int row, int column) {
-		return Math.abs(column - this.column) != Math.abs(row - this.row);
-	}
-
-	public boolean isNotAbsoluteDifferenceOne(int row, int column) {
-		return Math.abs(column - this.column) > 1 || Math.abs(row - this.row) > 1;
-	}
-
-	public boolean isNotAbsoluteSlopeTwoOrHalf(int row, int column) {
-		return !((Math.abs(this.row - row) == 1 && Math.abs(this.column - column) == 2) ||
-			(Math.abs(this.row - row) == 2 && Math.abs(this.column - column) == 1));
+	public boolean isSameRow(int row) {
+		return this.row == row;
 	}
 
 	@Override
@@ -66,9 +49,9 @@ public class Position {
 		Position position = (Position)o;
 		return row == position.row && column == position.column;
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(row, column);
 	}
+
 }
