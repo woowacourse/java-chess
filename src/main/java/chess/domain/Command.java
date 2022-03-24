@@ -33,11 +33,19 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        if (!Rank.isRank(token[1].charAt(0)) || !File.isFile(token[1].charAt(1))
-        || !Rank.isRank(token[2].charAt(0)) || !File.isFile(token[2].charAt(1))) {
+        if((!isPosition(token[1])) || (!isPosition(token[2]))) {
             throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
         }
+    }
 
+    private static boolean isPosition(String token) {
+        char first = token.charAt(0);
+        char second = token.charAt(1);
+
+        if (File.isFile(first) && Rank.isRank(Character.getNumericValue(second))) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isEnd() {

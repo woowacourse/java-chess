@@ -23,9 +23,9 @@ public enum File {
 
     public static boolean isFile(char candidate) {
         return Arrays.stream(File.values())
-                .map(file -> file.equals(candidate))
-                .findFirst()
-                .orElse(false);
+                .filter(file -> file.getFile() == candidate)
+                .findAny()
+                .isPresent();
     }
 
     public int calculateAbsoluteValue(File other) {

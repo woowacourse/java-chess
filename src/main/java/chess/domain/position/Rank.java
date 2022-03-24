@@ -18,11 +18,11 @@ public enum Rank {
         this.rank = rank;
     }
 
-    public static boolean isRank(char candidate) {
+    public static boolean isRank(int candidate) {
         return Arrays.stream(Rank.values())
-                .map(rank -> rank.equals(candidate))
-                .findFirst()
-                .orElse(false);
+                .filter(rank -> rank.getRank() == candidate)
+                .findAny()
+                .isPresent();
     }
 
     public int calculateRank(Rank other) {
