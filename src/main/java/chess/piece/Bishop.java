@@ -18,7 +18,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        return source.isDiagonal(target);
     }
 
 }

@@ -59,4 +59,8 @@ public class Position {
     public int fileDistance(Position other) {
         return Math.abs(file.displacement(other.file));
     }
+
+    public boolean isDiagonal(Position target) {
+        return this.fileDistance(target) == this.rankDistance(target);
+    }
 }
