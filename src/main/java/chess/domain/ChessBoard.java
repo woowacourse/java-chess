@@ -47,6 +47,8 @@ public class ChessBoard {
 
         Piece piece = cells.get(source);
 
+        piece.canMove(source, target);
+
         cells.remove(source);
 
         cells.put(target, piece);

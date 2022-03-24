@@ -3,7 +3,8 @@ package chess.controller;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.ChessBoard;
+import chess.domain.ChessGame;
+import chess.domain.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -18,6 +19,11 @@ import java.util.Set;
 
 public class ChessController {
 
+    private static final List<Position> positions = stream(Rank.values())
+            .flatMap(rank -> stream(File.values())
+                    .map(file -> new Position(file, rank)))
+            .collect(toList());
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -27,25 +33,25 @@ public class ChessController {
     }
 
     public void run() {
+        ChessGame chessGame = new ChessGame();
+
         outputView.printAnnounce();
-        while (inputView.inputCommand()) {
-            start();
+
+        while (true) {
+            Command command = Command.from(inputView.inputCommand());
+
+            chessGame.progress(command);
+
+            printChessBoard(chessGame);
         }
     }
 
-    public void start() {
-        ChessBoard chessBoard = new ChessBoard();
-
+    private void printChessBoard(ChessGame chessGame) {
         List<String> symbols = new ArrayList<>();
 
-        Map<Position, Piece> cells = chessBoard.getCells();
+        Map<Position, Piece> cells = chessGame.getChessBoard().getCells();
 
-        List<Position> positions = stream(File.values())
-                .flatMap(file -> stream(Rank.values())
-                        .map(rank -> new Position(file, rank)))
-                .collect(toList());
-
-        Collections.reverse(positions);
+        Collections.sort(positions);
 
         Set<Position> cellsKeySet = cells.keySet();
 
