@@ -10,7 +10,7 @@ public class KingMovingStrategy implements MovingStrategy {
 
 	@Override
 	public boolean check(Position from, Position to) {
-		Optional<? extends Direction> nullableDirection = DirectionGenerator.generateOfKing(from, to);
+		Optional<? extends Direction> nullableDirection = DirectionGenerator.generateOfRoyal(from, to);
 		if (nullableDirection.isEmpty()) {
 			return false;
 		}

@@ -28,7 +28,7 @@ public class DirectionGenerator {
 			.findAny();
 	}
 
-	public static Optional<? extends Direction> generateOfKing(Position from, Position to) {
+	public static Optional<? extends Direction> generateOfRoyal(Position from, Position to) {
 		List<Direction> directions = new ArrayList<>();
 		directions.addAll(Arrays.asList(BasicDirection.values()));
 		directions.addAll(Arrays.asList(DiagonalDirection.values()));

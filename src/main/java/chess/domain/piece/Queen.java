@@ -2,22 +2,23 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.strategy.QueenMovingStrategy;
 
 public class Queen extends Piece {
 
 	private final String symbol;
 
-	private Queen(Color color, Position position, String symbol) {
-		super(color, position);
+	private Queen(Color color, String symbol) {
+		super(color);
 		this.symbol = symbol;
 	}
 
-	public static Queen createWhite(int row, int column) {
-		return new Queen(Color.WHITE, new Position(row, column) , "♛");
+	public static Queen createWhite() {
+		return new Queen(Color.WHITE, "♛");
 	}
 
-	public static Queen createBlack(int row, int column) {
-		return new Queen(Color.BLACK, new Position(row, column) , "♕");
+	public static Queen createBlack() {
+		return new Queen(Color.BLACK, "♕");
 	}
 
 	@Override
@@ -26,15 +27,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public void move(int row, int column) {
-		validatePosition(row, column);
-		this.position = this.position.change(row, column);
-	}
-
-	private void validatePosition(int row, int column) {
-		if ((position.isDifferentRow(row) && position.isDifferentColumn(column)) &&
-			this.position.isNotAbsoluteSlopeOne(row, column)) {
-			throw new IllegalArgumentException();
-		}
+	public boolean isMovable(Position from, Position to) {
+		return new QueenMovingStrategy().check(from, to);
 	}
 }
