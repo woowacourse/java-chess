@@ -21,6 +21,12 @@ public class ChessBoard {
         return new ChessBoard(PieceFactory.createNewChessBoard());
     }
 
+    public void movePiece(Position start, Position target) {
+        Piece movedPiece = pieceByPosition(start).move(start, target, this);
+        pieces.remove(start);
+        pieces.put(start, movedPiece);
+    }
+
     public boolean isPositionEmpty(Position position) {
         return !pieces.containsKey(position);
     }
