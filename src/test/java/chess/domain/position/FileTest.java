@@ -1,11 +1,9 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import chess.domain.position.File;
 
 public class FileTest {
     @Test
