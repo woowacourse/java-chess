@@ -45,6 +45,10 @@ public class Position {
         return this.column == position.column || this.row == position.row;
     }
 
+    public boolean equalsColumn(Position position) {
+        return this.column == position.column;
+    }
+
     public int calculateDistance(Position position) {
         return Math.abs(this.column - position.column) + Math.abs(this.row - position.row);
     }

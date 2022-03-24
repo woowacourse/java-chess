@@ -16,4 +16,9 @@ public final class Rook extends Piece {
     public final double score() {
         return ROOK_SCORE;
     }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
+    }
 }

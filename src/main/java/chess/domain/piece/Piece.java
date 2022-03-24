@@ -28,9 +28,14 @@ public abstract class Piece {
         return color.convertToCase(name);
     }
 
-    public final boolean isSameColor(Piece piece) {
-        return this.color == piece.color;
+    public final boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    public final boolean isSameTeamPiece(Piece piece) {
+        return isSameColor(piece.color);
     }
 
     abstract public double score();
+    abstract public boolean isPawn();
 }

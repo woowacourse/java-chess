@@ -1,13 +1,9 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.direction.Direction.UP_LEFT;
-import static chess.domain.direction.Direction.UP_RIGHT;
-
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Piece;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class PawnMovableStrategy implements PieceMovableStrategy {
@@ -34,7 +30,7 @@ public abstract class PawnMovableStrategy implements PieceMovableStrategy {
 
     private boolean existDirectionToEnemyPiecePosition(Position start, Position target, ChessBoard chessBoard) {
         Piece piece = chessBoard.pieceByPosition(start);
-        return !chessBoard.isPositionEmpty(target) && !piece.isSameColor(chessBoard.pieceByPosition(target));
+        return !chessBoard.isPositionEmpty(target) && !piece.isSameTeamPiece(chessBoard.pieceByPosition(target));
     }
 
     private boolean isMovableToEnemyPosition(final Position start, final Position target) {

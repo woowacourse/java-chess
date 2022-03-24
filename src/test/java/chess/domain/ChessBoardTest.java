@@ -4,8 +4,15 @@ import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.pawn.BlackFirstPawn;
+import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -61,5 +68,25 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(position, piece));
 
         assertThat(chessBoard.pieceByPosition(position)).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("각 플레이어의 점수 반환")
+    void calcualteScoreStaus() {
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                new Position('a', '2'), new WhiteFirstPawn(),
+                new Position('a', '3'), new WhiteFirstPawn(),
+                new Position('c', '3'), new WhitePawn(),
+                new Position('b', '1'), new Knight(Color.WHITE),
+                new Position('d', '1'), new Queen(Color.WHITE),
+                new Position('e', '1'), new King(Color.WHITE),
+
+                new Position('c', '8'), new Bishop(Color.BLACK),
+                new Position('h', '8'), new Rook(Color.BLACK),
+                new Position('e', '8'), new King(Color.BLACK)
+        ));
+        Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 8.0);
+
+        assertThat(chessBoard.calcualteScoreStatus()).isEqualTo(expected);
     }
 }
