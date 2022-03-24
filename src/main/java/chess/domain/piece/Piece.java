@@ -25,6 +25,14 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
