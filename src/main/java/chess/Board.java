@@ -1,8 +1,8 @@
 package chess;
 
+import static chess.Position.of;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
-import static chess.Position.of;
 
 import chess.piece.*;
 import java.util.HashMap;
