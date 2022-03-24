@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import java.util.Objects;
 
 public class Knight implements Piece {
 
@@ -21,5 +22,22 @@ public class Knight implements Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Knight knight = (Knight) o;
+        return Objects.equals(position, knight.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position);
     }
 }

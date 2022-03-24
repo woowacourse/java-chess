@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import java.util.Objects;
 
 public class Pawn implements Piece {
 
@@ -19,10 +20,10 @@ public class Pawn implements Piece {
         if (!currentPosition.isMoveForward(destinationPosition)) {
             throw new IllegalArgumentException("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
         }
-        if (position.isFirstTurnOfPawn()) {
-            validateFirstTurnMove(currentPosition, destinationPosition);
+        if (!position.isFirstTurnOfPawn()) {
+            validateDefaultMoveDistance(currentPosition.calculateDistance(destinationPosition));
         }
-        validateDefaultMoveDistance(currentPosition.calculateDistance(destinationPosition));
+        validateFirstTurnMove(currentPosition, destinationPosition);
         return position = destinationPosition;
     }
 
@@ -53,5 +54,22 @@ public class Pawn implements Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Pawn pawn = (Pawn) o;
+        return Objects.equals(position, pawn.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position);
     }
 }
