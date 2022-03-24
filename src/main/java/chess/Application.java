@@ -9,7 +9,7 @@ public class Application {
         Command command = InputView.requestCommand();
         if (command.isStart()) {
             Board board = new Board();
-            OutputView.printChessBoard(board);
+            OutputView.printChessBoard(board.getBoard());
         }
     }
 }

@@ -1,33 +1,30 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
 
-    private final List<Rank> board;
+    private final Map<Row, Rank> board = new EnumMap<>(Row.class);
 
     public Board() {
-        board = new ArrayList<>();
-        board.add(Rank.createFirstRank(Team.BLACK));
-        board.add(Rank.createPawn(Team.BLACK));
-        for (int i = 0; i < 4; i++) {
-            board.add(Rank.createBlank());
+        board.put(Row.EIGHT, Rank.createPiecesExceptPawn(Team.BLACK, 8));
+        board.put(Row.SEVEN, Rank.createPawn(Team.BLACK, 7));
+        for (int i = 3; i <= 6; i++) {
+            board.put(Row.find(i), Rank.createBlank(i));
         }
-        board.add(Rank.createPawn(Team.WHITE));
-        board.add(Rank.createFirstRank(Team.WHITE));
+        board.put(Row.TWO, Rank.createPawn(Team.WHITE, 2));
+        board.put(Row.ONE, Rank.createPiecesExceptPawn(Team.WHITE, 1));
     }
 
     public Piece getPiece(String input) {
         Position position = Position.from(input);
-        return getRank(position.getRow()).getPiece(position.getColumn());
+        return board.get(position.getRow()).getPiece(position.getCol());
     }
 
-    private Rank getRank(int row) {
-        return board.get(row);
-    }
-
-    public List<Rank> getBoard() {
-        return new ArrayList<>(board);
+    public Map<Row, Rank> getBoard() {
+        return board;
     }
 }

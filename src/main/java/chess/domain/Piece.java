@@ -4,10 +4,12 @@ public abstract class Piece {
 
     private Team team;
     private final String name;
+    private Position position;
 
-    public Piece(Team team, String name) {
+    public Piece(Team team, String name, Position position) {
         this.team = team;
         this.name = name;
+        this.position = position;
     }
 
     public String getName() {
