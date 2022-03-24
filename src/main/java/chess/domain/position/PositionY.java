@@ -24,7 +24,7 @@ public enum PositionY {
         return Arrays.stream(values())
                 .filter(positionY -> positionY.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않는 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."));
     }
 
     public static PositionY of(int coordination) {

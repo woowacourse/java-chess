@@ -11,16 +11,28 @@ public class Application {
 
         outputView.printGameStartMessage();
 
-        String startOrEndInput = inputView.getStartOrEndInput(outputView);
+        String startOrEndInput = inputView.getStartOrEndInput();
         if (startOrEndInput.equals("start")) {
-            startGame(outputView);
+            startGame(inputView, outputView);
         }
         inputView.terminate();
     }
 
-    private static void startGame(OutputView outputView) {
+    private static void startGame(InputView inputView, OutputView outputView) {
         ChessGame game = new ChessGame();
         outputView.printBoard(game.getBoard());
-        
+        playTurn(inputView, outputView, game);
+        outputView.printBoard(game.getBoard());
+    }
+
+    private static void playTurn(InputView inputView, OutputView outputView, ChessGame game) {
+        try {
+            String moveCommand = inputView.getMoveCommand();
+            String[] commands = moveCommand.split(" ");
+            game.movePiece(commands[1], commands[2]);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            playTurn(inputView, outputView, game);
+        }
     }
 }

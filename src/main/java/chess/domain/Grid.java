@@ -13,6 +13,10 @@ public class Grid {
         return piece.isSameColor(color);
     }
 
+    public boolean hasPiece(){
+        return !piece.isBlank();
+    }
+
     public Piece getPiece() {
         return piece;
     }
