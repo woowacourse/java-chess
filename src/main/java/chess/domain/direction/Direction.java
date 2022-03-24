@@ -31,7 +31,7 @@ public enum Direction {
     private final int columnAmount;
     private final int rowAmount;
 
-    Direction(final int columnAmount, final int rowAmount) {
+    Direction(int columnAmount, int rowAmount) {
         this.columnAmount = columnAmount;
         this.rowAmount = rowAmount;
     }
@@ -41,17 +41,14 @@ public enum Direction {
     }
 
     public List<Position> route(Position position, Position targetPosition) {
-        if (!isMovable(position, targetPosition)) {
+        if (isNotMovable(position, targetPosition)) {
             return Collections.emptyList();
         }
         return calculateRoute(position, targetPosition, new ArrayList<>());
     }
 
-    private boolean isMovable(Position position, Position wantPosition) {
-        if (position.equals(wantPosition)) {
-            return false;
-        }
-        return isMovableByMultipleMovable(position, wantPosition);
+    private boolean isNotMovable(Position position, Position wantPosition) {
+        return position.equals(wantPosition) || !isMovableByMultipleMovable(position, wantPosition);
     }
 
     private boolean isMovableByMultipleMovable(Position position, Position wantPosition) {
