@@ -13,7 +13,10 @@ public final class Bishop extends Piece {
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
 
     static {
-        DIRECTIONS.add(new Direction(0, 1));
+        DIRECTIONS.add(new Direction(1, 1));
+        DIRECTIONS.add(new Direction(1, -1));
+        DIRECTIONS.add(new Direction(-1, -1));
+        DIRECTIONS.add(new Direction(-1, 1));
     }
 
     Bishop(Color color) {
@@ -35,6 +38,7 @@ public final class Bishop extends Piece {
 
     @Override
     public boolean canMove(Square source, Square target) {
-        return false;
+        Direction direction = source.getGap(target);
+        return direction.hasMultiple(DIRECTIONS);
     }
 }
