@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class DirectionTest {
@@ -32,17 +31,5 @@ public class DirectionTest {
         Position targetPosition = new Position(target);
 
         assertThat(Direction.of(sourcePosition, targetPosition)).isEqualTo(expected);
-    }
-
-    @DisplayName("source 위치와 target 위치를 확인하여 대각선 여부를 반환한다.")
-    @ParameterizedTest
-    @CsvSource({"c4,e6,true", "c4,a6,true", "c4,e2,true", "c4,a2,true", "c1,f2,false", "c4,f5,false", "c1,e2,false"})
-    void 대각선_여부를_반환한다(String source, String target, boolean expected) {
-        Position sourcePosition = new Position(source);
-        Position targetPosition = new Position(target);
-
-        boolean result = Direction.isDiagonal(sourcePosition, targetPosition);
-
-        assertThat(result).isEqualTo(expected);
     }
 }
