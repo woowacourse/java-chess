@@ -13,6 +13,11 @@ public class Pawn extends Piece {
         return isVerticalWay(to) && isForward(to) && isValidDistance(to);
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
     private boolean isVerticalWay(Position to) {
         return getPosition().isVerticalWay(to);
     }

@@ -1,16 +1,12 @@
 package chess.piece;
 
 import static chess.position.File.*;
-import static chess.position.File.G;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.ChessBoard;
-import chess.exception.UnmovableException;
 import chess.position.Position;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +22,7 @@ class KnightTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> knight.move(new Position(F, FIVE)))
-                .isInstanceOf(UnmovableException.class);
+                .isInstanceOf(IllegalArgumentException.class);
             assertThat(knight.getPosition()).isEqualTo(new Position(G, EIGHT));
         });
     }

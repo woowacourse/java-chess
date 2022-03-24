@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.exception.UnmovableException;
 import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ class KingTest {
         King king = new King(Color.BLACK, from);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> king.move(to)).isInstanceOf(UnmovableException.class);
+            assertThatThrownBy(() -> king.move(to)).isInstanceOf(IllegalArgumentException.class);
             assertThat(king.getPosition()).isEqualTo(from);
         });
     }

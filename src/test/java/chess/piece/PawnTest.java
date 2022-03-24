@@ -3,12 +3,10 @@ package chess.piece;
 import static chess.position.File.A;
 import static chess.position.File.B;
 import static chess.position.Rank.*;
-import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.exception.UnmovableException;
 import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +44,7 @@ class PawnTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> pawn.move(new Position(A, FOUR)))
-                .isInstanceOf(UnmovableException.class);
+                .isInstanceOf(IllegalArgumentException.class);
             assertThat(pawn.getPosition()).isEqualTo(new Position(A, SEVEN));
         });
     }
@@ -58,7 +56,7 @@ class PawnTest {
         Piece pawn = new Pawn(color, from);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(UnmovableException.class);
+            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(IllegalArgumentException.class);
             assertThat(pawn.getPosition()).isEqualTo(from);
         });
     }
@@ -77,7 +75,7 @@ class PawnTest {
         Piece pawn = new Pawn(color, from);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(UnmovableException.class);
+            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(IllegalArgumentException.class);
             assertThat(pawn.getPosition()).isEqualTo(from);
         });
     }
@@ -96,7 +94,7 @@ class PawnTest {
         Piece pawn = new Pawn(Color.WHITE, from);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(UnmovableException.class);
+            assertThatThrownBy(() -> pawn.move(to)).isInstanceOf(IllegalArgumentException.class);
             assertThat(pawn.getPosition()).isEqualTo(from);
         });
     }

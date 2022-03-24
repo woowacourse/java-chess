@@ -2,15 +2,11 @@ package chess.piece;
 
 import static chess.position.File.*;
 import static chess.position.Rank.*;
-import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.ChessBoard;
-import chess.exception.UnmovableException;
 import chess.position.Position;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,7 +42,7 @@ class RookTest {
         Piece rook = new Rook(Color.BLACK, from);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> rook.move(to)).isInstanceOf(UnmovableException.class);
+            assertThatThrownBy(() -> rook.move(to)).isInstanceOf(IllegalArgumentException.class);
             assertThat(rook.getPosition()).isEqualTo(from);
         });
     }

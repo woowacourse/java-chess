@@ -1,14 +1,10 @@
 package chess;
 
-import static chess.position.Rank.*;
 import static chess.position.File.*;
+import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.exception.HasObstacleException;
-import chess.exception.UnmovableException;
 import chess.piece.*;
 import chess.position.Position;
 import java.util.List;
@@ -76,7 +72,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
 
         assertThatThrownBy(() -> chessBoard.move(new Position(D, FIVE), new Position(F, SIX)))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
     @Test
@@ -86,7 +82,7 @@ class ChessBoardTest {
             List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, SEVEN)))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
     @Test
@@ -96,7 +92,7 @@ class ChessBoardTest {
             List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(B, SEVEN)))
-            .isInstanceOf(UnmovableException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -109,7 +105,7 @@ class ChessBoardTest {
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(E, SIX), new Position(E, FIVE)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(java.lang.IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
                 new King(Color.WHITE, new Position(E, SIX)),
                 new King(Color.BLACK, new Position(B, FIVE)));
@@ -136,10 +132,10 @@ class ChessBoardTest {
     void throwExceptionWhenMovePieceToSameColorPiecePosition() {
         ChessBoard chessBoard = new ChessBoard(List.of(new King(Color.WHITE, new Position(E, FIVE)),
             new Pawn(Color.WHITE, new Position(E, SIX))), Color.WHITE);
-        
+
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(new Position(E, FIVE), new Position(E, SIX)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(java.lang.IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
                 new King(Color.WHITE, new Position(E, FIVE)),
                 new Pawn(Color.WHITE, new Position(E, SIX)));
@@ -149,16 +145,17 @@ class ChessBoardTest {
     @ParameterizedTest
     @MethodSource("provideHasObstacleVerticalAndHorizontalWay")
     @DisplayName("움직일 때 장애물이 있을 경우 예외 발생")
-    void throwExceptionWhenHasObstacleMoveToDestination(Position from, Position to, Position obstacle) {
+    void throwExceptionWhenHasObstacleMoveToDestination(Position from, Position to,
+        Position obstacle) {
         ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.WHITE, from),
             new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(HasObstacleException.class);
+                .isInstanceOf(java.lang.IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                    new Queen(Color.WHITE, from),
-                    new Pawn(Color.BLACK, obstacle));
+                new Queen(Color.WHITE, from),
+                new Pawn(Color.BLACK, obstacle));
         });
     }
 
@@ -182,7 +179,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.WHITE, from),
             new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
-        assertAll(()->{
+        assertAll(() -> {
             assertThatCode(() -> chessBoard.move(from, to)).doesNotThrowAnyException();
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
                 new Knight(Color.WHITE, to),
@@ -197,5 +194,34 @@ class ChessBoardTest {
             Arguments.of(new Position(E, FIVE), new Position(G, SIX), new Position(F, FIVE)),
             Arguments.of(new Position(E, FIVE), new Position(D, THREE), new Position(E, FOUR))
         );
+    }
+
+    @Test
+    @DisplayName("폰이 이동하는 위치에 기물이 있으면 예외 발생")
+    void throwExceptionMovePawnAlreadyExistPiecePosition() {
+        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
+            new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
+
+        assertAll(() -> {
+            assertThatThrownBy(() -> chessBoard.move(new Position(D, FOUR), new Position(D, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
+            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new Pawn(Color.WHITE, new Position(D, FOUR)),
+                new Pawn(Color.BLACK, new Position(D, FIVE)));
+        });
+    }
+
+
+    @Test
+    @DisplayName("폰을 제외한 기물이 이동하는 위치에 기물이 있으면 해당 기물을 제거")
+    void removeTargetPieceByMove() {
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Queen(Color.WHITE, new Position(D, FOUR)),
+                new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
+
+        chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
+
+        assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+            new Queen(Color.WHITE, new Position(D, FIVE)));
     }
 }
