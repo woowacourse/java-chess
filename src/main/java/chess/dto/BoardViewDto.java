@@ -50,7 +50,7 @@ public class BoardViewDto {
         return position.getFileIdx();
     }
 
-    public List<String> getDisplay() {
+    public List<String> boardDisplay() {
         return boardDisplay;
     }
 }

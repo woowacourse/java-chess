@@ -19,11 +19,11 @@ public class GameResultDto {
         return Color.BLACK;
     }
 
-    public double getWhiteScore() {
+    public double whiteScore() {
         return whiteScore;
     }
 
-    public double getBlackScore() {
+    public double blackScore() {
         return blackScore;
     }
 }
