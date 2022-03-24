@@ -15,58 +15,58 @@ import chess.domain.board.Row;
 @DisplayName("Pawn 테스트")
 class PawnTest {
 
-	@DisplayName("입력된 방향에 대해")
-	@Nested
-	class DirectionTest {
+    @DisplayName("입력된 방향에 대해")
+    @Nested
+    class DirectionTest {
 
-		@DisplayName("유효하지 않으면 예외를 반환한다.")
-		@Test
-		void invalid_Direction() {
-			Position current = new Position(Row.SECOND, Column.a);
-			Position invalidTarget = new Position(Row.THIRD, Column.c);
-			Pawn pawn = new Pawn(Color.BLACK);
+        @DisplayName("유효하지 않으면 예외를 반환한다.")
+        @Test
+        void invalid_Direction() {
+            Position current = new Position(Row.SECOND, Column.a);
+            Position invalidTarget = new Position(Row.THIRD, Column.c);
+            Pawn pawn = new Pawn(Color.BLACK);
 
-			assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));
-		}
+            assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));
+        }
 
-		@DisplayName("유효하면 방향 객체를 반환한다.")
-		@Test
-		void valid_Direction() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position target = new Position(Row.SECOND, Column.a);
-			Pawn pawn = new Pawn(Color.WHITE);
+        @DisplayName("유효하면 방향 객체를 반환한다.")
+        @Test
+        void valid_Direction() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.SECOND, Column.a);
+            Pawn pawn = new Pawn(Color.WHITE);
 
-			Direction actual = pawn.findValidDirection(current, target);
+            Direction actual = pawn.findValidDirection(current, target);
 
-			assertThat(actual).isEqualTo(Direction.N);
-		}
-	}
+            assertThat(actual).isEqualTo(Direction.N);
+        }
+    }
 
-	@DisplayName("입력된 범위에 대해")
-	@Nested
-	class RangeTest {
+    @DisplayName("입력된 범위에 대해")
+    @Nested
+    class RangeTest {
 
-		@DisplayName("유효하지 않으면 예외를 반환한다.")
-		@Test
-		void invalid_Range() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position invalidTarget = new Position(Row.THIRD, Column.a);
-			Pawn pawn = new Pawn(Color.WHITE);
+        @DisplayName("유효하지 않으면 예외를 반환한다.")
+        @Test
+        void invalid_Range() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position invalidTarget = new Position(Row.THIRD, Column.a);
+            Pawn pawn = new Pawn(Color.WHITE);
 
-			assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));
-		}
+            assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));
+        }
 
-		@DisplayName("유효하면 방향 객체를 반환한다.")
-		@ParameterizedTest
-		@CsvSource(value = {"SECOND, FOURTH", "FOURTH, FIFTH"})
-		void valid_Direction(Row start, Row end) {
-			Position current = new Position(start, Column.a);
-			Position target = new Position(end, Column.a);
-			Pawn pawn = new Pawn(Color.WHITE);
+        @DisplayName("유효하면 방향 객체를 반환한다.")
+        @ParameterizedTest
+        @CsvSource(value = {"SECOND, FOURTH", "FOURTH, FIFTH"})
+        void valid_Direction(Row start, Row end) {
+            Position current = new Position(start, Column.a);
+            Position target = new Position(end, Column.a);
+            Pawn pawn = new Pawn(Color.WHITE);
 
-			Direction actual = pawn.findValidDirection(current, target);
+            Direction actual = pawn.findValidDirection(current, target);
 
-			assertThat(actual).isEqualTo(Direction.N);
-		}
-	}
+            assertThat(actual).isEqualTo(Direction.N);
+        }
+    }
 }

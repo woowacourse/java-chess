@@ -7,5 +7,5 @@ import chess.domain.piece.Piece;
 
 @FunctionalInterface
 public interface BoardInitializeStrategy {
-	Map<Position, Piece> createPieces();
+    Map<Position, Piece> createPieces();
 }

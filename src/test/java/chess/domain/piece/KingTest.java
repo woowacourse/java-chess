@@ -12,57 +12,57 @@ import chess.domain.board.Row;
 
 class KingTest {
 
-	@DisplayName("입력된 방향에 대해")
-	@Nested
-	class DirectionTest {
+    @DisplayName("입력된 방향에 대해")
+    @Nested
+    class DirectionTest {
 
-		@DisplayName("유효하지 않으면 예외를 반환한다.")
-		@Test
-		void invalid_Direction() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position invalidTarget = new Position(Row.THIRD, Column.b);
-			King king = new King(Color.BLACK);
+        @DisplayName("유효하지 않으면 예외를 반환한다.")
+        @Test
+        void invalid_Direction() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position invalidTarget = new Position(Row.THIRD, Column.b);
+            King king = new King(Color.BLACK);
 
-			assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
-		}
+            assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
+        }
 
-		@DisplayName("유효하면 방향 객체를 반환한다.")
-		@Test
-		void valid_Direction() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position target = new Position(Row.SECOND, Column.b);
-			King king = new King(Color.BLACK);
+        @DisplayName("유효하면 방향 객체를 반환한다.")
+        @Test
+        void valid_Direction() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.SECOND, Column.b);
+            King king = new King(Color.BLACK);
 
-			Direction actual = king.findValidDirection(current, target);
+            Direction actual = king.findValidDirection(current, target);
 
-			assertThat(actual).isEqualTo(Direction.NE);
-		}
-	}
+            assertThat(actual).isEqualTo(Direction.NE);
+        }
+    }
 
-	@DisplayName("입력된 범위에 대해")
-	@Nested
-	class RangeTest {
+    @DisplayName("입력된 범위에 대해")
+    @Nested
+    class RangeTest {
 
-		@DisplayName("유효하지 않으면 예외를 반환한다.")
-		@Test
-		void invalid_Range() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position invalidTarget = new Position(Row.EIGHTH, Column.a);
-			King king = new King(Color.BLACK);
+        @DisplayName("유효하지 않으면 예외를 반환한다.")
+        @Test
+        void invalid_Range() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position invalidTarget = new Position(Row.EIGHTH, Column.a);
+            King king = new King(Color.BLACK);
 
-			assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
-		}
+            assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
+        }
 
-		@DisplayName("유효하면 방향 객체를 반환한다.")
-		@Test
-		void valid_Direction() {
-			Position current = new Position(Row.FIRST, Column.a);
-			Position target = new Position(Row.SECOND, Column.b);
-			King king = new King(Color.BLACK);
+        @DisplayName("유효하면 방향 객체를 반환한다.")
+        @Test
+        void valid_Direction() {
+            Position current = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.SECOND, Column.b);
+            King king = new King(Color.BLACK);
 
-			Direction actual = king.findValidDirection(current, target);
+            Direction actual = king.findValidDirection(current, target);
 
-			assertThat(actual).isEqualTo(Direction.NE);
-		}
-	}
+            assertThat(actual).isEqualTo(Direction.NE);
+        }
+    }
 }

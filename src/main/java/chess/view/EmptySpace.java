@@ -7,12 +7,12 @@ import chess.domain.piece.Piece;
 
 public class EmptySpace extends Piece {
 
-	public EmptySpace() {
-		super("blank", Color.BLACK);
-	}
+    public EmptySpace() {
+        super("blank", Color.BLACK);
+    }
 
-	@Override
-	public Direction findValidDirection(Position current, Position target) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Direction findValidDirection(Position current, Position target) {
+        throw new UnsupportedOperationException();
+    }
 }
