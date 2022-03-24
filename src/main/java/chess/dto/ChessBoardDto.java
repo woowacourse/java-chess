@@ -3,7 +3,7 @@ package chess.dto;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.Position;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.Piece;
 
 public class ChessBoardDto {

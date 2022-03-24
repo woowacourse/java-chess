@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.property;
 
 public class Name {
     private final String name;

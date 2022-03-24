@@ -6,19 +6,17 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Color;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.piece.property.Color;
+import chess.domain.piece.state.StartedBishop;
 
 public class PieceTest {
     @Test
-    @DisplayName("체스말은 생성될때 위치, 색, 이름을 가진다.")
+    @DisplayName("체스말은 생성될때 색, 이름, 상태을 가진다.")
     void pieceTest() {
         assertThatCode(() -> mock(Piece.class,
             withSettings()
-            .useConstructor(Position.of(File.a, Rank.One), Color.Black, "k")
-            .defaultAnswer(CALLS_REAL_METHODS)))
+                .useConstructor(Color.Black, "k", new StartedBishop())
+                .defaultAnswer(CALLS_REAL_METHODS)))
             .doesNotThrowAnyException();
     }
 }

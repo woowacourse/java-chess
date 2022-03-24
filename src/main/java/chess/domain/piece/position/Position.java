@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece.position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,5 +24,9 @@ public class Position {
 
     public Rank getRank() {
         return rank;
+    }
+
+    public Position getNext(Direction direction) {
+        return Position.of(file.getNext(direction.file()), rank.getNext(direction.rank()));
     }
 }

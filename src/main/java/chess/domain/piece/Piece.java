@@ -1,20 +1,45 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import java.util.List;
+
+import chess.domain.ChessBoard;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.property.Color;
+import chess.domain.piece.property.Name;
+import chess.domain.piece.state.State;
 
 public abstract class Piece {
-    private Position position;
     private final Color color;
     private final Name name;
+    private State state;
 
-    public Piece(Position position, Color color, String name) {
-        this.position = position;
+    public Piece(Color color, String name, State state) {
         this.color = color;
         this.name = new Name(color.convertName(name));
+        this.state = state;
+    }
+
+    public List<Position> getMovablePaths(Position source, ChessBoard board) {
+        return state.getMovablePaths(source, board);
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return color == piece.getColor();
     }
 
     public String getName() {
         return name.getName();
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void updateState() {
+        state = state.updateState();
+    }
+
+    public void killed() {
+        state = state.killed();
     }
 }

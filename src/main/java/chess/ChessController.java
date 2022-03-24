@@ -3,7 +3,7 @@ package chess;
 import java.util.Map;
 
 import chess.domain.ChessGame;
-import chess.domain.Position;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.Piece;
 import chess.dto.ChessBoardDto;
 import chess.view.InputView;

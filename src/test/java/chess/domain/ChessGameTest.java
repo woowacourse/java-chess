@@ -17,6 +17,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.position.File;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.position.Rank;
 
 public class ChessGameTest {
     @ParameterizedTest(name = "{index}: {2}")
