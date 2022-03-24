@@ -7,12 +7,18 @@ import java.util.List;
 
 public class OutputView {
 
+    private static final String ERROR_PREFIX = "[ERROR] ";
+
     private OutputView() {
     }
 
     public static void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(ERROR_PREFIX + message);
     }
 
     public static void printChessBoard(List<List<Piece>> board) {
