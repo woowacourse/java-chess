@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Camp;
+import chess.domain.board.Position;
 
 public final class Knight extends Piece{
     public Knight(Camp camp) {
@@ -35,5 +36,14 @@ public final class Knight extends Piece{
     @Override
     public boolean isRook() {
         return false;
+    }
+
+    public boolean canMove(Position beforePosition, Position afterPosition) {
+        int columnDistance = beforePosition.columnDistance(afterPosition);
+        int rowDistance = beforePosition.rowDistance(afterPosition);
+        if (columnDistance == 1 && rowDistance == 2) {
+            return true;
+        }
+        return columnDistance == 2 && rowDistance == 1;
     }
 }
