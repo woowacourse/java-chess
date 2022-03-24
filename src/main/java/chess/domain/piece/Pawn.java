@@ -30,12 +30,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isMovable(Position from, Position to) {
-		MovingStrategy movingStrategy = findStrategy();
-		try {
-			return movingStrategy.check(from, to);
-		} catch (IllegalArgumentException exception) {
-			return false;
-		}
+		return findStrategy().check(from, to);
 	}
 
 	private MovingStrategy findStrategy() {

@@ -1,35 +1,23 @@
 package chess.domain.direction;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import chess.domain.Position;
 
 public class DirectionGenerator {
 
-	public static Direction generateOfBlackPawn(Position from, Position to) {
-		List<Direction> blackPawn = List.of(
-			BasicDirection.SOUTH,
-			DiagonalDirection.SOUTH_EAST,
-			DiagonalDirection.SOUTH_WEST
-		);
-		return blackPawn.stream()
+	public static Optional<? extends Direction> generateOfBlackPawn(Position from, Position to) {
+		return Stream.of(BasicDirection.SOUTH, DiagonalDirection.SOUTH_EAST, DiagonalDirection.SOUTH_WEST)
 			.filter(direction -> direction.confirm(from, to))
-			.findAny()
-			.orElseThrow(IllegalArgumentException::new);
+			.findAny();
 	}
 
-	public static Direction generateOfWhitePawn(Position from, Position to) {
-		List<Direction> whitePawn = List.of(
-			BasicDirection.NORTH,
-			DiagonalDirection.NORTH_EAST,
-			DiagonalDirection.NORTH_WEST
-		);
-		return whitePawn.stream()
+	public static Optional<? extends Direction> generateOfWhitePawn(Position from, Position to) {
+		return Stream.of(BasicDirection.NORTH, DiagonalDirection.NORTH_EAST, DiagonalDirection.NORTH_WEST)
 			.filter(direction -> direction.confirm(from, to))
-			.findAny()
-			.orElseThrow(IllegalArgumentException::new);
+			.findAny();
 	}
 
 	public static Optional<? extends Direction> generateOfBishop(Position from, Position to) {

@@ -1,5 +1,7 @@
 package chess.domain.piece.strategy;
 
+import java.util.Optional;
+
 import chess.domain.Position;
 import chess.domain.direction.BasicDirection;
 import chess.domain.direction.Direction;
@@ -11,7 +13,12 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
 
 	@Override
 	public boolean check(Position from, Position to) {
-		Direction direction = DirectionGenerator.generateOfWhitePawn(from, to);
+		Optional<? extends Direction> nullableDirection = DirectionGenerator.generateOfWhitePawn(from, to);
+		if (nullableDirection.isEmpty()) {
+			return false;
+		}
+
+		Direction direction = nullableDirection.get();
 		int distance = from.calculateDistance(to);
 
 		if (isFirstStartWithTwoStep(from, direction, distance)) {
