@@ -30,7 +30,9 @@ public abstract class Piece {
     public boolean isSamePlayer(Player player) {
         return this.player == player;
     }
-
+    public boolean isSamePlayer(Piece comparePiece) {
+        return comparePiece.isSamePlayer(player);
+    }
     public String symbol() {
         return pieceSymbol.symbol(player);
     }
@@ -45,5 +47,9 @@ public abstract class Piece {
 
     protected boolean checkOverRange(final int row, final int column) {
         return Row.isRowRange(row) && Column.isColumnRange(column);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

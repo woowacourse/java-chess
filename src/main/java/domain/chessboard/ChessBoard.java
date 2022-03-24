@@ -19,4 +19,23 @@ public class ChessBoard {
         }
         return piece.symbol();
     }
+
+    public void move(final Position source, final Position target) {
+        validateTargetPieceColor(source, target);
+        Piece selectedPiece = board.get(source);
+        if (selectedPiece.isAvailableMove(source, target)) {
+            board.put(source, null);
+            board.put(target, selectedPiece);
+            return;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private void validateTargetPieceColor(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+        if (targetPiece != null && targetPiece.isSamePlayer(sourcePiece)) {
+            throw new IllegalArgumentException();
+        }
+    }
 }

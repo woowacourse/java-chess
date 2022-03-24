@@ -28,7 +28,7 @@ public class RookTest {
     void moveRookUpDownRightLeftTarget() {
         Piece piece = new Rook(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
-        Position target = new Position(Row.THREE, Column.B);
+        Position target = new Position(Row.SEVEN, Column.B);
 
         assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
