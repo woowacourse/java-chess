@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.position.Direction;
-import chess.domain.position.Square;
 
 public class QueenTest {
     @Test
@@ -40,7 +39,7 @@ public class QueenTest {
     @DisplayName("퀸을 오른쪽으로 두칸, 위쪽으로 두칸 이동 가능하다")
     void canMove_a1_c3() {
         Queen queen = new Queen(Color.BLACK);
-        Boolean canMove = queen.canMove(new Direction(2,2));
+        Boolean canMove = queen.canMove(new Direction(2, 2));
 
         assertThat(canMove).isTrue();
     }
@@ -49,7 +48,7 @@ public class QueenTest {
     @DisplayName("퀸은 오른쪽으로 2칸 위로 3칸 이동 불가능하다다")
     void canMove_a1_c4() {
         Queen queen = new Queen(Color.BLACK);
-        Boolean canMove = queen.canMove(new Direction(2,3));
+        Boolean canMove = queen.canMove(new Direction(2, 3));
 
         assertThat(canMove).isFalse();
     }

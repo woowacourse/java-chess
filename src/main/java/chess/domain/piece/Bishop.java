@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.position.Direction;
-import chess.domain.position.Square;
 
 public final class Bishop extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 비숍은 색상을 가져야합니다.";
@@ -25,11 +24,11 @@ public final class Bishop extends Piece {
 
     @Override
     public String getEmoji() {
-        if(color==Color.NONE){
+        if (color == Color.NONE) {
             throw new IllegalArgumentException(BUG_MESSAGE_COLOR);
         }
 
-        if(color==Color.BLACK){
+        if (color == Color.BLACK) {
             return BLACK_BISHOP;
         }
 

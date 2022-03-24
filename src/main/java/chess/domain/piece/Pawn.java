@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.position.Direction;
-import chess.domain.position.Square;
 
 public final class Pawn extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";
     private static final String BLACK_PAWN = "♟";
     private static final String WHITE_PAWN = "♙";
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
+    private static final List<Direction> ATTACK_DIRECTIONS = List.of(new Direction(1, 1), new Direction(-1, 1));
 
     static {
         DIRECTIONS.add(new Direction(0, 1));
@@ -38,23 +38,30 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean canMove(Direction direction) {
+        if (color == Color.BLACK) {
+            direction = direction.flipAboutX();
+        }
+        List<Direction> directions = new ArrayList<>(DIRECTIONS);
+        checkCanAttack(direction, directions);
+        checkIsStart(directions);
+        return direction.hasSame(directions);
+    }
+
+    private void checkCanAttack(Direction direction, List<Direction> directions) {
+        if (direction.hasSame(ATTACK_DIRECTIONS)) {
+            directions.addAll(ATTACK_DIRECTIONS);
+        }
+    }
+
+    private void checkIsStart(List<Direction> directions) {
         if (start) {
             this.start = false;
-            return canMoveAtStart(direction);
+            directions.add(new Direction(0, 2));
         }
-        return direction.hasSame(DIRECTIONS);
     }
 
     @Override
     public boolean isPawn() {
         return true;
     }
-
-    private boolean canMoveAtStart(Direction direction) {
-        List<Direction> startDirections = new ArrayList<>(DIRECTIONS);
-        startDirections.add(new Direction(0, 2));
-        return direction.hasSame(startDirections);
-    }
-
-
 }

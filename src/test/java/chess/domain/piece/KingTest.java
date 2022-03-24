@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.position.Direction;
-import chess.domain.position.Square;
 
 public class KingTest {
     @Test

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 
 import chess.domain.piece.Piece;
+import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -24,7 +25,7 @@ public class Board {
     }
 
     public Board(Map<Square, Piece> board) {
-        this.board = board;
+        this.board = new LinkedHashMap<>(board);
     }
 
     private static Map<Square, Piece> createBoard() {
@@ -58,16 +59,17 @@ public class Board {
     public void move(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
+        Direction direction = source.getGap(target);
 
-        checkCapablePosition(source, target, sourcePiece);
         checkSameTeamPosition(sourcePiece, targetPiece);
+        checkCapablePosition(direction, sourcePiece);
 
         board.put(target, sourcePiece);
         board.put(source, NONE);
     }
 
-    private void checkCapablePosition(Square source, Square target, Piece sourcePiece) {
-        if (!sourcePiece.canMove(source, target)) {
+    private void checkCapablePosition(Direction direction, Piece sourcePiece) {
+        if (!sourcePiece.canMove(direction)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_INCAPABLE);
         }
     }

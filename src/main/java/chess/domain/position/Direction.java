@@ -13,6 +13,10 @@ public class Direction {
         this.dRank = dRank;
     }
 
+    public Direction flipAboutX() {
+        return new Direction(dFile, -1 * dRank);
+    }
+
     public boolean hasSame(List<Direction> directions) {
         return directions.stream()
                 .anyMatch(this::equals);

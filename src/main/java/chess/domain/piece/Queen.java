@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.position.Direction;
-import chess.domain.position.Square;
 
 public final class Queen extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 퀸은 색상을 가져야합니다.";

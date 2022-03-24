@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
-import chess.domain.position.Square;
 
 public abstract class Piece {
     protected final Color color;

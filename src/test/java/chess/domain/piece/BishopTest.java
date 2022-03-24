@@ -17,7 +17,7 @@ public class BishopTest {
         assertThat(canMove).isTrue();
     }
 
-   @Test
+    @Test
     @DisplayName("비숍을 왼쪽으로 3칸 아래쪽으로 3칸 이동 가능하다")
     void canMove_d1_a4() {
         Bishop bishop = new Bishop(Color.BLACK);
