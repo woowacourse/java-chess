@@ -19,7 +19,7 @@ public class PositionTest {
     @DisplayName("동일한 row에서 크기 비교에 성공한다.")
     void compareToSameRow() {
         Position position = Position.valueOf("a8");
-        assertThat(position).isGreaterThan(Position.valueOf("c8"));
+        assertThat(position).isLessThan(Position.valueOf("c8"));
     }
 
     @Test
