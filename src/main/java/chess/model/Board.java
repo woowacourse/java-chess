@@ -26,7 +26,7 @@ public final class Board {
 
     private void initBlack() {
         initBaseLine(Rank.EIGHT, Color.BLACK);
-        initPawns(Rank.TWO, Color.BLACK);
+        initPawns(Rank.SEVEN, Color.BLACK);
     }
 
     private void initBaseLine(Rank rank, Color color) {
@@ -45,7 +45,7 @@ public final class Board {
                 new King(color, new Square(File.E, rank)),
                 new Bishop(color, new Square(File.F, rank)), 
                 new Knight(color, new Square(File.G, rank)), 
-                new Rook(color, new Square(File.F, rank))
+                new Rook(color, new Square(File.H, rank))
         );
     }
 
@@ -68,8 +68,8 @@ public final class Board {
     }
 
     private void initWhite() {
-        initPawns(Rank.SEVEN, Color.WHITE);
-        initBaseLine(Rank.EIGHT, Color.WHITE);
+        initPawns(Rank.TWO, Color.WHITE);
+        initBaseLine(Rank.ONE, Color.WHITE);
     }
 
     public List<Piece> getBoard() {
@@ -81,5 +81,44 @@ public final class Board {
                 .filter(piece -> piece.isAt(square))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치의 값을 찾을 수 없습니다."));
+    }
+
+    public void move(Square sourceSquare, Square targetSquare) {
+        Piece sourcePiece = findPieceBySquare(sourceSquare);
+        Piece targetPiece = findPieceBySquare(targetSquare);
+        if (!sourcePiece.movable(targetPiece)) {
+            throw new IllegalArgumentException("해당 칸으로 이동할 수 없습니다.");
+        }
+        Direction direction = findDirection(sourceSquare, targetSquare);
+        Square tempSquare = sourceSquare;
+        while (!tempSquare.equals(targetSquare)) {
+            tempSquare = tempSquare.tryToMove(direction);
+            if (!findPieceBySquare(tempSquare).isEmpty()) {
+                throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
+            }
+        }
+        board.set(board.indexOf(sourcePiece), new Empty(sourceSquare));
+        board.set(board.indexOf(targetPiece), sourcePiece);
+        sourcePiece.changeLocation(targetSquare);
+    }
+
+    private Direction findDirection(Square sourceSquare, Square targetSquare) {
+        Square tempSquare = sourceSquare;
+        Square nowSquare;
+        for (Direction direction : Direction.getNonKnightDirection()) {
+            do {
+                nowSquare = tempSquare;
+                tempSquare = nowSquare.tryToMove(direction);
+                if (tempSquare.equals(targetSquare)) {
+                    return direction;
+                }
+            } while (!tempSquare.equals(nowSquare));
+        }
+        for (Direction direction : Direction.getKnightDirection()) {
+            if (sourceSquare.tryToMove(direction).equals(targetSquare)) {
+                return direction;
+            }
+        }
+        throw new IllegalArgumentException("방향을 찾지 못했습니다.");
     }
 }

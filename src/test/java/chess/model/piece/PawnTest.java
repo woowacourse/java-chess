@@ -20,9 +20,9 @@ class PawnTest {
 
     @Test
     void firstSquareMovable() {
-        Pawn pawn = new Pawn(Color.BLACK, new Square(File.A, Rank.SEVEN));
-        Empty oneMoveSquare = new Empty(new Square(File.A, Rank.SIX));
-        Empty twoMoveSquare = new Empty(new Square(File.A, Rank.FIVE));
+        Pawn pawn = new Pawn(Color.WHITE, new Square(File.A, Rank.TWO));
+        Empty oneMoveSquare = new Empty(new Square(File.A, Rank.THREE));
+        Empty twoMoveSquare = new Empty(new Square(File.A, Rank.FOUR));
         assertAll(
                 () -> assertThat(pawn.movable(oneMoveSquare)).isTrue(),
                 () -> assertThat(pawn.movable(twoMoveSquare)).isTrue());

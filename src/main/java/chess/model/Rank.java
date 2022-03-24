@@ -32,6 +32,6 @@ public enum Rank {
     }
 
     public static List<Rank> emptyBaseLine() {
-        return List.of(THREE, FOUR, FIVE, SIX);
+        return List.of(SIX, FIVE, FOUR, THREE);
     }
 }

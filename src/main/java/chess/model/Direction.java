@@ -4,12 +4,12 @@ import java.util.List;
 
 public enum Direction {
     NORTH(0, 1),
-    NORTHEAST(1, 1),
     EAST(1, 0),
-    SOUTHEAST(1, -1),
     SOUTH(0, -1),
-    SOUTHWEST(-1, -1),
     WEST(-1, 0),
+    SOUTHEAST(1, -1),
+    NORTHEAST(1, 1),
+    SOUTHWEST(-1, -1),
     NORTHWEST(-1, 1),
     NNE(1, 2),
     NNW(-1, 2),
@@ -35,6 +35,9 @@ public enum Direction {
         return col;
     }
 
+    public static List<Direction> getNonKnightDirection() {
+        return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, NORTHEAST, SOUTHWEST, NORTHWEST);
+    }
     public static List<Direction> getKnightDirection() {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }

@@ -21,4 +21,8 @@ public enum Color {
     public boolean isAlly(Color other) {
         return this.equals(other);
     }
+
+    public boolean isEmpty() {
+        return this.equals(Color.NOTHING);
+    }
 }
