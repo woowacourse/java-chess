@@ -21,7 +21,7 @@ public class KingMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
+        final Distance distance = Distance.of(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
