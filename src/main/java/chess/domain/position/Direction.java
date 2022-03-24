@@ -36,6 +36,13 @@ public enum Direction {
         return Integer.compare(0, value);
     }
 
+    public static boolean isDiagonal(Position source, Position target) {
+        int absRankIndex = Math.abs(source.getRankIndex() - target.getRankIndex());
+        int absFileIndex = Math.abs(source.getFileIndex() - target.getFileIndex());
+
+        return absRankIndex == absFileIndex;
+    }
+
     public int getRow() {
         return row;
     }
