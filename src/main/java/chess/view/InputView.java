@@ -8,7 +8,7 @@ public class InputView {
         throw new AssertionError();
     }
 
-    public static Command requestGameCommand() {
-        return Command.from(Console.readLine());
+    public static String requestGameCommand() {
+        return Console.readLine();
     }
 }
