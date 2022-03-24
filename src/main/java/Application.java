@@ -1,4 +1,5 @@
 import chess.controller.ChessGameController;
+import java.util.Locale;
 
 public class Application {
 
