@@ -45,7 +45,7 @@ public class Pawn implements Piece {
         final boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
         final int moveDistance = currentPosition.calculateDistance(destinationPosition);
 
-        if (!isMoveDiagonal && moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
+        if (!isMoveDiagonal || moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
             throw new IllegalArgumentException("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
         }
         return position = destinationPosition;
