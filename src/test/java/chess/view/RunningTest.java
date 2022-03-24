@@ -25,6 +25,13 @@ class RunningTest {
     }
 
     @Test
+    @DisplayName("move커맨드 입력 시 현재 상태로 변경")
+    void runToMove() {
+        Command command = new Running(ChessBoard.createNewChessBoard()).run("move a2 a4");
+        assertThat(command).isInstanceOf(Running.class);
+    }
+
+    @Test
     @DisplayName("end커맨드 입력 시 End 상태로 변경")
     void runToEnd() {
         Command command = new Running(ChessBoard.createNewChessBoard()).run("end");
