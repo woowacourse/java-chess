@@ -3,6 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,19 @@ class PositionTest {
         assertThatThrownBy(() -> Position.of("A10"))
             .isInstanceOf(NoSuchElementException.class)
             .hasMessage("유효하지 않은 범위입니다.");
+    }
+
+    @Test
+    @DisplayName("Position 거리 계산 테스트")
+    void calculatePositionDistance(){
+        // given
+        Position position1 = Position.of("b1");
+        Position position2 = Position.of("c3");
+
+        // when
+        List<Integer> distance = position1.calculateDistance(position2);
+
+        // then
+        assertThat(distance).containsExactly(1,2);
     }
 }

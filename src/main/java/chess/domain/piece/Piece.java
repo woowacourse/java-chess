@@ -17,6 +17,10 @@ public abstract class Piece {
         return this.color != another.color;
     }
 
+    public boolean isInValid() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

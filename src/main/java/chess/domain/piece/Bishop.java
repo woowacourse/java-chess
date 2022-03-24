@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import java.util.List;
 
 public final class Bishop extends Piece{
     public Bishop(Color color) {
@@ -8,7 +9,9 @@ public final class Bishop extends Piece{
     }
 
     @Override
-    boolean movable(String position, Piece target) {
+    public boolean movable(List<Integer> distances, Piece target) {
         return false;
     }
+
+
 }
