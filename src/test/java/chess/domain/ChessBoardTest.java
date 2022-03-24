@@ -10,17 +10,19 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.pawn.BlackFirstPawn;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhiteFirstPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessBoardTest {
 
@@ -90,5 +92,28 @@ class ChessBoardTest {
         Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 9.0);
 
         assertThat(chessBoard.calcualteScoreStatus()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFinished")
+    @DisplayName("게임이 종료되었는지 확인")
+    void isFinished(ChessBoard chessBoard, boolean expected) {
+        assertThat(chessBoard.isFinished()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isFinished() {
+        return Stream.of(
+                Arguments.of(
+                        new ChessBoard(Map.of(
+                                new Position('e', '1'), new King(Color.WHITE),
+                                new Position('e', '8'), new King(Color.BLACK)
+                        )), false
+                ),
+                Arguments.of(
+                        new ChessBoard(Map.of(
+                                new Position('e', '1'), new King(Color.WHITE)
+                        )), true
+                )
+        );
     }
 }

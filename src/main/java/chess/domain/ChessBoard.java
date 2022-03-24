@@ -82,6 +82,17 @@ public class ChessBoard {
         return !position.equals(comparePosition) && position.equalsColumn(comparePosition);
     }
 
+    public boolean isFinished() {
+        return countKing() != 2;
+    }
+
+    private int countKing() {
+        return (int) pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
     public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
