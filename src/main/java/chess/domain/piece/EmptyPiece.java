@@ -8,7 +8,7 @@ public class EmptyPiece implements Piece {
     private final String name = ".";
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public boolean isMovable(final Position from, final Position to) {
         return false;
     }
 

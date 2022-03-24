@@ -14,6 +14,11 @@ public abstract class FullPiece implements Piece {
     public abstract boolean isMovable(final Position from, final Position to);
 
     @Override
+    public boolean isSameColor(final Color color) {
+        return this.color.equals(color);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
