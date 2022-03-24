@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class Rook extends Strongmen {
+public final class Rook extends Strongmen {
 
     private static final int LEFT_INIT_FILE = 0;
     private static final int RIGHT_INIT_FILE = 7;
@@ -33,11 +33,6 @@ public class Rook extends Strongmen {
         this.position = position;
     }
 
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
     private void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
@@ -47,11 +42,6 @@ public class Rook extends Strongmen {
     private boolean isMovablePosition(Position toPosition) {
         return position.isHorizontal(toPosition)
                 || position.isVertical(toPosition);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override
@@ -92,9 +82,6 @@ public class Rook extends Strongmen {
 
     @Override
     public String toString() {
-        return "Rook{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "Rook{color=" + color + ", position=" + position + '}';
     }
 }

@@ -145,9 +145,6 @@ public final class Pawn extends Chessmen {
 
     @Override
     public String toString() {
-        return "Pawn{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "Pawn{color=" + color + ", position=" + position + '}';
     }
 }

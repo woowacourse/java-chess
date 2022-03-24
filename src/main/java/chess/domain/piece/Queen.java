@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class Queen extends Strongmen {
+public final class Queen extends Strongmen {
 
     private static final int INIT_FILE = 3;
 
@@ -26,11 +26,6 @@ public class Queen extends Strongmen {
         this.position = position;
     }
 
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
     private void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
@@ -41,11 +36,6 @@ public class Queen extends Strongmen {
         return position.isHorizontal(toPosition)
                 || position.isVertical(toPosition)
                 || position.isDiagonal(toPosition);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override

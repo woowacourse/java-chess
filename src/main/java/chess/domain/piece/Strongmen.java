@@ -19,4 +19,14 @@ public abstract class Strongmen extends Chessmen {
         }
         return WHITE_FIRST_RANK;
     }
+
+    @Override
+    protected final void attack(Position enemyPosition) {
+        move(enemyPosition);
+    }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
+    }
 }

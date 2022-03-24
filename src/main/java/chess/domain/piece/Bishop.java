@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Strongmen.firstRankOf;
-
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class Bishop extends Chessmen {
+public final class Bishop extends Strongmen {
 
     private static final int LEFT_INIT_FILE = 2;
     private static final int RIGHT_INIT_FILE = 5;
@@ -35,20 +33,10 @@ public class Bishop extends Chessmen {
         this.position = position;
     }
 
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
     private void validateMovable(Position toPosition) {
         if (!position.isDiagonal(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override
@@ -89,9 +77,6 @@ public class Bishop extends Chessmen {
 
     @Override
     public String toString() {
-        return "Bishop{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "Bishop{color=" + color + ", position=" + position + '}';
     }
 }

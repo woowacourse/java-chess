@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class King extends Strongmen {
+public final class King extends Strongmen {
 
     private static final int INIT_FILE = 4;
 
@@ -28,11 +28,6 @@ public class King extends Strongmen {
         this.position = position;
     }
 
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
     private void validateMovable(Position toPosition) {
         if (!canMoveOneStep(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
@@ -45,11 +40,6 @@ public class King extends Strongmen {
 
         return fileDifference <= MAX_MOVE_DIFFERENCE
                 && rankDifference <= MAX_MOVE_DIFFERENCE;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override

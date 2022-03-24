@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public class Knight extends Strongmen {
+public final class Knight extends Strongmen {
 
     private static final int LEFT_INIT_FILE = 1;
     private static final int RIGHT_INIT_FILE = 6;
@@ -36,11 +36,6 @@ public class Knight extends Strongmen {
         this.position = position;
     }
 
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
     private void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
@@ -53,11 +48,6 @@ public class Knight extends Strongmen {
 
         return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
                 || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override
@@ -98,9 +88,6 @@ public class Knight extends Strongmen {
 
     @Override
     public String toString() {
-        return "Knight{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "Knight{color=" + color + ", position=" + position + '}';
     }
 }
