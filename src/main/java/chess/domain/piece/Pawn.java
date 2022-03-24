@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.position.PositionUtil.isMappedRankIdx;
-
 import chess.domain.piece.position.Position;
 import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    public static final char BLACK_INIT_RANK = '7';
-    public static final char WHITE_INIT_RANK = '2';
+    public static final char BLACK_PAWN_INIT_RANK = 6;
+    public static final char WHITE_PAWN_INIT_RANK = 1;
 
     private static final double DEFAULT_SCORE = 1;
 
@@ -62,11 +60,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color == Color.WHITE && isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return color == Color.WHITE && WHITE_PAWN_INIT_RANK == curRankIdx;
     }
 
     private boolean isBlackJump(int curRankIdx) {
-        return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return color == Color.BLACK && BLACK_PAWN_INIT_RANK == curRankIdx;
     }
 
     @Override
