@@ -15,7 +15,7 @@ class CommandTest {
     void invalid(final String invalidCommand) {
         final var ChessGame = new ChessGame();
 
-        assertThatThrownBy(() -> Command.execute(invalidCommand, ChessGame))
+        assertThatThrownBy(() -> Command.execute(new String[]{invalidCommand}, ChessGame))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("유효하지 않은 명령어 입니다.");
     }
@@ -24,9 +24,9 @@ class CommandTest {
     @DisplayName("게임이 시작했을 때 start 명령어를 할 경우 예외 처리")
     void start_exception() {
         ChessGame chessGame = new ChessGame();
-        Command.execute("start", chessGame);
+        Command.execute(new String[]{"start"}, chessGame);
 
-        assertThatThrownBy(() -> Command.execute("start", chessGame))
+        assertThatThrownBy(() -> Command.execute(new String[]{"start"}, chessGame))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임이 이미 시작되었습니다.");
     }

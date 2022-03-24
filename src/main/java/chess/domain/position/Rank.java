@@ -23,6 +23,13 @@ public enum Rank {
         this.rank = rank;
     }
 
+    public static Rank from(final int other) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.rank == other)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
+    }
+
     public static List<Rank> reversed() {
         return Arrays.stream(values())
                 .sorted(Comparator.comparing(Rank::getRank).reversed())

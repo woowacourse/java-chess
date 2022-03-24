@@ -23,6 +23,13 @@ public enum File {
         this.file = file;
     }
 
+    public static File from(final String other) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.file.equals(other))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
+    }
+
     public static List<File> sorted() {
         return Arrays.stream(File.values())
                 .sorted(Comparator.comparing(File::getFile))

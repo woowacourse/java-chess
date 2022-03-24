@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.domain.position.Position;
+
 public class End extends State {
 
     @Override
@@ -15,5 +17,10 @@ public class End extends State {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public State move(final Position from, final Position to) {
+        throw new IllegalStateException("게임이 종료됐습니다.");
     }
 }

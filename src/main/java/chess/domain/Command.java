@@ -7,19 +7,22 @@ public enum Command {
 
     START("start", (input, chessGame) -> chessGame.start()),
     END("end", (input, chessGame) -> chessGame.end()),
+    MOVE("move", (input, chessGame) -> chessGame.move(input)),
     ;
 
-    private final String command;
-    private final BiConsumer<String, ChessGame> operate;
+    private static final int COMMAND_LOCATION = 0;
 
-    Command(final String command, final BiConsumer<String, ChessGame> operate) {
+    private final String command;
+    private final BiConsumer<String[], ChessGame> operate;
+
+    Command(final String command, final BiConsumer<String[], ChessGame> operate) {
         this.command = command;
         this.operate = operate;
     }
 
-    public static void execute(final String input, final ChessGame chessGame) {
+    public static void execute(final String[] input, final ChessGame chessGame) {
         Arrays.stream(Command.values())
-                .filter(command -> input.contains(command.command))
+                .filter(command -> input[COMMAND_LOCATION].equals(command.command))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어 입니다."))
                 .operate

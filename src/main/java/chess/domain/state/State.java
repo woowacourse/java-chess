@@ -8,7 +8,7 @@ import java.util.Map;
 
 public abstract class State {
 
-    private final Board board = new Board();
+    protected Board board;
 
     public abstract State start();
 
@@ -19,4 +19,6 @@ public abstract class State {
     }
 
     public abstract boolean isRunning();
+
+    public abstract State move(final Position from, final Position to);
 }

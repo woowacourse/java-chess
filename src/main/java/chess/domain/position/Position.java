@@ -24,6 +24,13 @@ public class Position {
                 .orElse(newPosition);
     }
 
+    public static Position from(final String position) {
+        File file = File.from(position.substring(0, 1));
+        Rank rank = Rank.from(Integer.parseInt(position.substring(1)));
+
+        return Position.of(file, rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

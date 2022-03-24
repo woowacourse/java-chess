@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -17,5 +18,14 @@ public class Board {
 
     public Map<Position, Piece> toMap() {
         return Collections.unmodifiableMap(value);
+    }
+
+    public void move(final Position from, final Position to) {
+
+    }
+
+    public boolean isMatchingColor(final Position from, final Color color) {
+        Piece piece = value.get(from);
+        return piece.isSameColor(color);
     }
 }

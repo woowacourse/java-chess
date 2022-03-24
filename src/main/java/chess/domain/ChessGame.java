@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class ChessGame {
 
+    private static final int FROM = 1;
+    private static final int TO = 2;
+
     private State state = new Ready();
 
     public void start() {
@@ -25,5 +28,12 @@ public class ChessGame {
 
     public boolean isRunning() {
         return state.isRunning();
+    }
+
+    public void move(final String[] positions) {
+        Position from = Position.from(positions[FROM]);
+        Position to = Position.from(positions[TO]);
+
+        state = state.move(from, to);
     }
 }

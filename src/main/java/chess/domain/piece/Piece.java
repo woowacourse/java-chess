@@ -18,4 +18,8 @@ public abstract class Piece {
         }
         return name;
     }
+
+    public boolean isSameColor(Color other) {
+        return color == other;
+    }
 }
