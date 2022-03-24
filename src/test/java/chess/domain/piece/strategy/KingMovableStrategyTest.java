@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Color;
-import chess.domain.piece.Knight;
+import chess.domain.piece.King;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class KingMovableStrategyTest {
     @DisplayName("킹의 빈곳 이동 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Knight(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(start, new King(WHITE)));
 
         assertThat(kingMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
@@ -40,8 +40,8 @@ class KingMovableStrategyTest {
     void isMovableToDifferentPiecePosition(Color color, boolean expected) {
         Position target = new Position('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Knight(WHITE),
-                target, new Knight(color)
+                start, new King(WHITE),
+                target, new King(color)
         ));
 
         assertThat(kingMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);

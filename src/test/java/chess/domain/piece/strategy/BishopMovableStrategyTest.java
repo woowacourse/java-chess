@@ -6,9 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Rook;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +32,7 @@ class BishopMovableStrategyTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어났는지에 따른 이동 가능여부")
     void emptyDirection(char col, char row, boolean expected) {
         Position target = new Position(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Rook(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Bishop(WHITE)));
 
         assertThat(bishopMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
@@ -42,7 +41,7 @@ class BishopMovableStrategyTest {
     @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
     void isMovableToClearEmptyPosition() {
         Position target = new Position('b', '6');
-        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Pawn(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(start, new Bishop(WHITE)));
 
         assertThat(bishopMovableStrategy.isMovable(start, target, chessBoard)).isTrue();
     }
@@ -53,8 +52,8 @@ class BishopMovableStrategyTest {
     void isMovableToClearPiecePosition(Color color, boolean expected) {
         Position target = new Position('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                target, new Pawn(color)));
+                start, new Bishop(WHITE),
+                target, new Bishop(color)));
 
         assertThat(bishopMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
@@ -64,8 +63,8 @@ class BishopMovableStrategyTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = new Position('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                new Position('c', '5'), new Pawn(BLACK)));
+                start, new Bishop(WHITE),
+                new Position('c', '5'), new Bishop(BLACK)));
 
         assertThat(bishopMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
@@ -76,9 +75,9 @@ class BishopMovableStrategyTest {
     void isMovableToNotClearPiecePosition(Color color) {
         Position target = new Position('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                start, new Pawn(WHITE),
-                new Position('c', '5'), new Pawn(BLACK),
-                target, new Pawn(color)));
+                start, new Bishop(WHITE),
+                new Position('c', '5'), new Bishop(BLACK),
+                target, new Bishop(color)));
 
         assertThat(bishopMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
