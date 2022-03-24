@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Location;
 
 public class End implements State {
     @Override
@@ -24,7 +25,7 @@ public class End implements State {
     }
 
     @Override
-    public State move() {
+    public State move(Location source, Location target) {
         throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 }

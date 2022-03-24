@@ -3,7 +3,9 @@ package chess;
 import java.util.Arrays;
 
 public enum GameCommand {
-    START("start"), END("end");
+    START("start"),
+    END("end"),
+    MOVE("move");
 
     private final String command;
 
@@ -18,12 +20,16 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 명령어를 지원하지 않습니다."));
     }
 
-    public static boolean isStart(String s) {
-        return GameCommand.of(s) == GameCommand.START;
+    public static boolean isStart(String command) {
+        return GameCommand.of(command) == GameCommand.START;
     }
 
-    public static boolean isEnd(String s) {
-        return GameCommand.of(s) == GameCommand.END;
+    public static boolean isEnd(String command) {
+        return GameCommand.of(command) == GameCommand.END;
+    }
+
+    public static boolean isMove(String command) {
+        return GameCommand.of(command) == GameCommand.MOVE;
     }
 
     private String getCommand() {

@@ -17,4 +17,12 @@ public abstract class Piece {
     public String toString() {
         return getName();
     }
+
+    public boolean isBlack() {
+        return team.isBlack();
+    }
+
+    public boolean isWhite() {
+        return team.isWhite();
+    }
 }

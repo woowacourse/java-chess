@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
+import chess.domain.File;
+import chess.domain.Location;
+import chess.domain.Rank;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,6 +45,7 @@ class RunningTest {
     @DisplayName("White상태에서 move를 실행하면 Black 상태 반환된다.")
     void WhiteMoveTest() {
         State state = new White(new Board());
-        assertThat(state.move()).isInstanceOf(Black.class);
+        assertThatThrownBy(() -> state.move(Location.of(File.F, Rank.SEVEN), Location.of(File.F, Rank.FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

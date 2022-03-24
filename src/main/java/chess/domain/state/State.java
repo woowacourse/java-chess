@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Location;
 
 public interface State {
 
@@ -12,5 +13,5 @@ public interface State {
 
     Board getBoard();
 
-    State move();
+    State move(Location source, Location target);
 }
