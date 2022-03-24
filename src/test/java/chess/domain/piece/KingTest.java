@@ -64,7 +64,7 @@ class KingTest {
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.ONE));
+        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();

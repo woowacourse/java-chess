@@ -81,6 +81,22 @@ public class Position {
         return condition1 || condition2;
     }
 
+    public List<YAxis> getYAxesBetween(Position other) {
+        return YAxis.getBetween(this.yAxis, other.yAxis);
+    }
+
+    public List<XAxis> getXAxesBetween(Position other) {
+        return XAxis.getBetween(this.xAxis, other.xAxis);
+    }
+
+    public XAxis getXAxis() {
+        return xAxis;
+    }
+
+    public YAxis getYAxis() {
+        return yAxis;
+    }
+
     @Override
     public String toString() {
         return "Position{" +

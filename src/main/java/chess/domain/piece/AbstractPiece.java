@@ -32,6 +32,10 @@ public abstract class AbstractPiece {
         return isMovable(from, to);
     }
 
+    public boolean isAbleToJump() {
+        return false;
+    }
+
     public boolean isSameTeam(AbstractPiece other) {
         return this.pieceColor == other.pieceColor;
     }

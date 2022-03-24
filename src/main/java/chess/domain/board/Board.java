@@ -57,13 +57,33 @@ public class Board {
     }
 
     public boolean executeCommand(Position from, Position to) {
+        AbstractPiece piece = value.get(from);
         AbstractPiece otherPiece = value.get(to);
+
+        if (!piece.isAbleToJump() && hasObstacle(from, to)) {
+            return false;
+        }
 
         if (otherPiece == null) {
             return move(from, to);
         }
 
         return attack(from, to);
+    }
+
+    private boolean hasObstacle(Position from, Position to) {
+        if (from.isSameXAxis(to)) {
+            return from.getYAxesBetween(to).stream()
+                    .map(yAxis -> value.get(Position.from(from.getXAxis(), yAxis)))
+                    .anyMatch(position -> !Objects.isNull(position));
+        }
+
+        if (from.isSameYAxis(to)) {
+            return from.getXAxesBetween(to).stream()
+                    .map(xAxis -> value.get(Position.from(xAxis, from.getYAxis())))
+                    .anyMatch(position -> !Objects.isNull(position));
+        }
+        return false;
     }
 
     private boolean move(Position from, Position to) {

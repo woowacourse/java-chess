@@ -165,4 +165,61 @@ class BoardTest {
         // then
         assertThat(actual).isFalse();
     }
+
+    @DisplayName("나이트가 아닌 말의 수직방향 진로에 다른 말이 있다면, 이동할 수 없다.")
+    @Test
+    void moveVertical_returnsFalseRouteHasObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("나이트가 아닌 말의 수직방향 진로에 다른 말이 없다면, 이동할 수 있다.")
+    @Test
+    void moveVertical_returnsTrueRouteHasNotObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("나이트가 아닌 말의 수평방향 진로에 다른 말이 있다면, 이동할 수 없다.")
+    @Test
+    void moveHorizontal_returnsFalseRouteHasObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE));
+        board.executeCommand(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.C, YAxis.THREE));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("나이트가 아닌 말의 수평방향 진로에 다른 말이 없다면, 이동할 수 있다.")
+    @Test
+    void moveHorizontal_returnsTrueRouteHasNotObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.C, YAxis.THREE));
+
+        // then
+        assertThat(actual).isTrue();
+    }
 }
