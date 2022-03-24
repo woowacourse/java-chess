@@ -6,17 +6,7 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public boolean inputCommand() {
-        String input = SCANNER.nextLine();
-
-        if (input.equals("start")) {
-            return true;
-        }
-
-        if (input.equals("end")) {
-            return false;
-        }
-
-        return false;
+    public String inputCommand() {
+        return SCANNER.nextLine();
     }
 }
