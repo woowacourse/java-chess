@@ -26,4 +26,13 @@ public class ChessGameTest {
         assertThatThrownBy(() -> chessGame.execute(List.of("start")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("빈 말을 움직이면 예외가 발생한다.")
+    void emptyPieceMove() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.execute(List.of("start"));
+        assertThatThrownBy(() -> chessGame.execute(List.of("move", "a3", "a4")))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

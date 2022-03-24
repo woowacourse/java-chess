@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Location {
-    private static Map<String, Location> CACHE = new HashMap<>();
+    private static final Map<String, Location> CACHE = new HashMap<>();
 
     static {
         Arrays.stream(File.values())
@@ -27,5 +27,11 @@ public class Location {
 
     public static Location of(File file, Rank rank) {
         return CACHE.get(toKey(file, rank));
+    }
+
+    public static Location of(String source) {
+        String file = source.substring(0, 1);
+        String rank = source.substring(1, 2);
+        return CACHE.get(toKey(File.of(file), Rank.of(rank)));
     }
 }

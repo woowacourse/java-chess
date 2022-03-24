@@ -27,6 +27,21 @@ public enum Rank {
                 .collect(Collectors.toList());
     }
 
+    public static Rank of(String value) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.rank == toInteger(value))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 축은 없습니다."));
+    }
+
+    private static int toInteger(String rank) {
+        try {
+            return Integer.parseInt(rank);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("[ERROR 가로 축은 숫자로 입력해야합니다.");
+        }
+    }
+
     @Override
     public String toString() {
         return String.valueOf(rank);

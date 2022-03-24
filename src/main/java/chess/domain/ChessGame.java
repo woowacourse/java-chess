@@ -26,10 +26,16 @@ public class ChessGame {
             end();
         }
 
-//        if (GameCommand.isMove(commandList[0])) {
-//            move(commandList[1], commandList[2]);
-//        }
+        if (GameCommand.isMove(commandList.get(0))) {
+            move(commandList.get(1), commandList.get(2));
+        }
 
+    }
+
+    private void move(String source, String target) {
+        Location sourceLocation = Location.of(source);
+        Location targetLocation = Location.of(target);
+        state.move(sourceLocation, targetLocation);
     }
 
     private void start() {
