@@ -50,4 +50,11 @@ public final class Piece {
         return source.isBelow(target);
     }
 
+    public boolean isPawn() {
+        return type.isPawn();
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return color == piece.color;
+    }
 }

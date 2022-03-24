@@ -5,7 +5,7 @@ import chess.domain.position.Row;
 
 public final class Pawn implements Type {
 
-    public static final int VERTICAL_MOVEMENT_LIMIT = 1;
+    public static final int DEFAULT_MOVEMENT_LIMIT = 1;
     public static final int VERTICAL_MOVEMENT_LIMIT_ON_START = 2;
     public static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
 
@@ -18,6 +18,10 @@ public final class Pawn implements Type {
     public boolean isMovable(Position source, Position target) {
         int rowGap = source.rowGap(target);
         int columnGap = source.columnGap(target);
+        return isVerticalOneOrTwoSteps(source, rowGap, columnGap) || isDiagonalOneStep(rowGap, columnGap);
+    }
+
+    private boolean isVerticalOneOrTwoSteps(Position source, int rowGap, int columnGap) {
         return isVerticalMove(columnGap) && (isOneStep(rowGap) || isTwoStepOnStart(source, rowGap));
     }
 
@@ -30,7 +34,11 @@ public final class Pawn implements Type {
     }
 
     private boolean isOneStep(int rowGap) {
-        return rowGap == VERTICAL_MOVEMENT_LIMIT;
+        return rowGap == DEFAULT_MOVEMENT_LIMIT;
+    }
+
+    private boolean isDiagonalOneStep(int rowGap, int columnGap) {
+        return rowGap == DEFAULT_MOVEMENT_LIMIT && columnGap == DEFAULT_MOVEMENT_LIMIT;
     }
 
     private boolean checkPawnOnStartPoint(Position source) {

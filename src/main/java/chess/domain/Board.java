@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -26,8 +27,21 @@ public final class Board {
         validateNotEquals(sourcePosition, targetPosition);
         Piece piece = findPiece(sourcePosition);
         if (piece.isMovable(sourcePosition, targetPosition)) {
+            checkPawnMovement(sourcePosition, targetPosition, piece);
             pieces.remove(sourcePosition);
             pieces.put(targetPosition, piece);
+        }
+    }
+
+    private void checkPawnMovement(Position sourcePosition, Position targetPosition, Piece piece) {
+        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.DIAGONAL) {
+            checkPawnTargetExist(targetPosition);
+        }
+    }
+
+    private void checkPawnTargetExist(Position targetPosition) {
+        if (!pieces.containsKey(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
         }
     }
 

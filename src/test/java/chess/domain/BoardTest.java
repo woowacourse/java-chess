@@ -113,4 +113,33 @@ class BoardTest {
         assertThat(board.piece(Position.of("g4")).get()).isEqualTo(piece);
     }
 
+    @Test
+    @DisplayName("폰은 상대기물이 목적지에 존재하지 않으면 대각선으로 움직일 수 없다")
+    void pawnCannotMoveDiagonal_targetNotExist() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            Piece whitePawn = new Piece(Color.WHITE, new Pawn());
+            pieces.put(Position.of("a2"), whitePawn);
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("a2", "b3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
+    }
+
+    @Test
+    @DisplayName("폰은 상대기물이 목적지에 존재하면 대각선으로 움직일 수 있다")
+    void pawnCanMoveDiagonal_targetExist() {
+        Piece whitePawn = new Piece(Color.WHITE, new Pawn());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("a2"), whitePawn);
+            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Pawn()));
+            return pieces;
+        });
+
+        board.move("a2", "b3");
+        assertThat(board.piece(Position.of("b3")).get()).isEqualTo(whitePawn);
+    }
 }

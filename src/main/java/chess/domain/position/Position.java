@@ -23,11 +23,11 @@ public final class Position {
         return isVertical(target) || isHorizontal(target);
     }
 
-    private boolean isVertical(Position target) {
+    public boolean isVertical(Position target) {
         return column.isSame(target.column);
     }
 
-    private boolean isHorizontal(Position target) {
+    public boolean isHorizontal(Position target) {
         return row.isSame(target.row);
     }
 

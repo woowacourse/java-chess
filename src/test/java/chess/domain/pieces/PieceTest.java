@@ -125,4 +125,54 @@ class PieceTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("blackPawnDiagonalMovement")
+    @DisplayName("폰이 블랙이면 대각 아래로만 이동한다")
+    void blackPawn_moveDiagonalBelow(Position source, Position target, boolean result) {
+        Piece piece = new Piece(Color.BLACK, new Pawn());
+        assertThat(piece.isMovable(source, target)).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> blackPawnDiagonalMovement() {
+        return Stream.of(
+                Arguments.of(
+                        Position.of("c3"), Position.of("d2"), true
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("d4"), false
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("b2"), true
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("b4"), false
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("whitePawnDiagonalMovement")
+    @DisplayName("폰이 흰색이면 대각 위로만 이동한다")
+    void whitePawn_moveDiagonalAbove(Position source, Position target, boolean result) {
+        Piece piece = new Piece(Color.WHITE, new Pawn());
+        assertThat(piece.isMovable(source, target)).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> whitePawnDiagonalMovement() {
+        return Stream.of(
+                Arguments.of(
+                        Position.of("c3"), Position.of("d4"), true
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("d2"), false
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("b4"), true
+                ),
+                Arguments.of(
+                        Position.of("c3"), Position.of("b2"), false
+                )
+        );
+    }
 }
