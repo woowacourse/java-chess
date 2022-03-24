@@ -1,13 +1,13 @@
-package chess.view;
+package chess.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
-import chess.view.command.BlackRunning;
-import chess.view.command.Command;
-import chess.view.command.End;
-import chess.view.command.WhiteRunning;
+import chess.command.BlackRunning;
+import chess.command.Command;
+import chess.command.End;
+import chess.command.WhiteRunning;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

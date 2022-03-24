@@ -1,4 +1,4 @@
-package chess.view.command;
+package chess.command;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
