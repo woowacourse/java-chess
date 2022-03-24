@@ -24,11 +24,15 @@ public class GameController {
     }
 
     public void playGame(ChessGame game) {
-        printBoard(new BoardViewDto(game));
+        printBoardDisplay(game);
         while (!game.isEnd()) {
             game.moveChessmen(requestValidMoveInput());
-            printBoard(new BoardViewDto(game));
+            printBoardDisplay(game);
         }
+    }
+
+    private void printBoardDisplay(ChessGame game) {
+        printBoard(new BoardViewDto(game));
     }
 
     public void endGame(ChessGame game) {
