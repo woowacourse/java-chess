@@ -6,7 +6,7 @@ import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
 
-public class ChessGameProgressor {
+public class ChessGameProgress {
 
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
@@ -17,7 +17,7 @@ public class ChessGameProgressor {
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
-    public ChessGameProgressor() {
+    public ChessGameProgress() {
         this.chessGame = new ChessGame(Board.create());
         this.gameSwitch = new GameSwitch();
         this.turn = new Turn();
