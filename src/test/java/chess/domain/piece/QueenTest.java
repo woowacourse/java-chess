@@ -6,7 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.domain.Position;
+
 class QueenTest {
+
+	private Queen queen = Queen.createBlack();
 
 	@ParameterizedTest
 	@CsvSource(value = {"5:5", "3:3", "7:7", "8:4", "4:7", "1:1"}, delimiter = ':')

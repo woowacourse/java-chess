@@ -26,5 +26,9 @@ class KnightTest {
 	@CsvSource(value = {"5:4", "6:4", "3:4", "2:4", "4:3", "4:5", "4:2", "4:5"}, delimiter = ':')
 	@DisplayName("나이트가 움직일 수 없으면 예외가 발생한다.")
 	void moveKnightException(int row, int column) {
+		assertThat(knight.isMovable(
+			new Position(4, 4),
+			new Position(row, column))
+		).isFalse();
 	}
 }

@@ -36,4 +36,16 @@ public class DirectionGenerator {
 			.filter(direction -> direction.confirm(from, to))
 			.findAny();
 	}
+
+	public static Optional<? extends Direction> generateOfKnight(Position from, Position to) {
+		return Arrays.stream(KnightDirection.values())
+			.filter(direction -> direction.confirm(from, to))
+			.findAny();
+	}
+
+	public static Optional<? extends Direction> generateOfRook(Position from, Position to) {
+		return Arrays.stream(BasicDirection.values())
+			.filter(direction -> direction.confirm(from, to))
+			.findAny();
+	}
 }

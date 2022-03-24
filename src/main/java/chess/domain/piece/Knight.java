@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.strategy.KnightMovingStrategy;
 
 public class Knight extends Piece {
 

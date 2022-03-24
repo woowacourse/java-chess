@@ -23,7 +23,7 @@ public class RookTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"2:4", "3:5"}, delimiter = ':')
+	@CsvSource(value = {"2:3", "3:5"}, delimiter = ':')
 	@DisplayName("Rook은 대각선으로 이동할 수 없다.")
 	void moveRookInvalid(int row, int column) {
 		assertThat(rook.isMovable(

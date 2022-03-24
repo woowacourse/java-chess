@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.strategy.RookMovingStrategy;
 
 public class Rook extends Piece {
 
