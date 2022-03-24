@@ -36,4 +36,15 @@ public class KnightMoveStrategyTest {
 
         assertThat(knightMoveStrategy.isMovable(board, source, target)).isFalse();
     }
+
+    @Test
+    @DisplayName("Target 에 우리편 기물이 있을 때 false")
+    void isMovableWhenTargetColorSame() {
+        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"));
+
+        Position source = Position.valueOf("b8");
+        Position target = Position.valueOf("c6");
+
+        assertThat(knightMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
 }

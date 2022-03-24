@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public class KingMoveStrategy implements MoveStrategy {
+public class KingMoveStrategy extends MoveStrategy {
 
     private static final List<MovePattern> MOVE_PATTERNS = List.of(
             MovePattern.NORTH,
@@ -32,10 +32,11 @@ public class KingMoveStrategy implements MoveStrategy {
         return isTargetPositionMovable(targetPiece, color);
     }
 
-    private boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
+    @Override
+    protected boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
         if (!targetPiece.isBlank()) {
             return targetPiece.getColor() == color.oppositeColor();
         }
-        return targetPiece.isBlank();
+        return true;
     }
 }

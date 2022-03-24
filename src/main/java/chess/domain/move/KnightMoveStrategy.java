@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public class KnightMoveStrategy implements MoveStrategy {
+public class KnightMoveStrategy extends MoveStrategy {
 
     private static final List<MovePattern> MOVE_PATTERNS = List.of(
             MovePattern.NNW,
@@ -29,8 +29,14 @@ public class KnightMoveStrategy implements MoveStrategy {
         if (!MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
+        return isTargetPositionMovable(targetPiece, color);
+    }
 
-
+    @Override
+    protected boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
+        if (!targetPiece.isBlank()) {
+            return targetPiece.getColor() == color.oppositeColor();
+        }
         return true;
     }
 }

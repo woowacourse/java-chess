@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public class PawnMoveStrategy implements MoveStrategy{
+public class PawnMoveStrategy extends MoveStrategy{
 
     private static final int NO_HORIZONTAL_MOVE = 0;
     private static final int FORWARD_UNIT_BLACK = -1;
@@ -49,7 +49,7 @@ public class PawnMoveStrategy implements MoveStrategy{
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.SOUTHEAST || movePattern == MovePattern.SOUTHWEST) {
-            return isCatchable(targetPiece, color);
+            return isTargetPositionMovable(targetPiece, color);
         }
         return false;
     }
@@ -65,7 +65,7 @@ public class PawnMoveStrategy implements MoveStrategy{
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.NORTHEAST || movePattern == MovePattern.NORTHWEST) {
-            return isCatchable(targetPiece, color);
+            return isTargetPositionMovable(targetPiece, color);
         }
         return false;
     }
@@ -84,7 +84,8 @@ public class PawnMoveStrategy implements MoveStrategy{
         return FORWARD_UNIT_WHITE;
     }
 
-    private boolean isCatchable(final Piece targetPiece, final Color color) {
+    @Override
+    protected boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
         return !targetPiece.isBlank() && targetPiece.getColor() == color.oppositeColor();
     }
 }
