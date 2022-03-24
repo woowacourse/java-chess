@@ -11,9 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BoardGeneratorTest {
 
     @Test
-    @DisplayName("")
+    @DisplayName("초기 체스판을 만든다.")
     void createInitialPieces() {
-        BoardGenerator constructor = new BoardGenerator();
+        BoardGenerator constructor = new InitialBoardGenerator();
         Map<Point, Piece> pointPieces = constructor.generate();
         assertThat(pointPieces.size()).isEqualTo(LineNumber.MAX * LineNumber.MAX);
     }

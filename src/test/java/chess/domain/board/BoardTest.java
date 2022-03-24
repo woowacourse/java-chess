@@ -10,7 +10,7 @@ class BoardTest {
     @Test
     @DisplayName("")
     void createBoardByGenerator() {
-        Board board = Board.of(new BoardGenerator());
+        Board board = Board.of(new InitialBoardGenerator());
         assertThat(board).isNotNull();
     }
 }
