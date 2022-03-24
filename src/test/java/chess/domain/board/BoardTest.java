@@ -161,13 +161,55 @@ class BoardTest {
 
     @DisplayName("나이트가 이동할 위치에 아군이 있으면 이동할 수 없다.")
     @Test
-    void knightMove() {
+    void knightCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
         value.put(Position.of("d5"), new Knight(Color.WHITE));
         value.put(Position.of("e7"), new Knight(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("e7")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("아군");
+    }
+
+    @DisplayName("킹이 성공적으로 이동한다")
+    @ParameterizedTest(name = "{displayName} : {arguments}")
+    @MethodSource("kingMoveTestSet")
+    void kingMove(Position src, Position dest) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        Piece piece = new King(Color.BLACK);
+        value.put(src, piece);
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+    }
+
+    static Stream<Arguments> kingMoveTestSet() {
+        return Stream.of(
+                Arguments.of(Position.of("d3"), Position.of("d4")),
+                Arguments.of(Position.of("d3"), Position.of("d2")),
+                Arguments.of(Position.of("d3"), Position.of("e3")),
+                Arguments.of(Position.of("d3"), Position.of("c3")),
+                Arguments.of(Position.of("d3"), Position.of("e4")),
+                Arguments.of(Position.of("d3"), Position.of("e2")),
+                Arguments.of(Position.of("d3"), Position.of("c4")),
+                Arguments.of(Position.of("d3"), Position.of("c2"))
+        );
+    }
+
+    @DisplayName("킹은 이동할 위치에 아군이 있으면 이동할 수 없다.")
+    @Test
+    void kingCannotMove() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("d5"), new King(Color.WHITE));
+        value.put(Position.of("d6"), new Pawn(Color.WHITE));
+        Board board = new Board(value);
+
+        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }

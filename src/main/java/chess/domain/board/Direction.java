@@ -4,14 +4,15 @@ import java.util.List;
 
 public enum Direction {
 
-    NORTH(0,1),
-    SOUTH(0,-1),
-    EAST(1,0),
-    WEST(-1,0),
-    NORTH_EAST(1,1),
-    NORTH_WEST(1,-1),
-    SOUTH_EAST(-1,1),
-    SOUTH_WEST(-1,-1),
+    NORTH(0, 1),
+    SOUTH(0, -1),
+    EAST(1, 0),
+    WEST(-1, 0),
+
+    NORTH_EAST(1, 1),
+    NORTH_WEST(1, -1),
+    SOUTH_EAST(-1, 1),
+    SOUTH_WEST(-1, -1),
 
     NORTH_NORTH_EAST(1, 2),
     NORTH_NORTH_WEST(-1, 2),
@@ -54,6 +55,10 @@ public enum Direction {
                 WEST_SOUTH_WEST,
                 WEST_NORTH_WEST
         );
+    }
+
+    public static List<Direction> getKingDirections() {
+        return List.of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     }
 
     @Override
