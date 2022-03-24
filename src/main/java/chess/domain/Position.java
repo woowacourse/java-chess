@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -40,6 +42,98 @@ public class Position {
             return false;
         }
         return destination.rank - rank > 0;
+    }
+
+    public List<Position> findAllBetweenPosition(final Position destination) {
+        if (isMoveLinear(destination)) {
+            return findBetweenLinearPosition(destination);
+        }
+        if (isMoveDiagonal(destination)) {
+            return findBetweenDiagonalPosition(destination);
+        }
+        if (isMoveOfKnight(destination)) {
+            return findBetweenKnightPosition(destination);
+        }
+        throw new IllegalArgumentException("올바른 이동이 아닙니다.");
+    }
+
+    private List<Position> findBetweenLinearPosition(final Position destination) {
+        final List<Position> positions = new ArrayList<>();
+
+        final int startRank = Math.min(rank, destination.rank);
+        final int startFile = Math.min(file, destination.file);
+        final int endRank = Math.max(rank, destination.rank);
+        final int endFile = Math.max(file, destination.file);
+
+        addBetweenVerticalPosition(positions, startRank, endRank);
+        addBetweenHorizonPosition(positions, startFile, endFile);
+        return positions;
+    }
+
+    private void addBetweenVerticalPosition(List<Position> positions, int startRank, int endRank) {
+        for (int i = startRank + 1; i < endRank; i++) {
+            positions.add(new Position(i, file));
+        }
+    }
+
+    private void addBetweenHorizonPosition(List<Position> positions, int startFile, int endFile) {
+        for (int i = startFile + 1; i < endFile; i++) {
+            positions.add(new Position(rank, (char) i));
+        }
+    }
+
+    private List<Position> findBetweenDiagonalPosition(final Position destination) {
+        final List<Position> positions = new ArrayList<>();
+
+        final int startRank = Math.min(rank, destination.rank);
+        final int startFile = Math.min(file, destination.file);
+        final int end = Math.max(rank, destination.rank);
+
+        addBetweenDiagonalPosition(positions, startRank, startFile, end);
+        return positions;
+    }
+
+    private void addBetweenDiagonalPosition(List<Position> positions, int startRank, int startFile, int end) {
+        for (int i = startRank + 1, j = startFile + 1; i < end; i++, j++) {
+            positions.add(new Position(i, (char) j));
+        }
+    }
+
+    private List<Position> findBetweenKnightPosition(final Position destination) {
+        final List<Position> positions = new ArrayList<>();
+
+        final int[] rankDifferenceDirection = {2, -2, 0, 0};
+        final int[] fileDifferenceDirection = {0, 0, -2, 2};
+        final int directionCount = 4;
+        for (int index = 0; index < directionCount; index++) {
+            checkKnightPosition(destination, positions, rankDifferenceDirection, fileDifferenceDirection, index);
+        }
+        return positions;
+    }
+
+    private void checkKnightPosition(final Position destination, final List<Position> betweenPosition,
+            final int[] rankDifferenceDirection, final int[] fileDifferenceDirection, final int directionIndex) {
+        final int nextRank = rank + rankDifferenceDirection[directionIndex];
+        final char nextFile = (char) (file + fileDifferenceDirection[directionIndex]);
+
+        if (isValidBetweenPosition(nextRank, nextFile, destination)) {
+            final int checkingRank = this.rank + rankDifferenceDirection[directionIndex] / 2;
+            final char checkingFile = (char) (this.file + fileDifferenceDirection[directionIndex] / 2);
+            betweenPosition.add(new Position(checkingRank, checkingFile));
+        }
+    }
+
+    private boolean isValidBetweenPosition(final int rank, final char file, final Position destinationPosition) {
+        if (new Position(rank + 1, file).equals(destinationPosition)) {
+            return true;
+        }
+        if (new Position(rank - 1, file).equals(destinationPosition)) {
+            return true;
+        }
+        if (new Position(rank, (char) (file - 1)).equals(destinationPosition)) {
+            return true;
+        }
+        return new Position(rank, (char) (file + 1)).equals(destinationPosition);
     }
 
     public boolean isMoveLinear(final Position destination) {

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,5 +71,29 @@ public class PositionTest {
         final int actual = currentPosition.calculateDistance(destinationPosition);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "{2}")
+    @MethodSource("provideDestinationPosition")
+    @DisplayName("목적지까지 존재하는 중간 위치를 모두 구한다.")
+    void findAllBetweenCurrentAndDestination(final Position position, final List<Position> expected, final String name) {
+        final Position currentPosition = new Position(4, 'd');
+
+        final List<Position> actual = currentPosition.findAllBetweenPosition(position);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideDestinationPosition() {
+        return Stream.of(
+                Arguments.of(new Position(1, 'd'),
+                        List.of(new Position(2, 'd'), new Position(3, 'd')),
+                        "상하좌우"),
+                Arguments.of(new Position(1, 'a'),
+                        List.of(new Position(2, 'b'), new Position(3, 'c')),
+                        "대각선"),
+                Arguments.of(new Position(3, 'f'), List.of(new Position(4, 'e')),
+                        "나이트")
+        );
     }
 }
