@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
+
 import chess.domain.position.util.PositionUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,8 +65,8 @@ public class Position {
         return fileIdx;
     }
 
-    public int getRankIdx() {
-        return rankIdx;
+    public int toDisplayRowIndex() {
+        return RANKS_TOTAL_SIZE - rankIdx - 1;
     }
 
     public boolean hasRankIdxOf(int rankIdx) {

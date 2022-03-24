@@ -23,16 +23,16 @@ public class BoardDto {
                 .collect(Collectors.toList());
     }
 
-    private static String initRowDisplay(List<Piece> existingChessMEN) {
+    private static String initRowDisplay(List<Piece> existingChessMen) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
-                .mapToObj(fileIdx -> squareView(existingChessMEN, fileIdx))
+                .mapToObj(fileIdx -> squareView(existingChessMen, fileIdx))
                 .collect(Collectors.joining());
     }
 
     private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
                 .stream()
-                .filter(piece -> toRowIdx(piece) == rowIdx)
+                .filter(piece -> piece.isAtDisplayRowIdxOf(rowIdx))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -42,13 +42,6 @@ public class BoardDto {
                 .map(Piece::display)
                 .findFirst()
                 .orElse(EMPTY_SQUARE_DISPLAY);
-    }
-
-    private static int toRowIdx(Piece piece) {
-        Position position = piece.position();
-        int rankIdx = position.getRankIdx();
-
-        return RANKS_TOTAL_SIZE - rankIdx - 1;
     }
 
     private static int extractFileIdx(Piece piece) {

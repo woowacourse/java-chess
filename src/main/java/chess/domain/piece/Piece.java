@@ -18,6 +18,8 @@ public interface Piece {
 
     boolean isAt(Position position);
 
+    boolean isAtDisplayRowIdxOf(int rowIdx);
+
     Position position();
 
     String display();
