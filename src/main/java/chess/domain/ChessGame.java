@@ -38,5 +38,14 @@ public final class ChessGame {
         Position sourcePosition = new Position(PositionX.of(source.substring(0, 1)), PositionY.of(source.substring(1)));
         Position targetPosition = new Position(PositionX.of(target.substring(0, 1)), PositionY.of(target.substring(1)));
         board.movePiece(currentTurnColor, sourcePosition, targetPosition);
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        currentTurnColor = currentTurnColor.nextTurnColor();
+    }
+
+    public boolean isRunning() {
+        return true;
     }
 }

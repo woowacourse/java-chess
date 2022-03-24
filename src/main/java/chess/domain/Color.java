@@ -14,4 +14,14 @@ public enum Color {
         }
         return signature;
     }
+
+    public Color nextTurnColor() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return NONE;
+    }
 }
