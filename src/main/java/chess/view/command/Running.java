@@ -27,17 +27,21 @@ public class Running implements Command {
         }
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
         if (matcher.find()) {
-            List<String> values = Arrays.asList(command.split(" "));
-            Position start = position(values.get(START_POSITION_INDEX));
-            Position target = position(values.get(TARGET_POSITION_INDEX));
-            chessBoard.movePiece(start, target);
+            movePieceByCommand(command);
             OutputView.printChessBoard(chessBoard.getPieces());
             return this;
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
    }
 
-   private Position position(String command) {
+    private void movePieceByCommand(final String command) {
+        List<String> values = Arrays.asList(command.split(" "));
+        Position start = position(values.get(START_POSITION_INDEX));
+        Position target = position(values.get(TARGET_POSITION_INDEX));
+        chessBoard.movePiece(start, target);
+    }
+
+    private Position position(String command) {
         return new Position(command.charAt(0), command.charAt(1));
    }
 }
