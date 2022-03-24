@@ -4,7 +4,7 @@ import static chess.domain.piece.position.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.domain.piece.position.PositionUtil.RANKS_TOTAL_SIZE;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Chessmen;
 import chess.domain.piece.position.Position;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,35 +23,35 @@ public class BoardDto {
                 .collect(Collectors.toList());
     }
 
-    private static String initRowDisplay(List<Piece> existingChessMen) {
+    private static String initRowDisplay(List<Chessmen> existingChessMen) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
                 .mapToObj(fileIdx -> squareView(existingChessMen, fileIdx))
                 .collect(Collectors.joining());
     }
 
-    private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
+    private static List<Chessmen> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
                 .stream()
                 .filter(piece -> toRowIdx(piece) == rowIdx)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static String squareView(List<Piece> currentRowChessMen, int fileIdx) {
+    private static String squareView(List<Chessmen> currentRowChessMen, int fileIdx) {
         return currentRowChessMen.stream()
                 .filter(piece -> extractFileIdx(piece) == fileIdx)
-                .map(Piece::display)
+                .map(Chessmen::display)
                 .findFirst()
                 .orElse(EMPTY_SQUARE_DISPLAY);
     }
 
-    private static int toRowIdx(Piece piece) {
+    private static int toRowIdx(Chessmen piece) {
         Position position = piece.getPosition();
         int rankIdx = position.getRankIdx();
 
         return RANKS_TOTAL_SIZE - rankIdx - 1;
     }
 
-    private static int extractFileIdx(Piece piece) {
+    private static int extractFileIdx(Chessmen piece) {
         Position position = piece.getPosition();
         return position.getFileIdx();
     }
