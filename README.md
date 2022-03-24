@@ -19,17 +19,17 @@
 
 
 - [x] 각 기물의 초기위치는 아래와 같다.
-```java
-RNBQKBNR  8
-        PPPPPPPP  7
-        ........  6
-        ........  5
-        ........  4
-        ........  3
-        pppppppp  2
-        rnbqkbnr  1
+```
+  RNBQKBNR  8
+  PPPPPPPP  7
+  ........  6
+  ........  5
+  ........  4
+  ........  3
+  pppppppp  2
+  rnbqkbnr  1
 
-        abcdefgh
+  abcdefgh
 ```
 
 ```
