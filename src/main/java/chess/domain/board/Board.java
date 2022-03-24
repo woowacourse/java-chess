@@ -11,7 +11,7 @@ public class Board {
     private final Map<Position, Piece> board;
 
     Board(Map<Position, Piece> board) {
-        this.board = board;
+        this.board = new LinkedHashMap<>(board);
     }
 
     public boolean move(String from, String to) {
