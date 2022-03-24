@@ -26,10 +26,17 @@ public final class Board {
         Position targetPosition = Position.of(target);
         validateNotEquals(sourcePosition, targetPosition);
         Piece piece = findPiece(sourcePosition);
+        validateTargetNotSameColor(targetPosition, piece);
         if (piece.isMovable(sourcePosition, targetPosition)) {
             checkPawnMovement(sourcePosition, targetPosition, piece);
             pieces.remove(sourcePosition);
             pieces.put(targetPosition, piece);
+        }
+    }
+
+    private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
+        if (pieces.containsKey(targetPosition) && piece.isSameColor(findPiece(targetPosition))) {
+            throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
         }
     }
 

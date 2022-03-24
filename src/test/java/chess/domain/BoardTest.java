@@ -142,4 +142,19 @@ class BoardTest {
         board.move("a2", "b3");
         assertThat(board.piece(Position.of("b3")).get()).isEqualTo(whitePawn);
     }
+
+    @Test
+    @DisplayName("목적지에 같은 색의 기물이 있으면 움직일 수 없다")
+    void pieceCannotMove_ifTargetIsSameColor() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Rook()));
+            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("b8", "b3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+    }
 }
