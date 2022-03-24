@@ -6,7 +6,7 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public boolean inputStartCommand() {
+    public boolean inputCommand() {
         String input = SCANNER.nextLine();
 
         if (input.equals("start")) {

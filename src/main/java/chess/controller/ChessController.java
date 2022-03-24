@@ -29,7 +29,7 @@ public class ChessController {
 
     public void run() {
         outputView.printAnnounce();
-        while (inputView.inputStartCommand()) {
+        while (inputView.inputCommand()) {
             start();
         }
     }

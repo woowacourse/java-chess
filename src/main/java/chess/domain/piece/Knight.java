@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.strategy.KnightMoveStrategy;
 
 public final class Knight extends Piece {
 
@@ -8,7 +9,7 @@ public final class Knight extends Piece {
     private final String symbol;
 
     public Knight(Team team, String symbol, Position position) {
-        super(position);
+        super(position, new KnightMoveStrategy(), team);
         this.team = team;
         this.symbol = symbol;
     }

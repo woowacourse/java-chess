@@ -14,9 +14,9 @@ public class FileTest {
         File file = File.ONE;
 
         //when
-        String fileName = file.getFile();
+        int fileName = file.getFile();
 
         //then
-        assertThat(fileName).isEqualTo("1");
+        assertThat(fileName).isEqualTo(1);
     }
 }

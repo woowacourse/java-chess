@@ -14,9 +14,9 @@ public class RankTest {
         Rank rank = Rank.A;
 
         //when
-        String rankName = rank.getRank();
+        char rankName = rank.getRank();
 
         //then
-        assertThat(rankName).isEqualTo("a");
+        assertThat(rankName).isEqualTo('a');
     }
 }
