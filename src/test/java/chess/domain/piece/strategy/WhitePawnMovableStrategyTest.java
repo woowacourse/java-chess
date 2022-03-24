@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.BlackFirstPawn;
+import chess.domain.piece.pawn.BlackFirstPawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.WhiteFirstPawn;
-import chess.domain.piece.WhitePawn;
+import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

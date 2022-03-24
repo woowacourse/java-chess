@@ -1,7 +1,10 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.pawn.WhiteFirstPawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
