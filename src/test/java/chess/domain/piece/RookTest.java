@@ -48,4 +48,23 @@ class RookTest {
         // then
         assertThat(move).isFalse();
     }
+
+    @ParameterizedTest(name = "출발지 : E4, 도착지 : {0}")
+    @ValueSource(strings = {"E8", "E1", "A4", "H4"})
+    @DisplayName("타 기물로 인한 룩 이동 실패 테스트")
+    void rookMoveFailCausedByPieceOnTheWay(String to) {
+        // given
+        Map<Position, Piece> testBoard = new LinkedHashMap<>();
+        Stream.of("E6", "E2", "B4", "G4")
+                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
+
+        testBoard.put(Position.of("E4"), new Rook(Color.WHITE));
+        Board board = BoardFactory.newInstance(testBoard);
+
+        // when
+        boolean move = board.move("E4", to);
+
+        // then
+        assertThat(move).isFalse();
+    }
 }

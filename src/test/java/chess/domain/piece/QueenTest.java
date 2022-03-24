@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class QueenTest {
     @ParameterizedTest(name = "출발지 : D5, 도착지 : {0}")
-    @ValueSource(strings = {"A8", "A5", "A2", "D1", "H1", "H5", "G8", "D"})
+    @ValueSource(strings = {"A8", "A5", "A2", "D1", "H1", "H5", "G8", "D6"})
     @DisplayName("퀸 이동 테스트")
     void rookMove(String to) {
         // given
@@ -40,6 +40,25 @@ class QueenTest {
                 .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.WHITE)));
 
         testBoard.put(Position.of("D5"), new Queen(Color.WHITE));
+        Board board = BoardFactory.newInstance(testBoard);
+
+        // when
+        boolean move = board.move("D5", to);
+
+        // then
+        assertThat(move).isFalse();
+    }
+
+    @ParameterizedTest(name = "출발지 : D5, 도착지 : {0}")
+    @ValueSource(strings = {"A8", "A5", "A2", "D1", "H1", "H5", "G8", "D8"})
+    @DisplayName("타 기물로 인한 퀸 이동 실패 테스트")
+    void queenMoveFailCausedByPieceOnTheWay(String to) {
+        // given
+        Map<Position, Piece> testBoard = new LinkedHashMap<>();
+        Stream.of("D6", "C5", "E5", "C4", "D2", "F3", "G5", "D7")
+                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
+
+        testBoard.put(Position.of("D5"), new Rook(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when

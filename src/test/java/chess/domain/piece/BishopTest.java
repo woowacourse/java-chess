@@ -48,4 +48,23 @@ class BishopTest {
         // then
         assertThat(move).isFalse();
     }
+
+    @ParameterizedTest(name = "출발지 : E4, 도착지 : {0}")
+    @ValueSource(strings = {"A8", "B1", "H1", "H7"})
+    @DisplayName("타 기물로 인한 비숍 이동 실패 테스트")
+    void bishopMoveFailCausedByPieceOnTheWay(String to) {
+        // given
+        Map<Position, Piece> testBoard = new LinkedHashMap<>();
+        Stream.of("C6", "D3", "F3", "F5")
+                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
+
+        testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
+        Board board = BoardFactory.newInstance(testBoard);
+
+        // when
+        boolean move = board.move("E4", to);
+
+        // then
+        assertThat(move).isFalse();
+    }
 }
