@@ -213,4 +213,90 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("아군");
     }
+
+    @DisplayName("룩이 성공적으로 이동한다")
+    @ParameterizedTest(name = "{displayName} : {arguments}")
+    @MethodSource("rookMoveTestSet")
+    void rookMove(Position src, Position dest) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        Piece piece = new Rook(Color.BLACK);
+        value.put(src, piece);
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+    }
+
+    static Stream<Arguments> rookMoveTestSet() {
+        return Stream.of(
+                // 동
+                Arguments.of(Position.of("a3"), Position.of("b3")),
+                Arguments.of(Position.of("a3"), Position.of("c3")),
+                Arguments.of(Position.of("a3"), Position.of("d3")),
+                Arguments.of(Position.of("a3"), Position.of("e3")),
+                Arguments.of(Position.of("a3"), Position.of("f3")),
+                Arguments.of(Position.of("a3"), Position.of("g3")),
+                Arguments.of(Position.of("a3"), Position.of("h3")),
+                // 서
+                Arguments.of(Position.of("h3"), Position.of("a3")),
+                Arguments.of(Position.of("h3"), Position.of("b3")),
+                Arguments.of(Position.of("h3"), Position.of("c3")),
+                Arguments.of(Position.of("h3"), Position.of("d3")),
+                Arguments.of(Position.of("h3"), Position.of("e3")),
+                Arguments.of(Position.of("h3"), Position.of("f3")),
+                Arguments.of(Position.of("h3"), Position.of("g3")),
+                // 남
+                Arguments.of(Position.of("a8"), Position.of("a7")),
+                Arguments.of(Position.of("a8"), Position.of("a6")),
+                Arguments.of(Position.of("a8"), Position.of("a5")),
+                Arguments.of(Position.of("a8"), Position.of("a4")),
+                Arguments.of(Position.of("a8"), Position.of("a3")),
+                Arguments.of(Position.of("a8"), Position.of("a2")),
+                Arguments.of(Position.of("a8"), Position.of("a1")),
+                // 북
+                Arguments.of(Position.of("a1"), Position.of("a8")),
+                Arguments.of(Position.of("a1"), Position.of("a7")),
+                Arguments.of(Position.of("a1"), Position.of("a6")),
+                Arguments.of(Position.of("a1"), Position.of("a5")),
+                Arguments.of(Position.of("a1"), Position.of("a4")),
+                Arguments.of(Position.of("a1"), Position.of("a3")),
+                Arguments.of(Position.of("a1"), Position.of("a2"))
+        );
+    }
+
+    @DisplayName("룩은 이동할 위치에 아군이 있으면 이동할 수 없다.")
+    @Test
+    void rookCannotMove() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("d5"), new Rook(Color.WHITE));
+        value.put(Position.of("d8"), new Pawn(Color.WHITE));
+        Board board = new Board(value);
+
+        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d8")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("아군");
+    }
+
+    @DisplayName("룩은 이동경로에 다른 기물이 있는 경우 예외를 던진다")
+    @Test
+    void rookCheckObstacleInPath() {
+
+        Piece rook = new Rook(Color.WHITE);
+        Piece obstacle = new Pawn(Color.BLACK);
+        Map<Position, Piece> value = new HashMap<>();
+        Position src = Position.of("d3");
+        value.put(src, rook);
+        value.put(Position.of("f3"), obstacle);
+        Board board = new Board(value);
+
+        Position dest = Position.of("h3");
+
+        assertThatThrownBy(() -> board.move(src, dest))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("다른 기물");
+    }
+
 }
