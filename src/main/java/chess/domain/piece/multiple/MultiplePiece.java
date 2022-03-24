@@ -1,26 +1,20 @@
-package chess.domain.piece;
-
-import static chess.domain.direction.Direction.DOWN_LEFT;
-import static chess.domain.direction.Direction.DOWN_RIGHT;
-import static chess.domain.direction.Direction.UP_LEFT;
-import static chess.domain.direction.Direction.UP_RIGHT;
+package chess.domain.piece.multiple;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
-import java.util.Arrays;
+import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 
-public final class Bishop extends Piece {
+public abstract class MultiplePiece extends Piece {
 
-    private static final String BISHOP_NAME = "B";
-    private static final double BISHOP_SCORE = 3;
-    private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
+    private final List<Direction> moveDirections;
 
-    public Bishop(Color color) {
-        super(color, BISHOP_NAME);
+    protected MultiplePiece(Color color, String name, List<Direction> moveDirections) {
+        super(color, name);
+        this.moveDirections = moveDirections;
     }
 
     @Override
@@ -34,7 +28,7 @@ public final class Bishop extends Piece {
     }
 
     private List<Position> calculateRoute(Position source, Position target) {
-        return MOVE_DIRECTIONS.stream()
+        return moveDirections.stream()
                 .map(direction -> direction.route(source, target))
                 .filter(route -> !route.isEmpty())
                 .findAny()
@@ -50,20 +44,5 @@ public final class Bishop extends Piece {
     private boolean isTargetSameColor(Position source, Position target, ChessBoard chessBoard) {
         Piece piece = chessBoard.pieceByPosition(source);
         return !chessBoard.isPositionEmpty(target) && chessBoard.pieceByPosition(target).isSameTeamPiece(piece);
-    }
-
-    @Override
-    public final double score() {
-        return BISHOP_SCORE;
-    }
-
-    @Override
-    public final boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public final boolean isKing() {
-        return false;
     }
 }
