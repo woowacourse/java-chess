@@ -18,6 +18,10 @@ public class Position {
         this.rankIdx = charToMatchingInt(positionInfo[1]);
     }
 
+    public static Position of(int fileIdx, int rankIdx) {
+        return PositionCache.getCache(fileIdx, rankIdx);
+    }
+
     public static Position of(String value) {
         return PositionCache.getCache(value);
     }
