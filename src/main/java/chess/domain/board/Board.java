@@ -18,13 +18,40 @@ public class Board {
     public void move(final Position start, final Position target) {
         final Piece movingPiece = pieces.get(start);
         validatePieceExistIn(movingPiece);
+        validateMoving(start, target);
+        pieces.put(target, movingPiece);
+        pieces.remove(start);
+    }
+
+    private void validateMoving(Position start, Position target) {
+        final Piece movingPiece = pieces.get(start);
+        if (movingPiece.isSamePiece("knight")) {
+            validateKnight(start, target);
+            return;
+        }
+        if (movingPiece.isSamePiece("pawn")) {
+            validatePawn(start, target);
+            return;
+        }
+        validateCommonPiece(start, target);
+    }
+
+    private void validateCommonPiece(final Position start, final Position target) {
+        final Piece movingPiece = pieces.get(start);
         validatePath(movingPiece, start, target);
 
         final Piece targetPiece = pieces.get(target);
         validateTarget(movingPiece, targetPiece);
+    }
 
-        pieces.put(target, movingPiece);
-        pieces.remove(start);
+    private void validateKnight(final Position start, final Position target) {
+        final Piece movingPiece = pieces.get(start);
+        final Piece targetPiece = pieces.get(target);
+        validateTarget(movingPiece, targetPiece);
+    }
+
+    private void validatePawn(final Position start, final Position target) {
+
     }
 
     private void validatePieceExistIn(final Piece movingPiece) {

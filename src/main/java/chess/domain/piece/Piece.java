@@ -16,6 +16,10 @@ public abstract class Piece {
 
     public abstract Direction findValidDirection(Position current, Position target);
 
+    public boolean isSamePiece(final String expected) {
+        return this.getName().equals(expected);
+    }
+
     public String getName() {
         return name;
     }

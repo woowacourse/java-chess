@@ -53,9 +53,47 @@ class BoardTest {
         );
     }
 
+    @DisplayName("나이트를 이동시킬 때")
+    @Nested
+    class KnightMovingTest {
+        @DisplayName("도착 지점에 같은 팀의 말이 존재할 경우 예외를 반환한다.")
+        @Test
+        void same_Color_Piece_In_Target_Point() {
+            Piece startPiece = new Knight(Color.BLACK);
+            Piece existPiece = new Knight(Color.BLACK);
+            Position start = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.THIRD, Column.b);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
+
+            assertThatThrownBy(() -> board.move(start, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
+        }
+
+        @DisplayName("경로에 말 존재 엽주와 관련 없이 말이 이동한다.")
+        @Test
+        void success_Move() {
+            Piece startPiece = new Knight(Color.BLACK);
+            Piece existPiece = new Knight(Color.BLACK);
+            Position start = new Position(Row.FIRST, Column.a);
+            Position midPoint = new Position(Row.SECOND, Column.a);
+            Position target = new Position(Row.THIRD, Column.b);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
+
+            board.move(start, target);
+            Map<Position, Piece> pieces = board.getPieces();
+
+            Assertions.assertAll(
+                () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
+                () -> assertThat(pieces.get(start)).isNull());
+        }
+    }
+
     @DisplayName("말을 이동시킬 때")
     @Nested
-    class MovingTest {
+    class CommonMovingTest {
 
         @DisplayName("빈 칸을 이동시킬 말로 지정할 경우 예외를 반환한다.")
         @Test
