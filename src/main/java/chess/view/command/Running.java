@@ -39,7 +39,7 @@ public abstract class Running implements Command {
             return otherCommand(this.chessBoard);
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
-   }
+    }
 
     private void movePieceByCommand(final String command) {
         List<String> values = Arrays.asList(command.split(" "));
@@ -50,7 +50,7 @@ public abstract class Running implements Command {
 
     private Position position(String command) {
         return new Position(command.charAt(0), command.charAt(1));
-   }
+    }
 
     @Override
     public boolean isEnd() {

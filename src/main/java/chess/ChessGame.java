@@ -19,7 +19,7 @@ public class ChessGame {
     }
 
     private void runGameUntilEnd() {
-        while(!command.isEnd()) {
+        while (!command.isEnd()) {
             command = command.run(InputView.requestGameCommand());
         }
     }
