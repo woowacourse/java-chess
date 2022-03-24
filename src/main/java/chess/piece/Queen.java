@@ -14,7 +14,15 @@ public final class Queen extends Piece {
 
     static {
         DIRECTIONS.add(new Direction(0, 1));
+        DIRECTIONS.add(new Direction(0, -1));
+        DIRECTIONS.add(new Direction(1, 0));
+        DIRECTIONS.add(new Direction(1, -1));
+        DIRECTIONS.add(new Direction(1, 1));
+        DIRECTIONS.add(new Direction(-1, 0));
+        DIRECTIONS.add(new Direction(-1, -1));
+        DIRECTIONS.add(new Direction(-1, 1));
     }
+
     Queen (Color color) {
         super(color);
     }
@@ -33,5 +41,8 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source,Square target){return true;}
+    public boolean canMove(Square source, Square target) {
+        Direction direction = source.getGap(target);
+        return direction.hasMultiple(DIRECTIONS);
+    }
 }
