@@ -27,7 +27,7 @@ public abstract class Piece {
         return name.getValue();
     }
 
-    protected boolean isEmpty() {
+    public boolean isEmpty() {
         return false;
     }
 }

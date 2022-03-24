@@ -14,7 +14,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    protected boolean isEmpty() {
+    public boolean isEmpty() {
         return true;
     }
 }
