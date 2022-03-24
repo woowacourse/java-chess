@@ -26,7 +26,7 @@ public enum Row {
     }
 
     public static boolean isRowRange(int index) {
-        return ONE.index < index && index < EIGHT.index;
+        return ONE.index <= index && index <= EIGHT.index;
     }
 
     public int getIndex() {

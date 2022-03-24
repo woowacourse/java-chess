@@ -17,7 +17,7 @@ public class KingTest {
     @ParameterizedTest
     @MethodSource("targetPosition")
     @DisplayName("King 은 현재 위치에서 모든 방향으로 한 칸 이동할 수 있다.")
-    void moveKingDiagonally(Position target) {
+    void moveKingAnyPositionOneSpace(Position target) {
         Piece piece = new King(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
         List<Position> positions = piece.availableMovePositions(source);
@@ -36,5 +36,27 @@ public class KingTest {
                 new Position(Row.ONE, Column.B),
                 new Position(Row.ONE, Column.C)
             );
+    }
+
+    @ParameterizedTest
+    @MethodSource("targetPosition_overRage")
+    @DisplayName("King이 이동할 수 있는 범위 중 벽에 가로막힌 곳이 있다면 이동할 수 없다.")
+    void moveKingAnyPositionOneSpace_overRange(Position target) {
+        Piece piece = new King(Player.WHITE);
+        Position source = new Position(Row.ONE, Column.B);
+        List<Position> positions = piece.availableMovePositions(source);
+
+        assertThat(positions.size()).isEqualTo(5);
+        assertThat(positions.contains(target)).isEqualTo(true);
+    }
+
+    private static Stream<Position> targetPosition_overRage() {
+        return Stream.of(
+            new Position(Row.TWO, Column.A),
+            new Position(Row.TWO, Column.B),
+            new Position(Row.TWO, Column.C),
+            new Position(Row.ONE, Column.A),
+            new Position(Row.ONE, Column.C)
+        );
     }
 }

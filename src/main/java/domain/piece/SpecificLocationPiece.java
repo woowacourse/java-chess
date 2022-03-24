@@ -24,13 +24,19 @@ public class SpecificLocationPiece extends Piece {
         for (Direction direction : directions) {
             calculateAvailablePosition(source, direction);
         }
+        System.out.println(positions);
         return positions;
     }
 
     private void calculateAvailablePosition(Position source, Direction direction) {
         int row = source.getRow() + direction.getRow();
         int column = source.getColumn() + direction.getColumn();
+        if (checkOverRange(row, column)) {
+            positions.add(new Position(Row.of(row), Column.of(column)));
+        }
+    }
 
-        positions.add(new Position(Row.of(row), Column.of(column)));
+    private boolean checkOverRange(final int row, final int column) {
+        return Row.isRowRange(row) && Column.isColumnRange(column);
     }
 }
