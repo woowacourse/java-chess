@@ -5,13 +5,19 @@ import java.util.Objects;
 
 public class Queen extends Strongmen {
 
+    private static final int INIT_FILE = 3;
+
     private static final double SCORE = 9;
 
     private static final String BLACK_DISPLAY = "♕";
     private static final String WHITE_DISPLAY = "♛";
 
-    public Queen(Color color, Position position) {
+    Queen(Color color, Position position) {
         super(color, position);
+    }
+
+    public Queen(Color color) {
+        this(color, Position.of(INIT_FILE, firstRankOf(color)));
     }
 
     @Override
@@ -80,10 +86,7 @@ public class Queen extends Strongmen {
 
     @Override
     public String toString() {
-        return "Queen{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+        return "Queen{" + "color=" + color + ", position=" + position + '}';
     }
 }
 

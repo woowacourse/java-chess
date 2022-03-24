@@ -11,6 +11,16 @@ import org.junit.jupiter.api.Test;
 
 public class QueenTest {
 
+    @DisplayName("매개변수에 해당되는 색깔의 위치에 퀸을 생성한다.")
+    @Test
+    void init() {
+        Queen actual = new Queen(BLACK);
+
+        Queen expected = new Queen(BLACK, Position.of("d8"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("퀸은 상하좌우 방향으로 이동할 수 있다.")
     @Test
     void move_horizontal() {

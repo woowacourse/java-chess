@@ -23,16 +23,14 @@ import java.util.stream.IntStream;
 public class ChessGame {
 
     private static final int TOTAL_KING_COUNT = 2;
-    private static final int BLACK_FIRST_RANK = 7;
-    private static final int WHITE_FIRST_RANK = 0;
 
     private final List<Chessmen> chessmen = new ArrayList<>(32);
 
     public ChessGame() {
-        chessmen.addAll(initStrongMen(BLACK, BLACK_FIRST_RANK));
+        chessmen.addAll(initStrongmen(BLACK));
         chessmen.addAll(initPawnsOf(BLACK));
         chessmen.addAll(initPawnsOf(WHITE));
-        chessmen.addAll(initStrongMen(WHITE, WHITE_FIRST_RANK));
+        chessmen.addAll(initStrongmen(WHITE));
     }
 
     private List<Chessmen> initPawnsOf(Color color) {
@@ -41,16 +39,11 @@ public class ChessGame {
                 .collect(Collectors.toList());
     }
 
-    private List<Chessmen> initStrongMen(Color color, int initFileIdx) {
-        return List.of(
-                Rook.ofLeft(color),
-                Knight.ofLeft(color),
-                Bishop.ofLeft(color),
-                new Queen(color, Position.of(3, initFileIdx)),
-                new King(color),
-                Bishop.ofRight(color),
-                Knight.ofRight(color),
-                Rook.ofRight(color));
+    private List<Chessmen> initStrongmen(Color color) {
+        return List.of(new King(color), new Queen(color),
+                Rook.ofLeft(color), Rook.ofRight(color),
+                Bishop.ofLeft(color), Bishop.ofRight(color),
+                Knight.ofLeft(color), Knight.ofRight(color));
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
