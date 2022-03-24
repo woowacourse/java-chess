@@ -28,8 +28,24 @@ public class Position {
         this.y = y;
     }
 
-    public static boolean isValidPosition(int x, int y) {
-        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    public static Position createNextPosition(Position position, Direction direction) {
+        return new Position(
+                position.getX() + direction.getXDegree(),
+                position.getY() + direction.getYDegree());
+    }
+
+    public static Position createNextPosition(Position position, Direction direction, int product) {
+        return new Position(
+                position.getX() + direction.getXDegree() * product,
+                position.getY() + direction.getYDegree() * product);
+    }
+
+    public static boolean isValidPosition(Position position) {
+        return position.getX() >= 0 && position.getX() < 8 && position.getY() >= 0 && position.getY() < 8;
+    }
+
+    public static int calculateStraightDistance(Position position1, Position position2) {
+        return Math.max(Math.abs(position1.getX() - position2.getX()), Math.abs(position1.getY() - position2.getY()));
     }
 
     private void validate(String charPosition) {

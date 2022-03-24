@@ -43,4 +43,38 @@ public class PositionTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("숫자는 1 부터 8 까지만 가능합니다.");
     }
+
+    @DisplayName("현재 위치에서 주어진 방향만큼 이동할 경우 새로운 위치를 반환한다.")
+    @Test
+    void createNextPosition() {
+        Position position = new Position("a1");
+
+        assertThat(Position.createNextPosition(position, Direction.NORTH))
+                .isEqualTo(new Position("a2"));
+    }
+
+    @DisplayName("현재 위치에서 주어진 방향만큼 이동할 경우 새로운 위치를 반환한다.")
+    @Test
+    void createNextPositionExistProduct() {
+        Position position = new Position("a1");
+
+        assertThat(Position.createNextPosition(position, Direction.NORTH, 3))
+                .isEqualTo(new Position("a4"));
+    }
+
+    @DisplayName("해당 위치가 체스판 범위 내에 있는지 확인한다.")
+    @Test
+    void isValidPosition() {
+        assertThat(Position.isValidPosition(new Position(-1, -1))).isFalse();
+    }
+
+    @DisplayName("두 위치의 직선 거리를 계산한다.")
+    @Test
+    void calculateStraightDistance() {
+        Position position1 = new Position(0, 0);
+        Position position2 = new Position(7, 7);
+
+        assertThat(Position.calculateStraightDistance(position1, position2))
+                .isEqualTo(7);
+    }
 }
