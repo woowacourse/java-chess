@@ -35,7 +35,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("체스판 생성")
+    @DisplayName("새로운 기본 체스판 생성")
     void createNewChessBoard() {
         ChessBoard chessBoard = ChessBoard.createNewChessBoard();
         assertThat(chessBoard.getPieces()).hasSize(32);
