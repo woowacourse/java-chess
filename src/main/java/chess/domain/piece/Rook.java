@@ -19,11 +19,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         int distanceX = Math.abs(source.calculateDistanceX(target));
         int distanceY = Math.abs(source.calculateDistanceY(target));
@@ -58,7 +53,17 @@ public class Rook extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
         return false;
     }
 }

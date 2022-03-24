@@ -49,7 +49,7 @@ public final class ChessGame {
     }
 
     public boolean isRunning() {
-        return true;
+        return board.hasAliveBothKings();
     }
 
     public Map<Position, Piece> getBoard() {

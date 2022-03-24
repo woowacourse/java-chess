@@ -21,7 +21,7 @@ public class Application {
     private static void startGame(InputView inputView, OutputView outputView) {
         ChessGame game = new ChessGame();
         outputView.printBoard(game.getBoard());
-        while(game.isRunning()) {
+        while (game.isRunning()) {
             playTurn(inputView, outputView, game);
             outputView.printBoard(game.getBoard());
         }

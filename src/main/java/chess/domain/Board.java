@@ -63,6 +63,14 @@ public class Board {
                 .sum();
     }
 
+    public boolean hasAliveBothKings() {
+        long kingCount = board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count();
+        return kingCount == 2;
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }

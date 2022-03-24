@@ -17,11 +17,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         int distanceX = source.calculateDistanceX(target);
         int distanceY = source.calculateDistanceY(target);
@@ -62,8 +57,18 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 }
 

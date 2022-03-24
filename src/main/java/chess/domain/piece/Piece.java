@@ -22,13 +22,15 @@ public abstract class Piece {
 
     protected abstract String baseSignature();
 
-    public abstract boolean isBlank();
-
     public abstract boolean isMovable(Position source, Position target);
 
     public abstract List<Position> findRoute(Position source, Position target);
 
     public abstract double score();
 
+    public abstract boolean isBlank();
+
     public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 }

@@ -16,11 +16,6 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return true;
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         throw new IllegalArgumentException("기물이 없는 위치입니다.");
     }
@@ -36,7 +31,17 @@ public class Blank extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
         return false;
     }
 }
