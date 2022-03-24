@@ -51,7 +51,7 @@ public class Application {
     }
 
     private static void showStatus(OutputView outputView, ChessGame game) {
-        Map<Color, Double> scores = game.getStatus();
+        Map<Color, Double> scores = game.calculateScore();
         Color winningColor = Color.NONE;
         double blackScore = scores.get(Color.BLACK);
         double whiteScore = scores.get(Color.WHITE);

@@ -54,7 +54,7 @@ public final class ChessGame {
         return board.hasAliveBothKings();
     }
 
-    public Map<Color, Double> getStatus() {
+    public Map<Color, Double> calculateScore() {
         return Stream.of(Color.BLACK, Color.WHITE)
                 .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
     }
