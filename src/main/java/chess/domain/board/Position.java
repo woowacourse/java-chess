@@ -99,4 +99,8 @@ public class Position implements Comparable<Position> {
         }
         return position.row.getValue() - this.row.getValue();
     }
+
+    public Column getColumn() {
+        return column;
+    }
 }
