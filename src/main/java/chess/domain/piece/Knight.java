@@ -3,19 +3,30 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
+import java.util.List;
+
 public final class Knight extends Piece {
 
     public Knight(Color color) {
         super(color);
     }
 
+    // TODO 좀 더 나은 리팩터링 방법을 찾을 수 있을 것 같다
     @Override
     public boolean canMove(Position src, Position dest) {
-        throw new UnsupportedOperationException();
+        return findDirection(src, dest) != null;
     }
 
     @Override
     public Direction findDirection(Position src, Position dest) {
-        throw new UnsupportedOperationException();
+        List<Direction> directions = Direction.getKnightDirections();
+        for (Direction direction : directions) {
+            int x = direction.getX();
+            int y = direction.getY();
+            if (dest.equals(src.move(x, y))) {
+                return direction;
+            }
+        }
+        return null;
     }
 }

@@ -76,7 +76,7 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
         // 기물의 행마법 체크
         if (!piece.canMove(src, dest)) {
-            throw new IllegalArgumentException("못갑니다");
+            throw new IllegalArgumentException("이동할 수 없습니다");
         }
         // 도착지 아군 체크
         checkSameColorInDestination(piece, dest);
