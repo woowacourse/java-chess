@@ -80,6 +80,7 @@ public class Board {
 
     public void move(final Position from, final Position to) {
         final Piece source = board.get(from);
+        final Piece target = board.get(to);
 
         if (from.equals(to)) {
             throw new IllegalStateException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
@@ -88,6 +89,15 @@ public class Board {
         if (source.equals(new EmptyPiece())) {
             throw new IllegalStateException("[ERROR] source 위치에 기물이 존재하지 않습니다.");
         }
+
+        // 행마법
+        if (!source.isMovable(from, to)){
+            throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
+        }
+
+        // target 위치 기물 확인
+
+        // 이동 경로에 기물이 있는지 확인
 
         board.put(from, new EmptyPiece());
         board.put(to, source);

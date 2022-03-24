@@ -133,4 +133,15 @@ public class BoardTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] source 위치에 기물이 존재하지 않습니다.");
     }
+
+    @Test
+    @DisplayName("기물이 행마법에 맞는지 확인한다.")
+    void exceptionIllegalMovement() {
+        Position from = Position.create("b1");
+        Position to = Position.create("b3");
+
+        assertThatThrownBy(() -> board.move(from, to))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 행마법에 맞지 않는 이동입니다.");
+    }
 }
