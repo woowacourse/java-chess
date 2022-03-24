@@ -12,14 +12,14 @@ public class PawnMoveStrategy implements MoveStrategy{
     private static final int FORWARD_UNIT_BLACK = -1;
     private static final int FORWARD_UNIT_WHITE = 1;
 
-    private final static List<MovePattern> BLACK_MOVE_PATTERN = List.of(
+    private final static List<MovePattern> BLACK_MOVE_PATTERNS = List.of(
             MovePattern.SOUTH,
             MovePattern.SOUTHEAST,
             MovePattern.SOUTHWEST,
             MovePattern.PAWN_START_MOVE_BLACK
     );
 
-    private final static List<MovePattern> WHITE_MOVE_PATTERN = List.of(
+    private final static List<MovePattern> WHITE_MOVE_PATTERNS = List.of(
             MovePattern.NORTH,
             MovePattern.NORTHEAST,
             MovePattern.NORTHWEST,
@@ -28,12 +28,9 @@ public class PawnMoveStrategy implements MoveStrategy{
 
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
-        final int horizon = distance.getHorizon();
-        final int vertical = distance.getVertical();
-
-        final Color color = board.getPiece(source).getColor();
-        final MovePattern movePattern = MovePattern.of(horizon, vertical);
+        final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         final Piece targetPiece = board.getPiece(target);
+        final Color color = board.getPiece(source).getColor();
 
         if (color == Color.BLACK) {
             return isBlackMovePattern(movePattern, board, source, targetPiece, color);
@@ -42,7 +39,7 @@ public class PawnMoveStrategy implements MoveStrategy{
     }
 
     private boolean isBlackMovePattern(final MovePattern movePattern, final Board board, final Position source, final Piece targetPiece, final Color color) {
-        if (!BLACK_MOVE_PATTERN.contains(movePattern)) {
+        if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
         if (movePattern == MovePattern.PAWN_START_MOVE_BLACK) {
@@ -58,7 +55,7 @@ public class PawnMoveStrategy implements MoveStrategy{
     }
 
     private boolean isWhiteMovePattern(final MovePattern movePattern, final Board board, final Position source, final Piece targetPiece, final Color color) {
-        if (!WHITE_MOVE_PATTERN.contains(movePattern)) {
+        if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
         if (movePattern == MovePattern.PAWN_START_MOVE_WHITE) {

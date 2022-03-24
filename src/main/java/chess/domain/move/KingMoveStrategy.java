@@ -2,12 +2,39 @@ package chess.domain.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import java.util.List;
 
 public class KingMoveStrategy implements MoveStrategy {
 
+    private static final List<MovePattern> MOVE_PATTERNS = List.of(
+            MovePattern.NORTH,
+            MovePattern.NORTHEAST,
+            MovePattern.EAST,
+            MovePattern.SOUTHEAST,
+            MovePattern.SOUTH,
+            MovePattern.SOUTHWEST,
+            MovePattern.WEST,
+            MovePattern.NORTHWEST
+    );
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
+        final Distance distance = new Distance(source.subtractRow(target), source.subtractColumn(target));
+        final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
+        final Piece targetPiece = board.getPiece(target);
+        final Color color = board.getPiece(source).getColor();
+
+        // movepattern에 있는지
+        if (!MOVE_PATTERNS.contains(movePattern)) {
+            return false;
+        }
+
+        // 존재가 없는지
+        // 타겟이 있다면 상대편인지
+
+
         return true;
     }
 }
