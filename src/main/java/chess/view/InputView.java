@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.dto.CommandRequest;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -9,7 +11,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static Command inputCommand() {
-        return Command.of(SCANNER.nextLine());
+    public static CommandRequest inputCommand() {
+        String input = SCANNER.nextLine();
+        List<String> splitInputs = List.of(input.split(" ", -1));
+        return CommandRequest.of(splitInputs);
     }
 }
