@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PawnTest {
 
     @ParameterizedTest(name = "{index}: {3}")
-    @MethodSource("invalidParameters")
+    @MethodSource("moveParameters")
     @DisplayName("폰은 한 칸 또는 두 칸 전진한다.")
     void initialMoveTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
         Pawn pawn = new Pawn(team, initialPosition);
@@ -23,7 +23,7 @@ class PawnTest {
         assertThat(pawn.isSamePosition(nextPosition)).isTrue();
     }
 
-    private static Stream<Arguments> invalidParameters() {
+    private static Stream<Arguments> moveParameters() {
         return Stream.of(
                 Arguments.of(Team.BLACK, new ChessBoardPosition('a', 2),
                         new ChessBoardPosition('a', 3), "흑팀의 폰은 초기상태에서 한칸 전진한다"),
@@ -67,5 +67,27 @@ class PawnTest {
         ChessBoardPosition nextPosition = new ChessBoardPosition('b', 3);
 
         assertThatThrownBy(() -> pawn.move(nextPosition)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest(name = "{index}: {3}")
+    @MethodSource("diagonalParameters")
+    @DisplayName("폰은 한 칸 또는 두 칸 전진한다.")
+    void diagonalMoveTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
+        Pawn pawn = new Pawn(team, initialPosition);
+        pawn.moveDiagonal(nextPosition);
+        assertThat(pawn.isSamePosition(nextPosition)).isTrue();
+    }
+
+    private static Stream<Arguments> diagonalParameters() {
+        return Stream.of(
+                Arguments.of(Team.BLACK, new ChessBoardPosition('b', 2),
+                        new ChessBoardPosition('a', 3), "흑팀의 폰이 오른쪽 대각선으로 한 칸 이동한다"),
+                Arguments.of(Team.BLACK, new ChessBoardPosition('b', 2),
+                        new ChessBoardPosition('c', 3), "흑팀의 폰은 왼쪽 대각선으로 한 칸 이동한다"),
+                Arguments.of(Team.WHITE, new ChessBoardPosition('b', 7),
+                        new ChessBoardPosition('a', 6), "백팀의 폰은 왼쪽 대각선으로 한 칸 이동한다"),
+                Arguments.of(Team.WHITE, new ChessBoardPosition('b', 7),
+                        new ChessBoardPosition('c', 6), "백팀의 폰은 오른쪽 대각선으로 한 칸 이동한다")
+        );
     }
 }
