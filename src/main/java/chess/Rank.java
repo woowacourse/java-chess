@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Rank {
     ONE(1),
@@ -36,5 +37,19 @@ public enum Rank {
 
     public int displacement(Rank other) {
         return other.index - this.index;
+    }
+
+    public static List<Rank> traceGroup(Rank source, Rank target) {
+        return Arrays.stream(values())
+            .filter(rank -> rank.isBetween(source, target))
+            .collect(Collectors.toList());
+    }
+
+    private boolean isBetween(Rank small, Rank big) {
+        return this.isBiggerThan(small) && big.isBiggerThan(this);
+    }
+
+    private boolean isBiggerThan(Rank other) {
+        return this.compareTo(other) > 0;
     }
 }
