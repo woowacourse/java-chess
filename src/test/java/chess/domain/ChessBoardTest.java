@@ -48,10 +48,22 @@ class ChessBoardTest {
         Position target = new Position('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE)));
 
-        assertThatThrownBy(() -> chessBoard.movePiece(position, target))
+        assertThatThrownBy(() -> chessBoard.movePiece(position, target, WHITE))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되어 기물을 움직일 수 없습니다.");
+    }
 
+    @Test
+    @DisplayName("상대 진영의 기물 이동 시 예외발생")
+    void moveOtherTeamPieceException() {
+        Position position = new Position('a', '1');
+        Position target = new Position('a', '2');
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE),
+                new Position('e', '8'), new King(Color.BLACK)));
+
+        assertThatThrownBy(() -> chessBoard.movePiece(position, target, Color.BLACK))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("상대 진영의 기물을 움직일 수 없습니다.");
     }
 
     @ParameterizedTest

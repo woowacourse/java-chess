@@ -14,7 +14,7 @@ public class Ready implements Command {
         }
         ChessBoard chessBoard = ChessBoard.createNewChessBoard();
         OutputView.printChessBoard(chessBoard.getPieces());
-        return new WhiteRunning(chessBoard);
+        return Running.createFirstTurnRunning(chessBoard);
     }
 
     @Override
