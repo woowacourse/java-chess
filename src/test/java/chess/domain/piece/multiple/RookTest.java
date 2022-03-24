@@ -3,13 +3,11 @@ package chess.domain.piece.multiple;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.multiple.Rook;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

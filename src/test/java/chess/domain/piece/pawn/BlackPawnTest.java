@@ -1,12 +1,10 @@
 package chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

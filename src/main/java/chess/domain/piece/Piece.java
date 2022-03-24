@@ -4,40 +4,23 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 
-public abstract class Piece {
+public interface Piece {
 
-    private final Color color;
-    private final String name;
+    Piece move(Position source, Position target, ChessBoard chessBoard);
 
-    protected Piece(Color color, String name) {
-        this.color = color;
-        this.name = name;
-    }
+    String convertedName();
 
-    public Piece move(Position source, Position target, ChessBoard chessBoard) {
-        if (!isMovable(source, target, chessBoard)) {
-            throw new IllegalStateException("움직일 수 없는 곳입니다.");
-        }
-        return this;
-    }
+    boolean isSameColor(Color color);
 
-    public final String convertedName() {
-        return color.convertToCase(name);
-    }
+    boolean isSameTeamPiece(Piece piece);
 
-    public final boolean isSameColor(Color color) {
-        return this.color == color;
-    }
+    boolean isMovable(Position source, Position target, ChessBoard chessBoard);
 
-    public final boolean isSameTeamPiece(Piece piece) {
-        return isSameColor(piece.color);
-    }
+    double score();
 
-    abstract public boolean isMovable(Position source, Position target, ChessBoard chessBoard);
+    Color color();
 
-    abstract public double score();
+    boolean isPawn();
 
-    abstract public boolean isPawn();
-
-    abstract public boolean isKing();
+    boolean isKing();
 }
