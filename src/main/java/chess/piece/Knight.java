@@ -13,7 +13,14 @@ public final class Knight extends Piece {
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
 
     static {
-        DIRECTIONS.add(new Direction(0, 1));
+        DIRECTIONS.add(new Direction(1, 2));
+        DIRECTIONS.add(new Direction(1, -2));
+        DIRECTIONS.add(new Direction(-1, 2));
+        DIRECTIONS.add(new Direction(-1, -2));
+        DIRECTIONS.add(new Direction(2, 1));
+        DIRECTIONS.add(new Direction(2, -1));
+        DIRECTIONS.add(new Direction(-2, -1));
+        DIRECTIONS.add(new Direction(-2, 1));
     }
 
     Knight (Color color) {
@@ -35,6 +42,7 @@ public final class Knight extends Piece {
 
     @Override
     public boolean canMove(Square source, Square target) {
-        return false;
+        Direction direction = source.getGap(target);
+        return direction.hasSame(DIRECTIONS);
     }
 }
