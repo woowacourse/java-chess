@@ -13,6 +13,11 @@ public class EmptyPiece implements Piece {
     }
 
     @Override
+    public boolean isSameColor(final Color color) {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

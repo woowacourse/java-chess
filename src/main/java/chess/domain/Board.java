@@ -83,11 +83,11 @@ public class Board {
         final Piece target = board.get(to);
 
         if (from.equals(to)) {
-            throw new IllegalStateException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
         }
 
         if (!source.isSameColor(color)){
-            throw new IllegalArgumentException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
+            throw new IllegalStateException("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
         }
 
         if (source.equals(new EmptyPiece())) {
@@ -101,8 +101,9 @@ public class Board {
 
         // target 위치 기물 확인
         // 1. 색상 확인
-        // turn Color
-
+        if (target.isSameColor(color)) {
+            throw new IllegalStateException("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
+        }
 
         // 이동 경로에 기물이 있는지 확인
 
