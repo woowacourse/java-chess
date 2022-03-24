@@ -45,4 +45,16 @@ public class WhitePawnMovableStrategyTest {
 
         assertThat(whitePawnMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,2,BLACK,true", "c,2,BLACK,true", "a,2,WHITE,false", "c,2,WHITE,false"})
+    @DisplayName("대각선 방향에 적이 있으면 전진 가능")
+    void canMoveToEnemyPiecePosition(char col, char row, Color color, boolean expected) {
+        Position target = new Position(col, row);
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                start, new Pawn(WHITE),
+                target, new Pawn(color)));
+
+        assertThat(whitePawnMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
+    }
 }
