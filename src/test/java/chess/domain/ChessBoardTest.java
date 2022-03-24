@@ -119,13 +119,10 @@ class ChessBoardTest {
                 Arguments.of(
                         new ChessBoard(Map.of(
                                 new Position('e', '1'), new King(Color.WHITE),
-                                new Position('e', '8'), new King(Color.BLACK)
-                        )), false
+                                new Position('e', '8'), new King(Color.BLACK))), false
                 ),
                 Arguments.of(
-                        new ChessBoard(Map.of(
-                                new Position('e', '1'), new King(Color.WHITE)
-                        )), true
+                        new ChessBoard(Map.of(new Position('e', '1'), new King(Color.WHITE))), true
                 )
         );
     }
