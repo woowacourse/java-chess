@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class InvalidPiece extends Piece {
 
-    private static final Piece INVALID_PIECE = new InvalidPiece(Color.WHITE);
+    private static final Piece INVALID_PIECE = new InvalidPiece(Color.EMPTY);
 
     private InvalidPiece(Color color) {
         super(color);
