@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
+import java.util.Optional;
 
 public class Knight extends Piece {
 
@@ -23,8 +24,11 @@ public class Knight extends Piece {
 		List<Direction> directions = Direction.getKnightDirection();
 
 		for (Direction direction : directions) {
-			Position position = source.addDirection(direction);
-			if (position == target) {
+			Optional<Position> position = source.addDirection(direction);
+			if (position.isEmpty()) {
+				continue;
+			}
+			if (position.get() == target) {
 				return;
 			}
 		}
@@ -36,4 +40,19 @@ public class Knight extends Piece {
 		return false;
 	}
 
+	@Override
+	public Direction getDirection(final Position source, final Position target) {
+		List<Direction> directions = Direction.getKnightDirection();
+
+		for (Direction direction : directions) {
+			Optional<Position> position = source.addDirection(direction);
+			if (position.isEmpty()) {
+				continue;
+			}
+			if (position.get() == target) {
+				return direction;
+			}
+		}
+		throw new IllegalArgumentException(MOVEMENT_ERROR);
+	}
 }

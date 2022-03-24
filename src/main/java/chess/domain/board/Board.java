@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class Board {
@@ -22,6 +23,36 @@ public class Board {
 	public Board() {
 		this.board = new HashMap<>();
 		initialBatchPiece();
+	}
+
+	public void move(Position source, Position target) {
+		Piece piece = board.get(source);
+		if (piece.isBlank()) {
+			throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+		}
+		Piece targetPiece = board.get(target);
+		if (piece.isSameTeam(targetPiece)) {
+			throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
+		}
+
+		piece.validateMovement(source, target);
+		Direction direction = piece.getDirection(source, target);
+
+		Position checkPosition = source;
+		while (checkPosition != target) {
+			Optional<Position> position = checkPosition.addDirection(direction);
+			if (position.isEmpty()) {
+				throw new IllegalArgumentException("체스 판의 범위를 벗어 났습니다.");
+			}
+			checkPosition = position.get();
+			Piece currentPiece = board.get(checkPosition);
+
+			if (checkPosition != target && !currentPiece.isBlank()) {
+				throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
+			}
+		}
+		board.put(target, piece);
+		board.put(source, new Blank());
 	}
 
 	private void initialBatchPiece() {

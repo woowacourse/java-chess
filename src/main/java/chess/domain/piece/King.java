@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
+import java.util.Optional;
 
 public class King extends Piece {
 
@@ -23,8 +24,11 @@ public class King extends Piece {
 		List<Direction> directions = Direction.getKingDirection();
 
 		for (Direction direction : directions) {
-			Position position = source.addDirection(direction);
-			if (position == target) {
+			Optional<Position> position = source.addDirection(direction);
+			if (position.isEmpty()) {
+				continue;
+			}
+			if (position.get() == target) {
 				return;
 			}
 		}

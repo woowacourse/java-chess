@@ -1,10 +1,12 @@
 package chess.domain.board;
 
+import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Position {
 
@@ -19,9 +21,16 @@ public class Position {
 	}
 
 	public static Position of(final int row, final int column) {
+		validateRange(row, column);
 		cachedPositions.putIfAbsent(row, new HashMap<>());
 		cachedPositions.get(row).putIfAbsent(column, new Position(row, column));
 		return cachedPositions.get(row).get(column);
+	}
+
+	private static void validateRange(final int row, final int column) {
+		if (row < 1 || row > 8 || column < 1 || column > 8) {
+			throw new IllegalArgumentException("체스판 범위를 벗어나는 입력입니다.");
+		}
 	}
 
 	public static List<Position> getPositions() {
@@ -32,8 +41,13 @@ public class Position {
 		return positions;
 	}
 
-	public Position addDirection(Direction direction) {
-		return Position.of(direction.addRow(row), direction.addColumn(column));
+	public Optional<Position> addDirection(Direction direction) {
+		int row = direction.addRow(this.row);
+		int column = direction.addColumn(this.column);
+		if (row < 1 || row > 8 || column < 1 || column > 8) {
+			return Optional.empty();
+		}
+		return Optional.of(Position.of(row, column));
 	}
 
 	public boolean isDifferentRow(Position position) {
@@ -46,6 +60,14 @@ public class Position {
 
 	public boolean isDifferentDiagonal(Position position) {
 		return this.row - position.row != this.column - position.column;
+	}
+
+	public int subtractRow(Position position) {
+		return Integer.compare(this.row, position.row);
+	}
+
+	public int subtractColumn(Position position) {
+		return Integer.compare(this.column, position.column);
 	}
 
 	private static List<Position> createRowPositions(final int row) {
@@ -83,5 +105,12 @@ public class Position {
 
 	public boolean isEndColumn() {
 		return column == 8;
+	}
+
+	public boolean isDefaultRow(final Team team) {
+		if (team.isBlack()) {
+			return this.row == 7;
+		}
+		return this.row == 2;
 	}
 }

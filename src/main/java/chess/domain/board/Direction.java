@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Team;
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -8,6 +9,8 @@ public enum Direction {
 	W(0, -1),
 	N(1, 0),
 	E(0, 1),
+	SS(-2, 0),
+	NN(2, 0),
 	SW(-1, -1),
 	SE(-1, 1),
 	NW(1, -1),
@@ -56,6 +59,19 @@ public enum Direction {
 		return List.of(N, NE, NW);
 	}
 
+	public static Direction getDefaultPawnByTeam(final Team team) {
+		if (team.isBlack()) {
+			return SS;
+		}
+		return NN;
+	}
+
+	public static Direction find(final int differenceRow, final int differenceColumn) {
+		return Arrays.stream(values())
+				.filter(value -> value.rowMovement == differenceRow && value.columnMovement == differenceColumn)
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException("해당 방향이 없습니다."));
+	}
 
 	public int addRow(final int row) {
 		return row + rowMovement;
@@ -63,9 +79,5 @@ public enum Direction {
 
 	public int addColumn(final int column) {
 		return column + columnMovement;
-	}
-
-	public boolean match(final int differenceRow, final int differenceColumn) {
-		return rowMovement == differenceRow && columnMovement == differenceColumn;
 	}
 }

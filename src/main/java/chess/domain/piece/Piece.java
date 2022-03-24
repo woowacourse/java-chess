@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
 public abstract class Piece {
@@ -19,6 +20,18 @@ public abstract class Piece {
 	public abstract void validateMovement(Position source, Position target);
 
 	public abstract boolean isBlank();
+
+	//public abstract Direction getDirection(final Position source, final Position target);
+
+	public Direction getDirection(final Position source, final Position target) {
+		int differenceRow = target.subtractRow(source);
+		int differenceColumn = target.subtractColumn(source);
+		return Direction.find(differenceRow, differenceColumn);
+	}
+
+	public boolean isSameTeam(final Piece targetPiece) {
+		return this.team == targetPiece.team;
+	}
 
 	public String getSymbol() {
 		return symbol;
