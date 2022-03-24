@@ -59,7 +59,8 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when & then
-        assertThat(board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE))).isTrue();
+        assertThat(
+                board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE))).isTrue();
     }
 
     @DisplayName("이동할 위치에 적이 있는 경우 말을 이동시킨다.")
@@ -69,10 +70,11 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when & then
-        board.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
-        board.move(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
+        board.executeCommand(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
 
-        assertThat(board.move(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN))).isTrue();
+        assertThat(
+                board.executeCommand(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN))).isTrue();
     }
 
     @DisplayName("이동할 위치에 적이 있는 경우 적을 제거한다.")
@@ -82,9 +84,9 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when & then
-        board.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
-        board.move(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
-        board.move(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN));
+        board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
+        board.executeCommand(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN));
 
         assertThat(board.find(Position.from(XAxis.E, YAxis.SEVEN)).get()).isInstanceOf(Knight.class);
     }
@@ -96,7 +98,69 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("흰색 진영 폰의 대각선 전진방향에 적이 있다면, 해당 위치로 이동하고 적을 제거한다.")
+    @Test
+    void move_returnsTruePawnDiagonalForwardInWhite() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.B, YAxis.SEVEN));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("흰색 진영 폰의 대각선 전진방향에 적이 없다면, 해당 위치로 이동할 수 없다.")
+    @Test
+    void move_returnsFalsePawnDiagonalForwardInWhite() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.FIVE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.B, YAxis.SIX));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("검정색 진영 폰의 대각선 전진방향에 적이 있다면, 해당 위치로 이동하고 적을 제거한다.")
+    @Test
+    void move_returnsTruePawnDiagonalForwardInBlack() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.B, YAxis.TWO));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("검정색 진영 폰의 대각선 전진방향에 적이 없다면, 해당 위치로 이동할 수 없다.")
+    @Test
+    void move_returnsFalsePawnDiagonalForwardInBlack() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.A, YAxis.FIVE), Position.from(XAxis.A, YAxis.FOUR));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.FOUR), Position.from(XAxis.B, YAxis.THREE));
 
         // then
         assertThat(actual).isFalse();

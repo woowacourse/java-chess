@@ -18,7 +18,7 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO));
 
         // then
         assertThat(actual).isFalse();
@@ -31,7 +31,7 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR));
 
         // then
         assertThat(actual).isTrue();
@@ -44,8 +44,8 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FOUR));
 
         // then
         assertThat(actual).isTrue();
@@ -58,8 +58,8 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.FIVE));
 
         // then
         assertThat(actual).isFalse();
@@ -72,7 +72,7 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE));
 
         // then
         assertThat(actual).isTrue();
@@ -85,8 +85,8 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FIVE));
+        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FIVE));
 
         // then
         assertThat(actual).isTrue();
@@ -99,8 +99,8 @@ class PawnTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        board.move(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
-        boolean actual = board.move(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FOUR));
+        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX));
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FOUR));
 
         // then
         assertThat(actual).isFalse();

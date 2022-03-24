@@ -25,12 +25,23 @@ public class Pawn extends AbstractPiece {
         return getMovableIfNotInitialPosition(from, to);
     }
 
+    @Override
+    public boolean isAbleToAttack(Position from, Position to) {
+        boolean isDiagonalOneDistance = from.isOnDiagonal(to) && from.isInVerticalRange(to, 1);
+
+        if (isPieceColor(PieceColor.BLACK)) {
+            return isDiagonalOneDistance && from.isUpperThan(to);
+        }
+
+        return isDiagonalOneDistance && from.isLowerThan(to);
+    }
+
     private boolean isInitialPosition(Position from) {
         return from.isSameYAxis(YAxis.TWO) || from.isSameYAxis(YAxis.SEVEN);
     }
 
     private boolean getMovableIfInitialPosition(Position from, Position to) {
-        boolean inVerticalRange = from.isInVerticalRange(to, INITIAL_MOVE_RANGE);
+        boolean inVerticalRange = from.isInVerticalRangeAndSameXAxis(to, INITIAL_MOVE_RANGE);
 
         if (isPieceColor(PieceColor.BLACK)) {
             return from.isUpperThan(to) && inVerticalRange;
@@ -40,7 +51,7 @@ public class Pawn extends AbstractPiece {
     }
 
     private boolean getMovableIfNotInitialPosition(Position from, Position to) {
-        boolean inVerticalRange = from.isInVerticalRange(to, DEFAULT_MOVE_RANGE);
+        boolean inVerticalRange = from.isInVerticalRangeAndSameXAxis(to, DEFAULT_MOVE_RANGE);
 
         if (isPieceColor(PieceColor.BLACK)) {
             return from.isUpperThan(to) && inVerticalRange;

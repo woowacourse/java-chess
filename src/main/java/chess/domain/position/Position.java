@@ -60,6 +60,10 @@ public class Position {
         return Math.abs(this.yAxis.subtract(other.yAxis)) <= range;
     }
 
+    public boolean isInVerticalRangeAndSameXAxis(Position other, int range) {
+        return isInVerticalRange(other, range) && isSameXAxis(other);
+    }
+
     public boolean isFarFromMoreThanOne(Position other) {
         int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
         int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());

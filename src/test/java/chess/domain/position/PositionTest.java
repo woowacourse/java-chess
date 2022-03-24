@@ -128,17 +128,45 @@ class PositionTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("isInVerticalRange는 현재 위치가 다른 위치보다 주어진 거리 안에 있는지 체크한다.")
+    @DisplayName("isInVerticalRange는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있는지 체크한다.")
     @Test
-    void isInRange_returnsTrue() {
+    void isInVerticalRange_returnsTrue() {
         // given
         Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.A, YAxis.ONE);
+        Position position2 = Position.from(XAxis.C, YAxis.ONE);
 
         // when
         boolean actual = position1.isInVerticalRange(position2, 2);
 
         // then
         assertThat(actual).isTrue();
+    }
+
+    @DisplayName("isInVerticalRangeAndSameXAxis는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있고, 같은 X좌표를 갖는다면 true 를 반환한다.")
+    @Test
+    void isInVerticalRangeAndSameXAxis_returnsTrue() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.TWO);
+        Position position2 = Position.from(XAxis.A, YAxis.ONE);
+
+        // when
+        boolean actual = position1.isInVerticalRangeAndSameXAxis(position2, 2);
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("isInVerticalRangeAndSameXAxis는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있지만, 다른 X좌표를 갖는다면 false 를 반환한다.")
+    @Test
+    void isInVerticalRangeAndSameXAxis_returnsFalse() {
+        // given
+        Position position1 = Position.from(XAxis.A, YAxis.TWO);
+        Position position2 = Position.from(XAxis.C, YAxis.ONE);
+
+        // when
+        boolean actual = position1.isInVerticalRangeAndSameXAxis(position2, 2);
+
+        // then
+        assertThat(actual).isFalse();
     }
 }
