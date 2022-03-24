@@ -31,6 +31,7 @@ public class BoardDto {
 
     private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
+                .findAll()
                 .stream()
                 .filter(piece -> piece.isAtDisplayRowIdxOf(rowIdx))
                 .collect(Collectors.toUnmodifiableList());

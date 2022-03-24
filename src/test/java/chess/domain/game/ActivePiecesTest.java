@@ -28,7 +28,7 @@ class ActivePiecesTest {
 
     @Test
     void 흑백_모두_폰8개가_생성된다() {
-        List<Piece> actual = activePieces.getAll();
+        List<Piece> actual = activePieces.findAll();
 
         List<Piece> expectedPawns = new ArrayList<>();
         IntStream.range(0, 8)
@@ -40,7 +40,7 @@ class ActivePiecesTest {
 
     @Test
     void 흑백_모두_킹1개_퀸1개_룩2개_비숍2개_나이트2개가_생성된다() {
-        List<Piece> actual = activePieces.getAll();
+        List<Piece> actual = activePieces.findAll();
 
         List<Piece> expectedStrongmen = List.of(
                 new King(BLACK), new Queen(BLACK), new King(WHITE), new Queen(WHITE),
