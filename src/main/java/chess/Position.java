@@ -12,39 +12,39 @@ public class Position {
         this.col = col;
     }
 
-    public boolean isSameRow(Position other) {
+    public boolean isVerticalWay(Position other) {
         return this.row == other.row;
     }
 
-    public boolean isSameRowOrCol(Position other) {
-        return isSameRow(other) || isSameCol(other);
-    }
-
-    private boolean isSameCol(Position other) {
+    public boolean isHorizontalWay(Position other) {
         return this.col == other.col;
     }
 
-    public boolean isCross(Position other) {
-        return getDistanceOfCol(other) == getDistanceOfRow(other);
+    public boolean isDiagonalWay(Position other) {
+        return getHorizontalDistance(other) == getVerticalDistance(other);
     }
 
     public boolean isAdjacent(Position other) {
-        if (isCross(other)) {
-            return getDistanceOfCol(other) == 1 && getDistanceOfRow(other) == 1;
+        if (isDiagonalWay(other)) {
+            return getHorizontalDistance(other) == 1 && getVerticalDistance(other) == 1;
         }
 
-        if (isSameRowOrCol(other)) {
-            return getDistanceOfCol(other) == 1 || getDistanceOfRow(other) == 1;
+        if (isVerticalWay(other)) {
+            return getVerticalDistance(other) == 0 && getHorizontalDistance(other) == 1;
+        }
+
+        if (isHorizontalWay(other)) {
+            return getVerticalDistance(other) == 1 && getHorizontalDistance(other) == 0;
         }
 
         return false;
     }
 
-    public int getDistanceOfCol(Position other) {
+    public int getHorizontalDistance(Position other) {
         return col.getDistance(other.col);
     }
 
-    public int getDistanceOfRow(Position other) {
+    public int getVerticalDistance(Position other) {
         return row.getDistance(other.row);
     }
 

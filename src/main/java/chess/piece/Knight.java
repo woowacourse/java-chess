@@ -17,8 +17,8 @@ public class Knight extends Piece{
     }
 
     private boolean isValidPosition(Position to) {
-        int distanceOfCol = position.getDistanceOfCol(to);
-        int distanceOfRow = position.getDistanceOfRow(to);
+        int distanceOfCol = position.getHorizontalDistance(to);
+        int distanceOfRow = position.getVerticalDistance(to);
         return (distanceOfCol == 1 && distanceOfRow == 2) ||
             (distanceOfCol == 2 && distanceOfRow == 1);
     }

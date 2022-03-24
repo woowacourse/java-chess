@@ -10,6 +10,10 @@ public enum Color {
         this.backward = backward;
     }
 
+    public boolean isBackward(Position from, Position to) {
+        return true;
+    }
+
     public boolean isBackward(Direction direction) {
         return backward == direction;
     }

@@ -10,7 +10,7 @@ public class Rook extends Piece{
 
     @Override
     public void move(Position to) {
-        if (!position.isSameRowOrCol(to)) {
+        if (!(position.isVerticalWay(to) || position.isHorizontalWay(to))) {
             throw new IllegalArgumentException();
         }
         position = to;

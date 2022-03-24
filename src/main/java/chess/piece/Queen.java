@@ -10,7 +10,7 @@ public class Queen extends Piece {
 
     @Override
     public void move(Position to) {
-        if (!position.isCross(to) && !position.isSameRowOrCol(to)) {
+        if (!position.isDiagonalWay(to) && !position.isVerticalWay(to) && !position.isHorizontalWay(to)) {
             throw new IllegalArgumentException();
         }
         position = to;

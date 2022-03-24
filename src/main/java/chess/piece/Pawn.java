@@ -28,15 +28,15 @@ public class Pawn extends Piece {
 
     private boolean isInvalidDirection(Position to) {
         Direction direction = position.getDirectionTo(to);
-        return !position.isSameRow(to) || color.isBackward(direction);
+        return !position.isVerticalWay(to) || color.isBackward(direction);
     }
 
     private boolean isInvalidDistance(Position to) {
-        return position.getDistanceOfCol(to) > 2;
+        return position.getHorizontalDistance(to) > 2;
     }
 
     private boolean isMoveOverOneSpaceAfterFirstMove(Position to) {
-        return !isFirstMove && position.getDistanceOfCol(to) >= 2;
+        return !isFirstMove && position.getHorizontalDistance(to) >= 2;
     }
 
 }

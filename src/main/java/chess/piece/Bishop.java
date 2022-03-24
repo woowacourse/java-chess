@@ -10,7 +10,7 @@ public class Bishop extends Piece {
 
     @Override
     public void move(Position to) {
-        if (!position.isCross(to)) {
+        if (!position.isDiagonalWay(to)) {
             throw new IllegalArgumentException();
         }
         position = to;

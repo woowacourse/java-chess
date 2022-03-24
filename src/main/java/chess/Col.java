@@ -33,6 +33,10 @@ public enum Col {
             .collect(Collectors.toList());
     }
 
+    public boolean isDownward(Col destination) {
+        return value > destination.value;
+    }
+
     public Direction getDirection(Col other) {
         if (value < other.value) {
             return UP;
