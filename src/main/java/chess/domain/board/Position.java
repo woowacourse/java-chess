@@ -1,11 +1,12 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.toMap;
+
 import chess.domain.piece.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
 
@@ -13,8 +14,7 @@ public class Position implements Comparable<Position> {
 
     static {
         CACHE = createAll().stream()
-                .collect(Collectors.toMap(Position::createKey,
-                        position -> position));
+                .collect(toMap(Position::createKey, position -> position));
     }
 
     private final Column column;
@@ -75,6 +75,10 @@ public class Position implements Comparable<Position> {
         return this;
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -98,9 +102,5 @@ public class Position implements Comparable<Position> {
             return this.column.getValue() - position.column.getValue();
         }
         return position.row.getValue() - this.row.getValue();
-    }
-
-    public Column getColumn() {
-        return column;
     }
 }

@@ -25,27 +25,39 @@ public class ChessGameController {
         OutputView.printEndMessage();
     }
 
+    private void printCurrentBoard(final ChessGameProgress chessGameProgress) {
+        if (chessGameProgress.isOn()) {
+            OutputView.printBoard(chessGameProgress.getCurrentBoard());
+        }
+    }
+
     private void progressChessGame(final ChessGameProgress chessGameProgress) {
         while (chessGameProgress.isOn()) {
             List<String> inputs = InputView.inputProgressCommand();
             String commandMessage = inputs.get(COMMAND_INDEX);
-            if (commandMessage.equals(END_COMMAND_MESSAGE)) {
-                chessGameProgress.turnOff();
-            }
-            if (commandMessage.equals(STATUS_COMMAND_MESSAGE)) {
-                Score score = chessGameProgress.calculateScore();
-                // 아웃풋 만들기
-            }
-            if (commandMessage.equals(MOVE_COMMAND_MESSAGE)) {
-                chessGameProgress.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
-                printCurrentBoard(chessGameProgress);
-            }
+            move(chessGameProgress, inputs, commandMessage);
+            showStatus(chessGameProgress, commandMessage);
+            endGame(chessGameProgress, commandMessage);
         }
     }
 
-    private void printCurrentBoard(final ChessGameProgress chessGameProgress) {
-        if (chessGameProgress.isOn()) {
-            OutputView.printBoard(chessGameProgress.getCurrentBoard());
+    private void move(final ChessGameProgress chessGameProgress, final List<String> inputs,final String commandMessage) {
+        if (commandMessage.equals(MOVE_COMMAND_MESSAGE)) {
+            chessGameProgress.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
+            printCurrentBoard(chessGameProgress);
+        }
+    }
+
+    private void showStatus(final ChessGameProgress chessGameProgress, final String commandMessage) {
+        if (commandMessage.equals(STATUS_COMMAND_MESSAGE)) {
+            Score score = chessGameProgress.calculateScore();
+            OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinColor().getValue());
+        }
+    }
+
+    private void endGame(final ChessGameProgress chessGameProgress, final String commandMessage) {
+        if (commandMessage.equals(END_COMMAND_MESSAGE)) {
+            chessGameProgress.turnOff();
         }
     }
 }

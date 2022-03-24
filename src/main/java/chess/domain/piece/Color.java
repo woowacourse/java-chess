@@ -2,7 +2,15 @@ package chess.domain.piece;
 
 public enum Color {
 
-    BLACK, WHITE, NONE;
+    BLACK("흑"),
+    WHITE("백"),
+    NONE("none");
+
+    private final String value;
+
+    Color(String value) {
+        this.value = value;
+    }
 
     public Color oppositeColor() {
         if (this == NONE) {
@@ -12,5 +20,9 @@ public enum Color {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

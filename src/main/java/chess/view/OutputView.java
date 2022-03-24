@@ -43,4 +43,10 @@ public class OutputView {
     public static void printEndMessage() {
         System.out.println("게임이 종료됐습니다.");
     }
+
+    public static void printScore(final double whiteScore, final double blackScore, final String winColor) {
+        System.out.printf("백팀 점수 : %.1f\n", whiteScore);
+        System.out.printf("흑팀 점수 : %.1f\n", blackScore);
+        System.out.printf("승리팀 : %s\n", winColor);
+    }
 }

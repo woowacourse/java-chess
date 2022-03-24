@@ -1,10 +1,11 @@
 package chess.view;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -26,7 +27,7 @@ public class InputView {
     public static List<String> inputProgressCommand() {
         final List<String> input = Arrays.stream(scanner.nextLine().split(" "))
                 .map(value -> value.toLowerCase(Locale.ROOT))
-                .collect(Collectors.toList());
+                .collect(toList());
         Command progressCommand = Command.of(input.get(0));
         validateInvalidInput(progressCommand);
         return input;
