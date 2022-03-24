@@ -1,6 +1,8 @@
 package chess.domain.direction;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -22,6 +24,15 @@ public class DirectionGenerator {
 
 	public static Optional<? extends Direction> generateOfBishop(Position from, Position to) {
 		return Arrays.stream(DiagonalDirection.values())
+			.filter(direction -> direction.confirm(from, to))
+			.findAny();
+	}
+
+	public static Optional<? extends Direction> generateOfKing(Position from, Position to) {
+		List<Direction> directions = new ArrayList<>();
+		directions.addAll(Arrays.asList(BasicDirection.values()));
+		directions.addAll(Arrays.asList(DiagonalDirection.values()));
+		return directions.stream()
 			.filter(direction -> direction.confirm(from, to))
 			.findAny();
 	}

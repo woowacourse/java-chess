@@ -19,24 +19,10 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
 		}
 
 		Direction direction = nullableDirection.get();
-		int distance = from.calculateDistance(to);
 
-		if (isFirstStartWithTwoStep(from, direction, distance)) {
-			return true;
+		if (from.isSameRow(WHITE_PAWN_INITIAL_ROW) && direction == BasicDirection.NORTH) {
+			return from.canReach(to, direction.getUnitPosition(), 2);
 		}
-		if (isDiagonalStep(direction, distance)) {
-			return true;
-		}
-		return distance == 1;
-	}
-
-	private boolean isDiagonalStep(Direction direction, int distance) {
-		return distance == 2 && direction != BasicDirection.NORTH;
-	}
-
-	private boolean isFirstStartWithTwoStep(Position from, Direction direction, int distance) {
-		return distance == 2
-			&& direction == BasicDirection.NORTH
-			&& from.isSameRow(WHITE_PAWN_INITIAL_ROW);
+		return from.canReach(to, direction.getUnitPosition(), 1);
 	}
 }

@@ -18,24 +18,11 @@ public class BlackPawnMovingStrategy implements MovingStrategy {
 			return false;
 		}
 
-		int distance = from.calculateDistance(to);
 		Direction direction = nullableDirection.get();
-		if (isFirstStartWithTwoStep(from, direction, distance)) {
-			return true;
-		}
-		if (isDiagonalStep(direction, distance)) {
-			return true;
-		}
-		return distance == 1;
-	}
 
-	private boolean isDiagonalStep(Direction direction, int distance) {
-		return distance == 2 && direction != BasicDirection.SOUTH;
-	}
-
-	private boolean isFirstStartWithTwoStep(Position from, Direction direction, int distance) {
-		return distance == 2
-			&& direction == BasicDirection.SOUTH
-			&& from.isSameRow(BLACK_PAWN_INITIAL_ROW);
+		if (from.isSameRow(BLACK_PAWN_INITIAL_ROW) && direction == BasicDirection.SOUTH) {
+			return from.canReach(to, direction.getUnitPosition(), 2);
+		}
+		return from.canReach(to, direction.getUnitPosition(), 1);
 	}
 }
