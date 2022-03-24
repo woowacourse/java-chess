@@ -35,6 +35,10 @@ public class ChessBoardPosition {
         }
     }
 
+    public boolean isSameRow(int row) {
+        return this.row == row;
+    }
+
     public char getColumn() {
         return column;
     }
@@ -58,5 +62,9 @@ public class ChessBoardPosition {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    public boolean isDifferentColumn(ChessBoardPosition targetPosition) {
+        return column != targetPosition.column;
     }
 }

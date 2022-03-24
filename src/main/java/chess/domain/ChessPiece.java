@@ -1,7 +1,5 @@
 package chess.domain;
 
-import javax.swing.JTable.DropLocation;
-
 public class ChessPiece {
     private final Team team;
     private final Type type;
