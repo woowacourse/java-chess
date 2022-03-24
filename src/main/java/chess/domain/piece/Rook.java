@@ -10,8 +10,11 @@ public final class Rook extends Piece {
 
     @Override
     public boolean movable(List<Integer> distances, Piece target) {
-        return false;
+        boolean isMovableDistance = distances.stream()
+                .filter(integer -> integer == 0)
+                .count() == 1;
+        boolean isOpponent = isOpponent(target);
+
+        return isMovableDistance && isOpponent;
     }
-
-
 }

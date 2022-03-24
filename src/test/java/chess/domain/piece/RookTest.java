@@ -1,26 +1,31 @@
 package chess.domain.piece;
 
-import static chess.domain.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Color;
-import java.util.List;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class RookTest {
-    @Test
-    @DisplayName("이동 가능 여부 테스트")
-    void canMove(){
+    @ParameterizedTest(name = "출발지 : F5, 도착지 : {0}")
+    @ValueSource(strings = {"F1", "F8", "A5", "H5"})
+    @DisplayName("룩 이동 테스트")
+    void rookMove(String to) {
         // given
-        Piece rook = new Rook(Color.WHITE);
-        Piece opponent = new Rook(Color.BLACK);
+        Map<Position, Piece> testBoard = new LinkedHashMap<>();
+        testBoard.put(Position.of("f5"), new Rook(Color.WHITE));
+        Board board = BoardFactory.newInstance(testBoard);
 
         // when
-        List<Integer> distance = B1.calculateDistance(B3);
-        boolean movable = rook.movable(distance, opponent);
+        boolean move = board.move("f5", to);
 
         // then
-        assertThat(movable).isTrue();
+        assertThat(move).isTrue();
     }
 }
