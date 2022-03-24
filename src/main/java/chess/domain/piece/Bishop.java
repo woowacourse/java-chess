@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Color;
 import java.util.List;
 
-public final class Bishop extends Piece{
+public final class Bishop extends Piece {
     public Bishop(Color color) {
         super(color);
     }

@@ -1,6 +1,12 @@
 package chess.domain;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
@@ -20,16 +26,16 @@ public enum PieceConvertor {
     private final Function<Color, Piece> pieceMaker;
 
     PieceConvertor(String letter,
-        Function<Color, Piece> pieceMaker) {
+                   Function<Color, Piece> pieceMaker) {
         this.letter = letter;
         this.pieceMaker = pieceMaker;
     }
 
-    public static Piece of(String input, Color color){
+    public static Piece of(String input, Color color) {
         PieceConvertor pieceConvertor = Arrays.stream(values())
-            .filter(piece -> piece.letter.equalsIgnoreCase(input))
-            .findAny()
-            .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_PIECE_FOUND));
+                .filter(piece -> piece.letter.equalsIgnoreCase(input))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_PIECE_FOUND));
 
         return pieceConvertor.pieceMaker.apply(color);
     }

@@ -28,9 +28,9 @@ public enum Column {
 
     public static Column of(String value) {
         return Arrays.stream(values())
-            .filter(column -> column.value.equalsIgnoreCase(value))
-            .findAny()
-            .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
+                .filter(column -> column.value.equalsIgnoreCase(value))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
     }
 
     public static List<Column> getBetween(Column from, Column to) {
@@ -38,8 +38,8 @@ public enum Column {
         Column minOrder = getLowerOrder(from, to);
 
         return Arrays.stream(values())
-            .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
-            .collect(Collectors.toList());
+                .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
+                .collect(Collectors.toList());
     }
 
     private static Column getHigherOrder(Column from, Column to) {

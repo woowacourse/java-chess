@@ -5,7 +5,7 @@ import chess.dto.BoardDto;
 import chess.view.OutputView;
 
 public class ChessController {
-    public void start(){
+    public void start() {
         OutputView outputView = OutputView.getInstance();
         Board board = new Board();
 

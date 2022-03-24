@@ -6,7 +6,7 @@ import java.util.List;
 public final class Knight extends Piece {
 
     private static final List<List<Integer>> MOVABLE_DISTANCES = List.of(
-        List.of(1, 2), List.of(2, 1));
+            List.of(1, 2), List.of(2, 1));
 
     public Knight(Color color) {
         super(color);

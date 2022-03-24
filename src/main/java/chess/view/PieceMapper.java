@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.Color;
 import chess.domain.PieceConvertor;
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 

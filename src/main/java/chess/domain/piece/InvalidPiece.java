@@ -11,15 +11,15 @@ public final class InvalidPiece extends Piece {
         super(color);
     }
 
+    public static Piece getInstance() {
+        return INVALID_PIECE;
+    }
+
     @Override
     public boolean movable(List<Integer> distances, Piece target) {
         return false;
     }
 
-    public static Piece getInstance() {
-        return INVALID_PIECE;
-    }
-    
     @Override
     public boolean isInValid() {
         return true;

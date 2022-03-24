@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Color;
 import java.util.List;
 
-public final class Pawn extends Piece{
+public final class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);

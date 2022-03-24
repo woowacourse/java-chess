@@ -25,6 +25,12 @@ public class OutputView {
         return OUTPUT_VIEW;
     }
 
+    private static Function<Row, Stream<? extends Position>> getPositionStream() {
+        return row ->
+                Arrays.stream(Column.values())
+                        .map(column -> Position.of(row, column));
+    }
+
     public void initialPrint() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -36,8 +42,8 @@ public class OutputView {
         Map<Position, Piece> board = boardDto.getBoard();
 
         List<Position> collect = Arrays.stream(Row.values())
-            .flatMap(getPositionStream())
-            .collect(Collectors.toList());
+                .flatMap(getPositionStream())
+                .collect(Collectors.toList());
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < collect.size(); i++) {
@@ -50,11 +56,5 @@ public class OutputView {
         }
 
         System.out.println(stringBuilder);
-    }
-
-    private static Function<Row, Stream<? extends Position>> getPositionStream() {
-        return row ->
-            Arrays.stream(Column.values())
-                .map(column -> Position.of(row, column));
     }
 }

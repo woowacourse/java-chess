@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private final Scanner SCANNER = new Scanner(System.in);
     private static final InputView INPUT_VIEW = new InputView();
+    private final Scanner SCANNER = new Scanner(System.in);
 
     private InputView() {
     }

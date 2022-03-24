@@ -29,21 +29,22 @@ public enum Row {
 
     public static Row of(String value) {
         return Arrays.stream(values())
-            .filter(row -> row.value.equals(value))
-            .findAny()
-            .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
+                .filter(row -> row.value.equals(value))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
     }
 
     public static List<Row> initialRows() {
         return List.of(EIGHT, SEVEN, TWO, ONE);
     }
+
     public static List<Row> getBetween(Row from, Row to) {
         Row maxOrder = getHigherOrder(from, to);
         Row minOrder = getLowerOrder(from, to);
 
         return Arrays.stream(values())
-            .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
-            .collect(Collectors.toList());
+                .filter(column -> column.order < maxOrder.order && column.order < minOrder.order)
+                .collect(Collectors.toList());
     }
 
     private static Row getHigherOrder(Row from, Row to) {

@@ -17,8 +17,8 @@ public enum ChessExecution {
 
     public static ChessExecution from(String value) {
         return Arrays.stream(values())
-            .filter(execution -> execution.value.equalsIgnoreCase(value))
-            .findAny()
-            .orElseThrow(() -> new NoSuchElementException(NO_COMMAND_FIND));
+                .filter(execution -> execution.value.equalsIgnoreCase(value))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(NO_COMMAND_FIND));
     }
 }

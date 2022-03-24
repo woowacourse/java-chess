@@ -22,9 +22,9 @@ public enum InitialExecution {
 
     public static InitialExecution of(String input) {
         return Arrays.stream(values())
-            .filter(execution -> execution.command.equalsIgnoreCase(input.trim()))
-            .findAny()
-            .orElseThrow(() -> new NoSuchElementException(INITIAL_EXECUTION_ERROR));
+                .filter(execution -> execution.command.equalsIgnoreCase(input.trim()))
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(INITIAL_EXECUTION_ERROR));
     }
 
     public void run() {
