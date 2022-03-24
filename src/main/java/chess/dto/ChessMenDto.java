@@ -21,10 +21,6 @@ public class ChessMenDto implements Iterable<ChessPieceDto> {
         return new ChessMenDto(chessPieces);
     }
 
-    public List<ChessPieceDto> getChessPieces() {
-        return chessPieces;
-    }
-
     @Override
     public Iterator<ChessPieceDto> iterator() {
         return chessPieces.iterator();
