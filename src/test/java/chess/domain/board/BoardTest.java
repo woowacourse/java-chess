@@ -91,6 +91,90 @@ class BoardTest {
         }
     }
 
+    @DisplayName("폰을 이동시킬 때")
+    @Nested
+    class PawnTest {
+        @DisplayName("대각선 한 칸 앞에 상대 말이 있으면 이동시킬 수 있다")
+        @Test
+        void move_Diagonal_To_Catch_Enemy() {
+            Piece startPiece = new Pawn(Color.WHITE);
+            Piece existPiece = new Knight(Color.BLACK);
+            Position start = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.SECOND, Column.b);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
+
+            board.move(start, target);
+            Map<Position, Piece> pieces = board.getPieces();
+
+            Assertions.assertAll(
+                () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
+                () -> assertThat(pieces.get(start)).isNull());
+        }
+
+        @DisplayName("대각선 한 칸 앞에 상대 말이 없으면 예외가 발생한다.")
+        @Test
+        void same_Color_Piece_In_Diagonal() {
+            Piece startPiece = new Pawn(Color.WHITE);
+            Piece existPiece = new Knight(Color.WHITE);
+            Position start = new Position(Row.FIRST, Column.a);
+            Position target = new Position(Row.SECOND, Column.b);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
+
+            assertThatThrownBy(() -> board.move(start, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.");
+        }
+
+        @DisplayName("처음 두 칸 이동할 떄 경로에 말이 존재하는 경우 예외를 반환한다")
+        @Test
+        void other_Piece_In_Path() {
+            Piece startPiece = new Pawn(Color.WHITE);
+            Piece existPiece = new Knight(Color.WHITE);
+            Position start = new Position(Row.SECOND, Column.a);
+            Position midPoint = new Position(Row.THIRD, Column.a);
+            Position target = new Position(Row.FOURTH, Column.a);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
+
+            assertThatThrownBy(() -> board.move(start, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("다른 말이 경로에 존재해 이동할 수 없습니다.");
+        }
+
+        @DisplayName("한 칸 이동할 떄 말이 존재하는 경우 예외를 반환한다")
+        @Test
+        void other_Piece_In_Destination() {
+            Piece startPiece = new Pawn(Color.WHITE);
+            Piece existPiece = new Knight(Color.WHITE);
+            Position start = new Position(Row.THIRD, Column.a);
+            Position target = new Position(Row.FOURTH, Column.a);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
+
+            assertThatThrownBy(() -> board.move(start, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("다른 말이 존재해 이동할 수 없습니다.");
+        }
+
+        @DisplayName("직진 성공")
+        @Test
+        void move_Success() {
+            Piece startPiece = new Pawn(Color.WHITE);
+            Position start = new Position(Row.THIRD, Column.a);
+            Position target = new Position(Row.FOURTH, Column.a);
+
+            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
+            board.move(start, target);
+            Map<Position, Piece> pieces = board.getPieces();
+            Assertions.assertAll(
+                () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
+                () -> assertThat(pieces.get(start)).isNull());
+        }
+
+    }
+
     @DisplayName("말을 이동시킬 때")
     @Nested
     class CommonMovingTest {

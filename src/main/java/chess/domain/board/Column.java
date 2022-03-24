@@ -19,7 +19,7 @@ public enum Column {
         this.value = value;
     }
 
-    public static Column of(int value) {
+    public static Column from(int value) {
         return Arrays.stream(values())
             .filter(column -> column.value == value)
             .findFirst()
@@ -31,6 +31,6 @@ public enum Column {
     }
 
     public Column move(int columnDifference) {
-        return of(value + columnDifference);
+        return from(value + columnDifference);
     }
 }

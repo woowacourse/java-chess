@@ -51,7 +51,23 @@ public class Board {
     }
 
     private void validatePawn(final Position start, final Position target) {
+        final Piece movingPiece = pieces.get(start);
+        final Piece targetPiece = pieces.get(target);
+        final Direction direction = movingPiece.findValidDirection(start, target);
+        if (direction.isDiagonal()) {
+            validatePawnDiagonalMove(movingPiece, targetPiece);
+            return;
+        }
+        validatePath(movingPiece, start, target);
+        if (targetPiece != null) {
+            throw new IllegalArgumentException("다른 말이 존재해 이동할 수 없습니다.");
+        }
+    }
 
+    private void validatePawnDiagonalMove(Piece movingPiece, Piece targetPiece) {
+        if (targetPiece == null || targetPiece.getColor() == movingPiece.getColor()) {
+            throw new IllegalArgumentException("폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.");
+        }
     }
 
     private void validatePieceExistIn(final Piece movingPiece) {

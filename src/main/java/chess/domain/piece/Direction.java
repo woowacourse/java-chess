@@ -50,6 +50,10 @@ public enum Direction {
         return Direction.of(rowDifference, columnDifference);
     }
 
+    public boolean isDiagonal() {
+        return this == NE || this == SE || this == SW || this == NW;
+    }
+
     public int getRow() {
         return row;
     }

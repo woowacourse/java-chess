@@ -29,7 +29,7 @@ public class OutputView {
 
     private static void printRow(final Map<Position, Piece> pieces, int rawRow) {
         for (int i = 1; i <= 8; i++) {
-            Position position = new Position(Row.of(rawRow), Column.of(i));
+            Position position = new Position(Row.from(rawRow), Column.from(i));
             Piece piece = pieces.getOrDefault(position, new EmptySpace());
             System.out.print(convertToSymbol(piece));
         }
