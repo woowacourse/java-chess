@@ -13,8 +13,8 @@ public class ChessGame {
     }
 
     public static ChessGame create() {
-        ChessMen blackChessMen = initializeChessMen(Team.BLACK, 7, 8);
-        ChessMen whiteChessMen = initializeChessMen(Team.WHITE, 2, 1);
+        ChessMen blackChessMen = initializeChessMen(Team.BLACK, 2, 1);
+        ChessMen whiteChessMen = initializeChessMen(Team.WHITE, 7, 8);
         return new ChessGame(blackChessMen, whiteChessMen);
     }
 
