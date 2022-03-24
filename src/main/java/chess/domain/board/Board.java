@@ -103,13 +103,6 @@ public class Board {
 
         Direction direction = piece.findDirection(src, dest);
         checkObstacle(src, dest, direction);
-
-        // 직선인경우 로직
-        // 대각선인 경우 로직
-        // 이동경로에 장애물
-
-        // 가는 경로를 알아야한다.
-        // Piece가 행마법을 안다.
     }
 
     private void checkObstacle(Position src, Position dest, Direction direction) {

@@ -61,6 +61,10 @@ public enum Direction {
         return List.of(NORTH, WEST, SOUTH, EAST);
     }
 
+    public static List<Direction> getBishopDirections() {
+        return List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    }
+
     public static List<Direction> getKingDirections() {
         return List.of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     }

@@ -77,7 +77,7 @@ class RookTest {
     }
 
     @DisplayName("룩은 북쪽으로 직진할 수 있다")
-
+    @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMoveNorthTestSet")
     void rookMoveNorth(Position src, Position dest) {
         Piece piece = new Rook(Color.BLACK);

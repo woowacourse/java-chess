@@ -299,4 +299,60 @@ class BoardTest {
                 .hasMessageContaining("다른 기물");
     }
 
+    @DisplayName("비숍이 성공적으로 이동한다")
+    @ParameterizedTest(name = "{displayName} : {arguments}")
+    @MethodSource("bishopMoveTestSet")
+    void bishopMove(Position src, Position dest) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        Piece piece = new Bishop(Color.BLACK);
+        value.put(src, piece);
+        Board board = new Board(value);
+
+        board.move(src, dest);
+
+        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+    }
+
+    static Stream<Arguments> bishopMoveTestSet() {
+        return Stream.of(
+                Arguments.of(Position.of("d5"), Position.of("e6")),
+                Arguments.of(Position.of("d5"), Position.of("e4")),
+                Arguments.of(Position.of("d5"), Position.of("c6")),
+                Arguments.of(Position.of("d5"), Position.of("c4"))
+        );
+    }
+
+    @DisplayName("비숍은 이동할 위치에 아군이 있으면 이동할 수 없다.")
+    @Test
+    void bishopCannotMove() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("d5"), new Bishop(Color.WHITE));
+        value.put(Position.of("g8"), new Pawn(Color.WHITE));
+        Board board = new Board(value);
+
+        assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("아군");
+    }
+
+    @DisplayName("비숍은 이동경로에 다른 기물이 있는 경우 예외를 던진다")
+    @Test
+    void bishopCheckObstacleInPath() {
+
+        Piece bishop = new Bishop(Color.WHITE);
+        Piece obstacle = new Pawn(Color.BLACK);
+        Map<Position, Piece> value = new HashMap<>();
+        Position src = Position.of("d3");
+        value.put(src, bishop);
+        value.put(Position.of("f5"), obstacle);
+        Board board = new Board(value);
+
+        Position dest = Position.of("g6");
+
+        assertThatThrownBy(() -> board.move(src, dest))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("다른 기물");
+    }
 }
