@@ -34,6 +34,4 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
         }
         return 0;
     }
-
-
 }

@@ -26,6 +26,14 @@ public class Distance {
         return horizon != NOT_MOVE && vertical == NOT_MOVE;
     }
 
+    public boolean isPositiveDiagonal() {
+        return vertical / horizon == 1;
+    }
+
+    public boolean isNegativeDiagonal() {
+        return vertical / horizon == -1;
+    }
+
     public int getVertical() {
         return vertical;
     }

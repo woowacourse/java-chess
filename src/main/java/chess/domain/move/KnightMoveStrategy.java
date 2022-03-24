@@ -27,5 +27,4 @@ public final class KnightMoveStrategy extends FirstRowMoveStrategy {
         }
         return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
     }
-
 }
