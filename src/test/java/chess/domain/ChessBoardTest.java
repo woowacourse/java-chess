@@ -4,12 +4,12 @@ import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
+import chess.domain.piece.multiple.Bishop;
+import chess.domain.piece.single.King;
+import chess.domain.piece.single.Knight;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.multiple.Queen;
+import chess.domain.piece.multiple.Rook;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import java.util.HashMap;
