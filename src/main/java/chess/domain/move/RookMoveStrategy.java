@@ -11,7 +11,7 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
 
-        if (!distance.isHorizontalMovement() && !distance.isVerticalMovement()) {
+        if (!isRookMovePattern(distance)) {
             return false;
         }
 
@@ -24,6 +24,10 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
         }
 
         return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+    }
+
+    private boolean isRookMovePattern(final Distance distance) {
+        return distance.isHorizontalMovement() || distance.isVerticalMovement();
     }
 
     @Override
