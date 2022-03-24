@@ -18,4 +18,8 @@ public abstract class Piece {
     abstract public String getEmoji();
 
     abstract public boolean canMove(Square source, Square target);
+
+    public boolean isSameTeam(Piece otherPiece) {
+        return this.color == otherPiece.color;
+    }
 }
