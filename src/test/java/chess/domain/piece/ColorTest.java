@@ -12,4 +12,10 @@ public class ColorTest {
     void containBlackAndWhite() {
         assertThat(Color.values()).containsOnly(Color.BLACK, Color.WHITE);
     }
+
+    @Test
+    @DisplayName("반대 Color를 반환한다.")
+    void getOpposite() {
+        assertThat(Color.WHITE.getOpposite()).isEqualTo(Color.BLACK);
+    }
 }

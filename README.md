@@ -64,6 +64,7 @@
     
 ### Color
 - [x] 흑과 백이 있다.
+- [x] 반대 Color를 반환한다.
 
 ### Command
 - [x] start와 end를 가진다.
