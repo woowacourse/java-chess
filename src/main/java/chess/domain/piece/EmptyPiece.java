@@ -1,10 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
 import java.util.Objects;
 
 public class EmptyPiece implements Piece {
 
     private final String name = ".";
+
+    @Override
+    public boolean isMovable(Position from, Position to) {
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -26,6 +26,10 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 File 값 입니다."));
     }
 
+    public int calculateDistance(final File file) {
+        return value - file.value;
+    }
+
     public File plus() {
         try {
             return of((char) (value + (char) 1));

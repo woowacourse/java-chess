@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.position.diraction.Direction;
+import chess.domain.position.direction.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -30,6 +30,19 @@ public class Position {
     public Position move(final Direction direction) {
         return direction.move(file, rank);
     }
+
+    public boolean isSameRank(final Rank rank) {
+        return rank == this.rank;
+    }
+
+    public int calculateFileDistance(final Position from) {
+        return this.file.calculateDistance(from.file);
+    }
+
+    public int calculateRankDistance(final Position from) {
+        return this.rank.calculateDistance(from.rank);
+    }
+
 
     @Override
     public boolean equals(Object o) {

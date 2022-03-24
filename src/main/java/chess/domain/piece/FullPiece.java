@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
 import java.util.Objects;
 
 public abstract class FullPiece implements Piece {
@@ -9,6 +10,8 @@ public abstract class FullPiece implements Piece {
     public FullPiece(final Color color) {
         this.color = color;
     }
+
+    public abstract boolean isMovable(final Position from, final Position to);
 
     @Override
     public boolean equals(Object o) {
@@ -29,4 +32,8 @@ public abstract class FullPiece implements Piece {
 
     @Override
     public abstract String getName();
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -26,6 +26,10 @@ public enum Rank {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다."));
     }
 
+    public int calculateDistance(final Rank rank) {
+        return value - rank.value;
+    }
+
     public Rank plus() {
         try {
             return of(value + 1);
