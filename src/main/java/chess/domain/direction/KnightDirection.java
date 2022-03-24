@@ -1,8 +1,7 @@
 package chess.domain.direction;
 
-import java.util.function.BiPredicate;
-
 import chess.domain.Position;
+import chess.domain.UnitPosition;
 
 public enum KnightDirection implements Direction {
 	NORTH_NORTH_EAST(new UnitPosition(2, 1)),
@@ -14,7 +13,7 @@ public enum KnightDirection implements Direction {
 	WEST_NORTH_WEST(new UnitPosition(1, -2)),
 	NORTH_NORTH_WEST(new UnitPosition(2, -1));
 
-	private final BiPredicate<Integer, Integer> positionPredicate;
+	private final UnitPosition unitPosition;
 
 	KnightDirection(UnitPosition unitPosition) {
 		this.unitPosition = unitPosition;

@@ -7,17 +7,17 @@ public class Knight extends Piece {
 
 	private final String symbol;
 
-	private Knight(Color color, Position position, String symbol) {
-		super(color, position);
+	private Knight(Color color, String symbol) {
+		super(color);
 		this.symbol = symbol;
 	}
 
-	public static Knight createWhite(int row, int column) {
-		return new Knight(Color.WHITE, new Position(row, column), "♞");
+	public static Knight createWhite() {
+		return new Knight(Color.WHITE, "♞");
 	}
 
-	public static Knight createBlack(int row, int column) {
-		return new Knight(Color.BLACK, new Position(row, column) , "♘");
+	public static Knight createBlack() {
+		return new Knight(Color.BLACK, "♘");
 	}
 
 	@Override
@@ -26,14 +26,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void move(int row, int column) {
-		validatePosition(row, column);
-		this.position = this.position.change(row, column);
-	}
-
-	private void validatePosition(int row, int column) {
-		if (this.position.isNotAbsoluteSlopeTwoOrHalf(row, column)) {
-			throw new IllegalArgumentException();
-		}
+	public boolean isMovable(Position from, Position to) {
+		return new KnightMovingStrategy().check(from, to);
 	}
 }

@@ -6,12 +6,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.domain.Position;
+
 class KnightTest {
+
+	private final Piece knight = Knight.createBlack();
 
 	@ParameterizedTest
 	@CsvSource(value = {"6:5", "5:6", "3:6", "2:5", "2:3", "3:2", "5:2", "6:3"}, delimiter = ':')
 	@DisplayName("나이트가 움직일 수 있는 경우 움직인다.")
 	void moveKnight(int row, int column) {
+		assertThat(knight.isMovable(
+			new Position(4, 4),
+			new Position(row, column))
+		).isTrue();
 	}
 
 	@ParameterizedTest
