@@ -18,7 +18,7 @@ public class RookTest {
     }
 
     @Test
-    @DisplayName("A1에 있는 룩을 B3로 이동 가능하다")
+    @DisplayName("A1에 있는 룩을 B3로 이동 불가능하다")
     void canMove_a1_b3() {
         Rook rook = new Rook(Color.BLACK);
         Boolean canMove = rook.canMove(new Square("a1"), new Square("b3"));
