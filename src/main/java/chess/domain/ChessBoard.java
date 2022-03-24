@@ -49,6 +49,20 @@ public class ChessBoard {
     public void move(String source, String target) {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
+
+        Piece sourcePiece = findPiece(sourcePosition);
+    }
+
+    private Piece findPiece(Position sourcePosition) {
+        int rankIndex = sourcePosition.getRankIndex();
+        int fileIndex = sourcePosition.getFileIndex();
+        Piece piece = board.get(rankIndex).get(fileIndex);
+
+        if(piece.isEmpty()) {
+            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
+        }
+
+        return piece;
     }
 
     public List<List<Piece>> getBoard() {

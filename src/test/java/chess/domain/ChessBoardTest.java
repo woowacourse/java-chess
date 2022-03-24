@@ -22,4 +22,13 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move("i1", "a1"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("source 위치에 기물이 존재하지 않으면 예외를 던진다.")
+    @Test
+    void source_위치에_기물이_존재하지_않으면_예외를_던진다() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThatThrownBy(() -> chessBoard.move("b1", "c3"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

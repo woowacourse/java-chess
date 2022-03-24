@@ -14,5 +14,9 @@ public abstract class Piece {
         return color.isBlack();
     }
 
+    public boolean isEmpty() {
+        return false;
+    }
+
     public abstract String getNotation();
 }

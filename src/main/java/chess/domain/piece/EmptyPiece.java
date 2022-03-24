@@ -16,6 +16,11 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
     public String getNotation() {
         return NOTATION;
     }
