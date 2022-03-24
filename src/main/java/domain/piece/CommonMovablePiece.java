@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.piece.property.PieceSymbol;
+import domain.piece.property.TeamColor;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -11,8 +13,8 @@ public abstract class CommonMovablePiece extends Piece {
 
     private List<Position> positions;
 
-    public CommonMovablePiece(Player player, PieceSymbol unit) {
-        super(player, unit);
+    public CommonMovablePiece(TeamColor teamColor, PieceSymbol unit) {
+        super(teamColor, unit);
     }
 
     private void initializePosition() {

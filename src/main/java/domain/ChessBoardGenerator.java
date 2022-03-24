@@ -1,16 +1,16 @@
 package domain;
 
-import static domain.piece.Player.BLACK;
-import static domain.piece.Player.WHITE;
+import static domain.piece.property.TeamColor.BLACK;
+import static domain.piece.property.TeamColor.WHITE;
 
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
+import domain.piece.unit.Bishop;
+import domain.piece.unit.King;
+import domain.piece.unit.Knight;
+import domain.piece.unit.Pawn;
 import domain.piece.CommonMovablePiece;
-import domain.piece.Player;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.property.TeamColor;
+import domain.piece.unit.Queen;
+import domain.piece.unit.Rook;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -25,7 +25,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         Map<Position, CommonMovablePiece> board = new HashMap<>();
         createInitialize(board);
         createTeamBoard(board, BLACK);
-        createTeamBoard(board, Player.WHITE);
+        createTeamBoard(board, TeamColor.WHITE);
 
         return board;
     }
@@ -42,17 +42,17 @@ public class ChessBoardGenerator implements BoardGenerator {
         }
     }
 
-    private void createTeamBoard(final Map<Position, CommonMovablePiece> board, final Player player) {
-        createInitPawn(board, player);
-        createInitRook(board, player);
-        createInitKnight(board, player);
-        createInitBishop(board, player);
-        createInitQueen(board, player);
-        createInitKing(board, player);
+    private void createTeamBoard(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        createInitPawn(board, teamColor);
+        createInitRook(board, teamColor);
+        createInitKnight(board, teamColor);
+        createInitBishop(board, teamColor);
+        createInitQueen(board, teamColor);
+        createInitKing(board, teamColor);
     }
 
-    private void createInitPawn(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitPawn(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             Arrays.stream(XPosition.values())
                     .forEach(x -> board.put(new Position(x, YPosition.SEVEN), new Pawn(BLACK)));
             return;
@@ -60,8 +60,8 @@ public class ChessBoardGenerator implements BoardGenerator {
         Arrays.stream(XPosition.values()).forEach(x -> board.put(new Position(x, YPosition.TWO), new Pawn(WHITE)));
     }
 
-    private void createInitRook(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitRook(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             board.put(new Position(XPosition.A, YPosition.EIGHT), new Rook(BLACK));
             board.put(new Position(XPosition.H, YPosition.EIGHT), new Rook(BLACK));
             return;
@@ -70,8 +70,8 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(new Position(XPosition.H, YPosition.ONE), new Rook(WHITE));
     }
 
-    private void createInitKnight(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitKnight(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             board.put(new Position(XPosition.B, YPosition.EIGHT), new Knight(BLACK));
             board.put(new Position(XPosition.G, YPosition.EIGHT), new Knight(BLACK));
             return;
@@ -80,8 +80,8 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(new Position(XPosition.G, YPosition.ONE), new Knight(WHITE));
     }
 
-    private void createInitBishop(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitBishop(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             board.put(new Position(XPosition.C, YPosition.EIGHT), new Bishop(BLACK));
             board.put(new Position(XPosition.F, YPosition.EIGHT), new Bishop(BLACK));
             return;
@@ -90,16 +90,16 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(new Position(XPosition.F, YPosition.ONE), new Bishop(WHITE));
     }
 
-    private void createInitQueen(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitQueen(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             board.put(new Position(XPosition.D, YPosition.EIGHT), new Queen(BLACK));
             return;
         }
         board.put(new Position(XPosition.D, YPosition.ONE), new Queen(WHITE));
     }
 
-    private void createInitKing(final Map<Position, CommonMovablePiece> board, final Player player) {
-        if (player == BLACK) {
+    private void createInitKing(final Map<Position, CommonMovablePiece> board, final TeamColor teamColor) {
+        if (teamColor == BLACK) {
             board.put(new Position(XPosition.E, YPosition.EIGHT), new King(BLACK));
             return;
         }

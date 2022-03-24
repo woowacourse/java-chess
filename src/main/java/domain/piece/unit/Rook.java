@@ -1,7 +1,10 @@
-package domain.piece;
+package domain.piece.unit;
 
 import static domain.utils.Direction.*;
 
+import domain.piece.CommonMovablePiece;
+import domain.piece.property.PieceSymbol;
+import domain.piece.property.TeamColor;
 import domain.utils.Direction;
 import java.util.List;
 
@@ -13,13 +16,13 @@ public final class Rook extends CommonMovablePiece {
         directions = upDownLeftRightDirections();
     }
 
-    public Rook(final Player player) {
-        super(player, PieceSymbol.Rook);
+    public Rook(final TeamColor teamColor) {
+        super(teamColor, PieceSymbol.Rook);
 
     }
 
     @Override
-    protected List<Direction> directions() {
+    public List<Direction> directions() {
         return directions;
     }
 }

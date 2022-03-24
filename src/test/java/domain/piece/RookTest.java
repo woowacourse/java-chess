@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.piece.property.TeamColor;
+import domain.piece.unit.Rook;
 import domain.position.XPosition;
 import domain.position.Position;
 import domain.position.YPosition;
@@ -15,7 +17,7 @@ class RookTest {
     @MethodSource("availablePositions")
     @DisplayName("Rook 은 상하좌우로 이동할 수 있다.")
     void moveRookUpDownRightLeft(Position target) {
-        CommonMovablePiece piece = new Rook(Player.WHITE);
+        CommonMovablePiece piece = new Rook(TeamColor.WHITE);
 
         Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);

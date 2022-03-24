@@ -8,7 +8,7 @@ class PawnTest {
     @Test
     @DisplayName("Pawn은 앞으로 한칸 이동할 수 있다.")
     void movePawnOneSpace(){
-//        Piece piece = new Pawn(Player.WHITE);
+//        Piece piece = new Pawn(teamColor.WHITE);
 
         // target == null
 //        assertThat(((Pawn)piece).avaliableMove(new Position(Row.TWO, Column.B), new Position(Row.THREE, Column.B)))
@@ -29,7 +29,7 @@ class PawnTest {
         //   list can, can`t
         //}
 
-        // Player, Unit getter getPlayer getUnit
+        // teamColor, Unit getter getteamColor getUnit
         // pawn  List<> == 1, 2
         // king  => currentPosition c3  =>  b4 c4 d4 b3 d3 b2 c2 d2
 
@@ -42,9 +42,9 @@ class PawnTest {
 
         //
 //        source.validateMove(source, target, isExist(target))
-//        if (player == Player.BLACK)
+//        if (teamColor == teamColor.BLACK)
 //            blackList
-//        if (player == Player.WHITE)
+//        if (teamColor == teamColor.WHITE)
 //            whileList
 /*
 2. board는 source/target을 통해 검증

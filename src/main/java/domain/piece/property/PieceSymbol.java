@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.property;
 
 public enum PieceSymbol {
 
@@ -15,8 +15,8 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
-    public String symbol(final Player player) {
-        if (player == Player.BLACK) {
+    public String symbol(final TeamColor teamColor) {
+        if (teamColor == TeamColor.BLACK) {
             return symbol;
         }
         return symbol.toLowerCase();
