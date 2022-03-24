@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Running implements Command {
+public abstract class Running implements Command {
 
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("move [a-h][1-8] [a-h][1-8]");
     private static final int START_POSITION_INDEX = 1;
@@ -29,7 +29,7 @@ public class Running implements Command {
         if (matcher.find()) {
             movePieceByCommand(command);
             OutputView.printChessBoard(chessBoard.getPieces());
-            return this;
+            return otherCommand(this.chessBoard);
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
    }
@@ -49,4 +49,6 @@ public class Running implements Command {
     public boolean isEnd() {
         return false;
     }
+
+    abstract protected Running otherCommand(ChessBoard chessBoard);
 }
