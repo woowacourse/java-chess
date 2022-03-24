@@ -56,11 +56,11 @@ public class StartedBishop implements State {
 
     @Override
     public State killed() {
-        return null;
+        return new Dead();
     }
 
     @Override
     public State updateState() {
-        return null;
+        return new StartedBishop();
     }
 }
