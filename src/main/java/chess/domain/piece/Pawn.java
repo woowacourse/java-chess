@@ -6,11 +6,9 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private boolean isNeverDisplaced;
 
     public Pawn(Color color) {
         super(color);
-        isNeverDisplaced = false;
     }
 
     @Override
@@ -20,8 +18,8 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int displacementX = source.calculateDisplacementX(target);
-        int displacementY = source.calculateDisplacementY(target);
+        int displacementX = source.calculateDisplacementXTo(target);
+        int displacementY = source.calculateDisplacementYTo(target);
 
         if (color == Color.BLACK) {
             return isBlackMovable(displacementX, displacementY);
@@ -37,7 +35,7 @@ public class Pawn extends Piece {
             return true;
         }
         if (displacementY == 2 && displacementX == 0){
-            return isNeverDisplaced;
+            return isNeverDisplaced();
         }
         return false;
     }
@@ -50,14 +48,13 @@ public class Pawn extends Piece {
             return true;
         }
         if (displacementY == -2 && displacementX == 0){
-            return isNeverDisplaced;
+            return isNeverDisplaced();
         }
         return false;
     }
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        isNeverDisplaced = true;
         return findLinearRoute(source, target);
     }
 

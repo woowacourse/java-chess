@@ -20,28 +20,28 @@ public final class Position {
                 .collect(groupingBy(position->position.positionY));
     }
 
-    public int calculateDisplacementX(Position position) {
-        return positionX.displacementFrom(position.positionX);
+    public int calculateDisplacementXTo(Position position) {
+        return positionX.displacementTo(position.positionX);
     }
 
-    public int calculateDisplacementY(Position position) {
-        return positionY.displacementFrom(position.positionY);
+    public int calculateDisplacementYTo(Position position) {
+        return positionY.displacementTo(position.positionY);
     }
 
-    public int calculateDisplacementFrom(Position position) {
-        return Math.max(Math.abs(calculateDisplacementY(position)), Math.abs(calculateDisplacementX(position)));
+    public int calculateMaxLinearLengthTo(Position position) {
+        return Math.max(Math.abs(calculateDisplacementYTo(position)), Math.abs(calculateDisplacementXTo(position)));
     }
 
     public int calculateXSlope(Position target, int routeLength) {
-        return calculateDisplacementX(target) / routeLength;
+        return calculateDisplacementXTo(target) / routeLength;
     }
 
     public int calculateYSlope(Position target, int routeLength) {
-        return calculateDisplacementY(target) / routeLength;
+        return calculateDisplacementYTo(target) / routeLength;
     }
 
-    public Position displacement(int xDisplacement, int yDisplacement) {
-        return new Position(positionX.displace(xDisplacement), positionY.displace(yDisplacement));
+    public Position displacedOf(int xDisplacement, int yDisplacement) {
+        return new Position(positionX.displacedOf(xDisplacement), positionY.displacedOf(yDisplacement));
     }
 
     @Override

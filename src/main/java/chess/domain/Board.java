@@ -16,6 +16,59 @@ public class Board {
         this.board = board;
     }
 
+    public boolean isCastable(Color turnColor, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+
+        if (sourcePiece.isSameColor(turnColor) && isCastablePieces(sourcePiece, targetPiece) && isEmptyBetween(source, target)) {
+            return sourcePiece.isNeverDisplaced() && targetPiece.isNeverDisplaced();
+        }
+        return false;
+    }
+
+    private boolean isCastablePieces(Piece sourcePiece, Piece targetPiece) {
+        return sourcePiece.isKing() && targetPiece.isRook();
+    }
+
+    private boolean isEmptyBetween(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        List<Position> route = sourcePiece.findRoute(source, target);
+
+        return route.stream()
+                .allMatch(node -> board.get(node).isBlank());
+    }
+
+    public void castle(Position source, Position target) {
+
+        if(source.calculateDisplacementXTo(target) > 0){
+            castleToKingSide(source, target);
+        }
+        castleToQueenSide(source, target);
+
+    }
+
+    private void castleToKingSide(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+
+        board.replace(source, new Blank());
+        board.replace(source.displacedOf(2, 0), sourcePiece.displaced());
+
+        board.replace(target, new Blank());
+        board.replace(target.displacedOf(-2,0), targetPiece.displaced());
+    }
+
+    private void castleToQueenSide(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+
+        board.replace(source, new Blank());
+        board.replace(source.displacedOf(-2, 0), sourcePiece.displaced());
+
+        board.replace(target, new Blank());
+        board.replace(target.displacedOf(3,0), targetPiece.displaced());
+    }
+
     public void validateMovement(Color turnColor, Position source, Position target) {
         validatePieceChoice(turnColor, source);
         validateTargetChoice(source, target);
@@ -54,7 +107,7 @@ public class Board {
     public void movePiece(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         board.replace(source, new Blank());
-        board.replace(target, sourcePiece);
+        board.replace(target, sourcePiece.displaced());
     }
 
     public double calculateScoreOf(Color color) {
@@ -86,11 +139,14 @@ public class Board {
     }
 
     public boolean isBothKingsAlive() {
-        long kingCount = board.values()
+        return countKingsOnBoard() == 2;
+    }
+
+    private long countKingsOnBoard() {
+        return board.values()
                 .stream()
                 .filter(Piece::isKing)
                 .count();
-        return kingCount == 2;
     }
 
     public Map<Position, Piece> getBoard() {

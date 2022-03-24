@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
@@ -18,8 +17,8 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        int distanceX = Math.abs(source.calculateDisplacementX(target));
-        int distanceY = Math.abs(source.calculateDisplacementY(target));
+        int distanceX = Math.abs(source.calculateDisplacementXTo(target));
+        int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 
         if (distanceY == 1 && distanceX == 0) {
             return true;

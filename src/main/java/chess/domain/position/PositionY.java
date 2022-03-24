@@ -34,11 +34,11 @@ public enum PositionY {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
 
-    public int displacementFrom(PositionY positionY) {
+    public int displacementTo(PositionY positionY) {
         return positionY.coordination - coordination;
     }
 
-    public PositionY displace(int displacement) {
+    public PositionY displacedOf(int displacement) {
         return PositionY.of(coordination + displacement);
     }
 

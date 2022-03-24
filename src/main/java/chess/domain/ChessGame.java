@@ -5,7 +5,6 @@ import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,22 +22,35 @@ public final class ChessGame {
         Map<Position, Piece> pieces = new HashMap<>();
 
         for (PositionY positionY : PositionY.values()) {
-            for (PositionX positionX : PositionX.values()) {
-                Position position = new Position(positionX, positionY);
-                pieces.put(position, new Blank());
-            }
+            fillRankWithBlank(pieces, positionY);
         }
-        Arrays.stream(InitialPiece.values())
-                .forEach(piece -> pieces.replace(piece.getPosition(), piece.piece()));
+
+        for (InitialPiece piece : InitialPiece.values()) {
+            pieces.replace(piece.getPosition(), piece.piece());
+        }
 
         return new Board(pieces);
     }
 
+    private void fillRankWithBlank(Map<Position, Piece> pieces, PositionY positionY) {
+        for (PositionX positionX : PositionX.values()) {
+            Position position = new Position(positionX, positionY);
+            pieces.put(position, new Blank());
+        }
+    }
+
     public void movePiece(String sourceCommand, String targetCommand) {
-        Position sourcePosition = parseToPosition(sourceCommand);
-        Position targetPosition = parseToPosition(targetCommand);
-        board.validateMovement(currentTurnColor, sourcePosition, targetPosition);
-        board.movePiece(sourcePosition, targetPosition);
+        Position source = parseToPosition(sourceCommand);
+        Position target = parseToPosition(targetCommand);
+
+        if(board.isCastable(currentTurnColor, source, target)){
+            board.castle(source, target);
+            changeTurn();
+            return;
+        }
+
+        board.validateMovement(currentTurnColor, source, target);
+        board.movePiece(source, target);
         changeTurn();
     }
 
