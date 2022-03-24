@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.pawn.BlackFirstPawn;
 import chess.domain.piece.pawn.WhiteFirstPawn;

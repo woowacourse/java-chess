@@ -1,12 +1,12 @@
 package chess.domain.piece.strategy;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Rook;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

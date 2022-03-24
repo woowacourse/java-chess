@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.piece.strategy.KingMovableStrategy;
 
 public final class King extends Piece {

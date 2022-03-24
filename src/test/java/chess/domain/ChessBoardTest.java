@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

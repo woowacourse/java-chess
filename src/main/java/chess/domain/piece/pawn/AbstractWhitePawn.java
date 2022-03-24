@@ -1,6 +1,6 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.strategy.PawnMovableStrategy;
 
 public abstract class AbstractWhitePawn extends Pawn {

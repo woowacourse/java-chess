@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain;
 
 import java.util.function.Function;
 
