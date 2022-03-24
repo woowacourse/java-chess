@@ -5,16 +5,17 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final Grid[][] board;
+    private final Map<Position, Grid> board;
 
-    public Board(Grid[][] board) {
+    public Board(Map<Position, Grid> board) {
         this.board = board;
     }
 
     public void movePiece(Color turnColor, Position source, Position target) {
-        Grid sourceGrid = board[source.getPositionY().getCoordination()][source.getPositionX().getCoordination()];
+        Grid sourceGrid = board.get(source);
         Piece sourcePiece = sourceGrid.getPiece();
 
         if (!sourceGrid.hasPieceOf(turnColor)) {
@@ -25,16 +26,16 @@ public class Board {
         }
         List<Position> route = sourcePiece.findRoute(source, target);
         for (Position node : route) {
-            Grid nodeGrid = board[node.getPositionY().getCoordination()][node.getPositionX().getCoordination()];
-            if(nodeGrid.hasPiece()){
+            Grid nodeGrid = board.get(node);
+            if (nodeGrid.hasPiece()) {
                 throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
             }
         }
-        board[source.getPositionY().getCoordination()][source.getPositionX().getCoordination()] = new Grid(new Blank());
-        board[target.getPositionY().getCoordination()][target.getPositionX().getCoordination()] = new Grid(sourcePiece);
+        board.replace(source, new Grid(new Blank()));
+        board.replace(target, new Grid(sourcePiece));
     }
 
-    public Grid[][] getBoard() {
+    public Map<Position, Grid> getBoard() {
         return board;
     }
 }

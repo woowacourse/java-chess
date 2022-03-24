@@ -1,8 +1,11 @@
 package chess.view;
 
 import chess.domain.Grid;
+import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
+
+import java.util.Map;
 
 public class OutputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.\n" +
@@ -14,10 +17,11 @@ public class OutputView {
         System.out.println(GAME_START_MESSAGE);
     }
 
-    public void printBoard(Grid[][] board) {
+    public void printBoard(Map<Position, Grid> board) {
         for (int rank = 0; rank < 8; rank++) {
             for (int column = 0; column < 8; column++) {
-                System.out.print(board[rank][column].getPiece().signature());
+                Position position = new Position(PositionX.of(column), PositionY.of(rank));
+                System.out.print(board.get(position).getPiece().signature());
             }
             System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
         }

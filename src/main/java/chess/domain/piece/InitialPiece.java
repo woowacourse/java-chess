@@ -54,11 +54,7 @@ public enum InitialPiece {
         return piece;
     }
 
-    public PositionX positionX() {
-        return position.getPositionX();
-    }
-
-    public PositionY positionY() {
-        return position.getPositionY();
+    public Position getPosition() {
+        return position;
     }
 }
