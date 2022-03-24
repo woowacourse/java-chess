@@ -19,7 +19,7 @@ public abstract class Piece {
     }
 
     public boolean isEnemy(String signature) {
-        return Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(signature.charAt(0));
+        return !signature.equals(".") && Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(signature.charAt(0));
     }
 
     public boolean isKnight() {

@@ -7,6 +7,7 @@ public class Pawn extends Piece {
 
     private static final String WHITE_SIGNATURE = "p";
     private static final String BLACK_SIGNATURE = "P";
+    private static final int FIRST_MOVE_DISTANCE = 2;
 
     private Pawn(Position position, String signature) {
         super(position, signature);
@@ -22,10 +23,10 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Piece piece) {
-        if (isBlackPawn() && piece.isEnemy(getSignature())) {
+        if (isBlackPawn() && isEnemy(piece.getSignature())) {
             return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
         }
-        if (!isBlackPawn() && piece.isEnemy(getSignature())) {
+        if (!isBlackPawn() && isEnemy(piece.getSignature())) {
             return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
         }
         if (isBlackPawn() && piece.isBlank()) {
@@ -40,12 +41,8 @@ public class Pawn extends Piece {
     private boolean isInRange(Position targetPosition, List<Direction> directions) {
         List<Position> inRangePosition = directions
                 .stream()
-                .filter(direction -> Position.isValidPosition(
-                        position.getX() + direction.getXDegree(),
-                        position.getY() + direction.getYDegree()))
-                .map(direction -> new Position(
-                        position.getX() + direction.getXDegree(),
-                        position.getY() + direction.getYDegree()))
+                .filter(direction -> Position.isValidPosition(Position.createNextPosition(position, direction)))
+                .map(direction -> Position.createNextPosition(position, direction))
                 .collect(Collectors.toList());
 
         return inRangePosition.contains(targetPosition);
@@ -53,17 +50,11 @@ public class Pawn extends Piece {
 
     private boolean isInStraightRange(Position targetPosition, Direction direction) {
         if (isFirstTurn) {
-            return List.of(new Position(
-                                    position.getX() + direction.getXDegree(),
-                                    position.getY() + direction.getYDegree()),
-                            new Position(
-                                    position.getX() + direction.getXDegree() * 2,
-                                    position.getY() + direction.getYDegree() * 2))
+            return List.of(Position.createNextPosition(position, direction),
+                            Position.createNextPosition(position, direction, FIRST_MOVE_DISTANCE))
                     .contains(targetPosition);
         }
-        return new Position(
-                position.getX() + direction.getXDegree(),
-                position.getY() + direction.getYDegree()).equals(targetPosition);
+        return Position.createNextPosition(position, direction).equals(targetPosition);
     }
 
     private boolean isBlackPawn() {

@@ -34,7 +34,8 @@ public enum Direction {
 
     public static Direction findDirection(Position start, Position target) {
         for (Direction direction : getEightStraightDirections()) {
-            Optional<Position> optionalPosition = IntStream.rangeClosed(1, Board.RANK_CAPACITY)
+            Optional<Position> optionalPosition = IntStream
+                    .rangeClosed(1, Position.calculateStraightDistance(start, target))
                     .mapToObj(number -> new Position(start.getX() + direction.getXDegree() * number,
                             start.getY() + direction.getYDegree() * number))
                     .filter(position -> position.equals(target))

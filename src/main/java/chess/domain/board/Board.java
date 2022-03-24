@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class Board {
 
-    public static final int RANK_CAPACITY = 8;
+    private static final int RANK_CAPACITY = 8;
     private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
     private static final String OBSTACLE_EXCEPTION_MESSAGE = "경로에 기물이 존재합니다.";
 
@@ -123,21 +123,17 @@ public class Board {
     }
 
     private void checkPath(Position start, Position target, Direction direction) {
-        Position beforeTarget = new Position(
-                target.getX() - direction.getXDegree(),
-                target.getY() - direction.getYDegree());
+        if (Position.calculateStraightDistance(start, target) == 1) {
+            return;
+        }
 
-        for (Position position = start;
-             !position.equals(beforeTarget);
-             position = createNextPosition(direction, position)) {
+        Position afterStartTarget = Position.createNextPosition(start, direction);
+
+        for (Position position = afterStartTarget;
+             !position.equals(target);
+             position = Position.createNextPosition(position, direction)) {
             validateCollision(position);
         }
-    }
-
-    private Position createNextPosition(Direction direction, Position position) {
-        return new Position(
-                position.getX() + direction.getXDegree(),
-                position.getY() + direction.getYDegree());
     }
 
     private void validateCollision(Position position) {

@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,11 +31,10 @@ public class Rook extends Piece {
         List<Position> inRangePosition = new ArrayList<>();
 
         for (Direction direction : Direction.getPerpendicularDirections()) {
-            List<Position> directionPositions = IntStream.rangeClosed(1, Board.RANK_CAPACITY)
-                    .mapToObj(product -> new Position(
-                            position.getX() + direction.getXDegree() * product,
-                            position.getY() + direction.getYDegree() * product))
-                    .filter(position -> Position.isValidPosition(position.getX(), position.getY()))
+            List<Position> directionPositions = IntStream
+                    .rangeClosed(1, Position.calculateStraightDistance(getPosition(), targetPosition))
+                    .mapToObj(product -> Position.createNextPosition(position, direction, product))
+                    .filter(Position::isValidPosition)
                     .collect(Collectors.toList());
             inRangePosition.addAll(directionPositions);
         }
