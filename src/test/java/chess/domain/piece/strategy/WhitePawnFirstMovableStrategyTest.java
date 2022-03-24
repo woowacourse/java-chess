@@ -25,7 +25,7 @@ class WhitePawnFirstMovableStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,2,true", "b,3,true", "b,1,false", "b,4,false", "a,1,false"})
+    @CsvSource(value = {"b,2,true", "b,3,true", "b,1,false", "b,4,false", "a,1,false", "a,2,false"})
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = new Position(col, row);
@@ -44,5 +44,17 @@ class WhitePawnFirstMovableStrategyTest {
                 target, new Pawn(color)));
 
         assertThat(whitePawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,2,BLACK,true", "c,2,BLACK,true", "a,2,WHITE,false", "c,2,WHITE,false"})
+    @DisplayName("대각선 방향에 적이 있으면 전진 가능")
+    void canMoveToEnemyPiecePosition(char col, char row, Color color, boolean expected) {
+        Position target = new Position(col, row);
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                start, new Pawn(WHITE),
+                target, new Pawn(color)));
+
+        assertThat(whitePawnFirstMovableStrategy.isMovable(start, target, chessBoard)).isEqualTo(expected);
     }
 }
