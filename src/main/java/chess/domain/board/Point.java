@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.move.Direction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,6 +29,24 @@ public class Point {
         return horizontal * DECIMAL + vertical;
     }
 
+    public static Point of(String argument) {
+        return Point.of(argument.charAt(0) - 'a',
+                Integer.parseInt(argument.substring(1, 2)));
+    }
+
+    public int subtractHorizontal(Point other) {
+        return horizontal.subtract(other.horizontal);
+    }
+
+    public int subtractVertical(Point other) {
+        return vertical.subtract(other.vertical);
+    }
+
+    public Point next(Direction direction) {
+        return Point.of(horizontal.next(direction.getDx()),
+                vertical.next(direction.getDy()));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,5 +58,13 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(horizontal, vertical);
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "horizontal=" + horizontal +
+                ", vertical=" + vertical +
+                '}';
     }
 }

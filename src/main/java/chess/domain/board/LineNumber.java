@@ -31,6 +31,14 @@ public class LineNumber {
         }
     }
 
+    public int subtract(LineNumber other) {
+        return number - other.number;
+    }
+
+    public int next(int degree) {
+        return number + degree;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,5 +50,12 @@ public class LineNumber {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    @Override
+    public String toString() {
+        return "LineNumber{" +
+                "number=" + number +
+                '}';
     }
 }
