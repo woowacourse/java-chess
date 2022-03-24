@@ -1,18 +1,26 @@
 package chess;
 
 import chess.domain.ChessGame;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.List;
-import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-        Scanner scanner = new Scanner(System.in);
+        OutputView.printChessCommandInfo();
         ChessGame chessGame = new ChessGame();
         do {
-            String inputValue = scanner.nextLine();
-            chessGame.execute(List.of(inputValue.split(" ")));
+            playEachTurn(chessGame);
         } while (chessGame.isRunning());
+    }
+
+    private static void playEachTurn(ChessGame chessGame) {
+        try {
+            String inputValue = InputView.askCommand();
+            chessGame.execute(List.of(inputValue.split(" ")));
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception);
+            playEachTurn(chessGame);
+        }
     }
 }

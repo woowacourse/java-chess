@@ -1,9 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.Board;
-import chess.domain.Location;
-import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class Ready implements State {
 

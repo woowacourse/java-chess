@@ -1,11 +1,10 @@
 package chess.domain;
 
 import chess.GameCommand;
-import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -16,23 +15,6 @@ public class ChessGame {
 
     public boolean isRunning() {
         return state.isRunning();
-    }
-
-    private void start() {
-        if (isRunning()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 이미 실행 중 입니다.");
-        }
-        this.state = state.start();
-
-        Map<Location, Piece> board = state.getBoard().getBoard();
-
-        for (Rank rank : Rank.reverseValues()) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (File file : File.values()) {
-                stringBuilder.append(board.get(Location.of(file, rank)).toString());
-            }
-            System.out.println(stringBuilder);
-        }
     }
 
     public void execute(List<String> commandList) {
@@ -48,6 +30,15 @@ public class ChessGame {
 //            move(commandList[1], commandList[2]);
 //        }
 
+    }
+
+    private void start() {
+        if (isRunning()) {
+            throw new IllegalArgumentException("[ERROR] 게임이 이미 실행 중 입니다.");
+        }
+        this.state = state.start();
+        Board board = state.getBoard();
+        OutputView.printChessBoard(board);
     }
 
     private void end() {

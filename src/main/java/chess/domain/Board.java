@@ -9,15 +9,14 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class Board {
     private final Map<Location, Piece> chessBoard;
 
     public Board() {
-        this.chessBoard = new HashMap<>();
+        this.chessBoard = new LinkedHashMap<>();
         initializeBoard();
     }
 
@@ -32,11 +31,11 @@ public class Board {
     }
 
     private void initializeEmptyBoard() {
-        Stream.of(File.values())
-                .flatMap(file ->
-                        Stream.of(Rank.values())
-                                .map(rank -> Location.of(file, rank)))
-                .forEach(location -> chessBoard.put(location, new EmptyPiece()));
+        for (Rank rank : Rank.reverseValues()) {
+            for (File file : File.values()) {
+                chessBoard.put(Location.of(file, rank), new EmptyPiece());
+            }
+        }
     }
 
     private void initializePiece(Rank rank, Team team) {
@@ -57,8 +56,13 @@ public class Board {
     }
 
     public Piece getPiece(File file, Rank rank) {
-        return chessBoard.get(Location.of(file, rank));
+        return getPiece(Location.of(file, rank));
     }
+
+    public Piece getPiece(Location location) {
+        return chessBoard.get(location);
+    }
+
 
     public Map<Location, Piece>  getBoard() {
         return chessBoard;
