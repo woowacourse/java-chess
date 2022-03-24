@@ -6,7 +6,8 @@ public enum Command {
 
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String value;
 
@@ -19,9 +20,5 @@ public enum Command {
                 .filter(gameSwitch -> gameSwitch.value.equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다."));
-    }
-
-    public String getValue() {
-        return value;
     }
 }
