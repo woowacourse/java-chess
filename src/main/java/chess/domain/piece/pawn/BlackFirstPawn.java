@@ -1,7 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.strategy.BlackPawnFirstMovableStrategy;
 
 public final class BlackFirstPawn extends AbstractBlackPawn {
