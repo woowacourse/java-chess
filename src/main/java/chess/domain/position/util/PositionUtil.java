@@ -3,6 +3,8 @@ package chess.domain.position.util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,8 +15,14 @@ public class PositionUtil {
     public static final int FILES_TOTAL_SIZE = BOARD_SIZE;
     private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
 
-    private static final List<Character> validFiles = toCharacters("abcdefgh");
-    private static final List<Character> validRanks = toCharacters("12345678");
+    private static final String VALID_FILES = "abcdefgh";
+    private static final String VALID_RANKS = "12345678";
+
+    private static final String POSITION_INPUT_FORMAT_REGEX = "([" + VALID_FILES + "][" + VALID_RANKS + "])";
+    private static final Pattern PATTERN = Pattern.compile(POSITION_INPUT_FORMAT_REGEX);
+
+    private static final List<Character> validFiles = toCharacters(VALID_FILES);
+    private static final List<Character> validRanks = toCharacters(VALID_RANKS);
 
     private static final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
     private static final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
@@ -23,7 +31,7 @@ public class PositionUtil {
     private static final int RANK_KEY_IDX = 1;
 
     static {
-        IntStream.range(FILE_KEY_IDX, BOARD_SIZE)
+        IntStream.range(0, BOARD_SIZE)
                 .peek(PositionUtil::initializeRankMapValue)
                 .forEach(PositionUtil::initializeFileMapValue);
     }
@@ -48,30 +56,20 @@ public class PositionUtil {
     }
 
     public static int toFileIdx(String positionKey) {
+        validatePositionFormat(positionKey);
         char file = positionKey.charAt(FILE_KEY_IDX);
-        validateFileKey(file);
         return fileMap.get(file);
     }
 
     public static int toRankIdx(String positionKey) {
+        validatePositionFormat(positionKey);
         char rank = positionKey.charAt(RANK_KEY_IDX);
-        validateRankKey(rank);
         return rankMap.get(rank);
     }
 
-    public static void validatePosition(String position) {
-        validateFileKey(position.charAt(FILE_KEY_IDX));
-        validateRankKey(position.charAt(RANK_KEY_IDX));
-    }
-
-    public static void validateFileKey(char file) {
-        if (fileMap.get(file) == null) {
-            throw new IllegalArgumentException(INVALID_POSITION_RANGE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    public static void validateRankKey(char rank) {
-        if (rankMap.get(rank) == null) {
+    public static void validatePositionFormat(String position) {
+        Matcher matcher = PATTERN.matcher(position);
+        if (!matcher.matches()) {
             throw new IllegalArgumentException(INVALID_POSITION_RANGE_EXCEPTION_MESSAGE);
         }
     }

@@ -1,6 +1,6 @@
 package chess.view;
 
-import static chess.domain.position.util.PositionUtil.validatePosition;
+import static chess.domain.position.util.PositionUtil.validatePositionFormat;
 import static chess.view.OutputView.print;
 
 import chess.dto.MovePositionCommandDto;
@@ -13,6 +13,9 @@ public class InputView {
     private static final String STATUS = "status";
     private static final String END = "end";
     private static final String COMMAND_INPUT_DELIMITER = " ";
+    private static final int MOVE_COMMAND_IDX = 0;
+    private static final int MOVE_SOURCE_IDX = 1;
+    private static final int MOVE_TARGET_IDX = 2;
     private static final int MOVE_COMMAND_LENGTH = 3;
 
     private static final String A_OR_B = "%s 혹은 %s만 입력하셔야 합니다.";
@@ -56,18 +59,20 @@ public class InputView {
     private static MovePositionCommandDto requestMoveInput() {
         String[] input = readConsoleInput().split(COMMAND_INPUT_DELIMITER);
         validateMoveInput(input);
-        return new MovePositionCommandDto(input[1], input[2]);
+
+        return new MovePositionCommandDto(
+                input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
     }
 
     private static void validateMoveInput(String[] input) {
-        boolean isValidMoveCommand = input[0].equals(MOVE);
+        boolean isValidMoveCommand = input[MOVE_COMMAND_IDX].equals(MOVE);
         boolean isValidCommandLength = input.length == MOVE_COMMAND_LENGTH;
 
         if (!isValidMoveCommand || !isValidCommandLength) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND_FORMAT_EXCEPTION_MESSAGE);
         }
-        validatePosition(input[1]);
-        validatePosition(input[2]);
+        validatePositionFormat(input[MOVE_SOURCE_IDX]);
+        validatePositionFormat(input[MOVE_TARGET_IDX]);
     }
 
     public static boolean requestValidStatusOrEndInput() {
