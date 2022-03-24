@@ -50,6 +50,7 @@ class PositionTest {
     }
 
     @ParameterizedTest
+    @DisplayName("현재 위치를 기반으로 방향을 찾는다.")
     @CsvSource(value = {"d7:N", "f7:NE", "f5:E", "f3:SE", "d3:S", "b3:SW", "b5:W", "b7:NW"}, delimiter = ':')
     void findDirection(String target, Direction expected) {
         // given
@@ -63,6 +64,7 @@ class PositionTest {
     }
 
     @ParameterizedTest
+    @DisplayName("현재 위치의 주변 좌표를 탐색한다.")
     @CsvSource(value = {"N:d6", "NE:e6", "E:e5", "SE:e4", "S:d4", "SW:c4", "W:c5", "NW:c6"}, delimiter = ':')
     void toNextPosition(Direction direction, String expected) {
         // given

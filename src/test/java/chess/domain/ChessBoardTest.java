@@ -3,16 +3,17 @@ package chess.domain;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.Color;
 import chess.domain.chessPiece.Pawn;
-import chess.domain.chessPiece.Queen;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
 
@@ -54,5 +55,51 @@ class ChessBoardTest {
 
         // then
         assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
+    void move() {
+        assertThatThrownBy(() -> chessBoard.move(new Position("a1"), new Position("a3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
+
+    }
+
+    @Test
+    @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Straight1() {
+        // given
+        chessBoard.move(new Position("b1"), new Position("c3"));
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은색 기물입니다.");
+    }
+
+    @Test
+    @DisplayName("폰의 이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Straight2() {
+        // given
+        chessBoard.move(new Position("b1"), new Position("c3"));
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰의 대각선 방향에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Cross() {
+        // given
+        chessBoard.move(new Position("a2"), new Position("a3"));
+        chessBoard.move(new Position("b2"), new Position("b4"));
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(new Position("a3"), new Position("b4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은색 기물입니다.");
     }
 }
