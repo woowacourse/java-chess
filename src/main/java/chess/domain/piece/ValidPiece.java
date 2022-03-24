@@ -8,8 +8,6 @@ public abstract class ValidPiece extends Piece {
         super(color);
     }
 
-    public abstract MoveStrategy getMoveStrategy();
-
     @Override
     public boolean isBlank() {
         return false;

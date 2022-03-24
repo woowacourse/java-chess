@@ -17,6 +17,8 @@ public abstract class Piece {
 
     public abstract boolean isBlank();
 
+    public abstract MoveStrategy getMoveStrategy();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

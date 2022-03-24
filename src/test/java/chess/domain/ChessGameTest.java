@@ -31,4 +31,12 @@ public class ChessGameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] source에 Piece가 존재하지 않습니다.");
     }
+
+    @Test
+    @DisplayName("기물이 이동할 수 없으면 에러를 발생한다.")
+    void pieceIsNotMovable() {
+        assertThatThrownBy(() -> chessGame.move("d1", "d2"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 이동할 수 없습니다.");
+    }
 }
