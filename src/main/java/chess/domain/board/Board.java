@@ -76,20 +76,15 @@ public class Board {
     public void move(Position src, Position dest) {
         Piece piece = findPieceBy(src)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
-        // 기물의 행마법 체크
+
         if (!piece.canMove(src, dest)) {
             throw new IllegalArgumentException("이동할 수 없습니다");
         }
-        // 도착지 아군 체크
+
         checkSameColorInDestination(piece, dest);
-//        if (piece.isSameType(Pawn.class)) {
-//            폰만을위한다른체크메서드
-//        }
-        // 장애물/아군 체크
         checkObstacleInPath(src, dest);
-        // 이동 또는 먹힘
+
         value.put(dest, piece);
-        // 기존 위치 기물 제거
         value.remove(src);
     }
 

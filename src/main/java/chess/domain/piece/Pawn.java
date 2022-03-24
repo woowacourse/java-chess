@@ -20,9 +20,5 @@ public class Pawn extends Piece {
     @Override
     public Direction findDirection(Position src, Position dest) {
         return pattern.findDirection(src, dest);
-//        if (color == Color.BLACK) {
-//            return Direction.SOUTH;
-//        }
-//        return Direction.NORTH;
     }
 }
