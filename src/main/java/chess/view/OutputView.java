@@ -17,9 +17,12 @@ public class OutputView {
         for (int i = 7; i >= 0; i--) {
             String rankLine = board.getRank(i).getPieces().stream()
                     .map(Piece::getSignature)
-                    .collect(Collectors.joining());
+                    .collect(Collectors.joining()) + " | " + (i + 1);
 
             System.out.println(rankLine);
         }
+        System.out.println("--------");
+        System.out.println("abcdefgh");
+        System.out.println();
     }
 }
