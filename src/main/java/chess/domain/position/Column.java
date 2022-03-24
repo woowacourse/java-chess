@@ -1,6 +1,9 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum Column {
 
@@ -33,4 +36,30 @@ public enum Column {
     public int gap(Column column) {
         return Math.abs(this.value - column.value);
     }
+
+    public List<Column> columnPaths(Column targetColumn) {
+        int gap = gap(targetColumn);
+        if (targetColumn.value > this.value) {
+            return upperColumnsRange(this.value, gap);
+        }
+        List<Column> columns = upperColumnsRange(targetColumn.value, gap);
+        Collections.reverse(columns);
+        return columns;
+    }
+
+    private List<Column> upperColumnsRange(int startValue, int gap) {
+        List<Column> columns = new ArrayList<>();
+        for (int i = 1; i < gap; i++) {
+            columns.add(find(startValue + i));
+        }
+        return columns;
+    }
+
+    private Column find(int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 컬럼입니다."));
+    }
+
 }

@@ -1,6 +1,8 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,4 +56,30 @@ public enum Row {
     public boolean isSmallerThan(Row row) {
         return this.value < row.value;
     }
+
+    public List<Row> rowPaths(Row targetRow) {
+        int gap = gap(targetRow);
+        if (targetRow.value > this.value) {
+            return upperRowsRange(this.value, gap);
+        }
+        List<Row> rows = upperRowsRange(targetRow.value, gap);
+        Collections.reverse(rows);
+        return rows;
+    }
+
+    private List<Row> upperRowsRange(int startValue, int gap) {
+        List<Row> rows = new ArrayList<>();
+        for (int i = 1; i < gap; i++) {
+            rows.add(find(startValue + i));
+        }
+        return rows;
+    }
+
+    private Row find(int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 로우입니다."));
+    }
+
 }

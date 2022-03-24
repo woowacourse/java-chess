@@ -157,4 +157,36 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
     }
+
+    @Test
+    @DisplayName("직선 이동경로에 다른 기물이 있으면 움직일 수 없다")
+    void rookCannotMove_anotherPiecesExistOnPath() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Rook()));
+            pieces.put(Position.of("b5"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("b3"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("b8", "b3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
+
+    @Test
+    @DisplayName("대각선 이동경로에 다른 기물이 있으면 움직일 수 없다")
+    void bishopCannotMove_anotherPiecesExistOnPath() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Bishop()));
+            pieces.put(Position.of("d6"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("e5"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("b8", "e5"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
 }

@@ -28,4 +28,16 @@ class RowTest {
 
         assertThat(orderedValues).containsExactly(8, 7, 6, 5, 4, 3, 2, 1);
     }
+
+    @Test
+    @DisplayName("시작 로우와 목표 로우 사이에 있는 로우들을 반환한다")
+    void calculate_rowPaths() {
+        assertThat(Row.ONE.rowPaths(Row.SIX)).containsExactly(Row.TWO, Row.THREE, Row.FOUR, Row.FIVE);
+    }
+
+    @Test
+    @DisplayName("시작 로우와 목표 로우 사이에 있는 로우들을 순서에 맞게 반환한다")
+    void calculate_rowPathsInRightOrder() {
+        assertThat(Row.SIX.rowPaths(Row.TWO)).containsExactly(Row.FIVE, Row.FOUR, Row.THREE);
+    }
 }

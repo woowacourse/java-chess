@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,7 +29,10 @@ public final class Board {
         Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
         if (piece.isMovable(sourcePosition, targetPosition)) {
+            // pawn이 1칸이동할 때 목적지에 다른 기물이 있는지 확인
+            // pawn이 2칸이동할 때 경로에 다른 기물 있는지 확인 + 목적지에 다른 기물이 있는지 확인
             checkPawnMovement(sourcePosition, targetPosition, piece);
+            validatePathEmpty(sourcePosition, targetPosition);
             pieces.remove(sourcePosition);
             pieces.put(targetPosition, piece);
         }
@@ -63,6 +67,19 @@ public final class Board {
     private void validateNotEquals(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
+        }
+    }
+
+    private void validatePathEmpty(Position source, Position target) {
+        Direction direction = Direction.calculate(source, target);
+        if (direction.isIgnore()) {
+            return;
+        }
+        List<Position> positions = source.calculatePath(target, direction);
+        for (Position position : positions) {
+            if (pieces.containsKey(position)) {
+                throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+            }
         }
     }
 }

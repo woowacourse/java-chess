@@ -19,4 +19,20 @@ public enum Direction {
         }
         return IGNORE;
     }
+
+    public boolean isIgnore() {
+        return this == IGNORE;
+    }
+
+    public boolean isVertical() {
+        return this == VERTICAL;
+    }
+
+    public boolean isHorizontal() {
+        return this == HORIZONTAL;
+    }
+
+    public boolean isDiagonal() {
+        return this == DIAGONAL;
+    }
 }
