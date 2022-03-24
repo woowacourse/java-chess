@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private final Rank rank;
     private final File file;
 
@@ -84,5 +84,14 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    @Override
+    public int compareTo(Position other) {
+        if (rank == other.getRank()) {
+            return file.calculateFile(other.getFile());
+        }
+
+        return other.getRank().calculateRank(rank);
     }
 }

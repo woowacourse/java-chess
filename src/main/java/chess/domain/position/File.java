@@ -24,6 +24,10 @@ public enum File {
                 .orElseThrow(IllegalStateException::new);
     }
 
+    public int calculateFile(File other) {
+        return file - other.getFile();
+    }
+
     public char getFile() {
         return file;
     }
