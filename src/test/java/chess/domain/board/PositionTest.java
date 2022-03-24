@@ -48,4 +48,48 @@ public class PositionTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @DisplayName("체스판 좌표로 비교했을 때 a1은 a8보다 크다.")
+    @Test
+    void a1_greater_than_a8() {
+        //given
+        Position A1 = new Position(Column.A, Row.ONE);
+        Position A8 = new Position(Column.A, Row.EIGHT);
+
+        // when & then
+        assertThat(A1).isGreaterThan(A8);
+    }
+
+    @DisplayName("체스판 좌표로 비교했을 때 a2은 b2보다 작다.")
+    @Test
+    void a2_less_than_b2() {
+        //given
+        Position A2 = new Position(Column.A, Row.TWO);
+        Position B2 = new Position(Column.B, Row.TWO);
+
+        //when & then
+        assertThat(A2).isLessThan(B2);
+    }
+
+    @DisplayName("체스판 좌표로 비교했을 때 a7은 a8보다 크다.")
+    @Test
+    void a7_greater_than_a8() {
+        //given
+        Position A7 = new Position(Column.A, Row.SEVEN);
+        Position A8 = new Position(Column.A, Row.EIGHT);
+
+        //when & then
+        assertThat(A7).isGreaterThan(A8);
+    }
+
+    @DisplayName("체스판 좌표로 비교했을 때 h1은 b2보다 크다.")
+    @Test
+    void h1_greater_than_b2() {
+        //given
+        Position B2 = new Position(Column.B, Row.TWO);
+        Position H1 = new Position(Column.H, Row.ONE);
+
+        //when & then
+        assertThat(H1).isGreaterThan(B2);
+    }
 }

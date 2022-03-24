@@ -13,25 +13,23 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 public final class Board {
-    private static final Position ROOK_INITIAL_POSITION =
-            new Position(Column.A, Row.ONE);
-    private static final Position KNIGHT_INITIAL_POSITION =
-            new Position(Column.B, Row.ONE);
-    private static final Position BISHOP_INITIAL_POSITION =
-            new Position(Column.C, Row.ONE);
-    private static final Position QUEEN_INITIAL_POSITION =
-            new Position(Column.D, Row.ONE);
-    private static final Position KING_INITIAL_POSITION =
-            new Position(Column.E, Row.ONE);
+    private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
+    private static final Position KNIGHT_INITIAL_POSITION = new Position(Column.B, Row.ONE);
+    private static final Position BISHOP_INITIAL_POSITION = new Position(Column.C, Row.ONE);
+    private static final Position QUEEN_INITIAL_POSITION = new Position(Column.D, Row.ONE);
+    private static final Position KING_INITIAL_POSITION = new Position(Column.E, Row.ONE);
     private static final Row PAWN_INITIAL_ROW = Row.TWO;
+    private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
+    private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
     private final Map<Position, Piece> value;
 
     public Board() {
-        this.value = new HashMap<>();
+        this.value = new TreeMap<>();
         initializeFourPiecesOf(ROOK_INITIAL_POSITION, Rook::new);
         initializeFourPiecesOf(KNIGHT_INITIAL_POSITION, Knight::new);
         initializeFourPiecesOf(BISHOP_INITIAL_POSITION, Bishop::new);
@@ -40,6 +38,7 @@ public final class Board {
         initializeTwoPiecesOf(KING_INITIAL_POSITION, King::new);
 
         initializePawn();
+        initializeBlanks();
     }
 
     private void initializeFourPiecesOf(Position pieceInitialPosition,
@@ -58,6 +57,18 @@ public final class Board {
     private void initializePawn() {
         for (Column column : Column.values()) {
             initializeTwoPiecesOf(new Position(column, PAWN_INITIAL_ROW), Pawn::new);
+        }
+    }
+
+    private void initializeBlanks() {
+        for (Column column : Column.values()) {
+            initializeBlankColumn(column);
+        }
+    }
+
+    private void initializeBlankColumn(Column column) {
+        for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
+            value.put(new Position(column, Row.values()[i]), null);
         }
     }
 

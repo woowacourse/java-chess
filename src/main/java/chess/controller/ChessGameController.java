@@ -14,8 +14,16 @@ public class ChessGameController {
     }
 
     public void run() {
-        if (inputView.inputStartCommand()) {
+        outputView.printStartMessage();
+        while (inputView.inputStartCommand()) {
             Board board = new Board();
+
+            outputView.printBoard(board.getValue());
         }
+
+    }
+
+    public boolean isRunning() {
+        return inputView.inputStartCommand();
     }
 }

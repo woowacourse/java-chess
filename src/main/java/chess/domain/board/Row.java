@@ -25,4 +25,8 @@ public enum Row {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public int getValue() {
+        return value;
+    }
 }
