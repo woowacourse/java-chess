@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.position.Position;
 
 import java.util.Locale;
@@ -25,7 +26,7 @@ public abstract class Piece {
         return color == other;
     }
 
-    public void checkPieceMoveRange(final Piece target, final Position from, final Position to){
+    public void checkPieceMoveRange(final Board board, final Position from, final Position to){
 
     };
 }

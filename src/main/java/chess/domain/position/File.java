@@ -36,7 +36,7 @@ public enum File {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private String getFile() {
+    String getFile() {
         return file;
     }
 }
