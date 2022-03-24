@@ -13,7 +13,12 @@ public class Direction {
         this.dRank = dRank;
     }
 
-    public boolean exist(List<Direction> directions) {
+    public boolean hasSame(List<Direction> directions) {
+        return directions.stream()
+                .anyMatch(this::equals);
+    }
+
+    public boolean hasMultiple(List<Direction> directions) {
         return directions.stream()
                 .anyMatch(this::canReach);
     }
