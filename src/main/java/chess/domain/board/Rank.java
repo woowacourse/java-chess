@@ -29,4 +29,18 @@ public enum Rank {
     public static boolean isPawnRank(final Rank rank) {
         return rank == TWO || rank == SEVEN;
     }
+
+    public int calculateDifference(final Rank anotherRank) {
+        return Math.abs(this.ordinal() - anotherRank.ordinal());
+    }
+
+    public Rank next(final Rank targetRank) {
+        if (this.ordinal() < targetRank.ordinal()) {
+            return values()[this.ordinal() + 1];
+        }
+        if (this.ordinal() > targetRank.ordinal()) {
+            return values()[this.ordinal() - 1];
+        }
+        return this;
+    }
 }

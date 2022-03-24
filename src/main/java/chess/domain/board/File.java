@@ -25,4 +25,18 @@ public enum File {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file 값입니다."));
     }
+
+    public int calculateDifference(final File anotherFile) {
+        return Math.abs(this.ordinal() - anotherFile.ordinal());
+    }
+
+    public File next(final File targetFile) {
+        if (this.ordinal() < targetFile.ordinal()) {
+            return values()[this.ordinal() + 1];
+        }
+        if (this.ordinal() > targetFile.ordinal()) {
+            return values()[this.ordinal() - 1];
+        }
+        return this;
+    }
 }

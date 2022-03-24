@@ -56,4 +56,18 @@ public class Position {
             throw new IllegalArgumentException("위치 정보가 유효하지 않습니다.");
         }
     }
+
+    public int calculateDifferenceOfRank(final Position targetPosition) {
+        return this.rank.calculateDifference(targetPosition.rank);
+    }
+
+    public int calculateDifferenceOfFile(final Position targetPosition) {
+        return this.file.calculateDifference(targetPosition.file);
+    }
+
+    public Position nextPosition(final Position targetPosition) {
+        File nextFile = file.next(targetPosition.file);
+        Rank nextRank = rank.next(targetPosition.rank);
+        return Position.of(nextFile, nextRank);
+    }
 }
