@@ -8,7 +8,7 @@ public enum Direction {
     Down(0, -1),
     DownLeft(-1, -1),
     Left(-1, 0),
-    UpLeft(-1, -1),
+    UpLeft(-1, 1),
     ;
 
     private final int file;

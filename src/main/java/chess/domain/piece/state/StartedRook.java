@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.ChessBoard;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Direction;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.Direction;
+import chess.domain.piece.position.Position;
 
 public class StartedRook implements State{
 
@@ -26,7 +26,7 @@ public class StartedRook implements State{
         List<Position> list = new ArrayList<>();
 
         Position currentPosition = source;
-        Position nextPosition = currentPosition.getNext(direction); //움직인것
+        Position nextPosition = currentPosition.getNext(direction);
 
         while ((currentPosition != nextPosition) && (!board.isFilled(nextPosition))) {
             list.add(nextPosition);
