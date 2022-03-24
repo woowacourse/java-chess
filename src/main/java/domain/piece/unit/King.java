@@ -5,7 +5,6 @@ import static domain.utils.Direction.allDirections;
 import domain.piece.SpecificMovablePiece;
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.TeamColor;
-import domain.position.Position;
 import domain.utils.Direction;
 import java.util.List;
 

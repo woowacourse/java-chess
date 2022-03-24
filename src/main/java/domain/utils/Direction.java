@@ -1,6 +1,7 @@
 package domain.utils;
 
 import java.util.List;
+import java.util.Vector;
 
 public enum Direction {
 
@@ -11,7 +12,15 @@ public enum Direction {
     NORTHEAST(1, 1),
     NORTHWEST(-1, 1),
     SOUTHEAST(1, -1),
-    SOUTHWEST(-1, -1);
+    SOUTHWEST(-1, -1),
+    EAST_NORTHEAST(2, 1),
+    EAST_SOUTHEAST(2, -1),
+    WEST_NORTHWEST(-2, 1),
+    WEST_SOUTHWEST(-2, -1),
+    NORTH_NORTHEAST(1, 2),
+    NORTH_NORTHWEST(-1, 2),
+    SOUTH_SOUTHEAST(1, -2),
+    SOUTH_SOUTHWEST(-1, -2);
 
     private final int x;
     private final int y;
@@ -31,6 +40,11 @@ public enum Direction {
 
     public static List<Direction> allDirections() {
         return List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
+    }
+
+    public static List<Direction> knightDirections() {
+        return List.of(EAST_NORTHEAST, EAST_SOUTHEAST, WEST_NORTHWEST, WEST_SOUTHWEST, NORTH_NORTHEAST, NORTH_NORTHWEST,
+                SOUTH_SOUTHEAST, SOUTH_SOUTHWEST);
     }
 
     public int getX() {

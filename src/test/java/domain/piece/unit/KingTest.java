@@ -25,14 +25,14 @@ class KingTest {
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.ONE),
-                new Position(XPosition.B, YPosition.ONE),
-                new Position(XPosition.C, YPosition.ONE),
-                new Position(XPosition.A, YPosition.TWO),
-                new Position(XPosition.C, YPosition.TWO),
                 new Position(XPosition.A, YPosition.THREE),
                 new Position(XPosition.B, YPosition.THREE),
-                new Position(XPosition.C, YPosition.THREE)
+                new Position(XPosition.C, YPosition.THREE),
+                new Position(XPosition.A, YPosition.TWO),
+                new Position(XPosition.C, YPosition.TWO),
+                new Position(XPosition.A, YPosition.ONE),
+                new Position(XPosition.B, YPosition.ONE),
+                new Position(XPosition.C, YPosition.ONE)
         );
     }
 
