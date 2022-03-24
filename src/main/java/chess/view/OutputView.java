@@ -33,4 +33,10 @@ public class OutputView {
         }
         return "백";
     }
+
+    public static void printResult(Board board) {
+        System.out.printf("승자 : %s%n", board.findWinner().getName());
+        System.out.printf("백팀 점수 : %.1f%n", board.getBlackScore());
+        System.out.printf("흑팀 점수 : %.1f%n", board.getWhiteScore());
+    }
 }

@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.board.state.BoardInitializer;
 import chess.domain.board.state.BoardState;
+import chess.domain.board.state.Winner;
 import chess.domain.piece.Position;
 
 public class Board {
@@ -30,5 +31,17 @@ public class Board {
 
     public void terminate() {
         this.state = state.terminate();
+    }
+
+    public Winner findWinner() {
+        return state.findWinner();
+    }
+
+    public double getBlackScore() {
+        return state.calculateBlackScore();
+    }
+
+    public double getWhiteScore() {
+        return state.calculateWhiteScore();
     }
 }

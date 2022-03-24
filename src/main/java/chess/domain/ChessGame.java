@@ -20,6 +20,8 @@ public class ChessGame {
             OutputView.printBoard(board);
             executeCommand(board);
         }
+
+        OutputView.printResult(board);
     }
 
     private void executeCommand(Board board) {
