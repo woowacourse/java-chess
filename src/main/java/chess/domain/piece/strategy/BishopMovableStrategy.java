@@ -40,6 +40,6 @@ public class BishopMovableStrategy implements PieceMovableStrategy {
 
     private boolean isTargetSameColor(Position start, Position target, ChessBoard chessBoard) {
         Piece piece = chessBoard.pieceByPosition(start);
-        return !chessBoard.isPositionEmpty(target) && chessBoard.pieceByPosition(target).isSameColor(piece);
+        return !chessBoard.isPositionEmpty(target) && chessBoard.pieceByPosition(target).isSameTeamPiece(piece);
     }
 }

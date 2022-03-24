@@ -29,7 +29,7 @@ public class KingMovableStrategy implements PieceMovableStrategy {
 
     private boolean existSameColorPiece(Position start, Position target, ChessBoard chessBoard) {
         Piece piece = chessBoard.pieceByPosition(start);
-        return !chessBoard.isPositionEmpty(target) && piece.isSameColor(chessBoard.pieceByPosition(target));
+        return !chessBoard.isPositionEmpty(target) && piece.isSameTeamPiece(chessBoard.pieceByPosition(target));
     }
 
     private boolean isMovableByDirection(final Position start, final Position target) {

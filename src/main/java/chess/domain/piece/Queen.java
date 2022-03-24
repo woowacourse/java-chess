@@ -16,4 +16,9 @@ public final class Queen extends Piece {
     public final double score() {
         return QUEEN_SCORE;
     }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
+    }
 }

@@ -16,4 +16,9 @@ public final class Bishop extends Piece {
     public final double score() {
         return BISHOP_SCORE;
     }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
+    }
 }

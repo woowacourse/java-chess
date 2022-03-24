@@ -22,4 +22,9 @@ public abstract class Pawn extends Piece {
     public final double score() {
         return PAWN_SCORE;
     }
+
+    @Override
+    public final boolean isPawn() {
+        return true;
+    }
 }
