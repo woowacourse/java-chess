@@ -7,7 +7,8 @@ import java.util.function.BiFunction;
 public enum Command {
 
     START("start", (GameState state, List<String> ignored) -> state.start()),
-    FINISH("end", (GameState state, List<String> ignored) -> state.finish());
+    FINISH("end", (GameState state, List<String> ignored) -> state.finish()),
+    MOVE("move", (GameState state, List<String> arguments) -> state.move(arguments));
 
     private final String input;
     private final BiFunction<GameState, List<String>, GameState> executor;

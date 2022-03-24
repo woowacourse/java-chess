@@ -1,11 +1,14 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
+
+import java.util.List;
 
 public class Finished extends Started {
 
-    Finished(Board board) {
-        super(board);
+    Finished(Board board, Color turnColor) {
+        super(board, turnColor);
     }
 
     @Override
@@ -21,5 +24,10 @@ public class Finished extends Started {
     @Override
     public boolean isRunnable() {
         return false;
+    }
+
+    @Override
+    public GameState move(List<String> arguments) {
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 }
