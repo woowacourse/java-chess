@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.board.File;
 import chess.board.Rank;
+import chess.board.Square;
 
 public abstract class Piece {
     protected final Color color;
@@ -15,4 +16,6 @@ public abstract class Piece {
     }
 
     abstract public String getEmoji();
+
+    abstract public boolean canMove(Square source, Square target);
 }

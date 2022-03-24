@@ -1,9 +1,20 @@
 package chess.piece;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import chess.board.Direction;
+import chess.board.Square;
+
 public final class Bishop extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 비숍은 색상을 가져야합니다.";
     private static final String BLACK_BISHOP = "♝";
     private static final String WHITE_BISHOP = "♗";
+    private static final List<Direction> DIRECTIONS = new ArrayList<>();
+
+    static {
+        DIRECTIONS.add(new Direction(0, 1));
+    }
 
     Bishop(Color color) {
         super(color);
@@ -20,5 +31,10 @@ public final class Bishop extends Piece {
         }
 
         return WHITE_BISHOP;
+    }
+
+    @Override
+    public boolean canMove(Square source, Square target) {
+        return false;
     }
 }

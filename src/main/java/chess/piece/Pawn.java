@@ -36,6 +36,7 @@ public final class Pawn extends Piece {
         return WHITE_PAWN;
     }
 
+    @Override
     public boolean canMove(Square source, Square target) {
         Direction direction = source.getGap(target);
         if (start) {

@@ -23,11 +23,6 @@ public final class Rook extends Piece {
         super(color);
     }
 
-    public boolean canMove(Square source, Square target) {
-        Direction direction = source.getGap(target);
-        return direction.exist(DIRECTIONS);
-    }
-
     @Override
     public String getEmoji() {
         if (color == Color.NONE) {
@@ -39,5 +34,11 @@ public final class Rook extends Piece {
         }
 
         return WHITE_ROOK;
+    }
+
+    @Override
+    public boolean canMove(Square source, Square target) {
+        Direction direction = source.getGap(target);
+        return direction.hasMultiple(DIRECTIONS);
     }
 }
