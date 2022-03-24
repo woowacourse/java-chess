@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Optional;
 
@@ -71,6 +70,7 @@ class ChessBoardTest {
     void move_Pawn_Straight1() {
         // given
         chessBoard.move(new Position("b1"), new Position("c3"));
+        chessBoard.move(new Position("a7"),new Position("a6"));
 
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c3")))
@@ -83,6 +83,7 @@ class ChessBoardTest {
     void move_Pawn_Straight2() {
         // given
         chessBoard.move(new Position("b1"), new Position("c3"));
+        chessBoard.move(new Position("a7"),new Position("a6"));
 
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c4")))
@@ -95,11 +96,22 @@ class ChessBoardTest {
     void move_Pawn_Cross() {
         // given
         chessBoard.move(new Position("a2"), new Position("a3"));
+        chessBoard.move(new Position("a7"), new Position("a6")); // Dummy
         chessBoard.move(new Position("b2"), new Position("b4"));
+        chessBoard.move(new Position("a6"), new Position("a5")); // Dummy
 
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a3"), new Position("b4")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은색 기물입니다.");
+    }
+
+    @Test
+    @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    void chessBoard_turn() {
+        // then
+        assertThatThrownBy(() ->  chessBoard.move(new Position("a7"), new Position("a6")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("WHITE의 차례입니다.");
     }
 }

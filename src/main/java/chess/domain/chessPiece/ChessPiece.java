@@ -50,4 +50,8 @@ public abstract class ChessPiece {
     public boolean isSameColor(ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }
+
+    public boolean isEnemyTurn(Color color) {
+        return this.color != color;
+    }
 }

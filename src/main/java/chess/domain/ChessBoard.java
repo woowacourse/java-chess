@@ -48,6 +48,10 @@ public class ChessBoard {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
+        if (me.isEnemyTurn(currentTurn)) {
+            throw new IllegalArgumentException(currentTurn.name() +"의 차례입니다.");
+        }
+
         checkMove(from, to, me);
 
         if (findPiece(to).isEmpty()) {
