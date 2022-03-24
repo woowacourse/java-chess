@@ -60,22 +60,20 @@ public class Board {
 
         Piece pieceAtFrom = board.getOrDefault(fromPosition, InvalidPiece.getInstance());
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
+
+        // 출발 좌표에 기물이 없으면 false다
         if (pieceAtFrom.isInValid()) {
             return false;
         }
 
-        boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition),
-                pieceAtTo);
+        // 출발 좌표에 있는 기물이 목적지로 이동이 불가하면 false다
+        boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition), pieceAtTo);
         if (!movable) {
             return false;
         }
 
-//        if (pieceAtFrom.isKnight()) {
-//
-//        }
-
-        boolean isPieceOnTheWay = isPieceOnTheWay(fromPosition, toPosition);
-        if (isPieceOnTheWay) {
+        // 이동 경로 내 다른 기물이 있을 경우 false다
+        if (!pieceAtFrom.isKnight() && isPieceOnTheWay(fromPosition, toPosition)) {
             return false;
         }
 
@@ -87,12 +85,8 @@ public class Board {
     private boolean isPieceOnTheWay(Position fromPosition, Position toPosition) {
         List<Position> positionsOnTheWay = fromPosition.getPositionBetween(toPosition);
 
-        // Position이 다른 Position을 받아서, 중간 좌표를 List로 묶기 좋음
-        // 이때 대각선, 세로, 가로방식은 distance 구해서 확인
-        // List<Position>을 board가 모두 찾아서 있는지 여부 확인 좋음
-        // 면적으로 가져오는?
-
-        return false;
+        return positionsOnTheWay.stream()
+                .anyMatch(board::containsKey);
     }
 
 
