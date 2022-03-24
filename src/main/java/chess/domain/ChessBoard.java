@@ -40,6 +40,14 @@ public class ChessBoard {
             return;
         }
 
+        checkMove(from, to, me);
+
+        if (findPiece(to).isEmpty() || enemyExist(me, to)) {
+            movePiece(from, to, me);
+        }
+    }
+
+    private void checkMove(Position from, Position to, ChessPiece me){
         me.canMove(from, to);
         Stack<Position> routes = me.findRoute(from, to);
 
@@ -49,13 +57,12 @@ public class ChessBoard {
                 throw new IllegalArgumentException("히히 못가");
             }
         }
+    }
 
-        if (findPiece(to).isEmpty() || enemyExist(me, to)) {
-            chessBoard.put(to, me);
-            chessBoard.remove(from);
-            currentTurn = currentTurn.toOpposite();
-            return;
-        }
+    private void movePiece(Position from, Position to, ChessPiece me) {
+        chessBoard.put(to, me);
+        chessBoard.remove(from);
+        currentTurn = currentTurn.toOpposite();
     }
 
     private void movePawn(Position from, Position to, Pawn me) {
@@ -65,19 +72,14 @@ public class ChessBoard {
                 throw new IllegalArgumentException("이동할 수 없습니다.");
             }
 
-            chessBoard.put(to, me);
-            chessBoard.remove(from);
-            currentTurn = currentTurn.toOpposite();
+            movePiece(from, to, me);
             return;
         }
 
         if (!from.isSameRank(to)) {
             me.checkCrossMove(from, to);
             if (enemyExist(me, to)) {
-                chessBoard.put(to, me);
-                chessBoard.remove(from);
-                currentTurn = currentTurn.toOpposite();
-                return;
+                movePiece(from, to, me);
             }
         }
     }
