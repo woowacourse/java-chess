@@ -9,7 +9,19 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    public final boolean isBlack(){
+    public final boolean isBlack() {
         return this.camp == Camp.BLACK;
     }
+
+    public abstract boolean isBishop();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isKnight();
+
+    public abstract boolean isPawn();
+
+    public abstract boolean isQueen();
+
+    public abstract boolean isRook();
 }

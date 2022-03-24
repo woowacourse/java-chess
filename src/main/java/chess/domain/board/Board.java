@@ -11,6 +11,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -73,6 +74,6 @@ public final class Board {
     }
 
     public Map<Position, Piece> getValue() {
-        return Map.copyOf(value);
+        return Collections.unmodifiableMap(value);
     }
 }
