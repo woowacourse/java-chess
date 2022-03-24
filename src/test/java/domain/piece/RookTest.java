@@ -22,4 +22,14 @@ public class RookTest {
 
         assertThat(positions.contains(target)).isEqualTo(true);
     }
+
+    @Test
+    @DisplayName("Rook은 Target을 상하좌우로 움직일 수 있다.")
+    void moveRookUpDownRightLeftTarget() {
+        Piece piece = new Rook(Player.WHITE);
+        Position source = new Position(Row.TWO, Column.B);
+        Position target = new Position(Row.THREE, Column.B);
+
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+    }
 }

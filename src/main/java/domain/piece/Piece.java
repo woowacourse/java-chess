@@ -24,6 +24,9 @@ public abstract class Piece {
 
     abstract List<Position> calculateAvailablePosition(final Position source, final Direction direction);
 
+    public boolean isAvailableMove(Position source, Position target){
+        return availableMovePositions(source).contains(target);
+    }
     public boolean isSamePlayer(Player player) {
         return this.player == player;
     }
