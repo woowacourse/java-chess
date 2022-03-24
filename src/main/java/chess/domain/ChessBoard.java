@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 public class ChessBoard {
 
     private final List<List<Piece>> board;
-    private final Color turn;
+    private Color turn;
 
     public ChessBoard() {
         this.board = IntStream.rangeClosed(0, 7)
@@ -51,18 +51,30 @@ public class ChessBoard {
         Position targetPosition = new Position(target);
 
         Piece sourcePiece = findPiece(sourcePosition);
+        validateTurn(sourcePiece);
+
+        turn = turn.change();
     }
 
     private Piece findPiece(Position sourcePosition) {
         int rankIndex = sourcePosition.getRankIndex();
         int fileIndex = sourcePosition.getFileIndex();
         Piece piece = board.get(rankIndex).get(fileIndex);
-
-        if(piece.isEmpty()) {
-            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
-        }
+        validateEmptyPiece(piece);
 
         return piece;
+    }
+
+    private void validateEmptyPiece(Piece piece) {
+        if (piece.isEmpty()) {
+            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private void validateTurn(Piece sourcePiece) {
+        if (!sourcePiece.isSameColor(turn)) {
+            throw new IllegalArgumentException("source 위치의 기물이 본인의 기물이 아닙니다.");
+        }
     }
 
     public List<List<Piece>> getBoard() {

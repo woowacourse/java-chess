@@ -14,6 +14,10 @@ public abstract class Piece {
         return color.isBlack();
     }
 
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public boolean isEmpty() {
         return false;
     }

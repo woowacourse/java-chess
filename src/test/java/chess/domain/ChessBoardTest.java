@@ -23,12 +23,23 @@ public class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("source 위치에 기물이 존재하지 않으면 예외를 던진다.")
+    @DisplayName("source 위치의 기물이 존재하지 않으면 예외를 던진다.")
     @Test
-    void source_위치에_기물이_존재하지_않으면_예외를_던진다() {
+    void source_위치의_기물이_존재하지_않으면_예외를_던진다() {
         ChessBoard chessBoard = new ChessBoard();
 
         assertThatThrownBy(() -> chessBoard.move("b1", "c3"))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("source 위치의 기물이 본인의 기물이 아닌 경우 예외를 던진다.")
+    @Test
+    void source_위치의_기물이_본인의_기물이_아니면_예외를_던진다() {
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.init();
+
+        assertThatThrownBy(() -> chessBoard.move("b8", "c6"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("source 위치의 기물이 본인의 기물이 아닙니다.");
     }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class PieceTest {
@@ -41,5 +42,14 @@ public class PieceTest {
     @MethodSource("generatePieces")
     void 진영에_맞는_표기_정보를_반환한다(Piece piece, String notation) {
         assertThat(piece.getNotation()).isEqualTo(notation);
+    }
+
+    @DisplayName("기물과 같은 색인지의 여부를 반환한다.")
+    @ParameterizedTest
+    @CsvSource({"BLACK,true", "WHITE,false"})
+    void 기물과_같은_색인지_반환한다(Color color, boolean expected) {
+        Piece piece = new King(Color.BLACK);
+
+        assertThat(piece.isSameColor(color)).isEqualTo(expected);
     }
 }
