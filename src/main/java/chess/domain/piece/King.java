@@ -38,4 +38,9 @@ public class King extends Piece {
     private boolean isValidPosition(Piece piece) {
         return piece.isBlank() || piece.isEnemy(getSignature());
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

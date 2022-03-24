@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;

@@ -3,9 +3,6 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Turn;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import java.util.List;
@@ -40,28 +37,13 @@ public class BoardTest {
         }
     }
 
-    @DisplayName("말 이동 명령 성공 시 원래 자리에 빈 칸이 생성된다.")
-    @Test
-    void move() {
-        Board board = new Board();
-        board.initialize();
-        Turn turn = new Turn();
-        turn.countTurn();
-        board.move(new Position("b8"), new Position("a6"), turn);
-
-        assertThat(board.getPiece(new Position("b8")))
-                .isInstanceOf(Blank.class);
-        assertThat(board.getPiece(new Position("a6")))
-                .isInstanceOf(Knight.class);
-    }
-
     @DisplayName("상대방 말을 선택할 시 예외가 발생한다.")
     @Test
     void moveWrongPiece_Fails() {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.move(new Position("b8"), new Position("a6"), new Turn()))
+        assertThatThrownBy(() -> board.move(new Position("b8"), new Position("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("본인의 기물이 아닙니다.");
     }
@@ -72,7 +54,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("c8"), new Position("a6")))
+        assertThatThrownBy(() -> board.move(new Position("c1"), new Position("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -83,7 +65,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("c8"), new Position("b7")))
+        assertThatThrownBy(() -> board.move(new Position("c1"), new Position("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
@@ -94,7 +76,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("a6")))
+        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -105,7 +87,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("a7")))
+        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("a2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
@@ -116,7 +98,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("c8")))
+        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("c1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -127,7 +109,7 @@ public class BoardTest {
         Board board = new Board();
         board.initialize();
 
-        assertThatThrownBy(() -> board.moveStraight(new Position("a8"), new Position("b8")))
+        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("b1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }

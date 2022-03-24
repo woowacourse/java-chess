@@ -19,7 +19,8 @@ public abstract class Piece {
     }
 
     public boolean isEnemy(String signature) {
-        return !signature.equals(".") && Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(signature.charAt(0));
+        return !signature.equals(".") && Character.isLowerCase(getSignature().charAt(0)) != Character.isLowerCase(
+                signature.charAt(0));
     }
 
     public boolean isKnight() {
@@ -41,5 +42,9 @@ public abstract class Piece {
     public void updatePosition(Position position) {
         this.position = position;
         this.isFirstTurn = false;
+    }
+
+    public boolean isKing() {
+        return false;
     }
 }

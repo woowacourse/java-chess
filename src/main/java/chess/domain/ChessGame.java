@@ -17,17 +17,19 @@ public class ChessGame {
         while (!command.equals(Command.END)) {
             OutputView.printBoard(board, turn);
 
-            List<String> input = List.of(InputView.requestCommand().split(" "));
-            executeMoveCommand(board, input, turn);
-            command = Command.from(input.get(0));
+            command = executeCommand(board, turn);
         }
     }
 
-    private void executeMoveCommand(Board board, List<String> input, Turn turn) {
+    private Command executeCommand(Board board, Turn turn) {
+        List<String> input = List.of(InputView.requestCommand().split(" "));
+
         if (input.size() == 3) {
             board.move(new Position(input.get(1)),
-                    new Position(input.get(2)), turn);
+                    new Position(input.get(2)));
             turn.countTurn();
         }
+
+        return Command.from(input.get(0));
     }
 }
