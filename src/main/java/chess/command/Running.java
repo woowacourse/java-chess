@@ -32,6 +32,10 @@ public abstract class Running implements Command {
         if (command.equals("end")) {
             return new End();
         }
+        if (command.equals("status")) {
+            OutputView.printChessBoardStatus(chessBoard.calcualteScoreStatus());
+            return this;
+        }
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
         if (matcher.find()) {
             movePieceByCommand(command);

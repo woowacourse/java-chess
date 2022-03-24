@@ -99,10 +99,13 @@
     - [x] [ERROR] start가 아닌 명령이 들어올 경우 예외가 발생한다.
     - [x] start명령이 들어오면 체스판을 생성하고 Running 상태를 반환한다.
   - Running
-    - [x] [ERROR] end명령이 아니거나 move명령의 형태가 맞지 않으면 예외가 발생한다.
+    - [x] [ERROR] 허용된 명령어가 아니거나 명령어 형태가 맞지 않으면 예외가 발생한다.
+      - 허용된 명령어 목록은 다음과 같다.
+        - end (게임 종료)
+        - status (점수 출력)
+        - move [source] [target] (기물 이동)
       - [x] end명령이 들어오면 End 상태를 반환한다.
-    - [x] move명령이 들어오면 해당 위치로 말을 옮기고 상대방의 상태로 반환한다.
-      - WhiteRunning -> BlackRunning
-      - BlackRunning -> WhiteRunning
-  - End
+      - [x] status명령이 들어오면 현재 체스판의 점수를 출력한다.
+  
+    - End
     - [x] [ERROR] run을 실행하면 예외가 발생한다.

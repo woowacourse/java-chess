@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -31,5 +32,15 @@ public class OutputView {
             return piece.convertedName();
         }
         return ".";
+    }
+
+    public static void printChessBoardStatus(Map<Color, Double> chessBoardStatus) {
+        for (Color color : chessBoardStatus.keySet()) {
+            printScoreStatus(color, chessBoardStatus.get(color));
+        }
+    }
+
+    private static void printScoreStatus(Color color, Double score) {
+        System.out.println(color + "의 점수는 " + score + "입니다.");
     }
 }
