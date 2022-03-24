@@ -21,7 +21,6 @@ public enum XAxis {
         this.value = value;
     }
 
-
     public static XAxis getByValue(int value) {
         return Arrays.stream(XAxis.values())
                 .filter(xAxis -> xAxis.value == value)
@@ -40,5 +39,9 @@ public enum XAxis {
 
     int subtract(XAxis other) {
         return this.value - other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

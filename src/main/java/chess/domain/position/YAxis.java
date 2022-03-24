@@ -40,4 +40,8 @@ public enum YAxis {
     int subtract(YAxis other) {
         return this.value - other.value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

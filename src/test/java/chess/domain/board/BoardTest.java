@@ -222,4 +222,58 @@ class BoardTest {
         // then
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("나이트가 아닌 말의 오른쪽 위 방향 대각선 진로에 다른 말이 있다면, 이동할 수 없다.")
+    @Test
+    void moveRightUpDiagonalDirection_returnsFalseRouteHasObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("나이트가 아닌 말의 오른쪽 위 방향 대각선 진로에 다른 말이 없다면, 이동할 수 있다.")
+    @Test
+    void moveRightUpDiagonalDirection_returnsTrueRouteHasNotObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.D, YAxis.TWO), Position.from(XAxis.D, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE));
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("나이트가 아닌 말의 왼쪽 위 방향 대각선 진로에 다른 말이 있다면, 이동할 수 없다.")
+    @Test
+    void moveLeftUpDiagonalDirection_returnsFalseRouteHasObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE));
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("나이트가 아닌 말의 왼쪽 위 방향 대각선 진로에 다른 말이 없다면, 이동할 수 있다.")
+    @Test
+    void moveLeftUpDiagonalDirection_returnsTrueRouteHasNotObstacle() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE));
+        boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE));
+
+        // then
+        assertThat(actual).isTrue();
+    }
 }

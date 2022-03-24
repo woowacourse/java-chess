@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,17 +74,24 @@ public class Board {
 
     private boolean hasObstacle(Position from, Position to) {
         if (from.isSameXAxis(to)) {
-            return from.getYAxesBetween(to).stream()
-                    .map(yAxis -> value.get(Position.from(from.getXAxis(), yAxis)))
-                    .anyMatch(position -> !Objects.isNull(position));
+            return hasAnyPiece(from.getPositionsSameYAxisBetween(to));
         }
 
         if (from.isSameYAxis(to)) {
-            return from.getXAxesBetween(to).stream()
-                    .map(xAxis -> value.get(Position.from(xAxis, from.getYAxis())))
-                    .anyMatch(position -> !Objects.isNull(position));
+            return hasAnyPiece(from.getPositionsSameXAxisBetween(to));
         }
+
+        if (from.isOnDiagonal(to)) {
+            return hasAnyPiece(from.getPositionsSameDirectionDiagonalBetween(to));
+        }
+
         return false;
+    }
+
+    private boolean hasAnyPiece(List<Position> positions) {
+        return positions.stream()
+                .map(value::get)
+                .anyMatch(position -> !Objects.isNull(position));
     }
 
     private boolean move(Position from, Position to) {

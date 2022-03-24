@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Position {
+
     private final XAxis xAxis;
     private final YAxis yAxis;
 
@@ -42,8 +44,8 @@ public class Position {
     }
 
     public boolean isOnDiagonal(Position other) {
-        int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
-        int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());
+        int xAxisDelta = Math.abs(other.xAxis.getValue() - this.xAxis.getValue());
+        int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
 
         return xAxisDelta == yAxisDelta;
     }
@@ -65,28 +67,52 @@ public class Position {
     }
 
     public boolean isFarFromMoreThanOne(Position other) {
-        int xAxisDelta = Math.abs(other.xAxis.ordinal() - this.xAxis.ordinal());
-        int yAxisDelta = Math.abs(other.yAxis.ordinal() - this.yAxis.ordinal());
+        int xAxisDelta = Math.abs(other.xAxis.getValue() - this.xAxis.getValue());
+        int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
 
         return xAxisDelta > 1 || yAxisDelta > 1;
     }
 
     public boolean isOnSevenShape(Position other) {
-        boolean condition1 = Math.abs(this.xAxis.ordinal() - other.xAxis.ordinal()) == 2
-                && Math.abs(this.yAxis.ordinal() - other.yAxis.ordinal()) == 1;
+        boolean condition1 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 2
+                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 1;
 
-        boolean condition2 = Math.abs(this.xAxis.ordinal() - other.xAxis.ordinal()) == 1
-                && Math.abs(this.yAxis.ordinal() - other.yAxis.ordinal()) == 2;
+        boolean condition2 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 1
+                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 2;
 
         return condition1 || condition2;
     }
 
-    public List<YAxis> getYAxesBetween(Position other) {
-        return YAxis.getBetween(this.yAxis, other.yAxis);
+    public List<Position> getPositionsSameYAxisBetween(Position other) {
+        return YAxis.getBetween(this.yAxis, other.yAxis).stream()
+                .map(yAxis -> Position.from(this.xAxis, yAxis))
+                .collect(Collectors.toList());
     }
 
-    public List<XAxis> getXAxesBetween(Position other) {
-        return XAxis.getBetween(this.xAxis, other.xAxis);
+    public List<Position> getPositionsSameXAxisBetween(Position other) {
+        return XAxis.getBetween(this.xAxis, other.xAxis).stream()
+                .map(xAxis -> Position.from(xAxis, this.yAxis))
+                .collect(Collectors.toList());
+    }
+
+    public List<Position> getPositionsSameDirectionDiagonalBetween(Position to) {
+        int xAxisDelta = xAxis.getValue() - to.xAxis.getValue();
+        int yAxisDelta = yAxis.getValue() - to.yAxis.getValue();
+        int time = Math.abs(xAxisDelta);
+
+        int xDirection = -(xAxisDelta / time);
+        int yDirection = -(yAxisDelta / time);
+
+        return IntStream.range(1, time)
+                .mapToObj(idx -> getPositionWith(xDirection, yDirection, idx))
+                .collect(Collectors.toList());
+    }
+
+    private Position getPositionWith(int xDir, int yDir, int idx) {
+        XAxis xAxis1 = XAxis.getByValue(this.xAxis.getValue() + xDir * idx);
+        YAxis yAxis1 = YAxis.getByValue(this.yAxis.getValue() + yDir * idx);
+
+        return Position.from(xAxis1, yAxis1);
     }
 
     public XAxis getXAxis() {
