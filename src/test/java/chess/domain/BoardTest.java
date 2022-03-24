@@ -1,10 +1,17 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -21,5 +28,24 @@ class BoardTest {
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 테스트")
+    void calculateScore() {
+        // given
+        Map<Position, Piece> testBoard = new LinkedHashMap<>();
+        testBoard.put(Position.of("D5"), new Rook(Color.WHITE));
+        testBoard.put(Position.of("F5"), new Rook(Color.BLACK));
+        Board board = BoardFactory.newInstance(testBoard);
+
+        // when
+        Map<Color, Double> score = board.getScore();
+
+        // then
+        assertAll(
+                () -> assertThat(score.get(Color.BLACK)).isEqualTo(5),
+                () -> assertThat(score.get(Color.WHITE)).isEqualTo(5)
+        );
     }
 }

@@ -1,7 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
 import chess.domain.piece.Piece;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +50,27 @@ public class Board {
 
         return positionsOnTheWay.stream()
                 .anyMatch(board::containsKey);
+    }
+
+    public Map<Color, Double> getScore() {
+        Map<Color, Double> scores = new HashMap<>();
+
+        double blackSum = board.values()
+                .stream()
+                .filter(Piece::isBlack)
+                .mapToDouble(blackPiece -> Score.from(blackPiece))
+                .sum();
+
+        double whiteSum = board.values()
+                .stream()
+                .filter(Piece::isWhite)
+                .mapToDouble(whitePiece -> Score.from(whitePiece))
+                .sum();
+
+        scores.put(Color.BLACK, blackSum);
+        scores.put(Color.WHITE, whiteSum);
+
+        return scores;
     }
 
 
