@@ -71,4 +71,8 @@ public class ChessBoard {
     public Piece getPiece(Position target) {
         return board.get(target);
     }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
 }
