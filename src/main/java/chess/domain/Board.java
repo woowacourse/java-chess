@@ -22,8 +22,7 @@ public class Board {
 
     public void move(final Position from, final Position to) {
         Piece piece = value.get(from);
-        Piece target = value.get(to);
-        piece.checkPieceMoveRange(target, from, to);
+        piece.checkPieceMoveRange(this, from, to);
         value.put(to, piece);
     }
 
@@ -34,5 +33,19 @@ public class Board {
 
     public Piece getPiece(final Position position) {
         return value.get(position);
+    }
+
+    public boolean hasPieceInFile(final Position from, final Position to) {
+        return value.keySet().stream()
+                .filter(position -> position.getFile().equals(from.getFile()))
+                .filter(position -> position.getRankNumber() > from.getRankNumber())
+                .anyMatch(position -> position.getRankNumber() < to.getRankNumber());
+    }
+
+    public boolean hasPieceInRank(final Position from, final Position to) {
+        return value.keySet().stream()
+                .filter(position -> position.getRankNumber() == from.getRankNumber())
+                .filter(position -> position.getFileChar() > from.getFileChar())
+                .anyMatch(position -> position.getFileChar() < to.getFileChar());
     }
 }

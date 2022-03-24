@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -15,8 +16,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void checkPieceMoveRange(final Piece target, final Position from, final Position to) {
-        checkMoveDiagonal(target, from, to);
+    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
+        checkMoveDiagonal(board.getPiece(to), from, to);
         int fromRank = from.getRankNumber();
         int toRank = to.getRankNumber();
         if (color == Color.WHITE) {

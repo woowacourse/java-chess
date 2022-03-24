@@ -54,4 +54,8 @@ public class Position {
     public File getFile() {
         return file;
     }
+
+    public char getFileChar() {
+        return file.getFile().charAt(0);
+    }
 }
