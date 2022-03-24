@@ -1,6 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
 public class Position {
@@ -20,10 +22,6 @@ public class Position {
 
     public int rankDisplacement(Position other) {
         return rank.displacement(other.rank);
-    }
-
-    public int fileDisplacement(Position other) {
-        return file.displacement(other.file);
     }
 
     public boolean isSameFile(Position other) {
@@ -76,6 +74,40 @@ public class Position {
     public List<Position> traceGroup(Position other) {
         List<File> traceFileGroup = File.traceGroup(this.file, other.file);
         List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
-        return null;
+
+        ListIterator<File> fileListIterator = traceFileGroup.listIterator();
+        ListIterator<Rank> rankListIterator = traceRankGroup.listIterator();
+
+        return possiblePositions(rankListIterator, fileListIterator);
+    }
+
+    public List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
+        List<Position> positions = new ArrayList<>();
+
+        if (!rankIterator.hasNext()) {
+            while (fileIterator.hasNext()) {
+                positions.add(new Position(this.rank, fileIterator.next()));
+            }
+            return positions;
+        }
+
+        if (!fileIterator.hasNext()) {
+            while (rankIterator.hasNext()) {
+                positions.add(new Position(rankIterator.next(), this.file));
+            }
+            return positions;
+        }
+
+        while (rankIterator.hasNext()) {
+            while (fileIterator.hasNext()) {
+                Position position = new Position(rankIterator.next(), fileIterator.next());
+                if (this.isAllDirectional(position)) {
+                    positions.add(position);
+                }
+            }
+            positions.add(new Position(rankIterator.next(), this.file));
+        }
+
+        return positions;
     }
 }
