@@ -5,7 +5,7 @@ import chess.domain.position.Square;
 public final class None extends Piece {
     private static final String NONE = "·";
 
-    None (Color color) {
+    None(Color color) {
         super(color);
     }
 

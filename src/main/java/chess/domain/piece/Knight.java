@@ -23,17 +23,17 @@ public final class Knight extends Piece {
         DIRECTIONS.add(new Direction(-2, 1));
     }
 
-    Knight (Color color) {
+    Knight(Color color) {
         super(color);
     }
 
     @Override
     public String getEmoji() {
-        if(color==Color.NONE){
+        if (color == Color.NONE) {
             throw new IllegalArgumentException(BUG_MESSAGE_COLOR);
         }
 
-        if(color==Color.BLACK){
+        if (color == Color.BLACK) {
             return BLACK_KNIGHT;
         }
 

@@ -23,17 +23,17 @@ public final class King extends Piece {
         DIRECTIONS.add(new Direction(-1, 1));
     }
 
-    King (Color color) {
+    King(Color color) {
         super(color);
     }
 
     @Override
     public String getEmoji() {
-        if(color==Color.NONE){
+        if (color == Color.NONE) {
             throw new IllegalArgumentException(BUG_MESSAGE_COLOR);
         }
 
-        if(color==Color.BLACK){
+        if (color == Color.BLACK) {
             return BLACK_KING;
         }
 

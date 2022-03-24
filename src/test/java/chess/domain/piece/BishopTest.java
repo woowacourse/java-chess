@@ -6,8 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.position.Square;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
 
 public class BishopTest {
     @Test

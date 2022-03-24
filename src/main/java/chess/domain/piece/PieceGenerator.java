@@ -8,13 +8,13 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 
 public enum PieceGenerator {
-    KING((file, rank) -> new PieceCondition(file,rank).isKing(), rank -> new King(getColor(rank))),
-    QUEEN((file, rank) -> new PieceCondition(file,rank).isQueen(), rank -> new Queen(getColor(rank))),
-    ROOK((file, rank) -> new PieceCondition(file,rank).isRook(), rank -> new Rook(getColor(rank))),
-    BISHOP((file, rank) -> new PieceCondition(file,rank).isBishop(), rank -> new Bishop(getColor(rank))),
-    KNIGHT((file, rank) -> new PieceCondition(file,rank).isKnight(), rank -> new Knight(getColor(rank))),
+    KING((file, rank) -> new PieceCondition(file, rank).isKing(), rank -> new King(getColor(rank))),
+    QUEEN((file, rank) -> new PieceCondition(file, rank).isQueen(), rank -> new Queen(getColor(rank))),
+    ROOK((file, rank) -> new PieceCondition(file, rank).isRook(), rank -> new Rook(getColor(rank))),
+    BISHOP((file, rank) -> new PieceCondition(file, rank).isBishop(), rank -> new Bishop(getColor(rank))),
+    KNIGHT((file, rank) -> new PieceCondition(file, rank).isKnight(), rank -> new Knight(getColor(rank))),
     PAWN((file, rank) -> new PieceCondition(file, rank).isPawn(), rank -> new Pawn(getColor(rank))),
-    NONE((file, rank) -> new PieceCondition(file,rank).isNone(), rank -> new None(getColor(rank)));
+    NONE((file, rank) -> new PieceCondition(file, rank).isNone(), rank -> new None(getColor(rank)));
 
     private final BiPredicate<File, Rank> condition;
     private final Function<Rank, Piece> of;

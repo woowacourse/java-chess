@@ -6,8 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.position.Square;
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 
 public class PawnTest {
     @Test

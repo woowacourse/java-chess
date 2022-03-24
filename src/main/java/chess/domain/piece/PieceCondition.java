@@ -38,7 +38,7 @@ public class PieceCondition {
     }
 
     boolean isPawn() {
-        return rank==Rank.TWO||rank==Rank.SEVEN;
+        return rank == Rank.TWO || rank == Rank.SEVEN;
     }
 
     boolean isNone() {

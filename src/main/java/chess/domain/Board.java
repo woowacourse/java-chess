@@ -7,10 +7,10 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
-import chess.domain.piece.Piece;
 
 public class Board {
     private final Map<Square, Piece> board;
