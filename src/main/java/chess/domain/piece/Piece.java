@@ -27,6 +27,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract boolean isPawn();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

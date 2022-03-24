@@ -20,4 +20,9 @@ public final class King extends ValidPiece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

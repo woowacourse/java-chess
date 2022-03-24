@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -28,10 +29,22 @@ public class ChessGame {
         }
     }
 
-    private void validateMove(Position source, Position target, MoveStrategy moveStrategy) {
+    private void validateMove(final Position source, final Position target, final MoveStrategy moveStrategy) {
         if (!moveStrategy.isMovable(board, source, target)) {
             throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
         }
+    }
+
+    public double calculateScore(final Color color) {
+        return calculateFirstLinePieces(color);
+    }
+
+    private double calculateFirstLinePieces(final Color color) {
+        return getBoard().values().stream()
+                .filter(piece -> piece.getColor() == color)
+                .filter(piece -> !piece.isPawn())
+                .mapToDouble(Piece::getPoint)
+                .sum();
     }
 
     public Map<Position, Piece> getBoard() {

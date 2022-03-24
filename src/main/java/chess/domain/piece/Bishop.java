@@ -20,4 +20,9 @@ public final class Bishop extends ValidPiece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
