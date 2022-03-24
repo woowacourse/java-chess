@@ -44,7 +44,6 @@
   - Blank : 기물이 없음을 뜻하는 기물
 - InitialPiece: 기물들의 초기 정보 enum
 - Board: 체스판 
-- Grid: 체스판의 한 칸
 - Position: 기물의 위치 
 - PositionX: 가로 위치 enum 
 - PositionY: 세로 위치 enum 

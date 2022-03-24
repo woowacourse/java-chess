@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Grid;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
@@ -17,11 +17,11 @@ public class OutputView {
         System.out.println(GAME_START_MESSAGE);
     }
 
-    public void printBoard(Map<Position, Grid> board) {
+    public void printBoard(Map<Position, Piece> board) {
         for (int rank = 0; rank < 8; rank++) {
             for (int column = 0; column < 8; column++) {
                 Position position = new Position(PositionX.of(column), PositionY.of(rank));
-                System.out.print(board.get(position).getPiece().signature());
+                System.out.print(board.get(position).signature());
             }
             System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
         }

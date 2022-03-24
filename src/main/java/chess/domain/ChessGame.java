@@ -18,24 +18,25 @@ public final class ChessGame {
     }
 
     private Board initializeBoard() {
-        Map<Position, Grid> initialBoard = new HashMap<>();
+        Map<Position, Piece> pieces = new HashMap<>();
 
         for (PositionY positionY : PositionY.values()) {
             for (PositionX positionX : PositionX.values()) {
                 Position position = new Position(positionX, positionY);
-                initialBoard.put(position, new Grid(new Blank()));
+                pieces.put(position, new Blank());
             }
         }
         Arrays.stream(InitialPiece.values())
-                .forEach(piece -> initialBoard.replace(piece.getPosition(), new Grid(piece.piece())));
+                .forEach(piece -> pieces.replace(piece.getPosition(), piece.piece()));
 
-        return new Board(initialBoard);
+        return new Board(pieces);
     }
 
     public void movePiece(String source, String target) {
         Position sourcePosition = new Position(PositionX.of(source.substring(0, 1)), PositionY.of(source.substring(1)));
         Position targetPosition = new Position(PositionX.of(target.substring(0, 1)), PositionY.of(target.substring(1)));
-        board.movePiece(currentTurnColor, sourcePosition, targetPosition);
+        board.validateMovement(currentTurnColor, sourcePosition, targetPosition);
+        board.movePiece(sourcePosition, targetPosition);
         changeTurn();
     }
 
@@ -47,7 +48,7 @@ public final class ChessGame {
         return true;
     }
 
-    public Map<Position, Grid> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board.getBoard();
     }
 }

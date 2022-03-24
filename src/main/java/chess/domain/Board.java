@@ -8,17 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Grid> board;
+    private final Map<Position, Piece> board;
 
-    public Board(Map<Position, Grid> board) {
+    public Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public void movePiece(Color turnColor, Position source, Position target) {
-        Grid sourceGrid = board.get(source);
-        Piece sourcePiece = sourceGrid.getPiece();
+    public void validateMovement(Color turnColor, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
 
-        if (!sourceGrid.hasPieceOf(turnColor)) {
+        if (!sourcePiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
         if (!sourcePiece.isMovable(source, target)) {
@@ -26,16 +25,20 @@ public class Board {
         }
         List<Position> route = sourcePiece.findRoute(source, target);
         for (Position node : route) {
-            Grid nodeGrid = board.get(node);
-            if (nodeGrid.hasPiece()) {
+            Piece nodePiece = board.get(node);
+            if (!nodePiece.isBlank()) {
                 throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
             }
         }
-        board.replace(source, new Grid(new Blank()));
-        board.replace(target, new Grid(sourcePiece));
     }
 
-    public Map<Position, Grid> getBoard() {
+    public void movePiece(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        board.replace(source, new Blank());
+        board.replace(target, sourcePiece);
+    }
+
+    public Map<Position, Piece> getBoard() {
         return board;
     }
 }
