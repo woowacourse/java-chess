@@ -13,14 +13,6 @@ public class Position {
         this.rank = rank;
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
     public boolean isVerticalWay(Position other) {
         return this.file == other.file;
     }
