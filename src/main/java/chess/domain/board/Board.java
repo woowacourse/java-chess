@@ -36,7 +36,8 @@ public class Board {
 
         Piece fromPiece = pointPieces.get(from);
         Piece toPiece = pointPieces.get(to);
-        validatePieceColor(turnColor, fromPiece, toPiece);
+        validateAllyMove(turnColor, fromPiece);
+        validateNotAllyAttack(turnColor, toPiece);
 
         boolean possible = fromPiece.move(this, from, to);
 
@@ -49,13 +50,19 @@ public class Board {
 
     private void validateArgumentSize(List<String> arguments) {
         if (arguments.size() != 2) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
         }
     }
 
-    private void validatePieceColor(Color turnColor, Piece fromPiece, Piece toPiece) {
-        if (!fromPiece.isSameColor(turnColor) || toPiece.isSameColor(turnColor)) {
-            throw new IllegalArgumentException("");
+    private void validateAllyMove(Color turnColor, Piece fromPiece) {
+        if (!fromPiece.isSameColor(turnColor)) {
+            throw new IllegalArgumentException("[ERROR] 자신의 말을 움직여야 합니다.");
+        }
+    }
+
+    private void validateNotAllyAttack(Color turnColor, Piece toPiece) {
+        if (toPiece.isSameColor(turnColor)) {
+            throw new IllegalArgumentException("[ERROR] 아군을 공격할 수 없습니다.");
         }
     }
 
