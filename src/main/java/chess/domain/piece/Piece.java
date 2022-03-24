@@ -14,6 +14,8 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Piece piece);
 
+    public abstract double getScore();
+
     public boolean isBlank() {
         return false;
     }
@@ -45,6 +47,10 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
         return false;
     }
 }

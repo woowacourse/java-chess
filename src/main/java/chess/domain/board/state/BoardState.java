@@ -16,4 +16,8 @@ public interface BoardState {
     Rank getRank(int rankLine);
 
     BoardState terminate();
+
+    double calculateBlackScore();
+
+    double calculateWhiteScore();
 }

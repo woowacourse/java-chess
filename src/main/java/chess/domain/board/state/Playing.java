@@ -130,4 +130,14 @@ public abstract class Playing extends GameStarted {
     public BoardState terminate() {
         return new Terminate(ranks);
     }
+
+    @Override
+    public double calculateBlackScore() {
+        throw new IllegalStateException("아직 게임이 끝나지 않아 점수를 계산할 수 없습니다.");
+    }
+
+    @Override
+    public double calculateWhiteScore() {
+        throw new IllegalStateException("아직 게임이 끝나지 않아 점수를 계산할 수 없습니다.");
+    }
 }

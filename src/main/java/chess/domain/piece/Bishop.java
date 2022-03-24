@@ -45,4 +45,9 @@ public class Bishop extends Piece {
     private boolean isValidPosition(Piece piece) {
         return piece.isBlank() || piece.isEnemy(getSignature());
     }
+
+    @Override
+    public double getScore() {
+        return 3;
+    }
 }
