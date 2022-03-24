@@ -18,7 +18,7 @@ public class Bishop extends Piece {
         validateTargetPositionToMove(fileDifference, rankDifference);
         checkOtherPiecesInPathToTarget(position, targetPosition, pieces);
 
-        return new Rook(teamColor, targetPosition);
+        return new Bishop(teamColor, targetPosition);
     }
 
     private void checkOtherPiecesInPathToTarget(final Position currentPosition, final Position targetPosition,
