@@ -11,6 +11,26 @@ import org.junit.jupiter.api.Test;
 
 public class KnightTest {
 
+    @DisplayName("ofLeft 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 왼쪽 나이트를 생성한다.")
+    @Test
+    void ofLeft() {
+        Knight actual = Knight.ofLeft(BLACK);
+
+        Knight expected = new Knight(BLACK, Position.of("b8"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("ofRight 정적 팩토리 메서드는 매개변수에 해당되는 색깔의 오른쪽 나이트를 생성한다.")
+    @Test
+    void ofRight() {
+        Knight actual = Knight.ofRight(WHITE);
+
+        Knight expected = new Knight(WHITE, Position.of("g1"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("나이트는 상하좌우 한 칸을 이동하고, 해당 방향을 기준으로 대각선으로 한 칸 이동한다.")
     @Test
     void move() {

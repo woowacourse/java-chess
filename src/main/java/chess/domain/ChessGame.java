@@ -44,12 +44,12 @@ public class ChessGame {
     private List<Piece> initStrongMen(Color color, int initFileIdx) {
         return List.of(
                 Rook.ofLeft(color),
-                new Knight(color, Position.of(1, initFileIdx)),
+                Knight.ofLeft(color),
                 Bishop.ofLeft(color),
                 new Queen(color, Position.of(3, initFileIdx)),
                 new King(color, Position.of(4, initFileIdx)),
                 Bishop.ofRight(color),
-                new Knight(color, Position.of(6, initFileIdx)),
+                Knight.ofRight(color),
                 Rook.ofRight(color));
     }
 

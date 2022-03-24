@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class Knight extends Piece {
 
+    private static final int LEFT_INIT_FILE = 1;
+    private static final int RIGHT_INIT_FILE = 6;
+
     private static final int MAIN_DIRECTION_MOVE_COUNT = 2;
     private static final int SUB_DIRECTION_MOVE_COUNT = 1;
 
@@ -13,8 +16,18 @@ public class Knight extends Piece {
     private static final String BLACK_DISPLAY = "♘";
     private static final String WHITE_DISPLAY = "♞";
 
-    public Knight(Color color, Position position) {
+    Knight(Color color, Position position) {
         super(color, position);
+    }
+
+    public static Knight ofLeft(Color color) {
+        Position position = Position.of(LEFT_INIT_FILE, firstRankOf(color));
+        return new Knight(color, position);
+    }
+
+    public static Knight ofRight(Color color) {
+        Position position = Position.of(RIGHT_INIT_FILE, firstRankOf(color));
+        return new Knight(color, position);
     }
 
     @Override
