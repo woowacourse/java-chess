@@ -91,7 +91,7 @@ abcdefgh (file)
 
 #### 입력 Input
 
-- [ ] 게임 명령을 입력 받는다. (`start`, `end`, `move source target`)
+- [x] 게임 명령을 입력 받는다. (`start`, `end`, `move source target`)
 
 ### Domain
 

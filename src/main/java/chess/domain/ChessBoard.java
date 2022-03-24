@@ -47,4 +47,8 @@ public class ChessBoard {
     public List<List<Piece>> getBoard() {
         return Collections.unmodifiableList(board);
     }
+
+    public void move(String source, String target) {
+
+    }
 }

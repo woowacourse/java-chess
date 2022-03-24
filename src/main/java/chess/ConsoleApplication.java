@@ -44,6 +44,8 @@ public class ConsoleApplication {
             return;
         }
 
-        // TODO: move 진행
+        chessBoard.move(commandRequest.getSource(), commandRequest.getTarget());
+        OutputView.printChessBoard(chessBoard.getBoard());
+        playChess(chessBoard);
     }
 }
