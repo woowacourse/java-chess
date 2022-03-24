@@ -32,6 +32,7 @@ public enum Rank {
     public int calculateDistance(Rank target) {
         return value.charAt(0) - target.value.charAt(0);
     }
+
     public String getValue() {
         return value;
     }

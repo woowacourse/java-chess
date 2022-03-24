@@ -59,6 +59,8 @@ public class ChessBoard {
         }
     }
 
+    // movePawn(직진,대각선), checkMove, enemyExist 예외
+
     private void checkMove(Position from, Position to, ChessPiece me){
         me.canMove(from, to);
         Stack<Position> routes = me.findRoute(from, to);

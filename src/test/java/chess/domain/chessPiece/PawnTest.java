@@ -6,10 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+import java.util.Stack;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PawnTest {
 
@@ -56,7 +58,7 @@ class PawnTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"BLACK:e4","BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
+    @CsvSource(value = {"BLACK:e4", "BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     void canCatch_canCatch(Color color, String target) {
         // given

@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+import java.util.Stack;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
@@ -38,5 +42,16 @@ class KingTest {
         Assertions.assertThatCode(() -> king.canMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
 
+    }
+
+    @Test
+    @DisplayName("목적지까지 경로를 구한다.")
+    void findRoute() {
+        // given
+        ChessPiece king = new King(Color.BLACK);
+        // when
+        Stack<Position> actual = king.findRoute(initialPosition, new Position("e4"));
+        // then
+        assertThat(actual).isEmpty();
     }
 }
