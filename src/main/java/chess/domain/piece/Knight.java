@@ -13,4 +13,9 @@ public class Knight extends ValidPiece {
     public MoveStrategy getMoveStrategy() {
         return new KnightMoveStrategy();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

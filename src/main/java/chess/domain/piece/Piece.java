@@ -19,6 +19,8 @@ public abstract class Piece {
 
     public abstract MoveStrategy getMoveStrategy();
 
+    public abstract boolean isKing();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -13,4 +13,9 @@ public class Queen extends ValidPiece {
     public MoveStrategy getMoveStrategy() {
         return new QueenMoveStrategy();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

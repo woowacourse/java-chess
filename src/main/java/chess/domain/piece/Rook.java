@@ -13,4 +13,9 @@ public class Rook extends ValidPiece {
     public MoveStrategy getMoveStrategy() {
         return new RookMoveStrategy();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

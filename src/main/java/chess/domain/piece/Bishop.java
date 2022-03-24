@@ -13,4 +13,9 @@ public class Bishop extends ValidPiece {
     public MoveStrategy getMoveStrategy() {
         return new BishopMoveStrategy();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

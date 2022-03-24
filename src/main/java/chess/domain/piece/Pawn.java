@@ -13,4 +13,9 @@ public class Pawn extends ValidPiece {
     public MoveStrategy getMoveStrategy() {
         return new PawnMoveStrategy();
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -14,12 +14,12 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void move(final Position source, final Position target, final Turn turn) {
+    public Piece move(final Position source, final Position target, final Turn turn) {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
         validateMove(source, target, moveStrategy);
-        board.movePiece(source, target);
+        return board.movePiece(source, target);
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {

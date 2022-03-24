@@ -13,4 +13,10 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         assertThat(pawn.isBlank()).isFalse();
     }
+
+    @Test
+    @DisplayName("킹이 아니다.")
+    void isNotKing() {
+        assertThat(new Pawn(Color.WHITE).isKing()).isFalse();
+    }
 }

@@ -68,9 +68,9 @@ public class Board {
     }
 
     public Piece movePiece(final Position source, final Position target) {
-        Piece replace = board.replace(target, getPiece(source));
+        Piece targetPiece = board.replace(target, getPiece(source));
         board.replace(source, new Blank());
-        return replace;
+        return targetPiece;
     }
 
     public Piece getPiece(final Position position) {
