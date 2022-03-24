@@ -8,13 +8,21 @@ import chess.domain.UnitPosition;
 
 public enum BasicDirection implements Direction {
 
-	SOUTH(row -> row > 0, column -> column == 0),
-	NORTH(row -> row < 0, column -> column == 0),
-	WEST(row -> row == 0, column -> column > 0),
-	EAST(row -> row == 0, column -> column < 0);
+	SOUTH((rowDifference, columnDifference) ->
+		rowDifference > 0 && columnDifference == 0, new UnitPosition(-1, 0)
+	),
+	NORTH((rowDifference, columnDifference) ->
+		rowDifference < 0 && columnDifference == 0, new UnitPosition(1, 0)
+	),
+	WEST((rowDifference, columnDifference) ->
+		rowDifference == 0 && columnDifference > 0, new UnitPosition(0, -1)
+	),
+	EAST((rowDifference, columnDifference) ->
+		rowDifference == 0 && columnDifference < 0, new UnitPosition(0, 1)
+	);
 
-	private final IntPredicate rowPredicate;
-	private final IntPredicate columnPredicate;
+	private final BiPredicate<Integer, Integer> directionPredicate;
+	private final UnitPosition unitPosition;
 
 	BasicDirection(BiPredicate<Integer, Integer> directionPredicate, UnitPosition unitPosition) {
 		this.directionPredicate = directionPredicate;

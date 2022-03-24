@@ -8,20 +8,24 @@ import chess.domain.UnitPosition;
 public enum DiagonalDirection implements Direction {
 
 	NORTH_EAST(
-		(rowDifference, columnDifference) -> rowDifference < 0 && columnDifference < 0,
-		(rowDifference, columnDifference) -> rowDifference - columnDifference == 0
+		(rowDifference, columnDifference) ->
+			rowDifference < 0 && columnDifference < 0 && rowDifference - columnDifference == 0,
+		new UnitPosition(1, 1)
 	),
 	NORTH_WEST(
-		(rowDifference, columnDifference) -> rowDifference < 0 && columnDifference > 0,
-		(rowDifference, columnDifference) -> rowDifference + columnDifference == 0
+		(rowDifference, columnDifference) ->
+			rowDifference < 0 && columnDifference > 0 && rowDifference + columnDifference == 0,
+		new UnitPosition(1, -1)
 	),
 	SOUTH_EAST(
-		(rowDifference, columnDifference) -> rowDifference > 0 && columnDifference < 0,
-		(rowDifference, columnDifference) -> rowDifference + columnDifference == 0
+		(rowDifference, columnDifference) -> rowDifference > 0 && columnDifference < 0
+			&& rowDifference + columnDifference == 0,
+		new UnitPosition(-1, 1)
 	),
 	SOUTH_WEST(
-		(rowDifference, columnDifference) -> rowDifference > 0 && columnDifference > 0,
-		(rowDifference, columnDifference) -> rowDifference - columnDifference == 0);
+		(rowDifference, columnDifference) ->
+			rowDifference > 0 && columnDifference > 0 &&  rowDifference - columnDifference == 0,
+		new UnitPosition(-1, -1));
 
 	private final BiPredicate<Integer, Integer> directionPredicate;
 	private final UnitPosition unitPosition;
