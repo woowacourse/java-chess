@@ -62,12 +62,12 @@ public class Board {
 //        }
 //    }
 
-//    public Piece getPiece(Position position) {
-//        return board.stream()
-//                .filter(piece -> piece.findPosition(position))
-//                .findFirst()
-//                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말"))
-//    }
+    public Piece getPiece(Position position) {
+        return board.stream()
+                .filter(piece -> piece.findPosition(position))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말"));
+    }
 
     public List<Piece> getBoard() {
         return board;

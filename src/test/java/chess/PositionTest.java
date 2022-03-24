@@ -4,15 +4,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
 
     @Test
     @DisplayName("position끼리 수평이면 true를 반환한다.")
     void isHorizontal() {
-        Position source = Position.of("a1");
-        Position target = Position.of("d1");
+        Position source = Position.of('a', '1');
+        Position target = Position.of('d', '1');
 
         assertThat(source.isHorizontal(target)).isTrue();
     }
@@ -20,8 +19,8 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 수직이면 true를 반환한다.")
     void isVertical() {
-        Position source = Position.of("a1");
-        Position target = Position.of("a3");
+        Position source = Position.of('a', '1');
+        Position target = Position.of('a', '3');
 
         assertThat(source.isVertical(target)).isTrue();
     }
@@ -29,8 +28,8 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 대각선이면 true를 반환한다.")
     void isDiagonal() {
-        Position source = Position.of("a1");
-        Position target = Position.of("f6");
+        Position source = Position.of('a', '1');
+        Position target = Position.of('f', '6');
 
         assertThat(source.isDiagonal(target)).isTrue();
     }

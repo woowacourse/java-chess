@@ -1,5 +1,7 @@
 package chess;
 
+import chess.command.Command;
+import chess.command.End;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +20,8 @@ public class CommandTest {
 
     @Test
     @DisplayName("command가 end이면 true를 반환한다.")
-    void isEnd(){
-        Command command = new Command("end");
+    void isEnd() {
+        Command command = new End("end");
         assertThat(command.isEnd()).isTrue();
     }
 }
