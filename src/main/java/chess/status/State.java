@@ -1,6 +1,7 @@
 package chess.status;
 
 import chess.Board;
+import chess.MoveCommand;
 import chess.view.Command;
 
 public interface State {
@@ -9,7 +10,7 @@ public interface State {
 
     boolean isRunning();
 
-    void move(String command);
+    void move(MoveCommand moveCommand);
 
     boolean canMove();
 

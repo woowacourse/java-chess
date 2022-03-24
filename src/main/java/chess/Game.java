@@ -24,7 +24,7 @@ public class Game {
 
         this.state = state.turn(command);
         if (state.canMove()) {
-            state.move(inputs.get(1) + inputs.get(2));
+            state.move(MoveCommand.of(inputs.get(1) + inputs.get(2)));
         }
     }
 

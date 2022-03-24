@@ -1,6 +1,7 @@
 package chess.status;
 
 import chess.Board;
+import chess.MoveCommand;
 import chess.view.Command;
 
 public final class Finished implements State {
@@ -19,7 +20,7 @@ public final class Finished implements State {
     }
 
     @Override
-    public void move(final String input) {
+    public void move(final MoveCommand moveCommand) {
         throw new IllegalStateException("게임이 종료되어 말을 움직일 수 없습니다.");
     }
 

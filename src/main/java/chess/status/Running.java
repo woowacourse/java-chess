@@ -1,6 +1,7 @@
 package chess.status;
 
 import chess.Board;
+import chess.MoveCommand;
 import chess.view.Command;
 
 public class Running implements State {
@@ -28,8 +29,8 @@ public class Running implements State {
     }
 
     @Override
-    public void move(final String command) {
-        System.out.println(command + "말 움직임");
+    public void move(final MoveCommand moveCommand) {
+        System.out.println(moveCommand + "말 움직임");
     }
 
     @Override

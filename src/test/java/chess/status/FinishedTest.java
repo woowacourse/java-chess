@@ -3,6 +3,7 @@ package chess.status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.MoveCommand;
 import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class FinishedTest {
     void continueRunning() {
         final State state = new Finished();
 
-        assertThatThrownBy(() -> state.move("move a1 a2"))
+        assertThatThrownBy(() -> state.move(MoveCommand.of("a1 a2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되어 말을 움직일 수 없습니다.");
     }

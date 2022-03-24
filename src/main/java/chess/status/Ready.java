@@ -1,6 +1,7 @@
 package chess.status;
 
 import chess.Board;
+import chess.MoveCommand;
 import chess.view.Command;
 
 public final class Ready implements State {
@@ -31,7 +32,7 @@ public final class Ready implements State {
     }
 
     @Override
-    public void move(final String input) {
+    public void move(final MoveCommand moveCommand) {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
     }
 
