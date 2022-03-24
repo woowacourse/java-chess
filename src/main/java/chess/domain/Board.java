@@ -29,8 +29,6 @@ public final class Board {
         Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
         if (piece.isMovable(sourcePosition, targetPosition)) {
-            // pawn이 1칸이동할 때 목적지에 다른 기물이 있는지 확인
-            // pawn이 2칸이동할 때 경로에 다른 기물 있는지 확인 + 목적지에 다른 기물이 있는지 확인
             checkPawnMovement(sourcePosition, targetPosition, piece);
             validatePathEmpty(sourcePosition, targetPosition);
             pieces.remove(sourcePosition);
@@ -47,6 +45,15 @@ public final class Board {
     private void checkPawnMovement(Position sourcePosition, Position targetPosition, Piece piece) {
         if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.DIAGONAL) {
             checkPawnTargetExist(targetPosition);
+        }
+        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.VERTICAL) {
+            checkPawnTargetNotExist(targetPosition);
+        }
+    }
+
+    private void checkPawnTargetNotExist(Position targetPosition) {
+        if (pieces.containsKey(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
         }
     }
 

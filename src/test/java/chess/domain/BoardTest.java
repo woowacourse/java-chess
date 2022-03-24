@@ -144,6 +144,38 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("폰은 직선 목적지에 다른 기물이 존재하면 움직일 수 없다")
+    void pawnCannotMoveVertical_targetExist() {
+        Piece whitePawn = new Piece(Color.WHITE, new Pawn());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("a2"), whitePawn);
+            pieces.put(Position.of("a4"), new Piece(Color.BLACK, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("a2", "a4"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
+    }
+
+    @Test
+    @DisplayName("폰은 두칸 이동할 때 경로에 다른 기물이 있으면 움직일 수 없다")
+    void pawnCannotMoveVertical_pathBlocked() {
+        Piece whitePawn = new Piece(Color.WHITE, new Pawn());
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("a2"), whitePawn);
+            pieces.put(Position.of("a3"), new Piece(Color.BLACK, new Pawn()));
+            return pieces;
+        });
+
+        assertThatThrownBy(() -> board.move("a2", "a4"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+    }
+
+    @Test
     @DisplayName("목적지에 같은 색의 기물이 있으면 움직일 수 없다")
     void pieceCannotMove_ifTargetIsSameColor() {
         Board board = new Board(() -> {
