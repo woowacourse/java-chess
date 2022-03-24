@@ -8,6 +8,8 @@ import java.util.Map;
 public class BoardFixtures {
 
     public static final Board INITIAL_BOARD = Board.of(new InitialBoardGenerator());
+    public static final Board EMPTY_BOARD = Board.of(new TestBoardGenerator(new HashMap<>()));
+
     public static final Board ROOK_NOT_MOVABLE_BOARD = Board.of(new TestBoardGenerator(
             Map.of(Point.of(1, 1), new Rook(Color.WHITE),
                     Point.of(1,6), new Pawn(Color.BLACK))));
