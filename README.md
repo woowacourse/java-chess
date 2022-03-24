@@ -74,7 +74,7 @@ abcdefgh
   - [x] 열과 행을 한칸 씩 움직일 수 있다.
   - [x] Direction에 따라서 움직인 후의 Position을 얻을 수 있다.
   - [x] Queen, Bishop, Rook
-  - [ ] King, Knight
+  - [x] King, Knight
   - [ ] Pawn
 - [ ] Map<Direction, List<Poistion>> 순회하면서 장애물 판단한다. - 체스판
   - [ ] 장애물이 내 편일 경우 : 장애물 닿기 전까지만 남기고 이후 포지션들은 제거
