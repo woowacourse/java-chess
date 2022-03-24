@@ -42,11 +42,6 @@ public enum Direction {
                 .orElse(NONE);
     }
 
-    public static boolean hasDirection(int row, int column) {
-        return Arrays.stream(Direction.values())
-                .anyMatch(it -> it.row == row && it.column == column);
-    }
-
     public static List<Direction> pullKnightDirections() {
         return Arrays.asList(NNE, NNW, WWN, WWS, EEN, EES, SSW, SSE);
     }
