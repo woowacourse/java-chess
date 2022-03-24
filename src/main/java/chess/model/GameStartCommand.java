@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 public enum GameStartCommand {
-    START("start", runner -> runner.run()), END("end", runnable -> {});
+    START("start"),
+    END("end"),
+    MOVE("move");
 
     private final String commandLine;
-    private final Consumer<Runnable> executor;
 
-    GameStartCommand(final String commandLine, final Consumer<Runnable> executor) {
+    GameStartCommand(final String commandLine) {
         this.commandLine = commandLine;
-        this.executor = executor;
     }
 
     public static GameStartCommand findCommand(final String commandLine) {
@@ -21,7 +21,15 @@ public enum GameStartCommand {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", commandLine)));
     }
 
-    public void execute(final Runnable runnable) {
-        executor.accept(runnable);
+    public boolean isNotEnd() {
+        return isStart() || isMove();
+    }
+
+    public boolean isStart() {
+        return this.equals(START);
+    }
+
+    public boolean isMove() {
+        return this.equals(MOVE);
     }
 }
