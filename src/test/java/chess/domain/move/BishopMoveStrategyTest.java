@@ -29,4 +29,22 @@ public class BishopMoveStrategyTest {
 
         assertThat(bishopMoveStrategy.isMovable(board, source, target)).isTrue();
     }
+
+    @Test
+    @DisplayName("양의 대각선으로 이동시 중간에 다른 기물이 존재하면 false")
+    void isMovablePositiveDiagonalIfExistOtherPiece() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("a6");
+
+        assertThat(bishopMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("음의 대각선으로 이동시 중간에 다른 기물이 존재하면 false")
+    void isMovableNegativeDiagonalIfExistOtherPiece() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("e6");
+
+        assertThat(bishopMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
 }
