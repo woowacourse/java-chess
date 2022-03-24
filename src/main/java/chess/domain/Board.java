@@ -20,15 +20,19 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        return sourcePiece.isSameColor(turnColor)
-                && isCastablePieces(sourcePiece, targetPiece)
-                && isEmptyBetween(source, target)
-                && sourcePiece.isNeverDisplaced()
-                && targetPiece.isNeverDisplaced();
+        return isCastablePieces(turnColor, sourcePiece, targetPiece) && isEmptyBetween(source, target);
     }
 
-    private boolean isCastablePieces(Piece sourcePiece, Piece targetPiece) {
-        return sourcePiece.isKing() && targetPiece.isRook();
+    private boolean isCastablePieces(Color turnColor, Piece sourcePiece, Piece targetPiece) {
+        return isCastableSourcePiece(turnColor, sourcePiece) && isCastableTargetPiece(turnColor, targetPiece);
+    }
+
+    private boolean isCastableSourcePiece(Color turnColor, Piece sourcePiece) {
+        return sourcePiece.isSameColor(turnColor) && sourcePiece.isKing() && sourcePiece.isNeverDisplaced();
+    }
+
+    private boolean isCastableTargetPiece(Color turnColor, Piece targetPiece) {
+        return targetPiece.isSameColor(turnColor) && targetPiece.isRook() && targetPiece.isNeverDisplaced();
     }
 
     private boolean isEmptyBetween(Position source, Position target) {
@@ -40,7 +44,7 @@ public class Board {
     }
 
     public void castle(Position source, Position target) {
-        if(source.calculateDisplacementXTo(target) > 0){
+        if (source.calculateDisplacementXTo(target) > 0) {
             castleToKingSide(source, target);
             return;
         }
@@ -55,7 +59,7 @@ public class Board {
         board.replace(source.displacedOf(2, 0), sourcePiece.displaced());
 
         board.replace(target, new Blank());
-        board.replace(target.displacedOf(-2,0), targetPiece.displaced());
+        board.replace(target.displacedOf(-2, 0), targetPiece.displaced());
     }
 
     private void castleToQueenSide(Position source, Position target) {
@@ -66,7 +70,7 @@ public class Board {
         board.replace(source.displacedOf(-2, 0), sourcePiece.displaced());
 
         board.replace(target, new Blank());
-        board.replace(target.displacedOf(3,0), targetPiece.displaced());
+        board.replace(target.displacedOf(3, 0), targetPiece.displaced());
     }
 
     public void validateMovement(Color turnColor, Position source, Position target) {
