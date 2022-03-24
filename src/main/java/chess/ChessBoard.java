@@ -1,9 +1,10 @@
 package chess;
 
-import static chess.Col.*;
-import static chess.Row.*;
+import static chess.position.Rank.*;
+import static chess.position.File.*;
 
 import chess.piece.*;
+import chess.position.Position;
 import java.util.*;
 
 public class ChessBoard {

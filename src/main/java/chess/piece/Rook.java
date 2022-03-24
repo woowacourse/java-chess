@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.*;
+import chess.position.Position;
 
 public class Rook extends Piece{
 
@@ -9,10 +9,15 @@ public class Rook extends Piece{
     }
 
     @Override
-    public void move(Position to) {
-        if (!(position.isVerticalWay(to) || position.isHorizontalWay(to))) {
-            throw new IllegalArgumentException();
-        }
-        position = to;
+    protected boolean isMovablePosition(Position to) {
+        return isVerticalWay(to) || isHorizontalWay(to);
+    }
+
+    private boolean isVerticalWay(Position to) {
+        return getPosition().isVerticalWay(to);
+    }
+
+    private boolean isHorizontalWay(Position to) {
+        return getPosition().isHorizontalWay(to);
     }
 }

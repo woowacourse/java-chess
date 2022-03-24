@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.*;
+import chess.position.Position;
 
 public class Bishop extends Piece {
 
@@ -9,10 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void move(Position to) {
-        if (!position.isDiagonalWay(to)) {
-            throw new IllegalArgumentException();
-        }
-        position = to;
+    protected boolean isMovablePosition(Position to) {
+        return getPosition().isDiagonalWay(to);
     }
 }

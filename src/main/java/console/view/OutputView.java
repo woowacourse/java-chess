@@ -1,7 +1,7 @@
 package console.view;
 
-import chess.*;
 import chess.piece.*;
+import chess.position.*;
 import java.util.*;
 
 public class OutputView {
@@ -19,21 +19,21 @@ public class OutputView {
     }
 
     public static void printChessBoard(List<Piece> pieces) {
-        for (Col col : Col.orderedValues()) {
-            printEachColumn(pieces, col);
+        for (Rank rank : Rank.orderedValues()) {
+            printEachColumn(pieces, rank);
         }
         System.out.println();
     }
 
-    private static void printEachColumn(List<Piece> pieces, Col col) {
-        for (Row row : Row.orderedValues()) {
-            printEachRow(pieces, col, row);
+    private static void printEachColumn(List<Piece> pieces, Rank rank) {
+        for (File file : File.orderedValues()) {
+            printEachRow(pieces, rank, file);
         }
         System.out.println();
     }
 
-    private static void printEachRow(List<Piece> pieces, Col col, Row row) {
-        Position position = new Position(row, col);
+    private static void printEachRow(List<Piece> pieces, Rank rank, File file) {
+        Position position = new Position(file, rank);
         Optional<Piece> pieceOptional = findByPosition(pieces, position);
         pieceOptional.ifPresentOrElse(
             piece -> System.out.print(pieceSymbol(piece)),

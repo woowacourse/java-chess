@@ -1,11 +1,11 @@
 package chess.piece;
 
-import chess.*;
+import chess.position.Position;
 import java.util.Objects;
 
 public abstract class Piece {
 
-    protected final Color color;
+    private final Color color;
     protected Position position;
 
     public Piece(Color color, Position position) {
@@ -13,7 +13,12 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public abstract void move(Position to);
+    public void move(Position to) {
+        if (!isMovablePosition(to)) {
+            throw new IllegalArgumentException();
+        }
+        position = to;
+    }
 
     public boolean isSamePosition(Position position) {
         return this.position.equals(position);
@@ -29,6 +34,10 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    protected Position getPosition() {
+        return position;
     }
 
     @Override
@@ -56,4 +65,6 @@ public abstract class Piece {
             ", position=" + position +
             '}';
     }
+
+    protected abstract boolean isMovablePosition(Position to);
 }

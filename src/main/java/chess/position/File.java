@@ -1,9 +1,9 @@
-package chess;
+package chess.position;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public enum Row {
+public enum File {
 
     A(1),
     B(2),
@@ -16,17 +16,17 @@ public enum Row {
 
     private final int value;
 
-    Row(int value) {
+    File(int value) {
         this.value = value;
     }
 
-    public int getDistance(Row other) {
+    public int getDistance(File other) {
         return Math.abs(this.value - other.value);
     }
 
-    public static List<Row> orderedValues() {
+    public static List<File> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.<Row>comparingInt(row -> row.value).reversed())
+            .sorted(Comparator.<File>comparingInt(row -> row.value).reversed())
             .collect(Collectors.toList());
     }
 }

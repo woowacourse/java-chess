@@ -1,13 +1,14 @@
 package chess;
 
-import static chess.Col.*;
-import static chess.Row.*;
+import static chess.position.Rank.*;
+import static chess.position.File.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.piece.*;
+import chess.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -100,8 +101,8 @@ class ChessBoardTest {
     private static Stream<Arguments> provideFirstMoveForwardPawn() {
         return Stream.of(
             Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, SIX)),
-            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, THREE)),
             Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, FIVE)),
+            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, THREE)),
             Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, FOUR))
         );
     }
@@ -120,20 +121,25 @@ class ChessBoardTest {
         });
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideInvalidMoveForwardPawn")
     @DisplayName("폰이 처음 움직인 이후 부터는 두칸 이상 이동시 예외 발생")
-    void throwExceptionMovePawnOverOneSpaceAfterFirstMove() {
+    void throwExceptionMovePawnOverOneSpaceAfterFirstMove(Color color, Position from, Position to) {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
-
-        chessBoard.move(new Position(A, SEVEN), new Position(A, SIX));
+            List.of(new Pawn(color, from)), color);
 
         assertAll(() -> {
-            assertThatThrownBy(() -> chessBoard.move(new Position(A, SIX), new Position(A, FOUR)))
+            assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces())
-                .contains(new Pawn(Color.BLACK, new Position(A, SIX)));
+            assertThat(chessBoard.getPieces()).contains(new Pawn(color, from));
         });
+    }
+
+    private static Stream<Arguments> provideInvalidMoveForwardPawn() {
+        return Stream.of(
+            Arguments.of(Color.BLACK, new Position(A, SIX), new Position(A, FOUR)),
+            Arguments.of(Color.WHITE, new Position(A, THREE), new Position(A, FIVE))
+        );
     }
 
     @ParameterizedTest

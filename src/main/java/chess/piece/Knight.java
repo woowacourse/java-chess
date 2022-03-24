@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.*;
+import chess.position.Position;
 
 public class Knight extends Piece{
 
@@ -9,17 +9,10 @@ public class Knight extends Piece{
     }
 
     @Override
-    public void move(Position to) {
-        if (!isValidPosition(to)) {
-            throw new IllegalArgumentException();
-        }
-        position = to;
-    }
-
-    private boolean isValidPosition(Position to) {
-        int distanceOfCol = position.getHorizontalDistance(to);
-        int distanceOfRow = position.getVerticalDistance(to);
-        return (distanceOfCol == 1 && distanceOfRow == 2) ||
-            (distanceOfCol == 2 && distanceOfRow == 1);
+    protected boolean isMovablePosition(Position to) {
+        int horizontalDistance = getPosition().getVerticalDistance(to);
+        int verticalDistance = getPosition().getHorizontalDistance(to);
+        return (horizontalDistance == 1 && verticalDistance == 2) ||
+            (horizontalDistance == 2 && verticalDistance == 1);
     }
 }

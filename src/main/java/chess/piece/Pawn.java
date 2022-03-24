@@ -1,42 +1,30 @@
 package chess.piece;
 
-import chess.*;
+import chess.position.Position;
 
 public class Pawn extends Piece {
 
-    private boolean isFirstMove;
-
     public Pawn(Color color, Position position) {
         super(color, position);
-        this.isFirstMove = true;
     }
 
     @Override
-    public void move(Position to) {
-        if (isInvalidMovement(to)) {
-            throw new IllegalArgumentException();
+    protected boolean isMovablePosition(Position to) {
+        return isVerticalWay(to) && isForward(to) && isValidDistance(to);
+    }
+
+    private boolean isVerticalWay(Position to) {
+        return getPosition().isVerticalWay(to);
+    }
+
+    private boolean isForward(Position to) {
+        return getColor().isForward(getPosition(), to);
+    }
+
+    private boolean isValidDistance(Position to) {
+        if (getColor().isFirstMove(getPosition())) {
+            return getPosition().getVerticalDistance(to) <= 2;
         }
-
-        this.isFirstMove = false;
-        this.position = to;
+        return getPosition().getVerticalDistance(to) == 1;
     }
-
-    private boolean isInvalidMovement(Position to) {
-        return isInvalidDirection(to) || isInvalidDistance(to) ||
-            isMoveOverOneSpaceAfterFirstMove(to);
-    }
-
-    private boolean isInvalidDirection(Position to) {
-        Direction direction = position.getDirectionTo(to);
-        return !position.isVerticalWay(to) || color.isBackward(direction);
-    }
-
-    private boolean isInvalidDistance(Position to) {
-        return position.getHorizontalDistance(to) > 2;
-    }
-
-    private boolean isMoveOverOneSpaceAfterFirstMove(Position to) {
-        return !isFirstMove && position.getHorizontalDistance(to) >= 2;
-    }
-
 }
