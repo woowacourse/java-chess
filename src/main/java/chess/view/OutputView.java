@@ -13,8 +13,10 @@ public class OutputView {
     private static final int FILE_END_NUMBER = 7;
 
     public static void printStartMessage() {
-        System.out.println("체스 게임을 시작합니다." + NEW_LINE +
-            "게임 시작은 start, 종료는 end 명령을 입력하세요.");
+        System.out.println("> 체스 게임을 시작합니다." + NEW_LINE +
+            "> 게임 시작 : start" + NEW_LINE +
+            "> 게임 종료 : end" + NEW_LINE +
+            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
     public static void printBoard(final Map<Position, Piece> board) {
@@ -31,5 +33,13 @@ public class OutputView {
         if (index % FILE_SIZE == FILE_END_NUMBER) {
             System.out.println();
         }
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.out.println(message);
+    }
+
+    public static void printTurnMessage(final String name) {
+        System.out.println(name + "의 턴입니다.");
     }
 }

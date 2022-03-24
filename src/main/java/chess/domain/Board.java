@@ -75,10 +75,6 @@ public class Board {
         }
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(new LinkedHashMap<>(board));
-    }
-
     public void move(final Position from, final Position to, final Color color) {
         final Piece source = board.get(from);
         final Piece target = board.get(to);
@@ -147,9 +143,13 @@ public class Board {
         if (next.equals(to)) {
             return false;
         }
-        if (board.get(next).equals(new EmptyPiece())) {
+        if (!board.get(next).equals(new EmptyPiece())) {
             return true;
         }
         return isBlocked(direction, next, to);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(new LinkedHashMap<>(board));
     }
 }

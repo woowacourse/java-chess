@@ -3,7 +3,7 @@
 ## 기능 목록
 - [x] 사용자가 start를 입력하면 체스판을 초기화 한다.
 - [x] 사용자가 end를 입력하면 프로그램을 종료한다.
-- [ ] 사용자가 move와 source와 target을 입력하면 piece를 이동시킨다.
+- [x] 사용자가 move와 source와 target을 입력하면 piece를 이동시킨다.
 
 ## 도메인
 

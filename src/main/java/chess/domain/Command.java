@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.state.State;
 import java.util.Arrays;
 
 public enum Command {
@@ -20,6 +21,19 @@ public enum Command {
             .filter(value -> value.getCommand().equals(command))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
+    }
+
+    public State run(final State state, final String[] commands) {
+        if (this == START) {
+            return state.start();
+        }
+        if (this == MOVE) {
+            return state.move(commands);
+        }
+        if (this == END) {
+            return state.end();
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다.");
     }
 
     public String getCommand() {

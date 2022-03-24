@@ -47,6 +47,10 @@ public class PawnPiece extends FullPiece {
             return true;
         }
 
+        if ((direction == Direction.NORTH || direction == Direction.SOUTH) && !isEmptyTarget) {
+            return false;
+        }
+
         if (direction != Direction.NORTH && direction != Direction.SOUTH && isEmptyTarget) {
             return false;
         }
