@@ -2,20 +2,21 @@ package chess;
 
 import java.util.Arrays;
 
-public enum GameSwitch {
+public enum Command {
 
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String value;
 
-    GameSwitch(final String value) {
+    Command(final String value) {
         this.value = value;
     }
 
-    public static GameSwitch of(final String value) {
+    public static Command of(final String value) {
         return Arrays.stream(values())
-                .filter(gameSwitch -> gameSwitch.value.equalsIgnoreCase(value))
+                .filter(command -> command.value.equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다."));
     }
