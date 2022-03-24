@@ -40,6 +40,12 @@ public abstract class Chessmen implements Piece {
     }
 
     @Override
+    public final boolean isAtDisplayColumnIdxOf(int colIdx) {
+        int displayFileIdx = position.getFileIdx();
+        return displayFileIdx == colIdx;
+    }
+
+    @Override
     public final boolean isAtDisplayRowIdxOf(int rowIdx) {
         int displayRowIdx = position.toDisplayRowIndex();
         return displayRowIdx == rowIdx;
