@@ -1,10 +1,12 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -56,5 +58,13 @@ public class OutputView {
         }
 
         System.out.println(stringBuilder);
+    }
+
+    public void printScore(ScoreDto scoreDto) {
+        Map<Color, Double> score = scoreDto.getScore();
+
+        System.out.println("---- 현재 점수 ----");
+        System.out.println("BLACK : " + score.get(Color.BLACK));
+        System.out.println("WHITE : " + score.get(Color.WHITE));
     }
 }

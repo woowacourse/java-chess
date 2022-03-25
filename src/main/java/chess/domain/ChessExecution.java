@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 public enum ChessExecution {
     END("end"),
     MOVE("move"),
+    STATUS("status"),
     ;
 
     private static final String NO_COMMAND_FIND = "게임 실행중 명령어는 end만 입력할 수 있습니다.";
