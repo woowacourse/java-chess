@@ -7,6 +7,7 @@ public class Knight extends Piece {
 
     private static final String WHITE_SIGNATURE = "n";
     private static final String BLACK_SIGNATURE = "N";
+    private static final double SCORE = 2.5;
 
     private Knight(Position position, String signature) {
         super(position, signature);
@@ -40,12 +41,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isKnight() {
-        return true;
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
-    public double getScore() {
-        return 2.5;
+    public boolean isKnight() {
+        return true;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum Direction {
+    
     NORTH(0, 1),
     NORTHEAST(1, 1),
     EAST(1, 0),
@@ -33,12 +34,7 @@ public enum Direction {
 
     public static Direction findDirection(Position start, Position target) {
         for (Direction direction : getEightStraightDirections()) {
-            Optional<Position> optionalPosition = IntStream
-                    .rangeClosed(1, Position.calculateStraightDistance(start, target))
-                    .mapToObj(number -> new Position(start.getX() + direction.getXDegree() * number,
-                            start.getY() + direction.getYDegree() * number))
-                    .filter(position -> position.equals(target))
-                    .findAny();
+            Optional<Position> optionalPosition = findPositionInDirection(start, target, direction);
 
             if (optionalPosition.isEmpty()) {
                 continue;
@@ -47,6 +43,14 @@ public enum Direction {
             return direction;
         }
         throw new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다.");
+    }
+
+    private static Optional<Position> findPositionInDirection(Position start, Position target, Direction direction) {
+        return IntStream.rangeClosed(1, Position.calculateStraightDistance(start, target))
+                .mapToObj(number -> new Position(start.getX() + direction.getXDegree() * number,
+                        start.getY() + direction.getYDegree() * number))
+                .filter(position -> position.equals(target))
+                .findAny();
     }
 
     public static List<Direction> getKnightDirections() {

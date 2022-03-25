@@ -8,6 +8,7 @@ public class Pawn extends Piece {
     private static final String WHITE_SIGNATURE = "p";
     private static final String BLACK_SIGNATURE = "P";
     private static final int FIRST_MOVE_DISTANCE = 2;
+    private static final double SCORE = 1.0;
 
     private Pawn(Position position, String signature) {
         super(position, signature);
@@ -23,19 +24,36 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Piece piece) {
-        if (isBlack() && piece.isBlank()) {
-            return isInStraightRange(piece.getPosition(), Direction.SOUTH);
+        if (piece.isBlank()) {
+            return isBlankTarget(piece);
         }
-        if (!isBlack() && piece.isBlank()) {
-            return isInStraightRange(piece.getPosition(), Direction.NORTH);
-        }
-        if (isBlack() && isEnemy(piece.getSignature())) {
-            return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
-        }
-        if (!isBlack() && isEnemy(piece.getSignature())) {
-            return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
+        if (isEnemy(piece.getSignature())) {
+            return isEnemyTarget(piece);
         }
         return false;
+    }
+
+    private boolean isBlankTarget(Piece piece) {
+        if (isBlack()) {
+            return isInStraightRange(piece.getPosition(), Direction.SOUTH);
+        }
+        return isInStraightRange(piece.getPosition(), Direction.NORTH);
+    }
+
+    private boolean isInStraightRange(Position targetPosition, Direction direction) {
+        if (isFirstTurn) {
+            return List.of(Position.createNextPosition(position, direction),
+                            Position.createNextPosition(position, direction, FIRST_MOVE_DISTANCE))
+                    .contains(targetPosition);
+        }
+        return Position.createNextPosition(position, direction).equals(targetPosition);
+    }
+
+    private boolean isEnemyTarget(Piece piece) {
+        if (isBlack()) {
+            return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
+        }
+        return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
     }
 
     private boolean isInRange(Position targetPosition, List<Direction> directions) {
@@ -48,22 +66,13 @@ public class Pawn extends Piece {
         return inRangePosition.contains(targetPosition);
     }
 
-    private boolean isInStraightRange(Position targetPosition, Direction direction) {
-        if (isFirstTurn) {
-            return List.of(Position.createNextPosition(position, direction),
-                            Position.createNextPosition(position, direction, FIRST_MOVE_DISTANCE))
-                    .contains(targetPosition);
-        }
-        return Position.createNextPosition(position, direction).equals(targetPosition);
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
     public boolean isPawn() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return 1;
     }
 }

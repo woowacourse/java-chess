@@ -3,6 +3,7 @@ package chess.domain.piece;
 public class Blank extends Piece {
 
     private static final String SIGNATURE = "·";
+    private static final double SCORE = 0.0;
 
     public Blank(Position position) {
         super(position, SIGNATURE);
@@ -19,6 +20,6 @@ public class Blank extends Piece {
 
     @Override
     public double getScore() {
-        return 0;
+        return SCORE;
     }
 }

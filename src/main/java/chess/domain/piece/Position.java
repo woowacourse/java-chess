@@ -9,7 +9,8 @@ public class Position {
     private static final int ASCII_ALPHABET = 97;
     private static final int ASCII_NUMBER = 49;
     private static final int CHAR_POSITION_LENGTH = 2;
-    private static final int RANGE = 7;
+    private static final int MIN = 0;
+    private static final int MAX = 8;
     private static final String CHAR_POSITION_LENGTH_EXCEPTION_MESSAGE = "좌표는 알파벳 소문자 하나와 숫자 하나여야 합니다.";
     private static final String CHAR_POSITION_ALPHABET_EXCEPTION_MESSAGE = "알파벳은 a 부터 h 까지만 가능합니다.";
     private static final String CHAR_POSITION_NUMBER_EXCEPTION_MESSAGE = "숫자는 1 부터 8 까지만 가능합니다.";
@@ -41,7 +42,7 @@ public class Position {
     }
 
     public static boolean isValidPosition(Position position) {
-        return position.getX() >= 0 && position.getX() < 8 && position.getY() >= 0 && position.getY() < 8;
+        return position.getX() >= MIN && position.getX() < MAX && position.getY() >= MIN && position.getY() < MAX;
     }
 
     public static int calculateStraightDistance(Position position1, Position position2) {
@@ -62,14 +63,14 @@ public class Position {
 
     private void validateAlphabetRange(String charPosition) {
         if (charPosition.charAt(FIRST_INDEX) < ASCII_ALPHABET
-                || charPosition.charAt(FIRST_INDEX) > ASCII_ALPHABET + RANGE) {
+                || charPosition.charAt(FIRST_INDEX) >= ASCII_ALPHABET + MAX) {
             throw new IllegalArgumentException(CHAR_POSITION_ALPHABET_EXCEPTION_MESSAGE);
         }
     }
 
     private void validateNumberRange(String charPosition) {
         if (charPosition.charAt(SECOND_INDEX) < ASCII_NUMBER
-                || charPosition.charAt(SECOND_INDEX) > ASCII_NUMBER + RANGE) {
+                || charPosition.charAt(SECOND_INDEX) >= ASCII_NUMBER + MAX) {
             throw new IllegalArgumentException(CHAR_POSITION_NUMBER_EXCEPTION_MESSAGE);
         }
     }

@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Bishop extends Piece {
+public class Bishop extends SlidingPiece {
 
     private static final String WHITE_SIGNATURE = "b";
     private static final String BLACK_SIGNATURE = "B";
+    private static final double SCORE = 3.0;
 
     private Bishop(Position position, String signature) {
         super(position, signature);
@@ -23,31 +24,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Piece piece) {
-        return isInRange(piece.getPosition()) && isValidPosition(piece);
-    }
-
-    private boolean isInRange(Position targetPosition) {
-        List<Position> inRangePosition = new ArrayList<>();
-
-        for (Direction direction : Direction.getDiagonalDirections()) {
-            List<Position> directionPositions = IntStream
-                    .rangeClosed(1, Position.calculateStraightDistance(getPosition(), targetPosition))
-                    .mapToObj(product -> Position.createNextPosition(position, direction, product))
-                    .filter(Position::isValidPosition)
-                    .collect(Collectors.toList());
-            inRangePosition.addAll(directionPositions);
-        }
-
-        return inRangePosition.contains(targetPosition);
-    }
-
-    private boolean isValidPosition(Piece piece) {
-        return piece.isBlank() || piece.isEnemy(getSignature());
+    protected List<Direction> findPossibleDirections() {
+        return Direction.getDiagonalDirections();
     }
 
     @Override
     public double getScore() {
-        return 3;
+        return SCORE;
     }
 }

@@ -7,6 +7,7 @@ public class King extends Piece {
 
     private static final String WHITE_SIGNATURE = "k";
     private static final String BLACK_SIGNATURE = "K";
+    private static final double SCORE = 0.0;
 
     private King(Position position, String signature) {
         super(position, signature);
@@ -40,12 +41,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isKing() {
-        return true;
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
-    public double getScore() {
-        return 0;
+    public boolean isKing() {
+        return true;
     }
 }

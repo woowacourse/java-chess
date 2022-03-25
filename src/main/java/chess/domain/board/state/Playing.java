@@ -52,27 +52,6 @@ public abstract class Playing extends GameStarted {
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
     }
 
-    private GameStarted judgeStatus(Piece targetPiece) {
-        if (targetPiece.isKing()) {
-            return judgeWinner();
-        }
-        return judgeTurn();
-    }
-
-    private Playing judgeTurn() {
-        if (isBlackTurn()) {
-            return new WhiteTurn(ranks);
-        }
-        return new BlackTurn(ranks);
-    }
-
-    private End judgeWinner() {
-        if (isBlackTurn()) {
-            return new BlackWin(ranks);
-        }
-        return new WhiteWin(ranks);
-    }
-
     private BoardState moveStraight(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
@@ -83,22 +62,13 @@ public abstract class Playing extends GameStarted {
         if (selected.isMovable(targetPiece)) {
             return updateBoard(target, selected, start, targetPiece);
         }
-
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
-    }
-
-    private BoardState updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
-        updatePiece(target, selected);
-        updatePiece(start, new Blank(start));
-        selected.updatePosition(targetPiece.getPosition());
-        return judgeStatus(targetPiece);
     }
 
     private void checkPath(Position start, Position target, Direction direction) {
         if (Position.calculateStraightDistance(start, target) == 1) {
             return;
         }
-
         Position afterStartTarget = Position.createNextPosition(start, direction);
 
         for (Position position = afterStartTarget;
@@ -114,13 +84,41 @@ public abstract class Playing extends GameStarted {
         }
     }
 
+    private BoardState updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
+        updatePiece(target, selected);
+        updatePiece(start, new Blank(start));
+        selected.updatePosition(targetPiece.getPosition());
+        return judgeStatus(targetPiece);
+    }
+
     private void updatePiece(Position position, Piece piece) {
         ranks.get(position.getY())
                 .getPieces()
                 .set(position.getX(), piece);
     }
 
-    public Piece getPiece(Position position) {
+    private GameStarted judgeStatus(Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            return judgeWinner();
+        }
+        return judgeTurn();
+    }
+
+    private End judgeWinner() {
+        if (isBlackTurn()) {
+            return new BlackWin(ranks);
+        }
+        return new WhiteWin(ranks);
+    }
+
+    private Playing judgeTurn() {
+        if (isBlackTurn()) {
+            return new WhiteTurn(ranks);
+        }
+        return new BlackTurn(ranks);
+    }
+
+    private Piece getPiece(Position position) {
         return ranks.get(position.getY())
                 .getPieces()
                 .get(position.getX());

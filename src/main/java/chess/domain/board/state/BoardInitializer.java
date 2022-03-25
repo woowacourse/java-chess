@@ -15,10 +15,17 @@ import java.util.Map;
 
 public class BoardInitializer {
 
-    private static final int RANK_CAPACITY = 8;
-
     public static BoardState initBoard() {
-        Map<Integer, Rank> ranks = new HashMap<>(RANK_CAPACITY);
+        Map<Integer, Rank> ranks = new HashMap<>();
+        initRank1(ranks);
+        initRank2(ranks);
+        initRank3To6(ranks);
+        initRank7(ranks);
+        initRank8(ranks);
+        return new WhiteTurn(ranks);
+    }
+
+    private static void initRank1(Map<Integer, Rank> ranks) {
         ranks.put(0, new Rank(List.of(
                 Rook.createWhite(new Position("a1")),
                 Knight.createWhite(new Position("b1")),
@@ -29,6 +36,9 @@ public class BoardInitializer {
                 Knight.createWhite(new Position("g1")),
                 Rook.createWhite(new Position("h1"))
         )));
+    }
+
+    private static void initRank2(Map<Integer, Rank> ranks) {
         ranks.put(1, new Rank(List.of(
                 Pawn.createWhite(new Position("a2")),
                 Pawn.createWhite(new Position("b2")),
@@ -39,6 +49,9 @@ public class BoardInitializer {
                 Pawn.createWhite(new Position("g2")),
                 Pawn.createWhite(new Position("h2"))
         )));
+    }
+
+    private static void initRank3To6(Map<Integer, Rank> ranks) {
         for (int i = 3; i < 7; i++) {
             ranks.put(i - 1, new Rank(List.of(
                     new Blank(new Position("a" + i)),
@@ -51,6 +64,9 @@ public class BoardInitializer {
                     new Blank(new Position("h" + i))
             )));
         }
+    }
+
+    private static void initRank7(Map<Integer, Rank> ranks) {
         ranks.put(6, new Rank(List.of(
                 Pawn.createBlack(new Position("a7")),
                 Pawn.createBlack(new Position("b7")),
@@ -61,6 +77,9 @@ public class BoardInitializer {
                 Pawn.createBlack(new Position("g7")),
                 Pawn.createBlack(new Position("h7"))
         )));
+    }
+
+    private static void initRank8(Map<Integer, Rank> ranks) {
         ranks.put(7, new Rank(List.of(
                 Rook.createBlack(new Position("a8")),
                 Knight.createBlack(new Position("b8")),
@@ -71,7 +90,6 @@ public class BoardInitializer {
                 Knight.createBlack(new Position("g8")),
                 Rook.createBlack(new Position("h8"))
         )));
-        return new WhiteTurn(ranks);
     }
 
 }

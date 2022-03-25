@@ -10,18 +10,22 @@ public class ChessGame {
 
     public void run() {
         OutputView.printStartView();
-        if (Command.firstCommand(InputView.requestCommand()) == Command.END) {
+
+        if (Command.firstCommand(InputView.requestCommand()) != Command.START) {
             return;
         }
 
         Board board = new Board();
+        playRound(board);
 
+        OutputView.printResult(board);
+    }
+
+    private void playRound(Board board) {
         while (!board.isEnd()) {
             OutputView.printBoard(board);
             executeCommand(board);
         }
-
-        OutputView.printResult(board);
     }
 
     private void executeCommand(Board board) {
@@ -33,8 +37,7 @@ public class ChessGame {
         }
 
         if (input.size() == 3) {
-            board.move(new Position(input.get(1)),
-                    new Position(input.get(2)));
+            board.move(new Position(input.get(1)), new Position(input.get(2)));
         }
     }
 }
