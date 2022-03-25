@@ -30,7 +30,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isForward(Position source, Position target, int amount) {
-        return (source.rankDisplacement(target) <= amount) && source.isSameFile(target);
+        return source.rankDisplacement(target) > 0 && source.rankDisplacement(target) <= amount && source.isSameFile(target);
     }
 
     @Override

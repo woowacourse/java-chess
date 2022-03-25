@@ -35,4 +35,26 @@ class PawnTest {
         boolean actual = pawn.isMovable(source, target);
         assertThat(actual).isFalse();
     }
+
+    @Test
+    @DisplayName("폰은 뒤로 이동하는 것이 불가하다(흰색)")
+    void pawn_cant_move_backward_white() {
+        Pawn pawn = new Pawn(PieceColor.WHITE);
+        Position source = new Position(FOUR, A);
+        Position target = new Position(THREE, A);
+        boolean actual = pawn.isMovable(source, target);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰은 뒤로 이동하는 것이 불가하다(흑색)")
+    void pawn_cant_move_backward_black() {
+        Pawn pawn = new Pawn(PieceColor.BLACK);
+        Position source = new Position(FIVE, A);
+        Position target = new Position(SIX, A);
+        boolean actual = pawn.isMovable(source, target);
+
+        assertThat(actual).isFalse();
+    }
 }
