@@ -7,8 +7,8 @@ import java.util.function.BiPredicate;
 
 public class King extends Piece {
 
-    private static final BiPredicate<Integer, Integer> invalidTargetCondition =
-            (rankDifference, fileDifference) -> rankDifference > 1 || fileDifference > 1;
+    private static final BiPredicate<Integer, Integer> movingCondition =
+            (rankDifference, fileDifference) -> rankDifference <= 1 && fileDifference <= 1;
 
     public King(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -16,7 +16,7 @@ public class King extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, invalidTargetCondition, true);
+        position.validateTargetPosition(targetPosition, movingCondition, true);
         return new King(teamColor, targetPosition);
     }
 }

@@ -7,8 +7,8 @@ import java.util.function.BiPredicate;
 
 public class Rook extends Piece {
 
-    static final BiPredicate<Integer, Integer> invalidTargetCondition =
-            (rankDifference, fileDifference) -> fileDifference != 0 && rankDifference != 0;
+    static final BiPredicate<Integer, Integer> movingCondition =
+            (rankDifference, fileDifference) -> fileDifference == 0 || rankDifference == 0;
 
     public Rook(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -16,7 +16,7 @@ public class Rook extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, invalidTargetCondition, false);
+        position.validateTargetPosition(targetPosition, movingCondition, false);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Rook(teamColor, targetPosition);

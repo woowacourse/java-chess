@@ -59,12 +59,12 @@ public class Position {
     }
 
     public void validateTargetPosition(final Position targetPosition,
-                                       final BiPredicate<Integer, Integer> invalidTargetCondition,
+                                       final BiPredicate<Integer, Integer> movingCondition,
                                        final boolean absoluteFlag) {
         final int differenceOfFile = this.file.calculateDifference(targetPosition.file, absoluteFlag);
         final int differenceOfRank = this.rank.calculateDifference(targetPosition.rank, absoluteFlag);
 
-        if (invalidTargetCondition.test(differenceOfFile, differenceOfRank)) {
+        if (!movingCondition.test(differenceOfFile, differenceOfRank)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
