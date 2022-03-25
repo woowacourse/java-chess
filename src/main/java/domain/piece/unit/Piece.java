@@ -68,8 +68,12 @@ public abstract class Piece {
 
     protected abstract List<Direction> directions();
 
-    public String symbol() {
+    public String getSymbolByTeamColor() {
         return unit.symbol(teamColor);
+    }
+
+    public String symbol() {
+        return unit.symbol();
     }
 
     @Override

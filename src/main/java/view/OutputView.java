@@ -13,12 +13,16 @@ public class OutputView {
         YPosition[] yPositions = YPosition.values();
         Arrays.sort(yPositions, Collections.reverseOrder());
 
+        System.out.println("현재 턴 : " + chessBoard.getCurrentTurn());
         for (YPosition y : yPositions) {
-            for (XPosition x : XPosition.values()) {
-                System.out.print(chessBoard.symbol(Position.of(x, y)));
-            }
-            System.out.println();
+            printBoardByXPosition(chessBoard, y);
         }
+        System.out.println();
+    }
+
+    private static void printBoardByXPosition(ChessBoard chessBoard, YPosition yPosition) {
+        Arrays.stream(XPosition.values())
+                .forEach(xPosition -> System.out.print(chessBoard.symbol(Position.of(xPosition, yPosition))));
         System.out.println();
     }
 }

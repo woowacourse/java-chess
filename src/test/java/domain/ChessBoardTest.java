@@ -7,10 +7,12 @@ import domain.piece.property.TeamColor;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
+import domain.piece.unit.Queen;
 import domain.piece.unit.Rook;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
+import domain.utils.Result;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -336,5 +338,107 @@ class ChessBoardTest {
                 Position.of(XPosition.B, YPosition.FOUR),
                 Position.of(XPosition.C, YPosition.FOUR)
         );
+    }
+
+    @Test
+    @DisplayName("현재 팀의 점수를 계산한다.")
+    void checkCurrentTeamScore(){
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+
+        assertThat(chessBoard.calculateTeamScore(TeamColor.WHITE)).isEqualTo(38);
+        assertThat(chessBoard.calculateTeamScore(TeamColor.BLACK)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("폰이 같은 세로줄에 있는 경우 1점이 아닌 0.5점을 준다.")
+    void checkDuplicatePawnScore(){
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(Position.of(x, y), null)));
+                board.put(Position.of("a","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("a","2"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("a","3"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("b","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("c","1"), new Pawn(TeamColor.WHITE));
+                return board;
+            }
+        });
+
+        assertThat(chessBoard.calculateTeamScore(TeamColor.WHITE)).isEqualTo(3.5);
+    }
+
+    @Test
+    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (패)")
+    void checkScoreWhoLoser(){
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(Position.of(x, y), null)));
+                board.put(Position.of("a","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("a","2"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("a","3"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("b","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("c","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("c","5"), new Queen(TeamColor.BLACK));
+                return board;
+            }
+        });
+
+        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (승)")
+    void checkScoreWhoWinner(){
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(Position.of(x, y), null)));
+                board.put(Position.of("a","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("a","2"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("a","3"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("b","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("c","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("c","5"), new Queen(TeamColor.WHITE));
+                return board;
+            }
+        });
+
+        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부) ")
+    void checkScoreDraw(){
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(Position.of(x, y), null)));
+                board.put(Position.of("a","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("a","2"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("a","4"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("a","3"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("b","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("d","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("c","1"), new Pawn(TeamColor.BLACK));
+                board.put(Position.of("c","5"), new Rook(TeamColor.WHITE));
+                return board;
+            }
+        });
+
+        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.DRAW);
     }
 }

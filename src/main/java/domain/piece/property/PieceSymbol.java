@@ -22,6 +22,10 @@ public enum PieceSymbol {
         return symbol.toLowerCase();
     }
 
+    public String symbol() {
+        return symbol;
+    }
+
     @Override
     public String toString() {
         return "Unit{" +
