@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessExecution;
+import chess.domain.MoveResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.dto.BoardDto;
@@ -20,8 +21,13 @@ public class ChessController {
 
         while (execution != ChessExecution.END) {
             if (execution == ChessExecution.MOVE) {
-                board.move(command[1], command[2]);
+                MoveResult move = board.move(command[1], command[2]);
                 outputView.printBoard(BoardDto.from(board));
+
+                if (move == MoveResult.ENDED) {
+                    outputView.printGameEnded(ScoreDto.from(board.getScore()));
+                    break;
+                }
             }
 
             if (execution == ChessExecution.STATUS) {

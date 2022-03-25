@@ -67,4 +67,9 @@ public class OutputView {
         System.out.println("BLACK : " + score.get(Color.BLACK));
         System.out.println("WHITE : " + score.get(Color.WHITE));
     }
+
+    public void printGameEnded(ScoreDto scoreDto) {
+        System.out.println("KING이 잡혀 게임이 끝났습니다.");
+        printScore(scoreDto);
+    }
 }

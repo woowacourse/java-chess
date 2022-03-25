@@ -4,8 +4,10 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingDouble;
 
 import chess.domain.Color;
+import chess.domain.MoveResult;
 import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.LinkedHashMap;
@@ -23,7 +25,7 @@ public class Board {
         this.board = new LinkedHashMap<>(board);
     }
 
-    public boolean move(String from, String to) {
+    public MoveResult move(String from, String to) {
         Position fromPosition = Position.of(from);
         Position toPosition = Position.of(to);
 
@@ -32,23 +34,28 @@ public class Board {
 
         // 출발 좌표에 기물이 없으면 false다
         if (pieceAtFrom.isInValid()) {
-            return false;
+            return MoveResult.FAIL;
         }
 
         // 출발 좌표에 있는 기물이 목적지로 이동이 불가하면 false다
         boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition), pieceAtTo);
         if (!movable) {
-            return false;
+            return MoveResult.FAIL;
         }
 
         // 이동 경로 내 다른 기물이 있을 경우 false다
         if (!pieceAtFrom.isKnight() && isPieceOnTheWay(fromPosition, toPosition)) {
-            return false;
+            return MoveResult.FAIL;
         }
 
         board.put(toPosition, pieceAtFrom);
         board.remove(fromPosition);
-        return true;
+
+        if (pieceAtTo instanceof King) {
+            return MoveResult.ENDED;
+        }
+
+        return MoveResult.SUCCESS;
     }
 
     private boolean isPieceOnTheWay(Position fromPosition, Position toPosition) {
