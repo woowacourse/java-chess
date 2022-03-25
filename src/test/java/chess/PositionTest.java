@@ -2,6 +2,8 @@ package chess;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,5 +28,44 @@ public class PositionTest {
         assertThatThrownBy(() -> new Position("a9"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("[ERROR]");
+    }
+
+    @Test
+    @DisplayName("두 Position 사이에 위치하는 모든 Position을 담아 List로 반환한다(대각).")
+    void traceGroupDiagonal() {
+        //given
+        Position source = new Position(Rank.ONE, File.A);
+        Position target = new Position(Rank.FOUR, File.C);
+
+        List<Position> traceGroup = source.traceGroup(target);
+
+        //then
+        assertThat(traceGroup).containsAnyOf(new Position(Rank.TWO, File.B), new Position(Rank.THREE, File.C));
+    }
+
+    @Test
+    @DisplayName("두 Position 사이에 위치하는 모든 Position을 담아 List로 반환한다(가로).")
+    void traceGroupRank() {
+        //given
+        Position source = new Position(Rank.ONE, File.A);
+        Position target = new Position(Rank.ONE, File.D);
+
+        List<Position> traceGroup = source.traceGroup(target);
+
+        //then
+        assertThat(traceGroup).contains(new Position(Rank.ONE, File.B), new Position(Rank.ONE, File.C));
+    }
+
+    @Test
+    @DisplayName("두 Position 사이에 위치하는 모든 Position을 담아 List로 반환한다(세로).")
+    void traceGroupFile() {
+        //given
+        Position source = new Position(Rank.ONE, File.A);
+        Position target = new Position(Rank.FOUR, File.A);
+
+        List<Position> traceGroup = source.traceGroup(target);
+
+        //then
+        assertThat(traceGroup).contains(new Position(Rank.TWO, File.A), new Position(Rank.THREE, File.A));
     }
 }

@@ -41,4 +41,18 @@ public class QueenTest {
         //then
         assertThat(actual).isFalse();
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:C", "TWO:D"}, delimiter = ':')
+    @DisplayName("경로에 다른 기물 있으면 이동할 수 없다.")
+    void isBlocked(Rank rank, File file) {
+        //given
+        Queen queen = new Queen(PieceColor.WHITE);
+
+        //when
+        boolean actual = queen.isMovable(new Position(Rank.ONE, File.D), new Position(rank, file));
+
+        //then
+        assertThat(actual).isFalse();
+    }
 }

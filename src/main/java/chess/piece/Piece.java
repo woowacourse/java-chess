@@ -1,9 +1,9 @@
 package chess.piece;
 
-import chess.Position;
 import java.util.Objects;
 
 import chess.PieceColor;
+import chess.Position;
 
 public abstract class Piece {
 
