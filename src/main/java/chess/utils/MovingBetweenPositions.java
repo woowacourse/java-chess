@@ -11,12 +11,12 @@ public class MovingBetweenPositions {
         if (source.getRight() < target.getRight()) {
             return generateRowPositions(source.getLeft(), source.getRight(), target.getRight());
         }
-        return generateColumnPositions(source.getLeft(), target.getRight(), source.getRight());
+        return generateRowPositions(source.getLeft(), target.getRight(), source.getRight());
     }
 
     public static List<Pair<Integer, Integer>> computeBetweenPositionsOfColumn(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
         if (source.getLeft() < target.getLeft()) {
-            return generateRowPositions(source.getRight(), source.getLeft(), target.getLeft());
+            return generateColumnPositions(source.getRight(), source.getLeft(), target.getLeft());
         }
         return generateColumnPositions(source.getRight(), target.getLeft(), source.getLeft());
     }
