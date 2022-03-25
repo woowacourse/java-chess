@@ -59,16 +59,6 @@ class PawnTest {
         assertThatThrownBy(() -> pawn.move(nextPosition)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("폰은 직진만 가능하다")
-    void notMove() {
-        ChessBoardPosition initialPosition = new ChessBoardPosition('a', 2);
-        Pawn pawn = new Pawn(Team.BLACK, initialPosition);
-        ChessBoardPosition nextPosition = new ChessBoardPosition('b', 3);
-
-        assertThatThrownBy(() -> pawn.move(nextPosition)).isInstanceOf(IllegalArgumentException.class);
-    }
-
     @ParameterizedTest(name = "{index}: {3}")
     @MethodSource("diagonalParameters")
     @DisplayName("폰은 한 칸 또는 두 칸 전진한다.")

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
 
 public class Pawn extends ChessPiece {
@@ -14,18 +15,6 @@ public class Pawn extends ChessPiece {
 
     public Pawn(Team team, ChessBoardPosition position) {
         super(NAME, team, position);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        if (position.isDifferentColumn(targetPosition)) {
-            throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
-        }
-        if (team.isWhite()) {
-            moveWhite(targetPosition);
-            return;
-        }
-        moveBlack(targetPosition);
     }
 
     private void moveWhite(ChessBoardPosition targetPosition) {
@@ -118,5 +107,47 @@ public class Pawn extends ChessPiece {
 
     private int calculateColumnDistance(char highColumn, char lowColumn) {
         return Math.abs(highColumn - lowColumn);
+    }
+
+    @Override
+    public void move(ChessBoardPosition targetPosition) {
+        if (team.isWhite()) {
+            moveWhite(targetPosition);
+            return;
+        }
+        moveBlack(targetPosition);
+    }
+
+    @Override
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+        if (!isBlackInitialPosition() && !isWhiteInitialPosition()) {
+            return true;
+        }
+        if (team.isWhite()) {
+            return isWhiteMovable(targetPosition, chessMen);
+        }
+        return isBlackMovable(targetPosition, chessMen);
+    }
+
+    private boolean isWhiteMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
+        if (rowDistance != DEFAULT_DISTANCE && rowDistance != DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
+            return false;
+        }
+        return rowDistance != 2 || isUnobstructed(chessMen, -DEFAULT_DISTANCE);
+    }
+
+    private boolean isBlackMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+        int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
+        if (rowDistance != DEFAULT_DISTANCE && rowDistance != DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
+            return false;
+        }
+        return rowDistance != 2 || isUnobstructed(chessMen, DEFAULT_DISTANCE);
+    }
+
+    private boolean isUnobstructed(ChessMen chessMen, int forwardDirection) {
+        ChessBoardPosition pathPosition = new ChessBoardPosition(position.getColumn(),
+                position.getRow() + forwardDirection);
+        return chessMen.existChessPieceAt(pathPosition);
     }
 }
