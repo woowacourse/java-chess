@@ -31,10 +31,7 @@ public class ChessController {
         }
 
         if (command == Command.MOVE) {
-            final String from = Command.getFromPosition(text);
-            final String to = Command.getToPosition(text);
-
-            runMoveCommand(from, to, chessBoard);
+            runMoveCommand(text, chessBoard);
             playTurn(chessBoard);
         }
 
@@ -60,10 +57,11 @@ public class ChessController {
         }
     }
 
-    private void runMoveCommand(final String from, final String to, final ChessBoard chessBoard) {
+    private void runMoveCommand(final String inputText, final ChessBoard chessBoard) {
         try {
             checkBeforePlaying(chessBoard);
-            chessBoard.move(Position.from(from), Position.from(to));
+            chessBoard.move(Position.from(Command.getFromPosition(inputText)),
+                    Position.from(Command.getToPosition(inputText)));
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
