@@ -22,6 +22,9 @@ public enum Direction {
     DownLeftLeft(-2, -1),
     UpLeftLeft(-2, 1),
     UpUpLeft(-1, 2),
+
+    UpUp(0, 2),
+    DownDown(0, -2)
     ;
 
     private final int file;
@@ -54,7 +57,7 @@ public enum Direction {
         return directions;
     }
 
-    public static List<Direction> diagonal() { //diagonal
+    public static List<Direction> diagonal() {
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.UpRight);
         directions.add(Direction.UpLeft);
@@ -67,6 +70,13 @@ public enum Direction {
         List<Direction> directions = new ArrayList<>();
         directions.addAll(upDownLeftRight());
         directions.addAll(diagonal());
+        return directions;
+    }
+
+    public static List<Direction> leftRight() {
+        List<Direction> directions = new ArrayList<>();
+        directions.add(Direction.Left);
+        directions.add(Direction.Right);
         return directions;
     }
 

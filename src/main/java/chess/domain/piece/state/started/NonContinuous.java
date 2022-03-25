@@ -1,4 +1,4 @@
-package chess.domain.piece.state;
+package chess.domain.piece.state.started;
 
 import java.util.List;
 import java.util.stream.Collectors;

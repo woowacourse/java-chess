@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.piece.state.StartedQueen;
+import chess.domain.piece.state.started.StartedQueen;
 
 public final class Queen extends Piece {
 

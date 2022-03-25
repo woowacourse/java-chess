@@ -1,10 +1,11 @@
-package chess.domain.piece.state;
+package chess.domain.piece.state.started;
 
 import java.util.List;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.state.State;
 
 public class StartedBishop extends Started{
 

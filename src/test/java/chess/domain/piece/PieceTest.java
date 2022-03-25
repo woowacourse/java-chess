@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.property.Color;
-import chess.domain.piece.state.StartedBishop;
+import chess.domain.piece.state.started.StartedBishop;
 
 public class PieceTest {
     @Test

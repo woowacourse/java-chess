@@ -1,22 +1,23 @@
-package chess.domain.piece.state;
+package chess.domain.piece.state.started;
 
 import java.util.List;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.state.State;
 
-public class StartedKing extends Started{
+public class StartedRook extends Started{
 
-    private final NonContinuous nonContinuous = new NonContinuous();
+    private final Continuous continuous = new Continuous();
 
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return nonContinuous.getMovablePositions(source, board, Direction.all());
+        return continuous.getMovablePositions(Direction.upDownLeftRight(), source, board);
     }
 
     @Override
     public State updateState() {
-        return new StartedKing();
+        return new StartedRook();
     }
 }

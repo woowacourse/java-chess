@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
-import chess.domain.piece.state.StartedKing;
+import chess.domain.piece.state.started.StartedKing;
 
 public final class King extends Piece {
     private static final String NAME = "k";
