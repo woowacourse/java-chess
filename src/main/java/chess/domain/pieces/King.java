@@ -20,4 +20,9 @@ public class King implements Type {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

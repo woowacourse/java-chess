@@ -8,6 +8,11 @@ import java.util.List;
 
 public class GameMachine {
 
+    public static final String MOVE_DELIMITER = " ";
+    public static final int MOVE_COMMAND_SIZE = 3;
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
+
     public void run() {
         InputView.announceStart();
         Board board = null;
@@ -15,16 +20,16 @@ public class GameMachine {
         do {
             command = InputView.requestCommand();
             board = play(board, command);
-        } while (!command.equals("end"));
+        } while (!Command.isEnd(command) && !board.isEnd());
     }
 
     private Board play(Board board, String command) {
-        if (command.trim().equals("start")) {
+        if (Command.isStart(command)) {
             board = new Board(new BoardInitiator());
             OutputView.printBoard(board);
         }
-        if (command.trim().startsWith("move")) {
-            List<String> commands = Arrays.asList(command.split(" "));
+        if (Command.isMove(command)) {
+            List<String> commands = Arrays.asList(command.split(MOVE_DELIMITER));
             movePiece(board, commands);
         }
         return board;
@@ -35,11 +40,19 @@ public class GameMachine {
             OutputView.announceNotStarted();
             return;
         }
-        if (commands.size() != 3) {
+        if (commands.size() != MOVE_COMMAND_SIZE) {
             OutputView.announceWrongMoveCommand();
             return;
         }
-        board.move(commands.get(1), commands.get(2));
+        movePieceOnBoard(board, commands);
         OutputView.printBoard(board);
+    }
+
+    private void movePieceOnBoard(Board board, List<String> commands) {
+        try {
+            board.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+        } catch (IllegalArgumentException e) {
+            OutputView.announceBadMovement(e.getMessage());
+        }
     }
 }

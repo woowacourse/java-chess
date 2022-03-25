@@ -286,4 +286,19 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
     }
+
+    @Test
+    @DisplayName("킹이 잡히면 게임이 끝난다")
+    void kingCaught_gameEnd() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new King()));
+            pieces.put(Position.of("g1"), new Piece(Color.WHITE, new Rook()));
+            return pieces;
+        });
+
+        board.move("g1", "g7");
+        assertThat(board.isEnd()).isTrue();
+    }
 }

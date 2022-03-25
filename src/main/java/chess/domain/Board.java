@@ -26,8 +26,14 @@ public final class Board {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
         validateNotEquals(sourcePosition, targetPosition);
+
         Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
+
+        movePiece(sourcePosition, targetPosition, piece);
+    }
+
+    private void movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
         if (piece.isMovable(sourcePosition, targetPosition)) {
             checkPawnMovement(sourcePosition, targetPosition, piece);
             validatePathEmpty(sourcePosition, targetPosition);
@@ -83,10 +89,25 @@ public final class Board {
             return;
         }
         List<Position> positions = source.calculatePath(target, direction);
+        validatePiecesNotExistOnPath(positions);
+    }
+
+    private void validatePiecesNotExistOnPath(List<Position> positions) {
         for (Position position : positions) {
-            if (pieces.containsKey(position)) {
-                throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
-            }
+            validatePieceNotExist(position);
         }
+    }
+
+    private void validatePieceNotExist(Position position) {
+        if (pieces.containsKey(position)) {
+            throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+        }
+    }
+
+    public boolean isEnd() {
+        return pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() != 2;
     }
 }

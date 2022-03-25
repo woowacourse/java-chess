@@ -57,4 +57,8 @@ public final class Piece {
     public boolean isSameColor(Piece piece) {
         return color == piece.color;
     }
+
+    public boolean isKing() {
+        return type.isKing();
+    }
 }

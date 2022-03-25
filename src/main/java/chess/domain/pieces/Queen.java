@@ -18,4 +18,9 @@ public class Queen implements Type {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -9,4 +9,6 @@ public interface Type {
     boolean isMovable(Position source, Position target);
 
     boolean isPawn();
+
+    boolean isKing();
 }
