@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
+import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -10,6 +11,8 @@ public abstract class AbstractPiece implements Piece {
     private final String name;
 
     protected AbstractPiece(Color color, String name) {
+        Objects.requireNonNull(color, "color는 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(name, "name는 null이 들어올 수 없습니다.");
         this.color = color;
         this.name = name;
     }
