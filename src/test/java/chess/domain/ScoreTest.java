@@ -47,4 +47,5 @@ class ScoreTest {
         Score score = new Score(board, Color.WHITE);
         assertThat(score.getValue()).isEqualTo(37);
     }
+
 }
