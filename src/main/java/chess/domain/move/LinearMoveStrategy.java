@@ -11,13 +11,13 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
 
     protected boolean isPieceExistWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getHorizon()))
-                .mapToObj(moveUnit -> smallerPosition.move(moveUnit, NO_MOVE))
+                .mapToObj(moveUnit -> smallerPosition.move(moveUnit, NOT_MOVE))
                 .anyMatch(position -> isPieceExist(board, position));
     }
 
     protected boolean isPieceExistWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getVertical()))
-                .mapToObj(moveUnit -> smallerPosition.move(NO_MOVE, moveUnit * REVERSE_DIRECTION))
+                .mapToObj(moveUnit -> smallerPosition.move(NOT_MOVE, moveUnit * REVERSE_DIRECTION))
                 .anyMatch(position -> isPieceExist(board, position));
     }
 

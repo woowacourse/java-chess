@@ -75,7 +75,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
         if (!source.isPawnStartPosition(color)) {
             return false;
         }
-        return board.getPiece(source.move(NO_MOVE, findForward(color))).isBlank() && targetPiece.isBlank();
+        return board.getPiece(source.move(NOT_MOVE, findForward(color))).isBlank() && targetPiece.isBlank();
     }
 
     private int findForward(final Color color) {

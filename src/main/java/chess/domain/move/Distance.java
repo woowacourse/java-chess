@@ -1,10 +1,10 @@
 package chess.domain.move;
 
+import static chess.domain.move.MoveStrategy.NOT_MOVE;
+
 import chess.domain.board.Position;
 
 public class Distance {
-
-    private static final int NOT_MOVE = 0;
 
     private final int horizon;
     private final int vertical;

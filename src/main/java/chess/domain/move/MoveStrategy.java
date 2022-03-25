@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 
 public abstract class MoveStrategy {
 
-    protected static final int NO_MOVE = 0;
+    protected static final int NOT_MOVE = 0;
 
     public abstract boolean isMovable(final Board board, final Position source, final Position target);
 
