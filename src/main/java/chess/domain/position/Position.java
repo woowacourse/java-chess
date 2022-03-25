@@ -35,6 +35,10 @@ public class Position {
         return rank == this.rank;
     }
 
+    public boolean isSameFile(final File file) {
+        return file == this.file;
+    }
+
     public int calculateFileDistance(final Position from) {
         return this.file.calculateDistance(from.file);
     }
@@ -42,7 +46,6 @@ public class Position {
     public int calculateRankDistance(final Position from) {
         return this.rank.calculateDistance(from.rank);
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -60,4 +63,5 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
 }

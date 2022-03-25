@@ -155,6 +155,20 @@ public class Board {
         return isBlocked(direction, next, to);
     }
 
+    public int countPiece(final Piece piece) {
+        return (int) board.values().stream()
+            .filter(value -> value.equals(piece))
+            .count();
+    }
+
+    public int countPieceOnSameFile(final Piece piece, final File file) {
+        return (int) board.entrySet()
+            .stream()
+            .filter(entry -> entry.getKey().isSameFile(file))
+            .filter(entry -> entry.getValue().equals(piece))
+            .count();
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(board));
     }
