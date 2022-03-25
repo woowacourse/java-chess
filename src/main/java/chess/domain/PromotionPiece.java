@@ -8,7 +8,7 @@ import chess.domain.piece.single.Knight;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum Promotion {
+public enum PromotionPiece {
 
     QUEEN("Q", King::new),
     ROOK("R", Rook::new),
@@ -19,7 +19,7 @@ public enum Promotion {
     private final String value;
     private final Function<Color, Piece> createPieceFunction;
 
-    Promotion(String value, Function<Color, Piece> createPieceFunction) {
+    PromotionPiece(String value, Function<Color, Piece> createPieceFunction) {
         this.value = value;
         this.createPieceFunction = createPieceFunction;
     }
