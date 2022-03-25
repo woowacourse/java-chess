@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -24,7 +25,7 @@ public class InputView {
         System.out.println("> 게임 종료 : " + END);
         System.out.println("> 게임 점수 : " + STATUS);
         System.out.println("> 게임 이동 : " + MOVE + " source위치 target위치 - 예. move b2 b3");
-        String input = sc.nextLine();
+        final String input = sc.nextLine();
         validateUserCommand(input);
         return input;
     }
@@ -51,7 +52,7 @@ public class InputView {
         validateNullCheck(input);
         validateNotAllowCommand(input);
         if (input.contains(MOVE)) {
-            String[] moveCommand = input.split(DELIMITER);
+            List<String> moveCommand = Arrays.asList(input.split(DELIMITER));
             validateMoveCommand(moveCommand);
             input = calculateMoveCommand(moveCommand);
         }
@@ -65,44 +66,44 @@ public class InputView {
         }
     }
 
-    private static void validateMoveCommand(String[] moveCommand) {
+    private static void validateMoveCommand(final List<String> moveCommand) {
         validateMoveCommandFirstIsMove(moveCommand);
         validateMoveCommandSize(moveCommand);
         validateEachSize(moveCommand);
         validateDuplicatePosition(moveCommand);
     }
 
-    private static void validateMoveCommandFirstIsMove(String[] moveCommand) {
-        if (!moveCommand[MOVE_COMMAND_INDEX].equals(MOVE)) {
+    private static void validateMoveCommandFirstIsMove(final List<String> moveCommand) {
+        if (!moveCommand.get(MOVE_COMMAND_INDEX).equals(MOVE)) {
             throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
         }
     }
 
-    private static void validateMoveCommandSize(String[] moveCommand) {
-        if (moveCommand.length != MOVE_COMMAND_LENGTH) {
+    private static void validateMoveCommandSize(final List<String> moveCommand) {
+        if (moveCommand.size() != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
         }
     }
 
-    private static void validateEachSize(String[] moveCommand) {
+    private static void validateEachSize(final List<String> moveCommand) {
         validateInputPositionSize(moveCommand, SOURCE_POSITION_INDEX);
         validateInputPositionSize(moveCommand, TARGET_POSITION_INDEX);
     }
 
-    private static void validateInputPositionSize(String[] moveCommand, int index) {
-        if (moveCommand[index].length() != POSITION_SIZE) {
+    private static void validateInputPositionSize(final List<String> moveCommand, int index) {
+        if (moveCommand.get(index).length() != POSITION_SIZE) {
             throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
         }
     }
 
-    private static void validateDuplicatePosition(String[] moveCommand) {
-        if (moveCommand[SOURCE_POSITION_INDEX].equals(moveCommand[TARGET_POSITION_INDEX])) {
+    private static void validateDuplicatePosition(final List<String> moveCommand) {
+        if (moveCommand.get(SOURCE_POSITION_INDEX).equals(moveCommand.get(TARGET_POSITION_INDEX))) {
             throw new IllegalArgumentException("[ERROR] source위치와 target위치를 다르게 입력해주세요.");
         }
     }
 
-    private static String calculateMoveCommand(String[] moveCommand) {
+    private static String calculateMoveCommand(final List<String> moveCommand) {
         return String.join(DELIMITER,
-                Arrays.copyOfRange(moveCommand, SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1));
+                moveCommand.subList(SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1));
     }
 }

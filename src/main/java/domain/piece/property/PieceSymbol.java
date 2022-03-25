@@ -15,8 +15,8 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
-    public String symbol(final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
+    public String symbol(final Team Team) {
+        if (Team == Team.BLACK) {
             return symbol;
         }
         return symbol.toLowerCase();

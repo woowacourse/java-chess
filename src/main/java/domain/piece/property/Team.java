@@ -1,6 +1,6 @@
 package domain.piece.property;
 
-public enum TeamColor {
+public enum Team {
 
     BLACK,
     WHITE

@@ -1,7 +1,7 @@
 package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public abstract class CommonMovablePiece extends Piece {
 
-    public CommonMovablePiece(final TeamColor teamColor, final PieceSymbol unit) {
-        super(teamColor, unit);
+    public CommonMovablePiece(final Team Team, final PieceSymbol unit) {
+        super(Team, unit);
     }
 
     @Override

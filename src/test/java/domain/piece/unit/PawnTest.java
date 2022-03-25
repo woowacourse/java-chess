@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -17,7 +17,7 @@ class PawnTest {
     @MethodSource("availableWhitePositions")
     @DisplayName("WhitePawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
     void moveWhitePawn(Position target) {
-        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece piece = new Pawn(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
@@ -35,7 +35,7 @@ class PawnTest {
     @MethodSource("unavailableWhitePositions")
     @DisplayName("WhitePawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이외에 이동할 수 없다.")
     void moveWhitePawnUnablePositions(Position target) {
-        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece piece = new Pawn(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(false);
@@ -54,7 +54,7 @@ class PawnTest {
     @MethodSource("availableBlackPositions")
     @DisplayName("BlackPawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
     void moveBlackPawn(Position target) {
-        Piece piece = new Pawn(TeamColor.BLACK);
+        Piece piece = new Pawn(Team.BLACK);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SEVEN), target))
                 .isEqualTo(true);
@@ -72,7 +72,7 @@ class PawnTest {
     @MethodSource("unavailableBlackPositions")
     @DisplayName("BlackPawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이외에 이동할 수 없다.")
     void moveBlackPawnUnablePositions(Position target) {
-        Piece piece = new Pawn(TeamColor.BLACK);
+        Piece piece = new Pawn(Team.BLACK);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FIVE), target))
                 .isEqualTo(false);
@@ -91,7 +91,7 @@ class PawnTest {
     @Test
     @DisplayName("Black Pawn 은 처음 출발할 때 앞으로 두 칸 이동할 수 있다.")
     void moveBlackPawnFirst() {
-        Piece piece = new Pawn(TeamColor.BLACK);
+        Piece piece = new Pawn(Team.BLACK);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SEVEN),
                         Position.of(XPosition.B, YPosition.FIVE)))
@@ -102,7 +102,7 @@ class PawnTest {
     @Test
     @DisplayName("White Pawn 은 처음 출발할 때 앞으로 두 칸 이동할 수 있다.")
     void moveWhitePawnFirst() {
-        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece piece = new Pawn(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO),
                         Position.of(XPosition.B, YPosition.FOUR)))
@@ -112,7 +112,7 @@ class PawnTest {
     @Test
     @DisplayName("White Pawn 은 처음 출발할 때가 아니라면 앞으로 두 칸 이동할 수 없다.")
     void moveWhitePawnNotFirst() {
-        Piece piece = new Pawn(TeamColor.WHITE);
+        Piece piece = new Pawn(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.THREE),
                         Position.of(XPosition.D, YPosition.FIVE)))
@@ -122,7 +122,7 @@ class PawnTest {
     @Test
     @DisplayName("Black Pawn 은 처음 출발할 때가 아니라면 앞으로 두 칸 이동할 수 없다.")
     void moveBlackPawnNotFirst() {
-        Piece piece = new Pawn(TeamColor.BLACK);
+        Piece piece = new Pawn(Team.BLACK);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SIX),
                         Position.of(XPosition.B, YPosition.FOUR)))

@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -16,7 +16,7 @@ class KnightTest {
     @MethodSource("availablePositions")
     @DisplayName("Knight 는 상하좌우로 이동할 수 있다.")
     void moveKnight(Position target) {
-        Piece piece = new Knight(TeamColor.WHITE);
+        Piece piece = new Knight(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FOUR), target))
                 .isEqualTo(true);
@@ -39,7 +39,7 @@ class KnightTest {
     @MethodSource("disablePositions")
     @DisplayName("Knight 는 상하좌우 L자 이외로 이동할 수 없다.")
     void nonMoveKnight(Position target) {
-        Piece piece = new Knight(TeamColor.WHITE);
+        Piece piece = new Knight(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FOUR), target))
                 .isEqualTo(false);

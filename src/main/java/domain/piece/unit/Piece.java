@@ -1,7 +1,7 @@
 package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -12,26 +12,22 @@ import java.util.Map;
 
 public abstract class Piece {
 
-    private final TeamColor teamColor;
+    private final Team Team;
     private final PieceSymbol unit;
 
     protected Map<Direction, List<Position>> directionalPositions;
 
-    public Piece(final TeamColor teamColor, final PieceSymbol unit) {
-        this.teamColor = teamColor;
+    public Piece(final Team Team, final PieceSymbol unit) {
+        this.Team = Team;
         this.unit = unit;
-    }
-
-    protected void initializeDirectionalPositions() {
-        directionalPositions = new HashMap<>();
     }
 
     protected boolean checkOverRange(final int x, final int y) {
         return XPosition.checkRange(x) && YPosition.checkRange(y);
     }
 
-    public boolean checkSameTeamColor(final TeamColor teamColor) {
-        return this.teamColor == teamColor;
+    public boolean checkSameTeam(final Team Team) {
+        return this.Team == Team;
     }
 
     public boolean availableMove(final Position source, final Position target) {
@@ -45,6 +41,12 @@ public abstract class Piece {
             calculateAvailableDirectionalPositions(source, direction);
         }
     }
+
+    protected void initializeDirectionalPositions() {
+        directionalPositions = new HashMap<>();
+    }
+
+    protected abstract void calculateAvailableDirectionalPositions(final Position source, final Direction direction);
 
     protected boolean containsPosition(final Position position) {
         return directions().stream()
@@ -64,22 +66,20 @@ public abstract class Piece {
                 .orElse(null);
     }
 
-    protected abstract void calculateAvailableDirectionalPositions(final Position source, final Direction direction);
-
-    protected abstract List<Direction> directions();
-
-    public String getSymbolByTeamColor() {
-        return unit.symbol(teamColor);
+    public String getSymbolByTeam() {
+        return unit.symbol(Team);
     }
 
     public String symbol() {
         return unit.symbol();
     }
 
+    protected abstract List<Direction> directions();
+
     @Override
     public String toString() {
         return "Piece{" +
-                "teamColor=" + teamColor +
+                "Team=" + Team +
                 ", unit=" + unit +
                 '}';
     }

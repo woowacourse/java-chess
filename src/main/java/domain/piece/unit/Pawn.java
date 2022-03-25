@@ -1,7 +1,7 @@
 package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.utils.Direction;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ public final class Pawn extends SpecificMovablePiece {
 
     private final List<Direction> directions;
 
-    public Pawn(final TeamColor teamColor) {
-        super(teamColor, PieceSymbol.Pawn);
-        if (teamColor == teamColor.BLACK) {
+    public Pawn(final Team Team) {
+        super(Team, PieceSymbol.Pawn);
+        if (Team == Team.BLACK) {
             directions = Direction.oneSpaceForwardDownDirections();
             return;
         }
@@ -34,7 +34,7 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     private boolean availableFirstStartPosition(final Position source, final Position target) {
-        return checkFirstDistance(source, target) && checkSameX(source, target) && checkColor(source);
+        return checkFirstDistance(source, target) && checkSameX(source, target) && checkTeam(source);
     }
 
     private boolean checkFirstDistance(final Position source, final Position target) {
@@ -45,11 +45,11 @@ public final class Pawn extends SpecificMovablePiece {
         return source.getX() == target.getX();
     }
 
-    private boolean checkColor(final Position source) {
-        boolean checkBlackColor = checkSameTeamColor(TeamColor.BLACK) && source.getY() == START_BLACK_LINE;
-        boolean checkWhiteColor = checkSameTeamColor(TeamColor.WHITE) && source.getY() == START_WHITE_LINE;
+    private boolean checkTeam(final Position source) {
+        boolean checkBlackTeam = checkSameTeam(Team.BLACK) && source.getY() == START_BLACK_LINE;
+        boolean checkWhiteTeam = checkSameTeam(Team.WHITE) && source.getY() == START_WHITE_LINE;
 
-        return checkBlackColor || checkWhiteColor;
+        return checkBlackTeam || checkWhiteTeam;
     }
 
     public boolean checkUpDownDirection(final Position source, final Position target) {
@@ -67,11 +67,11 @@ public final class Pawn extends SpecificMovablePiece {
 
     public List<Position> calculateForwardRouteByPawn(final Position position) {
         List<Position> forwardPositions = new ArrayList<>();
-        Direction direction = directions().stream()
+        final Direction direction = directions().stream()
                 .filter(direct -> direct == Direction.SOUTH || direct == Direction.NORTH)
                 .findFirst()
                 .orElse(null);
-        forwardPositions.addAll(directionalPositions.get(direction)); // 첫번째
+        forwardPositions.addAll(directionalPositions.get(direction));
         forwardPositions.add(position);
 
         return forwardPositions;

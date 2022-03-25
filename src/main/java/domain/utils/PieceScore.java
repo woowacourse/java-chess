@@ -21,7 +21,7 @@ public enum PieceScore {
         this.symbol = symbol;
     }
 
-    public static Double createScore(String symbol, boolean duplicatedPawn) {
+    public static Double createScore(final String symbol, final boolean duplicatedPawn) {
         Double score =  Arrays.stream(PieceScore.values())
                 .filter(pieceScore -> pieceScore.symbol.equals(symbol))
                 .map(pieceScore -> pieceScore.score)
@@ -33,4 +33,11 @@ public enum PieceScore {
         return score;
     }
 
+    @Override
+    public String toString() {
+        return "PieceScore{" +
+                "score=" + score +
+                ", symbol='" + symbol + '\'' +
+                '}';
+    }
 }

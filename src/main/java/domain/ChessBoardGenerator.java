@@ -5,7 +5,7 @@ import domain.piece.unit.Bishop;
 import domain.piece.unit.King;
 import domain.piece.unit.Knight;
 import domain.piece.unit.Pawn;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.piece.unit.Queen;
 import domain.piece.unit.Rook;
 import domain.position.Position;
@@ -21,8 +21,8 @@ public final class ChessBoardGenerator implements BoardGenerator {
     public Map<Position, Piece> generate() {
         Map<Position, Piece> board = new HashMap<>();
         createInitialize(board);
-        createTeamBoard(board, TeamColor.BLACK);
-        createTeamBoard(board, TeamColor.WHITE);
+        createTeamBoard(board, Team.BLACK);
+        createTeamBoard(board, Team.WHITE);
 
         return board;
     }
@@ -39,68 +39,68 @@ public final class ChessBoardGenerator implements BoardGenerator {
         }
     }
 
-    private void createTeamBoard(final Map<Position, Piece> board, final TeamColor teamColor) {
-        createInitPawn(board, teamColor);
-        createInitRook(board, teamColor);
-        createInitKnight(board, teamColor);
-        createInitBishop(board, teamColor);
-        createInitQueen(board, teamColor);
-        createInitKing(board, teamColor);
+    private void createTeamBoard(final Map<Position, Piece> board, final Team Team) {
+        createInitPawn(board, Team);
+        createInitRook(board, Team);
+        createInitKnight(board, Team);
+        createInitBishop(board, Team);
+        createInitQueen(board, Team);
+        createInitKing(board, Team);
     }
 
-    private void createInitPawn(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
+    private void createInitPawn(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
             Arrays.stream(XPosition.values())
-                    .forEach(x -> board.put(Position.of(x, YPosition.SEVEN), new Pawn(TeamColor.BLACK)));
+                    .forEach(x -> board.put(Position.of(x, YPosition.SEVEN), new Pawn(Team.BLACK)));
             return;
         }
         Arrays.stream(XPosition.values())
-                .forEach(x -> board.put(Position.of(x, YPosition.TWO), new Pawn(TeamColor.WHITE)));
+                .forEach(x -> board.put(Position.of(x, YPosition.TWO), new Pawn(Team.WHITE)));
     }
 
-    private void createInitRook(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
-            board.put(Position.of(XPosition.A, YPosition.EIGHT), new Rook(TeamColor.BLACK));
-            board.put(Position.of(XPosition.H, YPosition.EIGHT), new Rook(TeamColor.BLACK));
+    private void createInitRook(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
+            board.put(Position.of(XPosition.A, YPosition.EIGHT), new Rook(Team.BLACK));
+            board.put(Position.of(XPosition.H, YPosition.EIGHT), new Rook(Team.BLACK));
             return;
         }
-        board.put(Position.of(XPosition.A, YPosition.ONE), new Rook(TeamColor.WHITE));
-        board.put(Position.of(XPosition.H, YPosition.ONE), new Rook(TeamColor.WHITE));
+        board.put(Position.of(XPosition.A, YPosition.ONE), new Rook(Team.WHITE));
+        board.put(Position.of(XPosition.H, YPosition.ONE), new Rook(Team.WHITE));
     }
 
-    private void createInitKnight(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
-            board.put(Position.of(XPosition.B, YPosition.EIGHT), new Knight(TeamColor.BLACK));
-            board.put(Position.of(XPosition.G, YPosition.EIGHT), new Knight(TeamColor.BLACK));
+    private void createInitKnight(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
+            board.put(Position.of(XPosition.B, YPosition.EIGHT), new Knight(Team.BLACK));
+            board.put(Position.of(XPosition.G, YPosition.EIGHT), new Knight(Team.BLACK));
             return;
         }
-        board.put(Position.of(XPosition.B, YPosition.ONE), new Knight(TeamColor.WHITE));
-        board.put(Position.of(XPosition.G, YPosition.ONE), new Knight(TeamColor.WHITE));
+        board.put(Position.of(XPosition.B, YPosition.ONE), new Knight(Team.WHITE));
+        board.put(Position.of(XPosition.G, YPosition.ONE), new Knight(Team.WHITE));
     }
 
-    private void createInitBishop(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
-            board.put(Position.of(XPosition.C, YPosition.EIGHT), new Bishop(TeamColor.BLACK));
-            board.put(Position.of(XPosition.F, YPosition.EIGHT), new Bishop(TeamColor.BLACK));
+    private void createInitBishop(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
+            board.put(Position.of(XPosition.C, YPosition.EIGHT), new Bishop(Team.BLACK));
+            board.put(Position.of(XPosition.F, YPosition.EIGHT), new Bishop(Team.BLACK));
             return;
         }
-        board.put(Position.of(XPosition.C, YPosition.ONE), new Bishop(TeamColor.WHITE));
-        board.put(Position.of(XPosition.F, YPosition.ONE), new Bishop(TeamColor.WHITE));
+        board.put(Position.of(XPosition.C, YPosition.ONE), new Bishop(Team.WHITE));
+        board.put(Position.of(XPosition.F, YPosition.ONE), new Bishop(Team.WHITE));
     }
 
-    private void createInitQueen(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
-            board.put(Position.of(XPosition.D, YPosition.EIGHT), new Queen(TeamColor.BLACK));
+    private void createInitQueen(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
+            board.put(Position.of(XPosition.D, YPosition.EIGHT), new Queen(Team.BLACK));
             return;
         }
-        board.put(Position.of(XPosition.D, YPosition.ONE), new Queen(TeamColor.WHITE));
+        board.put(Position.of(XPosition.D, YPosition.ONE), new Queen(Team.WHITE));
     }
 
-    private void createInitKing(final Map<Position, Piece> board, final TeamColor teamColor) {
-        if (teamColor == TeamColor.BLACK) {
-            board.put(Position.of(XPosition.E, YPosition.EIGHT), new King(TeamColor.BLACK));
+    private void createInitKing(final Map<Position, Piece> board, final Team Team) {
+        if (Team == Team.BLACK) {
+            board.put(Position.of(XPosition.E, YPosition.EIGHT), new King(Team.BLACK));
             return;
         }
-        board.put(Position.of(XPosition.E, YPosition.ONE), new King(TeamColor.WHITE));
+        board.put(Position.of(XPosition.E, YPosition.ONE), new King(Team.WHITE));
     }
 }

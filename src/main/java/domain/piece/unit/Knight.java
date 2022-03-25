@@ -3,7 +3,7 @@ package domain.piece.unit;
 import static domain.utils.Direction.knightDirections;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.utils.Direction;
 import java.util.List;
 
@@ -15,8 +15,8 @@ public final class Knight extends SpecificMovablePiece {
         directions = knightDirections();
     }
 
-    public Knight(final TeamColor teamColor) {
-        super(teamColor, PieceSymbol.Knight);
+    public Knight(final Team Team) {
+        super(Team, PieceSymbol.Knight);
     }
 
     @Override

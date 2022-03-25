@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -16,7 +16,7 @@ class BishopTest {
     @MethodSource("availablePositions")
     @DisplayName("Bishop 은 대각선으로 이동할 수 있다.")
     void moveBishop(Position target) {
-        Piece piece = new Bishop(TeamColor.WHITE);
+        Piece piece = new Bishop(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target)).isEqualTo(true);
     }

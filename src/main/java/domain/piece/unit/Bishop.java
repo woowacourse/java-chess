@@ -3,7 +3,7 @@ package domain.piece.unit;
 import static domain.utils.Direction.*;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.utils.Direction;
 import java.util.List;
 
@@ -15,8 +15,8 @@ public final class Bishop extends CommonMovablePiece {
         directions = crossDirections();
     }
 
-    public Bishop(final TeamColor teamColor) {
-        super(teamColor, PieceSymbol.Bishop);
+    public Bishop(final Team Team) {
+        super(Team, PieceSymbol.Bishop);
     }
 
     @Override

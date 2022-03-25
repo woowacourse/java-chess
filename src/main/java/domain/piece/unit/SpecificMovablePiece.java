@@ -1,7 +1,7 @@
 package domain.piece.unit;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public abstract class SpecificMovablePiece extends Piece {
 
-    public SpecificMovablePiece(final TeamColor teamColor, final PieceSymbol unit) {
-        super(teamColor, unit);
+    public SpecificMovablePiece(final Team Team, final PieceSymbol unit) {
+        super(Team, unit);
     }
 
     @Override
@@ -24,7 +24,6 @@ public abstract class SpecificMovablePiece extends Piece {
         if (checkOverRange(x, y)) {
             positions.add(Position.of(XPosition.of(x), YPosition.of(y)));
         }
-
         addDirectionalPosition(direction, positions);
     }
 }

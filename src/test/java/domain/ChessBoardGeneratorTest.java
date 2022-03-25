@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.unit.Piece;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.King;
 import domain.piece.unit.Knight;
@@ -36,7 +36,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(x, YPosition.SEVEN));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
@@ -47,7 +47,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(x, YPosition.TWO));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
@@ -71,8 +71,8 @@ class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(Position.of(XPosition.A, YPosition.EIGHT));
         Piece rightRook = chessBoardGenerator.generate().get(Position.of(XPosition.H, YPosition.EIGHT));
 
-        assertThat(leftRook.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
-        assertThat(rightRook.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(leftRook.checkSameTeam(Team.BLACK)).isEqualTo(true);
+        assertThat(rightRook.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(leftRook).isInstanceOf(Rook.class);
         assertThat(rightRook).isInstanceOf(Rook.class);
     }
@@ -84,8 +84,8 @@ class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(Position.of(XPosition.A, YPosition.ONE));
         Piece rightRook = chessBoardGenerator.generate().get(Position.of(XPosition.H, YPosition.ONE));
 
-        assertThat(leftRook.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
-        assertThat(rightRook.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(leftRook.checkSameTeam(Team.WHITE)).isEqualTo(true);
+        assertThat(rightRook.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(leftRook).isInstanceOf(Rook.class);
         assertThat(rightRook).isInstanceOf(Rook.class);
     }
@@ -97,8 +97,8 @@ class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(Position.of(XPosition.B, YPosition.EIGHT));
         Piece rightKnight = chessBoardGenerator.generate().get(Position.of(XPosition.G, YPosition.EIGHT));
 
-        assertThat(leftKnight.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
-        assertThat(rightKnight.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(leftKnight.checkSameTeam(Team.BLACK)).isEqualTo(true);
+        assertThat(rightKnight.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(leftKnight).isInstanceOf(Knight.class);
         assertThat(rightKnight).isInstanceOf(Knight.class);
     }
@@ -110,8 +110,8 @@ class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(Position.of(XPosition.B, YPosition.ONE));
         Piece rightKnight = chessBoardGenerator.generate().get(Position.of(XPosition.G, YPosition.ONE));
 
-        assertThat(leftKnight.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
-        assertThat(rightKnight.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(leftKnight.checkSameTeam(Team.WHITE)).isEqualTo(true);
+        assertThat(rightKnight.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(leftKnight).isInstanceOf(Knight.class);
         assertThat(rightKnight).isInstanceOf(Knight.class);
     }
@@ -123,8 +123,8 @@ class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(Position.of(XPosition.C, YPosition.EIGHT));
         Piece rightBishop = chessBoardGenerator.generate().get(Position.of(XPosition.F, YPosition.EIGHT));
 
-        assertThat(leftBishop.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
-        assertThat(rightBishop.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(leftBishop.checkSameTeam(Team.BLACK)).isEqualTo(true);
+        assertThat(rightBishop.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(leftBishop).isInstanceOf(Bishop.class);
         assertThat(rightBishop).isInstanceOf(Bishop.class);
     }
@@ -136,8 +136,8 @@ class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(Position.of(XPosition.C, YPosition.ONE));
         Piece rightBishop = chessBoardGenerator.generate().get(Position.of(XPosition.F, YPosition.ONE));
 
-        assertThat(leftBishop.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
-        assertThat(rightBishop.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(leftBishop.checkSameTeam(Team.WHITE)).isEqualTo(true);
+        assertThat(rightBishop.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(leftBishop).isInstanceOf(Bishop.class);
         assertThat(rightBishop).isInstanceOf(Bishop.class);
     }
@@ -148,7 +148,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.D, YPosition.EIGHT));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
@@ -158,7 +158,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.D, YPosition.ONE));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
     }
 
@@ -168,7 +168,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.E, YPosition.EIGHT));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
     }
 
@@ -178,7 +178,7 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.E, YPosition.ONE));
 
-        assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
+        assertThat(piece.checkSameTeam(Team.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
     }
 }

@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -16,7 +16,7 @@ class QueenTest {
     @MethodSource("availablePositions")
     @DisplayName("Queen 은 상하좌우, 대각선으로 이동할 수 있다.")
     void moveQueen(Position target) {
-        Piece piece = new Queen(TeamColor.WHITE);
+        Piece piece = new Queen(Team.WHITE);
 
         Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);

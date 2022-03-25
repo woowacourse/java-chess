@@ -1,6 +1,7 @@
 package domain;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.PieceSymbol;
+import domain.piece.property.Team;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
 import domain.position.Position;
@@ -14,17 +15,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public final class ChessBoard {
 
-    private static final TeamColor START_TEAM_COLOR = TeamColor.WHITE;
+    private static final int DEFAULT_KING_COUNT = 2;
+    private static final int PAWN_DUPLICATE_CONDITION = 2;
+    private static final Team START_TEAM = Team.WHITE;
 
     private Map<Position, Piece> board;
-    private TeamColor currentTurn;
+    private Team currentTurn;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
-        this.currentTurn = START_TEAM_COLOR;
+        this.currentTurn = START_TEAM;
     }
 
     public void move(final Position source, final Position target) {
@@ -43,13 +45,13 @@ public final class ChessBoard {
     }
 
     private void checkCurrentTurn(final Position source) {
-        if (!board.get(source).checkSameTeamColor(this.currentTurn)) {
+        if (!board.get(source).checkSameTeam(this.currentTurn)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 자신의 기물의 위치가 아닙니다.");
         }
     }
 
     private void checkAvailableTarget(final Position target) {
-        if (board.get(target) != null && board.get(target).checkSameTeamColor(currentTurn)) {
+        if (board.get(target) != null && board.get(target).checkSameTeam(currentTurn)) {
             throw new IllegalArgumentException("[ERROR] 자신의 기물이 위치한 곳으로 이동할 수 없습니다.");
         }
     }
@@ -61,10 +63,7 @@ public final class ChessBoard {
             checkPawnMovement(source, target);
             return;
         }
-        List<Position> routePositions = calculateRoutePositions(target, piece);
-        for (Position position : routePositions) {
-            checkWayPointNull(position);
-        }
+        checkRoutePositionsNull(target, piece);
     }
 
     private void checkUnavailableMove(final Position source, final Position target, final Piece piece) {
@@ -102,12 +101,6 @@ public final class ChessBoard {
         }
     }
 
-    private void checkPawnAttack(final Position target) {
-        if (board.get(target) == null) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치에 상대 기물이 없습니다.");
-        }
-    }
-
     private void checkWayPointNullPawn(final Piece piece, final Position target) {
         List<Position> positions = ((Pawn) piece).calculateForwardRouteByPawn(target);
         boolean checkExistNotNullInPositions = positions.stream()
@@ -115,6 +108,19 @@ public final class ChessBoard {
 
         if (checkExistNotNullInPositions) {
             throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 선택한 위치로 이동할 수 없습니다.");
+        }
+    }
+
+    private void checkPawnAttack(final Position target) {
+        if (board.get(target) == null) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 상대 기물이 없습니다.");
+        }
+    }
+
+    private void checkRoutePositionsNull(final Position target, final Piece piece) {
+        List<Position> routePositions = calculateRoutePositions(target, piece);
+        for (Position position : routePositions) {
+            checkWayPointNull(position);
         }
     }
 
@@ -140,43 +146,43 @@ public final class ChessBoard {
     }
 
     private void changeTurn() {
-        if (this.currentTurn == TeamColor.BLACK) {
-            this.currentTurn = TeamColor.WHITE;
+        if (this.currentTurn == Team.BLACK) {
+            this.currentTurn = Team.WHITE;
             return;
         }
-        this.currentTurn = TeamColor.BLACK;
+        this.currentTurn = Team.BLACK;
     }
 
-    public double calculateTeamScore(TeamColor teamColor) {
+    public double calculateTeamScore(final Team Team) {
         double sum = 0;
         for (XPosition x : XPosition.values()) {
-            List<Piece> pieces = calculateTeamPiecesByXPosition(teamColor, x);
+            List<Piece> pieces = calculateTeamPiecesByXPosition(Team, x);
             sum += calculateXPositionScore(pieces);
         }
         return sum;
     }
 
-    private boolean checkDuplicatePawn(List<Piece> pieces) {
-        return pieces.stream()
-                .filter(piece -> piece.symbol().equals("P"))
-                .count() > 1;
-    }
-
-    private List<Piece> calculateTeamPiecesByXPosition(TeamColor teamColor, XPosition x) {
+    private List<Piece> calculateTeamPiecesByXPosition(final Team Team, final XPosition x) {
         return Arrays.stream(YPosition.values())
                 .map(yPosition -> board.get(Position.of(x, yPosition)))
                 .filter(piece -> piece != null)
-                .filter(piece -> piece.checkSameTeamColor(teamColor))
+                .filter(piece -> piece.checkSameTeam(Team))
                 .collect(Collectors.toList());
     }
 
-    private double calculateXPositionScore(List<Piece> pieces) {
+    private double calculateXPositionScore(final List<Piece> pieces) {
         List<Double> scores = new ArrayList<>();
         pieces.forEach(piece -> scores.add(PieceScore.createScore(piece.symbol(), checkDuplicatePawn(pieces))));
 
         return scores.stream()
                 .filter(score -> score != null)
                 .mapToDouble(Double::doubleValue).sum();
+    }
+
+    private boolean checkDuplicatePawn(List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> piece.symbol().equals(PieceSymbol.Pawn.symbol()))
+                .count() >= PAWN_DUPLICATE_CONDITION;
     }
 
     public Result calculateWinner() {
@@ -186,28 +192,35 @@ public final class ChessBoard {
         return competeScore(currentTeamScore, opponentTeamScore);
     }
 
-    private TeamColor getOpponentTeam() {
-        if (currentTurn == TeamColor.BLACK) {
-            return TeamColor.WHITE;
+    private Team getOpponentTeam() {
+        if (currentTurn == Team.BLACK) {
+            return Team.WHITE;
         }
-        return TeamColor.BLACK;
+        return Team.BLACK;
     }
 
-    private Result competeScore(double currentTeamScore, double opponentTeamScore) {
+    private Result competeScore(final double currentTeamScore, final double opponentTeamScore) {
         if (currentTeamScore > opponentTeamScore) {
             return Result.WIN;
         }
-        if(currentTeamScore < opponentTeamScore){
+        if (currentTeamScore < opponentTeamScore) {
             return Result.LOSE;
         }
         return Result.DRAW;
     }
 
-    public TeamColor calculateWhoWinner() {
+    public boolean checkKingExist() {
+        return board.values().stream()
+                .filter(piece -> piece != null)
+                .filter(piece -> piece.symbol().equals(PieceSymbol.King.symbol()))
+                .count() == DEFAULT_KING_COUNT;
+    }
+
+    public Team calculateWhoWinner() {
         return getOpponentTeam();
     }
 
-    public TeamColor getCurrentTurn() {
+    public Team getCurrentTurn() {
         return currentTurn;
     }
 
@@ -216,7 +229,7 @@ public final class ChessBoard {
         if (piece == null) {
             return ".";
         }
-        return piece.getSymbolByTeamColor();
+        return piece.getSymbolByTeam();
     }
 
     @Override
@@ -224,12 +237,5 @@ public final class ChessBoard {
         return "ChessBoard{" +
                 "board=" + board +
                 '}';
-    }
-
-    public boolean checkKingExist() {
-        return board.values().stream()
-                .filter(piece -> piece != null)
-                .filter(piece -> piece.symbol().equals("K"))
-                .count() == 2;
     }
 }

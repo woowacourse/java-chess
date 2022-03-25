@@ -3,7 +3,7 @@ package domain.piece.unit;
 import static domain.utils.Direction.allDirections;
 
 import domain.piece.property.PieceSymbol;
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.utils.Direction;
 import java.util.List;
 
@@ -15,8 +15,8 @@ public final class Queen extends CommonMovablePiece {
         directions = allDirections();
     }
 
-    public Queen(final TeamColor teamColor) {
-        super(teamColor, PieceSymbol.Queen);
+    public Queen(final Team Team) {
+        super(Team, PieceSymbol.Queen);
     }
 
     @Override

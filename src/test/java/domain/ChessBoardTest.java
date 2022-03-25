@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.piece.property.TeamColor;
+import domain.piece.property.Team;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
@@ -81,7 +81,7 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Rook(TeamColor.WHITE));
+                board.put(source, new Rook(Team.WHITE));
                 board.put(target, targetPiece);
                 return board;
             }
@@ -92,7 +92,7 @@ class ChessBoardTest {
 
     private static Stream<Piece> availableTargets() {
         return Stream.of(
-                new Rook(TeamColor.BLACK),
+                new Rook(Team.BLACK),
                 null
         );
     }
@@ -109,8 +109,8 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Rook(TeamColor.WHITE));
-                board.put(target, new Rook(TeamColor.WHITE));
+                board.put(source, new Rook(Team.WHITE));
+                board.put(target, new Rook(Team.WHITE));
                 return board;
             }
         });
@@ -132,9 +132,9 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Bishop(TeamColor.WHITE));
-                board.put(waypoint, new Bishop(TeamColor.WHITE));
-                board.put(target, new Bishop(TeamColor.BLACK));
+                board.put(source, new Bishop(Team.WHITE));
+                board.put(waypoint, new Bishop(Team.WHITE));
+                board.put(target, new Bishop(Team.BLACK));
                 return board;
             }
         });
@@ -171,7 +171,7 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(source, new Pawn(Team.WHITE));
                 return board;
             }
         });
@@ -199,8 +199,8 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
-                board.put(waypoint, new Pawn(TeamColor.BLACK));
+                board.put(source, new Pawn(Team.WHITE));
+                board.put(waypoint, new Pawn(Team.BLACK));
                 return board;
             }
         });
@@ -222,8 +222,8 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
-                board.put(waypoint, new Pawn(TeamColor.BLACK));
+                board.put(source, new Pawn(Team.WHITE));
+                board.put(waypoint, new Pawn(Team.BLACK));
                 return board;
             }
         });
@@ -251,7 +251,7 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(source, new Pawn(Team.WHITE));
                 return board;
             }
         });
@@ -272,8 +272,8 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
-                board.put(target, new Pawn(TeamColor.BLACK));
+                board.put(source, new Pawn(Team.WHITE));
+                board.put(target, new Pawn(Team.BLACK));
                 return board;
             }
         });
@@ -293,7 +293,7 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(source, new Pawn(Team.WHITE));
                 return board;
             }
         });
@@ -321,8 +321,8 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(TeamColor.WHITE));
-                board.put(target, new Pawn(TeamColor.BLACK));
+                board.put(source, new Pawn(Team.WHITE));
+                board.put(target, new Pawn(Team.BLACK));
                 return board;
             }
         });
@@ -345,8 +345,8 @@ class ChessBoardTest {
     void checkCurrentTeamScore(){
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
-        assertThat(chessBoard.calculateTeamScore(TeamColor.WHITE)).isEqualTo(38);
-        assertThat(chessBoard.calculateTeamScore(TeamColor.BLACK)).isEqualTo(38);
+        assertThat(chessBoard.calculateTeamScore(Team.WHITE)).isEqualTo(38);
+        assertThat(chessBoard.calculateTeamScore(Team.BLACK)).isEqualTo(38);
     }
 
     @Test
@@ -359,16 +359,16 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(Position.of("a","1"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("a","2"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("a","3"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("b","1"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("c","1"), new Pawn(TeamColor.WHITE));
+                board.put(Position.of("a","1"), new Pawn(Team.WHITE));
+                board.put(Position.of("a","2"), new Pawn(Team.WHITE));
+                board.put(Position.of("a","3"), new Pawn(Team.WHITE));
+                board.put(Position.of("b","1"), new Pawn(Team.WHITE));
+                board.put(Position.of("c","1"), new Pawn(Team.WHITE));
                 return board;
             }
         });
 
-        assertThat(chessBoard.calculateTeamScore(TeamColor.WHITE)).isEqualTo(3.5);
+        assertThat(chessBoard.calculateTeamScore(Team.WHITE)).isEqualTo(3.5);
     }
 
     @Test
@@ -381,12 +381,12 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(Position.of("a","1"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("a","2"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("a","3"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("b","1"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("c","1"), new Pawn(TeamColor.WHITE));
-                board.put(Position.of("c","5"), new Queen(TeamColor.BLACK));
+                board.put(Position.of("a","1"), new Pawn(Team.WHITE));
+                board.put(Position.of("a","2"), new Pawn(Team.WHITE));
+                board.put(Position.of("a","3"), new Pawn(Team.WHITE));
+                board.put(Position.of("b","1"), new Pawn(Team.WHITE));
+                board.put(Position.of("c","1"), new Pawn(Team.WHITE));
+                board.put(Position.of("c","5"), new Queen(Team.BLACK));
                 return board;
             }
         });
@@ -404,12 +404,12 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(Position.of("a","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("a","2"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("a","3"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("b","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("c","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("c","5"), new Queen(TeamColor.WHITE));
+                board.put(Position.of("a","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("a","2"), new Pawn(Team.BLACK));
+                board.put(Position.of("a","3"), new Pawn(Team.BLACK));
+                board.put(Position.of("b","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("c","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("c","5"), new Queen(Team.WHITE));
                 return board;
             }
         });
@@ -427,14 +427,14 @@ class ChessBoardTest {
                 Arrays.stream(XPosition.values())
                         .forEach(x -> Arrays.stream(YPosition.values())
                                 .forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(Position.of("a","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("a","2"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("a","4"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("a","3"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("b","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("d","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("c","1"), new Pawn(TeamColor.BLACK));
-                board.put(Position.of("c","5"), new Rook(TeamColor.WHITE));
+                board.put(Position.of("a","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("a","2"), new Pawn(Team.BLACK));
+                board.put(Position.of("a","4"), new Pawn(Team.BLACK));
+                board.put(Position.of("a","3"), new Pawn(Team.BLACK));
+                board.put(Position.of("b","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("d","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("c","1"), new Pawn(Team.BLACK));
+                board.put(Position.of("c","5"), new Rook(Team.WHITE));
                 return board;
             }
         });
