@@ -72,7 +72,7 @@ public class ActivePieces {
 
     public double calculateScore(Color color) {
         double defaultScore = calculateDefaultScore(findByColor(color));
-        double sameFilePawnCount = calculateSameFilePositionsSum(findPawnPositionsByColor(color));
+        double sameFilePawnCount = calculateSameFilePiecesSum(findPawnPositionsByColor(color));
 
         return defaultScore - (sameFilePawnCount / SAME_FILE_PAWN_DISADVANTAGE);
     }
@@ -89,24 +89,23 @@ public class ActivePieces {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> findPawnPositionsByColor(Color color) {
+    private List<Piece> findPawnPositionsByColor(Color color) {
         return pieces.stream()
                 .filter(Piece::isPawn)
                 .filter(piece -> piece.hasColorOf(color))
-                .map(Piece::position)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private double calculateSameFilePositionsSum(List<Position> positions) {
+    private double calculateSameFilePiecesSum(List<Piece> pieces) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
-                .map(fileIdx -> countPositionsOfSameFile(positions, fileIdx))
+                .map(fileIdx -> countPiecesOfSameFile(pieces, fileIdx))
                 .filter(count -> count > 1)
                 .reduce(0, Integer::sum);
     }
 
-    private int countPositionsOfSameFile(List<Position> positions, int fileIdx) {
-        return (int) positions.stream()
-                .filter(position -> position.hasSameFileIdx(fileIdx))
+    private int countPiecesOfSameFile(List<Piece> pieces, int fileIdx) {
+        return (int) pieces.stream()
+                .filter(piece -> piece.isAtFileOrColumnIdxOf(fileIdx))
                 .count();
     }
 }

@@ -26,10 +26,6 @@ public class Position {
         return Position.of(fileIdx, rankIdx);
     }
 
-    public boolean hasSameFileIdx(int fileIdx) {
-        return this.fileIdx == fileIdx;
-    }
-
     public int fileDifference(Position targetPosition) {
         return Math.abs(fileIdx - targetPosition.fileIdx);
     }
