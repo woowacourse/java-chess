@@ -14,8 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
 
-    private static final Position whitePawnPositionAtStartingPoint = new Position("b2");
-
+    // white
     @DisplayName("white pawn은 시작점인 경우 top 방향으로 한 칸 혹은 두 칸 이동 가능하다.")
     @ParameterizedTest
     @ValueSource(strings = {"b3", "b4"})
@@ -23,7 +22,7 @@ class PawnTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertDoesNotThrow(() -> pawn.validateMove(board, whitePawnPositionAtStartingPoint, new Position(target)));
+        assertDoesNotThrow(() -> pawn.validateMove(board, new Position("b2"), new Position(target)));
     }
 
     @DisplayName("white pawn이 시작점에서 두 칸 이동할 때 경로에 기물이 있는 경우 예외가 발생한다.")
@@ -103,4 +102,91 @@ class PawnTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    // black
+    @DisplayName("black pawn이 시작점인 경우 bottom 방향으로 한 칸 혹은 두 칸 이동 가능하다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"d6", "d5"})
+    void blackPawn_시작점_bottom방향_한칸_두칸_이동_가능하다(String target) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        assertDoesNotThrow(() -> pawn.validateMove(board, new Position("d7"), new Position(target)));
+    }
+
+    @DisplayName("black pawn이 시작점에서 두 칸 이동할 때 경로에 기물이 있는 경우 예외가 발생한다.")
+    @Test
+    void blackPawn이_시작점에서_이동할때_경로에_기물이_있는_경우_예외가_발생한다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d7");
+        Position pathPosition = new Position("d6");
+        Position targetPosition = new Position("d5");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        board.get(pathPosition.getRankIndex()).set(pathPosition.getFileIndex(), new Pawn(Color.BLACK));
+
+        assertThatThrownBy(() -> pawn.validateMove(board, sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("black pawn은 bottom 방향으로 한 칸 이동 가능하다.")
+    @Test
+    void blackPawn은_bottom방향으로_한칸_이동_가능하다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d6");
+        Position targetPosition = new Position("d5");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        assertDoesNotThrow(() -> pawn.validateMove(board, sourcePosition, targetPosition));
+    }
+
+    @DisplayName("black pawn이 두 칸 이동한 경우 예외가 발생한다.")
+    @Test
+    void blackPawn이_두칸_이동한_경우_예외가_발생한다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d6");
+        Position targetPosition = new Position("d4");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        assertThatThrownBy(() -> pawn.validateMove(board, sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("black pawn이 공격하는 경우 대각선으로 이동 가능하다.")
+    @Test
+    void blackPawn이_공격하는_경우_대각선으로_이동_가능하다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d6");
+        Position targetPosition = new Position("c5");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+
+        assertDoesNotThrow(() -> pawn.validateMove(board, sourcePosition, targetPosition));
+    }
+
+    @DisplayName("black pawn이 대각선으로 이동할 때 기물이 없는 경우 예외가 발생한다.")
+    @Test
+    void blackPawn이_대각선으로_이동할때_기물이_없는_경우_예외가_발생한다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d6");
+        Position targetPosition = new Position("c5");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        assertThatThrownBy(() -> pawn.validateMove(board, sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("black pawn이 대각선으로 이동할 때 기물이 같은 진영인 경우 예외가 발생한다.")
+    @Test
+    void blackPawn이_대각선으로_이동할때_기물이_같은진영인_경우_예외가_발생한다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("d6");
+        Position targetPosition = new Position("c5");
+        Pawn pawn = new Pawn(Color.BLACK);
+
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.BLACK));
+
+        assertThatThrownBy(() -> pawn.validateMove(board, sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

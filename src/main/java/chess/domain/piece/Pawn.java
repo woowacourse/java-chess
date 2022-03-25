@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.piece.strategy.BlackPawnMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.piece.strategy.WhitePawnMovingStrategy;
 import chess.domain.position.Position;
@@ -14,6 +15,12 @@ public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);
+
+        if (color.isBlack()) {
+            this.movingStrategy = new BlackPawnMovingStrategy();
+            return;
+        }
+
         this.movingStrategy = new WhitePawnMovingStrategy();
     }
 
