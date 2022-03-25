@@ -1,17 +1,16 @@
 package chess.domain.chessPiece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.domain.position.Position;
+import java.util.List;
+import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.List;
-import java.util.Stack;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BishopTest {
 
@@ -23,7 +22,6 @@ class BishopTest {
         // given
         ChessPiece bishop = new Bishop(Color.BLACK);
 
-        // when
         // then
         assertThatThrownBy(() -> bishop.canMove(initialPosition, new Position("d6")))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -31,13 +29,12 @@ class BishopTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"b7", "f7", "f3", "b3"})
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
+    @ValueSource(strings = {"b7", "f7", "f3", "b3"})
     void canMove_canGo() {
         // given
         ChessPiece bishop = new Bishop(Color.BLACK);
 
-        // when
         // then
         Assertions.assertThatCode(() -> bishop.canMove(initialPosition, new Position("c4")))
                 .doesNotThrowAnyException();
@@ -49,9 +46,11 @@ class BishopTest {
     void findRoute() {
         // given
         ChessPiece bishop = new Bishop(Color.BLACK);
+
         // when
         Stack<Position> actual = bishop.findRoute(initialPosition, new Position("h1"));
         List<Position> expected = List.of(new Position("e4"), new Position("f3"), new Position("g2"));
+
         // then
         assertThat(actual).containsAll(expected);
     }

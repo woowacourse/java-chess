@@ -2,7 +2,6 @@ package chess.domain.chessPiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.Stack;
 
@@ -21,14 +20,6 @@ public abstract class ChessPiece {
     public abstract List<Position> getInitWhitePosition();
 
     public abstract List<Position> getInitBlackPosition();
-
-    public boolean isBlack() {
-        return color.isBlack();
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public abstract void canMove(Position from, Position to);
 
@@ -49,6 +40,10 @@ public abstract class ChessPiece {
         return routes;
     }
 
+    public boolean isBlack() {
+        return color.isBlack();
+    }
+
     public boolean isSameColor(ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }
@@ -61,9 +56,11 @@ public abstract class ChessPiece {
         return this.color != color;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public double getValue() {
         return value;
     }
-
-    ;
 }

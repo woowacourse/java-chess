@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum File {
+
     ONE("1"),
     TWO("2"),
     THREE("3"),
@@ -12,7 +13,7 @@ public enum File {
     SEVEN("7"),
     EIGHT("8");
 
-    private String value;
+    private final String value;
 
     File(String value) {
         this.value = value;

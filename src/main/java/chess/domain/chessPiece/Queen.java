@@ -1,7 +1,6 @@
 package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
-
 import java.util.List;
 
 public class Queen extends ChessPiece {

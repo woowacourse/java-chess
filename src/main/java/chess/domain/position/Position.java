@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Position {
+
     private Rank rank;
     private File file;
 
@@ -16,12 +17,16 @@ public class Position {
         this.file = file;
     }
 
+    public int rankDistance(Position target) {
+        return rank.calculateDistance(target.rank);
+    }
+
     public int fileDistance(Position target) {
         return file.calculateDistance(target.file);
     }
 
-    public int rankDistance(Position target) {
-        return rank.calculateDistance(target.rank);
+    public boolean isSameRank(Position target) {
+        return rank.equals(target.rank);
     }
 
     public boolean isSameFile(Position target) {
@@ -30,10 +35,6 @@ public class Position {
 
     public boolean isSameFile(String target) {
         return file.equals(File.of(target));
-    }
-
-    public boolean isSameRank(Position target) {
-        return rank.equals(target.rank);
     }
 
     public Direction findDirection(Position target) {
@@ -63,8 +64,8 @@ public class Position {
     }
 
     public Position toNextPosition(Direction direction) {
-        this.file = file.add(direction.fileGap());
         this.rank = rank.add(direction.rankGap());
+        this.file = file.add(direction.fileGap());
         return new Position(rank.getValue() + file.getValue());
     }
 
@@ -74,8 +75,12 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return rank == position.rank && file == position.file;
     }

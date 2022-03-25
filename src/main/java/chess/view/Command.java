@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Arrays;
 
 public enum Command {
+
     START("start"),
     END("end"),
     MOVE("move"),
@@ -10,7 +11,7 @@ public enum Command {
 
     private static final String ERROR_MESSAGE = "잘못된 명령입니다.";
 
-    private String value;
+    private final String value;
 
     Command(String value) {
         this.value = value;

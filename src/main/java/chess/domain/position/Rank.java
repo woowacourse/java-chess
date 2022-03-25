@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Rank {
+
     A("a"),
     B("b"),
     C("c"),
@@ -12,7 +13,7 @@ public enum Rank {
     G("g"),
     H("h");
 
-    private String value;
+    private final String value;
 
     Rank(String value) {
         this.value = value;

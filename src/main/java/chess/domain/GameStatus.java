@@ -1,10 +1,10 @@
 package chess.domain;
 
 public enum GameStatus {
+
     READY,
     PLAYING,
-    END,
-    ;
+    END;
 
     public boolean isReady() {
         return this == READY;
