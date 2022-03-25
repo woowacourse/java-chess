@@ -5,14 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Column {
-    ONE("1", 7),
-    TWO("2", 6),
-    THREE("3", 5),
+
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
     FOUR("4", 4),
-    FIVE("5", 3),
-    SIX("6", 2),
-    SEVEN("7", 1),
-    EIGHT("8", 0);
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8);
 
     private final String value;
     private final int index;
@@ -36,6 +37,6 @@ public enum Column {
     }
 
     public int calculateIndex(Column column) {
-        return this.index - column.index;
+        return column.index - this.index;
     }
 }
