@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.chessPiece.Bishop;
@@ -47,22 +48,44 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("기물이 적인지 확인한다.")
-    void enemyExist() {
+    @DisplayName("기물을 빈 위치로 이동시킨다.")
+    void move_to_empty() {
         // given
-        final ChessPiece me = new Pawn(Color.BLACK);
-        final Position to = new Position("a1");
+        final Position from = new Position("b1");
+        final Position to = new Position("c3");
 
         // when
-        final boolean actual = chessBoard.enemyExist(me, to);
+        chessBoard.move(from, to);
+        final ChessPiece actual = chessBoard.findPiece(to).get();
 
         // then
-        assertThat(actual).isTrue();
+        assertThat(actual.getName()).isEqualTo("n");
+    }
+
+    @Test
+    @DisplayName("기물을 다른색의 기물이 있는 위치로 이동시킨다.")
+    void move_to_enemy() {
+        // given
+        final Position from = new Position("d2");
+        final Position to = new Position("f4");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Bishop(Color.WHITE));
+        pieceByPosition.put(to, new Rook(Color.BLACK));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        // when
+        chessBoard.move(from, to);
+        final ChessPiece actual = chessBoard.findPiece(to).get();
+
+        // then
+        assertThat(actual.getName()).isEqualTo("b");
     }
 
     @Test
     @DisplayName("이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
-    void move() {
+    void move_exception() {
         // given
         final Position from = new Position("a1");
         final Position to = new Position("a3");
@@ -71,6 +94,34 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰을 직진으로 이동 시킨다.")
+    void move_pawn_straight() {
+        // when
+
+        // then
+        assertThatCode(() -> chessBoard.move(new Position("a2"), new Position("a3")))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("폰으로 대각선에 있는 다른 색의 기물을 잡는다.")
+    void move_pawn_cross() {
+        // given
+        final Position from = new Position("a3");
+        final Position to = new Position("b4");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Pawn(Color.WHITE));
+        pieceByPosition.put(to, new Pawn(Color.BLACK));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        // then
+        assertThatCode(() -> chessBoard.move(from, to))
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -100,22 +151,83 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("폰의 대각선 방향에 같은색 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Cross() {
+    @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Straight3() {
         // given
-        chessBoard.move(new Position("a2"), new Position("a3"));
-        chessBoard.move(new Position("a7"), new Position("a6")); // Dummy
-        chessBoard.move(new Position("b2"), new Position("b4"));
-        chessBoard.move(new Position("a6"), new Position("a5")); // Dummy
+        final Position from = new Position("d5");
+        final Position to = new Position("d6");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Pawn(Color.WHITE));
+        pieceByPosition.put(to, new Pawn(Color.BLACK));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
         // then
-        assertThatThrownBy(() -> chessBoard.move(new Position("a3"), new Position("b4")))
+        assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Straight4() {
+        // given
+        final Position from = new Position("a5");
+        final Position to = new Position("a4");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Pawn(Color.BLACK));
+        pieceByPosition.put(new Position("a3"), new Pawn(Color.WHITE));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+        chessBoard.move(new Position("a3"), to);
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰의 대각선 방향에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    void move_Pawn_Cross1() {
+        // given
+        final Position from = new Position("d5");
+        final Position to = new Position("c6");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Pawn(Color.WHITE));
+        pieceByPosition.put(to, new Pawn(Color.WHITE));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은색 기물입니다.");
     }
 
     @Test
-    @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    @DisplayName("폰의 대각선 방향에 기물이 없으면 예외를 발생시킵니다.")
+    void move_Pawn_Cross2() {
+        // given
+        final Position from = new Position("d5");
+        final Position to = new Position("c6");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Pawn(Color.WHITE));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(from, to))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("순서에 맞지않는 색의 기물을 이동시키면 예외를 발생시킵니다.")
     void chessBoard_turn() {
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))
@@ -168,5 +280,48 @@ class ChessBoardTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("킹을 잡으면 게임이 끝난다.")
+    void game_end() {
+        // given
+        final Position from = new Position("d2");
+        final Position to = new Position("f4");
+
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(from, new Bishop(Color.WHITE));
+        pieceByPosition.put(to, new King(Color.BLACK));
+
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        chessBoard.move(from, to);
+
+        // when
+        final boolean actual = chessBoard.isEnd();
+
+        // then
+        assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("start 명령이 입력되기 전에는 ready 상태이다.")
+    void isReady() {
+        // when
+        final boolean actual = chessBoard.isReady();
+
+        // then
+        assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("start 명령이 입력되면 playing 상태이다.")
+    void isPlaying() {
+        // when
+        chessBoard.start();
+        final boolean actual = chessBoard.isPlaying();
+
+        // then
+        assertThat(actual).isEqualTo(true);
     }
 }
