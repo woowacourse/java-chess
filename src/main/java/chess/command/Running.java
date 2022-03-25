@@ -50,6 +50,9 @@ public class Running implements Command {
             OutputView.printPromotionGuide();
             return new PromotionStatus(chessBoard, color);
         }
+        if (chessBoard.isFinished()) {
+            return new End();
+        }
         return new Running(chessBoard, color.reverse());
     }
 
