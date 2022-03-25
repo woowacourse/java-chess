@@ -26,7 +26,7 @@ public class BoardViewDto {
         return game.getChessmen()
                 .findAll()
                 .stream()
-                .filter(piece -> piece.isAtDisplayRowIdxOf(rowIdx))
+                .filter(piece -> piece.isAtRowIdxOf(rowIdx))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -38,7 +38,7 @@ public class BoardViewDto {
 
     private static String squareDisplay(List<Piece> chessmen, int colIdx) {
         return chessmen.stream()
-                .filter(piece -> piece.isAtDisplayColumnIdxOf(colIdx))
+                .filter(piece -> piece.isAtFileOrColumnIdxOf(colIdx))
                 .map(Piece::display)
                 .findFirst()
                 .orElse(EMPTY_SQUARE_DISPLAY);

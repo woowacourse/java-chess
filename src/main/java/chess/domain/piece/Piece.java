@@ -18,9 +18,9 @@ public interface Piece {
 
     boolean isAt(Position position);
 
-    boolean isAtDisplayColumnIdxOf(int colIdx);
+    boolean isAtFileOrColumnIdxOf(int idx);
 
-    boolean isAtDisplayRowIdxOf(int rowIdx);
+    boolean isAtRowIdxOf(int rowIdx);
 
     Position position();
 
