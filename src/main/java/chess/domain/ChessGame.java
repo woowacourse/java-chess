@@ -90,7 +90,7 @@ public class ChessGame {
         ChessPiece chessPiece = getChessPiece(sourcePosition);
         ChessMen allyChessMen = getAlly();
 
-        if (!chessPiece.movable(targetPosition, allyChessMen)) {
+        if (!chessPiece.isMovable(targetPosition, allyChessMen)) {
             throw new IllegalArgumentException("[ERROR] 경로에 다른 체스가 있어 이동할 수 없습니다.");
         }
         chessPiece.move(targetPosition);

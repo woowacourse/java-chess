@@ -45,7 +45,7 @@ class BishopTest {
         List<ChessPiece> blackChessPieces = List.of(bishop,
                 new Knight(Team.BLACK, new ChessBoardPosition('d', 4)));
         ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = bishop.movable(new ChessBoardPosition('c', 5), chessMen);
+        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), chessMen);
         assertFalse(result);
     }
 
@@ -55,7 +55,7 @@ class BishopTest {
         ChessPiece bishop = new Bishop(Team.WHITE, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(bishop);
         ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = bishop.movable(new ChessBoardPosition('c', 5), chessMen);
+        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), chessMen);
         assertTrue(result);
     }
 }

@@ -15,7 +15,7 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
-    public abstract boolean movable(ChessBoardPosition targetPosition, ChessMen chessMen);
+    public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen);
 
     public abstract void move(ChessBoardPosition targetPosition);
 
@@ -30,4 +30,5 @@ public abstract class ChessPiece {
     public boolean isSamePosition(ChessBoardPosition other) {
         return position.equals(other);
     }
+
 }

@@ -1,6 +1,10 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessBoardPosition {
     private static final char MINIMUM_COLUMN = 'a';
@@ -82,5 +86,28 @@ public class ChessBoardPosition {
 
     public boolean isDifferentColumn(ChessBoardPosition targetPosition) {
         return column != targetPosition.column;
+    }
+
+    public List<ChessBoardPosition> createPathPositions(ChessBoardPosition other) {
+        List<Integer> rows = ascendingRange(this.row, other.getRow());
+        List<Integer> columns = ascendingRange(this.getColumn(), other.getColumn());
+        List<ChessBoardPosition> pathPositions = new ArrayList<>();
+        for (int i = 0; i < rows.size(); ++i) {
+            pathPositions.add(new ChessBoardPosition((char) (columns.get(i).intValue()), rows.get(i)));
+        }
+        return pathPositions;
+    }
+
+    private List<Integer> ascendingRange(int source, int target) {
+        if (source > target) {
+            return rangeClosed(target, source);
+        }
+        return rangeClosed(source, target);
+    }
+
+    private List<Integer> rangeClosed(int start, int end) {
+        return IntStream.rangeClosed(start, end)
+                .boxed()
+                .collect(Collectors.toList());
     }
 }
