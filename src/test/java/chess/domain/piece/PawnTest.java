@@ -18,7 +18,7 @@ class PawnTest {
         assertThat(piece.canMove(src, dest)).isTrue();
     }
 
-    @DisplayName("화이트 폰은 rank가 낮아지는 방향으로 이동할 수 있다.")
+    @DisplayName("화이트 폰은 rank가 낮아지는 방향으로 이동할 수 없다.")
     @Test
     void testWhitePawnMoveFalse() {
         Piece piece = new Pawn(Color.WHITE);
@@ -58,7 +58,7 @@ class PawnTest {
         assertThat(piece.canMove(src, dest)).isTrue();
     }
 
-    @DisplayName("블랙 폰은 첫 번째 이동일 때 rank가 높아지는 방향으로 두 칸 이동할 수 있다")
+    @DisplayName("블랙 폰은 첫 번째 이동일 때 rank가 낮아지는 방향으로 두 칸 이동할 수 있다")
     @Test
     void testBlackPawnMoveDoubleTrue() {
         Piece piece = new Pawn(Color.BLACK);
@@ -78,7 +78,7 @@ class PawnTest {
         assertThat(piece.canMove(src, dest)).isFalse();
     }
 
-    @DisplayName("블랙 폰은 rank가 높아지는 방향으로 이동할 수 있다.")
+    @DisplayName("블랙 폰은 rank가 높아지는 방향으로 이동할 수 없다.")
     @Test
     void testBlackPawnMoveFalse() {
         Piece piece = new Pawn(Color.BLACK);
