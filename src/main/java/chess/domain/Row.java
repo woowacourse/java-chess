@@ -24,4 +24,8 @@ public enum Row {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Row 값 입니다."));
     }
+
+    public int getDifference(Row row) {
+        return this.value - row.value;
+    }
 }

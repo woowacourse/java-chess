@@ -4,7 +4,7 @@ public abstract class Piece {
 
     private Team team;
     private final String name;
-    private Position position;
+    protected Position position;
 
     public Piece(Team team, String name, Position position) {
         this.team = team;

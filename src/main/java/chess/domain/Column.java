@@ -24,4 +24,8 @@ public enum Column {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Column 값 입니다."));
     }
+
+    public int getDifference(Column col) {
+        return this.value - col.value;
+    }
 }
