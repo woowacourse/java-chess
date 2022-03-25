@@ -38,9 +38,9 @@ public class LinearMovingStrategy implements MovingStrategy {
         }
     }
 
-    private Piece findPiece(List<List<Piece>> board, Position sourcePosition) {
-        int rankIndex = sourcePosition.getRankIndex();
-        int fileIndex = sourcePosition.getFileIndex();
+    private Piece findPiece(List<List<Piece>> board, Position position) {
+        int rankIndex = position.getRankIndex();
+        int fileIndex = position.getFileIndex();
 
         return board.get(rankIndex).get(fileIndex);
     }

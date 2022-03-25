@@ -1,5 +1,6 @@
-package chess.domain.piece;
+package chess.domain.piece.strategy;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -16,14 +17,16 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
         Direction direction = Direction.of(sourcePosition, targetPosition);
         validateDirection(direction);
 
+        int absRankIndex = Math.abs(sourcePosition.getRankIndex() - targetPosition.getRankIndex());
+        int absFileIndex = Math.abs(sourcePosition.getFileIndex() - targetPosition.getFileIndex());
+
         if (direction == MOVABLE_DIRECTION) {
-            int rankLength = Math.abs(sourcePosition.getRankIndex() - targetPosition.getRankIndex());
-            if (sourcePosition.getRankIndex() == RANK_INDEX_STARTING_POINT && rankLength == 2) {
+            if (sourcePosition.getRankIndex() == RANK_INDEX_STARTING_POINT && absRankIndex == 2) {
                 validateExistPieces(board, sourcePosition, targetPosition, direction);
                 return;
             }
 
-            if (rankLength != 1) {
+            if (absRankIndex != 1) {
                 throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
             }
 
@@ -31,12 +34,21 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
         }
 
         if (CAPTURABLE_DIRECTIONS.contains(direction)) {
-            // TODO
+            if(absRankIndex + absFileIndex != 2) {
+                throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
+            }
+            Piece targetPiece = findPiece(board, targetPosition);
+            if (targetPiece.isEmpty()) {
+                throw new IllegalArgumentException("target 위치에 기물이 존재하지 않아 공격할 수 없습니다.");
+            }
+            if(!targetPiece.isBlack()) {
+                throw new IllegalArgumentException("공격은 다른 진영만 가능합니다.");
+            }
         }
     }
 
     private void validateDirection(Direction direction) {
-        if (direction != MOVABLE_DIRECTION || !CAPTURABLE_DIRECTIONS.contains(direction)) {
+        if (!(direction == MOVABLE_DIRECTION || CAPTURABLE_DIRECTIONS.contains(direction))) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
         }
     }
@@ -56,9 +68,9 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
         }
     }
 
-    private Piece findPiece(List<List<Piece>> board, Position sourcePosition) {
-        int rankIndex = sourcePosition.getRankIndex();
-        int fileIndex = sourcePosition.getFileIndex();
+    private Piece findPiece(List<List<Piece>> board, Position position) {
+        int rankIndex = position.getRankIndex();
+        int fileIndex = position.getFileIndex();
 
         return board.get(rankIndex).get(fileIndex);
     }

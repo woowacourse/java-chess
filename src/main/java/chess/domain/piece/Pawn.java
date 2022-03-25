@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.piece.strategy.MovingStrategy;
+import chess.domain.piece.strategy.WhitePawnMovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 
