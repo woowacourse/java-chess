@@ -56,7 +56,7 @@ public abstract class Piece {
         directionalPositions.put(direction, positions);
     }
 
-    public List<Position> calculateRoute(Position target) {
+    public List<Position> calculateRoute(final Position target) {
         return directions().stream()
                 .map(direction -> directionalPositions.get(direction))
                 .filter(positions -> positions.contains(target))

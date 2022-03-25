@@ -19,7 +19,7 @@ public final class ChessBoard {
         this.currentTurn = START_TEAM_COLOR;
     }
 
-    public void move(Position source, Position target) {
+    public void move(final Position source, final Position target) {
         checkNullSource(source);
         checkCurrentTurn(source);
         checkAvailableTarget(target);
@@ -31,25 +31,25 @@ public final class ChessBoard {
         changeTurn();
     }
 
-    private void checkNullSource(Position source) {
+    private void checkNullSource(final Position source) {
         if (board.get(source) == null) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 기물이 존재하지 않습니다.");
         }
     }
 
-    private void checkCurrentTurn(Position source) {
+    private void checkCurrentTurn(final Position source) {
         if (!board.get(source).checkSameTeamColor(this.currentTurn)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 자신의 기물의 위치가 아닙니다.");
         }
     }
 
-    private void checkAvailableTarget(Position target) {
+    private void checkAvailableTarget(final Position target) {
         if (board.get(target) != null && board.get(target).checkSameTeamColor(currentTurn)) {
             throw new IllegalArgumentException("[ERROR] 자신의 기물이 위치한 곳으로 이동할 수 없습니다.");
         }
     }
 
-    private void checkGoThroughPosition(Position source, Position target) {
+    private void checkGoThroughPosition(final Position source, final Position target) {
         Piece piece = board.get(source);
         checkUnavailableMove(source, target, piece);
         if (board.get(source) instanceof Pawn) {
@@ -62,7 +62,7 @@ public final class ChessBoard {
         }
     }
 
-    private void checkPawnMovement(Position source, Position target) {
+    private void checkPawnMovement(final Position source, final Position target) {
         if (checkPawnUpDownDirection(source, target)) {
             checkPawnMoveForward(source, target);
             return;
@@ -70,12 +70,12 @@ public final class ChessBoard {
         checkPawnAttack(target);
     }
 
-    private boolean checkPawnUpDownDirection(Position source, Position target) {
+    private boolean checkPawnUpDownDirection(final Position source, final Position target) {
         Piece piece = board.get(source);
         return ((Pawn) piece).checkUpDownDirection(source, target);
     }
 
-    private void checkPawnMoveForward(Position source, Position target) {
+    private void checkPawnMoveForward(final Position source, final Position target) {
         Piece piece = board.get(source);
 
         if (((Pawn) piece).checkMoveOneSpace(target)) {
@@ -85,19 +85,19 @@ public final class ChessBoard {
         checkWayPointNullPawn(piece, target);
     }
 
-    private void checkPawnAttack(Position target) {
+    private void checkPawnAttack(final Position target) {
         if (board.get(target) == null) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 상대 기물이 없습니다.");
         }
     }
 
-    private void checkBoardPositionIsNull(Position position) {
+    private void checkBoardPositionIsNull(final Position position) {
         if (board.get(position) != null) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
         }
     }
 
-    private void checkWayPointNullPawn(Piece piece, Position target) {
+    private void checkWayPointNullPawn(final Piece piece, final Position target) {
         List<Position> positions = ((Pawn) piece).calculateForwardRouteByPawn(target);
         boolean checkExistNotNullInPositions = positions.stream()
                 .anyMatch(position -> board.get(position) != null);
@@ -107,13 +107,13 @@ public final class ChessBoard {
         }
     }
 
-    private void checkUnavailableMove(Position source, Position target, Piece piece) {
+    private void checkUnavailableMove(final Position source, final Position target, final Piece piece) {
         if (!piece.availableMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
         }
     }
 
-    private List<Position> calculateRoutePositions(Position target, Piece piece) {
+    private List<Position> calculateRoutePositions(final Position target, final Piece piece) {
         List<Position> baseRoutePositions = piece.calculateRoute(target);
         if (baseRoutePositions.size() == 0) {
             return null;
@@ -121,7 +121,7 @@ public final class ChessBoard {
         return baseRoutePositions.subList(0, baseRoutePositions.indexOf(target));
     }
 
-    private void checkWayPointNull(Position position) {
+    private void checkWayPointNull(final Position position) {
         if (board.get(position) != null) {
             throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 선택한 위치로 이동할 수 없습니다.");
         }
