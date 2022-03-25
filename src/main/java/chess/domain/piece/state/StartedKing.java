@@ -11,7 +11,7 @@ public class StartedKing extends Started{
 
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return Direction.queen()
+        return Direction.all()
             .stream()
             .filter(direction -> board.canMoveOneStep(source, direction))
             .map(source::getNext)

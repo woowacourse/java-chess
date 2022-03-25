@@ -22,7 +22,7 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> rook() {
+    public static List<Direction> upDownLeftRight() {
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.Up);
         directions.add(Direction.Down);
@@ -31,7 +31,7 @@ public enum Direction {
         return directions;
     }
 
-    public static List<Direction> bishop() {
+    public static List<Direction> diagonal() { //diagonal
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.UpRight);
         directions.add(Direction.UpLeft);
@@ -40,10 +40,10 @@ public enum Direction {
         return directions;
     }
 
-    public static List<Direction> queen() {
+    public static List<Direction> all() {
         List<Direction> directions = new ArrayList<>();
-        directions.addAll(rook());
-        directions.addAll(bishop());
+        directions.addAll(upDownLeftRight());
+        directions.addAll(diagonal());
         return directions;
     }
 

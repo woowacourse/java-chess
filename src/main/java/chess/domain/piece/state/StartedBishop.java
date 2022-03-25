@@ -1,6 +1,5 @@
 package chess.domain.piece.state;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.ChessBoard;
@@ -13,12 +12,7 @@ public class StartedBishop extends Started{
 
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        List<Position> movablePositions = new ArrayList<>();
-        for (Direction direction : Direction.bishop()) {
-            movablePositions.addAll(continuous.getPositions(source, board, direction));
-        }
-
-        return movablePositions;
+        return continuous.getMovablePositions(Direction.diagonal(), source, board);
     }
 
     @Override

@@ -42,18 +42,19 @@ public class ChessBoard {
     }
 
     public boolean canMoveOneStep(Position source, Direction direction) {
+        Position target = source.getNext(direction);
         if (source.isBlocked(direction)) {
             return false;
         }
 
-        return canKill(source, source.getNext(direction));
+        return !isFilled(target) || canKill(source, target);
     }
 
-    private boolean canKill(Position source, Position target) {
+    public boolean canKill(Position source, Position target) {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        return !isFilled(target) || !sourcePiece.isSameColor(targetPiece);
+        return isFilled(target) && !sourcePiece.isSameColor(targetPiece);
     }
 
     private void changeState(Piece sourcePiece, Piece targetPiece) {
