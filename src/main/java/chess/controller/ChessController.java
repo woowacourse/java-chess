@@ -27,8 +27,13 @@ public class ChessController {
             if (moveRequest.getCommand() == END) {
                 break;
             }
-            board.move(moveRequest.getSource(), moveRequest.getTarget());
+
+            boolean isFinished = board.move(moveRequest.getSource(), moveRequest.getTarget());
             OutputView.printChessGameBoard(board.getValues());
+
+            if (isFinished) {
+                break;
+            }
         }
     }
 }

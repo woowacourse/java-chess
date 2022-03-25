@@ -80,10 +80,13 @@ public class Board {
         }
     }
 
-    public void move(Position source, Position target) {
+    public boolean move(Position source, Position target) {
+
         turnDecide(source);
         validateSourceNotEmpty(source);
+        boolean isFinished = values.get(target) instanceof King;
         changePieces(source, target);
+        return isFinished;
     }
 
     private void turnDecide(Position source) {

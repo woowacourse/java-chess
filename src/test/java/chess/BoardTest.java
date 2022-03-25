@@ -1,13 +1,8 @@
 package chess;
 
 import static chess.Board.SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE;
-import static chess.File.A;
-import static chess.File.B;
-import static chess.File.C;
-import static chess.Rank.FOUR;
-import static chess.Rank.ONE;
-import static chess.Rank.THREE;
-import static chess.Rank.TWO;
+import static chess.File.*;
+import static chess.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -18,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -144,5 +140,22 @@ public class BoardTest {
         board.move(new Position(TWO, A), new Position(FOUR, A));
         Piece findPiece = board.getValues().get(new Position(FOUR, A));
         assertThat(findPiece).isInstanceOf(Pawn.class);
+    }
+
+    @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
+    @Test
+    void move_return_true_when_king_captured() {
+    	board.move(new Position(ONE, B), new Position(THREE, C));
+    	board.move(new Position(TWO, F), new Position(THREE, F));
+
+    	board.move(new Position(THREE, C), new Position(FOUR, E));
+    	board.move(new Position(TWO, G), new Position(THREE, G));
+
+    	board.move(new Position(FOUR, E), new Position(SIX, D));
+        board.move(new Position(TWO, H), new Position(THREE, H));
+
+        boolean isFinished = board.move(new Position(SIX, D), new Position(EIGHT, E));
+
+        assertThat(isFinished).isTrue();
     }
 }
