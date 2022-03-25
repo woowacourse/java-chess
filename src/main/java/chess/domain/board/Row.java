@@ -26,7 +26,11 @@ public enum Row {
                 .orElseThrow();
     }
 
+    public int directedDistance(Row otherRow) {
+        return this.value - otherRow.value;
+    }
+
     public int distance(Row otherRow) {
-        return Math.abs(this.value - otherRow.value);
+        return Math.abs(directedDistance(otherRow));
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import java.util.function.Consumer;
 
 public final class Bishop extends Piece {
 
@@ -10,7 +11,15 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position beforePosition, Position afterPosition) {
+    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        if (!canMove(beforePosition, afterPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        moveFunction.accept(this);
+    }
+
+    @Override
+    protected boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         return columnDistance == rowDistance;

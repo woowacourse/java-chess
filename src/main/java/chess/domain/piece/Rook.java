@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import java.util.function.Consumer;
 
 public final class Rook extends Piece {
     private static final int NOT_MOVED_DISTANCE = 0;
@@ -11,7 +12,15 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Position beforePosition, Position afterPosition) {
+    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        if (!canMove(beforePosition, afterPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        moveFunction.accept(this);
+    }
+
+    @Override
+    protected boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         if (columnDistance == NOT_MOVED_DISTANCE) {

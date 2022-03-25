@@ -14,6 +14,7 @@ import chess.domain.piece.Rook;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class Board {
@@ -81,17 +82,20 @@ public final class Board {
             return;
         }
         Piece piece = this.value.get(beforePosition);
-        this.value.put(afterPosition, piece);
-        this.value.put(beforePosition, null);
+        piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+    }
+
+    private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
+        return (piece) -> {
+            this.value.put(afterPosition, piece);
+            this.value.put(beforePosition, null);
+        };
     }
 
     private boolean isMovable(Position beforePosition, Position afterPosition) {
         if (value.get(afterPosition) == null) {
             return true;
         }
-        if (value.get(beforePosition).isBlack() == value.get(afterPosition).isBlack()) {
-            return false;
-        }
-        return true;
+        return value.get(beforePosition).isBlack() != value.get(afterPosition).isBlack();
     }
 }

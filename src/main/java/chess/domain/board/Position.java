@@ -20,6 +20,10 @@ public class Position implements Comparable<Position> {
         return this.row.distance(otherPosition.row);
     }
 
+    public int rowDirectedDistance(Position otherPosition) {
+        return this.row.directedDistance(otherPosition.row);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

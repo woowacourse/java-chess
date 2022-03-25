@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public abstract class Piece {
     private final Camp camp;
@@ -14,7 +16,9 @@ public abstract class Piece {
         return this.camp == Camp.BLACK;
     }
 
-    public abstract boolean canMove(Position beforePosition, Position afterPosition);
+    public abstract void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
+
+    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
     public abstract boolean isBishop();
 
