@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
 
 public class King extends ChessPiece {
     private static final String NAME = "KING";
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 킹이 이동할 수 없는 위치입니다.";
 
     public King(Team team, ChessBoardPosition position) {
         super(NAME, team, position);
@@ -19,17 +19,17 @@ public class King extends ChessPiece {
         return Math.abs(highColumn - lowColumn);
     }
 
-    private boolean isNotKingMovement(int rowDistance, int columnDistance) {
-        return isNotFourCardinalMovement(rowDistance, columnDistance)
-                && isNotFourDiagonalCardinalMovement(rowDistance, columnDistance);
+    private boolean isKingMovement(int rowDistance, int columnDistance) {
+        return isFourCardinalMovement(rowDistance, columnDistance)
+                || isFourDiagonalCardinalMovement(rowDistance, columnDistance);
     }
 
-    private boolean isNotFourCardinalMovement(int rowDistance, int columnDistance) {
-        return !((rowDistance == 1 && columnDistance == 0) || (columnDistance == 1 && rowDistance == 0));
+    private boolean isFourCardinalMovement(int rowDistance, int columnDistance) {
+        return (rowDistance == 1 && columnDistance == 0) || (columnDistance == 1 && rowDistance == 0);
     }
 
-    private boolean isNotFourDiagonalCardinalMovement(int rowDistance, int columnDistance) {
-        return !(rowDistance == 1 && columnDistance == 1);
+    private boolean isFourDiagonalCardinalMovement(int rowDistance, int columnDistance) {
+        return rowDistance == 1 && columnDistance == 1;
     }
 
     public boolean isSamePosition(ChessBoardPosition nextPosition) {
@@ -38,11 +38,13 @@ public class King extends ChessPiece {
 
     @Override
     public void move(ChessBoardPosition targetPosition) {
+        position = targetPosition;
+    }
+
+    @Override
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
         int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
         int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
-        if (isNotKingMovement(rowDistance, columnDistance)) {
-            throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
-        }
-        position = targetPosition;
+        return isKingMovement(rowDistance, columnDistance);
     }
 }
