@@ -75,16 +75,17 @@ public class ChessBoard {
 
         checkMove(from, to, me);
 
-        if (findPiece(to).isEmpty()) {
+        final Optional<ChessPiece> possibleTargetPiece = findPiece(to);
+        if (possibleTargetPiece.isEmpty()) {
             checkPawnStraightMove(from, to, me);
             movePiece(from, to, me);
             return;
         }
 
-        if (enemyExist(me, to)) {
-            checkPawnCrossMove(from, to, me);
-            movePiece(from, to, me);
-        }
+        final ChessPiece targetPiece = possibleTargetPiece.get();
+        checkEnemy(me, targetPiece);
+        checkPawnCrossMove(from, to, me);
+        movePiece(from, to, me);
     }
 
     public Optional<ChessPiece> findPiece(final Position position) {
@@ -113,7 +114,7 @@ public class ChessBoard {
 
     private void checkPawnStraightMove(final Position from, final Position to, final ChessPiece me) {
         if (me instanceof Pawn && isCross(from, to)) {
-            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
+            throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
         }
     }
 
@@ -123,26 +124,18 @@ public class ChessBoard {
 
     private void checkPawnCrossMove(final Position from, final Position to, final ChessPiece me) {
         if (me instanceof Pawn && isStraight(from, to)) {
-            throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
+            throw new IllegalArgumentException("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
         }
     }
 
     private boolean isStraight(final Position from, final Position to) {
-        return to.findDirection(from) == Direction.N && to.findDirection(from) == Direction.S;
+        return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
     }
 
-    public boolean enemyExist(final ChessPiece me, final Position to) {
-        final Optional<ChessPiece> possiblePiece = findPiece(to);
-        if (possiblePiece.isEmpty()) {
-            throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
-        }
-
-        final ChessPiece piece = possiblePiece.get();
-        if (piece.isSameColor(me)) {
+    private void checkEnemy(final ChessPiece me, final ChessPiece targetPiece) {
+        if (targetPiece.isSameColor(me)) {
             throw new IllegalArgumentException("같은색 기물입니다.");
         }
-
-        return true;
     }
 
     private void movePiece(final Position from, final Position to, final ChessPiece me) {
@@ -158,8 +151,7 @@ public class ChessBoard {
         return Arrays.stream(Color.values())
                 .collect(Collectors.toMap(
                         color -> color,
-                        this::getSum,
-                        (exist, replacement) -> exist));
+                        this::getSum));
     }
 
     private double getSum(final Color color) {
