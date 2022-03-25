@@ -1,9 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFixtures;
+import chess.domain.board.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class QueenTest {
 
@@ -13,5 +18,57 @@ public class QueenTest {
         Piece piece = new Queen(Color.WHITE);
 
         assertThat(piece).isNotNull();
+    }
+
+    @Test
+    @DisplayName("상하좌우의 직선으로 이동할 수 있다.")
+    void moveWithCross() {
+        Point from = Point.of(1, 1);
+        Point to = Point.of(1, 7);
+        Piece piece = new Queen(Color.WHITE);
+        Board board = BoardFixtures.EMPTY_BOARD;
+
+        assertThatCode(() -> piece.move(board, from, to))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("대각선으로 이동할 수 있다.")
+    void moveWithDiagonal() {
+        Point from = Point.of("c1");
+        Point to = Point.of("g5");
+        Piece piece = new Queen(Color.WHITE);
+        Board board = BoardFixtures.EMPTY_BOARD;
+
+        assertThatCode(() -> piece.move(board, from, to))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("장애물이 있을 경우 상하좌우로 이동할 수 없다.")
+    void notMovableWithCrossObstacle() {
+        Point from = Point.of(1, 1);
+        Point to = Point.of(1, 7);
+        Piece piece = new Queen(Color.WHITE);
+        Board board = BoardFixtures.create(Map.of(
+                Point.of(1, 5), new Pawn(Color.WHITE)
+        ));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> piece.move(board, from, to));
+    }
+
+    @Test
+    @DisplayName("장애물이 있을 경우 대각선으로 이동할 수 없다.")
+    void notMovableWithDiagonalObstacle() {
+        Point from = Point.of("c1");
+        Point to = Point.of("g5");
+        Piece piece = new Queen(Color.WHITE);
+        Board board = BoardFixtures.create(Map.of(
+                Point.of("d2"), new Pawn(Color.WHITE)
+        ));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> piece.move(board, from, to));
     }
 }
