@@ -1,10 +1,15 @@
 package chess.controller;
 
 import chess.Board;
+import chess.Position;
 import chess.command.Command;
 import chess.command.Init;
+import chess.command.Move;
+import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public class ChessController {
     public void run() {
@@ -12,9 +17,13 @@ public class ChessController {
 
         String input = InputView.inputCommand();
         Command command = new Init(input);
-        Board board = Board.create();
+        Pieces pieces = Pieces.create();
+        Board board = Board.create(pieces);
         command = command.turnState(input);
-        while (!command.isEnd()) {
+        while (!command.isEnd()){
+            if(command.isMove()){
+                board.move(command.getCommandPosition());
+            }
             OutputView.printBoard(board.getBoard());
             command = command.turnState(InputView.inputCommand());
         }

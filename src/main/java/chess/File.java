@@ -29,7 +29,11 @@ public enum File {
         return Math.abs(index - file.index);
     }
 
-    boolean isBiggerThan(File file){
+    boolean isBiggerThan(File file) {
         return index > file.index;
+    }
+
+    public File getNext(int distance) {
+        return File.valueOf(index + distance);
     }
 }

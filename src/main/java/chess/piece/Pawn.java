@@ -4,6 +4,8 @@ import chess.Position;
 import chess.Rank;
 import chess.Team;
 
+import java.util.List;
+
 public class Pawn extends Piece {
     private static final int ONE_STEP = 1;
     private static final int INIT_DISTANCE = 2;
@@ -29,6 +31,11 @@ public class Pawn extends Piece {
             return BLACK_NAME;
         }
         return WHITE_NAME;
+    }
+
+    @Override
+    public List<Position> getIntervalPosition(Piece targetPiece) {
+        return null;
     }
 
     private boolean isInitPosition() {

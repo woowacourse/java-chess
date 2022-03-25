@@ -3,6 +3,8 @@ package chess.piece;
 import chess.Position;
 import chess.Team;
 
+import java.util.List;
+
 public class Queen extends Piece {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
@@ -23,6 +25,12 @@ public class Queen extends Piece {
         }
         return WHITE_NAME;
     }
+
+    @Override
+    public List<Position> getIntervalPosition(Piece targetPiece) {
+        return null;
+    }
+
     private boolean isCorrectDirection(Position position) {
         return this.position.isVertical(position) ||
                 this.position.isHorizontal(position) ||

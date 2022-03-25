@@ -21,4 +21,10 @@ public class Start extends Command {
     public boolean isEnd() {
         return false;
     }
+
+    @Override
+    public boolean isMove() {
+        return false;
+    }
+
 }

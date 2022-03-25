@@ -2,6 +2,7 @@ package chess;
 
 import chess.command.Command;
 import chess.command.End;
+import chess.command.Init;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class CommandTest {
     @DisplayName("Command가 start 또는 end가 아니면 예외가 발생한다.")
     void validateMenu() {
         assertThatThrownBy(() -> {
-            new Command("aaa");
+            new Init("aaa");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -13,7 +13,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position of(char... position){
+    public static Position of(char... position) {
         File file = File.valueOf(position[0] - ASCII_TO_INT);
         Rank rank = Rank.valueOf(Character.getNumericValue(position[1]));
 
@@ -61,20 +61,27 @@ public class Position {
     }
 
     public boolean isStepForward(Position position, int direction, int distance) {
-        return position.rank.minus(rank) == direction*distance && file.absMinus(position.file) == 0;
-    }
-
-    public File getFile() {
-        return file;
+        return position.rank.minus(rank) == direction * distance && file.absMinus(position.file) == 0;
     }
 
     public Rank getRank() {
         return rank;
     }
 
+    public File getFile() {
+        return file;
+    }
 
-    public boolean isBiggerFileThan(Position position){
+    public boolean isBiggerFileThan(Position position) {
         return this.file.isBiggerThan(position.file);
+    }
+
+    public boolean isLessRankThan(Position position) {
+        return this.rank.isLessThan(position.rank);
+    }
+
+    public boolean isLastFile() {
+        return file.equals(File.H);
     }
 
     @Override
@@ -94,11 +101,12 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isLessRankThan(Position position) {
-        return this.rank.isLessThan(position.rank);
+
+    public Position getRightHorizontalPosition(int distance) {
+        return new Position(file.getNext(distance), rank);
     }
 
-    public boolean isLastFile() {
-        return file.equals(File.H);
+    public Position getUpVerticalPosition(int distance) {
+        return new Position(file, rank.getNext(distance));
     }
 }

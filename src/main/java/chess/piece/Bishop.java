@@ -3,6 +3,8 @@ package chess.piece;
 import chess.Position;
 import chess.Team;
 
+import java.util.List;
+
 public class Bishop extends Piece {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
@@ -26,5 +28,10 @@ public class Bishop extends Piece {
             return BLACK_NAME;
         }
         return WHITE_NAME;
+    }
+
+    @Override
+    public List<Position> getIntervalPosition(Piece targetPiece) {
+        return null;
     }
 }

@@ -36,4 +36,8 @@ public enum Rank {
     public boolean isLessThan(Rank rank) {
         return this.index < rank.index;
     }
+
+    public Rank getNext(int distance) {
+        return Rank.valueOf(index + distance);
+    }
 }

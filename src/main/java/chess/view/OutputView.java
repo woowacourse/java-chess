@@ -1,14 +1,14 @@
 package chess.view;
 
 import chess.piece.Piece;
+import chess.piece.Pieces;
 
 import java.util.Collections;
-import java.util.List;
 
 public class OutputView {
-    public static void printBoard(List<Piece> board) {
-        Collections.sort(board);
-        for (Piece piece : board) {
+    public static void printBoard(Pieces board) {
+        Collections.sort(board.getPieces());
+        for (Piece piece : board.getPieces()) {
             System.out.print(piece.getName());
             makeNewLine(piece);
         }

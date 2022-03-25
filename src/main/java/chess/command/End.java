@@ -15,4 +15,10 @@ public class End extends Command{
     public boolean isEnd() {
         return true;
     }
+
+    @Override
+    public boolean isMove() {
+        return false;
+    }
+
 }

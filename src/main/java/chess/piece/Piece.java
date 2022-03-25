@@ -3,10 +3,11 @@ package chess.piece;
 import chess.Position;
 import chess.Team;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece implements Comparable<Piece> {
-    protected final Position position;
+    protected Position position;
     protected final Team team;
 
     protected Piece(Position position, Team team) {
@@ -14,7 +15,32 @@ public abstract class Piece implements Comparable<Piece> {
         this.team = team;
     }
 
+    private boolean isFileComparison(Piece piece) {
+        return this.position.getRank() == piece.position.getRank() && this.position.isBiggerFileThan(piece.position);
+    }
+
+    public boolean isLastFile() {
+        return position.isLastFile();
+    }
+
+    public boolean findPosition(Position position) {
+        return this.position.equals(position);
+    }
+
+
+    public void moveTo(Piece targetPiece) {
+        position = targetPiece.position;
+    }
+
+    public boolean isSameTeam(Piece targetPiece) {
+        return team.equals(targetPiece.team);
+    }
+
+    public abstract List<Position> getIntervalPosition(Piece targetPiece);
+
     public abstract boolean isMovable(Position position);
+
+    public abstract String getName();
 
     @Override
     public int compareTo(Piece piece) {
@@ -27,19 +53,6 @@ public abstract class Piece implements Comparable<Piece> {
         return -1;
     }
 
-    private boolean isFileComparison(Piece piece) {
-        return this.position.getRank() == piece.position.getRank() && this.position.isBiggerFileThan(piece.position);
-    }
-
-    public abstract String getName();
-
-    public boolean isLastFile() {
-        return position.isLastFile();
-    }
-
-    public boolean findPosition(Position position) {
-        return this.position.equals(position);
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -57,4 +70,6 @@ public abstract class Piece implements Comparable<Piece> {
     public int hashCode() {
         return Objects.hash(position, team);
     }
+
+
 }

@@ -1,14 +1,22 @@
 package chess.command;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Move extends Command {
+
+    private static final String EMPTY_DELIMITER = " ";
 
     public Move(String input) {
         super(input);
     }
 
-    public String[] splitMove(){
-        return input.split(" ");
+    @Override
+    public List<String> getCommandPosition(){
+        String[] split = input.split(EMPTY_DELIMITER);
+        return Arrays.asList(split[1], split[2]);
     }
+
     @Override
     public Command turnState(String input) {
         if ("end".equals(input)) {
@@ -23,5 +31,10 @@ public class Move extends Command {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public boolean isMove() {
+        return true;
     }
 }
