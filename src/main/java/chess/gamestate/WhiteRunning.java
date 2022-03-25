@@ -5,12 +5,12 @@ import chess.domain.Color;
 
 public class WhiteRunning extends Running {
 
-    public WhiteRunning(final ChessBoard chessBoard) {
+    public WhiteRunning(ChessBoard chessBoard) {
         super(chessBoard, Color.WHITE);
     }
 
     @Override
-    protected final Running otherState(final ChessBoard chessBoard) {
+    protected final Running otherState(ChessBoard chessBoard) {
         return new BlackRunning(chessBoard);
     }
 }

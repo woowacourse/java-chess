@@ -46,16 +46,6 @@ public class ChessBoard {
         }
     }
 
-    public void promotion(Piece piece, Color color) {
-        Position position = pieces.entrySet()
-                .stream()
-                .filter(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue(), color))
-                .map(Entry::getKey)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("프로모션 프로모션 가능한 기물이 없습니다."));
-        pieces.put(position, piece);
-    }
-
     public boolean isPositionEmpty(Position position) {
         return !pieces.containsKey(position);
     }
@@ -96,7 +86,7 @@ public class ChessBoard {
                 .count();
     }
 
-    private boolean isSameColorPawn(final Color color, Piece piece) {
+    private boolean isSameColorPawn(Color color, Piece piece) {
         return piece.isSameColor(color) && piece.isPawn();
     }
 
@@ -107,7 +97,7 @@ public class ChessBoard {
                 .anyMatch(entry -> existOtherPawnInColumn(position, entry.getKey()));
     }
 
-    private boolean existOtherPawnInColumn(final Position position, Position comparePosition) {
+    private boolean existOtherPawnInColumn(Position position, Position comparePosition) {
         return !position.equals(comparePosition) && position.equalsColumn(comparePosition);
     }
 

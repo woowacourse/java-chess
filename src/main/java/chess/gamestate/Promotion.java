@@ -14,7 +14,7 @@ public class Promotion extends Running {
     }
 
     @Override
-    public GameState run(final String command) {
+    public GameState run(String command) {
         Piece promotionPiece = PromotionPiece.createPromotionPiece(command, color);
         chessBoard.promotion(promotionPiece, color);
         return beforeRunning.otherState(chessBoard);
@@ -26,7 +26,7 @@ public class Promotion extends Running {
     }
 
     @Override
-    protected Running otherState(final ChessBoard chessBoard) {
+    protected Running otherState(ChessBoard chessBoard) {
         throw new IllegalStateException("Promotion은 상대 턴을 확인할 수 없습니다.");
     }
 }

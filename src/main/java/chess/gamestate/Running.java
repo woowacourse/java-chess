@@ -62,7 +62,7 @@ public abstract class Running implements GameState {
         return otherState(this.chessBoard);
     }
 
-    private void movePieceByCommand(final String command) {
+    private void movePieceByCommand(String command) {
         List<String> values = Arrays.asList(command.split(" "));
         Position source = position(values.get(START_POSITION_INDEX));
         Position target = position(values.get(TARGET_POSITION_INDEX));
