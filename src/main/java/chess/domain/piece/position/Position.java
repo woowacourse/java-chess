@@ -18,6 +18,20 @@ public class Position {
         return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 
+    public boolean isBlocked(Direction direction) {
+        Position next = getNext(direction);
+        if (isUpDownLeftRight(direction)) {
+            return this == next;
+        }
+
+        return (getFile() == next.getFile()) || (getRank() == next.getRank());
+    }
+
+    private boolean isUpDownLeftRight(Direction direction) {
+        return direction == Direction.Up || direction == Direction.Down
+            || direction == Direction.Left || direction == Direction.Right;
+    }
+
     public File getFile() {
         return file;
     }

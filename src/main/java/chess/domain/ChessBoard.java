@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 
 public class ChessBoard {
@@ -38,6 +39,21 @@ public class ChessBoard {
         List<Position> movablePaths = piece.getMovablePaths(source, this);
 
         return movablePaths.contains(target);
+    }
+
+    public boolean canMoveOneStep(Position source, Direction direction) {
+        if (source.isBlocked(direction)) {
+            return false;
+        }
+
+        return canKill(source, source.getNext(direction));
+    }
+
+    private boolean canKill(Position source, Position target) {
+        Piece sourcePiece = getPiece(source);
+        Piece targetPiece = getPiece(target);
+
+        return !isFilled(target) || !sourcePiece.isSameColor(targetPiece);
     }
 
     private void changeState(Piece sourcePiece, Piece targetPiece) {
