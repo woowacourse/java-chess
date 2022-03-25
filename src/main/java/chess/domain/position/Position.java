@@ -5,21 +5,21 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Row row;
     private final Column column;
+    private final Row row;
 
-    public Position(Row row, Column column) {
-        this.row = row;
+    public Position(Column column, Row row) {
         this.column = column;
+        this.row = row;
     }
 
     public Position(String value) {
-        this(Row.of(value.substring(0, 1)), Column.of(value.substring(1, 2)));
+        this(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
     }
 
     public Direction findDirection(Position position, boolean isOne) {
-        int x = row.calculateIndex(position.row);
-        int y = column.calculateIndex(position.column);
+        int x = column.calculateIndex(position.column);
+        int y = row.calculateIndex(position.row);
 
         if (isOne) {
             return Direction.of(x, y);
@@ -54,15 +54,15 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return row == position.row && column == position.column;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(column, row);
     }
 
-    public boolean isSameColumn(Column column) {
-        return this.column == column;
+    public boolean isSameColumn(Row row) {
+        return this.row == row;
     }
 }

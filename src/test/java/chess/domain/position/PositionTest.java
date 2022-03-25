@@ -3,9 +3,6 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Direction;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,15 +11,15 @@ public class PositionTest {
     @Test
     void create() {
         // then
-        assertThat(new Position(Row.A, Column.ONE)).isNotNull();
+        assertThat(new Position(Column.A, Row.ONE)).isNotNull();
     }
 
     @DisplayName("좌표 이동")
     @Test
     void move() {
         // given
-        Position from = new Position(Row.A, Column.ONE);
-        Position to = new Position(Row.A, Column.TWO);
+        Position from = new Position(Column.A, Row.ONE);
+        Position to = new Position(Column.A, Row.TWO);
 
         // when
         Direction direction = from.findDirection(to, true);

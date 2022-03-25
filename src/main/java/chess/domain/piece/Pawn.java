@@ -5,7 +5,7 @@ import static chess.domain.piece.Direction.SOUTH_SOUTH;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
-import chess.domain.position.Column;
+import chess.domain.position.Row;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -43,11 +43,11 @@ public class Pawn implements Piece {
     }
 
     private boolean isWhiteStart(Position position) { // 여기 컬럼 반대로 되어있었음
-        return team == WHITE && position.isSameColumn(Column.TWO);
+        return team == WHITE && position.isSameColumn(Row.TWO);
     }
 
     private boolean isBlackStart(Position position) { // 여기 커럼 반대로 되어있었음
-        return (team == BLACK && position.isSameColumn(Column.SEVEN));
+        return (team == BLACK && position.isSameColumn(Row.SEVEN));
     }
 
     @Override

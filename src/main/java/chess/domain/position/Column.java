@@ -1,19 +1,17 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public enum Column {
 
-    ONE("1", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8);
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
     private final String value;
     private final int index;
@@ -27,13 +25,7 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
-    }
-
-    public static List<Column> reverseColumns() {
-        List<Column> columns = Arrays.asList(values());
-        columns.sort(Collections.reverseOrder());
-        return columns;
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
     }
 
     public int calculateIndex(Column column) {

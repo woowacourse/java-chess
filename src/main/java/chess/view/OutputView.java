@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.position.Column;
-import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.domain.position.Position;
+import chess.domain.position.Column;
 import java.util.Map;
 
 public class OutputView {
@@ -16,15 +16,15 @@ public class OutputView {
     }
 
     public static void printBoard(Map<Position, String> board) {
-        for (Column column : Column.reverseColumns()) {
-            printColumnWithRow(board, column);
+        for (Row row : Row.reverseColumns()) {
+            printColumnWithRow(board, row);
             System.out.println();
         }
     }
 
-    private static void printColumnWithRow(Map<Position, String> board, Column column) {
-        for (Row row : Row.values()) {
-            Position position = new Position(row, column);
+    private static void printColumnWithRow(Map<Position, String> board, Row row) {
+        for (Column column : Column.values()) {
+            Position position = new Position(column, row);
             String piece = board.get(position);
             printStringOrDefault(piece);
         }
