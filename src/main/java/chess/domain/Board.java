@@ -1,13 +1,18 @@
 package chess.domain;
 
+import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public final class Board {
+
+    private static final double PAWN_PENALTY_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
 
@@ -112,10 +117,25 @@ public final class Board {
     }
 
     public double calculateScore(Color color) {
-        return pieces.values()
+        double score = pieces.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(piece -> piece.score())
+                .mapToDouble(Piece::score)
                 .sum();
+        return score - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
+    }
+
+    private int countPawnsOnSameColumns(Color color) {
+        return Arrays.stream(Column.values())
+                .mapToInt(column -> countPawnsOnSameColumn(column, color))
+                .filter(count -> count > 1)
+                .sum();
+    }
+
+    private int countPawnsOnSameColumn(Column column, Color color) {
+        return (int) Arrays.stream(Row.values())
+                .map(row -> piece(Position.valueOf(column, row)))
+                .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))
+                .count();
     }
 }

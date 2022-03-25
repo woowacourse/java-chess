@@ -323,4 +323,21 @@ class BoardTest {
                 () -> assertThat(board.calculateScore(Color.BLACK)).isEqualTo(0)
         );
     }
+
+    @Test
+    @DisplayName("같은 세로줄에 같은 색의 폰이 복수 존재하면 폰은 0.5점이다.")
+    void calculate_pawnScore() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new King()));
+            pieces.put(Position.of("a1"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("a5"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b4"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertThat(board.calculateScore(Color.WHITE)).isEqualTo(2);
+    }
 }
