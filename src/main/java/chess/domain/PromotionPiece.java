@@ -6,6 +6,7 @@ import chess.domain.piece.multiple.Rook;
 import chess.domain.piece.single.King;
 import chess.domain.piece.single.Knight;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Function;
 
 public enum PromotionPiece {
@@ -25,6 +26,8 @@ public enum PromotionPiece {
     }
 
     public static Piece createPromotionPiece(String input, Color color) {
+        Objects.requireNonNull(input, "input은 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(color, "color는 null이 들어올 수 없습니다.");
         return Arrays.stream(values())
                 .filter(promotion -> promotion.value.equals(input))
                 .map(promotion -> promotion.createPieceFunction.apply(color))
