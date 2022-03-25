@@ -29,6 +29,9 @@ public class Position {
     }
 
     public static Position from(final String value) {
+        if (!cache.containsKey(value)) {
+            throw new IllegalArgumentException("유효하지 않은 위치입니다.");
+        }
         return cache.get(value);
     }
 

@@ -19,7 +19,7 @@ public enum File {
         this.value = value;
     }
 
-    public static File of(final String value) {
+    static File of(final String value) {
         return Arrays.stream(File.values())
                 .filter((it) -> it.value.equals(value))
                 .findFirst()

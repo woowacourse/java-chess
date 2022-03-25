@@ -19,7 +19,7 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Rank of(final String value) {
+    static Rank of(final String value) {
         return Arrays.stream(values())
                 .filter(it -> it.value.equals(value))
                 .findFirst()

@@ -1,14 +1,26 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PositionTest {
 
     final Position position = Position.from("a1");
+
+    @ParameterizedTest
+    @DisplayName("유효하지 않은 값으로 포지션을 찾으면 예외를 던진다.")
+    @ValueSource(strings = {"i1", "a9", "i9", "a", "1", "."})
+    void validate(final String value) {
+        // then
+        assertThatThrownBy(() -> Position.from(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유효하지 않은 위치입니다.");
+    }
 
     @ParameterizedTest
     @DisplayName("포지션 간 세로줄을 비교한다.")
