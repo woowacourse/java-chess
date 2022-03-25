@@ -15,22 +15,11 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Piece move(final List<Piece> pieces, final Position targetPosition) {
+    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         position.validateTargetPosition(targetPosition, invalidTargetCondition, false);
-        checkOtherPiecesInPathToTarget(position, targetPosition, pieces);
+        position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Rook(teamColor, targetPosition);
-    }
-
-    private void checkOtherPiecesInPathToTarget(final Position currentPosition, final Position targetPosition,
-                                                final List<Piece> pieces) {
-        if (currentPosition == targetPosition) {
-            return;
-        }
-        if (pieces.stream().anyMatch(piece -> piece.hasPosition(currentPosition))) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
-        }
-        checkOtherPiecesInPathToTarget(currentPosition.nextPosition(targetPosition), targetPosition, pieces);
     }
 }
 

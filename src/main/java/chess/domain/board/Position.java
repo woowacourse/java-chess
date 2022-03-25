@@ -69,7 +69,21 @@ public class Position {
         }
     }
 
-    public Position nextPosition(final Position targetPosition) {
+    public void checkOtherPiecesInPathToTarget(final Position targetPosition, final List<Position> positions) {
+        if (this == targetPosition) {
+            return;
+        }
+
+        if (positions.stream()
+                .anyMatch(another -> this == another)) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
+        }
+
+        nextPosition(targetPosition)
+                .checkOtherPiecesInPathToTarget(targetPosition, positions);
+    }
+
+    private Position nextPosition(final Position targetPosition) {
         File nextFile = file.next(targetPosition.file);
         Rank nextRank = rank.next(targetPosition.rank);
         return Position.of(nextFile, nextRank);

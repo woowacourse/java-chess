@@ -18,8 +18,9 @@ class RookTest {
     void move() {
         //given
         final Rook rook = new Rook(TeamColor.BLACK, Position.from("1a"));
+        final Rook anotherRook = new Rook(TeamColor.BLACK, Position.from("1h"));
         final Position targetPosition = Position.from("8a");
-        final Piece moved = rook.move(new ArrayList<>(), targetPosition);
+        final Piece moved = rook.move(Collections.singletonList(anotherRook), targetPosition);
         //when
         final boolean actual = moved.hasPosition(targetPosition);
         //then

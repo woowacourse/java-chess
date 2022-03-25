@@ -16,7 +16,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Piece move(final List<Piece> pieces, final Position targetPosition) {
+    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         position.validateTargetPosition(targetPosition, invalidTargetCondition, true);
         return new Knight(teamColor, targetPosition);
     }

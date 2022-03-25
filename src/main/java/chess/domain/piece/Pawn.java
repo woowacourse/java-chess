@@ -11,7 +11,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move(final List<Piece> pieces, final Position targetPosition) {
+    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         return null;
     }
 }

@@ -16,7 +16,9 @@ import chess.domain.board.Rank;
 import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
 
@@ -49,11 +51,34 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public Piece move(final List<Piece> pieces, final Position targetPosition) {
+    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         return null;
+    }
+
+    List<Position> convertToPositions(final List<Piece> pieces) {
+        return pieces.stream()
+                .map(piece -> piece.position)
+                .collect(Collectors.toList());
     }
 
     public final boolean isSameTeam(final Piece anotherPiece) {
         return this.teamColor == anotherPiece.teamColor;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Piece piece = (Piece) o;
+        return teamColor == piece.teamColor && Objects.equals(position, piece.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamColor, position);
     }
 }
