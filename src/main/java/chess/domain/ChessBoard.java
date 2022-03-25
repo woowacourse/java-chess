@@ -5,6 +5,7 @@ import chess.domain.piece.PieceFactory;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -45,10 +46,14 @@ public class ChessBoard {
         }
     }
 
-    public void promotion(Color color) {
-        if (!isPromotionStatus()) {
-            throw new IllegalStateException("프로모션 상태가 아닙니다.");
-        }
+    public void promotion(Piece piece, Color color) {
+        Position position = pieces.entrySet()
+                .stream()
+                .filter(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue(), color))
+                .map(Entry::getKey)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("프로모션 프로모션 가능한 기물이 없습니다."));
+        pieces.put(position, piece);
     }
 
     public boolean isPositionEmpty(Position position) {
@@ -117,14 +122,14 @@ public class ChessBoard {
                 .count();
     }
 
-    public boolean isPromotionStatus() {
+    public boolean isPromotionStatus(Color color) {
         return pieces.entrySet()
                 .stream()
-                .anyMatch(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue()));
+                .anyMatch(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue(), color));
     }
 
-    private boolean isPromotionPositionPawn(Position position, Piece piece) {
-        return position.isPromotionPosition() && piece.isPawn();
+    private boolean isPromotionPositionPawn(Position position, Piece piece, Color color) {
+        return position.isPromotionPosition() && piece.isPawn() && piece.isSameColor(color);
     }
 
     public Map<Position, Piece> getPieces() {
