@@ -20,6 +20,13 @@ public class RookPiece extends FullPiece {
             List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH));
     }
 
+    private String decideName(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE_NAME;
+        }
+        return BLACK_NAME;
+    }
+
     @Override
     public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
@@ -28,13 +35,6 @@ public class RookPiece extends FullPiece {
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
         return movableDirections.contains(direction);
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override

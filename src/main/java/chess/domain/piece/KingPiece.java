@@ -22,6 +22,13 @@ public class KingPiece extends FullPiece {
                 Direction.SOUTH_WEST));
     }
 
+    private String decideName(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE_NAME;
+        }
+        return BLACK_NAME;
+    }
+
     @Override
     public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
@@ -36,13 +43,6 @@ public class KingPiece extends FullPiece {
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override

@@ -24,6 +24,13 @@ public class KnightPiece extends FullPiece {
                 Direction.KNIGHT_SOUTH_RIGHT));
     }
 
+    private String decideName(final Color color) {
+        if (color == Color.WHITE) {
+            return WHITE_NAME;
+        }
+        return BLACK_NAME;
+    }
+
     @Override
     public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
@@ -37,13 +44,6 @@ public class KnightPiece extends FullPiece {
     @Override
     public boolean isJumpable() {
         return true;
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override
