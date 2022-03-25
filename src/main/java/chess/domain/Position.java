@@ -16,6 +16,13 @@ public class Position {
     private final char column;
     private final char row;
 
+    private Position(char column, char row) {
+        validateColumnInRange(column);
+        validateRowInRange(row);
+        this.column = column;
+        this.row = row;
+    }
+
     private static List<Position> createCache() {
         List<Position> cache = new ArrayList<>();
         for (char column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
@@ -30,11 +37,11 @@ public class Position {
         }
     }
 
-    private Position(char column, char row) {
-        validateColumnInRange(column);
-        validateRowInRange(row);
-        this.column = column;
-        this.row = row;
+    public static Position of(char column, char row) {
+        return CACHE.stream()
+                .filter(position -> position.column == column && position.row == row)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Position범위에 맞지 않는 입력값입니다."));
     }
 
     private void validateColumnInRange(char column) {
@@ -57,13 +64,6 @@ public class Position {
 
     private boolean isRowInRange(char row) {
         return MIN_ROW <= row && row <= MAX_ROW;
-    }
-
-    public static Position of(char column, char row) {
-        return CACHE.stream()
-                .filter(position -> position.column == column && position.row == row)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Position범위에 맞지 않는 입력값입니다."));
     }
 
     public boolean equalsColumnOrRow(Position position) {
