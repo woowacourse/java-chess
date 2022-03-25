@@ -3,10 +3,11 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bishop extends ChessPiece {
     private static final String NAME = "BISHOP";
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 비숍이 이동할 수 없는 위치입니다.";
 
     public Bishop(Team team, ChessBoardPosition position) {
         super(NAME, team, position);
@@ -33,9 +34,19 @@ public class Bishop extends ChessPiece {
     }
 
     private boolean isUnobstructed(ChessBoardPosition targetPosition, ChessMen chessMen) {
-        return position.getPaths(targetPosition)
+        return createPathPositions(targetPosition)
                 .stream()
                 .noneMatch(chessMen::existChessPieceAt);
+    }
+
+    public List<ChessBoardPosition> createPathPositions(ChessBoardPosition other) {
+        List<Integer> rows = position.ascendingRowRange(other);
+        List<Integer> columns = position.ascendingColumnRange(other);
+        List<ChessBoardPosition> pathPositions = new ArrayList<>();
+        for (int i = 0; i < rows.size(); ++i) {
+            pathPositions.add(new ChessBoardPosition((char) (columns.get(i).intValue()), rows.get(i)));
+        }
+        return pathPositions;
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
