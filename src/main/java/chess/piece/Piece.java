@@ -32,6 +32,8 @@ public abstract class Piece {
         return this.pieceColor == otherPieceColor;
     }
 
+    public abstract double getScore();
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

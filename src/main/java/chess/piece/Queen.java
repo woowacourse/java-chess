@@ -6,6 +6,7 @@ import chess.Position;
 public class Queen extends Piece {
 
     private static final String emblem = "Q";
+    private static final double SCORE = 9;
 
     public Queen(PieceColor pieceColor) {
         super(pieceColor);
@@ -19,5 +20,10 @@ public class Queen extends Piece {
     @Override
     public boolean isMovable(Position source, Position target) {
         return source.isAllDirectional(target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

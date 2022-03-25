@@ -7,6 +7,7 @@ import chess.Rank;
 public class Pawn extends Piece {
 
     private static final String emblem = "P";
+    private static final double SCORE = 1;
 
     public Pawn(PieceColor pieceColor) {
         super(pieceColor);
@@ -36,5 +37,10 @@ public class Pawn extends Piece {
     @Override
     public String getConcreteEmblem() {
         return emblem;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

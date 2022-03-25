@@ -3,6 +3,7 @@ package chess;
 import static chess.PieceColor.*;
 import static chess.Rank.*;
 
+import chess.turndecider.AlternatingTurnDecider;
 import chess.turndecider.TurnDecider;
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +125,13 @@ public class Board {
         if (values.get(source).equals(EMPTY_PIECE)) {
             throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
+    }
+
+    public double calculateScore(PieceColor color) {
+        return values.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 
     public Map<Position, Piece> getValues() {
