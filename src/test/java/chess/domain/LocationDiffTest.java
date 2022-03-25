@@ -25,7 +25,7 @@ class LocationDiffTest {
     @MethodSource("directionParameter")
     void getDirection(int x, int y, Direction direction) {
         LocationDiff locationDiff = new LocationDiff(x, y);
-        assertThat(locationDiff.getDirection()).isEqualTo(direction);
+        assertThat(locationDiff.computeDirection()).isEqualTo(direction);
     }
 
     public static Stream<Arguments> directionParameter() {

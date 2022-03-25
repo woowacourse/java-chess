@@ -50,6 +50,4 @@ class RunningTest {
         assertThatThrownBy(() -> state.move(Location.of(File.F, Rank.SEVEN), Location.of(File.F, Rank.FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }

@@ -10,4 +10,8 @@ public enum Team {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public boolean isNone() {
+        return this == NONE;
+    }
 }

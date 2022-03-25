@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.state.Direction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,14 @@ public class Location {
         return CACHE.get(toKey(File.of(file), Rank.of(rank)));
     }
 
-    public LocationDiff computeDiff(Location origin) {
-        int diffFile = file.computeDiff(origin.file);
-        int diffRank = rank.computeDiff(origin.rank);
+    public LocationDiff computeDiff(Location target) {
+        int diffFile = file.computeDiff(target.file);
+        int diffRank = rank.computeDiff(target.rank);
 
         return new LocationDiff(diffFile, diffRank);
+    }
+
+    public Location add(Direction direction) {
+        return Location.of(file.add(direction.getX()), rank.add(direction.getY()));
     }
 }
