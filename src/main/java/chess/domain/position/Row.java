@@ -30,11 +30,20 @@ public enum Row {
                 .collect(Collectors.toList());
     }
 
-    public static Row of(final int value) {
+    public static Row of(final String value) {
+        int rowValue = convertValue(value);
         return Arrays.stream(values())
-                .filter(it -> it.value == value)
+                .filter(it -> it.value == rowValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 로우입니다."));
+    }
+
+    private static int convertValue(final String value) {
+        try {
+            return Integer.parseInt(value);
+        }catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 헹은 숫자로 입력되어야 합니다.");
+        }
     }
 
     public int getValue() {

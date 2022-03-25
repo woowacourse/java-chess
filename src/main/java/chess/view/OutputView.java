@@ -37,4 +37,11 @@ public class OutputView {
     }
 
 
+    public static void announceNotStarted() {
+        System.out.println("게임을 먼저 start 해주세요.");
+    }
+
+    public static void announceWrongMoveCommand() {
+        System.out.println("목적지와 출발지가 둘 다 필요합니다.");
+    }
 }

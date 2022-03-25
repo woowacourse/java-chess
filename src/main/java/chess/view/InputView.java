@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final List<String> COMMANDS = List.of("start", "end");
+    private static final List<String> COMMANDS = List.of("start", "end", "move");
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -16,7 +16,8 @@ public class InputView {
 
     public static String requestCommand() {
         String command = scanner.nextLine().trim();
-        validateCommand(command);
+        String firstWord = command.split(" ")[0];
+        validateCommand(firstWord);
         return command;
     }
 
