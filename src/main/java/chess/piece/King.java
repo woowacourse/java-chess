@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Position;
 import chess.Team;
 
+import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
@@ -38,6 +39,6 @@ public class King extends Piece {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        return null;
+        return Collections.emptyList();
     }
 }

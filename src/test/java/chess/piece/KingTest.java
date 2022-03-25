@@ -1,12 +1,17 @@
 package chess.piece;
 
+import chess.Board;
 import chess.Position;
 import chess.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class KingTest {
 
@@ -28,5 +33,51 @@ class KingTest {
         King king = new King(Position.of('a', '1'), Team.WHITE);
 
         assertThat(king.isMovable(Position.of('c', '3'))).isFalse();
+    }
+
+
+    @Test
+    @DisplayName("킹의 target위치에 아군 말이 없으면 움직임에 성공한다")
+    void moveKingTest() {
+        List<Piece> pieces = List.of(
+                new King(Position.of('a', '8'), Team.BLACK),
+                new Pawn(Position.of('a', '7'), Team.WHITE)
+        );
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "a7");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("킹의 target위치에 아군 말이 없으면 움직임에 성공한다")
+    void moveKingTest2() {
+        List<Piece> pieces = List.of(
+                new King(Position.of('a', '8'), Team.BLACK),
+                new Empty(Position.of('b', '7'))
+        );
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "b7");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("킹의 target위치에 아군 말이 있으면 예외처리")
+    void moveFailureKingTest() {
+        List<Piece> pieces = List.of(
+                new King(Position.of('a', '8'), Team.WHITE),
+                new Pawn(Position.of('a', '7'), Team.WHITE)
+        );
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "a7");
+
+        assertThatThrownBy(
+                () -> board.move(command)
+        ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

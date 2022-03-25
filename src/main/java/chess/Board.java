@@ -1,6 +1,5 @@
 package chess;
 
-
 import chess.piece.*;
 
 import java.util.List;
