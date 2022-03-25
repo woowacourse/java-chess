@@ -26,8 +26,8 @@ public final class Pawn extends Piece {
 
     @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int rowDirectedDistance = beforePosition.rowDirectedDistance(afterPosition);
-        int columnDistance = beforePosition.columnDistance(afterPosition);
+        int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
+        int columnDistance = afterPosition.columnDistance(beforePosition);
         if (columnDistance != 0) {
             return false;
         }
@@ -40,9 +40,9 @@ public final class Pawn extends Piece {
 
     private boolean movableLimitByCamp(int distance, int movableDistance) {
         if (this.isBlack()) {
-            return 0 < distance && distance <= movableDistance;
+            return -movableDistance <= distance && distance < 0;
         }
-        return -movableDistance <= distance && distance < 0;
+        return 0 < distance && distance <= movableDistance;
     }
 
     @Override
