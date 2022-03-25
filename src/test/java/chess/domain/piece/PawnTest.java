@@ -7,30 +7,23 @@ import chess.domain.BoardFixtures;
 import chess.domain.Color;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
 
     private static final Position whitePawnPositionAtStartingPoint = new Position("b2");
 
-    private static Stream<Arguments> generatePossiblePositionsAtStartingPoint() {
-        return Stream.of("b3", "b4")
-                .map(Arguments::of);
-    }
-
     @DisplayName("white pawn은 시작점인 경우 top 방향으로 한 칸 혹은 두 칸 이동 가능하다.")
     @ParameterizedTest
-    @MethodSource("generatePossiblePositionsAtStartingPoint")
-    void whitePawn_시작점_top방향_한칸_두칸_이동_가능하다(Position targetPosition) {
+    @ValueSource(strings = {"b3", "b4"})
+    void whitePawn_시작점_top방향_한칸_두칸_이동_가능하다(String target) {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertDoesNotThrow(() -> pawn.validateMove(board, whitePawnPositionAtStartingPoint, targetPosition));
+        assertDoesNotThrow(() -> pawn.validateMove(board, whitePawnPositionAtStartingPoint, new Position(target)));
     }
 
     @DisplayName("white pawn이 시작점에서 두 칸 이동할 때 경로에 기물이 있는 경우 예외가 발생한다.")
