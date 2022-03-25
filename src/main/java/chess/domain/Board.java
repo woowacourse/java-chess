@@ -22,8 +22,11 @@ public class Board {
         return board.get(position.getRow()).getPiece(position.getCol());
     }
 
-    public void movePiece(String source, String destination) {
+    public void movePiece(String source, String destination, Team team) {
         Piece piece = getPiece(Position.from(source));
+        if (piece.getTeam() != team) {
+            throw new IllegalArgumentException("다른 팀 말을 옮길 수 없습니다.");
+        }
         List<Position> positions = piece.findPath(Position.from(destination));
         validateMovingPath(source, destination, piece, positions);
         piece.move(Position.from(destination));
@@ -36,6 +39,9 @@ public class Board {
     }
 
     private void validateMovingPath(String source, String destination, Piece piece, List<Position> positions) {
+        if (getPiece(Position.from(source)).getTeam() == getPiece(Position.from(destination)).getTeam()) {
+            throw new IllegalArgumentException("같은 팀은 kill 할 수 없습니다.");
+        }
         if (piece.isPawn() && isDiagonal(Position.from(source), Position.from(destination))){
             validatePawnAttemptKill(destination);
             return;

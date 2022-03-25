@@ -20,7 +20,8 @@ public class Knight extends Piece {
 
     @Override
     public List<Position> findPath(Position destination) {
-        return null;
+        validateIsPossible(destination);
+        return List.of();
     }
 
     @Override

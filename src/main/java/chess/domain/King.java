@@ -18,6 +18,7 @@ public class King extends Piece {
 
     @Override
     public List<Position> findPath(Position destination) {
-        return null;
+        validateIsPossible(destination);
+        return List.of();
     }
 }

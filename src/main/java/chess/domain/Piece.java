@@ -44,4 +44,8 @@ public abstract class Piece {
                 ", position=" + position +
                 '}';
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

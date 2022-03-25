@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public enum Command {
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String value;
 
@@ -16,10 +17,14 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(i -> i.value.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("start 또는 end만 입력할 수 있습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("start,end, move만 입력할 수 있습니다."));
     }
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
