@@ -51,6 +51,10 @@ public final class ChessGame {
 
         board.validateMovement(currentTurnColor, source, target);
         board.movePiece(source, target);
+
+        if(board.isPromotable(target)){
+            board.promoteTo(target, new Queen(currentTurnColor));
+        }
         changeTurn();
     }
 

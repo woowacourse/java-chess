@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
 import chess.domain.position.Position;
 import chess.domain.position.PositionY;
 
@@ -150,6 +151,15 @@ public class Board {
         Piece sourcePiece = board.get(source);
         board.replace(source, new Blank());
         board.replace(target, sourcePiece.displaced());
+    }
+
+    public boolean isPromotable(Position target) {
+        Piece targetPiece = board.get(target);
+        return (targetPiece.isPawn() && target.isEndRank());
+    }
+
+    public void promoteTo(Position target, Piece piece) {
+        board.replace(target, piece);
     }
 
     public double calculateScoreOf(Color color) {

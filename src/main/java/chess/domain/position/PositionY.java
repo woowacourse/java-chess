@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public enum PositionY {
     RANK_1("1", 7),
@@ -42,7 +43,21 @@ public enum PositionY {
         return PositionY.of(coordination + displacement);
     }
 
+    public boolean isFirstOrLastRank() {
+        Comparator<PositionY> comparatorByCoordination = Comparator.comparingInt(positionY -> positionY.coordination);
+        PositionY firstRank = Arrays.stream(values())
+                .min(comparatorByCoordination)
+                .orElseThrow(() -> new IllegalArgumentException("세로줄은 1개 이상 존재해야 합니다."));
+        PositionY lastRank = Arrays.stream(values())
+                .max(comparatorByCoordination)
+                .orElseThrow(() -> new IllegalArgumentException("세로줄은 1개 이상 존재해야 합니다."));
+
+        return (this.equals(firstRank) || this.equals(lastRank));
+    }
+
     public String getName() {
         return name;
     }
+
+
 }
