@@ -33,13 +33,15 @@ public abstract class Running implements GameState {
 
     @Override
     public GameState run(String command) {
-        if (command.equals("end")) {
+        Command cmd = Command.toCommand(command);
+        if (cmd.isEnd()) {
             return new End();
         }
-        if (command.equals("status")) {
+        if (cmd.isStatus()) {
             OutputView.printChessBoardStatus(chessBoard.calcualteScoreStatus());
             return this;
         }
+
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
         if (matcher.find()) {
             movePieceByCommand(command);

@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ReadyTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"move", "end", "start1"})
+    @ValueSource(strings = {"move a2 a3", "end"})
     @DisplayName("게임 시작 커맨드가 아니면 예외발생")
     void runException(String inputLine) {
         GameState gameState = new Ready();

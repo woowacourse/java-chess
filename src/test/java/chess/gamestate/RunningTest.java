@@ -11,17 +11,14 @@ import chess.domain.piece.single.King;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class RunningTest {
 
-    @ParameterizedTest
-    @ValueSource(strings = {"start", "move1", "end1"})
+    @Test
     @DisplayName("현재 상태에서 진행 가능한 커맨드가 아니면 예외발생")
-    void runException(String inputLine) {
+    void runException() {
         GameState gameState = new WhiteRunning(ChessBoard.createNewChessBoard());
-        assertThatThrownBy(() -> gameState.run(inputLine))
+        assertThatThrownBy(() -> gameState.run("start"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 진행상태에서 불가능한 명령어입니다.");
     }
