@@ -23,4 +23,9 @@ public class Queen implements Type {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 9;
+    }
 }

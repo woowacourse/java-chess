@@ -25,4 +25,9 @@ public class King implements Type {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public double score() {
+        return 0;
+    }
 }

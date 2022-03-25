@@ -43,7 +43,7 @@ public final class Board {
     }
 
     private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
-        if (pieces.containsKey(targetPosition) && piece.isSameColor(findPiece(targetPosition))) {
+        if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
             throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
         }
     }
@@ -109,5 +109,13 @@ public final class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .count() != 2;
+    }
+
+    public double calculateScore(Color color) {
+        return pieces.values()
+                .stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(piece -> piece.score())
+                .sum();
     }
 }

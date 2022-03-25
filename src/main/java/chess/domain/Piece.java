@@ -54,11 +54,19 @@ public final class Piece {
         return type.isPawn();
     }
 
-    public boolean isSameColor(Piece piece) {
+    public boolean isSameColorPiece(Piece piece) {
         return color == piece.color;
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     public boolean isKing() {
         return type.isKing();
+    }
+
+    public double score() {
+        return type.score();
     }
 }

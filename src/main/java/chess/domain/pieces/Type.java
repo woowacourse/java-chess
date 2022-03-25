@@ -11,4 +11,6 @@ public interface Type {
     boolean isPawn();
 
     boolean isKing();
+
+    double score();
 }

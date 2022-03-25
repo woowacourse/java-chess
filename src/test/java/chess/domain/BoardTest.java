@@ -10,6 +10,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BoardTest {
 
@@ -300,5 +301,26 @@ class BoardTest {
 
         board.move("g1", "g7");
         assertThat(board.isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("각 진영의 점수를 계산한다")
+    void calculate_eachColorsScore() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new King()));
+            pieces.put(Position.of("g1"), new Piece(Color.WHITE, new Rook()));
+            pieces.put(Position.of("c3"), new Piece(Color.WHITE, new Queen()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new Knight()));
+            pieces.put(Position.of("a1"), new Piece(Color.WHITE, new Bishop()));
+            pieces.put(Position.of("h2"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        assertAll(
+                () -> assertThat(board.calculateScore(Color.WHITE)).isEqualTo(20.5),
+                () -> assertThat(board.calculateScore(Color.BLACK)).isEqualTo(0)
+        );
     }
 }
