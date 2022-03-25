@@ -23,7 +23,7 @@ public class BishopTest {
                 .map(Arguments::of);
     }
 
-    private static final Stream<Arguments> generateImPossiblePositions() {
+    private static final Stream<Arguments> generateImpossiblePositions() {
         List<String> positions = List.of(
                 "a1", "b1", "d1", "e1", "f1", "g1", "h1", "a2", "c2", "e2",
                 "f2", "g2", "h2", "b3", "c3", "d3", "f3", "g3", "h3", "a4",
@@ -48,7 +48,7 @@ public class BishopTest {
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
     @ParameterizedTest
-    @MethodSource("generateImPossiblePositions")
+    @MethodSource("generateImpossiblePositions")
     void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Bishop bishop = new Bishop(Color.WHITE);
