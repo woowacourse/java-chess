@@ -30,4 +30,9 @@ public class Bishop extends Piece {
 	public String getSymbol() {
 		return this.symbol;
 	}
+
+	@Override
+	public boolean isPawn() {
+		return false;
+	}
 }

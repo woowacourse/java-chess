@@ -7,5 +7,7 @@ public interface Direction {
 
 	boolean confirm(Position from, Position to);
 
+	boolean isDiagonal();
+
 	UnitPosition getUnitPosition();
 }

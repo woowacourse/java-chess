@@ -30,4 +30,9 @@ public class Knight extends Piece {
 	public boolean isMovable(Position from, Position to) {
 		return new KnightMovingStrategy().check(from, to);
 	}
+
+	@Override
+	public boolean isPawn() {
+		return false;
+	}
 }

@@ -42,6 +42,11 @@ public enum DiagonalDirection implements Direction {
 	}
 
 	@Override
+	public boolean isDiagonal() {
+		return true;
+	}
+
+	@Override
 	public UnitPosition getUnitPosition() {
 		return unitPosition;
 	}

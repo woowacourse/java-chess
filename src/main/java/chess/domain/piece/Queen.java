@@ -30,4 +30,9 @@ public class Queen extends Piece {
 	public boolean isMovable(Position from, Position to) {
 		return new QueenMovingStrategy().check(from, to);
 	}
+
+	@Override
+	public boolean isPawn() {
+		return false;
+	}
 }

@@ -1,7 +1,10 @@
 package chess.view;
 
+import java.util.Optional;
+
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
 
 public class OutputView {
 
@@ -19,10 +22,11 @@ public class OutputView {
 	}
 
 	private void displaySymbol(Board board, int i, int j) {
-		try {
-			System.out.print(board.findPiece(new Position(i, j)).getSymbol());
-		} catch (IllegalArgumentException exception) {
-			System.out.print("ꕤ");
+		Optional<Piece> nullablePiece = board.findPiece(new Position(i, j));
+		if (nullablePiece.isPresent()) {
+			System.out.println(nullablePiece.get().getSymbol());
+			return;
 		}
+		System.out.println("ꕤ");
 	}
 }

@@ -24,6 +24,11 @@ public class Pawn extends Piece {
 	}
 
 	@Override
+	public boolean isPawn() {
+		return true;
+	}
+
+	@Override
 	public String getSymbol() {
 		return this.symbol;
 	}
