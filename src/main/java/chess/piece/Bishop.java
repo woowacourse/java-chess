@@ -5,7 +5,9 @@ import chess.Position;
 
 public class Bishop extends Piece {
 
-    public static final String emblem = "B";
+    private static final String EMBLEM = "B";
+    private static final double SCORE = 3f;
+
 
     public Bishop(PieceColor pieceColor) {
         super(pieceColor);
@@ -13,12 +15,17 @@ public class Bishop extends Piece {
 
     @Override
     public String getConcreteEmblem() {
-        return emblem;
+        return EMBLEM;
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
         return source.isDiagonal(target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
 }

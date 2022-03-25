@@ -5,7 +5,8 @@ import chess.Position;
 
 public class Knight extends Piece {
 
-    private static final String emblem = "N";
+    private static final String EMBLEM = "N";
+    private static final double SCORE = 2.5f;
 
     public Knight(PieceColor pieceColor) {
         super(pieceColor);
@@ -13,12 +14,17 @@ public class Knight extends Piece {
 
     @Override
     public String getConcreteEmblem() {
-        return emblem;
+        return EMBLEM;
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
         return source.rankDistance(target) == 2 && source.fileDistance(target) == 1 ||
             source.rankDistance(target) == 1 && source.fileDistance(target) == 2;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

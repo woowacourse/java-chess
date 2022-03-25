@@ -4,7 +4,9 @@ import chess.PieceColor;
 import chess.Position;
 
 public class EmptyPiece extends Piece {
-    private static final String emblem = ".";
+
+    private static final String EMBLEM = ".";
+    private static final double SCORE = 0;
 
     public EmptyPiece(PieceColor pieceColor) {
         super(pieceColor);
@@ -12,11 +14,16 @@ public class EmptyPiece extends Piece {
 
     @Override
     public String getConcreteEmblem() {
-        return emblem;
+        return EMBLEM;
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

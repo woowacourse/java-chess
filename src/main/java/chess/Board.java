@@ -3,6 +3,7 @@ package chess;
 import static chess.PieceColor.*;
 import static chess.Rank.*;
 
+import chess.turndecider.AlternatingTurnDecider;
 import chess.turndecider.TurnDecider;
 import java.util.HashMap;
 import java.util.List;
@@ -22,16 +23,15 @@ import chess.piece.Rook;
 public class Board {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
-
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
-    private final Map<Position, Piece> values;
-
-    private final TurnDecider turnDecider;
-
     private static final Function<PieceColor, List<Piece>> createPieceFunction = (PieceColor pieceColor) -> List.of(
         new Rook(pieceColor), new Knight(pieceColor), new Bishop(pieceColor),
         new Queen(pieceColor), new King(pieceColor), new Bishop(pieceColor),
         new Knight(pieceColor), new Rook(pieceColor));
+
+    private final Map<Position, Piece> values;
+    private final TurnDecider turnDecider;
+
 
     public Board(TurnDecider turnDecider) {
         this.values = initBoard();
@@ -124,6 +124,13 @@ public class Board {
         if (values.get(source).equals(EMPTY_PIECE)) {
             throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
+    }
+
+    public double calculateScore(PieceColor color) {
+        return values.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 
     public Map<Position, Piece> getValues() {

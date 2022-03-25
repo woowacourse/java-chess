@@ -5,7 +5,8 @@ import chess.Position;
 
 public class Rook extends Piece {
 
-    private static final String emblem = "R";
+    private static final String EMBLEM = "R";
+    private static final double SCORE = 5;
 
     public Rook(PieceColor pieceColor) {
         super(pieceColor);
@@ -13,11 +14,16 @@ public class Rook extends Piece {
 
     @Override
     public String getConcreteEmblem() {
-        return emblem;
+        return EMBLEM;
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
         return source.isCross(target);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
