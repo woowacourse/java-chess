@@ -1,39 +1,73 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.ChessBoard;
+import chess.domain.BoardFixtures;
 import chess.domain.Color;
-import chess.domain.generator.EmptyBoardGenerator;
 import chess.domain.position.Position;
+import java.util.List;
+import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class RookTest {
 
-    @DisplayName("위치 정보를 기반으로 이동 가능을 여부를 반환하다.")
-    @Test
-    void 위치정보를_활용하여_이동가능여부를_반환한다() {
-        ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
-        Position sourcePosition = new Position("a1");
-        Position targetPosition = new Position("a8");
-        Rook rook = new Rook(Color.WHITE);
+    private static final Position RookSourcePosition = new Position("a1");
 
-        assertDoesNotThrow(() -> rook.validateMove(chessBoard.getBoard(), sourcePosition, targetPosition));
+    private static final Stream<Arguments> generatePossiblePositions() {
+        return List.of("a2" ,"a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1")
+                .stream()
+                .map(Arguments::of);
     }
 
-    @DisplayName("위치 정보를 기반으로 중간에 기물이 있는 경우 이동이 불가능하다.")
-    @Test
-    void 중간에_기물이_있는_경우_이동_불가능하다() {
-        ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
-        chessBoard.init();
+    private static final Stream<Arguments> generateImPossiblePositions() {
+        List<String> positions = List.of(
+                "b2", "c2", "d2", "e2", "f2", "g2", "h2",
+                "b3", "c3", "d3", "e3", "f3", "g3", "h3",
+                "b4", "c4", "d4", "e4", "f4", "g4", "h4",
+                "b5", "c5", "d5", "e5", "f5", "g5", "h5",
+                "b6", "c6", "d6", "e6", "f6", "g6", "h6",
+                "b7", "c7", "d7", "e7", "f7", "g7", "h7",
+                "b8", "c8", "d8", "e8", "f8", "g8", "h8"
+        );
 
-        Position sourcePosition = new Position("a1");
-        Position targetPosition = new Position("a8");
+        return positions.stream()
+                .map(Arguments::of);
+    }
+
+    @DisplayName("이동 가능한 경우 예외를 던지지 않는다.")
+    @ParameterizedTest
+    @MethodSource("generatePossiblePositions")
+    void 이동_가능한_경우_예외를_던지지_않는다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Rook rook = new Rook(Color.WHITE);
 
-        assertThatThrownBy(() -> rook.validateMove(chessBoard.getBoard(), sourcePosition, targetPosition))
+        assertDoesNotThrow(() -> rook.validateMove(board, RookSourcePosition, targetPosition));
+    }
+
+    @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
+    @ParameterizedTest
+    @MethodSource("generateImPossiblePositions")
+    void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Rook rook = new Rook(Color.WHITE);
+
+        Assertions.assertThatThrownBy(() -> rook.validateMove(board, RookSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("이동 가능한 위치 중간에 기물이 위치한 경우 경우 예외를 던진다.")
+    @ParameterizedTest
+    @MethodSource("generatePossiblePositions")
+    void 이동_가능하고_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
+        Rook rook = new Rook(Color.WHITE);
+
+        Assertions.assertThatThrownBy(() -> rook.validateMove(board, RookSourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
     }
 }
