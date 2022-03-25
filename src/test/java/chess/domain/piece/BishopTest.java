@@ -12,10 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class BishopTest {
 
-    private static final Position BishopSourcePosition = new Position("c1");
+    private static final Position bishopSourcePosition = new Position("c1");
 
     private static Stream<Arguments> generatePossiblePositions() {
         return Stream.of("b2", "a3", "d2", "e3", "f4", "g5", "h6")
@@ -42,7 +43,9 @@ public class BishopTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Bishop bishop = new Bishop(Color.WHITE);
 
-        assertDoesNotThrow(() -> bishop.validateMove(board, BishopSourcePosition, targetPosition));
+        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+
+        assertDoesNotThrow(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
@@ -52,19 +55,38 @@ public class BishopTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Bishop bishop = new Bishop(Color.WHITE);
 
-        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, BishopSourcePosition, targetPosition))
+        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+
+        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("이동 가능한 위치 중간에 기물이 위치한 경우 경우 예외를 던진다.")
     @ParameterizedTest
-    @MethodSource("generatePossiblePositions")
-    void 이동_가능하고_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+    @ValueSource(strings = {"a3", "e3", "f4", "g5", "h6"})
+    void 이동_가능하고_기물이_위치한_경우_예외를_던진다(String target) {
         List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
         Bishop bishop = new Bishop(Color.WHITE);
 
-        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, BishopSourcePosition, targetPosition))
+        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+
+        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
+    }
+
+    @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
+    @ParameterizedTest
+    @MethodSource("generatePossiblePositions")
+    void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Bishop bishop = new Bishop(Color.WHITE);
+
+        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+
+        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
     }
 }

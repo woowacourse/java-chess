@@ -18,11 +18,22 @@ public class LinearMovingStrategy implements MovingStrategy {
         Direction direction = Direction.of(sourcePosition, targetPosition);
         validateDirection(direction);
 
-        Position currentPosition = sourcePosition;
+        Position currentPosition = sourcePosition.add(direction);
         while (!currentPosition.equals(targetPosition)) {
-            currentPosition = currentPosition.add(direction);
             Piece currentPiece = findPiece(board, currentPosition);
             validateExistPiece(currentPiece);
+            currentPosition = currentPosition.add(direction);
+        }
+
+        validateSameColor(board, sourcePosition, targetPosition);
+    }
+
+    private void validateSameColor(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = findPiece(board, sourcePosition);
+        Piece targetPiece = findPiece(board, targetPosition);
+
+        if(sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("같은 진영 기물은 공격할 수 없습니다.");
         }
     }
 

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.BoardFixtures;
@@ -34,6 +35,8 @@ class KnightTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Knight knight = new Knight(Color.WHITE);
 
+        board.get(knightSourcePosition.getRankIndex()).set(knightSourcePosition.getFileIndex(), knight);
+
         assertDoesNotThrow(() -> knight.validateMove(board, knightSourcePosition, targetPosition));
     }
 
@@ -44,7 +47,24 @@ class KnightTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Knight knight = new Knight(Color.WHITE);
 
+        board.get(knightSourcePosition.getRankIndex()).set(knightSourcePosition.getFileIndex(), knight);
+
         Assertions.assertThatThrownBy(() -> knight.validateMove(board, knightSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
+    @ParameterizedTest
+    @MethodSource("generatePossiblePositions")
+    void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Knight knight = new Knight(Color.WHITE);
+
+        board.get(knightSourcePosition.getRankIndex()).set(knightSourcePosition.getFileIndex(), knight);
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+
+        assertThatThrownBy(() -> knight.validateMove(board, knightSourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
     }
 }

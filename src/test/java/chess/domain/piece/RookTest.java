@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.BoardFixtures;
@@ -7,18 +8,18 @@ import chess.domain.Color;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class RookTest {
 
-    private static final Position RookSourcePosition = new Position("a1");
+    private static final Position rookSourcePosition = new Position("a1");
 
     private static Stream<Arguments> generatePossiblePositions() {
-        return Stream.of("a2" ,"a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1")
+        return Stream.of("a2", "a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1")
                 .map(Arguments::of);
     }
 
@@ -44,7 +45,9 @@ class RookTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Rook rook = new Rook(Color.WHITE);
 
-        assertDoesNotThrow(() -> rook.validateMove(board, RookSourcePosition, targetPosition));
+        board.get(rookSourcePosition.getRankIndex()).set(rookSourcePosition.getFileIndex(), rook);
+
+        assertDoesNotThrow(() -> rook.validateMove(board, rookSourcePosition, targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
@@ -54,19 +57,38 @@ class RookTest {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
         Rook rook = new Rook(Color.WHITE);
 
-        Assertions.assertThatThrownBy(() -> rook.validateMove(board, RookSourcePosition, targetPosition))
+        board.get(rookSourcePosition.getRankIndex()).set(rookSourcePosition.getFileIndex(), rook);
+
+        assertThatThrownBy(() -> rook.validateMove(board, rookSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("이동 가능한 위치 중간에 기물이 위치한 경우 경우 예외를 던진다.")
     @ParameterizedTest
-    @MethodSource("generatePossiblePositions")
-    void 이동_가능하고_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+    @ValueSource(strings = {"a3", "a4", "a5", "a6"})
+    void 이동_가능하고_기물이_위치한_경우_예외를_던진다(String target) {
         List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
         Rook rook = new Rook(Color.WHITE);
 
-        Assertions.assertThatThrownBy(() -> rook.validateMove(board, RookSourcePosition, targetPosition))
+        board.get(rookSourcePosition.getRankIndex()).set(rookSourcePosition.getFileIndex(), rook);
+
+        assertThatThrownBy(() -> rook.validateMove(board, rookSourcePosition, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
+    }
+
+    @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
+    @ParameterizedTest
+    @MethodSource("generatePossiblePositions")
+    void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Rook rook = new Rook(Color.WHITE);
+
+        board.get(rookSourcePosition.getRankIndex()).set(rookSourcePosition.getFileIndex(), rook);
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+
+        assertThatThrownBy(() -> rook.validateMove(board, rookSourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
     }
 }
