@@ -4,6 +4,10 @@ import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
@@ -15,7 +19,11 @@ public class OutputView {
     }
 
     public static void printChessBoard(Board board) {
-        for (Rank rank : Rank.values()) {
+        List<Rank> ranks = Arrays.stream(Rank.values())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+
+        for (Rank rank : ranks) {
             for (File file : File.values()) {
                 System.out.print(board.findByPosition(new Position(file, rank)).getName());
             }
