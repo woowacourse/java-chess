@@ -28,14 +28,22 @@ public class Board {
     }
 
     private void validateExistPiecePosition(Position position) {
-        if(!board.containsKey(position)) {
+        if (!board.containsKey(position)) {
             throw new IllegalArgumentException(NOT_EXIST_PIECE);
         }
     }
 
-    private void validateMovablePosition(Piece piece,Position fromPosition, Position toPosition) {
+    private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
         if (!piece.isMovable(fromPosition, toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
         }
+    }
+
+    public boolean isAllKingExist() {
+        return board.values()
+            .stream()
+            .filter(Piece::isKing)
+            .map(piece -> 1)
+            .reduce(0, Integer::sum) == 2;
     }
 }

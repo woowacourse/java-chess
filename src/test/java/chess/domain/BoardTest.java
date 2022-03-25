@@ -3,6 +3,11 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,5 +62,20 @@ public class BoardTest {
         assertThatThrownBy(() -> board.movePiece(fromPosition, toPosition))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 해당 위치는 말이 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("킹이 두 개 다 있는지 체크한다")
+    void checkKings() {
+        assertThat(board.isAllKingExist()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 2 개가 존재하지 않을 경우 False를 반환한다.")
+    void checkKingCount() {
+        Map<Position, Piece> initialPieces = new HashMap<>();
+        initialPieces.put(Position.valueOf(Abscissa.a, Ordinate.ONE), new King(Color.WHITE));
+        Board testBoard = new Board(initialPieces);
+        assertThat(testBoard.isAllKingExist()).isFalse();
     }
 }

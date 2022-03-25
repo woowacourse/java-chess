@@ -15,4 +15,8 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(Position fromPosition, Position toPosition);
+
+    public boolean isKing() {
+        return false;
+    }
 }

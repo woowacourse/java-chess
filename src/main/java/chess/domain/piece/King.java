@@ -36,4 +36,9 @@ public class King extends Piece{
         int width = fromPosition.getAbscissaDifference(toPosition);
         return Math.pow(height,2) + Math.pow(width,2) == 2;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
