@@ -1,6 +1,6 @@
 package console;
 
-import chess.ChessBoard;
+import chess.ChessGame;
 import console.view.InputView;
 import console.view.OutputView;
 
@@ -12,8 +12,8 @@ public class Application {
 
         while (true) {
             if (command.equals("start")) {
-                ChessBoard chessBoard = new ChessBoard();
-                OutputView.printChessBoard(chessBoard.getPieces());
+                ChessGame chessGame = new ChessGame();
+                OutputView.printChessBoard(chessGame.getSquare());
             }
 
             if (command.equals("end")) {

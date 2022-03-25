@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
+import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,27 +16,25 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class KnightTest {
+
     @Test
     @DisplayName("나이트가 이동할 수 없는 위치로 이동 시 예외 발생")
     void moveKnightToInvalidPosition() {
-        Knight knight = new Knight(Color.BLACK, new Position(G, EIGHT));
+        Knight knight = new Knight(Color.BLACK);
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> knight.move(new Position(F, FIVE)))
-                .isInstanceOf(IllegalArgumentException.class);
-            assertThat(knight.getPosition()).isEqualTo(new Position(G, EIGHT));
-        });
+        assertThat(
+            knight.isMovablePosition(new Transition(new Position(G, EIGHT), new Position(F, FIVE))))
+            .isFalse();
     }
 
     @ParameterizedTest
     @MethodSource("provideValidMoveKnight")
     @DisplayName("나이트는 직선으로 1칸 이동 후 대각선으로 1칸 움직인다.")
     void moveKnightToValidPosition(Position from, Position to) {
-        Knight knight = new Knight(Color.BLACK, from);
+        Knight knight = new Knight(Color.BLACK);
 
-        knight.move(to);
-
-        assertThat(knight.getPosition()).isEqualTo(to);
+        assertThat(knight.isMovablePosition(new Transition(from, to)))
+            .isTrue();
     }
 
     private static Stream<Arguments> provideValidMoveKnight() {

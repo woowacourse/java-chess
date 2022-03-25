@@ -3,10 +3,9 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
+import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,12 +18,10 @@ class QueenTest {
     @MethodSource("provideInvalidMoveQueen")
     @DisplayName("퀸은 동일선상외에는 이동 시 예외 발생")
     void moveInvalidMoveQueen(Position from, Position to) {
-        Queen queen = new Queen(Color.BLACK, from);
+        Queen queen = new Queen(Color.BLACK);
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> queen.move(to)).isInstanceOf(IllegalArgumentException.class);
-            assertThat(queen.getPosition()).isEqualTo(from);
-        });
+        assertThat(queen.isMovablePosition(new Transition(from, to)))
+            .isFalse();
     }
 
     private static Stream<Arguments> provideInvalidMoveQueen() {
@@ -40,11 +37,10 @@ class QueenTest {
     @MethodSource("provideValidMoveQueen")
     @DisplayName("퀸은 동일선상으로 이동")
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
-        Queen queen = new Queen(Color.BLACK, from);
+        Queen queen = new Queen(Color.BLACK);
 
-        queen.move(to);
-
-        assertThat(queen.getPosition()).isEqualTo(to);
+        assertThat(queen.isMovablePosition(new Transition(from, to)))
+            .isTrue();
     }
 
     private static Stream<Arguments> provideValidMoveQueen() {
@@ -59,5 +55,4 @@ class QueenTest {
             Arguments.of(new Position(D, ONE), new Position(A, FOUR))
         );
     }
-
 }

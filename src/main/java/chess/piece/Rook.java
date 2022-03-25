@@ -1,23 +1,15 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.position.Transition;
 
 public class Rook extends Piece{
 
-    public Rook(Color color, Position position) {
-        super(color, position);
+    public Rook(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean isMovablePosition(Position to) {
-        return isVerticalWay(to) || isHorizontalWay(to);
-    }
-
-    private boolean isVerticalWay(Position to) {
-        return getPosition().isVerticalWay(to);
-    }
-
-    private boolean isHorizontalWay(Position to) {
-        return getPosition().isHorizontalWay(to);
+    public boolean isMovablePosition(Transition transition) {
+        return transition.isVerticalWay() || transition.isHorizontalWay();
     }
 }

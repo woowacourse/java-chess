@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
+import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,12 +20,9 @@ class BishopTest {
     @MethodSource("provideInvalidMoveBishop")
     @DisplayName("비숍은 대각선외에는 움직일 수 없다.")
     void throwExceptionInvalidMoveBishop(Position from, Position to) {
-        Bishop bishop = new Bishop(Color.BLACK, from);
+        Bishop bishop = new Bishop(Color.BLACK);
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> bishop.move(to)).isInstanceOf(IllegalArgumentException.class);
-            assertThat(bishop.getPosition()).isEqualTo(from);
-        });
+        assertThat(bishop.isMovablePosition(new Transition(from, to))).isFalse();
     }
 
     private static Stream<Arguments> provideInvalidMoveBishop() {
@@ -40,11 +38,9 @@ class BishopTest {
     @MethodSource("provideCrossMoveBishop")
     @DisplayName("비숍은 대각선으로 이동할 수 있다.")
     void moveCrossBishop(Position from, Position to) {
-        Bishop bishop = new Bishop(Color.BLACK, from);
+        Bishop bishop = new Bishop(Color.BLACK);
 
-        bishop.move(to);
-
-        assertThat(bishop.getPosition()).isEqualTo(to);
+        assertThat(bishop.isMovablePosition(new Transition(from, to))).isTrue();
     }
 
     private static Stream<Arguments> provideCrossMoveBishop() {

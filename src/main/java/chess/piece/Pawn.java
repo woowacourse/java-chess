@@ -1,16 +1,16 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.position.Transition;
 
 public class Pawn extends Piece {
 
-    public Pawn(Color color, Position position) {
-        super(color, position);
+    public Pawn(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean isMovablePosition(Position to) {
-        return isVerticalWay(to) && isForward(to) && isValidDistance(to);
+    public boolean isMovablePosition(Transition transition) {
+        return transition.isVerticalWay() && isForward(transition) && isValidDistance(transition);
     }
 
     @Override
@@ -18,26 +18,22 @@ public class Pawn extends Piece {
         return true;
     }
 
-    private boolean isVerticalWay(Position to) {
-        return getPosition().isVerticalWay(to);
+    private boolean isForward(Transition transition) {
+        return getColor().isForward(transition);
     }
 
-    private boolean isForward(Position to) {
-        return getColor().isForward(getPosition(), to);
+    private boolean isValidDistance(Transition transition) {
+        return transition.getVerticalDistance() <= movableDistance(transition);
     }
 
-    private boolean isValidDistance(Position to) {
-        return getPosition().getVerticalDistance(to) <= movableDistance();
-    }
-
-    private int movableDistance() {
-        if (isStartPawnPosition()) {
+    private int movableDistance(Transition transition) {
+        if (isStartPawnPosition(transition)) {
             return 2;
         }
         return 1;
     }
 
-    private boolean isStartPawnPosition() {
-        return getColor().isStartPawnPosition(getPosition());
+    private boolean isStartPawnPosition(Transition transition) {
+        return getColor().isStartPawnPosition(transition.getFrom());
     }
 }

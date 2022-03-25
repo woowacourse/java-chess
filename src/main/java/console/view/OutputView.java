@@ -1,5 +1,6 @@
 package console.view;
 
+import chess.Square;
 import chess.piece.*;
 import chess.position.*;
 import java.util.*;
@@ -18,21 +19,21 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printChessBoard(List<Piece> pieces) {
+    public static void printChessBoard(List<Square> pieces) {
         for (Rank rank : Rank.orderedValues()) {
             printEachColumn(pieces, rank);
         }
         System.out.println();
     }
 
-    private static void printEachColumn(List<Piece> pieces, Rank rank) {
+    private static void printEachColumn(List<Square> pieces, Rank rank) {
         for (File file : File.orderedValues()) {
             printEachRow(pieces, rank, file);
         }
         System.out.println();
     }
 
-    private static void printEachRow(List<Piece> pieces, Rank rank, File file) {
+    private static void printEachRow(List<Square> pieces, Rank rank, File file) {
         Position position = new Position(file, rank);
         Optional<Piece> pieceOptional = findByPosition(pieces, position);
         pieceOptional.ifPresentOrElse(
@@ -40,9 +41,10 @@ public class OutputView {
             () -> System.out.print("."));
     }
 
-    private static Optional<Piece> findByPosition(List<Piece> pieces, Position position) {
+    private static Optional<Piece> findByPosition(List<Square> pieces, Position position) {
         return pieces.stream()
             .filter(piece -> piece.isSamePosition(position))
+            .map(square -> square.getPiece())
             .findFirst();
     }
 

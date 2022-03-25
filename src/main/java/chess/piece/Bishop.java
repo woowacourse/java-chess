@@ -1,15 +1,15 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.position.Transition;
 
 public class Bishop extends Piece {
 
-    public Bishop(Color color, Position position) {
-        super(color, position);
+    public Bishop(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean isMovablePosition(Position to) {
-        return getPosition().isDiagonalWay(to);
+    public boolean isMovablePosition(Transition transition) {
+        return transition.isDiagonalWay();
     }
 }

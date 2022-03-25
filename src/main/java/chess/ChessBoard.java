@@ -1,83 +1,90 @@
 package chess;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
-
-import chess.piece.*;
+import chess.piece.Color;
+import chess.piece.Piece;
 import chess.position.Position;
-import java.util.List;
+import chess.position.Transition;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private final Pieces pieces;
-    private Color currentColor;
+    private Map<Position, Piece> board = new HashMap<>();
 
-    public ChessBoard() {
-        pieces = new Pieces(List.of(
-            new Rook(Color.BLACK, new Position(A, EIGHT)),
-            new Knight(Color.BLACK, new Position(B, EIGHT)),
-            new Bishop(Color.BLACK, new Position(C, EIGHT)),
-            new Queen(Color.BLACK, new Position(D, EIGHT)),
-            new King(Color.BLACK, new Position(E, EIGHT)),
-            new Bishop(Color.BLACK, new Position(F, EIGHT)),
-            new Knight(Color.BLACK, new Position(G, EIGHT)),
-            new Rook(Color.BLACK, new Position(H, EIGHT)),
-            new Pawn(Color.BLACK, new Position(A, SEVEN)),
-            new Pawn(Color.BLACK, new Position(B, SEVEN)),
-            new Pawn(Color.BLACK, new Position(C, SEVEN)),
-            new Pawn(Color.BLACK, new Position(D, SEVEN)),
-            new Pawn(Color.BLACK, new Position(E, SEVEN)),
-            new Pawn(Color.BLACK, new Position(F, SEVEN)),
-            new Pawn(Color.BLACK, new Position(G, SEVEN)),
-            new Pawn(Color.BLACK, new Position(H, SEVEN)),
-            new Rook(Color.WHITE, new Position(A, ONE)),
-            new Knight(Color.WHITE, new Position(B, ONE)),
-            new Bishop(Color.WHITE, new Position(C, ONE)),
-            new Queen(Color.WHITE, new Position(D, ONE)),
-            new King(Color.WHITE, new Position(E, ONE)),
-            new Bishop(Color.WHITE, new Position(F, ONE)),
-            new Knight(Color.WHITE, new Position(G, ONE)),
-            new Rook(Color.WHITE, new Position(H, ONE)),
-            new Pawn(Color.WHITE, new Position(A, TWO)),
-            new Pawn(Color.WHITE, new Position(B, TWO)),
-            new Pawn(Color.WHITE, new Position(C, TWO)),
-            new Pawn(Color.WHITE, new Position(D, TWO)),
-            new Pawn(Color.WHITE, new Position(E, TWO)),
-            new Pawn(Color.WHITE, new Position(F, TWO)),
-            new Pawn(Color.WHITE, new Position(G, TWO)),
-            new Pawn(Color.WHITE, new Position(H, TWO))));
-        this.currentColor = Color.WHITE;
-    }
-
-    public ChessBoard(List<Piece> pieces, Color color) {
-        this.pieces = new Pieces(pieces);
-        this.currentColor = color;
+    public ChessBoard(Set<Square> squares) {
+        board = squares.stream()
+            .collect(Collectors.toMap(Square::getPosition, Square::getPiece));
     }
 
     public void move(Position from, Position to) {
-        if (isSamePosition(from, to)) {
+        if (isSameColorPiecesByPosition(from, to)) {
             throw new IllegalArgumentException(String.format(
-                "같은 위치(%s)로 기물을 이동할 수 없습니다.", from));
+                "%s에서 %s로 기물을 이동할 수 없습니다.", from, to));
         }
 
-        if (isNotMovablePieceColor(from)) {
+        if (HasObstacleBetweenPositions(from, to)) {
+            Piece piece = findPieceByPosition(from);
             throw new IllegalArgumentException(String.format(
-                "%s에 위치한 기물은 %s 색깔이 아닙니다.", from, currentColor));
+                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", piece.getClass().getSimpleName(), from, to));
         }
 
-        pieces.move(from, to);
-        currentColor = currentColor.reverse();
+        Piece piece = findPieceByPosition(from);
+
+        if (piece.isPawn() && hasPieceByPosition(to)) {
+            throw new IllegalArgumentException(String.format("폰이 이동하려는 위치 %s에 기물이 있습니다.", to));
+        }
+
+        if (hasPieceByPosition(to)) {
+            if (!piece.isMovablePosition(new Transition(from, to))) {
+                throw new IllegalArgumentException();
+            }
+
+            Piece piece1 = findPieceByPosition(from);
+            board.remove(from);
+            board.put(to, piece1);
+        } else {
+            if (!piece.isMovablePosition(new Transition(from, to))) {
+                throw new IllegalArgumentException();
+            }
+            Piece piece1 = findPieceByPosition(from);
+            board.remove(from);
+            board.put(to, piece1);
+        }
     }
 
-    private boolean isSamePosition(Position from, Position to) {
-        return from.equals(to);
+    private Piece findPieceByPosition(Position position) {
+        if (!board.containsKey(position)) {
+            throw new IllegalArgumentException();
+        }
+        return board.get(position);
     }
 
-    private boolean isNotMovablePieceColor(Position from) {
-        return pieces.isSameColorByPosition(from, currentColor);
+    private boolean isSameColorPiecesByPosition(Position from, Position to) {
+        if (board.containsKey(to)) {
+            Piece fromPiece = board.get(from);
+            Piece toPiece = board.get(to);
+            return fromPiece.isSameColor(toPiece.getColor());
+        }
+        return false;
     }
 
-    public List<Piece> getPieces() {
-        return pieces.getPieces();
+    private boolean HasObstacleBetweenPositions(Position from, Position to) {
+        Transition transition = new Transition(from, to);
+        return transition.getPath().stream()
+            .anyMatch(this::hasPieceByPosition);
+    }
+
+    private boolean hasPieceByPosition(Position position) {
+        return board.containsKey(position);
+    }
+
+    public Collection<Square> getSquares() {
+        return board.keySet()
+            .stream().map(position -> new Square(position, board.get(position)))
+            .collect(Collectors.toList());
+    }
+
+    public boolean isSameColorByPosition(Position from, Color color) {
+        return findPieceByPosition(from).isSameColor(color);
     }
 }

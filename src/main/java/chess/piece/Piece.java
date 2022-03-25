@@ -1,28 +1,14 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.position.Transition;
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
-    private Position position;
 
-    public Piece(Color color, Position position) {
+    public Piece(Color color) {
         this.color = color;
-        this.position = position;
-    }
-
-    public void move(Position to) {
-        if (!isMovablePosition(to)) {
-            throw new IllegalArgumentException(String.format(
-                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
-        }
-        position = to;
-    }
-
-    public boolean isSamePosition(Position position) {
-        return this.position.equals(position);
     }
 
     public boolean isSameColor(Color color) {
@@ -37,10 +23,6 @@ public abstract class Piece {
         return color;
     }
 
-    protected Position getPosition() {
-        return position;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -50,22 +32,20 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color && Objects.equals(position, piece.position);
+        return color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, position);
+        return Objects.hash(color, getClass());
     }
 
     @Override
     public String toString() {
         return "Piece{" +
             "color=" + color +
-            ", type=" + getClass().getSimpleName() +
-            ", position=" + position +
-            '}';
+            ", type=" + getClass().getSimpleName();
     }
 
-    public abstract boolean isMovablePosition(Position to);
+    public abstract boolean isMovablePosition(Transition to);
 }

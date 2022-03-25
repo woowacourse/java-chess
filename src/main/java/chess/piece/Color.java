@@ -1,7 +1,6 @@
 package chess.piece;
 
-import chess.position.Position;
-import chess.position.Rank;
+import chess.position.*;
 
 public enum Color {
 
@@ -11,6 +10,13 @@ public enum Color {
 
     Color(Rank rankOfStartPawn) {
         this.rankOfStartPawn = rankOfStartPawn;
+    }
+
+    public boolean isForward(Transition transition) {
+        if (this == WHITE) {
+            return transition.isUpward();
+        }
+        return transition.isDownward();
     }
 
     public boolean isForward(Position from, Position to) {

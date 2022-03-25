@@ -1,27 +1,16 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.position.Transition;
 
 public class Queen extends Piece {
 
-    public Queen(Color color, Position position) {
-        super(color, position);
+    public Queen(Color color) {
+        super(color);
     }
 
     @Override
-    public boolean isMovablePosition(Position to) {
-        return isDiagonalWay(to) || isVerticalWay(to) || isHorizontalWay(to);
-    }
-
-    private boolean isDiagonalWay(Position to) {
-        return getPosition().isDiagonalWay(to);
-    }
-
-    private boolean isVerticalWay(Position to) {
-        return getPosition().isVerticalWay(to);
-    }
-
-    private boolean isHorizontalWay(Position to) {
-        return getPosition().isHorizontalWay(to);
+    public boolean isMovablePosition(Transition transition) {
+        return transition.isDiagonalWay() || transition.isVerticalWay()
+            || transition.isHorizontalWay();
     }
 }
