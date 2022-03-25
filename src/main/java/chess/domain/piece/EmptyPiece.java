@@ -12,7 +12,7 @@ public class EmptyPiece extends Piece {
 
     @Override
     public void canMove(Board board, Position from, Position to) {
-
+        throw new IllegalArgumentException("해당 칸에는 움직일 기물이 없습니다.");
     }
 
     @Override
