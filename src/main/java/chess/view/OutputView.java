@@ -18,11 +18,15 @@ public class OutputView {
 
     public static void printChessBoard(Map<Position, Piece> pieces) {
         for (char i = '8'; i >= '1'; i--) {
-            for (char j = 'a'; j <= 'h'; j++) {
-                Position position = Position.of(j, i);
-                System.out.print(piecePrintName(pieces, position));
-            }
+            printColumnPieces(pieces, i);
             System.out.println();
+        }
+    }
+
+    private static void printColumnPieces(final Map<Position, Piece> pieces, final char i) {
+        for (char j = 'a'; j <= 'h'; j++) {
+            Position position = Position.of(j, i);
+            System.out.print(piecePrintName(pieces, position));
         }
     }
 
