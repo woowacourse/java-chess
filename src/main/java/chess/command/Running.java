@@ -53,7 +53,7 @@ public abstract class Running implements Command {
     }
 
     private Position position(String command) {
-        return new Position(command.charAt(0), command.charAt(1));
+        return Position.of(command.charAt(0), command.charAt(1));
     }
 
     @Override

@@ -43,8 +43,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("게임 종료 후 기물 이동 시 예외발생")
     void movePieceException() {
-        Position position = new Position('a', '1');
-        Position target = new Position('a', '2');
+        Position position = Position.of('a', '1');
+        Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE)));
 
         assertThatThrownBy(() -> chessBoard.movePiece(position, target, WHITE))
@@ -55,10 +55,10 @@ class ChessBoardTest {
     @Test
     @DisplayName("상대 진영의 기물 이동 시 예외발생")
     void moveOtherTeamPieceException() {
-        Position position = new Position('a', '1');
-        Position target = new Position('a', '2');
+        Position position = Position.of('a', '1');
+        Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE),
-                new Position('e', '8'), new King(Color.BLACK)));
+                Position.of('e', '8'), new King(Color.BLACK)));
 
         assertThatThrownBy(() -> chessBoard.movePiece(position, target, Color.BLACK))
                 .isInstanceOf(IllegalStateException.class)
@@ -69,18 +69,18 @@ class ChessBoardTest {
     @CsvSource(value = {"a,1,false", "a,2,true"})
     @DisplayName("해당 위치가 비어있는지 확인")
     void isPositionEmpty(char col, char row, boolean expected) {
-        Position position = new Position('a', '1');
+        Position position = Position.of('a', '1');
         Piece piece = new Knight(WHITE);
         ChessBoard chessBoard = new ChessBoard(Map.of(position, piece));
 
-        assertThat(chessBoard.isPositionEmpty(new Position(col, row))).isEqualTo(expected);
+        assertThat(chessBoard.isPositionEmpty(Position.of(col, row))).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("입력 위치에 기물이 없을 때 예외발생")
     void exceptionPieceByPosition() {
         ChessBoard chessBoard = new ChessBoard(new HashMap<>());
-        Position position = new Position('a', '1');
+        Position position = Position.of('a', '1');
 
         assertThatThrownBy(() -> chessBoard.pieceByPosition(position))
                 .isInstanceOf(NoSuchElementException.class)
@@ -90,7 +90,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("입력 위치에 기물 반환")
     void pieceByPosition() {
-        Position position = new Position('a', '1');
+        Position position = Position.of('a', '1');
         Piece piece = new Knight(WHITE);
         ChessBoard chessBoard = new ChessBoard(Map.of(position, piece));
 
@@ -101,17 +101,17 @@ class ChessBoardTest {
     @DisplayName("각 플레이어의 점수 반환")
     void calcualteScoreStaus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                new Position('a', '2'), new WhitePawn(),
-                new Position('a', '3'), new WhitePawn(),
-                new Position('c', '3'), new WhitePawn(),
-                new Position('b', '1'), new Knight(Color.WHITE),
-                new Position('d', '1'), new Queen(Color.WHITE),
-                new Position('e', '1'), new King(Color.WHITE),
+                Position.of('a', '2'), new WhitePawn(),
+                Position.of('a', '3'), new WhitePawn(),
+                Position.of('c', '3'), new WhitePawn(),
+                Position.of('b', '1'), new Knight(Color.WHITE),
+                Position.of('d', '1'), new Queen(Color.WHITE),
+                Position.of('e', '1'), new King(Color.WHITE),
 
-                new Position('a', '7'), new BlackPawn(),
-                new Position('c', '8'), new Bishop(Color.BLACK),
-                new Position('h', '8'), new Rook(Color.BLACK),
-                new Position('e', '8'), new King(Color.BLACK)
+                Position.of('a', '7'), new BlackPawn(),
+                Position.of('c', '8'), new Bishop(Color.BLACK),
+                Position.of('h', '8'), new Rook(Color.BLACK),
+                Position.of('e', '8'), new King(Color.BLACK)
         ));
         Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 9.0);
 
@@ -129,11 +129,11 @@ class ChessBoardTest {
         return Stream.of(
                 Arguments.of(
                         new ChessBoard(Map.of(
-                                new Position('e', '1'), new King(Color.WHITE),
-                                new Position('e', '8'), new King(Color.BLACK))), false
+                                Position.of('e', '1'), new King(Color.WHITE),
+                                Position.of('e', '8'), new King(Color.BLACK))), false
                 ),
                 Arguments.of(
-                        new ChessBoard(Map.of(new Position('e', '1'), new King(Color.WHITE))), true
+                        new ChessBoard(Map.of(Position.of('e', '1'), new King(Color.WHITE))), true
                 )
         );
     }

@@ -12,29 +12,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PositionTest {
 
     @ParameterizedTest
-    @ValueSource(chars = {'`', 'A', 'i'})
-    @DisplayName("열 위치가 범위를 벗어나면 예외발생")
-    void outOfRawRangeException(char column) {
-        assertThatThrownBy(() -> new Position(column, '1'))
+    @CsvSource(value = {"a,0", "a,9", "z,1", "z,8"})
+    @DisplayName("범위 외의 행,열 입력시 예외발생")
+    void createPositionException(char column, char row) {
+        assertThatThrownBy(() -> Position.of(column, row))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("열 위치는 a~h 범위에 포함되어야 합니다.");
-    }
-
-    @ParameterizedTest
-    @ValueSource(chars = {'a', '0', '9'})
-    @DisplayName("행 위치가 범위를 벗어나면 예외발생")
-    void outOfColumnRangeException(char row) {
-        assertThatThrownBy(() -> new Position('a', row))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("행 위치는 1~8 범위에 포함되어야 합니다.");
+                .hasMessage("Position범위에 맞지 않는 입력값입니다.");
     }
 
     @ParameterizedTest
     @CsvSource(value = {"b,2,false", "b,1,true", "a,2,true"})
     @DisplayName("행 또는 열 일치 여부 확인")
     void equalsColumnOrRow(char row, char col, boolean expected) {
-        Position position = new Position('a', '1');
-        Position otherPosition = new Position(row, col);
+        Position position = Position.of('a', '1');
+        Position otherPosition = Position.of(row, col);
 
         assertThat(position.equalsColumnOrRow(otherPosition)).isEqualTo(expected);
     }
@@ -43,8 +34,8 @@ class PositionTest {
     @CsvSource(value = {"b,2,false", "b,1,false", "a,2,true"})
     @DisplayName("열 일치 여부 확인")
     void equalsColumn(char row, char col, boolean expected) {
-        Position position = new Position('a', '1');
-        Position otherPosition = new Position(row, col);
+        Position position = Position.of('a', '1');
+        Position otherPosition = Position.of(row, col);
 
         assertThat(position.equalsColumn(otherPosition)).isEqualTo(expected);
     }
@@ -53,8 +44,8 @@ class PositionTest {
     @CsvSource(value = {"a,2,1", "b,2,2", "c,4,5"})
     @DisplayName("거리 계산")
     void calculateDistance(char row, char col, int expected) {
-        Position position = new Position('a', '1');
-        Position otherPosition = new Position(row, col);
+        Position position = Position.of('a', '1');
+        Position otherPosition = Position.of(row, col);
 
         assertThat(position.calculateDistance(otherPosition)).isEqualTo(expected);
     }
@@ -62,8 +53,8 @@ class PositionTest {
     @Test
     @DisplayName("입력받은 거리만큼 이동")
     void move() {
-        Position actual = new Position('a', '1').move(1, 1);
-        Position expected = new Position('b', '2');
+        Position actual = Position.of('a', '1').move(1, 1);
+        Position expected = Position.of('b', '2');
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -72,7 +63,7 @@ class PositionTest {
     @CsvSource(value = {"1,1,true", "-1,-1,false", "1,-1,false", "-1,1,false"})
     @DisplayName("입력받은 거리만큼 이동 가능 여부 확인")
     void movable(int columnAmount, int rowAmount, boolean expected) {
-        Position position = new Position('a', '1');
+        Position position = Position.of('a', '1');
 
         assertThat(position.isMovable(columnAmount, rowAmount)).isEqualTo(expected);
     }

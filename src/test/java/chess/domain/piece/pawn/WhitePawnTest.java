@@ -21,9 +21,9 @@ class WhitePawnTest {
 
     @BeforeEach
     void setUp() {
-        source = new Position('b', '2');
-        pawn = new WhitePawn().move(new Position('b', '1'), source, new ChessBoard(Map.of(
-                new Position('b', '1'), new WhitePawn()
+        source = Position.of('b', '2');
+        pawn = new WhitePawn().move(Position.of('b', '1'), source, new ChessBoard(Map.of(
+                Position.of('b', '1'), new WhitePawn()
         )));
     }
 
@@ -31,7 +31,7 @@ class WhitePawnTest {
     @CsvSource(value = {"b,3,true", "b,4,false", "b,2,false", "a,2,false", "a,3,false"})
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
-        Position target = new Position(col, row);
+        Position target = Position.of(col, row);
         ChessBoard chessBoard = new ChessBoard(Map.of(source, new WhitePawn()));
 
         assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
@@ -50,8 +50,8 @@ class WhitePawnTest {
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('b', '3'), new WhitePawn()),
-                Arguments.of(new Position('b', '3'), new BlackPawn())
+                Arguments.of(Position.of('b', '3'), new WhitePawn()),
+                Arguments.of(Position.of('b', '3'), new BlackPawn())
         );
     }
 
@@ -68,10 +68,10 @@ class WhitePawnTest {
 
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('a', '3'), new BlackPawn(), true),
-                Arguments.of(new Position('c', '3'), new BlackPawn(), true),
-                Arguments.of(new Position('a', '3'), new WhitePawn(), false),
-                Arguments.of(new Position('c', '3'), new WhitePawn(), false)
+                Arguments.of(Position.of('a', '3'), new BlackPawn(), true),
+                Arguments.of(Position.of('c', '3'), new BlackPawn(), true),
+                Arguments.of(Position.of('a', '3'), new WhitePawn(), false),
+                Arguments.of(Position.of('c', '3'), new WhitePawn(), false)
         );
     }
 

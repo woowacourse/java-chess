@@ -22,14 +22,14 @@ public class BlackFirstMovePawnTest {
     @BeforeEach
     void setUp() {
         pawn = new BlackPawn();
-        source = new Position('b', '8');
+        source = Position.of('b', '8');
     }
 
     @ParameterizedTest
     @CsvSource(value = {"b,7,true", "b,6,true", "b,8,false", "b,4,false", "a,8,false", "a,7,false"})
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
-        Position target = new Position(col, row);
+        Position target = Position.of(col, row);
         ChessBoard chessBoard = new ChessBoard(Map.of(source, new BlackPawn()));
 
         assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
@@ -48,10 +48,10 @@ public class BlackFirstMovePawnTest {
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('b', '7'), new WhitePawn()),
-                Arguments.of(new Position('b', '6'), new WhitePawn()),
-                Arguments.of(new Position('b', '7'), new BlackPawn()),
-                Arguments.of(new Position('b', '6'), new BlackPawn())
+                Arguments.of(Position.of('b', '7'), new WhitePawn()),
+                Arguments.of(Position.of('b', '6'), new WhitePawn()),
+                Arguments.of(Position.of('b', '7'), new BlackPawn()),
+                Arguments.of(Position.of('b', '6'), new BlackPawn())
         );
     }
 
@@ -68,10 +68,10 @@ public class BlackFirstMovePawnTest {
 
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {
         return Stream.of(
-                Arguments.of(new Position('a', '7'), new BlackPawn(), true),
-                Arguments.of(new Position('c', '7'), new BlackPawn(), true),
-                Arguments.of(new Position('a', '7'), new WhitePawn(), false),
-                Arguments.of(new Position('c', '7'), new WhitePawn(), false)
+                Arguments.of(Position.of('a', '7'), new BlackPawn(), true),
+                Arguments.of(Position.of('c', '7'), new BlackPawn(), true),
+                Arguments.of(Position.of('a', '7'), new WhitePawn(), false),
+                Arguments.of(Position.of('c', '7'), new WhitePawn(), false)
         );
     }
 }

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -9,10 +11,26 @@ public class Position {
     private static final char MIN_ROW = '1';
     private static final char MAX_ROW = '8';
 
+    private static final List<Position> CACHE = createCache();
+
     private final char column;
     private final char row;
 
-    public Position(char column, char row) {
+    private static List<Position> createCache() {
+        List<Position> cache = new ArrayList<>();
+        for (char column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
+            addPositionByColumn(cache, column);
+        }
+        return cache;
+    }
+
+    private static void addPositionByColumn(List<Position> cache, char column) {
+        for (char row = MIN_ROW; row <= MAX_ROW; row++) {
+            cache.add(new Position(column, row));
+        }
+    }
+
+    private Position(char column, char row) {
         validateColumnInRange(column);
         validateRowInRange(row);
         this.column = column;
@@ -41,6 +59,13 @@ public class Position {
         return MIN_ROW <= row && row <= MAX_ROW;
     }
 
+    public static Position of(char column, char row) {
+        return CACHE.stream()
+                .filter(position -> position.column == column && position.row == row)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Position범위에 맞지 않는 입력값입니다."));
+    }
+
     public boolean equalsColumnOrRow(Position position) {
         return this.column == position.column || this.row == position.row;
     }
@@ -54,7 +79,7 @@ public class Position {
     }
 
     public Position move(int columnAmount, int rowAmount) {
-        return new Position((char) (column + columnAmount), (char) (row + rowAmount));
+        return Position.of((char) (column + columnAmount), (char) (row + rowAmount));
     }
 
     public boolean isMovable(int columnAmount, int rowAmount) {
