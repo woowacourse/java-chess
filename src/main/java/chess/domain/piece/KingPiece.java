@@ -33,6 +33,11 @@ public class KingPiece extends FullPiece {
             Math.abs(fileDistance) < 2 && Math.abs(rankDistance) < 2;
     }
 
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
     private String decideName(final Color color) {
         if (color == Color.WHITE) {
             return WHITE_NAME;

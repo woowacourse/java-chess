@@ -10,5 +10,7 @@ public interface Piece {
 
     boolean isJumpable();
 
+    boolean isKing();
+
     String getName();
 }
