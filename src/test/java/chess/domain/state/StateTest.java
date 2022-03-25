@@ -26,8 +26,8 @@ public class StateTest {
     public void white() {
         //given
         ChessBoard chessBoard = new ChessBoard();
-        Command start = Command.from("start");
-        Command move = Command.from("move a1 a2");
+
+        Command move = Command.from("move a2 a3");
 
         //when
         State state = new Ready().start();
@@ -56,8 +56,8 @@ public class StateTest {
         //given
         ChessBoard chessBoard = new ChessBoard();
 
-        Command move1 = Command.from("move a1 a2");
-        Command move2 = Command.from("move a7 a5");
+        Command move1 = Command.from("move a2 a3");
+        Command move2 = Command.from("move a7 a6");
 
         //when
         State state = new Ready().start();

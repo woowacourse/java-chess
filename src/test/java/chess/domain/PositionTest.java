@@ -13,6 +13,6 @@ public class PositionTest {
     @Test
     public void position() {
         //given & when & then
-        Assertions.assertDoesNotThrow(() -> new Position(A, ONE));
+        Assertions.assertDoesNotThrow(() -> Position.of(A, ONE));
     }
 }
