@@ -9,12 +9,22 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
+    private final GameSwitch gameSwitch;
+    private final Turn turn;
 
     public ChessGame(final Board board) {
         this.board = board;
+        this.gameSwitch = new GameSwitch();
+        this.turn = new Turn();
     }
 
-    public Piece move(final Position source, final Position target, final Turn turn) {
+    public void move(final String rawSource, final String rawTarget) {
+        final Piece targetPiece = movePiece(Position.valueOf(rawSource), Position.valueOf(rawTarget));
+        turnOffWhenKingDie(targetPiece);
+        turn.nextTurn();
+    }
+
+    private Piece movePiece(final Position source, final Position target) {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
@@ -34,7 +44,25 @@ public class ChessGame {
         }
     }
 
-    public Map<Position, Piece> getBoard() {
+    private void turnOffWhenKingDie(final Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            gameSwitch.turnOff();
+        }
+    }
+
+    public Score calculateScore() {
+        return new Score(getCurrentBoard());
+    }
+
+    public boolean isOn() {
+        return gameSwitch.isOn();
+    }
+
+    public void turnOff() {
+        gameSwitch.turnOff();
+    }
+
+    public Map<Position, Piece> getCurrentBoard() {
         return board.getBoard();
     }
 }

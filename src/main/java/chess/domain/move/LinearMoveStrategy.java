@@ -35,7 +35,7 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
                 .anyMatch(position -> isPieceExist(board, position));
     }
 
-    protected boolean isPieceExist(final Board board, final Position amongPosition) {
-        return !board.getPiece(amongPosition).isBlank();
+    protected boolean isPieceExist(final Board board, final Position position) {
+        return !board.getPiece(position).isBlank();
     }
 }

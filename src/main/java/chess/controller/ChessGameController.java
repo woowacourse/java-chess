@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.domain.game.ChessGameProgress;
+import chess.domain.board.Board;
+import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -18,46 +19,46 @@ public class ChessGameController {
     public void run() {
         OutputView.printStartGame();
         if (InputView.inputInitialCommand()) {
-            ChessGameProgress chessGameProgress = new ChessGameProgress();
-            printCurrentBoard(chessGameProgress);
-            progressChessGame(chessGameProgress);
+            ChessGame chessGame = new ChessGame(Board.create());
+            printCurrentBoard(chessGame);
+            progressChessGame(chessGame);
         }
         OutputView.printEndMessage();
     }
 
-    private void printCurrentBoard(final ChessGameProgress chessGameProgress) {
-        if (chessGameProgress.isOn()) {
-            OutputView.printBoard(chessGameProgress.getCurrentBoard());
+    private void printCurrentBoard(final ChessGame chessGame) {
+        if (chessGame.isOn()) {
+            OutputView.printBoard(chessGame.getCurrentBoard());
         }
     }
 
-    private void progressChessGame(final ChessGameProgress chessGameProgress) {
-        while (chessGameProgress.isOn()) {
+    private void progressChessGame(final ChessGame chessGame) {
+        while (chessGame.isOn()) {
             List<String> inputs = InputView.inputProgressCommand();
             String commandMessage = inputs.get(COMMAND_INDEX);
-            move(chessGameProgress, inputs, commandMessage);
-            showStatus(chessGameProgress, commandMessage);
-            endGame(chessGameProgress, commandMessage);
+            move(chessGame, inputs, commandMessage);
+            showStatus(chessGame, commandMessage);
+            endGame(chessGame, commandMessage);
         }
     }
 
-    private void move(final ChessGameProgress chessGameProgress, final List<String> inputs,final String commandMessage) {
+    private void move(final ChessGame chessGame, final List<String> inputs,final String commandMessage) {
         if (commandMessage.equals(MOVE_COMMAND_MESSAGE)) {
-            chessGameProgress.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
-            printCurrentBoard(chessGameProgress);
+            chessGame.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
+            printCurrentBoard(chessGame);
         }
     }
 
-    private void showStatus(final ChessGameProgress chessGameProgress, final String commandMessage) {
+    private void showStatus(final ChessGame chessGame, final String commandMessage) {
         if (commandMessage.equals(STATUS_COMMAND_MESSAGE)) {
-            Score score = chessGameProgress.calculateScore();
+            Score score = chessGame.calculateScore();
             OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinColor().getValue());
         }
     }
 
-    private void endGame(final ChessGameProgress chessGameProgress, final String commandMessage) {
+    private void endGame(final ChessGame chessGame, final String commandMessage) {
         if (commandMessage.equals(END_COMMAND_MESSAGE)) {
-            chessGameProgress.turnOff();
+            chessGame.turnOff();
         }
     }
 }
