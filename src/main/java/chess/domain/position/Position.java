@@ -62,7 +62,7 @@ public class Position {
         return Objects.hash(row, column);
     }
 
-    public boolean isNotSameColumn(Column column) {
-        return this.column != column;
+    public boolean isSameColumn(Column column) {
+        return this.column == column;
     }
 }

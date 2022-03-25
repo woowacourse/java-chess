@@ -1,5 +1,10 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Direction.NORTH_NORTH;
+import static chess.domain.piece.Direction.SOUTH_SOUTH;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.List;
@@ -17,7 +22,7 @@ public class Pawn implements Piece {
     }
 
     private List<Direction> selectDirections(Team team) {
-        if (team == Team.WHITE) {
+        if (team == WHITE) {
             return Direction.pullWhitePawnDirections();
         }
         return Direction.pullBlackPawnDirections();
@@ -26,23 +31,23 @@ public class Pawn implements Piece {
     @Override
     public boolean movable(Position from, Position to) {
         Direction direction = from.findDirection(to, true);
-        if (isNotWhiteStart(direction, from)) {
-            return false;
+
+        if (direction == NORTH_NORTH) {
+            return isWhiteStart(from);
         }
-        if (isNotBlackStart(direction, from)) {
-            return false;
+
+        if (direction == SOUTH_SOUTH) {
+            return isBlackStart(from);
         }
         return directions.contains(direction);
     }
 
-    private boolean isNotWhiteStart(Direction direction, Position position) {
-        return direction == Direction.NORTH_NORTH
-                && (team != Team.WHITE || position.isNotSameColumn(Column.TWO));
+    private boolean isWhiteStart(Position position) { // 여기 컬럼 반대로 되어있었음
+        return team == WHITE && position.isSameColumn(Column.TWO);
     }
 
-    private boolean isNotBlackStart(Direction direction, Position position) {
-        return direction == Direction.SOUTH_SOUTH
-                && (team != Team.BLACK || position.isNotSameColumn(Column.SEVEN));
+    private boolean isBlackStart(Position position) { // 여기 커럼 반대로 되어있었음
+        return (team == BLACK && position.isSameColumn(Column.SEVEN));
     }
 
     @Override
