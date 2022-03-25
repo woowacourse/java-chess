@@ -4,6 +4,8 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.position.Position;
+import chess.strategy.OccupiedChecker;
+import java.util.List;
 import java.util.Objects;
 
 public final class Pawn extends Chessmen {
@@ -44,8 +46,9 @@ public final class Pawn extends Chessmen {
     }
 
     @Override
-    public void move(Position position) {
+    public void move(Position position, OccupiedChecker isOccupied) {
         validateMovable(position);
+        validateClearPathTo(position, isOccupied);
         this.position = position;
     }
 
@@ -67,6 +70,15 @@ public final class Pawn extends Chessmen {
         return position.movedBy(MOVE_FILE_COUNT, moveRankDifference(moveRankDiff));
     }
 
+    @Override
+    protected List<Position> positionsToPass(Position targetPosition) {
+        if (canJump()) {
+            Position positionBetween = position.movedBy(MOVE_FILE_COUNT, moveRankDifference(FORWARD_RANK_COUNT));
+            return List.of(positionBetween);
+        }
+        return List.of();
+    }
+
     private int moveRankDifference(int moveCount) {
         if (color == BLACK) {
             return moveCount * -1;
@@ -82,7 +94,7 @@ public final class Pawn extends Chessmen {
     }
 
     @Override
-    protected void attack(Position enemyPosition) {
+    protected void attack(Position enemyPosition, OccupiedChecker isOccupied) {
         validateAttackable(enemyPosition);
         this.position = enemyPosition;
     }

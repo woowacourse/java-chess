@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.fixture.StrategyFixture.NOT_OCCUPIED_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -14,7 +15,7 @@ public class PawnTest {
     @DisplayName("ofBlack 정적 팩토리 메서드는 매개변수에 해당되는 열에 흑색 폰을 생성한다.")
     @Test
     void ofBlack() {
-        Pawn actual =  Pawn.ofBlack(0);
+        Pawn actual = Pawn.ofBlack(0);
 
         Pawn expected = new Pawn(BLACK, Position.of("a7"));
 
@@ -24,7 +25,7 @@ public class PawnTest {
     @DisplayName("ofWhite 정적 팩토리 메서드는 매개변수에 해당되는 열에 백색 폰을 생성한다.")
     @Test
     void ofWhite() {
-        Pawn actual =  Pawn.ofWhite(2);
+        Pawn actual = Pawn.ofWhite(2);
 
         Pawn expected = new Pawn(WHITE, Position.of("c2"));
 
@@ -35,7 +36,7 @@ public class PawnTest {
     @Test
     void move_whiteForward() {
         Pawn pawn = new Pawn(WHITE, Position.of("a2"));
-        pawn.move(Position.of("a3"));
+        pawn.move(Position.of("a3"), NOT_OCCUPIED_STRATEGY);
 
         Pawn expected = new Pawn(WHITE, Position.of("a3"));
 
@@ -46,7 +47,7 @@ public class PawnTest {
     @Test
     void move_blackForward() {
         Pawn pawn = new Pawn(BLACK, Position.of("a7"));
-        pawn.move(Position.of("a6"));
+        pawn.move(Position.of("a6"), NOT_OCCUPIED_STRATEGY);
 
         Pawn expected = new Pawn(BLACK, Position.of("a6"));
 
@@ -58,7 +59,7 @@ public class PawnTest {
     void move_exceptionOnMovingBackwards() {
         Pawn pawn = new Pawn(WHITE, Position.of("a4"));
 
-        assertThatCode(() -> pawn.move(Position.of("a3")))
+        assertThatCode(() -> pawn.move(Position.of("a3"), NOT_OCCUPIED_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }
@@ -68,7 +69,7 @@ public class PawnTest {
     void move_exceptionOnMovingToDifferentFile() {
         Pawn pawn = new Pawn(WHITE, Position.of("a3"));
 
-        assertThatCode(() -> pawn.move(Position.of("b4")))
+        assertThatCode(() -> pawn.move(Position.of("b4"), NOT_OCCUPIED_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }
@@ -77,7 +78,7 @@ public class PawnTest {
     @Test
     void move_canJumpOnInitialPosition() {
         Pawn pawn = new Pawn(WHITE, Position.of("a2"));
-        pawn.move(Position.of("a4"));
+        pawn.move(Position.of("a4"), NOT_OCCUPIED_STRATEGY);
 
         Pawn expected = new Pawn(WHITE, Position.of("a4"));
 
@@ -89,7 +90,7 @@ public class PawnTest {
     void move_exceptionOnJumpingAtNonInitialPosition() {
         Pawn pawn = new Pawn(WHITE, Position.of("a3"));
 
-        assertThatCode(() -> pawn.move(Position.of("a5")))
+        assertThatCode(() -> pawn.move(Position.of("a5"), NOT_OCCUPIED_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }

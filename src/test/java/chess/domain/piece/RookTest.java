@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.fixture.StrategyFixture.NOT_OCCUPIED_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -35,7 +36,7 @@ public class RookTest {
     @Test
     void move() {
         Rook rook = new Rook(WHITE, Position.of("a1"));
-        rook.move(Position.of("a8"));
+        rook.move(Position.of("a8"), NOT_OCCUPIED_STRATEGY);
 
         Rook expected = new Rook(WHITE, Position.of("a8"));
 
@@ -47,7 +48,7 @@ public class RookTest {
     void move_exception() {
         Rook rook = new Rook(WHITE, Position.of("a1"));
 
-        assertThatCode(() -> rook.move(Position.of("b3")))
+        assertThatCode(() -> rook.move(Position.of("b3"), NOT_OCCUPIED_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }

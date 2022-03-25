@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.fixture.StrategyFixture.NOT_OCCUPIED_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -35,7 +36,7 @@ public class BishopTest {
     @Test
     void move() {
         Bishop bishop = new Bishop(WHITE, Position.of("c1"));
-        bishop.move(Position.of("d2"));
+        bishop.move(Position.of("d2"), NOT_OCCUPIED_STRATEGY);
 
         Bishop expected = new Bishop(WHITE, Position.of("d2"));
 
@@ -47,7 +48,7 @@ public class BishopTest {
     void move_exception() {
         Bishop bishop = new Bishop(WHITE, Position.of("c1"));
 
-        assertThatCode(() -> bishop.move(Position.of("c3")))
+        assertThatCode(() -> bishop.move(Position.of("c3"), NOT_OCCUPIED_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }

@@ -2,14 +2,14 @@ package chess.domain.game;
 
 import static chess.domain.position.util.PositionUtil.FILES_TOTAL_SIZE;
 
-import chess.domain.piece2.Bishop;
-import chess.domain.piece2.Color;
-import chess.domain.piece2.King;
-import chess.domain.piece2.Knight;
-import chess.domain.piece2.Pawn;
-import chess.domain.piece2.Piece;
-import chess.domain.piece2.Queen;
-import chess.domain.piece2.Rook;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;

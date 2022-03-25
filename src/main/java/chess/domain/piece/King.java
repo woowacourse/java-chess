@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.strategy.OccupiedChecker;
 import java.util.Objects;
 
 public final class King extends Strongmen {
@@ -23,7 +24,7 @@ public final class King extends Strongmen {
     }
 
     @Override
-    public void move(Position position) {
+    public void move(Position position, OccupiedChecker isOccupied) {
         validateMovable(position);
         this.position = position;
     }

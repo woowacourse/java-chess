@@ -1,9 +1,9 @@
 package chess.domain.game;
 
-import static chess.domain.piece2.Color.BLACK;
-import static chess.domain.piece2.Color.WHITE;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
-import chess.domain.piece2.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
