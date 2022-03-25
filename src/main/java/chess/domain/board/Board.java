@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -127,5 +128,9 @@ public class Board {
         if (findPieceBy(src).isPresent()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
+    }
+
+    public Map<Position, Piece> getValue() {
+        return Collections.unmodifiableMap(value);
     }
 }
