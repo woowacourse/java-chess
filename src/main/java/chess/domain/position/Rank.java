@@ -1,6 +1,9 @@
 package chess.domain.position;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
+import java.util.List;
 
 public enum Rank {
     ONE(1),
@@ -27,9 +30,7 @@ public enum Rank {
 
     public static boolean isRank(int candidate) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getRank() == candidate)
-                .findAny()
-                .isPresent();
+                .anyMatch(rank -> rank.getRank() == candidate);
     }
 
     public int calculateRank(Rank other) {
@@ -42,5 +43,11 @@ public enum Rank {
 
     public int calculateAbsoluteValue(Rank other) {
         return Math.abs(rank - other.getRank());
+    }
+
+    public static List<Rank> getRanks(Rank from, Rank to) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.getRank() > from.getRank() && rank.getRank() < to.getRank())
+                .collect(toList());
     }
 }

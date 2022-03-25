@@ -1,6 +1,9 @@
 package chess.domain.position;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
+import java.util.List;
 
 public enum File {
     A('a'),
@@ -34,12 +37,16 @@ public enum File {
 
     public static boolean isFile(char candidate) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getFile() == candidate)
-                .findAny()
-                .isPresent();
+                .anyMatch(file -> file.getFile() == candidate);
     }
 
     public int calculateAbsoluteValue(File other) {
         return Math.abs(file - other.getFile());
+    }
+
+    public static List<File> getFiles(File from, File to) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.getFile() > from.getFile() && file.getFile() < to.getFile())
+                .collect(toList());
     }
 }

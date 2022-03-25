@@ -61,11 +61,11 @@ public class Position implements Comparable<Position> {
         return false;
     }
 
-    private Rank getRank() {
+    public Rank getRank() {
         return rank;
     }
 
-    private File getFile() {
+    public File getFile() {
         return file;
     }
 
