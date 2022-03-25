@@ -3,14 +3,12 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
-public class King implements ChessPiece {
+public class King extends ChessPiece {
+    private static final String NAME = "KING";
     private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 킹이 이동할 수 없는 위치입니다.";
-    private final Team team;
-    private ChessBoardPosition position;
 
     public King(Team team, ChessBoardPosition position) {
-        this.team = team;
-        this.position = position;
+        super(NAME, team, position);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {

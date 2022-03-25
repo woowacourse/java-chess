@@ -1,5 +1,12 @@
 package chess.domain;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,27 +41,41 @@ public class ChessGame {
     private static ChessMen initializeChessMen(Team team, int pawnRow, int pieceRow) {
         List<ChessPiece> chessPieces = new ArrayList<>();
         addPawns(chessPieces, team, pawnRow);
-        addPieces(chessPieces, team, Type.ROOK, ROOK_COLUMN, pieceRow);
-        addPieces(chessPieces, team, Type.KNIGHT, KNIGHT_COLUMN, pieceRow);
-        addPieces(chessPieces, team, Type.BISHOP, BISHOP_COLUMN, pieceRow);
+        addRooks(chessPieces, team, pieceRow);
+        addKnights(chessPieces, team, pieceRow);
+        addBishops(chessPieces, team, pieceRow);
         addKingAndQueen(chessPieces, team, pieceRow);
         return new ChessMen(chessPieces);
     }
 
-    private static void addKingAndQueen(List<ChessPiece> whiteChessPieces, Team team, int row) {
-        whiteChessPieces.add(new ChessPiece(team, Type.QUEEN, new ChessBoardPosition(QUEEN_COLUMN, row)));
-        whiteChessPieces.add(new ChessPiece(team, Type.KING, new ChessBoardPosition(KING_COLUMN, row)));
-    }
-
     private static void addPawns(List<ChessPiece> chessPieces, Team team, int row) {
         for (char column = 'a'; column < 'i'; column++) {
-            chessPieces.add(new ChessPiece(team, Type.PAWN, new ChessBoardPosition(column, row)));
+            chessPieces.add(new Pawn(team, new ChessBoardPosition(column, row)));
         }
     }
 
-    private static void addPieces(List<ChessPiece> chessPieces, Team team, Type type, char column, int row) {
-        chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition(column, row)));
-        chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition((char) (PAIR_COLUMN_SUM - column), row)));
+    private static void addRooks(List<ChessPiece> chessPieces, Team team, int row) {
+        chessPieces.add(new Rook(team, new ChessBoardPosition(ChessGame.ROOK_COLUMN, row)));
+        chessPieces.add(new Rook(team, new ChessBoardPosition(calculatePairColumn(ROOK_COLUMN), row)));
+    }
+
+    private static void addKnights(List<ChessPiece> chessPieces, Team team, int row) {
+        chessPieces.add(new Knight(team, new ChessBoardPosition(ChessGame.KNIGHT_COLUMN, row)));
+        chessPieces.add(new Knight(team, new ChessBoardPosition(calculatePairColumn(KNIGHT_COLUMN), row)));
+    }
+
+    private static void addBishops(List<ChessPiece> chessPieces, Team team, int row) {
+        chessPieces.add(new Bishop(team, new ChessBoardPosition(ChessGame.BISHOP_COLUMN, row)));
+        chessPieces.add(new Bishop(team, new ChessBoardPosition(calculatePairColumn(BISHOP_COLUMN), row)));
+    }
+
+    private static void addKingAndQueen(List<ChessPiece> whiteChessPieces, Team team, int row) {
+        whiteChessPieces.add(new Queen(team, new ChessBoardPosition(QUEEN_COLUMN, row)));
+        whiteChessPieces.add(new King(team, new ChessBoardPosition(KING_COLUMN, row)));
+    }
+
+    private static char calculatePairColumn(char column) {
+        return (char) (PAIR_COLUMN_SUM - column);
     }
 
     public boolean existsAllyChessPiece(ChessBoardPosition position) {

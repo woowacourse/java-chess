@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.ChessPiece;
 import java.util.Iterator;
 import java.util.List;
 

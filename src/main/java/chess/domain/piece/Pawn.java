@@ -3,20 +3,17 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
-public class Pawn implements ChessPiece {
+public class Pawn extends ChessPiece {
 
     private static final int DEFAULT_DISTANCE = 1;
     private static final int OPTIONAL_DISTANCE = 1;
     private static final int WHITE_INITIAL_ROW_POSITION = 7;
     private static final int BLACK_INITIAL_ROW_POSITION = 2;
+    private static final String NAME = "PAWN";
     private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 폰이 이동할 수 없는 위치입니다.";
 
-    private final Team team;
-    private ChessBoardPosition position;
-
     public Pawn(Team team, ChessBoardPosition position) {
-        this.team = team;
-        this.position = position;
+        super(NAME, team, position);
     }
 
     @Override

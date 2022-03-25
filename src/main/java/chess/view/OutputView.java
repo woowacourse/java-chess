@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.Type;
 import chess.dto.ChessMenDto;
 import chess.dto.ChessPieceDto;
 import com.google.common.base.Joiner;
@@ -20,15 +19,15 @@ public class OutputView {
     private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
     private static final String GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final Map<Type, Character> chessPieceTypeToCharacter = new HashMap<>();
+    private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
 
     static {
-        chessPieceTypeToCharacter.put(Type.PAWN, 'p');
-        chessPieceTypeToCharacter.put(Type.BISHOP, 'b');
-        chessPieceTypeToCharacter.put(Type.KNIGHT, 'n');
-        chessPieceTypeToCharacter.put(Type.ROOK, 'r');
-        chessPieceTypeToCharacter.put(Type.KING, 'k');
-        chessPieceTypeToCharacter.put(Type.QUEEN, 'q');
+        chessPieceNameToCharacter.put("PAWN", 'p');
+        chessPieceNameToCharacter.put("BISHOP", 'b');
+        chessPieceNameToCharacter.put("KNIGHT", 'n');
+        chessPieceNameToCharacter.put("ROOK", 'r');
+        chessPieceNameToCharacter.put("KING", 'k');
+        chessPieceNameToCharacter.put("QUEEN", 'q');
     }
 
     public static void printChessGameStart() {
@@ -66,16 +65,16 @@ public class OutputView {
 
     private static void setBlackChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
         for (ChessPieceDto chessPieceDto : chessMenDto) {
-            Type type = chessPieceDto.getType();
-            char chessPieceAbbreviation = chessTypeToUpperCase(chessPieceTypeToCharacter.get(type));
+            String name = chessPieceDto.getName();
+            char chessPieceAbbreviation = chessTypeToUpperCase(chessPieceNameToCharacter.get(name));
             chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
         }
     }
 
     private static void setWhiteChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
         for (ChessPieceDto chessPieceDto : chessMenDto) {
-            Type type = chessPieceDto.getType();
-            Character chessPieceAbbreviation = chessPieceTypeToCharacter.get(type);
+            String name = chessPieceDto.getName();
+            Character chessPieceAbbreviation = chessPieceNameToCharacter.get(name);
             chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
         }
     }

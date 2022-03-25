@@ -1,7 +1,7 @@
 package chess.dto;
 
 import chess.domain.ChessMen;
-import chess.domain.ChessPiece;
+import chess.domain.piece.ChessPiece;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

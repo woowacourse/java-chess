@@ -3,15 +3,12 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
-public class Bishop implements ChessPiece {
+public class Bishop extends ChessPiece {
+    private static final String NAME = "BISHOP";
     private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 비숍이 이동할 수 없는 위치입니다.";
 
-    private final Team team;
-    private ChessBoardPosition position;
-
     public Bishop(Team team, ChessBoardPosition position) {
-        this.team = team;
-        this.position = position;
+        super(NAME, team, position);
     }
 
     @Override

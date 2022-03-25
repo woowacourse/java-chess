@@ -3,16 +3,13 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 
-public class Queen implements ChessPiece {
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 퀸이 이동할 수 없는 위치입니다.";
+public class Queen extends ChessPiece {
     private static final int NO_DIFFERENCE = 0;
-
-    private final Team team;
-    private ChessBoardPosition position;
+    private static final String NAME = "QUEEN";
+    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 퀸이 이동할 수 없는 위치입니다.";
 
     public Queen(Team team, ChessBoardPosition position) {
-        this.team = team;
-        this.position = position;
+        super(NAME, team, position);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
