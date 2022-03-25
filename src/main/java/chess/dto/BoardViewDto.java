@@ -4,7 +4,7 @@ import static chess.domain.position.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
 
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
+import chess.domain.piece2.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

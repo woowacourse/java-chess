@@ -1,22 +1,23 @@
 package chess.domain.game;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.piece2.Color.BLACK;
+import static chess.domain.piece2.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece2.Bishop;
+import chess.domain.piece2.King;
+import chess.domain.piece2.Knight;
+import chess.domain.piece2.Pawn;
+import chess.domain.piece2.Piece;
+import chess.domain.piece2.Queen;
+import chess.domain.piece2.Rook;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
 class ActivePiecesTest {
 
     private ActivePieces activePieces;
