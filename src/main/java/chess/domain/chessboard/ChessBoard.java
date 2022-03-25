@@ -1,20 +1,15 @@
-package chess.domain;
+package chess.domain.chessboard;
 
-import chess.domain.chessPiece.Bishop;
-import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.Color;
-import chess.domain.chessPiece.King;
-import chess.domain.chessPiece.Knight;
-import chess.domain.chessPiece.Pawn;
-import chess.domain.chessPiece.Queen;
-import chess.domain.chessPiece.Rook;
+import chess.domain.GameStatus;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Color;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Pawn;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
@@ -26,43 +21,9 @@ public class ChessBoard {
     private GameStatus gameStatus;
     private Color currentTurn = Color.WHITE;
 
-    public ChessBoard() {
-        this.chessBoard = new HashMap<>();
-        this.gameStatus = GameStatus.READY;
-        init();
-    }
-
     ChessBoard(final Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
         this.gameStatus = GameStatus.READY;
-    }
-
-    private void init() {
-        for (final Color color : Color.values()) {
-            final List<ChessPiece> pieces = List.of(
-                    King.from(color),
-                    Queen.from(color),
-                    Pawn.from(color),
-                    Rook.from(color),
-                    Bishop.from(color),
-                    Knight.from(color));
-
-            for (final ChessPiece chessPiece : pieces) {
-                initByPiece(chessPiece);
-            }
-        }
-    }
-
-    private void initByPiece(final ChessPiece chessPiece) {
-        if (chessPiece.isBlack()) {
-            for (final Position position : chessPiece.getInitBlackPosition()) {
-                chessBoard.put(position, chessPiece);
-            }
-            return;
-        }
-        for (final Position position : chessPiece.getInitWhitePosition()) {
-            chessBoard.put(position, chessPiece);
-        }
     }
 
     public void move(final Position from, final Position to) {

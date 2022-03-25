@@ -1,49 +1,41 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public final class Rook extends ChessPiece {
+public final class Queen extends ChessPiece {
 
-    private static final Map<Color, Rook> cache;
-    private static final String NAME = "R";
-    private static final Double VALUE = 5.0;
+    private static final Map<Color, Queen> cache;
+    private static final String NAME = "Q";
+    private static final Double VALUE = 9.0;
 
     static {
         cache = Arrays.stream(Color.values())
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        Rook::new));
+                        Queen::new));
     }
 
-    private Rook(final Color color) {
+    private Queen(final Color color) {
         super(color, NAME, VALUE);
     }
 
-    public static Rook from(final Color color) {
+    public static Queen from(final Color color) {
         return cache.get(color);
     }
 
     @Override
-    public List<Position> getInitWhitePosition() {
-        return List.of(Position.from("a1"), Position.from("h1"));
-    }
-
-    @Override
-    public List<Position> getInitBlackPosition() {
-        return List.of(Position.from("a8"), Position.from("h8"));
-    }
-
-    @Override
     public void canMove(final Position from, final Position to) {
+        final int fileDistance = Math.abs(from.fileDistance(to));
+        final int rankDistance = Math.abs(from.rankDistance(to));
+
         final boolean sameFile = from.isSameFile(to);
         final boolean sameRank = from.isSameRank(to);
 
-        if (!sameFile && !sameRank) {
+        if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
     }

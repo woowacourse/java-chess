@@ -1,8 +1,7 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Stack;
 
 public abstract class ChessPiece {
@@ -16,10 +15,6 @@ public abstract class ChessPiece {
         this.name = color.convertByColor(name);
         this.value = value;
     }
-
-    public abstract List<Position> getInitWhitePosition();
-
-    public abstract List<Position> getInitBlackPosition();
 
     public abstract void canMove(final Position from, final Position to);
 

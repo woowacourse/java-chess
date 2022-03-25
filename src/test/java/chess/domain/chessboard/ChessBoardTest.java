@@ -1,17 +1,17 @@
-package chess.domain;
+package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.chessPiece.Bishop;
-import chess.domain.chessPiece.ChessPiece;
-import chess.domain.chessPiece.Color;
-import chess.domain.chessPiece.King;
-import chess.domain.chessPiece.Knight;
-import chess.domain.chessPiece.Pawn;
-import chess.domain.chessPiece.Queen;
-import chess.domain.chessPiece.Rook;
+import chess.domain.chesspiece.Bishop;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Color;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Knight;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Queen;
+import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessBoardTest {
 
-    final ChessBoard chessBoard = new ChessBoard();
+    final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
 
     @ParameterizedTest
     @DisplayName("위치를 기반으로 기물을 찾는다.")

@@ -1,9 +1,7 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,24 +27,6 @@ public final class Pawn extends ChessPiece {
 
     public static Pawn from(final Color color) {
         return cache.get(color);
-    }
-
-    @Override
-    public List<Position> getInitWhitePosition() {
-        final List<Position> list = new ArrayList<>();
-        for (int i = 'a'; i <= 'h'; i++) {
-            list.add(Position.from((char) i + WHITE_INIT_FILE));
-        }
-        return list;
-    }
-
-    @Override
-    public List<Position> getInitBlackPosition() {
-        final List<Position> list = new ArrayList<>();
-        for (int i = 'a'; i <= 'h'; i++) {
-            list.add(Position.from((char) i + BLACK_INIT_FILE));
-        }
-        return list;
     }
 
     @Override

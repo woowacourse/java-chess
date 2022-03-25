@@ -1,8 +1,7 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,16 +25,6 @@ public final class King extends ChessPiece {
 
     public static King from(final Color color) {
         return cache.get(color);
-    }
-
-    @Override
-    public List<Position> getInitWhitePosition() {
-        return List.of(Position.from("e1"));
-    }
-
-    @Override
-    public List<Position> getInitBlackPosition() {
-        return List.of(Position.from("e8"));
     }
 
     @Override
