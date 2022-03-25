@@ -25,7 +25,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public Rank add(int gap){
+    public Rank add(int gap) {
         return Rank.of(String.valueOf((char) (value.charAt(0) + gap)));
     }
 

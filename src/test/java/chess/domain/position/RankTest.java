@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RankTest {
 
@@ -32,7 +31,7 @@ class RankTest {
         // when
         // then
         assertThatThrownBy(() -> File.of(value))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("유효하지 않은 범위입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유효하지 않은 범위입니다.");
     }
 }

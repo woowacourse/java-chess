@@ -18,14 +18,14 @@ public enum File {
         this.value = value;
     }
 
-    public static File of(String value){
+    public static File of(String value) {
         return Arrays.stream(File.values())
                 .filter((it) -> it.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public File add(int gap){
+    public File add(int gap) {
         return File.of(String.valueOf(Integer.parseInt(value) + gap));
     }
 

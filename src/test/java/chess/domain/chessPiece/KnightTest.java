@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
 import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +30,7 @@ class KnightTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"c7","c3","b6","b4","f4","f6","e7","e3"})
+    @ValueSource(strings = {"c7", "c3", "b6", "b4", "f4", "f6", "e7", "e3"})
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     void canMove_canGo(String target) {
         // given

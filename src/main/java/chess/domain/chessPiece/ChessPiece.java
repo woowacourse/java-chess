@@ -61,7 +61,9 @@ public abstract class ChessPiece {
         return this.color != color;
     }
 
-    public double getValue(){
+    public double getValue() {
         return value;
-    };
+    }
+
+    ;
 }

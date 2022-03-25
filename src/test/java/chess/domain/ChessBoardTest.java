@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.chessPiece.*;
 import chess.domain.position.Position;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -71,7 +70,7 @@ class ChessBoardTest {
     void move_Pawn_Straight1() {
         // given
         chessBoard.move(new Position("b1"), new Position("c3"));
-        chessBoard.move(new Position("a7"),new Position("a6"));
+        chessBoard.move(new Position("a7"), new Position("a6"));
 
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c3")))
@@ -84,7 +83,7 @@ class ChessBoardTest {
     void move_Pawn_Straight2() {
         // given
         chessBoard.move(new Position("b1"), new Position("c3"));
-        chessBoard.move(new Position("a7"),new Position("a6"));
+        chessBoard.move(new Position("a7"), new Position("a6"));
 
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c4")))
@@ -111,7 +110,7 @@ class ChessBoardTest {
     @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
     void chessBoard_turn() {
         // then
-        assertThatThrownBy(() ->  chessBoard.move(new Position("a7"), new Position("a6")))
+        assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("WHITE의 차례입니다.");
     }

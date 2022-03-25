@@ -31,7 +31,7 @@ class FileTest {
         // when
         // then
         assertThatThrownBy(() -> File.of(value))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("유효하지 않은 범위입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("유효하지 않은 범위입니다.");
     }
 }
