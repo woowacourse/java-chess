@@ -28,5 +28,5 @@ public abstract class Piece {
 
     public void checkPieceMoveRange(final Board board, final Position from, final Position to){
 
-    };
+    }
 }
