@@ -15,6 +15,7 @@ import java.util.Map;
 public class PieceFactory {
 
     private PieceFactory() {
+        throw new AssertionError();
     }
 
     public static Map<Position, Piece> createNewChessBoard() {
