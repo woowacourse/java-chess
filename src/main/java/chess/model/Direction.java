@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -25,6 +26,12 @@ public enum Direction {
     Direction(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    public static Direction of(int row, int col) {
+        return Arrays.stream(values()).filter(direction -> direction.col == col && direction.row == row)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
     public int getRow() {

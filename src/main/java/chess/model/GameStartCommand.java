@@ -1,7 +1,6 @@
 package chess.model;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 public enum GameStartCommand {
     START("start"),

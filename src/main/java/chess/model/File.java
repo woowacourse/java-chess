@@ -29,4 +29,8 @@ public enum File {
     public File add(int row) {
         return File.of(this.row + row);
     }
+
+    public int calculateGap(File file) {
+        return file.row - this.row;
+    }
 }

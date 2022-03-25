@@ -46,6 +46,26 @@ public final class Square {
         }
     }
 
+    public Direction findDirection(Square source) {
+        int fileDistance = file.calculateGap(source.file);
+        int rankDistance = rank.calculateGap(source.rank);
+        int gcd = GCD(fileDistance, rankDistance);
+        return Direction.of(fileDistance / gcd, rankDistance / gcd);
+    }
+
+    private static int GCD(int fileDistance, int rankDistance) {
+        fileDistance = Math.abs(fileDistance);
+        rankDistance = Math.abs(rankDistance);
+        int bigger = Math.max(fileDistance, rankDistance);
+        int smaller = Math.min(fileDistance, rankDistance);
+        while (smaller > 0) {
+            int tmp = bigger;
+            bigger = smaller;
+            smaller = tmp % smaller;
+        }
+        return bigger;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

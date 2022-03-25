@@ -31,6 +31,10 @@ public enum Rank {
         return Rank.of(this.col + col);
     }
 
+    public int calculateGap(Rank target) {
+        return target.col - this.col;
+    }
+
     public static List<Rank> emptyBaseLine() {
         return List.of(SIX, FIVE, FOUR, THREE);
     }
