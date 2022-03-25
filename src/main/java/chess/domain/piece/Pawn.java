@@ -9,9 +9,12 @@ public class Pawn implements Piece {
     private static final int PAWN_FIRST_MOVE_DISTANCE = 2;
     private static final int PAWN_DIAGONAL_MOVE_DISTANCE = 2;
 
+    private final State state;
+
     private Position position;
 
     public Pawn(Position position) {
+        this.state = State.PAWN;
         this.position = position;
     }
 

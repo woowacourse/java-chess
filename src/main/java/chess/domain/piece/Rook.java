@@ -5,9 +5,12 @@ import java.util.Objects;
 
 public class Rook implements Piece {
 
+    private final State state;
+
     private Position position;
 
     public Rook(Position position) {
+        this.state = State.ROOK;
         this.position = position;
     }
 

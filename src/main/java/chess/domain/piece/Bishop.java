@@ -5,9 +5,12 @@ import java.util.Objects;
 
 public class Bishop implements Piece {
 
+    private final State state;
+
     private Position position;
 
     public Bishop(Position position) {
+        this.state = State.BISHOP;
         this.position = position;
     }
 

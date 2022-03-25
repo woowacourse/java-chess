@@ -8,9 +8,12 @@ public class King implements Piece {
     private static final int KING_LINEAR_MOVE_DISTANCE = 1;
     private static final int KING_DIAGONAL_MOVE_DISTANCE = 2;
 
+    private final State state;
+
     private Position position;
 
     public King(Position position) {
+        this.state = State.KING;
         this.position = position;
     }
 

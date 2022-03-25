@@ -5,9 +5,12 @@ import java.util.Objects;
 
 public class Queen implements Piece {
 
+    private final State state;
+
     private Position position;
 
     public Queen(Position position) {
+        this.state = State.QUEEN;
         this.position = position;
     }
 

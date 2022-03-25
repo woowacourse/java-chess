@@ -5,9 +5,12 @@ import java.util.Objects;
 
 public class Knight implements Piece {
 
+    private final State state;
+
     private Position position;
 
     public Knight(Position position) {
+        this.state = State.KNIGHT;
         this.position = position;
     }
 
