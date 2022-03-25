@@ -3,16 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class RookTest {
 

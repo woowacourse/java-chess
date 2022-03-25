@@ -3,7 +3,6 @@ package chess.domain.piece.move.knight;
 import chess.domain.board.Point;
 import chess.domain.piece.move.Direction;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

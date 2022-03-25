@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.move.Direction;
 import chess.domain.piece.move.StraightDirection;
 
 public class Queen extends Piece {

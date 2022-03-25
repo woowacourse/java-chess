@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.move.Direction;
-import chess.domain.piece.move.StraightDirection;
 
 import java.util.HashMap;
 import java.util.Map;
