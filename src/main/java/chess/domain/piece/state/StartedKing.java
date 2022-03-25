@@ -1,7 +1,6 @@
 package chess.domain.piece.state;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.position.Direction;
@@ -9,13 +8,11 @@ import chess.domain.piece.position.Position;
 
 public class StartedKing extends Started{
 
+    private final NonContinuous nonContinuous = new NonContinuous();
+
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return Direction.all()
-            .stream()
-            .filter(direction -> board.canMoveOneStep(source, direction))
-            .map(source::getNext)
-            .collect(Collectors.toList());
+        return nonContinuous.getMovablePositions(source, board, Direction.all());
     }
 
     @Override
