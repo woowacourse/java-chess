@@ -24,6 +24,10 @@ public class ChessGame {
             Position.valueOf(information.get(2)));
     }
 
+    public boolean isFinish() {
+        return state.isFinish();
+    }
+
     public Board getBoard() {
         return board;
     }

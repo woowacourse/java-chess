@@ -9,4 +9,9 @@ public class End implements GameState{
     public GameState movePiece(Board board, Position fromPosition, Position toPosition) {
         return null;
     }
+
+    @Override
+    public boolean isFinish() {
+        return true;
+    }
 }

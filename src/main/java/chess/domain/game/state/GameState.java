@@ -6,4 +6,6 @@ import chess.domain.Position;
 public interface GameState {
 
     GameState movePiece(Board board, Position fromPosition, Position toPosition);
+
+    boolean isFinish();
 }

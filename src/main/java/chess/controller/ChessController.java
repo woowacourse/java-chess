@@ -18,13 +18,20 @@ public class ChessController {
     }
 
     private void turn(ChessGame chessGame) {
-        String inputOption = InputView.inputOption();
-        boolean isMoveOption = inputOption.contains("move");
+        while (!chessGame.isFinish()) {
+            String inputOption = InputView.inputOption();
+            boolean isMoveOption = inputOption.contains("move");
+            boolean isEndOption = inputOption.equals("end");
 
-        if (isMoveOption) {
-            chessGame.movePiece(inputOption);
+            if(isEndOption) {
+                return;
+            }
+
+            if (isMoveOption) {
+                chessGame.movePiece(inputOption);
+            }
+            OutputView.printInitialChessBoard(chessGame.getBoard());
         }
-        OutputView.printInitialChessBoard(chessGame.getBoard());
     }
 }
 

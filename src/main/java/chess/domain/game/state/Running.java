@@ -13,4 +13,9 @@ public class Running implements GameState{
         }
         return new Running();
     }
+
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
 }
