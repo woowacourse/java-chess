@@ -32,6 +32,6 @@ class BoardTest {
         //when, then
         assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 기물이 존재합니다.");
+                .hasMessage("이동하려는 위치에 같은 팀 기물이 있습니다.");
     }
 }
