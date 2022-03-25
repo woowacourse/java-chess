@@ -10,7 +10,8 @@ public enum Rank {
     Five(5),
     Six(6),
     Seven(7),
-    Eight(8)
+    Eight(8),
+    Out(-1)
     ;
 
     private final int value;
@@ -30,25 +31,9 @@ public enum Rank {
         return value;
     }
 
-    public Rank getUp() {
-        if (this == Eight) {
-            return this;
-        }
-
-        return Rank.valueOf(value + 1);
-    }
-
-    public Rank getDown() {
-        if (this == One) {
-            return this;
-        }
-
-        return Rank.valueOf(value - 1);
-    }
-
     public Rank getNext(int next) {
         if (value + next < One.value || value + next > Eight.value) {
-            return this;
+            return Out;
         }
 
         return Rank.valueOf(value + next);

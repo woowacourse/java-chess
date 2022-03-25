@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
-import chess.domain.piece.Night;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -34,12 +34,12 @@ public class ChessGameTest {
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
             Arguments.of(Position.of(File.a, Rank.Eight), Rook.class, "black Rook"),
-            Arguments.of(Position.of(File.b, Rank.Eight), Night.class, "black Night"),
+            Arguments.of(Position.of(File.b, Rank.Eight), Knight.class, "black Night"),
             Arguments.of(Position.of(File.c, Rank.Eight), Bishop.class, "black Bishop"),
             Arguments.of(Position.of(File.d, Rank.Eight), Queen.class, "black Queen"),
             Arguments.of(Position.of(File.e, Rank.Eight), King.class, "black King"),
             Arguments.of(Position.of(File.f, Rank.Eight), Bishop.class, "black Bishop"),
-            Arguments.of(Position.of(File.g, Rank.Eight), Night.class, "black Night"),
+            Arguments.of(Position.of(File.g, Rank.Eight), Knight.class, "black Night"),
             Arguments.of(Position.of(File.h, Rank.Eight), Rook.class, "black Rook"),
 
             Arguments.of(Position.of(File.a, Rank.Seven), Pawn.class, "black Pawn"),
@@ -52,12 +52,12 @@ public class ChessGameTest {
             Arguments.of(Position.of(File.h, Rank.Seven), Pawn.class, "black Pawn"),
 
             Arguments.of(Position.of(File.a, Rank.One), Rook.class, "white Rook"),
-            Arguments.of(Position.of(File.b, Rank.One), Night.class, "white Night"),
+            Arguments.of(Position.of(File.b, Rank.One), Knight.class, "white Night"),
             Arguments.of(Position.of(File.c, Rank.One), Bishop.class, "white Bishop"),
             Arguments.of(Position.of(File.d, Rank.One), Queen.class, "white Queen"),
             Arguments.of(Position.of(File.e, Rank.One), King.class, "white King"),
             Arguments.of(Position.of(File.f, Rank.One), Bishop.class, "white Bishop"),
-            Arguments.of(Position.of(File.g, Rank.One), Night.class, "white Night"),
+            Arguments.of(Position.of(File.g, Rank.One), Knight.class, "white Night"),
             Arguments.of(Position.of(File.h, Rank.One), Rook.class, "white Rook"),
 
             Arguments.of(Position.of(File.a, Rank.Two), Pawn.class, "white Pawn"),

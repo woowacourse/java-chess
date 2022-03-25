@@ -10,7 +10,8 @@ public enum File {
     e(5),
     f(6),
     g(7),
-    h(8);
+    h(8),
+    Out(-1);
 
     private final int value;
 
@@ -23,26 +24,6 @@ public enum File {
             .filter(file -> file.value == value)
             .findFirst()
             .get();
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public File getLeft() {
-        if (this == a) {
-            return this;
-        }
-
-        return File.valueOf(value - 1);
-    }
-
-    public File getRight() {
-        if (this == h) {
-            return this;
-        }
-
-        return File.valueOf(value + 1);
     }
 
     public File getNext(int next) {

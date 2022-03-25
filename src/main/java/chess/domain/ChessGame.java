@@ -4,7 +4,7 @@ import java.util.Map;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
-import chess.domain.piece.Night;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -32,12 +32,12 @@ public class ChessGame {
 
     private void initBlackRankEight() {
         board.putPiece(Position.of(File.a, Rank.Eight), new Rook(Color.Black));
-        board.putPiece(Position.of(File.b, Rank.Eight), new Night(Color.Black));
+        board.putPiece(Position.of(File.b, Rank.Eight), new Knight(Color.Black));
         board.putPiece(Position.of(File.c, Rank.Eight), new Bishop(Color.Black));
         board.putPiece(Position.of(File.d, Rank.Eight), new Queen(Color.Black));
         board.putPiece(Position.of(File.e, Rank.Eight), new King(Color.Black));
         board.putPiece(Position.of(File.f, Rank.Eight), new Bishop(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Eight), new Night(Color.Black));
+        board.putPiece(Position.of(File.g, Rank.Eight), new Knight(Color.Black));
         board.putPiece(Position.of(File.h, Rank.Eight), new Rook(Color.Black));
     }
 
@@ -70,12 +70,12 @@ public class ChessGame {
 
     private void initWhiteRankOne() {
         board.putPiece(Position.of(File.a, Rank.One), new Rook(Color.White));
-        board.putPiece(Position.of(File.b, Rank.One), new Night(Color.White));
+        board.putPiece(Position.of(File.b, Rank.One), new Knight(Color.White));
         board.putPiece(Position.of(File.c, Rank.One), new Bishop(Color.White));
         board.putPiece(Position.of(File.d, Rank.One), new Queen(Color.White));
         board.putPiece(Position.of(File.e, Rank.One), new King(Color.White));
         board.putPiece(Position.of(File.f, Rank.One), new Bishop(Color.White));
-        board.putPiece(Position.of(File.g, Rank.One), new Night(Color.White));
+        board.putPiece(Position.of(File.g, Rank.One), new Knight(Color.White));
         board.putPiece(Position.of(File.h, Rank.One), new Rook(Color.White));
     }
 }

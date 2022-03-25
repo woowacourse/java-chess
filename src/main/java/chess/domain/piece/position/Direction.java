@@ -5,12 +5,13 @@ import java.util.List;
 
 public enum Direction {
     Up(0, 1),
-    UpRight(1, 1),
     Right(1, 0),
-    DownRight(1, -1),
     Down(0, -1),
-    DownLeft(-1, -1),
     Left(-1, 0),
+
+    UpRight(1, 1),
+    DownRight(1, -1),
+    DownLeft(-1, -1),
     UpLeft(-1, 1),
     ;
 
@@ -20,6 +21,24 @@ public enum Direction {
     Direction(int file, int rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static List<Direction> knight(Position current) {
+        //현재 포지션에 따라서 갈수있는 방향이 달라지는거예요.
+        //up과 down, left, right의 속성들을 모두 분리해야할까?
+        //
+
+
+        List<Direction> directions = new ArrayList<>();
+        directions.add(Direction.UpUpRight);
+        directions.add(Direction.UpRightRight);
+        directions.add(Direction.DownRightRight);
+        directions.add(Direction.DownDownRight);
+        directions.add(Direction.DownDownLeft);
+        directions.add(Direction.DownLeftLeft);
+        directions.add(Direction.UpLeftLeft);
+        directions.add(Direction.UpUpLeft);
+        return directions;
     }
 
     public static List<Direction> upDownLeftRight() {
