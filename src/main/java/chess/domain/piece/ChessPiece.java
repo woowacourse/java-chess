@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
 
 public abstract class ChessPiece {
@@ -14,7 +15,9 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
-    abstract void move(ChessBoardPosition targetPosition);
+    public abstract boolean movable(ChessBoardPosition targetPosition, ChessMen chessMen);
+
+    public abstract void move(ChessBoardPosition targetPosition);
 
     public String getName() {
         return name;

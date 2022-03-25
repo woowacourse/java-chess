@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,20 +8,13 @@ import org.junit.jupiter.api.Test;
 class ChessGameTest {
 
     @Test
-    @DisplayName("위치에 같은 팀의 체스 피스가 있는지 확인한다")
-    void existsChessPiece() {
+    @DisplayName("경로에 체스피스가 있는 경우 움직일 수 없다.")
+    void moveTest() {
         ChessGame chessGame = ChessGame.create();
-        ChessBoardPosition position = ChessBoardPosition.of("b7");
+        ChessBoardPosition sourcePosition = ChessBoardPosition.of("c1");
+        ChessBoardPosition targetPosition = ChessBoardPosition.of("e3");
 
-        assertTrue(chessGame.existsAllyChessPiece(position));
-    }
-
-    @Test
-    @DisplayName("위치에 같은 팀의 체스 피스가 없는지 확인지다")
-    void notExistsChessPiece() {
-        ChessGame chessGame = ChessGame.create();
-        ChessBoardPosition position = ChessBoardPosition.of("d2");
-
-        assertFalse(chessGame.existsAllyChessPiece(position));
+        assertThatThrownBy(() -> chessGame.move(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

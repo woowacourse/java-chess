@@ -78,18 +78,35 @@ public class ChessGame {
         return (char) (PAIR_COLUMN_SUM - column);
     }
 
-    public boolean existsAllyChessPiece(ChessBoardPosition position) {
-        if (turn.isWhite()) {
-            return whiteChessMen.existChessPieceInPosition(position);
-        }
-        return blackChessMen.existChessPieceInPosition(position);
-    }
-
     public ChessMen getBlackChessMen() {
         return blackChessMen;
     }
 
     public ChessMen getWhiteChessMen() {
         return whiteChessMen;
+    }
+
+    public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessPiece chessPiece = getChessPiece(sourcePosition);
+        ChessMen allyChessMen = getAlly();
+
+        if (!chessPiece.movable(targetPosition, allyChessMen)) {
+            throw new IllegalArgumentException("[ERROR] 경로에 다른 체스가 있어 이동할 수 없습니다.");
+        }
+        chessPiece.move(targetPosition);
+    }
+
+    private ChessMen getAlly() {
+        if (turn.isWhite()) {
+            return whiteChessMen;
+        }
+        return blackChessMen;
+    }
+
+    private ChessPiece getChessPiece(ChessBoardPosition sourcePosition) {
+        if (turn.isSame(Team.WHITE)) {
+            return whiteChessMen.getChessPieceAt(sourcePosition);
+        }
+        return blackChessMen.getChessPieceAt(sourcePosition);
     }
 }
