@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.strategy.OccupiedChecker;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Chessmen implements Piece {
 
@@ -34,22 +32,13 @@ public abstract class Chessmen implements Piece {
     abstract protected void attack(Position enemyPosition, OccupiedChecker isOccupied);
 
     protected final void validateClearPathTo(Position targetPosition, OccupiedChecker isOccupied) {
-        boolean isClear = positionsToPass(targetPosition).stream()
+        boolean isClear =  position.positionsBetween(targetPosition)
+                .stream()
                 .noneMatch(isOccupied::test);
 
         if (!isClear) {
             throw new IllegalArgumentException(BLOCKED_PATH_EXCEPTION_MESSAGE);
         }
-    }
-
-    private List<Position> positionsToPass(Position targetPosition) {
-        List<Position> positionsBetween = new ArrayList<>();
-        Position next = position.oneStepToward(targetPosition);
-        while (next != targetPosition) {
-            positionsBetween.add(next);
-            next = next.oneStepToward(targetPosition);
-        }
-        return positionsBetween;
     }
 
     @Override

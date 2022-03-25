@@ -3,7 +3,9 @@ package chess.domain.position;
 import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
 
 import chess.domain.position.util.PositionUtil;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Position {
@@ -38,6 +40,12 @@ public class Position {
         return targetPosition.rankIdx - rankIdx;
     }
 
+    public Position movedBy(int fileDiff, int rankDiff) {
+        int toFileIdx = fileIdx + fileDiff;
+        int toRankIdx = rankIdx + rankDiff;
+        return PositionCache.getCache(toFileIdx, toRankIdx);
+    }
+
     public boolean isHorizontal(Position toPosition) {
         return fileDifference(toPosition) == 0
                 && rankDifference(toPosition) > 0;
@@ -52,28 +60,36 @@ public class Position {
         return fileDifference(toPosition) == rankDifference(toPosition);
     }
 
-    public Position movedBy(int fileDiff, int rankDiff) {
-        int toFileIdx = fileIdx + fileDiff;
-        int toRankIdx = rankIdx + rankDiff;
-        return PositionCache.getCache(toFileIdx, toRankIdx);
+    private boolean isStraightPathTo(Position targetPosition) {
+        return isHorizontal(targetPosition) || isVertical(targetPosition) || isDiagonal(targetPosition);
     }
 
-    public Position oneStepToward(Position targetPosition) {
-        int nextFileIdx = getIncrementedToward(fileIdx, targetPosition.fileIdx);
-        int nextRankIdx = getIncrementedToward(rankIdx, targetPosition.rankIdx);
+    public List<Position> positionsBetween(Position targetPosition) {
+        if (!isStraightPathTo(targetPosition)) {
+            return List.of();
+        }
+        return positionsStraightToward(targetPosition);
+    }
+
+    private List<Position> positionsStraightToward(Position targetPosition) {
+        List<Position> positions = new ArrayList<>();
+        Position next = oneStepToward(targetPosition);
+        while (next != targetPosition) {
+            positions.add(next);
+            next = next.oneStepToward(targetPosition);
+        }
+        return positions;
+    }
+
+    private Position oneStepToward(Position targetPosition) {
+        int nextFileIdx = incrementedToward(fileIdx, targetPosition.fileIdx);
+        int nextRankIdx = incrementedToward(rankIdx, targetPosition.rankIdx);
 
         return PositionCache.getCache(nextFileIdx, nextRankIdx);
     }
 
-    private int getIncrementedToward(int from, int to) {
-        int diff = to - from;
-        if (diff > 0) {
-            return from + 1;
-        }
-        if (diff < 0) {
-            return from - 1;
-        }
-        return from;
+    private int incrementedToward(int from, int to) {
+        return from + Integer.compare(to, from);
     }
 
     public int getFileIdx() {
