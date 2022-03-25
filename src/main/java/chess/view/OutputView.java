@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String CHESS_BOARD_EMPTY_PRINT_MESSAGE = ".";
+
     private OutputView() {
         throw new AssertionError();
     }
@@ -35,7 +37,7 @@ public class OutputView {
             Piece piece = pieces.get(position);
             return piece.convertedName();
         }
-        return ".";
+        return CHESS_BOARD_EMPTY_PRINT_MESSAGE;
     }
 
     public static void printChessBoardStatus(Map<Color, Double> chessBoardStatus) {
